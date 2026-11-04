@@ -1,0 +1,82 @@
+name = "physicslib"
+version = "0.1.0"
+defaultTargets = [
+  "PersistenceMechanics", "PMSubstrate", "PMAction", "PMConstants",
+  "PMFlavor", "PMElementaryParticles", "PMAtoms", "PMCosmology",
+  "CN1", "ELEM", "Classification",
+  "E8PConstants", "E8PConstantsProof", "e8p"
+]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+
+[[lean_lib]]
+name = "PersistenceMechanics"
+srcDir = "src"
+globs = ["PersistenceMechanics", "PersistenceMechanics.+"]
+
+[[lean_lib]]
+name = "PMSubstrate"
+srcDir = "src"
+globs = ["PMSubstrate", "PMSubstrate.Research.+"]
+
+[[lean_lib]]
+name = "PMAction"
+srcDir = "src"
+globs = ["PMAction", "PMAction.+"]
+
+[[lean_lib]]
+name = "PMConstants"
+srcDir = "src"
+globs = ["PMConstants", "PMConstants.+"]
+
+[[lean_lib]]
+name = "PMFlavor"
+srcDir = "src"
+globs = ["PMFlavor", "PMFlavor.+"]
+
+[[lean_lib]]
+name = "PMElementaryParticles"
+srcDir = "src"
+globs = ["PMElementaryParticles", "PMElementaryParticles.+"]
+
+[[lean_lib]]
+name = "PMAtoms"
+srcDir = "src"
+globs = ["PMAtoms", "PMAtoms.+"]
+
+[[lean_lib]]
+name = "PMCosmology"
+srcDir = "src"
+globs = ["PMCosmology", "PMCosmology.+"]
+
+[[lean_lib]]
+name = "CN1"
+srcDir = "src/classification"
+globs = ["CN1.Foundations.+", "CN1.Finite.+"]
+
+[[lean_lib]]
+name = "ELEM"
+srcDir = "src/classification"
+globs = ["ELEM.+"]
+
+[[lean_lib]]
+name = "Classification"
+srcDir = "src/classification"
+
+[[lean_lib]]
+name = "E8PConstants"
+srcDir = "tools/e8p"
+globs = ["E8PConstants", "E8PConstants.+"]
+
+[[lean_lib]]
+name = "E8PConstantsProof"
+srcDir = "tools/e8p"
+
+[[lean_exe]]
+name = "e8p"
+srcDir = "tools/e8p"
+root = "ConstantsMain"
+needs = ["E8PConstantsProof"]

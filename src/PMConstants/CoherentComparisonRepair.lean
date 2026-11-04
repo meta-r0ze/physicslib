@@ -1,0 +1,12 @@
+import PMAction.CoherentComparisonRepair
+
+/-! Compatibility names: the general dynamics proofs now live in Paper II. -/
+namespace PMConstants.CoherentComparisonRepair
+export PMAction.CoherentComparisonRepair
+  (plus minus compare flag_entry compare_one
+   compare_mul compare_star compare_unitary uncompute prepared_uncompute
+   involution_projectors valid_unflagged_idle valid_flagged_reset conditional_unitary_blocks minusPart
+   conditional_minus_part conditional_preserves_flag_norm comparison_flag_norm conditional_cannot_clear fixes_unflagged_blocks
+   nondisturbing_cannot_clear inverse_not_flag_only comparison_half_entry permutation_entry_not_half comparison_basis_not_permutation
+   comparison_not_permutation root_comparison_not_permutation)
+end PMConstants.CoherentComparisonRepair
