@@ -18,7 +18,10 @@ structure Parameters where
   eulerCharacteristic : ℕ
   deriving DecidableEq
 
-def baseline : Parameters := ⟨4, 43, 16, 5, 2⟩
+/-- Compatibility record for the forced E8 substrate. The canonical names live in
+`PMSubstrate.E8Values`; `Derived.parameters_forced` proves any derived record equals
+this one. New code should import `PMSubstrate.E8Values`. -/
+abbrev baseline : Parameters := ⟨4, 43, 16, 5, 2⟩
 def Parameters.nodeCapacity (p : Parameters) : ℕ := 2 * p.sectorChannels
 def Parameters.resolution (p : Parameters) : ℕ := p.dimension * p.period
 def Parameters.intrinsicLoad (p : Parameters) : ℕ :=

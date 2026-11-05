@@ -35,8 +35,9 @@ theorem description_length :
       Fintype.card (Description baseline) = 31 ∧
       (Nat.card {z : Fin 8 → ℤ // z ⬝ᵥ (Lattices.gram *ᵥ z) = 2} + 8) / 8 = 31 := by
   refine ⟨?_, ?_, ?_⟩
-  · simp only [Description, Fintype.card_sum, Fintype.card_fin]; decide
-  · simp only [Description, Fintype.card_sum, Fintype.card_fin]; decide
+  · norm_num [Description, Fintype.card_sum, Fintype.card_fin, PMSubstrate.baseline,
+      PMSubstrate.Parameters.embeddingLoad, PMSubstrate.Parameters.intrinsicLoad]
+  · norm_num [Description, Fintype.card_sum, Fintype.card_fin]
   · rw [ThetaE8.e8_card_roots]
 
 /-- **The only relabelings of the orientation data are the identity and the flip.** -/

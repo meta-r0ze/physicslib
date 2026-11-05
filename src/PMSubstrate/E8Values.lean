@@ -8,6 +8,10 @@ used by every later paper. This module gives them stable names and proves the
 numerals once, so downstream modules can import `PMSubstrate.E8Values` instead
 of spelling `4`, `43`, `16`, `5`, `2`, or `172` by hand.
 
+`Impedance.baseline` remains as a compatibility record; new code should use the
+names here. `Derived.parameters_forced` proves any derived parameter record equals
+that baseline.
+
 Core record:
 
 * `D = 4`, `Delta = 43`, `nu = 16`, `sigma = 5`, `chi = 2`;
@@ -28,7 +32,7 @@ namespace PMSubstrate.E8Values
 /-- Coordinate dimension `D`. -/
 def D : ℕ := baseline.dimension
 /-- Clock period `Delta`. -/
-def Delta : ℕ := baseline.period
+abbrev Delta : ℕ := baseline.period
 /-- Chiral channel count `nu`. -/
 def nu : ℕ := baseline.sectorChannels
 /-- Embedding dimension `sigma`. -/
@@ -63,5 +67,6 @@ def overhead : ℝ := ((RM - 1 : ℕ) : ℝ) / (RM : ℝ)
 
 @[simp] theorem overhead_eq : overhead = 171 / 172 := by
   norm_num [overhead, RM, PMSubstrate.baseline, PMSubstrate.Parameters.resolution]
+
 
 end PMSubstrate.E8Values

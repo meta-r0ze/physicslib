@@ -10,8 +10,8 @@ Build: Lean 4.34.1, with sibling `PM/lean` and the vendored `classification/` pa
 
 ```sh
 lake exe cache get
-./check.sh
+./build.sh PMSubstrate
 ```
 
-`check.sh` builds the library, runs the strict axiom audit, the readable audit, and the
-class-number audit.
+`./build.sh PMSubstrate` builds the library. The whole-tree audits run with
+`./build.sh audit` (strict axioms, readable/import checks, class-number audit).

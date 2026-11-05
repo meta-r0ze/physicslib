@@ -69,7 +69,8 @@ Postulate I). See [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md) for the missing imp
 | `PMSubstrate/SelfReadable`, `Parity`, `OrthogonalExchange`, `Sectors`, `Channels`, `ChannelSymmetry` | unimodularity, evenness, sectors, channels; the uniform channel measure from E8 symmetry |
 | `PMSubstrate/DerivedParameters`, `E8Invariants`, `CapacityBarbier`, `CapacityEnvelope`, `CauchyPolygon`, `CircleLength`, `Distinctions`, `Descartes`, `TollFilters`, `ClosureSymmetry`, `PersistenceEvents`, `PersistenceMaximin`, `PersistencePremises`, `FinalPremises`, `NetCost`, `NetIndex`, `Impedance*`, `ProtocolToll` | parameters and the six terms |
 | `PMSubstrate/E8Values.lean` | canonical E8 record names `D, Δ, ν, σ, χ, R_M, N`, the derived loads, and `overhead`; exported by the `PMSubstrate` root |
-| `PMSubstrate/Pillars`, `Comparison`, `PhysicalBridge` | PM failure modes, comparison with measurement, earlier bridge lemmas |
+| `PMSubstrate/Pillars`, `Comparison`, `PhysicalBridge` | PM failure modes, Postulate R, and conditional physical bridge lemmas |
+| `PMSubstrate/ExperimentalComparison` | measured α comparisons, isolated as a leaf and not used by the derivation |
 | `PMSubstrate/Research/` | alternative routes, counterexamples and necessity tests (not on the main path) |
 | `../classification/` | vendored class-number-one proof (Peter W. Murphy, Apache-2.0) |
 | `../audits/` | scoped axiom audits for the research modules |
@@ -81,13 +82,13 @@ Lean 4.34.1, mathlib `d13f23b` (pinned in `lake-manifest.json`). With
 
 ```sh
 lake exe cache get
-./check.sh
+./build.sh PMSubstrate
 ```
 
-`check.sh` runs `lake build`, the strict audit (`AuditStrict.lean`: every PMSubstrate declaration may
-depend only on `propext`, `Classical.choice`, `Quot.sound`), the readable `Audit.lean`, and the
-class-number audit. `audit-negative-tests.sh` checks that the strict audit rejects `sorry` and new
-axioms. Run `./check.sh` for current counts.
+`./build.sh PMSubstrate` builds the library. `./build.sh audit` runs the whole-tree strict audit
+(`AuditStrict.lean`: every project declaration may depend only on `propext`,
+`Classical.choice`, `Quot.sound`), the readable/import audit, and the class-number audit. The
+negative tests for the strict audit live under `tools/`.
 
 ## Credits
 
