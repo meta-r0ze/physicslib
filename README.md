@@ -27,18 +27,15 @@ https://metamagic.substack.com/p/persistence-mechanics-and-the-quantum-vacuum
 
 You do not need to compile anything to start. Point your AI at this repo and then ask:
 
-1. **What are the implications of this repository?** Explain the central claim in plain English: what is genuinely derived, what is a convention, and what is still a physical model input.
-2. **Map the whole thing.** Give me a dependency-ordered map of the eight Lean libraries and `e8p`, and say in one sentence what each one owns.
-3. **Trace the numbers.** Follow the chain from "some things persist" to D = 4, Δ = 43, ν = 16, χ = 2, σ = 5, and 137.035999212…. Which steps are Lean theorems, which are postulates, and which are physical identifications?
-4. **Why E8?** Walk me through the substrate argument in `src/PMSubstrate/OVERVIEW.md` and the `Research/` alternatives. What is forced, and what is assumed?
-5. **What exactly does PM prove about Yang–Mills, and what does it explicitly not prove?** Read `src/PMAction/OVERVIEW.md` and `src/PMAction/REVIEW-AND-NEXT.md`.
-6. **How does the muon width and lifetime come out of `PMElementaryParticles`?** Which parts are derived from the contact model, and which are phase-space, coupling, or final-state inputs?
-7. **Why does this substrate have three generations of matter?** Separate the proved encoding/representation facts from the physical generation law that is still missing.
-8. **Make a constants scorecard.** For α, α_s, G_F, W/Z, Higgs, the VEV, and neutrino masses, list "what Lean checks" vs. "what still needs a physical derivation." Use `src/PMConstants/OVERVIEW.md` and `REVIEW-AND-NEXT.md`.
-9. **What is `e8p`, and how does a value travel from a Lean theorem to the CLI?** Trace one value end to end without compiling anything. Start at `tools/e8p/README`, `E8PConstants/Catalog.lean`, and `E8PConstantsProof.lean`.
-10. **Audit the "no measured constants are inserted" claim.** Where do measured references live, and how would a reviewer check that they never enter theorem statements? Look at `tools/e8p/E8PConstants/Experimental.lean` and the prediction ledgers.
-11. **What is the most falsifiable prediction here, and what observation would rule it out?** Then tell me which part of the proof chain that prediction actually depends on."*
-12. **Can you create a new proof that is missing that we can compare to experimental values and contribute back?*
+ * Does this cross the "too many coincidences and requires further investigation" line?
+ * Give me an overview of how the systems stack from persistence through the E8 system followed by elementary particles, nucleons, nucleus, shell, and atoms
+ * Give me a dependency-ordered map of the eight Lean libraries and `e8p`, and say in one sentence what each one owns.
+ * Why E8? Walk me through the substrate argument in `src/PMSubstrate/OVERVIEW.md` and the `Research/` alternatives. What is forced, and what is assumed?
+ * What exactly does PM prove about Yang–Mills, and what does it explicitly not prove? (See PMAction)
+ * How does the muon width and lifetime come out of `PMElementaryParticles`?
+ * Why does this substrate have three generations of matter?
+ * Can this make falsifiable prediction, how many?
+ * Can you create a new proof that is missing that we can compare to experimental values and contribute back?
 
 Some more ways to contribute: *"Pick one item in any `REVIEW-AND-NEXT.md` and see if it is solvable simply by depending on existing proofs"*
 
