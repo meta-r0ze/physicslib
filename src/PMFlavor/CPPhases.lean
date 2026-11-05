@@ -4,19 +4,14 @@ import PMFlavor.CKM
 # The two CP phases, certified
 
 `CKM` bounds `sin δ` for `δ = arctan(σ/χ) = arctan(5/2)` but not the angle itself. This module
-certifies the supplied CP phases and compares them with fixed dated benchmark inputs.
+certifies the supplied CP phases. The fixed benchmark comparisons live in
+`PMFlavor.ExperimentalPulls`.
 
 * `arctan_lower`, `arctan_upper`: for `x ≥ 0`, the alternating series brackets `arctan x`
   (`x − x³/3 + x⁵/5 − x⁷/7 ≤ arctan x ≤ … + x⁹/9`), proved from the derivatives
   `x⁸/(1+x²) ≥ 0` and `x¹⁰/(1+x²) ≥ 0`.
 * `δ_bounds`: `δ = π/2 − arctan(2/5)` lies in `(1.190284, 1.190317)` rad.
 * `δ_degrees`: `68.198° < δ < 68.201°`.
-* `δ_vs_gamma`: against LHCb's 2024 combination `γ = (64.6 ± 2.8)°` (in the standard
-  parametrization `δ ≈ γ`), the arithmetic pull is `+1.28` to `+1.29σ`. Against the `(68 ± 5)°` the paper
-  cites it is below `0.05σ`. The actual triangle angle γ is not identified with δ
-  by this theorem; its matrix-based extraction remains separate.
-* `nu_phase`: the leptonic phase `360°/φ = 180°(√5 − 1)` lies in `(222.492°, 222.493°)`, pull
-  `+0.94σ` against NuFIT 6.0's `(197 ± 27)°`.
 -/
 
 noncomputable section
@@ -98,28 +93,5 @@ theorem δ_degrees : (68.198 : ℝ) < δdeg ∧ δdeg < 68.201 := by
   · have : 21.799 < arctan (2/5) * 180 / π := by
       rw [lt_div_iff₀ hp]; nlinarith [h.1]
     linarith
-
-theorem δ_vs_gamma : 1.28 < (δdeg - 64.6) / 2.8 ∧ (δdeg - 64.6) / 2.8 < 1.29 ∧
-    |δdeg - 68| / 5 < 0.05 := by
-  have h := δ_degrees
-  refine ⟨by rw [lt_div_iff₀ (by norm_num)]; linarith, by rw [div_lt_iff₀ (by norm_num)]; linarith, ?_⟩
-  rw [abs_of_pos (by linarith), div_lt_iff₀ (by norm_num)]; linarith
-
-/-- The leptonic phase `360°/φ`. -/
-def nuDeg : ℝ := 360 / ((1 + √5) / 2)
-
-theorem nu_phase : (222.492 : ℝ) < nuDeg ∧ nuDeg < 222.493 ∧
-    0.94 < (nuDeg - 197) / 27 ∧ (nuDeg - 197) / 27 < 0.95 := by
-  have s1 : (2.236067 : ℝ) < √5 := by rw [lt_sqrt (by norm_num)]; norm_num
-  have s2 : √5 < (2.236068 : ℝ) := by rw [sqrt_lt' (by norm_num)]; norm_num
-  have e : nuDeg = 180 * (√5 - 1) := by
-    unfold nuDeg
-    have h5 : (√5)^2 = 5 := sq_sqrt (by norm_num)
-    have hp : (1 + √5) ≠ 0 := by positivity
-    field_simp; nlinarith [h5]
-  rw [e]
-  refine ⟨by linarith, by linarith, ?_, ?_⟩
-  · rw [lt_div_iff₀ (by norm_num)]; linarith
-  · rw [div_lt_iff₀ (by norm_num)]; linarith
 
 end PMFlavor.CPPhases

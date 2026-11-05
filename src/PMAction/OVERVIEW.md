@@ -142,4 +142,4 @@ projector with `P_L`; the flavour generator and mediator remain Paper IV inputs.
 
 ## Verification
 
-Run `./check.sh`. No Paper III–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.

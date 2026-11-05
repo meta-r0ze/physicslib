@@ -1,7 +1,7 @@
 # PMAction — open work (todo)
 
 Checked mathematics and the module map are in [`OVERVIEW.md`](OVERVIEW.md). This
-file is only what remains. Paper II builds clean; run `./check.sh` for current counts. Each item states the frontier: what is proved, and
+file is only what remains. Paper II builds clean; run `./build.sh PMAction` for current counts. Each item states the frontier: what is proved, and
 the physical or mathematical input still missing. Nothing here is a missing Lean
 *statement* hidden behind an extra hypothesis; each needs a model law or a new
 construction.
@@ -78,4 +78,4 @@ decay/phase-space; Paper VI cosmology. See [`OVERVIEW.md`](OVERVIEW.md).
 
 ## Verification
 
-Run `./check.sh`. No Paper III–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.

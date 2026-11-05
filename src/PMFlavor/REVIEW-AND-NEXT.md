@@ -102,12 +102,13 @@ proofs. They are separate from the open physics items above.
   inherits the reference deficit.
 * **Flavour formulas are ansätze.** `FlavourInvariants` proves the numerals
   downstream equal the supplied formulas evaluated on derived `ν, σ, χ, D`; it does
-  not derive the six functional forms. `no_measurement_input` is a definitional
-  `rfl` restatement, not evidence of derivation.
+  not derive the six functional forms.
+  `formula_definitions_use_no_measurement_literal` is a definitional `rfl`
+  restatement, not evidence of derivation.
 * **Measurement pulls are a leaf.** The PDG/NuFIT pulls and the first-row benchmark
-  live in `FlavourPulls`; derivation modules import `FlavourPostulates` instead.
-  Benchmark comparisons remain in `CPPhases`, `TriangleAngles`, and `TriangleGamma`;
-  they are not in the PMNS/CKM closure, and should stay out of future proofs.
+  live in `FlavourPulls`; the LHCb/PDG benchmark pulls now live in
+  `ExperimentalPulls`. Derivation modules import `FlavourPostulates`, not either
+  comparison leaf.
 
 ## Verification
 

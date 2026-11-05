@@ -3,7 +3,8 @@ import PMFlavor.CPPhases
 
 /-! The actual rephasing-invariant CKM triangle gamma, rather than the
 parametrization phase delta used as a proxy. All angle formulas remain inputs.
-No new premise from Papers I–III is needed. -/
+No new premise from Papers I–III is needed. The measured gamma pull lives in
+`PMFlavor.ExperimentalPulls`. -/
 noncomputable section
 namespace PMFlavor.TriangleGamma
 open Complex ComplexConjugate PMFlavor.CKM
@@ -181,17 +182,5 @@ theorem value_is_ratio : value=
   have hg := gamma_degrees.1
   rw [hz] at hg
   norm_num at hg
-
-/-- Fixed benchmark already used in CPPhases; this is the actual gamma pull,
-not the proxy delta pull. No new experimental input or likelihood is introduced. -/
-theorem gamma_pull :
-    1.27 < (value*180/Real.pi-64.6)/2.8 ∧
-    (value*180/Real.pi-64.6)/2.8 < 1.28 := by
-  have h := gamma_degrees
-  constructor
-  · apply (lt_div_iff₀ (by norm_num : 0<(2.8 : ℝ))).mpr
-    linarith [h.1]
-  · apply (div_lt_iff₀ (by norm_num : 0<(2.8 : ℝ))).mpr
-    linarith [h.2]
 
 end PMFlavor.TriangleGamma

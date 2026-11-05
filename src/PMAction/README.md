@@ -44,15 +44,15 @@ is sibling `PM/lean`. Keep these directories as siblings, then run:
 
 ```sh
 source ~/.elan/env
-./check.sh
+./build.sh PMAction
 ```
 
-`PM_ACTION_LAKE_BIN` can name a specific Lake executable. `check.sh` builds the
-default library, strictly audits project declarations and their transitive axioms,
+`LAKE_BIN` can name a specific Lake executable. `./build.sh PMAction` builds the
+default library; whole-tree axiom/import audits run with `./build.sh audit`.
 and rejects Paper III–VI imports. Only `propext`, `Classical.choice` and
 `Quot.sound` are permitted. A successful audit certifies the statements under their
 stated hypotheses; it does **not** select the physical inputs.
 
 ## Verification
 
-Run `./check.sh`. No Paper III–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.

@@ -133,15 +133,15 @@ theorem lepton_event_mixing {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) 
           GaugeGroupFactor.eventCoupling 2 (1 / 2) toll m (footprint - (PMSubstrate.E8Values.Delta : ℝ))) = clockRatio ∧
       clockRatio = 1849 / 8295 := by
   constructor
-  · have := event_mixing (r := 2) (κW := 1 / 2) (κY := 1 / 2) (by norm_num) ht hm
+  · have h := event_mixing (r := 2) (κW := 1 / 2) (κY := 1 / 2) (by norm_num) ht hm
       (by norm_num) (by norm_num)
-    simp only [Nat.cast_ofNat] at this
-    rw [this]
-    have h1 := traces_are_reference_indices
-    rw [show ReferenceCharge.refMixing (1 / 2) (1 / 2) = ReferenceCharge.refMixing
-        (GaugeReadoutWeights.weakIndex (ReferenceCharge.ref .L))
-        (GaugeReadoutWeights.hyperIndex (ReferenceCharge.ref .L)) by rw [h1.1, h1.2]]
-    exact ReferenceCharge.lepton_reference_mixing
+    have h2 : ReferenceCharge.refMixing (1 / 2) (1 / 2) = clockRatio := by
+      have h1 := traces_are_reference_indices
+      rw [show ReferenceCharge.refMixing (1 / 2) (1 / 2) = ReferenceCharge.refMixing
+          (GaugeReadoutWeights.weakIndex (ReferenceCharge.ref .L))
+          (GaugeReadoutWeights.hyperIndex (ReferenceCharge.ref .L)) by rw [h1.1, h1.2]]
+      exact ReferenceCharge.lepton_reference_mixing
+    exact h.trans h2
   · norm_num [clockRatio, footprint, overhead]
 
 end PMConstants.ReferenceStiffness

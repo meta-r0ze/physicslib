@@ -10,9 +10,8 @@ to `PMSubstrate.E8Values.Delta`.
 
 namespace PMAction
 
-abbrev Delta : ℕ := 43
+abbrev Delta : ℕ := PMSubstrate.E8Values.Delta
 
-theorem Delta_eq : Delta = PMSubstrate.E8Values.Delta := by
-  rw [PMSubstrate.E8Values.Delta_eq]
+theorem Delta_eq : Delta = PMSubstrate.E8Values.Delta := rfl
 
 end PMAction

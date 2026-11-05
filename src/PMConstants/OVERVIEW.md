@@ -7,7 +7,7 @@ dependencies are in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md).
 ## Entry points
 
 - `CurrentConstants.current_snapshot`: the current manuscript values.
-- `E8Values`: partition constants written from `D, Δ, ν, σ, χ, R_M` with equality bridges.
+- `Partition`: partition constants written directly from the E8 record.
 - `ElectroweakE8`: canonical electroweak constants written from the E8 record.
 - `FlavourDressing`: the per-direction reference deficit `1 − (1−η)/D = 687/688`.
 - `TableConsequences.end_to_end`: the weak fraction from the derived requirement table.
@@ -155,8 +155,8 @@ experimental uncertainties or a proof that the formulas follow from bare persist
 The supplied electron-mass benchmark is labelled as an external input, including
 its use by the GeV-valued outputs. The reporter does not infer an absolute scale.
 
-`./check.sh` also checks the reporter's Lean certificates, formatting fixtures,
-and an independent standard-library Python test of the compiled CLI and JSON.
+`./build.sh e8p` checks the compiled value reporter's Lean certificates,
+formatting fixtures, and an independent Python test of the CLI and JSON.
 The existing Python calculator remains available separately.
 
 All interval endpoints are exact rationals in Lean.

@@ -140,7 +140,7 @@ theorem sigma_minus_chi_eq : (sigma : ℝ) - chi = 3 := by norm_num
 /-- Definitional restatement: the six formulas are built from `π`, `α⁻¹`, `φ`
 and the derived invariants, with no measurement literal. The proof is all `rfl`;
 this records the definitions, not a derivation of the formulas. -/
-theorem no_measurement_input :
+theorem formula_definitions_use_no_measurement_literal :
     s12f = Real.pi / (nu - chi) ∧ s13f = 1 / (chi * CKM.αinv + Real.pi) ∧
       vcbf = (Real.pi + chi) / (CKM.αinv - D * Real.pi) ∧
         solarf = 1 / (2 * FlavourPulls.φ) ∧

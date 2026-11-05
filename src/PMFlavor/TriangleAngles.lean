@@ -10,9 +10,8 @@ The calculator's unitarity-triangle values are now checked in Lean from the same
   `s₁₂² s₂₃c₂₃ − c₁₂² c₂₃s₂₃ s₁₃² + c₁₂s₁₂s₁₃ cos δ (s₂₃² − c₂₃²)` and imaginary part
   `c₁₂s₁₂s₁₃ sin δ`. Since `V_cb* V_tb > 0`, `β = arg w`.
 * `sin_two_beta`: `sin 2β = 2 Re w Im w/|w|²` (`Complex.sin_arg`, `cos_arg`).
-* `sin2β_bounds`: `0.7019 < sin 2β < 0.7023` (calculator: `0.70215`). Against PDG's
-  `0.710 ± 0.011` (HFLAV evaluation) the pull is `−0.75` to `−0.69σ`; the paper cites
-  `0.699 ± 0.017`.
+* `sin2β_bounds`: `0.7019 < sin 2β < 0.7023` (calculator: `0.70215`). The benchmark
+  pull is in `PMFlavor.ExperimentalPulls`.
 -/
 
 noncomputable section
@@ -121,12 +120,6 @@ theorem sin2β_bounds : (0.7019 : ℝ) < sin2β ∧ sin2β < 0.7023 := by
   constructor
   · rw [lt_div_iff₀ hd]; nlinarith [mul_pos (by linarith : (0:ℝ) < re) (by linarith : (0:ℝ) < im)]
   · rw [div_lt_iff₀ hd]; nlinarith [mul_pos (by linarith : (0:ℝ) < re) (by linarith : (0:ℝ) < im)]
-
-theorem sin2β_pull : -0.75 < (sin2β - 0.710) / 0.011 ∧ (sin2β - 0.710) / 0.011 < -0.69 := by
-  obtain ⟨h1, h2⟩ := sin2β_bounds
-  constructor
-  · rw [lt_div_iff₀ (by norm_num)]; linarith
-  · rw [div_lt_iff₀ (by norm_num)]; linarith
 
 /-- **`sin2β` is `sin 2 arg w` for the geometric matrix.** -/
 theorem sin2β_is_angle :

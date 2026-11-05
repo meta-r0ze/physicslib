@@ -106,8 +106,9 @@ representation and extending it off the kernel remain inputs. The neutrino
 Dirac-survival result is conditional on the upstream
 flux/one-link hypercharge representation; the `Y_L` sign is an `e`/`ν` convention
 (`ReferenceLink.standard_or_conjugate`), not a physical choice. Measured PDG/NuFIT
-comparisons live in the `FlavourPulls` leaf and are not imported by the CKM/PMNS
-derivation modules; no measured number enters the derivation closure.
+comparisons live in the `FlavourPulls` and `ExperimentalPulls` leaves and are not
+imported by the CKM/PMNS derivation modules; no measured number enters the
+derivation closure.
 
 ## Downstream handoff
 

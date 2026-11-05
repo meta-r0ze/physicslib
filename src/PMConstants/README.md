@@ -11,9 +11,10 @@ Build: Lean 4.34.1, with siblings `PM/lean`, `PMSubstrate` and `PMAction`.
 
 ```sh
 source ~/.elan/env
-./check.sh
+./build.sh PMConstants
 ```
 
-The dependency direction is Paper I → Paper II → Paper III. Run Paper II's `check.sh`
-before this one. Only `propext`, `Classical.choice` and `Quot.sound` are permitted;
+The dependency direction is Paper I → Paper II → Paper III. Run
+`./build.sh PMAction` before this one. Only `propext`, `Classical.choice` and
+`Quot.sound` are permitted;
 no `sorry`, custom axioms or `native_decide`.

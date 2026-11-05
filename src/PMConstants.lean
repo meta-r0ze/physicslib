@@ -1,6 +1,5 @@
 import PMConstants.General
 import PMConstants.Partition
-import PMConstants.E8Values
 import PMConstants.FlavourDressing
 import PMConstants.Depth
 import PMConstants.ReviewChecks
