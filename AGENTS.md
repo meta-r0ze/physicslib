@@ -47,8 +47,20 @@ Each paper library has its own `README.md`, `OVERVIEW.md` and
 ./build.sh audit          # axiom + dependency audits only
 ./build.sh e8p            # build e8p + formatter/reporter checks
 ./build.sh PMAction       # one library
-./build.sh src/PMAction/LatticeSiteAction.lean   # one file
+./build.sh src/PMAction/LatticeSiteAction.lean   # one file (OLean)
 ```
+
+Fast inner loop while editing one proof:
+
+```sh
+./build.sh fast PMAtoms.TwoLedger
+./build.sh check src/PMAtoms/TwoLedger.lean
+./build.sh watch src/PMAtoms/TwoLedger.lean
+LEAN_JOBS=8 ./build.sh lean src/PMAtoms/TwoLedger.lean
+```
+
+`fast` builds only OLean artifacts (no C/ilean); `FAST_OLD=1` additionally
+skips transitive dependency checks when imports are unchanged.
 
 Under the hood this is one Lake package with one `.lake` cache. The e8p binary is
 `.lake/build/bin/e8p`.
