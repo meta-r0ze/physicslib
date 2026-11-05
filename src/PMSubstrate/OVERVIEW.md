@@ -68,6 +68,7 @@ Postulate I). See [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md) for the missing imp
 | `PMSubstrate/Clock`, `ClockPlane`, `DiscriminantGroup`, `Scheduling`, `Selection`, `ClassNumber`, `ScheduleReconstruction`, `ScheduleReconstructionField` | clock, schedule window (the no-adjacent-idle hypothesis of the older route is discharged from gap-only reconstruction in `ScheduleReconstruction`), class number one |
 | `PMSubstrate/SelfReadable`, `Parity`, `OrthogonalExchange`, `Sectors`, `Channels`, `ChannelSymmetry` | unimodularity, evenness, sectors, channels; the uniform channel measure from E8 symmetry |
 | `PMSubstrate/DerivedParameters`, `E8Invariants`, `CapacityBarbier`, `CapacityEnvelope`, `CauchyPolygon`, `CircleLength`, `Distinctions`, `Descartes`, `TollFilters`, `ClosureSymmetry`, `PersistenceEvents`, `PersistenceMaximin`, `PersistencePremises`, `FinalPremises`, `NetCost`, `NetIndex`, `Impedance*`, `ProtocolToll` | parameters and the six terms |
+| `PMSubstrate/E8Values.lean` | canonical E8 record names `D, Δ, ν, σ, χ, R_M, N`, the derived loads, and `overhead`; exported by the `PMSubstrate` root |
 | `PMSubstrate/Pillars`, `Comparison`, `PhysicalBridge` | PM failure modes, comparison with measurement, earlier bridge lemmas |
 | `PMSubstrate/Research/` | alternative routes, counterexamples and necessity tests (not on the main path) |
 | `../classification/` | vendored class-number-one proof (Peter W. Murphy, Apache-2.0) |

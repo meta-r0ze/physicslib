@@ -15,7 +15,7 @@ gives the enclosures its regression tests check.
 
 noncomputable section
 namespace PMConstants.StrongLedgerBounds
-open PMConstants CertifiedConstants Electroweak GaugeSpectrum ElectroweakBounds ColourChannels
+open PMConstants CertifiedConstants ElectroweakE8 GaugeSpectrum ElectroweakBounds ColourChannels
 
 def ledgerStrong : ℝ := α * footprint / colourLedger
 

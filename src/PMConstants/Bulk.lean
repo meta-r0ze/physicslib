@@ -1,4 +1,5 @@
 import PMConstants.Depth
+import PMSubstrate.E8Values
 import Mathlib.Tactic
 
 /-!
@@ -38,19 +39,23 @@ theorem half_step_unique {p q : ℝ} (_hp : 0 ≤ p) (hq : 0 ≤ q) (hsq : q^2 =
   rw [hsq] at h
   exact h.symm
 
-def halfDepth (p : ℝ) : ℝ := (Real.sqrt p)^43
+def halfDepth (p : ℝ) : ℝ := (Real.sqrt p)^PMSubstrate.E8Values.Delta
 
-theorem half_depth_squared {p : ℝ} (hp : 0 ≤ p) : (halfDepth p)^2 = p^43 := by
+theorem half_depth_squared {p : ℝ} (hp : 0 ≤ p) : (halfDepth p)^2 = p^PMSubstrate.E8Values.Delta := by
   unfold halfDepth
-  rw [← pow_mul, Nat.mul_comm 43 2, pow_mul, Real.sq_sqrt hp]
+  rw [← pow_mul, Nat.mul_comm PMSubstrate.E8Values.Delta 2, pow_mul, Real.sq_sqrt hp]
 
-def floorRatio (α : ℝ) : ℝ := Real.pi * α / (16 * 43^3)
+def floorRatio (α : ℝ) : ℝ := Real.pi * α /
+  ((PMSubstrate.E8Values.nu : ℝ) * (PMSubstrate.E8Values.Delta : ℝ)^3)
 def floorMass (α me : ℝ) : ℝ := me * floorRatio α
 def vacuumDensity (α me : ℝ) : ℝ := α/2 * (floorMass α me)^4
 
 theorem thermal_positive {α me : ℝ} (hα : 0 < α) (hme : 0 < me) :
     0 < floorMass α me ∧ 0 < vacuumDensity α me := by
-  have hf : 0 < floorRatio α := by unfold floorRatio; positivity
+  have hf : 0 < floorRatio α := by
+    unfold floorRatio
+    rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.Delta_eq]
+    positivity
   have hm : 0 < floorMass α me := mul_pos hme hf
   exact ⟨hm, mul_pos (by linarith) (pow_pos hm 4)⟩
 
@@ -81,6 +86,8 @@ theorem inverse_floor_planck_ratio {α me g : ℝ} (hα : α ≠ 0) (hme : me �
   have hp : Real.pi ≠ 0 := Real.pi_pos.ne'
   have hs : Real.sqrt g ≠ 0 := (Real.sqrt_pos.mpr hg).ne'
   unfold Depth.planck floorMass floorRatio
+  rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.Delta_eq]
   field_simp
+  norm_num
 
 end PMConstants.Bulk

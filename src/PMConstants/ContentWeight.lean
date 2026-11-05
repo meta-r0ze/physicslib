@@ -31,13 +31,15 @@ noncomputable section
 namespace PMConstants.ContentWeight
 open PMConstants CertifiedConstants StrongLedgerTest
 
-def footprintW (w : ℝ) : ℝ := 172 + 16 * w + 5
+def footprintW (w : ℝ) : ℝ := (PMSubstrate.E8Values.RM : ℝ) +
+  (PMSubstrate.E8Values.nu : ℝ) * w + (PMSubstrate.E8Values.sigma : ℝ)
 def colourW (w : ℝ) : ℝ := 12 * w
 
 theorem ledgers_share_weight :
     footprintW overhead = footprint ∧ colourW overhead = ColourChannels.colourLedger := by
   constructor
-  · unfold footprintW footprint; ring
+  · unfold footprintW footprint
+    rw [PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
   · unfold colourW ColourChannels.colourLedger; ring
 
 theorem extensive_w_mass {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :

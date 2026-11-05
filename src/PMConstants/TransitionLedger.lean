@@ -79,7 +79,8 @@ theorem unit_ledger_lower_bound (address payload bus : ℕ)
   have hp : (1 : ℝ) ≤ payload := by exact_mod_cast hP
   have hb : (1 : ℝ) ≤ bus := by exact_mod_cast hB
   rw [expected_ledger, mean_workload]
-  norm_num only [footprint, overhead, one_mul]
+  norm_num [footprint, overhead, one_mul, PMSubstrate.E8Values.RM_eq,
+    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
   linarith
 
 /-- Attaining the lower bound forces all three operation lengths to be one. -/

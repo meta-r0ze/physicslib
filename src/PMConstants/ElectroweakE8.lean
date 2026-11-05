@@ -1,4 +1,5 @@
 import PMConstants.Partition
+import PMSubstrate.E8Values
 import Mathlib.Analysis.Real.Sqrt
 
 /-!
@@ -11,14 +12,26 @@ allocation laws remain physical obligations, separate from their consequences.
 -/
 
 noncomputable section
-namespace PMConstants.Electroweak
+namespace PMConstants.ElectroweakE8
 
-def bareYukawa : ℝ := 1 / (31 * 6 * 43^2)
-def electronYukawa (α : ℝ) : ℝ := bareYukawa * (1 + 5/4 * α)
-def effectiveDimension : ℝ := 4 + 2 / (4 * Real.pi)
+def bareYukawa : ℝ :=
+  1 / ((PMSubstrate.E8Values.embeddingLoad : ℝ) *
+    ((PMSubstrate.E8Values.D : ℝ) + (PMSubstrate.E8Values.chi : ℝ)) *
+      (PMSubstrate.E8Values.Delta : ℝ)^2)
+def electronYukawa (α : ℝ) : ℝ :=
+  bareYukawa * (1 + ((PMSubstrate.E8Values.sigma : ℝ) /
+    (PMSubstrate.E8Values.D : ℝ)) * α)
+def effectiveDimension : ℝ :=
+  (PMSubstrate.E8Values.D : ℝ) +
+    (PMSubstrate.E8Values.chi : ℝ) /
+      ((PMSubstrate.E8Values.D : ℝ) * Real.pi)
 def vevRatio (α : ℝ) : ℝ :=
-  (2 * 43^2 - (16 + 4 * 43)) / α *
-    (1 + α / effectiveDimension) * (1 - bareYukawa / 3)
+  (((PMSubstrate.E8Values.chi : ℝ) * (PMSubstrate.E8Values.Delta : ℝ)^2 -
+      ((PMSubstrate.E8Values.nu : ℝ) +
+        (PMSubstrate.E8Values.D : ℝ) * (PMSubstrate.E8Values.Delta : ℝ))) / α) *
+    (1 + α / effectiveDimension) *
+      (1 - bareYukawa /
+        ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)))
 def vev (α me : ℝ) : ℝ := vevRatio α * me
 def higgsMass (α me : ℝ) : ℝ := Real.sqrt (2 * selfCoupling) * vev α me
 def fermi (α me : ℝ) : ℝ := 1 / (Real.sqrt 2 * (vev α me)^2)
@@ -29,15 +42,31 @@ def strongSquared (α : ℝ) : ℝ := 4 * Real.pi * strongCoupling α
 theorem exact_counts :
     2 * 43^2 - (16 + 4 * 43) = (3510 : ℕ) ∧
       bareYukawa = 1/343914 ∧ 0 < bareYukawa ∧ bareYukawa < 1 := by
-  norm_num [bareYukawa]
+  unfold bareYukawa
+  rw [PMSubstrate.E8Values.embeddingLoad_eq, PMSubstrate.E8Values.D_eq,
+    PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.Delta_eq]
+  norm_num
 
 theorem effective_dimension_pos : 0 < effectiveDimension := by
   unfold effectiveDimension
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.chi_eq]
   positivity
 
 theorem ratio_pos {α : ℝ} (hα : 0 < α) : 0 < vevRatio α := by
-  have hb : 0 < 1 - bareYukawa / 3 := by linarith [exact_counts.2.2.2]
-  have hd := effective_dimension_pos
+  have hd : (0 : ℝ) < (PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ) := by
+    rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
+    norm_num
+  have hd3 : ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) = 3 := by
+    rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
+    norm_num
+  have hb : 0 < 1 - bareYukawa /
+      ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) := by
+    have hlt : bareYukawa /
+        ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) < 1 := by
+      rw [div_lt_one hd, hd3]
+      linarith [exact_counts.2.2.2]
+    linarith
+  have hdim := effective_dimension_pos
   unfold vevRatio
   have hnum : (0 : ℝ) < 2 * 43^2 - (16 + 4 * 43) := by norm_num
   exact mul_pos (mul_pos (div_pos hnum hα) (by positivity)) hb
@@ -50,6 +79,7 @@ theorem constants_positive {α me : ℝ} (hα : 0 < α) (hme : 0 < me) :
   have hw := clock_ratio_bounds
   have hs : 0 < strongCoupling α := by
     unfold strongCoupling
+    rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
     exact mul_pos (by linarith [overhead_bounds.1]) hα
   refine ⟨?_, hv, ?_, ?_, ?_, ?_, ?_⟩
   · unfold electronYukawa; exact mul_pos exact_counts.2.2.1 (by positivity)
@@ -94,7 +124,8 @@ theorem mass_scale_covariance (α me c : ℝ) :
 
 /-- Neither side of the manuscript's Higgs/aperture match contains the VEV. -/
 def interfaceMatch (_v : ℝ) : Prop :=
-  Real.exp (-2 * selfCoupling) / selfCoupling = 6 * overhead
+  Real.exp (-2 * selfCoupling) / selfCoupling =
+    ((PMSubstrate.E8Values.D : ℝ) + (PMSubstrate.E8Values.chi : ℝ)) * overhead
 
 theorem interface_match_cannot_select_scale (v w : ℝ) :
     interfaceMatch v ↔ interfaceMatch w := Iff.rfl
@@ -112,4 +143,4 @@ theorem electron_mass_closure {α me : ℝ} (hme : me ≠ 0) :
       (electronYukawa α * vevRatio α) * me = Real.sqrt 2 * me))
   · intro h; rw [← mul_assoc, h, mul_comm]
 
-end PMConstants.Electroweak
+end PMConstants.ElectroweakE8

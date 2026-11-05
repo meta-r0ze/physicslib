@@ -63,6 +63,7 @@ theorem unit_workload (t : Trial) : workload 1 1 1 t = if t = 0 then 177 else 19
 theorem unit_footprint : meanWorkload 1 1 1 = footprint := by
   rw [mean_workload]
   unfold footprint
+  rw [PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
   ring
 
 /-- The coefficient selected by counting all clock work against all work. -/

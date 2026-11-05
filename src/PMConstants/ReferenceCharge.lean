@@ -54,7 +54,10 @@ theorem equal_response_iff (t : Ty) :
   cases t <;> norm_num [weakIndex, hyperIndex, ref]
 
 /-- Weak fraction with reference indices `I_W, I_Y` multiplying the ledgers. -/
-def refMixing (IW IY : ℝ) : ℝ := IW * 43 / (IW * 43 + IY * (footprint - 43))
+def refMixing (IW IY : ℝ) : ℝ :=
+  IW * (PMSubstrate.E8Values.Delta : ℝ) /
+    (IW * (PMSubstrate.E8Values.Delta : ℝ) +
+      IY * (footprint - (PMSubstrate.E8Values.Delta : ℝ)))
 
 /-- **The lepton-doublet reference gives the manuscript value.** -/
 theorem lepton_reference_mixing :

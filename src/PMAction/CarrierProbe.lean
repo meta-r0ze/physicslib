@@ -1,4 +1,5 @@
 import PMAction.CarrierReferenceCycle
+import PMAction.ClockPeriod
 
 /-!
 # Operational readout requires coupling, not a carrier excursion
@@ -31,7 +32,7 @@ def ReadsBit (c : Fin 3) (F : State c → State c) : Prop :=
   ∀ v : Carrier c, (F (v,0)).2 = if bit v then 1 else 0
 
 def Uncoupled (c : Fin 3) (F : State c → State c) : Prop :=
-  ∀ (u v : Carrier c) (t : Fin 43), (F (u,t)).2 = (F (v,t)).2
+  ∀ (u v : Carrier c) (t : Fin Delta), (F (u,t)).2 = (F (v,t)).2
 
 theorem readout_requires_coupling (c : Fin 3) (F : State c → State c)
     (hread : ReadsBit c F) : ¬ Uncoupled c F := by
@@ -52,21 +53,21 @@ theorem readout_requires_probe_motion (c : Fin 3) (F : State c → State c)
   rw [hread v]
   simp [hv]
 
-theorem cycle_phase_iterate (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) (n : ℕ) :
-    ((tick c mask)^[n] s).2 = (finRotate 43)^[n] s.2 := by
+theorem cycle_phase_iterate (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) (n : ℕ) :
+    ((tick c mask)^[n] s).2 = (finRotate Delta)^[n] s.2 := by
   induction n with
   | zero => rfl
   | succ n ih =>
     rw [Function.iterate_succ_apply', phase_advances, ih, Function.iterate_succ_apply']
 
-theorem cycle_uncoupled (c : Fin 3) (mask : Fin 43 → Bool) (n : ℕ) :
+theorem cycle_uncoupled (c : Fin 3) (mask : Fin Delta → Bool) (n : ℕ) :
     Uncoupled c ((tick c mask)^[n]) := by
   intro u v t
   rw [cycle_phase_iterate, cycle_phase_iterate]
 
 /-- No time in this clock-only observation history reads the carrier bit.
 This does not say a separate observation of the carrier cannot distinguish it. -/
-theorem cycle_does_not_read (c : Fin 3) (mask : Fin 43 → Bool) (n : ℕ) :
+theorem cycle_does_not_read (c : Fin 3) (mask : Fin Delta → Bool) (n : ℕ) :
     ¬ ReadsBit c ((tick c mask)^[n]) := by
   intro h
   exact readout_requires_coupling c _ h (cycle_uncoupled c mask n)
@@ -74,14 +75,14 @@ theorem cycle_does_not_read (c : Fin 3) (mask : Fin 43 → Bool) (n : ℕ) :
 /-- A nondemolition finite probe: shift its phase conditionally on the bit.
 It is a reversible register coupling; no physical elementary gate cost is claimed. -/
 def probe (c : Fin 3) : Equiv.Perm (State c) where
-  toFun s := (s.1, if bit s.1 then finRotate 43 s.2 else s.2)
-  invFun s := (s.1, if bit s.1 then (finRotate 43).symm s.2 else s.2)
+  toFun s := (s.1, if bit s.1 then finRotate Delta s.2 else s.2)
+  invFun s := (s.1, if bit s.1 then (finRotate Delta).symm s.2 else s.2)
   left_inv s := by cases hb : bit s.1 <;> simp [hb]
   right_inv s := by cases hb : bit s.1 <;> simp [hb]
 
 theorem probe_reads (c : Fin 3) : ReadsBit c (probe c) := by
   intro v
-  change (if bit v then finRotate 43 0 else 0) = _
+  change (if bit v then finRotate Delta 0 else 0) = _
   simp
 
 theorem probe_preserves_carrier (c : Fin 3) (s : State c) : (probe c s).1 = s.1 := rfl

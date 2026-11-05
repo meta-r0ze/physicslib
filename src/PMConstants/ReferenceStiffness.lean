@@ -112,13 +112,15 @@ theorem lepton_weak_limit {A : V → V →L[ℝ] Matrix (Fin 2) (Fin 2) ℂ}
 /-- **Mixing from event-priced reference couplings.** -/
 theorem event_mixing {r : ℕ} {toll κW κY : ℝ} {m : ℕ} (hr : 0 < r) (ht : 0 < toll) (hm : 0 < m)
     (hW : 0 < κW) (hY : 0 < κY) :
-    GaugeGroupFactor.eventCoupling r κY toll m (footprint - 43) /
-        (GaugeGroupFactor.eventCoupling r κW toll m 43 +
-          GaugeGroupFactor.eventCoupling r κY toll m (footprint - 43)) =
+    GaugeGroupFactor.eventCoupling r κY toll m (footprint - (PMSubstrate.E8Values.Delta : ℝ)) /
+        (GaugeGroupFactor.eventCoupling r κW toll m (PMSubstrate.E8Values.Delta : ℝ) +
+          GaugeGroupFactor.eventCoupling r κY toll m (footprint - (PMSubstrate.E8Values.Delta : ℝ))) =
       ReferenceCharge.refMixing κW κY := by
   have hm' : (0 : ℝ) < m := by exact_mod_cast hm
   have hr' : (0 : ℝ) < r := by exact_mod_cast hr
-  have hf : (0 : ℝ) < footprint - 43 := by norm_num [footprint, overhead]
+  have hf : (0 : ℝ) < footprint - (PMSubstrate.E8Values.Delta : ℝ) := by
+    rw [PMSubstrate.E8Values.Delta_eq]
+    norm_num [footprint, overhead]
   simp only [GaugeGroupFactor.eventCoupling, ReferenceCharge.refMixing]
   field_simp
   ring
@@ -126,9 +128,9 @@ theorem event_mixing {r : ℕ} {toll κW κY : ℝ} {m : ℕ} (hr : 0 < r) (ht :
 /-- **The lepton-doublet reference gives the manuscript weak fraction from the continuum
 chain.** Both refreshes read the doublet (`κ_W = κ_Y = 1/2`, the doublet traces above). -/
 theorem lepton_event_mixing {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
-    GaugeGroupFactor.eventCoupling 2 (1 / 2) toll m (footprint - 43) /
-        (GaugeGroupFactor.eventCoupling 2 (1 / 2) toll m 43 +
-          GaugeGroupFactor.eventCoupling 2 (1 / 2) toll m (footprint - 43)) = clockRatio ∧
+    GaugeGroupFactor.eventCoupling 2 (1 / 2) toll m (footprint - (PMSubstrate.E8Values.Delta : ℝ)) /
+        (GaugeGroupFactor.eventCoupling 2 (1 / 2) toll m (PMSubstrate.E8Values.Delta : ℝ) +
+          GaugeGroupFactor.eventCoupling 2 (1 / 2) toll m (footprint - (PMSubstrate.E8Values.Delta : ℝ))) = clockRatio ∧
       clockRatio = 1849 / 8295 := by
   constructor
   · have := event_mixing (r := 2) (κW := 1 / 2) (κY := 1 / 2) (by norm_num) ht hm

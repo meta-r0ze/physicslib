@@ -7,6 +7,9 @@ dependencies are in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md).
 ## Entry points
 
 - `CurrentConstants.current_snapshot`: the current manuscript values.
+- `E8Values`: partition constants written from `D, Δ, ν, σ, χ, R_M` with equality bridges.
+- `ElectroweakE8`: canonical electroweak constants written from the E8 record.
+- `FlavourDressing`: the per-direction reference deficit `1 − (1−η)/D = 687/688`.
 - `TableConsequences.end_to_end`: the weak fraction from the derived requirement table.
 - `ChainCouplings.chain_couplings`: all three couplings from Paper II's D₄ gauge action.
 - `SectorObligations`: the reference/update contract (exact refresh, weak ownership, colour reads).
@@ -182,7 +185,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `Interface` | Exact versions of reversible remainder storage and a chosen real impedance |
 | `Hypercharge` | Charge selection from specified conservation and coupling constraints |
 | `Allocation` | What allocation equations select, and what finiteness does not select |
-| `Electroweak` | The proposed electroweak constants and their dependency graph |
+| `ElectroweakE8` | The proposed electroweak constants in E8 notation and their dependency graph |
 | `Bulk` | Bulk propagation and the thermal floor |
 | `Matching` | Exact interface matching is distinct from a small mismatch. Its unique |
 | `CertifiedConstants` | Certified geometric values inherited from Paper I. Decimal endpoints are |

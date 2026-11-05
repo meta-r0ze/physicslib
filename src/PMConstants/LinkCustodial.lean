@@ -31,7 +31,7 @@ numerical size the non-leading remainder must have.
 
 noncomputable section
 namespace PMConstants.LinkCustodial
-open PMConstants Electroweak CertifiedConstants JointConstants GaugeSpectrum ElectroweakBounds
+open PMConstants ElectroweakE8 CertifiedConstants JointConstants GaugeSpectrum ElectroweakBounds
 
 /-! ## `k` is the on-shell `Δr` -/
 

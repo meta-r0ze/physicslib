@@ -70,7 +70,9 @@ theorem colour_value : ledger reqColour = ColourChannels.colourLedger := by
   norm_num [ColourChannels.colourLedger]
 
 theorem footprint_from_rule : ledger reqSU2 + ledger reqY = footprint := by
-  rw [su2_value, hyper_value]; unfold footprint; ring
+  rw [su2_value, hyper_value]; unfold footprint
+  rw [PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
+  ring
 
 theorem mixing_from_rule : ledger reqSU2 / (ledger reqSU2 + ledger reqY) = clockRatio := by
   rw [footprint_from_rule, su2_value]; rfl

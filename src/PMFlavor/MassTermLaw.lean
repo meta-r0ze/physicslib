@@ -10,8 +10,15 @@ import PMConstants.SectorObligations
 Review item 4 asks for exclusions from an actual mass-term law. Paper III's law: a mass bilinear
 is hypercharge neutral after `a` doublet and `b` conjugate insertions, and each insertion is one
 priced read of the vacuum (`VevEntry.economy_one_insertion`). Paper II derives Economy and positive
-prices from persistence (`PersistenceSelection`). Charges are Paper III's forced ones
-(`Hypercharge.standard`, doubled convention): `Y_L = −1`, `Y_ν = 0`, `Y_e = −2`, so `Y_H = 1`.
+prices from persistence (`PersistenceSelection`). Charges are the supplied Paper III
+representation (`Hypercharge.standard`, doubled convention): `Y_L = −1`, `Y_ν = 0`,
+`Y_e = −2`, so `Y_H = 1`. `PMConstants.Hypercharge` is explicit that the
+representation content and charge normalization are hypotheses, not rank-derived.
+Upstream `PMConstants.ReferenceLink.standard_or_conjugate` shows the sign of `Y_L` is
+an `e`/`ν` labeling convention: with flux, one unit link and `|Y_L| = 1`, the charges
+are either the standard assignment (ν neutral) or its conjugate (e neutral). This
+module uses the ν-neutral branch; the remaining inputs are the representation/flux
+content and the unit-link premise.
 
 * `dirac_one`: the Dirac term `L̄ ν_R` (total `+1`) needs at least one insertion, and one suffices.
 * `weinberg_even`: the active Majorana term `L L` (total `−2`) needs an even number, at least two.
@@ -34,7 +41,8 @@ prices from persistence (`PersistenceSelection`). Charges are Paper III's forced
   restriction forbids lepton–colour (proton-decay) root events.
 
 Scope: the carrier–channel identification (`CarrierRepresentation`, axis `0` is the lepton axis),
-the one-insertion pricing law and the reference/repair contract are application inputs. In
+the one-insertion pricing law, the reference/repair contract, and the Paper III hypercharge
+representation/normalization (`Hypercharge` header) are application inputs. In
 particular, `allowed_roots_conserve_axis` assumes the root avoids axis `0`; it does not derive
 that restriction for every physical update. The reference argument below is for isolated carrier
 reflections with the stated gauge repair, not arbitrary coherent updates or composite protocols.

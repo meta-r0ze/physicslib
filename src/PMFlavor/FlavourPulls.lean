@@ -1,10 +1,12 @@
 import PMConstants.TableConsequences
 import PMSubstrate.Impedance
-import Mathlib.Analysis.Real.Pi.Bounds
+import PMFlavor.FlavourPostulates
 
 /-!
 # Paper IV's mixing formulas against PDG 2024 and NuFIT 6.0, and the shared weak mixing
 
+This is the **measurement-comparison leaf**. The CKM/PMNS derivation modules import
+`FlavourPostulates` (the `φ` postulate and numerical enclosures), not this file.
 `α⁻¹` is Paper I's derived `geometricIndex`; `φ = (1 + √5)/2`.
 
 **CKM** (PDG 2024):
@@ -31,10 +33,6 @@ def s12 : ℝ := Real.pi / 14
 def s13 : ℝ := 1 / (2 * αinv + Real.pi)
 def vus : ℝ := s12 * Real.sqrt (1 - s13 ^ 2)
 def vcb : ℝ := (Real.pi + 2) / (αinv - 4 * Real.pi)
-def φ : ℝ := (1 + Real.sqrt 5) / 2
-
-lemma pi_b : (3.14159265358979 : ℝ) < Real.pi ∧ Real.pi < 3.1415926535898 :=
-  ⟨by linarith [Real.pi_gt_d20], by linarith [Real.pi_lt_d20]⟩
 lemma g_b : (137.035999212 : ℝ) < αinv ∧ αinv < 137.035999213 := by
   have h := geometricIndex_bounds; constructor <;> unfold αinv <;> linarith [h.1, h.2]
 
@@ -72,11 +70,6 @@ theorem vub_pull : -1.1 < (s13 - 0.00382) / 0.0002 ∧ (s13 - 0.00382) / 0.0002 
   · rw [lt_div_iff₀ (by norm_num)]; linarith
   · rw [div_lt_iff₀ (by norm_num)]; linarith
 
-lemma sqrt5_b : (2.2360679 : ℝ) < Real.sqrt 5 ∧ Real.sqrt 5 < 2.2360680 := by
-  have h := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  have hn := Real.sqrt_nonneg 5
-  constructor <;> nlinarith
-
 theorem solar_pull : |(1 / (2 * φ) - 0.304) / 0.012| < 0.5 := by
   have h := sqrt5_b
   have hd : 0 < 2 * φ := by unfold φ; positivity
@@ -101,6 +94,14 @@ theorem reactor_pull : |((5 - 2) / αinv - 0.02225) / 0.00056| < 0.7 := by
   · rw [lt_div_iff₀ (by norm_num)]; linarith
   · rw [div_lt_iff₀ (by norm_num)]; linarith
 
+/-- Measured first-row sum `0.9984 ± 0.0007` against the two hypotheses. This is
+a benchmark comparison, not an input to any derivation. -/
+theorem first_row_deficit_test :
+    |(1 - 1/688 : ℝ) - 0.9984| / 0.0007 < 0.22 ∧ 2.28 < |(1 : ℝ) - 0.9984| / 0.0007 := by
+  constructor
+  · rw [abs_of_pos (by norm_num)]; norm_num
+  · rw [abs_of_pos (by norm_num)]; norm_num
+
 /-- **Paper IV's weak mixing is Paper III's.** -/
 theorem weak_mixing_shared :
     (43 : ℝ) / (4 * 43 + 3 * Real.pi * PMConstants.overhead / (2 * s12) + (1 - PMConstants.overhead) * 5) =
@@ -108,6 +109,8 @@ theorem weak_mixing_shared :
   have hp : Real.pi ≠ 0 := Real.pi_ne_zero
   refine ⟨?_, by norm_num [PMConstants.clockRatio, PMConstants.footprint, PMConstants.overhead]⟩
   unfold PMConstants.clockRatio PMConstants.footprint s12
+  rw [PMSubstrate.E8Values.Delta_eq, PMSubstrate.E8Values.RM_eq,
+    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
   congr 1
   field_simp
   ring

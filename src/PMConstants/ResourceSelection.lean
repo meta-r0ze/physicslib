@@ -66,7 +66,9 @@ theorem weak_forced (p : Process) : p.service 0 / (∑ i, p.service i) = clockRa
   have h := SteadyAllocation.persistent_clock_share (payloadFraction p.reserved)
     p.rate p.service p.backlog p.bound p.positiveRate.ne' p.update p.persistent
   rw [reference_forced p] at h
-  simpa only [clockRatio, footprint] using h
+  simpa [clockRatio, footprint, overhead, PMSubstrate.E8Values.Delta_eq,
+    PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.nu_eq,
+    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.overhead_eq] using h
 
 /-- The process discharges each of the earlier bare allocation equations. -/
 theorem process_compatible (p : Process) (α : ℝ) : Allocation.Compatible α (values p α) := by

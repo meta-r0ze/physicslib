@@ -1,6 +1,5 @@
 import PMFlavor.CKMDressing
-import PMFlavor.FlavourPulls
-import PMFlavor.CPPhases
+import PMFlavor.FlavourPostulates
 
 /-! The complete proposed Dirac-PMNS matrix, not only its four input numbers.
 The three angles are supplied formulas. The phase is not: it is fixed by the

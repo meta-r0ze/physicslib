@@ -29,6 +29,7 @@ theorem floor_bounds : 0.009208 < Bulk.floorMass α meEV ∧ Bulk.floorMass α m
   have ha := alpha_bounds
   have hp1 := Real.pi_gt_d6; have hp2 := Real.pi_lt_d6
   unfold Bulk.floorMass Bulk.floorRatio meEV
+  rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.Delta_eq]
   constructor <;> nlinarith [mul_pos (by linarith : (0:ℝ) < Real.pi) (by linarith : (0:ℝ) < α)]
 
 theorem tower_sum :
@@ -46,7 +47,7 @@ theorem oscillation_excludes (n : ℕ) :
   nlinarith [h.2]
 
 /-- A common response scale, including the proposed factor six. -/
-def towerMass (base scale : ℝ) (n : ℕ) : ℝ := scale*base/43^n
+def towerMass (base scale : ℝ) (n : ℕ) : ℝ := scale*base/(PMSubstrate.E8Values.Delta : ℝ)^n
 
 def smallGap (base scale : ℝ) : ℝ := (towerMass base scale 1)^2-(towerMass base scale 2)^2
 def largeGap (base scale : ℝ) : ℝ := (towerMass base scale 0)^2-(towerMass base scale 1)^2

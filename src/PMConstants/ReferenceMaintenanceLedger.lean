@@ -88,6 +88,7 @@ theorem alternative_same_total :
   refine ⟨canonical_restores _, canonical_restores _, ?_, ?_⟩
   · rw [alternative_weak_price, alternative_hyper_price]
     unfold footprint
+    rw [PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
     ring
   · rw [alternative_weak_price, su2_value]
     norm_num

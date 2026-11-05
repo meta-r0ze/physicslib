@@ -38,7 +38,7 @@ written as the formula times the ratio of correction factors.
 
 noncomputable section
 namespace PMConstants.VevCorrections
-open PMConstants Electroweak CertifiedConstants ElectroweakBounds
+open PMConstants ElectroweakE8 CertifiedConstants ElectroweakBounds
 
 def V : ℝ := vev α electronGeV
 def Y : ℝ := bareYukawa
@@ -46,7 +46,11 @@ def x : ℝ := α / effectiveDimension
 
 lemma V_bounds : (246.2196378 : ℝ) < V ∧ V < 246.2196379 := vev_bounds
 
-lemma Y_val : Y = 1 / (31 * 6 * 43 ^ 2) := rfl
+lemma Y_val : Y = 1 / (31 * 6 * 43 ^ 2) := by
+  unfold Y bareYukawa
+  rw [PMSubstrate.E8Values.embeddingLoad_eq, PMSubstrate.E8Values.D_eq,
+    PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.Delta_eq]
+  norm_num
 
 lemma x_bounds : (0.0017545277 : ℝ) < x ∧ x < 0.0017545279 := by
   have ha := alpha_bounds
@@ -179,8 +183,12 @@ theorem boundary_unique (a b : ℕ) (hb : 0 < b) (hb2 : b ≤ 200) :
       field_simp; ring
     have hv := V_bounds
     have hx := x_bounds
+    have hdim : effectiveDimension = 4 + 2 / (4 * Real.pi) := by
+      unfold effectiveDimension
+      rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.chi_eq]
+      norm_num
     unfold withDimension
-    rw [hab', ← effectiveDimension]
+    rw [hab', ← hdim]
     have : α / effectiveDimension = x := rfl
     rw [this, mul_div_assoc, div_self (by linarith), mul_one]
     constructor <;> linarith

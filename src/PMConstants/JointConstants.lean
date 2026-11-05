@@ -10,7 +10,7 @@ coefficient is fitted and no measured quantity is inferred from this arithmetic.
 -/
 noncomputable section
 namespace PMConstants.JointConstants
-open Electroweak CertifiedConstants
+open ElectroweakE8 CertifiedConstants
 
 theorem product_bounds {x y a b c d : ℝ}
     (ha : 0 < a) (hc : 0 < c) (hx : a < x ∧ x < b) (hy : c < y ∧ y < d) :
@@ -27,6 +27,7 @@ theorem inverse_effective_dimension :
   have hp := Real.pi_pos
   have hd := effective_dimension_pos
   unfold effectiveDimension at *
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.chi_eq] at *
   field_simp
   ring
 
@@ -42,11 +43,18 @@ theorem inverse_dimension_bounds :
     nlinarith [Real.pi_lt_d20]
 
 theorem vev_reduced {a : ℝ} (ha : a ≠ 0) :
-    vevRatio a = 3510 * (1/a + 1/effectiveDimension) * (1-bareYukawa/3) := by
+    vevRatio a = 3510 * (1/a + 1/effectiveDimension) *
+      (1 - bareYukawa / ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ))) := by
   have hd := effective_dimension_pos.ne'
   unfold vevRatio
-  rw [show (2*43^2-(16+4*43) : ℝ) = 3510 by norm_num]
-  apply congrArg (fun z : ℝ => z*(1-bareYukawa/3))
+  rw [show ((PMSubstrate.E8Values.chi : ℝ) * (PMSubstrate.E8Values.Delta : ℝ)^2 -
+      ((PMSubstrate.E8Values.nu : ℝ) + (PMSubstrate.E8Values.D : ℝ) *
+        (PMSubstrate.E8Values.Delta : ℝ))) = 3510 by
+    rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.Delta_eq,
+      PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
+    norm_num]
+  apply congrArg (fun z : ℝ => z * (1 - bareYukawa /
+    ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ))))
   field_simp [ha, hd]
  
 

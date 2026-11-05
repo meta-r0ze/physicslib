@@ -1,4 +1,4 @@
-import PMConstants.Electroweak
+import PMConstants.ElectroweakE8
 import PMConstants.Allocation
 import PMConstants.Hypercharge
 
@@ -39,10 +39,10 @@ theorem scalar_bounds :
   norm_num [selfCoupling]
 
 theorem electron_yukawa_bounds :
-    (0.000002934226843 : ℝ) < Electroweak.electronYukawa α ∧
-      Electroweak.electronYukawa α < 0.000002934226844 := by
+    (0.000002934226843 : ℝ) < ElectroweakE8.electronYukawa α ∧
+      ElectroweakE8.electronYukawa α < 0.000002934226844 := by
   obtain ⟨hl, hu⟩ := alpha_bounds
-  norm_num [Electroweak.electronYukawa, Electroweak.bareYukawa]
+  norm_num [ElectroweakE8.electronYukawa, ElectroweakE8.bareYukawa]
   constructor <;> linarith
 
 /-- The proposed constants follow from the stated balance equations. The

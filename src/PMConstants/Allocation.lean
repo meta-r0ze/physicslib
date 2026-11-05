@@ -27,7 +27,9 @@ structure Compatible (α : ℝ) (v : Values) : Prop where
 theorem allocation_forced (α : ℝ) (v : Values) (h : Compatible α v) :
     v.η = overhead ∧ v.strong = strongCoupling α ∧
       v.weak = clockRatio ∧ v.scalar = selfCoupling := by
-  have ho : v.η = overhead := by dsimp [overhead]; linarith [h.origin]
+  have ho : v.η = overhead := by
+    norm_num [overhead]
+    linarith [h.origin]
   refine ⟨ho, ?_, ?_, ?_⟩
   · simpa [strongCoupling, ho] using h.saturation
   · have ht := h.temporal

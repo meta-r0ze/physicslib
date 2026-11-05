@@ -26,7 +26,9 @@ noncomputable section
 namespace PMConstants.HyperScope
 open PMConstants
 
-def footprint14 : ℝ := 172 + 14 * overhead + 5
+def footprint14 : ℝ := (PMSubstrate.E8Values.RM : ℝ) +
+  ((PMSubstrate.E8Values.nu : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) * overhead +
+    (PMSubstrate.E8Values.sigma : ℝ)
 
 theorem relative_scope_excluded {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
     mZ * Real.sqrt (1 - 43 / footprint14) < 80.2664 ∧

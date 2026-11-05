@@ -68,6 +68,7 @@ theorem chain_mixing {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
   have := hf
   have := hfp
   simp only [chainCoupling, clockRatio]
+  rw [PMSubstrate.E8Values.Delta_eq]
   field_simp
   ring
 

@@ -17,6 +17,9 @@ import Mathlib.Tactic
 
 Paper IV's values: `s₁₂ = π/(ν−χ)`, `|V_cb| = (π+χ)/(α⁻¹ − Dπ)` with `s₂₃ = |V_cb|/c₁₃`,
 `s₁₃ = 1/(χα⁻¹ + π)`, `δ = arctan(σ/χ)`, with Paper I's certified `α⁻¹`.
+These four expressions are supplied model formulas; `FlavourInvariants` shows their
+numerals are the derived invariants evaluated, not that the functional forms are
+derived from E8.
 
 * `pm_jarlskog_matrix`: these values in the unitary matrix give exactly `pmJ`.
 * `pmJ_bounds`: `3.02×10⁻⁵ < J < 3.03×10⁻⁵`.

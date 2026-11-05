@@ -53,26 +53,32 @@ theorem paper_electroweak {c : ℝ} (hc : 0 < c) :
   have hY : 0 < Y := by simp only [Y]; linarith
   refine ⟨?_, ?_, ?_⟩
   · rw [mixing hc (by norm_num) hY]
-    simp only [W, Y, clockRatio]; ring_nf
+    simp only [W, Y, clockRatio]; rw [PMSubstrate.E8Values.Delta_eq]; ring_nf
   · simp only [e2, W, Y, gsq, clockRatio]
+    rw [PMSubstrate.E8Values.Delta_eq]
     have : footprint ≠ 0 := by linarith
     field_simp; ring_nf; field_simp
   · simp only [e2, W, Y, gsq, clockRatio]
+    rw [PMSubstrate.E8Values.Delta_eq]
     have h1 : footprint ≠ 0 := by linarith
     have h2 : footprint - 43 ≠ 0 := by linarith
-    have h3 : (1 : ℝ) - 43/footprint = (footprint - 43)/footprint := by field_simp
-    rw [h3]; field_simp; ring_nf; field_simp
+    field_simp [h1, h2]
+    ring
 
 /-- Under the rule, `α_s/α = N_sys/W₃`; the paper's strong formula needs this workload. -/
-def strongWorkload : ℝ := footprint / (16*overhead + 1/4)
+def strongWorkload : ℝ := footprint /
+  ((PMSubstrate.E8Values.nu : ℝ)*overhead + 1/(PMSubstrate.E8Values.D : ℝ))
 
 theorem strong_workload (α : ℝ) :
     strongCoupling α = α * (footprint / strongWorkload) := by
   have : (16*overhead + 1/4 : ℝ) ≠ 0 := by norm_num [overhead]
   have hf : footprint ≠ 0 := by norm_num [footprint, overhead]
-  unfold strongWorkload strongCoupling; field_simp
+  unfold strongWorkload strongCoupling
+  rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
+  field_simp
 
 theorem strong_workload_not_integer : 11 < strongWorkload ∧ strongWorkload < 12 := by
-  norm_num [strongWorkload, footprint, overhead]
+  norm_num [strongWorkload, footprint, overhead, PMSubstrate.E8Values.nu_eq,
+    PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.sigma_eq]
 
 end PMConstants.GaugeStiffness

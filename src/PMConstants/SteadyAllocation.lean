@@ -62,7 +62,11 @@ theorem full_utilization_share (demand service : I → ℝ) (rate : ℝ)
 
 /-- Address workload is separated into temporal and spatial work, so the
 clock is part of the address cost, not an additional denominator term. -/
-def workload (η : ℝ) : Fin 4 → ℝ := ![43, 3*43, 16*η, 5]
+def workload (η : ℝ) : Fin 4 → ℝ :=
+  ![(PMSubstrate.E8Values.Delta : ℝ),
+    ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) *
+      (PMSubstrate.E8Values.Delta : ℝ),
+    (PMSubstrate.E8Values.nu : ℝ)*η, (PMSubstrate.E8Values.sigma : ℝ)]
 
 theorem workload_sum (η : ℝ) : (∑ i, workload η i) = 172+16*η+5 := by
   simp [workload, Fin.sum_univ_succ]

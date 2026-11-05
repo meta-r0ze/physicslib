@@ -66,7 +66,8 @@ theorem product_targets_balanced : Balanced productTargets := by
 
 theorem product_targets_injective : Function.Injective productTargets := by decide +kernel
 
-def sampleWork (tgt : Fin 16 → Grid) (o : Grid) : ℝ := 172+5+executed tgt o
+def sampleWork (tgt : Fin 16 → Grid) (o : Grid) : ℝ :=
+  (PMSubstrate.E8Values.RM : ℝ) + (PMSubstrate.E8Values.sigma : ℝ) + executed tgt o
 
 theorem balanced_mean_footprint (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : Grid) :
     (∑ k : Fin 43, sampleWork tgt (gridTick^[k.val] o))/43 = PMConstants.footprint := by
@@ -74,6 +75,7 @@ theorem balanced_mean_footprint (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o :
   unfold sampleWork
   simp only [sum_add_distrib, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
   unfold PMConstants.footprint
+  rw [PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
   linarith
 
 /-- Normalize total clock work by total work, along any starting direction. -/

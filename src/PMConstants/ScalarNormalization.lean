@@ -76,6 +76,7 @@ theorem mass_ratio {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) (vsub : �
   have := hfp
   have hv2 : vsub ^ 2 ≠ 0 := pow_ne_zero 2 hv
   simp only [clockRatio]
+  rw [PMSubstrate.E8Values.Delta_eq]
   field_simp
   ring
 

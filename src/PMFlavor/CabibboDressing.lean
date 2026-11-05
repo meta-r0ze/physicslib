@@ -1,14 +1,20 @@
 import PMFlavor.CKMDressing
 import PMFlavor.FlavourInvariants
+import PMConstants.FlavourDressing
 import Mathlib.Tactic
 
 /-!
 # The Cabibbo dressing constant is a derived invariant expression
 
-`FlavourInvariants` flagged `CKMDressing.q2 = 687/688` as a bare fitted literal:
-the dressing that turns exact CKM unitarity into a `1 − 1/688` first-row sum, i.e.
-the claimed resolution of the Cabibbo Angle Anomaly. This module shows the
-**number itself is not independent** — it is exactly
+Upstream `PMConstants.FlavourDressing` shows the number is the reference-frame
+deficit shared over the lattice directions: with overhead `η = 171/172` and
+`D = 4`, `1 − (1−η)/D = 687/688`. `q2_eq_per_direction_reference` below connects
+`CKMDressing.q2` to that expression. The physical claim that the CKM first row
+inherits the per-direction reference deficit remains the model step.
+
+The original arithmetic observation was that the dressing turns exact CKM
+unitarity into a `1 − 1/688` first-row sum, i.e. the claimed resolution of the
+Cabibbo Angle Anomaly. The **number itself is not independent** — it is exactly
 
     q² = 1 − 1/(ν · Δ),
 
@@ -18,18 +24,19 @@ forced clock period (`PMSubstrate.Impedance.baseline.period`, `parameters_forced
 written out.
 
 **What this fixes and what it does not.**
+* `q2_eq_per_direction_reference`, `q2_eq_frame_deficit` — the number is the
+  per-direction reference exclusion `1 − (1−η)/D` from PMConstants, and hence also
+  `1 − 1/(D·R_M)` with `R_M = D·Δ = 172`.
 * `q2_eq_invariants` — the dressing amplitude squared is `1 − 1/(ν Δ)`, not a free
   literal; the denominator `688` is `ν·Δ` (`invariant_denominator`).
 * `deficit_eq` — the first-row deficit `1 − q²` is exactly `1/(ν Δ)`.
 * `q2_pos`, `q2_lt_one` — the dressing keeps the amplitude in `(0,1)`, so the
   dressed matrix is a genuine contraction.
 
-It does **not** justify *why* exact unitarity is dressed by `1/(ν Δ)` in the first
-place; that is the physical claim about the anomaly, and it remains fitted (see
-`CKMDressing.first_row_deficit_test`). The improvement is that the arithmetic
-input `687/688` is replaced by the two derived integers `ν` and `Δ`, so the only
-remaining content in the Cabibbo-dressing item is the physical justification, not
-the constant.
+It does **not** justify *why the CKM first row inherits* the per-direction
+reference deficit; that is the remaining physical claim about the anomaly (see
+`FlavourPulls.first_row_deficit_test`). The arithmetic input is now the upstream
+reference-frame deficit, not an independent fitted literal.
 -/
 
 noncomputable section
@@ -40,6 +47,23 @@ open PMSubstrate
 def clock : ℕ := baseline.period
 
 theorem clock_eq : clock = 43 := by decide
+
+/-- **`q2` is the per-direction reference deficit.** This is the upstream
+`PMConstants.FlavourDressing.cabibbo_deficit_per_direction` expression. -/
+theorem q2_eq_per_direction_reference :
+    CKMDressing.q2 = 1 - (1 - PMConstants.overhead) /
+      (PMSubstrate.baseline.dimension : ℝ) := by
+  rw [PMConstants.FlavourDressing.cabibbo_deficit_per_direction]
+  unfold CKMDressing.q2
+  norm_num
+
+/-- The same deficit written with the frame resolution `R_M = D·Δ = 172`. -/
+theorem q2_eq_frame_deficit :
+    CKMDressing.q2 = 1 - 1 / ((PMSubstrate.baseline.dimension : ℝ) *
+      (PMSubstrate.baseline.resolution : ℝ)) := by
+  rw [PMConstants.FlavourDressing.cabibbo_deficit_frame]
+  unfold CKMDressing.q2
+  norm_num
 
 /-- **The dressing amplitude squared is an invariant expression.** -/
 theorem q2_eq_invariants :

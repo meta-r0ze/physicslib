@@ -45,17 +45,18 @@ def advance (event : Bool) : ℕ := if event then 1 else 0
 theorem no_event_no_advance : advance false = 0 := rfl
 
 theorem one_way_from_loop {α out back : ℝ} (hα : 0 ≤ α) (ho : 0 ≤ out)
-    (hsym : out = back) (hloop : out * back = α ^ 43) :
-    out = α ^ ((43 : ℝ) / 2) := by
+    (hsym : out = back) (hloop : out * back = α ^ PMSubstrate.E8Values.Delta) :
+    out = α ^ ((PMSubstrate.E8Values.Delta : ℝ) / (PMSubstrate.E8Values.chi : ℝ)) := by
   subst hsym
-  have h2 : out ^ 2 = α ^ 43 := by rw [sq]; exact hloop
-  have hs : out = Real.sqrt (α ^ 43) := by
+  have h2 : out ^ 2 = α ^ PMSubstrate.E8Values.Delta := by rw [sq]; exact hloop
+  have hs : out = Real.sqrt (α ^ PMSubstrate.E8Values.Delta) := by
     rw [← h2, Real.sqrt_sq ho]
   rw [hs, Real.sqrt_eq_rpow, ← Real.rpow_natCast, ← Real.rpow_mul hα]
+  rw [PMSubstrate.E8Values.Delta_eq, PMSubstrate.E8Values.chi_eq]
   norm_num
 
 theorem gravity_from_events {α : ℝ} (hα : 0 ≤ α) {out : ℝ} (ho : 0 ≤ out)
-    (hloop : out * out = crossProb α 43) :
+    (hloop : out * out = crossProb α PMSubstrate.E8Values.Delta) :
     Depth.gravity α = residual α * out := by
   rw [required_handoffs] at hloop
   rw [Depth.gravity, one_way_from_loop hα ho rfl hloop]

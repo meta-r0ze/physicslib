@@ -1,12 +1,15 @@
 import PMConstants.Partition
+import PMSubstrate.E8Values
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Real.Sqrt
 
 noncomputable section
 namespace PMConstants.Depth
 
-/-- This is the attenuation law stipulated by the paper. -/
-def gravity (α : ℝ) : ℝ := residual α * α ^ ((43 : ℝ)/2)
+/-- This is the attenuation law stipulated by the paper, with the half-period
+written as `Delta/chi`. -/
+def gravity (α : ℝ) : ℝ := residual α *
+  α ^ ((PMSubstrate.E8Values.Delta : ℝ)/(PMSubstrate.E8Values.chi : ℝ))
 
 def planck (me g : ℝ) : ℝ := me / Real.sqrt g
 

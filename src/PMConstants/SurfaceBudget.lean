@@ -8,7 +8,7 @@ is an additional allocation premise, including its cost elsewhere in the ledger.
 -/
 noncomputable section
 namespace PMConstants.SurfaceBudget
-open Electroweak
+open ElectroweakE8
 
 def source : ℝ := Matching.regulator selfCoupling
 def load : ℝ := 6*overhead

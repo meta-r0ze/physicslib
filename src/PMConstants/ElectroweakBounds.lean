@@ -8,7 +8,7 @@ and VEV; running/response corrections are not silently supplied.
 -/
 noncomputable section
 namespace PMConstants.ElectroweakBounds
-open Electroweak CertifiedConstants JointConstants GaugeSpectrum
+open ElectroweakE8 CertifiedConstants JointConstants GaugeSpectrum
 
 def electronGeV : ℝ := 0.00051099895
 

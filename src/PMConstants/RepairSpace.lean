@@ -20,7 +20,7 @@ No measured value is used. Interpretation against data is outside this module.
 
 noncomputable section
 namespace PMConstants.RepairSpace
-open PMConstants PMConstants.Electroweak PMConstants.GaugeSpectrum
+open PMConstants PMConstants.ElectroweakE8 PMConstants.GaugeSpectrum
 
 /-! ## Gauge response across `0 ≤ η ≤ 1` -/
 

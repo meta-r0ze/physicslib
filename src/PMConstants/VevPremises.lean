@@ -25,7 +25,7 @@ premise, together with the two correction factors.
 
 noncomputable section
 namespace PMConstants.VevPremises
-open PMConstants Electroweak CertifiedConstants ElectroweakBounds VevAccounting
+open PMConstants ElectroweakE8 CertifiedConstants ElectroweakBounds VevAccounting
 
 theorem wire_share_excluded {GF s : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5)
     (hs : 1/1000 ≤ s) :

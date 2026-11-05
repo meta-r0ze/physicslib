@@ -1,6 +1,6 @@
 import PMSubstrate.DerivedParameters
 import PMFlavor.CKM
-import PMFlavor.FlavourPulls
+import PMFlavor.FlavourPostulates
 import PMFlavor.PMNS
 import Mathlib.Tactic
 
@@ -24,28 +24,36 @@ signature and boundary postulates. But that derivation was never cited at the us
 site, so the flavour numbers were plugged in twice over: once honestly in Paper I,
 once silently here.
 
-This module closes that gap. `χ`, `σ`, `ν`, `D` name the derived
+This module closes the **bookkeeping** gap. `χ`, `σ`, `ν`, `D` name the derived
 `PMSubstrate.Parameters` fields of `baseline`, and each formula is restated in terms of
 them. The bridge theorems below then prove the invariant form **equals** the
 literal form already used downstream, so nothing else has to change and the
 numerals become conclusions rather than inputs:
+
+**What the bridge does and does not prove.** These are arithmetic identifications:
+they prove the numerals downstream are the *supplied* formulas evaluated on the
+derived invariants. They do **not** derive the six functional forms themselves;
+each form is a model ansatz. The file removes a notational ambiguity, not a
+physical postulate.
 
 * `s12_eq`, `s13_eq`, `vcb_eq_`, `delta_eq_` — CKM side
 * `solar_eq`, `atmos_eq`, `reactor_eq` — PMNS side, i.e. `PMNS.sineSquared`
 
 ## What this does NOT fix
 
-Three inputs remain genuinely underived, and stating them as open is the point of
-this file:
+Three further inputs remain genuinely underived, and stating them as open is the
+point of this file:
 
 * **φ.** `FlavourPulls.φ = (1 + √5)/2` occurs nowhere else in Papers I–III; no
   theorem derives the golden ratio from the lattice. The solar angle is therefore
   still a postulated form, and `solar_eq` only relabels it.
 * **q² = 687/688.** `CKMDressing.q2` is the dressing that turns the geometrically
   exact first-row sum `1` into `1 − 1/688`, i.e. the entire claimed resolution of
-  the Cabibbo Angle Anomaly (`first_row_deficit_test` shows the undressed value is
-  2.28σ from the measured deficit, the dressed one 0.22σ). It is a literal, so the
-  anomaly is fitted rather than derived.
+  the Cabibbo Angle Anomaly (`FlavourPulls.first_row_deficit_test` shows the undressed value is
+  2.28σ from the measured deficit, the dressed one 0.22σ). Upstream
+  `PMConstants.FlavourDressing.cabibbo_deficit_per_direction` identifies it as the
+  per-direction reference exclusion `1 − (1−η)/D`; the remaining physical claim is
+  that the CKM first row inherits that deficit.
 * **The octant.** Paper IV §IV claims the geometric running "resolves the apparent
   octant anomaly"; there is no Lean statement of that claim at all.
 -/
@@ -129,8 +137,9 @@ theorem nu_minus_chi_eq : (nu : ℝ) - chi = 14 := by norm_num
 theorem nu_plus_sigma_eq : (nu : ℝ) + sigma = 21 := by norm_num
 theorem sigma_minus_chi_eq : (sigma : ℝ) - chi = 3 := by norm_num
 
-/-- No CKM or PMNS measurement enters any of the six formulas: they are built
-from `π`, `α⁻¹`, `φ` and the invariants above. -/
+/-- Definitional restatement: the six formulas are built from `π`, `α⁻¹`, `φ`
+and the derived invariants, with no measurement literal. The proof is all `rfl`;
+this records the definitions, not a derivation of the formulas. -/
 theorem no_measurement_input :
     s12f = Real.pi / (nu - chi) ∧ s13f = 1 / (chi * CKM.αinv + Real.pi) ∧
       vcbf = (Real.pi + chi) / (CKM.αinv - D * Real.pi) ∧

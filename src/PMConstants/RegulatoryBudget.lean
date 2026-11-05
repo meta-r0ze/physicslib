@@ -75,12 +75,14 @@ theorem maximal_iff {labels budget sync gain : ℝ} (hL : 0 < labels)
 
 theorem scalar_feasible_iff (gain : ℝ) :
     Feasible 23 3 (1/43) gain ↔ 0 ≤ gain ∧ gain ≤ selfCoupling := by
-  simpa [selfCoupling] using (feasible_iff (gain := gain) (budget := 3)
+  have hsc : selfCoupling = (3 - 1/43)/23 := by norm_num [selfCoupling]
+  simpa [hsc] using (feasible_iff (gain := gain) (budget := 3)
     (sync := 1/43) (show (0 : ℝ) < 23 by norm_num))
 
 theorem scalar_maximal_iff (gain : ℝ) :
     Maximal 23 3 (1/43) gain ↔ gain = selfCoupling := by
-  simpa [selfCoupling] using (maximal_iff (gain := gain) (budget := 3)
+  have hsc : selfCoupling = (3 - 1/43)/23 := by norm_num [selfCoupling]
+  simpa [hsc] using (maximal_iff (gain := gain) (budget := 3)
     (sync := 1/43) (show (0 : ℝ) < 23 by norm_num) (by norm_num))
 
 /-- There is a positive, solvent alternative to the maximal gain. The queue

@@ -1,4 +1,5 @@
 import PMAction.ScheduledReadout
+import PMAction.ClockPeriod
 
 /-!
 # The missing observing-register coupling
@@ -17,7 +18,7 @@ lattice permutations are allowed to make the restriction on the record clear. -/
 inductive Gate
   | input (e : Equiv.Perm Lattice)
   | probe (e : Equiv.Perm Lattice)
-  | clock (e : Equiv.Perm (Fin 43))
+  | clock (e : Equiv.Perm (Fin Delta))
 
 def root : Equiv.Perm Lattice where
   toFun := SubstrateReflection.reflect

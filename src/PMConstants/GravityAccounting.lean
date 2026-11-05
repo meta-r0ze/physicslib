@@ -45,6 +45,8 @@ theorem channels_as_frame :
   have h := alpha_bounds
   have hA := attenuation_bounds
   unfold Depth.gravity residual
+  rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq,
+    PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.Delta_eq]
   constructor <;> nlinarith [h.1, h.2, hA.1, hA.2]
 
 /-- Tight enclosure of the residual capacity `B_res`. -/
@@ -52,18 +54,26 @@ theorem residual_tight_bounds :
     (15.3260359807 : ℝ) < residual α ∧ residual α < 15.3260359808 := by
   have h := alpha_bounds
   unfold residual
+  rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
   constructor <;> linarith [h.1, h.2]
 
 theorem inside_codata :
     (1.751770e-45 : ℝ) < Depth.gravity α ∧ Depth.gravity α < 1.751849e-45 := by
   have h := channels_as_frame; constructor <;> linarith [h.1, h.2]
 
-def gravityPayload (a : ℝ) : ℝ := (16 * overhead - 2/3 - a) * a ^ ((43 : ℝ) / 2)
+def gravityPayload (a : ℝ) : ℝ :=
+  ((PMSubstrate.E8Values.nu : ℝ) * overhead -
+      (PMSubstrate.E8Values.chi : ℝ) /
+        ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) - a) *
+    a ^ ((PMSubstrate.E8Values.Delta : ℝ) / (PMSubstrate.E8Values.chi : ℝ))
 
 theorem channels_as_payload : gravityPayload α < 1.7412e-45 := by
   have h := alpha_bounds
   have hA := attenuation_bounds
   unfold gravityPayload overhead
+  rw [PMSubstrate.E8Values.overhead_eq,
+    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+    PMSubstrate.E8Values.Delta_eq]
   nlinarith [h.1, h.2, hA.1, hA.2]
 
 end PMConstants.GravityAccounting

@@ -63,10 +63,13 @@ Open: full real-space field/PDE mode–domain control, the integrated Hessian, t
 real-space fermion field, and interacting-field estimates.
 
 ## 7. Physical applications
-Open: identify the weak current/mediator, statistics, normalization, measure and
-regulator before reading the trace/running results as physical predictions. Gravity
-and measurement need their own state/update/observable constructions; quantum
-continuum and Lorentzian continuation are distinct obligations.
+The chiral projector is now forced on the zero kernel by the reference conditions
+(`ChiralityConvention.projector_unique_on_kernel`), and its block form matches `P_L`
+(`projector_eq_fromBlocks_PL`). Open: attach that projector to the physical weak
+representation, extend it off the zero kernel, and identify the mediator, statistics,
+normalization, measure and regulator before reading the trace/running results as
+physical predictions. Gravity and measurement need their own state/update/observable
+constructions; quantum continuum and Lorentzian continuation are distinct obligations.
 
 ## Downstream boundary
 Generic proofs do not move a downstream paper's physical identification with them.

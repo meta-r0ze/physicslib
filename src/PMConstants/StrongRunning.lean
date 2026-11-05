@@ -27,13 +27,21 @@ open PMConstants CertifiedConstants
 
 /-! ## Flavour thresholds from Paper V's masses (units of `m_e`) -/
 
-def mCharm : ℝ := 4 * 43^2 / (overhead * (5 - 2))
-def mTau : ℝ := -4 + 43^2 * 2 - 43 * 5 - 2
-def mBottom : ℝ := 43^2 * (4 + 2/5) / overhead
+def mCharm : ℝ := (PMSubstrate.E8Values.D : ℝ) * (PMSubstrate.E8Values.Delta : ℝ)^2 /
+  (overhead * ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)))
+def mTau : ℝ := -(PMSubstrate.E8Values.D : ℝ) +
+  (PMSubstrate.E8Values.Delta : ℝ)^2 * (PMSubstrate.E8Values.chi : ℝ) -
+    (PMSubstrate.E8Values.Delta : ℝ) * (PMSubstrate.E8Values.sigma : ℝ) -
+      (PMSubstrate.E8Values.chi : ℝ)
+def mBottom : ℝ := (PMSubstrate.E8Values.Delta : ℝ)^2 *
+  ((PMSubstrate.E8Values.D : ℝ) +
+    (PMSubstrate.E8Values.chi : ℝ) / (PMSubstrate.E8Values.sigma : ℝ)) / overhead
 def mZ : ℝ := 91187.6 / 0.51099895
 
 theorem flavour_order : mCharm < mTau ∧ mTau < mBottom ∧ mBottom < mZ := by
-  norm_num [mCharm, mTau, mBottom, mZ, overhead]
+  norm_num [mCharm, mTau, mBottom, mZ, overhead,
+    PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
+    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
 
 /-! ## One-loop inverse coupling over two intervals -/
 

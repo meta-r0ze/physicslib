@@ -1,12 +1,14 @@
 import PMConstants.General
 import PMConstants.Partition
+import PMConstants.E8Values
+import PMConstants.FlavourDressing
 import PMConstants.Depth
 import PMConstants.ReviewChecks
 
 import PMConstants.Interface
 import PMConstants.Hypercharge
 import PMConstants.Allocation
-import PMConstants.Electroweak
+import PMConstants.ElectroweakE8
 import PMConstants.Bulk
 import PMConstants.Matching
 import PMConstants.CertifiedConstants

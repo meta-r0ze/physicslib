@@ -17,6 +17,8 @@ reference type's up to conjugation means `|Y_L| = 1`.
   reference's conjugate), the charges are the standard ones, so `Y_ν = 0`.
 * `conjugate_or_same`: with `|Y_L| = 1`, one lepton singlet is neutral either way; the other sign
   only exchanges which singlet is called `e` and which `ν`.
+* `standard_or_conjugate`: the full statement of that convention: the charges are either the
+  standard assignment (ν neutral) or the conjugate assignment (e neutral), and nothing else.
 * `unmatched_link_fails`: the family member that `neutrality_needed` exhibits has `Y_L = 0`, so its
   link does not carry the reference's charge.
 
@@ -48,6 +50,31 @@ theorem conjugate_or_same (Y : Charges) (hl : SectorLinks.OneLink Y 1)
   rcases hr with h | h
   · left; have := hy.2.2.2; linarith
   · right; have := hy.2.2.1; linarith
+
+/-- The opposite sign of the reference hypercharge. It is the charge-conjugate
+assignment with the electron, rather than the neutrino, as the neutral singlet. -/
+def conjugateStandard : Charges := ⟨-1/3, 2/3, -4/3, 1, 0, 2⟩
+
+/-- **The hypercharge sign is a labeling convention, not a physical choice.** With
+flux conservation, one unit link and `|Y_L| = 1`, the charges are either the
+standard ones (ν neutral) or their conjugate (e neutral). No other assignment is
+admissible. -/
+theorem standard_or_conjugate (Y : Charges) (hf : Flux Y) (hl : SectorLinks.OneLink Y 1)
+    (h : Y.l = -1 ∨ Y.l = 1) :
+    (Y = standard ∧ Y.n = 0) ∨ (Y = conjugateStandard ∧ Y.e = 0) := by
+  rcases h with h | h
+  · obtain ⟨hstd, hn⟩ := neutral_from_reference Y hf hl h
+    exact Or.inl ⟨hstd, hn⟩
+  · have hy := (SectorLinks.links_iff_yukawa Y 1).mp hl
+    have hq : Y.q = -1/3 := by linarith [hf.1, h]
+    have hu : Y.u = 2/3 := by linarith [hy.1, hq]
+    have hd : Y.d = -4/3 := by linarith [hy.2.1, hq]
+    have he : Y.e = 0 := by linarith [hy.2.2.1, h]
+    have hn : Y.n = 2 := by linarith [hy.2.2.2, h]
+    refine Or.inr ⟨?_, he⟩
+    cases Y
+    simp only [conjugateStandard, Charges.mk.injEq]
+    exact ⟨hq, hu, hd, h, he, hn⟩
 
 theorem unmatched_link_fails : (family 0 1).l = 0 := by norm_num [family]
 

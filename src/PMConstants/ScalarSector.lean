@@ -43,9 +43,15 @@ theorem higgs_from_fermi {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5
   have hs := JointConstants.sqrt_two_bounds
   have hd : 0 < Real.sqrt 2 * GF := by nlinarith [hs.1, h.1]
   have hlo : (125.26 : ℝ)^2 < higgsSq GF := by
-    unfold higgsSq selfCoupling; rw [lt_div_iff₀ hd]; nlinarith [hs.2, h.2]
+    unfold higgsSq selfCoupling
+    rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq,
+      PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.Delta_eq]
+    rw [lt_div_iff₀ hd]; nlinarith [hs.2, h.2]
   have hhi : higgsSq GF < (125.28 : ℝ)^2 := by
-    unfold higgsSq selfCoupling; rw [div_lt_iff₀ hd]; nlinarith [hs.1, h.1]
+    unfold higgsSq selfCoupling
+    rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq,
+      PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.Delta_eq]
+    rw [div_lt_iff₀ hd]; nlinarith [hs.1, h.1]
   constructor
   · rw [Real.lt_sqrt (by norm_num)]; exact hlo
   · rw [Real.sqrt_lt' (by norm_num)]; exact hhi

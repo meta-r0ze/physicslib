@@ -17,7 +17,10 @@ framework actually makes, each with its proof, so a fit can be run against them.
 This module is that ledger. Every claim below is a theorem with no measured input;
 each is stated so that a future measurement can refute it.
 
-**Unconditional within the supplied model.**
+**Unconditional relative to the supplied model inputs** — the six angle
+ansätze, the solar postulate `φ`, and the Cabibbo dressing `q² = 687/688`. These
+are not unconditional consequences of E8.
+
 * `wEta_gt_wRho` — `ρ̄ < η̄`: the CKM unitarity-triangle apex lies above the `ρ̄`
   axis. Refuted by `η̄ ≤ ρ̄`.
 * `solar_first_octant` — `1/4 < sin²θ₁₂ < 1/2` (solar lower octant, not maximal).
@@ -40,9 +43,10 @@ noncomputable section
 namespace PMFlavor.FalsifiablePredictions
 open Wolfenstein WolfensteinOctant CabibboDressing
 
-/-- **The auditable ledger of unconditional falsifiable predictions.** Each
-conjunct is a theorem with no measured input; a measurement violating any conjunct
-refutes the corresponding framework claim. -/
+/-- **The auditable ledger of falsifiable predictions.** Each conjunct is a
+theorem with no measured input, conditional on the model inputs listed in the
+header; a measurement violating any conjunct refutes the corresponding framework
+claim. -/
 theorem prediction_ledger :
     -- CKM unitarity-triangle apex above the ρ̄ axis
     (Wolfenstein.wRho < Wolfenstein.wEta) ∧

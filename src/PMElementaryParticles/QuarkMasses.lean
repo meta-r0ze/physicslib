@@ -24,13 +24,18 @@ noncomputable section
 namespace PMElementaryParticles.QuarkMasses
 open PMElementaryParticles.CompositeMasses
 
-def η : ℝ := 171 / 172
-def up : ℝ := 4 / η
-def down : ℝ := (4 + 5) / η
-def strange : ℝ := (4 * 43 + 2 * 5) / η
-def charm : ℝ := 4 * 43 ^ 2 / (η * (5 - 2))
-def bottom : ℝ := 43 ^ 2 * (4 + 2 / 5) / η
-def top : ℝ := 43 ^ 3 * (4 + 1 / 4)
+def η : ℝ := PMSubstrate.E8Values.overhead
+def up : ℝ := (PMSubstrate.E8Values.D : ℝ) / η
+def down : ℝ := ((PMSubstrate.E8Values.D : ℝ) + (PMSubstrate.E8Values.sigma : ℝ)) / η
+def strange : ℝ := ((PMSubstrate.E8Values.D : ℝ) * (PMSubstrate.E8Values.Delta : ℝ) +
+  (PMSubstrate.E8Values.chi : ℝ) * (PMSubstrate.E8Values.sigma : ℝ)) / η
+def charm : ℝ := (PMSubstrate.E8Values.D : ℝ) * (PMSubstrate.E8Values.Delta : ℝ)^2 /
+  (η * ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)))
+def bottom : ℝ := (PMSubstrate.E8Values.Delta : ℝ)^2 *
+  ((PMSubstrate.E8Values.D : ℝ) +
+    (PMSubstrate.E8Values.chi : ℝ) / (PMSubstrate.E8Values.sigma : ℝ)) / η
+def top : ℝ := (PMSubstrate.E8Values.Delta : ℝ)^3 *
+  ((PMSubstrate.E8Values.D : ℝ) + 1 / (PMSubstrate.E8Values.D : ℝ))
 
 theorem pulls :
     (-1.5 < (up * me - 2.16) / 0.07 ∧ (up * me - 2.16) / 0.07 < -1.4) ∧
@@ -40,11 +45,17 @@ theorem pulls :
     (-0.3 < (bottom * me - 4183) / 7 ∧ (bottom * me - 4183) / 7 < -0.1) ∧
     (0.3 < (top * me - 172570) / 290 ∧ (top * me - 172570) / 290 < 0.4) := by
   unfold up down strange charm bottom top η me
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
+    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+    PMSubstrate.E8Values.overhead_eq]
   norm_num
 
 /-- The thresholds Paper III orders are these formulas. -/
 theorem threshold_match : charm = PMConstants.StrongRunning.mCharm ∧ bottom = PMConstants.StrongRunning.mBottom := by
   unfold charm bottom η PMConstants.StrongRunning.mCharm PMConstants.StrongRunning.mBottom PMConstants.overhead
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
+    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+    PMSubstrate.E8Values.overhead_eq]
   constructor <;> ring
 
 end PMElementaryParticles.QuarkMasses

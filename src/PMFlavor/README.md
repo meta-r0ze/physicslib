@@ -13,10 +13,11 @@ Build: Lean 4.34.1, with sibling dependencies pinned through Lake. Paper IV uses
 Papers I–III and rejects imports from Papers V–VI.
 
 ```sh
-./check.sh
+./build.sh PMFlavor
 ```
 
-`check.sh` builds the library, runs the strict axiom audit, the dependency audit,
-and the independent-algebra audit. The physical generation/update law and the
-selection of mixing and mass formulas remain open; they are not supplied by
-silently adding hypotheses to a theorem.
+The root `./build.sh` builds the whole workspace; `./build.sh PMFlavor` builds
+only this library. The top-level `./build.sh audit` runs the whole-tree axiom and
+dependency audits. The physical generation/update law and the selection of mixing
+and mass formulas remain open; they are not supplied by silently adding hypotheses
+to a theorem.

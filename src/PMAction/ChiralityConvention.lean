@@ -1,6 +1,7 @@
 import PMAction.WallChiralCurrent
 import PMAction.WallExchange
 import PMAction.NativeReferenceBackground
+import PMAction.WeakVertex
 
 /-!
 # "Left-handed" is a convention fixed by the charged current
@@ -103,6 +104,24 @@ theorem exchange_hamiltonian (k : Fin 3 → ℝ) (δ : ℝ) :
 def background (r : Fin 2 → ℂ) : Sites → ℂ :=
   Sum.elim (WalkReferenceCoupling.pack (Sum.elim r r)) (fun _ => 0)
 
+/-- Coordinates of the first-wall reference background. -/
+theorem background_apply (r : Fin 2 → ℂ) :
+    background r = Sum.elim
+      (![(Real.sqrt 2 : ℂ) * r 0, (Real.sqrt 2 : ℂ) * r 1, 0, 0] : Fin 4 → ℂ)
+      (fun _ => 0) := by
+  have hsqrt : (Real.sqrt 2 : ℂ) ≠ 0 := by
+    rw [Complex.ofReal_ne_zero]; positivity
+  have h2 : ((Real.sqrt 2 : ℂ) ^ 2) = 2 := by
+    rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num)]; norm_num
+  ext x
+  rcases x with i | i <;> fin_cases i <;>
+    simp [background, WalkReferenceCoupling.pack, WalkReferenceCoupling.raw,
+      WalkReferenceCoupling.backward, WalkRecordTransport.encode, Sum.elim]
+  all_goals
+    field_simp [hsqrt]
+    rw [h2]
+    ring
+
 theorem background_kernel (r : Fin 2 → ℂ) : hamiltonian 0 0 *ᵥ background r = 0 :=
   NativeReferenceBackground.background_zero_mode r
 
@@ -163,6 +182,15 @@ theorem displayed_placement_excluded (r : Fin 2 → ℂ) (hr : r ≠ 0) :
 /-- The physical reference: the stationary background in the wall-exchanged placement. -/
 def physicalBackground (r : Fin 2 → ℂ) : Sites → ℂ := exchange *ᵥ background r
 
+/-- Coordinates of the exchanged physical background: it lives on the second wall. -/
+theorem physicalBackground_apply (r : Fin 2 → ℂ) :
+    physicalBackground r = Sum.elim (fun _ => 0)
+      (![0, 0, (Real.sqrt 2 : ℂ) * r 0, (Real.sqrt 2 : ℂ) * r 1] : Fin 4 → ℂ) := by
+  rw [physicalBackground, background_apply]
+  ext x
+  rcases x with i | i <;> fin_cases i <;>
+    simp [exchange, beta, fromBlocks, Matrix.mulVec, dotProduct, Fin.sum_univ_four, Sum.elim]
+
 /-- It is still a zero mode, because the exchange is a symmetry of the Hamiltonian at `k = 0`. -/
 theorem physicalBackground_kernel (r : Fin 2 → ℂ) :
     hamiltonian 0 0 *ᵥ physicalBackground r = 0 := by
@@ -177,6 +205,43 @@ theorem physicalBackground_kernel (r : Fin 2 → ℂ) :
 /-- **The weak current acts on the physical reference.** -/
 theorem weak_acts_on_reference (r : Fin 2 → ℂ) :
     projector *ᵥ physicalBackground r = physicalBackground r := exchanged_background r
+
+/-- **The wall projector is the block-diagonal Paper-II V−A projector.** -/
+theorem projector_eq_fromBlocks_PL :
+    projector = (fromBlocks (PMAction.WeakVertex.PL) 0 0 (PMAction.WeakVertex.PL) :
+      Matrix Sites Sites ℂ) := by
+  rw [projector, chirality, PMAction.WeakVertex.PL_eq]
+  ext i j
+  rcases i with i | i <;> rcases j with j | j <;>
+    simp [fromBlocks, Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply]
+
+/-- **Uniqueness on the zero kernel.** Any operator that kills the unphysical
+first-wall background and fixes the exchanged physical background agrees with the
+chiral projector on every zero mode. The projector is therefore forced by the
+reference on the kernel, not chosen; extending it off the kernel remains the
+stated input. -/
+theorem projector_unique_on_kernel (P : Matrix Sites Sites ℂ)
+    (hkill : ∀ r, P *ᵥ background r = 0)
+    (hfix : ∀ r, P *ᵥ physicalBackground r = physicalBackground r)
+    (v : Sites → ℂ) (hv : hamiltonian 0 0 *ᵥ v = 0) :
+    P *ᵥ v = projector *ᵥ v := by
+  have hc := (kernel_coordinates v).mp hv
+  let a : Fin 2 → ℂ := ![v (.inl 0) / (Real.sqrt 2 : ℂ), v (.inl 1) / (Real.sqrt 2 : ℂ)]
+  let b : Fin 2 → ℂ := ![v (.inr 2) / (Real.sqrt 2 : ℂ), v (.inr 3) / (Real.sqrt 2 : ℂ)]
+  have hsqrt : (Real.sqrt 2 : ℂ) ≠ 0 := by
+    rw [Complex.ofReal_ne_zero]; positivity
+  have hdecomp : v = background a + physicalBackground b := by
+    rw [background_apply, physicalBackground_apply]
+    ext x
+    rcases x with i | i <;> fin_cases i <;>
+      simp [a, b, Sum.elim, hc]
+    all_goals field_simp [hsqrt]
+  rw [hdecomp]
+  have hL : P *ᵥ (background a + physicalBackground b) = physicalBackground b := by
+    rw [mulVec_add, hkill, hfix]; simp
+  have hR : projector *ᵥ (background a + physicalBackground b) = physicalBackground b := by
+    rw [mulVec_add, projector_kills_background, weak_acts_on_reference]; simp
+  rw [hL, hR]
 
 theorem physicalBackground_ne_zero (r : Fin 2 → ℂ) (hr : r ≠ 0) : physicalBackground r ≠ 0 := by
   intro h

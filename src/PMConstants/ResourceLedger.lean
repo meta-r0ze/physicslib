@@ -79,7 +79,8 @@ theorem colour_ledger_rule :
 
 /-! ## The sterile channel's capacity counts -/
 
-def footprint15 : ℝ := 172 + 15 * overhead + 5
+def footprint15 : ℝ := (PMSubstrate.E8Values.RM : ℝ) +
+  ((PMSubstrate.E8Values.nu : ℝ) - 1) * overhead + (PMSubstrate.E8Values.sigma : ℝ)
 
 theorem sterile_counted {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
     mZ * Real.sqrt (1 - 43/footprint15) < 80.3268 ∧

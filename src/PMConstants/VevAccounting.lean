@@ -24,7 +24,7 @@ formula's slot count; the factor `α⁻¹` and the two corrections are separate 
 
 noncomputable section
 namespace PMConstants.VevAccounting
-open PMConstants Electroweak CertifiedConstants ElectroweakBounds
+open PMConstants ElectroweakE8 CertifiedConstants ElectroweakBounds
 
 theorem fermi_window {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5) :
     246.21957 < Real.sqrt (1 / (Real.sqrt 2 * GF)) ∧

@@ -27,9 +27,9 @@ theorem electron_bounds : (0.00000293502845 : ℝ) < electronYukawa ∧
     electronYukawa < 0.00000293502847 := by
   have hv := JointConstants.vev_ratio_bounds
   have hs := JointConstants.sqrt_two_bounds
-  have hp : 0 < Electroweak.vevRatio alpha := by linarith [hv.1]
-  change _ < Real.sqrt 2/Electroweak.vevRatio alpha ∧
-    Real.sqrt 2/Electroweak.vevRatio alpha < _
+  have hp : 0 < ElectroweakE8.vevRatio alpha := by linarith [hv.1]
+  change _ < Real.sqrt 2/ElectroweakE8.vevRatio alpha ∧
+    Real.sqrt 2/ElectroweakE8.vevRatio alpha < _
   constructor
   · apply (lt_div_iff₀ hp).mpr; nlinarith [hv.2,hs.1]
   · apply (div_lt_iff₀ hp).mpr; nlinarith [hv.1,hs.2]
@@ -40,7 +40,7 @@ theorem current_snapshot :
     (0.007297352562 < alpha ∧ alpha < 0.007297352563) ∧
     (0.11799520370 < strong ∧ strong < 0.11799520373) ∧
     weakFraction=1849/8295 ∧ scalar=128/989 ∧
-    (∀ me : ℝ, me ≠ 0 → electronYukawa*Electroweak.vev alpha me/Real.sqrt 2=me) := by
+    (∀ me : ℝ, me ≠ 0 → electronYukawa*ElectroweakE8.vev alpha me/Real.sqrt 2=me) := by
   refine ⟨CertifiedConstants.alpha_bounds, strong_bounds, ?_, ?_, ?_⟩
   · norm_num [weakFraction,clockRatio,footprint,overhead]
   · norm_num [scalar,selfCoupling]
@@ -48,7 +48,7 @@ theorem current_snapshot :
 
 /-- These two legacy formulas genuinely differ from the current public values. -/
 theorem legacy_distinct :
-    strong ≠ strongCoupling alpha ∧ electronYukawa ≠ Electroweak.electronYukawa alpha := by
+    strong ≠ strongCoupling alpha ∧ electronYukawa ≠ ElectroweakE8.electronYukawa alpha := by
   constructor
   · intro h
     have hl := ColourChannels.strong_from_channels.1
@@ -58,7 +58,7 @@ theorem legacy_distinct :
     linarith
   · intro h
     have hc := ScaleConsistency.closure_exact (me := (1 : ℝ)) (by norm_num)
-    change electronYukawa*Electroweak.vev alpha 1/Real.sqrt 2=1 at hc
+    change electronYukawa*ElectroweakE8.vev alpha 1/Real.sqrt 2=1 at hc
     rw [h] at hc
     exact JointConstants.no_exact_electron_closure (by norm_num : (1 : ℝ) ≠ 0) hc
 

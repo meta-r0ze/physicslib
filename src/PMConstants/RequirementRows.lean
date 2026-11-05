@@ -65,7 +65,7 @@ theorem identification_is_identity (f : Equiv.Perm (Fin 4))
   revert f; decide
 
 /-- Frame resources per row. -/
-def rowWeight : ℕ := 43
+def rowWeight : ℕ := PMSubstrate.E8Values.Delta
 
 /-- **The frame parts of the electroweak ledgers.** -/
 theorem frame_ledgers (f : Fin 4 → Sector) (hw : f 0 = .weak) (hconf : ∀ r, f r = .weak → r = 0) :

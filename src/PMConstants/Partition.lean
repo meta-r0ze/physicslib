@@ -1,25 +1,30 @@
 import Mathlib.Tactic
-import PMSubstrate.Impedance
+import PMSubstrate.E8Values
 
-/-! Conditional arithmetic of the paper's partition rules, with no empirical identification. -/
+/-! Conditional arithmetic of the paper's partition rules, with no empirical identification.
+`E8Values` gives the same constants as `D, Δ, ν, σ, χ, R_M` expressions and proves
+the bridges, so the literals below are E8-record values rather than independent choices. -/
 noncomputable section
 namespace PMConstants
+open PMSubstrate.E8Values
 
-def overhead : ℝ := 171/172
+def overhead : ℝ := PMSubstrate.E8Values.overhead
 
-def strongCoupling (α : ℝ) : ℝ := (16*overhead + 1/4)*α
+def strongCoupling (α : ℝ) : ℝ := ((nu : ℝ)*overhead + 1/(D : ℝ))*α
 
-def footprint : ℝ := 172 + 16*overhead + 5
+def footprint : ℝ := (RM : ℝ) + (nu : ℝ)*overhead + (sigma : ℝ)
 
-def clockRatio : ℝ := 43/footprint
+def clockRatio : ℝ := (Delta : ℝ)/footprint
 
-def selfCoupling : ℝ := (3-1/43)/23
+def selfCoupling : ℝ := (((sigma : ℝ) - (chi : ℝ)) - 1/(Delta : ℝ)) /
+  ((nu : ℝ) + (sigma : ℝ) + (chi : ℝ))
 
 def scalarToll : ℝ := 2*selfCoupling
 
-def beta0 (nf : ℕ) : ℝ := 11 - 2/3*nf
+def beta0 (nf : ℕ) : ℝ := ((D : ℝ) + (sigma : ℝ) + (chi : ℝ)) -
+  ((chi : ℝ)/((sigma : ℝ) - (chi : ℝ)))*nf
 
-def residual (α : ℝ) : ℝ := 16 - 2/3 - α
+def residual (α : ℝ) : ℝ := (nu : ℝ) - (chi : ℝ)/((sigma : ℝ) - (chi : ℝ)) - α
 
 theorem exact_partition_values :
     overhead = 171/172 ∧ footprint = 8295/43 ∧ clockRatio = 1849/8295 ∧
@@ -34,7 +39,7 @@ theorem clock_ratio_bounds : 0 < clockRatio ∧ clockRatio < 1 := by
 theorem self_coupling_pos : 0 < selfCoupling := by norm_num [selfCoupling]
 
 theorem beta_positive_iff (nf : ℕ) : 0 < beta0 nf ↔ nf ≤ 16 := by
-  simp only [beta0]
+  simp [beta0]
   constructor
   · intro h
     by_contra hn
@@ -46,11 +51,13 @@ theorem beta_positive_iff (nf : ℕ) : 0 < beta0 nf ↔ nf ≤ 16 := by
 
 theorem residual_solvent (α : ℝ) : residual α + 2/3 + α = 16 := by
   unfold residual
+  rw [nu_eq, sigma_eq, chi_eq]
   ring
 
 theorem residual_bounds {α : ℝ} (h0 : 0 < α) (h1 : α < 1) :
     14 < residual α ∧ residual α < 16 := by
   unfold residual
+  rw [nu_eq, sigma_eq, chi_eq]
   constructor <;> linarith
 
 /-- Solvency does not determine a unique allocation, even if all allocations are positive. -/

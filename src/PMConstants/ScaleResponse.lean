@@ -21,7 +21,7 @@ coefficient and the opposite-sign term from the substrate is the remaining oblig
 
 noncomputable section
 namespace PMConstants.ScaleResponse
-open PMConstants Electroweak CertifiedConstants
+open PMConstants ElectroweakE8 CertifiedConstants
 
 /-! ## Scale homogeneity forces logarithmic response -/
 

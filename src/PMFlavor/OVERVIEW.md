@@ -60,33 +60,54 @@ generation 0) splits it for any `δ ≠ 0`; `brokenLinkB ε` breaks the residual
 `Z₂` and loses the protected antisymmetric state. `MixingMatrix` computes the
 protected-state overlap and shows the shared-state no-go is resolved
 (`anti_overlaps_all`), all-nonzero mixing on the physical square `0 < δ, ε ≤ 4`
-(`all_nonzero_mixing_interval`), and a witness point (`all_nonzero_mixing_witness`).
+(`all_nonzero_mixing_interval`), a global version whose zero set is exactly the
+explicit curve `δ = rootMInv (5 − rootM ε)` for `ε > 2` and empty for `ε ≤ 2`
+(`all_nonzero_mixing_global`, `rootM_sum_eq_five_iff_of_two_lt`), and a witness
+point (`all_nonzero_mixing_witness`).
 
-**Derived inputs and Wolfenstein.** `FlavourInvariants` ties the six flavour
-formulas to the Paper I invariants; `CabibboDressing` proves the `687/688`
-dressing is `1 − 1/(νΔ)` with `ν = 16`, `Δ = 43`. `Wolfenstein` defines
+**Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
+six supplied flavour formulas are the Paper I invariants evaluated; the functional
+forms themselves are ansätze, not E8 theorems. Upstream
+`PMConstants.FlavourDressing` identifies `687/688` as the per-direction reference
+deficit `1 − (1−η)/D`; `CabibboDressing` connects it to `1 − 1/(νΔ)`. The remaining
+model step is the claim that the CKM first row inherits that deficit. `Wolfenstein` defines
 λ, A, ρ̄, η̄ on the paper's own matrix and proves `η̄ > ρ̄` (from `σ > 2χ`) and the
 `O(λ³)` truncation structure. `WolfensteinOctant` proves the solar/atmospheric/
 reactor octants, and that the solar octant is exactly `1 < φ < 2`.
 
 **Current chirality tied to Paper II.** `WeakCurrentBridge.spinProjector_eq_PL`: the
-native flavour current's chiral projector is Paper II's weak V−A projector `P_L`
-(rank two), so `modelCurrent G = P_L ⊗ G` is inherited, not chosen.
+native flavour current's chiral projector is Paper II's `P_L` **within Paper II's
+chosen four-component representation**. PMAction
+`ChiralityConvention.projector_unique_on_kernel` now forces that projector on the
+zero kernel from the reference conditions, and
+`projector_eq_fromBlocks_PL` matches it to block-diagonal `P_L`. The remaining input
+is attaching the weak gauge representation and extending the projector off the
+kernel. The projector is rank two, so `modelCurrent G = P_L ⊗ G` is inherited within
+that representation, not chosen separately.
 
 **CP for the next papers.** `Downstream`: `pmJ > 0` (CKM CP violated, positive
 Jarlskog → baryon-asymmetry sign), `cp_conserved_iff` (`pmJ = 0 ↔ sin δ = 0`), and
 the leptonic side `PMNS.jarlskog_nonpos` (opposite sign to CKM).
 
 **Falsifiable ledger.** `FalsifiablePredictions.prediction_ledger` bundles every
-unconditional, measured-input-free claim in one conjunction — the auditable input
+measured-input-free claim, conditional on the model inputs above, in one conjunction — the auditable input
 to a data fit (the fit itself is data work, outside the axiom-checked tree).
 
 ## What is *not* derived
 
-`φ = (1+√5)/2` is a postulate (the solar sector is a one-parameter input). The
-numerical breaking weights `δ, ε` are dynamical, not fixed. Link eigenvalues are
-not the physical energy scale, so the `π/43` chord bound is about energies. No
-measured number enters the theorem tree.
+`φ = (1+√5)/2` is a postulate (the solar sector is a one-parameter input). The six
+mixing functional forms are supplied ansätze; `FlavourInvariants` only removes the
+literal-numeral duplication. The `687/688` Cabibbo dressing is re-expressed, not
+derived. The numerical breaking weights `δ, ε` are dynamical, not fixed. Link
+eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
+energies. The V−A projector is forced on the zero kernel by reference persistence
+(PM-2 `ChiralityConvention.projector_unique_on_kernel`); attaching the gauge
+representation and extending it off the kernel remain inputs. The neutrino
+Dirac-survival result is conditional on the upstream
+flux/one-link hypercharge representation; the `Y_L` sign is an `e`/`ν` convention
+(`ReferenceLink.standard_or_conjugate`), not a physical choice. Measured PDG/NuFIT
+comparisons live in the `FlavourPulls` leaf and are not imported by the CKM/PMNS
+derivation modules; no measured number enters the derivation closure.
 
 ## Downstream handoff
 
@@ -99,4 +120,6 @@ for VI) — not missing Paper IV proofs.
 
 ## Verification
 
-Run `./check.sh`. No Paper V–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMFlavor` for this library. The top-level `./build.sh audit` checks
+the whole tree, not just PMFlavor. No Paper V–VI imports; permitted axioms
+`propext`, `Classical.choice`, `Quot.sound`.

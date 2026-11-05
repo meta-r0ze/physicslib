@@ -1,5 +1,5 @@
 import PMFlavor.FlavourInvariants
-import PMFlavor.FlavourPulls
+import PMFlavor.FlavourPostulates
 import Mathlib.Tactic
 
 /-!

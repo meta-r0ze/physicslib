@@ -19,7 +19,11 @@ noncomputable section
 namespace PMConstants.ScalarAccounting
 open PMConstants ScalarSector
 
-def lambdaPayload : ℝ := (3 - 1/43) / (16 * overhead + 7)
+def lambdaPayload : ℝ :=
+  (((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) -
+      1 / (PMSubstrate.E8Values.Delta : ℝ)) /
+    ((PMSubstrate.E8Values.nu : ℝ) * overhead + (PMSubstrate.E8Values.D : ℝ) +
+      (PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ))
 
 def higgsSqPayload (GF : ℝ) : ℝ := 2 * lambdaPayload / (Real.sqrt 2 * GF)
 
@@ -28,9 +32,17 @@ theorem payload_higgs {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5) :
   have hs := JointConstants.sqrt_two_bounds
   have hd : 0 < Real.sqrt 2 * GF := by nlinarith [hs.1, h.1]
   have hlo : (125.52 : ℝ)^2 < higgsSqPayload GF := by
-    unfold higgsSqPayload lambdaPayload overhead; rw [lt_div_iff₀ hd]; nlinarith [hs.2, h.2]
+    unfold higgsSqPayload lambdaPayload overhead
+    rw [PMSubstrate.E8Values.overhead_eq, PMSubstrate.E8Values.nu_eq,
+      PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+      PMSubstrate.E8Values.Delta_eq, PMSubstrate.E8Values.D_eq, lt_div_iff₀ hd]
+    nlinarith [hs.2, h.2]
   have hhi : higgsSqPayload GF < (125.53 : ℝ)^2 := by
-    unfold higgsSqPayload lambdaPayload overhead; rw [div_lt_iff₀ hd]; nlinarith [hs.1, h.1]
+    unfold higgsSqPayload lambdaPayload overhead
+    rw [PMSubstrate.E8Values.overhead_eq, PMSubstrate.E8Values.nu_eq,
+      PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+      PMSubstrate.E8Values.Delta_eq, PMSubstrate.E8Values.D_eq, div_lt_iff₀ hd]
+    nlinarith [hs.1, h.1]
   constructor
   · rw [Real.lt_sqrt (by norm_num)]; exact hlo
   · rw [Real.sqrt_lt' (by norm_num)]; exact hhi

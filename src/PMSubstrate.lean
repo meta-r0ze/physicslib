@@ -12,6 +12,7 @@ import PMSubstrate.Scheduling
 import PMSubstrate.Selection
 import PMSubstrate.SchedulingComplete
 import PMSubstrate.Impedance
+import PMSubstrate.E8Values
 import PMSubstrate.MainResult
 import PMSubstrate.PhysicalBridge
 import PMSubstrate.ClassNumber

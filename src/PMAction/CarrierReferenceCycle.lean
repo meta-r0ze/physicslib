@@ -1,9 +1,10 @@
 import PMAction.SubstrateReflection
+import PMAction.ClockPeriod
 import PMAction.CarrierResponse
 import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-!
-# A closed reference cycle on actual carriers and a supplied 43-phase clock
+# A closed reference cycle on actual carriers and a supplied Delta-phase clock
 
 Reference information is encoded in the correlation between a carrier and the
 existing phase label. A root excursion is undone before the clock closes; no
@@ -18,159 +19,159 @@ noncomputable section
 namespace PMAction.CarrierReferenceCycle
 open Matrix Finset CarrierEvents
 
-abbrev State (c : Fin 3) := Carrier c × Fin 43
+abbrev State (c : Fin 3) := Carrier c × Fin Delta
 
-def rebase (c : Fin 3) (mask : Fin 43 → Bool) : Equiv.Perm (State c) where
+def rebase (c : Fin 3) (mask : Fin Delta → Bool) : Equiv.Perm (State c) where
   toFun s := (if mask s.2 then reflect c s.1 else s.1, s.2)
   invFun s := (if mask s.2 then reflect c s.1 else s.1, s.2)
   left_inv s := by cases hm : mask s.2 <;> simp [hm, reflection_involutive c s.1]
   right_inv s := by cases hm : mask s.2 <;> simp [hm, reflection_involutive c s.1]
 
-@[simp] theorem rebase_twice (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) :
+@[simp] theorem rebase_twice (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) :
     rebase c mask (rebase c mask s) = s := (rebase c mask).left_inv s
 
 def clock (c : Fin 3) : Equiv.Perm (State c) :=
-  Equiv.prodCongr (Equiv.refl _) (finRotate 43)
+  Equiv.prodCongr (Equiv.refl _) (finRotate Delta)
 
-def tick (c : Fin 3) (mask : Fin 43 → Bool) : Equiv.Perm (State c) :=
+def tick (c : Fin 3) (mask : Fin Delta → Bool) : Equiv.Perm (State c) :=
   (rebase c mask).trans ((clock c).trans (rebase c mask))
 
-def reference (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) : Carrier c :=
+def reference (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) : Carrier c :=
   (rebase c mask s).1
 
-theorem reference_encoded (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c) (t : Fin 43) :
+theorem reference_encoded (c : Fin 3) (mask : Fin Delta → Bool) (r : Carrier c) (t : Fin Delta) :
     reference c mask (rebase c mask (r,t)) = r :=
   congrArg Prod.fst (rebase_twice c mask (r,t))
 
 theorem state_card (c : Fin 3) : Fintype.card (State c) = 344 := by
-  simp [State, Fintype.card_prod, carrier_card]
+  norm_num [State, Fintype.card_prod, carrier_card, Delta_eq]
 
-theorem encoded_step (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c) (t : Fin 43) :
-    tick c mask (rebase c mask (r,t)) = rebase c mask (r,finRotate 43 t) := by
+theorem encoded_step (c : Fin 3) (mask : Fin Delta → Bool) (r : Carrier c) (t : Fin Delta) :
+    tick c mask (rebase c mask (r,t)) = rebase c mask (r,finRotate Delta t) := by
   change rebase c mask (clock c (rebase c mask (rebase c mask (r,t)))) = _
   rw [rebase_twice]
   rfl
 
-theorem reference_preserved (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) :
+theorem reference_preserved (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) :
     reference c mask (tick c mask s) = reference c mask s := by
   change (rebase c mask (rebase c mask (clock c (rebase c mask s)))).1 = _
   rw [rebase_twice]
   rfl
 
-theorem phase_advances (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) :
-    (tick c mask s).2 = finRotate 43 s.2 := rfl
+theorem phase_advances (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) :
+    (tick c mask s).2 = finRotate Delta s.2 := rfl
 
 /-- Executable gate form: advance the clock and perform at most one carrier
 root event, exactly at a mask boundary. The two rebases defining the conjugacy
 are algebraic coordinates, not two gates charged on every tick. -/
-theorem tick_gate_form (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) :
+theorem tick_gate_form (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) :
     tick c mask s =
-      (if mask (finRotate 43 s.2) ≠ mask s.2 then reflect c s.1 else s.1,
-        finRotate 43 s.2) := by
-  change (if mask (finRotate 43 s.2) then reflect c
+      (if mask (finRotate Delta s.2) ≠ mask s.2 then reflect c s.1 else s.1,
+        finRotate Delta s.2) := by
+  change (if mask (finRotate Delta s.2) then reflect c
       (if mask s.2 then reflect c s.1 else s.1) else
-      (if mask s.2 then reflect c s.1 else s.1), finRotate 43 s.2) = _
-  cases h0 : mask s.2 <;> cases h1 : mask (finRotate 43 s.2) <;>
+      (if mask s.2 then reflect c s.1 else s.1), finRotate Delta s.2) = _
+  cases h0 : mask s.2 <;> cases h1 : mask (finRotate Delta s.2) <;>
     simp_all [reflection_involutive c s.1]
 
-theorem iterate_encoded (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c)
-    (t : Fin 43) (n : ℕ) :
-    (tick c mask)^[n] (rebase c mask (r,t)) = rebase c mask (r,(finRotate 43)^[n] t) := by
+theorem iterate_encoded (c : Fin 3) (mask : Fin Delta → Bool) (r : Carrier c)
+    (t : Fin Delta) (n : ℕ) :
+    (tick c mask)^[n] (rebase c mask (r,t)) = rebase c mask (r,(finRotate Delta)^[n] t) := by
   induction n with
   | zero => rfl
   | succ n ih =>
     rw [Function.iterate_succ_apply', ih, encoded_step, Function.iterate_succ_apply']
 
-theorem clock_closes : ∀ t : Fin 43, (finRotate 43)^[43] t = t := by decide +kernel
+theorem clock_closes : ∀ t : Fin Delta, (finRotate Delta)^[Delta] t = t := by decide +kernel
 
-theorem clock_visits : ∀ t : Fin 43, (finRotate 43)^[t.val] 0 = t := by decide +kernel
+theorem clock_visits : ∀ t : Fin Delta, (finRotate Delta)^[t.val] 0 = t := by decide +kernel
 
-theorem trajectory_visits (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c) (t : Fin 43) :
+theorem trajectory_visits (c : Fin 3) (mask : Fin Delta → Bool) (r : Carrier c) (t : Fin Delta) :
     (tick c mask)^[t.val] (rebase c mask (r,0)) = rebase c mask (r,t) := by
   rw [iterate_encoded, clock_visits]
 
 /-- Closure holds on every state, not just a subset supplied with clean ancillas. -/
-theorem cycle_closes (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) :
-    (tick c mask)^[43] s = s := by
+theorem cycle_closes (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) :
+    (tick c mask)^[Delta] s = s := by
   obtain ⟨u, hu⟩ := (rebase c mask).surjective s
   rw [← hu, iterate_encoded, clock_closes]
 
-theorem cycles_repeat (c : Fin 3) (mask : Fin 43 → Bool) (s : State c) (n : ℕ) :
-    (tick c mask)^[43*n] s = s := by
-  have hc : (tick c mask)^[43] = id := funext (cycle_closes c mask)
+theorem cycles_repeat (c : Fin 3) (mask : Fin Delta → Bool) (s : State c) (n : ℕ) :
+    (tick c mask)^[Delta*n] s = s := by
+  have hc : (tick c mask)^[Delta] = id := funext (cycle_closes c mask)
   rw [Function.iterate_mul, hc]
   simp
 
-theorem tick_unitary (c : Fin 3) (mask : Fin 43 → Bool) :
+theorem tick_unitary (c : Fin 3) (mask : Fin Delta → Bool) :
     (tick c mask).permMatrix ℂ ∈ unitary (Matrix (State c) (State c) ℂ) :=
   CarrierResponse.perm_unitary _
 
 /-- On encoded states, the carrier changes precisely at a mask boundary and
 on an active root carrier. Clock motion is a different event. -/
-theorem carrier_changed_iff (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c) (t : Fin 43) :
+theorem carrier_changed_iff (c : Fin 3) (mask : Fin Delta → Bool) (r : Carrier c) (t : Fin Delta) :
     (tick c mask (rebase c mask (r,t))).1 ≠ (rebase c mask (r,t)).1 ↔
-      mask (finRotate 43 t) ≠ mask t ∧ r ∈ active c := by
+      mask (finRotate Delta t) ≠ mask t ∧ r ∈ active c := by
   rw [encoded_step]
-  change (if mask (finRotate 43 t) then reflect c r else r) ≠
+  change (if mask (finRotate Delta t) then reflect c r else r) ≠
     (if mask t then reflect c r else r) ↔ _
-  cases h0 : mask t <;> cases h1 : mask (finRotate 43 t) <;>
+  cases h0 : mask t <;> cases h1 : mask (finRotate Delta t) <;>
     simp_all [active, ne_comm]
 
 /-- One explicit excursion: the carrier is reflected only during phase 1. -/
-def excursionMask (t : Fin 43) : Bool := decide (t = 1)
+def excursionMask (t : Fin Delta) : Bool := decide (t = 1)
 
 theorem excursion_start (c : Fin 3) (r : Carrier c) :
     rebase c excursionMask (r,0) = (r,0) := by
   simp [rebase, excursionMask]
 
-def boundaries (mask : Fin 43 → Bool) : Finset (Fin 43) :=
-  univ.filter fun t => mask (finRotate 43 t) ≠ mask t
+def boundaries (mask : Fin Delta → Bool) : Finset (Fin Delta) :=
+  univ.filter fun t => mask (finRotate Delta t) ≠ mask t
 
 theorem excursion_boundaries : boundaries excursionMask = {0,1} := by decide +kernel
 
 /-- A nonempty change set on a closed binary cycle cannot have just one edge:
 the signed changes sum to zero. This does not require selecting an excursion mask. -/
-theorem boundary_minimum (mask : Fin 43 → Bool) (hne : (boundaries mask).Nonempty) :
+theorem boundary_minimum (mask : Fin Delta → Bool) (hne : (boundaries mask).Nonempty) :
     2 ≤ (boundaries mask).card := by
-  have hs : (∑ t : Fin 43, ((if mask (finRotate 43 t) then (1 : ℤ) else 0) -
+  have hs : (∑ t : Fin Delta, ((if mask (finRotate Delta t) then (1 : ℤ) else 0) -
       (if mask t then 1 else 0))) = 0 := by
     rw [Finset.sum_sub_distrib]
-    exact sub_eq_zero.mpr (Equiv.sum_comp (finRotate 43)
-      (fun t : Fin 43 => if mask t then (1 : ℤ) else 0))
+    exact sub_eq_zero.mpr (Equiv.sum_comp (finRotate Delta)
+      (fun t : Fin Delta => if mask t then (1 : ℤ) else 0))
   have hnot : (boundaries mask).card ≠ 1 := by
     intro hc
     obtain ⟨a, ha⟩ := Finset.card_eq_one.mp hc
-    have had : mask (finRotate 43 a) ≠ mask a := by
+    have had : mask (finRotate Delta a) ≠ mask a := by
       have hm : a ∈ boundaries mask := by rw [ha]; simp
       simpa [boundaries] using hm
-    have hz : (∑ t : Fin 43, ((if mask (finRotate 43 t) then (1 : ℤ) else 0) -
+    have hz : (∑ t : Fin Delta, ((if mask (finRotate Delta t) then (1 : ℤ) else 0) -
         (if mask t then 1 else 0))) =
-        (if mask (finRotate 43 a) then 1 else 0) - (if mask a then 1 else 0) := by
+        (if mask (finRotate Delta a) then 1 else 0) - (if mask a then 1 else 0) := by
       apply Finset.sum_eq_single a
       · intro t _ hta
         have hn : t ∉ boundaries mask := by rw [ha]; simpa using hta
-        have he : mask (finRotate 43 t) = mask t := by
+        have he : mask (finRotate Delta t) = mask t := by
           by_contra hbad
           exact hn (Finset.mem_filter.mpr ⟨mem_univ t, hbad⟩)
         rw [he, sub_self]
       · simp
     rw [hz] at hs
-    cases h0 : mask a <;> cases h1 : mask (finRotate 43 a) <;> simp_all
+    cases h0 : mask a <;> cases h1 : mask (finRotate Delta a) <;> simp_all
   have hp := hne.card_pos
   omega
 
 /-- The two carrier events are the actual outgoing and returning root actions. -/
-def carrierEvents (c : Fin 3) (mask : Fin 43 → Bool) (t : Fin 43) : Finset (Carrier c) :=
+def carrierEvents (c : Fin 3) (mask : Fin Delta → Bool) (t : Fin Delta) : Finset (Carrier c) :=
   if t ∈ boundaries mask then active c else ∅
 
-theorem event_member_iff (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c) (t : Fin 43) :
+theorem event_member_iff (c : Fin 3) (mask : Fin Delta → Bool) (r : Carrier c) (t : Fin Delta) :
     r ∈ carrierEvents c mask t ↔ t ∈ boundaries mask ∧ r ∈ active c := by
   by_cases ht : t ∈ boundaries mask <;> simp [carrierEvents, ht]
 
 /-- A fixed reference does not sample the ensemble: it experiences either all
 boundary events or none. -/
 theorem pointwise_excursion_count (c : Fin 3) (r : Carrier c) :
-    (∑ t : Fin 43, if r ∈ carrierEvents c excursionMask t then (1 : ℕ) else 0) =
+    (∑ t : Fin Delta, if r ∈ carrierEvents c excursionMask t then (1 : ℕ) else 0) =
       if r ∈ active c then 2 else 0 := by
   simp_rw [event_member_iff]
   by_cases hr : r ∈ active c
@@ -183,7 +184,7 @@ theorem pointwise_excursion_count (c : Fin 3) (r : Carrier c) :
     norm_num
   · simp [hr]
 
-theorem event_matches_update (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c) (t : Fin 43) :
+theorem event_matches_update (c : Fin 3) (mask : Fin Delta → Bool) (r : Carrier c) (t : Fin Delta) :
     r ∈ carrierEvents c mask t ↔
       (tick c mask (rebase c mask (r,t))).1 ≠ (rebase c mask (r,t)).1 := by
   rw [carrier_changed_iff]
@@ -191,11 +192,11 @@ theorem event_matches_update (c : Fin 3) (mask : Fin 43 → Bool) (r : Carrier c
 
 /-- Uniform sampling is an explicit ensemble input. No independence of the
 outgoing and returning events is needed; they have the same reference label. -/
-theorem carrier_cost_for_mask (c : Fin 3) (mask : Fin 43 → Bool) (toll : ℝ) :
+theorem carrier_cost_for_mask (c : Fin 3) (mask : Fin Delta → Bool) (toll : ℝ) :
     PMSubstrate.NetCost.expectedCost toll (carrierEvents c mask) =
       toll * ((boundaries mask).card / 2) := by
   rw [PMSubstrate.NetCost.expected_count_linear]
-  have hp (t : Fin 43) : PMSubstrate.NetCost.prob (carrierEvents c mask t) =
+  have hp (t : Fin Delta) : PMSubstrate.NetCost.prob (carrierEvents c mask t) =
       if t ∈ boundaries mask then (1/2 : ℝ) else 0 := by
     by_cases ht : t ∈ boundaries mask <;>
       norm_num [carrierEvents, ht, PMSubstrate.NetCost.prob, active_card, carrier_card]
@@ -223,7 +224,7 @@ theorem idle_cycle_cost (c : Fin 3) (toll : ℝ) :
 /-- Economy within the stated family of non-idle root excursions. Requiring
 an excursion is an operational input; idle cycles also persist at zero root cost. -/
 theorem minimum_nonidle_carrier_cost (c : Fin 3) (toll : ℝ) (ht : 0 ≤ toll) :
-    IsLeast {cost | ∃ mask : Fin 43 → Bool, (boundaries mask).Nonempty ∧
+    IsLeast {cost | ∃ mask : Fin Delta → Bool, (boundaries mask).Nonempty ∧
       PMSubstrate.NetCost.expectedCost toll (carrierEvents c mask) = cost} toll := by
   constructor
   · refine ⟨excursionMask, ?_, carrier_cycle_cost c toll⟩
@@ -235,7 +236,7 @@ theorem minimum_nonidle_carrier_cost (c : Fin 3) (toll : ℝ) (ht : 0 ≤ toll) 
     have hf : (1 : ℝ) ≤ (boundaries mask).card / 2 := by linarith
     simpa using mul_le_mul_of_nonneg_left hf ht
 
-theorem minimum_cost_iff_two_boundaries (c : Fin 3) (mask : Fin 43 → Bool)
+theorem minimum_cost_iff_two_boundaries (c : Fin 3) (mask : Fin Delta → Bool)
     (toll : ℝ) (ht : 0 < toll) :
     PMSubstrate.NetCost.expectedCost toll (carrierEvents c mask) = toll ↔
       (boundaries mask).card = 2 := by
@@ -277,8 +278,8 @@ theorem minimum_closed_root_word (c : Fin 3) :
 /-- Clock advance is not free in this ledger. Its price is supplied separately;
 every phase advances, even when the carrier itself is stationary. -/
 theorem clock_cycle_cost (c : Fin 3) (clockToll : ℝ) :
-    PMSubstrate.NetCost.expectedCost clockToll (fun _ : Fin 43 => (univ : Finset (Carrier c))) =
-      43 * clockToll := by
+    PMSubstrate.NetCost.expectedCost clockToll (fun _ : Fin Delta => (univ : Finset (Carrier c))) =
+      Delta * clockToll := by
   rw [PMSubstrate.NetCost.expected_count_linear]
   have hn : Fintype.card (Carrier c) ≠ 0 := by rw [carrier_card]; decide
   simp [PMSubstrate.NetCost.prob, hn]

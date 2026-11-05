@@ -22,7 +22,7 @@ inputs, not derived numbers.
 
 noncomputable section
 namespace PMConstants.ScaleConsistency
-open Electroweak CertifiedConstants JointConstants GaugeSpectrum ElectroweakBounds
+open ElectroweakE8 CertifiedConstants JointConstants GaugeSpectrum ElectroweakBounds
 
 /-- Comparison inputs (measured; used only to test the response family). -/
 def zAnchor : ℝ := 91.1876

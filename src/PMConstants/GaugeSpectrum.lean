@@ -1,4 +1,4 @@
-import PMConstants.Electroweak
+import PMConstants.ElectroweakE8
 
 /-!
 # The neutral quadratic response and derived gauge mass relations
@@ -11,7 +11,7 @@ No gauge group, response normalization or coupling value is inferred from E8.
 -/
 noncomputable section
 namespace PMConstants.GaugeSpectrum
-open Matrix Electroweak
+open Matrix ElectroweakE8
 
 def neutral (g gp : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   !![g^2, -g*gp; -g*gp, gp^2]

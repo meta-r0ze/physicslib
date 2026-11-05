@@ -1,5 +1,4 @@
 import PMFlavor.CKM
-import PMFlavor.Mixing
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Data.Matrix.Block
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -13,9 +12,8 @@ The calculator multiplies every CKM amplitude by `q = √(1 − 1/688)`, `688 = 
 * `ckm_unitary_matrix`, `ckm_unitary_cols`: the undressed matrix satisfies `VV† = V†V = 1`.
 * `dressed_gram`, `dressed_gram_cols`: the dressed matrix `A = qV` has `AA† = A†A = (687/688)·1`.
   Every row and every column loses the same `1/688`; `first_row_sum` states it for the first row.
-* `first_row_deficit_test`: the first-row sum measured from `|V_ud|`, `|V_us|`, `|V_ub|`,
-  `0.9984 ± 0.0007` (CKM 2023 workshop), is within `0.22σ` of the dressed prediction and more
-  than `2.28σ` from exact unitarity. This is a fixed benchmark test of the dressing alternative, not a selection of it.
+* The fixed first-row benchmark test (CKM 2023 workshop) now lives in
+  `FlavourPulls.first_row_deficit_test`; this module contains only the dressing algebra.
 * `dilation_needs_three`: if a dressed block `A` with `AA† = c·1`, `c ≠ 1`, is the
   upper-left `3×3` block of any unitary matrix of size `3 + m`, then `m ≥ 3`. The lost `1/688`
   cannot go into one extra outcome: Conservation requires at least three further channels
@@ -80,13 +78,6 @@ theorem first_row_sum (q : ℝ) (hq : q^2 = q2) (r12 : c12^2 + s12^2 = 1)
   rw [Matrix.mul_apply] at h
   simp only [Matrix.conjTranspose_apply, Complex.star_def, Complex.mul_conj] at h
   rw [h]; simp [q2]
-
-/-- Measured first-row sum `0.9984 ± 0.0007` against the two hypotheses. -/
-theorem first_row_deficit_test :
-    |(1 - 1/688 : ℝ) - 0.9984| / 0.0007 < 0.22 ∧ 2.28 < |(1 : ℝ) - 0.9984| / 0.0007 := by
-  constructor
-  · rw [abs_of_pos (by norm_num)]; norm_num
-  · rw [abs_of_pos (by norm_num)]; norm_num
 
 /-- A unitary dilation of a uniformly dressed `3×3` block needs at least three extra channels. -/
 theorem dilation_needs_three {m : ℕ} (W : Matrix (Fin 3 ⊕ Fin m) (Fin 3 ⊕ Fin m) ℂ)

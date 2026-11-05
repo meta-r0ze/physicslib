@@ -1,4 +1,5 @@
 import PMAction.ParityReadoutCircuit
+import PMAction.ClockPeriod
 
 /-!
 # The existing E8 root reflection is an in-band parity readout
@@ -178,7 +179,7 @@ theorem scheduled_read (z : Lattice) (hz : record z = false) :
   exact clean_record_reads z hz
 
 theorem schedule_closes (s : ClockControlledRoot.State) :
-    (ClockControlledRoot.update CarrierReferenceCycle.excursionMask)^[43] s = s :=
+    (ClockControlledRoot.update CarrierReferenceCycle.excursionMask)^[Delta] s = s :=
   ClockControlledRoot.cycle_closes _ s
 
 end PMAction.InBandRootReadout

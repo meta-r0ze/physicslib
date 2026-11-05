@@ -450,6 +450,196 @@ theorem all_nonzero_mixing_interval (δ ε : ℝ) (hδ0 : 0 < δ) (hε0 : 0 < ε
   · rw [ip_M_P]; exact eMP
   · rw [ip_M_M]; exact eMM
 
+/-! ## The global exceptional set
+
+The square `0 < δ, ε ≤ 4` is sufficient but not necessary. For every positive
+`δ, ε`, the only overlap that can vanish is the `rootM/rootM` cross term; the
+other eight entries are sign-definite. The zero condition is
+`rootM δ + rootM ε = 5`, and this section solves it as an explicit graph
+
+    δ = rootMInv (5 − rootM ε),   rootMInv y = (y − 1)(4 − y)/(3 − y).
+
+So the exceptional set is a curve, not a region: for each `ε` there is at most one
+`δ`. This is the global exceptional-set statement the review asked for. -/
+
+/-- `rootM x < 3` for every real `x` (not only positive `x`). -/
+theorem rootM_lt_three (x : ℝ) : rootM x < 3 := by
+  unfold rootM
+  have h : x - 1 < Real.sqrt ((x - 1) ^ 2 + 8) := by
+    rcases le_or_gt 0 (x - 1) with hx1 | hx1
+    · rw [Real.lt_sqrt hx1]
+      nlinarith
+    · exact lt_trans hx1 (Real.sqrt_pos.mpr (by positivity))
+  linarith
+
+/-- If `2 < x`, then `2 < rootM x`. -/
+theorem rootM_gt_two (x : ℝ) (hx : 2 < x) : 2 < rootM x := by
+  unfold rootM
+  have h : Real.sqrt ((x - 1) ^ 2 + 8) < x + 1 := by
+    rw [Real.sqrt_lt' (by linarith : (0 : ℝ) < x + 1)]
+    nlinarith
+  linarith
+
+/-- If `x ≤ 2`, then `rootM x ≤ 2`. -/
+theorem rootM_le_two_of_le_two (x : ℝ) (hx : x ≤ 2) : rootM x ≤ 2 := by
+  unfold rootM
+  have h : x + 1 ≤ Real.sqrt ((x - 1) ^ 2 + 8) := by
+    rcases le_or_gt 0 (x + 1) with hx1 | hx1
+    · rw [Real.le_sqrt hx1 (by positivity)]
+      nlinarith
+    · exact le_trans (le_of_lt hx1) (Real.sqrt_nonneg _)
+  linarith
+
+/-- The smaller block root is injective on all of `ℝ`. -/
+theorem rootM_inj (δ ε : ℝ) (h : rootM δ = rootM ε) : δ = ε := by
+  have hqδ := rootM_quadratic δ
+  have hqε := rootM_quadratic ε
+  rw [h] at hqδ
+  have hsub : (δ - ε) * (3 - rootM ε) = 0 := by
+    calc
+      (δ - ε) * (3 - rootM ε)
+          = (rootM ε ^ 2 - (5 + δ) * rootM ε + (4 + 3 * δ))
+            - (rootM ε ^ 2 - (5 + ε) * rootM ε + (4 + 3 * ε)) := by ring
+      _ = 0 := by rw [hqδ, hqε]; ring
+  have hlt : rootM ε < 3 := rootM_lt_three ε
+  have hne : 3 - rootM ε ≠ 0 := by linarith
+  have hde : δ - ε = 0 := by
+    rcases mul_eq_zero.mp hsub with h1 | h2
+    · exact h1
+    · exact absurd h2 hne
+  exact sub_eq_zero.mp hde
+
+/-- The explicit inverse of `rootM` on its range `(-∞, 3)`. -/
+def rootMInv (y : ℝ) : ℝ := ((y - 1) * (4 - y)) / (3 - y)
+
+theorem rootMInv_pos {y : ℝ} (hy1 : 1 < y) (hy3 : y < 3) : 0 < rootMInv y := by
+  unfold rootMInv
+  exact div_pos (mul_pos (by linarith) (by linarith)) (by linarith)
+
+/-- `rootMInv` is a right inverse of `rootM` below `3`. -/
+theorem rootM_rootMInv (y : ℝ) (hy3 : y < 3) :
+    rootM (rootMInv y) = y := by
+  unfold rootM rootMInv
+  have hden : 3 - y ≠ 0 := by linarith
+  have hnumpos : 0 < y ^ 2 - 6 * y + 11 := by nlinarith [sq_nonneg (y - 3)]
+  have hnum : y ^ 2 - 6 * y + 11 ≠ 0 := ne_of_gt hnumpos
+  have hspos : 0 < (y ^ 2 - 6 * y + 11) / (3 - y) :=
+    div_pos hnumpos (by linarith)
+  have hs : Real.sqrt (((((y - 1) * (4 - y)) / (3 - y)) - 1) ^ 2 + 8)
+      = (y ^ 2 - 6 * y + 11) / (3 - y) := by
+    rw [Real.sqrt_eq_iff_eq_sq (by positivity) (le_of_lt hspos)]
+    field_simp [hden, hnum]
+    ring
+  rw [hs]
+  field_simp [hden]
+  ring
+
+/-- If the `rootM/rootM` sum is `5`, the pair lies on the explicit exceptional
+curve `δ = rootMInv (5 − rootM ε)`. Consequently, for fixed `ε` there is at most
+one `δ` where this overlap vanishes. -/
+theorem rootM_sum_eq_five_imp (δ ε : ℝ) (hδ0 : 0 < δ)
+    (h : rootM δ + rootM ε = 5) :
+    δ = rootMInv (5 - rootM ε) := by
+  have hy1 : 1 < 5 - rootM ε := by linarith [rootM_gt_one δ hδ0]
+  have hy3 : 5 - rootM ε < 3 := by linarith [rootM_lt_three δ]
+  have hxpos : 0 < rootMInv (5 - rootM ε) := rootMInv_pos hy1 hy3
+  apply rootM_inj
+  rw [rootM_rootMInv (5 - rootM ε) hy3]
+  linarith
+
+/-- On the exceptional curve, the `rootM/rootM` sum is exactly `5`. -/
+theorem rootM_sum_eq_five_of_exceptional (δ ε : ℝ) (hε2 : 2 < ε)
+    (h : δ = rootMInv (5 - rootM ε)) :
+    rootM δ + rootM ε = 5 := by
+  have hy3 : 5 - rootM ε < 3 := by linarith [rootM_gt_two ε hε2]
+  rw [h, rootM_rootMInv (5 - rootM ε) hy3]
+  ring
+
+/-- For `ε > 2`, the `rootM/rootM` zero condition is exactly the exceptional
+curve. This is the converse of `rootM_sum_eq_five_imp`. -/
+theorem rootM_sum_eq_five_iff_of_two_lt (δ ε : ℝ) (hδ0 : 0 < δ) (hε2 : 2 < ε) :
+    rootM δ + rootM ε = 5 ↔ δ = rootMInv (5 - rootM ε) := by
+  constructor
+  · intro h
+    exact rootM_sum_eq_five_imp δ ε hδ0 h
+  · intro h
+    exact rootM_sum_eq_five_of_exceptional δ ε hε2 h
+
+/-- For `ε ≤ 2` the `rootM/rootM` sum is automatically below `5`, so the
+exceptional curve is empty there. -/
+theorem rootM_sum_lt_five_of_le_two (δ ε : ℝ) (hε2 : ε ≤ 2) :
+    rootM δ + rootM ε < 5 := by
+  have hMε : rootM ε ≤ 2 := rootM_le_two_of_le_two ε hε2
+  have hMδ : rootM δ < 3 := rootM_lt_three δ
+  linarith
+
+/-- **Global all-nonzero mixing, with the exceptional curve removed.** For every
+positive `δ, ε`, all nine entries of the mixing overlap are nonzero unless
+`δ = rootMInv (5 − rootM ε)`. Since the exceptional set is an explicit graph, the
+zeros are confined to a curve rather than a two-dimensional region. -/
+theorem all_nonzero_mixing_global (δ ε : ℝ) (hδ0 : 0 < δ) (hε0 : 0 < ε)
+    (h : δ ≠ rootMInv (5 - rootM ε)) :
+    (ip anti antiB ≠ 0 ∧
+      ip anti (![1, (rootP ε : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      ip anti (![1, (rootM ε : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0) ∧
+    (ip (![(rootP δ : ℂ) - 3, 1, 1] : Fin 3 → ℂ) antiB ≠ 0 ∧
+      ip (![(rootM δ : ℂ) - 3, 1, 1] : Fin 3 → ℂ) antiB ≠ 0) ∧
+    (ip (![(rootP δ : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (rootP ε : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      ip (![(rootP δ : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (rootM ε : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      ip (![(rootM δ : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (rootP ε : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      ip (![(rootM δ : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (rootM ε : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0) := by
+  have hsum : rootM δ + rootM ε ≠ 5 := by
+    intro h5
+    exact h (rootM_sum_eq_five_imp δ ε hδ0 h5)
+  have hPδ : 4 < rootP δ := rootP_gt_four δ hδ0
+  have hPε : 4 < rootP ε := rootP_gt_four ε hε0
+  have hMδ : 1 < rootM δ := rootM_gt_one δ hδ0
+  have hMε : 1 < rootM ε := rootM_gt_one ε hε0
+  have hMδ4 : rootM δ < 4 := by linarith [rootM_lt_three δ]
+  have hMε4 : rootM ε < 4 := by linarith [rootM_lt_three ε]
+  have ePδ : (rootP δ : ℂ) - 4 ≠ 0 := by
+    have heq : (rootP δ : ℂ) - 4 = ((rootP δ - 4 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (by linarith)
+  have ePε : (rootP ε : ℂ) - 4 ≠ 0 := by
+    have heq : (rootP ε : ℂ) - 4 = ((rootP ε - 4 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (by linarith)
+  have eMδ : (rootM δ : ℂ) - 4 ≠ 0 := by
+    have heq : (rootM δ : ℂ) - 4 = ((rootM δ - 4 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (by linarith)
+  have eMε : (rootM ε : ℂ) - 4 ≠ 0 := by
+    have heq : (rootM ε : ℂ) - 4 = ((rootM ε - 4 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (by linarith)
+  have ePP : (rootP δ : ℂ) + (rootP ε : ℂ) - 5 ≠ 0 := by
+    have heq : (rootP δ : ℂ) + (rootP ε : ℂ) - 5
+        = ((rootP δ + rootP ε - 5 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (by linarith)
+  have ePM : (rootP δ : ℂ) + (rootM ε : ℂ) - 5 ≠ 0 := by
+    have heq : (rootP δ : ℂ) + (rootM ε : ℂ) - 5
+        = ((rootP δ + rootM ε - 5 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (by linarith)
+  have eMP : (rootM δ : ℂ) + (rootP ε : ℂ) - 5 ≠ 0 := by
+    have heq : (rootM δ : ℂ) + (rootP ε : ℂ) - 5
+        = ((rootM δ + rootP ε - 5 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (by linarith)
+  have eMM : (rootM δ : ℂ) + (rootM ε : ℂ) - 5 ≠ 0 := by
+    have heq : (rootM δ : ℂ) + (rootM ε : ℂ) - 5
+        = ((rootM δ + rootM ε - 5 : ℝ) : ℂ) := by push_cast; ring
+    rw [heq]; exact real_cast_ne (sub_ne_zero.mpr hsum)
+  refine ⟨⟨?_, ?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
+  · rw [ip_anti_antiB]; norm_num
+  · rw [ip_anti_P]; exact ePε
+  · rw [ip_anti_M]; exact eMε
+  · rw [ip_comm, ip_antiB_P]; exact ePδ
+  · rw [ip_comm, ip_antiB_M]; exact eMδ
+  · rw [ip_P_P]; exact ePP
+  · rw [ip_P_M]; exact ePM
+  · rw [ip_M_P]; exact eMP
+  · rw [ip_M_M]; exact eMM
+
 /-! ## The interval `0 < x ≤ 4` is not vacuous — the global statement genuinely fails
 
 At `δ = ε = 9/2` the smaller block root is exactly `5/2`, so the cross term
