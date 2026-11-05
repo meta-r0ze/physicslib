@@ -28,13 +28,13 @@ def pnWeight : ℝ := mapWeight - boundaryWeight
 def nnWeight : ℝ := mapWeight + boundaryWeight
 
 theorem ppWeight_eq : ppWeight = Real.pi * 4 := by
-  simp [ppWeight, mapWeight, D, PMSubstrate.baseline]
+  simp [ppWeight, mapWeight, D]
 
 theorem pnWeight_eq : pnWeight = Real.pi * 4 - 5 / 2 := by
-  simp [pnWeight, mapWeight, boundaryWeight, D, σ, PMSubstrate.baseline]
+  simp [pnWeight, mapWeight, boundaryWeight, D, σ]
 
 theorem nnWeight_eq : nnWeight = Real.pi * 4 + 5 / 2 := by
-  simp [nnWeight, mapWeight, boundaryWeight, D, σ, PMSubstrate.baseline]
+  simp [nnWeight, mapWeight, boundaryWeight, D, σ]
 
 /-- The proton base is exactly `Δ² − mapWeight − 1/D`. -/
 theorem base_eq : base = (Δ : ℝ) ^ 2 - mapWeight - 1 / (D : ℝ) := by

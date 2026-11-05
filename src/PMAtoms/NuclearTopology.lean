@@ -50,4 +50,32 @@ theorem triangle_is_minimal_closed :
   · exact triangle_edges
   · rw [triangle_edges]
 
+
+/-- First Betti number (independent cycles) of a finite simple graph. -/
+def cycleRank {V : Type} [Fintype V] (G : SimpleGraph V) [DecidableRel G.Adj] : Nat :=
+  G.edgeFinset.card + 1 - Fintype.card V
+
+/-- The triangle has one independent cycle. -/
+theorem triangle_cycleRank : cycleRank (⊤ : SimpleGraph (Fin 3)) = 1 := by
+  unfold cycleRank
+  rw [triangle_edges]
+  norm_num
+
+/-- The tetrahedron has three independent cycles. -/
+theorem tetrahedron_edges_top : (⊤ : SimpleGraph (Fin 4)).edgeFinset.card = 6 := by
+  decide
+
+theorem tetrahedron_cycleRank : cycleRank (⊤ : SimpleGraph (Fin 4)) = 3 := by
+  unfold cycleRank
+  rw [tetrahedron_edges_top]
+  norm_num
+
+/-- An open tree has no independent cycle. -/
+theorem tree_cycleRank {A : Nat} (G : SimpleGraph (Fin A)) [DecidableRel G.Adj]
+    (hG : G.IsTree) (hA : 0 < A) : cycleRank G = 0 := by
+  unfold cycleRank
+  rw [tree_edges G hG]
+  simp
+  omega
+
 end PMAtoms

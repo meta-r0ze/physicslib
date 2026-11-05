@@ -40,4 +40,6 @@ theorem charge_coupling :
     Real.pi * (D : ℝ) / (2 * (σ : ℝ)) = Real.pi * 4 / 10 := by
   norm_num [D, σ, PMSubstrate.baseline]
 
+
+
 end PMAtoms

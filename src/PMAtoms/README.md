@@ -29,13 +29,24 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `NuclearFolding` | `Folding`, `coulombEnergy`, `coulombEnergy_scale`; `softenedKernel` (homothetic, ≤1/r); `e8ChargeCoupling = πD/(2σ)`, `sphereCoulomb` | actual folded positions | 3D folding `Folding` (positions in `Fin 3`), `dist`, `coulombEnergy`; `dist_scale`; `coulombEnergy_scale` (energy ∝ 1/λ); `coulombEnergy_folded` (radius A^{1/3}) | absolute charge coupling |
 | `NuclearCharge` | Paper II path Green function + Paper III charge: `chargeEnergy3_H3 = 3/4`, `chargeEnergy3_He3 = 11/4`, `chargeEnergy4_He4 = 16/5`, `mirror_charge_difference = 2` | absolute E8 coupling scale |
 | `NuclearLine` | `lineCounts` (alternating ring + alpha diagonals); H-3/He-3/He-4/C-12/O-16 counts; `lineBinding_*` | Coulomb valley, boundary term |
-| `TwoLedger` | `nuclearMass` = free − link binding + charge; `nuclearMassCapped` (homo cap); `mirror_h3_he3`, `mirror_h3_he3_capped` |
+| `AlphaPersistence` | `survivingPhases`/`blockedPhases` (cards `Δ−gap`/`gap`), `blocked_surviving_card_sum`, `isospinBudget_add_gap`, `alphaPhaseFraction`, `alphaCountPhase_eq`, alpha nonneg/zero/capacity bounds |
+| `ShapePotential` | general Landau potential `V(β)=Aβ²+Bβ³+Cβ⁴`, `Stationary`, `discriminant`, symmetric `doubleWell` minima; E8 control coefficients `e8ShapePotential` (`A=N−152`, `B=Z−96`, `C=χ`); E8 cubic/asymmetry `cubicCoupling=deformationWeight/ν`, `e8CubicPotential`, `nuclearMassPackingCubic`, `nuclearMassPackingShape` with supplied equilibrium β |
+| `NuclearDeformation` | `protonValence`, `neutronValence`, `valenceProduct`, `deformationWeight = 43/288`, `deformationExcess = max((Z−82)(N−126)−82,0)`; upper closures `protonUpperShell=126`, `neutronUpperShell=184`; capped valence functions, `deformationBinding` (even-even), `nuclearMassPackingDeformed`; Z-dependent `deformationZFactor=(Z−82)/(ν−χ)`, `deformationBindingZ`, `nuclearMassPackingDeformedZ`; two-shape `mixingMass`, `nuclearMassPackingCoexist` with `V = shellWeight`; pairing factor `deformationPairingFactor` (even-even `1`, odd-odd `1/2`, odd-A `0`) and `nuclearMassPackingDeformedZPair` |
+| `TwoLedger` | `nuclearMass`/`nuclearMassCapped`; `nuclearMassPacking` (3D), `nuclearMassPackingTyped` (typed channels), `nuclearMassPackingClosure` (closure rank), `nuclearMassPackingAlpha` (alpha cluster), `nuclearMassPackingShell` (heavy `N>126` shell correction), `nuclearMassPackingShellPaired` (odd-A `3/4` shell cost); `mirror_h3_he3_typed` |
+| `ShapePotential` | general Landau potential `V(β)=Aβ²+Bβ³+Cβ⁴`, `Stationary`, `discriminant`, symmetric `doubleWell` minima; E8 control coefficients `e8ShapePotential` (`A=N−152`, `B=Z−96`, `C=χ`); E8 cubic/asymmetry `cubicCoupling=deformationWeight/ν`, `e8CubicPotential`, `nuclearMassPackingCubic`, `nuclearMassPackingShape` with supplied equilibrium β |
+| `NuclearDeformation` | `protonValence`, `neutronValence`, `valenceProduct`, `deformationWeight = 43/288`, `deformationExcess = max((Z−82)(N−126)−82,0)`; upper closures `protonUpperShell=126`, `neutronUpperShell=184`; capped valence functions, `deformationBinding` (even-even), `nuclearMassPackingDeformed`; Z-dependent `deformationZFactor=(Z−82)/(ν−χ)`, `deformationBindingZ`, `nuclearMassPackingDeformedZ`; two-shape `mixingMass`, `nuclearMassPackingCoexist` with `V = shellWeight`; pairing factor `deformationPairingFactor` (even-even `1`, odd-odd `1/2`, odd-A `0`) and `nuclearMassPackingDeformedZPair` |
 | `TwoLedger` | `nuclearMass` = free − link binding + charge; `massLinkWeight` (`pp=πD+c/2`, `nn=πD−c/2`), `chargeTerm`; **`mirror_h3_he3`**: `M(H3)−M(He3)=m_n−m_p−m_e` |
+| `LatticeCharge3Energy` | `latticeChargeEnergy3_single`, `greenCube3_nonneg`, `latticeChargeEnergy3_nonneg`, `latticeChargeEnergy3_one = 743/51`, `latticeChargeEnergy3_uniform` |
+| `LatticeCharge3` | exact `3×3×3` Green rows (`greenCube3`), `twoProtonEnergy3` values; `latticeNormalization3`, `normalized_nearest3_eq_sphere`, `normalized_face3_lt_sphere`, `normalized_body3_lt_sphere`; `cube3Lap_green` (27-site Laplacian identity) |
+| `LatticeCharge` | `twoProtonEnergy`, `twoProtonEnergy_nearest = 46/105`, `twoProtonEnergy_le_nearest`; `latticeChargeEnergy`, `latticeChargeEnergy_single`; `latticeChargeFactor`; `lattice_nearest_lt_sphere` (lattice below continuum sphere) |
 | `LatticeGreen3D` | `greenCube` (rational 3D inverse), `cubeLap`, `greenCube_symm`, `cubeLap_green : L G = δ`; self-energy `58/315` |
 | `LatticeGreen` | general path Green `pathGreen N i j`; `pathGreen_diag` (definite self-energy), `pathGreen_symm`; `green3_eq_pathGreen`, `green4_eq_pathGreen` | 3D lattice kernel |
-| `NuclearTopology` | `closed_min_edges` (min degree 2 ⇒ ≥A edges), `triangle_is_minimal_closed`, `tree_edges` (open tree = A−1) |
+| `NuclearPacking3D` | `xEdge`/`yEdge`/`zEdge`, `cubeEdgeFinset`; **`cubeEdges_eq_card`** (`E = 3n²(n−1)`), `cubeEdges_per_vertex`, bounds, `cubeEdges_pos`; typed channels `ppEdges`/`pnEdges`/`nnEdges`, `cubeEdges_channel_partition`, `cubeEdges_channel_card_sum`, `mixedPP/PN/NN`; closure rank `packingClosureRank`; `cubeInterior`, `cube_interior_iff` (smallest valid cube is `3×3×3`) | 3D packing + channel + closure counts |
+| `NuclearTopology` | `closed_min_edges` (min degree 2 ⇒ ≥A edges), `triangle_is_minimal_closed`, `tree_edges` (open tree = A−1); `cycleRank`, `triangle_cycleRank`, `tetrahedron_cycleRank`, `tree_cycleRank` |
 | `AxisSplit` | `lepton_axis_unique`, `reference_axis_card = 1`, `colour_axis_card = 3`, `axis_split`, `three_plus_one_axes` — the 3+1 split from `BaryonNumber.axisB` |
+| `LinkWeights` | `packingWeight_from_linkRow` derives `πD·3/5` from `(linkRowSum−1)/σ`; `packingChannelAsymmetry_from_link` derives `σ/ν` from `boundaryWeight/(ν/2)` |
 | `LinkWeights` | `ppWeight = πD`, `pnWeight = πD − σ/2`, `nnWeight = πD + σ/2`; `base_eq`, `neutron_boundary` connect them to `CompositeMasses` |
+| `E8AtomValues` | atom-specific closure identities: `delta_add_sigma`, `proton_closure=82`, `neutron_closure=126`, `deformed_proton_closure=96`, `upper_neutron_closure=184`, `deformed_neutron_closure=152`, `deformation_denominator=288`; proved inside PMAtoms |
 | `Invariants` | `Δ,ν,σ,χ,D`; `colour_axes = 3`, `reference_axes = 1`, `three_plus_one`, `homo_pair = 2`, `sphere_factor = 3/5`, `charge_coupling = πD/(2σ)` |
 | `NuclearCoordination` | 3 hetero + 1 homo channel split; `pnCapacity`, `homoCapacity`; H-3/He-3/He-4 within-capacity proofs; one proton ≤3 neutrons, two protons ≤6 |
 | `NuclearBinding` | `he4_pairwise_shortfall`, `he4_closure_gap`, `mirror_link_difference` |
@@ -47,6 +58,16 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `Nucleus` | `(Z,N)` ledger; `β⁻`, `β⁺`, capture, `α`, fission; conservation; persistence as local minimality of a supplied cost |
 | `Particle` | generic mass-ordered decay ledger; **`proton_stable`**; allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` |
 | `ElectronCloud` | spin-orbital cloud (`Finset SpinOrbital`), Pauli by construction; hydrogenic `ε_n = −R∞/n²`; `fillCloud` = lowest-`n` variational filling; `AtomSystem` = nucleus + cloud | electron–electron screening/exchange |
+| `CollectiveE8` | `alphaBarrier=Δ`, `fissionBarrier=shellWeight`, `e8ClockPeriod=Δ`; `alphaChannelE8`, `fissionChannelE8`; Coulomb-corrected `alphaBarrierCoulomb`, `alphaChannelCoulomb`; Geiger–Nuttall `alphaBarrierGeiger`, `alphaQ`, `alphaChannelGeiger` |
+| `CollectiveRate` | `barrierRate`, `collectiveRate`, `collectiveMeanLife`, `PersistsOn`; barrier → hazard → mean-life scaffold; `tollTime = toll/energy`, `PersistsAtToll` |
+| `CollectiveRegime` | `CollectiveChannel`, `collectiveMass`, `CollectivePersists`; `alphaChannel`, `fissionChannel` with smooth-ledger masses and `shellWeight` barrier |
+| `CollectiveE8` | `alphaBarrier=Δ`, `fissionBarrier=shellWeight`, `e8ClockPeriod=Δ`; `alphaChannelE8`, `fissionChannelE8`; Coulomb-corrected `alphaBarrierCoulomb`, `alphaChannelCoulomb`; Geiger–Nuttall `alphaBarrierGeiger`, `alphaQ`, `alphaChannelGeiger` |
+| `CollectiveRate` | `barrierRate`, `collectiveRate`, `collectiveMeanLife`, `PersistsOn`; barrier → hazard → mean-life scaffold; `tollTime = toll/energy`, `PersistsAtToll` |
+| `CollectiveRegime` | `CollectiveChannel`, `collectiveMass` lower envelope, `CollectivePersists`; `collectiveMass_le_parent`, `collectiveMass_le_channel`, `collectiveMass_eq_parent_of_forall` |
+| `NuclearLedger` | `certifiedMass`, `certifiedDomain`, `certifiedMass_decomp`, `certifiedDomain_cm`, `certifiedDomain_cf`; certified smooth ledger through the frontier |
+| `NuclearRegime` | `NuclearRegime`, `deformedFrontier`, `regimeOf`; `pb_regime`, `u_regime`, `cm_regime`, `cf_regime`, `cm_at_frontier`, `cf_beyond_frontier`; Cm/Cf boundary as a theorem |
+| `SingleParticle` | `NuclearOrbital`, `nuclearOrbitals126`, `nuclearOrbitals184`, `totalOccupation`; `126`/`184` occupations proved; `orbitalEnergy`, `orbitalLevels`, `cumulativeEnergy`, `smoothEnergy`, `strutinskyCorrection` scaffold; `spinOrbit`, `nilssonEnergy`, `nilssonLevels`, `nilssonCumulative`, `nilssonCorrection` |
+| `NuclearShells` | E8 nuclear magic ladder: `magic2=χ`, `magic8=Dχ`, `magic20=Dσ`, `magic28=D(σ+χ)`, `magic50=χσ²`, `magic82=2(Δ−χ)`, `magic96=2(Δ+σ)`, `magic126=(σ−χ)(Δ−1)`, `magic152`, `magic184=D(Δ+σ−χ)`; shell occupations `nuclearShellSizes=[2,6,12,8,22,32,14,30,26,32]` |
 | `Shells` | `orbitalCapacity l = 2(2l+1)`, `shellCapacity n = 2n²`, first shells `2,8,18,32` |
 | `Hydrogen` | Rydberg energy and Bohr radius from the certified `α`; `E_n = E_1/n²`; ground state lowest |
 | `PersistenceRate` | dynamical persistence: `Persists` = total hazard zero, else `MeanLife = 1/λ`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | the E8 channel rates |
@@ -66,4 +87,6 @@ open E8 derivation; the library fixes the `rate → lifetime` step and proves th
 structural decays in the meantime.
 
 Open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); proved results are in
-[`OVERVIEW.md`](OVERVIEW.md).
+[`OVERVIEW.md`](OVERVIEW.md); the narrative map is in
+[`ATOM-SYSTEM.md`](ATOM-SYSTEM.md); comparison residuals are in
+[`RESIDUALS.md`](RESIDUALS.md).

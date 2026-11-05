@@ -1,125 +1,144 @@
 # PMAtoms — open work (todo)
 
-Topology selection: `NuclearTopology.closed_min_edges` proves a closed system
-(min degree 2) needs at least `A` links, and the triangle attains 3; `tree_edges`
-gives `A−1` for an open line. So the ring/line topology is persistence-selected,
-not assumed.
-
-The 3+1 split is now derived from `BaryonNumber.axisB`: one reference axis and
-three colour axes (`AxisSplit`). The link weights are tied to `CompositeMasses`:
-`base_eq` shows `−πD`, `neutron_boundary` shows `+σ/2` (`LinkWeights`). The
-remaining assumption is the line/ring topology, not the numbers.
-
-The numeric factors are now expressed through `Δ,ν,σ,χ,D` with equality proofs:
-`3 = σ−χ`, `1 = D−(σ−χ)`, `2 = χ`, `3/5 = (σ−χ)/σ`, `πD/(2σ) = πD/10`.
-`lineCountsE8`, `pnCapacityE8`, `homoCapacityE8`, `e8ChargeCoupling`, and
-`sphereCoulomb` use those invariants. The line/ring arrangement and persistence
-selection remain model choices.
-
-The line/ring arrangement model is a 4-channel model: 3 hetero + 1 homo,
-line/ring topology, alpha diagonals, link masses `πD ± σ/2`, and the open
-Coulomb/valley term.
-
 Checked results are in [`OVERVIEW.md`](OVERVIEW.md); build instructions are in
-[`README.md`](README.md). This file is only what remains.
+[`README.md`](README.md). This file is only open work.
 
-## 1. The E8 rate/binding model (the main gap)
+The nucleus mass ledger now has the layers
 
-`MeanLife` shows how a hazard rate becomes a lifetime, and
-`PersistenceMechanics.HazardForm` derives the exponential survival from persistence with a
-common `β`. `RateModel` now reads the per-channel cost from `PMSubstrate.NetCost`
-(toll × expected transitions) and proves `rate = β · costRate` on the actual
-event family.
+```
+free nucleons
+− 3D packing links
+− typed channel asymmetry
+− cycle closure
+− alpha-cluster closure
+− heavy shell correction
++ charge
+− even-even collective deformation (candidate)
+```
 
-`TransitionSelection` closes the “which family?” question: a channel fixes the
-payload, and persistence selects a **least-cost transition family** from the
-candidates. So the family is not an outside choice; it is a persistence optimum.
+The main remaining issues are the heavy deformation shape, the charge tail, and
+the rate/lifetime layer.
 
-`ProtocolCandidates` generates the finite cohorts, and `candidateCohortsWeak`
-adds the PM-2 weak-doublet partner (`electron↔neutrino`, `up↔down`). This removes
-the unphysical singleton `{e}` (`electron_singleton_not_weak`) while keeping the
-observed muon cohort (`muon_cohort_weak`).
+## Honest gaps
 
-`ListCohorts` now keeps multiplicity (`e ν ν̄` is length 3) and applies the
-ledger constraints: charge in thirds, odd fermion parity, and the weak partner.
-`muon_list_mem` holds; `electron_list_not` and `electron_neutrino_list_not`
-remove `e` and `e ν`.
+| gap | status |
+| --- | --- |
+| per-link weight `πD·3/5` | closed: `(linkRowSum−1)/σ` |
+| channel asymmetry `σ/ν` | closed: `boundaryWeight/(ν/2)` |
+| alpha weight `Δ/D` | E8 expression; physical alpha assignment is model input |
+| shell cost `Δ/(D+χ)` | E8 expression; shell assignment is model input |
+| odd-A factor `3/4` | E8 expression; pairing assignment is model input |
+| charge normalization | `sphereCoulombNormalized` defined; mass ledger still uses the unnormalized convention |
+| `N>146` tail | deformation candidate exists but holdout even-even actinides scatter `−0.019` to `+0.018 u`; shape is not predictive yet |
+| spectral Green | closed: `cubeLapN_spectralGreen` |
+| 1D/3D mode theorems | closed |
+| uniform odd-mode reduction | closed |
+| `S(n) ~ n⁵/(16π)` | numerical evidence; asymptotic theorem open |
+| nuclear lifetimes/rates | structural `MeanLife` only; no E8 clock calibration |
+| electron shells | cloud exists; screening/exchange and chemistry-level shell interaction are separate |
+| Aufbau order | supplied model input |
+| unified system type | `Nucleon`/`Nuclide`/`Atom`/`Particle` are separate ledgers |
 
-Still missing:
+## 1. Heavy deformation shape
 
-- the **candidate set** for nuclear channels with the same rule applied;
-- the **E8 rate per selected channel**;
-- the **binding/cost order for nuclei** (which `(Z,N)` are local minima);
-- hence a concrete nuclear lifetime (helium, tritium, …), and the stability valley.
+The candidate term is
 
-Next: add the weak-vertex constraint to `ProtocolCandidates` (import the PM-2
-`WeakVertex`/`ChargedCurrent` data), then `selectedFamily` +
-`RateModel.channelMeanLife` give `τ`. Without that, particle lifetimes stay
-tree-level and `Nucleus.Persists` stays relative to the candidate set.
+```
+− deformationWeight · max((Z−82)(N−126) − 82, 0)
+```
 
-## 1b. System weight (periodic-table column)
+for even-even nuclei, with
 
-`e8p --periodic-table` now shows the **E8 lattice weight**
-`Z m_p + N m_n + Z m_e` from the certified masses, the standard experimental
-atomic weight, and the mass number used to pick `N`. In this framework there is
-no separate SM binding energy to subtract: "binding" is the **persistence** of the
-combined lattice system (`Stable`/`Persists`), and the E8 mass is the lattice sum.
-`SystemTower` makes the hierarchy explicit. The periodic table now uses a
-**shell-resolved link-layer counting**: each shell with `n≥2` nucleons
-contributes `n` ring links (none for a singleton), each carrying map `πD` (from
-`CAP/Δ`), protocol `1/D`, boundary `σ/2`, and toll/margin. This gives H exactly,
-C-12 within ~0.002 u, O-16 within ~0.003 u, and residuals up to ~0.03 u for Ca.
-The Li-7 residual improved from −0.017 to −0.008 u. The remaining systematic
-residual is the colour/glue link-graph correction, not fitted; the numeric
-per-level CAP/MAP counting remains the open E8 task.
+```
+deformationWeight = shellWeight/(Δ+σ)
+                  = Δ/((D+χ)(σ−χ)ν)
+                  = 43/288.
+```
 
-`NuclearMass` now gives the first E8 persistence criterion: `PersistsMass` = no
-allowed channel lowers the lattice mass. It shows the criterion is necessary but
-not sufficient — `β⁻` lowers the mass, so every `N>0` nucleus fails it, while
-`α` and fission conserve the mass. `PersistenceRate` now states that dynamical rule: a system persists iff its
-total hazard is zero; otherwise its mean life is `1/λ`, and selection picks the
-least-hazard system. Full nuclear persistence therefore needs the actual E8
-channel rates, not just mass minimality. The `m_E8` vs `m_exp`
-gap is the mass-defect comparison for that dynamical persistence.
+Training set is inside `±0.008 u`, odd-A controls are fine, but holdout
+even-even nuclei Pu-244/246, Cm-248, Cf-246/248, Fm-254, No-252/254, Rf-256
+scatter from `−0.019` to `+0.018 u`.
 
-## 1c. Electron cloud
+Likely missing: a Z-dependent or mid-shell deformation factor, or shape
+coexistence. Do **not** integrate the term into the table until the holdout
+passes.
 
-`ElectronCloud` now has a real state: a set of occupied spin-orbitals, Pauli by
-construction, filled by the lowest hydrogenic `−R∞/n²` (E8 α + supplied `m_e`).
-`AtomSystem` combines nucleus + cloud. The cloud binding is eV-scale, so it does
-not change the 6-decimal nuclear mass table; the MeV residual is the nuclear
-mass excess. Missing: electron–electron screening/exchange, shell energy, and
-coupling to nuclear decay beyond electron count.
+### Heavy-tail candidate ranking
 
-## 2. Numeric lifetimes — deferred
+Short tests on the even-even residuals after the two-shape model:
 
-PM/E8 specifies **which** decay channels exist and when a system persists; it
-does not supply a clock or a per-channel time scale. The conditional tau result
-remains in `PMElementaryParticles.TauLifetime` but is not reported by `e8p` because it uses the
-measured muon lifetime and `B(τ→eνν)` as anchors. Numeric lifetimes are future
-work and require an E8 clock calibration plus per-channel transition counts. The
-structural pieces (`MeanLife`, `PersistenceRate`) stay; no SM width formula is
-used.
+| candidate | test result | assessment |
+| --- | --- | --- |
+| cubic Landau / `P·(N−152)` | RMS `0.0052`, but needs a nonphysical intercept | most likely: it is the `Bβ³` term of the shape potential; coefficient ≈ `deformationWeight/ν` |
+| symmetry energy `(N−Z)²/A` | RMS `0.0056`, also intercept-dominated | plausible standard liquid-drop term |
+| closure at `N=152` | RMS `0.0061` | real but too sharp alone |
+| distance to nearest E8 magic | RMS `0.0062` | shell-ladder effect, not an energy law |
+| Z-linear deformation | RMS `0.0069` | partial, not predictive |
+| Nilsson/Strutinsky | fit collapses to zero | level ordering not realistic enough |
+| finite-size lattice charge | changes too slowly with A | ruled out for Cm/Cf |
+| pairing factor | fixes odd-odd Md-256 only | necessary bookkeeping, not the heavy slope |
+| alpha tail | untested | possible but no E8 coefficient yet |
 
-## 3. Stability valley and the periodic table
+The smooth-ledger boundary is now formalized in `NuclearRegime`: `Z=96`, `N=152` is the deformed-actinide frontier. `cm_at_frontier` and `cf_beyond_frontier` make Cm/Cf a regime change, not an outlier to be fitted. The remaining heavy work belongs to the collective/fission regime beyond that frontier. `CollectiveRegime` now supplies the lower-envelope mass, `CollectivePersists`, and the persistence/equality theorem. `alphaChannel` and `fissionChannel` now populate the collective envelope with smooth-ledger fragment masses and the E8 `shellWeight` barrier. The barrier is still schematic. `CollectiveRate` now wires barrier → hazard → `MeanLife` → `PersistsOn`, including the empty-channel indefinite-persistence case. A mass-only check shows the problem: symmetric fission fragments are already lower in the smooth ledger by `≈0.29 u`, so the lower-envelope criterion would predict immediate fission. Alpha is lower by `≈0.009 u` even with a `Δ`-scale barrier. Mass minimality alone is therefore the wrong persistence criterion for the post-frontier regime; the barrier/rate layer (`MeanLife`/`PersistenceRate`) is required. `not_collectivePersists_of_lower` records the mass-only consequence. `e8CubicPotential`/`nuclearMassPackingCubic` implement it with `cubicCoupling = deformationWeight/ν = (43/288)/16`, but the literal minimum still leaves the holdout at `≈0.0135 u`. The term is structurally E8-clean but not yet predictive.
 
-- `conservation_permits_all` shows conservation alone allows a `β` channel from
-  every nonempty nuclide.
-- A real periodic table needs the E8 binding ledger: nuclear masses, magic
-  numbers/shell closures, and the neutron-rich boundary.
-- `e8p --periodic-table` now prints `Z`, symbol, configuration, K/L/M/N,
-  mass number and a **leading E8 weight** `Z m_p + N m_n + Z m_e` from the
-  certified masses (capacities proved; Aufbau order and `N=Z` are supplied
-  placeholders). The nuclear binding/link term is omitted; that term is the same
-  E8 link ledger needed for persistence and decay, and it will also select `N`.
+## 2. Charge tail
 
-## 4. Shell filling order
+The exact `3×3×3` charge response is certified, but it does not scale to heavy
+nuclei by a global factor. A low-Z-anchored finite-size differential is the next
+principled target. It remains an alternative explanation for the same heavy tail.
 
-`Shells` proves capacities but not the Madelung/Aufbau order. That order is a
-model input; if added, prove the resulting noble-gas closures.
+## 3. Proton-shell / deformed closure
 
-## 5. Unified system type
+`protonShell = 2(Δ−χ) = 82` is proved. A candidate deformed proton closure
+`2(Δ+σ) = 96` is recorded, but a simple closure term is too large and
+overcorrects U-238.
 
-`Nucleon`, `Nuclide`, `Atom` and `Particle.Species` are separate ledgers. A
-single `System` record with mass, charge, `B`, `L`, channels and `MeanLife` would
-let `e8p` present one table and one decay graph.
+## 4. Spectral asymptotic (optional for the mass table)
+
+```lean
+uniformResponse_asymptotic :
+  Tendsto (fun n => uniformResponse n / n^5) atTop
+    (𝓝 (1 / (16 * Real.pi)))
+```
+
+The finite spectral machinery is complete; this is a genuine asymptotic analysis
+theorem and is not needed for the current mass ledger.
+
+## 5. Nuclear rates and lifetimes
+
+`MeanLife` and `PersistenceRate` give the structural rate → lifetime step. The
+missing input is the E8 per-channel rate/clock. Numeric lifetimes are deferred.
+
+## 6. Electron cloud / chemistry pillar
+
+The electron cloud exists as a Pauli-constrained spin-orbital set. Missing:
+electron–electron screening/exchange, shell energy, and the chemistry-level
+60°/tetrahedral shell interaction. This is a separate pillar from the nuclear
+mass ledger.
+
+## 7. Periodic table and unified system type
+
+`e8p --periodic-table` still uses the leading lattice weight, not the full
+nuclear mass ledger. Integrating the two-ledger mass into the table, proving
+Aufbau order, and unifying `Nucleon`/`Nuclide`/`Atom`/`Particle` into one
+`System` record remain open.
+
+## Checkpoint path
+
+PMAtoms is checkpoint-ready when:
+
+1. `NuclearLedger` exposes one `certifiedMass` with a proved domain.
+2. Candidate modules (`NuclearDeformation`, `ShapePotential`, `SingleParticle`,
+   `CollectiveRegime`, `CollectiveRate`, `CollectiveE8`) are explicitly marked
+   experimental and are not imported by `certifiedMass`.
+3. `README`, `OVERVIEW`, `ATOM-SYSTEM`, and this file agree on certified vs
+   experimental status.
+4. `RESIDUALS.md` records the comparison residuals outside the theorem tree.
+5. `./build.sh fast PMAtoms`, `./build.sh audit`, and `./build.sh e8p` pass.
+   Checkpoint decision: e8p keeps the leading lattice weight; wiring
+   `certifiedMass` into the printed table is deferred.
+6. A git checkpoint records the job/declaration counts.
+
+Not required for the checkpoint: solving Cm/Cf, the E8 clock/barrier
+normalization, alpha preformation, fission fragment asymmetry, the spectral
+asymptotic, or the electron/chemistry pillar.

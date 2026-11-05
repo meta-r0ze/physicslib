@@ -53,4 +53,19 @@ def graphs4 : Finset (Finset (Fin 4 × Fin 4)) :=
 theorem tetrahedron_mem_graphs4 : pairEdges 4 ∈ graphs4 := by
   decide
 
+
+/-- **Persistence uniqueness.** If no two candidates have equal cost, the
+persistent graph is unique. -/
+theorem selectedGraph_unique (cands : Finset GraphCandidate) (h : cands.Nonempty)
+    (hstrict : ∀ c ∈ cands, ∀ d ∈ cands, c.cost = d.cost → c = d) :
+    ∃! g, GraphPersists cands g := by
+  rcases selectedGraph_persists cands h with ⟨hmem, hmin⟩
+  refine ⟨selectedGraph cands h, ⟨hmem, hmin⟩, ?_⟩
+  intro g hg
+  have hle1 : (selectedGraph cands h).cost ≤ g.cost := hmin g hg.1
+  have hle2 : g.cost ≤ (selectedGraph cands h).cost :=
+    hg.2 (selectedGraph cands h) hmem
+  have hcost : g.cost = (selectedGraph cands h).cost := le_antisymm hle2 hle1
+  exact hstrict g hg.1 (selectedGraph cands h) hmem hcost
+
 end PMAtoms

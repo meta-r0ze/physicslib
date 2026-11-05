@@ -66,4 +66,18 @@ theorem gap_eq_nucleus_budget (z n : ℕ) (bN : LevelBudget) :
   rw [gap_eq_level_budgets]
   simp [LevelBudget.contribution]
 
+
+theorem LevelBudget.contribution_nonneg (b : LevelBudget)
+    (ht : 0 ≤ b.toll) (hm : 0 ≤ b.margin) (hs : 0 ≤ b.sharedLinks) :
+    0 ≤ b.contribution := by
+  unfold LevelBudget.contribution
+  linarith
+
+/-- A nonnegative level budget never increases the bound mass. -/
+theorem boundMass_le_latticeSum (z n : Nat) (bN bA : LevelBudget)
+    (hN : 0 ≤ bN.contribution) (hA : 0 ≤ bA.contribution) :
+    boundMass z n bN bA ≤ latticeSum z n := by
+  unfold boundMass
+  linarith
+
 end PMAtoms

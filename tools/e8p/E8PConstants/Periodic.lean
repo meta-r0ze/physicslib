@@ -154,4 +154,32 @@ def periodicTable (maxZ : Nat) : List String :=
     s!"{z}  {symbol z}  {configuration z}  |  {shells}  {aExp}  {ws}  {mes}  {midScore z n}  {fixedDecimal (lowerScaled (cloudEnergyRat z) 2) 2}")
   (header :: rows) ++ ["", "* m_E8 = Z m_p + N m_n + Z m_e minus the E8 link budget: A effective links from the substrate link spectrum 4,1,1 (row sum 4 / two endpoints), each carrying map πD + protocol 1/D + boundary σ/2 + PRO (1/167) + GOV (2/43) + toll/margin, all positive costs subtracted. m_iso = isotopic mass. The Aufbau shell column is display-only; `2l+1` is standard SO(3), not E8, and does not enter the mass."]
 
+
+theorem aufbau_length : aufbau.length = 19 := by decide
+
+theorem standardWeightU_length : standardWeightU.length = 20 := by decide
+
+theorem standardMassNumber_length : standardMassNumber.length = 20 := by decide
+
+theorem isotopeMassU_length : isotopeMassU.length = 20 := by decide
+
+theorem symbols_length : symbols.length = 36 := by decide
+
+theorem shellCounts_length (z : Nat) : (shellCounts z).length = 4 := by
+  simp [shellCounts]
+
+theorem periodicTable_length (maxZ : Nat) : (periodicTable maxZ).length = maxZ + 3 := by
+  simp [periodicTable]
+
+
+/-- Extended frozen comparison masses (AME-style, u) for nuclei beyond Z=20. -/
+def extendedIsotopeMassU : List ((Nat × Nat) × Rat) := [
+  ((20,48), 47.9525228), ((26,56), 55.93493633), ((28,58), 57.93534241),
+  ((28,62), 61.9283451), ((50,120), 119.9022016), ((54,132), 131.9041551),
+  ((56,138), 137.9052472), ((60,142), 141.9077290), ((74,184), 183.9509312),
+  ((79,197), 196.9665687), ((82,208), 207.9766525), ((92,238), 238.0507882),
+  ((96,244), 244.0627526), ((98,252), 252.081626)]
+
+theorem extendedIsotopeMassU_length : extendedIsotopeMassU.length = 14 := by decide
+
 end E8PConstants

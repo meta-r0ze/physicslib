@@ -19,6 +19,7 @@ import PMCosmology.Background
 import PMSubstrate.Readouts
 import PMConstants.PlanckReadout
 import PMConstants.ElectroweakBounds
+import PMConstants.ElectroweakE8
 import PMConstants.JointConstants
 import PMConstants.FloorNeutrino
 import PMAtoms
@@ -43,11 +44,11 @@ def value : Key → ℝ
   | .scalarToll => scalarToll
   | .electronYukawa => CurrentConstants.electronYukawa
   | .strong => CurrentConstants.strong
-  | .vevRatio => Electroweak.vevRatio CertifiedConstants.α
+  | .vevRatio => ElectroweakE8.vevRatio CertifiedConstants.α
   | .electronMassInput => ElectroweakBounds.electronGeV
-  | .vev => Electroweak.vev CertifiedConstants.α ElectroweakBounds.electronGeV
-  | .higgsMass => Electroweak.higgsMass CertifiedConstants.α ElectroweakBounds.electronGeV
-  | .fermi => Electroweak.fermi CertifiedConstants.α ElectroweakBounds.electronGeV
+  | .vev => ElectroweakE8.vev CertifiedConstants.α ElectroweakBounds.electronGeV
+  | .higgsMass => ElectroweakE8.higgsMass CertifiedConstants.α ElectroweakBounds.electronGeV
+  | .fermi => ElectroweakE8.fermi CertifiedConstants.α ElectroweakBounds.electronGeV
   | .jarlskog => PMFlavor.CKM.pmJ
   | .load => PMCosmology.loadFactor
   | .hubbleLate => (674 : ℝ) / 10 * PMCosmology.loadFactor
@@ -127,8 +128,8 @@ def value : Key → ℝ
   | .ckmVcb => PMFlavor.CKM.vcb
   | .wMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.wMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
   | .zMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.zMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
-  | .gWeak => Real.sqrt (PMConstants.Electroweak.weakSquared PMConstants.CertifiedConstants.α)
-  | .gPrime => Real.sqrt (PMConstants.Electroweak.hyperchargeSquared PMConstants.CertifiedConstants.α)
+  | .gWeak => Real.sqrt (PMConstants.ElectroweakE8.weakSquared PMConstants.CertifiedConstants.α)
+  | .gPrime => Real.sqrt (PMConstants.ElectroweakE8.hyperchargeSquared PMConstants.CertifiedConstants.α)
   | .electronClosure => PMConstants.JointConstants.electronClosureRatio
   | .vud => PMFlavor.CKM.c12 * PMFlavor.CKM.c13
   | .bRes => PMConstants.residual PMConstants.CertifiedConstants.α
