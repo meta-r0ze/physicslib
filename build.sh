@@ -7,9 +7,10 @@ LAKE="${LAKE_BIN:-lake}"
 usage() {
   cat <<'USAGE'
 Usage:
-  ./build.sh                Build everything, run audits, run e8p checks
+  ./build.sh                Build libraries, run audits
   ./build.sh all            Same as ./build.sh
-  ./build.sh build          Build everything, no audits or e8p checks
+  ./build.sh full           Build libraries, run audits, run e8p checks
+  ./build.sh build          Build libraries only
   ./build.sh audit          Run audits only
   ./build.sh e8p            Build e8p and run its formatter/reporter checks
   ./build.sh fast <module|file.lean>...
@@ -113,6 +114,11 @@ case "${1:-all}" in
   audit|audits)
     run_audits
     ;;
+  full)
+    "$LAKE" build
+    run_audits
+    run_e8p_tests
+    ;;
   e8p)
     run_e8p_tests
     ;;
@@ -122,7 +128,6 @@ case "${1:-all}" in
   all)
     "$LAKE" build
     run_audits
-    run_e8p_tests
     ;;
   *)
     if [ -f "$1" ] && [[ "$1" == *.lean ]]; then

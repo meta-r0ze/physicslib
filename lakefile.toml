@@ -3,8 +3,7 @@ version = "0.1.0"
 defaultTargets = [
   "PersistenceMechanics", "PMSubstrate", "PMAction", "PMConstants",
   "PMFlavor", "PMElementaryParticles", "PMAtoms", "PMCosmology",
-  "CN1", "ELEM", "Classification",
-  "E8PConstants", "E8PConstantsProof", "e8p"
+  "CN1", "ELEM", "Classification"
 ]
 
 [[require]]
