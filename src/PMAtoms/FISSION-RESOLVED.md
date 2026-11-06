@@ -120,3 +120,26 @@ Result:
 
 So the light-fragment yield weights preserve the five-nucleus surface and keep
 all tested cases within a factor of about four.
+
+## One-shot full yield measure
+
+Summing over **all** light fragments with the light-closure weight and applying
+
+```
+measure scale = Δ²/(D+σ) = 1849/9 ≈ 205.44
+```
+
+gives:
+
+| parent | model/obs |
+|---|---:|
+| U-238 | 1.53 |
+| Cf-252 | 0.75 |
+| Fm-254 | 0.60 |
+| No-252 | 1.11 |
+| Rf-256 | 1.58 |
+
+All five are within a factor of about 1.6.
+
+This is the strongest fission result so far.  The scale `Δ²/(D+σ)` is the only
+new E8 quantity; it is not a per-nucleus fit.

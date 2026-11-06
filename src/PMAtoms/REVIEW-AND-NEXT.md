@@ -34,7 +34,7 @@ the rate/lifetime layer.
 | 1D/3D mode theorems | closed |
 | uniform odd-mode reduction | closed |
 | `S(n) ~ n⁵/(16π)` | numerical evidence; asymptotic theorem open |
-| nuclear lifetimes/rates | structural `MeanLife` only; no E8 clock calibration |
+| nuclear lifetimes/rates | beta/alpha/fission chains now have E8 cost models; fission is not universal |
 | electron shells | cloud exists; screening/exchange and chemistry-level shell interaction are separate |
 | Aufbau order | supplied model input |
 | unified system type | `Nucleon`/`Nuclide`/`Atom`/`Particle` are separate ledgers |
@@ -250,6 +250,13 @@ mass ledger.
 nuclear mass ledger. Integrating the two-ledger mass into the table, proving
 Aufbau order, and unifying `Nucleon`/`Nuclide`/`Atom`/`Particle` into one
 `System` record remain open.
+
+## Checkpoint status
+
+See [`CHECKPOINT.md`](CHECKPOINT.md).  Certified core, beta/alpha/fission E8
+chains, and the five-nucleus fission surface are recorded there.  Open blockers:
+fission out-of-sample (U-234/Pu-242), full fragment-yield measure, and the
+continuum-comparison modules.
 
 ## Checkpoint path
 

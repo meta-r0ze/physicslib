@@ -103,4 +103,6 @@ Open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); proved results are i
 [`NEUTRON-PREDICTION.md`](NEUTRON-PREDICTION.md); fission scale diagnostics are in
 [`FISSION-TESTS.md`](FISSION-TESTS.md); fragment-resolved tests are in
 [`FISSION-RESOLVED.md`](FISSION-RESOLVED.md); inertia tests are in
-[`FISSION-INERTIA.md`](FISSION-INERTIA.md).
+[`FISSION-INERTIA.md`](FISSION-INERTIA.md); out-of-sample checks are in
+[`FISSION-OUT-OF-SAMPLE.md`](FISSION-OUT-OF-SAMPLE.md); the checkpoint summary is
+[`CHECKPOINT.md`](CHECKPOINT.md).

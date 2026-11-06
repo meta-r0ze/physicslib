@@ -74,4 +74,29 @@ noncomputable def fissionYieldRateNormalized (p : Nuclide) : ℝ :=
 noncomputable def fissionYieldLifetimeNormalized (p : Nuclide) : ℝ :=
   1 / fissionYieldRateNormalized p
 
+/-- E8 full-yield measure scale `Δ²/(D+σ) = 1849/9`. -/
+def fissionYieldMeasureScale : ℝ :=
+  ((Δ : ℝ) ^ 2) / (((D + σ : Nat)) : ℝ)
+
+theorem fissionYieldMeasureScale_eq : fissionYieldMeasureScale = 1849 / 9 := by
+  unfold fissionYieldMeasureScale
+  norm_num [Δ, D, σ, PMSubstrate.baseline]
+
+/-- Full finite yield sum over all light fragments. -/
+noncomputable def fissionFullSum (p : Nuclide) : ℝ :=
+  Finset.sum ((Finset.range p.Z).product (Finset.range p.N)) (fun x =>
+    if 0 < x.1 ∧ 0 < x.2 ∧ x.1 < p.Z ∧ x.2 < p.N then
+      let s : FissionSplit := ⟨⟨x.1, x.2⟩, ⟨p.Z - x.1, p.N - x.2⟩⟩
+      fissionYieldWeight s * alphaAttempt p *
+        Real.exp (-(s.costWithGovernor p))
+    else 0)
+
+/-- Full-yield fission rate after the E8 measure normalization. -/
+noncomputable def fissionFullRate (p : Nuclide) : ℝ :=
+  fissionFullSum p / fissionYieldMeasureScale
+
+/-- Full-yield fission lifetime. -/
+noncomputable def fissionFullLifetime (p : Nuclide) : ℝ :=
+  1 / fissionFullRate p
+
 end PMAtoms
