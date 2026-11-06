@@ -83,4 +83,18 @@ theorem nuclearShellSizes_eq :
   simp [nuclearShellSizes, magic2_eq, magic8_eq, magic20_eq, magic28_eq,
     magic50_eq, magic82_eq, magic96_eq, magic126_eq, magic152_eq, magic184_eq]
 
+/-- E8 shell ladder used by the decay/level layer. -/
+def e8ShellLadder : List Nat := nuclearMagic
+
+/-- E8 shell occupations. -/
+def e8ShellOccupations : List Nat := nuclearShellSizes
+
+theorem e8ShellLadder_eq :
+    e8ShellLadder = [2, 8, 20, 28, 50, 82, 96, 126, 152, 184] :=
+  nuclearMagic_eq
+
+theorem e8ShellOccupations_eq :
+    e8ShellOccupations = [2, 6, 12, 8, 22, 32, 14, 30, 26, 32] :=
+  nuclearShellSizes_eq
+
 end PMAtoms

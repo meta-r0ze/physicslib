@@ -30,5 +30,6 @@ import PMElementaryParticles.ExternalStates
 import PMElementaryParticles.MassiveExternalAmplitude
 import PMElementaryParticles.MassiveDaughterSpectrum
 import PMElementaryParticles.MassiveWidth
+import PMElementaryParticles.NeutronRate
 import PMElementaryParticles.ContinuumPair
 import PMElementaryParticles.PhaseSpace

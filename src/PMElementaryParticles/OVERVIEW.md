@@ -65,6 +65,7 @@ particle ledger; those remain model inputs.
 | `QuarkMasses` | Six quark formulas vs PDG 2024 |
 | `NeutrinoContext` | Contextual neutrino masses excluded by oscillation data (`weak_minus_rest_excluded`, `no_moderate_gap_ratio`) |
 | `TauLifetime` | `τ_τ = τ_μ (m_μ/m_τ)⁵ B_e` (`rate_ratio`, `tau_lifetime_tree`, `tau_lifetime_pull`) |
+| `NeutronRate` | Massive-electron phase space `phaseSpace = ∫ E√(E²−1)(m_n−m_p−E)²`; `g_A = σ/D = 5/4`, `axialFactor = 91/16`; `neutronWidth`, `neutronLifetime`, `beamLifetime`; recoil endpoint `recoilEndpoint`, `phaseSpaceRecoil`, `neutronWidthRecoil`, `neutronLifetimeRecoil` with supplied radiative factor `R` | full Dalitz angular density and derived radiative correction |
 
 ## External states
 

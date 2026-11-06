@@ -104,10 +104,104 @@ uniformResponse_asymptotic :
 The finite spectral machinery is complete; this is a genuine asymptotic analysis
 theorem and is not needed for the current mass ledger.
 
+## 4b. Neutrino decay
+
+The particle ledger treats neutrinos as massless, with no channel lighter than
+zero.  `neutrino_stable` and `antineutrino_stable` are proved in
+`PMAtoms/Particle.lean`.  There is no neutrino decay width or lifetime, no
+neutrino mass ordering beyond the oscillation mixing, and no sterile-decay
+channel.  Neutrino **oscillation** is in `PMFlavor.PMNS`; it is not decay.
+A massive-neutrino decay channel would require a new mass ledger and is not
+currently modeled.
+
+## 4c. Regime-aware decay selection
+
+`NuclearDecay.nuclearLedgerKind` selects the smooth ledger through the deformed
+frontier and the collective ledger beyond it.  `regimePersists` is the
+regime-aware criterion: mass-allowed for Cm-244, collective envelope for Cf-252.
+`cm_regimePersists_iff` and `cf_regimePersists_iff` make the split explicit.
+`smooth_regimePersists_iff` and `collective_regimePersists_iff` are the general
+decision rules; `nuclearExits` is the β±/α/fission exit table with Q and barrier; `nuclearExitChannels` converts it to the `CollectiveChannel` form used by the rate layer; `cm/cf_exitTable_regimePersists_iff` and the alpha variants apply the rule to the actual exit table.
+
 ## 5. Nuclear rates and lifetimes
+
+The allowed beta Coulomb factor is now `FermiFunction.fermiFunction` with
+`fermiFunction_pos` and `fermiFunction_ge_one`.  The physical integrand contains
+`F·p`, not `F`; this product is finite at threshold.  `fermiMomentumFactor`
+records that product and `fermiMomentumFactor_pos` proves positivity.
+`one_sub_exp_neg_ge` and `fermiMomentumFactor_le` show the product is bounded by
+`p + 2πZαE`, so the threshold is integrable in the physical variable.  The exact
+three-body Dalitz density and the transport of this bound through the full
+measure remain open.  The E8-native alternative is `BetaLattice`: a finite
+family of open modes with the `RateModel` cost rate, replacing the continuum
+Dalitz measure.  `betaSpectralWeight = exp(−λ)` now supplies a spectral Boltzmann weight, and
+`betaSpectralRate` sums those weights over a chosen mode subset.  `betaOpenModes`
+selects modes below an energy cutoff and `betaSpectralRateCutoff` is positive for
+a nonempty cutoff.  What remains is the numerical spectral sum and the neutron
+benchmark comparison.  The spectral rate is bounded by `β c0`, so the lifetime
+is bounded below by `1/(β c0)`; the open task is the actual spectral sum.
 
 `MeanLife` and `PersistenceRate` give the structural rate → lifetime step. The
 missing input is the E8 per-channel rate/clock. Numeric lifetimes are deferred.
+
+Candidate: `alphaBarrierShellPreformed = alphaBarrierGeiger + (σ/2)·d`, with
+`d` the Euclidean daughter distance to the E8 magic ladder.  This is the first
+E8 preformation term with the correct Cm/Cf/U ordering; it still needs an
+independent test and a derivation of the absolute attempt frequency.  The
+reference-width model of Paper 5 supplies the natural next correction:
+`Γ = Γ₀·P·F·exp(−B)`, where `F` is phase space/hindrance; reducing `F`
+lengthens the lifetime, which is the direction needed for Cf-252.  The E8
+`F` is `exp(−ν/(d+1))`; it is strong enough at the double closure and keeps the
+single-closure Cm case in range.  The simpler open fraction `(d+1)/(d+ν)` is
+recorded but too weak.
+
+
+### Neutron prediction
+
+`NeutronPrediction` fixes the minimal cube `n=3` and the exact endpoint
+`m_n−m_p`.  With `f ≈ 0.452840`, `h = G_F²/(σ−χ)`, and the E8 margin factor
+`1−χ/Δ = 41/43`, the corrected lifetime is `≈877.2 s`, within `0.1%` of the
+measured `878 s`.  The off-diagonal carrier entries vanish by
+`weakCarrierOperator_offdiag_zero`; the numerical fraction remains a comparison
+calculation, not a theorem input.
+
+## 5b. Continuum / standard-physics remnants to convert
+
+The E8-native beta route is `BetaLattice`; these are comparison/legacy pieces:
+
+| module | continuum content | E8 conversion |
+| --- | --- | --- |
+| `PMElementaryParticles.NeutronRate` | continuum massive-electron phase space, `G_F`, `g_A` | finite spectral beta rate |
+| `PMAtoms.BetaDecay` | continuum beta phase-space integral, Fermi function | finite spectral beta rate |
+| `PMAtoms.FermiFunction` | Coulomb Fermi factor | lattice Coulomb phase / finite channel |
+| `PMAtoms.SingleParticle` | Nilsson/Strutinsky shell model | E8 level ladder / finite shell count |
+| `PMAtoms.ShapePotential` | Landau collective potential | E8 deformation ledger |
+| `PMAtoms.CollectiveE8` | Geiger–Nuttall WKB exponent | finite channel cost |
+| `PMElementaryParticles.MuonRate` | continuum contact/phase space | finite lattice spectral channel |
+| `PMElementaryParticles.MassiveDaughterSpectrum` | continuum massive-daughter phase space | finite lattice spectral channel |
+| `PMElementaryParticles.Widths` | supplied reference width | E8 channel hazard |
+| `PMAtoms.Nucleus` | supplied cost in `Persists` | E8 cost ledger |
+
+Converted at the structural level:
+
+- `NeutronRate` → `BetaLattice`
+- `BetaDecay` → `BetaLattice`
+- `FermiFunction` → lattice channel/threshold bound
+- `Widths` → `betaHazardE8` / `betaLatticeLifetime`
+- `Nucleus` → `e8Cost` / `e8NuclearCost`
+
+Converted structurally:
+
+- `MuonRate`/`MassiveDaughterSpectrum` → `LeptonLattice`
+- `SingleParticle` → `e8ShellLadder`/`e8ShellOccupations`
+- `ShapePotential` → `e8DeformationLedger`
+- `CollectiveE8` → `CollectiveFinite`
+
+The comparison modules remain for numerical checks; their E8 structural
+counterparts now exist.
+
+Do not delete the comparison modules until each E8 replacement has a numerical or
+structural counterpart.
 
 ## 6. Electron cloud / chemistry pillar
 

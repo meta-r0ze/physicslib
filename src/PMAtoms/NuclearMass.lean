@@ -5,7 +5,7 @@ import Mathlib.Tactic
 /-!
 # Nuclear persistence from the E8 lattice mass
 
-In this framework "binding" is not a separate SM potential: the mass is the
+In this framework "binding" is not a separate standard-physics potential: the mass is the
 lattice/information readout, and a nucleus persists when no allowed decay channel
 lowers that lattice mass. This module makes that criterion explicit:
 

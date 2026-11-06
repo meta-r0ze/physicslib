@@ -110,6 +110,29 @@ conservation/mass checks are constraints, not a selection. The muon/tau mass for
 ≈2.1σ tensions; the factor-six contextual neutrino prescription is excluded. Do not
 promote a numerical fit or a symmetry-class count to a particle classification.
 
+### Neutron width
+The massless-pair diagnostic is superseded by `NeutronRate`, which uses the
+massive-electron phase space
+
+```
+f = ∫_{1}^{m_n−m_p} E√(E²−1)(m_n−m_p−E)² dE
+```
+
+and the E8 axial assignment `g_A = σ/D = 5/4`.  The width is
+
+```
+Γ = G_F²|Vud|²/(2π³)·(1+3g_A²)·f.
+```
+
+With `f ≈ 1.636`, `Vud² ≈ 0.949`, this gives `τ ≈ 9.8×10² s`, about 11% above
+the measured `8.78×10² s`.  The recoil-corrected endpoint
+`E_rec = (m_n² + 1 − m_p²)/(2m_n)` gives `f ≈ 1.630` and `τ ≈ 9.8×10² s`; a
+supplied `4%` radiative factor brings it to `≈9.4×10² s`.  The residual few
+percent is the remaining strong/electroweak correction, not a free fit.  The
+full angular Dalitz density and a derived radiative correction are still open.
+The environmental `beamLifetime = (215/213)·neutronLifetime` is formalized as a
+conditional rescaling.
+
 ### B5. Absolute coupling and corrections
 Radiative corrections, hadronic final states, bound-state matrix elements, and an
 absolute coupling/lifetime prediction remain inputs. The tau lifetime uses the

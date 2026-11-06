@@ -241,4 +241,14 @@ theorem nuclearMassPackingDeformedZPair_decomp (z n : Nat) :
     nuclearMassPackingDeformedZPair z n =
       nuclearMassPackingShellPaired z n - deformationBindingZPair z n := rfl
 
+/-- E8 deformation ledger, replacing the supplied Landau coefficient. -/
+noncomputable def e8DeformationLedger (z n : Nat) : ℝ :=
+  deformationBinding z n
+
+theorem e8DeformationLedger_eq (z n : Nat) (h : (z + n) % 2 = 0) :
+    e8DeformationLedger z n =
+      deformationWeight * deformationExcess z n := by
+  unfold e8DeformationLedger deformationBinding
+  rw [ite_eq_left h]
+
 end PMAtoms

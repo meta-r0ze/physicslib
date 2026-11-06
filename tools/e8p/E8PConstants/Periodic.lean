@@ -1,5 +1,6 @@
 import PMAtoms.Shells
 import PMAtoms.ElectronCloud
+import PMAtoms.NuclearRegime
 import E8PConstants.Format
 
 /-!
@@ -139,8 +140,16 @@ def symbols : List String := [
 
 def symbol (z : Nat) : String := symbols.getD (z-1) "?"
 
+/-- Regime label for the certified-ledger boundary. -/
+def regimeLabel (z n : Nat) : String :=
+  match PMAtoms.regimeOf z n with
+  | .light => "light"
+  | .mid => "mid"
+  | .deformedActinide => "deformed"
+  | .beyondFrontier => "beyond"
+
 def periodicTable (maxZ : Nat) : List String :=
-  let header := "Z   Sym  configuration                  K  L  M  N  A  m_E8(u)*  m_iso(u)  shell  cloud(eV)"
+  let header := "Z   Sym  configuration                  K  L  M  N  A  regime     m_E8(u)*  m_iso(u)  shell  cloud(eV)"
   let rows := (List.range maxZ).map (fun i =>
     let z := i+1
     let aExp := standardMassNumber.getD i (2*z)
@@ -151,8 +160,8 @@ def periodicTable (maxZ : Nat) : List String :=
     let mes := fixedDecimal (lowerScaled mexp 6) 6
     let counts := shellCounts z
     let shells := String.intercalate "  " (counts.map toString)
-    s!"{z}  {symbol z}  {configuration z}  |  {shells}  {aExp}  {ws}  {mes}  {midScore z n}  {fixedDecimal (lowerScaled (cloudEnergyRat z) 2) 2}")
-  (header :: rows) ++ ["", "* m_E8 = Z m_p + N m_n + Z m_e minus the E8 link budget: A effective links from the substrate link spectrum 4,1,1 (row sum 4 / two endpoints), each carrying map πD + protocol 1/D + boundary σ/2 + PRO (1/167) + GOV (2/43) + toll/margin, all positive costs subtracted. m_iso = isotopic mass. The Aufbau shell column is display-only; `2l+1` is standard SO(3), not E8, and does not enter the mass."]
+    s!"{z}  {symbol z}  {configuration z}  |  {shells}  {aExp}  {regimeLabel z n}  {ws}  {mes}  {midScore z n}  {fixedDecimal (lowerScaled (cloudEnergyRat z) 2) 2}")
+  (header :: rows) ++ ["", "* m_E8 = Z m_p + N m_n + Z m_e minus the E8 link budget: A effective links from the substrate link spectrum 4,1,1 (row sum 4 / two endpoints), each carrying map πD + protocol 1/D + boundary σ/2 + PRO (1/167) + GOV (2/43) + toll/margin, all positive costs subtracted. m_iso = isotopic mass. The Aufbau shell column is display-only; `2l+1` is standard SO(3), not E8, and does not enter the mass. regime = smooth-ledger validity: `beyond` rows are post-frontier comparison data, not certified smooth-ledger fits."]
 
 
 theorem aufbau_length : aufbau.length = 19 := by decide

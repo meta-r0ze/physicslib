@@ -180,6 +180,32 @@ theorem proton_stable : Stable .proton := by
   have hlt := decay_lighter hdec
   linarith
 
+theorem pMass_nonneg (ds : List Species) : 0 ≤ pMass ds := by
+  unfold pMass
+  exact List.sum_nonneg (by
+    intro x hx
+    obtain ⟨s, -, rfl⟩ := List.mem_map.mp hx
+    exact mass_nonneg s)
+
+/-- **The massless neutrino is stable** in the particle ledger: every channel has
+nonnegative mass, so no products can be lighter than zero. -/
+theorem neutrino_stable : Stable .neutrino := by
+  intro ds hdec
+  have hlt := decay_lighter hdec
+  have hnn := pMass_nonneg ds
+  have hm : Species.mass .neutrino = 0 := by norm_num [Species.mass]
+  rw [hm] at hlt
+  linarith
+
+/-- **The massless antineutrino is stable** for the same reason. -/
+theorem antineutrino_stable : Stable .antineutrino := by
+  intro ds hdec
+  have hlt := decay_lighter hdec
+  have hnn := pMass_nonneg ds
+  have hm : Species.mass .antineutrino = 0 := by norm_num [Species.mass]
+  rw [hm] at hlt
+  linarith
+
 /-- **Neutron `β⁻` decay is allowed**: `n → p e ν̄`, with
 `m_p + m_e < m_n` from the certified mass enclosures. -/
 theorem neutron_beta :
