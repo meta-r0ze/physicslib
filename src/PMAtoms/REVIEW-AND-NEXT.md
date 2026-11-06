@@ -165,6 +165,40 @@ measured `878 s`.  The off-diagonal carrier entries vanish by
 `weakCarrierOperator_offdiag_zero`; the numerical fraction remains a comparison
 calculation, not a theorem input.
 
+### Finite alpha channel
+
+`AlphaFinite` applies the same finite-channel form as beta: `rate = attempt · P ·
+F · exp(−B)`.  `alphaFiniteLifetime_ratio` proves the unknown attempt frequency
+cancels in relative lifetimes.  `alphaAttempt` now supplies the E8 `cKf` form:
+`K = alphaCapacity`, `f = 1/Δ`, `c = 1`.  The absolute normalization is structural.  `alphaCostScale = Δ²/(ν+σ) = 1849/21`
+gives the leading collective scale and lands near the U-238 lifetime.  The improved candidate
+`alphaCostQ2 = (43/8)Z/√Q − 84` puts most tested alpha emitters within a factor
+of four, with U-235 the clear outlier.  The remaining task is deriving this cost
+from the collective link counting rather than selecting it from the table.
+Residual diagnosis (`ALPHA-TESTS.md`) points to a single-particle/spin-parity
+hindrance: even-even residuals are small, while U-235 is a strong odd-A outlier.
+`AlphaHindrance` now makes the spin-parity input explicit
+(`AlphaLevel.ofOrbital`, `spinMismatch`, `parityChange`, `alphaCostHindered`).
+The hindrance scale is still supplied.  Actual U-235/Pu-239 E8 orbital assignments
+(`2f7/2`, `2d5/2`, `3s1/2`) reproduce the spin-parity units `3` and `7`; no
+single scale fits both.  The remaining term is configuration mixing / Nilsson
+deformation.  `AlphaConfiguration` now supplies it with E8 parameters
+`κ=1/ν`, `μ=χ/σ`, `δ=1/σ` and `hindrance = σ/(|ΔE|+1/χ)`; this fixes U-235
+and Pu-239 while leaving even-even entries unchanged.  The mixing form still
+needs a first-principles derivation; its E8-normalized form is
+`σχ/(χ·gap+1)`, proved in `alphaMixingHindrance_eq`.  `AlphaConfiguration` now
+also records the two-level Hamiltonian `alphaTwoLevel` and the scalar resolvent
+`alphaMixingResolvent`; the hindrance is `σχ` times that resolvent.  The full non-zero mixing amplitude is now
+`alphaMixingV = κμδ = 1/200`; `alphaMixedGap` dresses the gap by
+`√(ΔE²+4V²)`, and `alphaMixingHindranceFull_zero` proves the old formula is the
+`V=0` limit.  Because `V` is small, the numerical table is unchanged.  `spinDegeneracy` tests the cheaper
+alternative `log((2Jp+1)(2Jd+1))`, which is the best single residual feature so
+far but still leaves Pu-239 overcorrected.  `alphaBlockingHindrance` adds the
+same `log 2` to both odd-A outliers and is insufficient.  The smooth-term list is
+exhausted; the remaining term is the actual level/configuration hindrance.  The
+existing comparison table still shows Cm/Cf near the frontier working while
+U-234/Pu-238 fail, so alpha remains frontier-local.
+
 ## 5b. Continuum / standard-physics remnants to convert
 
 The E8-native beta route is `BetaLattice`; these are comparison/legacy pieces:

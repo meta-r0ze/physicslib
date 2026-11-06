@@ -57,6 +57,9 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `Particle` | generic mass-ordered decay ledger; **`proton_stable`**, `neutrino_stable`, `antineutrino_stable`; allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` |
 | `ElectronCloud` | spin-orbital cloud (`Finset SpinOrbital`), Pauli by construction; hydrogenic `ε_n = −R∞/n²`; `fillCloud` = lowest-`n` variational filling; `AtomSystem` = nucleus + cloud | electron–electron screening/exchange |
 | `FissionAsymmetry` | `sn132` double E8 closure, `fissionComplement`, `asymmetricFissionChannel`; asymmetric fission candidate | fragment yields/mass split |
+| `AlphaConfiguration` | two-level E8 mixing Hamiltonian, `V=κμδ=1/200`, dressed gap, scalar resolvent, hindrance `σχ/(χ·gap+1)`; fixes U-235/Pu-239 | derived mixing amplitudes |
+| `AlphaHindrance` | spin-parity hindrance scaffold `AlphaLevel`, `AlphaLevel.ofOrbital`, actual U-235/Pu-239 orbitals and levels, `spinDegeneracy`, `alphaCostSpin`, blocking hindrance, `alphaCostHindered`, `alphaLifetimeHindered` | hindrance scale from E8 ladder |
+| `AlphaFinite` | finite alpha channel `alphaFiniteRate`, `alphaFiniteLifetime`, `alphaFiniteLifetime_ratio`; `alphaWorkload`, `alphaFlux`, `alphaAttempt`, `alphaFiniteRateE8`; `alphaCostScale`, `alphaCostQ`, `alphaCostQ2`, `alphaActivationQ2`, `alphaLifetimeQ2` | attempt frequency |
 | `CollectiveE8` | `alphaBarrier=Δ`, `fissionBarrier=shellWeight`, `e8ClockPeriod=Δ`; `alphaChannelE8`, `fissionChannelE8`; Geiger–Nuttall `alphaBarrierGeiger`, `alphaQ`, `alphaChannelGeiger`; `magicDistance`, `daughterShellGapZ/N`, `daughterShellDistance` (Euclidean), `alphaPreformationShell`, `alphaBarrierShellPreformed`, `alphaChannelShellPreformed`; `daughterClosureHindrance`, `alphaPhaseSpace`, `alphaWidthE8`, `alphaMeanLifeE8`, `alphaRelativeLifetimeE8` | frontier-local alpha model; rates/lifetimes |
 | `CollectiveRate` | `barrierRate`, `collectiveRate`, `collectiveMeanLife`, `PersistsOn`; barrier → hazard → mean-life scaffold; `tollTime = toll/energy`, `PersistsAtToll` |
 | `CollectiveRegime` | `CollectiveChannel`, `collectiveMass`, `CollectivePersists`; `alphaChannel`, `fissionChannel` with smooth-ledger masses and `shellWeight` barrier |
@@ -97,4 +100,7 @@ Open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); proved results are i
 [`RESIDUALS.md`](RESIDUALS.md); alpha lifetime comparisons are in
 [`ALPHA-TESTS.md`](ALPHA-TESTS.md); finite spectral weights are in
 [`SPECTRAL-BETA.md`](SPECTRAL-BETA.md); the neutron prediction is in
-[`NEUTRON-PREDICTION.md`](NEUTRON-PREDICTION.md).
+[`NEUTRON-PREDICTION.md`](NEUTRON-PREDICTION.md); fission scale diagnostics are in
+[`FISSION-TESTS.md`](FISSION-TESTS.md); fragment-resolved tests are in
+[`FISSION-RESOLVED.md`](FISSION-RESOLVED.md); inertia tests are in
+[`FISSION-INERTIA.md`](FISSION-INERTIA.md).
