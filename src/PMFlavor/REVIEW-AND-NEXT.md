@@ -153,3 +153,17 @@ The absolute wall scale `δ` cancels in this observable; only the breaking cost
 entries and needs one anchor.  The unit-toll anchor `unitWall = (1,1)` is
 physical, off the exceptional curve, and gives all-nonzero full mixing
 (`unitWall_all_nonzero`).  It is an anchor choice, not an E8 derivation.
+
+### Unit-toll wall mixing test
+
+At `unitWall = (1,1)`, the normalized protected-state mixing entries are:
+
+| row \ col | antiB | P | M |
+|---|---:|---:|---:|
+| P | 0.1464 | 0.9571 | 0.25 |
+| M | −0.8536 | 0.25 | −0.4571 |
+| anti | 0.5 | 0.1464 | −0.8536 |
+
+This is a **large-mixing** matrix, PMNS-like rather than CKM-like.  So the
+unit-toll anchor is a plausible neutrino-sector anchor, but not a CKM anchor.
+The CKM sector needs a different scale/mode anchor.
