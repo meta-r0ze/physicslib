@@ -49,7 +49,7 @@ noncomputable def pionLifetimeE8 : ℝ := pionLifetime pionDecayConstantE8
 
 /-- Broad enclosure of the E8 pion decay constant in `m_e` units. -/
 theorem pionDecayConstantE8_bounds :
-    (254 : ℝ) < pionDecayConstantE8 ∧ pionDecayConstantE8 < (256 : ℝ) := by
+    (254.94 : ℝ) < pionDecayConstantE8 ∧ pionDecayConstantE8 < (254.95 : ℝ) := by
   unfold pionDecayConstantE8 PMConstants.ElectroweakE8.vev
   rw [show (((PMSubstrate.E8Values.Delta : ℝ) ^ 2 +
       ((PMSubstrate.E8Values.Delta - PMSubstrate.E8Values.chi : Nat) : ℝ))) = 1890 by
@@ -59,31 +59,31 @@ theorem pionDecayConstantE8_bounds :
 
 /-- Broad enclosure of the two-body phase-space factor. -/
 theorem pionPhaseSpaceFactor_bounds :
-    (0.18 : ℝ) < (1 - (muon / pionPlus) ^ 2) ^ 2 ∧
-      (1 - (muon / pionPlus) ^ 2) ^ 2 < (0.19 : ℝ) := by
+    (0.182 : ℝ) < (1 - (muon / pionPlus) ^ 2) ^ 2 ∧
+      (1 - (muon / pionPlus) ^ 2) ^ 2 < (0.1826 : ℝ) := by
   have hp := pionPlus_value
   have hm := muon_value
   have hpos : (0 : ℝ) < pionPlus := lt_trans (by norm_num) hp.1
-  have hr1 : (0.756 : ℝ) < muon / pionPlus := by
+  have hr1 : (0.7568 : ℝ) < muon / pionPlus := by
     rw [lt_div_iff₀ hpos]; nlinarith [hm.1, hp.2]
-  have hr2 : muon / pionPlus < (0.758 : ℝ) := by
+  have hr2 : muon / pionPlus < (0.7572 : ℝ) := by
     rw [div_lt_iff₀ hpos]; nlinarith [hm.2, hp.1]
   constructor
-  · nlinarith [sq_nonneg (muon / pionPlus - 0.756),
-      sq_nonneg (0.758 - muon / pionPlus)]
-  · have hsqlo : (0.5715 : ℝ) < (muon / pionPlus) ^ 2 := by
-      nlinarith [sq_nonneg (muon / pionPlus - 0.756), hr1]
-    have hsqhi : (muon / pionPlus) ^ 2 < (0.5746 : ℝ) := by
-      nlinarith [sq_nonneg (0.758 - muon / pionPlus), hr2]
+  · nlinarith [sq_nonneg (muon / pionPlus - 0.7568),
+      sq_nonneg (0.7572 - muon / pionPlus)]
+  · have hsqlo : (0.5727 : ℝ) < (muon / pionPlus) ^ 2 := by
+      nlinarith [sq_nonneg (muon / pionPlus - 0.7568), hr1]
+    have hsqhi : (muon / pionPlus) ^ 2 < (0.5734 : ℝ) := by
+      nlinarith [sq_nonneg (0.7572 - muon / pionPlus), hr2]
     nlinarith [hsqlo, hsqhi,
-      sq_nonneg (1 - (muon / pionPlus) ^ 2 - 0.4254),
-      sq_nonneg (0.4285 - (1 - (muon / pionPlus) ^ 2))]
+      sq_nonneg (1 - (muon / pionPlus) ^ 2 - 0.4265),
+      sq_nonneg (0.4274 - (1 - (muon / pionPlus) ^ 2))]
 
 set_option linter.unusedTactic false in
 set_option linter.unreachableTactic false in
 /-- Broad enclosure of the charged-pion width in `m_e` units. -/
 theorem pionWidthE8_bounds :
-    (4.8e-14 : ℝ) < pionWidthE8 ∧ pionWidthE8 < (5.5e-14 : ℝ) := by
+    (4.9e-14 : ℝ) < pionWidthE8 ∧ pionWidthE8 < (5.16e-14 : ℝ) := by
   have hf := pionDecayConstantE8_bounds
   have hF := PMElementaryParticles.MuonLifetime.fermiME_bounds_tight
   have hp := pionPlus_value
@@ -99,12 +99,12 @@ theorem pionWidthE8_bounds :
     lt_trans (by norm_num) hfac.1
   have hF2lo : (3.04e-12 : ℝ) ^ 2 < fermiME ^ 2 := by nlinarith [hF.1, hF.2]
   have hF2hi : fermiME ^ 2 < (3.05e-12 : ℝ) ^ 2 := by nlinarith [hF.1, hF.2]
-  have hf2lo : (254 : ℝ) ^ 2 < pionDecayConstantE8 ^ 2 := by nlinarith [hf.1, hf.2]
-  have hf2hi : pionDecayConstantE8 ^ 2 < (256 : ℝ) ^ 2 := by nlinarith [hf.1, hf.2]
+  have hf2lo : (254.94 : ℝ) ^ 2 < pionDecayConstantE8 ^ 2 := by nlinarith [hf.1, hf.2]
+  have hf2hi : pionDecayConstantE8 ^ 2 < (254.95 : ℝ) ^ 2 := by nlinarith [hf.1, hf.2]
   have hm2lo : (206.7682716 : ℝ) ^ 2 < muon ^ 2 := by nlinarith [hm.1, hm.2]
   have hm2hi : muon ^ 2 < (206.7682718 : ℝ) ^ 2 := by nlinarith [hm.1, hm.2]
   have hprodlo :
-      (3.04e-12 : ℝ)^2 * (254:ℝ)^2 * 273.1 * (206.7682716:ℝ)^2 * 0.18 <
+      (3.04e-12 : ℝ)^2 * (254.94:ℝ)^2 * 273.1 * (206.7682716:ℝ)^2 * 0.182 <
         fermiME^2 * pionDecayConstantE8^2 * pionPlus * muon^2 *
           (1 - (muon / pionPlus)^2)^2 := by
     gcongr <;> first
@@ -113,7 +113,7 @@ theorem pionWidthE8_bounds :
   have hprodhi :
       fermiME^2 * pionDecayConstantE8^2 * pionPlus * muon^2 *
           (1 - (muon / pionPlus)^2)^2 <
-        (3.05e-12 : ℝ)^2 * (256:ℝ)^2 * 273.2 * (206.7682718:ℝ)^2 * 0.19 := by
+        (3.05e-12 : ℝ)^2 * (254.95:ℝ)^2 * 273.2 * (206.7682718:ℝ)^2 * 0.1826 := by
     gcongr <;> first
       | exact hF2hi | exact hf2hi | exact hp.2 | exact hm2hi | exact hfac.2
       | exact hFpos | exact hfpos | exact hmpos | exact hppos | exact hfacpos
@@ -129,11 +129,11 @@ theorem pionWidthE8_bounds :
 
 /-- Broad enclosure of the charged-pion lifetime in `m_e⁻¹`. -/
 theorem pionLifetimeE8_bounds :
-    (1.8e13 : ℝ) < pionLifetimeE8 ∧ pionLifetimeE8 < (2.1e13 : ℝ) := by
+    (1.9e13 : ℝ) < pionLifetimeE8 ∧ pionLifetimeE8 < (2.05e13 : ℝ) := by
   have hw := pionWidthE8_bounds
   have hwpos : (0 : ℝ) < pionWidthE8 := lt_trans (by norm_num) hw.1
   unfold pionLifetimeE8 pionLifetime
-  change (1.8e13 : ℝ) < 1 / pionWidthE8 ∧ 1 / pionWidthE8 < (2.1e13 : ℝ)
+  change (1.9e13 : ℝ) < 1 / pionWidthE8 ∧ 1 / pionWidthE8 < (2.05e13 : ℝ)
   constructor
   · rw [lt_div_iff₀ hwpos]
     nlinarith [hw.2]

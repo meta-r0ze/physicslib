@@ -34,7 +34,7 @@ set_option linter.unusedTactic false in
 set_option linter.unreachableTactic false in
 /-- Broad enclosure of the neutral-pion width in `m_e` units. -/
 theorem neutralPionWidthE8_bounds :
-    (1.5e-5 : ℝ) < neutralPionWidthE8 ∧ neutralPionWidthE8 < (1.55e-5 : ℝ) := by
+    (1.52e-5 : ℝ) < neutralPionWidthE8 ∧ neutralPionWidthE8 < (1.523e-5 : ℝ) := by
   have ha := PMConstants.CertifiedConstants.alpha_bounds
   have hm := CompositeMasses.pion0_value
   have hf := PionWidth.pionDecayConstantE8_bounds
@@ -52,8 +52,8 @@ theorem neutralPionWidthE8_bounds :
     exact pow_lt_pow_left₀ hm.1 (by norm_num) (by norm_num : (3 : ℕ) ≠ 0)
   have hm3hi : pion0 ^ 3 < (264.2 : ℝ) ^ 3 := by
     exact pow_lt_pow_left₀ hm.2 (le_of_lt hmpos) (by norm_num : (3 : ℕ) ≠ 0)
-  have hf2lo : (254 : ℝ) ^ 2 < pionDecayConstantE8 ^ 2 := by nlinarith [hf.1, hf.2]
-  have hf2hi : pionDecayConstantE8 ^ 2 < (256 : ℝ) ^ 2 := by nlinarith [hf.1, hf.2]
+  have hf2lo : (254.94 : ℝ) ^ 2 < pionDecayConstantE8 ^ 2 := by nlinarith [hf.1, hf.2]
+  have hf2hi : pionDecayConstantE8 ^ 2 < (254.95 : ℝ) ^ 2 := by nlinarith [hf.1, hf.2]
   have hpi3lo : (3.1415926535 : ℝ) ^ 3 < Real.pi ^ 3 := by
     have h := pow_lt_pow_left₀ hpi1 (by norm_num) (by norm_num : (3 : ℕ) ≠ 0)
     exact lt_trans (by norm_num) h
@@ -73,14 +73,14 @@ theorem neutralPionWidthE8_bounds :
       | exact ha2hi | exact hm3hi
       | exact hapos | exact hmpos
   have hdenlo :
-      32 * (3.1415926535 : ℝ)^3 * (254:ℝ)^2 <
+      32 * (3.1415926535 : ℝ)^3 * (254.94:ℝ)^2 <
         32 * Real.pi^3 * pionDecayConstantE8^2 := by
     gcongr <;> first
       | exact hpi3lo | exact hf2lo
       | norm_num | exact hpipos | exact hfpos
   have hdenhi :
       32 * Real.pi^3 * pionDecayConstantE8^2 <
-        32 * (3.1415926536 : ℝ)^3 * (256:ℝ)^2 := by
+        32 * (3.1415926536 : ℝ)^3 * (254.95:ℝ)^2 := by
     gcongr <;> first
       | exact hpi3hi | exact hf2hi
       | norm_num | exact hpipos | exact hfpos
@@ -94,7 +94,7 @@ theorem neutralPionWidthE8_bounds :
 
 /-- Broad enclosure of the neutral-pion lifetime in `m_e⁻¹`. -/
 theorem neutralPionLifetimeE8_bounds :
-    (6.4e4 : ℝ) < neutralPionLifetimeE8 ∧ neutralPionLifetimeE8 < (6.7e4 : ℝ) := by
+    (6.56e4 : ℝ) < neutralPionLifetimeE8 ∧ neutralPionLifetimeE8 < (6.58e4 : ℝ) := by
   have hw := neutralPionWidthE8_bounds
   have hwpos : (0 : ℝ) < neutralPionWidthE8 := lt_trans (by norm_num) hw.1
   unfold neutralPionLifetimeE8
