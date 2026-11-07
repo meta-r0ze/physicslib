@@ -38,8 +38,10 @@ physical derivation from Finiteness, Conservation and Causality. Start with
    scale handoff. Separate prepared probabilities from effective repair weights.
    `ControllerLedger` now packages the finite typed-repair candidates, their cost
    `activeBudget`, and least-cost selection for the baseline, target-mixing, and
-   all-equal constraints (costs 15, 21, 43).  The remaining input is the final
-   physical controller implementation, not the selection rule.
+   all-equal constraints (costs 15, 21, 43).  `gaugeController` identifies the gauge-active controller with the
+   target least-cost repair (cost 21) and proves it reproduces `clockRatio`.
+   The remaining input is the final physical controller implementation, not the
+   selection rule.
 2. **Minimum necessary work and its symmetry.** Price admissible primitive
    words executing that task, including references/controller records. The
    matched integer lengths in `TypedRepairWork` are conditional bounds, not a

@@ -38,4 +38,20 @@ theorem physicalController_components (r : ControllerCandidate)
     r.q = 1 ∧ r.u = 1 ∧ r.d = 1 ∧ r.l = 1 ∧ r.e = 1 :=
   baseline_unique r hr (by simpa [controllerCost] using hc)
 
+/-- Gauge-active controller: the target-mixing least-cost repair. -/
+def gaugeController : ControllerCandidate := weakWitness
+
+theorem gaugeController_cost : controllerCost gaugeController = 21 := by
+  norm_num [gaugeController, controllerCost, activeBudget, weakWitness]
+
+theorem gaugeController_admissible : TargetAdmissible gaugeController := by
+  norm_num [gaugeController, TargetAdmissible, Positive, weakWitness]
+
+/-- The gauge controller reproduces the clock mixing ratio. -/
+theorem gaugeController_mixing :
+    PMConstants.GaugeReadoutWeights.mixing (weights gaugeController) =
+      PMConstants.clockRatio := by
+  rw [target_iff _ gaugeController_admissible.1]
+  norm_num [gaugeController, weakWitness]
+
 end PMConstants.ControllerIdentification
