@@ -147,6 +147,9 @@ def value : Key → ℝ
   | .kaonFiniteLifetime => PMAtoms.kaonFiniteLifetime
   | .neutralPionFiniteWidth => PMAtoms.neutralPionFiniteWidth
   | .neutralPionFiniteLifetime => PMAtoms.neutralPionFiniteLifetime
+  | .pionFiniteLifetimeSeconds => PMAtoms.pionFiniteLifetimeSeconds
+  | .kaonFiniteLifetimeSeconds => PMAtoms.kaonFiniteLifetimeSeconds
+  | .neutralPionFiniteLifetimeSeconds => PMAtoms.neutralPionFiniteLifetimeSeconds
   | .bRes => PMConstants.residual PMConstants.CertifiedConstants.α
   | .neutrinoFloor => PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α PMConstants.FloorNeutrino.meEV
   | .rydbergEV => PMAtoms.rydbergEV
@@ -413,6 +416,18 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     exact ⟨h.1.le, h.2.le⟩
   | neutralPionFiniteLifetime =>
     have h := PMAtoms.neutralPionFiniteLifetime_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | pionFiniteLifetimeSeconds =>
+    have h := PMAtoms.pionFiniteLifetimeSeconds_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | kaonFiniteLifetimeSeconds =>
+    have h := PMAtoms.kaonFiniteLifetimeSeconds_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | neutralPionFiniteLifetimeSeconds =>
+    have h := PMAtoms.neutralPionFiniteLifetimeSeconds_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | bRes =>

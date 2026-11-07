@@ -2,6 +2,7 @@ import PMAtoms.BetaLattice
 import PMElementaryParticles.PionWidth
 import PMElementaryParticles.KaonWidth
 import PMElementaryParticles.NeutralPionWidth
+import PMElementaryParticles.PhysicalUnits
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.** Not part of `certifiedMass`.
@@ -177,5 +178,56 @@ theorem neutralPionFiniteLifetime_bounds :
     (6.4e4 : ℝ) < neutralPionFiniteLifetime ∧ neutralPionFiniteLifetime < (6.7e4 : ℝ) := by
   rw [neutralPionFiniteLifetime_eq_continuum]
   exact PMElementaryParticles.NeutralPionWidth.neutralPionLifetimeE8_bounds
+
+/-- Finite-channel pion lifetime in seconds. -/
+def pionFiniteLifetimeSeconds : ℝ :=
+  pionFiniteLifetime * PMElementaryParticles.PhysicalUnits.electronTime
+
+/-- Finite-channel kaon lifetime in seconds. -/
+def kaonFiniteLifetimeSeconds : ℝ :=
+  kaonFiniteLifetime * PMElementaryParticles.PhysicalUnits.electronTime
+
+/-- Finite-channel neutral-pion lifetime in seconds. -/
+def neutralPionFiniteLifetimeSeconds : ℝ :=
+  neutralPionFiniteLifetime * PMElementaryParticles.PhysicalUnits.electronTime
+
+theorem pionFiniteLifetimeSeconds_bounds :
+    (2.06e-8 : ℝ) < pionFiniteLifetimeSeconds ∧
+      pionFiniteLifetimeSeconds < (3.23e-8 : ℝ) := by
+  have hl := pionFiniteLifetime_bounds
+  have he := PMElementaryParticles.PhysicalUnits.electronTime_bounds
+  have hlpos : (0 : ℝ) < pionFiniteLifetime := lt_trans (by norm_num) hl.1
+  have hepos : (0 : ℝ) < PMElementaryParticles.PhysicalUnits.electronTime :=
+    lt_trans (by norm_num) he.1
+  have hlo := mul_lt_mul'' hl.1 he.1 (by norm_num) (by norm_num)
+  have hhi := mul_lt_mul'' hl.2 he.2 (le_of_lt hlpos) (le_of_lt hepos)
+  unfold pionFiniteLifetimeSeconds
+  constructor <;> nlinarith [hlo, hhi]
+
+theorem kaonFiniteLifetimeSeconds_bounds :
+    (1.54e-8 : ℝ) < kaonFiniteLifetimeSeconds ∧
+      kaonFiniteLifetimeSeconds < (2.58e-8 : ℝ) := by
+  have hl := kaonFiniteLifetime_bounds
+  have he := PMElementaryParticles.PhysicalUnits.electronTime_bounds
+  have hlpos : (0 : ℝ) < kaonFiniteLifetime := lt_trans (by norm_num) hl.1
+  have hepos : (0 : ℝ) < PMElementaryParticles.PhysicalUnits.electronTime :=
+    lt_trans (by norm_num) he.1
+  have hlo := mul_lt_mul'' hl.1 he.1 (by norm_num) (by norm_num)
+  have hhi := mul_lt_mul'' hl.2 he.2 (le_of_lt hlpos) (le_of_lt hepos)
+  unfold kaonFiniteLifetimeSeconds
+  constructor <;> nlinarith [hlo, hhi]
+
+theorem neutralPionFiniteLifetimeSeconds_bounds :
+    (8.24e-17 : ℝ) < neutralPionFiniteLifetimeSeconds ∧
+      neutralPionFiniteLifetimeSeconds < (8.64e-17 : ℝ) := by
+  have hl := neutralPionFiniteLifetime_bounds
+  have he := PMElementaryParticles.PhysicalUnits.electronTime_bounds
+  have hlpos : (0 : ℝ) < neutralPionFiniteLifetime := lt_trans (by norm_num) hl.1
+  have hepos : (0 : ℝ) < PMElementaryParticles.PhysicalUnits.electronTime :=
+    lt_trans (by norm_num) he.1
+  have hlo := mul_lt_mul'' hl.1 he.1 (by norm_num) (by norm_num)
+  have hhi := mul_lt_mul'' hl.2 he.2 (le_of_lt hlpos) (le_of_lt hepos)
+  unfold neutralPionFiniteLifetimeSeconds
+  constructor <;> nlinarith [hlo, hhi]
 
 end PMAtoms

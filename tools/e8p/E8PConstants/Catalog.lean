@@ -26,6 +26,8 @@ inductive Key where
   | pionFiniteWidth | pionFiniteLifetime
   | kaonFiniteWidth | kaonFiniteLifetime
   | neutralPionFiniteWidth | neutralPionFiniteLifetime
+  | pionFiniteLifetimeSeconds | kaonFiniteLifetimeSeconds
+  | neutralPionFiniteLifetimeSeconds
   | rydbergEV | bohrRadius | shell4
   deriving BEq, DecidableEq, Repr
 
@@ -49,6 +51,8 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .pionFiniteWidth, .pionFiniteLifetime,
   .kaonFiniteWidth, .kaonFiniteLifetime,
   .neutralPionFiniteWidth, .neutralPionFiniteLifetime,
+  .pionFiniteLifetimeSeconds, .kaonFiniteLifetimeSeconds,
+  .neutralPionFiniteLifetimeSeconds,
   .rydbergEV, .bohrRadius, .shell4]
 
 def Key.id : Key → String
@@ -131,6 +135,9 @@ def Key.id : Key → String
   | .kaonFiniteLifetime => "kaon_finite_lifetime"
   | .neutralPionFiniteWidth => "neutral_pion_finite_width"
   | .neutralPionFiniteLifetime => "neutral_pion_finite_lifetime"
+  | .pionFiniteLifetimeSeconds => "pion_finite_lifetime_s"
+  | .kaonFiniteLifetimeSeconds => "kaon_finite_lifetime_s"
+  | .neutralPionFiniteLifetimeSeconds => "neutral_pion_finite_lifetime_s"
   | .rydbergEV => "rydberg_ev"
   | .bohrRadius => "bohr_radius"
   | .shell4 => "shell_capacity_n4"
@@ -240,6 +247,9 @@ def bounds : Key → Rat × Rat
   | .kaonFiniteLifetime => (1.2e13, 2.0e13)
   | .neutralPionFiniteWidth => (1.5e-5, 1.55e-5)
   | .neutralPionFiniteLifetime => (6.4e4, 6.7e4)
+  | .pionFiniteLifetimeSeconds => (2.06e-8, 3.23e-8)
+  | .kaonFiniteLifetimeSeconds => (1.54e-8, 2.58e-8)
+  | .neutralPionFiniteLifetimeSeconds => (8.24e-17, 8.64e-17)
   | .rydbergEV => (13.60569309, 13.60569310)
   | .bohrRadius => (0.5291772110, 0.5291772114)
   | .shell4 => (32, 32)
@@ -254,7 +264,9 @@ def Key.unit : Key → String
   | .tauLifetimeFs => "fs"
   | .muonLifetimeFinite | .tauLifetimeE8Natural | .neutronLifetimeE8 => "m_e^-1"
   | .neutronSpectralFraction => "1"
-  | .muonLifetimeSeconds | .neutronLifetimeSeconds => "s"
+  | .muonLifetimeSeconds | .neutronLifetimeSeconds
+  | .pionFiniteLifetimeSeconds | .kaonFiniteLifetimeSeconds
+  | .neutralPionFiniteLifetimeSeconds => "s"
   | .pionFiniteWidth | .kaonFiniteWidth | .neutralPionFiniteWidth => "m_e"
   | .pionFiniteLifetime | .kaonFiniteLifetime | .neutralPionFiniteLifetime => "m_e^-1"
   | .hubbleLate => "km/s/Mpc"
@@ -369,6 +381,9 @@ def Key.theoremName : Key → String
   | .kaonFiniteLifetime => "PMAtoms.kaonFiniteLifetime_bounds"
   | .neutralPionFiniteWidth => "PMAtoms.neutralPionFiniteWidth_bounds"
   | .neutralPionFiniteLifetime => "PMAtoms.neutralPionFiniteLifetime_bounds"
+  | .pionFiniteLifetimeSeconds => "PMAtoms.pionFiniteLifetimeSeconds_bounds"
+  | .kaonFiniteLifetimeSeconds => "PMAtoms.kaonFiniteLifetimeSeconds_bounds"
+  | .neutralPionFiniteLifetimeSeconds => "PMAtoms.neutralPionFiniteLifetimeSeconds_bounds"
   | .neutrinoFloor => "PMConstants.FloorNeutrino.floor_bounds"
   | .rydbergEV => "PMAtoms.rydbergEV_bounds"
   | .bohrRadius => "PMAtoms.bohrRadius_bounds"
@@ -432,6 +447,8 @@ def Key.paper : Key → Nat
   | .pionFiniteWidth | .pionFiniteLifetime
   | .kaonFiniteWidth | .kaonFiniteLifetime
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime => 5
+  | .pionFiniteLifetimeSeconds | .kaonFiniteLifetimeSeconds
+  | .neutralPionFiniteLifetimeSeconds => 5
   | .rydbergEV => 5
   | .bohrRadius => 5
   | .shell4 => 5

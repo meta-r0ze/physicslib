@@ -78,7 +78,7 @@ elementary protocols (PMElementaryParticles)
 | `BetaCalibration` | `weakAmplitudeSquared = G_F²`, `weakChannelCost = 1/(σ−χ) = 1/3`, `betaHazardE8 = weakAmplitudeSquared · weakChannelCost`, positivity; `betaLifetimeFromFraction`, `betaNeutronLifetimeE8` | independent derivation/validation of the hazard |
 | `LeptonLifetime` | `muonSpectralFraction`, `muonFiniteWidth`, `muonFiniteLifetime`; minimal-cube lepton channel | mass/phase-space coefficient still continuum |
 | `LeptonLattice` | finite lepton channel reusing `BetaLattice`; `leptonLatticeRate`, `leptonLatticeLifetime`, positivity | lepton eigenvalue input |
-| `MesonFiniteChannels` | minimal-cube finite channels for π⁺, K⁺, π⁰; `pion/kaon/neutralPion_openModes`, `*SpectralFraction_eq_one`, `*FiniteWidth`, `*FiniteLifetime`, certified bounds | all modes open; finite equals continuum |
+| `MesonFiniteChannels` | minimal-cube finite channels for π⁺, K⁺, π⁰; `pion/kaon/neutralPion_openModes`, `*SpectralFraction_eq_one`, `*FiniteWidth`, `*FiniteLifetime`, `*FiniteLifetimeSeconds`, certified bounds | all modes open; finite equals continuum |
 | `SpectralWaveBridge` | `spectralFraction`, `spectralDecayChannel`, `spectralDecayChannel_rate/lifetime`, `betaSpectralRate_eq_effectiveWidth`, `spectralAmplitude`, `betaSpectralWeight_eq_normSq_amplitude`, `betaSpectralRate_eq_amplitude_probability`, `spectralDecoherenceRate` | structural bridge to `EffectiveAction`/`DecayChannel` |
 | `CollectiveFinite` | finite collective barriers; `collectiveBarrierWeight`, `collectiveFiniteRate`, positivity | barrier set selection |
 | `E8Tick` | `e8Tick = Δ = 43`, `lifetimeTicks`; pure E8 period | unit conversion |
