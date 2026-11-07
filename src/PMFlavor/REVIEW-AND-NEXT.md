@@ -13,6 +13,12 @@ can supply, a data task, or a genuinely open structural question.
 `PhysicalWall = 0<δ ∧ 0<ε<2` and `physicalWall_off_exceptional` proves any
 physical wall point lies off the curve.  The numerical `δ, ε` remain wall inputs.
 
+### Flavor as transfer
+
+`TransferFlavor` classifies CKM as boundary conduction, PMNS as capacity
+promotion, and the broken link as a coordinate jump.  The mixing overlap is the
+transfer-amplitude ledger.  Numerical transfer parameters remain wall inputs.
+
 ### 1. Numerical link weights (physics, not a proof)
 `BreakingLink.brokenLink δ` and `brokenLinkB ε` are structural: the doublet splits
 for any `δ ≠ 0`, the `Z₂` obstruction is removed for any `ε ≠ 0`. The **values** of
