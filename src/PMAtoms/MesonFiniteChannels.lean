@@ -145,25 +145,25 @@ theorem neutralPionFiniteLifetime_eq_continuum :
 
 /-- Certified finite-channel pion width enclosure. -/
 theorem pionFiniteWidth_bounds :
-    (4e-14 : ℝ) < pionFiniteWidth ∧ pionFiniteWidth < (6e-14 : ℝ) := by
+    (4.8e-14 : ℝ) < pionFiniteWidth ∧ pionFiniteWidth < (5.5e-14 : ℝ) := by
   rw [pionFiniteWidth_eq_continuum]
   exact PionWidth.pionWidthE8_bounds
 
 /-- Certified finite-channel pion lifetime enclosure. -/
 theorem pionFiniteLifetime_bounds :
-    (1.6e13 : ℝ) < pionFiniteLifetime ∧ pionFiniteLifetime < (2.5e13 : ℝ) := by
+    (1.8e13 : ℝ) < pionFiniteLifetime ∧ pionFiniteLifetime < (2.1e13 : ℝ) := by
   rw [pionFiniteLifetime_eq_continuum]
   exact PionWidth.pionLifetimeE8_bounds
 
 /-- Certified finite-channel kaon width enclosure. -/
 theorem kaonFiniteWidth_bounds :
-    (5e-14 : ℝ) < kaonFiniteWidth ∧ kaonFiniteWidth < (8e-14 : ℝ) := by
+    (5.9e-14 : ℝ) < kaonFiniteWidth ∧ kaonFiniteWidth < (6.7e-14 : ℝ) := by
   rw [kaonFiniteWidth_eq_continuum]
   exact KaonWidth.kaonWidthE8_bounds
 
 /-- Certified finite-channel kaon lifetime enclosure. -/
 theorem kaonFiniteLifetime_bounds :
-    (1.2e13 : ℝ) < kaonFiniteLifetime ∧ kaonFiniteLifetime < (2.0e13 : ℝ) := by
+    (1.49e13 : ℝ) < kaonFiniteLifetime ∧ kaonFiniteLifetime < (1.70e13 : ℝ) := by
   rw [kaonFiniteLifetime_eq_continuum]
   exact KaonWidth.kaonLifetimeE8_bounds
 
@@ -192,8 +192,8 @@ def neutralPionFiniteLifetimeSeconds : ℝ :=
   neutralPionFiniteLifetime * PMElementaryParticles.PhysicalUnits.electronTime
 
 theorem pionFiniteLifetimeSeconds_bounds :
-    (2.06e-8 : ℝ) < pionFiniteLifetimeSeconds ∧
-      pionFiniteLifetimeSeconds < (3.23e-8 : ℝ) := by
+    (2.31e-8 : ℝ) < pionFiniteLifetimeSeconds ∧
+      pionFiniteLifetimeSeconds < (2.71e-8 : ℝ) := by
   have hl := pionFiniteLifetime_bounds
   have he := PMElementaryParticles.PhysicalUnits.electronTime_bounds
   have hlpos : (0 : ℝ) < pionFiniteLifetime := lt_trans (by norm_num) hl.1
@@ -205,8 +205,8 @@ theorem pionFiniteLifetimeSeconds_bounds :
   constructor <;> nlinarith [hlo, hhi]
 
 theorem kaonFiniteLifetimeSeconds_bounds :
-    (1.54e-8 : ℝ) < kaonFiniteLifetimeSeconds ∧
-      kaonFiniteLifetimeSeconds < (2.58e-8 : ℝ) := by
+    (1.91e-8 : ℝ) < kaonFiniteLifetimeSeconds ∧
+      kaonFiniteLifetimeSeconds < (2.20e-8 : ℝ) := by
   have hl := kaonFiniteLifetime_bounds
   have he := PMElementaryParticles.PhysicalUnits.electronTime_bounds
   have hlpos : (0 : ℝ) < kaonFiniteLifetime := lt_trans (by norm_num) hl.1

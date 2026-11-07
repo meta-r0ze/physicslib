@@ -86,6 +86,22 @@ theorem fermiME_bounds : (2.9e-12 : ℝ) < fermiME ∧ fermiME < (3.2e-12 : ℝ)
     PMConstants.ElectroweakBounds.electronGeV ^ 2 < (3.2e-12 : ℝ)
   constructor <;> nlinarith [h.1, h.2, he.1, he.2]
 
+/-- Tighter enclosure of the Fermi constant in `m_e⁻²`. -/
+theorem fermiME_bounds_tight : (3.04e-12 : ℝ) < fermiME ∧ fermiME < (3.05e-12 : ℝ) := by
+  have h := PMConstants.ElectroweakBounds.fermi_bounds
+  have he : (2.6111e-7 : ℝ) < PMConstants.ElectroweakBounds.electronGeV ^ 2 ∧
+      PMConstants.ElectroweakBounds.electronGeV ^ 2 < (2.6113e-7 : ℝ) := by
+    unfold PMConstants.ElectroweakBounds.electronGeV; norm_num
+  unfold fermiME
+  change (3.04e-12 : ℝ) <
+    PMConstants.ElectroweakE8.fermi PMConstants.CertifiedConstants.α
+      PMConstants.ElectroweakBounds.electronGeV *
+    PMConstants.ElectroweakBounds.electronGeV ^ 2 ∧
+    PMConstants.ElectroweakE8.fermi PMConstants.CertifiedConstants.α
+      PMConstants.ElectroweakBounds.electronGeV *
+    PMConstants.ElectroweakBounds.electronGeV ^ 2 < (3.05e-12 : ℝ)
+  constructor <;> nlinarith [h.1, h.2, he.1, he.2]
+
 /-- Broad enclosure of the muon width in `m_e` units. -/
 theorem muonWidth_bounds : (4.0e-16 : ℝ) < muonWidth ∧ muonWidth < 8.0e-16 := by
   have hf := fermiME_bounds

@@ -99,10 +99,10 @@ set_option linter.unusedTactic false in
 set_option linter.unreachableTactic false in
 /-- Broad enclosure of the E8 kaon width in `m_e` units. -/
 theorem kaonWidthE8_bounds :
-    (5e-14 : ℝ) < kaonWidthE8 ∧ kaonWidthE8 < (8e-14 : ℝ) := by
+    (5.9e-14 : ℝ) < kaonWidthE8 ∧ kaonWidthE8 < (6.7e-14 : ℝ) := by
   have hf := kaonDecayConstantE8_bounds
   have hV := vusE8_bounds
-  have hF := PMElementaryParticles.MuonLifetime.fermiME_bounds
+  have hF := PMElementaryParticles.MuonLifetime.fermiME_bounds_tight
   have hp := kaonPlus_value
   have hm := muon_value
   have hfac := kaonPhaseSpaceFactor_bounds
@@ -115,8 +115,8 @@ theorem kaonWidthE8_bounds :
   have hVpos : (0 : ℝ) < vusE8 := lt_trans (by norm_num) hV.1
   have hfacpos : (0 : ℝ) < (1 - (muon / kaonPlus) ^ 2) ^ 2 :=
     lt_trans (by norm_num) hfac.1
-  have hF2lo : (2.9e-12 : ℝ) ^ 2 < fermiME ^ 2 := by nlinarith [hF.1, hF.2]
-  have hF2hi : fermiME ^ 2 < (3.2e-12 : ℝ) ^ 2 := by nlinarith [hF.1, hF.2]
+  have hF2lo : (3.04e-12 : ℝ) ^ 2 < fermiME ^ 2 := by nlinarith [hF.1, hF.2]
+  have hF2hi : fermiME ^ 2 < (3.05e-12 : ℝ) ^ 2 := by nlinarith [hF.1, hF.2]
   have hf2lo : (300 : ℝ) ^ 2 < kaonDecayConstantE8 ^ 2 := by nlinarith [hf.1, hf.2]
   have hf2hi : kaonDecayConstantE8 ^ 2 < (305 : ℝ) ^ 2 := by nlinarith [hf.1, hf.2]
   have hm2lo : (206.7682716 : ℝ) ^ 2 < muon ^ 2 := by nlinarith [hm.1, hm.2]
@@ -124,7 +124,7 @@ theorem kaonWidthE8_bounds :
   have hV2lo : (0.2242 : ℝ) ^ 2 < vusE8 ^ 2 := by nlinarith [hV.1, hV.2]
   have hV2hi : vusE8 ^ 2 < (0.2245 : ℝ) ^ 2 := by nlinarith [hV.1, hV.2]
   have hprodlo :
-      (2.9e-12 : ℝ)^2 * (300:ℝ)^2 * 966 * (206.7682716:ℝ)^2 * 0.90 *
+      (3.04e-12 : ℝ)^2 * (300:ℝ)^2 * 966 * (206.7682716:ℝ)^2 * 0.90 *
           (0.2242:ℝ)^2 <
         fermiME^2 * kaonDecayConstantE8^2 * kaonPlus * muon^2 *
           (1 - (muon / kaonPlus)^2)^2 * vusE8^2 := by
@@ -134,7 +134,7 @@ theorem kaonWidthE8_bounds :
   have hprodhi :
       fermiME^2 * kaonDecayConstantE8^2 * kaonPlus * muon^2 *
           (1 - (muon / kaonPlus)^2)^2 * vusE8^2 <
-        (3.2e-12 : ℝ)^2 * (305:ℝ)^2 * 967 * (206.7682718:ℝ)^2 * 0.92 *
+        (3.05e-12 : ℝ)^2 * (305:ℝ)^2 * 967 * (206.7682718:ℝ)^2 * 0.92 *
           (0.2245:ℝ)^2 := by
     gcongr <;> first
       | exact hF2hi | exact hf2hi | exact hp.2 | exact hm2hi | exact hfac.2 | exact hV2hi
@@ -152,7 +152,7 @@ theorem kaonWidthE8_bounds :
 
 /-- Broad enclosure of the E8 kaon lifetime in `m_e⁻¹`. -/
 theorem kaonLifetimeE8_bounds :
-    (1.2e13 : ℝ) < kaonLifetimeE8 ∧ kaonLifetimeE8 < (2.0e13 : ℝ) := by
+    (1.49e13 : ℝ) < kaonLifetimeE8 ∧ kaonLifetimeE8 < (1.70e13 : ℝ) := by
   have hw := kaonWidthE8_bounds
   have hwpos : (0 : ℝ) < kaonWidthE8 := lt_trans (by norm_num) hw.1
   unfold kaonLifetimeE8
