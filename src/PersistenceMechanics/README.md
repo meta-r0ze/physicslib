@@ -18,3 +18,5 @@ lake exe cache get
 - **ChannelMeasure / MarginCorrection.** Finite channel weights/probabilities and a supplied margin correction interface, shared by all decay systems.
 
 - **CoherentAction.** Phase-preserving and cost-attenuating sectors of the same operational action, with combined weight and quality factor.
+
+- **EffectiveAction.** The physics `S−iΓt/2` amplitude form with PM operational cost, normalized so `|A|² = exp(−βS_cost)`.
