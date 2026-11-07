@@ -153,6 +153,9 @@ The absolute wall scale `δ` cancels in this observable; only the breaking cost
 entries and needs one anchor.  The unit-toll anchor `unitWall = (1,1)` is
 physical, off the exceptional curve, and gives all-nonzero full mixing
 (`unitWall_all_nonzero`).  It is an anchor choice, not an E8 derivation.
+The CKM anchor is `ckmWall = (χ/ν, χ/ν) = (1/8,1/8)`, also physical and off the
+exceptional curve; its P/M submatrix has small off-diagonal mixing, while
+`unitWall` is large-mixing/PMNS-like.
 
 ### Unit-toll wall mixing test
 

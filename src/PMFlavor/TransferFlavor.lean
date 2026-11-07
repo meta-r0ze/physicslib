@@ -226,4 +226,31 @@ theorem unitWall_all_nonzero :
   PMFlavor.MixingMatrix.all_nonzero_mixing_interval 1 1 (by norm_num) (by norm_num)
     (by norm_num) (by norm_num)
 
+/-- CKM wall anchor: small breaking `δ = ε = χ/ν = 1/8`. -/
+def ckmWall : BreakingPhase :=
+  ⟨((PMSubstrate.E8Values.chi : ℝ) / (PMSubstrate.E8Values.nu : ℝ)),
+   ((PMSubstrate.E8Values.chi : ℝ) / (PMSubstrate.E8Values.nu : ℝ))⟩
+
+theorem ckmWall_delta_eq : ckmWall.delta = 1 / 8 := by
+  unfold ckmWall
+  norm_num [PMSubstrate.E8Values.chi, PMSubstrate.E8Values.nu, PMSubstrate.baseline]
+
+theorem ckmWall_epsilon_eq : ckmWall.epsilon = 1 / 8 := by
+  unfold ckmWall
+  norm_num [PMSubstrate.E8Values.chi, PMSubstrate.E8Values.nu, PMSubstrate.baseline]
+
+theorem ckmWall_physical : PhysicalWall ckmWall := by
+  unfold PhysicalWall
+  rw [ckmWall_delta_eq, ckmWall_epsilon_eq]
+  norm_num
+
+theorem ckmWall_off_exceptional : PhysicalWallInput ckmWall :=
+  physicalWall_off_exceptional ckmWall_physical
+
+theorem ckm_pmns_anchor_distinct : ckmWall ≠ unitWall := by
+  intro h
+  have hd := congrArg BreakingPhase.delta h
+  rw [ckmWall_delta_eq] at hd
+  norm_num [unitWall] at hd
+
 end PMFlavor.TransferFlavor
