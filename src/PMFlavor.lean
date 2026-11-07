@@ -74,6 +74,7 @@ import PMFlavor.FlavourCoherence
 import PMFlavor.PerStepContract
 import PMFlavor.BreakingPhase
 import PMFlavor.TransferFlavor
+import PMFlavor.WallMassRatio
 import PMFlavor.WolfensteinOctant
 import PMFlavor.BreakingLink
 import PMFlavor.CabibboDressing

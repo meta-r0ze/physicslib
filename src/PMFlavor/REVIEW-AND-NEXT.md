@@ -101,6 +101,10 @@ selects only a discrete route/order, not continuous angles.  A Gibbs/entropy
 selection test gave different temperatures for CKM-like and PMNS-like fits and
 collapsed the CKM fit toward a permutation.
 
+The wall mass ratio condition is now formalized:
+`WallMassRatio.wall_coupling_ratio_of_mass_ratio` gives `y² = (25/336)δ²`.
+This fixes the coupling ratio, but not `V`.
+
 Do **not** fit `V` to CKM/PMNS.  The remaining task is a substrate law that
 selects the continuous rotation, or an explicit decision to keep `V` as an input.
 
