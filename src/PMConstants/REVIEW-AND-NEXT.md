@@ -77,3 +77,11 @@ work and more general dynamics remain possibilities that need derivations.
 
 See [`OVERVIEW.md`](OVERVIEW.md) for the module map and [`README.md`](README.md) for
 build instructions.
+
+### Controller cost does not derive η
+
+`ControllerIdentification.gaugeController` reproduces `clockRatio`, but its
+active budget is `21`, not `171/172`.  The overhead `η=171/172` is the
+one-reserved-cell fraction of the 172-cell frame, not a controller repair count.
+So the controller ledger does **not** derive η as work; η remains the frame
+overhead input.
