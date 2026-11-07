@@ -222,9 +222,36 @@ lemma exp_neg_sqrt_two_le_half : Real.exp (-Real.sqrt 2) ≤ (1 / 2 : ℝ) := by
       (one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) h2)
   linarith
 
+/-- A degree-10 Taylor lower bound for `exp x` gives a sharp `exp(-√2)` upper bound. -/
+lemma exp_neg_le_inv_taylor10 {x : ℝ} (hx : 0 < x) :
+    Real.exp (-x) ≤
+      1 / ((Finset.range 11).sum (fun i => x ^ i / (i.factorial : ℝ))) := by
+  have hsum : (0 : ℝ) < (Finset.range 11).sum (fun i => x ^ i / (i.factorial : ℝ)) := by
+    have hnonneg : ∀ i ∈ Finset.range 11, 0 ≤ x ^ i / (i.factorial : ℝ) := by
+      intro i hi
+      positivity
+    have h1 : 1 ∈ Finset.range 11 := by norm_num
+    have hxpos : (0 : ℝ) < x ^ 1 / ((1 : ℕ).factorial : ℝ) := by simpa using hx
+    exact lt_of_lt_of_le hxpos (Finset.single_le_sum hnonneg h1)
+  have h := Real.sum_le_exp_of_nonneg (le_of_lt hx) 11
+  rw [Real.exp_neg]
+  simpa using one_div_le_one_div_of_le hsum h
+
+lemma exp_neg_sqrt_two_le_0244 : Real.exp (-Real.sqrt 2) ≤ (0.2442 : ℝ) := by
+  have hs : (1.41 : ℝ) ≤ Real.sqrt 2 := by
+    rw [Real.le_sqrt (by norm_num) (by norm_num)]
+    norm_num
+  have hmono : Real.exp (-Real.sqrt 2) ≤ Real.exp (-1.41 : ℝ) := by
+    apply Real.exp_le_exp.mpr
+    linarith
+  have ht := exp_neg_le_inv_taylor10 (x := 1.41) (by norm_num)
+  have hconst : 1 / ((Finset.range 11).sum (fun i => (1.41 : ℝ) ^ i / (i.factorial : ℝ))) ≤
+      (0.2442 : ℝ) := by norm_num
+  exact hmono.trans (ht.trans hconst)
+
 /-- Sharper certified bound using the first spectral gap `√2`. -/
 theorem neutronSpectralFraction_bounds_refined :
-    (1 / 14 : ℝ) ≤ neutronSpectralFraction ∧ neutronSpectralFraction ≤ 1 := by
+    (0.136 : ℝ) ≤ neutronSpectralFraction ∧ neutronSpectralFraction ≤ 1 := by
   rw [neutronSpectralFraction_eq_lowest_weight]
   let low : Fin 3 × (Fin 3 × Fin 3) :=
     (⟨0, by norm_num⟩, (⟨0, by norm_num⟩, ⟨0, by norm_num⟩))
@@ -232,7 +259,7 @@ theorem neutronSpectralFraction_bounds_refined :
     fun p => betaSpectralWeight 3 (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1) with hwdef
   have hwpos : ∀ p, 0 < w p := by
     intro p; unfold w; exact betaSpectralWeight_pos 3 _ _ _
-  have hwle : ∀ p, p ≠ low → w p ≤ w low / 2 := by
+  have hwle : ∀ p, p ≠ low → w p ≤ w low * 0.2442 := by
     intro p hpne
     have hdisj : p.1.val + 1 ≠ 1 ∨ p.2.1.val + 1 ≠ 1 ∨ p.2.2.val + 1 ≠ 1 := by
       by_contra h
@@ -259,28 +286,29 @@ theorem neutronSpectralFraction_bounds_refined :
       _ = Real.exp (-dirichletEigenvalue 3 1 1 1) * Real.exp (-Real.sqrt 2) := by
         rw [← Real.exp_add]
         ring_nf
-      _ ≤ Real.exp (-dirichletEigenvalue 3 1 1 1) * (1 / 2) := by
-        exact mul_le_mul_of_nonneg_left exp_neg_sqrt_two_le_half
+      _ ≤ Real.exp (-dirichletEigenvalue 3 1 1 1) * 0.2442 := by
+        exact mul_le_mul_of_nonneg_left exp_neg_sqrt_two_le_0244
           (le_of_lt (Real.exp_pos _))
-      _ = w low / 2 := by
-        simp [w, low, betaSpectralWeight, div_eq_mul_inv]
-  have hrest : (Finset.univ.erase low).sum w ≤ 26 * (w low / 2) := by
+      _ = w low * 0.2442 := by
+        simp [w, low, betaSpectralWeight]
+  have hrest : (Finset.univ.erase low).sum w ≤ 26 * (w low * 0.2442) := by
     calc
       (Finset.univ.erase low).sum w ≤
-          (Finset.univ.erase low).sum (fun _ => w low / 2) := by
+          (Finset.univ.erase low).sum (fun _ => w low * 0.2442) := by
         apply Finset.sum_le_sum
         intro p hp
         exact hwle p (Finset.mem_erase.mp hp).1
-      _ = (Finset.univ.erase low).card * (w low / 2) := by
+      _ = (Finset.univ.erase low).card * (w low * 0.2442) := by
         rw [Finset.sum_const, nsmul_eq_mul]
-      _ = 26 * (w low / 2) := by
+      _ = 26 * (w low * 0.2442) := by
         rw [Finset.card_erase_of_mem (Finset.mem_univ low)]
         simp [Fintype.card_prod]
   have htotal_eq : ∑ p, w p = w low + (Finset.univ.erase low).sum w := by
     have h := Finset.sum_erase_add (s := Finset.univ) (f := w) (a := low) (Finset.mem_univ low)
     linarith
-  have htotal_le : ∑ p, w p ≤ 14 * w low := by
-    nlinarith [hrest, htotal_eq]
+  have htotal_le : ∑ p, w p ≤ 7.35 * w low := by
+    have hwlowpos : 0 < w low := hwpos low
+    nlinarith [hrest, htotal_eq, hwlowpos]
   have htotal_pos : 0 < ∑ p, w p := by
     apply Finset.sum_pos
     · intro p _; exact hwpos p
@@ -302,24 +330,24 @@ theorem neutronSpectralFraction_pos : 0 < neutronSpectralFraction :=
 
 /-- Broad certified enclosure of the finite-channel neutron lifetime. -/
 theorem neutronLifetimeE8_bounds :
-    (2.9e23 : ℝ) < neutronLifetimeE8 ∧ neutronLifetimeE8 < 5.0e24 := by
+    (2.9e23 : ℝ) < neutronLifetimeE8 ∧ neutronLifetimeE8 < 2.63e24 := by
   have hz := betaHazardE8_bounds
   have hf := neutronSpectralFraction_bounds_refined
   have hzpos : 0 < betaHazardE8 := lt_trans (by norm_num) hz.1
   have hfpos : 0 < neutronSpectralFraction := neutronSpectralFraction_pos
   have hden_pos : 0 < betaHazardE8 * neutronSpectralFraction := mul_pos hzpos hfpos
-  have hden_lo : (2.8e-24 : ℝ) * (1 / 14) <
+  have hden_lo : (2.8e-24 : ℝ) * 0.136 <
       betaHazardE8 * neutronSpectralFraction := by
     exact mul_lt_mul hz.1 hf.1 (by norm_num) (le_of_lt hzpos)
   have hden_hi : betaHazardE8 * neutronSpectralFraction < (3.42e-24 : ℝ) * 1 := by
     exact mul_lt_mul hz.2 hf.2 hfpos (by norm_num)
-  have hlo_pos : (0 : ℝ) < (2.8e-24 : ℝ) * (1 / 14) := by norm_num
+  have hlo_pos : (0 : ℝ) < (2.8e-24 : ℝ) * 0.136 := by norm_num
   have hhi_pos : (0 : ℝ) < (3.42e-24 : ℝ) * 1 := by norm_num
   have hlow : 1 / ((3.42e-24 : ℝ) * 1) <
       1 / (betaHazardE8 * neutronSpectralFraction) :=
     one_div_lt_one_div_of_lt hden_pos hden_hi
   have hhigh : 1 / (betaHazardE8 * neutronSpectralFraction) <
-      1 / ((2.8e-24 : ℝ) * (1 / 14)) :=
+      1 / ((2.8e-24 : ℝ) * 0.136) :=
     one_div_lt_one_div_of_lt hlo_pos hden_lo
   rw [neutronLifetimeE8_eq]
   constructor <;> nlinarith [hlow, hhigh]
@@ -330,7 +358,7 @@ def neutronLifetimeSeconds : ℝ :=
 
 /-- Broad certified enclosure of the finite-channel neutron lifetime in seconds. -/
 theorem neutronLifetimeSeconds_bounds :
-    (3.7e2 : ℝ) < neutronLifetimeSeconds ∧ neutronLifetimeSeconds < 6.45e3 := by
+    (3.7e2 : ℝ) < neutronLifetimeSeconds ∧ neutronLifetimeSeconds < 3.39e3 := by
   have hn := neutronLifetimeE8_bounds
   have he := PMElementaryParticles.PhysicalUnits.electronTime_bounds
   have hnpos : (0 : ℝ) < neutronLifetimeE8 := lt_trans (by norm_num) hn.1
