@@ -6,6 +6,12 @@ can supply, a data task, or a genuinely open structural question.
 
 ## Open items
 
+#### Phase/cost reading of `δ, ε`
+
+`BreakingPhase` now records `δ = phase mismatch`, `ε = cost`, and
+`ExceptionalWall` is the mixing exceptional curve in those variables.  The
+numerical values remain wall inputs.
+
 ### 1. Numerical link weights (physics, not a proof)
 `BreakingLink.brokenLink δ` and `brokenLinkB ε` are structural: the doublet splits
 for any `δ ≠ 0`, the `Z₂` obstruction is removed for any `ε ≠ 0`. The **values** of

@@ -71,6 +71,8 @@ import PMFlavor.SpectralGapOrder
 import PMFlavor.SubstrateLink
 import PMFlavor.ChordBranch
 import PMFlavor.FlavourCoherence
+import PMFlavor.PerStepContract
+import PMFlavor.BreakingPhase
 import PMFlavor.WolfensteinOctant
 import PMFlavor.BreakingLink
 import PMFlavor.CabibboDressing

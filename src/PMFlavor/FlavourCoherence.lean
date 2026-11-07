@@ -55,4 +55,12 @@ theorem phaseWeight_unit (phase : ℝ) :
     Complex.normSq (PersistenceMechanics.CoherentAction.phaseWeight phase) = 1 :=
   PersistenceMechanics.CoherentAction.phaseWeight_normSq phase
 
+/-- The physical preparation spread is an explicit input. -/
+def PreparationSpreadBound (e : Fin 3 → ℝ) : Prop :=
+  e 2 - e 0 ≤ Real.pi / clock
+
+theorem oneTickCoherent_of_preparation (e : Fin 3 → ℝ) (h02 : e 0 < e 2)
+    (h : PreparationSpreadBound e) : coherentBranch e clock :=
+  oneTickCoherent e h02 h
+
 end PMFlavor.FlavourCoherence
