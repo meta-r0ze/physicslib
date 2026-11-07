@@ -292,6 +292,7 @@ mass-ratio impedance = 16/21
 phase-coherence spread ≤ π/43
 ```
 
-This is a genuine tension.  Either the impedance is a `p=0` mass ratio while
-coherence uses a separate momentum, or the dispersion/coherence law is different.
-`V` remains an explicit input.
+Resolution chosen: the capacity impedance is the zero-momentum mass ratio
+(`capacityImpedance`), while `physicalImpedance p` is a separate diagnostic.
+They need not agree at the preparation momentum.  This removes the tension
+without changing the wall masses.  `V` remains an explicit input.
