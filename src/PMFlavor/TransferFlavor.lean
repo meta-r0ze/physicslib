@@ -144,4 +144,36 @@ noncomputable def normalizedSectorEntry (s : FlavorSector) (i j : Fin 3) : ℂ :
 theorem normalizedSectorEntry_eq (s : FlavorSector) (i j : Fin 3) :
     normalizedSectorEntry s i j = normalizedOverlap (sectorEntry s i j) := rfl
 
+/-- Wall-dispersion impedance from a two-branch spectrum. -/
+def wallImpedance (e : Fin 3 → ℝ) : ℝ := Real.sqrt (e 2 / e 0)
+
+/-- If the wall dispersion gives the E8 capacity ratio, the transfer impedance is
+the wall impedance. -/
+theorem transferImpedance_eq_wall (e : Fin 3 → ℝ)
+    (h : wallImpedance e = 16 / 21) :
+    transferImpedance = wallImpedance e := by
+  rw [transferImpedance_eq, h]
+
+/-- CKM share of the combined transfer capacity. -/
+def ckmCapacityFraction : ℝ := ckmCapacity / (ckmCapacity + pmnsCapacity)
+
+/-- PMNS share of the combined transfer capacity. -/
+def pmnsCapacityFraction : ℝ := pmnsCapacity / (ckmCapacity + pmnsCapacity)
+
+theorem ckmCapacityFraction_eq : ckmCapacityFraction = 16 / 37 := by
+  unfold ckmCapacityFraction
+  rw [ckmCapacity_eq, pmnsCapacity_eq]
+  norm_num
+
+theorem pmnsCapacityFraction_eq : pmnsCapacityFraction = 21 / 37 := by
+  unfold pmnsCapacityFraction
+  rw [ckmCapacity_eq, pmnsCapacity_eq]
+  norm_num
+
+theorem ckm_fraction_lt_half : ckmCapacityFraction < 1 / 2 := by
+  rw [ckmCapacityFraction_eq]; norm_num
+
+theorem pmns_fraction_gt_half : 1 / 2 < pmnsCapacityFraction := by
+  rw [pmnsCapacityFraction_eq]; norm_num
+
 end PMFlavor.TransferFlavor

@@ -21,8 +21,10 @@ transfer-amplitude ledger (`mixingOverlapAmplitude_eq_rootM`), and the E8 capaci
 ratio is `pmnsCapacity/ckmCapacity = 21/16`, with transfer impedance `16/21`.
 `normalizedOverlap` turns a complex overlap into a unit-modulus entry, and
 `FlavorSector`/`normalizedSectorEntry` label CKM and PMNS entries.  The impedance
-is still the capacity ratio `16/21`; deriving it from the wall dispersion remains
-open.  Numerical transfer parameters remain wall inputs.
+is the capacity ratio `16/21`; `wallImpedance` and `transferImpedance_eq_wall`
+give the conditional wall-dispersion identification.  The capacity fractions are
+`16/37` (CKM) and `21/37` (PMNS), so the PMNS basin is the larger one.  Deriving
+the wall masses remains open.  Numerical transfer parameters remain wall inputs.
 
 ### 1. Numerical link weights (physics, not a proof)
 `BreakingLink.brokenLink δ` and `brokenLinkB ε` are structural: the doublet splits
