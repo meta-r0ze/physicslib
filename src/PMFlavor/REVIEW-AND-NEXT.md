@@ -295,4 +295,6 @@ phase-coherence spread ≤ π/43
 Resolution chosen: the capacity impedance is the zero-momentum mass ratio
 (`capacityImpedance`), while `physicalImpedance p` is a separate diagnostic.
 They need not agree at the preparation momentum.  This removes the tension
-without changing the wall masses.  `V` remains an explicit input.
+without changing the wall masses.  `CapacityImpedance` proves the mass-ratio
+condition `((16/21)^2) → 16/21` and its agreement with `transferImpedance`.
+`V` remains an explicit input.

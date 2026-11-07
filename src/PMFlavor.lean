@@ -78,6 +78,7 @@ import PMFlavor.WallMassRatio
 import PMFlavor.WallDispersion
 import PMFlavor.WallMassModel
 import PMFlavor.WallImpedanceChoice
+import PMFlavor.CapacityImpedance
 import PMFlavor.WolfensteinOctant
 import PMFlavor.BreakingLink
 import PMFlavor.CabibboDressing
