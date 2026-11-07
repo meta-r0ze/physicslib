@@ -170,3 +170,40 @@ At `unitWall = (1,1)`, the normalized protected-state mixing entries are:
 This is a **large-mixing** matrix, PMNS-like rather than CKM-like.  So the
 unit-toll anchor is a plausible neutrino-sector anchor, but not a CKM anchor.
 The CKM sector needs a different scale/mode anchor.
+
+### Wall-anchor vs observed hierarchy
+
+Observed magnitudes:
+
+```
+CKM:  [0.9745, 0.2244, 0.0036;
+       0.2243, 0.9737, 0.0413;
+       0.0086, 0.0406, 0.9991]
+
+PMNS: [0.8221, 0.5498, 0.1480;
+       0.2982, 0.5907, 0.7498;
+       0.4850, 0.5907, 0.6449]
+```
+
+Wall matrices:
+
+```
+ckmWall (1/8,1/8):
+  [0.0172, 0.9994, 0.0299;
+   -0.8659, 0.0299, -0.4994;
+   0.5, 0.0172, -0.8659]
+
+unitWall (1,1):
+  [0.1464, 0.9571, 0.25;
+   -0.8536, 0.25, -0.4571;
+   0.5, 0.1464, -0.8536]
+```
+
+The qualitative hierarchy matches:
+
+- `ckmWall` has small P/M off-diagonal mixing, CKM-like.
+- `unitWall` has large mixing, PMNS-like.
+
+The numerical entries do not match directly because the wall matrix is in the
+`P/M/anti` basis, not the mass-eigenstate basis.  A basis rotation/normalization
+is still required before entry-by-entry comparison.
