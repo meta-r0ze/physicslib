@@ -4,6 +4,9 @@ import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.PionWidth
 import PMElementaryParticles.KaonWidth
 import PMElementaryParticles.TauE8
+import PMAtoms.FissionYield
+import PMAtoms.AlphaFinite
+import PMSubstrate.E8Margin
 import PMElementaryParticles.NeutralPionWidth
 import Mathlib.Tactic
 
@@ -59,5 +62,14 @@ noncomputable def tauLifetimeTicks : ℝ :=
 /-- Neutral-pion lifetime in E8 ticks. -/
 noncomputable def neutralPionLifetimeTicks : ℝ :=
   lifetimeTicks PMElementaryParticles.NeutralPionWidth.neutralPionLifetimeE8
+
+/-- Pion lifetime after the pion-channel margin, in ticks. -/
+noncomputable def pionLifetimeCorrectedTicks : ℝ :=
+  lifetimeTicks (PMSubstrate.E8Margin.pionCorrectedLifetime
+    PMElementaryParticles.PionWidth.pionLifetimeE8)
+
+/-- Fission tick scales for the test nuclei. -/
+noncomputable def u238FissionTicks : ℝ := lifetimeTicks (fissionFullLifetime u238)
+noncomputable def cf252FissionTicks : ℝ := lifetimeTicks (fissionFullLifetime cf252)
 
 end PMAtoms

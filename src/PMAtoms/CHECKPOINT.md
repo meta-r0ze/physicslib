@@ -105,6 +105,9 @@ Additional tick checks:
 
 - tau lifetime ≈ 5.24×10⁶ ticks
 - neutral pion lifetime ≈ 1.53×10³ ticks
+- pion with `32/33` margin ≈ 2.60×10⁻⁸ s
+- U-238 fission ≈ 1.22×10⁴³ ticks
+- Cf-252 fission ≈ 1.86×10²⁹ ticks
 
 ## Next
 

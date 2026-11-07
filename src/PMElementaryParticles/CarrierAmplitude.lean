@@ -109,4 +109,29 @@ noncomputable def CarrierExternalStates.matrixElement (G : ℝ)
     (fun _ : Fin 1 => s.neutrinoSpinor)
     (((0 : Fin 1), (0 : Fin 1)), ((0 : Fin 1), (0 : Fin 1)))
 
+/-- An on-shell carrier spinor: definite mass and energy. -/
+structure CarrierSpinorState where
+  species : CarrierSpecies
+  energy : ℝ
+  mass : ℝ
+  spinor : Fin 4 → ℂ
+  onShell : energy ^ 2 = mass ^ 2
+
+/-- Four on-shell external spinors for a contact transition. -/
+structure OnShellExternalStates where
+  source : CarrierSpinorState
+  target : CarrierSpinorState
+  electron : CarrierSpinorState
+  neutrino : CarrierSpinorState
+
+/-- Contact matrix element from on-shell external spinors. -/
+noncomputable def OnShellExternalStates.matrixElement (G : ℝ)
+    (s : OnShellExternalStates) : ℂ :=
+  carrierMatrixElement G
+    (fun _ : Fin 1 => s.source.spinor)
+    (fun _ : Fin 1 => s.target.spinor)
+    (fun _ : Fin 1 => s.electron.spinor)
+    (fun _ : Fin 1 => s.neutrino.spinor)
+    (((0 : Fin 1), (0 : Fin 1)), ((0 : Fin 1), (0 : Fin 1)))
+
 end PMElementaryParticles.CarrierCouplings

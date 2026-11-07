@@ -62,4 +62,21 @@ theorem maskedCorrected_particle (weight : ℝ) :
   unfold maskedCorrected marginApplies
   rw [ite_eq_right (by decide)]
 
+/-- Pion-channel margin `(Δ+ν+σ)/(Δ+ν+σ+χ) = 32/33`. -/
+def pionMargin : ℝ :=
+  (((PMSubstrate.E8Values.Delta + PMSubstrate.E8Values.nu + PMSubstrate.E8Values.sigma : Nat)) : ℝ) /
+    (((PMSubstrate.E8Values.Delta + PMSubstrate.E8Values.nu + PMSubstrate.E8Values.sigma +
+      PMSubstrate.E8Values.chi : Nat)) : ℝ)
+
+theorem pionMargin_eq : pionMargin = 32 / 33 := by
+  unfold pionMargin
+  norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.E8Values.nu,
+    PMSubstrate.E8Values.sigma, PMSubstrate.E8Values.chi, PMSubstrate.baseline]
+
+theorem pionMargin_pos : 0 < pionMargin := by
+  rw [pionMargin_eq]; norm_num
+
+/-- Lifetime after the pion-channel margin. -/
+noncomputable def pionCorrectedLifetime (tau : ℝ) : ℝ := tau / pionMargin
+
 end PMSubstrate.E8Margin
