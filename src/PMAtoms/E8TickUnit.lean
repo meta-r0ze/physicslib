@@ -3,6 +3,8 @@ import PMElementaryParticles.CompositeMasses
 import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.PionWidth
 import PMElementaryParticles.KaonWidth
+import PMElementaryParticles.TauE8
+import PMElementaryParticles.NeutralPionWidth
 import Mathlib.Tactic
 
 /-! **Comparison / unit conversion.** Not an E8 prediction.
@@ -49,5 +51,13 @@ noncomputable def pionLifetimeTicks : ℝ :=
 /-- Kaon lifetime in E8 ticks. -/
 noncomputable def kaonLifetimeTicks : ℝ :=
   lifetimeTicks PMElementaryParticles.KaonWidth.kaonLifetimeE8
+
+/-- Tau lifetime in E8 ticks. -/
+noncomputable def tauLifetimeTicks : ℝ :=
+  lifetimeTicks PMElementaryParticles.TauE8.tauLifetimeE8
+
+/-- Neutral-pion lifetime in E8 ticks. -/
+noncomputable def neutralPionLifetimeTicks : ℝ :=
+  lifetimeTicks PMElementaryParticles.NeutralPionWidth.neutralPionLifetimeE8
 
 end PMAtoms

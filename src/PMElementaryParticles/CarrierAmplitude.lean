@@ -90,4 +90,23 @@ theorem carrierMatrixElement_eq_amp (G : ℝ) {ιk ιp ιe ιb : Type*}
     carrierMatrixElement G uk up ue vb x =
       PMAction.AmplitudeTrace.amp G uk up ue vb x := rfl
 
+/-- Species-specific external spinors for one contact transition. -/
+structure CarrierExternalStates where
+  source : CarrierSpecies
+  target : CarrierSpecies
+  sourceSpinor : Fin 4 → ℂ
+  targetSpinor : Fin 4 → ℂ
+  electronSpinor : Fin 4 → ℂ
+  neutrinoSpinor : Fin 4 → ℂ
+
+/-- Contact matrix element from the species-specific external spinors. -/
+noncomputable def CarrierExternalStates.matrixElement (G : ℝ)
+    (s : CarrierExternalStates) : ℂ :=
+  carrierMatrixElement G
+    (fun _ : Fin 1 => s.sourceSpinor)
+    (fun _ : Fin 1 => s.targetSpinor)
+    (fun _ : Fin 1 => s.electronSpinor)
+    (fun _ : Fin 1 => s.neutrinoSpinor)
+    (((0 : Fin 1), (0 : Fin 1)), ((0 : Fin 1), (0 : Fin 1)))
+
 end PMElementaryParticles.CarrierCouplings

@@ -97,9 +97,14 @@ predictions.
 - pion lifetime in ticks ≈ 4.55×10¹¹
 - kaon lifetime in ticks ≈ 3.61×10¹¹
 
-Applying the `41/43` phase margin is not universal: it improves the pion residual
-but spoils the muon residual.  The margin remains beta-specific unless a
-channel-selection rule says otherwise.
+The beta-only margin mask leaves particle lifetimes unchanged: the muon residual
+is no longer spoiled, while beta keeps the `41/43` margin.  The pion improvement
+from the raw margin is therefore not used without a separate channel rule.
+
+Additional tick checks:
+
+- tau lifetime ≈ 5.24×10⁶ ticks
+- neutral pion lifetime ≈ 1.53×10³ ticks
 
 ## Next
 
