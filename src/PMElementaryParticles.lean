@@ -23,6 +23,7 @@ import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.ChargeProtocols
 import PMElementaryParticles.ProtocolInventory
+import PMElementaryParticles.CarrierSpecies
 import PMElementaryParticles.ProtocolDynamics
 import PMElementaryParticles.ProtocolCaveats
 import PMElementaryParticles.SubstrateLedger
