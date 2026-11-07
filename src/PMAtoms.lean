@@ -49,6 +49,8 @@ import PMAtoms.SpectralDecoherenceInstances
 import PMAtoms.CollectiveWaveBridge
 import PMAtoms.NuclearExitWaveBridge
 import PMAtoms.E8Tick
+import PMAtoms.ClockHierarchy
+import PMAtoms.AlphaClockComparison
 import PMAtoms.E8TickUnit
 import PMAtoms.NuclearDecay
 import PersistenceMechanics.DecayChannel
