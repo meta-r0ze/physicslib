@@ -2,6 +2,7 @@ import PMElementaryParticles.MuonRate
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.NeutronRate
 import PMElementaryParticles.Widths
+import PMSubstrate.E8Values
 import Mathlib.Tactic
 
 /-! **Comparison / E8-input check.**
@@ -49,5 +50,23 @@ theorem muonLifetime_eq : muonLifetime = 1 / muonWidth := rfl
 
 theorem muonLifetime_pos : 0 < muonLifetime :=
   lifetime_pos (by norm_num) muonWidth_pos
+
+/-- E8 coefficient `D(σ−χ)ν = 4·3·16 = 192`. -/
+def muonCoefficientE8 : Nat :=
+  PMSubstrate.E8Values.D * (PMSubstrate.E8Values.sigma - PMSubstrate.E8Values.chi) *
+    PMSubstrate.E8Values.nu
+
+theorem muonCoefficientE8_eq : muonCoefficientE8 = 192 := by
+  unfold muonCoefficientE8
+  norm_num [PMSubstrate.E8Values.D, PMSubstrate.E8Values.sigma,
+    PMSubstrate.E8Values.chi, PMSubstrate.E8Values.nu, PMSubstrate.baseline]
+
+/-- Muon width written with the E8 coefficient. -/
+theorem muonWidth_eq_E8 :
+    muonWidth =
+      fermiME ^ 2 * muon ^ 5 / ((muonCoefficientE8 : ℝ) * Real.pi ^ 3) := by
+  unfold muonWidth
+  rw [muonCoefficientE8_eq]
+  norm_num
 
 end PMElementaryParticles.MuonLifetime

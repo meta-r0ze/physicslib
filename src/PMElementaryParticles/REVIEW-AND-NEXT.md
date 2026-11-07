@@ -145,6 +145,11 @@ finite-channel replacement remains open.
 masses; `B_e` remains comparison data.  `PionWidth` now uses `fπ = v/(Δ²+Δ−χ) = v/1890`; the resulting lifetime is
 `≈2.52×10⁻⁸ s`, about 3% below the measured `2.60×10⁻⁸ s`.
 
+### Kaon and neutral pion
+
+`KaonWidth` supplies the structural `K⁺ → μ⁺ν` two-body width but still needs an
+E8 `f_K`.  The neutral-pion two-photon anomaly has no E8 derivation yet.
+
 ### B5. Absolute coupling and corrections
 Radiative corrections, hadronic final states, bound-state matrix elements, and an
 absolute coupling/lifetime prediction remain inputs. The tau lifetime uses the

@@ -251,6 +251,12 @@ nuclear mass ledger. Integrating the two-ledger mass into the table, proving
 Aufbau order, and unifying `Nucleon`/`Nuclide`/`Atom`/`Particle` into one
 `System` record remain open.
 
+## Decay validation
+
+A frozen validation table is in [`DECAY-VALIDATION.md`](DECAY-VALIDATION.md).
+Neutron, muon, tau, pion, alpha, and fission are recorded with provenance labels.
+The neutral-pion anomaly and E8 `f_K` remain open.
+
 ## Checkpoint status
 
 See [`CHECKPOINT.md`](CHECKPOINT.md).  Certified core, beta/alpha/fission E8

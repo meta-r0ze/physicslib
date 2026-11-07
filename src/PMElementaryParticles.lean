@@ -8,6 +8,7 @@ import PMElementaryParticles.WeakMatching
 import PMElementaryParticles.MuonRate
 import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.PionWidth
+import PMElementaryParticles.KaonWidth
 import PMElementaryParticles.TauE8
 import PMElementaryParticles.MuonAmplitude
 import PMElementaryParticles.ScalingObligations

@@ -43,6 +43,7 @@ import PMAtoms.LeptonLattice
 import PMAtoms.BetaCalibration
 import PMAtoms.NeutronPrediction
 import PMAtoms.NuclearDecay
+import PMAtoms.DecayChannel
 import PMAtoms.WeakTransition
 import PMAtoms.FermiFunction
 import PMAtoms.CollectiveRegime
