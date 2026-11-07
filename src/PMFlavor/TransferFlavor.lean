@@ -176,4 +176,16 @@ theorem ckm_fraction_lt_half : ckmCapacityFraction < 1 / 2 := by
 theorem pmns_fraction_gt_half : 1 / 2 < pmnsCapacityFraction := by
   rw [pmnsCapacityFraction_eq]; norm_num
 
+/-- Full mixing entries depend on `δ`; the protected-state overlap does not. -/
+theorem fullMixing_delta_dependence :
+    PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootP 0 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (PMFlavor.MixingMatrix.rootP 0 : ℂ) - 3, 1] : Fin 3 → ℂ) ≠
+      PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootP 2 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (PMFlavor.MixingMatrix.rootP 0 : ℂ) - 3, 1] : Fin 3 → ℂ) := by
+  rw [PMFlavor.MixingMatrix.ip_P_P, PMFlavor.MixingMatrix.ip_P_P,
+    PMFlavor.MixingMatrix.rootP_zero, PMFlavor.MixingMatrix.rootP_two]
+  norm_num
+
 end PMFlavor.TransferFlavor

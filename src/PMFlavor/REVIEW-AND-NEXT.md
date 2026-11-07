@@ -148,4 +148,6 @@ the whole tree, not just PMFlavor. No Paper V–VI imports; permitted axioms
 The state `anti` is an eigenvector of `brokenLink δ` for every `δ`, so the
 protected-state overlap with the `Z₂`-breaking sector depends only on `ε`.
 The absolute wall scale `δ` cancels in this observable; only the breaking cost
-`ε` matters.
+`ε` matters.  Full mixing entries do depend on `δ`
+(`fullMixing_delta_dependence`), so `δ` is physical for the full CKM/PMNS
+entries and needs one anchor.
