@@ -376,7 +376,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronSpectralFraction =>
-    have h := PMAtoms.neutronSpectralFraction_bounds_refined
+    have h := PMAtoms.neutronSpectralFraction_bounds_weighted
     norm_num [bounds, value] at h ⊢
     exact h
   | neutronLifetimeE8 =>

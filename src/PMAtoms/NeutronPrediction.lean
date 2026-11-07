@@ -249,6 +249,86 @@ lemma exp_neg_sqrt_two_le_0244 : Real.exp (-Real.sqrt 2) ≤ (0.2442 : ℝ) := b
       (0.2442 : ℝ) := by norm_num
   exact hmono.trans (ht.trans hconst)
 
+/-- Exact `3×3×3` eigenvalue gap is `√2` times the sum of index excesses. -/
+lemma dirichletTerm_three (a : Nat) (ha1 : 1 ≤ a) (ha3 : a ≤ 3) :
+    2 - 2 * Real.cos (Real.pi * (a : ℝ) / (((3 : Nat) : ℝ) + 1)) =
+      (2 - Real.sqrt 2) + Real.sqrt 2 * ((a : ℝ) - 1) := by
+  interval_cases a
+  · rw [show Real.pi * ((1 : Nat) : ℝ) / (((3 : Nat) : ℝ) + 1) = Real.pi / 4 by ring,
+      Real.cos_pi_div_four]
+    ring
+  · rw [show Real.pi * ((2 : Nat) : ℝ) / (((3 : Nat) : ℝ) + 1) = Real.pi / 2 by ring,
+      Real.cos_pi_div_two]
+    norm_num
+  · rw [show Real.pi * ((3 : Nat) : ℝ) / (((3 : Nat) : ℝ) + 1) = Real.pi - Real.pi / 4 by ring,
+      Real.cos_pi_sub, Real.cos_pi_div_four]
+    ring
+
+lemma dirichletEigenvalue_three_eq_low_add (a b c : Nat)
+    (ha1 : 1 ≤ a) (ha3 : a ≤ 3) (hb1 : 1 ≤ b) (hb3 : b ≤ 3)
+    (hc1 : 1 ≤ c) (hc3 : c ≤ 3) :
+    dirichletEigenvalue 3 a b c =
+      dirichletEigenvalue 3 1 1 1 + Real.sqrt 2 * ((a : ℝ) + b + c - 3) := by
+  have h1 := dirichletTerm_three a ha1 ha3
+  have h2 := dirichletTerm_three b hb1 hb3
+  have h3 := dirichletTerm_three c hc1 hc3
+  have hlow := dirichletTerm_three 1 (by norm_num) (by norm_num)
+  unfold dirichletEigenvalue
+  nlinarith [h1, h2, h3, hlow]
+
+/-- Weight of a `3×3×3` mode: sum of the three index excesses. -/
+def neutronModeWeight (p : Fin 3 × (Fin 3 × Fin 3)) : Fin 7 :=
+  ⟨p.1.val + p.2.1.val + p.2.2.val, by
+    have h1 := p.1.isLt
+    have h2 := p.2.1.isLt
+    have h3 := p.2.2.isLt
+    omega⟩
+
+/-- Number of modes at each weight `0..6`. -/
+def neutronWeightCount (s : Nat) : Nat :=
+  match s with
+  | 0 => 1
+  | 1 => 3
+  | 2 => 6
+  | 3 => 7
+  | 4 => 6
+  | 5 => 3
+  | 6 => 1
+  | _ => 0
+
+lemma neutronModeWeight_card (s : Fin 7) :
+    (Finset.univ.filter (fun p : Fin 3 × (Fin 3 × Fin 3) =>
+      neutronModeWeight p = s)).card = neutronWeightCount s.val := by
+  fin_cases s <;> decide
+
+lemma dirichletEigenvalue_three_mode_eq (p : Fin 3 × (Fin 3 × Fin 3)) :
+    dirichletEigenvalue 3 (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1) =
+      dirichletEigenvalue 3 1 1 1 + Real.sqrt 2 * ((neutronModeWeight p).val : ℝ) := by
+  have h := dirichletEigenvalue_three_eq_low_add (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1)
+    (Nat.succ_pos _) (Nat.succ_le_of_lt p.1.isLt)
+    (Nat.succ_pos _) (Nat.succ_le_of_lt p.2.1.isLt)
+    (Nat.succ_pos _) (Nat.succ_le_of_lt p.2.2.isLt)
+  rw [h]
+  congr 1
+  simp [neutronModeWeight]
+  ring
+
+lemma neutron_weight_sum_eq (r : ℝ) :
+    (∑ p : Fin 3 × (Fin 3 × Fin 3), r ^ (neutronModeWeight p).val) =
+      ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * r ^ s.val := by
+  have hfiber := Finset.sum_fiberwise
+    (s := (Finset.univ : Finset (Fin 3 × (Fin 3 × Fin 3))))
+    (g := neutronModeWeight) (f := fun p => r ^ (neutronModeWeight p).val)
+  rw [← hfiber]
+  apply Finset.sum_congr rfl
+  intro s hs
+  rw [show (∑ i with neutronModeWeight i = s, r ^ (neutronModeWeight i).val) =
+      ∑ i with neutronModeWeight i = s, r ^ s.val by
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [(Finset.mem_filter.mp hi).2]]
+  rw [Finset.sum_const, nsmul_eq_mul, neutronModeWeight_card]
+
 /-- Sharper certified bound using the first spectral gap `√2`. -/
 theorem neutronSpectralFraction_bounds_refined :
     (0.136 : ℝ) ≤ neutronSpectralFraction ∧ neutronSpectralFraction ≤ 1 := by
@@ -328,26 +408,95 @@ theorem neutronSpectralFraction_bounds_refined :
 theorem neutronSpectralFraction_pos : 0 < neutronSpectralFraction :=
   lt_of_lt_of_le (by norm_num) neutronSpectralFraction_bounds.1
 
+/-- Sharper bound from the exact mode-weight decomposition. -/
+theorem neutronSpectralFraction_bounds_weighted :
+    (0.45 : ℝ) ≤ neutronSpectralFraction ∧ neutronSpectralFraction ≤ 1 := by
+  rw [neutronSpectralFraction_eq_lowest_weight]
+  let low : Fin 3 × (Fin 3 × Fin 3) :=
+    (⟨0, by norm_num⟩, (⟨0, by norm_num⟩, ⟨0, by norm_num⟩))
+  set w : Fin 3 × (Fin 3 × Fin 3) → ℝ :=
+    fun p => betaSpectralWeight 3 (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1) with hwdef
+  let r : ℝ := Real.exp (-Real.sqrt 2)
+  have hwpos : ∀ p, 0 < w p := by
+    intro p; unfold w; exact betaSpectralWeight_pos 3 _ _ _
+  have hw_eq : ∀ p, w p = w low * r ^ (neutronModeWeight p).val := by
+    intro p
+    have hlam := dirichletEigenvalue_three_mode_eq p
+    calc
+      w p = Real.exp (-dirichletEigenvalue 3 (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1)) := rfl
+      _ = Real.exp (-(dirichletEigenvalue 3 1 1 1 +
+          Real.sqrt 2 * ((neutronModeWeight p).val : ℝ))) := by rw [hlam]
+      _ = Real.exp (-dirichletEigenvalue 3 1 1 1) *
+          Real.exp (-(Real.sqrt 2 * ((neutronModeWeight p).val : ℝ))) := by
+        rw [← Real.exp_add]
+        ring_nf
+      _ = Real.exp (-dirichletEigenvalue 3 1 1 1) *
+          Real.exp (-Real.sqrt 2) ^ (neutronModeWeight p).val := by
+        congr 1
+        rw [show -(Real.sqrt 2 * ((neutronModeWeight p).val : ℝ)) =
+            ((neutronModeWeight p).val : ℝ) * (-Real.sqrt 2) by ring,
+          Real.exp_nat_mul]
+      _ = w low * r ^ (neutronModeWeight p).val := by
+        simp [w, low, r, betaSpectralWeight]
+  have htotal_eq : ∑ p, w p = w low * ∑ p, r ^ (neutronModeWeight p).val := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro p hp
+    rw [hw_eq p]
+  have hr0 : 0 ≤ r := le_of_lt (Real.exp_pos _)
+  have hrle : r ≤ (0.2442 : ℝ) := exp_neg_sqrt_two_le_0244
+  have hsum_le : (∑ p : Fin 3 × (Fin 3 × Fin 3), r ^ (neutronModeWeight p).val) ≤
+      (2.217 : ℝ) := by
+    rw [neutron_weight_sum_eq]
+    calc
+      ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * r ^ s.val ≤
+          ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * (0.2442 : ℝ) ^ s.val := by
+        apply Finset.sum_le_sum
+        intro s hs
+        exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hr0 hrle _) (by positivity)
+      _ ≤ (2.217 : ℝ) := by
+        simp [Fin.sum_univ_succ, neutronWeightCount]
+        norm_num
+  have htotal_le : ∑ p, w p ≤ 2.217 * w low := by
+    rw [htotal_eq]
+    have hwlowpos : 0 < w low := hwpos low
+    nlinarith [hsum_le, hwlowpos]
+  have htotal_pos : 0 < ∑ p, w p := by
+    apply Finset.sum_pos
+    · intro p _; exact hwpos p
+    · exact Finset.univ_nonempty
+  constructor
+  · rw [le_div_iff₀ htotal_pos]
+    nlinarith [htotal_le]
+  · rw [div_le_one htotal_pos]
+    have hsingle : w low ≤ ∑ p, w p := by
+      have h := Finset.sum_le_sum_of_subset_of_nonneg
+        (s := {low}) (t := Finset.univ) (f := w)
+        (by intro x hx; simp)
+        (by intro x _ _; exact le_of_lt (hwpos x))
+      simpa using h
+    exact hsingle
+
 /-- Broad certified enclosure of the finite-channel neutron lifetime. -/
 theorem neutronLifetimeE8_bounds :
-    (2.9e23 : ℝ) < neutronLifetimeE8 ∧ neutronLifetimeE8 < 2.63e24 := by
+    (2.9e23 : ℝ) < neutronLifetimeE8 ∧ neutronLifetimeE8 < 8.0e23 := by
   have hz := betaHazardE8_bounds
-  have hf := neutronSpectralFraction_bounds_refined
+  have hf := neutronSpectralFraction_bounds_weighted
   have hzpos : 0 < betaHazardE8 := lt_trans (by norm_num) hz.1
   have hfpos : 0 < neutronSpectralFraction := neutronSpectralFraction_pos
   have hden_pos : 0 < betaHazardE8 * neutronSpectralFraction := mul_pos hzpos hfpos
-  have hden_lo : (2.8e-24 : ℝ) * 0.136 <
+  have hden_lo : (2.8e-24 : ℝ) * 0.45 <
       betaHazardE8 * neutronSpectralFraction := by
     exact mul_lt_mul hz.1 hf.1 (by norm_num) (le_of_lt hzpos)
   have hden_hi : betaHazardE8 * neutronSpectralFraction < (3.42e-24 : ℝ) * 1 := by
     exact mul_lt_mul hz.2 hf.2 hfpos (by norm_num)
-  have hlo_pos : (0 : ℝ) < (2.8e-24 : ℝ) * 0.136 := by norm_num
+  have hlo_pos : (0 : ℝ) < (2.8e-24 : ℝ) * 0.45 := by norm_num
   have hhi_pos : (0 : ℝ) < (3.42e-24 : ℝ) * 1 := by norm_num
   have hlow : 1 / ((3.42e-24 : ℝ) * 1) <
       1 / (betaHazardE8 * neutronSpectralFraction) :=
     one_div_lt_one_div_of_lt hden_pos hden_hi
   have hhigh : 1 / (betaHazardE8 * neutronSpectralFraction) <
-      1 / ((2.8e-24 : ℝ) * 0.136) :=
+      1 / ((2.8e-24 : ℝ) * 0.45) :=
     one_div_lt_one_div_of_lt hlo_pos hden_lo
   rw [neutronLifetimeE8_eq]
   constructor <;> nlinarith [hlow, hhigh]
@@ -358,7 +507,7 @@ def neutronLifetimeSeconds : ℝ :=
 
 /-- Broad certified enclosure of the finite-channel neutron lifetime in seconds. -/
 theorem neutronLifetimeSeconds_bounds :
-    (3.7e2 : ℝ) < neutronLifetimeSeconds ∧ neutronLifetimeSeconds < 3.39e3 := by
+    (3.7e2 : ℝ) < neutronLifetimeSeconds ∧ neutronLifetimeSeconds < 1.04e3 := by
   have hn := neutronLifetimeE8_bounds
   have he := PMElementaryParticles.PhysicalUnits.electronTime_bounds
   have hnpos : (0 : ℝ) < neutronLifetimeE8 := lt_trans (by norm_num) hn.1
