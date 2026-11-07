@@ -142,3 +142,10 @@ proofs. They are separate from the open physics items above.
 Run `./build.sh PMFlavor` for this library. The top-level `./build.sh audit` checks
 the whole tree, not just PMFlavor. No Paper V–VI imports; permitted axioms
 `propext`, `Classical.choice`, `Quot.sound`.
+
+### Protected-state overlap is δ-independent
+
+The state `anti` is an eigenvector of `brokenLink δ` for every `δ`, so the
+protected-state overlap with the `Z₂`-breaking sector depends only on `ε`.
+The absolute wall scale `δ` cancels in this observable; only the breaking cost
+`ε` matters.
