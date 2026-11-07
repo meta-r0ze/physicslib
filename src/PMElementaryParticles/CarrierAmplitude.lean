@@ -66,4 +66,11 @@ theorem weakCoupling_eq_fermi (g v : ℝ) (hg : g ≠ 0) (hv : v ≠ 0)
   unfold weakCoupling PMConstants.ElectroweakE8.fermi
   rw [hvev]
 
+/-- Coherent transition amplitude ledger: sum of the three E8 coupling channels. -/
+def CarrierTransition.amplitude (t : CarrierTransition) : ℝ :=
+  t.em + t.weak + t.strong
+
+theorem CarrierTransition.amplitude_eq (t : CarrierTransition) :
+    t.amplitude = t.em + t.weak + t.strong := rfl
+
 end PMElementaryParticles.CarrierCouplings

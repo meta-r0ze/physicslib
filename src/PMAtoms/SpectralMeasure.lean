@@ -1,4 +1,5 @@
 import PMAtoms.BetaLattice
+import PMAtoms.NeutronPrediction
 import PersistenceMechanics.ChannelMeasure
 import Mathlib.Tactic
 
@@ -29,5 +30,12 @@ theorem betaSelectedProbability_nonneg (n : Nat) (E : ℝ) :
   apply subsetProbability_nonneg
   intro p
   exact le_of_lt (betaSpectralWeight_pos n _ _ _)
+
+/-- Probability of the neutron-endpoint selected beta modes. -/
+noncomputable def neutronSelectedProbability : ℝ :=
+  betaSelectedProbability neutronCube neutronCutoffExact
+
+theorem neutronSelectedProbability_nonneg : 0 ≤ neutronSelectedProbability :=
+  betaSelectedProbability_nonneg neutronCube neutronCutoffExact
 
 end PMAtoms

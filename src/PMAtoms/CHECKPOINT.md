@@ -84,7 +84,7 @@ E8 clock:
 
 ```
 e8Tick = Δ = 43
-e8TickSeconds = Δ · electronSecond
+e8TickSeconds = Δ · electronSecond, with electronSecond = ħc/(m_e c²)
 ```
 
 These are structural wiring layers.  They do not change existing numerical
@@ -92,7 +92,7 @@ predictions.
 
 ## Next
 
-1. Connect `CarrierAmplitude` to the actual `PMAction` transition operator.
-2. Derive the physical mode-selection rule from the spectral cutoff.
-3. Fix the numerical E8 tick conversion.
-4. Apply `E8Margin`/`MarginCorrection` only after 1–3.
+1. Replace the amplitude ledger with the actual `PMAction` matrix element.
+2. Derive the physical mode-selection rule beyond the cutoff parameter.
+3. Test the E8 tick against another clock-sensitive decay.
+4. Apply the margin only after those tests.
