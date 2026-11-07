@@ -207,3 +207,11 @@ The qualitative hierarchy matches:
 The numerical entries do not match directly because the wall matrix is in the
 `P/M/anti` basis, not the mass-eigenstate basis.  A basis rotation/normalization
 is still required before entry-by-entry comparison.
+
+### Wall-to-mass basis is not fixed by the spectrum
+
+`NativeMassBasis.arbitrary_mixing_with_fixed_spectra` proves that any unitary
+mixing `V` can be realized while holding the wall spectra fixed.  Therefore the
+wall-to-mass basis rotation is not determined by the wall spectrum alone.
+The `ckmWall`/`unitWall` anchors remain qualitative candidates; making them
+numerical requires a separate cost or breaking law that selects `V`.
