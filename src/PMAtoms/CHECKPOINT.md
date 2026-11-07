@@ -84,7 +84,8 @@ E8 clock:
 
 ```
 e8Tick = Δ = 43
-e8TickSeconds = Δ · electronSecond, with electronSecond = ħc/(m_e c²)
+E8TickUnit.e8TickSeconds = Δ · electronSecond, with electronSecond = ħc/(m_e c²)
+(the seconds conversion is comparison/unit input, not E8)
 ```
 
 These are structural wiring layers.  They do not change existing numerical

@@ -44,6 +44,7 @@ import PMAtoms.LeptonLattice
 import PMAtoms.BetaCalibration
 import PMAtoms.NeutronPrediction
 import PMAtoms.E8Tick
+import PMAtoms.E8TickUnit
 import PMAtoms.NuclearDecay
 import PersistenceMechanics.DecayChannel
 import PMAtoms.DecayInstantiation
