@@ -37,4 +37,15 @@ theorem probability_nonneg (m : ChannelMeasure ι) (h : ∀ i, 0 ≤ m.weight i)
   unfold probability total
   exact div_nonneg (h i) (Finset.sum_nonneg (by intro j _; exact h j))
 
+/-- Probability of a selected subset of modes. -/
+def subsetProbability (m : ChannelMeasure ι) (S : Finset ι) : ℝ :=
+  S.sum m.weight / total m
+
+theorem subsetProbability_nonneg (m : ChannelMeasure ι)
+    (h : ∀ i, 0 ≤ m.weight i) (S : Finset ι) :
+    0 ≤ subsetProbability m S := by
+  unfold subsetProbability total
+  exact div_nonneg (Finset.sum_nonneg (by intro i _; exact h i))
+    (Finset.sum_nonneg (by intro i _; exact h i))
+
 end PersistenceMechanics.ChannelCounting
