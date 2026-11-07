@@ -1,4 +1,5 @@
 import PMElementaryParticles.ProtocolInventory
+import PMElementaryParticles.QuarkMasses
 
 /-! **Experimental/candidate module.**
 
@@ -66,5 +67,15 @@ theorem channelSpecies_charge {c : PMConstants.PacketGaugeActions.Channels}
       · simpa [ofBaseProtocol, CarrierSpecies.charge] using baseProtocol_charge.1 c hb
       · simpa [ofBaseProtocol, CarrierSpecies.charge] using baseProtocol_charge.2.1 c hb
       · simpa [ofBaseProtocol, CarrierSpecies.charge] using baseProtocol_charge.2.2.2 c hb
+
+/-- Base-species mass in `m_e` units. -/
+def CarrierSpecies.mass : CarrierSpecies → ℝ
+  | .electron => 1
+  | .up => PMElementaryParticles.QuarkMasses.up
+  | .down => PMElementaryParticles.QuarkMasses.down
+  | .neutrino => 0
+
+theorem CarrierSpecies.electron_mass : CarrierSpecies.electron.mass = 1 := rfl
+theorem CarrierSpecies.neutrino_mass : CarrierSpecies.neutrino.mass = 0 := rfl
 
 end PMElementaryParticles.CarrierBridge

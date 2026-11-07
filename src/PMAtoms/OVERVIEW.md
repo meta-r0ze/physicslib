@@ -79,6 +79,7 @@ elementary protocols (PMElementaryParticles)
 | `LeptonLifetime` | `muonSpectralFraction`, `muonFiniteWidth`, `muonFiniteLifetime`; minimal-cube lepton channel | mass/phase-space coefficient still continuum |
 | `LeptonLattice` | finite lepton channel reusing `BetaLattice`; `leptonLatticeRate`, `leptonLatticeLifetime`, positivity | lepton eigenvalue input |
 | `CollectiveFinite` | finite collective barriers; `collectiveBarrierWeight`, `collectiveFiniteRate`, positivity | barrier set selection |
+| `SpectralMeasure` | `betaChannelMeasure`; finite spectral weights as a `ChannelMeasure` | numerical normalization |
 | `BetaLattice` | `BetaLatticeChannel` (`modes`, `active`), `event`, `family`; `betaLatticeRate = β·c0·active/(modes+1)`, `betaLatticeLifetime`, positivity; `betaSpectralWeight = exp(−λ)`, `betaWeightedRate`, `betaSpectralRate`; `betaOpenModes`, `betaSpectralRateCutoff`, positivity, `betaWeightedRate_le`, `betaSpectralRateCutoff_le` (`rate ≤ β·c0`) | numerical spectral sum / neutron benchmark |
 | `BetaDecay` | `betaDaughter`, `betaQ`, `betaAllowed`, `betaChannel`; `betaWidth = (G Vud)²M²f/(2π³)`, `betaWidth_pos`, `betaLifetime`; `betaEndpoint`, `betaPhaseSpace`, `betaWidthRecoil`, `betaLifetimeRecoil` with supplied Fermi function and radiative factor | supplied nuclear matrix element and Fermi/radiative factors |
 | `NuclearLedger` | `certifiedMass = nuclearMassPackingShellPaired` on `certifiedDomain = deformedFrontier`; `certifiedDomain_cm`, `certifiedDomain_cf`, `certifiedMass_decomp` |

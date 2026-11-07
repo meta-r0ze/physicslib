@@ -37,6 +37,7 @@ import PMAtoms.NuclearRegime
 import PMAtoms.NuclearLedger
 import PMAtoms.BetaDecay
 import PMAtoms.BetaLattice
+import PMAtoms.SpectralMeasure
 import PMAtoms.LeptonLifetime
 import PMAtoms.CollectiveFinite
 import PMAtoms.LeptonLattice

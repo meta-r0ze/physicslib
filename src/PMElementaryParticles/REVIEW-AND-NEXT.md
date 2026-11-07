@@ -86,7 +86,7 @@ Suggested order: **A1 → A2 → A3**, then **A5**, then **A4** (A4 reuses A1–
 
 `CarrierSpecies` now supplies the channel-label → base-protocol → species bridge
 and proves `channelSpecies_charge`: the bridge respects the E8 charge grading.
-Mass/amplitude assignment remains open.
+Base-species masses are now assigned (`CarrierSpecies.mass`); amplitude assignment remains open.
 
 ### B1. Physical interaction and final states
 Connect the substrate update / reference / charged-current operators to the contact
@@ -94,11 +94,23 @@ vertex used in `AmplitudeTrace`, and state which carrier transitions give the
 external one-particle states and decay channels. Paper II supplies conditional
 operator bridges; the identification and normalization need a model law.
 
+### B2 status
+
+`PersistenceMechanics.ChannelMeasure` supplies the finite normalized measure, and
+`PMAtoms.SpectralMeasure.betaChannelMeasure` instantiates it with the beta
+spectral weights.  The remaining input is the physical mode selection/normalization.
+
 ### B2. Select the measure and normalizations from the substrate
 Independently of A1–A2 (which construct the *standard* measure), the **choice** of
 counting measure, reduced angular density `1/(32π²)`, electron measure, parent flux
 `1/(2m)` and overall normalization must be derived from the selected physical
 readout — they are currently supplied.
+
+### B3 status
+
+Structurally solved: `DecayChannel.lifetime = 1/rate` and the persistence hazard
+layer already give the exponential survival law.  The missing input is the
+physical tick/rate normalization.
 
 ### B3. Decay law from the chosen dynamics
 Specify subsystem, environment/readout and the controlled approximation giving
