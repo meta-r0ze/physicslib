@@ -157,6 +157,130 @@ noncomputable def betaOpenModes (n : Nat) (E : ℝ) :
   exact Finset.univ.filter
     (fun p => dirichletEigenvalue n (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1) ≤ E)
 
+/-- The one-dimensional Dirichlet term is monotone in the mode index. -/
+lemma dirichletTerm_mono {n a a' : Nat} (hn : 0 < n)
+    (ha : 1 ≤ a) (haa : a ≤ a') (ha' : a' ≤ n) :
+    2 - 2 * Real.cos (Real.pi * (a : ℝ) / ((n : ℝ) + 1)) ≤
+      2 - 2 * Real.cos (Real.pi * (a' : ℝ) / ((n : ℝ) + 1)) := by
+  have hx0 : 0 ≤ Real.pi * (a : ℝ) / ((n : ℝ) + 1) := by positivity
+  have hxy : Real.pi * (a : ℝ) / ((n : ℝ) + 1) ≤
+      Real.pi * (a' : ℝ) / ((n : ℝ) + 1) := by
+    gcongr
+  have hyπ : Real.pi * (a' : ℝ) / ((n : ℝ) + 1) ≤ Real.pi := by
+    have hle : (a' : ℝ) ≤ (n : ℝ) + 1 := by
+      have : a' ≤ n + 1 := Nat.le_trans ha' (Nat.le_succ n)
+      exact_mod_cast this
+    calc
+      Real.pi * (a' : ℝ) / ((n : ℝ) + 1)
+          ≤ Real.pi * ((n : ℝ) + 1) / ((n : ℝ) + 1) := by gcongr
+      _ = Real.pi := by field_simp
+  have hcos := Real.cos_le_cos_of_nonneg_of_le_pi hx0 hyπ hxy
+  linarith
+
+/-- The Dirichlet eigenvalue is monotone in the three mode indices. -/
+lemma dirichletEigenvalue_mono {n a b c a' b' c' : Nat} (hn : 0 < n)
+    (ha : 1 ≤ a) (haa : a ≤ a') (ha' : a' ≤ n)
+    (hb : 1 ≤ b) (hbb : b ≤ b') (hb' : b' ≤ n)
+    (hc : 1 ≤ c) (hcc : c ≤ c') (hc' : c' ≤ n) :
+    dirichletEigenvalue n a b c ≤ dirichletEigenvalue n a' b' c' := by
+  unfold dirichletEigenvalue
+  have h1 := dirichletTerm_mono (n := n) hn ha haa ha'
+  have h2 := dirichletTerm_mono (n := n) hn hb hbb hb'
+  have h3 := dirichletTerm_mono (n := n) hn hc hcc hc'
+  linarith
+
+/-- The lowest mode has the smallest eigenvalue. -/
+lemma dirichletEigenvalue_lowest_le {n a b c : Nat} (hn : 0 < n)
+    (ha : 1 ≤ a) (ha' : a ≤ n)
+    (hb : 1 ≤ b) (hb' : b ≤ n)
+    (hc : 1 ≤ c) (hc' : c ≤ n) :
+    dirichletEigenvalue n 1 1 1 ≤ dirichletEigenvalue n a b c :=
+  dirichletEigenvalue_mono (n := n) hn (by norm_num) ha ha'
+    (by norm_num) hb hb' (by norm_num) hc hc'
+
+lemma dirichletEigenvalue_perm12 (n a b c : Nat) :
+    dirichletEigenvalue n a b c = dirichletEigenvalue n b a c := by
+  unfold dirichletEigenvalue
+  ring
+
+lemma dirichletEigenvalue_perm13 (n a b c : Nat) :
+    dirichletEigenvalue n a b c = dirichletEigenvalue n c b a := by
+  unfold dirichletEigenvalue
+  ring
+
+/-- Any non-lowest mode is at least as high as `(2,1,1)`; the first gap. -/
+lemma dirichletEigenvalue_ge_next {n a b c : Nat} (hn : 1 < n)
+    (ha : 1 ≤ a) (ha' : a ≤ n) (hb : 1 ≤ b) (hb' : b ≤ n)
+    (hc : 1 ≤ c) (hc' : c ≤ n)
+    (h : a ≠ 1 ∨ b ≠ 1 ∨ c ≠ 1) :
+    dirichletEigenvalue n 2 1 1 ≤ dirichletEigenvalue n a b c := by
+  rcases h with ha_ne | hb_ne | hc_ne
+  · have ha2 : 2 ≤ a := by omega
+    exact dirichletEigenvalue_mono (n := n) (a := 2) (b := 1) (c := 1)
+      (a' := a) (b' := b) (c' := c) (by omega) (by norm_num) ha2 ha'
+      (by norm_num) hb hb' (by norm_num) hc hc'
+  · have hb2 : 2 ≤ b := by omega
+    have hmono := dirichletEigenvalue_mono (n := n) (a := 1) (b := 2) (c := 1)
+      (a' := a) (b' := b) (c' := c) (by omega) (by norm_num) ha ha'
+      (by norm_num) hb2 hb' (by norm_num) hc hc'
+    rw [← dirichletEigenvalue_perm12] at hmono
+    exact hmono
+  · have hc2 : 2 ≤ c := by omega
+    have hmono := dirichletEigenvalue_mono (n := n) (a := 1) (b := 1) (c := 2)
+      (a' := a) (b' := b) (c' := c) (by omega) (by norm_num) ha ha'
+      (by norm_num) hb hb' (by norm_num) hc2 hc'
+    rw [← dirichletEigenvalue_perm13] at hmono
+    exact hmono
+
+/-- Every Dirichlet eigenvalue on a cube is at most `12`. -/
+lemma dirichletEigenvalue_le_twelve (n a b c : Nat) :
+    dirichletEigenvalue n a b c ≤ 12 := by
+  unfold dirichletEigenvalue
+  have h1 := Real.neg_one_le_cos (Real.pi * (a : ℝ) / ((n : ℝ) + 1))
+  have h2 := Real.neg_one_le_cos (Real.pi * (b : ℝ) / ((n : ℝ) + 1))
+  have h3 := Real.neg_one_le_cos (Real.pi * (c : ℝ) / ((n : ℝ) + 1))
+  nlinarith
+
+/-- If the cutoff is above `12`, every mode of any cube is open. -/
+theorem betaOpenModes_eq_univ_of_twelve_le {n : Nat} {E : ℝ} (hE : 12 ≤ E) :
+    betaOpenModes n E = Finset.univ := by
+  apply Finset.eq_univ_of_forall
+  intro p
+  simp only [betaOpenModes, Finset.mem_filter, Finset.mem_univ, true_and]
+  exact le_trans
+    (dirichletEigenvalue_le_twelve n (p.1.val+1) (p.2.1.val+1) (p.2.2.val+1)) hE
+
+/-- If the cutoff lies between the lowest and next eigenvalue, exactly the
+lowest mode is open. -/
+theorem betaOpenModes_eq_singleton_of_gap {n : Nat} {E : ℝ} (hn : 1 < n)
+    (hlo : dirichletEigenvalue n 1 1 1 ≤ E)
+    (hhi : E < dirichletEigenvalue n 2 1 1) :
+    betaOpenModes n E =
+      {(⟨0, by omega⟩, (⟨0, by omega⟩, ⟨0, by omega⟩))} := by
+  ext p
+  rcases p with ⟨a, b, c⟩
+  simp only [betaOpenModes, Finset.mem_filter, Finset.mem_univ, true_and,
+    Finset.mem_singleton]
+  constructor
+  · intro hE
+    by_contra hne
+    have hdisj : a.val + 1 ≠ 1 ∨ b.val + 1 ≠ 1 ∨ c.val + 1 ≠ 1 := by
+      by_contra h
+      push Not at h
+      apply hne
+      ext <;> norm_num
+      all_goals omega
+    have hge := dirichletEigenvalue_ge_next (n := n) hn
+      (a := a.val + 1) (b := b.val + 1) (c := c.val + 1)
+      (Nat.succ_pos _) (Nat.succ_le_of_lt a.isLt)
+      (Nat.succ_pos _) (Nat.succ_le_of_lt b.isLt)
+      (Nat.succ_pos _) (Nat.succ_le_of_lt c.isLt) hdisj
+    linarith
+  · intro hp
+    rcases hp with ⟨rfl, rfl, rfl⟩
+    norm_num
+    exact hlo
+
 /-- The lowest mode is open when the cutoff reaches its eigenvalue. -/
 theorem betaOpenModes_nonempty {n : Nat} {E : ℝ} (hn : 0 < n)
     (hE : dirichletEigenvalue n 1 1 1 ≤ E) :

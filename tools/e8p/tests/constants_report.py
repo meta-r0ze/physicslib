@@ -32,7 +32,7 @@ EXPECTED = {
     "sin2_theta12", "sin2_theta23", "sin2_theta13", "pmns_jarlskog",
     "pmns_e11", "pmns_e12", "pmns_e13", "pmns_e21", "pmns_e22", "pmns_e23",
     "pmns_e31", "pmns_e32", "pmns_e33",
-    "ckm_s13", "ckm_s23", "ckm_vcb", "vud",
+    "ckm_s13", "ckm_s23", "ckm_vcb", "vud", "vud_dressed",
     # paper 0 derived loads + structure
     "l_intrinsic", "l_embed", "l_substrate", "n", "rm",
     "nc", "weinberg_gut", "boundary_storage", "beta_0",
@@ -46,7 +46,8 @@ EXPECTED = {
     "proton_ratio", "neutron_ratio", "muon_ratio",
     "tau_ratio", "proton_radius", "pion0_mev", "kaon0_mev", "kaon_plus_mev",
     "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
-    "pion_plus_mev", "neutrino_floor_mass",
+    "pion_plus_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
+    "tau_lifetime_e8_natural", "neutron_spectral_fraction",
     "rydberg_ev", "bohr_radius", "shell_capacity_n4",
     # paper 6
     "load", "hubble_late", "clustering_late", "hubble_sigma", "s8_sigma",
@@ -101,11 +102,13 @@ def main():
                       "sin2_theta13", "pmns_jarlskog",
                       "pmns_e11", "pmns_e12", "pmns_e13", "pmns_e21", "pmns_e22",
                       "pmns_e23", "pmns_e31", "pmns_e32", "pmns_e33",
-                      "ckm_s13", "ckm_s23", "ckm_vcb", "vud"}
+                      "ckm_s13", "ckm_s23", "ckm_vcb", "vud", "vud_dressed"}
     assert ids(5) == {"proton_ratio", "neutron_ratio", "muon_ratio", "tau_ratio",
                       "proton_radius", "pion0_mev", "kaon0_mev", "kaon_plus_mev",
                       "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
-                      "pion_plus_mev", "neutrino_floor_mass",
+                      "pion_plus_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
+                      "tau_lifetime_e8_natural", "neutron_spectral_fraction",
+    "tau_lifetime_e8_natural", "neutron_spectral_fraction",
                       "rydberg_ev", "bohr_radius", "shell_capacity_n4"}
     assert ids(6) == {"load", "hubble_late", "clustering_late", "hubble_sigma", "s8_sigma",
                       "omega_ratio", "baryon_pmJ", "baryon_pm3J", "z_eq", "dark_raw"}
@@ -132,6 +135,8 @@ def main():
 
     audit = run(binary, "--audit").stdout
     assert "σ" in audit and "comparisons over" in audit and "✓" in audit
+    assert "undressed; compare vud_dressed" in audit
+    assert "uses measured muon lifetime and B_e" in audit
     audit_only = run(binary, "--audit", "--only=wolf_rho").stdout
     assert "wolf_rho" in audit_only and "omega_ratio" not in audit_only
 

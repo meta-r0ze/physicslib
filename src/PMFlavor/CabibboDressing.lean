@@ -92,4 +92,21 @@ theorem q2_pos : 0 < CKMDressing.q2 := by
 theorem q2_lt_one : CKMDressing.q2 < 1 := by
   unfold CKMDressing.q2; norm_num
 
+/-- The dressed `|V_ud| = q · c₁₂c₁₃`, where `q² = 687/688`. -/
+noncomputable def vudDressed : ℝ :=
+  Real.sqrt CKMDressing.q2 * (CKM.c12 * CKM.c13)
+
+/-- Certified enclosure of the dressed `|V_ud|`. -/
+theorem vudDressed_bounds :
+    (0.97377 : ℝ) < vudDressed ∧ vudDressed < 0.97380 := by
+  have hq1 : (0.99927 : ℝ) < Real.sqrt CKMDressing.q2 := by
+    rw [Real.lt_sqrt (by norm_num)]
+    norm_num [CKMDressing.q2]
+  have hq2 : Real.sqrt CKMDressing.q2 < (0.99928 : ℝ) := by
+    rw [Real.sqrt_lt' (by norm_num)]
+    norm_num [CKMDressing.q2]
+  have hv := CKM.vud_bounds
+  unfold vudDressed
+  constructor <;> nlinarith [hq1, hq2, hv.1, hv.2]
+
 end PMFlavor.CabibboDressing

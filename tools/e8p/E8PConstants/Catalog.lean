@@ -20,7 +20,8 @@ inductive Key where
   | gaugeHyper | gaugeColour | zEq | darkRaw
   | cLight | vonKlitzing | planckChargeAtt | planckChargeRatio | planckMass | ckmS13 | ckmS23 | ckmVcb
   | wMassUnc | zMassUnc | gWeak | gPrime | electronClosure
-  | vud | bRes | neutrinoFloor
+  | vud | vudDressed | bRes | neutrinoFloor | tauLifetimeFs
+  | muonLifetimeFinite | tauLifetimeE8Natural | neutronSpectralFraction
   | rydbergEV | bohrRadius | shell4
   deriving BEq, DecidableEq, Repr
 
@@ -38,7 +39,8 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .gaugeHyper, .gaugeColour, .zEq, .darkRaw,
   .cLight, .vonKlitzing, .planckChargeAtt, .planckChargeRatio, .planckMass, .ckmS13, .ckmS23, .ckmVcb,
   .wMassUnc, .zMassUnc, .gWeak, .gPrime, .electronClosure,
-  .vud, .bRes, .neutrinoFloor,
+  .vud, .vudDressed, .bRes, .neutrinoFloor, .tauLifetimeFs, .muonLifetimeFinite,
+  .tauLifetimeE8Natural, .neutronSpectralFraction,
   .rydbergEV, .bohrRadius, .shell4]
 
 def Key.id : Key → String
@@ -105,8 +107,13 @@ def Key.id : Key → String
   | .gPrime => "g_prime"
   | .electronClosure => "electron_closure"
   | .vud => "vud"
+  | .vudDressed => "vud_dressed"
   | .bRes => "b_res"
   | .neutrinoFloor => "neutrino_floor_mass"
+  | .tauLifetimeFs => "tau_lifetime_fs"
+  | .muonLifetimeFinite => "muon_lifetime_finite"
+  | .tauLifetimeE8Natural => "tau_lifetime_e8_natural"
+  | .neutronSpectralFraction => "neutron_spectral_fraction"
   | .rydbergEV => "rydberg_ev"
   | .bohrRadius => "bohr_radius"
   | .shell4 => "shell_capacity_n4"
@@ -200,8 +207,13 @@ def bounds : Key → Rat × Rat
   | .gPrime => (0.3435, 0.3436)
   | .electronClosure => (0.99972687, 0.99972689)
   | .vud => (0.97449, 0.974499)
+  | .vudDressed => (0.97377, 0.97380)
   | .bRes => (15.3260359807, 15.3260359808)
   | .neutrinoFloor => (0.009208, 0.00921)
+  | .tauLifetimeFs => (291.15, 291.17)
+  | .muonLifetimeFinite => (1.25e15, 2.5e15)
+  | .tauLifetimeE8Natural => (1.6e8, 3.4e8)
+  | .neutronSpectralFraction => (1 / 27, 1)
   | .rydbergEV => (13.60569309, 13.60569310)
   | .bohrRadius => (0.5291772110, 0.5291772114)
   | .shell4 => (32, 32)
@@ -213,6 +225,9 @@ def Key.unit : Key → String
   | .cLight => "10^7 m/s" | .vonKlitzing => "Ω" | .planckMass => "GeV"
   | .wMassUnc | .zMassUnc => "GeV"
   | .neutrinoFloor => "eV"
+  | .tauLifetimeFs => "fs"
+  | .muonLifetimeFinite | .tauLifetimeE8Natural => "m_e^-1"
+  | .neutronSpectralFraction => "1"
   | .hubbleLate => "km/s/Mpc"
   | .rydbergEV => "eV" | .bohrRadius => "Å" | .shell4 => "states"
   | .fermi => "GeV^-2"
@@ -226,6 +241,7 @@ def Key.inputs : Key → List String
   | .pion0MeV | .kaon0MeV | .kaonPlusMeV | .pionPlusMeV => ["electron_mass_input"]
   | .upMeV | .downMeV | .strangeMeV | .charmMeV | .bottomMeV | .topMeV => ["electron_mass_input"]
   | .protonRadius => ["electron_mass_input"]
+  | .tauLifetimeFs => ["measured_muon_lifetime", "B_e"]
   | .vonKlitzing => ["c_light"]
   | .hubbleLate => ["h0_anchor"]
   | .clusteringLate => ["s8_anchor"]
@@ -309,7 +325,12 @@ def Key.theoremName : Key → String
   | .gPrime => "PMConstants.ElectroweakBounds.coupling_bounds"
   | .electronClosure => "PMConstants.JointConstants.electron_closure_bounds"
   | .vud => "PMFlavor.CKM.vud_bounds"
+  | .vudDressed => "PMFlavor.CabibboDressing.vudDressed_bounds"
   | .bRes => "PMConstants.GravityAccounting.residual_tight_bounds"
+  | .tauLifetimeFs => "PMElementaryParticles.TauLifetime.tau_lifetime_tree"
+  | .muonLifetimeFinite => "PMAtoms.muonFiniteLifetime_bounds"
+  | .tauLifetimeE8Natural => "PMElementaryParticles.TauE8.tauLifetimeE8_bounds"
+  | .neutronSpectralFraction => "PMAtoms.neutronSpectralFraction_bounds"
   | .neutrinoFloor => "PMConstants.FloorNeutrino.floor_bounds"
   | .rydbergEV => "PMAtoms.rydbergEV_bounds"
   | .bohrRadius => "PMAtoms.bohrRadius_bounds"
@@ -364,9 +385,11 @@ def Key.paper : Key → Nat
   | .gWeak => 3
   | .gPrime => 3
   | .electronClosure => 3
-  | .vud => 4
+  | .vud | .vudDressed => 4
   | .bRes => 3
   | .neutrinoFloor => 5
+  | .tauLifetimeFs | .muonLifetimeFinite | .tauLifetimeE8Natural
+  | .neutronSpectralFraction => 5
   | .rydbergEV => 5
   | .bohrRadius => 5
   | .shell4 => 5
@@ -474,6 +497,21 @@ def Key.formula : Key → String
   | .rydbergEV => "R_\\infty=\\alpha^2 m_e c^2/2"
   | .bohrRadius => "a_0=\\hbar c/(\\alpha m_e c^2)"
   | .shell4 => "\\sum_{\\ell=0}^{n-1}2(2\\ell+1)=2n^2"
+  | _ => ""
+
+/-- Known interpretation caveats shown alongside an audit row. -/
+def Key.caveat : Key → String
+  | .wMassUnc => "uncorrected; omits the interface/correction factor"
+  | .zMassUnc => "uncorrected; omits the interface/correction factor"
+  | .vud => "undressed; compare vud_dressed"
+  | .muonRatio => "documented ~2.4σ model tension"
+  | .tauRatio => "documented ~2.1σ model tension"
+  | .upMeV | .downMeV | .charmMeV => "documented model tension"
+  | .tauLifetimeFs => "uses measured muon lifetime and B_e"
+  | .muonLifetimeFinite => "finite 3x3x3 channel; all modes open; broad natural-unit interval"
+  | .tauLifetimeE8Natural => "E8 muon input; broad natural-unit interval"
+  | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
+  | .rydbergEV | .bohrRadius => "atoms comparison; unit-sensitive"
   | _ => ""
 
 end E8PConstants

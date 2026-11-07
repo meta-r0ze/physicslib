@@ -5,7 +5,7 @@ compares it with a frozen experimental reference, and can emit manuscript tags o
 audit. This file tracks coverage so the per-paper Python calculators can be retired
 only when their values are Lean-backed here.
 
-## Certified now (98 values)
+## Certified now (104 values)
 
 - Paper 0: `delta`, `nu`, `sigma`, `chi`, `D` (substrate invariants); derived loads
   `l_intrinsic`, `l_embed`, `l_substrate`, `n`, `rm`; `nc`, `weinberg_gut`,
@@ -26,7 +26,8 @@ only when their values are Lean-backed here.
   (`pm3J_bounds`), `cabibbo` (`CKM.s12_bounds`); `wolf_lambda`, `wolf_A`,
   `wolf_rho`, `wolf_eta` (`PMFlavor.Wolfenstein.*_bounds`); `sin2_theta12`,
   `sin2_theta23`, `sin2_theta13` (`PMFlavor.PMNSIntervals.input_bounds`);
-  `ckm_s13`, `ckm_s23`, `ckm_vcb`, `vud` (`PMFlavor.CKM.*_bounds`);
+  `ckm_s13`, `ckm_s23`, `ckm_vcb`, `vud`, `vud_dressed` (`PMFlavor.CKM.*_bounds`,
+  `PMFlavor.CabibboDressing.vudDressed_bounds`);
   `pmns_jarlskog` (`PMFlavor.PMNSIntervals.jarlskog_bounds`).
 - Paper 5 / Atoms (`PMAtoms`): `rydberg_ev`, `bohr_radius`,
   `shell_capacity_n4`.
@@ -34,8 +35,9 @@ only when their values are Lean-backed here.
   `muon_ratio`, `tau_ratio` (`PMElementaryParticles.LeptonMasses.*_value`), `proton_radius`,
   `pion0_mev`, `kaon0_mev`, `kaon_plus_mev` (`CompositeMasses` pulls), and the six
   quark masses `up/down/strange/charm/bottom/top_mev` (`QuarkMasses.pulls`),
-  `pion_plus_mev` (`LeptonMasses.pionPlus_mass`), and `neutrino_floor_mass`
-  (`FloorNeutrino.floor_bounds`).
+  `pion_plus_mev` (`LeptonMasses.pionPlus_mass`), `neutrino_floor_mass`
+  (`FloorNeutrino.floor_bounds`), and `tau_lifetime_fs`
+  (`PMElementaryParticles.TauLifetime.tau_lifetime_tree`).
 - Paper 6: `baryon_pmJ`, `baryon_pm3J` (`PMCosmology.Primordial.baryon_windows`),
   `z_eq` (`PMCosmology.Background.z_eq_bounds`), `dark_raw` (`Scaling.exact_ratios`),
   `omega_ratio` (`PMCosmology.Tensions.omegaRatio_bounds`);
@@ -58,6 +60,17 @@ Not yet in `e8p`, compared against `PM-1-Arch/calculations/constants.txt`:
   wavelength `λ_min`.
 - **Global audit/χ²**: now provided by `e8p --audit` (per-value σ and summary);
   a tiered audit can be added as `--audit --tier` if wanted.
+
+## Decay coverage
+
+`tau_lifetime_fs` is now catalogued. The remaining decay lifetimes/widths
+(`muon`, `pion`, `kaon`, `neutral pion`, `neutron`) are not yet catalogued:
+the Lean modules define them, but most do not yet have certified numeric
+enclosures, and the neutron route needs the finite-channel spectral fraction.
+This is a numeric-enclosure task, not a new model postulate.
+
+Known comparison caveats (uncorrected W/Z, undressed Vud, documented mass
+tensions) are printed by `--audit` and included as `caveat` fields in JSON.
 
 ## Not catalog values
 

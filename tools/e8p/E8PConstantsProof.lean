@@ -4,6 +4,7 @@ import PMConstants.GravityAccounting
 import PMConstants.Depth
 import PMFlavor.PMNSIntervals
 import PMFlavor.CKM
+import PMFlavor.CabibboDressing
 import PMCosmology.Scaling
 import PMCosmology.SubstrateLoad
 import PMCosmology.Tensions
@@ -132,6 +133,11 @@ def value : Key → ℝ
   | .gPrime => Real.sqrt (PMConstants.ElectroweakE8.hyperchargeSquared PMConstants.CertifiedConstants.α)
   | .electronClosure => PMConstants.JointConstants.electronClosureRatio
   | .vud => PMFlavor.CKM.c12 * PMFlavor.CKM.c13
+  | .vudDressed => PMFlavor.CabibboDressing.vudDressed
+  | .tauLifetimeFs => PMElementaryParticles.TauLifetime.tauLife
+  | .muonLifetimeFinite => PMAtoms.muonFiniteLifetime
+  | .tauLifetimeE8Natural => PMElementaryParticles.TauE8.tauLifetimeE8
+  | .neutronSpectralFraction => PMAtoms.neutronSpectralFraction
   | .bRes => PMConstants.residual PMConstants.CertifiedConstants.α
   | .neutrinoFloor => PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α PMConstants.FloorNeutrino.meEV
   | .rydbergEV => PMAtoms.rydbergEV
@@ -344,6 +350,26 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     have h := PMFlavor.CKM.vud_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
+  | vudDressed =>
+    have h := PMFlavor.CabibboDressing.vudDressed_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | tauLifetimeFs =>
+    have h := PMElementaryParticles.TauLifetime.tau_lifetime_tree
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | muonLifetimeFinite =>
+    have h := PMAtoms.muonFiniteLifetime_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | tauLifetimeE8Natural =>
+    have h := PMElementaryParticles.TauE8.tauLifetimeE8_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | neutronSpectralFraction =>
+    have h := PMAtoms.neutronSpectralFraction_bounds
+    norm_num [bounds, value] at h ⊢
+    exact h
   | bRes =>
     have h := PMConstants.GravityAccounting.residual_tight_bounds
     norm_num [bounds, value] at h ⊢

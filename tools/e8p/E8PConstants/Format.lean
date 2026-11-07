@@ -70,6 +70,7 @@ def rowJson (k : Key) (digits : Nat) : Lean.Json :=
   Lean.Json.mkObj [
     ("id", .str k.id), ("paper", .str (toString k.paper)), ("section", .str k.section),
     ("role", .str k.role), ("unit", .str k.unit),
+    ("caveat", .str k.caveat),
     ("inputs", .arr (k.inputs.map Lean.Json.str).toArray),
     ("theorem", .str k.theoremName), ("formula", .str k.formula),
     ("rational_lower", .str (fraction lo)), ("rational_upper", .str (fraction hi)),
@@ -96,7 +97,8 @@ def rowText (k : Key) (digits : Nat) : String :=
   let exp := match expRef k with
     | some r => s!"  | exp {expValueText r} ± {expUncText r} ({r.citation}): diff {diffText k r}, σ {sigmaText k r}"
     | none => ""
-  text ++ exact ++ input ++ exp
+  let caveat := if k.caveat.isEmpty then "" else s!"  [caveat: {k.caveat}]"
+  text ++ exact ++ input ++ exp ++ caveat
 
 /-- One audit line (keys with an experimental reference only). -/
 def auditText (k : Key) (digits : Nat) : Option String :=
@@ -148,6 +150,7 @@ def auditBlocks (k : Key) (digits : Nat) : List String :=
   let (lo, hi) := bounds k
   (expRefs k).map (fun r =>
     s!"  {statusGlyph k r} {k.id}: model [{fixedDecimal (lowerScaled lo digits) digits}, {fixedDecimal (upperScaled hi digits) digits}] {k.unit}\n" ++
-    s!"      exp {expValueText r} ± {expUncText r} ({r.citation}); diff {diffText k r}; σ {sigmaText k r}")
+    s!"      exp {expValueText r} ± {expUncText r} ({r.citation}); diff {diffText k r}; σ {sigmaText k r}" ++
+    (if k.caveat.isEmpty then "" else s!"\n      note: {k.caveat}"))
 
 end E8PConstants
