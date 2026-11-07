@@ -150,4 +150,6 @@ protected-state overlap with the `Z₂`-breaking sector depends only on `ε`.
 The absolute wall scale `δ` cancels in this observable; only the breaking cost
 `ε` matters.  Full mixing entries do depend on `δ`
 (`fullMixing_delta_dependence`), so `δ` is physical for the full CKM/PMNS
-entries and needs one anchor.
+entries and needs one anchor.  The unit-toll anchor `unitWall = (1,1)` is
+physical, off the exceptional curve, and gives all-nonzero full mixing
+(`unitWall_all_nonzero`).  It is an anchor choice, not an E8 derivation.

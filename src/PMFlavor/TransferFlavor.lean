@@ -188,4 +188,42 @@ theorem fullMixing_delta_dependence :
     PMFlavor.MixingMatrix.rootP_zero, PMFlavor.MixingMatrix.rootP_two]
   norm_num
 
+/-- Unit-toll wall anchor: one unit of phase mismatch and one unit of cost. -/
+def unitWall : BreakingPhase := ⟨1, 1⟩
+
+theorem unitWall_physical : PhysicalWall unitWall := by
+  unfold PhysicalWall unitWall
+  norm_num
+
+theorem unitWall_off_exceptional : PhysicalWallInput unitWall :=
+  physicalWall_off_exceptional unitWall_physical
+
+/-- At the unit-toll anchor every full mixing entry is nonzero. -/
+theorem unitWall_all_nonzero :
+    (PMFlavor.MixingMatrix.ip PMFlavor.GenerationBreaking.anti PMFlavor.MixingMatrix.antiB ≠ 0 ∧
+      PMFlavor.MixingMatrix.ip PMFlavor.GenerationBreaking.anti
+        (![1, (PMFlavor.MixingMatrix.rootP 1 : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      PMFlavor.MixingMatrix.ip PMFlavor.GenerationBreaking.anti
+        (![1, (PMFlavor.MixingMatrix.rootM 1 : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0) ∧
+    (PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootP 1 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        PMFlavor.MixingMatrix.antiB ≠ 0 ∧
+      PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootM 1 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        PMFlavor.MixingMatrix.antiB ≠ 0) ∧
+    (PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootP 1 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (PMFlavor.MixingMatrix.rootP 1 : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootP 1 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (PMFlavor.MixingMatrix.rootM 1 : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootM 1 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (PMFlavor.MixingMatrix.rootP 1 : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0 ∧
+      PMFlavor.MixingMatrix.ip
+        (![(PMFlavor.MixingMatrix.rootM 1 : ℂ) - 3, 1, 1] : Fin 3 → ℂ)
+        (![1, (PMFlavor.MixingMatrix.rootM 1 : ℂ) - 3, 1] : Fin 3 → ℂ) ≠ 0) :=
+  PMFlavor.MixingMatrix.all_nonzero_mixing_interval 1 1 (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num)
+
 end PMFlavor.TransferFlavor
