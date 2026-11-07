@@ -46,6 +46,7 @@ import PMAtoms.NeutronPrediction
 import PMAtoms.MesonFiniteChannels
 import PMAtoms.SpectralWaveBridge
 import PMAtoms.SpectralDecoherenceInstances
+import PMAtoms.CollectiveWaveBridge
 import PMAtoms.E8Tick
 import PMAtoms.E8TickUnit
 import PMAtoms.NuclearDecay
