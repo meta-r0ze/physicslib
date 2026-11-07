@@ -1,5 +1,8 @@
 import PMAtoms.E8Tick
 import PMElementaryParticles.CompositeMasses
+import PMElementaryParticles.MuonLifetime
+import PMElementaryParticles.PionWidth
+import PMElementaryParticles.KaonWidth
 import Mathlib.Tactic
 
 /-! **Comparison / unit conversion.** Not an E8 prediction.
@@ -34,5 +37,17 @@ theorem e8TickSeconds_eq : e8TickSeconds = 43 * electronSecond := by
 theorem e8TickSeconds_pos : 0 < e8TickSeconds := by
   unfold e8TickSeconds
   exact mul_pos (by rw [e8Tick_eq]; norm_num) electronSecond_pos
+
+/-- Muon lifetime in E8 ticks. -/
+noncomputable def muonLifetimeTicks : ℝ :=
+  lifetimeTicks PMElementaryParticles.MuonLifetime.muonLifetime
+
+/-- Pion lifetime in E8 ticks. -/
+noncomputable def pionLifetimeTicks : ℝ :=
+  lifetimeTicks PMElementaryParticles.PionWidth.pionLifetimeE8
+
+/-- Kaon lifetime in E8 ticks. -/
+noncomputable def kaonLifetimeTicks : ℝ :=
+  lifetimeTicks PMElementaryParticles.KaonWidth.kaonLifetimeE8
 
 end PMAtoms

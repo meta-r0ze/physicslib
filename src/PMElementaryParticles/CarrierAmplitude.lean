@@ -3,6 +3,7 @@ import PMConstants.CurrentConstants
 import PMConstants.ElectroweakE8
 import PMFlavor.CKM
 import PMAction.WeakVertex
+import PMAction.AmplitudeTrace
 import PMConstants.MatterRunning
 import Mathlib.Tactic
 
@@ -72,5 +73,21 @@ def CarrierTransition.amplitude (t : CarrierTransition) : ℝ :=
 
 theorem CarrierTransition.amplitude_eq (t : CarrierTransition) :
     t.amplitude = t.em + t.weak + t.strong := rfl
+
+/-- Actual external-spinor contact matrix element from `PMAction`. -/
+noncomputable def carrierMatrixElement (G : ℝ) {ιk ιp ιe ιb : Type*}
+    [Fintype ιk] [Fintype ιp] [Fintype ιe] [Fintype ιb]
+    (uk : ιk → Fin 4 → ℂ) (up : ιp → Fin 4 → ℂ)
+    (ue : ιe → Fin 4 → ℂ) (vb : ιb → Fin 4 → ℂ)
+    (x : (ιk × ιp) × (ιe × ιb)) : ℂ :=
+  PMAction.AmplitudeTrace.amp G uk up ue vb x
+
+theorem carrierMatrixElement_eq_amp (G : ℝ) {ιk ιp ιe ιb : Type*}
+    [Fintype ιk] [Fintype ιp] [Fintype ιe] [Fintype ιb]
+    (uk : ιk → Fin 4 → ℂ) (up : ιp → Fin 4 → ℂ)
+    (ue : ιe → Fin 4 → ℂ) (vb : ιb → Fin 4 → ℂ)
+    (x : (ιk × ιp) × (ιe × ιb)) :
+    carrierMatrixElement G uk up ue vb x =
+      PMAction.AmplitudeTrace.amp G uk up ue vb x := rfl
 
 end PMElementaryParticles.CarrierCouplings

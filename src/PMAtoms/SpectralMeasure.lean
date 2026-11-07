@@ -1,5 +1,6 @@
 import PMAtoms.BetaLattice
 import PMAtoms.NeutronPrediction
+import PMElementaryParticles.LeptonMasses
 import PersistenceMechanics.ChannelMeasure
 import Mathlib.Tactic
 
@@ -37,5 +38,12 @@ noncomputable def neutronSelectedProbability : ℝ :=
 
 theorem neutronSelectedProbability_nonneg : 0 ≤ neutronSelectedProbability :=
   betaSelectedProbability_nonneg neutronCube neutronCutoffExact
+
+/-- Probability of the muon-cutoff selected modes in the minimal cube. -/
+noncomputable def muonSelectedProbability : ℝ :=
+  betaSelectedProbability 3 PMElementaryParticles.LeptonMasses.muon
+
+theorem muonSelectedProbability_nonneg : 0 ≤ muonSelectedProbability :=
+  betaSelectedProbability_nonneg 3 _
 
 end PMAtoms

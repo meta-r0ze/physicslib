@@ -91,9 +91,18 @@ E8TickUnit.e8TickSeconds = Δ · electronSecond, with electronSecond = ħc/(m_e 
 These are structural wiring layers.  They do not change existing numerical
 predictions.
 
+## Numerical checks
+
+- muon lifetime in ticks ≈ 3.95×10¹³
+- pion lifetime in ticks ≈ 4.55×10¹¹
+- kaon lifetime in ticks ≈ 3.61×10¹¹
+
+Applying the `41/43` phase margin is not universal: it improves the pion residual
+but spoils the muon residual.  The margin remains beta-specific unless a
+channel-selection rule says otherwise.
+
 ## Next
 
-1. Replace the amplitude ledger with the actual `PMAction` matrix element.
-2. Derive the physical mode-selection rule beyond the cutoff parameter.
-3. Test the E8 tick against another clock-sensitive decay.
-4. Apply the margin only after those tests.
+1. Derive a channel mask for when the phase margin applies.
+2. Test the tick on another clock-sensitive decay.
+3. Replace the amplitude ledger by species-specific spinors.

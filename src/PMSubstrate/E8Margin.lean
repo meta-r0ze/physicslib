@@ -33,4 +33,7 @@ noncomputable def phaseCorrected (weight : ℝ) : ℝ := phaseMargin * weight
 theorem phaseCorrected_eq (weight : ℝ) :
     phaseCorrected weight = phaseMargin * weight := rfl
 
+/-- Lifetime after dividing by the phase margin. -/
+noncomputable def phaseCorrectedLifetime (tau : ℝ) : ℝ := tau / phaseMargin
+
 end PMSubstrate.E8Margin
