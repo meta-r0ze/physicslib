@@ -5,4 +5,5 @@ import PersistenceMechanics.Gibbs
 import PersistenceMechanics.LawSelection
 import PersistenceMechanics.DecayChannel
 import PersistenceMechanics.MarginCorrection
+import PersistenceMechanics.CoherentAction
 import PersistenceMechanics.ChannelMeasure

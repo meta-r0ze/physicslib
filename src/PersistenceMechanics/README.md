@@ -16,3 +16,5 @@ lake exe cache get
 - **DecayChannel.** Shared six-pillar decay template: capacity, map, protocol, governor, toll, margin, plus the channel action in the exponent.
 
 - **ChannelMeasure / MarginCorrection.** Finite channel weights/probabilities and a supplied margin correction interface, shared by all decay systems.
+
+- **CoherentAction.** Phase-preserving and cost-attenuating sectors of the same operational action, with combined weight and quality factor.
