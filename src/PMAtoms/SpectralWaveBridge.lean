@@ -96,6 +96,38 @@ theorem betaSpectralRate_eq_amplitude_probability (β c0 : ℝ) (n : Nat)
   unfold betaSpectralRate betaWeightedRate
   simp only [betaSpectralWeight_eq_normSq_amplitude, spectralAmplitudeMode]
 
+/-- A phase-loss channel.  `phaseCost` is an explicit model input here; it is
+not identified with the population cost or with an E8-derived number. -/
+structure SpectralDecoherenceChannel where
+  phaseCost : ℝ
+  time : ℝ
+
+namespace SpectralDecoherenceChannel
+
+/-- Phase-loss rate of a decoherence channel. -/
+def rate (β : ℝ) (c : SpectralDecoherenceChannel) : ℝ :=
+  EffectiveAction.decoherenceRate β c.phaseCost c.time
+
+end SpectralDecoherenceChannel
+
+/-- One proposed phase-cost rule: the spectral-weight average eigenvalue.  This
+is a model choice, kept separate from the population spectral fraction. -/
+def spectralMeanCost (n : Nat) (S : Finset (Fin n × (Fin n × Fin n))) : ℝ :=
+  (S.sum (fun p => dirichletEigenvalue n (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1) *
+      betaSpectralWeight n (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1))) /
+    (S.sum (fun p => betaSpectralWeight n (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1)))
+
+/-- The phase-loss channel associated with a finite spectral set. -/
+def spectralDecoherenceChannel (n : Nat)
+    (S : Finset (Fin n × (Fin n × Fin n))) : SpectralDecoherenceChannel :=
+  { phaseCost := spectralMeanCost n S
+    time := 1 }
+
+theorem spectralDecoherenceChannel_rate (β : ℝ) (n : Nat)
+    (S : Finset (Fin n × (Fin n × Fin n))) :
+    SpectralDecoherenceChannel.rate β (spectralDecoherenceChannel n S) =
+      EffectiveAction.decoherenceRate β (spectralMeanCost n S) 1 := rfl
+
 /-- Phase-loss rate, kept separate from the population width. -/
 def spectralDecoherenceRate (β phaseCost time : ℝ) : ℝ :=
   EffectiveAction.decoherenceRate β phaseCost time
