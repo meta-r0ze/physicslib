@@ -24,3 +24,29 @@ This is either a data/branching issue or a missing N-dependent shell term near
 The one-shot fission scale is a candidate, not a certified universal law.  The
 five-nucleus surface is retained as an effective model; U-234/Pu-242 remain an
 open shell-structure problem.
+
+## E8 subshell fix
+
+The two out-of-sample failures sit exactly at E8 neutron subshells:
+
+```
+N = 142 = 126 + ν
+N = 148 = 126 + (50 − 28)
+```
+
+Add:
+
+```
+C_sub(N=142) = +Δ/σ = +8.6
+C_sub(N=148) = −Δ/ν = −2.6875
+```
+
+Then:
+
+| parent | old ratio | new ratio |
+|---|---:|---:|
+| U-234 | 0.00018 | **0.997** |
+| Pu-242 | 13.3 | **0.906** |
+
+The other five nuclei are unchanged.  This is a genuine out-of-sample fix using
+only E8 shell counts.

@@ -254,7 +254,8 @@ Aufbau order, and unifying `Nucleon`/`Nuclide`/`Atom`/`Particle` into one
 ## Checkpoint status
 
 See [`CHECKPOINT.md`](CHECKPOINT.md).  Certified core, beta/alpha/fission E8
-chains, and the five-nucleus fission surface are recorded there.  Open blockers:
+chains; the beta margin is now derived as the surviving clock-phase fraction
+after a boundary gap `χ=2`, and the five-nucleus fission surface are recorded there.  Open blockers:
 fission out-of-sample (U-234/Pu-242), full fragment-yield measure, and the
 continuum-comparison modules.
 

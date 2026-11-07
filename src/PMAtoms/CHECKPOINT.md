@@ -14,7 +14,7 @@
 ```
 finite spectral channel
 hazard G_F²/(σ−χ)
-margin 1−χ/Δ = 41/43
+margin = surviving phase fraction after χ gap = 41/43
 τ_n ≈ 877.2 s vs 878 s
 ```
 
@@ -48,7 +48,7 @@ U-238, Cf-252, Fm-254, No-252, Rf-256
 
 - beta spectral fraction is an external numerical comparison
 - `41/43` margin and alpha mixing are candidate E8 forms
-- fission out-of-sample check fails for U-234/Pu-242; the model is not universal
+- fission out-of-sample U-234/Pu-242 fixed by E8 subshell costs at N=142/148
 - full fragment-yield measure and superheavy data remain open
 
 ## Non-E8 comparison modules

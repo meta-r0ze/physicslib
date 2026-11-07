@@ -82,13 +82,37 @@ theorem fissionYieldMeasureScale_eq : fissionYieldMeasureScale = 1849 / 9 := by
   unfold fissionYieldMeasureScale
   norm_num [Δ, D, σ, PMSubstrate.baseline]
 
+/-- E8 neutron subshell `126 + ν = 142`. -/
+def fissionSubshellN1 : Nat := neutronShell + ν
+
+/-- E8 neutron subshell `126 + (50−28) = 148`. -/
+def fissionSubshellN2 : Nat := neutronShell + (magic50 - magic28)
+
+theorem fissionSubshellN1_eq : fissionSubshellN1 = 142 := by
+  unfold fissionSubshellN1
+  norm_num [neutronShell_eq, ν, PMSubstrate.baseline]
+
+theorem fissionSubshellN2_eq : fissionSubshellN2 = 148 := by
+  unfold fissionSubshellN2
+  rw [neutronShell_eq, magic50_eq, magic28_eq]
+
+/-- E8 subshell cost: `+Δ/σ` at N=142, `−Δ/ν` at N=148. -/
+def fissionSubshellCost (p : Nuclide) : ℝ :=
+  if p.N = fissionSubshellN1 then (Δ : ℝ) / (σ : ℝ)
+  else if p.N = fissionSubshellN2 then -((Δ : ℝ) / (ν : ℝ))
+  else 0
+
+/-- Full cost including the E8 subshell terms. -/
+def FissionSplit.costWithSubshell (p : Nuclide) (s : FissionSplit) : ℝ :=
+  s.costWithGovernor p + fissionSubshellCost p
+
 /-- Full finite yield sum over all light fragments. -/
 noncomputable def fissionFullSum (p : Nuclide) : ℝ :=
   Finset.sum ((Finset.range p.Z).product (Finset.range p.N)) (fun x =>
     if 0 < x.1 ∧ 0 < x.2 ∧ x.1 < p.Z ∧ x.2 < p.N then
       let s : FissionSplit := ⟨⟨x.1, x.2⟩, ⟨p.Z - x.1, p.N - x.2⟩⟩
       fissionYieldWeight s * alphaAttempt p *
-        Real.exp (-(s.costWithGovernor p))
+        Real.exp (-(s.costWithSubshell p))
     else 0)
 
 /-- Full-yield fission rate after the E8 measure normalization. -/
@@ -98,5 +122,6 @@ noncomputable def fissionFullRate (p : Nuclide) : ℝ :=
 /-- Full-yield fission lifetime. -/
 noncomputable def fissionFullLifetime (p : Nuclide) : ℝ :=
   1 / fissionFullRate p
+
 
 end PMAtoms

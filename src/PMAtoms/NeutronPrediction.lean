@@ -2,6 +2,7 @@ import PMAtoms.BetaCalibration
 import PMAtoms.BetaLattice
 import PMAtoms.NuclearPacking3D
 import PMAtoms.Invariants
+import PMAtoms.AlphaPersistence
 import PMElementaryParticles.CompositeMasses
 import Mathlib.Tactic
 
@@ -80,5 +81,18 @@ def neutronLifetimeCorrected : ℝ :=
 theorem neutronLifetimeCorrected_eq :
     neutronLifetimeCorrected =
       neutronMarginFactor * neutronLifetimeExactCutoff := rfl
+
+/-- The boundary gap `χ=2` leaves `Δ−χ=41` surviving clock phases. -/
+theorem neutronMargin_survivingPhases :
+    (survivingPhases χ).card = 41 := by
+  rw [survivingPhases_card χ (by norm_num [χ, Δ, PMSubstrate.baseline])]
+  norm_num [χ, Δ, PMSubstrate.baseline]
+
+/-- The margin is the surviving-phase fraction after a boundary gap `χ`. -/
+theorem neutronMarginFactor_eq_phaseFraction :
+    neutronMarginFactor = alphaPhaseFraction χ := by
+  rw [neutronMarginFactor_eq]
+  rw [alphaPhaseFraction_eq χ (by norm_num [χ, Δ, PMSubstrate.baseline])]
+  norm_num [χ, Δ, PMSubstrate.baseline]
 
 end PMAtoms
