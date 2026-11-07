@@ -232,3 +232,24 @@ continuous V       → still unselected
 
 Do not fit `V` to CKM/PMNS.  Use the cost law for the discrete part, and keep the
 continuous rotation explicit until a substrate law fixes it.
+
+### Gibbs-selection quick test
+
+Using wall eigenvalue gaps and the entropy/cost functional
+
+```
+F_T(P) = Σ P_ij gap_ij − T H(P),   P_ij = |V_ij|²,
+```
+
+the Sinkhorn/Gibbs coupling was compared to the observed CKM/PMNS magnitudes.
+
+Result:
+
+```
+CKM-like best fit:  T ≈ 0.03, near-permutation
+PMNS-like best fit: T ≈ 2,    interior mixing
+```
+
+There is no common `T`, and the CKM fit collapses toward a permutation.
+So the simple Gibbs functional does not select the observed mixing matrices.
+`V` remains an explicit input.
