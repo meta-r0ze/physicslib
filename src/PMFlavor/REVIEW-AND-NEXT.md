@@ -92,6 +92,18 @@ the mediator/statistics, and the chiral representation itself. Paper II gained t
 must record measurements with provenance, uncertainties and covariance and evaluate
 residuals against the ledger. Do not put measured numbers into the theorem tree.
 
+### 8. Continuous wall-to-mass rotation `V` (blocked)
+
+`NativeMassBasis.arbitrary_mixing_with_fixed_spectra` shows any unitary `V` is
+realizable with the wall spectra fixed.  The existing cost law
+(`RelativeFrameCost.workPrice`, `TransferWorkLaw.route_is_tightest_adjacent`)
+selects only a discrete route/order, not continuous angles.  A Gibbs/entropy
+selection test gave different temperatures for CKM-like and PMNS-like fits and
+collapsed the CKM fit toward a permutation.
+
+Do **not** fit `V` to CKM/PMNS.  The remaining task is a substrate law that
+selects the continuous rotation, or an explicit decision to keep `V` as an input.
+
 ## Suggested order
 
 1. **Item 2** — structural part closed; after item 1 fixes `(δ, ε)`, check the
@@ -104,6 +116,7 @@ residuals against the ledger. Do not put measured numbers into the theorem tree.
 5. **Item 3** — no derivation route exists; keep the solar sector a postulate until
    one is found.
 6. **Items 1 & 7** — physical/data tasks, done last and kept out of the tree.
+7. **Item 8** — blocked; no continuous `V` selection law yet.  Keep `V` explicit.
 
 ## Lean-review audit flags
 
