@@ -1,4 +1,5 @@
 import PMFlavor.ChordBranch
+import PMFlavor.MixingMatrix
 import PersistenceMechanics.CoherentAction
 
 /-! **Experimental/candidate module.**
@@ -62,5 +63,16 @@ def PreparationSpreadBound (e : Fin 3 → ℝ) : Prop :=
 theorem oneTickCoherent_of_preparation (e : Fin 3 → ℝ) (h02 : e 0 < e 2)
     (h : PreparationSpreadBound e) : coherentBranch e clock :=
   oneTickCoherent e h02 h
+
+/-- Raw link spectrum in increasing order. -/
+def rawSpectrum : Fin 3 → ℝ := ![PMFlavor.MixingMatrix.rootM 0, 1, PMFlavor.MixingMatrix.rootP 0]
+
+/-- The raw link spectrum cannot satisfy the preparation spread bound. -/
+theorem rawSpectrum_not_preparation : ¬ PreparationSpreadBound rawSpectrum := by
+  intro h
+  have hspread : PMFlavor.MixingMatrix.rootP 0 - PMFlavor.MixingMatrix.rootM 0 ≤ Real.pi / clock := by
+    simpa [PreparationSpreadBound, rawSpectrum] using h
+  have hgt := PMFlavor.MixingMatrix.spread_exceeds_pi_over_43
+  simpa [clock] using (not_le_of_gt hgt hspread)
 
 end PMFlavor.FlavourCoherence

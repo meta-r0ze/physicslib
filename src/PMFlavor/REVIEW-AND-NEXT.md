@@ -48,7 +48,9 @@ one-parameter postulate. No Lean path from E8/clock data to φ is known.
 `FlavourCoherence` states the chord-branch bound as phase coherence:
 `phaseDrift e t ≤ π`, `PreparationSpreadBound`, `oneTickCoherent`, and
 `perStepRestores` for exact `2π` restoration.  The physical preparation spread
-is now an explicit input, not a claimed theorem.
+is an explicit input, not a claimed theorem.  `rawSpectrum_not_preparation` proves
+the raw link eigenvalues cannot satisfy it; the physical energies must come from
+the wall dispersion.
 `ChordBranch` reduces the branch condition to `t ≤ tStar` and to the *energy*
 spread `≤ π/43`; `MixingMatrix.spread_exceeds_pi_over_43` shows link eigenvalues are
 the wrong scale. Remaining: a concrete preparation protocol (not just
