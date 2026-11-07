@@ -300,6 +300,24 @@ theorem betaSpectralRateCutoff_pos (β c0 : ℝ) (n : Nat) (E : ℝ)
   exact betaSpectralRate_pos β c0 n _ hβ hc0 hn
     (betaOpenModes_nonempty hn hE)
 
+set_option linter.style.haveILetI false in
+/-- If every mode is open, the spectral rate is the bare rate. -/
+theorem betaSpectralRateCutoff_eq_one_of_openModes_eq_univ {n : Nat} {E : ℝ}
+    (hn : 0 < n) (h : betaOpenModes n E = Finset.univ) :
+    betaSpectralRateCutoff 1 1 n E = 1 := by
+  unfold betaSpectralRateCutoff
+  rw [h]
+  unfold betaSpectralRate betaWeightedRate
+  letI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  have hpos : (0 : ℝ) <
+      ∑ i : Fin n × (Fin n × Fin n),
+        betaSpectralWeight n (i.1.val + 1) (i.2.1.val + 1) (i.2.2.val + 1) := by
+    apply Finset.sum_pos
+    · intro i _; exact betaSpectralWeight_pos n _ _ _
+    · exact Finset.univ_nonempty
+  simp only [one_mul]
+  rw [div_self hpos.ne']
+
 /-- The weighted rate never exceeds the bare `β·c0`. -/
 theorem betaWeightedRate_le (β c0 : ℝ) {Ω : Type*} [Fintype Ω] [Nonempty Ω]
     (w : Ω → ℝ) (S : Finset Ω)

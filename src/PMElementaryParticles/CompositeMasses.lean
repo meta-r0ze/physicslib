@@ -107,6 +107,24 @@ theorem kaon0_mass : |(kaon0 * me - 497.611) / 0.013| < 0.2 := by
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1, hp.2]
   · rw [div_lt_iff₀ (by norm_num)]; nlinarith [hg.2, hp.1]
 
+/-- Direct two-sided enclosure of the charged kaon in `m_e` units. -/
+theorem kaonPlus_value : (966 : ℝ) < kaonPlus ∧ kaonPlus < (967 : ℝ) := by
+  have hg := g_b; have hp := pi_b; have ha := a_b
+  have hs : (0.7071067811 : ℝ) < 1 / Real.sqrt 2 ∧ 1 / Real.sqrt 2 < 0.7071067812 := by
+    have h2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+    have hpos := Real.sqrt_pos.mpr (show (0 : ℝ) < 2 by norm_num)
+    constructor
+    · rw [lt_div_iff₀ hpos]; nlinarith
+    · rw [div_lt_iff₀ hpos]; nlinarith
+  unfold kaonPlus
+  constructor <;> nlinarith [hg.1, hg.2, hp.1, hp.2, hs.1, hs.2, ha.1, ha.2]
+
+/-- Direct two-sided enclosure of the neutral pion in `m_e` units. -/
+theorem pion0_value : (264.1 : ℝ) < pion0 ∧ pion0 < (264.2 : ℝ) := by
+  have hg := g_b; have ha := a_b
+  unfold pion0
+  constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
+
 theorem kaonPlus_mass : |(kaonPlus * me - 493.677) / 0.016| < 0.1 := by
   have hg := g_b; have hp := pi_b; have ha := a_b
   have hs : (0.7071067811 : ℝ) < 1 / Real.sqrt 2 ∧ 1 / Real.sqrt 2 < 0.7071067812 := by

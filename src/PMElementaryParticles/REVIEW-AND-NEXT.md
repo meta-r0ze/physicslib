@@ -172,7 +172,8 @@ masses; `B_e` remains comparison data.  `PionWidth` now uses `fπ = v/(Δ²+Δ�
 
 `KaonWidth` now uses `fK = v/(Δ²−ν²) = v/1593` and `|Vus| = s₁₂c₂₃`; the
 partial `K⁺ → μ⁺ν` lifetime is about `2.0×10⁻⁸ s` versus `1.95×10⁻⁸ s`.
-`NeutralPionWidth` uses `fπ` and the identical-photon factor `128=2·64`, giving
+`NeutralPionWidth` uses `fπ` and the identical-photon factor `32` in the
+`130 MeV` convention (the earlier `128` was a factor-four error), giving
 `τ(π⁰) ≈ 8.46×10⁻¹⁷ s` versus `8.52×10⁻¹⁷ s`.
 
 ### B4 status

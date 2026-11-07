@@ -5,7 +5,7 @@ compares it with a frozen experimental reference, and can emit manuscript tags o
 audit. This file tracks coverage so the per-paper Python calculators can be retired
 only when their values are Lean-backed here.
 
-## Certified now (110 values)
+## Certified now (116 values)
 
 - Paper 0: `delta`, `nu`, `sigma`, `chi`, `D` (substrate invariants); derived loads
   `l_intrinsic`, `l_embed`, `l_substrate`, `n`, `rm`; `nc`, `weinberg_gut`,
@@ -65,15 +65,18 @@ Not yet in `e8p`, compared against `PM-1-Arch/calculations/constants.txt`:
 
 Catalogued decay quantities now include `tau_lifetime_fs`, the finite-channel
 muon and neutron lifetimes (`muon_lifetime_finite`, `muon_lifetime_s`,
-`neutron_spectral_fraction`, `neutron_lifetime_e8`, `neutron_lifetime_s`), and
-the natural-unit E8 tau lifetime (`tau_lifetime_e8_natural`). The muon/neutron
-intervals are still broad; they are certified, but not yet precise enough for
-meaningful σ comparisons.
+`neutron_spectral_fraction`, `neutron_lifetime_e8`, `neutron_lifetime_s`), the
+natural-unit E8 tau lifetime (`tau_lifetime_e8_natural`), and the meson finite
+channels: `pion_finite_width`, `pion_finite_lifetime`, `kaon_finite_width`,
+`kaon_finite_lifetime`, `neutral_pion_finite_width`, and
+`neutral_pion_finite_lifetime`. The intervals are still broad; they are
+certified, but not yet precise enough for meaningful σ comparisons.
 
-The remaining decay lifetimes/widths (`pion`, `kaon`, `neutral pion`) are not yet
-catalogued: the Lean modules define them, but they do not yet have certified
-numeric enclosures or finite spectral channels. This is a numeric-enclosure and
-finite-channel task, not a new model postulate.
+The meson channels use the minimal `3×3×3` cube and the parent mass as cutoff.
+Since all three cutoffs exceed the universal eigenvalue bound `12`, every mode
+is open and the finite spectral fraction is exactly one; the finite width is
+therefore the continuum width. The neutron remains the special case because its
+cutoff lies in the first spectral gap.
 
 Known comparison caveats (uncorrected W/Z, undressed Vud, documented mass
 tensions) are printed by `--audit` and included as `caveat` fields in JSON.

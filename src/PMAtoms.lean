@@ -43,6 +43,7 @@ import PMAtoms.CollectiveFinite
 import PMAtoms.LeptonLattice
 import PMAtoms.BetaCalibration
 import PMAtoms.NeutronPrediction
+import PMAtoms.MesonFiniteChannels
 import PMAtoms.E8Tick
 import PMAtoms.E8TickUnit
 import PMAtoms.NuclearDecay

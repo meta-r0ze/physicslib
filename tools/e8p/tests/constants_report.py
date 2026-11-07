@@ -49,6 +49,9 @@ EXPECTED = {
     "pion_plus_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
     "muon_lifetime_s", "neutron_lifetime_s",
+    "pion_finite_width", "pion_finite_lifetime",
+    "kaon_finite_width", "kaon_finite_lifetime",
+    "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
     "rydberg_ev", "bohr_radius", "shell_capacity_n4",
     # paper 6
     "load", "hubble_late", "clustering_late", "hubble_sigma", "s8_sigma",
@@ -110,8 +113,14 @@ def main():
                       "pion_plus_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
                       "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
     "muon_lifetime_s", "neutron_lifetime_s",
+    "pion_finite_width", "pion_finite_lifetime",
+    "kaon_finite_width", "kaon_finite_lifetime",
+    "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
     "muon_lifetime_s", "neutron_lifetime_s",
+    "pion_finite_width", "pion_finite_lifetime",
+    "kaon_finite_width", "kaon_finite_lifetime",
+    "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
                       "rydberg_ev", "bohr_radius", "shell_capacity_n4"}
     assert ids(6) == {"load", "hubble_late", "clustering_late", "hubble_sigma", "s8_sigma",
                       "omega_ratio", "baryon_pmJ", "baryon_pm3J", "z_eq", "dark_raw"}
