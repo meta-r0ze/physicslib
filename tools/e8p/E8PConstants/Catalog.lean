@@ -22,6 +22,7 @@ inductive Key where
   | wMassUnc | zMassUnc | gWeak | gPrime | electronClosure
   | vud | vudDressed | bRes | neutrinoFloor | tauLifetimeFs
   | muonLifetimeFinite | tauLifetimeE8Natural | neutronSpectralFraction
+  | neutronLifetimeE8 | muonLifetimeSeconds | neutronLifetimeSeconds
   | rydbergEV | bohrRadius | shell4
   deriving BEq, DecidableEq, Repr
 
@@ -40,7 +41,8 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .cLight, .vonKlitzing, .planckChargeAtt, .planckChargeRatio, .planckMass, .ckmS13, .ckmS23, .ckmVcb,
   .wMassUnc, .zMassUnc, .gWeak, .gPrime, .electronClosure,
   .vud, .vudDressed, .bRes, .neutrinoFloor, .tauLifetimeFs, .muonLifetimeFinite,
-  .tauLifetimeE8Natural, .neutronSpectralFraction,
+  .tauLifetimeE8Natural, .neutronSpectralFraction, .neutronLifetimeE8,
+  .muonLifetimeSeconds, .neutronLifetimeSeconds,
   .rydbergEV, .bohrRadius, .shell4]
 
 def Key.id : Key → String
@@ -114,6 +116,9 @@ def Key.id : Key → String
   | .muonLifetimeFinite => "muon_lifetime_finite"
   | .tauLifetimeE8Natural => "tau_lifetime_e8_natural"
   | .neutronSpectralFraction => "neutron_spectral_fraction"
+  | .neutronLifetimeE8 => "neutron_lifetime_e8"
+  | .muonLifetimeSeconds => "muon_lifetime_s"
+  | .neutronLifetimeSeconds => "neutron_lifetime_s"
   | .rydbergEV => "rydberg_ev"
   | .bohrRadius => "bohr_radius"
   | .shell4 => "shell_capacity_n4"
@@ -213,7 +218,10 @@ def bounds : Key → Rat × Rat
   | .tauLifetimeFs => (291.15, 291.17)
   | .muonLifetimeFinite => (1.25e15, 2.5e15)
   | .tauLifetimeE8Natural => (1.6e8, 3.4e8)
-  | .neutronSpectralFraction => (1 / 27, 1)
+  | .neutronSpectralFraction => (1 / 14, 1)
+  | .neutronLifetimeE8 => (2.9e23, 5.0e24)
+  | .muonLifetimeSeconds => (1.60e-6, 3.23e-6)
+  | .neutronLifetimeSeconds => (3.7e2, 6.45e3)
   | .rydbergEV => (13.60569309, 13.60569310)
   | .bohrRadius => (0.5291772110, 0.5291772114)
   | .shell4 => (32, 32)
@@ -226,8 +234,9 @@ def Key.unit : Key → String
   | .wMassUnc | .zMassUnc => "GeV"
   | .neutrinoFloor => "eV"
   | .tauLifetimeFs => "fs"
-  | .muonLifetimeFinite | .tauLifetimeE8Natural => "m_e^-1"
+  | .muonLifetimeFinite | .tauLifetimeE8Natural | .neutronLifetimeE8 => "m_e^-1"
   | .neutronSpectralFraction => "1"
+  | .muonLifetimeSeconds | .neutronLifetimeSeconds => "s"
   | .hubbleLate => "km/s/Mpc"
   | .rydbergEV => "eV" | .bohrRadius => "Å" | .shell4 => "states"
   | .fermi => "GeV^-2"
@@ -331,6 +340,9 @@ def Key.theoremName : Key → String
   | .muonLifetimeFinite => "PMAtoms.muonFiniteLifetime_bounds"
   | .tauLifetimeE8Natural => "PMElementaryParticles.TauE8.tauLifetimeE8_bounds"
   | .neutronSpectralFraction => "PMAtoms.neutronSpectralFraction_bounds"
+  | .neutronLifetimeE8 => "PMAtoms.neutronLifetimeE8_bounds"
+  | .muonLifetimeSeconds => "PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_bounds"
+  | .neutronLifetimeSeconds => "PMAtoms.neutronLifetimeSeconds_bounds"
   | .neutrinoFloor => "PMConstants.FloorNeutrino.floor_bounds"
   | .rydbergEV => "PMAtoms.rydbergEV_bounds"
   | .bohrRadius => "PMAtoms.bohrRadius_bounds"
@@ -389,7 +401,8 @@ def Key.paper : Key → Nat
   | .bRes => 3
   | .neutrinoFloor => 5
   | .tauLifetimeFs | .muonLifetimeFinite | .tauLifetimeE8Natural
-  | .neutronSpectralFraction => 5
+  | .neutronSpectralFraction | .neutronLifetimeE8
+  | .muonLifetimeSeconds | .neutronLifetimeSeconds => 5
   | .rydbergEV => 5
   | .bohrRadius => 5
   | .shell4 => 5
@@ -511,6 +524,9 @@ def Key.caveat : Key → String
   | .muonLifetimeFinite => "finite 3x3x3 channel; all modes open; broad natural-unit interval"
   | .tauLifetimeE8Natural => "E8 muon input; broad natural-unit interval"
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
+  | .neutronLifetimeE8 => "finite 3x3x3 channel; broad natural-unit interval"
+  | .muonLifetimeSeconds => "unit conversion using measured m_e and hbar c; broad interval"
+  | .neutronLifetimeSeconds => "unit conversion using measured m_e and hbar c; broad interval"
   | .rydbergEV | .bohrRadius => "atoms comparison; unit-sensitive"
   | _ => ""
 

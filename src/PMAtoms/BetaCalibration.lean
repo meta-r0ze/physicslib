@@ -1,5 +1,6 @@
 import PMAtoms.BetaLattice
 import PMElementaryParticles.NeutronRate
+import PMElementaryParticles.MuonLifetime
 import PMSubstrate.E8Values
 import Mathlib.Tactic
 
@@ -63,6 +64,13 @@ theorem betaHazardE8_eq :
 theorem betaHazardE8_pos : 0 < betaHazardE8 := by
   unfold betaHazardE8
   exact mul_pos weakAmplitudeSquared_pos weakChannelCost_pos
+
+/-- Broad certified enclosure of the E8 beta hazard. -/
+theorem betaHazardE8_bounds :
+    (2.8e-24 : ℝ) < betaHazardE8 ∧ betaHazardE8 < 3.42e-24 := by
+  rw [betaHazardE8_eq]
+  have h := PMElementaryParticles.MuonLifetime.fermiME_bounds
+  constructor <;> nlinarith [h.1, h.2]
 
 /-- Lifetime from a hazard and a spectral fraction. -/
 def betaLifetimeFromFraction (h f : ℝ) : ℝ := 1 / (h * f)

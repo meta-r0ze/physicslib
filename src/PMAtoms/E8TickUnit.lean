@@ -4,6 +4,7 @@ import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.PionWidth
 import PMElementaryParticles.KaonWidth
 import PMElementaryParticles.TauE8
+import PMElementaryParticles.PhysicalUnits
 import PMAtoms.FissionYield
 import PMAtoms.AlphaFinite
 import PMSubstrate.E8Margin
@@ -20,18 +21,14 @@ comparison inputs, not E8-derived numbers.
 noncomputable section
 namespace PMAtoms
 
-/-- Speed of light in fm/s (unit conversion). -/
-def cFmPerSecond : ℝ := 2.99792458e23
+/-- Electron time unit `ħ/(m_e c²)` from the canonical conversion module. -/
+def electronSecond : ℝ := PMElementaryParticles.PhysicalUnits.electronTime
 
-/-- Electron time unit `ħ/(m_e c²)` from the existing mass/`ħc` inputs. -/
-def electronSecond : ℝ :=
-  PMElementaryParticles.CompositeMasses.hbarc /
-    (PMElementaryParticles.CompositeMasses.me * cFmPerSecond)
+theorem electronSecond_eq :
+    electronSecond = PMElementaryParticles.PhysicalUnits.electronTime := rfl
 
-theorem electronSecond_pos : 0 < electronSecond := by
-  unfold electronSecond cFmPerSecond PMElementaryParticles.CompositeMasses.hbarc
-    PMElementaryParticles.CompositeMasses.me
-  norm_num
+theorem electronSecond_pos : 0 < electronSecond :=
+  PMElementaryParticles.PhysicalUnits.electronTime_pos
 
 /-- Physical E8 tick in seconds. -/
 def e8TickSeconds : ℝ := e8Tick * electronSecond

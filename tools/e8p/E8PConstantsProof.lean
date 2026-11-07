@@ -138,6 +138,9 @@ def value : Key → ℝ
   | .muonLifetimeFinite => PMAtoms.muonFiniteLifetime
   | .tauLifetimeE8Natural => PMElementaryParticles.TauE8.tauLifetimeE8
   | .neutronSpectralFraction => PMAtoms.neutronSpectralFraction
+  | .neutronLifetimeE8 => PMAtoms.neutronLifetimeE8
+  | .muonLifetimeSeconds => PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds
+  | .neutronLifetimeSeconds => PMAtoms.neutronLifetimeSeconds
   | .bRes => PMConstants.residual PMConstants.CertifiedConstants.α
   | .neutrinoFloor => PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α PMConstants.FloorNeutrino.meEV
   | .rydbergEV => PMAtoms.rydbergEV
@@ -367,9 +370,21 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronSpectralFraction =>
-    have h := PMAtoms.neutronSpectralFraction_bounds
+    have h := PMAtoms.neutronSpectralFraction_bounds_refined
     norm_num [bounds, value] at h ⊢
     exact h
+  | neutronLifetimeE8 =>
+    have h := PMAtoms.neutronLifetimeE8_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | muonLifetimeSeconds =>
+    have h := PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | neutronLifetimeSeconds =>
+    have h := PMAtoms.neutronLifetimeSeconds_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | bRes =>
     have h := PMConstants.GravityAccounting.residual_tight_bounds
     norm_num [bounds, value] at h ⊢

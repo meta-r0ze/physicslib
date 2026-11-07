@@ -5,7 +5,7 @@ compares it with a frozen experimental reference, and can emit manuscript tags o
 audit. This file tracks coverage so the per-paper Python calculators can be retired
 only when their values are Lean-backed here.
 
-## Certified now (104 values)
+## Certified now (110 values)
 
 - Paper 0: `delta`, `nu`, `sigma`, `chi`, `D` (substrate invariants); derived loads
   `l_intrinsic`, `l_embed`, `l_substrate`, `n`, `rm`; `nc`, `weinberg_gut`,
@@ -63,11 +63,17 @@ Not yet in `e8p`, compared against `PM-1-Arch/calculations/constants.txt`:
 
 ## Decay coverage
 
-`tau_lifetime_fs` is now catalogued. The remaining decay lifetimes/widths
-(`muon`, `pion`, `kaon`, `neutral pion`, `neutron`) are not yet catalogued:
-the Lean modules define them, but most do not yet have certified numeric
-enclosures, and the neutron route needs the finite-channel spectral fraction.
-This is a numeric-enclosure task, not a new model postulate.
+Catalogued decay quantities now include `tau_lifetime_fs`, the finite-channel
+muon and neutron lifetimes (`muon_lifetime_finite`, `muon_lifetime_s`,
+`neutron_spectral_fraction`, `neutron_lifetime_e8`, `neutron_lifetime_s`), and
+the natural-unit E8 tau lifetime (`tau_lifetime_e8_natural`). The muon/neutron
+intervals are still broad; they are certified, but not yet precise enough for
+meaningful σ comparisons.
+
+The remaining decay lifetimes/widths (`pion`, `kaon`, `neutral pion`) are not yet
+catalogued: the Lean modules define them, but they do not yet have certified
+numeric enclosures or finite spectral channels. This is a numeric-enclosure and
+finite-channel task, not a new model postulate.
 
 Known comparison caveats (uncorrected W/Z, undressed Vud, documented mass
 tensions) are printed by `--audit` and included as `caveat` fields in JSON.
