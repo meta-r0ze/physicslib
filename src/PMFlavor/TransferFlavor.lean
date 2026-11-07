@@ -65,4 +65,37 @@ theorem mixingOverlapAmplitude_eq (ε : ℝ) :
       PMFlavor.MixingMatrix.ip PMFlavor.GenerationBreaking.anti
         (![1, (PMFlavor.MixingMatrix.rootM ε : ℂ) - 3, 1] : Fin 3 → ℂ) := rfl
 
+/-- CKM transfer capacity: the active channel count `ν`. -/
+def ckmCapacity : ℝ := (PMSubstrate.E8Values.nu : ℝ)
+
+/-- PMNS transfer capacity: the active basin `ν + σ`. -/
+def pmnsCapacity : ℝ :=
+  ((PMSubstrate.E8Values.nu + PMSubstrate.E8Values.sigma : Nat) : ℝ)
+
+theorem ckmCapacity_eq : ckmCapacity = 16 := by
+  unfold ckmCapacity
+  norm_num [PMSubstrate.E8Values.nu, PMSubstrate.baseline]
+
+theorem pmnsCapacity_eq : pmnsCapacity = 21 := by
+  unfold pmnsCapacity
+  norm_num [PMSubstrate.E8Values.nu, PMSubstrate.E8Values.sigma, PMSubstrate.baseline]
+
+/-- The PMNS/CKM capacity ratio. -/
+def capacityRatio : ℝ := pmnsCapacity / ckmCapacity
+
+theorem capacityRatio_eq : capacityRatio = 21 / 16 := by
+  unfold capacityRatio
+  rw [pmnsCapacity_eq, ckmCapacity_eq]
+
+/-- Quark and neutrino transfer modes are distinct. -/
+theorem ckm_pmns_modes_distinct :
+    (ckmTransfer 0 0 1 1).mode ≠ (pmnsTransfer 0 0 1 1).mode := by
+  decide
+
+/-- The protected-state overlap is the explicit `rootM − 4` amplitude. -/
+theorem mixingOverlapAmplitude_eq_rootM (ε : ℝ) :
+    mixingOverlapAmplitude ε = ((PMFlavor.MixingMatrix.rootM ε : ℂ) - 4) := by
+  unfold mixingOverlapAmplitude
+  rw [PMFlavor.MixingMatrix.ip_anti_M]
+
 end PMFlavor.TransferFlavor

@@ -17,7 +17,9 @@ physical wall point lies off the curve.  The numerical `δ, ε` remain wall inpu
 
 `TransferFlavor` classifies CKM as boundary conduction, PMNS as capacity
 promotion, and the broken link as a coordinate jump.  The mixing overlap is the
-transfer-amplitude ledger.  Numerical transfer parameters remain wall inputs.
+transfer-amplitude ledger (`mixingOverlapAmplitude_eq_rootM`), and the E8 capacity
+ratio is `pmnsCapacity/ckmCapacity = 21/16`.  Numerical transfer parameters remain
+wall inputs.
 
 ### 1. Numerical link weights (physics, not a proof)
 `BreakingLink.brokenLink δ` and `brokenLinkB ε` are structural: the doublet splits
