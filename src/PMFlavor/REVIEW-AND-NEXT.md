@@ -105,6 +105,9 @@ The wall mass ratio condition is now formalized:
 `WallMassRatio.wall_coupling_ratio_of_mass_ratio` gives `y² = (25/336)δ²`.
 This fixes the coupling ratio, but not `V`.
 
+`WallDispersion` now records the physical relativistic dispersion `E=√(p²+m²)`;
+the absolute momentum and masses remain inputs.
+
 Do **not** fit `V` to CKM/PMNS.  The remaining task is a substrate law that
 selects the continuous rotation, or an explicit decision to keep `V` as an input.
 

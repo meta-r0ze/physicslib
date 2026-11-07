@@ -327,7 +327,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `WeightedReadoutResponse` | The event/response map for supplied nonnegative preparation or work weights. |
 | `GaugeReadoutWeights` | Response indices for every type-invariant incoherent basis preparation. |
 | `LinkPreparation` | Stationary diagonal preparation under inter-type transfer. The generator, |
-| `ControllerLedger` | `ControllerCandidate`, `controllerCost`, `BaselineAdmissible`, `TargetAdmissible`, `AllEqualAdmissible`; `baseline_controller_least`, `target_controller_least`, `allEqual_controller_least` | final physical controller implementation |
+| `ControllerLedger` | `ControllerCandidate`, `controllerCost`, `BaselineAdmissible`, `TargetAdmissible`, `AllEqualAdmissible`; `baseline_controller_least`, `target_controller_least`, `allEqual_controller_least`; `physicalController = baseline least-cost`, `physicalController_cost=15`, `physicalController_components` | final physical controller implementation |
 | `TypedRepairWork` | Price supplied type-dependent integer repairs using the actual comparison |
 | `PrimitiveReadoutSymmetry` | A paired carrier-reflection action tests the six-type preparation freedom. |
 | `CoherentComparisonRepair` | Compatibility names: the general dynamics proofs now live in Paper II. |
