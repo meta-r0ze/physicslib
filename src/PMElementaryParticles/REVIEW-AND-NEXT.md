@@ -71,7 +71,7 @@ extend `pair_density`/`closed_width` to a massive neutrino pair (at least equal
 masses or one massive leg), with positivity and endpoint limits, reusing the
 transported pair tensor with `q² ≠ 0`. Closed form or a controlled integral.
 
-### A5. Rotation invariance of the continuum angular average
+### A5. Rotation invariance of the continuum angular average — optional/blocked
 `ContinuumPair` proves moments and linearity on *continuous* test functions but not
 full rotation invariance for every integrable test function. Target: prove the
 uniform-sphere average is invariant under rotations on `L¹` (change of variables /
@@ -156,6 +156,17 @@ masses; `B_e` remains comparison data.  `PionWidth` now uses `fπ = v/(Δ²+Δ�
 partial `K⁺ → μ⁺ν` lifetime is about `2.0×10⁻⁸ s` versus `1.95×10⁻⁸ s`.
 `NeutralPionWidth` uses `fπ` and the identical-photon factor `128=2·64`, giving
 `τ(π⁰) ≈ 8.46×10⁻¹⁷ s` versus `8.52×10⁻¹⁷ s`.
+
+### B4 status
+
+`ParticleChannels` gives the multi-channel algebra: partial rates, total rate,
+branching fraction and total lifetime.  The concrete per-particle rate inventory
+still needs the E8 partial rates.
+
+### B5 status
+
+`RadiativeCorrection` provides the supplied-`R` interface; the actual radiative
+factors remain open.
 
 ### B5. Absolute coupling and corrections
 Radiative corrections, hadronic final states, bound-state matrix elements, and an

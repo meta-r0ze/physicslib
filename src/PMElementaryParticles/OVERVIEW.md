@@ -26,6 +26,8 @@ particle ledger; those remain model inputs.
 | `WExchangeRate` | Contact amplitude as the `q→0` limit of tree `W` exchange; `G=√2g²/(8m_W²)`, `G=1/(√2v²)` (`exchange_rate_input`, `exchange_rate_fermi`, `bases_exist`) | That this exchange is the substrate interaction |
 | `WeakMatching` | Mediator matching `M_W²=g²v²/4`, `G=1/(√2v²)`, normalized spectrum | Physical coupling/mediator |
 | `TauE8` | `tauLifetimeE8 = τ_μ(m_μ/m_τ)^5 B_e`, positivity | supplied `B_e` |
+| `ParticleChannels` | `ParticleChannel`, `totalRate`, `branching`, `totalLifetime`, positivity | E8 partial-rate inventory |
+| `RadiativeCorrection` | supplied `R`, `correctedRate`, `correctedLifetime`, positivity | derived radiative correction |
 | `KaonWidth` | `kaonWidthCKM`, `kaonDecayConstantE8=v/(Δ²−ν²)`, `vusE8=s₁₂c₂₃`, `kaonWidthE8`, `kaonLifetimeE8` | full E8 width |
 | `NeutralPionWidth` | `neutralPionWidthE8 = α²mπ⁰³/(128π³fπ²)`, `neutralPionLifetimeE8` | anomaly derivation |
 | `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthE8`, `pionLifetimeE8` | full E8 width |
