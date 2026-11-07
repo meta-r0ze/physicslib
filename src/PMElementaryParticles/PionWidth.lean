@@ -45,4 +45,17 @@ noncomputable def pionWidthE8 : ℝ := pionWidth pionDecayConstantE8
 /-- E8 pion lifetime. -/
 noncomputable def pionLifetimeE8 : ℝ := pionLifetime pionDecayConstantE8
 
+/-- Pion two-body width for a daughter of mass `ml` in `m_e` units. -/
+noncomputable def pionWidthTo (fPi ml : ℝ) : ℝ :=
+  fermiME ^ 2 * fPi ^ 2 * pionPlus * ml ^ 2 *
+    (1 - (ml / pionPlus) ^ 2) ^ 2 / (8 * Real.pi)
+
+/-- Pion electron width with E8 `fπ`; electron mass is `1` in `m_e` units. -/
+noncomputable def pionElectronWidthE8 : ℝ :=
+  pionWidthTo pionDecayConstantE8 1
+
+/-- Pion electron lifetime. -/
+noncomputable def pionElectronLifetimeE8 : ℝ :=
+  1 / pionElectronWidthE8
+
 end PMElementaryParticles.PionWidth

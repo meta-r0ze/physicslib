@@ -160,8 +160,10 @@ partial `K⁺ → μ⁺ν` lifetime is about `2.0×10⁻⁸ s` versus `1.95×10�
 ### B4 status
 
 `ParticleChannels` now has concrete μ, τ, π, and K inventories with provenance
-labels (`e8`, `calibrated`, `modelInput`, `blocked`).  Missing rates are the tau
-hadronic channels, pion electron mode, and kaon multibody modes.
+labels (`e8`, `calibrated`, `modelInput`, `blocked`).  The pion electron mode has an E8 rate (`pionElectronWidthE8`).  The tau hadronic
+channels and kaon multibody modes are inventoried but blocked on hadronic matrix
+elements.  B1/B2 (physical final states and measure normalization), A5, and A4
+remain model/analysis inputs.
 
 ### B5 status
 

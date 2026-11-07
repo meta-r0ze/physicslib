@@ -11,6 +11,7 @@ Comparison values are external; model values are E8-based unless marked.
 | τ → μ ν ν̄ | ≈2.9×10⁻¹³ s | 2.90×10⁻¹³ s | E8 masses + supplied B_e |
 | π⁺ → μ⁺ν | 2.52×10⁻⁸ s | 2.60×10⁻⁸ s | E8 fπ |
 | K⁺ → μ⁺ν | ≈2.0×10⁻⁸ s | 1.95×10⁻⁸ s | E8 fK + Vus |
+| π⁺ → e⁺ν | E8 `fπ` helicity-suppressed | — | E8 prediction |
 | π⁰ → γγ | ≈8.46×10⁻¹⁷ s | 8.52×10⁻¹⁷ s | E8 fπ + anomaly factor |
 | proton | stable | stable | structural |
 | neutrino | stable | stable | structural |

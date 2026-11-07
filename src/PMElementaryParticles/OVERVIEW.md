@@ -26,11 +26,11 @@ particle ledger; those remain model inputs.
 | `WExchangeRate` | Contact amplitude as the `q→0` limit of tree `W` exchange; `G=√2g²/(8m_W²)`, `G=1/(√2v²)` (`exchange_rate_input`, `exchange_rate_fermi`, `bases_exist`) | That this exchange is the substrate interaction |
 | `WeakMatching` | Mediator matching `M_W²=g²v²/4`, `G=1/(√2v²)`, normalized spectrum | Physical coupling/mediator |
 | `TauE8` | `tauLifetimeE8 = τ_μ(m_μ/m_τ)^5 B_e`, positivity | supplied `B_e` |
-| `ParticleChannels` | `ParticleChannel`, `RateStatus`, `totalRate`, `branching`, `totalLifetime`; concrete μ/τ/π/K inventories with provenance labels | missing hadronic/electron-mode rates |
+| `ParticleChannels` | `ParticleChannel`, `RateStatus`, `totalRate`, `branching`, `totalLifetime`; concrete μ/τ/π/K inventories with provenance labels; kaon multibody channels blocked on hadronic matrix elements | missing hadronic/electron-mode rates |
 | `RadiativeCorrection` | supplied `R`, `correctedRate`, `correctedLifetime`, positivity | derived radiative correction |
 | `KaonWidth` | `kaonWidthCKM`, `kaonDecayConstantE8=v/(Δ²−ν²)`, `vusE8=s₁₂c₂₃`, `kaonWidthE8`, `kaonLifetimeE8` | full E8 width |
 | `NeutralPionWidth` | `neutralPionWidthE8 = α²mπ⁰³/(128π³fπ²)`, `neutralPionLifetimeE8` | anomaly derivation |
-| `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthE8`, `pionLifetimeE8` | full E8 width |
+| `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthTo`, `pionWidthE8`, `pionElectronWidthE8`, `pionLifetimeE8` | full E8 width |
 | `MuonLifetime` | E8-input muon width `G_F²m_μ⁵/(192π³)`, `muonLifetime`, positivity; `muonWidth_eq_integral` | finite spectral-channel phase space |
 | `MuonRate` | `192π³` derived: `pair_kinematics`, `tensor_coeffs`, `two_body`, `electron_measure`, `rate_density`, `muon_rate = G_F²m⁵/(192π³)`, `spectrum_form` | `Φ₂=1/(8π)` and the electron measure/flux (see Review A1–A2) |
 | `MassiveDaughterSpectrum` | Massive charged daughter, massless neutrino pair: `threshold`, `kinematics`, `radial_measure`, `pair_density`, `massless`, `rate_positive`, `width_scaling` | Contact vertex, transported pair average |

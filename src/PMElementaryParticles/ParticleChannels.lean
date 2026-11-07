@@ -71,14 +71,16 @@ noncomputable def tauChannels : List ParticleChannel :=
 /-- Pion channels: μν is E8; the electron mode is blocked. -/
 noncomputable def pionChannels : List ParticleChannel :=
   [⟨"μ⁺ ν", PMElementaryParticles.PionWidth.pionWidthE8, .e8⟩
-  , ⟨"e⁺ ν", 0, .blocked⟩
+  , ⟨"e⁺ ν", PMElementaryParticles.PionWidth.pionElectronWidthE8, .e8⟩
   ]
 
 /-- Kaon channels: μν is E8; multibody modes are blocked. -/
 noncomputable def kaonChannels : List ParticleChannel :=
   [⟨"μ⁺ ν", PMElementaryParticles.KaonWidth.kaonWidthE8, .e8⟩
-  , ⟨"π π", 0, .blocked⟩
-  , ⟨"π π π", 0, .blocked⟩
+  , ⟨"π⁺ π⁰", 0, .blocked⟩
+  , ⟨"π⁺ π⁺ π⁻", 0, .blocked⟩
+  , ⟨"π⁰ e⁺ ν", 0, .blocked⟩
+  , ⟨"π⁰ μ⁺ ν", 0, .blocked⟩
   ]
 
 end PMElementaryParticles.ParticleChannels
