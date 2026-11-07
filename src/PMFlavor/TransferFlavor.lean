@@ -98,4 +98,28 @@ theorem mixingOverlapAmplitude_eq_rootM (ε : ℝ) :
   unfold mixingOverlapAmplitude
   rw [PMFlavor.MixingMatrix.ip_anti_M]
 
+/-- Normalize a complex overlap into a unit-modulus transfer entry. -/
+noncomputable def normalizedOverlap (z : ℂ) : ℂ :=
+  z / (Real.sqrt (Complex.normSq z) : ℂ)
+
+theorem normalizedOverlap_normSq (z : ℂ) (h : z ≠ 0) :
+    Complex.normSq (normalizedOverlap z) = 1 := by
+  unfold normalizedOverlap
+  rw [Complex.normSq_div, Complex.normSq_ofReal]
+  have hz : Complex.normSq z ≠ 0 := by
+    intro hz
+    exact h (Complex.normSq_eq_zero.mp hz)
+  rw [Real.mul_self_sqrt (Complex.normSq_nonneg z)]
+  field_simp [hz]
+
+/-- Transfer impedance from the E8 capacity ratio. -/
+def transferImpedance : ℝ := ckmCapacity / pmnsCapacity
+
+theorem transferImpedance_eq : transferImpedance = 16 / 21 := by
+  unfold transferImpedance
+  rw [ckmCapacity_eq, pmnsCapacity_eq]
+
+theorem ckmCapacity_lt_pmns : ckmCapacity < pmnsCapacity := by
+  rw [ckmCapacity_eq, pmnsCapacity_eq]; norm_num
+
 end PMFlavor.TransferFlavor
