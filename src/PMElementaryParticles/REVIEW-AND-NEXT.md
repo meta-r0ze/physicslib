@@ -82,6 +82,12 @@ Suggested order: **A1 → A2 → A3**, then **A5**, then **A4** (A4 reuses A1–
 
 ## Part B — physical model inputs (not Lean-provable)
 
+### B1 status
+
+`CarrierSpecies` now supplies the channel-label → base-protocol → species bridge
+and proves `channelSpecies_charge`: the bridge respects the E8 charge grading.
+Mass/amplitude assignment remains open.
+
 ### B1. Physical interaction and final states
 Connect the substrate update / reference / charged-current operators to the contact
 vertex used in `AmplitudeTrace`, and state which carrier transitions give the
