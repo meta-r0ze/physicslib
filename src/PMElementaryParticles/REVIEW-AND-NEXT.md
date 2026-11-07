@@ -86,7 +86,7 @@ Suggested order: **A1 → A2 → A3**, then **A5**, then **A4** (A4 reuses A1–
 
 `CarrierSpecies` now supplies the channel-label → base-protocol → species bridge
 and proves `channelSpecies_charge`: the bridge respects the E8 charge grading.
-Base-species masses are assigned (`CarrierSpecies.mass`) and `CarrierCouplings.amplitude` supplies E8 em/weak/strong amplitude slots.  The physical amplitude model remains open.
+Base-species masses are assigned (`CarrierSpecies.mass`) and `CarrierCouplings.amplitude` supplies E8 em/weak/strong amplitude slots; `weakCoupling_eq_fermi` connects the weak slot to the W-exchange Fermi coupling.  The physical amplitude model remains open.
 
 ### B1. Physical interaction and final states
 Connect the substrate update / reference / charged-current operators to the contact

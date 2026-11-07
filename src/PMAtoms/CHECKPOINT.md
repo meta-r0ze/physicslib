@@ -69,7 +69,7 @@ PMAtoms: 4349 jobs
 PersistenceMechanics.DecayChannel      six-pillar rate template
 PersistenceMechanics.ChannelMeasure    finite normalized channel measure
 PersistenceMechanics.MarginCorrection  supplied margin correction
-PersistenceMechanics.E8Margin          phase margin 41/43
+PMSubstrate.E8Margin                   phase margin 41/43
 ```
 
 Carrier bridge:

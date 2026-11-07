@@ -1,8 +1,7 @@
 import PMSubstrate.E8Values
-import PersistenceMechanics.MarginCorrection
 import Mathlib.Tactic
 
-/-! **Experimental/candidate module.**
+/-! **Substrate module.**
 
 # E8 phase margin
 
@@ -14,7 +13,7 @@ phaseMargin = (Δ−χ)/Δ = 41/43.
 -/
 
 noncomputable section
-namespace PersistenceMechanics.E8Margin
+namespace PMSubstrate.E8Margin
 
 def phaseMargin : ℝ :=
   (((PMSubstrate.E8Values.Delta - PMSubstrate.E8Values.chi : Nat)) : ℝ) /
@@ -29,10 +28,9 @@ theorem phaseMargin_pos : 0 < phaseMargin := by
   rw [phaseMargin_eq]; norm_num
 
 /-- Apply the E8 phase margin to a channel weight. -/
-noncomputable def phaseCorrected (weight : ℝ) : ℝ :=
-  MarginCorrection.correctedWeight phaseMargin weight
+noncomputable def phaseCorrected (weight : ℝ) : ℝ := phaseMargin * weight
 
 theorem phaseCorrected_eq (weight : ℝ) :
     phaseCorrected weight = phaseMargin * weight := rfl
 
-end PersistenceMechanics.E8Margin
+end PMSubstrate.E8Margin

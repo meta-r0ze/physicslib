@@ -15,3 +15,5 @@ lake exe cache get
 
 `./build.sh PMSubstrate` builds the library. The whole-tree audits run with
 `./build.sh audit` (strict axioms, readable/import checks, class-number audit).
+
+- **E8Margin.** Substrate phase margin `(Δ−χ)/Δ = 41/43` and its application to channel weights.

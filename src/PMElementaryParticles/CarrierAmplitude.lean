@@ -2,6 +2,8 @@ import PMElementaryParticles.CarrierSpecies
 import PMConstants.CurrentConstants
 import PMConstants.ElectroweakE8
 import PMFlavor.CKM
+import PMAction.WeakVertex
+import PMConstants.MatterRunning
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
@@ -55,5 +57,13 @@ def CarrierTransition.strong (t : CarrierTransition) : ℝ :=
 /-- Transition weight from the three E8 coupling channels. -/
 def CarrierTransition.weight (t : CarrierTransition) : ℝ :=
   t.em ^ 2 + t.weak ^ 2 + t.strong ^ 2
+
+/-- The weak carrier coupling equals the W-exchange Fermi coupling. -/
+theorem weakCoupling_eq_fermi (g v : ℝ) (hg : g ≠ 0) (hv : v ≠ 0)
+    (hvev : v = PMConstants.ElectroweakE8.vev alpha 1) :
+    weakCoupling = Real.sqrt 2 * (g ^ 2 / (8 * PMConstants.MatterRunning.mWsq g v)) := by
+  rw [PMConstants.MatterRunning.fermi_from_reference g v hg hv]
+  unfold weakCoupling PMConstants.ElectroweakE8.fermi
+  rw [hvev]
 
 end PMElementaryParticles.CarrierCouplings

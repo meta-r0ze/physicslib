@@ -3,6 +3,7 @@ import PMAtoms.BetaLattice
 import PMAtoms.NuclearPacking3D
 import PMAtoms.Invariants
 import PMAtoms.AlphaPersistence
+import PMSubstrate.E8Margin
 import PMElementaryParticles.CompositeMasses
 import Mathlib.Tactic
 
@@ -94,5 +95,9 @@ theorem neutronMarginFactor_eq_phaseFraction :
   rw [neutronMarginFactor_eq]
   rw [alphaPhaseFraction_eq χ (by norm_num [χ, Δ, PMSubstrate.baseline])]
   norm_num [χ, Δ, PMSubstrate.baseline]
+
+theorem neutronMarginFactor_eq_substrate :
+    neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin := by
+  rw [neutronMarginFactor_eq, PMSubstrate.E8Margin.phaseMargin_eq]
 
 end PMAtoms
