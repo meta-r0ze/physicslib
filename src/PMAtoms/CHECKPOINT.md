@@ -62,3 +62,37 @@ U-238, Cf-252, Fm-254, No-252, Rf-256
 ```
 PMAtoms: 4349 jobs
 ```
+
+## Shared decay wiring
+
+```
+PersistenceMechanics.DecayChannel      six-pillar rate template
+PersistenceMechanics.ChannelMeasure    finite normalized channel measure
+PersistenceMechanics.MarginCorrection  supplied margin correction
+PersistenceMechanics.E8Margin          phase margin 41/43
+```
+
+Carrier bridge:
+
+```
+CarrierSpecies → charge/mass
+CarrierAmplitude → em/weak/strong slots
+CarrierTransition → transition amplitude ledger
+```
+
+E8 clock:
+
+```
+e8Tick = Δ = 43
+e8TickSeconds = Δ · electronSecond
+```
+
+These are structural wiring layers.  They do not change existing numerical
+predictions.
+
+## Next
+
+1. Connect `CarrierAmplitude` to the actual `PMAction` transition operator.
+2. Derive the physical mode-selection rule from the spectral cutoff.
+3. Fix the numerical E8 tick conversion.
+4. Apply `E8Margin`/`MarginCorrection` only after 1–3.

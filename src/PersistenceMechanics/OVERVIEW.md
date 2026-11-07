@@ -7,6 +7,7 @@
 | `Selection` | §4.2–4.4 | Distribution conditional on survival, relative odds, **Proposition (Selection by Operational Action)** with `S_i(T) = s_i T + o(T)`, selection timescale `1/(βΔs)`. |
 | `Gibbs` | §4.2 | Finite survival weights `exp(−βS)` at equal priors: positivity, ratios, ordering, a finite penalty never deletes a history; the β → ∞ limit concentrates uniformly on the minimum-cost histories. Moved from Paper II (`Survival`, `Concentration`). |
 | `ChannelMeasure` | finite `ChannelMeasure`, `total`, `probability`, `probability_sum`, `probability_nonneg`, `subsetProbability`, `subsetProbability_nonneg`; E8 channel-counting measure. |
+| `E8Margin` | `phaseMargin = (Δ−χ)/Δ = 41/43`, `phaseCorrected`; E8 margin applied to a channel weight. |
 | `MarginCorrection` | supplied `correctedWeight`, `correctedRate`, positivity; substrate margin correction interface. |
 | `DecayChannel` | Shared six-pillar channel algebra: `capacity`, `map`, `protocol`, `governor`, `toll`, `margin`, plus `action`; `rate = β·toll·capacity·map·protocol·governor·margin·exp(−action)`; `lifetime`, `physicalLifetime`, `totalRate`, `familyLifetime`. |
 | `LawSelection` | application | Candidate event laws on a finite label set: the uniform law uniquely minimizes the average return cost `−(1/|Ω|)Σ log p` and the worst-case cost `−log min p`, so it is the law that survives selection. Used by Paper I (`PersistenceMaximin`). |

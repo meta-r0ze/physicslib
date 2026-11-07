@@ -38,4 +38,22 @@ def amplitude : CarrierSpecies → CarrierAmplitude
 
 theorem neutrino_em_zero : (amplitude .neutrino).em = 0 := rfl
 
+/-- A two-species transition amplitude ledger. -/
+structure CarrierTransition where
+  source : CarrierSpecies
+  target : CarrierSpecies
+
+def CarrierTransition.em (t : CarrierTransition) : ℝ :=
+  (amplitude t.source).em * (amplitude t.target).em
+
+def CarrierTransition.weak (t : CarrierTransition) : ℝ :=
+  (amplitude t.source).weak * (amplitude t.target).weak
+
+def CarrierTransition.strong (t : CarrierTransition) : ℝ :=
+  (amplitude t.source).strong * (amplitude t.target).strong
+
+/-- Transition weight from the three E8 coupling channels. -/
+def CarrierTransition.weight (t : CarrierTransition) : ℝ :=
+  t.em ^ 2 + t.weak ^ 2 + t.strong ^ 2
+
 end PMElementaryParticles.CarrierCouplings

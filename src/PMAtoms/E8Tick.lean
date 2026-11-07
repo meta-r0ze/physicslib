@@ -28,4 +28,12 @@ def e8TickSeconds : ℝ := e8Tick * electronSecond
 theorem e8TickSeconds_eq : e8TickSeconds = 43 * electronSecond := by
   rw [e8TickSeconds, e8Tick_eq]
 
+theorem electronSecond_pos : 0 < electronSecond := by
+  unfold electronSecond
+  norm_num
+
+theorem e8TickSeconds_pos : 0 < e8TickSeconds := by
+  unfold e8TickSeconds
+  exact mul_pos (by rw [e8Tick_eq]; norm_num) electronSecond_pos
+
 end PMAtoms
