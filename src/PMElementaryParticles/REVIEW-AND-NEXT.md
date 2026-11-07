@@ -29,6 +29,11 @@ These are analysis/probability tasks: the physics input is the standard
 Lorentz-invariant measure, and the goal is to **construct** it rather than supply
 its value. Each names the current placeholder to replace.
 
+> **Status update:** A1–A3 are now optional for the E8 decay route.  The finite
+> `BetaLattice`/`LeptonLattice`/`DecayChannel` construction bypasses the
+> continuum measure for the E8 rates.  Keep A1–A3 as comparison/mathematics
+> projects, not blockers.
+
 ### A1. Two-body phase space from a delta function
 `MuonRate.two_body` currently proves only the arithmetic
 `4π/(2π)²·(1/4)·(1/2) = 1/(8π)`; it does **not** construct a measure. Target:
@@ -60,7 +65,7 @@ The three-body measure is used but not factored. Target: factor it into
 input. This is the concrete mathematical content of former review item 2.
 Depends on A1–A2.
 
-### A4. Massive neutrino pair (extend the daughter spectrum)
+### A4. Massive neutrino pair (extend the daughter spectrum) — optional/blocked
 `MassiveDaughterSpectrum`/`MassiveWidth` treat a massless neutrino pair. Target:
 extend `pair_density`/`closed_width` to a massive neutrino pair (at least equal
 masses or one massive leg), with positivity and endpoint limits, reusing the
@@ -147,8 +152,10 @@ masses; `B_e` remains comparison data.  `PionWidth` now uses `fπ = v/(Δ²+Δ�
 
 ### Kaon and neutral pion
 
-`KaonWidth` supplies the structural `K⁺ → μ⁺ν` two-body width but still needs an
-E8 `f_K`.  The neutral-pion two-photon anomaly has no E8 derivation yet.
+`KaonWidth` now uses `fK = v/(Δ²−ν²) = v/1593` and `|Vus| = s₁₂c₂₃`; the
+partial `K⁺ → μ⁺ν` lifetime is about `2.0×10⁻⁸ s` versus `1.95×10⁻⁸ s`.
+`NeutralPionWidth` uses `fπ` and the identical-photon factor `128=2·64`, giving
+`τ(π⁰) ≈ 8.46×10⁻¹⁷ s` versus `8.52×10⁻¹⁷ s`.
 
 ### B5. Absolute coupling and corrections
 Radiative corrections, hadronic final states, bound-state matrix elements, and an
