@@ -215,3 +215,20 @@ mixing `V` can be realized while holding the wall spectra fixed.  Therefore the
 wall-to-mass basis rotation is not determined by the wall spectrum alone.
 The `ckmWall`/`unitWall` anchors remain qualitative candidates; making them
 numerical requires a separate cost or breaking law that selects `V`.
+
+### The existing cost law selects ordering, not continuous V
+
+`RelativeFrameCost.workPrice` and `TransferWorkLaw.route_is_tightest_adjacent`
+provide the existing cost law.  It selects the least-work **adjacent route**
+between spectral levels.  That fixes a discrete basis ordering, not the
+continuous unitary rotation `V`.
+
+So:
+
+```
+cost law           → discrete route/order
+continuous V       → still unselected
+```
+
+Do not fit `V` to CKM/PMNS.  Use the cost law for the discrete part, and keep the
+continuous rotation explicit until a substrate law fixes it.
