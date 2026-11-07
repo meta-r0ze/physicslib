@@ -133,6 +133,18 @@ full angular Dalitz density and a derived radiative correction are still open.
 The environmental `beamLifetime = (215/213)·neutronLifetime` is formalized as a
 conditional rescaling.
 
+### Muon lifetime
+
+`MuonLifetime` gives `τ_μ ≈ 2.187×10⁻⁶ s` from E8 `G_F` and `m_μ`, about 0.5%
+below the measured value.  The phase space is still the continuum one; the E8
+finite-channel replacement remains open.
+
+### Tau and pion
+
+`TauE8` gives the tau lifetime from the E8-input muon lifetime and E8 lepton
+masses; `B_e` remains comparison data.  `PionWidth` now uses `fπ = v/(Δ²+Δ−χ) = v/1890`; the resulting lifetime is
+`≈2.52×10⁻⁸ s`, about 3% below the measured `2.60×10⁻⁸ s`.
+
 ### B5. Absolute coupling and corrections
 Radiative corrections, hadronic final states, bound-state matrix elements, and an
 absolute coupling/lifetime prediction remain inputs. The tau lifetime uses the

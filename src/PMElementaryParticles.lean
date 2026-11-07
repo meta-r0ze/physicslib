@@ -6,6 +6,9 @@ import PMElementaryParticles.MassScaling
 import PMElementaryParticles.SubstrateBridge
 import PMElementaryParticles.WeakMatching
 import PMElementaryParticles.MuonRate
+import PMElementaryParticles.MuonLifetime
+import PMElementaryParticles.PionWidth
+import PMElementaryParticles.TauE8
 import PMElementaryParticles.MuonAmplitude
 import PMElementaryParticles.ScalingObligations
 import PMElementaryParticles.MassiveMuon
