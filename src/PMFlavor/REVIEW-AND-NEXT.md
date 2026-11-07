@@ -273,3 +273,25 @@ PMNS-like best fit: T ≈ 2,    interior mixing
 There is no common `T`, and the CKM fit collapses toward a permutation.
 So the simple Gibbs functional does not select the observed mixing matrices.
 `V` remains an explicit input.
+
+### Wall momentum/mass tension
+
+`WallMassModel.wallImpedanceAt p m0 m2 = √(E(p,m0)/E(p,m2))` with
+`E=√(p²+m²)`.
+
+At `p=0` the impedance is the mass ratio.  At large `p` it tends to one.
+But phase coherence requires enough momentum when the mass gap exceeds `π/43`.
+
+For the unit-toll masses (`m_low≈0.873`, `m_high≈1.146`), the required momentum
+is `p≈3.8 m_e`; at that momentum the impedance is already near one, not `16/21`.
+
+So the simple massive dispersion cannot simultaneously satisfy:
+
+```
+mass-ratio impedance = 16/21
+phase-coherence spread ≤ π/43
+```
+
+This is a genuine tension.  Either the impedance is a `p=0` mass ratio while
+coherence uses a separate momentum, or the dispersion/coherence law is different.
+`V` remains an explicit input.
