@@ -159,9 +159,9 @@ partial `K⁺ → μ⁺ν` lifetime is about `2.0×10⁻⁸ s` versus `1.95×10�
 
 ### B4 status
 
-`ParticleChannels` gives the multi-channel algebra: partial rates, total rate,
-branching fraction and total lifetime.  The concrete per-particle rate inventory
-still needs the E8 partial rates.
+`ParticleChannels` now has concrete μ, τ, π, and K inventories with provenance
+labels (`e8`, `calibrated`, `modelInput`, `blocked`).  Missing rates are the tau
+hadronic channels, pion electron mode, and kaon multibody modes.
 
 ### B5 status
 

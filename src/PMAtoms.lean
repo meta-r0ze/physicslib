@@ -44,6 +44,7 @@ import PMAtoms.BetaCalibration
 import PMAtoms.NeutronPrediction
 import PMAtoms.NuclearDecay
 import PersistenceMechanics.DecayChannel
+import PMAtoms.DecayInstantiation
 import PMAtoms.WeakTransition
 import PMAtoms.FermiFunction
 import PMAtoms.CollectiveRegime

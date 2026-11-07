@@ -3,13 +3,23 @@ import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
 
-# Generic decay channel
+# Generic six-pillar decay channel
 
-Shared by PMAtoms and PMElementaryParticles:
+The fields mirror the six persistence pillars:
 
 ```
-rate = β · c0 · capacity · margin · protocol · exp(−cost)
+capacity, map, protocol, governor, toll, margin
 ```
+
+`action` is the channel's accumulated operational cost/barrier, not a seventh
+pillar.  The rate is
+
+```
+rate = β · toll · capacity · map · protocol · governor · margin · exp(−action).
+```
+
+`governor` is a gate factor (typically `0` or `1`); `map` is the conserved-identity
+overlap; `toll` is the per-transition `c0`; `margin` is the noise/attempt weight.
 -/
 
 noncomputable section
@@ -17,34 +27,40 @@ namespace PersistenceMechanics.Decay
 
 structure DecayChannel where
   capacity : ℝ
+  map : ℝ
   protocol : ℝ
-  cost : ℝ
+  governor : ℝ
+  toll : ℝ
   margin : ℝ
+  action : ℝ
 
-def rate (β c0 : ℝ) (c : DecayChannel) : ℝ :=
-  β * c0 * c.capacity * c.margin * c.protocol * Real.exp (-c.cost)
+def rate (β : ℝ) (c : DecayChannel) : ℝ :=
+  β * c.toll * c.capacity * c.map * c.protocol * c.governor * c.margin *
+    Real.exp (-c.action)
 
-def lifetime (β c0 : ℝ) (c : DecayChannel) : ℝ :=
-  1 / rate β c0 c
+def lifetime (β : ℝ) (c : DecayChannel) : ℝ :=
+  1 / rate β c
 
-theorem rate_pos (β c0 : ℝ) (c : DecayChannel)
-    (hβ : 0 < β) (hc0 : 0 < c0) (hcap : 0 < c.capacity)
-    (hmar : 0 < c.margin) (hpro : 0 < c.protocol) :
-    0 < rate β c0 c := by
+theorem rate_pos (β : ℝ) (c : DecayChannel)
+    (hβ : 0 < β) (hcap : 0 < c.capacity) (hmap : 0 < c.map)
+    (hpro : 0 < c.protocol) (hgov : 0 < c.governor)
+    (htoll : 0 < c.toll) (hmar : 0 < c.margin) :
+    0 < rate β c := by
   unfold rate
   positivity
 
-theorem lifetime_pos (β c0 : ℝ) (c : DecayChannel)
-    (hβ : 0 < β) (hc0 : 0 < c0) (hcap : 0 < c.capacity)
-    (hmar : 0 < c.margin) (hpro : 0 < c.protocol) :
-    0 < lifetime β c0 c := by
+theorem lifetime_pos (β : ℝ) (c : DecayChannel)
+    (hβ : 0 < β) (hcap : 0 < c.capacity) (hmap : 0 < c.map)
+    (hpro : 0 < c.protocol) (hgov : 0 < c.governor)
+    (htoll : 0 < c.toll) (hmar : 0 < c.margin) :
+    0 < lifetime β c := by
   unfold lifetime
-  exact one_div_pos.mpr (rate_pos β c0 c hβ hc0 hcap hmar hpro)
+  exact one_div_pos.mpr (rate_pos β c hβ hcap hmap hpro hgov htoll hmar)
 
-def totalRate (β c0 : ℝ) (channels : List DecayChannel) : ℝ :=
-  List.sum (channels.map (fun c => rate β c0 c))
+def totalRate (β : ℝ) (channels : List DecayChannel) : ℝ :=
+  List.sum (channels.map (fun c => rate β c))
 
-def familyLifetime (β c0 : ℝ) (channels : List DecayChannel) : ℝ :=
-  1 / totalRate β c0 channels
+def familyLifetime (β : ℝ) (channels : List DecayChannel) : ℝ :=
+  1 / totalRate β channels
 
 end PersistenceMechanics.Decay

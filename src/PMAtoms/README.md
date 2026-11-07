@@ -66,6 +66,7 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `CollectiveRegime` | `CollectiveChannel`, `collectiveMass` lower envelope, `CollectivePersists`; `collectiveMass_le_parent`, `collectiveMass_le_channel`, `collectiveMass_eq_parent_of_forall` |
 | `FermiFunction` | `coulombEta`, `fermiFunction`, `fermiFunction_pos`, `fermiFunction_ge_one`; `fermiMomentumFactor`, `fermiMomentumFactor_pos`, `fermiMomentumFactor_le`; allowed beta Coulomb factor and threshold-safe `F·p` | exact three-body measure and integrability |
 | `WeakTransition` | finite 3-channel weak operator, normalized current, unit entries; `weakChannel_card`, `weakTransitionHazard_eq = G²/3`, matches `betaHazardE8` | channel distribution from the weak current |
+| `DecayInstantiation` | six-pillar instances for beta, alpha, fission; rate-equivalence proofs | total fission sum proof |
 | `NuclearDecay` | `nuclearBetaMinusQ`, `nuclearBetaPlusQ`, `nuclearAlphaQ`, `nuclearFissionQ`, `massAllowed` predicates, channel-mass identities; `nuclearDecayRegime`, Pb/U/Cm/Cf regime tests; `e8NuclearCost` persistence; `nuclearLedgerKind`, `regimePersists`, smooth/collective decision rules; `NuclearExit`, `nuclearExits`, `NuclearExit.toChannel`, `nuclearExitChannels` table; Pb/U/Cm/Cf exit-table decision theorems | rates/lifetimes |
 | `BetaCalibration` | candidate E8 beta hazard `weakAmplitudeSquared · weakChannelCost`, `betaNeutronLifetimeE8`; spectral fraction → lifetime | hazard validation |
 | `LeptonLattice` | finite lepton channel reusing `BetaLattice` | lepton eigenvalues |
