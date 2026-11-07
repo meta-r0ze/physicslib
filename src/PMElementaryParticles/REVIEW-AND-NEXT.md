@@ -108,9 +108,9 @@ readout — they are currently supplied.
 
 ### B3 status
 
-Structurally solved: `DecayChannel.lifetime = 1/rate` and the persistence hazard
-layer already give the exponential survival law.  The missing input is the
-physical tick/rate normalization.
+Structurally solved: `DecayChannel.lifetime = 1/rate`, `physicalLifetime` carries
+the tick conversion, and the persistence hazard layer gives exponential survival.
+The missing input is the numerical E8 tick.
 
 ### B3. Decay law from the chosen dynamics
 Specify subsystem, environment/readout and the controlled approximation giving

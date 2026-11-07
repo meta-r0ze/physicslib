@@ -32,4 +32,9 @@ theorem probability_sum (m : ChannelMeasure ι) (h : total m ≠ 0) :
   rw [← Finset.sum_div]
   exact div_self h
 
+theorem probability_nonneg (m : ChannelMeasure ι) (h : ∀ i, 0 ≤ m.weight i) (i : ι) :
+    0 ≤ probability m i := by
+  unfold probability total
+  exact div_nonneg (h i) (Finset.sum_nonneg (by intro j _; exact h j))
+
 end PersistenceMechanics.ChannelCounting

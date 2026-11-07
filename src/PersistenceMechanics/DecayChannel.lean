@@ -63,4 +63,11 @@ def totalRate (β : ℝ) (channels : List DecayChannel) : ℝ :=
 def familyLifetime (β : ℝ) (channels : List DecayChannel) : ℝ :=
   1 / totalRate β channels
 
+/-- Physical lifetime from a tick duration and a per-tick rate. -/
+def physicalLifetime (tick β : ℝ) (c : DecayChannel) : ℝ :=
+  tick / rate β c
+
+theorem physicalLifetime_eq (tick β : ℝ) (c : DecayChannel) :
+    physicalLifetime tick β c = tick / rate β c := rfl
+
 end PersistenceMechanics.Decay
