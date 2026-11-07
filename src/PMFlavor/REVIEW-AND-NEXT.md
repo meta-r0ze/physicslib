@@ -37,6 +37,11 @@ golden ratio from the substrate, or state explicitly that the solar sector is a
 one-parameter postulate. No Lean path from E8/clock data to φ is known.
 
 ### 4. Physical preparation and the energy-spread bound (physics)
+
+`FlavourCoherence` now states the chord-branch bound as phase coherence:
+`phaseDrift e t ≤ π`, `oneTickCoherent` for spread `≤ π/43`, and
+`perStepRestores` for exact `2π` restoration.  The physical preparation still
+has to prove its actual spread lies in the window.
 `ChordBranch` reduces the branch condition to `t ≤ tStar` and to the *energy*
 spread `≤ π/43`; `MixingMatrix.spread_exceeds_pi_over_43` shows link eigenvalues are
 the wrong scale. Remaining: a concrete preparation protocol (not just
