@@ -8,6 +8,7 @@
 | `Gibbs` | §4.2 | Finite survival weights `exp(−βS)` at equal priors: positivity, ratios, ordering, a finite penalty never deletes a history; the β → ∞ limit concentrates uniformly on the minimum-cost histories. Moved from Paper II (`Survival`, `Concentration`). |
 | `ChannelMeasure` | finite `ChannelMeasure`, `total`, `probability`, `probability_sum`, `probability_nonneg`, `subsetProbability`, `subsetProbability_nonneg`; E8 channel-counting measure. |
 | `MarginCorrection` | supplied `correctedWeight`, `correctedRate`, positivity; substrate margin correction interface. |
+| `InformationTransfer` | `TransferMode` (`boundaryConduction`, `capacityPromotion`, `coordinateJump`), `TransferChannel`, amplitude/rate, admissibility; Paper IV transfer classification. |
 | `EffectiveAction` | `amplitude = exp(iφ − (β/2)S_cost)`, `amplitude_normSq = exp(−βS_cost)`, `width = β·cost/time`, `decoherenceRate`; physics `S−iΓt/2` form. |
 | `CoherentAction` | `phaseWeight = exp(iφ)`, `costWeight = exp(−βC)`, `combinedWeight`; phase has unit modulus, cost carries attenuation; `qualityFactor`. |
 | `DecayChannel` | Shared six-pillar channel algebra: `capacity`, `map`, `protocol`, `governor`, `toll`, `margin`, plus `action`; `rate = β·toll·capacity·map·protocol·governor·margin·exp(−action)`; `lifetime`, `physicalLifetime`, `totalRate`, `familyLifetime`. |
