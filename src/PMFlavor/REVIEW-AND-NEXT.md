@@ -19,8 +19,10 @@ physical wall point lies off the curve.  The numerical `δ, ε` remain wall inpu
 promotion, and the broken link as a coordinate jump.  The mixing overlap is the
 transfer-amplitude ledger (`mixingOverlapAmplitude_eq_rootM`), and the E8 capacity
 ratio is `pmnsCapacity/ckmCapacity = 21/16`, with transfer impedance `16/21`.
-`normalizedOverlap` turns a complex overlap into a unit-modulus entry.  Numerical
-transfer parameters remain wall inputs.
+`normalizedOverlap` turns a complex overlap into a unit-modulus entry, and
+`FlavorSector`/`normalizedSectorEntry` label CKM and PMNS entries.  The impedance
+is still the capacity ratio `16/21`; deriving it from the wall dispersion remains
+open.  Numerical transfer parameters remain wall inputs.
 
 ### 1. Numerical link weights (physics, not a proof)
 `BreakingLink.brokenLink δ` and `brokenLinkB ε` are structural: the doublet splits

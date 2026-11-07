@@ -1,6 +1,8 @@
 import PersistenceMechanics.InformationTransfer
 import PMFlavor.BreakingPhase
 import PMFlavor.MixingMatrix
+import PMFlavor.CKM
+import PMFlavor.PMNS
 
 /-! **Experimental/candidate module.**
 
@@ -121,5 +123,25 @@ theorem transferImpedance_eq : transferImpedance = 16 / 21 := by
 
 theorem ckmCapacity_lt_pmns : ckmCapacity < pmnsCapacity := by
   rw [ckmCapacity_eq, pmnsCapacity_eq]; norm_num
+
+/-- Flavor sector label. -/
+inductive FlavorSector
+  | ckm | pmns
+  deriving DecidableEq, Repr
+
+/-- Raw sector entry. -/
+noncomputable def sectorEntry (s : FlavorSector) (i j : Fin 3) : ℂ :=
+  match s with
+  | .ckm => PMFlavor.CKM.ckm PMFlavor.CKM.c12 PMFlavor.CKM.s12
+      PMFlavor.CKM.c23 PMFlavor.CKM.s23 PMFlavor.CKM.c13 PMFlavor.CKM.s13
+      (Complex.exp ((PMFlavor.CKM.δ : ℂ) * Complex.I)) i j
+  | .pmns => PMFlavor.PMNS.matrix i j
+
+/-- Normalized transfer entry for a labeled sector. -/
+noncomputable def normalizedSectorEntry (s : FlavorSector) (i j : Fin 3) : ℂ :=
+  normalizedOverlap (sectorEntry s i j)
+
+theorem normalizedSectorEntry_eq (s : FlavorSector) (i j : Fin 3) :
+    normalizedSectorEntry s i j = normalizedOverlap (sectorEntry s i j) := rfl
 
 end PMFlavor.TransferFlavor
