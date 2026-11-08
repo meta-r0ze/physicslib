@@ -297,3 +297,16 @@ instance uses the E8 composite masses; `kaonPionPhase_pos` proves it is above
 threshold and `kaonPionRate_nonneg` proves the structural rate is nonnegative.
 The hadronic matrix element is still the carrier-product operator, not a full
 bound-state calculation.
+
+
+### Bound-state matrix element
+
+`HadronicMatrixElement` makes the nonperturbative object explicit:
+
+```
+⟨π⁺π⁰|T|K⁺⟩
+```
+
+`BoundStateMatrixElement.value` is a supplied complex input; `kaonPionRate` proves
+the rate consequence `|value|²·Φ₂` and its nonnegativity.  The value is **not**
+derived here.  This is a deliberate interface, not a fake calculation.
