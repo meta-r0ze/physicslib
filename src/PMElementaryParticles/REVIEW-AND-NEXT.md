@@ -326,15 +326,3 @@ NeutrinoPropagation    two-flavour phase, survival/transition, bounds
 
 The first two remain genuine model inputs: no bound-state wavefunction or binding
 energy is derived.  The last three are concrete structural additions.
-
-## Housekeeping / lint backlog
-
-- **Formula modules are tagged as ansatz.** `CompositeMasses`, `LeptonMasses`
-  and `QuarkMasses` now carry the `Experimental/candidate module` tag: they
-  certify the paper's proposed ledger against CODATA/PDG, they do not derive it
-  (`NeutralPionWidth` already carried a `Comparison` tag). For the record,
-  `certifiedMass` (PMAtoms) does **not** use them — it is the nuclear
-  packing/shell ledger; the composite masses feed `Particle.mass`,
-  `ElectronCloud` and `NeutronPrediction` only. Moving the comparison tables to
-  `tools/e8p` remains optional if the theorem tree should not state measured
-  references at all.

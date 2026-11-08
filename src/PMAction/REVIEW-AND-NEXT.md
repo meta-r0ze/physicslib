@@ -51,8 +51,8 @@ subsystem this reduces to two explicit inputs: the C² control one-forms and tha
 admission. Further quantum-Yang–Mills constructions (gauge-measure transfer matrix,
 infinite volume, full O(4) restoration, renormalized continuum, mass gap) are out of
 scope for this test; see the Yang–Mills scope note in [`OVERVIEW.md`](OVERVIEW.md). The redirected
-PM-specific work is the native control/admission question here and the PM-4
-structural items (global all-nonzero mixing, per-step maintenance).
+PM-specific work is the native control/admission question here; the PM-4 structural
+items (global all-nonzero mixing, per-step maintenance) are now closed.
 
 ## 6. Full field and integrated limits
 Proved: `JointSpaceTime` gives the fixed-momentum joint limit (`a→0`, `1/(a²N)→0`),
@@ -63,13 +63,17 @@ Open: full real-space field/PDE mode–domain control, the integrated Hessian, t
 real-space fermion field, and interacting-field estimates.
 
 ## 7. Physical applications
-The chiral projector is now forced on the zero kernel by the reference conditions
-(`ChiralityConvention.projector_unique_on_kernel`), and its block form matches `P_L`
-(`projector_eq_fromBlocks_PL`). Open: attach that projector to the physical weak
-representation, extend it off the zero kernel, and identify the mediator, statistics,
-normalization, measure and regulator before reading the trace/running results as
-physical predictions. Gravity and measurement need their own state/update/observable
-constructions; quantum continuum and Lorentzian continuation are distinct obligations.
+The chiral projector is forced on the zero kernel by the reference conditions
+(`ChiralityConvention.projector_unique_on_kernel`) and matches `P_L` block-diagonally
+and globally (`projector_eq_fromBlocks_PL`); the weak representation is attached
+(`PMFlavor.WeakCurrentBridge`, `PMConstants.ReferenceStabilizer.electroweak_stabilizer`).
+Two objects once listed as inputs are now E8: statistics is the carrier parity
+(`CarrierParity.carrier_exchange_parity`) and the mediator is the broken electroweak
+direction of the reference (`ReferenceStabilizer.mediator_moves_reference`). Open:
+normalization, measure and regulator (and the trace/running reading), each a
+construction rather than an object; gravity and measurement need their own
+state/update/observable; quantum continuum and Lorentzian continuation are distinct
+obligations.
 
 ## Downstream boundary
 Generic proofs do not move a downstream paper's physical identification with them.

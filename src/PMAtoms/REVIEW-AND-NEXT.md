@@ -284,21 +284,3 @@ PMAtoms is checkpoint-ready when:
 Not required for the checkpoint: solving Cm/Cf, the E8 clock/barrier
 normalization, alpha preformation, fission fragment asymmetry, the spectral
 asymptotic, or the electron/chemistry pillar.
-
-## Housekeeping / lint backlog
-
-- **Clock source.** `E8Tick`, `ClockHierarchy` and `ClockDividedRate` already
-  route through `e8Tick` (`= E8Values.Delta`); `CollectiveE8.alphaBarrier` and
-  `e8ClockPeriod` now alias `e8Tick` too. PMAtoms has no literal `Fin 43` phase
-  type; the remaining bare `43` (`43/6`, `1/43`, `e8Tick_eq = 43`, …) are
-  `norm_num` evaluations of `Delta`-derived definitions, not independent inputs.
-- **Comparison appendices catalogued.** The 11 extra top-level notes
-  (`ATOM-SYSTEM`, `CHECKPOINT`, `DECAY-VALIDATION`, `RESIDUALS`, `ALPHA-TESTS`,
-  `NEUTRON-PREDICTION`, `SPECTRAL-BETA`, `FISSION-TESTS/RESOLVED/INERTIA/OUT-OF-SAMPLE`)
-  are all live evidence/narrative companions, not superseded WIP. `README.md`
-  now indexes them under "Comparison appendices"; keep them reviewed as a set.
-- **Duplicate tick derivations.** Four modules re-prove `Δ = 43`
-  (`Invariants.invariant_values`, `E8Tick.e8Tick_eq`,
-  `CollectiveE8.alphaBarrier_eq`/`e8ClockPeriod_eq`). The latter three now route
-  through `E8Tick`; review whether any remaining alias should collapse into
-  `E8Values`.
