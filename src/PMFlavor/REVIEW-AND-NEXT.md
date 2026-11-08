@@ -82,14 +82,16 @@ as the coupling-site record.
 
 ### 4. Carrier-current identification
 
-Derived: `WeakCurrentBridge` fixes the native current's chiral projector as Paper
-II's `P_L` (`ChiralityConvention.projector_eq_fromBlocks_PL` does so globally), and
-the flavour doublet generators are Paper II's — `FlavourCurrent.upstream_raising`
-(charged `T₊`) and `FlavourCurrent.neutral_charge_values` (neutral `T₃ = ±1/2`).
-So the "flavour generator" and "carrier charge values" are the doublet
-representation, not free. Remaining physical inputs: attaching that representation
-to the physical weak interaction, the mediator/statistics, and the chiral
-representation's physical gauge content.
+Derived: the chiral projector is Paper II's `P_L` (`WeakCurrentBridge`, and
+`ChiralityConvention.projector_eq_fromBlocks_PL` globally); the flavour doublet
+generators are Paper II's (`FlavourCurrent.upstream_raising` charged `T₊`,
+`neutral_charge_values` neutral `T₃ = ±1/2`); and the doublet is attached to the
+reference — `PMConstants.ReferenceStabilizer.electroweak_stabilizer` shows the
+reference carries `su(2)` and leaves exactly `Q = T₃ + Y/2` unbroken
+(`weakGen A (lepton s) (lepton t) = A s t`). So the "flavour generator", "carrier
+charge values" and the weak representation attachment are the doublet, not free.
+The remaining input is the **mediator/statistics** (W/Z exchange, spin–statistics),
+which is a modelling boundary like the Yang–Mills scope note.
 
 ### 5. Data module
 
