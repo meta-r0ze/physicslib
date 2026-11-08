@@ -42,6 +42,7 @@ import PMConstants.ChiralAnomalies
 import PMConstants.LinkMass
 import PMConstants.LinkCustodial
 import PMConstants.InterfaceCorrection
+import PMConstants.InterfaceSpectralCandidate
 import PMConstants.WMassTest
 import PMConstants.StrongLedgerTest
 import PMConstants.CPPhases

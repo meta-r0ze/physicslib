@@ -49,6 +49,12 @@ E8 carrier/spectral response
 If the substrate value misses the window, that is a falsification, not a reason
 to fit `Δα` or the top mass.
 
+**Candidate test.** The simplest isotropic D₄ root sum is
+`Σ = 24/(q²+2)`, `K_sub = 1 + αΣ`.  At `q²=0`, `InterfaceSpectralCandidate`
+proves `Δr_sub > 0.08`, far outside `0.0349 < Δr < 0.0353`.  The simplest
+root-sum response is therefore excluded; a physical response law must suppress
+or weight the roots.
+
 ## Shared proof dependencies and order
 
 1. **Maintained state, readout controller and primitive repair task.** This is
