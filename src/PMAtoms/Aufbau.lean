@@ -4,16 +4,15 @@ import Mathlib.Tactic
 /-!
 # The Aufbau order and electron configuration
 
-First module of the chemistry pillar. The *capacities* are E8-derived
-(`PMAtoms.Shells`: `2ℓ+1` magnetic states times the spin-2 rank of the PM-2 chiral
-projector, giving the shell capacity `2n²`). The *order* in which subshells fill
-is the Madelung/Aufbau rule `(n+ℓ, n)`; it is a supplied model input here (the
-hydrogenic energy `−R∞/n²` carries no `ℓ`-dependence, so the order needs the
-screening/chemistry physics). This module states the order and configuration
-explicitly so chemistry comparisons can be built on top.
+The *capacities* are E8-derived (`PMAtoms.Shells`: `2ℓ+1` magnetic states times the
+spin-2 rank of the PM-2 chiral projector, giving the shell capacity `2n²`). The
+*order* in which subshells fill is the Madelung/Aufbau rule `(n+ℓ, n)`; it is a
+supplied model input here (the hydrogenic energy `−R∞/n²` carries no `ℓ`-dependence,
+so the order needs the screening/chemistry physics). This module states the order
+and configuration explicitly so atom/chemistry comparisons can be built on top.
 -/
 
-namespace PMChemistry.Aufbau
+namespace PMAtoms.Aufbau
 
 /-- The Madelung sort key `(n+ℓ)·8 + n`. With `n ≤ 7` this is strictly increasing
 exactly along the `(n+ℓ, n)` order, so it linearizes the Aufbau rule. -/
@@ -52,4 +51,4 @@ def configuration (z : ℕ) : List ((ℕ × ℕ) × ℕ) := fill aufbau z
 example : configuration 0 = [] := rfl
 example : configuration 1 = [((1, 0), 1)] := rfl
 
-end PMChemistry.Aufbau
+end PMAtoms.Aufbau
