@@ -28,7 +28,7 @@ the rate/lifetime layer.
 | alpha weight `Δ/D` | E8 expression; physical alpha assignment is model input |
 | shell cost `Δ/(D+χ)` | E8 expression; shell assignment is model input |
 | odd-A factor `3/4` | E8 expression; pairing assignment is model input |
-| charge normalization | `sphereCoulombNormalized` defined; mass ledger still uses the unnormalized convention |
+| charge normalization | closed: `LatticeCharge.sphereCoulomb_eq_normalized` — the ledger's `chargeTermSphere` and the `1/(4π)` normalization differ by exactly `4π` |
 | `N>146` tail | deformation candidate exists but holdout even-even actinides scatter `−0.019` to `+0.018 u`; shape is not predictive yet |
 | spectral Green | closed: `cubeLapN_spectralGreen` |
 | 1D/3D mode theorems | closed |

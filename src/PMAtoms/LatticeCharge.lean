@@ -206,4 +206,14 @@ theorem sphereCoulombNormalized_nonneg (z a : Nat) :
   unfold sphereCoulombNormalized
   exact div_nonneg (sphereCoulomb_nonneg (le_of_lt e8ChargeCoupling_pos) z a) (by positivity)
 
+/-- **The mass-ledger charge term and the standard normalization differ by exactly
+`4π`.** The two-ledger mass uses `sphereCoulomb` with the E8 coupling directly
+(`chargeTermSphere`), absorbing the `1/(4π)` into its coupling; this makes the
+relation explicit rather than a silent convention clash. -/
+theorem sphereCoulomb_eq_normalized (z a : Nat) :
+    sphereCoulomb e8ChargeCoupling z a =
+      4 * Real.pi * sphereCoulombNormalized z a := by
+  unfold sphereCoulombNormalized
+  rw [mul_div_cancel₀ _ (by positivity : (4 : ℝ) * Real.pi ≠ 0)]
+
 end PMAtoms
