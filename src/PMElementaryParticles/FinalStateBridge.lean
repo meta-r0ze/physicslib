@@ -1,10 +1,11 @@
 import PMElementaryParticles.CarrierSpecies
 
-/-! **Final-state charge ledger.**
+/-! **Comparison final-state charge ledger.**
 
-This is the first B1 bridge: a decay channel records an initial species, a list
-of final species, and a proof that the charge grading is conserved.  It does not
-yet supply the physical matrix element or the full particle inventory.
+This is a comparison ledger using SM species names.  The substrate-native
+primary route is `SubstrateFinalStates`, built from the four base protocols.  A
+channel records an initial species, a list of final species, and a proof that the
+charge grading is conserved.
 -/
 
 noncomputable section

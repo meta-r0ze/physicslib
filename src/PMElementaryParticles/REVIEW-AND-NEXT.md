@@ -84,7 +84,12 @@ Suggested order: **A1 → A2 → A3**, then **A5**, then **A4** (A4 reuses A1–
 
 ### B1 status
 
-`FinalStateBridge` now supplies a final-state ledger: each channel carries an
+**Primary route:** `SubstrateFinalStates` uses the four base protocols from the
+16-channel inventory, not SM particle names.  A final state is admissible when
+`baseCharge initial = finalCharge final`; `betaMinus_admissible` is the first
+example.  SM names below are comparison labels, not the derivation target.
+
+`FinalStateBridge` now supplies a comparison final-state ledger: each channel carries an
 initial species, a final species list, and a proof of conserved charge.  The
 `ParticleFinalStates` inventory covers μ, τ, π and K channels, and
 `ChannelFinalStateLink` matches their names to `ParticleChannels`
