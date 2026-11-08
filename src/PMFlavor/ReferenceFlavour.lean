@@ -85,6 +85,17 @@ theorem column2_difference_conj (c12 s12 c23 s23 s13 : ℝ) (u : ℂ) (hu : norm
   have hre : (star u).re = u.re := RCLike.conj_re u
   rw [hre]
 
+/-- **Every mixing probability is blind to the CP-sign flip.** Each `ckm` entry is
+`A + B·u` (or `A + B·ū`) with real `A, B`, so its squared modulus depends only on
+`Re u = cos δ`. Replacing `δ ↦ −δ` (i.e. `u ↦ ū`) leaves every `|V_ij|²` unchanged.
+Only the Jarlskog (hence CP violation) changes sign. So no mixing probability can
+select the branch; the branch is an orientation, not a fit. -/
+theorem ckm_normSq_conj (c12 s12 c23 s23 c13 s13 : ℝ) (u : ℂ) (i j : Fin 3) :
+    normSq (CKM.ckm c12 s12 c23 s23 c13 s13 (star u) i j) =
+      normSq (CKM.ckm c12 s12 c23 s23 c13 s13 u i j) := by
+  fin_cases i <;> fin_cases j <;>
+    simp [CKM.ckm, normSq_apply]
+
 /-- **The paper's PMNS matrix satisfies the rule exactly.** With `δ` fixed by the sum rule
 (`PMNS.cosDelta`), `|U_μ2|² = |U_τ2|²`. -/
 theorem paper_on_rule :

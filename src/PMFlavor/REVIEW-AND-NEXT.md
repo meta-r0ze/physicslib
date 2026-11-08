@@ -42,9 +42,12 @@ satisfy it equally. The sum rule fixes `cos δ` (hence `|δ|`), not the branch.
 `Downstream.PMNS.jarlskog_sign_iff_branch` closes the remaining apparent loophole:
 the leptonic Jarlskog is exactly `(positive angle product) · sin δ`, so
 `J ≤ 0 ↔ sin δ ≤ 0` and `jarlskog_nonpos` is the branch choice in disguise, not
-independent evidence. What is still missing is the substrate orientation that
-selects `sign(sin δ)`; that is exactly what the octant/Jarlskog statements cannot
-supply. Do not replace it with a fit.
+independent evidence. `ReferenceFlavour.ckm_normSq_conj` shows every mixing
+probability `|V_ij|²` is invariant under `u ↦ ū` (`δ ↦ −δ`), so no mixing datum
+selects the branch either — only the Jarlskog (CP violation) does. What is still
+missing is the substrate orientation that selects `sign(sin δ)`; that is exactly
+what the mixing/octant/Jarlskog statements cannot supply. Do not replace it with a
+fit.
 
 ### 3. Per-step maintenance contract
 
@@ -77,11 +80,17 @@ capacity mass-ratio impedance from the physical energy-ratio diagnostic.
 
 ## Suggested order
 
-1. Item 2: substrate orientation for the CP sign/octant branch.
-2. Item 3: per-step restoration, if a new structural principle is available.
-3. Item 1: wall anchor `(δ, ε)` once the wall dynamics fixes them.
-4. Items 4 and 6: physical carrier/wall inputs.
-5. Item 5: data work, kept outside the theorem tree.
+Ordered substrate-first: derive each apparent input from E8 where possible, then
+treat only the residue as a model input.
+
+1. Item 4: carrier-current identification — the substrate owns the channels,
+   charges and current; the charged generator and chirality are already derived.
+2. Item 1: wall anchor `(δ, ε)` — a single lepton-axis weight on the substrate link.
+3. Item 2: the substrate orientation selecting `sign(sin δ)` — mixing
+   probabilities are branch-blind (the remaining external step).
+4. Item 3: per-step restoration from the actual update dynamics.
+5. Item 6: wall masses / dispersion — the ratio is E8; the scale is the input.
+6. Item 5: data work, kept outside the theorem tree.
 
 Do not reopen cycle-weight scans and do not fit `V`.
 
