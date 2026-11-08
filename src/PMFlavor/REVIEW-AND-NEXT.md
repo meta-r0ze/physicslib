@@ -298,3 +298,14 @@ They need not agree at the preparation momentum.  This removes the tension
 without changing the wall masses.  `CapacityImpedance` proves the mass-ratio
 condition `((16/21)^2) → 16/21` and its agreement with `transferImpedance`.
 `V` remains an explicit input.
+
+
+### Selection tests
+
+A full exploration is recorded in `SELECTION-TESTS.md`.
+
+Main result: a path-type operator-valued mass matrix can reach both CKM-like and
+PMNS-like angle patterns, while the complete-graph mode law and plain A4 fail.
+Holonomy can supply the CP phase but not the angles.  This makes the
+operator-valued path graph the leading candidate, but the link weights are still
+underived.
