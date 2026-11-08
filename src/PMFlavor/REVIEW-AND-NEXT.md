@@ -60,9 +60,12 @@ fit.
 formalizes the per-step one. `run_roots_axis_zero` derives `R 0 = 0` for
 *every* event in a run whose each step restores the reference, and
 `sampleEvent_pair_not_maintained` closes Gap A — the involution bypass that a
-cycle-end-only check admits. What remains is physical, not Lean-structural:
-deriving the per-step restoration (exact within-step state restoration) from
-the actual update dynamics instead of assuming it.
+cycle-end-only check admits. The per-step restoration itself is PM-2's
+`ReferenceMaintenance.live_restored`/`canonical_restores`: one canonical
+maintenance pass restores the live reference for every initial discrepancy. What
+remains is the model identification — encoding the packet reference as the
+maintained register/record bit — not a new Lean obligation. (So the per-step
+condition is not free; it is PM-2's maintenance theorem transported.)
 
 ### 4. Carrier-current identification
 
@@ -77,9 +80,12 @@ representation's physical gauge content.
 
 ### 5. Data module
 
-`FalsifiablePredictions.prediction_ledger` is the auditable input.  Measurements
+`FalsifiablePredictions.prediction_ledger` is the auditable input. Measurements
 with provenance, uncertainties and covariance belong outside the axiom-checked
-tree.  Do not put measured numbers into theorem statements.
+tree. **Verified:** no derivation module imports the comparison leaves
+(`FlavourPulls`, `ExperimentalPulls`); only the top-level `PMFlavor.lean`
+aggregator does, so no measured number enters the derivation closure. Do not put
+measured numbers into theorem statements.
 
 ### 6. Wall masses / dispersion
 
