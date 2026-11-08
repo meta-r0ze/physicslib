@@ -24,8 +24,10 @@ proves the statement for the lattice itself.
   connection whose derivative is Lipschitz on compact sets (every `C²` connection), the D₄ site
   action of any bounded measurable region with null boundary converges to the classical
   Yang–Mills action. Remaining inputs: the connection, the gauge group, `β`, and that the links are
-  its parallel transports (the existence of the transport ODE solution is assumed, not
-  constructed). This is a statement about smooth classical fields only.
+  its parallel transports. The transport ODE is **not** an extra assumption: for a `C²` skew
+  connection `TransportExistence.exists_yang_mills_transport_c2` *constructs* `T` with the ODE,
+  unitarity and the site-action convergence together. This is a statement about smooth classical
+  fields only.
 -/
 
 noncomputable section
