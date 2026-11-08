@@ -49,6 +49,13 @@ E8 carrier/spectral response
 If the substrate value misses the window, that is a falsification, not a reason
 to fit `Δα` or the top mass.
 
+**Effective weight.** `InterfaceWeightWindow.weight_window` proves the Z-anchor
+window selects exactly effective weight `N=5`.  The natural E8 candidates are
+`σ=5` (embedding dimension), `D₄ simple roots + reference`, and
+`colour + boundary`.  The next task is to derive which persistence/active-mode
+weighting sums to `5`; do not fit it to the window.  The unweighted root sum has
+effective `N=12` and is excluded.
+
 **Candidate test.** The simplest isotropic D₄ root sum is
 `Σ = 24/(q²+2)`, `K_sub = 1 + αΣ`.  At `q²=0`, `InterfaceSpectralCandidate`
 proves `Δr_sub > 0.08`, far outside `0.0349 < Δr < 0.0353`.  The simplest
