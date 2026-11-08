@@ -112,6 +112,15 @@ theorem range_iff_odd (c : Fin 3) (ψ : Carrier c → ℂ) :
     rw [mulVec_mulVec,projector,smul_mulVec,sub_mulVec,one_mulVec,h]
     module
 
+/-- **Carrier statistics is fermionic, and that parity is the substrate's.** The physical
+carrier sector is exactly the antipodal-odd (`−1`) eigenspace (`range_iff_odd`), so its exchange
+parity is `−1`: the spin-1/2 statistics sign `(−1)^{2s}` is the carrier parity, not an
+independent input. This is the E8 origin of the matter sector's spin–statistics. -/
+theorem carrier_exchange_parity (c : Fin 3) (ψ : Carrier c → ℂ)
+    (h : ∃ x : Fin 4 → ℂ, embedding c *ᵥ x = ψ) :
+    (antipode c).permMatrix ℂ *ᵥ ψ = -ψ :=
+  (range_iff_odd c ψ).mp h
+
 lemma recover (c : Fin 3) (x : Fin 4 → ℂ) :
     (embedding c)ᴴ *ᵥ (embedding c *ᵥ x) = x := by
   rw [mulVec_mulVec,isometry,one_mulVec]

@@ -45,6 +45,9 @@ self-coupling): the symmetric substrate link has `δ = 0`. Two anchors are
 recorded — `TransferFlavor.unitWall` (`δ = ε = 1`) and the E8-proposed
 `TransferFlavor.ckmWall` (`δ = ε = χ/ν = 1/8`, with `ckmWall_physical`). Which is
 physical is the remaining model choice; the curve, range and eigenvalues are E8.
+**Provenance:** the breaking *direction* (lepton axis) and functional form are E8;
+the *magnitude* is neither E8-forced nor persistence-selected (there is no cost
+functional in `δ`), so it is a genuine model input.
 
 ### 2. CP sign and octant orientation
 
@@ -90,8 +93,13 @@ reference — `PMConstants.ReferenceStabilizer.electroweak_stabilizer` shows the
 reference carries `su(2)` and leaves exactly `Q = T₃ + Y/2` unbroken
 (`weakGen A (lepton s) (lepton t) = A s t`). So the "flavour generator", "carrier
 charge values" and the weak representation attachment are the doublet, not free.
-The remaining input is the **mediator/statistics** (W/Z exchange, spin–statistics),
-which is a modelling boundary like the Yang–Mills scope note.
+**Provenance of the rest:** both are E8. Spin–statistics is the substrate carrier
+parity — `PMAction.CarrierParity.range_iff_odd`/`carrier_exchange_parity` identify
+the physical carrier sector exactly with the antipodal-odd (`−1`) eigenspace. The
+mediator is the broken electroweak direction of the reference —
+`PMConstants.ReferenceStabilizer.mediator_moves_reference` (the stabilizer is
+exactly the `Q` line). What remains is only the dynamical attachment/statistics
+law, not the objects.
 
 ### 5. Data module
 
@@ -108,7 +116,8 @@ Both ratios are E8: `WallMassRatio.capacity_ratio_sq` gives `256/441 = (ν/(ν+�
 and `coupling_ratio` gives `25/336 = σ²/(ν(ν+σ))`; `wall_coupling_ratio_substrate`
 restates the coupling law `y² = σ²/(ν(ν+σ)) δ²` in those terms. `WallDispersion`
 records `E=√(p²+m²)`. The remaining input is the absolute wall-mass scale and
-physical momentum (the usual unit/anchor input, like `m_e`). `WallImpedanceChoice`
+physical momentum. **Provenance:** neither E8 nor persistence — it is the usual
+unit/anchor input (like `m_e`), fixed externally by comparison, not derived. `WallImpedanceChoice`
 separates the capacity mass-ratio impedance from the physical energy-ratio
 diagnostic.
 

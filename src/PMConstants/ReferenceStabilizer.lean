@@ -81,6 +81,17 @@ theorem electroweak_stabilizer (A : Matrix (Fin 2) (Fin 2) ℂ) (hA : Aᴴ = A) 
   · intro h c
     rw [h, Matrix.smul_apply, charge_fixes_neutral c, smul_zero]
 
+/-- **The weak mediators are the electroweak directions that move the reference.** The
+reference's stabilizer is exactly the line `Q = T₃ + Y/2` (`electroweak_stabilizer`); every other
+electroweak generator acts nontrivially on the reference carrier. Those are the exchanged
+(mediating) directions — the `W`/`Z` — so the mediator content is E8 (the reference stabilizer),
+not a separate input. -/
+theorem mediator_moves_reference {A : Matrix (Fin 2) (Fin 2) ℂ} {b : ℝ}
+    (hA : Aᴴ = A) (htr : A.trace = 0) :
+    (¬ Fixes (weakGen A + (b : ℂ) • hyperGen) (lepton 0)) ↔
+      weakGen A + (b : ℂ) • hyperGen ≠ (b : ℂ) • (t3 + hyperGen) :=
+  not_congr (electroweak_stabilizer A hA htr b)
+
 /-- **On the electron carrier the charge is broken.** -/
 theorem charged_carrier_breaks_charge : ¬ Fixes (t3 + hyperGen) (lepton 1) := by
   intro h

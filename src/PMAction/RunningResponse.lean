@@ -201,9 +201,12 @@ theorem pair_coefficient (a : ℝ) :
 
 /-- **Spin decomposition, assembled.** `pair_coefficient` derives the `B²` coefficient `a² − 1/3` of
 a helicity pair. With Zeeman factor `a = 2s` (derived for `s = 1/2` by `zeeman`/`concrete_spin`,
-for `s = 1` by `GaugeFluctuation.vector_kernel`) and the statistics sign `(−1)^{2s}` (an input:
-spin–statistics is not derived here), it is `RunningCoefficients.spinTerm`. This theorem itself
-is only the cast identity for that definition. -/
+for `s = 1` by `GaugeFluctuation.vector_kernel`) and the statistics sign `(−1)^{2s}`, it is
+`RunningCoefficients.spinTerm`. For spin 1/2 the sign is the **substrate carrier parity**:
+`CarrierParity.range_iff_odd`/`carrier_exchange_parity` identify the physical carrier sector
+exactly with the antipodal-odd (`−1`) eigenspace, so `2s = 1` carries `−1`. (The spin-1 `+1` is
+the separate gauge-sector parity.) This theorem itself is only the cast identity for the
+definition. -/
 theorem spin_term_from_response (twoS : ℕ) :
     ((RunningCoefficients.spinTerm twoS : ℚ) : ℝ) = (-1) ^ twoS * (((twoS : ℝ)) ^ 2 - 1 / 3) := by
   simp [RunningCoefficients.spinTerm]
