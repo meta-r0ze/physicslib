@@ -122,3 +122,18 @@ Numerical eigenbasis gives:
 This is PMNS-like for `θ12` and `θ13`, but `θ23` is low compared with
 `≈49°`.  It is a separate operator from the CKM diagonal; the CKM diagonal is
 not reused.
+
+## PMNS pattern comparison
+
+Three separate PMNS patterns were tested, all with `δ=1`, `y=1`:
+
+| pattern | diagonal | θ12 | θ13 | θ23 |
+|---|---|---:|---:|---:|
+| light-light-heavy | `(m_low², m_low², m_high²)` | 35.35° | 9.40° | 35.07° |
+| light-heavy-heavy | `(m_low², m_high², m_high²)` | 15.64° | 10.37° | 57.44° |
+| light-mid-heavy | `(m_low², (m_low²+m_high²)/2, m_high²)` | 23.39° | 10.45° | 46.49° |
+
+The heavy-pair pattern fixes `θ23` upward but spoils `θ12`.  The midpoint pattern
+puts `θ23` near the target but still has low `θ12`.
+
+No pattern matches PMNS while also fixing the CKM sector.  `V` remains explicit.

@@ -339,4 +339,6 @@ Lean.  The PMNS sector still needs its own mass term.
 polynomial.  `PMNSMassOperator` uses a separate wall-mass diagonal at `δ=1,y=1`
 with a degenerate light pair; numerically it gives
 `θ12≈35.35°, θ13≈9.40°, θ23≈35.07°`.  This is PMNS-like for `θ12/θ13` but not
-`θ23`.  The CKM diagonal is not reused.
+`θ23`.  Heavy-pair `(low,high,high)` gives `θ23≈57.4°` but `θ12≈15.6°`; midpoint
+`(low,mid,high)` gives `θ23≈46.5°` but `θ12≈23.4°`.  No pattern simultaneously
+matches PMNS.  The CKM diagonal is not reused.

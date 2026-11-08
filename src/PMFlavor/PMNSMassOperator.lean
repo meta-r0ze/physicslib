@@ -32,4 +32,31 @@ theorem pmnsMassOperator_eq :
     simp [pmnsMassOperator, PMFlavor.HierarchicalPathOperator.HierarchicalOperator, pathOperator, Matrix.diagonal,
       pmnsMassLowSq, pmnsMassHighSq]
 
+/-- Heavy-pair PMNS pattern: one light entry, two heavy entries. -/
+def pmnsHeavyPairOperator : Matrix (Fin 3) (Fin 3) ℝ :=
+  pathOperator + Matrix.diagonal ![pmnsMassLowSq, pmnsMassHighSq, pmnsMassHighSq]
+
+theorem pmnsHeavyPairOperator_eq :
+    pmnsHeavyPairOperator =
+      PMFlavor.HierarchicalPathOperator.HierarchicalOperator
+        pmnsMassLowSq pmnsMassHighSq pmnsMassHighSq := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [pmnsHeavyPairOperator, PMFlavor.HierarchicalPathOperator.HierarchicalOperator,
+      pathOperator, Matrix.diagonal, pmnsMassLowSq, pmnsMassHighSq]
+
+/-- Mixed PMNS pattern: light, midpoint, heavy. -/
+def pmnsMidOperator : Matrix (Fin 3) (Fin 3) ℝ :=
+  pathOperator + Matrix.diagonal
+    ![pmnsMassLowSq, (pmnsMassLowSq + pmnsMassHighSq) / 2, pmnsMassHighSq]
+
+theorem pmnsMidOperator_eq :
+    pmnsMidOperator =
+      PMFlavor.HierarchicalPathOperator.HierarchicalOperator
+        pmnsMassLowSq ((pmnsMassLowSq + pmnsMassHighSq) / 2) pmnsMassHighSq := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [pmnsMidOperator, PMFlavor.HierarchicalPathOperator.HierarchicalOperator,
+      pathOperator, Matrix.diagonal, pmnsMassLowSq, pmnsMassHighSq]
+
 end PMFlavor.PMNSMassOperator
