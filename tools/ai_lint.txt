@@ -17,7 +17,7 @@ For example: PMConstants can and should refer to PMSubstrate lean and it shouldn
 - Check if proofs are in the right place, if they belong in a different folder or if potentially a folder should be split
 - Check that the Lean proof names are clear to help future readers
 - Check that when referencing the substrate or constants values the main api lean files is imported rather than importing the proofs or rederiving values
-
+- Check that any lean code that pulls in experimental values simply for use in e8p lives in tools/e8p, the src directory should be pure e8 substrate stuff
 
 Lean, the lean for physics work should be finding the values of the E8 substrate and *then* comparing it to
 SM values. The tools/e8p contains experimental values.
