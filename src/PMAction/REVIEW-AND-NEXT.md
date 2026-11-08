@@ -47,10 +47,12 @@ identified with the on-site one.
 ## 3. Reference, records and vacuum coexistence
 Proved: `RegisterReference` (capacity-aware spatial model), exact maintenance
 (`RecordSupply`, `HomogeneousRouting`), stationary-preparation bounds
-(`PersistentBackground`, `ReversibleStationarity`). Open: a clean **source contract**
-(an open/replenished supply — `OpenReferenceFlow` shows an indefinite source is not
-derived from closed finite-memory persistence), its per-tick ledger, and physical
-allocation/preparation of the reference/record banks.
+(`PersistentBackground`, `ReversibleStationarity`), and **unboundedness from
+persistence** (`HomogeneousRouting.forever_iff_open`, `forever_needs_infinite`:
+persistence forever forces an infinite substrate). Open: the **prepared initial
+reference** — closed basis-preserving controls cannot supply it
+(`ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`) — its per-tick
+ledger, and physical allocation of the reference/record banks.
 
 ## 4. Physical clock and event ledger
 Proved: `RegisterSplit` (four-phase schedule, exact phase/tick readout),

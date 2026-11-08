@@ -22,10 +22,21 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
 ## Physical inputs (not Lean gaps)
 
 - **Primitive admission.** The local amplitude factors / four-phase schedule are
-  not yet admitted in a microscopic E8 gate library, and their prices are model
-  inputs (four factor applications are not four primitive events).
-- **Source contract.** A clean, indefinite record supply is an open-system input
-  (`OpenReferenceFlow`); closed finite-memory persistence cannot derive it.
+  not yet admitted in a microscopic E8 gate library, and the *overall price scale*
+  is a model input (four factor applications are not four primitive events). What
+  is derived: the minimum-execution cost of a supplied task
+  (`ReferenceMaintenance.minimum_executable_cost`; PMConstants `TypedRepairWork`
+  bounds) and the impossibility of preparing the required two-support state from
+  basis-preserving gates (`PrimitiveRecordBoundary.cannot_prepare`). Admission
+  (which gates) and the price scale are the inputs; the minimization is not.
+- **Source contract.** The *unboundedness* is **derived, not an input**: exact
+  maintenance forever holds iff the backward orbit is open
+  (`HomogeneousRouting.forever_iff_open`), and a finite substrate always closes
+  (`finite_closes`), so persistence forever forces an infinite substrate
+  (`forever_needs_infinite`). What remains is the **prepared initial reference**:
+  closed basis-preserving controls cannot supply it (`ReferenceSourceBoundary`,
+  `PrimitiveRecordBoundary.cannot_prepare`, `OpenReferenceFlow`) — a preparation /
+  implementation input, not a missing theorem.
 - **Bank/preparation and calibration.** Physical allocation of the
   reference/record banks, clock calibration, amplitude preparation and charge
   values are supplied.
