@@ -1,4 +1,5 @@
 import PMFlavor.BreakingLink
+import PMSubstrate.E8Values
 import Mathlib.Tactic
 
 /-!
@@ -511,6 +512,36 @@ theorem rootM_inj (δ ε : ℝ) (h : rootM δ = rootM ε) : δ = ε := by
 
 /-- The explicit inverse of `rootM` on its range `(-∞, 3)`. -/
 def rootMInv (y : ℝ) : ℝ := ((y - 1) * (4 - y)) / (3 - y)
+
+/-! ## The block constants are the substrate invariants
+
+The eigenvalues carry the bare numerals `5`, `8`, `4`, `3`; they are the E8
+records `σ = 5`, `D·χ = 8`, `D = 4`, `σ−χ = 3`. The exceptional-curve and mass
+literals are therefore E8 values, not independent choices. -/
+
+theorem rootP_eq_substrate (x : ℝ) :
+    rootP x =
+      ((PMSubstrate.E8Values.sigma : ℝ) + x +
+        Real.sqrt ((x - 1) ^ 2 + ((PMSubstrate.E8Values.D * PMSubstrate.E8Values.chi : ℕ) : ℝ))) / 2 := by
+  unfold rootP
+  rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.chi_eq]
+  norm_num
+
+theorem rootM_eq_substrate (x : ℝ) :
+    rootM x =
+      ((PMSubstrate.E8Values.sigma : ℝ) + x -
+        Real.sqrt ((x - 1) ^ 2 + ((PMSubstrate.E8Values.D * PMSubstrate.E8Values.chi : ℕ) : ℝ))) / 2 := by
+  unfold rootM
+  rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.chi_eq]
+  norm_num
+
+theorem rootMInv_eq_substrate (y : ℝ) :
+    rootMInv y =
+      ((y - 1) * ((PMSubstrate.E8Values.D : ℝ) - y)) /
+        (((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)) - y) := by
+  unfold rootMInv
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
+  norm_num
 
 theorem rootMInv_pos {y : ℝ} (hy1 : 1 < y) (hy3 : y < 3) : 0 < rootMInv y := by
   unfold rootMInv

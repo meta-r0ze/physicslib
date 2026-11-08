@@ -27,9 +27,14 @@ The flavour sector is no longer an open angle-fitting problem.
 ### 1. Physical wall anchor `(δ, ε)`
 
 `BreakingPhase` records `δ = phase mismatch`, `ε = cost`, and `ExceptionalWall`
-is the mixing exceptional curve.  `PhysicalWall = 0<δ ∧ 0<ε<2` and
+is the mixing exceptional curve. `PhysicalWall = 0<δ ∧ 0<ε<2` (the `2` is `χ`) and
 `physicalWall_off_exceptional` proves any physical wall point lies off the curve.
-The numerical `δ, ε` remain wall inputs.
+The curve's constants are E8, not free: `MixingMatrix.rootP/rootM_eq_substrate`
+give `root±(x) = (σ + x ± √((x−1)² + Dχ))/2`, and `rootMInv_eq_substrate` gives
+`((y−1)(D−y))/((σ−χ)−y)` — the block numerals `5,8,4,3` are `σ, Dχ, D, σ−χ`.
+The remaining input is the *magnitude* `δ` of the S₃-breaking (the lepton-axis
+self-coupling): the symmetric substrate link has `δ = 0`, so the anchor is the
+breaking scale, not an E8 number.
 
 ### 2. CP sign and octant orientation
 
