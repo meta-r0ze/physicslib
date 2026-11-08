@@ -18,7 +18,7 @@ import PMConstants.GaugeLedgers
 import PMConstants.ColourChannels
 import PMCosmology.Background
 import PMSubstrate.Readouts
-import PMConstants.PlanckReadout
+import E8PConstants.PlanckReadout
 import PMConstants.ElectroweakBounds
 import PMConstants.ElectroweakE8
 import PMConstants.JointConstants
@@ -123,7 +123,7 @@ def value : Key → ℝ
   | .vonKlitzing => PMSubstrate.vonKlitzing
   | .planckChargeAtt => PMSubstrate.planckChargeAttenuation
   | .planckChargeRatio => PMSubstrate.planckChargeRatio
-  | .planckMass => PMConstants.planckMass
+  | .planckMass => E8PConstants.PlanckReadout.planckMass
   | .ckmS13 => PMFlavor.CKM.s13
   | .ckmS23 => PMFlavor.CKM.s23
   | .ckmVcb => PMFlavor.CKM.vcb
@@ -472,7 +472,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | planckMass =>
-    have h := PMConstants.planckMass_bounds
+    have h := E8PConstants.PlanckReadout.planckMass_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmS13 =>
