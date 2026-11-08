@@ -1,4 +1,5 @@
 import PMAtoms.Shells
+import PMAtoms.Aufbau
 import PMAtoms.ElectronCloud
 import PMAtoms.NuclearRegime
 import E8PConstants.Format
@@ -19,11 +20,9 @@ structure Orbital where
   l : Nat
   deriving Repr, BEq, DecidableEq
 
-/-- Madelung/Aufbau order, supplied as a model input. -/
-def aufbau : List Orbital := [
-  ⟨1,0⟩, ⟨2,0⟩, ⟨2,1⟩, ⟨3,0⟩, ⟨3,1⟩, ⟨4,0⟩, ⟨3,2⟩, ⟨4,1⟩,
-  ⟨5,0⟩, ⟨4,2⟩, ⟨5,1⟩, ⟨6,0⟩, ⟨4,3⟩, ⟨5,2⟩, ⟨6,1⟩,
-  ⟨7,0⟩, ⟨5,3⟩, ⟨6,2⟩, ⟨7,1⟩]
+/-- Madelung/Aufbau order, read from `PMAtoms.Aufbau` (a model input there). -/
+def aufbau : List Orbital :=
+  PMAtoms.Aufbau.aufbau.map (fun nl => ⟨nl.1, nl.2⟩)
 
 def orbitalLabel (o : Orbital) : String :=
   let shell := ["s","p","d","f"].getD o.l "?"

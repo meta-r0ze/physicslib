@@ -254,11 +254,16 @@ the level ledger: nuclides/atoms use the **certified** nuclear ledger
 (`atom_sub_nucleus` gives the electron+cloud gap; `certifiedMass_eq_latticeSum_sub_binding`
 ties it to the free lattice sum). The leading-vs-certified gap is exactly the
 binding (`System.atomSystem_massME_eq`: `AtomSystem.massME = System.mass + binding`).
-Remaining: `e8p --periodic-table` still prints the leading lattice weight (wiring
-the certified ledger into the `Rat` table needs exact enclosures of the
-`π`-containing certified mass, or the binding as a rational bound), and the Aufbau order is a
-model input (the orbital energy `-R∞/n²` carries no `l`-dependence, so the order
-needs the screening/chemistry pillar).
+The periodic-table structure is now formalized in `PeriodicTable`: the periods
+partition the Aufbau order (`periodSubshells_flatten`), the period lengths are
+`2,8,8,18,18,32,32` from the E8 subshell capacities (`periodLengths_eq`), the
+cumulative ends are the noble-gas numbers (`nobleNumbers_eq`), and `valenceElectrons`
+reads the outer-shell count from the configuration. `e8p --periodic-table` now
+imports `PMAtoms.Aufbau` for the order instead of duplicating it. Remaining: the
+table still prints the leading lattice weight (wiring the certified ledger in needs
+exact enclosures of the `π`-containing certified mass, or the binding as a rational
+bound), and the Aufbau order itself is a model input (the orbital energy `-R∞/n²`
+carries no `l`-dependence, so the order needs the screening/chemistry pillar).
 
 ## Decay validation
 

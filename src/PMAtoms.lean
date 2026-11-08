@@ -6,6 +6,7 @@ import PMAtoms.LinkWeights
 import PMAtoms.Shells
 import PMAtoms.ElectronCloud
 import PMAtoms.Aufbau
+import PMAtoms.PeriodicTable
 import PMAtoms.Hydrogen
 import PMAtoms.Nucleon
 import PMAtoms.Nucleus
