@@ -37,6 +37,7 @@ import PMElementaryParticles.SubstrateTransition
 import PMElementaryParticles.CarrierTransitionOperator
 import PMElementaryParticles.CompositeStates
 import PMElementaryParticles.CompositeTransition
+import PMElementaryParticles.CompositePhaseSpace
 import PMElementaryParticles.ProtocolCaveats
 import PMElementaryParticles.SubstrateLedger
 

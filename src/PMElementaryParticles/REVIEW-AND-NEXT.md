@@ -282,3 +282,18 @@ need composite states.
 charges.  `CompositeTransition` extends the carrier-product operator to composite
 cohorts and proves `K⁺ → π⁺ π⁰` charge conservation and its operator entry.  These
 are structural/comparison states, not a derivation of the bound-state spectrum.
+
+
+### Composite phase space and rate
+
+`CompositePhaseSpace` adds the standard two-body phase space
+
+```
+Φ₂ = √((M² − (m1+m2)²)(M² − (m1−m2)²)) / (8πM²)
+```
+
+and the structural rate `compositePartialWidth = |T|²·Φ₂`.  The `K⁺ → π⁺ π⁰`
+instance uses the E8 composite masses; `kaonPionPhase_pos` proves it is above
+threshold and `kaonPionRate_nonneg` proves the structural rate is nonnegative.
+The hadronic matrix element is still the carrier-product operator, not a full
+bound-state calculation.
