@@ -27,6 +27,7 @@ import PMElementaryParticles.ProtocolInventory
 import PMElementaryParticles.CarrierSpecies
 import PMElementaryParticles.FinalStateBridge
 import PMElementaryParticles.SubstrateFinalStates
+import PMElementaryParticles.ChannelParticleLedger
 import PMElementaryParticles.ChannelFinalStateLink
 import PMElementaryParticles.CarrierAmplitude
 import PMElementaryParticles.ProtocolDynamics

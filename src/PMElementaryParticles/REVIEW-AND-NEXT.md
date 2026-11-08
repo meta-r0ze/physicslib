@@ -217,3 +217,17 @@ remaining work is to select the physical law, not to hide its hypotheses.
 ## Verification
 
 Run `./check.sh`. No Paper VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+
+
+### Channel → particle join
+
+`ChannelParticleLedger` now supplies one row per substrate channel:
+
+```
+channel, index, base protocol, species, colour, chirality, anchor, charge
+```
+
+with `ledger_length = 16`, `active_channels_card = 15`, and
+`channelCharge_eq_Q` tying the rational charge to `ChargeProtocols.Q`.  The 15
+active channels are not 15 independent particles: they are colour/chirality
+copies of the four base protocols.  Generational tiers remain a separate ledger.
