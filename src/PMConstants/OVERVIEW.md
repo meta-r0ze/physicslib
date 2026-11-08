@@ -309,6 +309,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `StableReadout` | Why the colour formula pairs `α(0)` with `α_s(M_Z)` |
 | `RegulatoryLabels` | The 23 regulatory labels are the coordinates of a link hop |
 | `VevLedger` | factorised VEV ledger `slotCount · α⁻¹ · (1+α/D_eff) · (1−Y/(σ−χ)) · m_e`, `vevLedger_eq_vev`, `noiseDenominator_eq_orthogonal`, `boundaryDenominator`; remaining premises: channels as frame, wires carry no boundary area, one-repair anchor, noise on the `D−1` reference-orthogonal axes, and the `m_e` unit. |
+| `VevDownstream` | `vev_downstream`: positivity, `G_F=1/(√2v²)`, `m_H²=2λv²`, exact electron closure; `w_mass_from_canonical_vev` conditional on `vev = canonicalVev`. |
 | `VevClosure` | `VevFactor`, `VevStatus`, `factorStatus`, `factorProduct`, `vev_closure`, `slotCount_closed`, `noiseAxes_closed`, `boundary_closed`, `oneRepair_closed`; composed VEV closure ledger. |
 | `VevCorrections` | What the Fermi window says about the VEV corrections |
 | `NeutralCurrent` | The photon and Z couplings from the reference's mass form |
