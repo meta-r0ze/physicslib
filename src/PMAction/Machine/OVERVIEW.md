@@ -21,7 +21,13 @@ points are theorem names, not exhaustive lists.
 
 ## Interpretation boundary
 Build success certifies the conditional reversible constructions, not physical
-identification. Supplied: banks/occupancies, amplitudes, charge, preparation,
-gate admission, clock calibration, primitive prices and the source contract. The
-derived E8 content is the carrier parity (statistics), the reference chirality,
-the clock period and the maintenance/supply identities.
+identification. **Supplied:** banks/occupancies, amplitudes, the *payload* charge
+operator, preparation of the initial reference, gate admission, clock calibration
+and the price *scale*.
+
+**Derived** E8/persistence content: carrier parity (statistics), the reference
+chirality and charge (`ReferenceAnchor.reference_charges`), the clock period
+(`ClockPeriod.Delta`), the exact maintenance/supply identities, the substrate's
+unboundedness from persistence (`HomogeneousRouting.forever_iff_open`,
+`forever_needs_infinite`) and the minimum-execution cost
+(`ReferenceMaintenance.minimum_executable_cost`).
