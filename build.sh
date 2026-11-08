@@ -20,7 +20,15 @@ Usage:
                             FAST_OLD=1 skips transitive dependency checks
   ./build.sh check <file>   Build one module's OLean incrementally
                             e.g. ./build.sh check src/PMConstants/ContentWeight.lean
-  ./build.sh lean <file>    Typecheck one file without writing an OLean
+  ./build.sh lean <target>...
+                            Typecheck without writing OLeans (fast iteration).
+                            <target> is any of:
+                              a file     src/PMAction/Foo.lean
+                              a module   PMAction.Foo
+                              a dir      src/PMAction
+                              a library  PMAction  (its root + all files)
+                            With no target, checks the changed/untracked .lean
+                            files from `git status`.
   ./build.sh watch <file>   Poll and typecheck one file on every change
   ./build.sh <module>       Build one target, e.g. ./build.sh PMAction
   ./build.sh <file.lean>    Build one file's OLean, e.g. ./build.sh src/PMAction.lean
@@ -29,6 +37,38 @@ Usage:
 Set LAKE_BIN to use a non-default lake binary.
 Set LEAN_JOBS to control `./build.sh lean` threads (default 4).
 USAGE
+}
+
+# Resolve lean targets (files, dirs, dotted module names, libraries) to .lean paths.
+resolve_lean_targets() {
+  local t path
+  for t in "$@"; do
+    if [[ "$t" == *.lean && -f "$t" ]]; then
+      printf '%s\n' "$t"
+    elif [ -d "$t" ]; then
+      find "$t" -name '*.lean' -not -path '*/.lake/*' | sort
+    elif [ -d "src/$t" ]; then
+      [ -f "src/$t.lean" ] && printf '%s\n' "src/$t.lean"
+      find "src/$t" -name '*.lean' -not -path '*/.lake/*' | sort
+    else
+      path="src/$(printf '%s' "$t" | tr '.' '/').lean"
+      if [ -f "$path" ]; then
+        printf '%s\n' "$path"
+      elif [ -f "src/$t.lean" ]; then
+        printf '%s\n' "src/$t.lean"
+      else
+        echo "build.sh: cannot resolve '$t' to a .lean file or directory" >&2
+        return 1
+      fi
+    fi
+  done
+}
+
+# Changed (staged/unstaged) and untracked .lean files, for the no-arg default.
+changed_lean_targets() {
+  git status --porcelain -- '*.lean' 2>/dev/null \
+    | awk '{print $NF}' \
+    | while IFS= read -r f; do [ -f "$f" ] && printf '%s\n' "$f"; done
 }
 
 run_audits() {
@@ -89,7 +129,39 @@ case "${1:-all}" in
     ;;
   lean)
     shift
-    "$LAKE" env lean -j "${LEAN_JOBS:-4}" "$@"
+    if [ "$#" -eq 0 ]; then
+      if ! resolved="$(changed_lean_targets)" || [ -z "$resolved" ]; then
+        echo "build.sh lean: no changed .lean files; pass a file/module/dir target." >&2
+        exit 0
+      fi
+      echo "build.sh lean: checking changed .lean files"
+    else
+      if ! resolved="$(resolve_lean_targets "$@")"; then
+        exit 1
+      fi
+    fi
+    if [ -z "$resolved" ]; then
+      echo "build.sh: no .lean files resolved" >&2
+      exit 1
+    fi
+    files=()
+    while IFS= read -r f; do files+=("$f"); done \
+      < <(printf '%s\n' "$resolved" | awk '!seen[$0]++')
+    "$LAKE" env bash -c '
+      jobs="$1"; shift
+      status=0; total=0; failed=0
+      for f in "$@"; do
+        total=$((total + 1))
+        printf "== lean: %s ==\n" "$f"
+        if ! lean -j "$jobs" "$f"; then status=1; failed=$((failed + 1)); fi
+      done
+      if [ "$status" -eq 0 ]; then
+        printf "== lean: OK (%d file(s)) ==\n" "$total"
+      else
+        printf "== lean: FAILED (%d of %d file(s)) ==\n" "$failed" "$total"
+      fi
+      exit "$status"
+    ' _ "${LEAN_JOBS:-4}" "${files[@]}"
     ;;
   watch)
     shift

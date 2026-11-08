@@ -50,10 +50,15 @@ Each paper library has its own `README.md`, `OVERVIEW.md` and
 ./build.sh src/PMAction/LatticeSiteAction.lean   # one file (OLean)
 ```
 
-Fast inner loop while editing one proof:
+Fast inner loop while editing one proof. `lean` typechecks *without* writing
+OLeans, so it is the quick "is my edit correct?" check; reach for `fast` only
+when you actually need the compiled artifact:
 
 ```sh
-./build.sh fast PMAtoms.TwoLedger
+./build.sh lean PMAtoms.TwoLedger   # typecheck one module (no OLean)
+./build.sh lean                     # typecheck your changed/untracked .lean files
+./build.sh lean PMAtoms             # typecheck a whole library (slower, one file at a time)
+./build.sh fast PMAtoms.TwoLedger   # now actually build the OLean
 ./build.sh check src/PMAtoms/TwoLedger.lean
 ./build.sh watch src/PMAtoms/TwoLedger.lean
 LEAN_JOBS=8 ./build.sh lean src/PMAtoms/TwoLedger.lean
