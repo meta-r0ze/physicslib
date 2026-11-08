@@ -363,3 +363,21 @@ edge² = 1/φ²,  diagonal² = 1,  diagonal/edge = φ,
 plus the scaled Ptolemy relation.  This completes the geometric chain from the
 600-cell pentagon to the solar aperture.  `α⁻¹` is imported from
 `PMSubstrate.geometricIndex`, not a flavour input.
+
+
+### PMNS geometry as chamber/capacity statements
+
+`PMNSGeometry.lean` restates the PMNS geometry explicitly:
+
+```
+capacityBasin = ν+σ = 21
+bareBisection = 1/χ = 1/2
+bulkStrain = π/21
+atmosSineSq = bareBisection*(1+bulkStrain)
+```
+
+and proves `atmosSineSq = PMNS.sineSquared 1` plus `atmos_upper_octant`.
+The reactor angle is `colourRemainder/α⁻¹` with `colourRemainder = σ−χ = 3`,
+proved equal to `PMNS.sineSquared 2`.  The CP sign and octant are explicit branch
+values (`selectedCPBranch = negativeSin`, `selectedOctant = upper`), not hidden
+inputs.  No cycle-weight scanning is used.
