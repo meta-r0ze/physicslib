@@ -37,7 +37,7 @@ the rate/lifetime layer.
 | nuclear lifetimes/rates | beta/alpha/fission chains now have E8 cost models; fission is not universal |
 | electron shells | cloud exists; screening/exchange and chemistry-level shell interaction are separate |
 | Aufbau order | supplied model input |
-| unified system type | `Nucleon`/`Nuclide`/`Atom`/`Particle` are separate ledgers |
+| unified system type | closed: `System` (`System.level`/`mass`/`charge`/`baryon`/`leptonNumber`); `atom_sub_nucleus`, `certifiedMass_eq_latticeSum_sub_binding` |
 
 ## 1. Heavy deformation shape
 
@@ -246,10 +246,15 @@ mass ledger.
 
 ## 7. Periodic table and unified system type
 
-`e8p --periodic-table` still uses the leading lattice weight, not the full
-nuclear mass ledger. Integrating the two-ledger mass into the table, proving
-Aufbau order, and unifying `Nucleon`/`Nuclide`/`Atom`/`Particle` into one
-`System` record remain open.
+`Nucleon`/`Nuclide`/`AtomSystem`/`Species` are now unified into one `System` record
+(`System.level`/`mass`/`charge`/`baryon`/`leptonNumber`), with masses dispatching to
+the level ledger: nuclides/atoms use the **certified** nuclear ledger
+(`atom_sub_nucleus` gives the electron+cloud gap; `certifiedMass_eq_latticeSum_sub_binding`
+ties it to the free lattice sum). Remaining: `e8p --periodic-table` still prints the
+leading lattice weight (wiring the certified ledger into the `Rat` table needs
+exact enclosures of the `π`-containing certified mass), and the Aufbau order is a
+model input (the orbital energy `-R∞/n²` carries no `l`-dependence, so the order
+needs the screening/chemistry pillar).
 
 ## Decay validation
 
