@@ -55,9 +55,10 @@ window selects exactly effective weight `N=5`.  The geometric reading is already
 `InterfaceGeometry.activeResponseModes_eq_sigma` connects it to `σ`, and
 `geometric_weight_in_window` shows it lies in the window.  Equal weighting of the
 five modes is the maximin law (`PersistenceMaximin`), not a new assumption.
-The unweighted root sum has effective `N=12` and is excluded.  Remaining: derive
-why the five geometric modes enter linearly/equally in the response, rather than
-by the excluded all-root sum.
+The unweighted root sum has effective `N=12` and is excluded.  `InterfaceResponseLaw` assembles the response: exact repair gives the linear
+non-iterated form (`VevReadout.exact_net_is_identity`), maximin gives equal weight
+on the five modes, and the remaining input is the per-mode repair `α`.  The
+excluded all-root sum is not used.
 
 **Candidate test.** The simplest isotropic D₄ root sum is
 `Σ = 24/(q²+2)`, `K_sub = 1 + αΣ`.  At `q²=0`, `InterfaceSpectralCandidate`

@@ -309,6 +309,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `StableReadout` | Why the colour formula pairs `α(0)` with `α_s(M_Z)` |
 | `RegulatoryLabels` | The 23 regulatory labels are the coordinates of a link hop |
 | `VevLedger` | factorised VEV ledger `slotCount · α⁻¹ · (1+α/D_eff) · (1−Y/(σ−χ)) · m_e`, `vevLedger_eq_vev`, `noiseDenominator_eq_orthogonal`, `boundaryDenominator`; remaining premises: channels as frame, wires carry no boundary area, one-repair anchor, noise on the `D−1` reference-orthogonal axes, and the `m_e` unit. |
+| `InterfaceResponseLaw` | `interfaceFactor = 1 + perMode·activeResponseModes`, `interfaceFactor_eq = 1+5·perMode`, `interfaceFactor_sigma`, `exact_repair_linear`; assembles the linear response from existing exact-repair/maximin facts. |
 | `InterfaceGeometry` | uses `PMSubstrate.Derived.configDim` for the five modes, `activeResponseModes_eq_sigma`, `uniform_five_weights` from `PersistenceMaximin`, `geometric_weight_in_window`; no duplicate spatial/boundary definitions. |
 | `InterfaceWeightWindow` | `deltaRWeight`, `weight_window`: the Z-anchor window selects effective spectral weight `N=5`; `weight_four_low`, `weight_six_high`, `effective_weight_eq_sigma`. |
 | `InterfaceSpectralCandidate` | simplest isotropic D₄ root sum `Σ=24/(q²+2)`, `Ksub=1+αΣ`, `deltaRsub`; `simple_root_sum_excluded` shows `Δr(0)>0.08`, outside the Z-anchor window. |
