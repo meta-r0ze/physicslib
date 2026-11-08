@@ -29,6 +29,7 @@ src/PMFlavor.lean            + src/PMFlavor/
 src/PMElementaryParticles.lean + src/PMElementaryParticles/
 src/PMAtoms.lean             + src/PMAtoms/
 src/PMCosmology.lean         + src/PMCosmology/
+src/PMChemistry.lean         + src/PMChemistry/
 
 src/classification/          vendored class-number-one proof (Apache-2.0)
 tools/e8p/                   E8-Persistence value CLI + reporter tests

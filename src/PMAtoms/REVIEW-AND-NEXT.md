@@ -239,10 +239,12 @@ structural counterpart.
 
 ## 6. Electron cloud / chemistry pillar
 
-The electron cloud exists as a Pauli-constrained spin-orbital set. Missing:
-electron–electron screening/exchange, shell energy, and the chemistry-level
-60°/tetrahedral shell interaction. This is a separate pillar from the nuclear
-mass ledger.
+The electron cloud exists as a Pauli-constrained spin-orbital set. The chemistry
+pillar now has its own module, **`PMChemistry`** (`PMChemistry/Aufbau.lean`: the
+Madelung order + electron configuration scaffold); the E8 shell capacities
+(`Shells`) and the cloud (`ElectronCloud`) stay here. Open there: electron–electron
+screening/exchange, shell energy, and the chemistry-level 60°/tetrahedral shell
+interaction.
 
 ## 7. Periodic table and unified system type
 
