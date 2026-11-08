@@ -131,6 +131,7 @@ import PMConstants.VevCorrections
 import PMConstants.VevLedger
 import PMConstants.VevClosure
 import PMConstants.VevDownstream
+import PMConstants.ScalarVevLink
 import PMConstants.NeutralCurrent
 import PMConstants.RepairBudget
 import PMConstants.BudgetReadout
