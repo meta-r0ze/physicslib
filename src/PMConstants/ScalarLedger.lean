@@ -1,5 +1,6 @@
 import PMConstants.ScalarBudget
 import PMConstants.ScalarSector
+import PMConstants.ReferenceDirections
 
 /-! **Scalar factor ledger.**
 
@@ -62,5 +63,11 @@ theorem scalarMassSq_eq (v : ℝ) : scalarMassSq v = selfCoupling * v ^ 2 := by
 /-- The budget is the colour-bulk dimension. -/
 theorem scalarBudget_eq_colourBulk :
     scalarBudget = PMSubstrate.E8Values.sigma - PMSubstrate.E8Values.chi := rfl
+
+/-- The budget is the number of real electroweak directions that move the reference. -/
+theorem scalarBudget_eq_movedCount :
+    scalarBudget = Module.finrank ℝ (ℝ × ℂ) := by
+  rw [ReferenceDirections.displacement_dim]
+  exact scalarBudget_eq
 
 end PMConstants.ScalarLedger

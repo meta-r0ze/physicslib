@@ -84,10 +84,12 @@ Suggested order: **A1 → A2 → A3**, then **A5**, then **A4** (A4 reuses A1–
 
 ### B1 status
 
-`FinalStateBridge` now supplies a first final-state ledger: each `FinalStateChannel`
-carries an initial species, a final species list, and a proof of conserved
-`chargeSum` (`betaMinus`, `neutrinoFinal`). It does not yet supply the physical
-matrix element or the full particle inventory.
+`FinalStateBridge` now supplies a final-state ledger: each channel carries an
+initial species, a final species list, and a proof of conserved charge.  The
+`ParticleFinalStates` inventory covers μ, τ, π and K channels, and
+`ChannelFinalStateLink` matches their names to `ParticleChannels`
+(`muon_names`, `tau_first_name`, `pion_names`, `kaon_prefix`).  It does not yet
+supply the physical matrix element or the full hadronic inventory.
 
 `CarrierSpecies` now supplies the channel-label → base-protocol → species bridge
 and proves `channelSpecies_charge`: the bridge respects the E8 charge grading.
