@@ -9,8 +9,8 @@ The Lean source is the ground truth. The prose docs (`README.md`,
 `src/*/OVERVIEW.md`, `src/*/REVIEW-AND-NEXT.md`, `tools/e8p/README`) are maps;
 when they disagree with a theorem, the theorem wins.
 
-When developing new proofs, they need to be based on the E8 substrate and not SM,
-the tools/e8p contains experimental values.
+Any new proofs are finding the values of the E8 substrate and *then* comparing it to
+SM values. The tools/e8p contains experimental values.
 
 When creating new proofs they should either prove out something on top of existing proofs
 or show that something persists.  See the PersistenceMechanics.lean
