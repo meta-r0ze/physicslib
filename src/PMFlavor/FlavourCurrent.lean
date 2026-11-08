@@ -1,9 +1,11 @@
 import PMAction.ChargedCurrent
 import PMFlavor.CKMClosure
 
-/-! Generation mixing in the supplied generation-universal weak current.
+/-! Generation mixing in the generation-universal weak current.
 The complete mass bases and three-generation state space are inputs; this does
-not select the mass links, mixing angles or physical generation count. -/
+not select the mass links, mixing angles or physical generation count. The
+doublet generators themselves are Paper II's (`upstream_raising`,
+`neutral_charge_values`), not free parameters. -/
 noncomputable section
 namespace PMFlavor.FlavourCurrent
 open Matrix
@@ -21,6 +23,17 @@ def doubletLift (T : Matrix (Fin 2) (Fin 2) ℂ) :
 theorem upstream_raising : doubletLift PMAction.ChargedCurrent.Tp = raising := by
   rw [PMAction.ChargedCurrent.raising_entries.1]
   simp [doubletLift,raising]
+
+/-- **The neutral carrier charge values are Paper II's doublet `T₃`.** The up-type
+charge is `+1/2`, the down-type `−1/2`; they are the doublet generator, not a new
+flavour input. (The charged generator is `T₊`, `upstream_raising`.) -/
+theorem neutral_charge_values :
+    doubletLift PMAction.ChargedCurrent.T3 =
+      fromBlocks ((1 / 2 : ℂ) • (1 : M)) 0 0 ((-1 / 2 : ℂ) • (1 : M)) := by
+  unfold doubletLift PMAction.ChargedCurrent.T3
+  ext i j
+  rcases i with i | i <;> rcases j with j | j <;> fin_cases i <;> fin_cases j <;>
+    simp [fromBlocks, Matrix.smul_apply]
 
 def mixing (Uu Ud : M) := Uuᴴ * Ud
 

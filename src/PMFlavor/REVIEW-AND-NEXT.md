@@ -61,9 +61,14 @@ the actual update dynamics instead of assuming it.
 
 ### 4. Carrier-current identification
 
-`WeakCurrentBridge` proves the native current's chiral projector is Paper II's
-weak V−A projector.  Remaining physical inputs: the flavour generator, carrier
-charge values, mediator/statistics, and the chiral representation itself.
+Derived: `WeakCurrentBridge` fixes the native current's chiral projector as Paper
+II's `P_L` (`ChiralityConvention.projector_eq_fromBlocks_PL` does so globally), and
+the flavour doublet generators are Paper II's — `FlavourCurrent.upstream_raising`
+(charged `T₊`) and `FlavourCurrent.neutral_charge_values` (neutral `T₃ = ±1/2`).
+So the "flavour generator" and "carrier charge values" are the doublet
+representation, not free. Remaining physical inputs: attaching that representation
+to the physical weak interaction, the mediator/statistics, and the chiral
+representation's physical gauge content.
 
 ### 5. Data module
 
