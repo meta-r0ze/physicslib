@@ -24,6 +24,13 @@ The flavour sector is no longer an open angle-fitting problem.
 
 ## Open items
 
+**Status (latest pass).** Item 2 is **closed**: the CP branch is now a consequence
+of the substrate orientation object, with no flavour-side choice left. Items 1, 4
+and 6 are reduced to explicit, named inputs (the wall anchor, the physical weak
+attachment, the mass scale); items 3 and 5 are documented reductions. The
+flavour-specific derivation work is complete; what remains are the upstream
+objects/identifications those notes name.
+
 ### 1. Physical wall anchor `(δ, ε)`
 
 `BreakingPhase` records `δ = phase mismatch`, `ε = cost`, and `ExceptionalWall`
@@ -54,9 +61,10 @@ the leptonic Jarlskog is exactly `(positive angle product) · sin δ`, so
 `J ≤ 0 ↔ sin δ ≤ 0` and `jarlskog_nonpos` is the branch choice in disguise, not
 independent evidence. `ReferenceFlavour.ckm_normSq_conj` shows every mixing
 probability `|V_ij|²` is invariant under `u ↦ ū` (`δ ↦ −δ`), so no mixing datum
-selects the branch either — only the Jarlskog (CP violation) does. What is still
-missing is only the convention `left ↔ negativeSin` itself, which is now a single
-upstream object rather than a flavour choice. Do not replace it with a fit.
+selects the branch either — only the Jarlskog (CP violation) does. **Closed:** the
+branch is `ChiralityConvention.Orientation.referenceOrientation`, so the only
+residue is the substrate convention `left ↔ negativeSin`, owned upstream, not a
+flavour fit.
 
 ### 3. Per-step maintenance contract
 
@@ -104,16 +112,15 @@ diagnostic.
 ## Suggested order
 
 Ordered substrate-first: derive each apparent input from E8 where possible, then
-treat only the residue as a model input.
+treat only the residue as a model input. Flavour-side work is done; the remaining
+line items are the upstream objects/identifications the notes name.
 
-1. Item 4: carrier-current identification — the substrate owns the channels,
-   charges and current; the charged generator and chirality are already derived.
-2. Item 1: wall anchor `(δ, ε)` — a single lepton-axis weight on the substrate link.
-3. Item 2: the substrate orientation selecting `sign(sin δ)` — mixing
-   probabilities are branch-blind (the remaining external step).
-4. Item 3: per-step restoration from the actual update dynamics.
-5. Item 6: wall masses / dispersion — the ratio is E8; the scale is the input.
-6. Item 5: data work, kept outside the theorem tree.
+1. Item 2 — **closed** (branch = substrate orientation).
+2. Item 4 — generator/charges derived; physical weak attachment/mediator upstream.
+3. Item 1 — curve/range/eigenvalues E8; anchor magnitude is the model input.
+4. Item 6 — ratios E8; only the scale/momentum anchor remains.
+5. Item 3 — per-step = PM-2 `live_restored`; packet↔record is a model bridge.
+6. Item 5 — data, kept outside the theorem tree.
 
 Do not reopen cycle-weight scans and do not fit `V`.
 
