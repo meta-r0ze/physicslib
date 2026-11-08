@@ -257,3 +257,19 @@ branching i f    = partialWidth i f / totalWidth i
 `singleChannel` is the one-cohort instance; the muon E8 width is proved to be
 such an instance (`muonSystemE8_totalWidth`).  The operator and phase-space
 entries remain supplied inputs; hadronic matrix elements are still open.
+
+
+### Carrier-product operator
+
+`CarrierTransitionOperator` supplies a first substrate-native operator:
+
+```
+T(i,f) = weak(source) · Π_{x∈f} weak(x)   when Decay i f,
+       = 0                                  otherwise.
+```
+
+`muonOperatorSystem` and `tauOperatorSystem` instantiate the general form with this
+`T`; their total widths are `|T|²·phase`.  This removes the per-particle amplitude
+from the muon/tau leptonic examples.  It is a leading carrier-product operator,
+not the full nonperturbative interaction; charged pion/kaon matrix elements still
+need composite states.

@@ -34,6 +34,7 @@ import PMElementaryParticles.ChannelFinalStateLink
 import PMElementaryParticles.CarrierAmplitude
 import PMElementaryParticles.ProtocolDynamics
 import PMElementaryParticles.SubstrateTransition
+import PMElementaryParticles.CarrierTransitionOperator
 import PMElementaryParticles.ProtocolCaveats
 import PMElementaryParticles.SubstrateLedger
 
