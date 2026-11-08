@@ -127,6 +127,7 @@ import PMConstants.ScalePairing
 import PMConstants.StableReadout
 import PMConstants.RegulatoryLabels
 import PMConstants.VevCorrections
+import PMConstants.VevLedger
 import PMConstants.NeutralCurrent
 import PMConstants.RepairBudget
 import PMConstants.BudgetReadout
