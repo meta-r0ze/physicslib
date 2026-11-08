@@ -1,17 +1,18 @@
 import PMConstants.InterfaceWeightWindow
+import PMSubstrate.DerivedParameters
+import PMSubstrate.PersistenceMaximin
 
-/-! **Geometric reading of the interface weight.**
+/-! **Geometric interface modes from PMSubstrate.**
 
-The draft's geometric decomposition is
+The five-mode count is already owned by `PMSubstrate.Derived.configDim`:
 
 ```
-σ = 5 = 3 spatial directions + 2 boundary parameters.
+configDim D q = (D − q) + 2 = 3 spatial + 2 boundary = σ.
 ```
 
-The interface window independently selects effective weight `5`, so the active
-response modes are exactly the spatial directions plus the `χ=2` boundary
-parameters.  This is the geometric identification of the five-mode response, not a
-fit to the window.
+This module only connects that existing count to the interface window.  The equal
+weight of the five modes is the maximin law of `PMSubstrate.PersistenceMaximin`,
+not a new assumption.
 -/
 
 noncomputable section
@@ -19,29 +20,26 @@ namespace PMConstants.InterfaceGeometry
 
 open PMConstants
 
-/-- Spatial directions `D−1`. -/
-def spatialDirections : ℕ := PMSubstrate.E8Values.D - 1
-
-/-- Boundary parameters `χ`. -/
-def boundaryParameters : ℕ := PMSubstrate.E8Values.chi
-
-/-- Active interface response modes. -/
-def activeResponseModes : ℕ := spatialDirections + boundaryParameters
-
-theorem spatialDirections_eq : spatialDirections = 3 := by
-  norm_num [spatialDirections, PMSubstrate.E8Values.D_eq]
-
-theorem boundaryParameters_eq : boundaryParameters = 2 := by
-  norm_num [boundaryParameters, PMSubstrate.E8Values.chi_eq]
+/-- The substrate's configuration dimension at `D=4`, one time direction. -/
+abbrev activeResponseModes : ℕ :=
+  PMSubstrate.Derived.configDim PMSubstrate.E8Values.D 1
 
 theorem activeResponseModes_eq : activeResponseModes = 5 := by
-  norm_num [activeResponseModes, spatialDirections, boundaryParameters,
-    PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.chi_eq]
+  unfold activeResponseModes PMSubstrate.Derived.configDim
+  rw [PMSubstrate.E8Values.D_eq]
 
-/-- The active response modes are the interaction rank `σ`. -/
+/-- The configuration dimension is the interaction rank `σ`. -/
 theorem activeResponseModes_eq_sigma :
     activeResponseModes = PMSubstrate.E8Values.sigma := by
   rw [activeResponseModes_eq, PMSubstrate.E8Values.sigma_eq]
+
+/-- The maximin persistence law is uniform on five modes. -/
+theorem uniform_five_weights (p : Fin 5 → ℝ)
+    (hp : PMSubstrate.PersistenceMaximin.Maximin p) (i : Fin 5) :
+    p i = 1 / 5 := by
+  rw [PMSubstrate.PersistenceMaximin.maximin_iff] at hp
+  rw [hp i]
+  norm_num
 
 /-- The geometrically identified five modes lie in the interface window. -/
 theorem geometric_weight_in_window :

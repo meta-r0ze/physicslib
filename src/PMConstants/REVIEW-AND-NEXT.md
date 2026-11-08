@@ -50,10 +50,11 @@ If the substrate value misses the window, that is a falsification, not a reason
 to fit `Δα` or the top mass.
 
 **Effective weight.** `InterfaceWeightWindow.weight_window` proves the Z-anchor
-window selects exactly effective weight `N=5`.  The geometric reading is the
-draft's decomposition `σ = 5 = 3 spatial + 2 boundary parameters`;
-`InterfaceGeometry.activeResponseModes_eq_sigma` proves this equals the
-interaction rank, and `geometric_weight_in_window` shows it lies in the window.
+window selects exactly effective weight `N=5`.  The geometric reading is already owned by PMSubstrate:
+`Derived.configDim D q = (D−q)+2 = 3 spatial + 2 boundary`;
+`InterfaceGeometry.activeResponseModes_eq_sigma` connects it to `σ`, and
+`geometric_weight_in_window` shows it lies in the window.  Equal weighting of the
+five modes is the maximin law (`PersistenceMaximin`), not a new assumption.
 The unweighted root sum has effective `N=12` and is excluded.  Remaining: derive
 why the five geometric modes enter linearly/equally in the response, rather than
 by the excluded all-root sum.
