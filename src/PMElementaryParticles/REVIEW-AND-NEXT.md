@@ -241,3 +241,19 @@ copies of the four base protocols.  Generational tiers remain a separate ledger.
 `ChannelStatusLedger` expands every active channel row over its allowed tiers,
 recording the mass and decay provenance per row.  These are status ledgers, not
 new derivations.
+
+
+### General substrate transition form
+
+`SubstrateTransition` supplies the general decay form:
+
+```
+partialWidth i f = |⟨f|T|i⟩|² · phaseSpace i f
+totalWidth i     = Σ_f partialWidth i f
+lifetime i       = 1 / totalWidth i
+branching i f    = partialWidth i f / totalWidth i
+```
+
+`singleChannel` is the one-cohort instance; the muon E8 width is proved to be
+such an instance (`muonSystemE8_totalWidth`).  The operator and phase-space
+entries remain supplied inputs; hadronic matrix elements are still open.
