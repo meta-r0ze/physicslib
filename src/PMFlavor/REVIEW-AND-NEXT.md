@@ -39,9 +39,12 @@ breaking scale, not an E8 number.
 ### 2. CP sign and octant orientation
 
 `WolfensteinOctant` proves the octants (lower solar, upper atmospheric, small
-reactor) as consequences of the supplied closed forms, and `PMNSGeometry` fixes
-`selectedCPBranch = negativeSin` by definition. The CP sign is now known to be
-genuinely external: `ReferenceFlavour.column2_difference_conj` proves the
+reactor) as consequences of the supplied closed forms. `PMNSGeometry.selectedCPBranch`
+now reads the branch off the **substrate orientation object**
+`PMAction.ChiralityConvention.Orientation.referenceOrientation` (the reference's
+chirality, `reference_proj`; the wall exchange swaps the two orientations). So the
+CP sign is the substrate's left/right convention, not a flavour fit. It is also
+not derivable from the data: `ReferenceFlavour.column2_difference_conj` proves the
 persistence balance `|U_μ2| = |U_τ2|` depends only on `cos δ`, so `δ` and `−δ`
 satisfy it equally. The sum rule fixes `cos δ` (hence `|δ|`), not the branch.
 `Downstream.PMNS.jarlskog_sign_iff_branch` closes the remaining apparent loophole:
@@ -50,9 +53,8 @@ the leptonic Jarlskog is exactly `(positive angle product) · sin δ`, so
 independent evidence. `ReferenceFlavour.ckm_normSq_conj` shows every mixing
 probability `|V_ij|²` is invariant under `u ↦ ū` (`δ ↦ −δ`), so no mixing datum
 selects the branch either — only the Jarlskog (CP violation) does. What is still
-missing is the substrate orientation that selects `sign(sin δ)`; that is exactly
-what the mixing/octant/Jarlskog statements cannot supply. Do not replace it with a
-fit.
+missing is only the convention `left ↔ negativeSin` itself, which is now a single
+upstream object rather than a flavour choice. Do not replace it with a fit.
 
 ### 3. Per-step maintenance contract
 

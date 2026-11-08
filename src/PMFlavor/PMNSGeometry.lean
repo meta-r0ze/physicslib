@@ -1,5 +1,6 @@
 import PMFlavor.PMNS
 import PMFlavor.FlavourInvariants
+import PMAction.ChiralityConvention
 
 /-! **PMNS geometry as chamber/capacity statements.**
 
@@ -73,9 +74,19 @@ inductive CPBranch
   | negativeSin
   deriving DecidableEq, Repr
 
-/-- The reference sum rule is used on the `sin δ < 0` branch. -/
-def selectedCPBranch : CPBranch := .negativeSin
+/-- **The CP branch is read off the substrate orientation.**
+`ChiralityConvention.Orientation.referenceOrientation` is the substrate object
+that fixes the reference's chirality orientation (`reference_proj`); the branch is
+its image under the stated convention `left ↔ negativeSin`. The mixing data cannot
+select the branch (`ReferenceFlavour.ckm_normSq_conj`), so this is the only
+remaining convention, and it is the substrate's, not a flavour fit. -/
+def selectedCPBranch : CPBranch :=
+  match PMAction.ChiralityConvention.Orientation.referenceOrientation with
+  | .left => CPBranch.negativeSin
+  | .right => CPBranch.positiveSin
 
-theorem selectedCPBranch_eq : selectedCPBranch = .negativeSin := rfl
+theorem selectedCPBranch_eq : selectedCPBranch = .negativeSin := by
+  simp only [selectedCPBranch,
+    PMAction.ChiralityConvention.Orientation.referenceOrientation]
 
 end PMFlavor.PMNSGeometry

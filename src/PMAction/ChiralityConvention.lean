@@ -250,4 +250,68 @@ theorem physicalBackground_ne_zero (r : Fin 2 → ℂ) (hr : r ≠ 0) : physical
   simp only [physicalBackground, mulVec_mulVec, exchange_sq, one_mulVec, mulVec_zero] at this
   exact this
 
+/-! ## The chirality orientation object
+
+The sign of `γ⁵` is a **convention, fixed — not fitted — by the reference**. The
+wall exchange swaps the two orientations; the maintained reference is fixed by
+one of them. Downstream CP-phase branches read the physical orientation off this
+object instead of choosing a sign; the mixing data cannot select it
+(`PMFlavor.ReferenceFlavour.ckm_normSq_conj`). -/
+
+/-- The two chirality orientations: the sign multiplying `γ⁵`. -/
+inductive Orientation where
+  | left
+  | right
+  deriving DecidableEq, Repr
+
+namespace Orientation
+
+/-- The chirality operator in this orientation, `±γ⁵`. -/
+def chi : Orientation → Matrix Sites Sites ℂ
+  | left => chirality
+  | right => -chirality
+
+/-- The opposite orientation. -/
+def flip : Orientation → Orientation
+  | left => right
+  | right => left
+
+/-- The chiral projector `½(1 − χ)`. -/
+def proj (o : Orientation) : Matrix Sites Sites ℂ := (1 / 2 : ℂ) • (1 - chi o)
+
+@[simp] theorem chi_left : chi left = chirality := rfl
+@[simp] theorem chi_right : chi right = -chirality := rfl
+@[simp] theorem flip_left : flip left = right := rfl
+@[simp] theorem flip_right : flip right = left := rfl
+
+/-- `left` is the displayed physical projector `½(1 − γ⁵)`. -/
+theorem proj_left : proj left = WallChiralCurrent.projector := rfl
+
+/-- The wall exchange swaps the two orientations. -/
+theorem exchange_chi (o : Orientation) :
+    exchange * chi o * exchange = chi (flip o) := by
+  cases o with
+  | left => simpa using exchange_flips_chirality
+  | right =>
+      rw [chi_right, flip_right, chi_left, mul_neg, neg_mul, exchange_flips_chirality,
+        neg_neg]
+
+theorem exchange_proj (o : Orientation) :
+    exchange * proj o * exchange = proj (flip o) := by
+  rw [proj, proj, mul_smul_comm, smul_mul_assoc]
+  congr 1
+  rw [mul_sub, sub_mul, mul_one, exchange_sq, exchange_chi]
+
+/-- **The physical orientation is fixed by the maintained reference.** The
+reference is a chirality eigenmode, so it is fixed by exactly one of the two
+projectors; that orientation is the substrate's convention. -/
+def referenceOrientation : Orientation := left
+
+theorem reference_proj (r : Fin 2 → ℂ) :
+    (proj referenceOrientation) *ᵥ physicalBackground r = physicalBackground r := by
+  rw [referenceOrientation, proj_left]
+  exact weak_acts_on_reference r
+
+end Orientation
+
 end PMAction.ChiralityConvention
