@@ -331,3 +331,12 @@ term.  Numerically the eigenbasis of `pathOperator + D` gives
 
 CKM-like, without fitting the diagonal.  The cubic eigenbasis is not yet proved in
 Lean.  The PMNS sector still needs its own mass term.
+
+
+### Characteristic polynomial and separate PMNS term
+
+`HierarchicalPathOperator.charpoly_eq` proves the generic cubic characteristic
+polynomial.  `PMNSMassOperator` uses a separate wall-mass diagonal at `δ=1,y=1`
+with a degenerate light pair; numerically it gives
+`θ12≈35.35°, θ13≈9.40°, θ23≈35.07°`.  This is PMNS-like for `θ12/θ13` but not
+`θ23`.  The CKM diagonal is not reused.

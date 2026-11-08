@@ -83,3 +83,42 @@ PMNS sector                             ❌ separate operator needed
 ```
 
 The PMNS sector still needs its own mass term; do not reuse the CKM diagonal.
+
+## Characteristic polynomial
+
+`HierarchicalOperator a b c` has the generic characteristic polynomial
+
+```text
+x³ − ((8(a+b+c)+37)/8)x²
+   + ((16ab+16ac+58a+16bc+37b+53c+63)/16)x
+   − ((16abc+21ab+37ac+21a+16bc+21b+21c)/16).
+```
+
+This is proved in `HierarchicalPathOperator.charpoly_eq`.
+
+## Separate PMNS mass term
+
+The PMNS sector uses a different wall-mass diagonal at `δ=1`, `y=1`:
+
+```text
+m_low²  = massSqM 1 1 ≈ 0.3819660
+m_high² = massSqP 1 1 ≈ 2.6180340
+```
+
+with a degenerate light pair:
+
+```text
+D_PMNS = diag(m_low², m_low², m_high²).
+```
+
+Numerical eigenbasis gives:
+
+```text
+θ12 ≈ 35.35°
+θ13 ≈ 9.40°
+θ23 ≈ 35.07°
+```
+
+This is PMNS-like for `θ12` and `θ13`, but `θ23` is low compared with
+`≈49°`.  It is a separate operator from the CKM diagonal; the CKM diagonal is
+not reused.
