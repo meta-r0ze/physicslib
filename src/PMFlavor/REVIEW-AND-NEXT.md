@@ -24,12 +24,13 @@ The flavour sector is no longer an open angle-fitting problem.
 
 ## Open items
 
-**Status (latest pass).** Item 2 is **closed**: the CP branch is now a consequence
-of the substrate orientation object, with no flavour-side choice left. Items 1, 4
-and 6 are reduced to explicit, named inputs (the wall anchor, the physical weak
-attachment, the mass scale); items 3 and 5 are documented reductions. The
-flavour-specific derivation work is complete; what remains are the upstream
-objects/identifications those notes name.
+**Status (latest pass).** Items 2 and 3 are **closed** upstream: the CP branch is
+the substrate orientation object (`ChiralityConvention.Orientation`), and the
+per-step restoration is `SectorObligations.refresh_exact` (per-tick reference
+refresh), with no flavour-side choice left. Items 1, 4 and 6 are reduced to
+explicit, named inputs (wall anchor, physical weak attachment, mass scale); item 5
+is a verified data separation. The flavour-specific derivation work is complete;
+what remains are the upstream objects/identifications those notes name.
 
 ### 1. Physical wall anchor `(δ, ε)`
 
@@ -68,16 +69,16 @@ flavour fit.
 
 ### 3. Per-step maintenance contract
 
-`LeptonAxisRestriction` proves the per-cycle contract; `PerStepContract` now
-formalizes the per-step one. `run_roots_axis_zero` derives `R 0 = 0` for
-*every* event in a run whose each step restores the reference, and
-`sampleEvent_pair_not_maintained` closes Gap A — the involution bypass that a
-cycle-end-only check admits. The per-step restoration itself is PM-2's
-`ReferenceMaintenance.live_restored`/`canonical_restores`: one canonical
-maintenance pass restores the live reference for every initial discrepancy. What
-remains is the model identification — encoding the packet reference as the
-maintained register/record bit — not a new Lean obligation. (So the per-step
-condition is not free; it is PM-2's maintenance theorem transported.)
+`LeptonAxisRestriction` proves the per-cycle contract; `PerStepContract` formalizes
+the per-step one (`run_roots_axis_zero`, `sampleEvent_pair_not_maintained`,
+`perCycle_does_not_imply_perStep`). The per-step restoration is **derived
+upstream**, not assumed: PM-2 `ReferenceMaintenance.live_restored` (one canonical
+pass restores the live reference) and, at the record level,
+`PMConstants.SectorObligations.refresh_exact` / `refresh_exact_homogeneous` — with
+lattice-translation (or any homogeneous record-moving) routing and a stationary
+background, the coupling site's reference is restored *at every tick*. So the
+per-step condition is a theorem; the only residue is naming the packet reference
+as the coupling-site record.
 
 ### 4. Carrier-current identification
 
