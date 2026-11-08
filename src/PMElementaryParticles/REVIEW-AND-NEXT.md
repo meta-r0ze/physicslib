@@ -273,3 +273,12 @@ T(i,f) = weak(source) · Π_{x∈f} weak(x)   when Decay i f,
 from the muon/tau leptonic examples.  It is a leading carrier-product operator,
 not the full nonperturbative interaction; charged pion/kaon matrix elements still
 need composite states.
+
+
+### Composite states and transition
+
+`CompositeStates` adds signed constituent cohorts: `pionPlus`, `pionZero`,
+`kaonPlus`, `proton`, `neutron`, with charges proved from the base-protocol
+charges.  `CompositeTransition` extends the carrier-product operator to composite
+cohorts and proves `K⁺ → π⁺ π⁰` charge conservation and its operator entry.  These
+are structural/comparison states, not a derivation of the bound-state spectrum.

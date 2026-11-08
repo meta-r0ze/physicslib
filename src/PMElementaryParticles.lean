@@ -35,6 +35,8 @@ import PMElementaryParticles.CarrierAmplitude
 import PMElementaryParticles.ProtocolDynamics
 import PMElementaryParticles.SubstrateTransition
 import PMElementaryParticles.CarrierTransitionOperator
+import PMElementaryParticles.CompositeStates
+import PMElementaryParticles.CompositeTransition
 import PMElementaryParticles.ProtocolCaveats
 import PMElementaryParticles.SubstrateLedger
 
