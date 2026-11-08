@@ -88,7 +88,7 @@ operator.
 ## Remaining genuine inputs
 
 ```text
-φ        not derived from H4/E8 in Lean
+φ        derived from regular-pentagon Ptolemy d²=1+d; H4/600-cell embedding still to formalize
 α⁻¹      external constant, not flavour geometry
 CP sign  fixed by the sin δ < 0 branch
 octant   tied to the reference sum rule, not independently derived
@@ -96,6 +96,7 @@ octant   tied to the reference sum rule, not independently derived
 
 ## Next check
 
-Do not scan more `w3` values.  Derive `φ` from the H4 / 600-cell geometry, then
-check whether the solar aperture `1/(2φ)` follows.  Only after that should the
-PMNS operator be constrained to reproduce the geometric angles.
+The regular-pentagon Ptolemy relation `d²=1+d` now derives `d=φ` and hence
+`sin²θ12=1/(2φ)` in `GoldenGeometry.lean`.  The remaining geometric step is to
+explicitly place that pentagon in the 600-cell/H4 vertex set, rather than citing
+the embedding informally.

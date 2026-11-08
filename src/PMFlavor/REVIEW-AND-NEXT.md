@@ -342,3 +342,11 @@ with a degenerate light pair; numerically it gives
 `θ23`.  Heavy-pair `(low,high,high)` gives `θ23≈57.4°` but `θ12≈15.6°`; midpoint
 `(low,mid,high)` gives `θ23≈46.5°` but `θ12≈23.4°`.  No pattern simultaneously
 matches PMNS.  The CKM diagonal is not reused.
+
+
+### Golden geometry
+
+`GoldenGeometry.lean` proves that a regular-pentagon diagonal ratio `d` with
+Ptolemy relation `d²=1+d` is exactly `φ`, and therefore gives
+`sin²θ12=1/(2φ)`.  This removes φ as a bare postulate at the pentagon level; the
+explicit 600-cell/H4 embedding remains to be formalized.
