@@ -33,8 +33,10 @@ The curve's constants are E8, not free: `MixingMatrix.rootP/rootM_eq_substrate`
 give `root±(x) = (σ + x ± √((x−1)² + Dχ))/2`, and `rootMInv_eq_substrate` gives
 `((y−1)(D−y))/((σ−χ)−y)` — the block numerals `5,8,4,3` are `σ, Dχ, D, σ−χ`.
 The remaining input is the *magnitude* `δ` of the S₃-breaking (the lepton-axis
-self-coupling): the symmetric substrate link has `δ = 0`, so the anchor is the
-breaking scale, not an E8 number.
+self-coupling): the symmetric substrate link has `δ = 0`. Two anchors are
+recorded — `TransferFlavor.unitWall` (`δ = ε = 1`) and the E8-proposed
+`TransferFlavor.ckmWall` (`δ = ε = χ/ν = 1/8`, with `ckmWall_physical`). Which is
+physical is the remaining model choice; the curve, range and eigenvalues are E8.
 
 ### 2. CP sign and octant orientation
 
