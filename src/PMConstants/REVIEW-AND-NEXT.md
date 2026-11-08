@@ -49,6 +49,18 @@ E8 carrier/spectral response
 If the substrate value misses the window, that is a falsification, not a reason
 to fit `Δα` or the top mass.
 
+**Closed: the substrate value is assembled.**
+`InterfaceResponseLaw.substrate_deltaR_in_window` runs the chain: exact linear
+repair (`exact_repair_linear`) + the five geometric modes
+(`InterfaceGeometry.activeResponseModes_eq_sigma`) + maximin uniform weight give
+`K_sub = 1 + σα` (`interfaceFactor_sigma`), hence
+`Δr_sub = 1 − 1/K_sub = 5α/(1+5α)`, inside `0.0349 < Δr < 0.0353`
+(`InterfaceWeightWindow.weight_five_in_window`). The excluded naive root sum
+(`InterfaceSpectralCandidate.simple_root_sum_excluded`) is not used. The only
+remaining input is the identification of the *per-mode repair* with the substrate
+admittance `α`; the later `Δα`/top-mass/remainder numbers are comparison
+diagnostics only.
+
 **Effective weight.** `InterfaceWeightWindow.weight_window` proves the Z-anchor
 window selects exactly effective weight `N=5`.  The geometric reading is already owned by PMSubstrate:
 `Derived.configDim D q = (D−q)+2 = 3 spatial + 2 boundary`;
