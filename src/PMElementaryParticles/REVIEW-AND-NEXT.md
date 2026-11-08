@@ -84,6 +84,11 @@ Suggested order: **A1 → A2 → A3**, then **A5**, then **A4** (A4 reuses A1–
 
 ### B1 status
 
+`FinalStateBridge` now supplies a first final-state ledger: each `FinalStateChannel`
+carries an initial species, a final species list, and a proof of conserved
+`chargeSum` (`betaMinus`, `neutrinoFinal`). It does not yet supply the physical
+matrix element or the full particle inventory.
+
 `CarrierSpecies` now supplies the channel-label → base-protocol → species bridge
 and proves `channelSpecies_charge`: the bridge respects the E8 charge grading.
 Base-species masses are assigned (`CarrierSpecies.mass`) and `CarrierCouplings.amplitude` supplies E8 em/weak/strong amplitude slots; `weakCoupling_eq_fermi` connects the weak slot to the W-exchange Fermi coupling.  The physical amplitude model remains open.

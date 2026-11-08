@@ -262,6 +262,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `BetaUniversality` | The rank rule for the beta coefficient fails its own universality test |
 | `GravityAccounting` | Which channel count the gravitational coupling can persist with |
 | `ScalarAccounting` | The scalar ledger picks the same channel accounting |
+| `ScalarLedger` | `scalarBudget = σ−χ = 3`, `scalarLabels = ν+σ+χ = 23`, `scalarGain`, `scalarGain_eq`, `scalarTollLedger_eq`, `scalarMassSq_eq`; factorised scalar ledger. |
 | `ScalarBudget` | The scalar ledger's budget is the integer 3 |
 | `BoundaryStorage` | The gravity residual's boundary-storage term |
 | `CarrierActions` | Actual finite carrier operations behind two representation columns. |
