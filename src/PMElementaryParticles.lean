@@ -39,6 +39,11 @@ import PMElementaryParticles.CompositeStates
 import PMElementaryParticles.CompositeTransition
 import PMElementaryParticles.CompositePhaseSpace
 import PMElementaryParticles.HadronicMatrixElement
+import PMElementaryParticles.NeutrinoPropagation
+import PMElementaryParticles.TopTransition
+import PMElementaryParticles.MultiBodyPhaseSpace
+import PMElementaryParticles.CompositeBinding
+import PMElementaryParticles.BoundStateOverlap
 import PMElementaryParticles.ProtocolCaveats
 import PMElementaryParticles.SubstrateLedger
 

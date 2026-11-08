@@ -310,3 +310,19 @@ bound-state calculation.
 `BoundStateMatrixElement.value` is a supplied complex input; `kaonPionRate` proves
 the rate consequence `|value|²·Φ₂` and its nonnegativity.  The value is **not**
 derived here.  This is a deliberate interface, not a fake calculation.
+
+
+### Five-task sweep
+
+Completed structural versions of the five follow-ups:
+
+```
+BoundStateOverlap      overlap as a finite inner product (wavefunction supplied)
+CompositeBinding       mass = constituent mass − binding (binding supplied)
+MultiBodyPhaseSpace    massless three-body Φ₃ and rate form
+TopTransition          top → bottom + charged vector, charge + structural rate
+NeutrinoPropagation    two-flavour phase, survival/transition, bounds
+```
+
+The first two remain genuine model inputs: no bound-state wavefunction or binding
+energy is derived.  The last three are concrete structural additions.

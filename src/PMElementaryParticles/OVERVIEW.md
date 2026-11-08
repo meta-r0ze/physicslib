@@ -30,6 +30,11 @@ particle ledger; those remain model inputs.
 | `ChannelFinalStateLink` | name-level bridge from `ParticleChannels` (muon, tau, pion, kaon prefixes) to `ParticleFinalStates`; `muon_names`, `tau_first_name`, `pion_names`, `kaon_prefix`, `finalStates_charge_conserved`. |
 | `TierLedger` | `tiersFor` up `{0,2,3}` / down/lepton `{0,1,2}`, `massProvenance`, `decayProvenance`; tier subsets and provenance labels. |
 | `CompositeStates` | `SignedState`, `CompositeState`, `compositeCharge`, meson/baryon cohorts; `pionPlus`, `pionZero`, `kaonPlus`, `proton`, `neutron` charges. |
+| `BoundStateOverlap` | finite constituent `Wavefunction`, `overlap`, `toMatrixElement`, `rate_eq`; overlap as inner product. |
+| `CompositeBinding` | `BindingLedger`, `compositeMassSq`, positivity/mass-lowering, `compositePhase`; binding energy supplied. |
+| `MultiBodyPhaseSpace` | massless three-body `Φ₃=M²/(128π³)`, `threeBodyRate`, nonnegativity. |
+| `TopTransition` | `Boson`, `topInitial`, `bottomFinal`, `topFinal`, `topT`, `topRate`, charge conservation. |
+| `NeutrinoPropagation` | `TwoFlavour`, `phase`, `survival`, `transition`, bounds and sum rule. |
 | `HadronicMatrixElement` | `BoundStateMatrixElement` with supplied `value`; `kaonPion`, `kaonPionRate`, `kaonPionRate_eq`, `kaonPionRate_nonneg`; explicit nonperturbative-input interface. |
 | `CompositePhaseSpace` | `twoBodyPhaseSpace`, `compositePartialWidth`, `kaonPionT`, `kaonPionPhase`, `kaonPionRate`; K⁺→π⁺π⁰ structural rate with positivity. |
 | `CompositeTransition` | `compositeAmplitude`, `CompositeDecay`, `compositeOperator`; `K⁺ → π⁺ π⁰` charge/operator instance. |
