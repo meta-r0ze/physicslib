@@ -1,4 +1,5 @@
 import PMAction.WallDispersion
+import PMSubstrate.E8Values
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
@@ -47,5 +48,41 @@ theorem wall_coupling_ratio_of_mass_ratio (δ y : ℝ) (hδ : δ ≠ 0)
   have hsum' : (21 / 16) * δ ^ 2 + (16 / 21) * δ ^ 2 = y ^ 2 + 2 * δ ^ 2 := by
     rw [← hP, ← hM', hsum]
   nlinarith
+
+/-! ## The two ratios are substrate expressions
+
+The mass ratio `256/441 = (16/21)²` is the capacity-basin ratio `(ν/(ν+σ))²`, and
+the coupling ratio `25/336 = σ²/(ν(ν+σ))`. Neither is an independent choice. -/
+
+theorem capacity_ratio_sq :
+    (256 / 441 : ℝ) =
+      (((PMSubstrate.E8Values.nu : ℝ) /
+        (PMSubstrate.E8Values.nu + PMSubstrate.E8Values.sigma)) ^ 2) := by
+  rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
+  norm_num
+
+theorem coupling_ratio :
+    (25 / 336 : ℝ) =
+      ((PMSubstrate.E8Values.sigma : ℝ) ^ 2 /
+        ((PMSubstrate.E8Values.nu : ℝ) *
+          (PMSubstrate.E8Values.nu + PMSubstrate.E8Values.sigma))) := by
+  rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
+  norm_num
+
+/-- The capacity mass-ratio hypothesis and the coupling ratio, both written as
+substrate expressions: if `m_M²/m_P² = (ν/(ν+σ))²` then `y² = σ²/(ν(ν+σ)) δ²`. -/
+theorem wall_coupling_ratio_substrate (δ y : ℝ) (hδ : δ ≠ 0)
+    (h : massSqM δ y / massSqP δ y =
+      (((PMSubstrate.E8Values.nu : ℝ) /
+        (PMSubstrate.E8Values.nu + PMSubstrate.E8Values.sigma)) ^ 2)) :
+    y ^ 2 =
+      ((PMSubstrate.E8Values.sigma : ℝ) ^ 2 /
+        ((PMSubstrate.E8Values.nu : ℝ) *
+          (PMSubstrate.E8Values.nu + PMSubstrate.E8Values.sigma))) * δ ^ 2 := by
+  have h' : massSqM δ y / massSqP δ y = (256 / 441 : ℝ) := by
+    rw [h, capacity_ratio_sq]
+  have h2 := wall_coupling_ratio_of_mass_ratio δ y hδ h'
+  rw [coupling_ratio] at h2
+  exact h2
 
 end PMFlavor.WallMassRatio

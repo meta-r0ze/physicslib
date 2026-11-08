@@ -83,10 +83,13 @@ tree.  Do not put measured numbers into theorem statements.
 
 ### 6. Wall masses / dispersion
 
-`WallMassRatio.wall_coupling_ratio_of_mass_ratio` fixes the coupling ratio
-`y² = (25/336)δ²`, and `WallDispersion` records `E=√(p²+m²)`.  The absolute wall
-masses and physical momentum remain inputs.  `WallImpedanceChoice` separates the
-capacity mass-ratio impedance from the physical energy-ratio diagnostic.
+Both ratios are E8: `WallMassRatio.capacity_ratio_sq` gives `256/441 = (ν/(ν+σ))²`
+and `coupling_ratio` gives `25/336 = σ²/(ν(ν+σ))`; `wall_coupling_ratio_substrate`
+restates the coupling law `y² = σ²/(ν(ν+σ)) δ²` in those terms. `WallDispersion`
+records `E=√(p²+m²)`. The remaining input is the absolute wall-mass scale and
+physical momentum (the usual unit/anchor input, like `m_e`). `WallImpedanceChoice`
+separates the capacity mass-ratio impedance from the physical energy-ratio
+diagnostic.
 
 ## Suggested order
 
