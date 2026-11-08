@@ -50,11 +50,13 @@ If the substrate value misses the window, that is a falsification, not a reason
 to fit `Δα` or the top mass.
 
 **Effective weight.** `InterfaceWeightWindow.weight_window` proves the Z-anchor
-window selects exactly effective weight `N=5`.  The natural E8 candidates are
-`σ=5` (embedding dimension), `D₄ simple roots + reference`, and
-`colour + boundary`.  The next task is to derive which persistence/active-mode
-weighting sums to `5`; do not fit it to the window.  The unweighted root sum has
-effective `N=12` and is excluded.
+window selects exactly effective weight `N=5`.  The geometric reading is the
+draft's decomposition `σ = 5 = 3 spatial + 2 boundary parameters`;
+`InterfaceGeometry.activeResponseModes_eq_sigma` proves this equals the
+interaction rank, and `geometric_weight_in_window` shows it lies in the window.
+The unweighted root sum has effective `N=12` and is excluded.  Remaining: derive
+why the five geometric modes enter linearly/equally in the response, rather than
+by the excluded all-root sum.
 
 **Candidate test.** The simplest isotropic D₄ root sum is
 `Σ = 24/(q²+2)`, `K_sub = 1 + αΣ`.  At `q²=0`, `InterfaceSpectralCandidate`
