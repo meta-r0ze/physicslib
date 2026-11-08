@@ -231,3 +231,13 @@ with `ledger_length = 16`, `active_channels_card = 15`, and
 `channelCharge_eq_Q` tying the rational charge to `ChargeProtocols.Q`.  The 15
 active channels are not 15 independent particles: they are colour/chirality
 copies of the four base protocols.  Generational tiers remain a separate ledger.
+
+
+### Tier and status ledgers
+
+`TierLedger` fixes the tier subsets: up-type `{0,2,3}`, down/electron/neutrino
+`{0,1,2}`, and assigns `massProvenance`/`decayProvenance` labels
+(`e8`, `comparison`, `partialE8`, `blocked`, `notModeled`, `stable`).
+`ChannelStatusLedger` expands every active channel row over its allowed tiers,
+recording the mass and decay provenance per row.  These are status ledgers, not
+new derivations.
