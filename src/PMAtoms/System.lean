@@ -47,7 +47,8 @@ def mass : System → ℝ
   | .nucleon .neutron => CompositeMasses.neutron
   | .nuclide n => certifiedMass n.Z n.N
   | .atom a =>
-      certifiedMass a.nucleus.Z a.nucleus.N + (a.electrons : ℝ) + a.cloud.massCorrectionME
+      certifiedMass a.nucleus.Z a.nucleus.N +
+        ((a.electrons : ℝ) - (a.nucleus.Z : ℝ)) + a.cloud.massCorrectionME
 
 /-- Electric charge. -/
 def charge : System → ℚ
@@ -77,14 +78,15 @@ theorem mass_nuclide (n : Nuclide) :
 /-- An atom's mass is its certified nucleus plus the electron and cloud contributions. -/
 theorem mass_atom_decomp (a : AtomSystem) :
     mass (.atom a) =
-      certifiedMass a.nucleus.Z a.nucleus.N + (a.electrons : ℝ) +
-        a.cloud.massCorrectionME := rfl
+      certifiedMass a.nucleus.Z a.nucleus.N +
+        ((a.electrons : ℝ) - (a.nucleus.Z : ℝ)) + a.cloud.massCorrectionME := rfl
 
-/-- **The atom-minus-nucleus gap is the electron + cloud contribution.** The atom
-level adds exactly its electrons and cloud binding to the certified nucleus. -/
+/-- **The atom-minus-nucleus gap is the electron-count adjustment plus the cloud
+binding.** The certified ledger already carries `Z` electrons, so a neutral atom's
+atom-minus-nucleus gap is exactly the cloud binding. -/
 theorem atom_sub_nucleus (a : AtomSystem) :
     mass (.atom a) - mass (.nuclide a.nucleus) =
-      (a.electrons : ℝ) + a.cloud.massCorrectionME := by
+      ((a.electrons : ℝ) - (a.nucleus.Z : ℝ)) + a.cloud.massCorrectionME := by
   rw [mass_atom_decomp, mass_nuclide]; ring
 
 /-- Free-constituent lattice sum minus the certified mass: the nuclear binding. -/
@@ -94,6 +96,14 @@ def binding (n : Nuclide) : ℝ := latticeSum n.Z n.N - certifiedMass n.Z n.N
 theorem certifiedMass_eq_latticeSum_sub_binding (n : Nuclide) :
     certifiedMass n.Z n.N = latticeSum n.Z n.N - binding n := by
   unfold binding; ring
+
+/-- **The leading atom weight exceeds the certified atom mass by exactly the nuclear
+binding.** `AtomSystem.massME` sums free nucleons + electrons + cloud correction;
+`System.mass (.atom a)` uses the certified (bound) ledger, so the gap is `binding`. -/
+theorem atomSystem_massME_eq (a : AtomSystem) :
+    AtomSystem.massME a = mass (.atom a) + binding a.nucleus := by
+  unfold AtomSystem.massME mass binding latticeSum
+  ring
 
 /-- A neutral atom has zero net charge. -/
 theorem atom_neutral_net_zero (a : AtomSystem) (h : a.neutral) :

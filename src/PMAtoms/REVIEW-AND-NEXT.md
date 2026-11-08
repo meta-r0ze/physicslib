@@ -250,9 +250,11 @@ mass ledger.
 (`System.level`/`mass`/`charge`/`baryon`/`leptonNumber`), with masses dispatching to
 the level ledger: nuclides/atoms use the **certified** nuclear ledger
 (`atom_sub_nucleus` gives the electron+cloud gap; `certifiedMass_eq_latticeSum_sub_binding`
-ties it to the free lattice sum). Remaining: `e8p --periodic-table` still prints the
-leading lattice weight (wiring the certified ledger into the `Rat` table needs
-exact enclosures of the `π`-containing certified mass), and the Aufbau order is a
+ties it to the free lattice sum). The leading-vs-certified gap is exactly the
+binding (`System.atomSystem_massME_eq`: `AtomSystem.massME = System.mass + binding`).
+Remaining: `e8p --periodic-table` still prints the leading lattice weight (wiring
+the certified ledger into the `Rat` table needs exact enclosures of the
+`π`-containing certified mass, or the binding as a rational bound), and the Aufbau order is a
 model input (the orbital energy `-R∞/n²` carries no `l`-dependence, so the order
 needs the screening/chemistry pillar).
 
