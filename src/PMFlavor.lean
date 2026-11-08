@@ -80,6 +80,7 @@ import PMFlavor.WallMassModel
 import PMFlavor.WallImpedanceChoice
 import PMFlavor.CapacityImpedance
 import PMFlavor.PathOperator
+import PMFlavor.HierarchicalPathOperator
 import PMFlavor.WolfensteinOctant
 import PMFlavor.BreakingLink
 import PMFlavor.CabibboDressing

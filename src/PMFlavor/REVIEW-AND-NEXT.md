@@ -318,3 +318,16 @@ the rational eigenbasis `0, 9/8, 7/2` with integer eigenvectors.  With ascending
 eigenvalues the fixed-weight mixing is large (`≈52°,19°,59°`), so capacity
 weights alone point toward PMNS-like mixing, not CKM.  A hierarchical diagonal
 mass term is the next structural ingredient.
+
+
+### Hierarchical path operator
+
+At `δ=χ=2`, `y=σ=5`, the two-wall masses plus `χ²` give a hierarchical diagonal
+term.  Numerically the eigenbasis of `pathOperator + D` gives
+
+```
+θ12 ≈ 11.39°, θ13 ≈ 0.084°, θ23 ≈ 2.73°,
+```
+
+CKM-like, without fitting the diagonal.  The cubic eigenbasis is not yet proved in
+Lean.  The PMNS sector still needs its own mass term.
