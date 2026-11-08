@@ -16,6 +16,24 @@ checks against data (recorded as tensions, not fits). It does **not** select the
 physical interaction, the phase-space normalization, the absolute coupling, or the
 particle ledger; those remain model inputs.
 
+## Selected E8 decay checks
+
+Frozen comparison values live outside the theorem tree.  The current headline
+checks are:
+
+| decay | E8 model | comparison | status |
+|---|---:|---:|---|
+| n → p e ν̄ | 877.2 s | 878 s | E8 finite-spectral + 41/43 margin |
+| μ → e ν ν̄ | 2.187×10⁻⁶ s | 2.197×10⁻⁶ s | E8 inputs, continuum phase space |
+| τ → e ν ν̄ | ≈2.9×10⁻¹³ s | 2.90×10⁻¹³ s | E8 masses + supplied `B_e` |
+| π⁺ → μ⁺ν | 2.52×10⁻⁸ s | 2.60×10⁻⁸ s | E8 `fπ` |
+| K⁺ → μ⁺ν | ≈2.0×10⁻⁸ s | 1.95×10⁻⁸ s | E8 `fK`, `Vus` |
+| π⁰ → γγ | ≈8.46×10⁻¹⁷ s | 8.52×10⁻¹⁷ s | E8 `fπ` + anomaly factor |
+
+The structural channel/status ledgers are in `ChannelParticleLedger`,
+`TierLedger` and `ChannelStatusLedger`.  SM particle names in the comparison
+ledgers are labels; the substrate objects are protocols, tiers and cohorts.
+
 ## Amplitude, rate and width
 
 | Modules | Checked result | Retained inputs |

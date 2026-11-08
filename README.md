@@ -39,8 +39,20 @@ You do not need to compile anything to start. Point your AI at this repo and the
 
 Some more ways to contribute: *"Pick one item in any `REVIEW-AND-NEXT.md` and see if it is solvable simply by depending on existing proofs"*
 
-TODO: improve documentation here in this repo
-For now it is probably helpful to also clone the following repositories and place it where the AI can access it as this is my initial English explanations.
+# Documentation map
+
+Each module under `src/` has three documents with separate jobs:
+
+```text
+README.md           build, layout and import boundary
+OVERVIEW.md         what is checked, with theorem entry points
+REVIEW-AND-NEXT.md  what remains open or is a model input
+```
+
+The Lean source is the ground truth.  Notes that are only comparison data or
+validation tables live with the module they describe; they are not theorem inputs.
+
+For more English background, it is helpful to clone the following repositories and place them where the AI can access them.
 https://github.com/meta-r0ze/Persistence-Mechanics
 https://github.com/meta-r0ze/PM_Quantum_Vacuum_I
 https://github.com/meta-r0ze/PM_Quantum_Vacuum_II

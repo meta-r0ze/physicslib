@@ -16,6 +16,23 @@ persistence, and a transfer/work cost — as a constrained-persistence applicati
 Nothing here compares to measurement; the falsifiable claims are collected in one
 ledger. No Paper V–VI imports are allowed.
 
+## Current geometric status
+
+The flavour angles are now geometry-first, not operator-fit-first.
+
+* CKM: `FlavourInvariants` restates the Paper IV formulae in derived invariants:
+  `s12 = π/(ν−χ)`, `s13 = 1/(χ α⁻¹+π)`, `|Vcb| = (π+χ)/(α⁻¹−Dπ)`,
+  `δCP = arctan(σ/χ)`.
+* PMNS: `PMNSGeometry` formalizes the bulk-strain angle
+  `sin²θ23 = (1/χ)(1+π/(ν+σ))`, the colour-remainder angle
+  `sin²θ13 = (σ−χ)/α⁻¹`, and the explicit upper-octant / `sin δ<0` branches.
+* Solar: `GoldenGeometry` derives `φ` from pentagon Ptolemy; `SixHundredCell`
+  gives an explicit 600-cell pentagon with edge `1/φ`, diagonal `1`, ratio `φ`;
+  hence `sin²θ12 = 1/(2φ)`.
+* `α⁻¹` is imported from `PMSubstrate.geometricIndex`; it is substrate, not flavour.
+* Path/cycle operators were exploratory candidates.  They are not the primary
+  derivation and no longer have separate documents.
+
 ## What is checked
 
 **Matrices and mixing.** `CKM`, `PMNS`: complete complex matrices with exact
@@ -95,9 +112,10 @@ to a data fit (the fit itself is data work, outside the axiom-checked tree).
 
 ## What is *not* derived
 
-`φ = (1+√5)/2` is a postulate (the solar sector is a one-parameter input). The six
-mixing functional forms are supplied ansätze; `FlavourInvariants` only removes the
-literal-numeral duplication. The `687/688` Cabibbo dressing is re-expressed, not
+`φ = (1+√5)/2` is now derived from pentagon Ptolemy and the explicit 600-cell
+pentagon (`GoldenGeometry`, `SixHundredCell`). The six mixing functional forms are
+still supplied geometric ansätze; `FlavourInvariants` only removes the literal-numeral
+duplication. The `687/688` Cabibbo dressing is re-expressed, not
 derived. The numerical breaking weights `δ, ε` are dynamical, not fixed. Link
 eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
 energies. The V−A projector is forced on the zero kernel by reference persistence
