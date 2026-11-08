@@ -133,8 +133,8 @@ theorem abs_not_unique :
 /-- **A reversible closed update cannot restore every state to one.** If `f` is injective and
 some iterate sends every state to `p`, the state space has one element. Exact restoration of a
 displaced reference therefore needs records or an environment outside the restored subsystem;
-`finite_restorer_exact` applies to that open map, and its link to the linear restorer of
-`ReferenceRestoration.finite_restore_trace` is not proved here. -/
+`finite_restorer_exact` applies to that open map; its link to the linear restorer is
+`PMAction.FiniteRestorationBridge.finite_restoration_gain_trace` (given the encoding law). -/
 theorem reversible_cannot_collapse {S : Type*} (f : S → S) (hf : Function.Injective f) (p : S)
     (N : ℕ) (hN : ∀ x, f^[N] x = p) (x y : S) : x = y :=
   (hf.iterate N) ((hN x).trans (hN y).symm)
