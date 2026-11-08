@@ -31,6 +31,24 @@ physical derivation from Finiteness, Conservation and Causality. Start with
 | Thermal floor / vacuum-density readout | Positive proposed floor, hierarchy and conditional formulas; bare floor around 9.21 meV with the electron mass input. | Physical propagation depth, thermal/mode population, coupling and interpretation of the floor as a density. |
 | Neutrino masses / splittings | The stated tower has gap ratios 1:1849:1850; no common multiplier repairs its splitting ratios. | A derived propagation/mixing Hamiltonian or nonuniform response, in Papers V/VI. The bare/common-rescaling identification is excluded; arbitrary alternative dynamics is not. |
 
+## Substrate-first rule for the interface correction
+
+`LinkCustodial`/`InterfaceCorrection` use `Δα`, the top mass and a remainder as
+**comparison diagnostics**. They are not the derivation target and must not be
+imported as SM inputs into a substrate calculation.
+
+The substrate task is:
+
+```
+E8 carrier/spectral response
+→ K_sub
+→ Δr_sub = 1 − 1/K_sub
+→ compare with the Z-anchor window afterwards
+```
+
+If the substrate value misses the window, that is a falsification, not a reason
+to fit `Δα` or the top mass.
+
 ## Shared proof dependencies and order
 
 1. **Maintained state, readout controller and primitive repair task.** This is
