@@ -309,3 +309,12 @@ PMNS-like angle patterns, while the complete-graph mode law and plain A4 fail.
 Holonomy can supply the CP phase but not the angles.  This makes the
 operator-valued path graph the leading candidate, but the link weights are still
 underived.
+
+
+### Concrete path operator
+
+`PathOperator.lean` fixes `w1=1`, `w2=21/16` from the capacity ratio and proves
+the rational eigenbasis `0, 9/8, 7/2` with integer eigenvectors.  With ascending
+eigenvalues the fixed-weight mixing is large (`≈52°,19°,59°`), so capacity
+weights alone point toward PMNS-like mixing, not CKM.  A hierarchical diagonal
+mass term is the next structural ingredient.
