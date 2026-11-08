@@ -24,13 +24,16 @@ The flavour sector is no longer an open angle-fitting problem.
 
 ## Open items
 
-**Status (latest pass).** Items 2 and 3 are **closed** upstream: the CP branch is
-the substrate orientation object (`ChiralityConvention.Orientation`), and the
-per-step restoration is `SectorObligations.refresh_exact` (per-tick reference
-refresh), with no flavour-side choice left. Items 1, 4 and 6 are reduced to
-explicit, named inputs (wall anchor, physical weak attachment, mass scale); item 5
-is a verified data separation. The flavour-specific derivation work is complete;
-what remains are the upstream objects/identifications those notes name.
+**Status (latest pass).** Items 2, 3 and 4 are **closed** upstream: the CP branch is
+the substrate orientation object (`ChiralityConvention.Orientation`); the per-step
+restoration is `SectorObligations.refresh_exact`; and the carrier-current objects are
+E8 — statistics is the carrier parity (`CarrierParity.carrier_exchange_parity`) and
+the mediator is the broken electroweak direction
+(`ReferenceStabilizer.mediator_moves_reference`). Item 5 is a verified data
+separation. Items 1 and 6 are **not derivable**: the wall-anchor *magnitude* `δ` is
+a model input (E8 fixes only the direction and functional form; there is no cost
+functional in `δ`, so persistence does not select it), and the absolute mass scale
+is an external unit anchor.
 
 ### 1. Physical wall anchor `(δ, ε)`
 
