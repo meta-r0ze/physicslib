@@ -13,8 +13,10 @@ A persistent closed system is described by survival weights `T x y ≥ 0` for on
 * **Quiescence** (zero net flux, PM's quiescent steady state): no net flow between any two states,
   `π x T x y = π y T y x` (detailed balance). `quiescent_symmetric`: the symmetrized transfer matrix
   `S x y = √π x · T x y / √π y` is symmetric.
-* **Operator hypothesis**: `S` is injective. Injectivity of the statistical transfer
-  operator is an additional premise, not proved from bijectivity of a realized update. `two_tick_positive`: the two-tick
+* **Operator hypothesis**: `S` is injective. In the deterministic case this is *derived*
+  from Conservation: a bijective update gives `sym_step_injective`, so its symmetrized
+  transfer has trivial kernel. For general statistical weights injectivity remains an
+  additional premise. `two_tick_positive`: the two-tick
   transfer matrix `S²` is positive definite — reflection positivity at two ticks.
 * `energies`: then `S² vᵢ = e^{−Eᵢ} vᵢ` in an orthonormal eigenbasis, with real energies
   `Eᵢ = −log λᵢ`: `S² = e^{−H}` for a self-adjoint `H`.
@@ -86,5 +88,33 @@ states merged in this finite-state model) moves supplied amplitudes by `c ↦ c 
 theorem bijective_update_unitary (f : X ≃ X) (c : X → ℂ) :
     ∑ x, ‖c (f.symm x)‖ ^ 2 = ∑ x, ‖c x‖ ^ 2 :=
   Equiv.sum_comp f.symm (fun x => ‖c x‖ ^ 2)
+
+/-- The one-tick transition matrix of a deterministic update `f`: `T x y = 1` iff `y = f x`. -/
+def step (f : X ≃ X) : Matrix X X ℝ := fun x y => if f x = y then 1 else 0
+
+/-- **The deterministic transfer operator is injective.** For a deterministic bijective
+update, `sym π (step f)` scales the permutation `f`; its `mulVec` has trivial kernel, so
+the `two_tick_positive` injectivity premise is *not* an independent assumption in the
+deterministic case (it is inherited from Conservation's bijection). -/
+theorem sym_step_injective (π : X → ℝ) (hπ : ∀ x, 0 < π x) (f : X ≃ X) :
+    Function.Injective (sym π (step f)).mulVec := by
+  have hformula : ∀ (u : X → ℝ) (y : X),
+      (sym π (step f) *ᵥ u) y =
+        Real.sqrt (π y) / Real.sqrt (π (f y)) * u (f y) := by
+    intro u y
+    rw [mulVec, dotProduct, Finset.sum_eq_single (f y)]
+    · simp only [sym, step, ite_true]; ring
+    · intro j _ hj
+      have hjy : f y ≠ j := fun hc => hj hc.symm
+      simp only [sym, step, hjy, ite_false, mul_zero, zero_div, zero_mul]
+    · intro hmem; exact absurd (Finset.mem_univ _) hmem
+  intro v w h
+  funext z
+  obtain ⟨y, rfl⟩ := f.surjective z
+  have hz := congrFun h y
+  rw [hformula v y, hformula w y] at hz
+  have hcoeff : Real.sqrt (π y) / Real.sqrt (π (f y)) ≠ 0 :=
+    div_ne_zero (Real.sqrt_pos.mpr (hπ y)).ne' (Real.sqrt_pos.mpr (hπ (f y))).ne'
+  exact mul_left_cancel₀ hcoeff hz
 
 end PMAction.Reconstruction
