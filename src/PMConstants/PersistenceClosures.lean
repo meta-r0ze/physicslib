@@ -9,8 +9,12 @@ Five premises left open by the reference chain, each settled by asking what pers
 **Exact restoration, from Finiteness (partial).** `finite_restorer_exact`: on a finite state space
 with the discrete topology, a restorer under which every state converges to the reference state
 reaches it exactly, after one uniform number of updates. Such a map is not reversible
-(`reversible_cannot_collapse`): it needs records or an environment. The bridge from this finite
-map to the real-linear restorer of `ReferenceRestoration.finite_restore_trace` is not proved.
+(`reversible_cannot_collapse`): it needs records or an environment. The bridge to the
+real-linear restorer **is** proved, in Paper II: an operational encoding law
+`encode (f s) = (id − K)(encode s)` on a spanning encoding forces `K` nilpotent and
+`PMAction.FiniteRestorationBridge.finite_restoration_gain_trace`/`convergent_gain_trace` give
+`trace K = finrank V`. So `ReferenceRestoration.finite_restore_trace` (the `V = ℝ × ℂ` case,
+trace `3`) is its instance; the encoding law is the remaining premise, not the bridge.
 
 **The link's charge, from covariance.** The restoring term pairs the regulator (charge `a`) with the
 displacement it cancels (charge `b`). Under a phase action it changes by `exp(iθ(a+b))`.
