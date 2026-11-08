@@ -1,4 +1,4 @@
-import PMAction.ReferenceSampling
+import PMAction.Machine.ReferenceSampling
 import PMConstants.ReferenceCharge
 import PMConstants.GaugeGroupFactor
 

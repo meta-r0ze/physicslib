@@ -1,4 +1,4 @@
-import PMAction.RegisterHamiltonian
+import PMAction.Machine.RegisterHamiltonian
 import Mathlib.Analysis.Calculus.Deriv.Pow
 
 /-!

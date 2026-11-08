@@ -273,4 +273,19 @@ theorem antiparticle_spin_sums (hp : 0 < p 0) (hs : msq p = m ^ 2) (e : ι → F
 /-- At `m = 0`, `A = p̸ γ⁰`, the matrix of Paper V's massless results. -/
 theorem massless_A : A p 0 = P p * g 0 := by simp [A]
 
+/-- **The massless spin sum.** At `m = 0` the completeness sum gives
+`Σ u u† = p̸ γ⁰` and `Σ u ū = p̸` — the identity `VATrace` lists as an input.
+`VATrace` is upstream of this file, so it cannot import it; this is where it is
+actually proved. -/
+theorem massless_spin_sums (hp : 0 < p 0) (hs : msq p = 0) (e : ι → Fin 4 → ℂ)
+    (horth : ∀ s t, star (e s) ⬝ᵥ e t = if s = t then 1 else 0)
+    (hker : ∀ s, D p 0 *ᵥ e s = 0)
+    (hspan : ∀ v, D p 0 *ᵥ v = 0 → v ∈ Submodule.span ℂ (Set.range e)) :
+    let u := fun s => ((Real.sqrt (2 * p 0) : ℝ) : ℂ) • e s
+    (∑ s, vecMulVec (u s) (star (u s))) = P p * g 0 ∧
+      (∑ s, vecMulVec (u s) (star (u s) ᵥ* g 0)) = P p := by
+  have hs' : msq p = (0 : ℝ) ^ 2 := by simpa using hs
+  have h := spin_sums p 0 hp hs' e horth hker hspan
+  exact ⟨h.1.trans (massless_A p), by simpa using h.2⟩
+
 end PMAction.SpinorCompleteness

@@ -1,4 +1,4 @@
-import PMAction.ReferenceWalkParity
+import PMAction.Machine.ReferenceWalkParity
 
 /-! Compatibility names: the general dynamics proofs now live in Paper II. -/
 namespace PMConstants.ReferenceWalkParity

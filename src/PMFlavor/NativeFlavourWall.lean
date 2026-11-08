@@ -1,5 +1,5 @@
 import PMFlavor.FlavourWallReduction
-import PMAction.RegisterHamiltonian
+import PMAction.Machine.RegisterHamiltonian
 import PMAction.GaugeRecordEmbedding
 
 /-!

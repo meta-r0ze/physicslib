@@ -1,5 +1,5 @@
 import PMAction.EventAccounting
-import PMAction.CarrierEvents
+import PMAction.Machine.CarrierEvents
 import PersistenceMechanics.LawSelection
 
 /-!

@@ -1,5 +1,5 @@
-import PMAction.WalkReferenceProtocol
-import PMAction.WalkReferenceCycle
+import PMAction.Machine.WalkReferenceProtocol
+import PMAction.Machine.WalkReferenceCycle
 import PMConstants.BudgetReadout
 
 /-!

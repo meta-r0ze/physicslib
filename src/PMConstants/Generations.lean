@@ -1,4 +1,4 @@
-import PMAction.CarrierCost
+import PMAction.Machine.CarrierCost
 
 /-!
 # Three generations as the pairs of distinct glue classes

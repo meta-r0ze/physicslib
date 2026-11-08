@@ -1,5 +1,5 @@
 import PMConstants.Generations
-import PMAction.CarrierClassBundle
+import PMAction.Machine.CarrierClassBundle
 
 /-!
 # Test generation dictionaries against the already constructed vacuum

@@ -17,10 +17,13 @@ Hamiltonian (`WallChiralCurrent.diracGamma`, `γ⁵ = Γ`).
 * `muon_amplitude`: `(G²/2) · 256 (k·p_e)(p·k̄) = 128 G² (p·k̄)(p_e·k)`, and its average over the
   muon's two spin states is `64 G² (p·k̄)(p_e·k)`, the input of `MuonRate`.
 
-Inputs not proved here: that the spin sums of the massless spinors give `Σ u ū = p̸` (so the
-squared amplitude is this product of traces), and the identification of the vertex with the
-charged current (`ChargedCurrent`, `WallChiralCurrent`). Components are covariant with the
-metric `η = diag(1, −1, −1, −1)`; `a̸ = η_{μμ} a_μ γ^μ`.
+The spin-sum step (`Σ u ū = p̸` for massless spinors, so the squared amplitude is
+this product of traces) is **not** taken here but is proved downstream and cited:
+`PMAction.SpinorCompleteness.spin_sums` gives `Σ u ū = p̸ + m` (massless case
+`massless_spin_sums`), and `PMAction.AmplitudeTrace.spin_averaged` carries it through
+the squared amplitude. Still an input: the identification of the vertex with the
+charged current (`ChargedCurrent`, `WallChiralCurrent`). Components are covariant with
+the metric `η = diag(1, −1, −1, −1)`; `a̸ = η_{μμ} a_μ γ^μ`.
 -/
 
 noncomputable section

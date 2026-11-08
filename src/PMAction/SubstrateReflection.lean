@@ -1,4 +1,4 @@
-import PMAction.CarrierEvents
+import PMAction.Machine.CarrierEvents
 
 /-! The carrier-coordinate reflection is the restriction of an actual integral
 E8 root reflection. This does not identify carrier amplitudes with physical spinors. -/

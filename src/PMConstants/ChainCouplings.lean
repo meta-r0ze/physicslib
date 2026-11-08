@@ -1,4 +1,4 @@
-import PMAction.SummedReference
+import PMAction.Machine.SummedReference
 import PMConstants.ReferenceStiffness
 import PMConstants.EventStiffness
 

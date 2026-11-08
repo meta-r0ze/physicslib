@@ -1,5 +1,5 @@
 import PMConstants.GenerationEncoding
-import PMAction.SubstrateWeylRoots
+import PMAction.Machine.SubstrateWeylRoots
 import PMAction.FiniteEncoding
 
 /-!

@@ -1,4 +1,4 @@
-import PMAction.CarrierResponse
+import PMAction.Machine.CarrierResponse
 
 /-!
 # One readout, one toll: the common gauge, scalar and fermion response

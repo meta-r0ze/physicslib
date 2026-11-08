@@ -1,5 +1,5 @@
 import PMAction.BranchMixerSynthesis
-import PMAction.RootTransferPhase
+import PMAction.Machine.RootTransferPhase
 
 /-!
 # Comparison of root phases without a universal branch marker

@@ -1,4 +1,4 @@
-import PMAction.RecordSupply
+import PMAction.Machine.RecordSupply
 
 /-!
 # Why the record routing is a lattice translation

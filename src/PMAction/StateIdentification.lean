@@ -1,9 +1,9 @@
 import Mathlib.LinearAlgebra.Matrix.Kronecker
-import PMAction.CarrierClifford
-import PMAction.CarrierReadoutQuotient
+import PMAction.Machine.CarrierClifford
+import PMAction.Machine.CarrierReadoutQuotient
 import PMAction.InvolutionSpectral
 import PMAction.LocalUnitary
-import PMAction.NativeCarrierProtocol
+import PMAction.Machine.NativeCarrierProtocol
 import PMAction.RealSpaceFourier
 import PMAction.RectangularEvolution
 import PMAction.RotationAlgebra

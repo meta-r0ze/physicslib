@@ -1,4 +1,4 @@
-import PMAction.CoherentRecordRestoration
+import PMAction.Machine.CoherentRecordRestoration
 import PMAction.RefreshSchedule
 
 /-!

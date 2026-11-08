@@ -1,5 +1,5 @@
 import PMConstants.RepairBudget
-import PMAction.CoherentRecordRestoration
+import PMAction.Machine.CoherentRecordRestoration
 import PMConstants.RegulatoryBudget
 
 /-!

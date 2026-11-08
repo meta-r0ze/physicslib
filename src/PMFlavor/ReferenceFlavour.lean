@@ -19,12 +19,16 @@ persist exactly (`SectorObligations.refresh_exact`, `HomogeneousRouting.forever_
   `|U_μ2|² − |U_τ2|² = (c₁₂² − s₁₂² s₁₃²)(c₂₃² − s₂₃²) − 4 c₁₂ s₁₂ c₂₃ s₂₃ s₁₃ cos δ`.
   So reference `= ν₂` gives the sum rule
   `cos δ = (c₁₂² − s₁₂² s₁₃²) cos 2θ₂₃ / (s₁₃ sin 2θ₁₂ sin 2θ₂₃)`.
+* `column2_difference_conj`: the balance depends only on `cos δ`, so `δ` and `−δ`
+  satisfy it equally — the sum rule cannot pick the `sin δ` branch.
 * `paper_on_rule`: the paper's PMNS matrix now takes `δ` from this rule (`PMNS.cosDelta`), and
   satisfies `|U_μ2|² = |U_τ2|²` exactly. With the paper's angles, `δ ≈ 220.8°`; the earlier
   golden angle `222.5°` missed the rule narrowly.
 
 Premises: the residual `Z₂` acts on the reference; the charged-lepton mass basis is the generation
-basis; the reference is `ν₂`. The sign of `sin δ` is not fixed.
+basis; the reference is `ν₂`. The sign of `sin δ` is **not** fixed by this balance:
+`column2_difference_conj` proves `δ` and `−δ` give the same `|U_μ2|² − |U_τ2|²`, so the branch is a
+substrate-orientation input, not a consequence of the reference sum rule.
 -/
 
 noncomputable section
@@ -62,6 +66,24 @@ theorem column2_difference (c12 s12 c23 s23 s13 : ℝ) (u : ℂ) (hu : normSq u 
   simp only [normSq_apply, sub_re, sub_im, mul_re, mul_im, neg_re, neg_im, ofReal_re,
     ofReal_im]
   linear_combination (s12 ^ 2 * s13 ^ 2 * (s23 ^ 2 - c23 ^ 2)) * hu
+
+/-- **The persistence balance is blind to the CP sign.** The column-2 difference
+`|U_μ2|² − |U_τ2|²` depends only on `u.re = cos δ`, so a phase `u` and its
+conjugate (`δ ↦ −δ`) give the same value. The sum rule therefore fixes `cos δ`
+(hence `|δ|`) and **cannot** select the `sin δ` branch: `selectedCPBranch` is a
+substrate-orientation input, not a consequence of the reference balance. -/
+theorem column2_difference_conj (c12 s12 c23 s23 s13 : ℝ) (u : ℂ) (hu : normSq u = 1) :
+    normSq ((c12 : ℂ) * c23 - (s12 : ℂ) * s23 * s13 * star u) -
+        normSq (-(c12 : ℂ) * s23 - (s12 : ℂ) * c23 * s13 * star u) =
+      normSq ((c12 : ℂ) * c23 - (s12 : ℂ) * s23 * s13 * u) -
+        normSq (-(c12 : ℂ) * s23 - (s12 : ℂ) * c23 * s13 * u) := by
+  have hu' : normSq (star u) = 1 := by
+    change normSq (starRingEnd ℂ u) = 1
+    rw [Complex.normSq_conj, hu]
+  rw [column2_difference c12 s12 c23 s23 s13 (star u) hu',
+      column2_difference c12 s12 c23 s23 s13 u hu]
+  have hre : (star u).re = u.re := RCLike.conj_re u
+  rw [hre]
 
 /-- **The paper's PMNS matrix satisfies the rule exactly.** With `δ` fixed by the sum rule
 (`PMNS.cosDelta`), `|U_μ2|² = |U_τ2|²`. -/

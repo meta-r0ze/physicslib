@@ -1,6 +1,6 @@
 import PMAction.WallChiralCurrent
 import PMAction.WallExchange
-import PMAction.NativeReferenceBackground
+import PMAction.Machine.NativeReferenceBackground
 import PMAction.WeakVertex
 
 /-!

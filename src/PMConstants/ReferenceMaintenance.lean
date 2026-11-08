@@ -1,4 +1,4 @@
-import PMAction.ReferenceMaintenance
+import PMAction.Machine.ReferenceMaintenance
 import PMConstants.MinimalRefresh
 
 /-! Compatibility names; generic reversible tasks now live in Paper II. -/

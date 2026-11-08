@@ -33,16 +33,28 @@ The numerical `δ, ε` remain wall inputs.
 
 ### 2. CP sign and octant orientation
 
-`PMNSGeometry` fixes the `sin δ < 0` and upper-octant branch by definition:
-`selectedCPBranch = negativeSin`, `selectedOctant = upper`.
-What is still missing is the substrate orientation that selects this branch.
-Do not replace it with a fit.
+`WolfensteinOctant` proves the octants (lower solar, upper atmospheric, small
+reactor) as consequences of the supplied closed forms, and `PMNSGeometry` fixes
+`selectedCPBranch = negativeSin` by definition. The CP sign is now known to be
+genuinely external: `ReferenceFlavour.column2_difference_conj` proves the
+persistence balance `|U_μ2| = |U_τ2|` depends only on `cos δ`, so `δ` and `−δ`
+satisfy it equally. The sum rule fixes `cos δ` (hence `|δ|`), not the branch.
+`Downstream.PMNS.jarlskog_sign_iff_branch` closes the remaining apparent loophole:
+the leptonic Jarlskog is exactly `(positive angle product) · sin δ`, so
+`J ≤ 0 ↔ sin δ ≤ 0` and `jarlskog_nonpos` is the branch choice in disguise, not
+independent evidence. What is still missing is the substrate orientation that
+selects `sign(sin δ)`; that is exactly what the octant/Jarlskog statements cannot
+supply. Do not replace it with a fit.
 
 ### 3. Per-step maintenance contract
 
-`LeptonAxisRestriction` proves the per-cycle (three-step) contract.  A per-step
-(one-step) contract needs exact within-step state restoration; the gap is
-documented there.  This is the deepest remaining structural proof.
+`LeptonAxisRestriction` proves the per-cycle contract; `PerStepContract` now
+formalizes the per-step one. `run_roots_axis_zero` derives `R 0 = 0` for
+*every* event in a run whose each step restores the reference, and
+`sampleEvent_pair_not_maintained` closes Gap A — the involution bypass that a
+cycle-end-only check admits. What remains is physical, not Lean-structural:
+deriving the per-step restoration (exact within-step state restoration) from
+the actual update dynamics instead of assuming it.
 
 ### 4. Carrier-current identification
 

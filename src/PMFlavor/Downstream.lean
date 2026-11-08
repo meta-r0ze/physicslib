@@ -124,4 +124,23 @@ theorem PMNS.jarlskog_nonpos : CKM.jarlskog PMNS.matrix ≤ 0 := by
   have hs := PMNS.sin_delta_nonpos
   nlinarith [hp, hs]
 
+/-- **The leptonic Jarlskog sign is exactly the branch sign.** The angle product is
+positive, so `jarlskog PMNS.matrix ≤ 0 ↔ sin δ ≤ 0`. The Jarlskog therefore carries
+no information beyond the choice of `PMNS.delta`'s branch: `jarlskog_nonpos` is
+`sign(sin δ)` in disguise, not independent evidence for the sign. With
+`ReferenceFlavour.column2_difference_conj` (the balance fixes `cos δ` only), the
+`sin δ` branch is a substrate-orientation input, not a consequence of the reference
+sum rule. -/
+theorem PMNS.jarlskog_sign_iff_branch :
+    CKM.jarlskog PMNS.matrix ≤ 0 ↔ Real.sin PMNS.delta ≤ 0 := by
+  rw [PMNS.jarlskog]
+  constructor
+  · intro h
+    by_contra hb
+    push Not at hb
+    have hp := mul_pos PMNS.angle_product_pos hb
+    linarith
+  · intro h
+    exact mul_nonpos_of_nonneg_of_nonpos PMNS.angle_product_pos.le h
+
 end PMFlavor.Downstream

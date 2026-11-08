@@ -1,5 +1,5 @@
 import PMConstants.CarrierRepresentation
-import PMAction.CarrierResponse
+import PMAction.Machine.CarrierResponse
 
 /-! Actual finite carrier operations behind two representation columns.
 The axis/sign interpretation is inherited; no continuous gauge group or

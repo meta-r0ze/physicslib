@@ -1,10 +1,10 @@
 import PMConstants.ReferenceDirections
 import PMConstants.ColourReference
-import PMAction.ReadoutAdditivity
-import PMAction.RecordSupply
+import PMAction.Machine.ReadoutAdditivity
+import PMAction.Machine.RecordSupply
 import PMAction.HomogeneousRouting
 import PMAction.PersistenceSelection
-import PMAction.ReferenceMaintenance
+import PMAction.Machine.ReferenceMaintenance
 
 /-!
 # Sector obligations from the record bound and the reference repair

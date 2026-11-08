@@ -1,6 +1,6 @@
 import PMConstants.CarrierActions
-import PMAction.RegisterPrograms
-import PMAction.RegisterVacuum
+import PMAction.Machine.RegisterPrograms
+import PMAction.Machine.RegisterVacuum
 
 /-!
 # Separate native register banks for spinor and internal packet labels

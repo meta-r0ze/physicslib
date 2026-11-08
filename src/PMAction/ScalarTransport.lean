@@ -1,4 +1,4 @@
-import PMAction.ReferenceSampling
+import PMAction.Machine.ReferenceSampling
 
 /-!
 # Event-priced scalar transport and its continuum limit on D₄

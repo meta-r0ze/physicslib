@@ -61,7 +61,11 @@ minimum density. The five selection tests (`ReferenceSelection`,
 
 **Lepton axis, Dirac survival.** `LeptonAxisRestriction` (per-cycle contract) plus
 `MassTermLaw` give `dirac_survival`: only the Dirac neutrino mass term survives;
-active-Majorana and sterile terms are unreachable.
+active-Majorana and sterile terms are unreachable. `PerStepContract` strengthens
+this to per-step maintenance: `perStep_root_axis_zero` derives the restriction
+from a single restored step, `run_roots_axis_zero` gives it for every event in a
+restored run, and `sampleEvent_pair_not_maintained` closes the paired-event
+(involution) bypass that a cycle-end-only check would admit.
 
 **Transfer cost and generation selection.** `RelativeFrameCost` prices a frame by
 `‖AB−BA‖²/12 = Σ gap·weight/12`. `TransferWorkLaw` shows the least-work route is
@@ -91,6 +95,8 @@ model step is the claim that the CKM first row inherits that deficit. `Wolfenste
 λ, A, ρ̄, η̄ on the paper's own matrix and proves `η̄ > ρ̄` (from `σ > 2χ`) and the
 `O(λ³)` truncation structure. `WolfensteinOctant` proves the solar/atmospheric/
 reactor octants, and that the solar octant is exactly `1 < φ < 2`.
+`ReferenceFlavour.column2_difference_conj` shows the persistence balance is blind
+to `sign(sin δ)`, so the CP branch is a separate substrate-orientation input.
 
 **Current chirality tied to Paper II.** `WeakCurrentBridge.spinProjector_eq_PL`: the
 native flavour current's chiral projector is Paper II's `P_L` **within Paper II's

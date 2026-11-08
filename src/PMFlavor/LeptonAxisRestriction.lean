@@ -349,7 +349,7 @@ theorem axis_event_breaks_type (E : Equiv.Perm Packet) (R : V4)
 
 /-- The maintained reference is the lepton doublet: a packet of type `L` is a
 left-sector carrier on the lepton axis. -/
-private theorem reference_is_left_lepton (ref : Packet)
+theorem reference_is_left_lepton (ref : Packet)
     (href : channelType ref = Ty.L) :
     ∃ v : Carrier 0, ref = Sum.inl v ∧ onLepton v = true := by
   cases ref with
@@ -563,7 +563,8 @@ theorem sample_event_not_admissible (rep : Equiv.Perm Packet)
 without any repair. So a per-cycle contract (check only at the end) admits
 lepton-touching roots in pairs, violating B − L in between. The derived
 restriction `R 0 = 0` requires per-step maintenance: every event root
-must avoid axis 0 at every tick. -/ 
+must avoid axis 0 at every tick. Closed in `PMFlavor.PerStepContract`:
+`run_roots_axis_zero` and `sampleEvent_pair_not_maintained`. -/ 
 theorem sampleEvent_involutive : Function.Involutive sampleEvent := by
   intro v
   simp [sampleEvent]

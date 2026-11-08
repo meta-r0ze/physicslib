@@ -1,4 +1,4 @@
-import PMAction.NativeReferenceBackground
+import PMAction.Machine.NativeReferenceBackground
 
 /-!
 # Reachability is distinct from selecting a stationary background
