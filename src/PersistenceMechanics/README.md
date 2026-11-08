@@ -10,7 +10,7 @@ Build: Lean 4.34.1 with Mathlib pinned in `lake-manifest.json`.
 
 ```sh
 lake exe cache get
-./check.sh
+./build.sh PersistenceMechanics
 ```
 
 - **DecayChannel.** Shared six-pillar decay template: capacity, map, protocol, governor, toll, margin, plus the channel action in the exponent.

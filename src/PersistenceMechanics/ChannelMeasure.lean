@@ -5,8 +5,9 @@ import Mathlib.Tactic
 
 # Finite channel measure
 
-A generic E8 channel-counting measure on a finite label type.  The measure is
-normalized by the total weight; no continuum measure is assumed.
+A channel-counting measure on an arbitrary finite label type. 
+The measure is normalized by the total weight; no
+continuum measure is assumed.
 -/
 
 noncomputable section

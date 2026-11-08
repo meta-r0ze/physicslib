@@ -35,8 +35,8 @@ theorem cyclic_uniform {N : ℕ} [NeZero N] (credit : Fin N → ℝ)
   rw [hconst i, eq_div_iff hN, mul_comm]
   exact hcount
 
-theorem clock_credit (credit : Fin 43 → ℝ)
-    (hinv : ∀ i, credit (finRotate 43 i) = credit i)
+theorem clock_credit (credit : Fin PMSubstrate.E8Values.Delta → ℝ)
+    (hinv : ∀ i, credit (finRotate PMSubstrate.E8Values.Delta i) = credit i)
     (hsum : ∑ i, credit i = 1) : credit 0 = 1/43 :=
   cyclic_uniform credit hinv hsum 0
 

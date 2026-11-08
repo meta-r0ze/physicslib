@@ -22,7 +22,7 @@ saturation, thermodynamic and primordial arguments. It builds on Papers I–V.
   `Modes` shows a source-free mode's amplitude/power is free, so the primordial
   spectrum needs initial data.
 - **Persistence selection (reused).** `PersistenceSelection` states the cosmology-
-  facing corollaries of `PM/lean`'s `PersistenceMechanics.Selection`
+  facing corollaries of `PersistenceMechanics.Selection`
   (`higher_rate_vanishes`, `least_rate_takes_over`, `uniform_law_selected`):
   among an explicit option family, the least-cost/persistent member survives.
 - **Finite capacity.** `InformationCapacity`: a saturated finite register cannot
@@ -47,20 +47,20 @@ saturation, thermodynamic and primordial arguments. It builds on Papers I–V.
 
 ## Build and audit
 
-Lean 4.34.1; keep Papers I–VI as sibling directories. Then:
+Lean 4.34.1; the whole tree is one Lake package with `PMSubstrate` through
+`PMElementaryParticles` already in this repository (see `AGENTS.md`). Then:
 
 ```sh
 source ~/.elan/env
-./check.sh
+./build.sh PMCosmology
 ```
 
-`check.sh` builds `PMCosmology`, strictly audits declarations against `propext`,
-`Classical.choice`, `Quot.sound`, and runs `../../calculations/check_load_consistency.py`
-(exact-fraction arithmetic and LaTeX tag freshness).
+`build.sh PMCosmology` builds `PMCosmology` and strictly audits declarations
+against `propext`, `Classical.choice`, `Quot.sound`.
 
 ## Verification
 
-Run `./check.sh`. Permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMCosmology`. Permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
 
 ## Draft status
 

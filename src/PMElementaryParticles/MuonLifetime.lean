@@ -2,6 +2,7 @@ import PMElementaryParticles.MuonRate
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.NeutronRate
 import PMElementaryParticles.Widths
+import PMConstants.Values
 import PMSubstrate.E8Values
 import Mathlib.Tactic
 
@@ -72,34 +73,30 @@ theorem muonWidth_eq_E8 :
 
 /-- Broad enclosure of the Fermi constant in `m_e⁻²`. -/
 theorem fermiME_bounds : (2.9e-12 : ℝ) < fermiME ∧ fermiME < (3.2e-12 : ℝ) := by
-  have h := PMConstants.ElectroweakBounds.fermi_bounds
-  have he : (2.6e-7 : ℝ) < PMConstants.ElectroweakBounds.electronGeV ^ 2 ∧
-      PMConstants.ElectroweakBounds.electronGeV ^ 2 < (2.62e-7 : ℝ) := by
-    unfold PMConstants.ElectroweakBounds.electronGeV; norm_num
+  have h := PMConstants.Values.fermi_bounds
+  have he : (2.6e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
+      PMConstants.Values.electronGeV ^ 2 < (2.62e-7 : ℝ) := by
+    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
   unfold fermiME
   change (2.9e-12 : ℝ) <
-    PMConstants.ElectroweakE8.fermi PMConstants.CertifiedConstants.α
-      PMConstants.ElectroweakBounds.electronGeV *
-    PMConstants.ElectroweakBounds.electronGeV ^ 2 ∧
-    PMConstants.ElectroweakE8.fermi PMConstants.CertifiedConstants.α
-      PMConstants.ElectroweakBounds.electronGeV *
-    PMConstants.ElectroweakBounds.electronGeV ^ 2 < (3.2e-12 : ℝ)
+    PMConstants.Values.fermi PMConstants.Values.electronGeV *
+    PMConstants.Values.electronGeV ^ 2 ∧
+    PMConstants.Values.fermi PMConstants.Values.electronGeV *
+    PMConstants.Values.electronGeV ^ 2 < (3.2e-12 : ℝ)
   constructor <;> nlinarith [h.1, h.2, he.1, he.2]
 
 /-- Tighter enclosure of the Fermi constant in `m_e⁻²`. -/
 theorem fermiME_bounds_tight : (3.04e-12 : ℝ) < fermiME ∧ fermiME < (3.05e-12 : ℝ) := by
-  have h := PMConstants.ElectroweakBounds.fermi_bounds
-  have he : (2.6111e-7 : ℝ) < PMConstants.ElectroweakBounds.electronGeV ^ 2 ∧
-      PMConstants.ElectroweakBounds.electronGeV ^ 2 < (2.6113e-7 : ℝ) := by
-    unfold PMConstants.ElectroweakBounds.electronGeV; norm_num
+  have h := PMConstants.Values.fermi_bounds
+  have he : (2.6111e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
+      PMConstants.Values.electronGeV ^ 2 < (2.6113e-7 : ℝ) := by
+    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
   unfold fermiME
   change (3.04e-12 : ℝ) <
-    PMConstants.ElectroweakE8.fermi PMConstants.CertifiedConstants.α
-      PMConstants.ElectroweakBounds.electronGeV *
-    PMConstants.ElectroweakBounds.electronGeV ^ 2 ∧
-    PMConstants.ElectroweakE8.fermi PMConstants.CertifiedConstants.α
-      PMConstants.ElectroweakBounds.electronGeV *
-    PMConstants.ElectroweakBounds.electronGeV ^ 2 < (3.05e-12 : ℝ)
+    PMConstants.Values.fermi PMConstants.Values.electronGeV *
+    PMConstants.Values.electronGeV ^ 2 ∧
+    PMConstants.Values.fermi PMConstants.Values.electronGeV *
+    PMConstants.Values.electronGeV ^ 2 < (3.05e-12 : ℝ)
   constructor <;> nlinarith [h.1, h.2, he.1, he.2]
 
 /-- Broad enclosure of the muon width in `m_e` units. -/

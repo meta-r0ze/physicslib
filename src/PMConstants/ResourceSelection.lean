@@ -38,8 +38,8 @@ structure Process where
   direction : Fin 4 → ℝ
   directionInvariant : ∀ i, direction (finRotate 4 i) = direction i
   directionTotal : ∑ i, direction i = 1
-  clock : Fin 43 → ℝ
-  clockInvariant : ∀ i, clock (finRotate 43 i) = clock i
+  clock : Fin PMSubstrate.E8Values.Delta → ℝ
+  clockInvariant : ∀ i, clock (finRotate PMSubstrate.E8Values.Delta i) = clock i
   clockTotal : ∑ i, clock i = 1
   gain : ℝ
   maximalGain : RegulatoryBudget.Maximal 23 3 (clock 0) gain

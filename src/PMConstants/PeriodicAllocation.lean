@@ -11,7 +11,7 @@ namespace PMConstants.PeriodicAllocation
 open Finset PMConstants.General.ReferenceCapacity PMConstants.BalancedAvailability
 
 /-- Clock, spatial address, executed payload and bus operation demands. -/
-def demand (tgt : Fin 16 → Grid) (o : Grid) (i : Fin 4) (t : Fin 43) : ℝ :=
+def demand (tgt : Fin 16 → Grid) (o : Grid) (i : Fin 4) (t : Fin PMSubstrate.E8Values.Delta) : ℝ :=
   ![43, 129, executed tgt ((gridTick^[t.val]) o), 5] i
 
 theorem cycle_demand (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : Grid) (i : Fin 4) :
@@ -22,7 +22,7 @@ theorem cycle_demand (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : Grid) (i :
 /-- Repeated-cycle persistence fixes total service ratios despite fluctuations
 inside the cycle. The phase-only update may remain in any one direction row. -/
 theorem persistent_clock_share (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : Grid)
-    (q : Fin 4 → ℕ → Fin 44 → ℝ) (service : Fin 4 → Fin 43 → ℝ)
+    (q : Fin 4 → ℕ → Fin 44 → ℝ) (service : Fin 4 → Fin PMSubstrate.E8Values.Delta → ℝ)
     (rate : ℝ) (C : Fin 4 → ℝ) (hr : rate ≠ 0)
     (hstep : ∀ i n t, q i n t.succ = q i n t.castSucc + rate*demand tgt o i t-service i t)
     (hlink : ∀ i n, q i (n+1) 0 = q i n (Fin.last 43))

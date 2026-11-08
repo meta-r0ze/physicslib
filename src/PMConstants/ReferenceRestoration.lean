@@ -1,4 +1,5 @@
 import PMConstants.RegulatoryMaximin
+import PMSubstrate.E8Values
 import Mathlib.LinearAlgebra.Matrix.IsDiag
 
 /-!
@@ -68,8 +69,11 @@ theorem neutral_independent (a b : ℂ) (h : a • t3 + b • hyperGen = 0) : a 
   norm_num at h0 h1
   exact ⟨by linear_combination h0 - h1, by linear_combination -(h0 + h1)⟩
 
-/-- Paper I's integer architecture inputs. -/
-def inputs : Fin 8 → ℕ := ![4, 43, 16, 32, 5, 2, 172, 31]
+/-- Paper I's integer architecture inputs, read from the canonical substrate record. -/
+def inputs : Fin 8 → ℕ :=
+  ![PMSubstrate.E8Values.D, PMSubstrate.E8Values.Delta, PMSubstrate.E8Values.nu,
+    PMSubstrate.E8Values.N, PMSubstrate.E8Values.sigma, PMSubstrate.E8Values.chi,
+    PMSubstrate.E8Values.RM, PMSubstrate.E8Values.embeddingLoad]
 
 /-- **`ν + σ + χ` is the only sum of distinct inputs equal to 23.** -/
 theorem unique_decomposition (S : Finset (Fin 8)) :

@@ -11,9 +11,8 @@ Sibling library: `PMElementaryParticles` — [README](../PMElementaryParticles/R
 Build:
 
 ```
-cd PM-5-Decay/lean
-lake build PMAtoms
-./check.sh          # builds PMElementaryParticles + PMAtoms, then runs the axiom audits
+source ~/.elan/env
+./build.sh PMAtoms  # builds PMElementaryParticles + PMAtoms, then runs the axiom audits
 ```
 
 `e8p` consumes the library: its `Atoms` section reports `rydberg_ev`,
@@ -96,14 +95,24 @@ open E8 derivation; the library fixes the `rate → lifetime` step and proves th
 structural decays in the meantime.
 
 Open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); proved results are in
-[`OVERVIEW.md`](OVERVIEW.md); the narrative map is in
-[`ATOM-SYSTEM.md`](ATOM-SYSTEM.md); comparison residuals are in
-[`RESIDUALS.md`](RESIDUALS.md); alpha lifetime comparisons are in
-[`ALPHA-TESTS.md`](ALPHA-TESTS.md); finite spectral weights are in
-[`SPECTRAL-BETA.md`](SPECTRAL-BETA.md); the neutron prediction is in
-[`NEUTRON-PREDICTION.md`](NEUTRON-PREDICTION.md); fission scale diagnostics are in
-[`FISSION-TESTS.md`](FISSION-TESTS.md); fragment-resolved tests are in
-[`FISSION-RESOLVED.md`](FISSION-RESOLVED.md); inertia tests are in
-[`FISSION-INERTIA.md`](FISSION-INERTIA.md); out-of-sample checks are in
-[`FISSION-OUT-OF-SAMPLE.md`](FISSION-OUT-OF-SAMPLE.md); the checkpoint summary is
-[`CHECKPOINT.md`](CHECKPOINT.md).
+[`OVERVIEW.md`](OVERVIEW.md).
+
+## Comparison appendices
+
+These are evidence/validation companions, not part of the theorem tree (they hold
+comparison data and narrative). They are reviewed as a set, not merged into
+`OVERVIEW.md`:
+
+| File | Role |
+| --- | --- |
+| [`ATOM-SYSTEM.md`](ATOM-SYSTEM.md) | narrative map of the atom ladder (how the pieces fit) |
+| [`CHECKPOINT.md`](CHECKPOINT.md) | certified-core checkpoint summary and known limitations |
+| [`DECAY-VALIDATION.md`](DECAY-VALIDATION.md) | frozen decay validation table (comparison values) |
+| [`RESIDUALS.md`](RESIDUALS.md) | certified-ledger residuals `certifiedMass − m_iso` |
+| [`ALPHA-TESTS.md`](ALPHA-TESTS.md) | alpha lifetime comparison tables |
+| [`NEUTRON-PREDICTION.md`](NEUTRON-PREDICTION.md) | neutron beta prediction comparison |
+| [`SPECTRAL-BETA.md`](SPECTRAL-BETA.md) | finite spectral beta weights (tool: `tools/spectral_beta.py`) |
+| [`FISSION-TESTS.md`](FISSION-TESTS.md) | fission scale diagnostics |
+| [`FISSION-RESOLVED.md`](FISSION-RESOLVED.md) | fragment-resolved fission tests |
+| [`FISSION-INERTIA.md`](FISSION-INERTIA.md) | collective-inertia partial-lifetime tests |
+| [`FISSION-OUT-OF-SAMPLE.md`](FISSION-OUT-OF-SAMPLE.md) | fission out-of-sample check |

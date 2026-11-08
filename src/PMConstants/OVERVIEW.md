@@ -6,6 +6,11 @@ dependencies are in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md).
 
 ## Entry points
 
+- `Values`: single canonical façade for downstream papers — the current
+  dimensionless constants plus the derived electroweak values, mirroring
+  `PMSubstrate.E8Values`. Later papers should import this instead of reaching
+  into `CertifiedConstants`, `CurrentConstants`, `ElectroweakE8` or
+  `ElectroweakBounds` directly; `Values.current_snapshot` is the combined entry.
 - `CurrentConstants.current_snapshot`: the current manuscript values.
 - `Partition`: partition constants written directly from the E8 record.
 - `ElectroweakE8`: canonical electroweak constants written from the E8 record.

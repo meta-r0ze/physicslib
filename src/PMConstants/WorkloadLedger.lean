@@ -17,7 +17,7 @@ namespace PMConstants.WorkloadLedger
 open Finset
 
 abbrev Trial := Fin 172
-abbrev Jobs := (Fin 4 × Fin 43) ⊕ (Fin 16 ⊕ Fin 5)
+abbrev Jobs := (Fin 4 × Fin PMSubstrate.E8Values.Delta) ⊕ (Fin 16 ⊕ Fin 5)
 
 def charge (address payload bus : ℝ) (t : Trial) : Jobs → ℝ
   | .inl _ => address

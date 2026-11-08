@@ -29,7 +29,7 @@ theorem worst_minimizer_uniform (μ : Grid → ℝ) (hμ : PosLaw μ)
     simpa only [hu] using hopt uniform uniform_law
   · exact worstRate_ge hμ
 
-def directionMass (μ : Grid → ℝ) (d : Fin 4) : ℝ := ∑ t : Fin 43, μ (d,t)
+def directionMass (μ : Grid → ℝ) (d : Fin 4) : ℝ := ∑ t : Fin PMSubstrate.E8Values.Delta, μ (d,t)
 
 lemma direction_mass_normalized (μ : Grid → ℝ) (hμ : PosLaw μ) :
     (∑ d, directionMass μ d)=1 := by

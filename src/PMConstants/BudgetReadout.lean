@@ -144,7 +144,7 @@ theorem record_at_least_three (R : Type*) [AddCommGroup R] [Module ℝ R] [Finit
 /-- **Both ledger terms in one unit.** -/
 theorem ledger_from_readouts (R : RepairBudget.ExactRepair) (f : Module.End ℝ D →ₗ[ℝ] ℝ)
     (hf : FrameIndependent f) (hone : f P₁ = 1)
-    (clock : Fin 43 → ℝ) (hinv : ∀ i, clock (finRotate 43 i) = clock i) (hsum : ∑ i, clock i = 1) :
+    (clock : Fin PMSubstrate.E8Values.Delta → ℝ) (hinv : ∀ i, clock (finRotate PMSubstrate.E8Values.Delta i) = clock i) (hsum : ∑ i, clock i = 1) :
     (f R.K.toLinearMap - clock 0) / 23 = (3 - 1 / 43) / 23 ∧
       (0.1286 : ℝ) < (3 - 1 / 43) / 23 ∧ (3 - 1 / 43 : ℝ) / 23 < 0.1300 := by
   rw [budget_readout R f hf hone, RegulatoryBudget.clock_credit clock hinv hsum]

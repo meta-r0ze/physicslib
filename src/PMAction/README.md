@@ -1,10 +1,10 @@
 # PMAction — Paper II action library
 
 Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum II: Operational
-Action and the Emergent Lagrangian*. This package supplies **shared dynamics,
-event accounting and action-response mathematics** to the later papers. It builds
-on the Paper I substrate (`../../PM-1-Arch/lean`) and the framework (`../../PM/lean`) and
-**rejects imports from Papers III–VI**.
+Action and the Emergent Lagrangian*. This library supplies **shared dynamics,
+event accounting and action-response mathematics** to the later papers. In this
+repository it builds on `PersistenceMechanics` and `PMSubstrate` and **rejects
+imports from Papers III–VI**.
 
 ## Main result
 
@@ -39,8 +39,7 @@ the actual update stencil and adjacency, not postulated.
 
 ## Build and audit
 
-Lean 4.34.1; Mathlib is pinned through sibling `PM-1-Arch/lean`, and the framework
-is sibling `PM/lean`. Keep these directories as siblings, then run:
+Lean 4.34.1; the whole tree is one Lake package (see `AGENTS.md`), then run:
 
 ```sh
 source ~/.elan/env
@@ -49,7 +48,7 @@ source ~/.elan/env
 
 `LAKE_BIN` can name a specific Lake executable. `./build.sh PMAction` builds the
 default library; whole-tree axiom/import audits run with `./build.sh audit`.
-and rejects Paper III–VI imports. Only `propext`, `Classical.choice` and
+The library rejects Paper III–VI imports. Only `propext`, `Classical.choice` and
 `Quot.sound` are permitted. A successful audit certifies the statements under their
 stated hypotheses; it does **not** select the physical inputs.
 

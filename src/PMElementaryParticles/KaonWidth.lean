@@ -2,9 +2,7 @@ import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.CompositeMasses
 import PMElementaryParticles.NeutronRate
 import PMFlavor.CKM
-import PMConstants.ElectroweakE8
-import PMConstants.CurrentConstants
-import PMConstants.JointConstants
+import PMConstants.Values
 import PMElementaryParticles.MuonLifetime
 import PMSubstrate.E8Values
 import Mathlib.Tactic
@@ -42,7 +40,7 @@ def kaonWidthCKM (fK Vus : ℝ) : ℝ :=
 
 /-- E8 kaon decay constant `v/(Δ²−ν²) = v/1593`. -/
 noncomputable def kaonDecayConstantE8 : ℝ :=
-  PMConstants.ElectroweakE8.vev PMConstants.CurrentConstants.alpha 1 /
+  PMConstants.Values.vev 1 /
     (((PMSubstrate.E8Values.Delta : ℝ) ^ 2 - (PMSubstrate.E8Values.nu : ℝ) ^ 2))
 
 /-- E8 `|Vus| = s₁₂ c₂₃`. -/
@@ -58,11 +56,11 @@ noncomputable def kaonLifetimeE8 : ℝ := 1 / kaonWidthE8
 /-- Broad enclosure of the E8 kaon decay constant in `m_e` units. -/
 theorem kaonDecayConstantE8_bounds :
     (302.47 : ℝ) < kaonDecayConstantE8 ∧ kaonDecayConstantE8 < (302.48 : ℝ) := by
-  unfold kaonDecayConstantE8 PMConstants.ElectroweakE8.vev
+  unfold kaonDecayConstantE8 PMConstants.Values.vev PMConstants.ElectroweakE8.vev
   rw [show (((PMSubstrate.E8Values.Delta : ℝ) ^ 2 -
       (PMSubstrate.E8Values.nu : ℝ) ^ 2)) = 1593 by
     norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.E8Values.nu]]
-  have h := PMConstants.JointConstants.vev_ratio_bounds
+  have h := PMConstants.Values.vev_ratio_bounds
   constructor <;> nlinarith [h.1, h.2]
 
 /-- Broad enclosure of `|V_us| = s₁₂ c₂₃`. -/

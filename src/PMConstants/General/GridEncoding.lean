@@ -1,4 +1,5 @@
 import PMConstants.General.ReferenceCapacity
+import PMSubstrate.E8Values
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Dynamics.PeriodicPts.Defs
@@ -17,16 +18,16 @@ variable {a : ℕ}
 local notation "U" => (gridUpdate (a := a))
 
 lemma iter_apply (n : ℕ) (w : Grid → Fin a) (x : Grid) :
-    U^[n] w x = w (x.1, ((finRotate 43).symm)^[n] x.2) := by
+    U^[n] w x = w (x.1, ((finRotate PMSubstrate.E8Values.Delta).symm)^[n] x.2) := by
   induction n generalizing w with
   | zero => rfl
   | succ n ih =>
     rw [iterate_succ_apply, ih, iterate_succ_apply']
     rfl
 
-lemma rot_period : ∀ t : Fin 43, ((finRotate 43).symm)^[43] t = t := by decide +kernel
-lemma rot_to_zero : ∀ t : Fin 43, ((finRotate 43).symm)^[t.val] t = 0 := by decide +kernel
-lemma rot_succ_val : ∀ t : Fin 43, (finRotate 43 t).val = (t.val + 1) % 43 := by decide +kernel
+lemma rot_period : ∀ t : Fin PMSubstrate.E8Values.Delta, ((finRotate PMSubstrate.E8Values.Delta).symm)^[43] t = t := by decide +kernel
+lemma rot_to_zero : ∀ t : Fin PMSubstrate.E8Values.Delta, ((finRotate PMSubstrate.E8Values.Delta).symm)^[t.val] t = 0 := by decide +kernel
+lemma rot_succ_val : ∀ t : Fin PMSubstrate.E8Values.Delta, (finRotate PMSubstrate.E8Values.Delta t).val = (t.val + 1) % 43 := by decide +kernel
 
 lemma periodic (w : Grid → Fin a) : IsPeriodicPt U 43 w := by
   funext x; rw [iter_apply, rot_period]
@@ -72,13 +73,13 @@ noncomputable instance : Fintype (Orbits a) := by unfold Orbits; infer_instance
 /-- Every free orbit has at most `43` elements: `card Free ≤ 43 · card Orbits`. -/
 lemma free_le_orbits : Fintype.card (Free a) ≤ 43 * Fintype.card (Orbits a) := by
   classical
-  have hex : ∀ w : Free a, ∃ k : Fin 43,
+  have hex : ∀ w : Free a, ∃ k : Fin PMSubstrate.E8Values.Delta,
       U^[k.val] (Quotient.out (⟦w⟧ : Orbits a)).1 = w.1 := by
     intro w
     obtain ⟨k, hk⟩ := Quotient.mk_out (s := orbitSetoid a) w
     refine ⟨⟨k % 43, Nat.mod_lt _ (by norm_num)⟩, ?_⟩
     simpa [(periodic _).iterate_mod_apply] using hk
-  let f : Free a → Orbits a × Fin 43 := fun w => (⟦w⟧, (hex w).choose)
+  let f : Free a → Orbits a × Fin PMSubstrate.E8Values.Delta := fun w => (⟦w⟧, (hex w).choose)
   have hf : Injective f := by
     intro w v h
     simp only [f, Prod.mk.injEq] at h
@@ -138,6 +139,8 @@ theorem grid_one_slot_sufficient (ha : 173 ≤ a) :
   · rintro ⟨⟨d, t⟩, p⟩ ⟨⟨d', s⟩, p'⟩ h
     simp only [code] at h
     -- bring both to the base of the first: apply `43 - t` more ticks
+    have ht : t.val < 43 :=
+      lt_of_lt_of_eq t.isLt PMSubstrate.E8Values.Delta_eq
     have h' := congrArg (U^[43 - t.val]) h
     rw [iter_comm, iter_comm, show 43 - t.val + t.val = 43 by omega, periodic] at h'
     -- same orbit, so same embedded class
@@ -152,7 +155,10 @@ theorem grid_one_slot_sufficient (ha : 173 ≤ a) :
     have hd := period_dvd (base (d, p)).2 h'.symm
     have hs : s = t := by
       apply Fin.ext
-      have := s.2; have := t.2
+      have hs2 : s.val < 43 :=
+        lt_of_lt_of_eq s.2 PMSubstrate.E8Values.Delta_eq
+      have ht2 : t.val < 43 :=
+        lt_of_lt_of_eq t.2 PMSubstrate.E8Values.Delta_eq
       omega
     rw [hx.1, hx.2, hs]
   · rintro ⟨d, t⟩ p

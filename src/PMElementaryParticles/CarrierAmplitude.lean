@@ -1,6 +1,5 @@
 import PMElementaryParticles.CarrierSpecies
-import PMConstants.CurrentConstants
-import PMConstants.ElectroweakE8
+import PMConstants.Values
 import PMFlavor.CKM
 import PMAction.WeakVertex
 import PMAction.AmplitudeTrace
@@ -27,9 +26,9 @@ structure CarrierAmplitude where
   weak : ℝ
   strong : ℝ
 
-def alpha : ℝ := PMConstants.CurrentConstants.alpha
-def weakCoupling : ℝ := PMConstants.ElectroweakE8.fermi alpha 1
-def strongCoupling : ℝ := Real.sqrt PMConstants.CurrentConstants.strong
+def alpha : ℝ := PMConstants.Values.alpha
+def weakCoupling : ℝ := PMConstants.Values.fermi 1
+def strongCoupling : ℝ := Real.sqrt PMConstants.Values.strong
 def vud : ℝ := PMFlavor.CKM.c12 * PMFlavor.CKM.c13
 
 /-- E8 amplitude assignment for each base species. -/
@@ -61,11 +60,12 @@ def CarrierTransition.weight (t : CarrierTransition) : ℝ :=
 
 /-- The weak carrier coupling equals the W-exchange Fermi coupling. -/
 theorem weakCoupling_eq_fermi (g v : ℝ) (hg : g ≠ 0) (hv : v ≠ 0)
-    (hvev : v = PMConstants.ElectroweakE8.vev alpha 1) :
+    (hvev : v = PMConstants.Values.vev 1) :
     weakCoupling = Real.sqrt 2 * (g ^ 2 / (8 * PMConstants.MatterRunning.mWsq g v)) := by
   rw [PMConstants.MatterRunning.fermi_from_reference g v hg hv]
-  unfold weakCoupling PMConstants.ElectroweakE8.fermi
+  unfold weakCoupling PMConstants.Values.fermi
   rw [hvev]
+  rfl
 
 /-- Coherent transition amplitude ledger: sum of the three E8 coupling channels. -/
 def CarrierTransition.amplitude (t : CarrierTransition) : ℝ :=

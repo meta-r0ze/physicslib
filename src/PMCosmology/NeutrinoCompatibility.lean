@@ -1,4 +1,5 @@
 import PMElementaryParticles.NeutrinoContext
+import PMConstants.Values
 
 /-! Apply upstream exclusions to Paper VI's proposed contextual neutrino law.
 Benchmarks are frozen inputs from the earlier audit, not current observations.
@@ -9,9 +10,9 @@ open PMConstants.FloorNeutrino
 
 /-- A small mass sum alone is not a successful oscillation spectrum. -/
 theorem small_sum_and_bad_splittings :
-    PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α meEV +
-      PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α meEV/43 +
-      PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α meEV/43^2 < 0.0095 ∧
+    PMConstants.Bulk.floorMass PMConstants.Values.alpha meEV +
+      PMConstants.Bulk.floorMass PMConstants.Values.alpha meEV/43 +
+      PMConstants.Bulk.floorMass PMConstants.Values.alpha meEV/43^2 < 0.0095 ∧
     17 < ((6*PMElementaryParticles.NeutrinoContext.mRest)^2-PMElementaryParticles.NeutrinoContext.mRest^2-
       0.002534)/0.000025 :=
   ⟨tower_sum, PMElementaryParticles.NeutrinoContext.weak_minus_rest_excluded⟩

@@ -1,6 +1,7 @@
 import PMElementaryParticles.CompositeMasses
 
-/-!
+/-! **Experimental/candidate module.**
+
 # Charged lepton and charged pion masses against CODATA 2022 and PDG
 
 Units of `m_e`; `α`, `α⁻¹`, `π` as in `CompositeMasses`.

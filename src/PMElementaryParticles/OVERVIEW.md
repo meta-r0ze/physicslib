@@ -192,8 +192,8 @@ persistent excitation.
 
 ## Verification
 
-Run `./check.sh` for current counts. The sibling `PMAtoms` library is documented
+Run `./build.sh PMElementaryParticles` for current counts. The sibling `PMAtoms` library is documented
 separately in `PMAtoms/`; this file covers only the elementary-particle `PMElementaryParticles`
 library.
 No Paper VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
-Run `./check.sh` for current numbers.
+Run `./build.sh PMElementaryParticles` for current numbers.

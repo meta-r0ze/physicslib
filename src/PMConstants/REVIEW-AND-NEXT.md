@@ -120,3 +120,24 @@ active budget is `21`, not `171/172`.  The overhead `η=171/172` is the
 one-reserved-cell fraction of the 172-cell frame, not a controller repair count.
 So the controller ledger does **not** derive η as work; η remains the frame
 overhead input.
+
+## Housekeeping / lint backlog
+
+- **Single value façade.** `Values` mirrors `PMSubstrate.E8Values` as the
+  canonical export of the current dimensionless constants and derived
+  electroweak values. Downstream now imports `Values` only: the elementary-
+  particle, atom and cosmology modules that formerly reached into
+  `CurrentConstants`, `CertifiedConstants`, `ElectroweakE8`, `ElectroweakBounds`
+  and `JointConstants` have been migrated. The legacy-vs-current
+  `strong`/`strongCoupling` names still coexist inside `CertifiedConstants`
+  (regression/exclusion only) and are not re-exported by `Values`.
+- **Clock has one source.** The phase-grid types (`Grid`, `Clocked`, `State`,
+  `Jobs`) and every `finRotate`/`Fin` clock argument now use
+  `PMSubstrate.E8Values.Delta` instead of the literal `43`
+  (`General/ReferenceCapacity`, `General/GridEncoding`, `ColourRefreshCadence`,
+  `CarrierImplementation`, `RegulatoryBudget`, `ResourceSelection`,
+  `BudgetReadout`, `PeriodicAllocation`, `WorkloadLedger`, `Bulk`,
+  `ColourGeometricLoad`, `SelectedColourLoad`, `AvailabilityAudit`,
+  `BalancedAvailability`). `ReferenceRestoration.inputs` likewise reads the
+  eight architecture inputs from `E8Values`. The remaining bare `43` are
+  `norm_num` evaluations of `Delta`-derived definitions, not independent inputs.

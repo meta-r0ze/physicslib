@@ -1,4 +1,4 @@
-import PMConstants.CertifiedConstants
+import PMConstants.Values
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic
 
@@ -30,23 +30,23 @@ def bohrRadius (α me hbarc : ℝ) : ℝ := hbarc / (α * me)
 def hydrogenLevel (α me : ℝ) (n : ℕ) : ℝ := -rydbergEnergy α me / (n : ℝ) ^ 2
 
 /-- Rydberg energy in eV. -/
-def rydbergEV : ℝ := rydbergEnergy CertifiedConstants.α electronMassEV
+def rydbergEV : ℝ := rydbergEnergy Values.alpha electronMassEV
 
 /-- Bohr radius in Å. -/
-def bohrRadiusAngstrom : ℝ := bohrRadius CertifiedConstants.α electronMassEV hbarCEVAngstrom
+def bohrRadiusAngstrom : ℝ := bohrRadius Values.alpha electronMassEV hbarCEVAngstrom
 
 theorem rydbergEV_bounds :
     (13.60569309 : ℝ) < rydbergEV ∧ rydbergEV < 13.60569310 := by
-  have h := CertifiedConstants.alpha_bounds
+  have h := Values.alpha_bounds
   unfold rydbergEV rydbergEnergy electronMassEV
   constructor <;> nlinarith [h.1, h.2]
 
 theorem bohrRadius_bounds :
     (0.5291772110 : ℝ) < bohrRadiusAngstrom ∧ bohrRadiusAngstrom < 0.5291772114 := by
-  have h := CertifiedConstants.alpha_bounds
+  have h := Values.alpha_bounds
   unfold bohrRadiusAngstrom bohrRadius electronMassEV hbarCEVAngstrom
-  have ha : 0 < CertifiedConstants.α := by linarith [h.1]
-  have hd : 0 < CertifiedConstants.α * 510998.95 := mul_pos ha (by norm_num)
+  have ha : 0 < Values.alpha := by linarith [h.1]
+  have hd : 0 < Values.alpha * 510998.95 := mul_pos ha (by norm_num)
   constructor
   · rw [lt_div_iff₀ hd]; nlinarith [h.2]
   · rw [div_lt_iff₀ hd]; nlinarith [h.1]

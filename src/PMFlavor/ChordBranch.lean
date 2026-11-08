@@ -1,5 +1,6 @@
 import PMFlavor.SpectralGapOrder
 import PMSubstrate.Impedance
+import PMSubstrate.E8Values
 import Mathlib.Tactic
 
 /-!
@@ -84,11 +85,13 @@ theorem branch_iff_tick_le (e : Fin 3 → ℝ) (t : ℝ) (ht : 0 < t) (h02 : e 0
 
 /-! ## Putting the substrate clock `43` inside the window -/
 
-/-- Paper I's forced clock period. -/
-def clock : ℝ := 43
+/-- Paper I's forced clock period, read from the canonical substrate record. -/
+def clock : ℝ := (PMSubstrate.E8Values.Delta : ℝ)
 
 /-- The clock is positive. -/
-theorem clock_pos : 0 < clock := by unfold clock; norm_num
+theorem clock_pos : 0 < clock := by
+  unfold clock
+  norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.baseline]
 
 /-- **The clock sits inside the window** when the spectral spread is at most
 `π/43`. -/
@@ -138,11 +141,12 @@ theorem route_at_tStar (e : Fin 3 → ℝ) (B : Matrix (Fin 3) (Fin 3) ℂ)
     (branch_at_tStar e h02) hsplit hmin
 
 /-- The window threshold `π/43` is a concrete positive number. -/
-theorem spread_threshold_pos : 0 < Real.pi / clock := by
-  unfold clock; positivity
+theorem spread_threshold_pos : 0 < Real.pi / clock :=
+  div_pos Real.pi_pos clock_pos
 
 /-- The threshold is exactly `π/43`. -/
 theorem spread_threshold_eq : Real.pi / clock = Real.pi / 43 := by
-  unfold clock; norm_num
+  unfold clock
+  norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.baseline]
 
 end PMFlavor.ChordBranch

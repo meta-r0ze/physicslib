@@ -1,7 +1,8 @@
 import PMElementaryParticles.CompositeMasses
 import PMConstants.StrongRunning
 
-/-!
+/-! **Experimental/candidate module.**
+
 # Paper V's quark mass formulas against PDG 2024
 
 Units of `m_e`, `η = 171/172`. Uncertainties as used by the shared calculator (PDG 2024):

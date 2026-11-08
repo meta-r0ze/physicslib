@@ -50,19 +50,19 @@ substrate, and their conditional decay rates. It builds on Papers I–IV and
 
 ## Build and audit
 
-Lean 4.34.1; dependencies pinned through sibling `PM-1-Arch/lean`,
-`PM-3-Nested/lean` and `PM-4-Dynamics/lean`. Keep the papers as siblings, then:
+Lean 4.34.1; the whole tree is one Lake package with `PMSubstrate` and `PMConstants`
+already in this repository (see `AGENTS.md`). Then:
 
 ```sh
 source ~/.elan/env
-./check.sh
+./build.sh PMElementaryParticles
 ```
 
-`check.sh` builds the `PMElementaryParticles` library, strictly audits transitive axioms against
+`build.sh PMElementaryParticles` builds the `PMElementaryParticles` library, strictly audits transitive axioms against
 `propext`, `Classical.choice`, `Quot.sound`, and rejects Paper VI imports. A
 successful audit certifies the statements under their hypotheses; it does **not**
 select the physical interaction, measure normalization or coupling.
 
 ## Verification
 
-Run `./check.sh`. No Paper VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMElementaryParticles`. No Paper VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.

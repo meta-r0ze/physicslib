@@ -22,13 +22,13 @@ abbrev Mass := Grid → ℝ
 def TickInvariant (μ : Mass) : Prop := ∀ x, μ (gridTick x) = μ x
 def Normalized (μ : Mass) : Prop := (∀ x, 0 ≤ μ x) ∧ ∑ x, μ x = 1
 
-lemma rot_add (k : ℕ) (t : Fin 43) : (finRotate 43)^[k] t = t + (k : Fin 43) := by
+lemma rot_add (k : ℕ) (t : Fin PMSubstrate.E8Values.Delta) : (finRotate PMSubstrate.E8Values.Delta)^[k] t = t + (k : Fin PMSubstrate.E8Values.Delta) := by
   induction k with
   | zero => simp
   | succ k ih =>
     rw [iterate_succ_apply', ih, finRotate_apply, Nat.cast_succ, add_assoc]
 
-lemma tick_iter (k : ℕ) (x : Grid) : gridTick^[k] x = (x.1, (finRotate 43)^[k] x.2) := by
+lemma tick_iter (k : ℕ) (x : Grid) : gridTick^[k] x = (x.1, (finRotate PMSubstrate.E8Values.Delta)^[k] x.2) := by
   induction k with
   | zero => rfl
   | succ k ih => rw [iterate_succ_apply', ih, iterate_succ_apply']; rfl
@@ -46,7 +46,7 @@ theorem tick_invariant_iff (μ : Mass) : TickInvariant μ ↔ ∀ d t, μ (d, t)
     rwa [tick_iter, rot_add, Fin.cast_val_eq_self, zero_add] at this
   · intro h x
     obtain ⟨d, t⟩ := x
-    show μ (d, finRotate 43 t) = μ (d, t)
+    show μ (d, finRotate PMSubstrate.E8Values.Delta t) = μ (d, t)
     rw [h, h d t]
 
 /-- The invariant masses with direction weights `w`. -/
@@ -152,12 +152,12 @@ theorem center_excluded :
 /-! ## 3. One deterministic trajectory versus the stationary ensemble -/
 
 lemma orbit_reindex (o : Grid) (f : Grid → ℝ) :
-    ∑ k : Fin 43, f (gridTick^[k.val] o) = ∑ t, f (o.1, t) := by
+    ∑ k : Fin PMSubstrate.E8Values.Delta, f (gridTick^[k.val] o) = ∑ t, f (o.1, t) := by
   simp_rw [tick_iter, rot_add, Fin.cast_val_eq_self]
   exact Fintype.sum_equiv (Equiv.addLeft o.2) _ _ (fun _ => rfl)
 
 /-- Visits of cell `c` in one period of the reference started at `o`. -/
-def hits (o c : Grid) : ℝ := ∑ k : Fin 43, if gridTick^[k.val] o = c then 1 else 0
+def hits (o c : Grid) : ℝ := ∑ k : Fin PMSubstrate.E8Values.Delta, if gridTick^[k.val] o = c then 1 else 0
 
 theorem hits_eq (o c : Grid) : hits o c = if c.1 = o.1 then 1 else 0 := by
   unfold hits
@@ -178,7 +178,7 @@ theorem trajectory_ne (o c : Grid) : 1 - hits o c / 43 ≠ 171/172 := by
   rw [trajectory_availability]; split_ifs <;> norm_num
 
 /-- `171/172` is the uniform mixture over the four ergodic rows. -/
-theorem direction_average (t : Fin 43) (c : Grid) :
+theorem direction_average (t : Fin PMSubstrate.E8Values.Delta) (c : Grid) :
     (∑ d : Fin 4, (1 - hits (d, t) c / 43)) / 4 = 171/172 := by
   simp_rw [hits_eq]
   obtain ⟨e, s⟩ := c
@@ -293,7 +293,7 @@ theorem csEnc_write_exact (o : Grid) (p p' : Fin 171 → Fin a) (j : Fin 171)
         Equiv.apply_symm_apply] using hne
 
 lemma update_sum (w : Grid → Fin a) : ∑ c, gridUpdate w c = ∑ c, w c :=
-  Fintype.sum_equiv ((Equiv.refl _).prodCongr (finRotate 43).symm) _ _ (fun _ => rfl)
+  Fintype.sum_equiv ((Equiv.refl _).prodCongr (finRotate PMSubstrate.E8Values.Delta).symm) _ _ (fun _ => rfl)
 
 /-- The checksum code is not tick-equivariant (the sum is tick-invariant, the label is not). -/
 theorem csEnc_not_equivariant (o : Grid) (p : Fin 171 → Fin a) :

@@ -1,4 +1,5 @@
 import PMConstants.General.Encoding
+import PMSubstrate.E8Values
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Logic.Equiv.Fin.Rotate
 
@@ -227,12 +228,12 @@ theorem pairCode_equivariant :
 /-! The actual direction/phase register interpretation has another possible
 tick: advance the 43 phases while retaining the direction component. It is not
 the single 172-cycle assumed by a word-necklace construction. -/
-abbrev Grid := Fin 4 × Fin 43
+abbrev Grid := Fin 4 × Fin PMSubstrate.E8Values.Delta
 
-def gridTick (x : Grid) : Grid := (x.1, finRotate 43 x.2)
+def gridTick (x : Grid) : Grid := (x.1, finRotate PMSubstrate.E8Values.Delta x.2)
 
 def gridUpdate {a : ℕ} (word : Grid → Fin a) : Grid → Fin a :=
-  fun x => word (x.1, (finRotate 43).symm x.2)
+  fun x => word (x.1, (finRotate PMSubstrate.E8Values.Delta).symm x.2)
 
 theorem gridTick_moves (x : Grid) : gridTick x ≠ x := by
   intro h

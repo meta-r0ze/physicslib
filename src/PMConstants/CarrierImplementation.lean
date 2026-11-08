@@ -9,7 +9,7 @@ open PMConstants.CarrierActions
 open Finset
 
 abbrev Payload := Packet → Bool
-abbrev State := Fin 43 × Payload
+abbrev State := Fin PMSubstrate.E8Values.Delta × Payload
 
 def onPayload (e : Equiv.Perm Packet) : Equiv.Perm Payload where
   toFun p := p ∘ e.symm
@@ -19,7 +19,7 @@ def onPayload (e : Equiv.Perm Packet) : Equiv.Perm Payload where
 
 /-- The global clock still advances; the carrier gate acts on internal payload. -/
 def step (e : Equiv.Perm Packet) : Equiv.Perm State :=
-  Equiv.prodCongr (finRotate 43) (onPayload e)
+  Equiv.prodCongr (finRotate PMSubstrate.E8Values.Delta) (onPayload e)
 
 theorem finite_state_count : Fintype.card State=43*2^16 := by
   simp [State, Payload, Packet, Fintype.card_prod,
@@ -34,9 +34,9 @@ theorem population_preserved (e : Equiv.Perm Packet) (s : State) :
     population (step e s).2=population s.2 :=
   Equiv.sum_comp e.symm (fun v => (s.2 v).toNat)
 
-theorem clock_advance (e : Equiv.Perm Packet) (s : State) : (step e s).1=finRotate 43 s.1 := rfl
+theorem clock_advance (e : Equiv.Perm Packet) (s : State) : (step e s).1=finRotate PMSubstrate.E8Values.Delta s.1 := rfl
 
-theorem payload_clock_independent (e : Equiv.Perm Packet) (c d : Fin 43) (p : Payload) :
+theorem payload_clock_independent (e : Equiv.Perm Packet) (c d : Fin PMSubstrate.E8Values.Delta) (p : Payload) :
     (step e (c,p)).2=(step e (d,p)).2 := rfl
 
 /-- An operational field is affected exactly when the actual carrier label moves. -/

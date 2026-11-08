@@ -2,7 +2,7 @@
 
 Checked mathematics and the module map are in [`OVERVIEW.md`](OVERVIEW.md). This
 file is only what remains, split by what a Lean proof can close (**Part A**) and
-what needs a physical model law or measured/selected input (**Part B**). Paper V's elementary-particle library builds clean; run `./check.sh` for current
+what needs a physical model law or measured/selected input (**Part B**). Paper V's elementary-particle library builds clean; run `./build.sh PMElementaryParticles` for current
 counts. The sibling `PMAtoms` library has its own `REVIEW-AND-NEXT.md`.
 
 ## How to test the draft paper
@@ -216,7 +216,7 @@ remaining work is to select the physical law, not to hide its hypotheses.
 
 ## Verification
 
-Run `./check.sh`. No Paper VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMElementaryParticles`. No Paper VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
 
 
 ### Channel → particle join
@@ -326,3 +326,15 @@ NeutrinoPropagation    two-flavour phase, survival/transition, bounds
 
 The first two remain genuine model inputs: no bound-state wavefunction or binding
 energy is derived.  The last three are concrete structural additions.
+
+## Housekeeping / lint backlog
+
+- **Formula modules are tagged as ansatz.** `CompositeMasses`, `LeptonMasses`
+  and `QuarkMasses` now carry the `Experimental/candidate module` tag: they
+  certify the paper's proposed ledger against CODATA/PDG, they do not derive it
+  (`NeutralPionWidth` already carried a `Comparison` tag). For the record,
+  `certifiedMass` (PMAtoms) does **not** use them — it is the nuclear
+  packing/shell ledger; the composite masses feed `Particle.mass`,
+  `ElectronCloud` and `NeutronPrediction` only. Moving the comparison tables to
+  `tools/e8p` remains optional if the theorem tree should not state measured
+  references at all.

@@ -50,9 +50,9 @@ older geometric `pm3J ≈ 3.08490×10⁻⁵` gives `6.073…×10⁻¹⁰`
 input is ≈4.22 quoted errors away. A CP invariant alone is not an asymmetry
 (`conserved_baryon`).
 
-## Persistence selection (reused from `PM/lean`)
+## Persistence selection (reused from `PersistenceMechanics`)
 
-The selection principle is **not** re-proved here: `PM/lean`'s
+The selection principle is **not** re-proved here: `PersistenceMechanics`'
 `PersistenceMechanics.Selection` proves it (`selection_principle`, `selection`,
 `selection_timescale`), with `HazardForm` deriving the cost-proportional hazard and
 `Gibbs`/`LawSelection` giving the zero-temperature and law-selection limits.
@@ -90,4 +90,4 @@ persistence can rank anything.
 
 ## Verification
 
-Run `./check.sh`. Permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMCosmology`. Permitted axioms `propext`, `Classical.choice`, `Quot.sound`.

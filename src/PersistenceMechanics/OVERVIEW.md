@@ -6,7 +6,7 @@
 | `HazardForm` | §4.1 | The cost-proportional hazard with a common `β` is derived: if survival depends on a history only through its accumulated cost (one function `F` for all histories), survival over consecutive stretches multiplies, and more cost never raises survival, then `F(S) = exp(−βS)` for one `β ≥ 0` and the hazard is `βZ`. For integer (transition-count) cost the first two suffice. |
 | `Selection` | §4.2–4.4 | Distribution conditional on survival, relative odds, **Proposition (Selection by Operational Action)** with `S_i(T) = s_i T + o(T)`, selection timescale `1/(βΔs)`. |
 | `Gibbs` | §4.2 | Finite survival weights `exp(−βS)` at equal priors: positivity, ratios, ordering, a finite penalty never deletes a history; the β → ∞ limit concentrates uniformly on the minimum-cost histories. Moved from Paper II (`Survival`, `Concentration`). |
-| `ChannelMeasure` | finite `ChannelMeasure`, `total`, `probability`, `probability_sum`, `probability_nonneg`, `subsetProbability`, `subsetProbability_nonneg`; E8 channel-counting measure. |
+| `ChannelMeasure` | finite `ChannelMeasure`, `total`, `probability`, `probability_sum`, `probability_nonneg`, `subsetProbability`, `subsetProbability_nonneg`; channel-counting measure over an arbitrary finite label type. |
 | `MarginCorrection` | supplied `correctedWeight`, `correctedRate`, positivity; substrate margin correction interface. |
 | `InformationTransfer` | `TransferMode` (`boundaryConduction`, `capacityPromotion`, `coordinateJump`), `TransferChannel`, amplitude/rate, admissibility; Paper IV transfer classification. |
 | `EffectiveAction` | `amplitude = exp(iφ − (β/2)S_cost)`, `amplitude_normSq = exp(−βS_cost)`, `width = β·cost/time`, `decoherenceRate`; physics `S−iΓt/2` form. |
@@ -21,4 +21,4 @@ is proved. `Audit.lean` prints the axioms of the main results (only
 `propext`, `Classical.choice`, `Quot.sound`).
 
 Toolchain and Mathlib match the paper-series projects (Lean 4.34.1, Mathlib `d13f23b`). Build:
-`./check.sh`.
+`./build.sh PersistenceMechanics`.

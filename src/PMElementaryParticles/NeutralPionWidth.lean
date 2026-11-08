@@ -1,6 +1,6 @@
 import PMElementaryParticles.PionWidth
 import PMElementaryParticles.CompositeMasses
-import PMConstants.CurrentConstants
+import PMConstants.Values
 import Mathlib.Tactic
 
 /-! **Comparison / E8-input check.**
@@ -23,7 +23,7 @@ open PMElementaryParticles.CompositeMasses
 
 /-- E8-input neutral-pion width. -/
 noncomputable def neutralPionWidthE8 : ℝ :=
-  (PMConstants.CurrentConstants.alpha ^ 2 * pion0 ^ 3) /
+  (PMConstants.Values.alpha ^ 2 * pion0 ^ 3) /
     (32 * Real.pi ^ 3 * pionDecayConstantE8 ^ 2)
 
 /-- E8-input neutral-pion lifetime. -/
@@ -35,18 +35,18 @@ set_option linter.unreachableTactic false in
 /-- Broad enclosure of the neutral-pion width in `m_e` units. -/
 theorem neutralPionWidthE8_bounds :
     (1.52e-5 : ℝ) < neutralPionWidthE8 ∧ neutralPionWidthE8 < (1.523e-5 : ℝ) := by
-  have ha := PMConstants.CertifiedConstants.alpha_bounds
+  have ha := PMConstants.Values.alpha_bounds
   have hm := CompositeMasses.pion0_value
   have hf := PionWidth.pionDecayConstantE8_bounds
   have hpi1 := Real.pi_gt_d20
   have hpi2 := Real.pi_lt_d20
-  have hapos : (0 : ℝ) < PMConstants.CurrentConstants.alpha := lt_trans (by norm_num) ha.1
+  have hapos : (0 : ℝ) < PMConstants.Values.alpha := lt_trans (by norm_num) ha.1
   have hmpos : (0 : ℝ) < pion0 := lt_trans (by norm_num) hm.1
   have hfpos : (0 : ℝ) < pionDecayConstantE8 := lt_trans (by norm_num) hf.1
   have hpipos : (0 : ℝ) < Real.pi := by positivity
-  have ha2lo : (0.007297352562 : ℝ) ^ 2 < PMConstants.CurrentConstants.alpha ^ 2 := by
+  have ha2lo : (0.007297352562 : ℝ) ^ 2 < PMConstants.Values.alpha ^ 2 := by
     nlinarith [ha.1, ha.2]
-  have ha2hi : PMConstants.CurrentConstants.alpha ^ 2 < (0.007297352563 : ℝ) ^ 2 := by
+  have ha2hi : PMConstants.Values.alpha ^ 2 < (0.007297352563 : ℝ) ^ 2 := by
     nlinarith [ha.1, ha.2]
   have hm3lo : (264.1 : ℝ) ^ 3 < pion0 ^ 3 := by
     exact pow_lt_pow_left₀ hm.1 (by norm_num) (by norm_num : (3 : ℕ) ≠ 0)
@@ -62,12 +62,12 @@ theorem neutralPionWidthE8_bounds :
     exact lt_trans h (by norm_num)
   have hnumlo :
       (0.007297352562 : ℝ)^2 * (264.1:ℝ)^3 <
-        PMConstants.CurrentConstants.alpha^2 * pion0^3 := by
+        PMConstants.Values.alpha^2 * pion0^3 := by
     gcongr <;> first
       | exact ha2lo | exact hm3lo
       | exact hapos | exact hmpos
   have hnumhi :
-      PMConstants.CurrentConstants.alpha^2 * pion0^3 <
+      PMConstants.Values.alpha^2 * pion0^3 <
         (0.007297352563 : ℝ)^2 * (264.2:ℝ)^3 := by
     gcongr <;> first
       | exact ha2hi | exact hm3hi

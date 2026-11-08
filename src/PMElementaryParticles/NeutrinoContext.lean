@@ -1,4 +1,5 @@
 import PMConstants.FloorNeutrino
+import PMConstants.Values
 
 /-!
 # The contextual neutrino masses against oscillation data
@@ -23,9 +24,9 @@ about `17%`. A derived propagation Hamiltonian, not a common factor, is needed.
 
 noncomputable section
 namespace PMElementaryParticles.NeutrinoContext
-open PMConstants FloorNeutrino CertifiedConstants
+open PMConstants FloorNeutrino
 
-def mRest : ℝ := Bulk.floorMass α meEV
+def mRest : ℝ := Bulk.floorMass Values.alpha meEV
 
 lemma sq_bounds : (0.009208 : ℝ) ^ 2 < mRest ^ 2 ∧ mRest ^ 2 < (0.009210 : ℝ) ^ 2 := by
   have hf := floor_bounds

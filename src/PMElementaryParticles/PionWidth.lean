@@ -1,8 +1,6 @@
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.NeutronRate
-import PMConstants.ElectroweakE8
-import PMConstants.CurrentConstants
-import PMConstants.JointConstants
+import PMConstants.Values
 import PMElementaryParticles.MuonLifetime
 import PMSubstrate.E8Values
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -37,7 +35,7 @@ theorem pionLifetime_eq (fPi : ℝ) : pionLifetime fPi = 1 / pionWidth fPi := rf
 /-- E8 pion decay constant in `m_e` units:
 `v/(Δ² + Δ − χ)` with `m_e = 1`. -/
 noncomputable def pionDecayConstantE8 : ℝ :=
-  PMConstants.ElectroweakE8.vev PMConstants.CurrentConstants.alpha 1 /
+  PMConstants.Values.vev 1 /
     (((PMSubstrate.E8Values.Delta : ℝ) ^ 2 +
       ((PMSubstrate.E8Values.Delta - PMSubstrate.E8Values.chi : Nat) : ℝ)))
 
@@ -50,11 +48,11 @@ noncomputable def pionLifetimeE8 : ℝ := pionLifetime pionDecayConstantE8
 /-- Broad enclosure of the E8 pion decay constant in `m_e` units. -/
 theorem pionDecayConstantE8_bounds :
     (254.94 : ℝ) < pionDecayConstantE8 ∧ pionDecayConstantE8 < (254.95 : ℝ) := by
-  unfold pionDecayConstantE8 PMConstants.ElectroweakE8.vev
+  unfold pionDecayConstantE8 PMConstants.Values.vev PMConstants.ElectroweakE8.vev
   rw [show (((PMSubstrate.E8Values.Delta : ℝ) ^ 2 +
       ((PMSubstrate.E8Values.Delta - PMSubstrate.E8Values.chi : Nat) : ℝ))) = 1890 by
     norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.E8Values.chi]]
-  have h := PMConstants.JointConstants.vev_ratio_bounds
+  have h := PMConstants.Values.vev_ratio_bounds
   constructor <;> nlinarith [h.1, h.2]
 
 /-- Broad enclosure of the two-body phase-space factor. -/

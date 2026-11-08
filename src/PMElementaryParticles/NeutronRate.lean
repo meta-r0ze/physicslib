@@ -1,8 +1,6 @@
 import PMElementaryParticles.CompositeMasses
 import PMElementaryParticles.Widths
-import PMConstants.ElectroweakBounds
-import PMConstants.ElectroweakE8
-import PMConstants.CurrentConstants
+import PMConstants.Values
 import PMSubstrate.E8Values
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -46,13 +44,13 @@ open PMConstants
 
 /-- `G_F` in `m_e⁻²`. -/
 def fermiME : ℝ :=
-  ElectroweakE8.fermi CurrentConstants.alpha ElectroweakBounds.electronGeV *
-    ElectroweakBounds.electronGeV ^ 2
+  Values.fermi Values.electronGeV *
+    Values.electronGeV ^ 2
 
 theorem fermiME_pos : 0 < fermiME := by
-  have h := ElectroweakBounds.fermi_bounds
-  have he : 0 < ElectroweakBounds.electronGeV ^ 2 := by
-    unfold ElectroweakBounds.electronGeV
+  have h := Values.fermi_bounds
+  have he : 0 < Values.electronGeV ^ 2 := by
+    unfold Values.electronGeV PMConstants.ElectroweakBounds.electronGeV
     positivity
   unfold fermiME
   exact mul_pos (lt_trans (by norm_num) h.1) he

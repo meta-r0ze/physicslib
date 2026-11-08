@@ -27,7 +27,7 @@ theorem no_integer_half_period : ¬ ∃ n : ℕ, 2*n = 43 := by omega
 
 /-- The shortest graph distance between clock vertices is at most 21.
 The continuous circumference/diameter model is a separate construction. -/
-theorem cyclic_distance_bound (x : Fin 43) : min x.val (43-x.val) ≤ 21 := by
+theorem cyclic_distance_bound (x : Fin PMSubstrate.E8Values.Delta) : min x.val (43-x.val) ≤ 21 := by
   have := x.isLt
   omega
 

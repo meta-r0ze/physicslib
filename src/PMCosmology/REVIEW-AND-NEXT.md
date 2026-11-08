@@ -2,7 +2,7 @@
 
 Checked mathematics and the certified numbers are in [`OVERVIEW.md`](OVERVIEW.md).
 This file is only what remains, split by what a Lean proof can close (**Part A**)
-and what needs a physical/model law (**Part B**). Paper VI builds clean; run `./check.sh` for current counts. This is
+and what needs a physical/model law (**Part B**). Paper VI builds clean; run `./build.sh PMCosmology` for current counts. This is
 the most draft-stage paper, so also read **Draft-status risks** first.
 
 ## Draft-status risks / possible bugs
@@ -47,7 +47,7 @@ machine-checkable input list. (Entropy laws remain an explicit Part B input.)
 ## Part B — physical model inputs
 
 **Persistence is not a free choice where an option family and cost exist.** The
-selection principle is already proved in `PM/lean` (`PersistenceMechanics.Selection`);
+selection principle is already proved in `PersistenceMechanics.Selection`;
 `PersistenceSelection` reuses it (`higher_rate_vanishes`, `least_rate_takes_over`,
 `uniform_law_selected`). So each "choose X" below should first be asked as: *is X
 the least-cost member of an explicit option family?* For (1) and (4) the substrate
@@ -113,4 +113,4 @@ all Part B:
 
 ## Verification
 
-Run `./check.sh`. Permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+Run `./build.sh PMCosmology`. Permitted axioms `propext`, `Classical.choice`, `Quot.sound`.

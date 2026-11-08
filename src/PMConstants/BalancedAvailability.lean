@@ -17,7 +17,7 @@ def executed (tgt : Fin 16 → Grid) (o : Grid) : ℝ :=
   ∑ j, if tgt j = o then 0 else 1
 
 theorem executed_sum (tgt : Fin 16 → Grid) (o : Grid) :
-    (∑ k : Fin 43, executed tgt (gridTick^[k.val] o)) =
+    (∑ k : Fin PMSubstrate.E8Values.Delta, executed tgt (gridTick^[k.val] o)) =
       43*16 - ∑ j, hits o (tgt j) := by
   have heq : ∀ j : Fin 16, ∀ x : Grid,
       (if tgt j = x then (0 : ℝ) else 1) =
@@ -33,7 +33,7 @@ theorem executed_sum (tgt : Fin 16 → Grid) (o : Grid) :
   norm_num
 
 theorem balanced_payload_mean (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : Grid) :
-    (∑ k : Fin 43, executed tgt (gridTick^[k.val] o))/43 = 16*PMConstants.overhead := by
+    (∑ k : Fin PMSubstrate.E8Values.Delta, executed tgt (gridTick^[k.val] o))/43 = 16*PMConstants.overhead := by
   have h := (collision_aggregate o tgt).mpr (hb o.1)
   rw [executed_sum]
   norm_num [PMConstants.overhead] at *
@@ -45,11 +45,11 @@ workload needs a reason why those operations are unnecessary or recovered. -/
 theorem required_work_cannot_be_skipped (tgt : Fin 16 → Grid) (hb : Balanced tgt)
     (o : Grid) (q : ℕ → ℝ) (C : ℝ)
     (hstep : ∀ n, q (n+1) = q n + 43*16 -
-      ∑ k : Fin 43, executed tgt (gridTick^[k.val] o))
+      ∑ k : Fin PMSubstrate.E8Values.Delta, executed tgt (gridTick^[k.val] o))
     (hbounded : ∀ n, 0 ≤ q n ∧ q n ≤ C) : False := by
   have hm := balanced_payload_mean tgt hb o
   norm_num [PMConstants.overhead] at hm
-  have hs : (∑ k : Fin 43, executed tgt (gridTick^[k.val] o)) = 684 := by linarith
+  have hs : (∑ k : Fin PMSubstrate.E8Values.Delta, executed tgt (gridTick^[k.val] o)) = 684 := by linarith
   have hz := PMConstants.SteadyAllocation.bounded_drift_zero q 4 C
     (fun n => by rw [hstep, hs]; ring) hbounded
   norm_num at hz
@@ -70,7 +70,7 @@ def sampleWork (tgt : Fin 16 → Grid) (o : Grid) : ℝ :=
   (PMSubstrate.E8Values.RM : ℝ) + (PMSubstrate.E8Values.sigma : ℝ) + executed tgt o
 
 theorem balanced_mean_footprint (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : Grid) :
-    (∑ k : Fin 43, sampleWork tgt (gridTick^[k.val] o))/43 = PMConstants.footprint := by
+    (∑ k : Fin PMSubstrate.E8Values.Delta, sampleWork tgt (gridTick^[k.val] o))/43 = PMConstants.footprint := by
   have h := balanced_payload_mean tgt hb o
   unfold sampleWork
   simp only [sum_add_distrib, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
@@ -80,10 +80,10 @@ theorem balanced_mean_footprint (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o :
 
 /-- Normalize total clock work by total work, along any starting direction. -/
 theorem balanced_aggregate_share (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : Grid) :
-    (∑ _k : Fin 43, (43 : ℝ)) /
-      (∑ k : Fin 43, sampleWork tgt (gridTick^[k.val] o)) = PMConstants.clockRatio := by
+    (∑ _k : Fin PMSubstrate.E8Values.Delta, (43 : ℝ)) /
+      (∑ k : Fin PMSubstrate.E8Values.Delta, sampleWork tgt (gridTick^[k.val] o)) = PMConstants.clockRatio := by
   have h := balanced_mean_footprint tgt hb o
-  have hs : (∑ k : Fin 43, sampleWork tgt (gridTick^[k.val] o)) =
+  have hs : (∑ k : Fin PMSubstrate.E8Values.Delta, sampleWork tgt (gridTick^[k.val] o)) =
       43*PMConstants.footprint := by linarith
   rw [hs]
   simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]

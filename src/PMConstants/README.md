@@ -7,7 +7,8 @@ Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum III: Nested Persi
 - What remains: [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md) — constant-by-constant open
   physical dependencies.
 
-Build: Lean 4.34.1, with siblings `PM/lean`, `PMSubstrate` and `PMAction`.
+Build: Lean 4.34.1, in the single Lake package of this repository, with
+`PersistenceMechanics`, `PMSubstrate` and `PMAction`.
 
 ```sh
 source ~/.elan/env

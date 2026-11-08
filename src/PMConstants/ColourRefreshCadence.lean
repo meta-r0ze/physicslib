@@ -104,16 +104,16 @@ def controlled : Equiv.Perm RotorState where
 def rotor : Equiv.Perm RotorState :=
   controlled.trans (Equiv.prodCongr (finRotate 3) (Equiv.refl Bits))
 
-abbrev Clocked := Fin 43 × RotorState
+abbrev Clocked := Fin PMSubstrate.E8Values.Delta × RotorState
 
-def clockedStep : Equiv.Perm Clocked := Equiv.prodCongr (finRotate 43) rotor
+def clockedStep : Equiv.Perm Clocked := Equiv.prodCongr (finRotate PMSubstrate.E8Values.Delta) rotor
 
 theorem finite_state_count : Fintype.card Clocked=43*3*2^16 := by
   simp [Clocked, RotorState, Bits, Fintype.card_prod]
 
 theorem reversible : Function.Injective clockedStep := clockedStep.injective
 
-theorem clock_advance (s : Clocked) : (clockedStep s).1=finRotate 43 s.1 := rfl
+theorem clock_advance (s : Clocked) : (clockedStep s).1=finRotate PMSubstrate.E8Values.Delta s.1 := rfl
 
 theorem request_advance (s : Clocked) : (clockedStep s).2.1=finRotate 3 s.2.1 := rfl
 

@@ -1,4 +1,4 @@
-import PMConstants.CertifiedConstants
+import PMConstants.Values
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Tactic
@@ -27,15 +27,15 @@ open PMConstants
 
 /-- Sommerfeld parameter `η = Z α E / p`. -/
 def coulombEta (Z E p : ℝ) : ℝ :=
-  Z * CertifiedConstants.α * E / p
+  Z * Values.alpha * E / p
 
 /-- Allowed beta Fermi function. -/
 def fermiFunction (Z E p : ℝ) : ℝ :=
   let η := coulombEta Z E p
   2 * Real.pi * η / (1 - Real.exp (-(2 * Real.pi * η)))
 
-theorem alpha_pos : 0 < CertifiedConstants.α := by
-  have h := CertifiedConstants.alpha_bounds
+theorem alpha_pos : 0 < Values.alpha := by
+  have h := Values.alpha_bounds
   linarith
 
 theorem coulombEta_pos {Z E p : ℝ} (hZ : 0 < Z) (hE : 0 < E) (hp : 0 < p) :
@@ -84,10 +84,10 @@ diverges. -/
 /-- `F · p`, extended at `p = 0` by its finite limit. -/
 def fermiMomentumFactor (Z E p : ℝ) : ℝ :=
   if p = 0 then
-    2 * Real.pi * Z * CertifiedConstants.α * E
+    2 * Real.pi * Z * Values.alpha * E
   else
-    2 * Real.pi * Z * CertifiedConstants.α * E /
-      (1 - Real.exp (-(2 * Real.pi * Z * CertifiedConstants.α * E / p)))
+    2 * Real.pi * Z * Values.alpha * E /
+      (1 - Real.exp (-(2 * Real.pi * Z * Values.alpha * E / p)))
 
 theorem fermiMomentumFactor_pos {Z E p : ℝ} (hZ : 0 < Z) (hE : 0 < E) (hp : 0 ≤ p) :
     0 < fermiMomentumFactor Z E p := by
@@ -98,14 +98,14 @@ theorem fermiMomentumFactor_pos {Z E p : ℝ} (hZ : 0 < Z) (hE : 0 < E) (hp : 0 
     exact mul_pos (mul_pos (mul_pos (by positivity : 0 < 2 * Real.pi) hZ)
       alpha_pos) hE
   · have hp0 : 0 < p := lt_of_le_of_ne hp (Ne.symm h0)
-    have hC : 0 < 2 * Real.pi * Z * CertifiedConstants.α * E := by
+    have hC : 0 < 2 * Real.pi * Z * Values.alpha * E := by
       have ha := alpha_pos
       positivity
-    have hx : 0 < 2 * Real.pi * Z * CertifiedConstants.α * E / p := div_pos hC hp0
-    have hexp : Real.exp (-(2 * Real.pi * Z * CertifiedConstants.α * E / p)) < 1 := by
+    have hx : 0 < 2 * Real.pi * Z * Values.alpha * E / p := div_pos hC hp0
+    have hexp : Real.exp (-(2 * Real.pi * Z * Values.alpha * E / p)) < 1 := by
       rw [Real.exp_lt_one_iff]
       linarith
-    have hden : 0 < 1 - Real.exp (-(2 * Real.pi * Z * CertifiedConstants.α * E / p)) := by
+    have hden : 0 < 1 - Real.exp (-(2 * Real.pi * Z * Values.alpha * E / p)) := by
       linarith
     unfold fermiMomentumFactor
     rw [ite_eq_right h0]
@@ -127,8 +127,8 @@ theorem one_sub_exp_neg_ge (x : ℝ) (hx : 0 < x) :
 
 /-- The physical factor `F · p` is bounded by `p + 2π Z α E`. -/
 theorem fermiMomentumFactor_le {Z E p : ℝ} (hZ : 0 < Z) (hE : 0 < E) (hp : 0 < p) :
-    fermiMomentumFactor Z E p ≤ p + 2 * Real.pi * Z * CertifiedConstants.α * E := by
-  let C : ℝ := 2 * Real.pi * Z * CertifiedConstants.α * E
+    fermiMomentumFactor Z E p ≤ p + 2 * Real.pi * Z * Values.alpha * E := by
+  let C : ℝ := 2 * Real.pi * Z * Values.alpha * E
   have hC : 0 < C := by
     dsimp [C]
     have ha := alpha_pos

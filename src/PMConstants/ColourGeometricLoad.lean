@@ -48,7 +48,7 @@ lemma relational_sum (o : Grid) (ρ : Grid → ℝ) :
 
 lemma density_total (a : Fin 3) : (∑ x : Grid, rowLoad a x.1/43)=4 := by
   rw [Fintype.sum_prod_type]
-  have ht : ∀ d, (∑ _t : Fin 43, rowLoad a d/43)=rowLoad a d := by
+  have ht : ∀ d, (∑ _t : Fin PMSubstrate.E8Values.Delta, rowLoad a d/43)=rowLoad a d := by
     intro d; simp; ring
   simp_rw [ht]
   exact axis_total a
@@ -86,11 +86,11 @@ theorem phase_orbit_constant (n : ℕ) (o : Grid) (a : Fin 3) :
   rw [AvailabilityAudit.tick_iter, axis_required, axis_required]
 
 theorem phase_cycle_not_colour_ledger (o : Grid) :
-    (∑ t : Fin 43, colourRequired ((gridTick^[t.val]) o))/43 ≠ 12*overhead := by
+    (∑ t : Fin PMSubstrate.E8Values.Delta, colourRequired ((gridTick^[t.val]) o))/43 ≠ 12*overhead := by
   have hc : ∀ n, colourRequired ((gridTick^[n]) o)=colourRequired o := by
     intro n; simp only [colourRequired, phase_orbit_constant]
   simp_rw [hc]
-  have he : (∑ _t : Fin 43, colourRequired o)/43=colourRequired o := by simp
+  have he : (∑ _t : Fin PMSubstrate.E8Values.Delta, colourRequired o)/43=colourRequired o := by simp
   rw [he]
   exact fixed_reference_not_colour_ledger o
 
@@ -183,14 +183,14 @@ theorem reference_axis_count : ∀ d : Fin 4,
 /-- A reference-direction sampler using the existing uniform carrier law.
 Identifying this with the physical reference process is an explicit bridge;
 the phase map is arbitrary and need not sample all 172 grid cells. -/
-def sampledReference (phase : V → Fin 43) (v : V) : Grid := (axis v,phase v)
+def sampledReference (phase : V → Fin PMSubstrate.E8Values.Delta) (v : V) : Grid := (axis v,phase v)
 
-def sampledAxis (phase : V → Fin 43) (a : Fin 3) : ℝ :=
+def sampledAxis (phase : V → Fin PMSubstrate.E8Values.Delta) (a : Fin 3) : ℝ :=
   (∑ v : V, axisRequired a (sampledReference phase v))/8
 
 /-- η is an output here, not a coefficient of the load definition. The
 operational inputs are the intensive relational density and this sampler. -/
-theorem sampled_axis_target (phase : V → Fin 43) (a : Fin 3) :
+theorem sampled_axis_target (phase : V → Fin PMSubstrate.E8Values.Delta) (a : Fin 3) :
     sampledAxis phase a=4*overhead := by
   have hc := reference_axis_count (colourAxis a)
   have hs : (∑ v : V, if axis v=colourAxis a then (4/43 : ℝ) else 0)=2*(4/43) := by
@@ -201,14 +201,14 @@ theorem sampled_axis_target (phase : V → Fin 43) (a : Fin 3) :
   rw [sum_sub_distrib, hs]
   norm_num [PMAction.CarrierEvents.carrier_card, overhead]
 
-def sampledResponse (phase : V → Fin 43) (θ : Fin 3 → ℝ) : ℝ :=
+def sampledResponse (phase : V → Fin PMSubstrate.E8Values.Delta) (θ : Fin 3 → ℝ) : ℝ :=
   ∑ a, sampledAxis phase a*flag (θ a)
 
-theorem sampled_response (phase : V → Fin 43) (θ : Fin 3 → ℝ) :
+theorem sampled_response (phase : V → Fin PMSubstrate.E8Values.Delta) (θ : Fin 3 → ℝ) :
     sampledResponse phase θ=response (fun _ => overhead) θ := by
   simp only [sampledResponse, sampled_axis_target, response_formula, uniform_axis_load]
 
-theorem sampled_repair_cost (phase : V → Fin 43) (θ : Fin 3 → ℝ)
+theorem sampled_repair_cost (phase : V → Fin PMSubstrate.E8Values.Delta) (θ : Fin 3 → ℝ)
     (toll : ℝ) (m : ℕ) :
     toll*m*sampledResponse phase θ=
       (EventStiffness.c0 toll m*(12*overhead))*cosineMean θ := by

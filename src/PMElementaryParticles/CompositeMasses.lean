@@ -1,12 +1,13 @@
-import PMConstants.CertifiedConstants
+import PMConstants.Values
 import PMSubstrate.Impedance
 import Mathlib.Analysis.Real.Pi.Bounds
 
-/-!
+/-! **Experimental/candidate module.**
+
 # Paper V's composite mass formulas against CODATA 2022 and PDG
 
 Masses in units of `m_e` unless stated. `α⁻¹` is Paper I's derived `geometricIndex`
-(`PMSubstrate.geometricIndex_bounds`), `α = 1/α⁻¹` (`PMConstants.CertifiedConstants.alpha_bounds`).
+(`PMSubstrate.geometricIndex_bounds`), `α = 1/α⁻¹` (`PMConstants.Values.alpha_bounds`).
 `Z_TOL = χ(R_M − σ)/(N³ R_M σ)` and `Z_MAR = 1/(Δ² L_embed (σ+1))` are Paper I's Toll and Margin.
 
 | Formula | Value | Comparison |
@@ -30,7 +31,7 @@ open PMSubstrate
 
 def zTol : ℝ := 2 * (172 - 5) / (32 ^ 3 * 172 * 5)
 def zMar : ℝ := 1 / (43 ^ 2 * 31 * 6)
-def αe : ℝ := PMConstants.CertifiedConstants.α
+def αe : ℝ := PMConstants.Values.alpha
 def αinv : ℝ := geometricIndex
 def base : ℝ := 43 ^ 2 - Real.pi * 4 - 1 / 4
 
@@ -46,7 +47,7 @@ def hbarc : ℝ := 197.3269804
 lemma pi_b : (3.14159265358979323846 : ℝ) < Real.pi ∧ Real.pi < 3.14159265358979323847 :=
   ⟨Real.pi_gt_d20, Real.pi_lt_d20⟩
 lemma a_b : (0.007297352562 : ℝ) < αe ∧ αe < 0.007297352563 :=
-  PMConstants.CertifiedConstants.alpha_bounds
+  PMConstants.Values.alpha_bounds
 lemma g_b : (137.035999212381397211 : ℝ) < αinv ∧ αinv < 137.035999212381397213 :=
   geometricIndex_bounds
 

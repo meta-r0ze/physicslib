@@ -1,0 +1,42 @@
+The modules are setup to be a one way dependency
+
+src/PersistenceMechanics/
+src/PMSubstrate/
+src/PMAction/
+src/PMConstants/
+src/PMFlavor/
+src/PMElementaryParticles/
+src/PMAtoms/
+src/PMCosmology/
+
+
+For example: PMConstants can and should refer to PMSubstrate lean and it shouldn't rederive anything.
+
+- Check for duplicate derivations
+- Check that PersistenceMechanics should apply to any system and not assume or be limited to e8 etc
+- Check if proofs are in the right place, if they belong in a different folder or if potentially a folder should be split
+- Check that the Lean proof names are clear to help future readers
+- Check that when referencing the substrate or constants values the main api lean files is imported rather than importing the proofs or rederiving values
+
+
+Lean, the lean for physics work should be finding the values of the E8 substrate and *then* comparing it to
+SM values. The tools/e8p contains experimental values.
+- Check for random numerology type stuff or random choices that need to be fixed
+- Check for inputing SM when it should pull from E8/constraints/persistence
+- Proofs should either prove out something on top of existing proofs or show that something persists.  See the PersistenceMechanics.lean as an example
+- There are some comparison Lean that for example pull in m_e which is okay, either they belong with the tools/e8p or in its own lean file
+- Check for any duplicate effort proofs that could/should be replaced with general forms (see decay general forms as an example)
+
+
+Text Housekeeping: Modules should have 
+- README.md
+- OVERVIEW.md
+- REVIEW-AND-NEXT.md
+
+- Review for out of date text
+- Review for major duplication
+- Review for WIP md files that are old and maybe should be merged in and cleaned up
+- Review that the REVIEW-AND-NEXT to see if its suggestions are the right order and review if tasks are already solved in another module or can be easily solved by using something in another module
+
+
+Do not edit `src/classification/` except for its license/provenance files; it is vendored Apache-2.0 code with its own `Audit.lean`.

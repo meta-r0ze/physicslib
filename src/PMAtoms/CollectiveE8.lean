@@ -1,6 +1,7 @@
 import PMAtoms.CollectiveRegime
 import PMAtoms.NuclearShells
 import PMAtoms.MeanLife
+import PMAtoms.E8Tick
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.** Not part of `certifiedMass`.
@@ -20,20 +21,22 @@ barrier energies in `m_e` units.
 noncomputable section
 namespace PMAtoms
 
-/-- Alpha barrier `Δ`. -/
-def alphaBarrier : ℝ := (Δ : ℝ)
+/-- Alpha barrier: one substrate clock period. -/
+def alphaBarrier : ℝ := e8Tick
 theorem alphaBarrier_eq : alphaBarrier = 43 := by
-  norm_num [alphaBarrier, Δ, PMSubstrate.baseline]
+  unfold alphaBarrier
+  rw [e8Tick_eq]
 
 /-- Fission barrier `shellWeight = Δ/(D+χ)`. -/
 def fissionBarrier : ℝ := shellWeight
 theorem fissionBarrier_eq : fissionBarrier = 43 / 6 := by
   rw [fissionBarrier, shellWeight_eq]
 
-/-- One E8 clock period in `m_e` units. -/
-def e8ClockPeriod : ℝ := (Δ : ℝ)
+/-- One E8 clock period in `m_e` units. Alias of `e8Tick`. -/
+def e8ClockPeriod : ℝ := e8Tick
 theorem e8ClockPeriod_eq : e8ClockPeriod = 43 := by
-  norm_num [e8ClockPeriod, Δ, PMSubstrate.baseline]
+  unfold e8ClockPeriod
+  rw [e8Tick_eq]
 
 /-- Alpha channel with the E8 `Δ` barrier. -/
 noncomputable def alphaChannelE8 (p : Nuclide) : CollectiveChannel :=
