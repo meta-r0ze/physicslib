@@ -88,15 +88,15 @@ operator.
 ## Remaining genuine inputs
 
 ```text
-φ        derived from regular-pentagon Ptolemy d²=1+d; H4/600-cell embedding still to formalize
-α⁻¹      external constant, not flavour geometry
+φ        derived from pentagon Ptolemy; explicit 600-cell pentagon now in SixHundredCell
+α⁻¹      imported from PMSubstrate.geometricIndex (substrate, not flavour input)
 CP sign  fixed by the sin δ < 0 branch
 octant   tied to the reference sum rule, not independently derived
 ```
 
 ## Next check
 
-The regular-pentagon Ptolemy relation `d²=1+d` now derives `d=φ` and hence
-`sin²θ12=1/(2φ)` in `GoldenGeometry.lean`.  The remaining geometric step is to
-explicitly place that pentagon in the 600-cell/H4 vertex set, rather than citing
-the embedding informally.
+The regular-pentagon Ptolemy relation `d²=1+d` derives `d=φ` and hence
+`sin²θ12=1/(2φ)` in `GoldenGeometry.lean`.  `SixHundredCell.lean` now places an
+explicit five-vertex pentagon in the 600-cell coordinates: edge `1/φ`, diagonal
+`1`, ratio `φ`, with the scaled Ptolemy relation proved.

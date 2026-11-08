@@ -6,6 +6,7 @@ import PMFlavor.CKMClosure
 import PMFlavor.Wolfenstein
 import PMFlavor.FlavourPostulates
 import PMFlavor.GoldenGeometry
+import PMFlavor.SixHundredCell
 import PMFlavor.FlavourPulls
 import PMFlavor.UnitarityTriangle
 import PMFlavor.JarlskogReview

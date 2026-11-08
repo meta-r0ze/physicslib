@@ -350,3 +350,16 @@ matches PMNS.  The CKM diagonal is not reused.
 Ptolemy relation `d²=1+d` is exactly `φ`, and therefore gives
 `sin²θ12=1/(2φ)`.  This removes φ as a bare postulate at the pentagon level; the
 explicit 600-cell/H4 embedding remains to be formalized.
+
+
+### Explicit 600-cell pentagon
+
+`SixHundredCell.lean` writes five explicit 600-cell vertices and proves
+
+```
+edge² = 1/φ²,  diagonal² = 1,  diagonal/edge = φ,
+```
+
+plus the scaled Ptolemy relation.  This completes the geometric chain from the
+600-cell pentagon to the solar aperture.  `α⁻¹` is imported from
+`PMSubstrate.geometricIndex`, not a flavour input.
