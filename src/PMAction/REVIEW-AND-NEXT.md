@@ -3,31 +3,10 @@
 Checked mathematics and the module map are in [`OVERVIEW.md`](OVERVIEW.md). This
 file is only what remains. Paper II builds clean; run `./build.sh PMAction` for current counts.
 
-## Once-listed inputs now derived (E8 / persistence)
-
-These were open in earlier revisions; they are closed, so they are no longer work
-items:
-
-- **Carrier statistics** is the substrate carrier parity — the physical sector is
-  the antipodal-odd (`−1`) eigenspace (`CarrierParity.range_iff_odd`,
-  `carrier_exchange_parity`).
-- **The invisible (even) modes** evolve by the identity, *selected by persistence*
-  (`CompletionSelection.most_persistent_completion`, `selected_is_identity`) — not a
-  construction choice.
-- **The chiral projector** is attached and global (`ChiralityConvention.projector_eq_fromBlocks_PL`,
-  `PMFlavor.WeakCurrentBridge.spinProjector_eq_PL`); the **mediator** is the broken
-  electroweak direction of the reference (`ReferenceStabilizer.mediator_moves_reference`).
-- **The spin-sum V−A trace** (`SpinorCompleteness.spin_sums`, `AmplitudeTrace`) and
-  **deterministic transfer injectivity** (`Reconstruction.sym_step_injective`) are proved.
-- **Record maintenance is exact** (`RecordSupply.live_at_site`/`open_orbit_forever`,
-  `HomogeneousRouting.homogeneous_forever`, `SectorObligations.refresh_exact`).
-- **The transport ODE is constructed**, not assumed
-  (`TransportExistence.exists_yang_mills_transport_c2`).
-- **The clock period** is `PMSubstrate.E8Values.Delta` (`ClockPeriod.Delta`); two-tick
-  reflection positivity follows (`Reconstruction.two_tick_positive`).
-
-The remaining items each need a **model law or a new construction**, not a missing
-Lean statement:
+Once-listed inputs (carrier statistics, the even-mode completion, the projector/
+mediator, the V−A trace, exact record maintenance, the transport ODE, the clock
+period) are now **derived** and documented in `OVERVIEW.md`. The remaining items
+each need a **model law or a new construction**, not a missing Lean statement:
 
 ## 1. Physical states and observations
 Proved: native representation, dependent-sector observation (`SectorObservation`),
@@ -94,6 +73,7 @@ need their own state/update/observable; quantum continuum and Lorentzian continu
 are distinct obligations.
 
 ## Downstream boundary
+
 Generic proofs do not move a downstream paper's physical identification with them.
 Paper III owns packet representations and constants; Paper IV flavour/mass; Paper V
 decay/phase-space; Paper VI cosmology. See [`OVERVIEW.md`](OVERVIEW.md).

@@ -23,21 +23,13 @@ the rate/lifetime layer.
 
 | gap | status |
 | --- | --- |
-| per-link weight `πD·3/5` | closed: `(linkRowSum−1)/σ` |
-| channel asymmetry `σ/ν` | closed: `boundaryWeight/(ν/2)` |
 | alpha weight `Δ/D` | E8 expression; physical alpha assignment is model input |
 | shell cost `Δ/(D+χ)` | E8 expression; shell assignment is model input |
 | odd-A factor `3/4` | E8 expression; pairing assignment is model input |
-| charge normalization | closed: `LatticeCharge.sphereCoulomb_eq_normalized` — the ledger's `chargeTermSphere` and the `1/(4π)` normalization differ by exactly `4π` |
 | `N>146` tail | deformation candidate exists but holdout even-even actinides scatter `−0.019` to `+0.018 u`; shape is not predictive yet |
-| spectral Green | closed: `cubeLapN_spectralGreen` |
-| 1D/3D mode theorems | closed |
-| uniform odd-mode reduction | closed |
 | `S(n) ~ n⁵/(16π)` | numerical evidence; asymptotic theorem open |
 | nuclear lifetimes/rates | beta/alpha/fission chains now have E8 cost models; fission is not universal |
-| electron shells | cloud exists; screening/exchange and chemistry-level shell interaction are separate |
-| Aufbau order | supplied model input |
-| unified system type | closed: `System` (`System.level`/`mass`/`charge`/`baryon`/`leptonNumber`); `atom_sub_nucleus`, `certifiedMass_eq_latticeSum_sub_binding` |
+| electron shells / Aufbau | cloud + `Aufbau` order exist; screening/exchange and the order's justification are separate |
 
 ## 1. Heavy deformation shape
 
@@ -239,31 +231,17 @@ structural counterpart.
 
 ## 6. Electron cloud / chemistry pillar
 
-The electron cloud exists as a Pauli-constrained spin-orbital set, and `Aufbau`
-states the Madelung fill order with its configuration filler (`Aufbau.aufbau`,
-`aufbau_sorted`, `configuration`), on top of the E8 shell capacities (`Shells`).
 Missing: electron–electron screening/exchange, shell energy, and the chemistry-level
 60°/tetrahedral shell interaction. The fill order is a supplied model input (the
-hydrogenic energy `−R∞/n²` carries no `ℓ`-dependence).
+hydrogenic energy `−R∞/n²` carries no `ℓ`-dependence), stated in `Aufbau`.
 
-## 7. Periodic table and unified system type
+## 7. Periodic table — certified-mass column
 
-`Nucleon`/`Nuclide`/`AtomSystem`/`Species` are now unified into one `System` record
-(`System.level`/`mass`/`charge`/`baryon`/`leptonNumber`), with masses dispatching to
-the level ledger: nuclides/atoms use the **certified** nuclear ledger
-(`atom_sub_nucleus` gives the electron+cloud gap; `certifiedMass_eq_latticeSum_sub_binding`
-ties it to the free lattice sum). The leading-vs-certified gap is exactly the
-binding (`System.atomSystem_massME_eq`: `AtomSystem.massME = System.mass + binding`).
-The periodic-table structure is now formalized in `PeriodicTable`: the periods
-partition the Aufbau order (`periodSubshells_flatten`), the period lengths are
-`2,8,8,18,18,32,32` from the E8 subshell capacities (`periodLengths_eq`), the
-cumulative ends are the noble-gas numbers (`nobleNumbers_eq`), and `valenceElectrons`
-reads the outer-shell count from the configuration. `e8p --periodic-table` now
-imports `PMAtoms.Aufbau` for the order instead of duplicating it. Remaining: the
-table still prints the leading lattice weight (wiring the certified ledger in needs
-exact enclosures of the `π`-containing certified mass, or the binding as a rational
-bound), and the Aufbau order itself is a model input (the orbital energy `-R∞/n²`
-carries no `l`-dependence, so the order needs the screening/chemistry pillar).
+The structure is done (`System`, `PeriodicTable`, shared `Aufbau`). Remaining: the
+`e8p --periodic-table` readout still prints the leading lattice weight; printing the
+**certified** mass needs a proved rational enclosure of the `π`/`√`-containing
+`certifiedMass` (the leading-vs-certified gap is exactly `binding`,
+`System.atomSystem_massME_eq`). No `certifiedMass` enclosure exists yet.
 
 ## Decay validation
 

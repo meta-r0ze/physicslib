@@ -23,26 +23,8 @@ the most draft-stage paper, so also read **Draft-status risks** first.
 
 ## Part A — Lean-checkable gaps
 
-### A1. Dark-ratio count `31/6` vs `25/6` — **Done**
-`Scaling.disjoint_dark_count_check` proves `(248−48)/48 = 25/6` and
-`darkRatio = 1 + 25/6 = 31/6`; `Scaling.exact_ratios` fixes `31/6`. The
-`Ω_DM/Ω_b` identification is recorded as an input. No longer open.
-
-### A2. Certify the remaining display arithmetic — **Mostly done**
-Proved: `SubstrateLoad.revised_numerical_outputs`/`_bounds` (`H_late`, `S8_late`);
-`Tensions.hubbleInputSigma_*` (`(1/2)L`), `s8InputSigma_*` (`(13/1000)/L`),
-`omegaRatio_bounds` (`248/(48(1−2/43+α))`); and
-`Background.geometric_equality_requires_ratio` (`ρ_m/ρ_r = 1+1075π`). Remaining
-tags are reused upstream quantities (`α`, masses, …) generated in `cosmology.py`
-but owned by Papers I/IV/V; certifying those in PM-6 would duplicate their
-upstream proofs.
-
-### A3. Hypothesis ledger — **Done**
-`Hypotheses.CosmoModel` bundles the load, both response rules, the
-load-proportional density and the separately conserved continuity law in one
-structure; `product_invariant`, `equation_of_state`, `density_derivative`,
-`vacuum_iff` and `headline` are re-derived from it. The premises are now a
-machine-checkable input list. (Entropy laws remain an explicit Part B input.)
+A1 (dark-ratio count `31/6`), A2 (display arithmetic) and A3 (hypothesis ledger) are
+**done** (see `OVERVIEW.md`). What remains is all Part B.
 
 ## Part B — physical model inputs
 

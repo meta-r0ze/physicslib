@@ -4,28 +4,9 @@ Checked mathematics and the downstream handoff are in [`OVERVIEW.md`](OVERVIEW.m
 This file is only what remains. Paper IV builds clean; run `./build.sh PMFlavor`
 for current counts.
 
-## Closed geometry
-
-The flavour sector is no longer an open angle-fitting problem.
-
-* The original Paper IV CKM formulae are formalized in `FlavourInvariants`:
-  `s12 = π/(ν−χ)`, `s13 = 1/(χ α⁻¹ + π)`, `|Vcb| = (π+χ)/(α⁻¹−Dπ)`,
-  `δCP = arctan(σ/χ)`.
-* The PMNS bulk-strain and colour-remainder geometry is formalized in
-  `PMNSGeometry`: `sin²θ23 = (1/χ)(1+π/(ν+σ))`, `sin²θ13 = (σ−χ)/α⁻¹`.
-* The golden ratio is derived from pentagon Ptolemy in `GoldenGeometry`, and an
-  explicit 600-cell pentagon with edge `1/φ`, diagonal `1` and ratio `φ` is in
-  `SixHundredCell`. Hence `sin²θ12 = 1/(2φ)` follows from the 5-fold geometry.
-* `α⁻¹` is imported from `PMSubstrate.geometricIndex`; it is a substrate constant,
-  not a flavour input.
-
-The formerly-open items are closed upstream and recorded in `OVERVIEW.md`: the
-CP-sign branch is the substrate orientation object
-(`PMAction.ChiralityConvention.Orientation.referenceOrientation`, via
-`PMNSGeometry.selectedCPBranch`); the per-step restoration is
-`PMConstants.SectorObligations.refresh_exact`; the carrier-current objects are E8
-(Paper II doublet generators, carrier-parity statistics, reference-stabilizer
-mediator); and measurements stay outside the derivation closure.
+The flavour derivation (mixing formulas, angles, octants, CP magnitude, mass ratios,
+breaking direction, the CP-sign branch) and the carrier-current objects are all
+derived or E8-sourced; see `OVERVIEW.md`. Only the two inputs below remain.
 
 ## Open items
 

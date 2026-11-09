@@ -31,52 +31,14 @@ physical derivation from Finiteness, Conservation and Causality. Start with
 | Thermal floor / vacuum-density readout | Positive proposed floor, hierarchy and conditional formulas; bare floor around 9.21 meV with the electron mass input. | Physical propagation depth, thermal/mode population, coupling and interpretation of the floor as a density. |
 | Neutrino masses / splittings | The stated tower has gap ratios 1:1849:1850; no common multiplier repairs its splitting ratios. | A derived propagation/mixing Hamiltonian or nonuniform response, in Papers V/VI. The bare/common-rescaling identification is excluded; arbitrary alternative dynamics is not. |
 
-## Substrate-first rule for the interface correction
+## Interface correction — closed
 
-`LinkCustodial`/`InterfaceCorrection` use `Δα`, the top mass and a remainder as
-**comparison diagnostics**. They are not the derivation target and must not be
-imported as SM inputs into a substrate calculation.
-
-The substrate task is:
-
-```
-E8 carrier/spectral response
-→ K_sub
-→ Δr_sub = 1 − 1/K_sub
-→ compare with the Z-anchor window afterwards
-```
-
-If the substrate value misses the window, that is a falsification, not a reason
-to fit `Δα` or the top mass.
-
-**Closed: the substrate value is assembled.**
-`InterfaceResponseLaw.substrate_deltaR_in_window` runs the chain: exact linear
-repair (`exact_repair_linear`) + the five geometric modes
-(`InterfaceGeometry.activeResponseModes_eq_sigma`) + maximin uniform weight give
-`K_sub = 1 + σα` (`interfaceFactor_sigma`), hence
-`Δr_sub = 1 − 1/K_sub = 5α/(1+5α)`, inside `0.0349 < Δr < 0.0353`
-(`InterfaceWeightWindow.weight_five_in_window`). The excluded naive root sum
-(`InterfaceSpectralCandidate.simple_root_sum_excluded`) is not used. The only
-remaining input is the identification of the *per-mode repair* with the substrate
-admittance `α`; the later `Δα`/top-mass/remainder numbers are comparison
-diagnostics only.
-
-**Effective weight.** `InterfaceWeightWindow.weight_window` proves the Z-anchor
-window selects exactly effective weight `N=5`.  The geometric reading is already owned by PMSubstrate:
-`Derived.configDim D q = (D−q)+2 = 3 spatial + 2 boundary`;
-`InterfaceGeometry.activeResponseModes_eq_sigma` connects it to `σ`, and
-`geometric_weight_in_window` shows it lies in the window.  Equal weighting of the
-five modes is the maximin law (`PersistenceMaximin`), not a new assumption.
-The unweighted root sum has effective `N=12` and is excluded.  `InterfaceResponseLaw` assembles the response: exact repair gives the linear
-non-iterated form (`VevReadout.exact_net_is_identity`), maximin gives equal weight
-on the five modes, and the remaining input is the per-mode repair `α`.  The
-excluded all-root sum is not used.
-
-**Candidate test.** The simplest isotropic D₄ root sum is
-`Σ = 24/(q²+2)`, `K_sub = 1 + αΣ`.  At `q²=0`, `InterfaceSpectralCandidate`
-proves `Δr_sub > 0.08`, far outside `0.0349 < Δr < 0.0353`.  The simplest
-root-sum response is therefore excluded; a physical response law must suppress
-or weight the roots.
+`InterfaceResponseLaw.substrate_deltaR_in_window`: the E8 carrier/spectral response
+(exact linear repair + the five geometric modes + maximin uniform weight) gives
+`K_sub = 1 + σα`, so `Δr_sub = 1 − 1/K_sub = 5α/(1+5α)`, inside the Z-anchor window
+`0.0349 < Δr < 0.0353`. The naive isotropic root sum `24/(q²+2)` is excluded
+(`InterfaceSpectralCandidate.simple_root_sum_excluded`). The `Δα`/top-mass/remainder
+numbers are comparison diagnostics only, not derivation inputs.
 
 ## Shared proof dependencies and order
 
