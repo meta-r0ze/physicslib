@@ -51,7 +51,15 @@ theorem exchange_hermitian (A M M' B : Matrix n n ℂ)
 If an involution `τ` preserves the cost and the least-cost element is unique, that element is
 fixed by `τ`. This is the Economy step that turns indistinguishability into symmetry: when two
 sectors are indistinguishable the update cost is exchange-invariant, and persistence selects a
-unique least-cost update, so the update carries no sector label. -/
+unique least-cost update, so the update carries no sector label.
+
+The uniqueness premise is **not** automatic. It holds for strictly convex costs
+(`PersistenceMechanics.LawSelection.uniform_law` uniquely minimizes the average/worst-case
+rate), but it **fails** for continuous symmetry families: `PMFlavor.ReferenceSelection`
+(`invariant_cost_tie` with `different_link`) exhibits two distinct reference-fixing links with
+equal cost under a conjugation-invariant cost, so no unique minimizer exists there. So this
+reduces a choice to "invariant cost + uniqueness", not to nothing; where uniqueness fails (the
+continuous symmetries), a symmetric cost cannot force the selection. -/
 theorem unique_minimizer_fixed {U : Type*} (cost : U → ℝ) (τ : U → U)
     (hcost : ∀ u, cost (τ u) = cost u) (u : U)
     (hmin : ∀ v, cost u ≤ cost v) (huniq : ∀ v, (∀ w, cost v ≤ cost w) → v = u) :

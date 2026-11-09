@@ -96,6 +96,21 @@ theorem ckm_normSq_conj (c12 s12 c23 s23 c13 s13 : ℝ) (u : ℂ) (i j : Fin 3) 
   fin_cases i <;> fin_cases j <;>
     simp [CKM.ckm, normSq_apply]
 
+/-- **A mixing-based cost cannot select the CP branch.** Any cost that depends only on the
+squared moduli of the mixing matrix is invariant under `u ↦ ū` (`ckm_normSq_conj`), so the two
+CP branches tie: a conjugation-invariant cost has **no unique minimizer** and cannot pick a sign
+(the same obstruction as `ReferenceSelection.invariant_cost_tie` on the link side). The branch
+is therefore fixed by the **symmetry-breaking** reference orientation
+(`ChiralityConvention.Orientation.referenceOrientation`), not by a symmetric-cost selection. -/
+theorem conjugate_cost_tie (cost : Matrix (Fin 3) (Fin 3) ℝ → ℝ)
+    (hcost : ∀ m m', (∀ i j, m i j = m' i j) → cost m = cost m')
+    (c12 s12 c23 s23 c13 s13 : ℝ) (u : ℂ) :
+    cost (fun i j => normSq (CKM.ckm c12 s12 c23 s23 c13 s13 u i j)) =
+      cost (fun i j => normSq (CKM.ckm c12 s12 c23 s23 c13 s13 (star u) i j)) := by
+  apply hcost
+  intro i j
+  exact (ckm_normSq_conj c12 s12 c23 s23 c13 s13 u i j).symm
+
 /-- **The paper's PMNS matrix satisfies the rule exactly.** With `δ` fixed by the sum rule
 (`PMNS.cosDelta`), `|U_μ2|² = |U_τ2|²`. -/
 theorem paper_on_rule :
