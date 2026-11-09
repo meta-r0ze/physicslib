@@ -31,12 +31,16 @@ core that converts those facts into a semi-inner-product:
   `+` and scalar multiplication), packaged as the kernel `osNullSubmodule`.
 * `osGram` / `osGram_posSemidef`: the Gram matrix `Mᵢⱼ = B Fⱼ Fᵢ` of a finite family of
   observables is **positive semidefinite** — the finite-dimensional face of reflection positivity.
+* `osNull_cross`/`osNull_cross_right`, `quotientForm`, `quotientCore`, `quotientInnerProductSpace`:
+  the OS form descends to the quotient `V ⧸ osNullSubmodule` (well-defined because null vectors pair
+  to zero) and, being definite (`mem_osNullSubmodule_iff`), is a genuine inner product there;
+  `quotientInnerProductSpace` makes the quotient the **physical Hilbert space**. The OS quotient is
+  thus assembled.
 * `osGramInnerProductSpace`: by `Matrix.PosSemidef.toInnerProductSpace`, `n → ℂ` is the
   **physical Hilbert space** with inner product `⟪x, y⟫ = xᴴ M y`, an isometric model of the span of
-the `F`. The full quotient `V ⧸ osNullSubmodule` (for observables not assumed finite/independent): its
-mathematical content is assembled here (`osNull_cross` well-definedness, `mem_osNullSubmodule_iff`
-positive-definiteness), so the descended form is a genuine inner product; only the
-`InnerProductSpace` *instance* plumbing on the quotient is the remaining scaffolding.
+the `F`. The full quotient `V ⧸ osNullSubmodule` (for observables not assumed finite/independent) is
+assembled: `quotientCore`/`quotientInnerProductSpace` make it a Hilbert space, and `osGram` gives
+the finite-dimensional model.
 
 The framework here is the standard finite-dimensional OS reconstruction, specialized to the data
 `ReciprocalReflection` actually proves. No continuum, infinite-volume or mass-gap claim is made.
@@ -306,9 +310,8 @@ noncomputable def quotientForm (B : V → V → ℂ)
 /-- **The OS semi-inner-product on the quotient.** `quotientForm` is sesquilinear with a real
 non-negative diagonal, so `PreInnerProductSpace.Core` accepts it: the descended form on
 `V ⧸ osNullSubmodule` is a genuine semi-inner-product. (It is in fact *definite* —
-`mem_osNullSubmodule_iff` — so the quotient carries the physical Hilbert-space structure; turning
-`quotientCore` into an `InnerProductSpace` *instance* by `InnerProductSpace.ofCore` is the last
-typeclass-plumbing step, needing the quotient seminorm `InnerProductSpace.Core.toSeminormedAddCommGroup`.) -/
+`mem_osNullSubmodule_iff` — so the quotient carries the physical Hilbert-space structure; the instance is built in
+`quotientInnerProductSpace`.) -/
 @[instance_reducible]
 noncomputable def quotientCore (B : V → V → ℂ)
     (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
@@ -341,5 +344,22 @@ noncomputable def quotientCore (B : V → V → ℂ)
     rw [show (Quotient.mk _ a : V ⧸ _) = Submodule.Quotient.mk a from
       Submodule.Quotient.quot_mk_eq_mk a, ← Submodule.Quotient.mk_smul]
     simp only [quotientForm]; exact hsmul₂ r b a
+
+/-- **The physical OS Hilbert space.** `InnerProductSpace.ofCore` on the descended form makes the
+quotient `V ⧸ osNullSubmodule` an `InnerProductSpace` — the Hilbert space of the OS reconstruction.
+The quotient seminorm is `InnerProductSpace.Core.toSeminormedAddCommGroup` of `quotientCore`, so the
+quotient is a genuine (definite) inner-product space; the instance is complete, closing the OS
+quotient scaffolding. -/
+@[instance_reducible]
+noncomputable def quotientInnerProductSpace (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re) (hreal : ∀ x, (B x x).im = 0) :=
+  let c := quotientCore B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal
+  letI : SeminormedAddCommGroup (V ⧸ osNullSubmodule B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal) :=
+    InnerProductSpace.Core.toSeminormedAddCommGroup (c := c)
+  InnerProductSpace.ofCore c
 
 end PMAction.OsterwalderSchrader

@@ -48,11 +48,11 @@ the native E8 packet subsystem); `GeometricGauge`, `ReciprocalReflection`
 `ReciprocalReflection.osForm` + `reflection_positive'`; `conj_symm_of_real_diag`, `osCore`,
 `os_cauchy_schwarz` — the OS form is a Hermitian **semi-inner-product** with Cauchy–Schwarz, the
 `PreInnerProductSpace.Core` algebraic OS step); `QuotientClosure.gibbs_quotient_invariant`
-(edge-identification); per-step maintenance is closed in PM-4 (`PerStepContract`). The OS **quotient**'s mathematical content is assembled: the null set
-`{F | osForm F F = 0}` is the semi-inner-product's kernel (`osCore_normSq_eq`, `mem_osNullSubmodule_iff`),
-a null vector pairs to zero with everything (`osNull_cross`, by Cauchy–Schwarz), so the descended
-form on `V ⧸ osNullSubmodule` is well-defined and **positive-definite** — a genuine inner product.
-Only the `InnerProductSpace` *instance* plumbing on the quotient remains. Open: the
+(edge-identification); per-step maintenance is closed in PM-4 (`PerStepContract`). The OS **quotient is assembled**: the null set is the semi-inner-product's kernel
+(`osCore_normSq_eq`, `mem_osNullSubmodule_iff`), null vectors pair to zero (`osNull_cross`,
+`osNull_cross_right`), the form descends (`quotientForm`), and `quotientCore` +
+`quotientInnerProductSpace` make `V ⧸ osNullSubmodule` an `InnerProductSpace` — the physical
+Hilbert space. Open: the
 microscopic E8 realization of the abstract hop, its physical readout and price law,
 shared group/trace normalization across spacings, and the admission of the coherent
 root-generator evolution as the substrate dynamics. For the packet subsystem this
