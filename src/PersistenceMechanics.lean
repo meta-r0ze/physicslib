@@ -9,3 +9,4 @@ import PersistenceMechanics.CoherentAction
 import PersistenceMechanics.EffectiveAction
 import PersistenceMechanics.InformationTransfer
 import PersistenceMechanics.ChannelMeasure
+import PersistenceMechanics.SelectionSymmetry

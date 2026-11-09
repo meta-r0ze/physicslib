@@ -31,6 +31,19 @@ physical derivation from Finiteness, Conservation and Causality. Start with
 | Thermal floor / vacuum-density readout | Positive proposed floor, hierarchy and conditional formulas; bare floor around 9.21 meV with the electron mass input. | Physical propagation depth, thermal/mode population, coupling and interpretation of the floor as a density. |
 | Neutrino masses / splittings | The stated tower has gap ratios 1:1849:1850; no common multiplier repairs its splitting ratios. | A derived propagation/mixing Hamiltonian or nonuniform response, in Papers V/VI. The bare/common-rescaling identification is excluded; arbitrary alternative dynamics is not. |
 
+## Selection symmetry — the shape of the open choices
+
+The strongest open choices here reduce to one framework fact
+(`PersistenceMechanics.SelectionSymmetry`): a cost can only select its fixed points
+(`unique_minimizer_fixed`), so a moved point is tied (`exists_tied_of_moved`).
+`exchange_fixed_of_unique` applies it: the **Hermitian link mass** premise "the update
+carries no sector label" is reduced to invariant-cost + unique-minimizer, and
+`exchange_hermitian` then gives `M = M†`. This is a **discrete** symmetry, so it
+resolves the choice when the cost forces uniqueness. The **Strong CP θ̄** cost reading
+is the opposite case: the reference-fixing family is **continuous**
+(`ReferenceSelection.invariant_cost_tie` + `different_link` tie two distinct links), so
+no symmetric cost can pick it — it stays a symmetry-breaking input.
+
 ## Interface correction — closed
 
 `InterfaceResponseLaw.substrate_deltaR_in_window`: the E8 carrier/spectral response

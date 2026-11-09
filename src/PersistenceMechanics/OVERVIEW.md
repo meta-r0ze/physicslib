@@ -13,6 +13,7 @@
 | `CoherentAction` | `phaseWeight = exp(iφ)`, `costWeight = exp(−βC)`, `combinedWeight`; phase has unit modulus, cost carries attenuation; `qualityFactor`. |
 | `DecayChannel` | Shared six-pillar channel algebra: `capacity`, `map`, `protocol`, `governor`, `toll`, `margin`, plus `action`; `rate = β·toll·capacity·map·protocol·governor·margin·exp(−action)`; `lifetime`, `physicalLifetime`, `totalRate`, `familyLifetime`. |
 | `LawSelection` | application | Candidate event laws on a finite label set: the uniform law uniquely minimizes the average return cost `−(1/|Ω|)Σ log p` and the worst-case cost `−log min p`, so it is the law that survives selection. Used by Paper I (`PersistenceMaximin`). |
+| `SelectionSymmetry` | selection | A cost can only select its fixed points: `unique_minimizer_fixed` (an invariant cost with a unique minimizer fixes it) and `exists_tied_of_moved` (a moved point is tied). Framework shape for every open "model choice": a **discrete** symmetry with a uniqueness-forcing cost resolves a choice (`SectorExchange`); a **continuous** symmetry ties and needs a symmetry-breaking input (`ReferenceSelection`, the CP sign). |
 
 Inputs, not theorems: the three premises of `HazardForm` (survival depends only on accumulated
 cost, through one function for all histories; consecutive stretches multiply; more cost never

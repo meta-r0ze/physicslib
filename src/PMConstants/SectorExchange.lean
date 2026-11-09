@@ -1,4 +1,5 @@
 import PMConstants.HermitianMass
+import PersistenceMechanics.SelectionSymmetry
 import Mathlib.Data.Matrix.Block
 
 /-!
@@ -47,36 +48,22 @@ theorem exchange_hermitian (A M M' B : Matrix n n ℂ)
   obtain ⟨_, _, k3, _⟩ := hH
   exact ⟨k3.trans h3.symm, h4⟩
 
-/-- **Economy: a unique least-cost element of a symmetric cost is fixed by the symmetry.**
-If an involution `τ` preserves the cost and the least-cost element is unique, that element is
-fixed by `τ`. This is the Economy step that turns indistinguishability into symmetry: when two
-sectors are indistinguishable the update cost is exchange-invariant, and persistence selects a
-unique least-cost update, so the update carries no sector label.
-
-The uniqueness premise is **not** automatic. It holds for strictly convex costs
-(`PersistenceMechanics.LawSelection.uniform_law` uniquely minimizes the average/worst-case
-rate), but it **fails** for continuous symmetry families: `PMFlavor.ReferenceSelection`
-(`invariant_cost_tie` with `different_link`) exhibits two distinct reference-fixing links with
-equal cost under a conjugation-invariant cost, so no unique minimizer exists there. So this
-reduces a choice to "invariant cost + uniqueness", not to nothing; where uniqueness fails (the
-continuous symmetries), a symmetric cost cannot force the selection. -/
-theorem unique_minimizer_fixed {U : Type*} (cost : U → ℝ) (τ : U → U)
-    (hcost : ∀ u, cost (τ u) = cost u) (u : U)
-    (hmin : ∀ v, cost u ≤ cost v) (huniq : ∀ v, (∀ w, cost v ≤ cost w) → v = u) :
-    τ u = u :=
-  huniq (τ u) (fun w => by rw [hcost u]; exact hmin w)
-
 /-- **The no-sector-label premise, from Economy.** The update `H` is fixed by the sector
 exchange (`swap * H * swap = H`, the hypothesis of `exchange_hermitian`) whenever the update
 cost is exchange-invariant (the sectors are indistinguishable) and persistence selects a unique
-least-cost update. So "carries no sector label" reduces to those two persistence premises. -/
+least-cost update. This is the framework's general selection principle
+(`PersistenceMechanics.SelectionSymmetry.unique_minimizer_fixed`) applied to the exchange, so
+"carries no sector label" reduces to those two persistence premises. (The uniqueness premise is
+not automatic: it holds for strictly convex costs (`LawSelection.uniform_law`) and fails for
+continuous symmetry families (`PMFlavor.ReferenceSelection`).) -/
 theorem exchange_fixed_of_unique (cost : Matrix (n ⊕ n) (n ⊕ n) ℂ → ℝ)
     (H : Matrix (n ⊕ n) (n ⊕ n) ℂ)
     (hcost : ∀ K, cost (swap * K * swap) = cost K)
     (hmin : ∀ K, cost H ≤ cost K)
     (huniq : ∀ K, (∀ L, cost K ≤ cost L) → K = H) :
     swap * H * swap = H :=
-  unique_minimizer_fixed cost (fun K => swap * K * swap) hcost H hmin huniq
+  PersistenceMechanics.SelectionSymmetry.unique_minimizer_fixed cost
+    (fun K => swap * K * swap) hcost H hmin huniq
 
 theorem one_doublet_phase_cancels (v : ℂ) (Yu Yd : Matrix (Fin 3) (Fin 3) ℂ) :
     (conj v • Yu).det * (v • Yd).det =
