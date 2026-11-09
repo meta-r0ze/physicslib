@@ -266,4 +266,80 @@ noncomputable def osGramInnerProductSpace (B : V → V → ℂ)
       (osGram_posSemidef B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal F)) :=
   (osGram B F).toInnerProductSpace (osGram_posSemidef B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal F)
 
+/-- **Null in the second argument.** A vector that is null pairs to zero *from either side*:
+`B x y = 0` whenever `B y y = 0`, by `osNull_cross` and conjugacy. -/
+theorem osNull_cross_right (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re) (hreal : ∀ x, (B x x).im = 0)
+    {x y : V} (hy : B y y = 0) : B x y = 0 := by
+  have h := osNull_cross B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal hy (x := y) (y := x)
+  have hc := conj_symm_of_real_diag B hadd₁ hadd₂ hsmul₁ hsmul₂ hreal x y
+  rw [h] at hc; simpa using hc
+
+/-- **The descended OS form** `Q (mk x) (mk y) = B x y` on `V ⧸ osNullSubmodule`. Well-defined
+because a null vector pairs to zero with everything (`osNull_cross`, `osNull_cross_right`). -/
+noncomputable def quotientForm (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re) (hreal : ∀ x, (B x x).im = 0) :
+    (V ⧸ osNullSubmodule B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal) →
+      (V ⧸ osNullSubmodule B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal) → ℂ :=
+  Quotient.lift₂ (fun x y => B x y) (by
+    intro a₁ b₁ a₂ b₂ ha hb
+    have haN : a₁ - a₂ ∈ osNullSubmodule B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal :=
+      (Submodule.quotientRel_def _).mp ha
+    have hbN : b₁ - b₂ ∈ osNullSubmodule B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal :=
+      (Submodule.quotientRel_def _).mp hb
+    have h1 : B a₁ b₁ = B a₂ b₁ := by
+      have hsplit : a₁ = a₂ + (a₁ - a₂) := by abel
+      rw [hsplit, hadd₁, osNull_cross B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal haN, add_zero]
+    have h2 : B a₂ b₁ = B a₂ b₂ := by
+      have hsplit : b₁ = b₂ + (b₁ - b₂) := by abel
+      rw [hsplit, hadd₂, osNull_cross_right B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal hbN, add_zero]
+    rw [h1, h2])
+
+/-- **The OS semi-inner-product on the quotient.** `quotientForm` is sesquilinear with a real
+non-negative diagonal, so `PreInnerProductSpace.Core` accepts it: the descended form on
+`V ⧸ osNullSubmodule` is a genuine semi-inner-product. (It is in fact *definite* —
+`mem_osNullSubmodule_iff` — so the quotient carries the physical Hilbert-space structure; turning
+`quotientCore` into an `InnerProductSpace` *instance* by `InnerProductSpace.ofCore` is the last
+typeclass-plumbing step, needing the quotient seminorm `InnerProductSpace.Core.toSeminormedAddCommGroup`.) -/
+@[instance_reducible]
+noncomputable def quotientCore (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re) (hreal : ∀ x, (B x x).im = 0) :
+    PreInnerProductSpace.Core ℂ (V ⧸ osNullSubmodule B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal) where
+  inner x y := quotientForm B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal y x
+  conj_inner_symm x y := by
+    induction x using Quotient.inductionOn with | h a =>
+    induction y using Quotient.inductionOn with | h b =>
+    simp only [quotientForm, Quotient.lift₂_mk]
+    exact (conj_symm_of_real_diag B hadd₁ hadd₂ hsmul₁ hsmul₂ hreal b a).symm
+  re_inner_nonneg x := by
+    induction x using Quotient.inductionOn with | h a =>
+    simp only [quotientForm, Quotient.lift₂_mk]; exact hpos a
+  add_left x y z := by
+    induction x using Quotient.inductionOn with | h a =>
+    induction y using Quotient.inductionOn with | h b =>
+    induction z using Quotient.inductionOn with | h c =>
+    rw [show (Quotient.mk _ a : V ⧸ _) = Submodule.Quotient.mk a from
+      Submodule.Quotient.quot_mk_eq_mk a,
+      show (Quotient.mk _ b : V ⧸ _) = Submodule.Quotient.mk b from
+      Submodule.Quotient.quot_mk_eq_mk b, ← Submodule.Quotient.mk_add]
+    simp only [quotientForm]; exact hadd₂ c a b
+  smul_left x y r := by
+    induction x using Quotient.inductionOn with | h a =>
+    induction y using Quotient.inductionOn with | h b =>
+    rw [show (Quotient.mk _ a : V ⧸ _) = Submodule.Quotient.mk a from
+      Submodule.Quotient.quot_mk_eq_mk a, ← Submodule.Quotient.mk_smul]
+    simp only [quotientForm]; exact hsmul₂ r b a
+
 end PMAction.OsterwalderSchrader
