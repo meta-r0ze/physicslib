@@ -1,4 +1,6 @@
 import Mathlib.Analysis.Complex.Basic
+import Mathlib.Analysis.InnerProductSpace.GramMatrix
+import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Tactic
 
 /-!
@@ -26,14 +28,13 @@ core that converts those facts into a semi-inner-product:
   `normSq F = Re (B F F)`, so the **null set** `{F | normSq F = 0}` of the semi-inner-product is
   the kernel of the OS form.
 * `osNull_zero` / `osNull_add` / `osNull_smul`: the null set is a **subspace** (closed under `0`,
-  `+` and scalar multiplication) — the one algebraic fact the quotient needs. Addition uses the
-  Cauchy–Schwarz bound: if `B x x = B y y = 0` then `‖B y x‖ ≤ 0`, so the cross term vanishes.
-
-With this the OS form is a semi-inner-product whose null set is a subspace, and Mathlib's
-`PreInnerProductSpace.Core` quotient machinery applies: the quotient of the observables by the null
-set, with the descended form, is the finite-dimensional physical Hilbert space. Assembling the
-quotient itself (the `Submodule`/`SeparationQuotient` construction) is scoped in
-`PMAction/REVIEW-AND-NEXT.md`.
+  `+` and scalar multiplication), packaged as the kernel `osNullSubmodule`.
+* `osGram` / `osGram_posSemidef`: the Gram matrix `Mᵢⱼ = B Fⱼ Fᵢ` of a finite family of
+  observables is **positive semidefinite** — the finite-dimensional face of reflection positivity.
+* `osGramInnerProductSpace`: by `Matrix.PosSemidef.toInnerProductSpace`, `n → ℂ` is the
+  **physical Hilbert space** with inner product `⟪x, y⟫ = xᴴ M y`, an isometric model of the span of
+the `F`. The full quotient `V ⧸ osNullSubmodule` (for observables not assumed finite/independent)
+is the remaining scaffolding, scoped in `PMAction/REVIEW-AND-NEXT.md`.
 
 The framework here is the standard finite-dimensional OS reconstruction, specialized to the data
 `ReciprocalReflection` actually proves. No continuum, infinite-volume or mass-gap claim is made.
@@ -42,6 +43,7 @@ The framework here is the standard finite-dimensional OS reconstruction, special
 set_option linter.style.haveILetI false
 
 noncomputable section
+open scoped ComplexOrder
 namespace PMAction.OsterwalderSchrader
 
 variable {V : Type*} [AddCommGroup V] [Module ℂ V]
@@ -196,5 +198,41 @@ def osNullSubmodule (B : V → V → ℂ)
   zero_mem' := osNull_zero B hsmul₁
   add_mem' := fun hx hy => osNull_add B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal hx hy
   smul_mem' := fun c _ hx => osNull_smul B hsmul₁ hsmul₂ c hx
+
+/-- The **OS Gram matrix** of a finite family of observables, `Mᵢⱼ = B Fⱼ Fᵢ`, so that the OS
+form reads `⟪x, y⟫ = xᴴ M y` (Mathlib's convention, conjugate-linear in the first argument). -/
+def osGram (B : V → V → ℂ) {n : Type*} (F : n → V) : Matrix n n ℂ := fun i j => B (F j) (F i)
+
+/-- **The OS Gram matrix is positive semidefinite.** `osCore` makes `V` a (semi-)inner-product
+space; the Gram matrix of any finite family is then PSD (`Matrix.posSemidef_gram`). This is the
+finite-dimensional face of reflection positivity. -/
+theorem osGram_posSemidef (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) {n : Type*} [Fintype n] (F : n → V) :
+    (osGram B F).PosSemidef := by
+  let c := osCore B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal
+  letI : SeminormedAddCommGroup V := InnerProductSpace.Core.toSeminormedAddCommGroup (c := c)
+  letI : InnerProductSpace ℂ V := InnerProductSpace.ofCore c
+  change (Matrix.gram ℂ F).PosSemidef
+  exact Matrix.posSemidef_gram ℂ F
+
+/-- **The physical Hilbert space, finite-dimensional form.** A finite family of observables carries
+the PSD Gram matrix `osGram B F`; `Matrix.PosSemidef.toInnerProductSpace` makes `n → ℂ` the Hilbert
+space with inner product `xᴴ M y`. -/
+@[instance_reducible]
+noncomputable def osGramInnerProductSpace (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) {n : Type*} [Fintype n] (F : n → V) :
+    @InnerProductSpace ℂ (n → ℂ) _ ((osGram B F).toSeminormedAddCommGroup
+      (osGram_posSemidef B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal F)) :=
+  (osGram B F).toInnerProductSpace (osGram_posSemidef B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal F)
 
 end PMAction.OsterwalderSchrader
