@@ -4,6 +4,7 @@ import PMAction.Gauge
 import PMAction.Potential
 import PMAction.Dirac
 import PMAction.Governor
+import PMAction.Entanglement
 import PMAction.Measurement
 import PMAction.Operators
 import PMAction.OsterwalderSchrader
