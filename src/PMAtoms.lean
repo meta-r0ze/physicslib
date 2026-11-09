@@ -51,6 +51,7 @@ import PMAtoms.ClockHierarchy
 import PMAtoms.NuclearDecay
 import PersistenceMechanics.DecayChannel
 import PMAtoms.DecayInstantiation
+import PMAtoms.PersistenceComplex
 import PMAtoms.WeakTransition
 import PMAtoms.FermiFunction
 import PMAtoms.CollectiveRegime

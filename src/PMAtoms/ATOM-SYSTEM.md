@@ -88,6 +88,38 @@ These are E8 expressions, but the physical assignment is a model input:
 They are not fitted constants, but they are identifications of which E8 ratio
 pays which physical cost.
 
+## 4b. The general form, and what stays an input
+
+The structure of the ledger is more unified than its layers suggest (`PersistenceComplex`,
+`DecayInstantiation`):
+
+- **One complex.** Nucleons, links and closures are the vertices, edges and faces-minus-cubes
+  of one cubic packing complex with Euler characteristic `1` (`packing_euler`,
+  `packingClosureRank_eq_faces_sub_cells`).
+- **Margins are the substrate's Governor rule** (a credit spread over the `Δ` clock slots): the
+  beta margin `41/43 = 1 + governorTerm` with credit `χ`, and the alpha suppression `1 − gap/Δ`
+  with the isospin gap as credit.
+- **Decay factors are pillar slots** of `PersistenceMechanics.DecayChannel`
+  (`*PillarChannel`).
+- **The nucleus reuses the nucleon ledger**: link weights `πD` and `σ/2` are the proton and
+  neutron ledger's own terms (`LinkWeights`).
+- **Toll and margin at nucleus level are negligible**: the nucleon `Z_TOL ≈ 1.2×10⁻⁵ m_e` scales
+  to `≈ 5×10⁻⁶ u` at `A = 238`, far below the residuals.
+
+The **weights** remain identifications. Most have the form `Δ/k` or `Δ²/k`. Two counting rules
+were fixed in advance and scored against them: counting the links an event closes matches 2 of
+6; counting the nucleons involved matches 3 of 6. So no single participant rule derives them, and
+they are model inputs:
+
+| weight | `k` | geometric reading (where one exists) |
+| --- | --- | --- |
+| alpha closure `Δ/D` | 4 | the 4 links or 4 nucleons of a square |
+| shell `Δ/(D+χ)`, fission fragment shell | 6 | the 6 links of a bulk vertex |
+| fission yield `Δ²/(D+σ)` | 9 | the 9 nucleons of a `3×3` face |
+| fission cost `Δ²/(ν+D+σ+χ)` | 27 | the 27 nucleons of the minimal `3×3×3` cube |
+| alpha cost `Δ²/(ν+σ)` | 21 | none |
+| deformation `Δ/((D+χ)(σ−χ)ν)` | 288 | none |
+
 ## 5. Experimental / candidate modules
 
 These are exploratory and are **not** part of the certified mass column:

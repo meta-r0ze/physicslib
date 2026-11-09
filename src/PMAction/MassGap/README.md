@@ -103,5 +103,79 @@ Premises and scope:
 - The gauge layer is not covered (see the top of this file). `PeierlsDichotomy` also shows this
   contour route cannot reach continuous link groups.
 
-**This branch is closed.** It reopens only on a new premise: PM deriving `β`, or identifying the
-gauge Wilson cost with the distinction/survival cost.
+**This branch is closed.** See *The goal of this branch, and where it stops* below.
+
+## The Clay problem, and why this branch does not claim it
+
+The Millennium problem (Jaffe–Witten) asks for two things: for **every compact simple gauge
+group**, construct a non-trivial quantum Yang–Mills theory **on ℝ⁴** satisfying axioms at least
+as strong as Wightman / Osterwalder–Schrader, and prove it has a mass gap `Δ > 0`. The prize
+also requires refereed publication and general acceptance after two years. Lattice gaps,
+including numerical lattice evidence, do not count: the object is the continuum theory.
+
+This branch cannot reach that, for structural reasons rather than lack of effort:
+
+1. **PM answers a different question.** PM's substrate is discrete, and the continuum is a
+   readout. The prize asks for the continuum theory as the fundamental object.
+2. **The missing piece is not in PM.** The unsolved part is control across scales as the lattice
+   spacing goes to zero (a renormalization group for 4D non-Abelian theory). Nothing in the tree
+   addresses it.
+3. **PM's own coupling sits outside every provable regime.** `PMConstants.EventStiffness`
+   fixes the colour coupling at `g₃² = 4πα·N_sys/(12η) ≈ 1.48` (`StrongLedgerBounds`), that is
+   Wilson `β ≈ 4` for SU(3), up to PM's normalization factor of order one. Strong-coupling and
+   curvature (Lichnerowicz-type) gap arguments need `β ≪ 1`; weak coupling is the Clay problem
+   itself. At `β ≈ 4` lattice SU(3) is numerically confining, consistent with a gap, but no known
+   argument proves one there.
+
+## The goal of this branch, and where it stops
+
+**Goal.** A self-contained, formally verified claim that an outside expert can check without
+accepting PM: a volume-uniform mass gap for the ℤ/2 lattice with distinction cost
+(`SlabGap.slab_gap_explicit`, `CubicBox.box_mass_gap`), proved by Peierls contours, Dobrushin's
+criterion, a supersolution clustering bound and transfer-matrix spectral bounds. The PM reading
+(this lattice *is* PM's distinction substrate, `PMSubstrate.Distinctions.only_distinctions_cost`)
+is an interpretation layered on top.
+
+**Status: reached.** Everything above is proved with no `sorry`, axioms `propext`,
+`Classical.choice`, `Quot.sound`.
+
+**Not pursued, by decision:** the continuum limit; SU(N) at strong coupling (a general lattice
+result, not PM, and not prize-relevant); the flip-odd sector (no volume-uniform gap exists there);
+tightening the `β ≥ 30` constant.
+
+**Reopens only if** PM derives `β` at the substrate scale *and* identifies the gauge Wilson cost
+with the distinction/survival cost, or an external continuum construction becomes available to
+compare against.
+
+## What the gap work exposed for PM
+
+The ledger couplings are scale-free, but `PMConstants` compares them with running couplings at
+`M_Z` (`StrongLedgerTest` notes the scale must be stated). With ordinary running, a lattice
+coupling of `β ≈ 4` corresponds to a spacing of order `1/GeV`. So PM must say where its ledger
+couplings live: at the substrate spacing (then the substrate spacing is about `1/GeV`, a sharp
+and falsifiable claim), or read at `M_Z` by choice (then that choice is a free input). This is a
+question for the physics test, not for this branch.
+
+## Reusable lessons
+
+- **Discreteness ⇒ volume-uniform gap.** An **integer-valued** cost with a **unique** ground state
+  (up to relabeling) is gapped by at least one unit, *uniformly in volume*, and the diagonal
+  transfer contracts the excited sector (`DefectGap.cost_ge_one`,
+  `transfer_contracts_excitations`); the gap survives a form-bounded perturbation with `ε < m/2`
+  (`GapStability.gap_pos`, `DefectGap.gap_survives_offdiagonal`). The same "discrete count +
+  unique minimizer" shape appears in the framework's selection results
+  (`SelectionSymmetry.unique_minimizer_fixed`, `Vacuum.least_rank_most_persistent`, E6's
+  `probability_uniform_of_const_weight`) — worth reusing wherever an input is a count.
+- **Complementary gap halves.** `DefectGap` (diagonal cost) and the pre-existing linearized
+  Hessian/Schur gap (`SplitGap`, `VacuumSchur`, `VacuumLocalGap`, `JointVacuumGap`,
+  `CompactSplitGap`) are the two halves of a transfer-matrix gap; for the distinction substrate the
+  volume-uniform off-diagonal control is now supplied by the cluster expansion in `MassGap/`.
+- **Cluster expansion ⇒ gap.** A weight `p^(count of local distinctions)` with `p` small gives
+  contour polymers, Dobrushin convergence, a supersolution decay bound and a volume-uniform
+  spectral gap (`PMAction/MassGap`, `SlabGap.slab_gap_explicit`). Reusable for any PM model whose
+  weight is a power of a local event count.
+- **Gap = coupling; local defects cost locally.** At `p = exp(−β)` the survival weight is the
+  Gibbs density `exp(−β·cost)` (`DefectGap.survival_eq_gibbs`, `gap_eq_coupling`), so the per-tick
+  gap *is* the Gibbs coupling — a general "decay rate = coupling" reading. And a defect confined to
+  a region `Λ` has cost bounded by the adjacent pairs touching `Λ` (`cost_le_of_defect_subset`),
+  the first step of a locality argument for the off-diagonal part.

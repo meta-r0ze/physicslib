@@ -73,6 +73,17 @@ Short tests on the even-even residuals after the two-shape model:
 
 The smooth-ledger boundary is now formalized in `NuclearRegime`: `Z=96`, `N=152` is the deformed-actinide frontier. `cm_at_frontier` and `cf_beyond_frontier` make Cm/Cf a regime change, not an outlier to be fitted. The remaining heavy work belongs to the collective/fission regime beyond that frontier. `CollectiveRegime` now supplies the lower-envelope mass, `CollectivePersists`, and the persistence/equality theorem. `alphaChannel` and `fissionChannel` now populate the collective envelope with smooth-ledger fragment masses and the E8 `shellWeight` barrier. The barrier is still schematic. `CollectiveRate` now wires barrier → hazard → `MeanLife` → `PersistsOn`, including the empty-channel indefinite-persistence case. A mass-only check shows the problem: symmetric fission fragments are already lower in the smooth ledger by `≈0.29 u`, so the lower-envelope criterion would predict immediate fission. Alpha is lower by `≈0.009 u` even with a `Δ`-scale barrier. Mass minimality alone is therefore the wrong persistence criterion for the post-frontier regime; the barrier/rate layer (`MeanLife`/`PersistenceRate`) is required. `not_collectivePersists_of_lower` records the mass-only consequence. `e8CubicPotential`/`nuclearMassPackingCubic` implement it with `cubicCoupling = deformationWeight/ν = (43/288)/16`, but the literal minimum still leaves the holdout at `≈0.0135 u`. The term is structurally E8-clean but not yet predictive.
 
+## 1b. N=Z over-binding past O-16
+
+On the certified ledger, every N=Z nucleus past O-16 is over-bound by about `1.1–1.2 m_e` per
+alpha cluster (`RESIDUALS.md`: Ne-20 −7.6, Ca-40 −12.3, Ni-56 −16.4 `m_e`; He-4, C-12, O-16 within
+`±1.4`). Along isotope chains it is largest at N=Z (Ca-40 −12.3 vs Ca-44 −6.1; Ni-56 −16.4 vs
+Ni-62 +0.5). So the alpha closure lacks a saturation once a closed core exists.
+
+Ruled out: giving the alpha layer the complex's surface law (`× F(A)/3A`). It raises per-alpha
+binding with `A`, the wrong direction, and pushes every N=Z residual positive (up to `+52 m_e`).
+No coefficient was fitted to this trend.
+
 ## 2. Charge tail
 
 The exact `3×3×3` charge response is certified, but it does not scale to heavy
