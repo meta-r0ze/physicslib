@@ -73,4 +73,32 @@ theorem finite_budget_gram (M : Type*) [AddCommGroup M]
   rw [he]
   simpa using hz
 
+/-- **Finiteness does not force finite generation.** The finite-support group `ℤ^{(∞)}` (`ℕ →₀ ℤ`)
+has a positive-definite integral form (`Σ xᵢ²`) with **finite cost sublevels**, yet is **not finitely
+generated**. So the address lattice `ℤⁿ` (Paper I's Postulate L) is not a consequence of Finiteness:
+a finite description admits infinite-rank addresses. The load-bearing extra premise is
+bit-addressing (`2Λ* ⊆ Λ`, Postulate A), which `ℤ^{(∞)}` fails — the content of
+`PMSubstrate.RequirementMap.S1_residual`. -/
+theorem finsupp_not_finite_generated : ¬ Module.Finite ℤ (ℕ →₀ ℤ) := by
+  intro h
+  obtain ⟨s, hs⟩ := h.fg_top
+  let T : Submodule ℤ (ℕ →₀ ℤ) :=
+    { carrier := {x | x.support ⊆ s.biUnion Finsupp.support}
+      zero_mem' := by simp
+      add_mem' := fun hx hy =>
+        (Finsupp.support_add (g₁ := _) (g₂ := _)).trans (Finset.union_subset hx hy)
+      smul_mem' := fun a _ hx => (Finsupp.support_smul (b := a)).trans hx }
+  have hle : (⊤ : Submodule ℤ (ℕ →₀ ℤ)) ≤ T := by
+    rw [← hs]
+    apply Submodule.span_le.mpr
+    intro x hx
+    show x.support ⊆ s.biUnion Finsupp.support
+    exact Finset.subset_biUnion_of_mem Finsupp.support hx
+  obtain ⟨k, hk⟩ : ∃ k : ℕ, k ∉ s.biUnion Finsupp.support := by
+    by_contra hc
+    push_neg at hc
+    exact (Set.infinite_univ (α := ℕ)) ((Finset.finite_toSet _).subset (fun k _ => hc k))
+  exact hk ((hle Submodule.mem_top : (Finsupp.single k 1 : ℕ →₀ ℤ) ∈ T)
+    (Finsupp.mem_support_iff.mpr (by simp)))
+
 end PMSubstrate.Address
