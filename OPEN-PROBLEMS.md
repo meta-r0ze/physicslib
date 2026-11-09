@@ -125,3 +125,8 @@ These ideas are reusable on other open items.)
   `CompactSplitGap`) are the two halves of a transfer-matrix gap; the open condition joining them
   is a **volume-uniform bound on the off-diagonal form `ε`** (extensive for a lattice gauge
   transfer matrix). See the `PMAction/OVERVIEW.md` Yang–Mills scope note.
+- **Gap = coupling; local defects cost locally.** At `p = exp(−β)` the survival weight is the
+  Gibbs density `exp(−β·cost)` (`DefectGap.survival_eq_gibbs`, `gap_eq_coupling`), so the per-tick
+  gap *is* the Gibbs coupling — a general "decay rate = coupling" reading. And a defect confined to
+  a region `Λ` has cost bounded by the adjacent pairs touching `Λ` (`cost_le_of_defect_subset`),
+  the first step of a locality argument for the off-diagonal part.
