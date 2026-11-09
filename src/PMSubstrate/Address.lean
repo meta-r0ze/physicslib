@@ -101,4 +101,62 @@ theorem finsupp_not_finite_generated : ¬ Module.Finite ℤ (ℕ →₀ ℤ) := 
   exact hk ((hle Submodule.mem_top : (Finsupp.single k 1 : ℕ →₀ ℤ) ∈ T)
     (Finsupp.mem_support_iff.mpr (by simp)))
 
+/-- Coordinate-sum `σ x = Σ xᵢ`, a `ℤ`-linear functional. -/
+noncomputable def coordSum : (ℕ →₀ ℤ) →ₗ[ℤ] ℤ :=
+  Finsupp.lsum ℤ (fun _ : ℕ => (LinearMap.id : ℤ →ₗ[ℤ] ℤ))
+
+/-- **The infinite-rank even lattice** `D_∞ = {x ∈ ℤ^(∞) : Σ xᵢ even}`. -/
+def DInf : Submodule ℤ (ℕ →₀ ℤ) :=
+  Submodule.comap coordSum (Submodule.span ℤ ({2} : Set ℤ))
+
+/-- **Bit-addressing holds for `D_∞`.** `2·x ∈ D_∞` for every ambient `x`, i.e. `2·(D_∞*) ⊆ D_∞`
+(the ambient `ℤ^(∞)` is `D_∞*`, since the standard form on `ℤ^(∞) ⊆ ℓ²` is self-dual). -/
+theorem two_smul_mem_DInf (x : ℕ →₀ ℤ) : (2 : ℤ) • x ∈ DInf := by
+  change coordSum ((2 : ℤ) • x) ∈ Submodule.span ℤ ({2} : Set ℤ)
+  rw [map_smul]
+  exact Submodule.mem_span_singleton.mpr ⟨coordSum x, by simp [smul_eq_mul, mul_comm]⟩
+
+/-- `D_∞` has infinite rank (it contains `e₀ + e_k` for every `k`), so it is not finitely
+generated. (Same support argument as `finsupp_not_finite_generated`.) -/
+theorem DInf_not_finite : ¬ Module.Finite ℤ DInf := by
+  intro h
+  obtain ⟨s, hs⟩ := h.fg_top
+  let U : Finset ℕ := s.biUnion fun g : DInf => (g : ℕ →₀ ℤ).support
+  let T : Submodule ℤ (ℕ →₀ ℤ) :=
+    { carrier := {x | x.support ⊆ U}
+      zero_mem' := by simp
+      add_mem' := fun hx hy =>
+        (Finsupp.support_add (g₁ := _) (g₂ := _)).trans (Finset.union_subset hx hy)
+      smul_mem' := fun a _ hx => (Finsupp.support_smul (b := a)).trans hx }
+  have hspan : Submodule.span ℤ ((Submodule.subtype DInf) '' (s : Set DInf)) ≤ T := by
+    apply Submodule.span_le.mpr
+    rintro _ ⟨g, hg, rfl⟩
+    exact Finset.subset_biUnion_of_mem (fun g : DInf => (g : ℕ →₀ ℤ).support) hg
+  have hDInf_le : DInf ≤ T := by
+    have heq : DInf = Submodule.span ℤ ((Submodule.subtype DInf) '' (s : Set DInf)) := by
+      have hmap : (⊤ : Submodule ℤ DInf).map (Submodule.subtype DInf) = DInf :=
+        Submodule.map_subtype_top DInf
+      calc DInf = (⊤ : Submodule ℤ DInf).map (Submodule.subtype DInf) := hmap.symm
+        _ = (Submodule.span ℤ (s : Set DInf)).map (Submodule.subtype DInf) := by rw [← hs]
+        _ = Submodule.span ℤ ((Submodule.subtype DInf) '' (s : Set DInf)) :=
+              Submodule.map_span _ _
+    rw [heq]; exact hspan
+  obtain ⟨k, hk⟩ : ∃ k : ℕ, k ∉ U ∪ {0} := by
+    by_contra hc
+    push Not at hc
+    exact (Set.infinite_univ (α := ℕ))
+      ((Finset.finite_toSet (U ∪ {0})).subset (fun k _ => hc k))
+  have hmemD : (Finsupp.single 0 1 + Finsupp.single k 1 : ℕ →₀ ℤ) ∈ DInf := by
+    change coordSum (Finsupp.single 0 1 + Finsupp.single k 1) ∈ Submodule.span ℤ ({2} : Set ℤ)
+    rw [map_add, show coordSum (Finsupp.single 0 (1 : ℤ)) = 1 by simp [coordSum],
+      show coordSum (Finsupp.single k (1 : ℤ)) = 1 by simp [coordSum],
+      show (1 : ℤ) + 1 = 2 by norm_num]
+    exact Submodule.subset_span (Set.mem_singleton (2 : ℤ))
+  have hk_supp : k ∈ (Finsupp.single 0 1 + Finsupp.single k 1 : ℕ →₀ ℤ).support :=
+    Finsupp.mem_support_iff.mpr (by
+      rw [Finsupp.add_apply, Finsupp.single_eq_same,
+        Finsupp.single_eq_of_ne (by rintro rfl; exact hk (by simp))]
+      norm_num)
+  exact hk (Finset.mem_union_left _ (hDInf_le hmemD hk_supp))
+
 end PMSubstrate.Address
