@@ -114,7 +114,7 @@ def DInf : Submodule ℤ (ℕ →₀ ℤ) :=
 theorem two_smul_mem_DInf (x : ℕ →₀ ℤ) : (2 : ℤ) • x ∈ DInf := by
   change coordSum ((2 : ℤ) • x) ∈ Submodule.span ℤ ({2} : Set ℤ)
   rw [map_smul]
-  exact Submodule.mem_span_singleton.mpr ⟨coordSum x, by simp [smul_eq_mul, mul_comm]⟩
+  exact Submodule.mem_span_singleton.mpr ⟨coordSum x, by simp [mul_comm]⟩
 
 /-- `D_∞` has infinite rank (it contains `e₀ + e_k` for every `k`), so it is not finitely
 generated. (Same support argument as `finsupp_not_finite_generated`.) -/
