@@ -9,7 +9,7 @@ import PMCosmology.Scaling
 import PMCosmology.SubstrateLoad
 import PMCosmology.Tensions
 import PMCosmology.Primordial
-import PMElementaryParticles.CompositeMasses
+import E8PConstants.CompositeMassPulls
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.TauLifetime
@@ -518,22 +518,22 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     exact ⟨h.1.le, h.2.le⟩
   | tauRatio => norm_num [bounds, value, PMElementaryParticles.LeptonMasses.tau]
   | protonRadius =>
-    have h := PMElementaryParticles.CompositeMasses.proton_radius
+    have h := E8PConstants.CompositeMassPulls.proton_radius
     rw [abs_lt] at h
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]
   | pion0MeV =>
-    have h := PMElementaryParticles.CompositeMasses.pion_mass
+    have h := E8PConstants.CompositeMassPulls.pion_mass
     rw [abs_lt] at h
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]
   | kaon0MeV =>
-    have h := PMElementaryParticles.CompositeMasses.kaon0_mass
+    have h := E8PConstants.CompositeMassPulls.kaon0_mass
     rw [abs_lt] at h
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]
   | kaonPlusMeV =>
-    have h := PMElementaryParticles.CompositeMasses.kaonPlus_mass
+    have h := E8PConstants.CompositeMassPulls.kaonPlus_mass
     rw [abs_lt] at h
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]

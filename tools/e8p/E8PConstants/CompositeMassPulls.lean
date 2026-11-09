@@ -13,9 +13,6 @@ noncomputable section
 namespace E8PConstants.CompositeMassPulls
 open PMSubstrate PMElementaryParticles PMElementaryParticles.CompositeMasses
 
-def me : ℝ := 0.51099895069
-def hbarc : ℝ := 197.3269804
-
 theorem proton_ratio : |(proton - 1836.152673426) / 0.000000032| < 1 := by
   have h := proton_value
   rw [abs_lt]; constructor

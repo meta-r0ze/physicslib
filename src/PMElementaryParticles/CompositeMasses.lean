@@ -35,6 +35,9 @@ def αe : ℝ := PMConstants.Values.alpha
 def αinv : ℝ := geometricIndex
 def base : ℝ := 43 ^ 2 - Real.pi * 4 - 1 / 4
 
+def me : ℝ := 0.51099895069
+def hbarc : ℝ := 197.3269804
+
 def proton : ℝ := base + 5 * zTol - zMar / 2 - αe * (4 + 1 / 4)
 def neutron : ℝ := base + 5 / 2 + 3 * zTol - zMar
 def pion0 : ℝ := 2 * αinv - 5 * 2 + 1 / (16 - 2)
