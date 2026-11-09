@@ -22,7 +22,8 @@ is explicit rather than hidden.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace E8PConstants.AlphaClockComparison
+open PMAtoms PMElementaryParticles PMConstants
 
 /-- Capacity-convention period. -/
 def capacityPeriod (workload : ℝ) : ℝ := e8Tick / workload
@@ -68,4 +69,4 @@ theorem alpha_capacity_vs_nested_ratio {p : Nuclide}
 theorem nestedPeriod_10_2_6 : nestedPeriod [10, 2, 6] = 5160 := by
   norm_num [nestedPeriod, e8Tick_eq]
 
-end PMAtoms
+end AlphaClockComparison

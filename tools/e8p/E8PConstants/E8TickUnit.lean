@@ -19,7 +19,8 @@ comparison inputs, not E8-derived numbers.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace E8PConstants.E8TickUnit
+open PMAtoms PMElementaryParticles PMConstants
 
 /-- Electron time unit `ħ/(m_e c²)` from the canonical conversion module. -/
 def electronSecond : ℝ := PMElementaryParticles.PhysicalUnits.electronTime
@@ -69,4 +70,4 @@ noncomputable def pionLifetimeCorrectedTicks : ℝ :=
 noncomputable def u238FissionTicks : ℝ := lifetimeTicks (fissionFullLifetime u238)
 noncomputable def cf252FissionTicks : ℝ := lifetimeTicks (fissionFullLifetime cf252)
 
-end PMAtoms
+end E8TickUnit

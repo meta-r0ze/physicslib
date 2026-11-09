@@ -20,6 +20,8 @@ import PMCosmology.Background
 import PMSubstrate.Readouts
 import E8PConstants.PlanckReadout
 import E8PConstants.ExperimentalComparison
+import E8PConstants.AlphaClockComparison
+import E8PConstants.E8TickUnit
 import PMConstants.ElectroweakBounds
 import PMConstants.ElectroweakE8
 import PMConstants.JointConstants
