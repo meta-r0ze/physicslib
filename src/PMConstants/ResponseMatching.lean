@@ -101,6 +101,15 @@ theorem matching_frontier_of_calibration (toll : ℝ) (m : ℕ)
     matching_frontier toll m footprint :=
   (matching_frontier_iff_calibration toll m).mpr hcal
 
+/-- **The matching workload is the substrate's own electric ledger.** The electric sector refreshes
+exactly its required resources, so its refresh count is `ledger reqSU2 + ledger reqY = footprint`
+(`GaugeLedgers.footprint_from_rule`). So `matching_frontier toll m footprint` is the matching at a
+*substrate-fixed* workload, not a chosen one. -/
+theorem footprint_eq_electric_ledger :
+    footprint =
+      GaugeLedgers.ledger GaugeLedgers.reqSU2 + GaugeLedgers.ledger GaugeLedgers.reqY :=
+  GaugeLedgers.footprint_from_rule.symm
+
 /-- The matching **determines** the substrate's event product `toll·m·W`: `4π/g²(0) = Z_geo`
 holds exactly when `toll·m·W = Z_geo/(4π)`. So the matching is not a free physical hypothesis — it
 is the condition that the substrate's event pricing is normalized to its own admittance. -/

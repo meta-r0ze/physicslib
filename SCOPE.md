@@ -33,7 +33,7 @@ derived, then compared to SM values by `tools/e8p`.
 | Grand unification | PM-3 (a GUT-scale number only) | no group/dynamics | **open** |
 | CPT | PM-2 `CPPhases` (T only) | not a theorem | **open** |
 | Origin of the complex structure (why ℂ amplitudes) | PM-2 amplitudes | model choice | **postulate** |
-| Electromagnetic matching `α⁻¹(0) = Z_geo` | PM-1 `7_correspondences.tex` §EM matching; `PMConstants.ResponseMatching` | **closed**: the constants layer *defines* `α` as the substrate's admittance (`CertifiedConstants.α := causalCoupling`), so `α⁻¹ = Z_geo` is a theorem and the impedance form is the rationalized-units normalization `g² = 4πα` (`matching_frontier_iff_admittance`); equivalently the electric calibration (`matching_frontier_iff_calibration`) | **closed (definition/calibration)**; physical residual = the identification `α = κ` |
+| Electromagnetic matching `α⁻¹(0) = Z_geo` | PM-1 `7_correspondences.tex` §EM matching; `PMConstants.ResponseMatching` | **closed**: the constants layer *defines* `α` as the substrate's admittance (`CertifiedConstants.α := causalCoupling`), so `α⁻¹ = Z_geo` is a theorem and the impedance form is the rationalized-units normalization `g² = 4πα` (`matching_frontier_iff_admittance`); equivalently the electric calibration (`matching_frontier_iff_calibration`) at the electric ledger workload (`footprint_eq_electric_ledger`) | **closed**; content = the identification `α = κ`, tested in e8p |
 
 ## How each kind is closed
 - **postulate** — state it once and stop calling it derived; the tree already flags
