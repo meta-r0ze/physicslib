@@ -108,7 +108,58 @@ theorem no_signalling_singlet :
     marginal0 zProj singlet = 2⁻¹ ∧ marginal0 xProj singlet = 2⁻¹ := by
   constructor <;>
     simp only [marginal0, normSq2, apply, zProj, xProj, singlet, Fin.sum_univ_two, Fin.isValue,
-      Fin.reduceEq, and_self, and_true, and_false, ite_true, ite_false, zero_mul, mul_zero] <;>
+      Fin.reduceEq, and_true, and_false, ite_true, ite_false, zero_mul, mul_zero] <;>
     norm_num [s2_normSq]
+
+/-! ## Bell / CHSH -/
+
+/-- Pauli `σ_z`. -/
+def sz : Matrix (Fin 2) (Fin 2) ℂ :=
+  fun i j => if i = 0 then (if j = 0 then 1 else 0) else (if j = 1 then -1 else 0)
+
+/-- Pauli `σ_x`. -/
+def sx : Matrix (Fin 2) (Fin 2) ℂ :=
+  fun i j => if (i = 0 ∧ j = 1) ∨ (i = 1 ∧ j = 0) then 1 else 0
+
+/-- Bob setting `(σ_z + σ_x)/√2`. -/
+def b0 : Matrix (Fin 2) (Fin 2) ℂ := fun i j => (sz i j + sx i j) * s2⁻¹
+/-- Bob setting `(σ_z − σ_x)/√2`. -/
+def b1 : Matrix (Fin 2) (Fin 2) ℂ := fun i j => (sz i j - sx i j) * s2⁻¹
+
+/-- Singlet correlation `⟨ψ, (M ⊗ N) ψ⟩`. -/
+def corr (M N : Matrix (Fin 2) (Fin 2) ℂ) : ℝ :=
+  (∑ i : Fin 2, ∑ j : Fin 2, star (singlet i j) *
+    (∑ a : Fin 2, ∑ b : Fin 2, M i a * N j b * singlet a b)).re
+
+/-- The CHSH combination `E(a,b) + E(a,b') + E(a',b) − E(a',b')`. -/
+def chsh : ℝ := corr sz b0 + corr sz b1 + corr sx b0 - corr sx b1
+
+/-- The four singlet correlators of the CHSH settings, each `−(the angle cosine)`. -/
+theorem corr_values :
+    corr sz b0 = -(Real.sqrt 2) / 2 ∧ corr sz b1 = -(Real.sqrt 2) / 2 ∧
+      corr sx b0 = -(Real.sqrt 2) / 2 ∧ corr sx b1 = (Real.sqrt 2) / 2 := by
+  rw [corr, corr, corr, corr]
+  simp only [singlet, sz, sx, b0, b1, s2, Fin.sum_univ_two, Fin.isValue, Fin.reduceEq,
+    and_true, and_false, ite_true, ite_false, zero_mul, mul_zero]
+  have hs : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  refine ⟨?_, ?_, ?_, ?_⟩ <;>
+    · norm_num [Complex.normSq, Complex.div_re, Complex.div_im, Complex.mul_re, Complex.mul_im,
+        Complex.add_re, Complex.sub_re, Complex.ofReal_re, Complex.ofReal_im, Complex.conj_re,
+        Complex.conj_im]
+      ; field_simp
+      ; rw [hs]
+      ; ring
+
+/-- **CHSH violation.** The singlet's CHSH combination is `2√2`, exceeding the local bound `2`. -/
+theorem chsh_eq : chsh = -(2 * Real.sqrt 2) := by
+  unfold chsh
+  obtain ⟨h1, h2, h3, h4⟩ := corr_values
+  rw [h1, h2, h3, h4]; ring
+
+theorem chsh_violates : 2 < |chsh| := by
+  rw [chsh_eq, abs_neg]
+  have : Real.sqrt 2 * 2 = 2 * Real.sqrt 2 := by ring
+  rw [abs_of_pos (by positivity)]
+  nlinarith [Real.sqrt_pos.mpr (by norm_num : (0:ℝ) < 2), Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)]
 
 end PMAction.Entanglement
