@@ -1,5 +1,9 @@
 # PMCosmology — open work (todo)
 
+See [`PREDICTIONS.md`](PREDICTIONS.md) for the map from the general cosmology
+questions to PM's answers (what it predicts, what is a conditional rescaling, and
+what is not defined).
+
 Checked mathematics and the certified numbers are in [`OVERVIEW.md`](OVERVIEW.md).
 This file is only what remains, split by what a Lean proof can close (**Part A**)
 and what needs a physical/model law (**Part B**). Paper VI builds clean; run `./build.sh PMCosmology` for current counts. This is
