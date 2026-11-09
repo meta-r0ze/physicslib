@@ -156,6 +156,17 @@ theorem matching_coefficient (gSquared Z C : ℝ) (hg : 0 < gSquared)
   rw [hmatch, inv_div]
   field_simp
 
+/-- **The infrared electromagnetic response does not fix the coupling.** The substrate
+*computes* the optical response — the local index `n = ν/(ν−K)`, i.e. the reciprocal clock
+speed (`PMAction.SpatialResponse.localIndex_eq_inv_clock`) — but converting a response into the
+physical coupling `α` needs a matching coefficient, which positivity leaves free
+(`matching_coefficient`). For every positive geometric index `Z` and coupling `gSquared` there is
+a coefficient `C` with `Z = C / gSquared`, so no response computation alone pins `α`: the
+normalized response (the Maxwell matching law) is a **model input**. -/
+theorem response_leaves_matching_free (gSquared Z : ℝ) (_hg : 0 < gSquared) :
+    ∃ C : ℝ, Z = C / gSquared :=
+  ⟨Z * gSquared, by field_simp⟩
+
 /-- Given the electromagnetic matching postulate, the physical inverse
 coupling inherits the already verified numerical enclosure. -/
 theorem physical_inverse_coupling_bounds (gSquared : ℝ) (hg : 0 < gSquared)
