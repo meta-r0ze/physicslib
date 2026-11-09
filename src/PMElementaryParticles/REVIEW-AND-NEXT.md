@@ -55,7 +55,10 @@ constructed delta-function measure" gap.
 > `sphere_area_three`, `volume_ball_three`), from Mathlib's polar decomposition
 > `MeasureTheory.integral_fun_norm_addHaar`. The `S²` measure is `volume.toSphere`,
 > not the iterated `(z, φ)` integral. The massless measure follows
-> (`electron_measure_from_integral`). The remarks below are the historical state.
+> (`electron_measure_from_integral`), the delta-function/energy-shell `1/2` Jacobian is
+> *derived* (`delta_reduction`: the chain-rule factor `d(M/2)/dM = 1/2` via the
+> fundamental theorem of calculus), and `twoBody_from_delta` gives `Φ₂ = 1/(8π)` as the
+> energy-shell derivative of a genuine `∫_{ℝ³}`. The remarks below are the historical state.
 `MuonRate.electron_measure` is an algebraic identity. Target: derive
 `4π E²/((2π)³ 2E) = E/(4π²)` from `∫_{ℝ³} d³p` in spherical coordinates (surface
 measure of `S²` times `p² dp`, `p = √(E²−m²)`), for the massless case first, then

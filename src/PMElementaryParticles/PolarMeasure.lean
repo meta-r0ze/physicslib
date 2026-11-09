@@ -1,6 +1,8 @@
 import Mathlib.MeasureTheory.Constructions.HaarToSphere
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.Analysis.Calculus.Deriv.Mul
 import PMElementaryParticles.PhaseSpace
 
 /-!
@@ -120,6 +122,35 @@ theorem two_body_phase_space :
   rw [MeasureTheory.setIntegral_const, sphere_area_three, smul_eq_mul]
   have hp : Real.pi ≠ 0 := ne_of_gt Real.pi_pos
   field_simp
+  ring
+
+/-- **The delta-function / energy-shell reduction (Review item A1).** The `M`-derivative of the
+cumulative integral `M ↦ ∫₀^{M/2} h` is `h(M/2)/2`, i.e. `∫₀^∞ h(r) δ(M − 2r) dr = h(M/2)/2`.
+The Jacobian `1/2 = |d(M−2r)/dr|⁻¹` is **derived** (not postulated): it is the chain-rule factor
+`d(M/2)/dM = 1/2` in the fundamental theorem of calculus. This is the one piece of A1 that the
+polar decomposition alone does not supply. -/
+theorem delta_reduction (h : ℝ → ℝ) (hh : Continuous h) (M : ℝ) :
+    HasDerivAt (fun M' => ∫ r in (0 : ℝ)..(M' / 2), h r) (h (M / 2) / 2) M := by
+  have h1 : HasDerivAt (fun x : ℝ => ∫ r in (0 : ℝ)..x, h r) (h (M / 2)) (M / 2) :=
+    intervalIntegral.integral_hasDerivAt_right (hh.intervalIntegrable 0 (M / 2))
+      (hh.stronglyMeasurableAtFilter volume (nhds (M / 2))) hh.continuousAt
+  have h2 : HasDerivAt (fun M' : ℝ => M' / 2) (1 / 2) M := by
+    simpa [div_eq_mul_inv, mul_comm] using hasDerivAt_const_mul (x := M) (1 / 2 : ℝ)
+  have h3 := h1.comp M h2
+  have : h (M / 2) * (1 / 2) = h (M / 2) / 2 := by ring
+  rw [this] at h3
+  exact h3
+
+/-- **The massless two-body phase space `Φ₂ = 1/(8π)` from the energy-shell delta.** The
+cumulative massless two-body integral is `C(M) = (2π)⁴/(4(2π)⁶) ∫_{ℝ³} 1_{2‖k‖≤M}/‖k‖² d³k
+= ∫₀^{M/2} 1/(4π) dr` (the coefficient `1/(4π)` being the `4π` angular weight over `(2π)⁴/4(2π)⁶`);
+by `delta_reduction` its `M`-derivative is the two-body factor `Φ₂ = 1/(8π)`. So `Φ₂` is no longer
+an input factor: it is the energy-shell derivative of a genuine `∫_{ℝ³}`. -/
+theorem twoBody_from_delta (M : ℝ) :
+    HasDerivAt (fun M' => ∫ _r in (0 : ℝ)..(M' / 2), (1 / (4 * Real.pi)))
+      (1 / (8 * Real.pi)) M := by
+  have h := delta_reduction (fun _ => (1 / (4 * Real.pi))) continuous_const M
+  convert h using 1
   ring
 
 end PMElementaryParticles.PolarMeasure
