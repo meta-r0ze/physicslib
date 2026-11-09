@@ -1,4 +1,5 @@
 import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic
 
 /-!
 # Symmetry and selection
@@ -39,5 +40,22 @@ theorem exists_tied_of_moved {U : Type*} (cost : U → ℝ) (τ : U → U) (x : 
     (hcost : ∀ u, cost (τ u) = cost u) (hmove : τ x ≠ x) :
     ∃ v, v ≠ x ∧ cost v = cost x :=
   ⟨τ x, hmove, hcost x⟩
+
+/-- **A scale-invariant cost cannot select a magnitude.** If a cost is invariant under scaling
+`x ↦ c·x` (`1 < c`), then the scaled point ties: `c·x` is distinct from `x` with the same cost. So
+a *dimensionful anchor* — a mass scale, a length/energy unit, an SI second — has no cost
+functional, exactly as a continuous phase does (`exists_tied_of_moved`). -/
+theorem scale_ties {cost : ℝ → ℝ} (c : ℝ) (hc : 1 < c)
+    (hcost : ∀ x : ℝ, 0 < x → cost (c * x) = cost x) (x : ℝ) (hx : 0 < x) :
+    ∃ μ, μ ≠ x ∧ cost μ = cost x :=
+  ⟨c * x, by nlinarith, hcost x hx⟩
+
+/-- **A scale-invariant cost has no unique minimizer**, so it cannot single out an anchor value. -/
+theorem scale_no_unique_min {cost : ℝ → ℝ} (c : ℝ) (hc : 1 < c)
+    (hcost : ∀ x : ℝ, 0 < x → cost (c * x) = cost x) (x : ℝ) (hx : 0 < x) :
+    ¬ ((∀ y, cost x ≤ cost y) ∧ ∀ y, (∀ z, cost y ≤ cost z) → y = x) := by
+  rintro ⟨hmin, huniq⟩
+  obtain ⟨μ, hne, heq⟩ := scale_ties c hc hcost x hx
+  exact hne (huniq μ (by intro z; rw [heq]; exact hmin z))
 
 end PersistenceMechanics.SelectionSymmetry

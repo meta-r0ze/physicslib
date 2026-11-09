@@ -44,19 +44,24 @@ continuous the choice provably ties and it stays **M** (`SelectionSymmetry.invar
 | A2c | **Nuclear charge tail.** | `PMAtoms` §2 | M/H | The 3×3×3 charge response is exact; heavy scaling needs a finite-size differential. | Low-Z-anchored differential. |
 | A3c | **Deformed proton closure `2(Δ+σ)=96`.** | `PMAtoms` §3 | **H** | Candidate; simple closure overcorrects U-238. | Refine the closure. |
 
-## P3 — model-input leaves (data / selected laws; state once)
+## P3 — the input floor (anchors, laws, postulates; state once)
 
-| ID | Item | Modules | Kind | Note |
+**These are the irreducible inputs, not open derivations.** Each row splits *derived* (in the tree)
+from *input* (declared once). The **continuous** ones — a magnitude, a scale, a unit — are *proven
+not selectable*: a scale-invariant cost leaves every magnitude tied (`SelectionSymmetry.scale_ties`,
+`scale_no_unique_min`); the discrete ones need a cost functional that is not supplied.
+
+| ID | Item | Modules | Kind | Derived / input |
 | --- | --- | --- | --- | --- |
-| F1 | Wall anchor magnitude δ | `PMFlavor` | M | Direction/functional form E8; magnitude has no cost functional (`unitWall`, `ckmWall` anchors). |
-| F2 | Absolute wall-mass scale | `PMFlavor` | M | Ratios E8 (`capacity_ratio_sq`, `coupling_ratio`); scale external. |
-| C1 | Dark ratio `31/6` vs `25/6` | `PMCosmology` (`Scaling`) | M | Both proved distinct; which is `Ω_DM/Ω_b` is recorded as input. |
-| A7 | Electron screening/exchange, Aufbau order | `PMAtoms` §6 | M | Fill order is a supplied input (hydrogenic `−R∞/n²` has no ℓ-dependence). |
+| F1 | Wall anchor magnitude δ | `PMFlavor` | M | **Derived:** direction/functional form E8, candidate `ckmWall` (`δ = ε = χ/ν = 1/8`, `ckmWall_delta_eq`). **Input:** the magnitude — a continuous `(δ, ε)` with no cost functional, so not selectable (`scale_no_unique_min`; anchors `unitWall`, `ckmWall`). |
+| F2 | Absolute wall-mass scale | `PMFlavor` | M | **Derived:** the ratios (`WallMassRatio.capacity_ratio_sq`, `coupling_ratio`). **Input:** the absolute mass scale (external unit), not selectable (`scale_no_unique_min`). |
+| C1 | Dark ratio `31/6` vs `25/6` | `PMCosmology` (`Scaling`) | M | **Derived:** both counts (`darkRatio = 248/48 = 31/6`, `disjoint_dark_count_check`: `31/6 = 1 + 25/6`). **Input:** which is `Ω_DM/Ω_b` — a reading convention (the two differ by the baryon unit); no cost selects it. |
+| A7 | Electron screening/exchange, Aufbau order | `PMAtoms` §6 | M | **Derived:** capacities `2n²` and the order's linearisation (`Aufbau.madelungKey`, `aufbau_sorted`). **Input:** the fill *order* (Madelung `(n+ℓ, n)`) — the hydrogenic `−R∞/n²` carries no ℓ-dependence, so it needs screening/chemistry physics; no E8 cost supplied yet. |
 | C1–C7 | Cosmology Part B | `PMCosmology` | M/C | State/clock/readout, background `L(a)`, primordial source, baryon-changing event, metric/causal structure, entropy normalization, joint test. |
-| E7 | Decay law / physical E8 tick | `PMAtoms.E8Tick`, `E8TickUnit` | M | The E8 tick is the clock period `Δ = 43` (`E8Tick.e8Tick_eq`); the **SI conversion** (`E8TickUnit`) is a comparison input, explicitly not E8-derived. |
+| E7 | Decay law / physical E8 tick | `PMAtoms.E8Tick`, `E8TickUnit` | M | The E8 tick is the clock period `Δ = 43` (`E8Tick.e8Tick_eq`); the **SI conversion** (`e8TickSeconds = 43 · electronSecond`, `E8TickUnit`) is a unit/scale anchor, explicitly not E8-derived and not selectable (`scale_no_unique_min`). |
 | — | Nuclear rate unit `β·c0` (absolute attempt frequency) | `PMAtoms.RateModel`, `BetaLattice` | M | The spectral rate is `β·c0 · (open-mode fraction)`; `β` (persistence hazard) and `c0` (toll) fix the unit. The rate *structure* is complete (bounded, monotone in cutoff, saturating): `betaSpectralRateCutoff_mono`, `betaWeightedRate_univ`, `betaWeightedRate_empty`. Numeric spectral sums / lifetimes are comparison data. |
 | E9 | Radiative corrections, hadronic matrix elements | `PMElementaryParticles` B5 | M | `RadiativeCorrection` is a supplied-`R` interface; `BoundStateMatrixElement.value` is supplied. |
-| — | External anchors | `PMFlavor`, `PMConstants` | M | `m_e`, absolute wall-mass scale, `α_G` normalization, Planck scale — the dimensionful unit. Also the gauge-work **price scale**: it is the toll *unit* (`c₀ = 1` transition, `NetCost`), and the controller selection is scale-free (`ControllerLedger.selection_scale_free`), so it is an anchor, not a selection input. Isolated in `VevDownstream`, `WallImpedanceChoice`. |
+| — | External anchors | `PMFlavor`, `PMConstants` | M | `m_e`, absolute wall-mass scale, `α_G` normalization, Planck scale — the dimensionful unit. Also the gauge-work **price scale**: it is the toll *unit* (`c₀ = 1` transition, `NetCost`), and the controller selection is scale-free (`ControllerLedger.selection_scale_free`), so it is an anchor, not a selection input. Isolated in `VevDownstream`, `WallImpedanceChoice`. As scales/units they are not selectable (`SelectionSymmetry.scale_no_unique_min`). |
 | — | Postulates | `SCOPE.md` | P | Born rule; Lorentzian signature; origin of ℂ. Signature = "volume element squares to −1" (`Derived.SignaturePostulate`). |
 
 ## P4 — out of scope
@@ -81,7 +86,7 @@ cost over an explicit option family? The choices that are **open** (not selectab
 | strong-CP `θ̄` | continuous reference | provably ties | **M** (`ReferenceSelection.invariant_cost_tie`) |
 | dark-ratio reading `31/6` vs `25/6` | — (they differ by the baryon unit: `Scaling.disjoint_dark_count_check`, `darkRatio = 1 + 25/6`) | none | **M — reading convention** |
 | generation pair-type assignment | discrete `S₃` | generation-blind (`GenerationVacuumChoice`, degenerate before a breaking law) | **M — label** |
-| wall anchor `δ` | continuous magnitude | no cost in `δ` | **M** |
+| wall anchor `δ` | continuous magnitude | scale-invariant ⇒ ties | **M — no-go** (`SelectionSymmetry.scale_no_unique_min`) |
 | nuclear shell / α / pairing assignments | discrete channel labels | no cost yet | **M** |
 | gauge-work price scale | continuous (`c₀`) | selection is scale-free | **closed** — the least-cost controller is invariant under the toll (`ControllerLedger.selection_scale_free`); the scale is a unit (anchor) |
 
