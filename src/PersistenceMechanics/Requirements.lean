@@ -17,7 +17,9 @@ assumptions about a substrate**. The flow is
 So the E8 lattice is a *conclusion* (`PMSubstrate.Main.persistence_selects`), not a premise.
 The `MapRow` table below records, for each postulate reading, the PM requirement it formalizes
 and the Lean declaration in the substrate layer (`PMSubstrate`, necessarily downstream of this
-framework module) that forces its consequence; coverage of every reading is machine-checked.
+framework module) that forces its consequence; coverage of every reading is machine-checked. That
+table is certified against the real theorems in `PMSubstrate.RequirementMap` (`consequence_holds`),
+which also proves the reading `Geometric → PMRequirements` (`geometric_reading`).
 
 The three requirements are also stated abstractly (`PMRequirements`), with the framework
 consequence that Conservation + Causality is reversibility.

@@ -53,6 +53,7 @@ import PMSubstrate.NetCost
 import PMSubstrate.NetIndex
 -- Main theorem
 import PMSubstrate.MainTheorem
+import PMSubstrate.RequirementMap
 -- PM pillars and comparison with measurement
 import PMSubstrate.Pillars
 import PMSubstrate.Comparison
