@@ -47,12 +47,15 @@ Each module under `src/` has three documents with separate jobs:
 README.md           build, layout and import boundary
 OVERVIEW.md         what is checked, with theorem entry points
 REVIEW-AND-NEXT.md  what remains open or is a model input
+OPEN-PROBLEMS.md    the consolidated, prioritized register of open items
 ```
 
 The Lean source is the ground truth.  Notes that are only comparison data or
 validation tables live with the module they describe; they are not theorem inputs.
 The cross-cutting map of open physics questions — where the papers discuss them and
-whether the tree covers them — is [`SCOPE.md`](SCOPE.md).
+whether the tree covers them — is [`SCOPE.md`](SCOPE.md); the consolidated,
+prioritized register of every open item (why it is flagged, what E8/persistence would
+produce, the quickest test) is [`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md).
 
 For more English background, it is helpful to clone the following repositories and place them where the AI can access them.
 https://github.com/meta-r0ze/Persistence-Mechanics

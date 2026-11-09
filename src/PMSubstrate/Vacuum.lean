@@ -68,6 +68,28 @@ theorem geometric_lattice {s : Substrate} (h : Geometric s) :
     simp [hx]
   · exact h0
 
+/-- **Every geometric substrate is unimodular: `det = 1`.** Positive-definiteness gives
+`det > 0`; self-readability gives `IsUnit det` (`det = ±1`). Hence a *volume*-based economy
+is **degenerate** over the geometric family — every candidate has unit covolume — and rank is
+the only nondegenerate economy parameter, which is why `Economical` is selection by rank.
+(Independence of that selection is `VacuumIndependence.economy_needed`: `E₈ ⊕ E₈` is
+geometric with rank 16.) -/
+theorem geometric_det_one {s : Substrate} (h : Geometric s) : s.A.det = 1 := by
+  obtain ⟨hp, -, hd, -⟩ := geometric_lattice h
+  rcases Int.isUnit_iff.mp hd with h1 | h1
+  · exact h1
+  · exfalso
+    have hpos : (0 : ℝ) < (s.A.det : ℝ) := by
+      have h := hp.det_pos
+      rwa [← Int.cast_det] at h
+    rw [h1] at hpos
+    norm_num at hpos
+
+/-- Volume cannot select: all geometric substrates share determinant `1`. -/
+theorem geometric_det_degenerate {t u : Substrate} (ht : Geometric t) (hu : Geometric u) :
+    t.A.det = u.A.det :=
+  (geometric_det_one ht).trans (geometric_det_one hu).symm
+
 /-- Every substrate meeting the geometric postulates has rank at least eight. -/
 theorem geometric_rank {s : Substrate} (h : Geometric s) : 8 ≤ s.n := by
   obtain ⟨hp, he, hd, hn⟩ := geometric_lattice h
