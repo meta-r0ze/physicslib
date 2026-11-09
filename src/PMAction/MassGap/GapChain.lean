@@ -25,20 +25,19 @@ influence decays at rate `−log θ ≈ β − log(8K)` per incompatibility step
 `gap_of_euclidean_decay` (fully proved, from `GapFromDecay`). If the transfer matrix has Euclidean
 decay at rate `λ` on its excited sector, every excited eigenvalue is at most `λ`.
 
-## The open link
+## The link (closed elsewhere)
 
-`EuclideanDecay T λ` is what connects the two. It requires the **contour representation** of
-the PM spacetime model:
-1. every closed set of spacetime boundary edges is the boundary of exactly one history with the
-   vacuum boundary condition, so `Z` is the polymer partition function of connected closed
-   contours with activity `q^|γ|` (a cohomology statement on the spacetime box);
-2. the Euclidean correlation `⟨v, Tᵗ v⟩` of an excited vector is a difference of polymer ratios
-   between allowed sets that agree up to the time separation `t`, so `contour_decay` bounds it by
-   `C · θ^{t/r}` with `r` the contour range.
+`EuclideanDecay T λ` names the bridge between the two statements above. The route that closes it
+is the open-time slab, not the periodic box (`SlabGap.slab_gap`):
+1. contour representation: `ContourGas.contour_gas_eq`, `HistorySum.history_sum`, with
+   `SlabGeometry.slab_generate` for the slab;
+2. slab sum = transfer product: `TransferSlab.slab_transfer`;
+3. parity observables = sign twists: `SlabObservables.corr_eq_Z`;
+4. decay in time: `SlabClustering.slab_clustering` (supersolution form, `PolymerInfluence`);
+5. spectral assembly: `SpectralBounds.visible_top`, `GapFromCorrelation.gap_of_truncated_decay`,
+   with `Walsh` reducing the flip-even sector to even parity observables.
 
-Both steps are geometry and combinatorics of the low-temperature expansion. They contain no
-physics choice. They are stated here as the named hypothesis `EuclideanDecay`, the same way
-`ResponseMatching.matching_frontier` names its open step.
+`gap_of_euclidean_decay` is kept as the conditional form of the same conclusion.
 -/
 
 namespace PMAction.MassGap.GapChain

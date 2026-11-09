@@ -59,9 +59,10 @@ root-generator evolution as the substrate dynamics. For the packet subsystem thi
 reduces to the C² control one-forms and that admission. Gap half: `DefectGap` proves a
 volume-uniform gap for PM's diagonal distinction cost (unique vacuum up to relabeling, every
 excitation `≥ 1` transition, transfer contraction `≤ p` off the vacuum); `GapStability` proves the
-gap survives a form-bounded perturbation with `ε < m/2`. Open, and the real content: a
-volume-uniform bound on the off-diagonal (plaquette/kinetic) part of the gauge transfer matrix
-restricted to what the readout sees, or a cluster-expansion replacement for it; identifying
+gap survives a form-bounded perturbation with `ε < m/2`. The cluster-expansion
+replacement is now built for discrete distinctions: `MassGap.SlabGap.slab_gap` (flip-even sector
+of `T²`: simple top `Λ`, rest `≤ μ²Λ`, uniform in volume; see `MassGap/README.md`). Open: the
+slab plaquette-degree bound (a hypothesis there), the odd sector, continuous link groups; identifying
 `p` with the Gibbs `β`; and carrying the gap through the continuum readout. Remaining
 quantum-Yang–Mills constructions (transfer matrix, OS quotient/Hilbert space, infinite volume,
 full O(4) restoration, renormalized continuum, mass gap of the continuum theory) are out of

@@ -129,6 +129,16 @@ the off-diagonal part is bounded uniformly in volume. This diagonal half is *com
 linearized Hessian/Schur gap already present (`SplitGap`, `VacuumSchur`, `VacuumLocalGap`,
 `JointVacuumGap`, `CompactSplitGap`).
 
+**The gap chain, closed (discrete distinctions).** `MassGap/` now carries the contour route to
+the end. The PM history sum is a contour polymer gas (`ContourGas`, `HistorySum`). On the
+open-time slab it is a transfer-matrix product (`TransferSlab.slab_transfer`), and even parity
+observables are sign twists of that gas (`SlabObservables.corr_eq_Z`). A time-decaying
+supersolution gives Euclidean clustering (`SlabClustering`), and the spectral assembly
+(`SpectralBounds`, `Walsh`, `GapFromCorrelation`) gives `SlabGap.slab_gap`: in the flip-even
+sector of `T²` the top eigenvalue `Λ` is simple and every other eigenvalue is `≤ μ² Λ`,
+uniformly in volume. Scope: `ℤ/2` distinctions; `U(1)` excluded by `PeierlsDichotomy`; the slab
+plaquette degree bound is a hypothesis.
+
 **Yang–Mills scope.** This branch is a test of persistence mechanics, not a
 construction of Yang–Mills theory. Its deliverable is the classical continuum
 limit plus the finite-volume Euclidean setup (Gibbs measure, gauge invariance,
