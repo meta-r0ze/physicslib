@@ -51,7 +51,7 @@ rather than putting it in by hand. That is the PM-specific input, and it is the 
 QFT reader will examine. It does not address the Clay problem.
 -/
 
-namespace PMAction.HessianGap
+namespace PMAction.MassGap.HessianGap
 open Finset
 
 /-! ## Diamagnetic inequality -/
@@ -238,4 +238,4 @@ theorem hessian_gap_with_curvature (m ε Q C N : ℝ) (hQ : m * N ≤ Q) (hC : |
   rw [sub_mul]
   linarith
 
-end PMAction.HessianGap
+end PMAction.MassGap.HessianGap

@@ -108,7 +108,7 @@ site-sum-to-integral limits on a box under explicit regularity.
 `QuotientClosure.gibbs_quotient_invariant` proves gauge invariance descends to any
 measurable edge-identification quotient compatible with the action.
 
-**The gap half.** `DefectGap` reads Paper I's distinction cost (one transition per boundary
+**The gap half** (modules in [`MassGap/`](MassGap/README.md), namespace `PMAction.MassGap`). `DefectGap` reads Paper I's distinction cost (one transition per boundary
 edge, `PMSubstrate.Distinctions.cost_per_cut_edge`) on any finite connected site graph:
 `cost_eq_zero_iff` (zero cost exactly on the uniform configurations, the vacuum and its Closure
 relabeling), `cost_ge_one` / `gap_uniform_in_volume` (every excitation costs at least one

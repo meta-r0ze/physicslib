@@ -1,5 +1,5 @@
-import PMAction.PolymerDecay
-import PMAction.ContourCount
+import PMAction.MassGap.PolymerDecay
+import PMAction.MassGap.ContourCount
 import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
 
 /-!
@@ -30,7 +30,7 @@ Every constant is local (`D`, `K`, `q`, `c`), so all hypotheses hold uniformly i
 `q` is small enough.
 -/
 
-namespace PMAction.PolymerBridge
+namespace PMAction.MassGap.PolymerBridge
 open Finset PolymerConvergence
 
 section Cover
@@ -342,4 +342,4 @@ theorem site_sum_weighted_le (hconn : ∀ γ, ∃ u, ContourCount.Animal G u (su
 
 end Contours
 
-end PMAction.PolymerBridge
+end PMAction.MassGap.PolymerBridge

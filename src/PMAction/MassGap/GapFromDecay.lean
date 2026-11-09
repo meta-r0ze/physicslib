@@ -24,7 +24,7 @@ Combined with `PolymerConvergence` and `ContourCount`, the remaining analytic in
 volume-uniform gap is a volume-uniform `λ`, which is the decay-of-correlations estimate.
 -/
 
-namespace PMAction.GapFromDecay
+namespace PMAction.MassGap.GapFromDecay
 open Matrix
 
 variable {n : Type*} [Fintype n]
@@ -79,4 +79,4 @@ theorem gap_of_decay (T : Matrix n n ℝ) (excited : (n → ℝ) → Prop) (lam 
   obtain ⟨C, hC⟩ := hdec v hex
   exact eigen_le_of_decay T v hv0 μ hv C lam hlam hC
 
-end PMAction.GapFromDecay
+end PMAction.MassGap.GapFromDecay

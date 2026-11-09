@@ -44,7 +44,7 @@ the same criterion. Also still open: turning ratio decay into a transfer-matrix 
 geometric bridge that derives the criterion's hypothesis from `ContourCount`.
 -/
 
-namespace PMAction.PolymerConvergence
+namespace PMAction.MassGap.PolymerConvergence
 open Finset
 
 variable {P : Type*} [DecidableEq P] (inc : P → P → Prop) [DecidableRel inc] (w : P → ℝ)
@@ -266,4 +266,4 @@ theorem prod_one_sub_ge {ι : Type*} [DecidableEq ι] (s : Finset ι) (x : ι �
     have hs0 : 0 ≤ ∑ i ∈ s, x i := sum_nonneg fun i hi => h0 i (mem_insert_of_mem hi)
     nlinarith [mul_le_mul_of_nonneg_left ih' (by linarith : (0:ℝ) ≤ 1 - x a)]
 
-end PMAction.PolymerConvergence
+end PMAction.MassGap.PolymerConvergence

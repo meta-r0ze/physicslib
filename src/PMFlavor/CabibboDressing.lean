@@ -35,7 +35,7 @@ written out.
 
 It does **not** justify *why the CKM first row inherits* the per-direction
 reference deficit; that is the remaining physical claim about the anomaly (see
-`FlavourPulls.first_row_deficit_test`). The arithmetic input is now the upstream
+`E8PConstants.FlavourPulls.first_row_deficit_test`). The arithmetic input is now the upstream
 reference-frame deficit, not an independent fitted literal.
 -/
 

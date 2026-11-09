@@ -301,5 +301,4 @@ import PMAction.Machine.RegisterControl
 import PMAction.OrderComparison
 import PMAction.Machine.RootOrderComparison
 import PMAction.OrderRestoration
-import PMAction.DefectGap
-import PMAction.GapStability
+import PMAction.MassGap

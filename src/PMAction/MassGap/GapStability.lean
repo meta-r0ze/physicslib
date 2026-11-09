@@ -32,7 +32,7 @@ argument that the excited sector seen by the readout stays local) is the remaini
 it is where the Clay problem lives.
 -/
 
-namespace PMAction.GapStability
+namespace PMAction.MassGap.GapStability
 open Finset
 
 variable {ι : Type*} [Fintype ι]
@@ -111,4 +111,4 @@ theorem gap_pos (vac : ι → Prop) (m ε : ℝ) (e : ι → ℝ) (W : (ι → �
   have := gap_stable vac m ε e W he0 he hW v u hv hu hv1 hu1
   linarith
 
-end PMAction.GapStability
+end PMAction.MassGap.GapStability

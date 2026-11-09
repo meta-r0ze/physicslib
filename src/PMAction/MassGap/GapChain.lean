@@ -1,6 +1,6 @@
-import PMAction.PolymerBridge
-import PMAction.GapFromDecay
-import PMAction.SpacetimeCost
+import PMAction.MassGap.PolymerBridge
+import PMAction.MassGap.GapFromDecay
+import PMAction.MassGap.SpacetimeCost
 
 /-!
 # The gap chain, assembled
@@ -41,7 +41,7 @@ physics choice. They are stated here as the named hypothesis `EuclideanDecay`, t
 `ResponseMatching.matching_frontier` names its open step.
 -/
 
-namespace PMAction.GapChain
+namespace PMAction.MassGap.GapChain
 open Finset PolymerConvergence PolymerDecay PolymerBridge
 
 section Contours
@@ -154,4 +154,4 @@ theorem gap_of_euclidean_decay {n : Type*} [Fintype n] (T : Matrix n n ℝ)
     (v : n → ℝ) (hv0 : v ≠ 0) (hex : excited v) (μ : ℝ) (hv : T *ᵥ v = μ • v) : |μ| ≤ lam :=
   GapFromDecay.gap_of_decay T excited lam hlam h v hv0 hex μ hv
 
-end PMAction.GapChain
+end PMAction.MassGap.GapChain

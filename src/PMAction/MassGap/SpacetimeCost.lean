@@ -1,4 +1,4 @@
-import PMAction.DefectGap
+import PMAction.MassGap.DefectGap
 import Mathlib.Combinatorics.SimpleGraph.Prod
 import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.Maps
@@ -32,7 +32,7 @@ tick, or the same site at consecutive ticks. Sites are ordered lexicographically
   separately.
 -/
 
-namespace PMAction.SpacetimeCost
+namespace PMAction.MassGap.SpacetimeCost
 open SimpleGraph
 
 variable {V : Type*} [Fintype V] [LinearOrder V] (G : SimpleGraph V) (L : ℕ)
@@ -94,4 +94,4 @@ theorem history_weight (β : ℝ) (σ : Site V L → Bool) :
       Real.exp (-β * (DefectGap.cost (spacetime G L) σ : ℝ)) :=
   DefectGap.survival_eq_gibbs (spacetime G L) β σ
 
-end PMAction.SpacetimeCost
+end PMAction.MassGap.SpacetimeCost

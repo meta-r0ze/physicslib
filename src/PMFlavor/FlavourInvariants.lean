@@ -49,7 +49,7 @@ point of this file:
   still a postulated form, and `solar_eq` only relabels it.
 * **q² = 687/688.** `CKMDressing.q2` is the dressing that turns the geometrically
   exact first-row sum `1` into `1 − 1/688`, i.e. the entire claimed resolution of
-  the Cabibbo Angle Anomaly (`FlavourPulls.first_row_deficit_test` shows the undressed value is
+  the Cabibbo Angle Anomaly (`E8PConstants.FlavourPulls.first_row_deficit_test` shows the undressed value is
   2.28σ from the measured deficit, the dressed one 0.22σ). Upstream
   `PMConstants.FlavourDressing.cabibbo_deficit_per_direction` identifies it as the
   per-direction reference exclusion `1 − (1−η)/D`; the remaining physical claim is

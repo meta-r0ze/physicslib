@@ -13,7 +13,7 @@ The calculator multiplies every CKM amplitude by `q = √(1 − 1/688)`, `688 = 
 * `dressed_gram`, `dressed_gram_cols`: the dressed matrix `A = qV` has `AA† = A†A = (687/688)·1`.
   Every row and every column loses the same `1/688`; `first_row_sum` states it for the first row.
 * The fixed first-row benchmark test (CKM 2023 workshop) now lives in
-  `FlavourPulls.first_row_deficit_test`; this module contains only the dressing algebra.
+  `E8PConstants.FlavourPulls.first_row_deficit_test`; this module contains only the dressing algebra.
 * `dilation_needs_three`: if a dressed block `A` with `AA† = c·1`, `c ≠ 1`, is the
   upper-left `3×3` block of any unitary matrix of size `3 + m`, then `m ≥ 3`. The lost `1/688`
   cannot go into one extra outcome: Conservation requires at least three further channels

@@ -33,7 +33,7 @@ photon must be read out from a sector where this argument does not apply, or PM 
 massive photon. Item (iii) is a falsifiable constraint on the readout.
 -/
 
-namespace PMAction.PeierlsDichotomy
+namespace PMAction.MassGap.PeierlsDichotomy
 
 /-- **Finite link values satisfy the Peierls condition.** -/
 theorem finite_peierls {G : Type*} [Fintype G] [DecidableEq G] (one : G) (c : G → ℝ)
@@ -95,4 +95,4 @@ theorem u1_no_min_cost :
   obtain ⟨z, hz1, hz2, hz3⟩ := u1_no_peierls m hm
   linarith [h z hz1 hz2]
 
-end PMAction.PeierlsDichotomy
+end PMAction.MassGap.PeierlsDichotomy

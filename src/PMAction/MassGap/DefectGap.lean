@@ -1,5 +1,5 @@
 import PMSubstrate.Distinctions
-import PMAction.GapStability
+import PMAction.MassGap.GapStability
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
@@ -46,7 +46,7 @@ matrix is present. `GapStability` states exactly how much off-diagonal perturbat
 survives, which is where the remaining problem sits.
 -/
 
-namespace PMAction.DefectGap
+namespace PMAction.MassGap.DefectGap
 open Finset PMSubstrate.Distinctions
 
 variable {V : Type*} [Fintype V] [LinearOrder V] (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -222,4 +222,4 @@ theorem cost_le_of_defect_subset (Λ : Finset V) (x : V → Bool) (base : Bool)
   push Not at hc
   exact hne (by rw [h p.1 hc.1, h p.2 hc.2])
 
-end PMAction.DefectGap
+end PMAction.MassGap.DefectGap

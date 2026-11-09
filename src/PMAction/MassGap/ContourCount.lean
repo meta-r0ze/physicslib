@@ -39,7 +39,7 @@ activities. Both are standard but long. This file proves the combinatorial input
 them volume-uniform.
 -/
 
-namespace PMAction.ContourCount
+namespace PMAction.MassGap.ContourCount
 open Finset
 
 variable {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj]
@@ -210,4 +210,4 @@ theorem kotecky_preiss_condition (D : ℕ) (hD : ∀ w, G.degree w ≤ D) (v : V
     rw [div_le_one hden]; nlinarith
   linarith
 
-end PMAction.ContourCount
+end PMAction.MassGap.ContourCount
