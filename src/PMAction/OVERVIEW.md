@@ -115,7 +115,9 @@ relabeling), `cost_ge_one` / `gap_uniform_in_volume` (every excitation costs at 
 transition, with the constant independent of the number of sites), `survival_excited` (weight
 `≤ p` at hazard-form survival `p` per transition), and `transfer_contracts_excitations` /
 `transfer_fixes_vacuum` (the diagonal transfer is the identity on the vacuum and shrinks the
-excited sector by `p` in `ℓ²`; decay rate `≥ −log p` per tick, uniform in volume).
+excited sector by `p` in `ℓ²`; decay rate `≥ −log p` per tick, uniform in volume), and
+`cost_le_of_defect_subset` (a defect confined to a region `Λ` has cost bounded by the adjacent
+pairs touching `Λ` — *local defects cost locally*, the first step of the locality argument).
 `GapStability` gives the quadratic-form version under a perturbation `W` with `|W v| ≤ ε‖v‖²`:
 `excited_lower`, `vacuum_upper`, `gap_stable` (separation `≥ m − 2ε`), and `gap_pos`
 (`ε < m/2`); `DefectGap.gap_survives_offdiagonal` instantiates this at the PM gap `m = 1` (so the

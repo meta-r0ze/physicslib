@@ -200,4 +200,26 @@ theorem survival_eq_gibbs (β : ℝ) (x : V → Bool) :
 theorem gap_eq_coupling (β : ℝ) : -Real.log (Real.exp (-β)) = β := by
   rw [Real.log_exp]; ring
 
+/-! ### Local defects cost locally
+
+The first step of the locality argument for the off-diagonal part: a configuration that agrees with
+a base value outside a finite region `Λ` has **every** cut edge incident to `Λ`, so its cost is
+bounded by the adjacent pairs touching `Λ` — a constant that does not grow with the total volume.
+So a *local* defect has a *local* cost. -/
+
+/-- **Local defects cost locally.** If `x` agrees with `base` outside `Λ`, all cut edges are
+incident to `Λ`, hence `cost x` is bounded by the number of adjacent pairs touching `Λ`. -/
+theorem cost_le_of_defect_subset (Λ : Finset V) (x : V → Bool) (base : Bool)
+    (h : ∀ v, v ∉ Λ → x v = base) :
+    cost G x ≤ ((pairs G).filter (fun p => p.1 ∈ Λ ∨ p.2 ∈ Λ)).card := by
+  unfold cost
+  apply Finset.card_le_card
+  intro p hp
+  simp only [cutEdges, distinctions, Finset.mem_filter] at hp ⊢
+  obtain ⟨⟨hpair, hne⟩, -⟩ := hp
+  refine ⟨hpair, ?_⟩
+  by_contra hc
+  push Not at hc
+  exact hne (by rw [h p.1 hc.1, h p.2 hc.2])
+
 end PMAction.DefectGap
