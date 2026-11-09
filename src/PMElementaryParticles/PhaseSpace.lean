@@ -3,12 +3,14 @@ import PMElementaryParticles.ContinuumPair
 /-!
 # First step of the phase-space construction: the angular surface area
 
-`MuonRate` and `ContinuumPair` use the angular weight `4π`, but from a supplied
-measure convention. This module derives that weight from an actual iterated
+`MuonRate` and `ContinuumPair` use the angular weight `4π`. This module derives that weight from an actual iterated
 integral over the direction sphere in the `(z = cos θ, φ)` coordinates, and shows
 the normalized uniform average of a constant is one. It is the first concrete
-step toward constructing the phase-space measure (Review Part A1); the
-delta-function / energy-shell reduction is still open.
+step toward constructing the phase-space measure (Review Part A1). The
+genuine spherical change of variables is now in `PMElementaryParticles.PolarMeasure`
+(`integral_radial_three`, `sphere_area_three`), using Mathlib's polar decomposition
+`MeasureTheory.integral_fun_norm_addHaar`; only the delta-function / energy-shell
+reduction (Part A1) and the three-body factorization (Part A3) remain.
 
 * `solidAngle_one` — `∫_{z∈[−1,1]} ∫_{φ∈[0,2π]} 1 = 4π`, the unit-sphere area.
 * `average_one` — the normalized uniform angular average of `1` is `1`.
