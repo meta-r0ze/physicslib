@@ -158,4 +158,14 @@ def Postulate.usesSelection : Postulate → Bool
 theorem requirements_realized : ∀ r : Requirement, ∃ p : Postulate, Postulate.requirement p = r := by
   intro r; cases r <;> decide
 
+/-- **PM's three requirements do not force an additive lattice.** Any finite set with a permutation
+update (and any cost) satisfies `PMRequirements` — there is no additive/address structure in
+Finiteness, Conservation or Causality. So the lattice `Λ ≅ ℤⁿ` of Paper I's Postulate L is an
+*additional reading*, not a consequence of the three requirements: this is the content of
+`PMSubstrate.RequirementMap.S1_residual`. -/
+theorem requirements_not_lattice {n : ℕ} (σ : Equiv.Perm (Fin n)) :
+    Nonempty (PMRequirements (Fin n)) :=
+  ⟨{ step := σ, cost := fun _ => 0, finiteness := fun _ => Set.toFinite _,
+     conservation := σ.injective, causality := σ.surjective }⟩
+
 end PersistenceMechanics.Requirements

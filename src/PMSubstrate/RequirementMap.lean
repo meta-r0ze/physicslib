@@ -93,6 +93,13 @@ bilinear cost and finite cost sublevels alone — the finite-support group `ℤ^
 is not finitely generated — so the content of S1 is exactly this *finite, bit-addressed
 description* premise (bit-addressing, `2Λ* ⊆ Λ`, is what `ℤ^∞` fails). Proving `S1_residual`
 closes substrate selection. -/
+/-- **S1, explored.** The three requirements alone do not force an additive lattice
+(`PersistenceMechanics.Requirements.requirements_not_lattice`); Paper I's Postulate L — addresses
+form `Λ ≅ ℤⁿ` with an integral symmetric cost — is the additional *reading*. Two sub-facts pin the
+residual: bounded-cost finiteness gives positivity but **not** finite generation (the finite-support
+group `ℤ^{(∞)}` has finite cost sublevels yet is not finitely generated), while bit-addressing
+(`2Λ* ⊆ Λ`, Postulate A) is what `ℤ^{(∞)}` fails. So the honest target below is: **bit-addressing
+together with positivity forces finite generation** — the sharp form of Postulate L. -/
 def S1_residual : Prop :=
   ∀ (M : Type*) [AddCommGroup M] (r : PMRequirements M)
     (B : LinearMap.BilinForm ℤ M) (_hcost : ∀ x, r.cost x = (B x x : ℝ)),
