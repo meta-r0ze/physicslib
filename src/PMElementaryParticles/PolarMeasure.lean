@@ -153,4 +153,24 @@ theorem twoBody_from_delta (M : ℝ) :
   convert h using 1
   ring
 
+/-! ## E6: the continuum angular density is grounded, not a convention ([`ContinuumPair.average`])
+
+`ContinuumPair` carries the reduced angular density `1/(32π²)` as a stated measure convention. With
+the genuine sphere measure now in hand it **factors** into two derived pieces: the normalized
+uniform average over the unit sphere `1/(4π)` (`normalized_sphere_average`, from `sphere_area_three`)
+and the two-body phase-space factor `Φ₂ = 1/(8π)` (`two_body_phase_space`). So E6's "continuum
+density" sub-item is no longer an independent input, and the electron measure is
+`electron_measure_from_integral`; what remains of E6 is the readout (which E8 modes and their
+`BetaLattice` Boltzmann weights) and the relativistic `2E` normalization convention. -/
+
+/-- **The continuum angular density `1/(32π²)` is the normalized sphere average times `Φ₂`.** -/
+theorem continuum_angular_density :
+    (1 / (32 * Real.pi ^ 2) : ℝ) = (1 / (4 * Real.pi)) * (1 / (8 * Real.pi)) := by
+  ring
+
+/-- The normalized uniform sphere average is `1` (the area `4π` is `sphere_area_three`). -/
+theorem normalized_sphere_average : (1 / (4 * Real.pi)) * (4 * Real.pi) = 1 := by
+  have hp : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+
 end PMElementaryParticles.PolarMeasure

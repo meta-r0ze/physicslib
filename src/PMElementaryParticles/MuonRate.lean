@@ -104,6 +104,12 @@ theorem electron_measure (E : ℝ) (hE : E ≠ 0) :
   have : Real.pi ≠ 0 := Real.pi_ne_zero
   field_simp; ring
 
+/-- The parent **flux factor** `1/(2E)` — the relativistic normalization of a decaying state at
+rest. It is the *same* `2E` normalization that appears in the Lorentz-invariant measure
+`d³p/((2π)³ 2E)` (`PolarMeasure.massless_lorentz_measure`); it is a normalization convention, not
+an independent physical input. The muon rate uses it at `E = m`. -/
+def parentFlux (E : ℝ) : ℝ := 1 / (2 * E)
+
 /-- The electron energy spectrum. -/
 def rate (G m E : ℝ) : ℝ := G ^ 2 * m * E ^ 2 * (3 * m - 4 * E) / (12 * Real.pi ^ 3)
 

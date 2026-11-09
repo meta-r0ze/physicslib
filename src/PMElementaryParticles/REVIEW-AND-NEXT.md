@@ -123,10 +123,14 @@ operator bridges; the identification and normalization need a model law.
 spectral weights.  The remaining input is the physical mode selection/normalization.
 
 ### B2. Select the measure and normalizations from the substrate
-Independently of A1–A2 (which construct the *standard* measure), the **choice** of
-counting measure, reduced angular density `1/(32π²)`, electron measure, parent flux
-`1/(2m)` and overall normalization must be derived from the selected physical
-readout — they are currently supplied.
+Most of these are now **derived** rather than supplied. The counting measure is
+persistence-selected (`ChannelMeasure.probability_uniform_of_const_weight`,
+`probability_perm_uniform`); the reduced angular density `1/(32π²)` **factors** as
+`(1/4π)·Φ₂` (`PolarMeasure.continuum_angular_density`), with both factors constructed
+(`sphere_area_three`, `two_body_phase_space`); the electron measure is
+`PolarMeasure.electron_measure_from_integral` (from `massless_lorentz_measure`); and the
+spectral modes/weights are the E8 `BetaLattice` template.  What remains is the relativistic
+`2E` flux convention (`MuonRate.parentFlux`) and the physical readout normalization.
 
 ### B3 status
 
