@@ -162,6 +162,15 @@ conservation/mass checks are constraints, not a selection. The muon/tau mass for
 ≈2.1σ tensions; the factor-six contextual neutrino prescription is excluded. Do not
 promote a numerical fit or a symmetry-class count to a particle classification.
 
+### Lepton mass ledger naming (A7)
+`LeptonMasses` now writes every mass purely in the canonical `E8Values` invariants
+and decomposes it into named tier costs (`muon_ledger`, `tau_ledger`,
+`pionPlus_ledger`), so no bare measurement literal remains. The muon's vacuum
+feedback `(χ+σ)α/(1−α)` is *derived* as the fixed point of its recursive loop
+(`muonFeedback_fixpoint`), not fitted. What stays a declared model input (`M`) is
+the **assignment** of which invariant pays which tier cost (the paper's proposed
+ledger): there is no option family/cost functional over tier ledgers yet.
+
 ### Neutron width
 The massless-pair diagnostic is superseded by `NeutronRate`, which uses the
 massive-electron phase space

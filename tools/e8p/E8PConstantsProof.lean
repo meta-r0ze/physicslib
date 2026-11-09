@@ -509,13 +509,22 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
   | pionPlusMeV =>
     have h := PMElementaryParticles.LeptonMasses.pionPlus_mev_value
     norm_num [bounds, value, PMElementaryParticles.LeptonMasses.pionPlus,
+      PMElementaryParticles.LeptonMasses.pionCoulomb,
+      PMElementaryParticles.LeptonMasses.pionTopological,
+      PMElementaryParticles.LeptonMasses.pionLeak,
+      PMElementaryParticles.LeptonMasses.pionSymmetry,
+      PMElementaryParticles.LeptonMasses.pionAnchor,
+      PMElementaryParticles.LeptonMasses.pionChargeLoad,
       PMElementaryParticles.CompositeMasses.me] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | wRatio =>
     have h := PMConstants.WMassTest.ratio_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
-  | tauRatio => norm_num [bounds, value, PMElementaryParticles.LeptonMasses.tau]
+  | tauRatio => norm_num [bounds, value, PMElementaryParticles.LeptonMasses.tau,
+      PMElementaryParticles.LeptonMasses.tauBoundary,
+      PMElementaryParticles.LeptonMasses.tauCoreLatency,
+      PMElementaryParticles.LeptonMasses.tauAnchors]
   | protonRadius =>
     have h := E8PConstants.CompositeMassPulls.proton_radius
     rw [abs_lt] at h

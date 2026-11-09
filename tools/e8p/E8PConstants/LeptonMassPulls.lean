@@ -25,7 +25,10 @@ theorem tau_tension : -2.1 < (tau * me - 1776.93) / 0.09 ∧ (tau * me - 1776.93
 
 theorem pionPlus_mass : |(pionPlus * me - 139.57039) / 0.00018| < 0.2 := by
   have hg := g_b; have ha := a_b
-  unfold pionPlus me
+  rw [pionPlus_ledger]
+  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
+    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
+  unfold me
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1, ha.2]
   · rw [div_lt_iff₀ (by norm_num)]; nlinarith [hg.2, ha.1]
@@ -49,7 +52,10 @@ theorem kaon_inversion : 3.93 < (kaon0 - kaonPlus) * me ∧ (kaon0 - kaonPlus) *
 
 theorem pion_splitting : 4.5933 < (pionPlus - pion0) * me ∧ (pionPlus - pion0) * me < 4.5935 := by
   have ha := a_b
-  unfold pionPlus pion0 me
+  rw [pionPlus_ledger]
+  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
+    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
+  unfold pion0 me
   constructor <;> nlinarith [ha.1, ha.2]
 
 end E8PConstants.LeptonMassPulls
