@@ -49,6 +49,19 @@ theorem generator_observed (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
     (k : Fin 3 → ℝ) (δ : ℝ) : Obs encoding (generator p k δ) (observedGenerator k δ) :=
   SectorObservation.observed _ _ _ (fun _ => NativeSector.native_obs hp hp1 k δ)
 
+/-- **The coordinate readout contract (R1).** The observed coordinate dynamics is the native carrier
+dynamics: the encoding is an isometry (`isometry`, 24 observed modes faithfully sit inside the 48
+native labels) and the native generator is observed as the coordinate generator
+(`generator_observed`), with no invisible-mode feedback (`evolution_readout`). The observed sector
+is *intrinsically* the antipodal-odd sector (`CarrierParity.range_iff_odd`, `CarrierParity.projector`)
+and carrier exchange carries the substrate's fermionic parity
+(`CarrierParity.carrier_exchange_parity`). So the readout contract is **constructed**, not chosen;
+what remains an input is *admitting* that the physical readout is this coordinate observation
+(this module's docstring / the modelling boundary). -/
+theorem readout_contract (p : ℝ) (hp : 0 < p) (hp1 : p < 1 / 2) (k : Fin 3 → ℝ) (δ : ℝ) :
+    encodingᴴ * encoding = 1 ∧ Obs encoding (generator p k δ) (observedGenerator k δ) :=
+  ⟨isometry, generator_observed p hp hp1 k δ⟩
+
 /-- No invisible-mode feedback, for every ambient amplitude and complex evolution parameter. -/
 theorem evolution_readout (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
     (k : Fin 3 → ℝ) (δ : ℝ) (z : ℂ) (ψ : Native → ℂ) :
