@@ -25,6 +25,8 @@ This module uses it to **construct** the `ℝ³` momentum measure:
   `∫_{ℝ³} g(‖p‖) = 4π ∫₀^∞ r² g(r) dr`, the Part-A2 target.
 * `electron_measure_from_integral` — the massless radial electron measure `E/(4π²)`,
   now *derived* from `∫_{ℝ³}` rather than supplied.
+* `massless_lorentz_measure` — the Lorentz-invariant measure `d³k/((2π)³ 2E)` as a genuine
+  Lebesgue integral, `∫_{ℝ³} f(‖k‖)/((2π)³ 2‖k‖) = (1/(4π²)) ∫₀^∞ r f(r) dr`.
 -/
 
 noncomputable section
@@ -80,5 +82,30 @@ massless dispersion `p = E` and `g(r) = r² / ((2π)³ 2r) · δ(r−E)`, the ra
 theorem electron_measure_from_integral (E : ℝ) (hE : E ≠ 0) :
     4 * Real.pi * E ^ 2 / ((2 * Real.pi) ^ 3 * (2 * E)) = E / (4 * Real.pi ^ 2) :=
   MuonRate.electron_measure E hE
+
+/-- **The Lorentz-invariant massless measure `d³k/((2π)³ 2E)`, radially reduced.**
+`∫_{ℝ³} f(‖k‖)/((2π)³ 2‖k‖) d³k = (1/(4π²)) ∫₀^∞ r f(r) dr`. The measure factor
+`1/((2π)³ 2E)` is now integrated against a genuine Lebesgue measure (via
+`integral_radial_three`), not supplied — the Part-A1 step that does not need the
+delta-function / energy-shell reduction. -/
+theorem massless_lorentz_measure (f : ℝ → ℝ) :
+    ∫ x : EuclideanSpace ℝ (Fin 3), f ‖x‖ / ((2 * Real.pi) ^ 3 * (2 * ‖x‖)) =
+      (1 / (4 * Real.pi ^ 2)) * ∫ r in Ioi (0 : ℝ), r * f r := by
+  have h := integral_radial_three (fun r => f r / ((2 * Real.pi) ^ 3 * (2 * r)))
+  rw [show (fun x : EuclideanSpace ℝ (Fin 3) => f ‖x‖ / ((2 * Real.pi) ^ 3 * (2 * ‖x‖)))
+        = fun x => (fun r => f r / ((2 * Real.pi) ^ 3 * (2 * r))) ‖x‖ from rfl, h]
+  rw [show (∫ r in Ioi (0 : ℝ), r ^ 2 * (f r / ((2 * Real.pi) ^ 3 * (2 * r)))) =
+        (1 / (2 * (2 * Real.pi) ^ 3)) * ∫ r in Ioi (0 : ℝ), r * f r by
+    rw [← MeasureTheory.integral_const_mul]
+    apply MeasureTheory.setIntegral_congr_fun measurableSet_Ioi
+    intro r hr
+    have hr0 : r ≠ 0 := ne_of_gt hr
+    field_simp]
+  rw [show (4 : ℝ) * Real.pi *
+          ((1 / (2 * (2 * Real.pi) ^ 3)) * ∫ r in Ioi (0 : ℝ), r * f r) =
+        (1 / (4 * Real.pi ^ 2)) * ∫ r in Ioi (0 : ℝ), r * f r by
+    have hp : Real.pi ≠ 0 := ne_of_gt Real.pi_pos
+    field_simp
+    ring]
 
 end PMElementaryParticles.PolarMeasure

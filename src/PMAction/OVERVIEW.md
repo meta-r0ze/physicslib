@@ -108,6 +108,20 @@ site-sum-to-integral limits on a box under explicit regularity.
 `QuotientClosure.gibbs_quotient_invariant` proves gauge invariance descends to any
 measurable edge-identification quotient compatible with the action.
 
+**The gap half.** `DefectGap` reads Paper I's distinction cost (one transition per boundary
+edge, `PMSubstrate.Distinctions.cost_per_cut_edge`) on any finite connected site graph:
+`cost_eq_zero_iff` (zero cost exactly on the uniform configurations, the vacuum and its Closure
+relabeling), `cost_ge_one` / `gap_uniform_in_volume` (every excitation costs at least one
+transition, with the constant independent of the number of sites), `survival_excited` (weight
+`≤ p` at hazard-form survival `p` per transition), and `transfer_contracts_excitations` /
+`transfer_fixes_vacuum` (the diagonal transfer is the identity on the vacuum and shrinks the
+excited sector by `p` in `ℓ²`; decay rate `≥ −log p` per tick, uniform in volume).
+`GapStability` gives the quadratic-form version under a perturbation `W` with `|W v| ≤ ε‖v‖²`:
+`excited_lower`, `vacuum_upper`, `gap_stable` (separation `≥ m − 2ε`) and `gap_pos`
+(`ε < m/2`). This is a gap for PM's diagonal cost, not for the continuum quantum theory: for a
+lattice gauge transfer matrix `ε` is extensive, so `gap_stable` is volume-uniform only when the
+off-diagonal part is bounded uniformly in volume.
+
 **Yang–Mills scope.** This branch is a test of persistence mechanics, not a
 construction of Yang–Mills theory. Its deliverable is the classical continuum
 limit plus the finite-volume Euclidean setup (Gibbs measure, gauge invariance,
