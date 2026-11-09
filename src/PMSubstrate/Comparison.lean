@@ -8,7 +8,7 @@ import Mathlib.Logic.Function.Iterate
 * `never_merge_iff_bijective`: on a finite state space, an update never merges two distinct
   states at any time iff it is bijective (Postulate R as an exact translation).
 
-The measured α comparisons live in `PMSubstrate.ExperimentalComparison`.
+The measured α comparisons live in the e8p layer (`E8PConstants.ExperimentalComparison`).
 -/
 
 namespace PMSubstrate

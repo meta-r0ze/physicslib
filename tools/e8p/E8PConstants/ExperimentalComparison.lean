@@ -8,10 +8,11 @@ the cited sources. They are not used by the PMSubstrate derivation and should no
 be imported by derivation modules.
 
 This module is intentionally a leaf: it depends on the certified enclosure of
-`geometricIndex`, but nothing in the main substrate proof depends on it.
+`PMSubstrate.geometricIndex`, but nothing in the main substrate proof depends on it.
 -/
 
-namespace PMSubstrate
+namespace E8PConstants.ExperimentalComparison
+open PMSubstrate
 
 /-- Certified deviations, in units of the quoted standard uncertainty, for the
 four comparison inputs in the manuscript's table. Each lies within rounding of
@@ -31,4 +32,4 @@ theorem alpha_deviations :
   | (rw [lt_div_iff₀ (by norm_num)]; linarith)
   | (rw [div_lt_iff₀ (by norm_num)]; linarith)
 
-end PMSubstrate
+end ExperimentalComparison

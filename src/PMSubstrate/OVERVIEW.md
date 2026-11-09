@@ -70,7 +70,7 @@ Postulate I). See [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md) for the missing imp
 | `PMSubstrate/DerivedParameters`, `E8Invariants`, `CapacityBarbier`, `CapacityEnvelope`, `CauchyPolygon`, `CircleLength`, `Distinctions`, `Descartes`, `TollFilters`, `ClosureSymmetry`, `PersistenceEvents`, `PersistenceMaximin`, `PersistencePremises`, `FinalPremises`, `NetCost`, `NetIndex`, `Impedance*`, `ProtocolToll` | parameters and the six terms |
 | `PMSubstrate/E8Values.lean` | canonical E8 record names `D, Δ, ν, σ, χ, R_M, N`, the derived loads, and `overhead`; exported by the `PMSubstrate` root |
 | `PMSubstrate/Pillars`, `Comparison`, `PhysicalBridge` | PM failure modes, Postulate R, and conditional physical bridge lemmas |
-| `PMSubstrate/ExperimentalComparison` | measured α comparisons, isolated as a leaf and not used by the derivation |
+| measured α comparisons | moved to the e8p layer (`E8PConstants.ExperimentalComparison`); not part of the axiom-checked tree |
 | `PMSubstrate/Research/` | alternative routes, counterexamples and necessity tests (not on the main path) |
 | `../classification/` | vendored class-number-one proof (Peter W. Murphy, Apache-2.0) |
 | `../audits/` | scoped axiom audits for the research modules |

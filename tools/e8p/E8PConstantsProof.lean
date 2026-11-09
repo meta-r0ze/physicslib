@@ -19,6 +19,7 @@ import PMConstants.ColourChannels
 import PMCosmology.Background
 import PMSubstrate.Readouts
 import E8PConstants.PlanckReadout
+import E8PConstants.ExperimentalComparison
 import PMConstants.ElectroweakBounds
 import PMConstants.ElectroweakE8
 import PMConstants.JointConstants

@@ -57,7 +57,6 @@ import PMSubstrate.RequirementMap
 -- PM pillars and comparison with measurement
 import PMSubstrate.Pillars
 import PMSubstrate.Comparison
-import PMSubstrate.ExperimentalComparison
 import PMSubstrate.Address
 
 -- Research: alternative routes, counterexamples and necessity tests
