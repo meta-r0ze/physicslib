@@ -33,8 +33,10 @@ core that converts those facts into a semi-inner-product:
   observables is **positive semidefinite** — the finite-dimensional face of reflection positivity.
 * `osGramInnerProductSpace`: by `Matrix.PosSemidef.toInnerProductSpace`, `n → ℂ` is the
   **physical Hilbert space** with inner product `⟪x, y⟫ = xᴴ M y`, an isometric model of the span of
-the `F`. The full quotient `V ⧸ osNullSubmodule` (for observables not assumed finite/independent)
-is the remaining scaffolding, scoped in `PMAction/REVIEW-AND-NEXT.md`.
+the `F`. The full quotient `V ⧸ osNullSubmodule` (for observables not assumed finite/independent): its
+mathematical content is assembled here (`osNull_cross` well-definedness, `mem_osNullSubmodule_iff`
+positive-definiteness), so the descended form is a genuine inner product; only the
+`InnerProductSpace` *instance* plumbing on the quotient is the remaining scaffolding.
 
 The framework here is the standard finite-dimensional OS reconstruction, specialized to the data
 `ReciprocalReflection` actually proves. No continuum, infinite-volume or mass-gap claim is made.
@@ -181,6 +183,21 @@ theorem osNull_smul (B : V → V → ℂ)
   rw [hsmul₁ c x (c • x), hsmul₂ c x x]
   simp [hx]
 
+/-- **Cross-null vanishes.** A null vector pairs to `0` with every vector: `B x y = 0` whenever
+`B x x = 0`, by Cauchy–Schwarz (`os_cauchy_schwarz`). This is what makes the OS form well-defined
+on the quotient `V ⧸ osNullSubmodule`. -/
+theorem osNull_cross (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) {x y : V} (hx : B x x = 0) : B x y = 0 := by
+  have hxr : (B x x).re = 0 := by rw [hx]; simp
+  have h := os_cauchy_schwarz B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal y x
+  rw [hxr, Real.sqrt_zero, mul_zero] at h
+  exact norm_eq_zero.mp (le_antisymm h (norm_nonneg _))
+
 /-- **The kernel of the OS form as a `Submodule`.** The null set `{F | B F F = 0}` is closed
 under `0`, `+` and scalar multiplication (`osNull_zero`/`osNull_add`/`osNull_smul`), so it is a
 `Submodule`. The physical Hilbert space of the OS reconstruction is the quotient
@@ -198,6 +215,20 @@ def osNullSubmodule (B : V → V → ℂ)
   zero_mem' := osNull_zero B hsmul₁
   add_mem' := fun hx hy => osNull_add B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal hx hy
   smul_mem' := fun c _ hx => osNull_smul B hsmul₁ hsmul₂ c hx
+
+/-- **The null set is exactly the kernel.** `x` lies in `osNullSubmodule` iff `B x x = 0`, so the
+form descended to `V ⧸ osNullSubmodule` is *positive-definite*: its diagonal vanishes only on the
+zero class. Combined with `osNull_cross` (well-definedness), the OS form is a genuine inner product
+on the quotient — the physical Hilbert space; only the `InnerProductSpace` *instance* plumbing
+remains. -/
+theorem mem_osNullSubmodule_iff (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) (x : V) :
+    x ∈ osNullSubmodule B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal ↔ B x x = 0 := Iff.rfl
 
 /-- The **OS Gram matrix** of a finite family of observables, `Mᵢⱼ = B Fⱼ Fᵢ`, so that the OS
 form reads `⟪x, y⟫ = xᴴ M y` (Mathlib's convention, conjugate-linear in the first argument). -/
