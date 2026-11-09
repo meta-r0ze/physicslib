@@ -98,6 +98,31 @@ continuous the choice provably ties and it stays **M** (`SelectionSymmetry.invar
 
 ---
 
+## Selection-symmetry sweep (quick-test verdicts)
+
+For each remaining *choice*, the test (`SelectionSymmetry`) is: is it the unique minimizer of a
+cost over an explicit option family? Verdicts:
+
+| choice | symmetry | cost | verdict |
+| --- | --- | --- | --- |
+| two D₄ sectors | discrete exchange | invariance-forcing | **H — done** (`SectorExchange.exchange_fixed_of_unique`) |
+| μ–τ balance | discrete `Z₂` | invariance-forcing | **H — done** (`ReferenceFlavour.reference_z2_balance`) |
+| uniform law | discrete permutation | min-description | **H — done** (`LawSelection.uniform_law`) |
+| CP-sign branch | continuous phase conj. | provably ties | **M — no-go** (`conjugate_cost_tie`) |
+| strong-CP `θ̄` | continuous reference | provably ties | **M** (`ReferenceSelection.invariant_cost_tie`) |
+| dark-ratio reading `31/6` vs `25/6` | — (they differ by the baryon unit: `Scaling.disjoint_dark_count_check`, `darkRatio = 1 + 25/6`) | none | **M — reading convention** |
+| generation pair-type assignment | discrete `S₃` | generation-blind (`GenerationVacuumChoice`, degenerate before a breaking law) | **M — label** |
+| wall anchor `δ` | continuous magnitude | no cost in `δ` | **M** |
+| nuclear shell / α / pairing assignments | discrete channel labels | no cost yet | **M** |
+| gauge-work price scale | — | min over typed repairs (partial) | **H/C** (`TypedRepairWork`, `ControllerIdentification.gaugeController`) |
+
+**Verdict of the sweep.** Every remaining discrete choice is either (a) *already resolved* by
+`unique_minimizer_fixed` (sector exchange, μ–τ, uniform law), (b) genuinely **continuous** and so
+never selectable by a symmetric cost (CP sign, `θ̄`) — a proven no-go, or (c) has **no option
+family / cost yet**, hence a model input until one is supplied. There is no remaining case of a
+discrete symmetry with a uniqueness-forcing cost left un-applied. Supplying the *missing cost
+functional* is therefore the real lever for the (c) items — not another symmetry argument.
+
 ## What a reader will flag first — the ten
 
 1. **S1–S4** — *is E8 itself derived, or postulated?* Currently: E8 is forced from
