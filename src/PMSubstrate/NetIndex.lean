@@ -1,6 +1,7 @@
 import PMSubstrate.NetCost
 import PMSubstrate.PersistenceEvents
 import PMSubstrate.CapacityBarbier
+import PersistenceMechanics.Requirements
 import Mathlib.Combinatorics.SimpleGraph.Basic
 
 /-!
@@ -51,27 +52,5 @@ theorem index_as_net_transitions :
   obtain ⟨-, -, -, hp, hg, -⟩ := h
   unfold impedance
   linarith
-
-/-- The six pillars, grouped by the PM principle that requires them. -/
-inductive Pillar | capacity | margin | map | protocol | toll | governor
-  deriving DecidableEq
-
-/-- A pillar *regulates* when its PM definition is an action on other transitions:
-Protocol "coordinates state transitions"; Governor "restricts which transitions the system can
-undergo". The other four provision (Capacity, Margin, Map) or spend (Toll) on their own. -/
-def Pillar.regulates : Pillar → Bool
-  | .protocol => true
-  | .governor => true
-  | _ => false
-
-/-- Sign of a pillar's term: removed transitions count `−1`, provisioned or spent `+1`. -/
-def Pillar.sign (p : Pillar) : ℤ := if p.regulates then -1 else 1
-
-/-- Exactly Protocol and Governor enter negatively — one regulator each for Conservation
-(Map, Protocol) and Causality (Toll, Governor); Finiteness (Capacity, Margin) has none. -/
-theorem signs :
-    Pillar.capacity.sign = 1 ∧ Pillar.margin.sign = 1 ∧ Pillar.map.sign = 1 ∧
-      Pillar.toll.sign = 1 ∧ Pillar.protocol.sign = -1 ∧ Pillar.governor.sign = -1 := by
-  decide
 
 end PMSubstrate.NetIndex
