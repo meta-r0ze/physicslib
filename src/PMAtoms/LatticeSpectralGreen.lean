@@ -93,4 +93,57 @@ theorem cosSum_odd (n m : ℕ) (hm : 1 ≤ m) (hmN : m < 2 * (n + 1)) (ho : m % 
     ring
   rw [hcos]; ring
 
+
+/-! ## Mode orthogonality -/
+
+/-- The product-to-sum identity `sin x sin y = (cos(x−y) − cos(x+y))/2`. -/
+lemma sin_mul_sin (x y : ℝ) :
+    Real.sin x * Real.sin y = (Real.cos (x - y) - Real.cos (x + y)) / 2 := by
+  rw [Real.cos_sub, Real.cos_add]; ring
+
+/-- One product term of two Dirichlet modes, as a difference of cosines. -/
+theorem pathMode_mul_eq (n a b : ℕ) (k : Fin n) :
+    pathMode n a k * pathMode n b k =
+      (Real.cos (Real.pi * ((a : ℤ) - (b : ℤ)) * (k.val + 1) / (n + 1)) -
+        Real.cos (Real.pi * ((a : ℤ) + (b : ℤ)) * (k.val + 1) / (n + 1))) / 2 := by
+  simp only [pathMode]
+  rw [sin_mul_sin]
+  have h1 : Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) -
+        Real.pi * (b : ℝ) * (k.val + 1) / (n + 1) =
+      Real.pi * ((a : ℤ) - (b : ℤ)) * (k.val + 1) / (n + 1) := by push_cast; ring
+  have h2 : Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) +
+        Real.pi * (b : ℝ) * (k.val + 1) / (n + 1) =
+      Real.pi * ((a : ℤ) + (b : ℤ)) * (k.val + 1) / (n + 1) := by push_cast; ring
+  rw [h1, h2]
+
+/-- **Normalization of the Dirichlet modes** (the diagonal of the orthogonality):
+`∑_{k=1}^{n} sin²(π a k/(n+1)) = (n+1)/2`. -/
+theorem pathMode_sq_sum (n a : ℕ) (ha : 1 ≤ a) (ha' : a ≤ n) :
+    ∑ k : Fin n, pathMode n a k ^ 2 = ((n : ℝ) + 1) / 2 := by
+  have hterm : ∀ k : Fin n, pathMode n a k ^ 2 =
+      (1 - Real.cos (Real.pi * (2 * a) * (k.val + 1) / (n + 1))) / 2 := by
+    intro k
+    simp only [sq, pathMode]
+    rw [sin_mul_sin]
+    have h1 : Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) -
+          Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) = 0 := by ring
+    have h2 : Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) +
+          Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) =
+        Real.pi * (2 * a) * (k.val + 1) / (n + 1) := by push_cast; ring
+    rw [h1, h2, Real.cos_zero]
+  rw [Finset.sum_congr rfl (fun k _ => hterm k), ← Finset.sum_div, Finset.sum_sub_distrib]
+  have hfold : (∑ k : Fin n, Real.cos (Real.pi * (2 * ↑a) * (↑↑k + 1) / (↑n + 1)))
+      = cosSum n (2 * a) := by
+    rw [cosSum]
+    apply Finset.sum_congr rfl
+    intro k _
+    congr 1
+    push_cast
+    ring
+  rw [hfold]
+  rw [show (∑ _ : Fin n, (1 : ℝ)) = (n : ℝ) by
+    simp [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]]
+  rw [cosSum_even n (2 * a) (by omega) (by omega) (by omega)]
+  ring
+
 end PMAtoms
