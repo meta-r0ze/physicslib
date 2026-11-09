@@ -1,5 +1,6 @@
 import PMSubstrate.ClaimBoundary
 import PMSubstrate.Postulates
+import PMSubstrate.Address
 import Mathlib.LinearAlgebra.FreeModule.PID
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.Analysis.SpecialFunctions.Exp
@@ -16,54 +17,9 @@ namespace PMSubstrate.ConstraintFoundations
 open Matrix Filter
 open scoped Topology
 
-/-- Finite generation, commuting additive translations and absence of torsion
-supply integer coordinates. Neither a quadratic cost nor a physical real-space
-embedding nor these algebraic premises follows from generic persistence here. -/
-theorem integer_coordinates (M : Type*) [AddCommGroup M]
-    [Module.Finite ℤ M] [Module.IsTorsionFree ℤ M] :
-    ∃ n : ℕ, Nonempty (M ≃ₗ[ℤ] (Fin n → ℤ)) := by
-  obtain ⟨n, b⟩ := Module.basisOfFiniteTypeTorsionFree' (R := ℤ) (M := M)
-  exact ⟨n, ⟨b.equivFun⟩⟩
-
-/-- An integer-valued symmetric bilinear cost on a finitely generated,
-torsion-free additive address group has an integral Gram representation.
-Integrality and bilinearity are explicit assumptions, not derived from FCC. -/
-theorem integer_gram_representation (M : Type*) [AddCommGroup M]
-    [Module.Finite ℤ M] [Module.IsTorsionFree ℤ M]
-    (B : LinearMap.BilinForm ℤ M) (hs : ∀ x y, B x y = B y x) :
-    ∃ n : ℕ, ∃ e : M ≃ₗ[ℤ] (Fin n → ℤ),
-      ∃ A : Matrix (Fin n) (Fin n) ℤ,
-        A.IsSymm ∧ ∀ x y, B x y = e x ⬝ᵥ (A *ᵥ e y) := by
-  obtain ⟨n, b⟩ := Module.basisOfFiniteTypeTorsionFree' (R := ℤ) (M := M)
-  refine ⟨n, b.equivFun, LinearMap.BilinForm.toMatrix b B, ?_, ?_⟩
-  · ext i j
-    simp only [Matrix.transpose_apply, LinearMap.BilinForm.toMatrix_apply]
-    exact hs (b j) (b i)
-  · intro x y
-    simpa only [Module.Basis.equivFun_apply] using
-      LinearMap.BilinForm.apply_eq_dotProduct_toMatrix_mulVec b B x y
-
-/-- Finite cost sublevels then force positive definiteness of that Gram
-matrix. This closes a conditional lattice-class construction without assuming
-a Gram matrix at the outset; the address and cost premises remain explicit. -/
-theorem finite_budget_gram (M : Type*) [AddCommGroup M]
-    [Module.Finite ℤ M] [Module.IsTorsionFree ℤ M]
-    (B : LinearMap.BilinForm ℤ M) (hs : ∀ x y, B x y = B y x)
-    (hf : ∀ c : ℤ, ({x : M | B x x ≤ c}).Finite) :
-    ∃ n : ℕ, ∃ e : M ≃ₗ[ℤ] (Fin n → ℤ),
-      ∃ A : Matrix (Fin n) (Fin n) ℤ,
-        (A.map (Int.cast : ℤ → ℝ)).PosDef ∧
-        ∀ x y, B x y = e x ⬝ᵥ (A *ᵥ e y) := by
-  obtain ⟨n, e, A, hsym, he⟩ := integer_gram_representation M B hs
-  refine ⟨n, e, A, ?_, he⟩
-  apply (Translation.posDef_iff_finite_levels hsym).mpr
-  intro c
-  refine ((hf c).image e).subset ?_
-  intro z hz
-  refine ⟨e.symm z, ?_, by simp⟩
-  change B (e.symm z) (e.symm z) ≤ c
-  rw [he]
-  simpa using hz
+/- The positive derivation (integer coordinates, integral Gram, finite-budget positivity) is on
+the main path in `PMSubstrate.Address`; the counterexamples below show that the address and cost
+premises are *not* themselves forced by bare persistence. -/
 
 /-- Reflection is reversible on every integral coordinate model. -/
 def reflect {n : ℕ} : Equiv.Perm (Fin n → ℤ) where

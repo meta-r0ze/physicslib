@@ -57,6 +57,8 @@ import PMSubstrate.MainTheorem
 import PMSubstrate.Pillars
 import PMSubstrate.Comparison
 import PMSubstrate.ExperimentalComparison
+import PMSubstrate.Address
+
 -- Research: alternative routes, counterexamples and necessity tests
 import PMSubstrate.Research.ConstraintFoundations
 import PMSubstrate.Research.OperationalDuality
