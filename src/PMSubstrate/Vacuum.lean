@@ -113,6 +113,26 @@ theorem e8_geometric : Geometric e8 := by
 
 theorem e8_economical : Economical e8 := fun _ ht => geometric_rank ht
 
+/-- **Survival dilutes with rank.** If a substrate's `n` registers each survive a cycle
+independently with probability `p ∈ (0,1)`, the whole reference survives with probability `p ^ n`,
+strictly decreasing in the rank `n`. -/
+theorem survival_dilutes {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) {m n : ℕ} (h : m < n) :
+    p ^ n < p ^ m := by
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le (le_of_lt h)
+  have hk : k ≠ 0 := by omega
+  rw [pow_add]
+  calc p ^ m * p ^ k < p ^ m * 1 :=
+        mul_lt_mul_of_pos_left (pow_lt_one₀ hp0.le hp1 hk) (pow_pos hp0 m)
+    _ = p ^ m := mul_one _
+
+/-- **Persistence selects the least rank.** Under independent register survival at rate `p < 1`,
+the most persistent geometric substrate is the one of least rank, and `geometric_rank` gives
+`8 ≤ s.n` with `e8` attaining it. This *derives* the `Economical` cost from a survival mechanism
+instead of postulating it: Economy reduces to "registers survive independently with `p < 1`". -/
+theorem least_rank_most_persistent {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) {s : Substrate}
+    (h : Geometric s) : p ^ s.n ≤ p ^ e8.n :=
+  pow_le_pow_of_le_one hp0.le hp1.le (geometric_rank h)
+
 /-- **Main lattice theorem.** The geometric postulates and Economy force `E₈`. -/
 theorem geometric_selects_e8 {s : Substrate} (h : Geometric s) (hmin : Economical s) :
     ClaimBoundary.IsE8 s.A := by
