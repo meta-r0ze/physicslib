@@ -27,6 +27,8 @@ This module uses it to **construct** the `ℝ³` momentum measure:
   now *derived* from `∫_{ℝ³}` rather than supplied.
 * `massless_lorentz_measure` — the Lorentz-invariant measure `d³k/((2π)³ 2E)` as a genuine
   Lebesgue integral, `∫_{ℝ³} f(‖k‖)/((2π)³ 2‖k‖) = (1/(4π²)) ∫₀^∞ r f(r) dr`.
+* `two_body_phase_space` — the two-body factor `Φ₂ = 1/(8π)` as the integral of the reduced
+  angular density `1/(32π²)` over `volume.toSphere`.
 -/
 
 noncomputable section
@@ -107,5 +109,17 @@ theorem massless_lorentz_measure (f : ℝ → ℝ) :
     have hp : Real.pi ≠ 0 := ne_of_gt Real.pi_pos
     field_simp
     ring]
+
+/-- **The two-body phase-space factor `Φ₂ = 1/(8π)` from the genuine direction sphere.** The
+reduced angular density is `1/(32π²)` (`ContinuumPair.average`), so its integral over the real
+sphere measure `volume.toSphere` is `4π · (1/(32π²)) = 1/(8π)` (`MuonRate.two_body`) — with `S²`
+now measured by `volume.toSphere` rather than the iterated `(z, φ)` integral. -/
+theorem two_body_phase_space :
+    ∫ _ω in (univ : Set (sphere (0 : EuclideanSpace ℝ (Fin 3)) 1)),
+        (1 / (32 * Real.pi ^ 2) : ℝ) ∂(volume.toSphere) = 1 / (8 * Real.pi) := by
+  rw [MeasureTheory.setIntegral_const, sphere_area_three, smul_eq_mul]
+  have hp : Real.pi ≠ 0 := ne_of_gt Real.pi_pos
+  field_simp
+  ring
 
 end PMElementaryParticles.PolarMeasure
