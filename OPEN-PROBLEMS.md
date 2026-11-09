@@ -104,3 +104,24 @@ for the latter.
 - **M** → isolate into `tools/e8p/E8PConstants/Experimental.lean` (or the module's
   comparison leaf), never the theorem tree.
 - **X** → one scope note; do not reopen.
+
+---
+
+## Cross-cutting tools noted from the Yang–Mills gap branch
+
+(The `PMAction` gap work — `DefectGap`, `GapStability` — is a *partial* attack on the P4 mass gap.
+These ideas are reusable on other open items.)
+
+- **Discreteness ⇒ volume-uniform gap.** An **integer-valued** cost with a **unique** ground state
+  (up to relabeling) is gapped by at least one unit, *uniformly in volume*, and the diagonal
+  transfer contracts the excited sector (`DefectGap.cost_ge_one`,
+  `transfer_contracts_excitations`); the gap survives a form-bounded perturbation with `ε < m/2`
+  (`GapStability.gap_pos`, `DefectGap.gap_survives_offdiagonal`). The same "discrete count +
+  unique minimizer" shape appears in the framework's selection results
+  (`SelectionSymmetry.unique_minimizer_fixed`, `Vacuum.least_rank_most_persistent`, E6's
+  `probability_uniform_of_const_weight`) — worth reusing wherever an input is a count.
+- **Complementary gap halves.** `DefectGap` (diagonal cost) and the pre-existing linearized
+  Hessian/Schur gap (`SplitGap`, `VacuumSchur`, `VacuumLocalGap`, `JointVacuumGap`,
+  `CompactSplitGap`) are the two halves of a transfer-matrix gap; the open condition joining them
+  is a **volume-uniform bound on the off-diagonal form `ε`** (extensive for a lattice gauge
+  transfer matrix). See the `PMAction/OVERVIEW.md` Yang–Mills scope note.

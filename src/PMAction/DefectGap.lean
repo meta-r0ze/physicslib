@@ -1,4 +1,5 @@
 import PMSubstrate.Distinctions
+import PMAction.GapStability
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic.Linarith
@@ -157,5 +158,28 @@ theorem transfer_fixes_vacuum (p : ℝ) (v : (V → Bool) → ℝ) (hv : ∀ x, 
   by_cases hx : Uniform x
   · rw [survival_vacuum G p x hx, one_mul]
   · rw [hv x hx, mul_zero]
+
+/-! ### The gap under an off-diagonal perturbation
+
+`GapStability` gives the abstract quadratic-form statement; instantiating its gap `m` with the PM
+cost gap (`m = 1` transition) and its vacuum predicate with `Uniform` gives the PM-side condition
+on the off-diagonal (kinetic/plaquette) part of a transfer matrix. -/
+
+/-- **The PM cost gap survives an off-diagonal perturbation.** With the diagonal gap `m = 1`
+(`cost_ge_one`) and `GapStability.gap_pos`, any perturbation form `W` with `|W v| ≤ ε‖v‖²` and
+`ε < 1/2` keeps the excited sector strictly above the vacuum. This is the PM-side gap condition;
+the open content is a *volume-uniform* bound on `ε` for the actual plaquette/kinetic part, where
+`ε` is extensive (see `PMAction` `OVERVIEW.md`, the Yang–Mills scope note). -/
+theorem gap_survives_offdiagonal (hG : G.Connected) (ε : ℝ)
+    (W : ((V → Bool) → ℝ) → ℝ) (hW : ∀ v, |W v| ≤ ε * GapStability.normSq v)
+    (hε : ε < 1 / 2) (v u : (V → Bool) → ℝ)
+    (hv : ∀ x, Uniform x → v x = 0) (hu : ∀ x, ¬ Uniform x → u x = 0)
+    (hv1 : GapStability.normSq v = 1) (hu1 : GapStability.normSq u = 1) :
+    GapStability.diagForm (fun x => (cost G x : ℝ)) u + W u <
+      GapStability.diagForm (fun x => (cost G x : ℝ)) v + W v := by
+  refine GapStability.gap_pos Uniform 1 ε (fun x => (cost G x : ℝ)) W ?_ ?_ hW hε
+    v u hv hu hv1 hu1
+  · intro x hx; rw [cost_uniform G x hx]; norm_num
+  · intro x hx; exact_mod_cast cost_ge_one G hG x hx
 
 end PMAction.DefectGap

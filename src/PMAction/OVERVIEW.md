@@ -117,10 +117,13 @@ transition, with the constant independent of the number of sites), `survival_exc
 `transfer_fixes_vacuum` (the diagonal transfer is the identity on the vacuum and shrinks the
 excited sector by `p` in `ℓ²`; decay rate `≥ −log p` per tick, uniform in volume).
 `GapStability` gives the quadratic-form version under a perturbation `W` with `|W v| ≤ ε‖v‖²`:
-`excited_lower`, `vacuum_upper`, `gap_stable` (separation `≥ m − 2ε`) and `gap_pos`
-(`ε < m/2`). This is a gap for PM's diagonal cost, not for the continuum quantum theory: for a
-lattice gauge transfer matrix `ε` is extensive, so `gap_stable` is volume-uniform only when the
-off-diagonal part is bounded uniformly in volume.
+`excited_lower`, `vacuum_upper`, `gap_stable` (separation `≥ m − 2ε`), and `gap_pos`
+(`ε < m/2`); `DefectGap.gap_survives_offdiagonal` instantiates this at the PM gap `m = 1` (so the
+condition is `ε < 1/2`). This is a gap for PM's diagonal cost, not for the continuum quantum
+theory: for a lattice gauge transfer matrix `ε` is extensive, so it is volume-uniform only when
+the off-diagonal part is bounded uniformly in volume. This diagonal half is *complementary* to the
+linearized Hessian/Schur gap already present (`SplitGap`, `VacuumSchur`, `VacuumLocalGap`,
+`JointVacuumGap`, `CompactSplitGap`).
 
 **Yang–Mills scope.** This branch is a test of persistence mechanics, not a
 construction of Yang–Mills theory. Its deliverable is the classical continuum
