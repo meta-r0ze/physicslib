@@ -1,5 +1,6 @@
 import PMSubstrate.Distinctions
 import PMAction.GapStability
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic.Linarith
@@ -181,5 +182,22 @@ theorem gap_survives_offdiagonal (hG : G.Connected) (ε : ℝ)
     v u hv hu hv1 hu1
   · intro x hx; rw [cost_uniform G x hx]; norm_num
   · intro x hx; exact_mod_cast cost_ge_one G hG x hx
+
+/-! ### The gap is the Gibbs coupling
+
+`LatticeGibbs` weights a configuration of cost `S` by `exp(−β S)`. That is exactly `DefectGap`'s
+survival weight at `p = exp(−β)`, so the per-tick decay rate (the gap) is the coupling `β`. -/
+
+/-- **The survival weight is the Gibbs weight.** At `p = exp(−β)`, `survival` is
+`exp(−β·cost)`, the same density as `PMAction.LatticeGibbs.weight`. -/
+theorem survival_eq_gibbs (β : ℝ) (x : V → Bool) :
+    survival G (Real.exp (-β)) x = Real.exp (-β * (cost G x : ℝ)) := by
+  rw [survival, ← Real.exp_nat_mul]
+  congr 1
+  ring
+
+/-- **The gap is the coupling.** At `p = exp(−β)` the per-tick decay rate `−log p` is `β`. -/
+theorem gap_eq_coupling (β : ℝ) : -Real.log (Real.exp (-β)) = β := by
+  rw [Real.log_exp]; ring
 
 end PMAction.DefectGap

@@ -119,7 +119,9 @@ excited sector by `p` in `ℓ²`; decay rate `≥ −log p` per tick, uniform in
 `GapStability` gives the quadratic-form version under a perturbation `W` with `|W v| ≤ ε‖v‖²`:
 `excited_lower`, `vacuum_upper`, `gap_stable` (separation `≥ m − 2ε`), and `gap_pos`
 (`ε < m/2`); `DefectGap.gap_survives_offdiagonal` instantiates this at the PM gap `m = 1` (so the
-condition is `ε < 1/2`). This is a gap for PM's diagonal cost, not for the continuum quantum
+condition is `ε < 1/2`). At `p = exp(−β)` the survival weight is the Gibbs density
+`exp(−β·cost)` (`survival_eq_gibbs`, the same as `LatticeGibbs.weight`), so the per-tick gap is
+the coupling (`gap_eq_coupling`). This is a gap for PM's diagonal cost, not for the continuum quantum
 theory: for a lattice gauge transfer matrix `ε` is extensive, so it is volume-uniform only when
 the off-diagonal part is bounded uniformly in volume. This diagonal half is *complementary* to the
 linearized Hessian/Schur gap already present (`SplitGap`, `VacuumSchur`, `VacuumLocalGap`,
