@@ -612,4 +612,16 @@ def deformedProtonShell : Nat := 2 * (Δ + σ)
 theorem deformedProtonShell_eq : deformedProtonShell = 96 := by
   norm_num [deformedProtonShell, Δ, σ, PMSubstrate.baseline]
 
+/-- **Charge-term enclosure.** `chargeTermSphere z a = (π·2/5)·(3/5)·z(z−1)/√(a^(2/3)+1)` lies
+between `π·(6/25)·z(z−1)/(a+1)` and `π·(6/25)·z(z−1)` (`sphereCoulomb_bounds`, `chargeCoupling_eq`).
+With `Real.pi_gt_d20`/`lt_d20` this is a rational interval, completing the irrational bounds
+needed to enclose `certifiedMass`. -/
+theorem chargeTermSphere_bounds (z a : ℕ) (ha : 1 ≤ a) :
+    (Real.pi * 2 / 5) * (3 / 5) * ((z * (z - 1) : ℕ) : ℝ) / ((a : ℝ) + 1) ≤
+        chargeTermSphere z a ∧
+      chargeTermSphere z a ≤ (Real.pi * 2 / 5) * (3 / 5) * ((z * (z - 1) : ℕ) : ℝ) := by
+  have hcc : chargeCoupling = Real.pi * 2 / 5 := by rw [chargeCoupling_eq]; ring
+  rw [chargeTermSphere, hcc]
+  exact sphereCoulomb_bounds (Real.pi * 2 / 5) (by positivity) z a ha
+
 end PMAtoms
