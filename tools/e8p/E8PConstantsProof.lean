@@ -22,6 +22,7 @@ import E8PConstants.PlanckReadout
 import E8PConstants.ExperimentalComparison
 import E8PConstants.AlphaClockComparison
 import E8PConstants.E8TickUnit
+import E8PConstants.ExperimentalPulls
 import PMConstants.ElectroweakBounds
 import PMConstants.ElectroweakE8
 import PMConstants.JointConstants

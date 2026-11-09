@@ -17,7 +17,8 @@ statement used by the model derivation.
 -/
 
 noncomputable section
-namespace PMFlavor.ExperimentalPulls
+namespace E8PConstants.ExperimentalPulls
+open PMFlavor
 open Real CPPhases TriangleAngles TriangleGamma
 
 /-- The leptonic phase `360°/φ`. -/
@@ -61,4 +62,4 @@ theorem gamma_pull :
   · apply (div_lt_iff₀ (by norm_num : 0 < (2.8 : ℝ))).mpr
     linarith [h.2]
 
-end PMFlavor.ExperimentalPulls
+end ExperimentalPulls
