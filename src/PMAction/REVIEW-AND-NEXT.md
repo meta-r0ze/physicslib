@@ -44,13 +44,15 @@ a supplied cost but does not determine it.
 Proved: `CompositionalTransport` (transport ODE + classical limit from conserving
 single-hop updates under subdivision + C² response); `NativePacketUpdate` (contracts for
 the native E8 packet subsystem); `GeometricGauge`, `ReciprocalReflection`
-(gauge/Gibbs/site-reflection positivity); `OsterwalderSchrader.conj_symm_of_real_diag`
-(OS form `ReciprocalReflection.osForm` + `reflection_positive'`; sesquilinear form with real
-diagonal is Hermitian — the algebraic OS step); `QuotientClosure.gibbs_quotient_invariant`
-(edge-identification); per-step maintenance is closed in PM-4 (`PerStepContract`). Open: the
-OS **quotient** (Cauchy–Schwarz bound so the null set `{F | osForm F F = 0}` is a subspace, then
-the physical Hilbert space) on top of the now-Hermitian OS form; the
-the microscopic E8 realization of the abstract hop, its physical readout and price law,
+(gauge/Gibbs/site-reflection positivity); `OsterwalderSchrader` (OS form
+`ReciprocalReflection.osForm` + `reflection_positive'`; `conj_symm_of_real_diag`, `osCore`,
+`os_cauchy_schwarz` — the OS form is a Hermitian **semi-inner-product** with Cauchy–Schwarz, the
+`PreInnerProductSpace.Core` algebraic OS step); `QuotientClosure.gibbs_quotient_invariant`
+(edge-identification); per-step maintenance is closed in PM-4 (`PerStepContract`). Open:
+assembling the OS **quotient** (the null set `{F | osForm F F = 0}` is now the semi-inner-product's
+kernel — `osCore_normSq_eq` — so the descended form on the quotient is the finite-dimensional
+physical Hilbert space); the
+microscopic E8 realization of the abstract hop, its physical readout and price law,
 shared group/trace normalization across spacings, and the admission of the coherent
 root-generator evolution as the substrate dynamics. For the packet subsystem this
 reduces to the C² control one-forms and that admission. Remaining quantum-Yang–Mills

@@ -18,14 +18,24 @@ core that converts those facts into a semi-inner-product:
   **Hermitian**, `B x y = conj (B y x)` (polarization). Applying it to `osForm` — sesquilinear by
   integral linearity, real diagonal by `reflection_positive'` — makes the OS form Hermitian.
 
-With Hermitian-ness the OS form is a semi-inner-product. The two remaining steps toward the
-physical Hilbert space — the Cauchy–Schwarz bound `‖B x y‖² ≤ Re (B x x) · Re (B y y)` (which
-makes the null set `{x | B x x = 0}` a subspace) and the quotient by it — are scoped in
-`PMAction/REVIEW-AND-NEXT.md`; neither is built here.
+* `osCore`: those facts also make the OS form a `PreInnerProductSpace.Core` — the
+  **semi-inner-product** whose inner product is `⟪F,G⟫ = B G F`.
+* `os_cauchy_schwarz`: consequently `PreInnerProductSpace.Core`'s inner-product inequality gives
+  `‖B y x‖ ≤ √(B x x).re · √(B y y).re`.
+* `osCore_normSq_eq`: the core norm-squared is exactly the OS form's diagonal,
+  `normSq F = Re (B F F)`, so the **null set** `{F | normSq F = 0}` of the semi-inner-product is
+  the kernel of the OS form.
+
+With this the OS form is a semi-inner-product and Mathlib's `PreInnerProductSpace.Core` quotient
+machinery applies: the quotient of the observables by the null set, with the descended form, is the
+finite-dimensional physical Hilbert space. Assembling the quotient itself is scoped in
+`PMAction/REVIEW-AND-NEXT.md`.
 
 The framework here is the standard finite-dimensional OS reconstruction, specialized to the data
 `ReciprocalReflection` actually proves. No continuum, infinite-volume or mass-gap claim is made.
 -/
+
+set_option linter.style.haveILetI false
 
 noncomputable section
 namespace PMAction.OsterwalderSchrader
@@ -74,5 +84,56 @@ theorem conj_symm_of_real_diag (B : V → V → ℂ)
   · rw [Complex.star_def, Complex.conj_re]; exact h2.symm
   · simp only [Complex.star_def, Complex.conj_im]
     linarith
+
+/-- **The Osterwalder–Schrader semi-inner-product.** A sesquilinear form with a real, non-negative
+diagonal — in particular `ReciprocalReflection.osForm`, whose diagonal is real and non-negative on
+upper observables by `reflection_positive'` — is a `PreInnerProductSpace.Core`. The four
+reflection-positivity axioms are its defining fields; the inner product is `⟪F,G⟫ = B G F`. -/
+@[instance_reducible]
+def osCore (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) :
+    PreInnerProductSpace.Core ℂ V where
+  inner x y := B y x
+  conj_inner_symm x y := by
+    have h := conj_symm_of_real_diag B hadd₁ hadd₂ hsmul₁ hsmul₂ hreal y x
+    simpa [Complex.star_def] using h.symm
+  re_inner_nonneg x := hpos x
+  add_left x y z := hadd₂ z x y
+  smul_left x y r := by
+    have h := hsmul₂ r y x
+    simpa [Complex.star_def] using h
+
+/-- **Cauchy–Schwarz for the OS form.** With `osCore`, `PreInnerProductSpace.Core`'s inner-product
+inequality reads `‖B y x‖ ≤ √(B x x).re · √(B y y).re`. -/
+theorem os_cauchy_schwarz (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) (x y : V) :
+    ‖B y x‖ ≤ √(B x x).re * √(B y y).re := by
+  let c := osCore B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal
+  letI : Inner ℂ V := InnerProductSpace.Core.toPreInner' (c := c)
+  letI : Norm V := InnerProductSpace.Core.toNorm (c := c)
+  have h := InnerProductSpace.Core.norm_inner_le_norm (𝕜 := ℂ) (c := c) x y
+  simp only [Norm.norm] at h
+  exact h
+
+/-- The **null set** of the OS form is where the (squared) norm vanishes. -/
+theorem osCore_normSq_eq (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) (x : V) :
+    InnerProductSpace.Core.normSq (c := osCore B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal) x
+      = (B x x).re := rfl
 
 end PMAction.OsterwalderSchrader
