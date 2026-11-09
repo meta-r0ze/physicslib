@@ -25,10 +25,14 @@ core that converts those facts into a semi-inner-product:
 * `osCore_normSq_eq`: the core norm-squared is exactly the OS form's diagonal,
   `normSq F = Re (B F F)`, so the **null set** `{F | normSq F = 0}` of the semi-inner-product is
   the kernel of the OS form.
+* `osNull_zero` / `osNull_add` / `osNull_smul`: the null set is a **subspace** (closed under `0`,
+  `+` and scalar multiplication) — the one algebraic fact the quotient needs. Addition uses the
+  Cauchy–Schwarz bound: if `B x x = B y y = 0` then `‖B y x‖ ≤ 0`, so the cross term vanishes.
 
-With this the OS form is a semi-inner-product and Mathlib's `PreInnerProductSpace.Core` quotient
-machinery applies: the quotient of the observables by the null set, with the descended form, is the
-finite-dimensional physical Hilbert space. Assembling the quotient itself is scoped in
+With this the OS form is a semi-inner-product whose null set is a subspace, and Mathlib's
+`PreInnerProductSpace.Core` quotient machinery applies: the quotient of the observables by the null
+set, with the descended form, is the finite-dimensional physical Hilbert space. Assembling the
+quotient itself (the `Submodule`/`SeparationQuotient` construction) is scoped in
 `PMAction/REVIEW-AND-NEXT.md`.
 
 The framework here is the standard finite-dimensional OS reconstruction, specialized to the data
@@ -135,5 +139,62 @@ theorem osCore_normSq_eq (B : V → V → ℂ)
     (hreal : ∀ x, (B x x).im = 0) (x : V) :
     InnerProductSpace.Core.normSq (c := osCore B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal) x
       = (B x x).re := rfl
+
+/-- `0` is null. -/
+theorem osNull_zero (B : V → V → ℂ)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y) : B 0 0 = 0 := by
+  have := hsmul₁ (0 : ℂ) (0 : V) 0
+  simpa using this
+
+/-- **The null set is closed under addition.** If `B x x = B y y = 0` then `B (x+y) (x+y) = 0`.
+The cross term vanishes by Cauchy–Schwarz (`os_cauchy_schwarz`). -/
+theorem osNull_add (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) {x y : V}
+    (hx : B x x = 0) (hy : B y y = 0) : B (x + y) (x + y) = 0 := by
+  have hxr : (B x x).re = 0 := by rw [hx]; simp
+  have hyr : (B y y).re = 0 := by rw [hy]; simp
+  have hxy : B x y = 0 := by
+    have h := os_cauchy_schwarz B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal y x
+    rw [hxr, hyr] at h
+    simp only [Real.sqrt_zero, mul_zero] at h
+    exact norm_eq_zero.mp (le_antisymm h (norm_nonneg _))
+  have hyx : B y x = 0 := by
+    have h := conj_symm_of_real_diag B hadd₁ hadd₂ hsmul₁ hsmul₂ hreal x y
+    rw [hxy] at h
+    exact star_eq_zero.mp h.symm
+  calc B (x + y) (x + y) = B x (x + y) + B y (x + y) := hadd₁ x y (x + y)
+    _ = (B x x + B x y) + (B y x + B y y) := by rw [hadd₂ x x y, hadd₂ y x y]
+    _ = 0 := by rw [hx, hxy, hyx, hy]; ring
+
+/-- **The null set is closed under scaling.** -/
+theorem osNull_smul (B : V → V → ℂ)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (c : ℂ) {x : V} (hx : B x x = 0) : B (c • x) (c • x) = 0 := by
+  rw [hsmul₁ c x (c • x), hsmul₂ c x x]
+  simp [hx]
+
+/-- **The kernel of the OS form as a `Submodule`.** The null set `{F | B F F = 0}` is closed
+under `0`, `+` and scalar multiplication (`osNull_zero`/`osNull_add`/`osNull_smul`), so it is a
+`Submodule`. The physical Hilbert space of the OS reconstruction is the quotient
+`V ⧸ osNullSubmodule`; assembling the descended inner-product instance on that quotient is the
+remaining scaffolding (it needs the `SeparationQuotient`/`Matrix.PosSemidef.toInnerProductSpace`
+machinery, scoped in `PMAction/REVIEW-AND-NEXT.md`). -/
+def osNullSubmodule (B : V → V → ℂ)
+    (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
+    (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)
+    (hsmul₁ : ∀ (a : ℂ) x y, B (a • x) y = a * B x y)
+    (hsmul₂ : ∀ (a : ℂ) x y, B x (a • y) = star a * B x y)
+    (hpos : ∀ x, 0 ≤ (B x x).re)
+    (hreal : ∀ x, (B x x).im = 0) : Submodule ℂ V where
+  carrier := {x | B x x = 0}
+  zero_mem' := osNull_zero B hsmul₁
+  add_mem' := fun hx hy => osNull_add B hadd₁ hadd₂ hsmul₁ hsmul₂ hpos hreal hx hy
+  smul_mem' := fun c _ hx => osNull_smul B hsmul₁ hsmul₂ c hx
 
 end PMAction.OsterwalderSchrader
