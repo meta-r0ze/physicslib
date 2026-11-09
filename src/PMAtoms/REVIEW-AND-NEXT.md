@@ -130,9 +130,13 @@ family of open modes with the `RateModel` cost rate, replacing the continuum
 Dalitz measure.  `betaSpectralWeight = exp(−λ)` now supplies a spectral Boltzmann weight, and
 `betaSpectralRate` sums those weights over a chosen mode subset.  `betaOpenModes`
 selects modes below an energy cutoff and `betaSpectralRateCutoff` is positive for
-a nonempty cutoff.  What remains is the numerical spectral sum and the neutron
-benchmark comparison.  The spectral rate is bounded by `β c0`, so the lifetime
-is bounded below by `1/(β c0)`; the open task is the actual spectral sum.
+a nonempty cutoff.  The rate **structure is complete**: it is bounded by `β c0`
+(`betaSpectralRateCutoff_le`), monotone in the energy cutoff
+(`betaSpectralRateCutoff_mono`), saturates the bare rate when every mode is open
+(`betaWeightedRate_univ`) and is zero when none are (`betaWeightedRate_empty`);
+so the lifetime is bounded below by `1/(β c0)`.  What remains — the *numeric*
+spectral sum of a specific cube and the neutron benchmark comparison, plus the
+attempt-frequency unit `β c0` — is comparison/data, not a theorem.
 
 `MeanLife` and `PersistenceRate` give the structural rate → lifetime step. The
 missing input is the E8 per-channel rate/clock. Numeric lifetimes are deferred.

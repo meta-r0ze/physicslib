@@ -41,7 +41,6 @@ continuous the choice provably ties and it stays **M** (`SelectionSymmetry.invar
 
 | ID | Item | Modules | Kind | What is open | Quick test |
 | --- | --- | --- | --- | --- | --- |
-| A6 | **E8 per-channel rate/clock.** The nuclear `MeanLife` layer. | `PMAtoms` §5 (`BetaLattice`) | **H** | Bounds are done (`BetaLattice.betaWeightedRate_le`, `betaSpectralRateCutoff_le`); the actual numeric spectral sum (comparison data) and the absolute attempt frequency remain. | Numeric sum is data, not a theorem. |
 | A1d | **Heavy deformation shape (N > 146).** | `PMAtoms` §1 | H/M | Holdout even-even actinides scatter ±0.019 u; needs a Z-dependent/mid-shell factor. | Candidate ranking done; shape not yet predictive. |
 | A2c | **Nuclear charge tail.** | `PMAtoms` §2 | M/H | The 3×3×3 charge response is exact; heavy scaling needs a finite-size differential. | Low-Z-anchored differential. |
 | A3c | **Deformed proton closure `2(Δ+σ)=96`.** | `PMAtoms` §3 | **H** | Candidate; simple closure overcorrects U-238. | Refine the closure. |
@@ -56,6 +55,7 @@ continuous the choice provably ties and it stays **M** (`SelectionSymmetry.invar
 | A7 | Electron screening/exchange, Aufbau order | `PMAtoms` §6 | M | Fill order is a supplied input (hydrogenic `−R∞/n²` has no ℓ-dependence). |
 | C1–C7 | Cosmology Part B | `PMCosmology` | M/C | State/clock/readout, background `L(a)`, primordial source, baryon-changing event, metric/causal structure, entropy normalization, joint test. |
 | E7 | Decay law / physical E8 tick | `PMAtoms.E8Tick`, `E8TickUnit` | M | The E8 tick is the clock period `Δ = 43` (`E8Tick.e8Tick_eq`); the **SI conversion** (`E8TickUnit`) is a comparison input, explicitly not E8-derived. |
+| — | Nuclear rate unit `β·c0` (absolute attempt frequency) | `PMAtoms.RateModel`, `BetaLattice` | M | The spectral rate is `β·c0 · (open-mode fraction)`; `β` (persistence hazard) and `c0` (toll) fix the unit. The rate *structure* is complete (bounded, monotone in cutoff, saturating): `betaSpectralRateCutoff_mono`, `betaWeightedRate_univ`, `betaWeightedRate_empty`. Numeric spectral sums / lifetimes are comparison data. |
 | E9 | Radiative corrections, hadronic matrix elements | `PMElementaryParticles` B5 | M | `RadiativeCorrection` is a supplied-`R` interface; `BoundStateMatrixElement.value` is supplied. |
 | — | External anchors | `PMFlavor`, `PMConstants` | M | `m_e`, absolute wall-mass scale, `α_G` normalization, Planck scale — the dimensionful unit. Isolated in `VevDownstream`, `WallImpedanceChoice`. |
 | — | Postulates | `SCOPE.md` | P | Born rule; Lorentzian signature; origin of ℂ. Signature = "volume element squares to −1" (`Derived.SignaturePostulate`). |

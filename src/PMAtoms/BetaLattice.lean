@@ -344,4 +344,51 @@ theorem betaSpectralRateCutoff_le (β c0 : ℝ) (n : Nat) (E : ℝ)
   · intro p
     exact betaSpectralWeight_pos n _ _ _
 
+/-! ## Cutoff structure of the E8 spectral rate (Review item A6)
+
+The spectral rate `betaSpectralRateCutoff β c0 n E` is the open-mode fraction times
+the bare attempt scale `β·c0`. The collective statements A6 asks for are that it is
+**bounded** (`betaSpectralRateCutoff_le`), **monotone** in the cutoff `E`
+(`betaSpectralRateCutoff_mono`, as more modes open), **saturating** the bare rate when all
+modes are open (`betaWeightedRate_univ`), and **zero** when none are
+(`betaWeightedRate_empty`). The *numeric* spectral sum of a specific cube, and the absolute
+attempt-frequency unit `β·c0`, are comparison/data, not theorems. -/
+
+theorem betaOpenModes_mono {n : Nat} {E E' : ℝ} (h : E ≤ E') :
+    betaOpenModes n E ⊆ betaOpenModes n E' := by
+  intro p hp
+  simp only [betaOpenModes, Finset.mem_filter, Finset.mem_univ, true_and] at hp ⊢
+  exact le_trans hp h
+
+theorem betaWeightedRate_mono (β c0 : ℝ) {Ω : Type*} [Fintype Ω] (w : Ω → ℝ)
+    {S S' : Finset Ω} (hSS : S ⊆ S') (hβ : 0 ≤ β) (hc0 : 0 ≤ c0)
+    (hw : ∀ i, 0 < w i) :
+    betaWeightedRate β c0 w S ≤ betaWeightedRate β c0 w S' := by
+  have hsub : S.sum w ≤ S'.sum w :=
+    Finset.sum_le_sum_of_subset_of_nonneg hSS (fun i _ _ => le_of_lt (hw i))
+  have hbc : 0 ≤ β * c0 := mul_nonneg hβ hc0
+  unfold betaWeightedRate
+  refine div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_left hsub hbc) ?_
+  exact Finset.sum_nonneg (fun i _ => le_of_lt (hw i))
+
+theorem betaWeightedRate_univ (β c0 : ℝ) {Ω : Type*} [Fintype Ω] [Nonempty Ω]
+    (w : Ω → ℝ) (hw : ∀ i, 0 < w i) :
+    betaWeightedRate β c0 w Finset.univ = β * c0 := by
+  have htotal : 0 < ∑ i, w i := Finset.sum_pos (fun i _ => hw i) Finset.univ_nonempty
+  unfold betaWeightedRate
+  rw [mul_div_assoc, div_self htotal.ne', mul_one]
+
+theorem betaWeightedRate_empty (β c0 : ℝ) {Ω : Type*} [Fintype Ω] (w : Ω → ℝ) :
+    betaWeightedRate β c0 w (∅ : Finset Ω) = 0 := by
+  unfold betaWeightedRate; simp
+
+/-- **The E8 spectral rate is monotone in the energy cutoff**: opening more modes can only
+increase the open-weight fraction, hence the rate, up to the bare `β·c0`. -/
+theorem betaSpectralRateCutoff_mono (β c0 : ℝ) (n : Nat) {E E' : ℝ}
+    (hβ : 0 ≤ β) (hc0 : 0 ≤ c0) (h : E ≤ E') :
+    betaSpectralRateCutoff β c0 n E ≤ betaSpectralRateCutoff β c0 n E' := by
+  unfold betaSpectralRateCutoff betaSpectralRate
+  exact betaWeightedRate_mono β c0 _ (betaOpenModes_mono h) hβ hc0
+    (fun p => betaSpectralWeight_pos n _ _ _)
+
 end PMAtoms
