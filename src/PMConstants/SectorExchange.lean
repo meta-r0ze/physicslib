@@ -18,10 +18,14 @@ symmetry of the update and removes the remaining phase.
   `det(v̄ Y_u) det(v Y_d) = |v|⁶ det Y_u det Y_d`, so the vacuum phase drops out of `θ̄`.
 * `thetaBar_zero`: for Hermitian, positive `Y_u, Y_d`, `v ≠ 0` and `θ = 0`, `θ̄ = 0`.
 
-Premise, now stated as a symmetry: the update carries no sector label. The two sectors are the
-same D₄ (Paper I's `d4d4`), and a label that no observable requires is a spare coordinate,
-which Economy (`FinalPremises.description_minimal`) excludes. This is an argument from Paper I's
-premises, not a formal derivation here.
+Premise, **reduced to Economy**: the update carries no sector label. `exchange_fixed_of_unique`
+derives the exchange symmetry `swap * H * swap = H` (the hypothesis of `exchange_hermitian`) from
+two persistence premises — the update cost is exchange-invariant (the two D₄ sectors are
+indistinguishable) and persistence selects a unique least-cost update
+(`unique_minimizer_fixed`: a unique least-cost element of a symmetric cost is fixed by the
+symmetry). `FinalPremises.description_minimal` supplies the underlying "a label no observable
+requires is a spare coordinate" reading. So the Hermitian link mass follows from the derived
+matrix content plus those two premises, not from an unformalised symmetry assertion.
 -/
 
 noncomputable section
@@ -42,6 +46,29 @@ theorem exchange_hermitian (A M M' B : Matrix n n ℂ)
   obtain ⟨_, _, h3, h4⟩ := hS
   obtain ⟨_, _, k3, _⟩ := hH
   exact ⟨k3.trans h3.symm, h4⟩
+
+/-- **Economy: a unique least-cost element of a symmetric cost is fixed by the symmetry.**
+If an involution `τ` preserves the cost and the least-cost element is unique, that element is
+fixed by `τ`. This is the Economy step that turns indistinguishability into symmetry: when two
+sectors are indistinguishable the update cost is exchange-invariant, and persistence selects a
+unique least-cost update, so the update carries no sector label. -/
+theorem unique_minimizer_fixed {U : Type*} (cost : U → ℝ) (τ : U → U)
+    (hcost : ∀ u, cost (τ u) = cost u) (u : U)
+    (hmin : ∀ v, cost u ≤ cost v) (huniq : ∀ v, (∀ w, cost v ≤ cost w) → v = u) :
+    τ u = u :=
+  huniq (τ u) (fun w => by rw [hcost u]; exact hmin w)
+
+/-- **The no-sector-label premise, from Economy.** The update `H` is fixed by the sector
+exchange (`swap * H * swap = H`, the hypothesis of `exchange_hermitian`) whenever the update
+cost is exchange-invariant (the sectors are indistinguishable) and persistence selects a unique
+least-cost update. So "carries no sector label" reduces to those two persistence premises. -/
+theorem exchange_fixed_of_unique (cost : Matrix (n ⊕ n) (n ⊕ n) ℂ → ℝ)
+    (H : Matrix (n ⊕ n) (n ⊕ n) ℂ)
+    (hcost : ∀ K, cost (swap * K * swap) = cost K)
+    (hmin : ∀ K, cost H ≤ cost K)
+    (huniq : ∀ K, (∀ L, cost K ≤ cost L) → K = H) :
+    swap * H * swap = H :=
+  unique_minimizer_fixed cost (fun K => swap * K * swap) hcost H hmin huniq
 
 theorem one_doublet_phase_cancels (v : ℂ) (Yu Yd : Matrix (Fin 3) (Fin 3) ℂ) :
     (conj v • Yu).det * (v • Yd).det =
