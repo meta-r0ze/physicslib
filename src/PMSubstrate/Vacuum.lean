@@ -133,6 +133,39 @@ theorem least_rank_most_persistent {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) {s : Su
     (h : Geometric s) : p ^ s.n ≤ p ^ e8.n :=
   pow_le_pow_of_le_one hp0.le hp1.le (geometric_rank h)
 
+/-- **Multiplicative survival is geometric.** A positive function `F` of the register count that
+multiplies over independent registers is `F n = F 1 ^ n`. This is the discrete `HazardForm` form
+(one currency + no memory of exposure), so the substrate's per-period survival is the *product* of
+its per-register survivals `F 1`. -/
+theorem survival_geometric (F : ℕ → ℝ) (hpos : ∀ n, 0 < F n)
+    (hmul : ∀ m n, F (m + n) = F m * F n) : ∀ n, F n = F 1 ^ n := by
+  have h0 : F 0 = 1 := by
+    have h := hmul 0 0
+    simp only [add_zero] at h
+    nlinarith [h, hpos 0]
+  intro n
+  induction n with
+  | zero => simpa using h0
+  | succ n ih => rw [hmul n 1, ih, pow_succ]
+
+/-- **A positive per-register cost gives `p ∈ (0,1)`.** The exponential filter `p = exp(−x)` of a
+strictly positive cost `x` lies in `(0,1)`. -/
+theorem exp_survival_unit (x : ℝ) (hx : 0 < x) :
+    0 < Real.exp (-x) ∧ Real.exp (-x) < 1 :=
+  ⟨Real.exp_pos _, Real.exp_lt_one_iff.mpr (by linarith)⟩
+
+/-- **Economy from the hazard form (S3 closed).** Suppose period survival is a positive
+function `F` of the register count that multiplies over independent registers (HazardForm premises
+1–2) and that a positive per-register cost makes it strictly shrink (`F 1 < 1`, e.g. `F 1 = exp(−x)`
+with `x > 0` by `exp_survival_unit`). Then `F s.n = F 1 ^ s.n` is maximized at the least geometric
+rank, so **`Economical` is a consequence of the hazard form plus a positive per-register cost** — not
+an independent postulate. -/
+theorem economy_from_hazard (F : ℕ → ℝ) (hpos : ∀ n, 0 < F n)
+    (hmul : ∀ m n, F (m + n) = F m * F n) (h1 : F 1 < 1) {s : Substrate} (h : Geometric s) :
+    F s.n ≤ F e8.n := by
+  rw [survival_geometric F hpos hmul s.n, survival_geometric F hpos hmul e8.n]
+  exact pow_le_pow_of_le_one (hpos 1).le h1.le (geometric_rank h)
+
 /-- **Main lattice theorem.** The geometric postulates and Economy force `E₈`. -/
 theorem geometric_selects_e8 {s : Substrate} (h : Geometric s) (hmin : Economical s) :
     ClaimBoundary.IsE8 s.A := by
