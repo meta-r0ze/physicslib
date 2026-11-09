@@ -96,7 +96,7 @@ theorem finsupp_not_finite_generated : ¬ Module.Finite ℤ (ℕ →₀ ℤ) := 
     exact Finset.subset_biUnion_of_mem Finsupp.support hx
   obtain ⟨k, hk⟩ : ∃ k : ℕ, k ∉ s.biUnion Finsupp.support := by
     by_contra hc
-    push_neg at hc
+    push Not at hc
     exact (Set.infinite_univ (α := ℕ)) ((Finset.finite_toSet _).subset (fun k _ => hc k))
   exact hk ((hle Submodule.mem_top : (Finsupp.single k 1 : ℕ →₀ ℤ) ∈ T)
     (Finsupp.mem_support_iff.mpr (by simp)))
