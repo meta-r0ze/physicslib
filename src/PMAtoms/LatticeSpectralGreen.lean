@@ -34,10 +34,9 @@ theorem cosSum_eq (n m : ℕ) (hm : 1 ≤ m) (hmN : m < 2 * (n + 1)) :
     rw [cosSum, Finset.sum_fin_eq_sum_range]
     apply Finset.sum_congr rfl
     intro i hi
-    rw [dif_pos (Finset.mem_range.mp hi)]
+    rw [dite_eq_left (Finset.mem_range.mp hi)]
     apply congrArg Real.cos
     simp only [hA, hN]
-    push_cast
     ring
   have hmain := Real.sin_mul_sum_cos n A A
   rw [← hconv] at hmain
