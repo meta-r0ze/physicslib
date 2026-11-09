@@ -34,6 +34,13 @@ continuous the choice provably ties and it stays **M** (`SelectionSymmetry.invar
 - **P3** — model-input leaves: data or selected laws; state once.
 - **P4** — out of scope.
 
+### Removed after review — not open problems
+
+- **A4 (spectral asymptotic `uniformResponse n/n⁵ → 1/(16π)`)** — *dead scaffold.* `cubeLapN`, `spectralGreen`, `uniformResponse` were referenced by **nothing** in the tree; the `1/(16π)` "target" was a numerical observation (`S(3)=743/51,…`) promoted to a goal. The papers never state it. Deleted: `LatticeSpectral` trimmed to the one consumed object (`dirichletEigenvalue`, used by `BetaLattice`); the scaffold modules `LatticeSpectralGreen/Mode/Uniform/Asymptotic` removed.
+- **A8 (`certifiedMass` rational enclosure)** — *tool convenience.* The e8p periodic table prints its own rational `boundWeightU` and never imports `certifiedMass`; no paper asserts the enclosure. The added bound lemmas were reverted.
+
+> **Naming note.** The paper's `A₄`/`A₈` are *lattice candidates* in the substrate selection — `Sectors.sector_selection` dismisses `A₄` (glue `ℤ/5`) and keeps `D₄`; `E8Unique.e8_unique`/`Vacuum.geometric_selects_e8` give `E₈`. Those are **kept** (the load-bearing E8-selection) and are unrelated to the removed `A4`/`A8` register IDs.
+
 ---
 
 ## P0 — load-bearing (a reader flags these first)
@@ -67,8 +74,6 @@ continuous the choice provably ties and it stays **M** (`SelectionSymmetry.invar
 | ID | Item | Modules | Kind | Test |
 | --- | --- | --- | --- | --- |
 | R5 | **OS quotient / physical Hilbert space.** Hermitian semi-inner-product + Cauchy–Schwarz; null set is a subspace and the kernel `Submodule` `osNullSubmodule`; the Gram matrix `osGram B F` of a finite family is **PSD** (`osGram_posSemidef`), so `osGramInnerProductSpace` makes `n → ℂ` the **physical Hilbert space** (`Matrix.PosSemidef.toInnerProductSpace`). | `PMAction` §5 | **H — finite-dimensional form done** | Only the infinite/family-free quotient `V ⧸ osNullSubmodule` (for observables not assumed finite) remains; the finite-dimensional Hilbert space is assembled. | **Done** (finite-dimensional): PSD Gram + descended inner product. |
-| A4 | **Spectral asymptotic** `uniformResponse n / n^5 → 1/(16π)`. | `PMAtoms` (`LatticeSpectral`, `LatticeSpectralGreen`, `LatticeSpectralAsymptotic`) | H — in progress | **Done:** `cubeLapN_mode` (modes diagonalize `cubeLapN`); the Dirichlet **cosine-sum evaluation** `cosSum_eq` with parity cases `cosSum_even`/`cosSum_odd` (the core of the sine orthogonality). **Remaining:** the 1D orthogonality `∑ sin sin = (n+1)/2·δ` (assembled from `cosSum`), then `cubeLapN_spectralGreen` (Green = inverse Laplacian), then the off-diagonal `pathMode_orthogonal` (`cosSum_eq` + parity), `cubeLapN_spectralGreen`, and the `Tendsto` asymptotic. **Done so far:** `cubeLapN_mode`, `cosSum_eq`/`_even`/`_odd`, `pathMode_sq_sum` (mode normalization). |
-| A8 | **`certifiedMass` rational enclosure.** | `PMAtoms` (`NuclearFolding`, `TwoLedger`), `tools/e8p` | H — deep | The expression carries **both `π`** (`packingWeight = π·12/5`, `chargeCoupling = π·2/5`) **and an irrational root** (`sphereCoulomb` has `√(a^(2/3)+1)`), on top of the piecewise shell/charge counts. An enclosure needs rational bounds on the cube root and `π` per `(Z,N)`. Not a quick build. | Open (deep). |
 | A6 | **E8 per-channel rate/clock.** The nuclear `MeanLife` layer. | `PMAtoms` §5 (`BetaLattice`) | **H — bounds done** | The spectral rate is bounded by `β c0` (`BetaLattice.betaWeightedRate_le`, `betaSpectralRateCutoff_le`), and the structural `BetaLattice`/`AlphaFinite` chains exist. **Remaining:** the actual numeric spectral sum (comparison data) and the absolute attempt frequency — data, not a theorem. | Bound done. |
 | A1d | **Heavy deformation shape (N > 146).** | `PMAtoms` §1 | H/M | Holdout even-even actinides scatter ±0.019 u; candidate ranking done; needs a Z-dependent/mid-shell factor. |
 | A5 | **Neutrino decay channel.** No lighter-than-zero channel. | `PMAtoms` §4b | H | `neutrino_stable` is proved; a massive-neutrino channel needs a new mass ledger. |
