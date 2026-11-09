@@ -11,7 +11,8 @@ comments below; the definitions and the symmetry lemma are complete.
 
 Open targets:
 
-* `cubeLapN_mode` — the sine modes diagonalize the Dirichlet Laplacian.
+* ~~`cubeLapN_mode`~~ — **proved** (`cubeLapN_mode`): the sine modes diagonalize the Dirichlet
+  Laplacian, assembled from `pathLapN_mode` plus `pathLapN` linearity.
 * `cubeLapN_spectralGreen` — the spectral sum is the inverse Laplacian.
 * `uniformResponse_odd` — only odd modes contribute to a uniform charge.
 * `uniformResponse_asymptotic` — `S(n)/n^5 → 1/(16π)`.
@@ -149,5 +150,57 @@ def uniformResponse (n : Nat) : ℝ :=
          1 / Real.tan (Real.pi * (c.val + 1) / (2 * ((n : ℝ) + 1)))) ^ 2 /
         dirichletEigenvalue n (a.val + 1) (b.val + 1) (c.val + 1)
       else 0
+/-- Scaling the argument of a path function scales its extension. -/
+lemma pathExt_const_mul (n : Nat) (c : ℝ) (f : Fin n → ℝ) (i : ℤ) :
+    pathExt n (fun j => c * f j) i = c * pathExt n f i := by
+  unfold pathExt
+  by_cases h : 0 ≤ i ∧ i < n <;> simp [h]
+
+/-- Linearity of the 1D Dirichlet Laplacian under left scaling. -/
+lemma pathLapN_smul (n : Nat) (c : ℝ) (f : Fin n → ℝ) (i : Fin n) :
+    pathLapN n (fun j => c * f j) i = c * pathLapN n f i := by
+  unfold pathLapN
+  rw [pathExt_const_mul, pathExt_const_mul]
+  ring
+
+/-- Linearity of the 1D Dirichlet Laplacian under right scaling. -/
+lemma pathLapN_mul_const (n : Nat) (c : ℝ) (f : Fin n → ℝ) (i : Fin n) :
+    pathLapN n (fun j => f j * c) i = pathLapN n f i * c := by
+  conv_lhs => rw [show (fun j => f j * c) = (fun j => c * f j)
+    from funext fun j => by ring]
+  rw [pathLapN_smul]; ring
+
+/-- **The Dirichlet sine modes diagonalize the cube Laplacian.** Assembled from the three 1D
+`pathLapN_mode` eigenrelations plus linearity of `pathLapN`. -/
+theorem cubeLapN_mode (n a b c : Nat) (ha : 1 ≤ a) (ha' : a ≤ n)
+    (hb : 1 ≤ b) (hb' : b ≤ n) (hc : 1 ≤ c) (hc' : c ≤ n) :
+    cubeLapN n (dirichletMode n a b c) =
+      fun v => dirichletEigenvalue n a b c * dirichletMode n a b c v := by
+  funext v
+  rw [cubeLapN]
+  have h1 : pathLapN n (fun i => dirichletMode n a b c (i, v.2.1, v.2.2)) v.1
+      = pathEigenvalue n a * dirichletMode n a b c v := by
+    have hc1 : (fun i : Fin n => dirichletMode n a b c (i, v.2.1, v.2.2))
+        = (fun i => pathMode n a i * (pathMode n b v.2.1 * pathMode n c v.2.2)) := by
+      funext i; simp only [dirichletMode, pathMode]; ring
+    rw [hc1, pathLapN_mul_const, congrFun (pathLapN_mode n a ha ha') v.1]
+    simp only [dirichletMode, pathMode]; ring
+  have h2 : pathLapN n (fun j => dirichletMode n a b c (v.1, j, v.2.2)) v.2.1
+      = pathEigenvalue n b * dirichletMode n a b c v := by
+    have hc2 : (fun j : Fin n => dirichletMode n a b c (v.1, j, v.2.2))
+        = (fun j => pathMode n b j * (pathMode n a v.1 * pathMode n c v.2.2)) := by
+      funext j; simp only [dirichletMode, pathMode]; ring
+    rw [hc2, pathLapN_mul_const, congrFun (pathLapN_mode n b hb hb') v.2.1]
+    simp only [dirichletMode, pathMode]; ring
+  have h3 : pathLapN n (fun k => dirichletMode n a b c (v.1, v.2.1, k)) v.2.2
+      = pathEigenvalue n c * dirichletMode n a b c v := by
+    have hc3 : (fun k : Fin n => dirichletMode n a b c (v.1, v.2.1, k))
+        = (fun k => pathMode n c k * (pathMode n a v.1 * pathMode n b v.2.1)) := by
+      funext k; simp only [dirichletMode, pathMode]; ring
+    rw [hc3, pathLapN_mul_const, congrFun (pathLapN_mode n c hc hc') v.2.2]
+    simp only [dirichletMode, pathMode]; ring
+  rw [h1, h2, h3]
+  unfold dirichletEigenvalue pathEigenvalue
+  ring
 
 end PMAtoms
