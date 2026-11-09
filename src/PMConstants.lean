@@ -83,7 +83,6 @@ import PMConstants.Generations
 import PMConstants.FloorNeutrino
 import PMConstants.BetaUniversality
 import PMConstants.GravityAccounting
-import PMConstants.ScalarAccounting
 import PMConstants.ScalarBudget
 import PMConstants.ScalarLedger
 import PMConstants.BoundaryStorage
@@ -130,7 +129,6 @@ import PMConstants.TableConsequences
 import PMConstants.ReadoutScales
 import PMConstants.RunningLinks
 import PMConstants.MatterRunning
-import PMConstants.HyperScope
 import PMConstants.PreparationSelection
 import PMConstants.ScalePairing
 import PMConstants.StableReadout

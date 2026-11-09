@@ -23,7 +23,8 @@ derivation of the scope from the update.
 -/
 
 noncomputable section
-namespace PMConstants.HyperScope
+namespace E8PConstants.HyperScope
+open PMConstants
 open PMConstants
 
 def footprint14 : ℝ := (PMSubstrate.E8Values.RM : ℝ) +
@@ -40,4 +41,4 @@ theorem relative_scope_excluded {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
   refine ⟨h1, ?_⟩
   rw [div_lt_iff₀ (by norm_num)]; linarith
 
-end PMConstants.HyperScope
+end HyperScope

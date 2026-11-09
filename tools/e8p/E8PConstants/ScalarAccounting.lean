@@ -16,7 +16,8 @@ Three precision observables (`G_F`, `G`, `m_H` with `G_F`) therefore select the 
 -/
 
 noncomputable section
-namespace PMConstants.ScalarAccounting
+namespace E8PConstants.ScalarAccounting
+open PMConstants
 open PMConstants ScalarSector
 
 def lambdaPayload : ℝ :=
@@ -52,4 +53,4 @@ theorem payload_pull {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5) :
   have hm := payload_higgs h
   rw [lt_div_iff₀ (by norm_num)]; linarith
 
-end PMConstants.ScalarAccounting
+end ScalarAccounting

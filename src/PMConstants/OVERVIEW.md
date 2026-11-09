@@ -266,7 +266,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `FloorNeutrino` | Bare thermal tower and common-scale splitting obstruction |
 | `BetaUniversality` | The rank rule for the beta coefficient fails its own universality test |
 | `GravityAccounting` | Which channel count the gravitational coupling can persist with |
-| `ScalarAccounting` | The scalar ledger picks the same channel accounting |
+| scalar accounting (measured G_F/m_H selection) | moved to the e8p comparison layer (`E8PConstants.ScalarAccounting`) |
 | `ScalarLedger` | `scalarBudget = σ−χ = 3`, `scalarLabels = ν+σ+χ = 23`, `scalarGain`, `scalarGain_eq`, `scalarTollLedger_eq`, `scalarMassSq_eq`, `scalarBudget_eq_movedCount`; factorised scalar ledger. |
 | `ScalarBudget` | The scalar ledger's budget is the integer 3 |
 | `BoundaryStorage` | The gravity residual's boundary-storage term |
@@ -308,7 +308,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `ReadoutScales` | Where each readout is matched |
 | `RunningLinks` | Paper III's running coefficients come from Paper II |
 | `MatterRunning` | Paper II's dynamics applied to Paper III's derived content |
-| `HyperScope` | Which hypercharge scope the W mass allows |
+| hypercharge scope (measured W-mass selection) | moved to the e8p comparison layer (`E8PConstants.HyperScope`) |
 | `PreparationSelection` | The uniform preparation as an instance of law selection |
 | `ScalePairing` | Which electric coupling the colour formula pairs with `α_s(M_Z)` |
 | `StableReadout` | Why the colour formula pairs `α(0)` with `α_s(M_Z)` |

@@ -23,6 +23,8 @@ import E8PConstants.ExperimentalComparison
 import E8PConstants.AlphaClockComparison
 import E8PConstants.E8TickUnit
 import E8PConstants.ExperimentalPulls
+import E8PConstants.ScalarAccounting
+import E8PConstants.HyperScope
 import PMConstants.ElectroweakBounds
 import PMConstants.ElectroweakE8
 import PMConstants.JointConstants
