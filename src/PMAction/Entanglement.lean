@@ -83,4 +83,32 @@ theorem singlet_not_product :
   · exact h01 (by rw [h0, zero_mul])
   · exact h10 (by rw [h0, mul_zero])
 
+/-- Local action `(A ⊗ B) ψ`: `A` on the first system, `B` on the second. -/
+def apply (A B : Matrix (Fin 2) (Fin 2) ℂ) (ψ : State2) : State2 :=
+  fun i j => ∑ a, ∑ b, A i a * B j b * ψ a b
+
+/-- `Z`-basis projector on outcome `i`. -/
+def zProj (i : Fin 2) : Matrix (Fin 2) (Fin 2) ℂ := fun j k => if j = i ∧ k = i then 1 else 0
+
+/-- `X`-basis projectors `|±⟩⟨±|`. -/
+def xProj : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ
+  | 0 => fun _ _ => (2 : ℂ)⁻¹
+  | 1 => fun j k => if j = k then (2 : ℂ)⁻¹ else -((2 : ℂ)⁻¹)
+
+/-- The first system's marginal probability `P(0)` when the second is measured with resolution
+`B` (a complete family `∑_k B_k = 1`). -/
+def marginal0 (B : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) (ψ : State2) : ℝ :=
+  ∑ k, normSq2 (apply (zProj 0) (B k) ψ)
+
+/-- **No-signalling.** The singlet's first-system marginal `P(0)` is `1/2` whether the second
+system is measured in the `Z` or the `X` basis — the distant (space-like) choice cannot be read off
+locally. (Both families are complete resolutions, `∑_k B_k = 1`; the marginal depends only on the
+local projector.) -/
+theorem no_signalling_singlet :
+    marginal0 zProj singlet = 2⁻¹ ∧ marginal0 xProj singlet = 2⁻¹ := by
+  constructor <;>
+    simp only [marginal0, normSq2, apply, zProj, xProj, singlet, Fin.sum_univ_two, Fin.isValue,
+      Fin.reduceEq, and_self, and_true, and_false, ite_true, ite_false, zero_mul, mul_zero] <;>
+    norm_num [s2_normSq]
+
 end PMAction.Entanglement

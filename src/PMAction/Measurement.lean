@@ -118,4 +118,16 @@ theorem born_total {N : ℕ} (ψ : Fin (N+1) → ℂ) :
     (∑ j, normSq (pointerProj j (measure (prepare ψ)))) = ∑ j, Complex.normSq (ψ j) := by
   simp_rw [born]
 
+/-- **Preferred basis.** The interaction resolves the system basis `{|i⟩}` (the pointer basis): a
+system basis state premeasures to the correlated joint state `|i⟩|i⟩`. So the pointer coupling's
+eigenbasis — the basis the measurement reports in — is *selected* by the interaction, not put in by
+hand. -/
+theorem basis_premeasure {N : ℕ} (i : Fin (N+1)) (j a : Fin (N+1)) :
+    measure (prepare (Pi.single i 1)) j a = if j = i ∧ a = i then 1 else 0 := by
+  rw [measure_prepare]
+  by_cases hj : j = i
+  · rw [hj, Pi.single_eq_same]
+    by_cases ha : a = i <;> simp [ha]
+  · simp [hj]
+
 end PMAction.Measurement
