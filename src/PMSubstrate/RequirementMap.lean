@@ -86,8 +86,14 @@ def geometric_reading {s : Substrate} (h : Geometric s)
 form `Λ ≅ ℤⁿ` with an integral symmetric cost — is the additional *reading*. Two sub-facts pin the
 residual: bounded-cost finiteness gives positivity but **not** finite generation (the finite-support
 group `ℤ^{(∞)}` has finite cost sublevels yet is not finitely generated), while bit-addressing
-(`2Λ* ⊆ Λ`, Postulate A) is what `ℤ^{(∞)}` fails. So the honest target below is: **bit-addressing
-together with positivity forces finite generation** — the sharp form of Postulate L. -/
+(`2Λ* ⊆ Λ`, Postulate A) is what `ℤ^{(∞)}` fails.
+
+**Resolved (negatively).** Bit-addressing does **not** force finite generation: the infinite-rank even
+lattice `D_∞ = {x ∈ ℤ^(∞) : Σ xᵢ even}` (`PMSubstrate.Address.DInf`) satisfies bit-addressing
+(`Address.two_smul_mem_DInf`, since `ℤ^(∞)` is its own dual in `ℓ²`) and finite cost sublevels, yet is
+not finitely generated (`Address.DInf_not_finite`). So the finite generation of Postulate L is a
+**genuine additional premise**, not a consequence of the substrate readings. `S1_residual` below names
+the (false) sharpening, kept as the record of what was tested. -/
 def S1_residual : Prop :=
   ∀ (M : Type*) [AddCommGroup M] (r : PMRequirements M)
     (B : LinearMap.BilinForm ℤ M) (_hcost : ∀ x, r.cost x = (B x x : ℝ)),
