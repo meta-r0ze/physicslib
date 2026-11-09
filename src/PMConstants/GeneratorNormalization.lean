@@ -22,11 +22,12 @@ unit:
   `CarrierRepresentation.charges_from_carriers`), so `μ = 1`. This gives the manuscript value
   `1849/8295` (`charge_units_give_effective`).
 
-`normalization_decided`: with the measured `m_Z`, the trace-form normalization puts the W mass
-more than `289σ` above the direct average, while the charge-unit normalization lies within
-`1.3σ`. So the substrate's own trace form is **not** the normalization of the gauge
-stiffness; the charge quanta are. The vacuum is not normalized as a unified group: the 3/5 that
-unification would introduce is absent.
+The measured W-mass decision (`normalization_decided`) lives in
+`tools/e8p/E8PConstants/ReadoutPulls.lean`: with the measured `m_Z`, the trace-form
+normalization puts the W mass more than `289σ` above the direct average, while the
+charge-unit normalization lies within `1.3σ`. So the substrate's own trace form is
+**not** the normalization of the gauge stiffness; the charge quanta are. The vacuum is
+not normalized as a unified group: the 3/5 that unification would introduce is absent.
 
 The two normalizations also differ in how the conserved electric charge is assembled. On the
 packet `Q = T₃ + Y/2` (`electron_charge` gives the electron `−1`). It is the plain sum of the
@@ -92,17 +93,6 @@ theorem weak_unit_trace :
   rw [weak_trace_product]
   simp [Matrix.trace_fin_two]
   norm_num
-
-/-- **The W mass decides the normalization.** With the selected preparation and measured `m_Z`,
-the trace-form normalization is excluded by more than `289σ`; charge units lie within `1.3σ`. -/
-theorem normalization_decided {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) {c τ : ℝ}
-    (hc : 0 < c) (hτ : 0 < τ) :
-    mixing c 43 (footprint - 43) (2 / τ) ((10 / 3) / τ) = 5547 / 37777 ∧
-      289 < WMassTest.pull 80.3692 0.0133 (ReadoutAccounting.rawWMass mZ) ∧
-      mixing c 43 (footprint - 43) 1 1 = clockRatio ∧
-      WMassTest.pull 80.3692 0.0133 (WMassTest.wMass mZ) < 1.3 :=
-  ⟨(trace_form_gives_raw hc hτ).1, ReadoutAccounting.raw_excluded h,
-    charge_units_give_effective hc, (WMassTest.pull_world h).2⟩
 
 /-! ## One currency for charge
 

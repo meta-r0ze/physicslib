@@ -19,8 +19,8 @@ row (the reference's row) to weak and weak confined to it.
 * `electric_partition`: the two sets are disjoint and their ledgers add to the footprint; with
   stiffness proportional to the ledger, `1/e² = 1/g² + 1/g'²` is the sum over that partition
   (`GaugeStiffness.electric`).
-* `w_mass`: with `ρ = 1` (`ReferenceMasses.rho_one`), `m_W = m_Z √(1 - s)` lies in
-  `(80.3827, 80.38644)` GeV for the measured `m_Z`, within `1.3σ` of the direct average.
+The measured `m_Z` W-mass comparison (`w_mass`) lives in
+`tools/e8p/E8PConstants/ReadoutPulls.lean`.
 -/
 
 noncomputable section
@@ -66,23 +66,15 @@ theorem electric_partition (_P : Premises) {c : ℝ} (hc : 0 < c) :
     exact GaugeStiffness.electric hc (by rw [su2_value]; norm_num)
       (by rw [hyper_value]; norm_num [overhead])
 
-theorem w_mass (_P : Premises) {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
-    (80.3827 < mZ * Real.sqrt (1 - ledger reqSU2 / (ledger reqSU2 + ledger reqY)) ∧
-      mZ * Real.sqrt (1 - ledger reqSU2 / (ledger reqSU2 + ledger reqY)) < 80.38644) ∧
-      WMassTest.pull 80.3692 0.0133 (WMassTest.wMass mZ) < 1.3 := by
-  rw [mixing_from_rule]
-  exact ⟨WMassTest.w_window h, (WMassTest.pull_world h).2⟩
-
 /-- **End to end.** From the premises: the assignment is the table, and the table gives the weak
-mixing, the strong coupling, the sterile payload in hypercharge and the W mass. -/
-theorem end_to_end (P : Premises) {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
+mixing, the strong coupling and the sterile payload in hypercharge. -/
+theorem end_to_end (P : Premises) :
     (∀ r, (P.f r = .weak ↔ r ∈ reqSU2) ∧ (P.f r = .hyper ↔ r ∈ reqY)) ∧
       ledger reqSU2 / (ledger reqSU2 + ledger reqY) = 1849 / 8295 ∧
       ((0.11799 : ℝ) < CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour ∧
         CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour < 0.11800) ∧
-      P.f (.payload 15) = .hyper ∧
-      WMassTest.pull 80.3692 0.0133 (WMassTest.wMass mZ) < 1.3 :=
-  ⟨assignment P, weak_mixing P, strong_coupling P, sterile_included P, (w_mass P h).2⟩
+      P.f (.payload 15) = .hyper :=
+  ⟨assignment P, weak_mixing P, strong_coupling P, sterile_included P⟩
 
 /-- The premises are satisfiable. -/
 def witness : Premises where

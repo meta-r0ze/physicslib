@@ -1,5 +1,4 @@
 import PMConstants.ColourChannels
-import PMConstants.WMassTest
 
 /-!
 # Conditional comparison of common stored-content weights
@@ -16,10 +15,12 @@ rows are treated as the address frame with weight `1` in these formulas.
 * Two observables then test the single `w` jointly:
   - `extensive_w_mass`, `extensive_strong`: `w = 1` gives `m_W` in `(80.3882, 80.3926)` GeV and
     `α_s` in `(0.11736, 0.11737)`;
-  - the intensive values are `WMassTest.w_window` and `ColourChannels.strong_from_channels`.
-* `intensive_preferred`: against the direct `m_W` average `80.3692 ± 0.0133` and
-  `α_s = 0.1180 ± 0.0009`, the summed squared pulls are below `1.70` for `w = η` and above `2.5`
-  for `w = 1`. Both observables move the same way; the preference is mild (Δχ² ≈ 0.8).
+  - the intensive values are `ColourChannels.strong_from_channels` (and the measured
+    `w_window`, now living in `tools/e8p/E8PConstants/ReadoutPulls.lean`).
+* The summed squared-pull comparison (`intensive_preferred`) lives in
+  `tools/e8p/E8PConstants/ReadoutPulls.lean`: against the direct `m_W` average `80.3692 ± 0.0133`
+  and `α_s = 0.1180 ± 0.0009`, the summed squared pulls are below `1.70` for `w = η` and above
+  `2.5` for `w = 1`. Both observables move the same way; the preference is mild (Δχ² ≈ 0.8).
 * `economy_selects_intensive` proves only the two numerical cost inequalities
   `16η < 16` and `12η < 12`. It does not prove that the contracts execute the same
   required work, or that either has a complete physically admissible schedule.
@@ -59,28 +60,6 @@ theorem extensive_strong :
 
 /-- Squared pull. -/
 def chi (m σ x : ℝ) : ℝ := ((x - m) / σ)^2
-
-theorem intensive_preferred {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
-    chi 80.3692 0.0133 (WMassTest.wMass mZ) +
-        chi 0.1180 0.0009 (α * footprint / ColourChannels.colourLedger) < 1.70 ∧
-      2.5 < chi 80.3692 0.0133 (mZ * Real.sqrt (1 - 43 / footprintW 1)) +
-        chi 0.1180 0.0009 (α * footprintW 1 / colourW 1) := by
-  have hw := WMassTest.w_window h
-  have hs := ColourChannels.strong_from_channels
-  have ew := extensive_w_mass h
-  have es := extensive_strong
-  unfold chi
-  constructor
-  · have a1 : ((WMassTest.wMass mZ - 80.3692) / 0.0133)^2 < 1.6901 := by
-      rw [div_pow]; rw [div_lt_iff₀ (by norm_num)]; nlinarith [hw.1, hw.2]
-    have a2 : ((α * footprint / ColourChannels.colourLedger - 0.1180) / 0.0009)^2 < 0.0099 := by
-      rw [div_pow]; rw [div_lt_iff₀ (by norm_num)]; nlinarith [hs.1, hs.2]
-    linarith
-  · have b1 : (2.04 : ℝ) < ((mZ * Real.sqrt (1 - 43 / footprintW 1) - 80.3692) / 0.0133)^2 := by
-      rw [div_pow]; rw [lt_div_iff₀ (by norm_num)]; nlinarith [ew.1, ew.2]
-    have b2 : (0.49 : ℝ) < ((α * footprintW 1 / colourW 1 - 0.1180) / 0.0009)^2 := by
-      rw [div_pow]; rw [lt_div_iff₀ (by norm_num)]; nlinarith [es.1, es.2]
-    linarith
 
 /-- A cost ordering, not a derivation of an operational contract or physical selection. -/
 theorem economy_selects_intensive :

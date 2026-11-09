@@ -1,24 +1,25 @@
 import PMElementaryParticles.CompositeMasses
 import PMConstants.StrongRunning
 
-/-! **Experimental/candidate module.**
+/-!
 
-# Paper V's quark mass formulas against PDG 2024
+# Paper V's quark mass formulas
 
-Units of `m_e`, `η = 171/172`. Uncertainties as used by the shared calculator (PDG 2024):
-`m_u = 2.16(7)`, `m_d = 4.70(7)`, `m_s = 93.5(8)` MeV; `m_c = 1273.0(46)`, `m_b = 4183(7)`,
-`m_t = 172570(290)` MeV.
+Units of `m_e`, `η = 171/172`. The formulas are E8; this module keeps them and
+their **E8-only** enclosures. The measured PDG 2024 pull comparisons live in
+`tools/e8p/E8PConstants/QuarkMassPulls.lean`.
 
-| Formula | MeV | Pull |
-| --- | --- | --- |
-| `m_u = D/η` | `2.0560` | `(−1.5, −1.4)` |
-| `m_d = (D+σ)/η` | `4.6260` | `(−1.1, −1.0)` |
-| `m_s = (DΔ + 2σ)/η` | `93.546` | `(0, 0.1)` |
-| `m_c = DΔ²/(η(σ−χ))` | `1267.15` | `(−1.3, −1.2)` |
-| `m_b = Δ²(D + χ/σ)/η` | `4181.6` | `(−0.3, −0.1)` |
-| `m_t = Δ³(D + 1/D)` | `172668` | `(0.3, 0.4)` |
+| Formula | MeV |
+| --- | --- |
+| `m_u = D/η` | `2.0560` |
+| `m_d = (D+σ)/η` | `4.6260` |
+| `m_s = (DΔ + 2σ)/η` | `93.546` |
+| `m_c = DΔ²/(η(σ−χ))` | `1267.15` |
+| `m_b = Δ²(D + χ/σ)/η` | `4181.6` |
+| `m_t = Δ³(D + 1/D)` | `172668` |
 
-These are the formulas Paper III's `StrongRunning` uses for the flavour thresholds (`m_c`, `m_b`).
+These are the formulas Paper III's `StrongRunning` uses for the flavour
+thresholds (`m_c`, `m_b`).
 -/
 
 noncomputable section
@@ -38,18 +39,44 @@ def bottom : ℝ := (PMSubstrate.E8Values.Delta : ℝ)^2 *
 def top : ℝ := (PMSubstrate.E8Values.Delta : ℝ)^3 *
   ((PMSubstrate.E8Values.D : ℝ) + 1 / (PMSubstrate.E8Values.D : ℝ))
 
-theorem pulls :
-    (-1.5 < (up * me - 2.16) / 0.07 ∧ (up * me - 2.16) / 0.07 < -1.4) ∧
-    (-1.1 < (down * me - 4.70) / 0.07 ∧ (down * me - 4.70) / 0.07 < -1.0) ∧
-    (0 < (strange * me - 93.5) / 0.8 ∧ (strange * me - 93.5) / 0.8 < 0.1) ∧
-    (-1.3 < (charm * me - 1273.0) / 4.6 ∧ (charm * me - 1273.0) / 4.6 < -1.2) ∧
-    (-0.3 < (bottom * me - 4183) / 7 ∧ (bottom * me - 4183) / 7 < -0.1) ∧
-    (0.3 < (top * me - 172570) / 290 ∧ (top * me - 172570) / 290 < 0.4) := by
-  unfold up down strange charm bottom top η me
+/-- E8-only enclosure of the up-quark mass, matching the `e8p` catalog interval. -/
+theorem up_value : (2.055 : ℝ) < up * me ∧ up * me < (2.062 : ℝ) := by
+  unfold up η
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.overhead_eq]
+  norm_num [me]
+
+/-- E8-only enclosure of the down-quark mass. -/
+theorem down_value : (4.623 : ℝ) < down * me ∧ down * me < (4.63 : ℝ) := by
+  unfold down η
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.overhead_eq]
+  norm_num [me]
+
+/-- E8-only enclosure of the strange-quark mass. -/
+theorem strange_value : (93.5 : ℝ) < strange * me ∧ strange * me < (93.58 : ℝ) := by
+  unfold strange η
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
-    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
-    PMSubstrate.E8Values.overhead_eq]
-  norm_num
+    PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.overhead_eq]
+  norm_num [me]
+
+/-- E8-only enclosure of the charm-quark mass. -/
+theorem charm_value : (1267.02 : ℝ) < charm * me ∧ charm * me < (1267.48 : ℝ) := by
+  unfold charm η
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
+    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.overhead_eq]
+  norm_num [me]
+
+/-- E8-only enclosure of the bottom-quark mass. -/
+theorem bottom_value : (4180.9 : ℝ) < bottom * me ∧ bottom * me < (4182.3 : ℝ) := by
+  unfold bottom η
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
+    PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.overhead_eq]
+  norm_num [me]
+
+/-- E8-only enclosure of the top-quark mass. -/
+theorem top_value : (172657 : ℝ) < top * me ∧ top * me < (172686 : ℝ) := by
+  unfold top
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq]
+  norm_num [me]
 
 /-- The thresholds Paper III orders are these formulas. -/
 theorem threshold_match : charm = PMConstants.StrongRunning.mCharm ∧ bottom = PMConstants.StrongRunning.mBottom := by

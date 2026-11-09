@@ -13,11 +13,13 @@ reference type. It follows from the premise that already fixes `η = 171/172`.
   and distinct reference types occupy distinct reserved cells.
 * `shared`: then both refreshes use the same reference type.
 * `responsive_iff`: a type that responds to both refreshes is `Q` or `L`.
-* `quark_reference_excluded`: a quark reference gives `s = 16641/23087` and, with the measured
-  `m_Z`, `48.1 < m_W < 48.3` GeV, more than `2400σ` below the direct average.
-* `reference_selected`: so the shared reference is the lepton doublet, giving `s = 1849/8295`
-  within `1.3σ`. No colour-invariance premise is needed; the W mass decides between the only two
-  candidates.
+* `reference_selected`: the E8 part of the selection — the shared reference responds to both
+  refreshes, hence is `Q` or `L`, and `L` gives the manuscript `s = 1849/8295`.
+
+The measured selection (a quark reference puts the W mass more than `2400σ` below the direct
+average, so the shared reference is the lepton doublet) lives in
+`tools/e8p/E8PConstants/ReadoutPulls.lean` (`quark_w_window`, `quark_reference_excluded`,
+`reference_selected_wmass`). No colour-invariance premise is needed.
 * `colour_not_reserved`: if the colour refresh also read against the single reserved reference,
   that type would need colour response as well, which only `Q` has, and `Q` is excluded. So the
   colour refresh's reference is not the reserved cell, consistent with its payload-weighted
@@ -67,35 +69,14 @@ theorem responsive_iff (t : Ty) :
 /-- W mass for the quark-doublet reference. -/
 def quarkWMass (mZ : ℝ) : ℝ := mZ * Real.sqrt (1 - 16641 / 23087)
 
-theorem quark_w_window {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
-    48.1 < quarkWMass mZ ∧ quarkWMass mZ < 48.3 := by
-  have hs1 : (0.5283 : ℝ) < Real.sqrt (1 - 16641 / 23087) := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have hs2 : Real.sqrt (1 - 16641 / 23087) < 0.5285 := by
-    rw [Real.sqrt_lt' (by norm_num)]; norm_num
-  unfold quarkWMass
-  constructor <;> nlinarith [h.1, h.2]
-
-theorem quark_reference_excluded {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
-    refMixing (weakIndex (ref .Q)) (hyperIndex (ref .Q)) = 16641 / 23087 ∧
-      WMassTest.pull 80.3692 0.0133 (quarkWMass mZ) < -2400 := by
-  refine ⟨quark_reference_mixing, ?_⟩
-  have hw := quark_w_window h
-  unfold WMassTest.pull
-  rw [div_lt_iff₀ (by norm_num)]; linarith
-
-/-- **The shared reference is the lepton doublet.** Given a layout whose shared reference responds
-to both refreshes, it is `Q` or `L`; `Q` puts the W mass more than `2400σ` low, `L` gives the
-manuscript value within `1.3σ`. -/
+/-- **The E8 part of the shared-reference selection.** Given a layout whose shared reference
+responds to both refreshes, it is `Q` or `L`, and `L` gives the manuscript mixing. The measured
+exclusion of `Q` is `tools/e8p/E8PConstants/ReadoutPulls.lean`. -/
 theorem reference_selected (L : ReferenceLayout)
-    (hresp : 0 < weakIndex (ref (L.refOf 0)) ∧ 0 < hyperIndex (ref (L.refOf 0)))
-    {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
+    (hresp : 0 < weakIndex (ref (L.refOf 0)) ∧ 0 < hyperIndex (ref (L.refOf 0))) :
     L.refOf 0 = L.refOf 1 ∧ (L.refOf 0 = .Q ∨ L.refOf 0 = .L) ∧
-      WMassTest.pull 80.3692 0.0133 (quarkWMass mZ) < -2400 ∧
-      refMixing (weakIndex (ref .L)) (hyperIndex (ref .L)) = clockRatio ∧
-      WMassTest.pull 80.3692 0.0133 (WMassTest.wMass mZ) < 1.3 :=
-  ⟨shared L, (responsive_iff _).mp hresp, (quark_reference_excluded h).2,
-    lepton_reference_mixing, (WMassTest.pull_world h).2⟩
+      refMixing (weakIndex (ref .L)) (hyperIndex (ref .L)) = clockRatio :=
+  ⟨shared L, (responsive_iff _).mp hresp, lepton_reference_mixing⟩
 
 /-- **Colour cannot share the reserved reference.** A type responding to all three refreshes is
 `Q`, the excluded case. -/

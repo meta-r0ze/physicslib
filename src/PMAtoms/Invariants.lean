@@ -1,23 +1,31 @@
-import PMSubstrate.Impedance
+import PMSubstrate.E8Values
 
 /-!
 # Substrate invariants used by the nuclear model
 
 The numeric factors in the line/ring model are not free: they are the E8
-substrate invariants `Δ, ν, σ, χ, D`. This module exposes them and proves the
-arithmetic identities used downstream.
+substrate invariants `Δ, ν, σ, χ, D`. These are aliases of the canonical
+`PMSubstrate.E8Values` API (the single source for the invariants), not
+re-derivations; this module proves the arithmetic identities used downstream.
 -/
 
 namespace PMAtoms
 
-def Δ : Nat := PMSubstrate.baseline.period
-def ν : Nat := PMSubstrate.baseline.sectorChannels
-def σ : Nat := PMSubstrate.baseline.embeddingDimension
-def χ : Nat := PMSubstrate.baseline.eulerCharacteristic
-def D : Nat := PMSubstrate.baseline.dimension
+/-- Clock period `Δ = 43`. -/
+abbrev Δ : Nat := PMSubstrate.E8Values.Delta
+/-- Chiral channel count `ν = 16`. -/
+abbrev ν : Nat := PMSubstrate.E8Values.nu
+/-- Interaction symmetry order `σ = 5`. -/
+abbrev σ : Nat := PMSubstrate.E8Values.sigma
+/-- Topological boundary invariant `χ = 2`. -/
+abbrev χ : Nat := PMSubstrate.E8Values.chi
+/-- Coordinate dimension `D = 4`. -/
+abbrev D : Nat := PMSubstrate.E8Values.D
 
-theorem invariant_values : Δ = 43 ∧ ν = 16 ∧ σ = 5 ∧ χ = 2 ∧ D = 4 := by
-  decide
+theorem invariant_values : Δ = 43 ∧ ν = 16 ∧ σ = 5 ∧ χ = 2 ∧ D = 4 :=
+  ⟨PMSubstrate.E8Values.Delta_eq, PMSubstrate.E8Values.nu_eq,
+    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+    PMSubstrate.E8Values.D_eq⟩
 
 /-- The 4-channel split is `3 colour + 1 reference`. -/
 theorem colour_axes : σ - χ = 3 := by decide

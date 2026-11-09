@@ -13,10 +13,9 @@ cancels `G_F` and `192π³`:
 * `rate_ratio`: the `m⁵` law makes the width ratio `(m_τ/m_μ)⁵` (from `MuonRate.muon_rate`).
 * `tau_lifetime_tree`: with Paper V's `m_μ` and `m_τ` (`LeptonMasses`), the measured
   `τ_μ = 2.1969811 μs` and `B_e = 17.82 %`, `291.15 < τ_τ < 291.17` fs.
-* `tau_lifetime_pull`: with the standard small corrections (electron phase space in the muon,
-  W propagator in the tau, the difference of the QED corrections at the two masses) entering as a
-  factor `c ∈ [0.9995, 0.9997]`, the pull against PDG `290.3 ± 0.5` fs, combined with the `B_e`
-  error (`±0.65` fs) as `0.82` fs, lies in `(0.8, 1.0)σ`.
+
+The measured-lifetime pull (`tau_lifetime_pull`, against PDG `290.3 ± 0.5` fs) lives
+in `tools/e8p/E8PConstants/TauLifetimePulls.lean`.
 
 So the tau lifetime is consistent with the derived masses. It does not resolve the `−2σ` tau-mass
 tension: that tension moves `τ_τ` by only about `0.15` fs, below the lifetime's precision.
@@ -52,12 +51,5 @@ theorem tau_lifetime_tree : 291.15 < tauLife ∧ tauLife < 291.17 := by
   have p2 : (muon / 3477) ^ 5 < (206.7682718 / 3477 : ℝ) ^ 5 :=
     pow_lt_pow_left₀ hr2 (by positivity) (by norm_num)
   constructor <;> nlinarith [p1, p2]
-
-theorem tau_lifetime_pull (c : ℝ) (hc : 0.9995 ≤ c ∧ c ≤ 0.9997) :
-    0.8 < (c * tauLife - 290.3) / 0.82 ∧ (c * tauLife - 290.3) / 0.82 < 1.0 := by
-  have h := tau_lifetime_tree
-  constructor
-  · rw [lt_div_iff₀ (by norm_num)]; nlinarith [h.1, hc.1]
-  · rw [div_lt_iff₀ (by norm_num)]; nlinarith [h.2, hc.2]
 
 end PMElementaryParticles.TauLifetime

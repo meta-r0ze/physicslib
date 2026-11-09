@@ -10,6 +10,11 @@ import PMCosmology.SubstrateLoad
 import PMCosmology.Tensions
 import PMCosmology.Primordial
 import E8PConstants.CompositeMassPulls
+import E8PConstants.LeptonMassPulls
+import E8PConstants.QuarkMassPulls
+import E8PConstants.WeakMassPulls
+import E8PConstants.ReadoutPulls
+import E8PConstants.TauLifetimePulls
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.TauLifetime
@@ -325,35 +330,29 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | upMeV =>
-    have h := PMElementaryParticles.QuarkMasses.pulls
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.down,
-      PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.bottom,
-      PMElementaryParticles.QuarkMasses.top, PMElementaryParticles.QuarkMasses.η, PMElementaryParticles.CompositeMasses.me] at h ⊢
+    have h := PMElementaryParticles.QuarkMasses.up_value
+    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.η,
+      PMElementaryParticles.CompositeMasses.me] at h ⊢
   | downMeV =>
-    have h := PMElementaryParticles.QuarkMasses.pulls
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.down,
-      PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.bottom,
-      PMElementaryParticles.QuarkMasses.top, PMElementaryParticles.QuarkMasses.η, PMElementaryParticles.CompositeMasses.me] at h ⊢
+    have h := PMElementaryParticles.QuarkMasses.down_value
+    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.down, PMElementaryParticles.QuarkMasses.η,
+      PMElementaryParticles.CompositeMasses.me] at h ⊢
   | strangeMeV =>
-    have h := PMElementaryParticles.QuarkMasses.pulls
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.down,
-      PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.bottom,
-      PMElementaryParticles.QuarkMasses.top, PMElementaryParticles.QuarkMasses.η, PMElementaryParticles.CompositeMasses.me] at h ⊢
+    have h := PMElementaryParticles.QuarkMasses.strange_value
+    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.η,
+      PMElementaryParticles.CompositeMasses.me] at h ⊢
   | charmMeV =>
-    have h := PMElementaryParticles.QuarkMasses.pulls
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.down,
-      PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.bottom,
-      PMElementaryParticles.QuarkMasses.top, PMElementaryParticles.QuarkMasses.η, PMElementaryParticles.CompositeMasses.me] at h ⊢
+    have h := PMElementaryParticles.QuarkMasses.charm_value
+    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.η,
+      PMElementaryParticles.CompositeMasses.me] at h ⊢
   | bottomMeV =>
-    have h := PMElementaryParticles.QuarkMasses.pulls
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.down,
-      PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.bottom,
-      PMElementaryParticles.QuarkMasses.top, PMElementaryParticles.QuarkMasses.η, PMElementaryParticles.CompositeMasses.me] at h ⊢
+    have h := PMElementaryParticles.QuarkMasses.bottom_value
+    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.bottom, PMElementaryParticles.QuarkMasses.η,
+      PMElementaryParticles.CompositeMasses.me] at h ⊢
   | topMeV =>
-    have h := PMElementaryParticles.QuarkMasses.pulls
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.down,
-      PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.bottom,
-      PMElementaryParticles.QuarkMasses.top, PMElementaryParticles.QuarkMasses.η, PMElementaryParticles.CompositeMasses.me] at h ⊢
+    have h := PMElementaryParticles.QuarkMasses.top_value
+    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.top,
+      PMElementaryParticles.CompositeMasses.me] at h ⊢
   | rydbergEV =>
     have h := PMAtoms.rydbergEV_bounds
     norm_num [bounds, value] at h ⊢
@@ -508,10 +507,10 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
   | darkRaw =>
     norm_num [bounds, value, PMCosmology.darkRatio]
   | pionPlusMeV =>
-    have h := PMElementaryParticles.LeptonMasses.pionPlus_mass
-    rw [abs_lt] at h
-    norm_num [bounds, value] at h ⊢
-    constructor <;> linarith [h.1, h.2]
+    have h := PMElementaryParticles.LeptonMasses.pionPlus_mev_value
+    norm_num [bounds, value, PMElementaryParticles.LeptonMasses.pionPlus,
+      PMElementaryParticles.CompositeMasses.me] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | wRatio =>
     have h := PMConstants.WMassTest.ratio_bounds
     norm_num [bounds, value] at h ⊢

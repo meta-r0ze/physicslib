@@ -15,8 +15,17 @@ open Lean Elab Command in
 run_cmd do
   let env ← getEnv
   let anyPrefix (ps : List Name) (n : Name) : Bool := ps.any (fun p => p.isPrefixOf n)
+  -- Modules that make up the checked paper tree (the `src` libraries).
+  let paperMod (n : Name) : Bool :=
+    anyPrefix [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMFlavor,
+      `PMElementaryParticles, `PMAtoms, `PMCosmology] n
+  -- The `tools/e8p` value tool; it may import `src`, but `src` must not import it.
+  let toolsMod (n : Name) : Bool :=
+    anyPrefix [`E8PConstants, `E8PConstantsProof, `ConstantsMain] n
   let forbidden (mod dep : Name) : Bool :=
-    if (`PMAction).isPrefixOf mod then
+    if paperMod mod && toolsMod dep then
+      true
+    else if (`PMAction).isPrefixOf mod then
       anyPrefix [`PMConstants, `PMFlavor, `PMElementaryParticles, `PMAtoms, `PMCosmology] dep
     else if (`PMConstants).isPrefixOf mod then
       anyPrefix [`PMFlavor, `PMElementaryParticles, `PMAtoms, `PMCosmology] dep
@@ -40,7 +49,10 @@ run_cmd do
     for imp in data.imports do
       checked := checked + 1
       if forbidden mod imp.module then
-        throwError "Forbidden dependency: {mod} imports {imp.module}"
+        if paperMod mod && toolsMod imp.module then
+          throwError "Forbidden dependency: paper module {mod} imports the e8p tool module {imp.module} (src must stay free of tools/e8p)"
+        else
+          throwError "Forbidden dependency: {mod} imports {imp.module}"
   if checked == 0 then
     throwError "No imports found"
   logInfo m!"Top-level dependency audit passed: {checked} direct imports checked"

@@ -1,6 +1,7 @@
 import PMSubstrate.Vacuum
 import PMSubstrate.ImpedanceTerms
 import PMSubstrate.CliffordSignature
+import PMSubstrate.E8Values
 
 /-!
 # The integer inputs of the index are forced
@@ -65,6 +66,11 @@ theorem parameters_forced {s : Vacuum.Substrate} {Δ : ℕ} {q : Fin 5} {S : Clo
   have hS := (boundary_sphere hH).2
   simp only [derived, configDim, hn, h43, hq, hS, Channels.nu_eq, baseline]
   rfl
+
+/-- **Channel-count bridge.** The canonical API value `PMSubstrate.E8Values.nu` is the
+derived glue-class count `Channels.nu`, not an independent numeral. -/
+theorem e8Values_nu_eq_channels : PMSubstrate.E8Values.nu = Channels.nu := by
+  rw [PMSubstrate.E8Values.nu_eq, Channels.nu_eq]
 
 /-- **Main numerical theorem.** All postulates force the parameter record, and the six-term
 index evaluated on it lies in the certified interval. -/

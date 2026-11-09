@@ -416,7 +416,8 @@ theorem alphaCount_eq_budget (z n : Nat) :
   · by_cases hg : isospinGap z n < Δ
     · simp [hA, hg]
       have hΔ : (Δ : ℝ) ≠ 0 := by norm_num [Δ, PMSubstrate.baseline]
-      rw [Nat.cast_sub (le_of_lt hg)]
+      have hΔ43 : (Δ : ℝ) = 43 := by norm_num [Δ, PMSubstrate.baseline]
+      rw [Nat.cast_sub (le_of_lt hg), hΔ43]
       field_simp [hΔ]
     · simp [hA, hg]
   · simp [hA]

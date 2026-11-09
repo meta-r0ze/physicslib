@@ -15,7 +15,8 @@ overall scale, so the cleanest test of the scalar sector is one in which `v` can
 * `higgs_from_fermi`: the measured Fermi constant fixes `v_F² = 1/(√2 G_F)`. With the paper's `λ`,
   `m_H = √(2λ) v_F` lies in `(125.26, 125.28)` GeV for `G_F` in `(1.1663782, 1.1663794)·10⁻⁵ GeV⁻²`.
   This uses neither the proposed VEV formula nor the electron mass.
-* `higgs_pull`: against `m_H = 125.20 ± 0.11` GeV (PDG 2024) the pull lies in `(0.5, 0.75)`.
+The measured-Higgs pull against `m_H = 125.20 ± 0.11` GeV (PDG 2024) lives in
+`tools/e8p/E8PConstants/ScalarAccounting.lean` (`higgs_pull`).
 
 So `λ = 128/989` passes a test independent of the VEV derivation. The VEV formula itself,
 `v = (χΔ² − L)α⁻¹m_e(1 ± corrections)`, remains outside the event-law chain and was found not
@@ -55,12 +56,5 @@ theorem higgs_from_fermi {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5
   constructor
   · rw [Real.lt_sqrt (by norm_num)]; exact hlo
   · rw [Real.sqrt_lt' (by norm_num)]; exact hhi
-
-theorem higgs_pull {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5) :
-    0.5 < (Real.sqrt (higgsSq GF) - 125.20) / 0.11 ∧ (Real.sqrt (higgsSq GF) - 125.20) / 0.11 < 0.75 := by
-  have hm := higgs_from_fermi h
-  constructor
-  · rw [lt_div_iff₀ (by norm_num)]; linarith
-  · rw [div_lt_iff₀ (by norm_num)]; linarith
 
 end PMConstants.ScalarSector

@@ -1,4 +1,4 @@
-import PMSubstrate.DerivedParameters
+import PMSubstrate.E8Values
 import PMFlavor.CKM
 import PMFlavor.FlavourPostulates
 import PMFlavor.PMNS
@@ -24,9 +24,9 @@ signature and boundary postulates. But that derivation was never cited at the us
 site, so the flavour numbers were plugged in twice over: once honestly in Paper I,
 once silently here.
 
-This module closes the **bookkeeping** gap. `χ`, `σ`, `ν`, `D` name the derived
-`PMSubstrate.Parameters` fields of `baseline`, and each formula is restated in terms of
-them. The bridge theorems below then prove the invariant form **equals** the
+This module closes the **bookkeeping** gap. `χ`, `σ`, `ν`, `D` are the canonical
+`PMSubstrate.E8Values` names for the derived `PMSubstrate.Parameters` fields of
+`baseline`, and each formula is restated in terms of them. The bridge theorems below then prove the invariant form **equals** the
 literal form already used downstream, so nothing else has to change and the
 numerals become conclusions rather than inputs:
 
@@ -62,23 +62,26 @@ noncomputable section
 namespace PMFlavor.FlavourInvariants
 open PMSubstrate
 
-/-! ## The invariants, named from Paper I -/
+/-! ## The invariants, named from Paper I
+
+These are aliases of the canonical `PMSubstrate.E8Values` API, which is the single
+source for the substrate invariants; they are **not** re-derived here. -/
 
 /-- Spacetime dimension `D`. Derived: `parameters_forced`. -/
-def D : ℕ := baseline.dimension
+abbrev D : ℕ := PMSubstrate.E8Values.D
 /-- Chiral channel count `ν`. Derived: `Channels.nu_eq`. -/
-def nu : ℕ := baseline.sectorChannels
+abbrev nu : ℕ := PMSubstrate.E8Values.nu
 /-- Interaction symmetry order `σ`. Derived: `parameters_forced`. -/
-def sigma : ℕ := baseline.embeddingDimension
+abbrev sigma : ℕ := PMSubstrate.E8Values.sigma
 /-- Topological boundary invariant `χ`. Derived: `Derived.boundary_sphere`. -/
-def chi : ℕ := baseline.eulerCharacteristic
+abbrev chi : ℕ := PMSubstrate.E8Values.chi
 
 /-- The invariants really are the Paper I values, so these are computations and
 not definitions of convenience. -/
-theorem D_eq : D = 4 := rfl
-theorem nu_eq : nu = 16 := by show baseline.sectorChannels = 16; rfl
-theorem sigma_eq : sigma = 5 := by show baseline.embeddingDimension = 5; rfl
-theorem chi_eq : chi = 2 := by show baseline.eulerCharacteristic = 2; rfl
+theorem D_eq : D = 4 := PMSubstrate.E8Values.D_eq
+theorem nu_eq : nu = 16 := PMSubstrate.E8Values.nu_eq
+theorem sigma_eq : sigma = 5 := PMSubstrate.E8Values.sigma_eq
+theorem chi_eq : chi = 2 := PMSubstrate.E8Values.chi_eq
 
 /-! ## The formulas, written the paper's way -/
 

@@ -34,8 +34,8 @@ only when their values are Lean-backed here.
 - Paper 5: `proton_ratio`, `neutron_ratio` (`PMElementaryParticles.CompositeMasses.*_value`),
   `muon_ratio`, `tau_ratio` (`PMElementaryParticles.LeptonMasses.*_value`), `proton_radius`,
   `pion0_mev`, `kaon0_mev`, `kaon_plus_mev` (`CompositeMasses` pulls), and the six
-  quark masses `up/down/strange/charm/bottom/top_mev` (`QuarkMasses.pulls`),
-  `pion_plus_mev` (`LeptonMasses.pionPlus_mass`), `neutrino_floor_mass`
+  quark masses `up/down/strange/charm/bottom/top_mev` (`QuarkMasses.*_value`),
+  `pion_plus_mev` (`LeptonMasses.pionPlus_mev_value`), `neutrino_floor_mass`
   (`FloorNeutrino.floor_bounds`), and `tau_lifetime_fs`
   (`PMElementaryParticles.TauLifetime.tau_lifetime_tree`).
 - Paper 6: `baryon_pmJ`, `baryon_pm3J` (`PMCosmology.Primordial.baryon_windows`),
@@ -90,6 +90,24 @@ Several "easy" items turned out not to be numeric values, so they stay out of `e
 widths are parametric, `ScalarAccounting.payload_*` is parametric in `G_F`, and
 `NeutrinoCompatibility` is a negative result. `WMassTest` contributes the certified
 `w_ratio`; its absolute mass still needs the measured `M_Z` as a supplied input.
+
+## Comparison leaves (measured pulls out of `src`)
+
+The measured comparisons were extracted from the `src` derivation modules into
+`tools/e8p/E8PConstants/` leaves, leaving only E8-only enclosures in `src`:
+
+- `LeptonMassPulls` — `muon_tension`, `tau_tension`, `pionPlus_mass`, `kaon_inversion`,
+  `pion_splitting` (from `PMElementaryParticles.LeptonMasses`).
+- `QuarkMassPulls` — `pulls` (from `PMElementaryParticles.QuarkMasses`).
+- `WeakMassPulls` — `w_window`, `pull_world/cms/cdf/sm` (from `PMConstants.WMassTest`).
+- `TauLifetimePulls` — `tau_lifetime_pull` (from `PMElementaryParticles.TauLifetime`).
+- `ScalarAccounting.higgs_pull` (from `PMConstants.ScalarSector`).
+- `ReadoutPulls` — `raw_w_window`, `raw_excluded`, `ledgers_are_effective`,
+  `normalization_decided`, `w_mass`, `intensive_preferred`, `quark_w_window`,
+  `quark_reference_excluded`, `reference_selected_wmass`.
+
+The catalog proofs now cite the E8-only enclosures (`up_value`…`top_value`,
+`pionPlus_mev_value`) in `src`; the comparison leaves do not feed any derivation.
 
 ## Harder: Python value exists, no Lean enclosure yet
 

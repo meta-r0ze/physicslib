@@ -15,7 +15,7 @@ nonzero charge, or the fourteen whose phase differs from the reference's
   `80.2664` GeV for the measured `m_Z`, more than `7.7σ` from the direct average.
 * `ResourceLedger.sterile_counted`: the fifteen-channel (absolute-charge) scope is more than
   `3.1σ` low.
-* `TableConsequences.w_mass`: the sixteen-channel (whole-phase) scope lies within `1.3σ`.
+* `E8PConstants.ReadoutPulls.w_mass`: the sixteen-channel (whole-phase) scope lies within `1.3σ`.
 
 So among the support-based scopes the data keep only whole-phase coverage, the premise of
 `RequirementComplement`. This is an empirical selection among the stated scopes, not a

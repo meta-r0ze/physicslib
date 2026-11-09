@@ -35,10 +35,10 @@ def pnCapacityE8 (z : Nat) : Nat := (σ - χ) * z
 def homoCapacityE8 (z : Nat) : Nat := z / χ
 
 theorem pnCapacityE8_eq (z : Nat) : pnCapacityE8 z = pnCapacity z := by
-  simp [pnCapacityE8, pnCapacity, colour_axes]
+  simp only [pnCapacityE8, pnCapacity, colour_axes]
 
 theorem homoCapacityE8_eq (z : Nat) : homoCapacityE8 z = homoCapacity z := by
-  simp [homoCapacityE8, homoCapacity, homo_pair]
+  simp only [homoCapacityE8, homoCapacity, homo_pair]
 
 /-- Deuterium: one proton, one neutron. -/
 def dLabel : Fin 2 → NucleonLabel := fun i => if i = 0 then .proton else .neutron
