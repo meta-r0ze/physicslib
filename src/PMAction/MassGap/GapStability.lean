@@ -8,8 +8,8 @@ import Mathlib.Tactic.Linarith
 # How far the defect gap survives a perturbation
 
 `DefectGap` proves a volume-uniform gap for PM's diagonal cost: energy `0` on the vacuum,
-at least `m` on every excitation. A Yang–Mills transfer matrix also has an off-diagonal part
-(the kinetic/plaquette term). This file states, at the level of quadratic forms, how much of
+at least `m` on every excitation. A transfer matrix also has an off-diagonal part (for the
+distinction substrate, flips between ticks). This file states, at the level of quadratic forms, how much of
 that the gap tolerates. It is the min–max statement without eigenvalue machinery.
 
 Data: a finite label set `ι`, a vacuum predicate `vac`, a diagonal energy `e` with `e = 0` on
@@ -22,14 +22,14 @@ the vacuum and `e ≥ m` off it, and a perturbation form `W` with `|W v| ≤ ε 
 * `gap_stable`: for unit vectors, the excited sector sits at least `m − 2ε` above the vacuum
   sector; so the gap survives whenever `ε < m / 2`.
 
-## The open part, stated plainly
+## The limit of form bounds
 
-For `DefectGap`, `m = 1` transition for every volume. For a lattice gauge transfer matrix the
-off-diagonal term is a sum of local terms, so its form bound `ε` grows with the number of
-sites. `gap_stable` therefore gives a volume-uniform gap only when the off-diagonal part is
-bounded uniformly in volume. Removing that condition (cluster/polymer expansions, or a PM
-argument that the excited sector seen by the readout stays local) is the remaining work, and
-it is where the Clay problem lives.
+For `DefectGap`, `m = 1` transition for every volume. A local off-diagonal term is a sum over
+sites, so its form bound `ε` grows with the number of sites, and `gap_stable` gives a
+volume-uniform gap only when the off-diagonal part is bounded uniformly in volume. For the
+distinction substrate that condition is removed by the cluster expansion
+(`SlabGap.slab_gap_explicit`). The gauge layer is a separate continuous field, and its gap is the
+out-of-scope quantum Yang–Mills problem (`MassGap/README.md`).
 -/
 
 namespace PMAction.MassGap.GapStability

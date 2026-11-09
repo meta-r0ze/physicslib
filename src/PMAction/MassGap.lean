@@ -25,7 +25,9 @@ import PMAction.MassGap.TransferSlab
 import PMAction.MassGap.SlabObservables
 import PMAction.MassGap.Walsh
 import PMAction.MassGap.SpectralBounds
+import PMAction.MassGap.SlabDegree
 import PMAction.MassGap.SlabGap
+import PMAction.MassGap.CubicBox
 
 /-!
 # The Yang–Mills mass-gap branch of Paper II

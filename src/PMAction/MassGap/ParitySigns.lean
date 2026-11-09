@@ -41,7 +41,7 @@ lemma countP_eq_sum_count (C : Finset (Sym2 X)) (l : List (Sym2 X)) :
     by_cases ha : a ∈ C
     · simp [ha, beq_iff_eq, sum_ite_eq]
     · have : ∑ x ∈ C, (if a = x then 1 else 0) = 0 :=
-        sum_eq_zero fun x hx => by rw [if_neg]; rintro rfl; exact ha hx
+        sum_eq_zero fun x hx => ite_eq_right_iff.mpr fun h => absurd (h ▸ hx) ha
       simp only [ha, decide_false, Bool.false_eq_true, ↓reduceIte, add_zero, beq_iff_eq]
       simp only [eq_comm (a := a)] at this ⊢
       rw [this, add_zero]

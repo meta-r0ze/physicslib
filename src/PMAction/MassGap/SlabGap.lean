@@ -1,12 +1,14 @@
 import PMAction.MassGap.SlabObservables
+import PMAction.MassGap.SlabDegree
 import PMAction.MassGap.SpectralBounds
 import PMAction.MassGap.Walsh
 import PMAction.MassGap.GapFromCorrelation
+import Mathlib.Tactic.FieldSimp
 
 /-!
 # The slab transfer matrix has a gap in the flip-even sector
 
-Assembly of the Yang–Mills-gap chain for discrete distinctions on a slab `G □ [0, L]`.
+Assembly of the mass-gap chain for PM's distinction substrate on a slab `G □ [0, L]`.
 
 `T` is the PM transfer matrix of `TransferSlab` and `S = T²` (so the spectrum is nonnegative).
 `v₀` is the free end. In the low-cost regime `Regime` (the same numerical conditions as
@@ -375,5 +377,157 @@ theorem slab_gap {q μ : ℝ} {D : ℕ} (R : Regime G plaqG q μ D) :
       simp only [χ, sub_dotProduct, smul_dotProduct, smul_eq_mul]; ring
     have := hperp χ Λ hχ0 hχe hχS hχv
     nlinarith
+
+/-! ### The regime is not empty
+
+With `μ = √q`, every numerical condition of `Regime` holds once `√q ≤ 1 / (16 (D+1)²)`. The gap
+ratio is then `μ² = q`: the relative gap is at least `1 - q`, and it widens as the cost per
+distinction grows. -/
+
+/-- The numerical conditions of `Regime`, with `q = a²`, `μ = a`. -/
+theorem regime_numerics (D : ℕ) (a : ℝ) (ha0 : 0 < a) (ha : a ≤ 1 / (16 * ((D : ℝ) + 1) ^ 2)) :
+    a < 1 ∧
+    2 * a ^ 2 ≤ 1 / 2 ∧
+    (D : ℝ) ^ 2 * (2 * a ^ 2) < 1 ∧
+    2 * ((2 * a ^ 2) / (1 - (D : ℝ) ^ 2 * (2 * a ^ 2))) ≤ 1 ∧
+    1 ≤ 2 * (1 - 2 * ((2 * a ^ 2) / (1 - (D : ℝ) ^ 2 * (2 * a ^ 2)))) ^ (D + 1) ∧
+    2 * (D : ℝ) ^ 2 * ((2 * a ^ 2) / a) < 1 ∧
+    2 * ((D : ℝ) + 1) * (((2 * a ^ 2) / a) / (1 - 2 * (D : ℝ) ^ 2 * ((2 * a ^ 2) / a))) ≤
+      (1 - 2 * a ^ 2) ^ 2 := by
+  set N : ℝ := (D : ℝ) + 1 with hNdef
+  have hD0 : (0 : ℝ) ≤ D := Nat.cast_nonneg D
+  have hN1 : 1 ≤ N := by rw [hNdef]; linarith
+  have hDN : (D : ℝ) ^ 2 ≤ N ^ 2 := pow_le_pow_left₀ hD0 (by rw [hNdef]; linarith) 2
+  have hNN : N ≤ N ^ 2 := by nlinarith
+  have h16 : 16 * N ^ 2 * a ≤ 1 := by
+    have hpos : 0 < 16 * N ^ 2 := by positivity
+    rw [le_div_iff₀ hpos] at ha; linarith
+  have ha16 : a ≤ 1 / 16 := by nlinarith
+  have hDa : 4 * (D : ℝ) ^ 2 * a ≤ 1 / 4 := by nlinarith
+  have hNa : N * a ≤ 1 / 16 := by nlinarith
+  have hDa2 : (D : ℝ) ^ 2 * (2 * a ^ 2) ≤ 1 / 2 := by nlinarith
+  have hden1 : 1 / 2 ≤ 1 - (D : ℝ) ^ 2 * (2 * a ^ 2) := by linarith
+  have hden1p : 0 < 1 - (D : ℝ) ^ 2 * (2 * a ^ 2) := by linarith
+  -- `s = 2a²/(1 - 2D²a²) ≤ 4a²`
+  have hs : (2 * a ^ 2) / (1 - (D : ℝ) ^ 2 * (2 * a ^ 2)) ≤ 4 * a ^ 2 := by
+    rw [div_le_iff₀ hden1p]; nlinarith
+  have hs0 : 0 ≤ (2 * a ^ 2) / (1 - (D : ℝ) ^ 2 * (2 * a ^ 2)) := by positivity
+  set s := (2 * a ^ 2) / (1 - (D : ℝ) ^ 2 * (2 * a ^ 2))
+  have hNs : N * (2 * s) ≤ 1 / 2 := by nlinarith
+  have hza : (2 * a ^ 2) / a = 2 * a := by field_simp
+  refine ⟨by linarith, by nlinarith, by linarith, by nlinarith, ?_, ?_, ?_⟩
+  · have hb := one_add_mul_le_pow (a := -(2 * s)) (by nlinarith) (D + 1)
+    have hcast : ((D + 1 : ℕ) : ℝ) = N := by push_cast; rfl
+    rw [hcast, ← sub_eq_add_neg] at hb
+    have : 1 - N * (2 * s) ≤ (1 - 2 * s) ^ (D + 1) := by
+      simpa [mul_neg, ← sub_eq_add_neg] using hb
+    linarith
+  · rw [hza]; nlinarith
+  · rw [hza]
+    have hden2 : 3 / 4 ≤ 1 - 2 * (D : ℝ) ^ 2 * (2 * a) := by nlinarith
+    have hden2p : 0 < 1 - 2 * (D : ℝ) ^ 2 * (2 * a) := by linarith
+    have hl : 2 * N * (2 * a / (1 - 2 * (D : ℝ) ^ 2 * (2 * a))) ≤ 1 / 3 := by
+      rw [mul_div_assoc', div_le_iff₀ hden2p]; nlinarith
+    have hr : 1 / 3 ≤ (1 - 2 * a ^ 2) ^ 2 := by nlinarith
+    linarith
+
+/-- **Small cost puts the slab in the regime.** -/
+theorem regime_of_small (hconnG : G.Connected) (hplaqE : ∀ P ∈ plaqG, P ⊆ G.edgeFinset)
+    (hplaqP : ∀ P ∈ plaqG, IsPlaquette G P) (hgenG : PlaquettesGenerate G plaqG) (D : ℕ)
+    (hD : ∀ (L : ℕ) e, (plaqGraph (slabPlaq G L plaqG)).degree e ≤ D)
+    {q : ℝ} (hq : 0 < q) (hsmall : Real.sqrt q ≤ 1 / (16 * ((D : ℝ) + 1) ^ 2)) :
+    Regime G plaqG q (Real.sqrt q) D := by
+  have ha0 : 0 < Real.sqrt q := Real.sqrt_pos.mpr hq
+  have hsq : Real.sqrt q ^ 2 = q := Real.sq_sqrt hq.le
+  obtain ⟨h1, h2, h3, h4, h5, h6, h7⟩ := regime_numerics D (Real.sqrt q) ha0 hsmall
+  rw [hsq] at h2 h3 h4 h5 h6 h7
+  exact ⟨hconnG, hplaqE, hplaqP, hgenG, hD, hq, ha0, h1, h2, h3, h4, h5, h6, h7⟩
+
+/-- **The gap at small cost.** For `√q ≤ 1/(16 (D+1)²)`, every flip-even eigenvalue of `T²` other
+than the simple top `Λ` is at most `q Λ`. -/
+theorem slab_gap_small (hconnG : G.Connected) (hplaqE : ∀ P ∈ plaqG, P ⊆ G.edgeFinset)
+    (hplaqP : ∀ P ∈ plaqG, IsPlaquette G P) (hgenG : PlaquettesGenerate G plaqG) (D : ℕ)
+    (hD : ∀ (L : ℕ) e, (plaqGraph (slabPlaq G L plaqG)).degree e ≤ D)
+    {q : ℝ} (hq : 0 < q) (hsmall : Real.sqrt q ≤ 1 / (16 * ((D : ℝ) + 1) ^ 2)) :
+    ∃ Λ : ℝ, 0 < Λ ∧
+      (∀ (ψ : (V → Bool) → ℝ) (lam : ℝ), ψ ≠ 0 → Even' ψ →
+        (transfer G q * transfer G q) *ᵥ ψ = lam • ψ →
+        lam ≤ q * Λ ∨ (lam = Λ ∧ ψ ⬝ᵥ TransferSlab.v₀ G q ≠ 0)) ∧
+      (∀ ψ₁ ψ₂ : (V → Bool) → ℝ, Even' ψ₁ → Even' ψ₂ →
+        (transfer G q * transfer G q) *ᵥ ψ₁ = Λ • ψ₁ →
+        (transfer G q * transfer G q) *ᵥ ψ₂ = Λ • ψ₂ →
+        (ψ₂ ⬝ᵥ TransferSlab.v₀ G q) • ψ₁ = (ψ₁ ⬝ᵥ TransferSlab.v₀ G q) • ψ₂) := by
+  obtain ⟨Λ, -, -, hΛ, -, -, -, hgap, hsimple⟩ :=
+    slab_gap (regime_of_small hconnG hplaqE hplaqP hgenG D hD hq hsmall)
+  rw [Real.sq_sqrt hq.le] at hgap
+  exact ⟨Λ, hΛ, hgap, hsimple⟩
+
+/-- **The gap, from the spatial lattice alone.** The degree bound is no longer a hypothesis: with
+`k` bounding the size of the spatial plaquettes, `m` the number through one spatial edge, and `Δ`
+the degree of `G`, take `D = max k 4 · (m + 8Δ)` (`SlabDegree.slab_degree_le`). For
+`√q ≤ 1/(16 (D+1)²)`, every flip-even eigenvalue of `T²` other than the simple top `Λ` is
+`≤ q Λ`, on every slab and every finite spatial lattice with these local bounds. -/
+theorem slab_gap_explicit (hconnG : G.Connected) (hplaqE : ∀ P ∈ plaqG, P ⊆ G.edgeFinset)
+    (hplaqP : ∀ P ∈ plaqG, IsPlaquette G P) (hgenG : PlaquettesGenerate G plaqG)
+    {k m Δ : ℕ} (hk : ∀ P ∈ plaqG, P.card ≤ k) (hm : ∀ e0, (plaqG.filter (e0 ∈ ·)).card ≤ m)
+    (hΔ : ∀ v, G.degree v ≤ Δ)
+    {q : ℝ} (hq : 0 < q)
+    (hsmall : Real.sqrt q ≤ 1 / (16 * (((max k 4 * (m + 8 * Δ) : ℕ) : ℝ) + 1) ^ 2)) :
+    ∃ Λ : ℝ, 0 < Λ ∧
+      (∀ (ψ : (V → Bool) → ℝ) (lam : ℝ), ψ ≠ 0 → Even' ψ →
+        (transfer G q * transfer G q) *ᵥ ψ = lam • ψ →
+        lam ≤ q * Λ ∨ (lam = Λ ∧ ψ ⬝ᵥ TransferSlab.v₀ G q ≠ 0)) ∧
+      (∀ ψ₁ ψ₂ : (V → Bool) → ℝ, Even' ψ₁ → Even' ψ₂ →
+        (transfer G q * transfer G q) *ᵥ ψ₁ = Λ • ψ₁ →
+        (transfer G q * transfer G q) *ᵥ ψ₂ = Λ • ψ₂ →
+        (ψ₂ ⬝ᵥ TransferSlab.v₀ G q) • ψ₁ = (ψ₁ ⬝ᵥ TransferSlab.v₀ G q) • ψ₂) :=
+  slab_gap_small hconnG hplaqE hplaqP hgenG _
+    (fun L e => SlabDegree.slab_degree_le G L plaqG hk hm hΔ e) hq hsmall
+
+/-! ### The gap in units of the coupling
+
+With `q = e^{−β}` (`SpacetimeCost.history_weight`: every distinction costs `β`), the bound
+`λ ≤ q Λ` on `T²` says each excited even state decays at least `e^{−β/2}` per tick relative to the
+vacuum: the mass gap is at least `β/2` per tick. -/
+
+lemma sqrt_exp_neg (β : ℝ) : Real.sqrt (Real.exp (-β)) = Real.exp (-β / 2) := by
+  rw [show Real.exp (-β) = Real.exp (-β / 2) ^ 2 by rw [sq, ← Real.exp_add]; ring_nf]
+  exact Real.sqrt_sq (Real.exp_pos _).le
+
+lemma small_of_beta {D : ℕ} {β : ℝ} (hβ : 2 * Real.log (16 * ((D : ℝ) + 1) ^ 2) ≤ β) :
+    Real.sqrt (Real.exp (-β)) ≤ 1 / (16 * ((D : ℝ) + 1) ^ 2) := by
+  have hc : 0 < 16 * ((D : ℝ) + 1) ^ 2 := by positivity
+  rw [sqrt_exp_neg, show -β / 2 = -(β / 2) by ring, Real.exp_neg, one_div]
+  refine inv_anti₀ hc ?_
+  rw [← Real.exp_log hc]
+  exact Real.exp_le_exp.mpr (by linarith)
+
+/-- **The mass gap is at least `β/2` per tick.** If `β ≥ 2 log(16 (D+1)²)`, every flip-even
+eigenvalue `λ > 0` of `T²` other than the simple top `Λ` satisfies `log(Λ/λ) / 2 ≥ β/2`. -/
+theorem slab_mass_gap (hconnG : G.Connected) (hplaqE : ∀ P ∈ plaqG, P ⊆ G.edgeFinset)
+    (hplaqP : ∀ P ∈ plaqG, IsPlaquette G P) (hgenG : PlaquettesGenerate G plaqG)
+    {k m Δ : ℕ} (hk : ∀ P ∈ plaqG, P.card ≤ k) (hm : ∀ e0, (plaqG.filter (e0 ∈ ·)).card ≤ m)
+    (hΔ : ∀ v, G.degree v ≤ Δ) {β : ℝ}
+    (hβ : 2 * Real.log (16 * (((max k 4 * (m + 8 * Δ) : ℕ) : ℝ) + 1) ^ 2) ≤ β) :
+    ∃ Λ : ℝ, 0 < Λ ∧
+      (∀ (ψ : (V → Bool) → ℝ) (lam : ℝ), ψ ≠ 0 → Even' ψ →
+        (transfer G (Real.exp (-β)) * transfer G (Real.exp (-β))) *ᵥ ψ = lam • ψ → 0 < lam →
+        β / 2 ≤ Real.log (Λ / lam) / 2 ∨
+          (lam = Λ ∧ ψ ⬝ᵥ TransferSlab.v₀ G (Real.exp (-β)) ≠ 0)) := by
+  obtain ⟨Λ, hΛ, hgap, -⟩ := slab_gap_explicit hconnG hplaqE hplaqP hgenG hk hm hΔ
+    (Real.exp_pos (-β)) (small_of_beta hβ)
+  refine ⟨Λ, hΛ, fun ψ lam hψ0 hψ h hlam => ?_⟩
+  rcases hgap ψ lam hψ0 hψ h with hle | htop
+  · left
+    have h1 : Real.exp β ≤ Λ / lam := by
+      rw [le_div_iff₀ hlam]
+      have h3 := mul_le_mul_of_nonneg_left hle (Real.exp_pos β).le
+      have e : Real.exp β * (Real.exp (-β) * Λ) = Λ := by
+        rw [← mul_assoc, ← Real.exp_add, add_neg_cancel, Real.exp_zero, one_mul]
+      linarith
+    have h2 : β ≤ Real.log (Λ / lam) := by
+      rw [Real.le_log_iff_exp_le (div_pos hΛ hlam)]; exact h1
+    linarith
+  · exact Or.inr htop
 
 end PMAction.MassGap.SlabGap

@@ -59,11 +59,13 @@ root-generator evolution as the substrate dynamics. For the packet subsystem thi
 reduces to the C² control one-forms and that admission. Gap half: `DefectGap` proves a
 volume-uniform gap for PM's diagonal distinction cost (unique vacuum up to relabeling, every
 excitation `≥ 1` transition, transfer contraction `≤ p` off the vacuum); `GapStability` proves the
-gap survives a form-bounded perturbation with `ε < m/2`. The cluster-expansion
-replacement is now built for discrete distinctions: `MassGap.SlabGap.slab_gap` (flip-even sector
-of `T²`: simple top `Λ`, rest `≤ μ²Λ`, uniform in volume; see `MassGap/README.md`). Open: the
-slab plaquette-degree bound (a hypothesis there), the odd sector, continuous link groups; identifying
-`p` with the Gibbs `β`; and carrying the gap through the continuum readout. Remaining
+gap survives a form-bounded perturbation with `ε < m/2`. The substrate gap is
+closed: `MassGap.SlabGap.slab_gap_explicit` (flip-even sector of `T²`: simple top `Λ`, rest
+`≤ qΛ`, uniform in volume; mass `≥ β/2` per tick, `CubicBox.box_mass_gap`; see
+`MassGap/README.md`). The gauge layer is a separate continuous field
+(`NativePacketRouting.pure_permutation_refinement_trivial`), so its gap is not an open item here:
+it is the quantum Yang–Mills problem below. It reopens only if PM derives `β` or identifies the
+Wilson cost with the survival cost. Remaining
 quantum-Yang–Mills constructions (transfer matrix, OS quotient/Hilbert space, infinite volume,
 full O(4) restoration, renormalized continuum, mass gap of the continuum theory) are out of
 scope; see the Yang–Mills scope note in

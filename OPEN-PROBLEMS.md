@@ -68,7 +68,7 @@ not selectable*: a scale-invariant cost leaves every magnitude tied (`SelectionS
 
 | Item | Note |
 | --- | --- |
-| General quantum Yang–Mills (transfer matrix, infinite volume, full O(4) restoration, renormalized continuum, mass gap) | See the Yang–Mills scope note in `PMAction/OVERVIEW.md`; the finite-volume OS core is built. |
+| General quantum Yang–Mills (transfer matrix, infinite volume, full O(4) restoration, renormalized continuum, mass gap) | See the Yang–Mills scope note in `PMAction/OVERVIEW.md`; the finite-volume OS core is built. The distinction substrate's mass gap is proved (`PMAction/MassGap`); the gauge layer is a separate continuous field (`NativePacketRouting.pure_permutation_refinement_trivial`), so its gap stays here. |
 | Full gravity (metric, Einstein eq., diffeomorphisms) | Weak-field only (`PM-2 WeakField`). |
 | Inflation / primordial spectrum | Source free (`Modes.amplitude_free`, `power_free`). |
 | Grand unification, electroweak hierarchy/naturalness, CPT | Not addressed beyond a value. |
@@ -113,8 +113,8 @@ for the latter.
 
 ## Cross-cutting tools noted from the Yang–Mills gap branch
 
-(The `PMAction` gap work — `DefectGap`, `GapStability` — is a *partial* attack on the P4 mass gap.
-These ideas are reusable on other open items.)
+(`DefectGap`, `GapStability` and `PMAction/MassGap` prove the mass gap of PM's distinction
+substrate; the gauge-layer gap stays P4. These ideas are reusable on other open items.)
 
 - **Discreteness ⇒ volume-uniform gap.** An **integer-valued** cost with a **unique** ground state
   (up to relabeling) is gapped by at least one unit, *uniformly in volume*, and the diagonal
@@ -126,9 +126,12 @@ These ideas are reusable on other open items.)
   `probability_uniform_of_const_weight`) — worth reusing wherever an input is a count.
 - **Complementary gap halves.** `DefectGap` (diagonal cost) and the pre-existing linearized
   Hessian/Schur gap (`SplitGap`, `VacuumSchur`, `VacuumLocalGap`, `JointVacuumGap`,
-  `CompactSplitGap`) are the two halves of a transfer-matrix gap; the open condition joining them
-  is a **volume-uniform bound on the off-diagonal form `ε`** (extensive for a lattice gauge
-  transfer matrix). See the `PMAction/OVERVIEW.md` Yang–Mills scope note.
+  `CompactSplitGap`) are the two halves of a transfer-matrix gap; for the distinction substrate the
+  volume-uniform off-diagonal control is now supplied by the cluster expansion in `MassGap/`.
+- **Cluster expansion ⇒ gap.** A weight `p^(count of local distinctions)` with `p` small gives
+  contour polymers, Dobrushin convergence, a supersolution decay bound and a volume-uniform
+  spectral gap (`PMAction/MassGap`, `SlabGap.slab_gap_explicit`). Reusable for any PM model whose
+  weight is a power of a local event count.
 - **Gap = coupling; local defects cost locally.** At `p = exp(−β)` the survival weight is the
   Gibbs density `exp(−β·cost)` (`DefectGap.survival_eq_gibbs`, `gap_eq_coupling`), so the per-tick
   gap *is* the Gibbs coupling — a general "decay rate = coupling" reading. And a defect confined to

@@ -4,7 +4,7 @@ The proofs are grouped based on their area:
 
  * Persistence Mechanics: survival/hazard, selection
  * Substrate: Applying PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
- * Action - Applying PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport
+ * Action - Applying PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport; `PMAction/MassGap` proves the mass gap of the distinction substrate
  * Constants - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
  * Flavor - Information transfer across the substrate (flavor mixing, wall spectra, propagation)
  * Elementary Particles - Systems that can persist on top of the substrate. (protocols, decay rates)
@@ -31,7 +31,7 @@ You do not need to compile anything to start. Point your AI at this repo and the
  * Give me an overview of how the systems stack from persistence through the E8 system followed by elementary particles, nucleons, nucleus, shell, and atoms
  * Give me a dependency-ordered map of the eight Lean libraries and `e8p`, and say in one sentence what each one owns.
  * Why E8? Walk me through the substrate argument in `src/PMSubstrate/OVERVIEW.md` and the `Research/` alternatives. What is forced, and what is assumed?
- * What exactly does PM prove about Yang–Mills, and what does it explicitly not prove? (See PMAction)
+ * What exactly does PM prove about Yang–Mills, and what does it explicitly not prove? (See PMAction. In short: the classical continuum limit and finite-volume Euclidean setup of the gauge layer, plus a proved volume-uniform mass gap for PM's distinction substrate in `PMAction/MassGap`; the gap of the continuous gauge layer is the general quantum Yang–Mills problem and is out of scope.)
  * How does the muon width and lifetime come out of `PMElementaryParticles`?
  * Why does this substrate have three generations of matter?
  * Can this make falsifiable prediction, how many?

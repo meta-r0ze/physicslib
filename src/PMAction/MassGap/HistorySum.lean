@@ -64,12 +64,14 @@ lemma mem_cutSet {σ : X → Bool} {u v : X} (h : Γ.Adj u v) :
     s(u, v) ∈ cutSet Γ σ ↔ σ u ≠ σ v := by
   simp [cutSet, h]
 
+omit [DecidableEq X] in
 lemma cutSet_isCut (σ : X → Bool) : IsCut Γ σ (cutSet Γ σ) :=
   fun _ _ h => mem_cutSet Γ h
 
 omit [DecidableEq X] in
 lemma cutSet_sub (σ : X → Bool) : cutSet Γ σ ⊆ Γ.edgeFinset := filter_subset _ _
 
+omit [DecidableEq X] in
 /-- An even edge set is the `cutSet` of the configuration it determines. -/
 lemma cut_eq_cutSet {σ : X → Bool} {C : Finset (Sym2 X)} (hC : IsCut Γ σ C)
     (hCE : C ⊆ Γ.edgeFinset) : C = cutSet Γ σ := by

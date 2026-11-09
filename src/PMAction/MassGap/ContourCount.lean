@@ -11,8 +11,8 @@ import Mathlib.Basic.Real.Basic
 # Contour counting and the polymer smallness condition
 
 This is the volume-independent counting that a polymer (cluster) expansion needs. It is the first
-step of attacking the off-diagonal problem (#2 in the Yang–Mills gap branch) the way quantum
-Pirogov–Sinai theory does. Excitations of PM's cost are contours: connected sets, with cost equal
+step of the cluster-expansion route to the mass gap of PM's distinction substrate (completed in
+`SlabGap`), in the manner of Pirogov–Sinai theory. Excitations of PM's cost are contours: connected sets, with cost equal
 to their size (`DefectGap`: one transition per boundary edge, the Peierls condition). A small
 off-diagonal term of strength `q` per site gives each contour a weight `≤ q^|γ|`. The expansion
 converges, with bounds that do not depend on the volume, once contours of size `k` through a

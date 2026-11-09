@@ -19,7 +19,7 @@ import Mathlib.Analysis.SpecialFunctions.Sqrt
 namespace PMAction.MassGap.TransferHistory
 open Finset Matrix
 
-variable {n : Type*} [Fintype n] [DecidableEq n]
+variable {n : Type*} [Fintype n]
 
 /-- **Matrix powers are history sums.** -/
 theorem power_eq_history (T : Matrix n n ℝ) (u w : n → ℝ) :
@@ -49,16 +49,13 @@ theorem power_eq_history (T : Matrix n n ℝ) (u w : n → ℝ) :
       intro i
       have : (i.castSucc.succ : Fin (L + 2)) = Fin.castSucc i.succ := Fin.ext rfl
       rw [this, Fin.snoc_castSucc]
-    have hc : ∀ i : Fin L, (Fin.snoc h s : Fin (L + 2) → n) i.castSucc.castSucc =
-        h i.castSucc := fun i => Fin.snoc_castSucc _ _ _
     have hl : (Fin.snoc h s : Fin (L + 2) → n) (Fin.last L).succ = s := by
       have : ((Fin.last L).succ : Fin (L + 2)) = Fin.last (L + 1) := Fin.ext rfl
       rw [this, Fin.snoc_last]
-    have hl' : (Fin.snoc h s : Fin (L + 2) → n) (Fin.last L).castSucc = h (Fin.last L) :=
-      Fin.snoc_castSucc _ _ _
-    simp only [h0, hs, hc, hl, hl']
+    simp only [h0, hs, hl]
     ring
 
+omit [Fintype n] in
 /-- **PM history weight.** -/
 theorem pm_weight {q r : ℝ} (hr : r ^ 2 = q) (c : n → ℕ) (d : n → n → ℕ) (L : ℕ)
     (h : Fin (L + 1) → n) :

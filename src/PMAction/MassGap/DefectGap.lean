@@ -8,8 +8,8 @@ import Mathlib.Tactic.Linarith
 /-!
 # The defect gap: a discrete cost spectrum with a unique vacuum
 
-This is the *gap* half of the Yang–Mills branch, stated for PM's own excitation cost.
-The *existence/continuity* half is elsewhere: Paper I prices the defect boundary by a
+This is the first step of the mass gap of PM's distinction substrate (completed in `SlabGap`):
+the diagonal part, stated for PM's own excitation cost. The continuity side is elsewhere: Paper I prices the defect boundary by a
 continuous perimeter (`Z_CAP = πΔ`, Barbier) although the substrate is the discrete `E₈`
 lattice, and Paper II builds the finite-volume measure, gauge invariance, reflection
 positivity and the classical continuum limit (`LatticeGibbs`, `ReciprocalReflection`,
@@ -39,11 +39,15 @@ Setting: any finite connected graph `G` of sites (any volume, any shape), config
 ## What this does and does not prove
 
 This is a gap for the diagonal (classical) PM cost operator. It is volume-uniform because the
-cost is integer-valued and the vacuum is unique; that is the PM content. It is **not** the Clay
-statement: that asks for a gap in a continuum quantum Yang–Mills theory on `ℝ⁴`, where the
-lattice spacing is sent to zero and the off-diagonal (kinetic/plaquette) part of the transfer
-matrix is present. `GapStability` states exactly how much off-diagonal perturbation the gap
-survives, which is where the remaining problem sits.
+cost is integer-valued and the vacuum is unique; that is the PM content. `GapStability` states
+how much off-diagonal perturbation it survives by form bounds. For the distinction substrate the
+off-diagonal part (flips between ticks) is handled in full by the cluster expansion:
+`SlabGap.slab_gap_explicit`, `CubicBox.box_mass_gap`.
+
+It is **not** the Clay statement, which asks for a gap in a continuum quantum Yang–Mills theory
+on `ℝ⁴`. In PM the gauge field is a separate continuous layer
+(`NativePacketRouting.pure_permutation_refinement_trivial`), and its gap is out of scope
+(`MassGap/README.md`).
 -/
 
 namespace PMAction.MassGap.DefectGap
@@ -168,9 +172,9 @@ on the off-diagonal (kinetic/plaquette) part of a transfer matrix. -/
 
 /-- **The PM cost gap survives an off-diagonal perturbation.** With the diagonal gap `m = 1`
 (`cost_ge_one`) and `GapStability.gap_pos`, any perturbation form `W` with `|W v| ≤ ε‖v‖²` and
-`ε < 1/2` keeps the excited sector strictly above the vacuum. This is the PM-side gap condition;
-the open content is a *volume-uniform* bound on `ε` for the actual plaquette/kinetic part, where
-`ε` is extensive (see `PMAction` `OVERVIEW.md`, the Yang–Mills scope note). -/
+`ε < 1/2` keeps the excited sector strictly above the vacuum. This is the PM-side gap condition
+in form-bound terms. A form bound `ε` is extensive in the volume; the volume-uniform route for the
+distinction substrate is the cluster expansion (`SlabGap.slab_gap_explicit`). -/
 theorem gap_survives_offdiagonal (hG : G.Connected) (ε : ℝ)
     (W : ((V → Bool) → ℝ) → ℝ) (hW : ∀ v, |W v| ≤ ε * GapStability.normSq v)
     (hε : ε < 1 / 2) (v u : (V → Bool) → ℝ)
