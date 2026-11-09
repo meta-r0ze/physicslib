@@ -28,10 +28,6 @@ import PMAtoms.LatticeCharge
 import PMAtoms.LatticeCharge3
 import PMAtoms.LatticeCharge3Energy
 import PMAtoms.LatticeSpectral
-import PMAtoms.LatticeSpectralMode
-import PMAtoms.LatticeSpectralGreen
-import PMAtoms.LatticeSpectralUniform
-import PMAtoms.LatticeSpectralAsymptotic
 import PMAtoms.NuclearPacking3D
 import PMAtoms.NuclearDeformation
 import PMAtoms.ShapePotential

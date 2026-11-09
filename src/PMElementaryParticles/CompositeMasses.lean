@@ -242,19 +242,5 @@ theorem neutron_counts (k j : ℕ) (hj : 0 < j) :
     have := neutron_ratio
     rw [abs_lt] at this ⊢; constructor <;> linarith [this.1, this.2]
 
-/-! ## Rational enclosures (first step toward the certified-mass readout)
-
-`proton` and `neutron` carry `π` and (for the proton) the bounded substrate `α`; enclosing them
-with rationals is the `A8` first step. `certifiedMass` additionally carries `√(a^(2/3)+1)`, which
-needs a cube-root bound (below). -/
-
-theorem proton_bounds : (1836.15267340 : ℝ) < proton ∧ proton < (1836.15267348 : ℝ) := by
-  obtain ⟨ha_lo, ha_hi⟩ := PMConstants.Values.alpha_bounds
-  unfold proton base zTol zMar αe
-  constructor <;> nlinarith [ha_lo, ha_hi, Real.pi_gt_d20, Real.pi_lt_d20]
-
-theorem neutron_bounds : (1838.68366195 : ℝ) < neutron ∧ neutron < (1838.68366210 : ℝ) := by
-  unfold neutron base zTol zMar
-  constructor <;> nlinarith [Real.pi_gt_d20, Real.pi_lt_d20]
 end PMElementaryParticles.CompositeMasses
 

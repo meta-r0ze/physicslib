@@ -145,32 +145,4 @@ theorem sphereCoulomb_nonneg {c : ℝ} (hc : 0 ≤ c) (z a : Nat) :
   unfold sphereCoulomb
   positivity
 
-/-- **Charge-term enclosure.** `sphereCoulomb`'s denominator is `√(a^(2/3)+1)`; since
-`a^(2/3) ∈ [1, a]` (with `a ≥ 1`) the denominator lies in `[1, a+1]`, so the term is bounded by
-rationals. This clears the "cube-root" obstacle for the A8 certified-mass readout. -/
-theorem sphereCoulomb_bounds (c : ℝ) (hc : 0 ≤ c) (z a : ℕ) (ha : 1 ≤ a) :
-    c * (3 / 5) * ((z * (z - 1) : ℕ) : ℝ) / ((a : ℝ) + 1) ≤ sphereCoulomb c z a ∧
-      sphereCoulomb c z a ≤ c * (3 / 5) * ((z * (z - 1) : ℕ) : ℝ) := by
-  rw [sphereCoulomb, sphereCoulomb_factor, sphereCoulomb_exponent]
-  have h2 : (a : ℝ) ^ ((2 : ℝ) / 3) ≤ (a : ℝ) := by
-    have := Real.rpow_le_rpow_of_exponent_le (show (1 : ℝ) ≤ a by exact_mod_cast ha)
-      (show (2 : ℝ) / 3 ≤ 1 by norm_num)
-    simpa using this
-  have hd1 : 1 ≤ Real.sqrt ((a : ℝ) ^ ((2 : ℝ) / 3) + 1) := by
-    rw [Real.one_le_sqrt]
-    have := Real.rpow_nonneg (Nat.cast_nonneg a) ((2 : ℝ) / 3)
-    linarith
-  have hdle : Real.sqrt ((a : ℝ) ^ ((2 : ℝ) / 3) + 1) ≤ (a : ℝ) + 1 := by
-    rw [Real.sqrt_le_iff]
-    refine ⟨by positivity, ?_⟩
-    nlinarith [h2, show (0 : ℝ) ≤ a by positivity]
-  have hnum : 0 ≤ c * ((3 : ℝ) / 5) * ((z * (z - 1) : ℕ) : ℝ) := by positivity
-  have hdpos : (0 : ℝ) < Real.sqrt ((a : ℝ) ^ ((2 : ℝ) / 3) + 1) := by positivity
-  constructor
-  · rw [le_div_iff₀ hdpos, div_mul_eq_mul_div,
-      div_le_iff₀ (show (0 : ℝ) < (a : ℝ) + 1 by positivity)]
-    exact mul_le_mul_of_nonneg_left hdle hnum
-  · rw [div_le_iff₀ hdpos]
-    nlinarith [mul_nonneg hnum (by linarith : (0 : ℝ) ≤ Real.sqrt ((a : ℝ) ^ ((2 : ℝ) / 3) + 1) - 1)]
-
 end PMAtoms
