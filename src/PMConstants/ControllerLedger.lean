@@ -73,4 +73,22 @@ theorem allEqual_controller_least :
     rw [← hc]
     exact all_equal_budget_bound r hr.1 hr.2.1 hr.2.2
 
+/-! ## The price scale is a unit, not a selection input
+
+The physical cost of a controller candidate is `c₀ · count` for a positive toll `c₀` (the *price
+scale*). Because `c₀ > 0`, comparing physical costs is exactly comparing counts, so the least-cost
+controller — baseline `15`, gauge `21`, all-equal `43` — does not depend on the price scale. The
+scale is therefore a **unit** (the toll `c₀ = 1` transition; `PMSubstrate.NetCost`, "set to one by
+Closure, no external unit"), not a physical selection input: only the relative counts (E8-derived
+by `activeBudget`) and the toll-free readout weights (`TypedRepairWork.weights = count / 16`, hence
+`ControllerIdentification.gaugeController_mixing`) carry content. -/
+
+/-- **The controller selection is scale-free.** For any positive toll `c₀` (the price scale), the
+physical cost `c₀ · count` orders the candidates exactly as the counts do. So the least-cost
+controller is invariant under the overall price scale. -/
+theorem selection_scale_free (c₀ : ℝ) (hc₀ : 0 < c₀) (r r' : ControllerCandidate) :
+    c₀ * (controllerCost r : ℝ) ≤ c₀ * (controllerCost r' : ℝ) ↔
+      controllerCost r ≤ controllerCost r' := by
+  rw [mul_le_mul_iff_of_pos_left hc₀, Nat.cast_le]
+
 end PMConstants.ControllerLedger
