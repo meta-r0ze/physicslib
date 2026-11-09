@@ -81,4 +81,21 @@ def geometric_reading {s : Substrate} (h : Geometric s)
   conservation := hstep.1
   causality := hstep.2
 
+/-- **S1 residual arrow (open target).** The one implication of substrate selection not yet
+derived, named here so the frontier is a Lean proposition.
+
+Everything else is proved: `PMSubstrate.Address.integer_coordinates` (a finitely generated,
+torsion-free additive group is `ℤⁿ`), `Address.finite_budget_gram` (an integral symmetric bilinear
+cost with finite sublevels is the lattice `Geometric`), and `geometric_reading` (the lattice
+satisfies PM's requirements). The missing arrow is: **PM's requirements force the address group to
+have a finite description** (be finitely generated). It is *not* implied by additivity, a symmetric
+bilinear cost and finite cost sublevels alone — the finite-support group `ℤ^∞` satisfies those but
+is not finitely generated — so the content of S1 is exactly this *finite, bit-addressed
+description* premise (bit-addressing, `2Λ* ⊆ Λ`, is what `ℤ^∞` fails). Proving `S1_residual`
+closes substrate selection. -/
+def S1_residual : Prop :=
+  ∀ (M : Type*) [AddCommGroup M] (r : PMRequirements M)
+    (B : LinearMap.BilinForm ℤ M) (_hcost : ∀ x, r.cost x = (B x x : ℝ)),
+    Module.Finite ℤ M
+
 end PMSubstrate.RequirementMap

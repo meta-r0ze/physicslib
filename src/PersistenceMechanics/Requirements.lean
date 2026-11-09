@@ -15,11 +15,10 @@ assumptions about a substrate**. The flow is
 > PM requirements → (readings) → postulates → **the substrate is derived**.
 
 So the E8 lattice is a *conclusion* (`PMSubstrate.Main.persistence_selects`), not a premise.
-The `MapRow` table below records, for each postulate reading, the PM requirement it formalizes
-and the Lean declaration in the substrate layer (`PMSubstrate`, necessarily downstream of this
-framework module) that forces its consequence; coverage of every reading is machine-checked. That
-table is certified against the real theorems in `PMSubstrate.RequirementMap` (`consequence_holds`),
-which also proves the reading `Geometric → PMRequirements` (`geometric_reading`).
+Each postulate reading is certified against the actual substrate theorem in
+`PMSubstrate.RequirementMap` (`Consequence` / `consequence_holds`), which also proves the reading
+`Geometric → PMRequirements` (`geometric_reading`) and names the one open implication
+(`S1_residual`). Here we name the requirements, the pillars, and the readings.
 
 The three requirements are also stated abstractly (`PMRequirements`), with the framework
 consequence that Conservation + Causality is reversibility.
@@ -154,41 +153,6 @@ which is how ties between admissible structures are broken. -/
 def Postulate.usesSelection : Postulate → Bool
   | .economy | .boundary => true
   | _ => false
-
-/-- One row of the **requirement ↔ postulate ↔ theorem** map: the reading, and the Lean
-declaration that forces its consequence in the substrate layer. (Names are strings because that
-layer is downstream of this framework module.) -/
-structure MapRow where
-  /-- The postulate reading. -/
-  postulate : Postulate
-  /-- The Lean declaration forcing the reading's consequence (in `PMSubstrate`). -/
-  leanName : String
-  /-- What it delivers. -/
-  consequence : String
-  deriving Repr
-
-/-- The map from PM's requirements, through the postulate readings, to what the substrate layer
-proves. Each row is one reading. -/
-def map : List MapRow :=
-  [ ⟨.addresses, "Vacuum.Substrate", "a lattice with integral symmetric cost A"⟩
-  , ⟨.finiteLevels, "Vacuum.geometric_lattice / Translation.posDef_iff_finite_levels",
-      "A positive definite"⟩
-  , ⟨.readable, "Vacuum.geometric_lattice / SelfReadable.bitAddressed_bitReadable_unimodular",
-      "det A odd; with bits, unimodular"⟩
-  , ⟨.bitAddressed, "Vacuum.Geometric.bitAddressed", "involutive glue, 2Λ* ⊆ Λ"⟩
-  , ⟨.exchange, "Vacuum.geometric_lattice / OrthogonalExchange.orthogonal_nontrivial_exchange_forces_even",
-      "the lattice is even"⟩
-  , ⟨.economy, "Vacuum.geometric_selects_e8 / economy_from_hazard",
-      "rank 8, then E8"⟩
-  , ⟨.sectors, "Vacuum.sectors_are_d4", "two D4 sectors, ν = 16, N = 32"⟩
-  , ⟨.clockPlane, "Vacuum.vacuum_selects", "complex multiplication, Δ = |D|"⟩
-  , ⟨.clockSchedule, "Vacuum.schedule_selects_43_of_reconstructible", "32 ≤ Δ ≤ 64, so Δ = 43"⟩
-  , ⟨.signature, "Derived.one_time / DerivedParameters.signature_volume_square", "one time direction"⟩
-  , ⟨.boundary, "Derived.boundary_sphere / Descartes.descartes", "S², χ = 2"⟩ ]
-
-/-- The map covers every reading, exactly once. -/
-theorem map_covers : (map.map MapRow.postulate).toFinset = Finset.univ ∧
-    (map.map MapRow.postulate).Nodup := by decide
 
 /-- Every PM requirement is formalized by at least one reading. -/
 theorem requirements_realized : ∀ r : Requirement, ∃ p : Postulate, Postulate.requirement p = r := by
