@@ -129,8 +129,11 @@ persistence-selected (`ChannelMeasure.probability_uniform_of_const_weight`,
 `(1/4π)·Φ₂` (`PolarMeasure.continuum_angular_density`), with both factors constructed
 (`sphere_area_three`, `two_body_phase_space`); the electron measure is
 `PolarMeasure.electron_measure_from_integral` (from `massless_lorentz_measure`); and the
-spectral modes/weights are the E8 `BetaLattice` template.  What remains is the relativistic
-`2E` flux convention (`MuonRate.parentFlux`) and the physical readout normalization.
+spectral modes/weights are the E8 `BetaLattice` template; and the relativistic `2E` normalization
+is *derived* (`PolarMeasure.massShell_reduction`: the `δ(p²−s)` mass-shell reduction Jacobian
+`2√s`, the same chain-rule shape as A1's `1/2`), so `d³p/((2π)³ 2E)` and the flux `MuonRate.parentFlux
+= 1/(2m)` are not separate inputs.  What remains is only the physical readout normalization
+(which E8 modes/weights).
 
 ### B3 status
 

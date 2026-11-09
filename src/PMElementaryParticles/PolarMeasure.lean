@@ -1,6 +1,7 @@
 import Mathlib.MeasureTheory.Constructions.HaarToSphere
 import Mathlib.MeasureTheory.Measure.Lebesgue.VolumeOfBalls
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import PMElementaryParticles.PhaseSpace
@@ -172,5 +173,21 @@ theorem continuum_angular_density :
 theorem normalized_sphere_average : (1 / (4 * Real.pi)) * (4 * Real.pi) = 1 := by
   have hp : Real.pi ≠ 0 := Real.pi_ne_zero
   field_simp
+
+/-- **E6: the `2E` normalization is the mass-shell reduction Jacobian, not a convention.** On the
+mass shell, `∫ dp₀ h(p₀) δ(p₀² − s) = h(√s)/(2√s)`: the `2√s` is the chain-rule factor
+`d(√s)/ds = 1/(2√s)`, *exactly* the shape of A1's `1/2` (`delta_reduction`). So the `2E` in
+`d³p/((2π)³ 2E)` — and the flux `1/(2m)` (`MuonRate.parentFlux`) at `E = m` — is the Jacobian of
+the manifestly Lorentz-invariant reduction `d⁴p δ(p² − m²) Θ(p⁰)`, not a separate input. -/
+theorem massShell_reduction (h : ℝ → ℝ) (hh : Continuous h) {s : ℝ} (hs : 0 < s) :
+    HasDerivAt (fun s' => ∫ p₀ in (0 : ℝ)..(Real.sqrt s'), h p₀)
+      (h (Real.sqrt s) / (2 * Real.sqrt s)) s := by
+  have h1 : HasDerivAt (fun x : ℝ => ∫ p₀ in (0 : ℝ)..x, h p₀) (h (Real.sqrt s)) (Real.sqrt s) :=
+    intervalIntegral.integral_hasDerivAt_right (hh.intervalIntegrable 0 (Real.sqrt s))
+      (hh.stronglyMeasurableAtFilter volume (nhds (Real.sqrt s))) hh.continuousAt
+  have h2 : HasDerivAt Real.sqrt (1 / (2 * Real.sqrt s)) s := Real.hasDerivAt_sqrt hs.ne'
+  have h3 := h1.comp s h2
+  rw [mul_one_div] at h3
+  exact h3
 
 end PMElementaryParticles.PolarMeasure
