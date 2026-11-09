@@ -129,7 +129,7 @@ theorem pathMode_sq_sum (n a : ℕ) (ha : 1 ≤ a) (ha' : a ≤ n) :
           Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) = 0 := by ring
     have h2 : Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) +
           Real.pi * (a : ℝ) * (k.val + 1) / (n + 1) =
-        Real.pi * (2 * a) * (k.val + 1) / (n + 1) := by push_cast; ring
+        Real.pi * (2 * a) * (k.val + 1) / (n + 1) := by ring
     rw [h1, h2, Real.cos_zero]
   rw [Finset.sum_congr rfl (fun k _ => hterm k), ← Finset.sum_div, Finset.sum_sub_distrib]
   have hfold : (∑ k : Fin n, Real.cos (Real.pi * (2 * ↑a) * (↑↑k + 1) / (↑n + 1)))
