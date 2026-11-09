@@ -1,5 +1,6 @@
 import PMConstants.OnShell
 import PMFlavor.GenerationBreaking
+import PersistenceMechanics.SelectionSymmetry
 
 /-!
 # The reference neutrino is a mass eigenstate: a persistence sum rule for `δ`
@@ -50,6 +51,22 @@ theorem z2_invariant_iff (v : Fin 3 → ℂ) :
   constructor
   · intro h; have := h 2; simpa using this
   · intro h i; fin_cases i <;> simp [h, Equiv.swap_apply_of_ne_of_ne]
+
+/-- **The μ–τ balance is forced by Economy.** If the reference's generation state `v` is the
+unique least-cost state of a cost invariant under the residual `Z₂` (the generation swap
+`1 ↔ 2`), then `v` is `Z₂`-fixed, `v 1 = v 2`, and hence `|U_μk| = |U_τk|` (`mu_tau_column`).
+This reduces the "the residual `Z₂` acts on the reference" premise to invariant-cost +
+unique-minimizer (`PersistenceMechanics.SelectionSymmetry.unique_minimizer_fixed`) — a **discrete**
+symmetry, so the selection can resolve it. -/
+theorem reference_z2_balance (cost : (Fin 3 → ℂ) → ℝ) (v : Fin 3 → ℂ)
+    (hcost : ∀ w : Fin 3 → ℂ, cost (fun i => w (Equiv.swap 1 2 i)) = cost w)
+    (hmin : ∀ w, cost v ≤ cost w)
+    (huniq : ∀ w, (∀ u, cost w ≤ cost u) → w = v) :
+    v 1 = v 2 := by
+  have hfix : (fun i => v (Equiv.swap 1 2 i)) = v :=
+    PersistenceMechanics.SelectionSymmetry.unique_minimizer_fixed cost
+      (fun w : Fin 3 → ℂ => fun i => w (Equiv.swap 1 2 i)) hcost v hmin huniq
+  exact (z2_invariant_iff v).mp (fun i => congrFun hfix i)
 
 /-- **The reference column is μ–τ balanced.** -/
 theorem mu_tau_column (U : Matrix (Fin 3) (Fin 3) ℂ) (k : Fin 3) (v : Fin 3 → ℂ) (d : Fin 3 → ℂ)
