@@ -100,11 +100,12 @@ theorem and is not needed for the current mass ledger.
 
 The particle ledger treats neutrinos as massless, with no channel lighter than
 zero.  `neutrino_stable` and `antineutrino_stable` are proved in
-`PMAtoms/Particle.lean`.  There is no neutrino decay width or lifetime, no
-neutrino mass ordering beyond the oscillation mixing, and no sterile-decay
-channel.  Neutrino **oscillation** is in `PMFlavor.PMNS`; it is not decay.
-A massive-neutrino decay channel would require a new mass ledger and is not
-currently modeled.
+`PMAtoms/Particle.lean`.  The **massive ledger** is now also built: `Species.massWith mν`
+gives the neutrino/antineutrino the E8 floor mass, and `neutrino_stable_massive` proves the
+neutrino stays stable for every `mν ∈ [0,1]` (it remains the lightest species), instantiated at
+the floor mass by `neutrino_stable_floor` (`floorMassME ≈ 1.8×10⁻⁸ m_e`).  There is still no
+neutrino decay width or lifetime, no neutrino mass ordering beyond the oscillation mixing, and
+no sterile-decay channel.  Neutrino **oscillation** is in `PMFlavor.PMNS`; it is not decay.
 
 ## 4c. Regime-aware decay selection
 

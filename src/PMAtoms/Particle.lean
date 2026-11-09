@@ -1,5 +1,6 @@
 import PMElementaryParticles.CompositeMasses
 import PMElementaryParticles.LeptonMasses
+import PMConstants.FloorNeutrino
 import Mathlib.Tactic
 
 /-!
@@ -254,5 +255,123 @@ theorem tau_decay :
   · simp [pMass, Species.mass]
     rw [ht]
     linarith
+
+/-! ## The massive-neutrino ledger (Review item A5)
+
+`Species.mass` gives the neutrino mass **zero**, so `neutrino_stable` is almost trivial. A
+*physical* neutrino is not massless: the E8 floor mass is `Bulk.floorMass α meEV ≈ 9.2 meV ≈
+1.8×10⁻⁸ m_e` (`PMConstants.FloorNeutrino.floor_bounds`). We record the one-parameter **massive
+ledger** `Species.massWith mν` (neutrino/antineutrino carry `mν`; every other species keeps its
+certified mass) and prove that for any `mν ∈ [0,1]` the neutrino stays **stable**: it remains the
+lightest species, so no channel's products can be lighter. In particular `neutrino_stable_floor`
+applies at the E8 floor mass.
+
+The content is exactly what A5 asked for — a *new mass ledger*. With `mν > 0` the old massless
+argument (`pMass ds ≥ 0 = mν`) is unavailable; the bound `pMass ds ≥ mν` now needs every species'
+mass to be `≥ mν`, which holds because every non-neutrino mass is `≥ 1`. -/
+
+namespace Species
+
+/-- Mass in `m_e` units with the neutrino and antineutrino given a common mass `mν` (the E8 floor
+mass); every other species keeps its certified mass. -/
+noncomputable def massWith (mν : ℝ) : Species → ℝ
+  | .neutrino => mν
+  | .antineutrino => mν
+  | s => s.mass
+
+theorem massWith_neutrino (mν : ℝ) : massWith mν .neutrino = mν := rfl
+
+theorem massWith_antineutrino (mν : ℝ) : massWith mν .antineutrino = mν := rfl
+
+theorem massWith_of_ne (mν : ℝ) {s : Species} (h : s ≠ .neutrino) (h' : s ≠ .antineutrino) :
+    massWith mν s = s.mass := by cases s <;> simp_all [massWith]
+
+end Species
+
+/-- Total product mass in the massive ledger. -/
+noncomputable def pMassWith (mν : ℝ) (ds : List Species) : ℝ :=
+  (ds.map (Species.massWith mν)).sum
+
+/-- **Every non-neutrino species weighs at least `1`** (`m_e`). -/
+theorem one_le_mass_of_neutrino_ne {s : Species} (h : s ≠ .neutrino) (h' : s ≠ .antineutrino) :
+    1 ≤ Species.mass s := by
+  cases s <;> simp_all [Species.mass, PMElementaryParticles.LeptonMasses.tau_value]
+  all_goals
+    first
+      | linarith [PMElementaryParticles.CompositeMasses.proton_value.1]
+      | linarith [PMElementaryParticles.CompositeMasses.neutron_value.1]
+      | linarith [PMElementaryParticles.LeptonMasses.muon_value.1]
+      | linarith [PMElementaryParticles.CompositeMasses.pion0_value.1]
+      | linarith [PMElementaryParticles.LeptonMasses.pionPlus_value.1]
+      | linarith [PMElementaryParticles.CompositeMasses.kaonPlus_value.1]
+      | (unfold PMElementaryParticles.CompositeMasses.kaon0
+         linarith [PMElementaryParticles.CompositeMasses.g_b.1,
+                   PMElementaryParticles.CompositeMasses.pi_b.2])
+
+/-- **The floor mass is below every species' mass** for `mν ∈ [0,1]` — the neutrino is the lightest. -/
+theorem massWith_ge (mν : ℝ) (h1 : mν ≤ 1) (s : Species) :
+    mν ≤ Species.massWith mν s := by
+  cases s <;> simp only [Species.massWith] <;> first
+    | exact le_refl mν
+    | exact le_trans h1 (one_le_mass_of_neutrino_ne (by simp) (by simp))
+
+/-- A decay is kinematically allowed in the massive ledger. -/
+def ParticleDecayWith (mν : ℝ) (p : Species) (ds : List Species) : Prop :=
+  ds ≠ [] ∧ pCharge ds = p.charge ∧ pBaryon ds = p.baryon ∧
+    pLepton ds = p.lepton ∧ pMassWith mν ds < Species.massWith mν p
+
+/-- A species persists in the massive ledger when no allowed channel exists. -/
+def StableWith (mν : ℝ) (p : Species) : Prop := ∀ ds, ¬ ParticleDecayWith mν p ds
+
+/-- Product mass is at least the neutrino mass whenever the channel is nonempty. -/
+theorem pMassWith_ge_of_ne_nil (mν : ℝ) (h0 : 0 ≤ mν) (h1 : mν ≤ 1)
+    {ds : List Species} (hds : ds ≠ []) : mν ≤ pMassWith mν ds := by
+  cases ds with
+  | nil => exact absurd rfl hds
+  | cons d rest =>
+      have hd : mν ≤ Species.massWith mν d := massWith_ge mν h1 d
+      have hrest : 0 ≤ (rest.map (Species.massWith mν)).sum :=
+        List.sum_nonneg (by
+          intro x hx
+          obtain ⟨s, -, rfl⟩ := List.mem_map.mp hx
+          exact le_trans h0 (massWith_ge mν h1 s))
+      simp only [pMassWith, List.map_cons, List.sum_cons]
+      linarith
+
+/-- **The massive neutrino is stable** for every `mν ∈ [0,1]`: it is the lightest species, so no
+channel's products can be strictly lighter. -/
+theorem neutrino_stable_massive (mν : ℝ) (h0 : 0 ≤ mν) (h1 : mν ≤ 1) :
+    StableWith mν .neutrino := by
+  intro ds hdec
+  have hlt : pMassWith mν ds < Species.massWith mν .neutrino := hdec.2.2.2.2
+  rw [Species.massWith_neutrino] at hlt
+  have hge : mν ≤ pMassWith mν ds := pMassWith_ge_of_ne_nil mν h0 h1 hdec.1
+  linarith
+
+theorem antineutrino_stable_massive (mν : ℝ) (h0 : 0 ≤ mν) (h1 : mν ≤ 1) :
+    StableWith mν .antineutrino := by
+  intro ds hdec
+  have hlt : pMassWith mν ds < Species.massWith mν .antineutrino := hdec.2.2.2.2
+  rw [Species.massWith_antineutrino] at hlt
+  have hge : mν ≤ pMassWith mν ds := pMassWith_ge_of_ne_nil mν h0 h1 hdec.1
+  linarith
+
+/-- The E8 floor mass in `m_e` units (`≈ 1.8×10⁻⁸`). -/
+noncomputable def floorMassME : ℝ :=
+  PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α PMConstants.FloorNeutrino.meEV /
+    PMConstants.FloorNeutrino.meEV
+
+theorem floorMassME_bounds : 0 ≤ floorMassME ∧ floorMassME ≤ 1 := by
+  have hb := PMConstants.FloorNeutrino.floor_bounds
+  have hme : PMConstants.FloorNeutrino.meEV = 510998.95 := rfl
+  have hm : (0 : ℝ) < PMConstants.FloorNeutrino.meEV := by rw [hme]; norm_num
+  refine ⟨?_, ?_⟩
+  · unfold floorMassME; exact div_nonneg (by linarith [hb.1]) hm.le
+  · rw [floorMassME, div_le_one hm]; rw [hme] at hb ⊢; linarith [hb.2]
+
+/-- **The neutrino with the E8 floor mass is stable.** A5's "new mass ledger" is instantiated at
+the floor mass, whose E8 origin is `PMConstants.FloorNeutrino.floor_bounds`. -/
+theorem neutrino_stable_floor : StableWith floorMassME .neutrino :=
+  neutrino_stable_massive floorMassME floorMassME_bounds.1 floorMassME_bounds.2
 
 end PMAtoms
