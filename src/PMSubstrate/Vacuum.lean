@@ -90,6 +90,28 @@ theorem geometric_det_degenerate {t u : Substrate} (ht : Geometric t) (hu : Geom
     t.A.det = u.A.det :=
   (geometric_det_one ht).trans (geometric_det_one hu).symm
 
+/-- **Conservation → θ symmetries (S2). T law.** The state enumeration of a geometric substrate —
+its theta series `θ_s(z) = Σ_z exp(−π z zᵀ A z)` — is invariant under the shift `z ↦ z − i`, and
+this is *equivalent* to the substrate's **evenness** (`Translation.even_iff_T_invariant`), which the
+Protocol / orthogonal-exchange postulate forces. So the `T` symmetry is not an extra input. -/
+theorem state_sum_T {s : Substrate} (h : Geometric s) :
+    ∀ z : ℂ, 0 < z.re →
+      RankEight.theta (s.A.map (Int.cast : ℤ → ℝ)) (z - Complex.I) =
+      RankEight.theta (s.A.map (Int.cast : ℤ → ℝ)) z :=
+  (Translation.even_iff_T_invariant (geometric_lattice h).1).mp (geometric_lattice h).2.1
+
+/-- **Conservation → θ symmetries (S2). S law.** The theta series of a geometric substrate is
+covariant under inversion `z ↦ 1/z`, and this is *equivalent* to **unimodularity**
+(`Translation.unimodular_iff_S_covariant`), forced by Map / Closure / self-readability. So the `S`
+symmetry is not an extra input either: Conservation and Closure **force** both transformation laws
+of the state sum. -/
+theorem state_sum_S {s : Substrate} (h : Geometric s) :
+    ∀ z : ℂ, 0 < z.re →
+      RankEight.theta (s.A.map (Int.cast : ℤ → ℝ)) z =
+      ((z ^ (1 / 2 : ℂ)) ^ s.n)⁻¹ *
+      RankEight.theta (s.A.map (Int.cast : ℤ → ℝ)) z⁻¹ :=
+  (Translation.unimodular_iff_S_covariant (geometric_lattice h).1).mp (geometric_lattice h).2.2.1
+
 /-- Every substrate meeting the geometric postulates has rank at least eight. -/
 theorem geometric_rank {s : Substrate} (h : Geometric s) : 8 ≤ s.n := by
   obtain ⟨hp, he, hd, hn⟩ := geometric_lattice h
