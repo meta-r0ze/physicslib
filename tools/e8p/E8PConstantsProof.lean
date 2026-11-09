@@ -25,6 +25,7 @@ import E8PConstants.E8TickUnit
 import E8PConstants.ExperimentalPulls
 import E8PConstants.ScalarAccounting
 import E8PConstants.FlavourPulls
+import E8PConstants.CompositeMassPulls
 import E8PConstants.HyperScope
 import PMConstants.ElectroweakBounds
 import PMConstants.ElectroweakE8

@@ -22,7 +22,7 @@ nucleon's charge is literally the sum of three substrate channel charges, and
 
 Nothing here postulates a nuclear force or binding energy; this module fixes the
 charge/baryon/colour/isospin content of the two nucleon systems. The proton and
-neutron masses are compared separately through `proton_ratio`/`neutron_ratio` in
+neutron masses are compared separately through `E8PConstants.CompositeMassPulls.proton_ratio`/`neutron_ratio` in
 `e8p`.
 -/
 
