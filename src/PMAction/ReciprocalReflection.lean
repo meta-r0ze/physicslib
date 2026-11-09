@@ -124,6 +124,15 @@ lemma raw_reflection_positive (hX : ∀ x ∈ X, reflect x ∈ X) (β : ℝ) (h�
 def UpperObservable (F : Inputs N X → ℂ) : Prop :=
   ∀ ω η, (∀ e, 0 ≤ height e → ω e=η e) → F ω=F η
 
+/-- **Osterwalder–Schrader reflection form** on the physical reciprocal-link measure:
+`⟨F, G⟩ = ∫ F ω · conj(G(θω)) dgibbs`, with `θ` the site reflection. This is the form the
+finite-volume OS reconstruction uses; `reflection_positive` is its positivity axiom
+(`⟨F,F⟩` is real and `≥ 0` for upper observables). The quotient of the upper observables by
+the null space of this form, completed, is the physical Hilbert space — the reconstruction
+step itself is not constructed here. -/
+def osForm (hX : ∀ x ∈ X, reflect x ∈ X) (β : ℝ) (F G : Inputs N X → ℂ) : ℂ :=
+  ∫ ω, F ω * starRingEnd ℂ (G (fun e => ω (edgeReflection hX e))) ∂gibbs N X β
+
 /-- Site-reflection positivity on the physical reciprocal-link measure itself. -/
 theorem reflection_positive (hX : ∀ x ∈ X, reflect x ∈ X) (β : ℝ) (hβ : 0 ≤ β)
     (F : Inputs N X → ℂ) (hF : Measurable F) (hUpper : UpperObservable F)
@@ -156,5 +165,13 @@ theorem reflection_positive (hX : ∀ x ∈ X, reflect x ∈ X) (β : ℝ) (hβ 
   rw [integral_map reciprocal_measurable.aemeasurable hInt.aestronglyMeasurable]
   simp_rw [← reciprocal_reflect hX,heq]
   exact raw_reflection_positive hX β hβ FF hFF (fun z => hFb _)
+
+/-- **Reflection positivity, as the OS positivity axiom.** For upper observables the OS form is
+real and nonnegative on the diagonal. -/
+theorem reflection_positive' (hX : ∀ x ∈ X, reflect x ∈ X) (β : ℝ) (hβ : 0 ≤ β)
+    (F : Inputs N X → ℂ) (hF : Measurable F) (hUpper : UpperObservable F)
+    {B : ℝ} (hFb : ∀ ω, ‖F ω‖ ≤ B) :
+    (osForm hX β F F).im = 0 ∧ 0 ≤ (osForm hX β F F).re :=
+  reflection_positive hX β hβ F hF hUpper hFb
 
 end PMAction.ReciprocalReflection
