@@ -5,6 +5,7 @@ import PMAction.Potential
 import PMAction.Dirac
 import PMAction.Governor
 import PMAction.Operators
+import PMAction.OsterwalderSchrader
 import PMAction.Protocol
 import PMAction.Reconstruction
 import PMAction.DiscreteEvolution

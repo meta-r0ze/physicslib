@@ -44,14 +44,18 @@ a supplied cost but does not determine it.
 Proved: `CompositionalTransport` (transport ODE + classical limit from conserving
 single-hop updates under subdivision + C² response); `NativePacketUpdate` (contracts for
 the native E8 packet subsystem); `GeometricGauge`, `ReciprocalReflection`
-(gauge/Gibbs/site-reflection positivity); `QuotientClosure.gibbs_quotient_invariant`
-(edge-identification); per-step maintenance is closed in PM-4 (`PerStepContract`). Open:
+(gauge/Gibbs/site-reflection positivity); `OsterwalderSchrader.conj_symm_of_real_diag`
+(OS form `ReciprocalReflection.osForm` + `reflection_positive'`; sesquilinear form with real
+diagonal is Hermitian — the algebraic OS step); `QuotientClosure.gibbs_quotient_invariant`
+(edge-identification); per-step maintenance is closed in PM-4 (`PerStepContract`). Open: the
+OS **quotient** (Cauchy–Schwarz bound so the null set `{F | osForm F F = 0}` is a subspace, then
+the physical Hilbert space) on top of the now-Hermitian OS form; the
 the microscopic E8 realization of the abstract hop, its physical readout and price law,
 shared group/trace normalization across spacings, and the admission of the coherent
 root-generator evolution as the substrate dynamics. For the packet subsystem this
-reduces to the C² control one-forms and that admission. Quantum-Yang–Mills constructions
-(gauge-measure transfer matrix, infinite volume, full O(4) restoration, renormalized
-continuum, mass gap) are out of scope; see the Yang–Mills scope note in
+reduces to the C² control one-forms and that admission. Remaining quantum-Yang–Mills
+constructions (transfer matrix, OS quotient/Hilbert space, infinite volume, full O(4)
+restoration, renormalized continuum, mass gap) are out of scope; see the Yang–Mills scope note in
 [`OVERVIEW.md`](OVERVIEW.md).
 
 ## 6. Full field and integrated limits

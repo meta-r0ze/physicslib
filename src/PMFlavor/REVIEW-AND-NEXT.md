@@ -5,8 +5,14 @@ This file is only what remains. Paper IV builds clean; run `./build.sh PMFlavor`
 for current counts.
 
 The flavour derivation (mixing formulas, angles, octants, CP magnitude, mass ratios,
-breaking direction, the CP-sign branch) and the carrier-current objects are all
-derived or E8-sourced; see `OVERVIEW.md`. Only the two inputs below remain.
+breaking direction, carrier-current objects) is derived or E8-sourced; see
+`OVERVIEW.md`. The **CP-sign branch** is a *no-go*, not a gap:
+`ReferenceFlavour.conjugate_cost_tie` proves any cost depending only on the mixing
+squared-moduli is `u ↦ ū`-invariant, so the two branches **tie** and a symmetric cost
+cannot pick a sign — the continuous-symmetry case of
+`PersistenceMechanics.SelectionSymmetry`. The branch is symmetry-breaking (the
+reference orientation, `ChiralityConvention.Orientation.referenceOrientation`). Only
+the two inputs below remain.
 
 ## Open items
 

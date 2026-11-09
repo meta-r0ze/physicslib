@@ -129,7 +129,9 @@ def UpperObservable (F : Inputs N X → ℂ) : Prop :=
 finite-volume OS reconstruction uses; `reflection_positive` is its positivity axiom
 (`⟨F,F⟩` is real and `≥ 0` for upper observables). The quotient of the upper observables by
 the null space of this form, completed, is the physical Hilbert space — the reconstruction
-step itself is not constructed here. -/
+step itself is not constructed here. The algebraic core (this form is sesquilinear with real
+diagonal, hence — by `PMAction.OsterwalderSchrader.conj_symm_of_real_diag` — Hermitian) is in
+`PMAction.OsterwalderSchrader`. -/
 def osForm (hX : ∀ x ∈ X, reflect x ∈ X) (β : ℝ) (F G : Inputs N X → ℂ) : ℂ :=
   ∫ ω, F ω * starRingEnd ℂ (G (fun e => ω (edgeReflection hX e))) ∂gibbs N X β
 

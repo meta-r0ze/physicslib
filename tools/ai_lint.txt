@@ -36,6 +36,7 @@ Text Housekeeping: Modules should have
 - Review for out of date text
 - Review for major duplication
 - Review for WIP md files that are old and maybe should be merged in and cleaned up
+- Review for anything that was research, marked and done and can be removed
 - Review that the REVIEW-AND-NEXT to see if its suggestions are the right order and review if tasks are already solved in another module or can be easily solved by using something in another module
 
 
