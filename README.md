@@ -13,7 +13,7 @@ The proofs are grouped based on their area:
  * Cosmology - The lifetime of the substrate systems (expansion of the universe equations, etc)
  * e8p command line tool to output the lean values you can compare against experimental physics values.
 
-The goal of the Lean proofs is to only assume that some things persist. No known physics equations or constants (other than say electron mass to convert to known values) are used, nor is any hand tuned values inserted.  The Lean proofs (should) only contain values derived from prior proofs. The Standard Model logic should be derived, not inserted.
+The goal of the Lean proofs is to only assume that some things persist without inserting anything from the Standard Model, known physics equations or constants, nor is any hand tuned values inserted.
 
 # Overview
 
@@ -21,20 +21,19 @@ Persistence Mechanics is the basic mechanics for any complex system that persist
 
 This application forces a single substrate, E8, with its characteristic values D = 4, Δ = 43 ν = 16, χ = 2, and σ = 5. And the index value, read as net transitions per cycle has the value 137.035999212…
 
-Todo: need to write a better version, but as a placeholder here is my blog entry from April 2026 which walks through most of it at a high level.
+Todo: need to write a better overview, but as a placeholder here is my blog entry from April 2026 which walks through most of it at a high level.
 https://metamagic.substack.com/p/persistence-mechanics-and-the-quantum-vacuum
 
 # Use your AI to explore and contribute!
 
-You do not need to compile anything to start. Point your AI at this repo and then ask:
+Without compiling anything you can still point your AI at this repo and ask fun questions like:
 
  * Does this cross the "too many coincidences and requires further investigation" line?
- * Give me an overview of how the systems stack from persistence through the E8 system followed by elementary particles, nucleons, nucleus, shell, and atoms
- * Give me a dependency-ordered map of the nine Lean libraries and `e8p`, and say in one sentence what each one owns.
+ * Give me an overview of how the systems stack from persistence through the E8 system followed by elementary particles, hadrons, nucleus, shell, and atoms
+ * Give me a dependency-ordered map of the Lean libraries and `e8p`, and say in one sentence what each one owns.
  * Why E8? Walk me through the substrate argument in `src/PMSubstrate/OVERVIEW.md` and the `Research/` alternatives. What is forced, and what is assumed?
- * What exactly does PM prove about Yang–Mills, and what does it explicitly not prove? (See PMAction. In short: the classical continuum limit and finite-volume Euclidean setup of the gauge layer, plus a proved volume-uniform mass gap for PM's distinction substrate in `PMAction/MassGap`; the gap of the continuous gauge layer is the general quantum Yang–Mills problem and is out of scope.)
- * How does the muon width and lifetime come out of `PMElementaryParticles`?
  * Why does this substrate have three generations of matter?
+ * How does the muon width and lifetime come out of `PMElementaryParticles`?
  * Can this make falsifiable prediction, how many?
  * Can you create a new proof that is missing that we can compare to experimental values and contribute back?
 
@@ -48,7 +47,6 @@ Each module under `src/` has three documents with separate jobs:
 README.md           build, layout and import boundary
 OVERVIEW.md         what is checked, with theorem entry points
 REVIEW-AND-NEXT.md  what remains open or is a model input
-OPEN-PROBLEMS.md    the consolidated, prioritized register of open items
 ```
 
 The Lean source is the ground truth.  Notes that are only comparison data or
@@ -58,7 +56,7 @@ whether the tree covers them — is [`SCOPE.md`](SCOPE.md); the consolidated,
 prioritized register of every open item (why it is flagged, what E8/persistence would
 produce, the quickest test) is [`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md).
 
-For more English background, it is helpful to clone the following repositories and place them where the AI can access them.
+For more English background, it is helpful to clone the following older draft repositories and place them where the AI can access them.
 https://github.com/meta-r0ze/Persistence-Mechanics
 https://github.com/meta-r0ze/PM_Quantum_Vacuum_I
 https://github.com/meta-r0ze/PM_Quantum_Vacuum_II
