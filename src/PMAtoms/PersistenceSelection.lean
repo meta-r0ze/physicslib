@@ -50,4 +50,16 @@ theorem selectedNuclide_min (systems : Finset RateSystem) (h : systems.Nonempty)
     ∀ s ∈ systems, (selectedSystem systems h).totalRate ≤ s.totalRate :=
   selectedSystem_min systems h
 
+/-- **The persistence-selected nuclide has the longest mean life** (among positive-hazard systems).
+So the selection is a persistence selection, not a mass one: a lower-mass neighbour with a higher
+exit hazard is not selected (`CollectiveRate.not_collectivePersists_of_lower`). -/
+theorem selectedNuclide_meanLife_max (systems : Finset RateSystem) (h : systems.Nonempty)
+    (hpos : ∀ s ∈ systems, 0 < s.totalRate) :
+    ∀ s ∈ systems, s.meanLife ≤ (selectedSystem systems h).meanLife := by
+  intro s hs
+  have hmin := selectedSystem_min systems h s hs
+  have hbest := hpos (selectedSystem systems h) (selectedSystem_mem systems h)
+  simp only [RateSystem.meanLife, PMElementaryParticles.MeanLife]
+  exact one_div_le_one_div_of_le hbest hmin
+
 end PMAtoms.PersistenceSelection

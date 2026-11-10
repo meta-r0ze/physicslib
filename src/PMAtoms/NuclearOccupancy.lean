@@ -40,8 +40,17 @@ theorem frontier_doublyClosed : DoublyClosed ⟨96, 152⟩ := by
   · show (96 : ℕ) ∈ nuclearMagic; rw [nuclearMagic_eq]; decide
   · show (152 : ℕ) ∈ nuclearMagic; rw [nuclearMagic_eq]; decide
 
+/-- Lead-208 (`Z = 82`, `N = 126`) is doubly closed. -/
+theorem pb208_doublyClosed : DoublyClosed ⟨82, 126⟩ := by
+  refine ⟨?_, ?_⟩
+  · show (82 : ℕ) ∈ nuclearMagic; rw [nuclearMagic_eq]; decide
+  · show (126 : ℕ) ∈ nuclearMagic; rw [nuclearMagic_eq]; decide
+
 /-- The nucleus occupancy of the frontier pair. -/
 theorem frontier_occupancy : occupancy ⟨96, 152⟩ = 248 := by
+  unfold occupancy; norm_num
+
+theorem pb208_occupancy : occupancy ⟨82, 126⟩ = 208 := by
   unfold occupancy; norm_num
 
 end PMAtoms.NuclearOccupancy
