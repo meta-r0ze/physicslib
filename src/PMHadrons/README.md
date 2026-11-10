@@ -35,7 +35,9 @@ comparison, not a derivation.
   lists).
 - **Composite mass = occupancy cost.** `CompositeMasses` and `MesonMasses`: a composite costs a
   whole number of substrate cells (`n·α⁻¹ + residual`), or the `Δ²`-based nucleon account. The
-  E8 value is derived; the measured mass is only the comparison.
+  E8 value is derived; the measured mass is only the comparison. `Occupancy` formalizes the
+  **minimum-room principle** (a persistent placement holds at least `n` cells; below `n` it
+  rearranges) and derives the pion's lower bound `≥ χ` from colour neutrality.
 - **Rearrangement and emission.** `Particle` (what persists, what rearranges),
   `ParticleChannels` (the channel inventory), `CompositeTransition`,
   `HadronicMatrixElement` / `BoundStateOverlap` (the missing emission overlap made explicit),

@@ -16,6 +16,12 @@ The mass is not "constituents minus a binding budget": every composite is far he
 current carriers (`MesonMasses.*_gt_constituents`), and the mass is set by the occupancy, not by
 the constituent list.
 
+The **occupancy** is the least number of cells a *persistent* placement holds (`Occupancy`):
+every persistent placement holds at least `n`, and a placement below `n` has nowhere to stand and
+rearranges (`minOccupancy_le`, `not_persistent_of_card_lt`). A colour-neutral composite needs at
+least two carriers, hence at least `χ = 2` cells (`occupancy_ge_two_of_colourNeutral`), which is
+the pion's lower bound. The persistence predicate and the kaon's extra `σ` remain inputs.
+
 Standard-Model names (proton, neutron, pion, kaon) are **comparison labels** throughout this
 file; a measured value or a `σ` in a column is a comparison, not an input.
 
@@ -54,6 +60,7 @@ is elementary-particle work.
 | `Particle` | `Species` with certified masses and `Q/B/L`; `ParticleDecay` = conserved numbers + lighter products; **`proton_stable`** (baryon number forbids a lighter channel), `neutrino_stable`/`antineutrino_stable` (massless ledger; no lighter channel); allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` | certified PM-5 mass enclosures; tree-level channels |
 | `CompositeMasses` | occupancy-cost formulas for the nucleon/meson composites (E8 values), compared with CODATA 2022 / PDG |  |
 | `MesonMasses` | `π⁺` tier ledger (`pionPlus_ledger`, `pionPlus_value`, `pionPlus_mev_value`); `α⁻¹` = six-pillar `cellBudget` (`cellBudget_pillars`; Toll/Margin = `Z_TOL`/`Z_MAR`); every meson = `n·cellBudget + residual` (`*_cells`); `π⁺`, `K⁺`, proton heavier than their current quarks (`*_gt_constituents`) | cell counts `n = χ, σ+χ`; residual terms |
+| `Occupancy` | minimum-room principle (`minOccupancy_le`, `not_persistent_of_card_lt`); meson ledgers as the occupancy form `occupancyMass` (`pionPlus_eq_occupancyMass`, `kaonPlus_eq_occupancyMass`); colour neutrality ⇒ ≥ `χ = 2` carriers (`two_le_length_of_colourNeutral`, `occupancy_ge_two_of_colourNeutral`); derived-or-tied (`tied_minimal_of_moved`) | the persistence predicate; the kaon's extra `σ` |
 | `CompositeStates` | `SignedState`, `CompositeState`, `compositeCharge`, meson/baryon cohorts; `pionPlus`, `pionZero`, `kaonPlus`, `proton`, `neutron` charges. |  |
 | `CompositeBinding` | `BindingLedger`, `compositeMassSq`, positivity/mass-lowering, `compositePhase`; binding energy supplied. |  |
 | `CompositeTransition` | `compositeAmplitude`, `CompositeDecay`, `compositeOperator`; `K⁺ → π⁺ π⁰` charge/operator instance. |  |

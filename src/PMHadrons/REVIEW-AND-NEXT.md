@@ -18,8 +18,17 @@ reading under test is: **a carrier cohort is a new persistent system exactly whe
 least `n` cells; below that it has nowhere to stand and rearranges (decays).** Then `n` is the
 minimum room needed, not a fitted number.
 
-**Missing on E8.** The rule fixing `n`: `n = χ` for the pion composite, `σ+χ` for the kaon
-composite (`pion0_cells` … `kaonPlus_cells`), and the `Δ²`-based nucleon account.
+**Proved so far (`Occupancy`).** The minimum-room principle is formalized: every persistent
+placement holds ≥ `n` cells and a placement below `n` is not persistent (`minOccupancy_le`,
+`not_persistent_of_card_lt`); the meson ledgers are exactly the occupancy form
+(`pionPlus_eq_occupancyMass`, `kaonPlus_eq_occupancyMass`); and a colour-neutral composite needs
+≥ 2 carriers, hence ≥ `χ = 2` cells (`occupancy_ge_two_of_colourNeutral`) — the **pion's lower
+bound is derived**. `tied_minimal_of_moved` gives the dichotomy: `n` is a result iff the
+persistence predicate forces a unique least-occupancy placement.
+
+**Still missing on E8.** The persistence predicate itself (what makes a multi-carrier placement
+self-supporting); the kaon's extra `σ` (its strange carrier needs `σ` more cells than the
+colour-neutrality bound gives); and the `Δ²`-based nucleon account.
 
 **Tasks.**
 1. State the **persistence/occupancy rule**: among the configurations of a carrier cohort,
