@@ -1,32 +1,31 @@
 This repository contains Lean proofs for the Physics application of Persistence Mechanics.
 
-The proofs are grouped based on their area:
-
- * Persistence Mechanics: survival/hazard, selection
- * Substrate: Applying PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
- * Action - Applying PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport; `PMAction/MassGap` proves the mass gap of the distinction substrate
- * Constants - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
- * Flavor - Information transfer across the substrate (flavor mixing, wall spectra, propagation)
- * Elementary Particles - Systems that can persist on top of the substrate. (protocols, decay rates)
- * Hadrons - Quark composites: nucleons (proton, neutron) with the full six-pillar mass ledger, mesons, and their decays
- * Atoms - Further recursive systems: nucleus (the shape is sort of like chemistry), shell, atom (ending with the full periodic table list of particles that can persist)
- * Cosmology - The lifetime of the substrate systems (expansion of the universe equations, etc)
- * e8p command line tool to output the lean values you can compare against experimental physics values.
-
-The goal of the Lean proofs is to only assume that some things persist without inserting anything from the Standard Model, known physics equations or constants, nor is any hand tuned values inserted.
-
 # Overview
 
-Persistence Mechanics is the basic mechanics for any complex system that persists.  Given the postulates from Persistence Mechanics that anything that persists has Finiteness, Conservation, and Causality and that the vacuum persists, we test this by translating it to geometry and seeing what happens. This output is the E8-Persistence theory, an informational theoretic dual to the standard model.  More about persistence mechanics can be found here: https://github.com/meta-r0ze/Persistence-Mechanics and further testing it in other domains such as biology or software engineering can be found on https://metamagic.substack.com
+Persistence Mechanics describes the basic mechanics for any complex system that persists.  More about persistence mechanics can be found here: https://github.com/meta-r0ze/Persistence-Mechanics 
 
-This application forces a single substrate, E8, with its characteristic values D = 4, Δ = 43 ν = 16, χ = 2, and σ = 5. And the index value, read as net transitions per cycle has the value 137.035999212…
+Given the postulates from Persistence Mechanics that anything that persists has Finiteness, Conservation, and Causality and that the vacuum persists, we test that here.
+This output is the E8-Persistence theory, an informational theoretic dual to the standard model. The Lean proofs are as followed, each building only on what comes before it.
+
+ * [Persistence Mechanics](src/PersistenceMechanics): survival/hazard, selection
+ * [Substrate](src/PMSubstrate): Applying PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
+ * [Action](src/PMAction) - Applying PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport; `PMAction/MassGap` proves the mass gap of the distinction substrate
+ * [Constants](src/PMConstants) - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
+ * [Flavor](src/PMFlavor) - Information transfer across the substrate (flavor mixing, wall spectra, propagation)
+ * [Elementary Particles](src/PMElementaryParticles) - Systems that can persist on top of the substrate. (protocols, decay rates)
+ * [Hadrons](src/PMHadrons) - Quark composites: nucleons (proton, neutron) with the full six-pillar mass ledger, mesons, and their decays
+ * [Atoms](src/PMAtoms) - Further recursive systems: nucleus (the shape is sort of like chemistry), shell, atom (ending with the full periodic table list of particles that can persist)
+ * [Cosmology](src/PMCosmology) - The lifetime of the substrate systems (expansion of the universe equations, etc)
+ * [e8p](tools/e8p) command line tool to output the lean values you can compare against experimental physics values.
 
 Todo: need to write a better overview, but as a placeholder here is my blog entry from April 2026 which walks through most of it at a high level.
 https://metamagic.substack.com/p/persistence-mechanics-and-the-quantum-vacuum
 
-# Use your AI to explore and contribute!
+The goal of the Lean proofs is to only assume that some things persist without inserting anything from the Standard Model, known physics equations or constants, nor is any hand tuned values inserted.
 
-Without compiling anything you can still point your AI at this repo and ask fun questions like:
+# Use your AI to explore
+
+Knowing that everyone is using AI, without compiling anything you can still point your AI at this repo and ask fun questions like:
 
  * Does this cross the "too many coincidences and requires further investigation" line?
  * Give me an overview of how the systems stack from persistence through the E8 system followed by elementary particles, hadrons, nucleus, shell, and atoms
@@ -36,8 +35,6 @@ Without compiling anything you can still point your AI at this repo and ask fun 
  * How does the muon width and lifetime come out of `PMElementaryParticles`?
  * Can this make falsifiable prediction, how many?
  * Can you create a new proof that is missing that we can compare to experimental values and contribute back?
-
-Some more ways to contribute: *"Pick one item in any `REVIEW-AND-NEXT.md` and see if it is solvable simply by depending on existing proofs"*
 
 # Documentation map
 
