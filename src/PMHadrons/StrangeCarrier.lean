@@ -88,4 +88,33 @@ theorem kaon_mass_eq :
   rw [kaon_occupancy]
   exact PMHadrons.Occupancy.kaonPlus_eq_occupancyMass
 
+/-- The neutral pion mass is the occupancy form at `n = χ`. -/
+theorem pion0_mass_eq :
+    PMHadrons.CompositeMasses.pion0 =
+      PMHadrons.Occupancy.occupancyMass (mesonOccupancy 0)
+        PMHadrons.MesonMasses.pion0Residual := by
+  rw [pion_occupancy]
+  exact PMHadrons.Occupancy.pion0_eq_occupancyMass
+
+/-- The neutral kaon mass is the occupancy form at `n = χ + σ`. -/
+theorem kaon0_mass_eq :
+    PMHadrons.CompositeMasses.kaon0 =
+      PMHadrons.Occupancy.occupancyMass (mesonOccupancy 1)
+        PMHadrons.MesonMasses.kaon0Residual := by
+  rw [kaon_occupancy]
+  exact PMHadrons.Occupancy.kaon0_eq_occupancyMass
+
+/-- **Every meson ledger is the occupancy form `χ + σ·ℓ`.** The charged and neutral pion have no
+line carrier (`ℓ = 0`), the charged and neutral kaon one (`ℓ = 1`). -/
+theorem meson_ledgers :
+    (PMHadrons.MesonMasses.pionPlus =
+        PMHadrons.Occupancy.occupancyMass (mesonOccupancy 0) PMHadrons.MesonMasses.pionPlusResidual) ∧
+      (PMHadrons.CompositeMasses.pion0 =
+        PMHadrons.Occupancy.occupancyMass (mesonOccupancy 0) PMHadrons.MesonMasses.pion0Residual) ∧
+      (PMHadrons.CompositeMasses.kaonPlus =
+        PMHadrons.Occupancy.occupancyMass (mesonOccupancy 1) PMHadrons.MesonMasses.kaonPlusResidual) ∧
+      (PMHadrons.CompositeMasses.kaon0 =
+        PMHadrons.Occupancy.occupancyMass (mesonOccupancy 1) PMHadrons.MesonMasses.kaon0Residual) :=
+  ⟨pion_mass_eq, pion0_mass_eq, kaon_mass_eq, kaon0_mass_eq⟩
+
 end PMHadrons.StrangeCarrier

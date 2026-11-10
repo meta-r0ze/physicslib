@@ -40,8 +40,12 @@ one cycle (`PersistencePremises.causal_cone_card`, `base_eq_causalCone`): the ev
 one clock period at speed one. So the "two bases" sub-question is answered — the nucleons and the
 mesons price different pillars.
 
-**Still missing on E8.** The persistence predicate itself (what makes a multi-carrier placement
-self-supporting), and the single premise that a line-tier carrier spans the `σ` directions.
+**Resolved, modulo one declared premise.** The occupancy `n` is `χ + σ·ℓ` (mesons) and `Δ²`
+(nucleons) from Map/Protocol/Margin, and all four meson ledgers are the occupancy form
+(`StrangeCarrier.meson_ledgers`). The persistence predicate is the occupancy threshold itself
+(`Occupancy.minOccupancy_le`: persistent ⇔ at least `minOccupancy` cells). The single remaining
+input is the modelling premise that a **line-tier carrier's address embedding is an injective
+placement of the `σ` interaction directions** (so it holds `σ` cells).
 
 **Tasks.**
 1. State the **persistence/occupancy rule**: among the configurations of a carrier cohort,
