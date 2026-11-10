@@ -87,6 +87,21 @@ theorem kaonPlus_eq_occupancyMass :
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
   norm_num
 
+/-- The neutral pion ledger is the occupancy form with `n = χ = 2`. -/
+theorem pion0_eq_occupancyMass :
+    PMHadrons.CompositeMasses.pion0 = occupancyMass 2 PMHadrons.MesonMasses.pion0Residual := by
+  rw [PMHadrons.MesonMasses.pion0_cells]
+  unfold occupancyMass PMHadrons.MesonMasses.pionCells
+  rw [PMSubstrate.E8Values.chi_eq]
+
+/-- The neutral kaon ledger is the occupancy form with `n = σ + χ = 7`. -/
+theorem kaon0_eq_occupancyMass :
+    PMHadrons.CompositeMasses.kaon0 = occupancyMass 7 PMHadrons.MesonMasses.kaon0Residual := by
+  rw [PMHadrons.MesonMasses.kaon0_cells]
+  unfold occupancyMass PMHadrons.MesonMasses.kaonCells
+  rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
+  norm_num
+
 /-! ## Colour neutrality forces at least two carriers
 
 A carrier carries one of the `σ − χ = 3` colours or its anticolour. A colour-neutral composite

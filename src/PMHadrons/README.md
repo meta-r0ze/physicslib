@@ -13,7 +13,7 @@ PMElementaryParticles  →  PMHadrons  →  PMAtoms
 
 ## The frame
 
-Everything here is an E8 statement. Elementary carriers combine into a configuration. A
+Elementary carriers combine into a configuration. A
 configuration is a *new persistent system* when it occupies enough substrate cells — each cell
 paying the six-pillar budget `α⁻¹` — and it can rearrange by emitting a carrier (a decay). So
 the two E8 quantities at this level are:
@@ -37,7 +37,10 @@ comparison, not a derivation.
   whole number of substrate cells (`n·α⁻¹ + residual`), or the `Δ²`-based nucleon account. The
   E8 value is derived; the measured mass is only the comparison. `Occupancy` formalizes the
   **minimum-room principle** (a persistent placement holds at least `n` cells; below `n` it
-  rearranges) and derives the pion's lower bound `≥ χ` from colour neutrality.
+  rearranges) and derives the pion's lower bound `≥ χ` from colour neutrality. Both bases are
+  **pillar counts**: a meson holds `χ + σ·ℓ` cells (Map base + Protocol direction count per
+  line-tier carrier, `StrangeCarrier`) and the nucleon base `Δ²` is Margin's causal cone
+  (`NucleonBase`).
 - **Rearrangement and emission.** `Particle` (what persists, what rearranges),
   `ParticleChannels` (the channel inventory), `CompositeTransition`,
   `HadronicMatrixElement` / `BoundStateOverlap` (the missing emission overlap made explicit),

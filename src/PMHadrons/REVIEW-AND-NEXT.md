@@ -34,9 +34,14 @@ defect's embedding occupies `σ` of the `R_M` cycle addresses and Protocol route
 the `σ` directions" it holds `σ` addresses, giving `nK = χ + σ` while the point-tier pion keeps
 `nπ = χ`. So the whole `n` reduces to the colour-singlet base plus line-tier direction counts.
 
+**Both bases are now pillar counts (`NucleonBase`).** The meson base is the Map count `χ` plus the
+Protocol direction count `σ` per line carrier; the nucleon base `Δ²` is **Margin's causal cone** of
+one cycle (`PersistencePremises.causal_cone_card`, `base_eq_causalCone`): the events reachable in
+one clock period at speed one. So the "two bases" sub-question is answered — the nucleons and the
+mesons price different pillars.
+
 **Still missing on E8.** The persistence predicate itself (what makes a multi-carrier placement
-self-supporting); the single premise that a line-tier carrier spans the `σ` directions; and the
-`Δ²`-based nucleon account.
+self-supporting), and the single premise that a line-tier carrier spans the `σ` directions.
 
 **Tasks.**
 1. State the **persistence/occupancy rule**: among the configurations of a carrier cohort,
