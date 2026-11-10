@@ -35,6 +35,11 @@ The nucleus mass is the free-nucleon sum minus the link/closure layers (`TwoLedg
    (Pu/Cm/Cf/Fm/No/Rf) scatters `−0.019…+0.018 u`. Needs a mid-shell/Z-dependent occupancy factor or
    shape coexistence; do **not** integrate until the holdout passes.
 
+**Built (`NuclearOccupancy`).** The occupancy `A = Z + N`, the closure predicates
+(`ProtonClosed`/`NeutronClosed`/`DoublyClosed`), and the frontier closure pair
+(`frontier_doublyClosed`: `Z=96`, `N=152`; `frontier_occupancy = 248`) are named — so "why these
+counts / where does it saturate" is a cost-functional question, not arithmetic.
+
 ## 2. Emission overlap: α and fission hindrance — C
 
 An α decay (`nucleus → α + daughter`) and fission (`nucleus → fragments`) are composite →
@@ -82,6 +87,12 @@ the collective ledger beyond it (`nuclearLedgerKind`, `regimePersists`); `Nuclea
 selection using the barrier/rate layer, not mass minimality alone
 (`CollectiveRate.not_collectivePersists_of_lower` shows mass minimality is the wrong criterion for
 the post-frontier regime).
+
+**Built (`PersistenceSelection`).** The exit table is wired into the rate layer:
+`nuclearExitRateSystem` (its hazard is `collectiveRate (nuclearExitChannels …)`), and
+`nuclearPersistsOn_iff` (`PersistsOn T ↔ T ≤ meanLife`, the exit table being nonempty). The
+persistence-selected nuclide is the least-hazard one (`selectedNuclide_min`, from
+`PersistenceRate`).
 
 ## Not the pattern (analysis / lattice / model input)
 
