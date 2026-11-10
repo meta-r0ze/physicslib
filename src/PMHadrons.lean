@@ -17,6 +17,7 @@ import PMHadrons.StrangeCarrier
 import PMHadrons.NucleonBase
 import PMHadrons.TollGovernor
 import PMHadrons.Emission
+import PMHadrons.EmissionScale
 import PMHadrons.ChannelFinalStateLink
 import PMHadrons.CompositeStates
 import PMHadrons.CompositeTransition

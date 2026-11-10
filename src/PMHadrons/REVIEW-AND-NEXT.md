@@ -85,6 +85,14 @@ composite's configuration) remains. `Emission` composes them into the width
 `Γ = emissionWeight · |overlap|² · phaseSpace`, an instance of the general rate form with
 `T = √emissionWeight · overlap` (`emissionWidth_eq_partialWidth`).
 
+**Emission scale (`EmissionScale`).** The emission configuration is the persistence-selected
+**uniform** law, so `fπ = v/|Ω_π|` (the VEV over the emission mode count). A no-go narrows it: the
+emission mode count is **not** the occupancy (`occupancy_reading_excluded` — that would give
+`fK/fπ = χ/(σ+χ) = 2/7 < 1`, but `fK/fπ > 1` by the E8 enclosures). So the emission space is a
+separate structure; the assigned counts are `|Ω_π| = Δ²+Δ−χ = 1890 = causalCone + (Δ−χ)`
+(`pionModes_eq_causalCone`) and `|Ω_K| = Δ²−ν² = 1593`. Identifying that space is the remaining
+construction.
+
 **Missing on E8.** the composite's configuration (a normalized many-carrier state, not just a
 constituent list); a single-carrier emission operator; and the composite → one-carrier overlap.
 
