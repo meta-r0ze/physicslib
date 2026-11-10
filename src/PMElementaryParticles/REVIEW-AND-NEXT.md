@@ -32,9 +32,9 @@ These are analysis/probability tasks: the physics input is the standard
 Lorentz-invariant measure, and the goal is to **construct** it rather than supply
 its value. Each names the current placeholder to replace.
 
-> **Status update:** A1–A3 are now optional for the E8 decay route.  The finite
-> `BetaLattice`/`LeptonLattice`/`DecayChannel` construction bypasses the
-> continuum measure for the E8 rates.  Keep A1–A3 as comparison/mathematics
+> **Status update:** the measure items (A1, A3–A5) are now optional for the E8 decay
+> route.  The finite `BetaLattice`/`LeptonLattice`/`DecayChannel` construction bypasses
+> the continuum measure for the E8 rates.  Keep them as comparison/mathematics
 > projects, not blockers.
 
 ### A1. Two-body phase space from a delta function
@@ -50,26 +50,6 @@ iterated direction integral over `(z,φ)`, `average_one` normalizes it, and
 `electron_measure_radial` records the massless radial measure. Remaining: the
 energy-shell **delta** reduction and the full two-body measure. This is the "not a
 constructed delta-function measure" gap.
-
-### A2. Radial energy-shell reduction of the electron measure
-
-> **Done:** the genuine `ℝ³` spherical change of variables is constructed in
-> `PMElementaryParticles.PolarMeasure` (`integral_radial_three`,
-> `sphere_area_three`, `volume_ball_three`), from Mathlib's polar decomposition
-> `MeasureTheory.integral_fun_norm_addHaar`. The `S²` measure is `volume.toSphere`,
-> not the iterated `(z, φ)` integral. The massless measure follows
-> (`electron_measure_from_integral`), the delta-function/energy-shell `1/2` Jacobian is
-> *derived* (`delta_reduction`: the chain-rule factor `d(M/2)/dM = 1/2` via the
-> fundamental theorem of calculus), and `twoBody_from_delta` gives `Φ₂ = 1/(8π)` as the
-> energy-shell derivative of a genuine `∫_{ℝ³}`. The remarks below are the historical state.
-`MuonRate.electron_measure` is an algebraic identity. Target: derive
-`4π E²/((2π)³ 2E) = E/(4π²)` from `∫_{ℝ³} d³p` in spherical coordinates (surface
-measure of `S²` times `p² dp`, `p = √(E²−m²)`), for the massless case first, then
-the massive one. **Status:** the angular area `4π` (`PhaseSpace.solidAngle_one`), the massless radial
-identity (`PhaseSpace.electron_measure_radial`) and the massive radial Jacobian
-(`MassiveDaughterSpectrum.radial_measure`) are proved. Only the global `∫_{ℝ³}`
-spherical change of variables remains, and Mathlib has **no** spherical-coordinate
-integral, so this item is blocked on that infrastructure rather than on our work.
 
 ### A3. Three-body phase-space factorization
 The three-body measure is used but not factored. Target: factor it into
@@ -91,7 +71,7 @@ uniform-sphere average is invariant under rotations on `L¹` (change of variable
 Haar invariance of the sphere), so the pair tensor's covariance is a consequence of
 the measure, not only of degree-≤2 moments.
 
-Suggested order: **A1 → A2 → A3**, then **A5**, then **A4** (A4 reuses A1–A3).
+Suggested order: **A1 → A3**, then **A5**, then **A4** (A4 reuses A1–A3).
 
 ## Part B — physical model inputs (not Lean-provable)
 
@@ -138,11 +118,13 @@ is *derived* (`PolarMeasure.massShell_reduction`: the `δ(p²−s)` mass-shell r
 = 1/(2m)` are not separate inputs.  What remains is only the physical readout normalization
 (which E8 modes/weights).
 
-### B3 status
+### B3 status — done, up to the tick
 
-Structurally solved: `DecayChannel.lifetime = 1/rate`, `physicalLifetime` carries
-the tick conversion, and the persistence hazard layer gives exponential survival.
-The missing input is the numerical E8 tick.
+The per-slot hazard is the six-pillar `Decay.rate` (including the Governor `χ/Δ` and the Toll),
+`DecayLaw.rate_eq_pillars`; the exponential law is `ticks_exact` / `ticks_are_survive`; and the
+physical lifetime is `tick · (1/rate)` (`DecayLaw.physicalLifetime_eq_tick_mul`). The only input
+is the tick `Δ` — the E8 clock period `Δ = 43` (`PMAtoms.E8Tick`) and its SI value (a unit anchor,
+`tools/e8p/E8PConstants/E8TickUnit`).
 
 ### B3. Decay law from the chosen dynamics
 Specify subsystem, environment/readout and the controlled approximation giving
@@ -194,16 +176,20 @@ blocked tau-hadronic / kaon multibody modes) is in `PMHadrons/REVIEW-AND-NEXT.md
 B1/B2 (physical final states and measure normalization), A5, and A4 remain
 model/analysis inputs.
 
-### B5 status
+### B5 status — interface complete
 
-`RadiativeCorrection` provides the supplied-`R` interface; the actual radiative
-factors remain open.
+`RadiativeCorrection` is the supplied-`R` interface (`correctedRate` / `correctedLifetime`), and
+the hadronic matrix elements are the `PMHadrons.BoundStateOverlap` / `PMHadrons.Emission` overlap
+construction (`emissionWidth` = Toll boundary × overlap² × phase space). The radiative factors and
+bound-state values remain supplied inputs (`M`).
 
 ### B5. Absolute coupling and corrections
 Radiative corrections, hadronic final states, bound-state matrix elements, and an
 absolute coupling/lifetime prediction remain inputs. The tau lifetime uses the
 measured muon lifetime and branching fraction; the neutron rescaling is a
-conditional arithmetic identity.
+conditional arithmetic identity. The hadronic matrix elements now have a concrete
+home: `PMHadrons.BoundStateOverlap` (the overlap) and `PMHadrons.Emission`
+(`emissionWidth` = Toll boundary × overlap² × phase space).
 
 ## Scope of the fifth-power result
 `MuonRate.muon_rate`'s `m⁵` is a consequence of the specified four-dimensional

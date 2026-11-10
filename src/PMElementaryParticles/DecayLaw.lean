@@ -1,5 +1,6 @@
 import PMElementaryParticles.Survival
 import PMSubstrate.NetCost
+import PersistenceMechanics.DecayChannel
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 
 /-!
@@ -62,6 +63,30 @@ theorem compounded_limit (Γ t : ℝ) :
   have h := Real.tendsto_one_add_div_pow_exp (-Γ * t)
   rw [Survival.survive]
   convert h using 2 with n
+  ring
+
+/-! ## The six-pillar channel and the physical tick
+
+`PersistenceMechanics.Decay.DecayChannel` prices one open channel by the six pillars,
+`rate = β · toll · capacity · map · protocol · governor · margin · exp(−action)` — including the
+Governor (`χ/Δ` per slot, `PMSubstrate.ImpedanceTerms.governor_baseline`) and the Toll
+(`PMSubstrate.uniform_toll`). Its per-slot lifetime is `1/rate`; the physical lifetime is
+`tick · (1/rate)`. The only remaining input is the tick `Δ` — the E8 clock period `Δ = 43`
+(`PMAtoms.E8Tick.e8Tick_eq`) and its SI value (a unit anchor,
+`tools/e8p/E8PConstants/E8TickUnit`). -/
+
+/-- The per-slot hazard is exactly the six-pillar channel rate. -/
+theorem rate_eq_pillars (β : ℝ) (c : PersistenceMechanics.Decay.DecayChannel) :
+    PersistenceMechanics.Decay.rate β c =
+      β * c.toll * c.capacity * c.map * c.protocol * c.governor * c.margin *
+        Real.exp (-c.action) := rfl
+
+/-- **The physical lifetime is the tick times the per-slot lifetime `1/rate`.** -/
+theorem physicalLifetime_eq_tick_mul (tick β : ℝ)
+    (c : PersistenceMechanics.Decay.DecayChannel) :
+    PersistenceMechanics.Decay.physicalLifetime tick β c =
+      tick * PersistenceMechanics.Decay.lifetime β c := by
+  unfold PersistenceMechanics.Decay.physicalLifetime PersistenceMechanics.Decay.lifetime
   ring
 
 end PMElementaryParticles.DecayLaw
