@@ -43,6 +43,18 @@ abbrev EmissionBoundary := PMSubstrate.ValidToll
 theorem emissionBoundary_card : Fintype.card EmissionBoundary = 334 := by
   simp [EmissionBoundary, PMSubstrate.ValidToll]
 
+/-- The composite's emission boundary weight: the Toll term. -/
+noncomputable def emissionWeight : ℝ := PMSubstrate.tollTerm PMSubstrate.baseline
+
+theorem emissionWeight_eq_toll : emissionWeight = PMSubstrate.tollTerm PMSubstrate.baseline :=
+  rfl
+
+theorem emissionWeight_pos : 0 < emissionWeight := by
+  rw [emissionWeight_eq_toll]
+  unfold PMSubstrate.tollTerm PMSubstrate.baseline
+  norm_num [PMSubstrate.Parameters.nodeCapacity, PMSubstrate.Parameters.resolution,
+    PMSubstrate.Parameters.embeddingDimension, PMSubstrate.Parameters.eulerCharacteristic]
+
 /-- **The emission boundary weight is the Toll term** (`PMSubstrate.uniform_toll`). -/
 theorem emissionBoundary_weight :
     (PMSubstrate.tollEvent.card : ℝ) / Fintype.card PMSubstrate.TollSpace =
