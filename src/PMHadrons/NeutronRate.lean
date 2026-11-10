@@ -131,11 +131,17 @@ theorem neutronLifetime_pos (Vud : ℝ) (hV : Vud ≠ 0) : 0 < neutronLifetime V
   unfold neutronLifetime
   exact Widths.lifetime_pos (by norm_num) (neutronWidth_pos Vud hV)
 
-/-- Paper V environmental factor `D = 215/213`. -/
-def environmentFactor : ℝ := Widths.neutronFactor
+/-- Paper V environmental factor `D = 215/213 = Δ/(Δ − χ/σ)`. -/
+def neutronFactor : ℝ := 43 / (43 - 2 / 5)
+
+theorem neutron_factor_exact : neutronFactor = 215 / 213 ∧ 1 < neutronFactor := by
+  norm_num [neutronFactor]
+
+/-- The environmental factor is the reference-width rescaling `D`. -/
+def environmentFactor : ℝ := neutronFactor
 
 theorem environmentFactor_eq : environmentFactor = 215 / 213 := by
-  unfold environmentFactor Widths.neutronFactor
+  unfold environmentFactor neutronFactor
   norm_num
 
 /-- Beam lifetime under the stated environmental rescaling. -/

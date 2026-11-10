@@ -55,14 +55,4 @@ theorem smaller_phase_longer_life {hbar base ratio mixing channels F G : ℝ}
   unfold referenceWidth
   exact mul_le_mul_of_nonneg_left hfg (by positivity)
 
-def neutronFactor : ℝ := 43/(43-2/5)
-
-theorem neutron_factor_exact : neutronFactor = 215/213 ∧ 1 < neutronFactor := by
-  norm_num [neutronFactor]
-
-theorem neutron_lifetime_rescaling (hbar width : ℝ) :
-    lifetime hbar (width/neutronFactor) = neutronFactor*lifetime hbar width := by
-  simp only [lifetime, div_eq_mul_inv, mul_inv_rev, inv_inv]
-  ring
-
 end PMElementaryParticles.Widths
