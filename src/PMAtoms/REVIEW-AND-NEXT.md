@@ -103,7 +103,9 @@ persistence-selected nuclide is the least-hazard one (`selectedNuclide_min`, fro
 - **Neutrino decay / ordering** (§4b) — needs a decay channel and mass ordering (model).
 - **Chemistry / Aufbau** (§6) — screening/exchange and the fill order are model inputs.
 - **Certified-mass enclosure** (§7) — a rational enclosure of the `π`/`√` `certifiedMass`;
-  interval analysis.
+  interval analysis. **Built (`CertifiedEnclosure`)**: the `certifiedMass_eq` expansion and the
+  first fully proved instance `certifiedMass_c12` (`21875 < certifiedMass 6 6 < 21877 m_e`);
+  the remaining table nuclei follow the same template.
 - **Continuum-comparison modules** (§5b) — keep as numerical cross-checks until each E8
   replacement has a numeric counterpart.
 
