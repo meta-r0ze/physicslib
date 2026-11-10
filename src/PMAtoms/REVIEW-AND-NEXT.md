@@ -50,6 +50,11 @@ fragment cohorts, the barrier as the boundary factor (`CollectiveE8.alphaBarrier
 of the hadron `Emission` construction. This reaches the collective/fission regime beyond the
 `Z=96`, `N=152` frontier.
 
+**Built (`FragmentOverlap`).** The interface exists: `fragmentOverlap` (fragment vs parent
+configuration), `fragmentWidth = barrierRate · |overlap|² · phase` and `fragmentWidth_eq_partialWidth`
+(`= |T|²·Φ` with `T = √barrierRate · overlap`). The barrier plays the Toll-boundary role; only the
+fragment configuration (the overlap value) remains.
+
 ## 3. Governor: the nuclear rate / attempt-frequency layer — H/M
 
 The rate *structure* is complete: `RateModel.betaSpectralRate*` (bounded by `β·c0`, monotone in the
@@ -60,6 +65,11 @@ frequency** `β·c0` and the E8 per-channel clock.
 **Task.** Pin `β·c0` with the **Governor** per-slot credit (`χ/Δ = 2/43`,
 `PMHadrons.TollGovernor.governorPerSlot`) — the same per-slot share that fixes the hadron cycle
 persistence. This is the nuclear analogue of the hadron Governor work and closes the rate unit.
+
+**Built (`NuclearRateUnit`).** The candidate identification is recorded: the per-slot attempt
+frequency is the Governor credit `χ/Δ = 2/43` (`attemptFrequency`, `attemptFrequency_eq`), and a
+channel's rate is `χ/Δ · Σ prob`, an instance of `RateModel.channelRate` with `β·c0 = χ/Δ`
+(`governorChannelRate_eq`). The identification is the named model foundation to test.
 
 ## 4. Persistence selection: regime and valley — H
 
