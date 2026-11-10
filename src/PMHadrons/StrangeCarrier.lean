@@ -117,4 +117,35 @@ theorem meson_ledgers :
         PMHadrons.Occupancy.occupancyMass (mesonOccupancy 1) PMHadrons.MesonMasses.kaon0Residual) :=
   ⟨pion_mass_eq, pion0_mass_eq, kaon_mass_eq, kaon0_mass_eq⟩
 
+/-! ## The carrier direction register (the line-carrier premise)
+
+A vertex's interaction direction is one of `σ` (three spatial positions plus two boundary points;
+`PMSubstrate.PersistencePremises.flipOrientation` acts on `Fin 5`). The modelling content of the
+line-carrier premise is that a directional carrier holds its **whole** direction register — just
+as a boundary holds its full orientation space (`PMSubstrate.Arity.Orientation.two_orientations`).
+With that, `n = χ + σ·ℓ` is a theorem, not an input. -/
+
+/-- The vertex interaction-direction space. -/
+abbrev Direction : Type := Fin directions
+
+/-- **The carrier direction register.** A point-tier carrier resolves no direction beyond its
+reference and holds one; a line-tier carrier resolves its direction among the `σ` directions and
+holds the whole register. -/
+def directionRegister (line : Bool) : Finset Direction :=
+  if line then univ else {⟨0, by decide⟩}
+
+theorem directionRegister_card (line : Bool) :
+    (directionRegister line).card = if line then directions else 1 := by
+  cases line <;> decide
+
+/-- **A line carrier holds all `σ` interaction directions.** -/
+theorem line_register_card : (directionRegister true).card = directions := by
+  rw [directionRegister_card]; simp
+
+/-- The meson occupancy is the singlet base plus `line` line-carrier direction registers. -/
+theorem mesonOccupancy_eq_register (line : ℕ) :
+    mesonOccupancy line = singletBase + (directionRegister true).card * line := by
+  rw [line_register_card]
+  rfl
+
 end PMHadrons.StrangeCarrier
