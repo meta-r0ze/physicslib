@@ -17,6 +17,8 @@ import E8PConstants.ReadoutPulls
 import E8PConstants.TauLifetimePulls
 import PMElementaryParticles.LeptonMasses
 import PMHadrons.MesonMasses
+import PMHadrons.PionWidth
+import PMHadrons.KaonWidth
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.TauLifetime
 import PMConstants.WMassTest
@@ -128,6 +130,8 @@ def value : Key → ℝ
   | .bottomMeV => PMElementaryParticles.QuarkMasses.bottom * PMHadrons.CompositeMasses.me
   | .topMeV => PMElementaryParticles.QuarkMasses.top * PMHadrons.CompositeMasses.me
   | .pionPlusMeV => PMHadrons.MesonMasses.pionPlus * PMHadrons.CompositeMasses.me
+  | .fPiMeV => PMHadrons.PionWidth.pionDecayConstantE8 * PMHadrons.CompositeMasses.me
+  | .fKMeV => PMHadrons.KaonWidth.kaonDecayConstantE8 * PMHadrons.CompositeMasses.me
   | .wRatio => Real.sqrt (1 - PMConstants.clockRatio)
   | .gaugeHyper => PMConstants.GaugeLedgers.ledger PMConstants.GaugeLedgers.reqY
   | .gaugeColour => PMConstants.ColourChannels.colourLedger
@@ -517,6 +521,14 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
       PMHadrons.MesonMasses.pionAnchor,
       PMHadrons.MesonMasses.pionChargeLoad,
       PMHadrons.CompositeMasses.me] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | fPiMeV =>
+    have h := PMHadrons.PionWidth.pionDecayConstantMeV_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | fKMeV =>
+    have h := PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds
+    norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | wRatio =>
     have h := PMConstants.WMassTest.ratio_bounds

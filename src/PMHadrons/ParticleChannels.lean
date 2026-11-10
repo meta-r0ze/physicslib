@@ -3,6 +3,7 @@ import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.TauE8
 import PMHadrons.PionWidth
 import PMHadrons.KaonWidth
+import PMHadrons.KaonSemileptonic
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
@@ -22,6 +23,7 @@ open PersistenceMechanics.Decay
 /-- Provenance label for a partial rate. -/
 inductive RateStatus
   | e8
+  | e8LeadingOrder
   | calibrated
   | modelInput
   | blocked
@@ -75,13 +77,15 @@ noncomputable def pionChannels : List ParticleChannel :=
   , ⟨"e⁺ ν", PMHadrons.PionWidth.pionElectronWidthE8, .e8⟩
   ]
 
-/-- Kaon channels: μν is E8; multibody modes are blocked. -/
+/-- Kaon channels: `μ⁺ν` is E8; the semileptonic `K_ℓ3` modes are E8 **leading order**
+(form-factor free, `m_ℓ → 0`, ~10% under the measured rate); the nonleptonic multibody
+modes stay blocked on the bound-state matrix element. -/
 noncomputable def kaonChannels : List ParticleChannel :=
   [⟨"μ⁺ ν", PMHadrons.KaonWidth.kaonWidthE8, .e8⟩
   , ⟨"π⁺ π⁰", 0, .blocked⟩
   , ⟨"π⁺ π⁺ π⁻", 0, .blocked⟩
-  , ⟨"π⁰ e⁺ ν", 0, .blocked⟩
-  , ⟨"π⁰ μ⁺ ν", 0, .blocked⟩
+  , ⟨"π⁰ e⁺ ν", PMHadrons.KaonSemileptonic.kaonL3Width, .e8LeadingOrder⟩
+  , ⟨"π⁰ μ⁺ ν", PMHadrons.KaonSemileptonic.kaonL3Width, .e8LeadingOrder⟩
   ]
 
 end PMHadrons.ParticleChannels

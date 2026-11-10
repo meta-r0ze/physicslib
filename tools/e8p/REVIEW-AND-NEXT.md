@@ -5,7 +5,7 @@ compares it with a frozen experimental reference, and can emit manuscript tags o
 audit. This file tracks coverage so the per-paper Python calculators can be retired
 only when their values are Lean-backed here.
 
-## Certified now (119 values)
+## Certified now (121 values)
 
 - Paper 0: `delta`, `nu`, `sigma`, `chi`, `D` (substrate invariants); derived loads
   `l_intrinsic`, `l_embed`, `l_substrate`, `n`, `rm`; `nc`, `weinberg_gut`,
@@ -35,8 +35,10 @@ only when their values are Lean-backed here.
   `muon_ratio`, `tau_ratio` (`PMElementaryParticles.LeptonMasses.*_value`), `proton_radius`,
   `pion0_mev`, `kaon0_mev`, `kaon_plus_mev` (`CompositeMasses` pulls), and the six
   quark masses `up/down/strange/charm/bottom/top_mev` (`QuarkMasses.*_value`),
-  `pion_plus_mev` (`PMHadrons.MesonMasses.pionPlus_mev_value`), `neutrino_floor_mass`
-  (`FloorNeutrino.floor_bounds`), and `tau_lifetime_fs`
+  `pion_plus_mev` (`PMHadrons.MesonMasses.pionPlus_mev_value`), the decay constants
+  `f_pi_mev` / `f_k_mev` (`PMHadrons.PionWidth.pionDecayConstantMeV_bounds`,
+  `PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds`; FLAG 2024, `f_k_mev` is ~3.8σ low),
+  `neutrino_floor_mass` (`FloorNeutrino.floor_bounds`), and `tau_lifetime_fs`
   (`PMElementaryParticles.TauLifetime.tau_lifetime_tree`).
 - Paper 6: `baryon_pmJ`, `baryon_pm3J` (`PMCosmology.Primordial.baryon_windows`),
   `z_eq` (`PMCosmology.Background.z_eq_bounds`), `dark_raw` (`Scaling.exact_ratios`),

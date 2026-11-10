@@ -154,4 +154,14 @@ noncomputable def pionElectronWidthE8 : ℝ :=
 noncomputable def pionElectronLifetimeE8 : ℝ :=
   1 / pionElectronWidthE8
 
+/-- E8 pion decay constant in MeV (`m_e` conversion): ≈ 130.27 MeV, to compare with
+FLAG 2024 `130.2(8)` MeV. -/
+theorem pionDecayConstantMeV_bounds :
+    (130.27 : ℝ) < pionDecayConstantE8 * PMHadrons.CompositeMasses.me ∧
+      pionDecayConstantE8 * PMHadrons.CompositeMasses.me < (130.28 : ℝ) := by
+  have h := pionDecayConstantE8_bounds
+  have hm : PMHadrons.CompositeMasses.me = (0.51099895069 : ℝ) := rfl
+  rw [hm]
+  constructor <;> nlinarith [h.1, h.2]
+
 end PMHadrons.PionWidth

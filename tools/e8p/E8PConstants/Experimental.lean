@@ -64,6 +64,8 @@ def expRefs : Key → List ExpRef
   | .pm3J => [⟨0.0000308, 0.0000015, "navas_review_2024"⟩]
   | .cabibbo => [⟨0.225, 0.00067, "navas_review_2024"⟩]
   | .pionPlusMeV => [⟨139.57039, 0.00018, "pdg_2024"⟩]
+  | .fPiMeV => [⟨130.2, 0.8, "flag_2024"⟩]
+  | .fKMeV => [⟨155.7, 0.3, "flag_2024"⟩]
   | .wRatio => [⟨0.881355, 0.000146, "pdg_2024"⟩]
   | .upMeV => [⟨2.16, 0.07, "pdg_2024"⟩]
   | .downMeV => [⟨4.7, 0.07, "pdg_2024"⟩]

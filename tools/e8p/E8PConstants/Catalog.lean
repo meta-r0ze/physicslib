@@ -16,7 +16,7 @@ inductive Key where
   | pmnsE11 | pmnsE12 | pmnsE13 | pmnsE21 | pmnsE22 | pmnsE23 | pmnsE31 | pmnsE32 | pmnsE33
   | tauRatio | protonRadius | pion0MeV | kaon0MeV | kaonPlusMeV | baryonPmJ | baryonPm3J
   | upMeV | downMeV | strangeMeV | charmMeV | bottomMeV | topMeV
-  | pionPlusMeV | wRatio
+  | pionPlusMeV | fPiMeV | fKMeV | wRatio
   | gaugeHyper | gaugeColour | zEq | darkRaw
   | cLight | vonKlitzing | planckChargeAtt | planckChargeRatio | planckMass | ckmS13 | ckmS23 | ckmVcb
   | wMassUnc | zMassUnc | gWeak | gPrime | electronClosure
@@ -41,7 +41,7 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .pmnsE11, .pmnsE12, .pmnsE13, .pmnsE21, .pmnsE22, .pmnsE23, .pmnsE31, .pmnsE32, .pmnsE33,
   .tauRatio, .protonRadius, .pion0MeV, .kaon0MeV, .kaonPlusMeV, .baryonPmJ, .baryonPm3J,
   .upMeV, .downMeV, .strangeMeV, .charmMeV, .bottomMeV, .topMeV,
-  .pionPlusMeV, .wRatio,
+  .pionPlusMeV, .fPiMeV, .fKMeV, .wRatio,
   .gaugeHyper, .gaugeColour, .zEq, .darkRaw,
   .cLight, .vonKlitzing, .planckChargeAtt, .planckChargeRatio, .planckMass, .ckmS13, .ckmS23, .ckmVcb,
   .wMassUnc, .zMassUnc, .gWeak, .gPrime, .electronClosure,
@@ -100,6 +100,8 @@ def Key.id : Key → String
   | .bottomMeV => "bottom_mev"
   | .topMeV => "top_mev"
   | .pionPlusMeV => "pion_plus_mev"
+  | .fPiMeV => "f_pi_mev"
+  | .fKMeV => "f_k_mev"
   | .wRatio => "w_ratio"
   | .gaugeHyper => "gauge_hyper"
   | .gaugeColour => "gauge_colour"
@@ -212,6 +214,8 @@ def bounds : Key → Rat × Rat
   | .bottomMeV => (4180.9, 4182.3)
   | .topMeV => (172657, 172686)
   | .pionPlusMeV => (139.570354, 139.570426)
+  | .fPiMeV => (130.27, 130.28)
+  | .fKMeV => (154.56, 154.57)
   | .wRatio => (0.8815297, 0.8815298)
   | .gaugeHyper => (6446/43, 6446/43)
   | .gaugeColour => (513/43, 513/43)
@@ -256,7 +260,7 @@ def bounds : Key → Rat × Rat
 
 def Key.unit : Key → String
   | .electronMassInput | .vev | .higgsMass => "GeV"
-  | .pion0MeV | .kaon0MeV | .kaonPlusMeV | .upMeV | .downMeV | .strangeMeV | .charmMeV | .bottomMeV | .topMeV => "MeV"
+  | .pion0MeV | .kaon0MeV | .kaonPlusMeV | .pionPlusMeV | .fPiMeV | .fKMeV | .upMeV | .downMeV | .strangeMeV | .charmMeV | .bottomMeV | .topMeV => "MeV"
   | .protonRadius => "fm"
   | .cLight => "10^7 m/s" | .vonKlitzing => "Ω" | .planckMass => "GeV"
   | .wMassUnc | .zMassUnc => "GeV"
@@ -279,7 +283,7 @@ def Key.inputs : Key → List String
   | .planckMass => ["electron_mass_input"]
   | .wMassUnc | .zMassUnc => ["electron_mass_input"]
   | .rydbergEV | .bohrRadius => ["electron_mass_input"]
-  | .pion0MeV | .kaon0MeV | .kaonPlusMeV | .pionPlusMeV => ["electron_mass_input"]
+  | .pion0MeV | .kaon0MeV | .kaonPlusMeV | .pionPlusMeV | .fPiMeV | .fKMeV => ["electron_mass_input"]
   | .upMeV | .downMeV | .strangeMeV | .charmMeV | .bottomMeV | .topMeV => ["electron_mass_input"]
   | .protonRadius => ["electron_mass_input"]
   | .tauLifetimeFs => ["measured_muon_lifetime", "B_e"]
@@ -347,6 +351,8 @@ def Key.theoremName : Key → String
   | .baryonPm3J => "PMCosmology.Primordial.baryon_windows"
   | .upMeV => "PMElementaryParticles.QuarkMasses.up_value"
   | .pionPlusMeV => "PMHadrons.MesonMasses.pionPlus_mev_value"
+  | .fPiMeV => "PMHadrons.PionWidth.pionDecayConstantMeV_bounds"
+  | .fKMeV => "PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds"
   | .wRatio => "PMConstants.WMassTest.ratio_bounds"
   | .gaugeHyper => "PMConstants.GaugeLedgers.hyper_value"
   | .gaugeColour => "PMConstants.ColourChannels.colour_ledger"
@@ -420,6 +426,7 @@ def Key.paper : Key → Nat
   | .baryonPm3J => 6
   | .upMeV => 5
   | .pionPlusMeV => 5
+  | .fPiMeV | .fKMeV => 5
   | .wRatio => 3
   | .gaugeHyper => 3
   | .gaugeColour => 3
@@ -532,6 +539,8 @@ def Key.formula : Key → String
   | .bottomMeV => "m_{b}"
   | .topMeV => "m_{t}"
   | .pionPlusMeV => "2\\alpha^{-1}-\\sigma\\chi+1/(\\nu-\\chi)+\\sigma+D-\\alpha(\\sigma-\\chi)/\\chi"
+  | .fPiMeV => "f_\\pi=v/(\\Delta^2+\\Delta-\\chi)"
+  | .fKMeV => "f_K=v/(\\Delta^2-\\nu^2)"
   | .wRatio => "\\sqrt{1-\\Delta/N_{sys}}"
   | .gaugeHyper => "129+5+16\\eta"
   | .gaugeColour => "12\\eta"
@@ -566,6 +575,8 @@ def Key.caveat : Key → String
   | .muonRatio => "documented ~2.4σ model tension"
   | .tauRatio => "documented ~2.1σ model tension"
   | .upMeV | .downMeV | .charmMeV => "documented model tension"
+  | .fKMeV => "FLAG 2024 lattice ~3.8σ low; assigned fK formula"
+  | .fPiMeV => "FLAG 2024 lattice agrees"
   | .tauLifetimeFs => "uses measured muon lifetime and B_e"
   | .muonLifetimeFinite => "finite 3x3x3 channel; all modes open; broad natural-unit interval"
   | .tauLifetimeE8Natural => "E8 muon input; broad natural-unit interval"

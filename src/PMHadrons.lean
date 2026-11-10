@@ -7,6 +7,7 @@ import PMHadrons.MinimalCube
 import PMHadrons.Particle
 import PMHadrons.PionWidth
 import PMHadrons.KaonWidth
+import PMHadrons.KaonSemileptonic
 import PMHadrons.NeutralPionWidth
 import PMHadrons.ParticleChannels
 import PMHadrons.CompositeMasses

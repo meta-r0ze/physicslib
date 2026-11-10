@@ -169,4 +169,14 @@ theorem kaonLifetimeE8_bounds :
   · rw [div_lt_iff₀ hwpos]
     nlinarith [hw.1]
 
+/-- E8 kaon decay constant in MeV (`m_e` conversion): ≈ 154.56 MeV, to compare with
+FLAG 2024 `155.7(3)` MeV. This is the weakest number at the hadron level (~3.8σ low). -/
+theorem kaonDecayConstantMeV_bounds :
+    (154.56 : ℝ) < kaonDecayConstantE8 * PMHadrons.CompositeMasses.me ∧
+      kaonDecayConstantE8 * PMHadrons.CompositeMasses.me < (154.57 : ℝ) := by
+  have h := kaonDecayConstantE8_bounds
+  have hm : PMHadrons.CompositeMasses.me = (0.51099895069 : ℝ) := rfl
+  rw [hm]
+  constructor <;> nlinarith [h.1, h.2]
+
 end PMHadrons.KaonWidth
