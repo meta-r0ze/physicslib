@@ -75,6 +75,13 @@ single-carrier state, acted on by the substrate transition operator**. The curre
 overlap interface (`BoundStateOverlap`); `HadronicMatrixElement` is `⟨f|T|i⟩` for two
 composites.
 
+**Toll boundary identified (`TollGovernor`).** The emission is a boundary transition, and its
+boundary factor is the **Toll** pillar: `χ = 2` orientations times a target address avoiding the
+composite's `σ` embedded addresses (`(R_M−σ)/R_M = 167/172`; self-aliasing `σ/R_M`), of weight
+`tollTerm` (`PMSubstrate.uniform_toll`, `emissionBoundary_weight`). So the emission amplitude is
+`Toll boundary × composite–carrier overlap`; the Toll half is now fixed and only the overlap (the
+composite's configuration) remains.
+
 **Missing on E8.** the composite's configuration (a normalized many-carrier state, not just a
 constituent list); a single-carrier emission operator; and the composite → one-carrier overlap.
 
@@ -88,6 +95,14 @@ constituent list); a single-carrier emission operator; and the composite → one
 
 **Closes when** the emission overlap is computed from the composite configuration. Until then
 `fπ`/`fK` stay declared model inputs (now shown in `e8p`, `f_k_mev` ≈ 3.8σ).
+
+## 3. Cycle persistence (Governor) — the rate layer
+
+The composite's per-slot persistence credit is the **Governor**'s uniform `χ/Δ = 2/43`
+(`TollGovernor.governorPerSlot`, `governorCycleTotal`), and restriction never increases the
+transition count (`governor_restricts`). This is the factor behind the rate/lifetime layer — how
+the clock keeps the composite going across slots. It needs the absolute emission amplitude of
+item 2 first, so it is the next step after the overlap.
 
 ## Not work
 
