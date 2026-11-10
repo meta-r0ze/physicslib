@@ -1,5 +1,5 @@
 import PMAtoms.Nucleus
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.CompositeMasses
 import Mathlib.Tactic
 
 /-!
@@ -26,7 +26,7 @@ mass-only criterion is the first E8 layer, not the whole story.
 noncomputable section
 namespace PMAtoms
 
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.CompositeMasses
 
 /-- E8 lattice mass: `Z` proton masses plus `N` neutron masses, in `m_e` units. -/
 def latticeMass (n : Nuclide) : ℝ :=

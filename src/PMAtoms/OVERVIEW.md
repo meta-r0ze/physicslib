@@ -11,7 +11,7 @@ The map of what the atomic/composite extension proves. Open work is in
 elementary protocols (PMElementaryParticles)
         │  three colour-axis protocols
         ▼
-     Nucleon            (uud / udd, Q = +1 / 0, B = 1)
+     Nucleon            (uud / udd, Q = +1 / 0, B = 1)   [PMHadrons]
         │  Z protons + N neutrons
         ▼
      Nucleus            ((Z,N), decay channels, persistence)
@@ -27,7 +27,6 @@ elementary protocols (PMElementaryParticles)
 
 | Module | Checked result | Retained inputs |
 | --- | --- | --- |
-| `Nucleon` | three colour-axis protocols (`slotChannel`); `ChargeProtocols.Q` on the actual channel equals the quark charge (`Q_slotChannel`, `charge_eq_channels`); three colour axes give `B=1` (`baryon_from_three_colours`); proton `uud` `Q=+1`, neutron `udd` `Q=0`, spin `2`, isospin gap `1` | spin-1/2, one protocol per colour axis |
 | `Nucleus` | `Q=Z`, `B=Z+N` as sums of nucleon values (`charge_eq_nucleons`, `baryon_eq_nucleons`); `β⁻`, `β⁺`, capture, `α`, fission conserve `Q`/`B` with lepton number on the lepton side; conservation permits a channel from every `(Z,N) ≠ (0,0)` (`conservation_permits_all`); `Persists` is local minimality of a supplied cost; lower-cost daughters vanish by `PersistenceMechanics.Selection` | binding/cost order, allowed routes and rates |
 | `NuclearGraph` | `NucleonLabel`, `LinkType` (`pp/pn/nn`), `completeEdgeCount`; `h3_counts` (0,2,1), `he3_counts` (1,2,0), `he4_counts` (1,4,1); `tetrahedron`/degree cap 4; `bindingComplete` decomposition | link weights, tetrahedron closure, packing |
 | `NuclearFolding` | `Folding`, `coulombEnergy`, `coulombEnergy_scale`; `softenedKernel a r = 1/√(r²+a²)` with `softenedKernel_scale`, `softenedKernel_le_inv`; `e8ChargeCoupling = πD/(2σ)`; `sphereCoulomb` | actual folded positions | `Folding (A)` positions in `Fin 3`; `dist`; `coulombEnergy`; `dist_scale`; `coulombEnergy_scale : E(λF)=E(F)/λ`; `coulombEnergy_folded` at radius `A^{1/3}` | absolute charge coupling |
@@ -43,7 +42,7 @@ elementary protocols (PMElementaryParticles)
 | `LatticeCharge` | `twoProtonEnergy` on the `2×2×2` cube; nearest pair `46/105`; `twoProtonEnergy_le_nearest`; `latticeChargeEnergy`, `latticeChargeEnergy_single`, `latticeChargeEnergy_zero`; `latticeChargeDifference_neg`; `latticeNormalization`/`normalizedTwoProtonEnergy`; `normalized_nearest_eq_sphere`; `latticeChargeDifferential` (zero at nearest, negative at body diagonal) |
 | `LatticeGreen3D` | `greenCube`/`cubeLap` on the `2×2×2` Dirichlet cube; `cubeLap_green`; diagonal `58/315`, nearest `11/315` |
 | `LatticeGreen` | `pathGreen N i j = min(i,j)(N+1−max)/(N+1)`; `pathGreen_diag` self-energy; `pathGreen_symm`; exact agreement with `green3`/`green4` | 3D folded lattice |
-| `NuclearPacking3D` | `cubeEdges n = 3n²(n−1)` via `cubeEdges_eq_card`; `cubeEdges_per_vertex` (`E/A=3−3/n`), monotonicity and `3/2 ≤ E/A ≤ 3`; typed partition `cubeEdges_channel_partition`, cardinality `cubeEdges_channel_card_sum`; `mixedPP/PN/NN`, `mixedChannelCounts_sum`; `packingClosureRank`, `packingClosureRank_cube`; `cubeInterior`/`cube_interior_iff` selects `3×3×3` as the smallest volume-persistent cube | 3D cubic packing + channel + closure counts |
+| `NuclearPacking3D` | `cubeEdges n = 3n²(n−1)` via `cubeEdges_eq_card`; `cubeEdges_per_vertex` (`E/A=3−3/n`), monotonicity and `3/2 ≤ E/A ≤ 3`; typed partition `cubeEdges_channel_partition`, cardinality `cubeEdges_channel_card_sum`; `mixedPP/PN/NN`, `mixedChannelCounts_sum`; `packingClosureRank`, `packingClosureRank_cube`; the smallest volume-persistent cube `3×3×3` (`PMHadrons.MinimalCube.cube_interior_iff`) | 3D cubic packing + channel + closure counts |
 | `NuclearTopology` | `closed_min_edges` (handshake: min degree 2 ⇒ `A ≤ edges`), `triangle_degree`, `triangle_edges`, `triangle_is_minimal_closed`; `tree_edges`; `cycleRank`, `triangle_cycleRank = 1`, `tetrahedron_cycleRank = 3`, `tree_cycleRank = 0` |
 | `AxisSplit` | `axisB` split: reference axis unique (`reference_axis_card = 1`), three colour axes (`colour_axis_card = 3`), `axis_split`, `three_plus_one_axes` |
 | `LinkWeights` | `mapWeight = πD`, `boundaryWeight = σ/2`; `ppWeight`, `pnWeight`, `nnWeight`; `base_eq`, `neutron_boundary` tie them to `CompositeMasses` |
@@ -56,7 +55,6 @@ elementary protocols (PMElementaryParticles)
 | `LinkModes` | `linkSpectrum = [4,1,1]`, row sum 4; `effectiveLinks A light = A + light/2`; `residual_eq_light` identifies the residual with half the light-mode weight | colour/generation light-mode occupation |
 | `SystemTower` | `Level` (particle/nucleon/nucleus/atom), `LevelBudget` (toll/margin/sharedLinks, positive cost magnitudes subtracted), `latticeSum`, `boundMass`; `gap_eq_level_budgets` identifies the periodic-table gap with the nucleus+atom budget | the numeric per-level budgets |
 | `NuclearMass` | `latticeMass n = Z m_p + N m_n`; `PersistsMass` = no decay lowers it; beta lowers it (`latticeMass_betaMinus_lt`), so `N>0` fails mass-persistence (`not_persistsMass_of_neutron`); α and fission conserve lattice mass (`alpha_mass_eq`, `fission_mass_eq`) | full persistence needs the channel rate/selection |
-| `Particle` | `Species` with certified masses and `Q/B/L`; `ParticleDecay` = conserved numbers + lighter products; **`proton_stable`** (baryon number forbids a lighter channel), `neutrino_stable`/`antineutrino_stable` (massless ledger; no lighter channel); allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` | certified PM-5 mass enclosures; tree-level channels |
 | `ElectronCloud` | `SpinOrbital`, `Cloud = Finset SpinOrbital` (Pauli), `orbitalEnergyEV = −R∞/n²`, `fillCloud` (lowest-n), `AtomSystem.massME` = nucleons + electrons + cloud binding/c² | screening/exchange, electron correlations |
 | `FissionYield` | `fissionSplitWith`, `FissionYield`, `fissionYields` (Sn-132 + neighbouring Sn + symmetric), `FissionSplit.lightShellDistance`, `fissionYieldWeight = exp(−(shellWeight/Δ)·d_light)`, `fissionYieldRate`, `fissionYieldLifetime`, `fissionYieldMeasureScale = Δ²/(D+σ) = 1849/9`, `fissionSubshellN1=142`, `fissionSubshellN2=148`, `fissionSubshellCost`, `fissionFullSum`, `fissionFullRate`, `fissionFullLifetime`, `fissionTestNuclei` | E8 fragment-yield weights |
 | `FissionSurface` | `FissionSplit`, `symmetricSplit`, `sn132Split`, `fissionSplits`, fragment `shellGain`, `shellCost`, `coulombCost`, `cost`, `fissionSurfaceRate`, `fissionSurfaceLifetime`; finite two-channel surface; `fissionSuperheavyThreshold = 2Δ+2σ+2χ = 100`, `fissionSuperheavyCost = χ·max(Z−100,0)`, `FissionSplit.costWithGovernor` | numerical barrier surface / yields |
@@ -71,15 +69,9 @@ elementary protocols (PMElementaryParticles)
 | `CollectiveRegime` | collective envelope; `alphaChannel`, `fissionChannel`, `alphaChannel_totalMass`, `fissionChannel_totalMass` |
 | `CollectiveRegime` | collective/fission channel envelope; `collectiveMass`, `CollectivePersists`, `collectiveMass_eq_parent_of_forall` |
 | `FermiFunction` | `coulombEta = ZαE/p`, `fermiFunction = 2πη/(1−e^{−2πη})`; `fermiFunction_pos`, `fermiFunction_ge_one`; `fermiMomentumFactor = F·p` extended at `p=0`, `fermiMomentumFactor_pos`, `one_sub_exp_neg_ge`, `fermiMomentumFactor_le` (bound `p + 2πZαE`) | exact three-body measure and integrability |
-| `WeakTransition` | `WeakChannel = Fin (σ−χ)`, `weakChannel_card = 3`, `weakChannelAmplitude`, `weakTransitionHazard`; `weakCurrent`, `weakCurrentWeight`, `weakHazardFromCurrent`; `weakCurrentEntries`, `weakCurrentEntries_norm`, `weakHazardFromEntries_eq`; `weakCarrierEntry`, `weakCarrierEntry_eq_one`, `weakCarrierEntryReal`, `weakCarrierEntries_eq`; `weakCarrierOperator`, `weakCarrierOperator_eq_one`, `weakCarrierOperator_apply`, `weakCarrierOperator_offdiag_zero`, `weakOperatorEntry`, `weakOperatorEntry_eq_entries`; `weakTransitionHazard_eq = G²/3`, `weakHazardFromAmplitude_eq` | equal channel distribution from the weak current |
 | `DecayInstantiation` | `betaDecayChannel`, `alphaDecayChannel`, `fissionDecayChannel`; rate-equivalence proofs for beta/alpha/fission split. Pillar-resolved versions `betaPillarChannel`, `alphaPillarChannel`, `fissionPillarChannel`, `fissionYieldPillarChannel` put each factor in its own slot (workload → capacity, flux/`c0` → toll, closure hindrance → map, preformation → protocol, superheavy gate → governor, yield weight → margin, barrier → action), each with the same rate (`*_rate_eq`) | total fission sum still definitional |
-| `PersistenceComplex` | the packing as one complex: `packingFaces`, `packingCells` (`3n(n−1)²`, `(n−1)³` at `A = n³`); `packing_euler` (`V − E + F − C = 1`); `packingClosureRank_eq_faces_sub_cells` (cycle rank = faces − cubes); `phaseMargin_eq_one_add_governor` (`41/43 = 1 + governorTerm`); `alphaPhaseFraction_eq_governor` (`1 − gap/Δ`); `neutronMargin_eq_phaseMargin` | |
+| `PersistenceComplex` | the packing as one complex: `packingFaces`, `packingCells` (`3n(n−1)²`, `(n−1)³` at `A = n³`); `packing_euler` (`V − E + F − C = 1`); `packingClosureRank_eq_faces_sub_cells` (cycle rank = faces − cubes); `phaseMargin_eq_one_add_governor` (`41/43 = 1 + governorTerm`); `alphaPhaseFraction_eq_governor` (`1 − gap/Δ`); `neutronMargin_eq_phaseMargin`; `neutronMargin_survivingPhases`, `neutronMarginFactor_eq_phaseFraction` (the neutron margin is the alpha phase fraction at gap `χ`) | |
 | `NuclearDecay` | `nuclearBetaMinusQ`, `nuclearBetaPlusQ`, `nuclearAlphaQ`, `nuclearFissionQ`; `NuclearMassAllowed`, `betaMinusMassAllowed`, `betaPlusMassAllowed`, `alphaMassAllowed`, `fissionMassAllowed`; Q-equals-channel-mass identities; `nuclearDecayRegime`, `pb/u/cm/cf_nuclearDecayRegime`; `e8NuclearCost`, `persists_e8NuclearCost_of_no_lower`, `not_persists_e8NuclearCost_of_lower`; `NuclearLedgerKind`, `nuclearLedgerKind`, `regimePersists`, `smooth_regimePersists_iff`, `collective_regimePersists_iff`, `cm/cf` selection; `NuclearExit`, `nuclearExits` (β±, α, fission table), `NuclearExit.toChannel`, `nuclearExitChannels`; `pb/u/cm/cf_exitTable_regimePersists_iff`, `cm/cf_alpha_regimePersists_iff` | channel rates/lifetimes |
-| `NeutronPrediction` | `neutronCube = 3` (minimal volume-persistent cube), `neutronCutoff`, `neutronCutoffExact`, `neutronSpectralFractionExact`, `neutronLifetimeExactCutoff`, `neutronMarginFactor = alphaPhaseFraction χ = PMSubstrate.E8Margin.phaseMargin = 41/43`, `neutronMargin_survivingPhases`, `neutronMarginFactor_eq_phaseFraction`, `neutronLifetimeCorrected`; `neutronCube_minimal` | numerical fraction is external comparison |
-| `BetaCalibration` | `weakAmplitudeSquared = G_F²`, `weakChannelCost = 1/(σ−χ) = 1/3`, `betaHazardE8 = weakAmplitudeSquared · weakChannelCost`, positivity; `betaLifetimeFromFraction`, `betaNeutronLifetimeE8` | independent derivation/validation of the hazard |
-| `LeptonLifetime` | `muonSpectralFraction`, `muonFiniteWidth`, `muonFiniteLifetime`; minimal-cube lepton channel | mass/phase-space coefficient still continuum |
-| `LeptonLattice` | finite lepton channel reusing `BetaLattice`; `leptonLatticeRate`, `leptonLatticeLifetime`, positivity | lepton eigenvalue input |
-| `MesonFiniteChannels` | minimal-cube finite channels for π⁺, K⁺, π⁰; `pion/kaon/neutralPion_openModes`, `*SpectralFraction_eq_one`, `*FiniteWidth`, `*FiniteLifetime`, `*FiniteLifetimeSeconds`, certified bounds | all modes open; finite equals continuum |
 | `SpectralWaveBridge` | `spectralFraction`, `spectralDecayChannel`, `spectralDecayChannel_rate/lifetime`, `betaSpectralRate_eq_effectiveWidth`, `spectralAmplitude`, `betaSpectralWeight_eq_normSq_amplitude`, `betaSpectralRate_eq_amplitude_probability`, `SpectralDecoherenceChannel`, `spectralMeanCost`, `spectralDecoherenceChannel`, `spectralDecoherenceRate` | structural bridge to `EffectiveAction`/`DecayChannel`; phase cost is a model input |
 | `SpectralDecoherenceInstances` | `muon/neutron/pion/kaon/neutralPionDecoherenceChannel`, corresponding `*_rate` theorems | same finite spectra; phase cost kept separate from population lifetime |
 | `CollectiveWaveBridge` | `collectiveFraction`, `collectiveDecayChannel`, `collectiveDecayChannel_rate/lifetime`, `collectiveFiniteRate_eq_effectiveWidth`, `collectiveAmplitude`, `collectiveBarrierWeight_eq_normSq_amplitude`, `collectiveFiniteRate_eq_amplitude_probability`, `collectiveMeanBarrier`, `collectiveDecoherenceChannel` | alpha/fission barrier weights as wave probabilities; phase cost model input |
@@ -90,7 +82,6 @@ elementary protocols (PMElementaryParticles)
 | `AlphaClockComparison` | `capacityPeriod`, `gatedPeriod`, `alphaAttempt_eq_inv_capacityPeriod`, `alphaNestedAttempt`, `capacity_vs_nested_ratio = workload²` | current capacity convention contrasted with nested clocks |
 | `E8TickUnit` | comparison conversion `electronSecond = ħc/(m_e c²)`, `e8TickSeconds`, `muonLifetimeTicks`, `pionLifetimeTicks`, `kaonLifetimeTicks`, `tauLifetimeTicks`, `neutralPionLifetimeTicks`, `pionLifetimeCorrectedTicks`, `u238FissionTicks`, `cf252FissionTicks`; uses measured unit inputs | not an E8 prediction |
 | `SpectralMeasure` | `betaChannelMeasure`, `betaSelectedProbability`, `betaSelectedProbability_nonneg`, `neutronSelectedProbability`, `muonSelectedProbability`; finite spectral weights as a `ChannelMeasure` | numerical normalization |
-| `BetaLattice` | `BetaLatticeChannel` (`modes`, `active`), `event`, `family`; `betaLatticeRate = β·c0·active/(modes+1)`, `betaLatticeLifetime`, positivity; `betaSpectralWeight = exp(−λ)`, `betaWeightedRate`, `betaSpectralRate`; `betaOpenModes`, `betaSpectralRateCutoff`, positivity, `betaWeightedRate_le`, `betaSpectralRateCutoff_le` (`rate ≤ β·c0`); general gap lemmas `dirichletEigenvalue_mono`, `dirichletEigenvalue_ge_next`, `betaOpenModes_eq_univ_of_twelve_le`, `betaOpenModes_eq_singleton_of_gap`, `betaSpectralRateCutoff_eq_one_of_openModes_eq_univ` | numerical spectral sum / neutron benchmark |
 | `BetaDecay` | `betaDaughter`, `betaQ`, `betaAllowed`, `betaChannel`; `betaWidth = (G Vud)²M²f/(2π³)`, `betaWidth_pos`, `betaLifetime`; `betaEndpoint`, `betaPhaseSpace`, `betaWidthRecoil`, `betaLifetimeRecoil` with supplied Fermi function and radiative factor | supplied nuclear matrix element and Fermi/radiative factors |
 | `NuclearLedger` | `certifiedMass = nuclearMassPackingShellPaired` on `certifiedDomain = deformedFrontier`; `certifiedDomain_cm`, `certifiedDomain_cf`, `certifiedMass_decomp` |
 | `NuclearRegime` | regime classification through the `Z=96`, `N=152` deformed frontier; `cm_at_frontier`, `cf_beyond_frontier` |
@@ -101,9 +92,7 @@ elementary protocols (PMElementaryParticles)
 | `ProtocolCandidates` | finite set cohorts (`candidateCohorts`), weak-partner filter (`candidateCohortsWeak`), least-cost selection | set version (multiplicity lost) |
 | `ListCohorts` | multiplicity-preserving list cohorts; `charge3`/`listCharge3`, odd fermion parity, weak partner; `muon_list_mem`, `electron_list_not`, `electron_neutrino_list_not` | nuclear candidate set and E8 rates |
 | `TransitionSelection` | `TransitionFamily`, `familyCost`; every nonempty candidate set has a least-cost family (`exists_least_cost`); `selectedFamily_min` and `selectedRate_le`; `selected_is_persistence_optimum` | the candidate set of substrate families |
-| `RateModel` | `channelCost = expectedCost c0 E`; `channelRate_eq : rate = β·c0·Σ prob`; `channelMeanLife = MeanLife (channelRate …)`; zero-probability channels have zero rate | the event family per channel, and the toll/hazard coefficients |
 | `PersistenceRate` | `RateSystem`, `totalRate`, `Persists` = total hazard zero, `not_persists_of_pos`, `MeanLife = 1/totalRate`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | E8 channel rates |
-| `MeanLife` | `MeanLife lam = 1/lam`; `MeanLife_eq_integral` (integral of `exp(−lam T)`); `MeanLife_eq_survival_integral` (same with `ExponentialFilter.survival`); `persistenceRate = β·costRate`; `meanLife_from_persistence` | the three persistence premises of `HazardForm`; the cost rate and `β` |
 
 ## E8 provenance audit
 
@@ -118,22 +107,9 @@ elementary protocols (PMElementaryParticles)
 
 ## Mass-formula pillar audit
 
-| particle | formula terms | TOL/MAR counted? | all six pillars? |
-| --- | --- | --- | --- |
-| proton | `Δ², πD, 1/D, α(D+1/D), Z_TOL, Z_MAR` | yes | **yes** |
-| neutron | same + `σ/2` | yes | **yes** |
-| muon | `Δσ, χ, π, α` | no | no |
-| tau | `Δ²χ, Δσ, χ, D` | no | no |
-| π⁰, π⁺ | `α⁻¹, σχ, 1/(ν−χ), …` | no (uses α⁻¹ sum) | no |
-| K⁰, K⁺ | `(σ+χ)α⁻¹, σ, Dπ, …` | no | no |
-| quarks | `η` and integer counts | no | no |
-| electron | supplied `m_e` | no | no |
-
-So the elementary-particle audit is uneven: **only the proton and neutron use the
-full six-pillar mass ledger including TOL/MAR**. The leptons, mesons and quarks
-use separate E8 formulas (`α⁻¹`, `η`, integer counts) and match experiment, but
-they are not the same six-pillar accounting. Re-deriving them in the proton/
-neutron ledger is the open unification task.
+Moved to [`PMHadrons/OVERVIEW.md`](../PMHadrons/OVERVIEW.md): the proton and neutron are the only
+masses that use the full six-pillar ledger, and they are the template the nucleus ledger reuses
+(`LinkWeights`).
 
 ## What is derived vs input
 

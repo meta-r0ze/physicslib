@@ -2,7 +2,7 @@ import Mathlib.Data.List.Basic
 import Mathlib.Tactic
 import PersistenceMechanics.Selection
 import PMAtoms.Shells
-import PMAtoms.Nucleon
+import PMHadrons.Nucleon
 
 /-!
 # Nuclear ledger: which `(Z, N)` combinations the substrate rules allow
@@ -27,6 +27,7 @@ decay changes the electron count needed for neutrality.
 -/
 
 namespace PMAtoms
+open PMHadrons
 
 /-- A nuclide: `Z` protons and `N` neutrons. -/
 structure Nuclide where

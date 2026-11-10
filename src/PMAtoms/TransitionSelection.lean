@@ -1,4 +1,4 @@
-import PMAtoms.RateModel
+import PMElementaryParticles.RateModel
 import Mathlib.Data.Finset.Max
 import Mathlib.Tactic
 
@@ -26,6 +26,7 @@ measured rate.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles
 
 open PMSubstrate.NetCost
 

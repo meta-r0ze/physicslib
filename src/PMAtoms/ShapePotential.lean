@@ -18,6 +18,7 @@ structural home for that derivation.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- One-dimensional Landau shape potential. -/
 structure ShapePotential where

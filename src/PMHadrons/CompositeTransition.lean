@@ -1,4 +1,4 @@
-import PMElementaryParticles.CompositeStates
+import PMHadrons.CompositeStates
 import PMElementaryParticles.CarrierTransitionOperator
 
 /-! **Composite transition operator.**
@@ -10,9 +10,10 @@ carrier-product operator, not a full bound-state calculation.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.CompositeTransition
+namespace PMHadrons.CompositeTransition
+open PMElementaryParticles
 
-open PMElementaryParticles.CompositeStates
+open PMHadrons.CompositeStates
 open PMElementaryParticles.CarrierTransitionOperator
 open PMElementaryParticles.CarrierBridge
 
@@ -55,4 +56,4 @@ theorem kaonPion_operator :
   rw [ite_eq_left kaonPion_decay]
   simp [kaonPionFinal, List.prod_cons]
 
-end PMElementaryParticles.CompositeTransition
+end PMHadrons.CompositeTransition

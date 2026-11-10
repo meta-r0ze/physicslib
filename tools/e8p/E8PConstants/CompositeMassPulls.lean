@@ -1,17 +1,17 @@
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.CompositeMasses
 
 /-!
 # Composite-mass measured pulls (moved from the PMElementaryParticles comparison leaf)
 
 The E8 composite-mass formulas and their certified `*_value` enclosures stay in
-`PMElementaryParticles.CompositeMasses`; the CODATA/PDG pull comparisons live here.
+`PMHadrons.CompositeMasses`; the CODATA/PDG pull comparisons live here.
 
 `m_e c² = 0.51099895069` MeV and `ħc = 197.3269804` MeV·fm (CODATA 2022) are comparison units.
 -/
 
 noncomputable section
 namespace E8PConstants.CompositeMassPulls
-open PMSubstrate PMElementaryParticles PMElementaryParticles.CompositeMasses
+open PMSubstrate PMElementaryParticles PMHadrons.CompositeMasses
 
 theorem proton_ratio : |(proton - 1836.152673426) / 0.000000032| < 1 := by
   have h := proton_value
@@ -28,6 +28,7 @@ theorem neutron_ratio : |(neutron - 1838.68366200) / 0.00000074| < 0.2 := by
 theorem pion_mass : |(pion0 * me - 134.9768) / 0.0005| < 0.9 := by
   have hg := g_b
   unfold pion0 me
+  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.nu_eq]
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1]
   · rw [div_lt_iff₀ (by norm_num)]; nlinarith [hg.2]
@@ -35,6 +36,8 @@ theorem pion_mass : |(pion0 * me - 134.9768) / 0.0005| < 0.9 := by
 theorem kaon0_mass : |(kaon0 * me - 497.611) / 0.013| < 0.2 := by
   have hg := g_b; have hp := pi_b
   unfold kaon0 me
+  rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.D_eq,
+    PMSubstrate.E8Values.nu_eq]
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1, hp.2]
   · rw [div_lt_iff₀ (by norm_num)]; nlinarith [hg.2, hp.1]
@@ -50,6 +53,7 @@ theorem kaonPlus_mass : |(kaonPlus * me - 493.677) / 0.016| < 0.1 := by
     · rw [lt_div_iff₀ hpos]; nlinarith
     · rw [div_lt_iff₀ hpos]; nlinarith
   unfold kaonPlus me
+  rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.D_eq]
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1, hp.1, hs.2, ha.2]
   · rw [div_lt_iff₀ (by norm_num)]; nlinarith [hg.2, hp.2, hs.1, ha.1]
@@ -81,7 +85,9 @@ theorem proton_counts (k j : ℕ) (hj : 0 < j) :
   have hv := proton_value
   have hjR : (0 : ℝ) < j := by exact_mod_cast hj
   have e : protonWith k j = proton + (k * zTol - zMar / j - (5 * zTol - zMar / 2)) := by
-    unfold protonWith proton; ring
+    unfold protonWith proton
+    rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
+    ring
   constructor
   · intro h
     rw [abs_lt, lt_div_iff₀ (by norm_num), div_lt_iff₀ (by norm_num), e] at h
@@ -123,7 +129,9 @@ theorem neutron_counts (k j : ℕ) (hj : 0 < j) :
   have hv := neutron_value
   have hjR : (0 : ℝ) < j := by exact_mod_cast hj
   have e : neutronWith k j = neutron + (k * zTol - zMar / j - (3 * zTol - zMar)) := by
-    unfold neutronWith neutron; ring
+    unfold neutronWith neutron
+    rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
+    ring
   constructor
   · intro h
     rw [abs_lt, lt_div_iff₀ (by norm_num), div_lt_iff₀ (by norm_num), e] at h

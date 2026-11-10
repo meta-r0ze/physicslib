@@ -12,6 +12,7 @@ No numerical lifetime is asserted here.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 open PersistenceMechanics
 open PersistenceMechanics.EffectiveAction

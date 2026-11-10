@@ -23,7 +23,7 @@ Multiple channels add their hazards: `lam = Σᵢ β Zᵢ`, hence
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMElementaryParticles
 
 open Real
 
@@ -91,4 +91,4 @@ def totalRate (rates : List ℝ) : ℝ := rates.sum
 theorem MeanLife_multi (rates : List ℝ) :
     MeanLife (totalRate rates) = 1 / rates.sum := rfl
 
-end PMAtoms
+end PMElementaryParticles

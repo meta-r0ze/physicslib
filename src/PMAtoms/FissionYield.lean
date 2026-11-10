@@ -12,6 +12,7 @@ structural object.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Split with an arbitrary light fragment. -/
 def fissionSplitWith (z n : Nat) (p : Nuclide) : FissionSplit :=

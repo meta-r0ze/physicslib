@@ -1,14 +1,14 @@
 import PMAtoms.NuclearLedger
 import PMAtoms.CollectiveRegime
 import PMAtoms.Nucleus
-import PMAtoms.MeanLife
+import PMElementaryParticles.MeanLife
 import PMAtoms.FermiFunction
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Tactic
 
-/-! **Continuum comparison.** This uses a continuum beta phase-space integral and is not an E8 assumption. The E8-native route is `PMAtoms.BetaLattice`.
+/-! **Continuum comparison.** This uses a continuum beta phase-space integral and is not an E8 assumption. The E8-native route is `PMElementaryParticles.BetaLattice`.
 
  **Experimental/candidate module.** Not part of `certifiedMass`.
 
@@ -28,6 +28,7 @@ not insert measured half-lives.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Daughter of `β⁻` decay. -/
 def betaDaughter (p : Nuclide) : Nuclide := ⟨p.Z + 1, p.N - 1⟩

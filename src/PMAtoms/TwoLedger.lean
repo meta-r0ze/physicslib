@@ -3,7 +3,7 @@ import PMAtoms.LinkModes
 import PMAtoms.NuclearLine
 import PMAtoms.NuclearFolding
 import PMAtoms.NuclearPacking3D
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.CompositeMasses
 import Mathlib.Tactic
 
 /-!
@@ -20,7 +20,8 @@ Coulomb measurement.
 
 noncomputable section
 namespace PMAtoms
-open PMElementaryParticles.CompositeMasses
+open PMElementaryParticles PMHadrons
+open PMHadrons.CompositeMasses
 
 /-- Charge coupling `c = πD/(2σ)`. -/
 def chargeCoupling : ℝ := Real.pi * (D : ℝ) / (2 * (σ : ℝ))

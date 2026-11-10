@@ -20,6 +20,7 @@ per-nucleus fit.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Leading E8 fissility cost. -/
 def fissionFissilityCost (p : Nuclide) : ℝ :=

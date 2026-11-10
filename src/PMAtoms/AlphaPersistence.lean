@@ -12,6 +12,7 @@ phase fraction.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Phases of the `Δ`-period that survive an isospin gap `gap`. -/
 def survivingPhases (gap : Nat) : Finset (Fin Δ) :=

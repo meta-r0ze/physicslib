@@ -1,5 +1,5 @@
 import PMSubstrate.NetCost
-import PMAtoms.MeanLife
+import PMElementaryParticles.MeanLife
 import Mathlib.Tactic
 
 /-!
@@ -20,7 +20,7 @@ remaining binding/rate input, not an outside numerical rate.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMElementaryParticles
 
 open PMSubstrate.NetCost
 
@@ -83,4 +83,4 @@ theorem channelMeanLife_pos (β c0 : ℝ) {k : ℕ} (E : Fin k → Finset Ω)
   rw [channelRate_eq]
   positivity
 
-end PMAtoms
+end PMElementaryParticles

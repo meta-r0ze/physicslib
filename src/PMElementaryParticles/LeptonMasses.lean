@@ -1,9 +1,9 @@
-import PMElementaryParticles.CompositeMasses
+import PMElementaryParticles.SharedUnits
 import PMSubstrate.E8Values
 
 /-!
 
-# Charged lepton and charged pion masses as E8 tier ledgers
+# Charged lepton masses as E8 tier ledgers
 
 Units of `m_e`; `α`, `α⁻¹`, `π` as in `CompositeMasses`. Every numeral is the
 canonical `PMSubstrate.E8Values` invariant (`Δ = 43`, `ν = 16`, `σ = 5`,
@@ -20,9 +20,8 @@ The paper (`PM-5 §Protocol ledger`) reads each charged lepton as a resonant tie
   not a fitted add-on.
 * **Tau (Tier 2, area).** `χΔ²` (boundary cost over the causal area) − `σΔ`
   (inherited linear core latency) − `(D + χ)` (spacetime anchors).
-* **Charged pion.** `2α⁻¹` (Coulomb self-energy of the two unit charges) − `χσ`
-  (topological/symmetry product) + `1/(ν−χ)` (chiral leak) + `σ` + `D` −
-  `α(σ−χ)/χ` (charge load).
+
+The charged pion is a hadron; its tier ledger is in `PMHadrons.MesonMasses`.
 
 **Status (A7).** The arithmetic is now purely E8-invariant and the feedback term
 is *derived* as the fixed point of its recursive loop; the **assignment** of which
@@ -34,7 +33,7 @@ functional over tier ledgers yet). The measured CODATA/PDG comparisons live in
 
 noncomputable section
 namespace PMElementaryParticles.LeptonMasses
-open PMElementaryParticles.CompositeMasses
+open PMElementaryParticles.SharedUnits
 open PMSubstrate.E8Values
 
 /-! ## Tier ledgers -/
@@ -82,30 +81,6 @@ theorem tau_ledger :
       ((D : ℝ) + (chi : ℝ)) := by
   unfold tau tauBoundary tauCoreLatency tauAnchors; ring
 
-/-- Pion: Coulomb self-energy of the two unit charges. -/
-def pionCoulomb : ℝ := 2 * αinv
-/-- Pion: topological/symmetry product. -/
-def pionTopological : ℝ := (chi : ℝ) * (sigma : ℝ)
-/-- Pion: chiral leak `1/(ν−χ)`. -/
-def pionLeak : ℝ := 1 / ((nu : ℝ) - (chi : ℝ))
-/-- Pion: internal symmetry weight. -/
-def pionSymmetry : ℝ := (sigma : ℝ)
-/-- Pion: spacetime anchor. -/
-def pionAnchor : ℝ := (D : ℝ)
-/-- Pion: charge load `α(σ−χ)/χ`. -/
-def pionChargeLoad : ℝ := αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
-
-/-- Charged-pion mass in `m_e` units. -/
-def pionPlus : ℝ :=
-  pionCoulomb - pionTopological + pionLeak + pionSymmetry + pionAnchor - pionChargeLoad
-
-/-- The pion is exactly the sum of its named costs. -/
-theorem pionPlus_ledger :
-    pionPlus = 2 * αinv - (chi : ℝ) * (sigma : ℝ) + 1 / ((nu : ℝ) - (chi : ℝ)) +
-      (sigma : ℝ) + (D : ℝ) - αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ)) := by
-  unfold pionPlus pionCoulomb pionTopological pionLeak pionSymmetry pionAnchor pionChargeLoad
-  ring
-
 /-! ## E8-only enclosures -/
 
 theorem muon_value : 206.7682716 < muon ∧ muon < 206.7682718 := by
@@ -128,22 +103,5 @@ theorem tau_value : tau = 3477 := by
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.Delta_eq,
     PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.D_eq]
   norm_num
-
-/-- A direct two-sided enclosure of the charged pion in `m_e` units. -/
-theorem pionPlus_value : (273.1 : ℝ) < pionPlus ∧ pionPlus < 273.2 := by
-  have hg := g_b; have ha := a_b
-  rw [pionPlus_ledger]
-  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
-    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
-  constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
-
-/-- The charged-pion mass in MeV, as an E8-only enclosure (no measured reference). -/
-theorem pionPlus_mev_value : (139.570354 : ℝ) < pionPlus * me ∧ pionPlus * me < 139.570426 := by
-  have hg := g_b; have ha := a_b
-  rw [pionPlus_ledger]
-  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
-    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
-  unfold me
-  constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
 
 end PMElementaryParticles.LeptonMasses

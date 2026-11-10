@@ -1,4 +1,5 @@
-import PMElementaryParticles.CompositePhaseSpace
+import PMHadrons.MesonMasses
+import PMHadrons.CompositePhaseSpace
 
 /-! **Hadronic matrix-element interface.**
 
@@ -12,13 +13,15 @@ is proved, but the value itself is not derived here.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.HadronicMatrixElement
+namespace PMHadrons.HadronicMatrixElement
+open PMElementaryParticles
 
-open PMElementaryParticles.CompositeStates
-open PMElementaryParticles.CompositeTransition
-open PMElementaryParticles.CompositePhaseSpace
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.CompositeStates
+open PMHadrons.CompositeTransition
+open PMHadrons.CompositePhaseSpace
+open PMHadrons.CompositeMasses
 open PMElementaryParticles.LeptonMasses
+open PMHadrons.MesonMasses
 
 /-- A supplied bound-state matrix element. -/
 structure BoundStateMatrixElement where
@@ -50,4 +53,4 @@ theorem kaonPionRate_nonneg (value : ℂ) : 0 ≤ kaonPionRate value := by
   rw [kaonPionRate_eq]
   exact mul_nonneg (Complex.normSq_nonneg _) kaonPionPhase_pos.le
 
-end PMElementaryParticles.HadronicMatrixElement
+end PMHadrons.HadronicMatrixElement

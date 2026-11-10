@@ -25,6 +25,7 @@ Even-even transitions get zero hindrance.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 def alphaKappa : ℝ := 1 / (ν : ℝ)
 def alphaMu : ℝ := (χ : ℝ) / (σ : ℝ)

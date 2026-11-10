@@ -1,5 +1,6 @@
-import PMElementaryParticles.PionWidth
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.PionWidth
+import PMHadrons.Nucleon
+import PMHadrons.CompositeMasses
 import PMConstants.Values
 import Mathlib.Tactic
 
@@ -13,13 +14,31 @@ Neutral-pion two-photon width:
 
 With `fπ` in the `130 MeV` convention, the identical-photon factor is `32`.
 `α`, `m_π⁰`, and `fπ` are E8 inputs.
+
+**Anomaly coefficient.** The general width is `A² α² m_π⁰³ / (32π³ fπ²)` with
+`A = N_c (Q_u² − Q_d²)`. Here `N_c` is the three colour axes (`Nucleon.colourContent`,
+`SubstrateLedger.colour_axes_exist`) and `Q_u`, `Q_d` are Paper V's protocol charges
+(`Quark.charge_eq_protocol`), so `A = 3 · (4/9 − 1/9) = 1` is computed from the substrate
+content (`anomalyCoefficient_eq_one`), and the width above is the `A = 1` case
+(`neutralPionWidthE8_anomaly`). The remaining `1/(32π³)` is the standard triangle-loop and
+two-photon normalization; that loop factor is the one model input left in this formula.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.NeutralPionWidth
+namespace PMHadrons.NeutralPionWidth
+open PMElementaryParticles
 
-open PMElementaryParticles.PionWidth
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.PionWidth
+open PMHadrons.CompositeMasses
+
+/-- `π⁰ → γγ` anomaly coefficient: colour axes × `(Q_u² − Q_d²)`. -/
+def anomalyCoefficient : ℚ :=
+  (Nucleon.colourContent.length : ℚ) * (Quark.charge .up ^ 2 - Quark.charge .down ^ 2)
+
+theorem anomalyCoefficient_eq_one : anomalyCoefficient = 1 := by
+  unfold anomalyCoefficient
+  rw [Nucleon.colour_length]
+  norm_num [Quark.charge]
 
 /-- E8-input neutral-pion width. -/
 noncomputable def neutralPionWidthE8 : ℝ :=
@@ -92,6 +111,15 @@ theorem neutralPionWidthE8_bounds :
   · rw [div_lt_iff₀ hdenpos]
     nlinarith [hnumhi, hdenlo]
 
+/-- The width written with the anomaly coefficient; it is the `A = 1` case. -/
+theorem neutralPionWidthE8_anomaly :
+    neutralPionWidthE8 =
+      ((anomalyCoefficient : ℝ) ^ 2 * PMConstants.Values.alpha ^ 2 * pion0 ^ 3) /
+        (32 * Real.pi ^ 3 * pionDecayConstantE8 ^ 2) := by
+  rw [show ((anomalyCoefficient : ℝ)) = 1 by exact_mod_cast anomalyCoefficient_eq_one]
+  unfold neutralPionWidthE8
+  ring
+
 /-- Broad enclosure of the neutral-pion lifetime in `m_e⁻¹`. -/
 theorem neutralPionLifetimeE8_bounds :
     (6.56e4 : ℝ) < neutralPionLifetimeE8 ∧ neutralPionLifetimeE8 < (6.58e4 : ℝ) := by
@@ -104,4 +132,4 @@ theorem neutralPionLifetimeE8_bounds :
   · rw [div_lt_iff₀ hwpos]
     nlinarith [hw.1]
 
-end PMElementaryParticles.NeutralPionWidth
+end PMHadrons.NeutralPionWidth

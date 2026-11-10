@@ -1,14 +1,14 @@
 import PMAtoms.E8Tick
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.CompositeMasses
 import PMElementaryParticles.MuonLifetime
-import PMElementaryParticles.PionWidth
-import PMElementaryParticles.KaonWidth
+import PMHadrons.PionWidth
+import PMHadrons.KaonWidth
 import PMElementaryParticles.TauE8
 import PMElementaryParticles.PhysicalUnits
 import PMAtoms.FissionYield
 import PMAtoms.AlphaFinite
 import PMSubstrate.E8Margin
-import PMElementaryParticles.NeutralPionWidth
+import PMHadrons.NeutralPionWidth
 import Mathlib.Tactic
 
 /-! **Comparison / unit conversion.** Not an E8 prediction.
@@ -47,11 +47,11 @@ noncomputable def muonLifetimeTicks : ℝ :=
 
 /-- Pion lifetime in E8 ticks. -/
 noncomputable def pionLifetimeTicks : ℝ :=
-  lifetimeTicks PMElementaryParticles.PionWidth.pionLifetimeE8
+  lifetimeTicks PMHadrons.PionWidth.pionLifetimeE8
 
 /-- Kaon lifetime in E8 ticks. -/
 noncomputable def kaonLifetimeTicks : ℝ :=
-  lifetimeTicks PMElementaryParticles.KaonWidth.kaonLifetimeE8
+  lifetimeTicks PMHadrons.KaonWidth.kaonLifetimeE8
 
 /-- Tau lifetime in E8 ticks. -/
 noncomputable def tauLifetimeTicks : ℝ :=
@@ -59,12 +59,12 @@ noncomputable def tauLifetimeTicks : ℝ :=
 
 /-- Neutral-pion lifetime in E8 ticks. -/
 noncomputable def neutralPionLifetimeTicks : ℝ :=
-  lifetimeTicks PMElementaryParticles.NeutralPionWidth.neutralPionLifetimeE8
+  lifetimeTicks PMHadrons.NeutralPionWidth.neutralPionLifetimeE8
 
 /-- Pion lifetime after the pion-channel margin, in ticks. -/
 noncomputable def pionLifetimeCorrectedTicks : ℝ :=
   lifetimeTicks (PMSubstrate.E8Margin.pionCorrectedLifetime
-    PMElementaryParticles.PionWidth.pionLifetimeE8)
+    PMHadrons.PionWidth.pionLifetimeE8)
 
 /-- Fission tick scales for the test nuclei. -/
 noncomputable def u238FissionTicks : ℝ := lifetimeTicks (fissionFullLifetime u238)

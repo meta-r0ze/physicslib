@@ -44,8 +44,9 @@ substrate, and their conditional decay rates. It builds on Papers I–IV and
   **mathematical proof gaps fillable in Lean** and **physical model inputs**.
 - The paper source is under `../../paper/`.
 
-## Sibling library
+## Sibling libraries
 
+`PMHadrons` builds on this library: [README](../PMHadrons/README.md), [OVERVIEW](../PMHadrons/OVERVIEW.md), [REVIEW-AND-NEXT](../PMHadrons/REVIEW-AND-NEXT.md).
 `PMAtoms` is a separate library in the same package: [README](../PMAtoms/README.md), [OVERVIEW](../PMAtoms/OVERVIEW.md), [REVIEW-AND-NEXT](../PMAtoms/REVIEW-AND-NEXT.md).
 
 ## Build and audit

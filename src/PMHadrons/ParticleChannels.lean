@@ -1,8 +1,8 @@
 import PersistenceMechanics.DecayChannel
 import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.TauE8
-import PMElementaryParticles.PionWidth
-import PMElementaryParticles.KaonWidth
+import PMHadrons.PionWidth
+import PMHadrons.KaonWidth
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
@@ -14,7 +14,8 @@ rate and whether that rate is E8, calibrated, model-input, or blocked.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.ParticleChannels
+namespace PMHadrons.ParticleChannels
+open PMElementaryParticles
 
 open PersistenceMechanics.Decay
 
@@ -68,19 +69,19 @@ noncomputable def tauChannels : List ParticleChannel :=
   , ⟨"hadrons", tauTotalRate * tauBhad, .modelInput⟩
   ]
 
-/-- Pion channels: μν is E8; the electron mode is blocked. -/
+/-- Pion channels: both μν and eν are E8 channels. -/
 noncomputable def pionChannels : List ParticleChannel :=
-  [⟨"μ⁺ ν", PMElementaryParticles.PionWidth.pionWidthE8, .e8⟩
-  , ⟨"e⁺ ν", PMElementaryParticles.PionWidth.pionElectronWidthE8, .e8⟩
+  [⟨"μ⁺ ν", PMHadrons.PionWidth.pionWidthE8, .e8⟩
+  , ⟨"e⁺ ν", PMHadrons.PionWidth.pionElectronWidthE8, .e8⟩
   ]
 
 /-- Kaon channels: μν is E8; multibody modes are blocked. -/
 noncomputable def kaonChannels : List ParticleChannel :=
-  [⟨"μ⁺ ν", PMElementaryParticles.KaonWidth.kaonWidthE8, .e8⟩
+  [⟨"μ⁺ ν", PMHadrons.KaonWidth.kaonWidthE8, .e8⟩
   , ⟨"π⁺ π⁰", 0, .blocked⟩
   , ⟨"π⁺ π⁺ π⁻", 0, .blocked⟩
   , ⟨"π⁰ e⁺ ν", 0, .blocked⟩
   , ⟨"π⁰ μ⁺ ν", 0, .blocked⟩
   ]
 
-end PMElementaryParticles.ParticleChannels
+end PMHadrons.ParticleChannels

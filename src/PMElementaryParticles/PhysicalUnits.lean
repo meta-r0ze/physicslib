@@ -1,4 +1,4 @@
-import PMElementaryParticles.CompositeMasses
+import PMElementaryParticles.SharedUnits
 import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.TauE8
 import Mathlib.Tactic
@@ -13,7 +13,7 @@ E8-derived numbers.
 noncomputable section
 namespace PMElementaryParticles.PhysicalUnits
 
-open PMElementaryParticles.CompositeMasses
+open PMElementaryParticles.SharedUnits
 
 /-- Speed of light in `fm/s` (unit conversion). -/
 def cFmPerSecond : ℝ := 2.99792458e23

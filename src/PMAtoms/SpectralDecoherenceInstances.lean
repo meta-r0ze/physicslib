@@ -1,7 +1,7 @@
 import PMAtoms.SpectralWaveBridge
-import PMAtoms.LeptonLifetime
-import PMAtoms.NeutronPrediction
-import PMAtoms.MesonFiniteChannels
+import PMElementaryParticles.LeptonLifetime
+import PMHadrons.NeutronPrediction
+import PMHadrons.MesonFiniteChannels
 import Mathlib.Tactic
 
 /-! **Model-input phase channels.**
@@ -14,6 +14,7 @@ decoherence rate as separate objects.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 open PersistenceMechanics
 open PersistenceMechanics.EffectiveAction

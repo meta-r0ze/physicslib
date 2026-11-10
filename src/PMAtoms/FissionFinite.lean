@@ -17,6 +17,7 @@ This is only a scale test: it has no fissility/Q dependence yet.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 def fissionCostScale : ℝ :=
   ((Δ : ℝ) ^ 2) / (((ν + D + σ + χ : Nat)) : ℝ)

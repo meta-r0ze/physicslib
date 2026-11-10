@@ -15,6 +15,7 @@ kept separate with an explicit model-input phase cost.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 open PersistenceMechanics
 open PersistenceMechanics.EffectiveAction

@@ -21,6 +21,7 @@ numerical barrier surface is still a candidate.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- A two-fragment fission split. -/
 structure FissionSplit where

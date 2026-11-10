@@ -22,6 +22,7 @@ It does **not** add a term to the mass ledger yet.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- The five quadrupole components. -/
 structure Quadrupole where

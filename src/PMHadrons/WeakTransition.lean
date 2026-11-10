@@ -1,4 +1,4 @@
-import PMAtoms.BetaCalibration
+import PMHadrons.BetaCalibration
 import PMAction.Machine.CarrierVacuumSector
 import PMSubstrate.E8Values
 import Mathlib.Tactic
@@ -17,7 +17,8 @@ This is the finite operator model behind `BetaCalibration.betaHazardE8`.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMHadrons
+open PMElementaryParticles
 
 /-- The `σ−χ = 3` internal weak channels. -/
 abbrev WeakChannel : Type := Fin (PMSubstrate.E8Values.sigma - PMSubstrate.E8Values.chi)
@@ -58,7 +59,7 @@ theorem weakTransitionHazard_pos (G : ℝ) (hG : G ≠ 0) :
   positivity
 
 /-- Instantiate the operator with the E8 weak amplitude. -/
-def weakHazardFromAmplitude : ℝ := weakTransitionHazard PMElementaryParticles.NeutronRate.fermiME
+def weakHazardFromAmplitude : ℝ := weakTransitionHazard PMHadrons.NeutronRate.fermiME
 
 theorem weakHazardFromAmplitude_eq :
     weakHazardFromAmplitude = betaHazardE8 := by
@@ -193,4 +194,4 @@ theorem weakCarrierOperator_offdiag_zero (c : Fin 3)
   rw [weakCarrierOperator_apply]
   simp [h]
 
-end PMAtoms
+end PMHadrons

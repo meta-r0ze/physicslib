@@ -1,7 +1,8 @@
-import PMAtoms.BetaLattice
-import PMElementaryParticles.PionWidth
-import PMElementaryParticles.KaonWidth
-import PMElementaryParticles.NeutralPionWidth
+import PMHadrons.MesonMasses
+import PMElementaryParticles.BetaLattice
+import PMHadrons.PionWidth
+import PMHadrons.KaonWidth
+import PMHadrons.NeutralPionWidth
 import PMElementaryParticles.PhysicalUnits
 import Mathlib.Tactic
 
@@ -24,15 +25,17 @@ phase-loss channel.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMHadrons
+open PMElementaryParticles
 
 open PMElementaryParticles
+open PMHadrons
 
 /-- Minimal volume-persistent cube, as in the neutron channel. -/
 def mesonFiniteCube : Nat := 3
 
 /-- Charged-pion cutoff: the parent mass in `m_e` units. -/
-def pionFiniteCutoff : ℝ := LeptonMasses.pionPlus
+def pionFiniteCutoff : ℝ := MesonMasses.pionPlus
 
 /-- Charged-kaon cutoff: the parent mass in `m_e` units. -/
 def kaonFiniteCutoff : ℝ := CompositeMasses.kaonPlus
@@ -42,7 +45,7 @@ def neutralPionFiniteCutoff : ℝ := CompositeMasses.pion0
 
 theorem pionFiniteCutoff_gt_twelve : (12 : ℝ) < pionFiniteCutoff := by
   unfold pionFiniteCutoff
-  linarith [LeptonMasses.pionPlus_value.1]
+  linarith [MesonMasses.pionPlus_value.1]
 
 theorem kaonFiniteCutoff_gt_twelve : (12 : ℝ) < kaonFiniteCutoff := by
   unfold kaonFiniteCutoff
@@ -171,13 +174,13 @@ theorem kaonFiniteLifetime_bounds :
 theorem neutralPionFiniteWidth_bounds :
     (1.52e-5 : ℝ) < neutralPionFiniteWidth ∧ neutralPionFiniteWidth < (1.523e-5 : ℝ) := by
   rw [neutralPionFiniteWidth_eq_continuum]
-  exact PMElementaryParticles.NeutralPionWidth.neutralPionWidthE8_bounds
+  exact PMHadrons.NeutralPionWidth.neutralPionWidthE8_bounds
 
 /-- Certified finite-channel neutral-pion lifetime enclosure. -/
 theorem neutralPionFiniteLifetime_bounds :
     (6.56e4 : ℝ) < neutralPionFiniteLifetime ∧ neutralPionFiniteLifetime < (6.58e4 : ℝ) := by
   rw [neutralPionFiniteLifetime_eq_continuum]
-  exact PMElementaryParticles.NeutralPionWidth.neutralPionLifetimeE8_bounds
+  exact PMHadrons.NeutralPionWidth.neutralPionLifetimeE8_bounds
 
 /-- Finite-channel pion lifetime in seconds. -/
 def pionFiniteLifetimeSeconds : ℝ :=
@@ -230,4 +233,4 @@ theorem neutralPionFiniteLifetimeSeconds_bounds :
   unfold neutralPionFiniteLifetimeSeconds
   constructor <;> nlinarith [hlo, hhi]
 
-end PMAtoms
+end PMHadrons

@@ -1,0 +1,74 @@
+# PMHadrons — overview of checked results
+
+The map of what the hadron library proves. Open work is in
+[`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in [`README.md`](README.md).
+
+## Place in the tower
+
+A hadron is a level-`L` system whose constituents are elementary protocols (quarks, from
+`PMElementaryParticles`). Its mass is not its constituents' cost minus a binding budget: every
+hadron is far heavier than its current quarks (`MesonMasses.*_gt_constituents`). The mesons are
+whole substrate-cell budgets plus a residual, and the nucleons are a `Δ²` base minus pillar
+costs. Its decays are channels priced by the same pillars. The nucleons are the template: the
+nucleus ledger (`PMAtoms.LinkWeights`) reuses their `πD` and `σ/2` terms.
+
+Shared units and couplings (`me`, `ħc`, `α`, `α⁻¹`, their bounds, `G_F` in `m_e⁻²`) live in
+`PMElementaryParticles.SharedUnits` and are re-exported here by `CompositeMasses` and
+`NeutronRate`.
+
+## Mass-formula pillar audit
+
+| particle | formula terms | TOL/MAR counted? | all six pillars? |
+| --- | --- | --- | --- |
+| proton | `Δ², πD, 1/D, α(D+1/D), Z_TOL, Z_MAR` | yes | **yes** |
+| neutron | same + `σ/2` | yes | **yes** |
+| muon | `Δσ, χ, π, α` | no | no |
+| tau | `Δ²χ, Δσ, χ, D` | no | no |
+| π⁰, π⁺ | `χ·α⁻¹` + residual `−σχ + 1/(ν−χ) (+ σ + D − α(σ−χ)/χ)` | yes, `χ` times via `α⁻¹` | **yes** (`pion0_cells`, `pionPlus_cells`) |
+| K⁰, K⁺ | `(σ+χ)·α⁻¹` + residual `−σ + Dσ − 2π/(ν−χ)` / `−σ + Dπ − 1/√2 − α(σ−χ)/χ` | yes, `σ+χ` times via `α⁻¹` | **yes** (`kaon0_cells`, `kaonPlus_cells`) |
+| quarks | `η` and integer counts | no | no |
+| electron | supplied `m_e` | no | no |
+
+`α⁻¹` is, by definition, one substrate cell's six-pillar budget
+(`PMSubstrate.impedance`; `MesonMasses.cellBudget_pillars`), and its Toll and Margin terms are
+exactly the nucleons' `Z_TOL` and `Z_MAR` (`tollTerm_eq_zTol`, `marginTerm_eq_zMar`). So
+**the nucleons and the mesons all carry the six pillars including TOL/MAR**, in two forms: the
+nucleons as a `Δ²` base minus pillar costs, the mesons as `n` whole cell budgets plus a
+residual. The cell counts `n` and the residuals are model inputs. The leptons and quarks still
+use separate E8 formulas (`η`, integer counts); that is elementary-particle work.
+
+## Modules
+
+| Module | Checked result | Retained inputs |
+| --- | --- | --- |
+| `Nucleon` | three colour-axis protocols (`slotChannel`); `ChargeProtocols.Q` on the actual channel equals the quark charge (`Q_slotChannel`, `charge_eq_channels`); three colour axes give `B=1` (`baryon_from_three_colours`); proton `uud` `Q=+1`, neutron `udd` `Q=0`, spin `2`, isospin gap `1` | spin-1/2, one protocol per colour axis |
+| `Particle` | `Species` with certified masses and `Q/B/L`; `ParticleDecay` = conserved numbers + lighter products; **`proton_stable`** (baryon number forbids a lighter channel), `neutrino_stable`/`antineutrino_stable` (massless ledger; no lighter channel); allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` | certified PM-5 mass enclosures; tree-level channels |
+| `CompositeMasses` | Proton, neutron, π⁰, K⁰, K⁺ formulas vs CODATA 2022 / PDG |  |
+| `MesonMasses` | `π⁺` tier ledger (`pionPlus_ledger`, `pionPlus_value`, `pionPlus_mev_value`); `α⁻¹` = six-pillar `cellBudget` (`cellBudget_pillars`; Toll/Margin = `Z_TOL`/`Z_MAR`); every meson = `n·cellBudget + residual` (`*_cells`); `π⁺`, `K⁺`, proton heavier than their current quarks (`*_gt_constituents`) | cell counts `n = χ, σ+χ`; residual terms |
+| `CompositeStates` | `SignedState`, `CompositeState`, `compositeCharge`, meson/baryon cohorts; `pionPlus`, `pionZero`, `kaonPlus`, `proton`, `neutron` charges. |  |
+| `CompositeBinding` | `BindingLedger`, `compositeMassSq`, positivity/mass-lowering, `compositePhase`; binding energy supplied. |  |
+| `CompositeTransition` | `compositeAmplitude`, `CompositeDecay`, `compositeOperator`; `K⁺ → π⁺ π⁰` charge/operator instance. |  |
+| `CompositePhaseSpace` | `twoBodyPhaseSpace`, `compositePartialWidth`, `kaonPionT`, `kaonPionPhase`, `kaonPionRate`; K⁺→π⁺π⁰ structural rate with positivity. |  |
+| `MultiBodyPhaseSpace` | massless three-body `Φ₃=M²/(128π³)`, `threeBodyRate`, nonnegativity. |  |
+| `HadronicMatrixElement` | `BoundStateMatrixElement` with supplied `value`; `kaonPion`, `kaonPionRate`, `kaonPionRate_eq`, `kaonPionRate_nonneg`; explicit nonperturbative-input interface. |  |
+| `BoundStateOverlap` | finite constituent `Wavefunction`, `overlap`, `toMatrixElement`, `rate_eq`; overlap as inner product. |  |
+| `NeutronRate` | Massive-electron phase space `phaseSpace = ∫ E√(E²−1)(m_n−m_p−E)²`; `g_A = σ/D = 5/4`, `axialFactor = 91/16`; `neutronWidth`, `neutronLifetime`, `beamLifetime`; recoil endpoint `recoilEndpoint`, `phaseSpaceRecoil`, `neutronWidthRecoil`, `neutronLifetimeRecoil` with supplied radiative factor `R` | full Dalitz angular density and derived radiative correction |
+| `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthTo`, `pionWidthE8`, `pionElectronWidthE8`, `pionLifetimeE8` | full E8 width |
+| `KaonWidth` | `kaonWidthCKM`, `kaonDecayConstantE8=v/(Δ²−ν²)`, `vusE8=s₁₂c₁₃` (the `(u,s)` entry of `PMFlavor.CKM.ckm`: `vusE8_eq_ckm`), `kaonWidthE8`, `kaonLifetimeE8` | `fK` formula |
+| `NeutralPionWidth` | `neutralPionWidthE8 = α²mπ⁰³/(32π³fπ²)`, `neutralPionLifetimeE8`; anomaly coefficient `A = N_c(Q_u²−Q_d²) = 1` from the three colour axes and the protocol charges (`anomalyCoefficient_eq_one`, `neutralPionWidthE8_anomaly`) | triangle-loop normalization `1/(32π³)` |
+| `ParticleChannels` | `ParticleChannel`, `RateStatus`, `totalRate`, `branching`, `totalLifetime`; concrete μ/τ/π/K inventories with provenance labels; kaon multibody channels blocked on hadronic matrix elements | missing hadronic/electron-mode rates |
+| `ChannelFinalStateLink` | name-level bridge from `ParticleChannels` (muon, tau, pion, kaon prefixes) to `ParticleFinalStates`; `muon_names`, `tau_first_name`, `pion_names`, `kaon_prefix`, `finalStates_charge_conserved`. |  |
+| `MinimalCube` | `CubeVertex`; `cubeInterior`; `cube_interior_iff` (an interior vertex exists iff `n ≥ 3`): the minimal volume-persistent cube is `3×3×3` | |
+| `BetaCalibration` | `weakAmplitudeSquared = G_F²`, `weakChannelCost = 1/(σ−χ) = 1/3`, `betaHazardE8 = weakAmplitudeSquared · weakChannelCost`, positivity; `betaLifetimeFromFraction`, `betaNeutronLifetimeE8` | independent derivation/validation of the hazard |
+| `WeakTransition` | `WeakChannel = Fin (σ−χ)`, `weakChannel_card = 3`, `weakChannelAmplitude`, `weakTransitionHazard`; `weakCurrent`, `weakCurrentWeight`, `weakHazardFromCurrent`; `weakCurrentEntries`, `weakCurrentEntries_norm`, `weakHazardFromEntries_eq`; `weakCarrierEntry`, `weakCarrierEntry_eq_one`, `weakCarrierEntryReal`, `weakCarrierEntries_eq`; `weakCarrierOperator`, `weakCarrierOperator_eq_one`, `weakCarrierOperator_apply`, `weakCarrierOperator_offdiag_zero`, `weakOperatorEntry`, `weakOperatorEntry_eq_entries`; `weakTransitionHazard_eq = G²/3`, `weakHazardFromAmplitude_eq` | equal channel distribution from the weak current |
+| `NeutronPrediction` | `neutronCube = 3` (minimal volume-persistent cube), `neutronCutoff`, `neutronCutoffExact`, `neutronSpectralFractionExact`, `neutronLifetimeExactCutoff`, `neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin = 41/43` (`neutronMarginFactor_eq_substrate`), `neutronLifetimeCorrected`; `neutronCube_minimal` | numerical fraction is external comparison |
+| `MesonFiniteChannels` | minimal-cube finite channels for π⁺, K⁺, π⁰; `pion/kaon/neutralPion_openModes`, `*SpectralFraction_eq_one`, `*FiniteWidth`, `*FiniteLifetime`, `*FiniteLifetimeSeconds`, certified bounds | all modes open; finite equals continuum |
+
+## E8 decay checks at this level
+
+| decay | E8 model | comparison | status |
+|---|---:|---:|---|
+| n → p e ν̄ | 877.2 s | 878 s | E8 finite-spectral + `41/43` margin (`NeutronPrediction`) |
+| π⁺ → μ⁺ν | 2.52×10⁻⁸ s | 2.60×10⁻⁸ s | E8 `fπ` |
+| K⁺ → μ⁺ν | ≈2.0×10⁻⁸ s | 1.95×10⁻⁸ s | E8 `fK`, `Vus` |
+| π⁰ → γγ | ≈8.46×10⁻¹⁷ s | 8.52×10⁻¹⁷ s | E8 `fπ`; anomaly `A = 1` derived |

@@ -1,6 +1,6 @@
 import PMElementaryParticles.LeptonMasses
-import PMElementaryParticles.CompositeMasses
-import PMElementaryParticles.NeutronRate
+import PMHadrons.CompositeMasses
+import PMHadrons.NeutronRate
 import PMFlavor.CKM
 import PMConstants.Values
 import PMElementaryParticles.MuonLifetime
@@ -15,15 +15,18 @@ Two-body charged-kaon width:
 Γ(K⁺ → μ⁺ν) = G_F² f_K² m_K m_μ² (1 − m_μ²/m_K²)² / (8π).
 ```
 
-`f_K` is a supplied input; the E8 kaon decay constant is still open.
+The E8 width uses `f_K = v/(Δ²−ν²)` (an assigned formula, a model input) and
+`|V_us| = s₁₂ c₁₃`, the `(u,s)` entry of the standard-parametrization CKM matrix
+`PMFlavor.CKM.ckm` with Paper IV's angles (`vusE8_eq_ckm`).
 -/
 
 noncomputable section
-namespace PMElementaryParticles.KaonWidth
+namespace PMHadrons.KaonWidth
+open PMElementaryParticles
 
 open PMElementaryParticles.LeptonMasses
-open PMElementaryParticles.CompositeMasses
-open PMElementaryParticles.NeutronRate
+open PMHadrons.CompositeMasses
+open PMHadrons.NeutronRate
 
 def kaonWidth (fK : ℝ) : ℝ :=
   fermiME ^ 2 * fK ^ 2 * kaonPlus * muon ^ 2 *
@@ -43,8 +46,14 @@ noncomputable def kaonDecayConstantE8 : ℝ :=
   PMConstants.Values.vev 1 /
     (((PMSubstrate.E8Values.Delta : ℝ) ^ 2 - (PMSubstrate.E8Values.nu : ℝ) ^ 2))
 
-/-- E8 `|Vus| = s₁₂ c₂₃`. -/
-def vusE8 : ℝ := PMFlavor.CKM.s12 * PMFlavor.CKM.c23
+/-- E8 `|Vus| = s₁₂ c₁₃`, the `(u,s)` entry of the standard-parametrization CKM matrix. -/
+def vusE8 : ℝ := PMFlavor.CKM.s12 * PMFlavor.CKM.c13
+
+/-- `vusE8` is the `(0,1)` entry of `PMFlavor.CKM.ckm` with Paper IV's angles, for any phase. -/
+theorem vusE8_eq_ckm (u : ℂ) :
+    PMFlavor.CKM.ckm PMFlavor.CKM.c12 PMFlavor.CKM.s12 PMFlavor.CKM.c23 PMFlavor.CKM.s23
+      PMFlavor.CKM.c13 PMFlavor.CKM.s13 u 0 1 = (vusE8 : ℂ) := by
+  simp [PMFlavor.CKM.ckm, vusE8]
 
 /-- E8 kaon width. -/
 noncomputable def kaonWidthE8 : ℝ :=
@@ -63,10 +72,10 @@ theorem kaonDecayConstantE8_bounds :
   have h := PMConstants.Values.vev_ratio_bounds
   constructor <;> nlinarith [h.1, h.2]
 
-/-- Broad enclosure of `|V_us| = s₁₂ c₂₃`. -/
+/-- Broad enclosure of `|V_us| = s₁₂ c₁₃`. -/
 theorem vusE8_bounds : (0.2242 : ℝ) < vusE8 ∧ vusE8 < (0.2245 : ℝ) := by
   have hs := PMFlavor.CKM.s12_bounds
-  have hc := PMFlavor.CKM.c23_bounds
+  have hc := PMFlavor.CKM.c13_bounds
   unfold vusE8
   constructor <;> nlinarith [hs.1, hs.2, hc.1, hc.2]
 
@@ -160,4 +169,4 @@ theorem kaonLifetimeE8_bounds :
   · rw [div_lt_iff₀ hwpos]
     nlinarith [hw.1]
 
-end PMElementaryParticles.KaonWidth
+end PMHadrons.KaonWidth

@@ -6,13 +6,13 @@ nucleons, then nuclei, then atoms, and ask what persists and what decays. The
 point is to produce **testable lifetime/mass comparisons**, not to restate
 textbook atomic physics.
 
-Sibling library: `PMElementaryParticles` — [README](../PMElementaryParticles/README.md), [OVERVIEW](../PMElementaryParticles/OVERVIEW.md), [REVIEW-AND-NEXT](../PMElementaryParticles/REVIEW-AND-NEXT.md).
+Sibling libraries: `PMElementaryParticles` — [README](../PMElementaryParticles/README.md), [OVERVIEW](../PMElementaryParticles/OVERVIEW.md), [REVIEW-AND-NEXT](../PMElementaryParticles/REVIEW-AND-NEXT.md); `PMHadrons` (nucleons and mesons, which `PMAtoms` builds on) — [README](../PMHadrons/README.md), [OVERVIEW](../PMHadrons/OVERVIEW.md), [REVIEW-AND-NEXT](../PMHadrons/REVIEW-AND-NEXT.md).
 
 Build:
 
 ```
 source ~/.elan/env
-./build.sh PMAtoms  # builds PMElementaryParticles + PMAtoms, then runs the axiom audits
+./build.sh PMAtoms  # builds PMElementaryParticles + PMHadrons + PMAtoms, then runs the axiom audits
 ```
 
 `e8p` consumes the library: its `Atoms` section reports `rydberg_ev`,
@@ -23,7 +23,6 @@ PM specifies channels/persistence, not a per-channel time scale.
 
 | Module | Role |
 | --- | --- |
-| `Nucleon` | assemble proton/neutron from three substrate colour-axis protocols; charge via `ChargeProtocols.Q`, baryon via `BaryonNumber` |
 | `NuclearGraph` | typed nucleon graph (`p/n`, `pp/pn/nn`), complete-graph counts for H-3/He-3/He-4, tetrahedron (K4) closure, degree cap 4 | binding weights, packing, persistence selection |
 | `NuclearFolding` | `Folding`, `coulombEnergy`, `coulombEnergy_scale`; `softenedKernel` (homothetic, ≤1/r); `e8ChargeCoupling = πD/(2σ)`, `sphereCoulomb` | actual folded positions | 3D folding `Folding` (positions in `Fin 3`), `dist`, `coulombEnergy`; `dist_scale`; `coulombEnergy_scale` (energy ∝ 1/λ); `coulombEnergy_folded` (radius A^{1/3}) | absolute charge coupling |
 | `NuclearCharge` | Paper II path Green function + Paper III charge: `chargeEnergy3_H3 = 3/4`, `chargeEnergy3_He3 = 11/4`, `chargeEnergy4_He4 = 16/5`, `mirror_charge_difference = 2` | absolute E8 coupling scale |
@@ -53,7 +52,6 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `SystemTower` | explicit level budgets (`Level`, `LevelBudget`, `latticeSum`, `boundMass`); `gap_eq_level_budgets` says the periodic-table gap is exactly the nucleus+atom budget | numeric nucleus/atom budgets |
 | `NuclearMass` | E8 lattice mass `Z m_p + N m_n`; `PersistsMass` = no channel lowers it; `latticeMass_betaMinus_lt`, `not_persistsMass_of_neutron`, `alpha_mass_eq`, `fission_mass_eq` | channel rates for full persistence |
 | `Nucleus` | `(Z,N)` ledger; `β⁻`, `β⁺`, capture, `α`, fission; conservation; persistence as local minimality of a supplied cost |
-| `Particle` | generic mass-ordered decay ledger; **`proton_stable`**, `neutrino_stable`, `antineutrino_stable`; allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` |
 | `ElectronCloud` | spin-orbital cloud (`Finset SpinOrbital`), Pauli by construction; hydrogenic `ε_n = −R∞/n²`; `fillCloud` = lowest-`n` variational filling; `AtomSystem` = nucleus + cloud | electron–electron screening/exchange |
 | `FissionAsymmetry` | `sn132` double E8 closure, `fissionComplement`, `asymmetricFissionChannel`; asymmetric fission candidate | fragment yields/mass split |
 | `AlphaConfiguration` | two-level E8 mixing Hamiltonian, `V=κμδ=1/200`, dressed gap, scalar resolvent, hindrance `σχ/(χ·gap+1)`; fixes U-235/Pu-239 | derived mixing amplitudes |
@@ -64,13 +62,9 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `CollectiveRegime` | `CollectiveChannel`, `collectiveMass`, `CollectivePersists`; `alphaChannel`, `fissionChannel` with smooth-ledger masses and `shellWeight` barrier |
 | `CollectiveRegime` | `CollectiveChannel`, `collectiveMass` lower envelope, `CollectivePersists`; `collectiveMass_le_parent`, `collectiveMass_le_channel`, `collectiveMass_eq_parent_of_forall` |
 | `FermiFunction` | `coulombEta`, `fermiFunction`, `fermiFunction_pos`, `fermiFunction_ge_one`; `fermiMomentumFactor`, `fermiMomentumFactor_pos`, `fermiMomentumFactor_le`; allowed beta Coulomb factor and threshold-safe `F·p` | exact three-body measure and integrability |
-| `WeakTransition` | finite 3-channel weak operator, normalized current, unit entries; `weakChannel_card`, `weakTransitionHazard_eq = G²/3`, matches `betaHazardE8` | channel distribution from the weak current |
 | `DecayInstantiation` | six-pillar instances for beta, alpha, fission; rate-equivalence proofs | total fission sum proof |
 | `NuclearDecay` | `nuclearBetaMinusQ`, `nuclearBetaPlusQ`, `nuclearAlphaQ`, `nuclearFissionQ`, `massAllowed` predicates, channel-mass identities; `nuclearDecayRegime`, Pb/U/Cm/Cf regime tests; `e8NuclearCost` persistence; `nuclearLedgerKind`, `regimePersists`, smooth/collective decision rules; `NuclearExit`, `nuclearExits`, `NuclearExit.toChannel`, `nuclearExitChannels` table; Pb/U/Cm/Cf exit-table decision theorems | rates/lifetimes |
-| `BetaCalibration` | candidate E8 beta hazard `weakAmplitudeSquared · weakChannelCost`, `betaNeutronLifetimeE8`; spectral fraction → lifetime | hazard validation |
-| `LeptonLattice` | finite lepton channel reusing `BetaLattice` | lepton eigenvalues |
 | `CollectiveFinite` | finite collective barrier weights and rate | barrier set |
-| `BetaLattice` | finite E8 beta channel: `BetaLatticeChannel`, `betaLatticeRate`, `betaLatticeLifetime`; `betaSpectralWeight`, `betaWeightedRate`, `betaSpectralRate`, `betaOpenModes`, `betaSpectralRateCutoff`, rate bound `≤ β·c0`; no continuum Dalitz measure | numerical spectral sum / neutron benchmark |
 | `BetaDecay` | `betaDaughter`, `betaQ`, `betaAllowed`, `betaChannel`, `betaWidth`, `betaLifetime`; `betaPhaseSpace`, `betaWidthRecoil`, `betaLifetimeRecoil`; nuclear β channel/factorization | nuclear matrix element, Fermi function, radiative factor |
 | `NuclearLedger` | `certifiedMass`, `certifiedDomain`, `certifiedMass_decomp`, `certifiedDomain_cm`, `certifiedDomain_cf`; certified smooth ledger through the frontier |
 | `NuclearRegime` | `NuclearRegime`, `deformedFrontier`, `regimeOf`; `pb_regime`, `u_regime`, `cm_regime`, `cf_regime`, `cm_at_frontier`, `cf_beyond_frontier`; Cm/Cf boundary as a theorem |
@@ -79,11 +73,9 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `Shells` | `orbitalCapacity l = 2(2l+1)`, `shellCapacity n = 2n²`, first shells `2,8,18,32` |
 | `Hydrogen` | Rydberg energy and Bohr radius from the certified `α`; `E_n = E_1/n²`; ground state lowest |
 | `PersistenceRate` | dynamical persistence: `Persists` = total hazard zero, else `MeanLife = 1/λ`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | the E8 channel rates |
-| `MeanLife` | `τ = 1/λ` as the integral of the persistence survival `exp(−λT)`; multiple channels add hazards; `λ = β·(cost rate)` from `PersistenceMechanics.HazardForm` |
 | `ProtocolCandidates` | finite set cohorts (`candidateCohorts`); weak-partner filter (`candidateCohortsWeak`) | set version, for reference |
 | `ListCohorts` | multiplicity-preserving list cohorts: `e ν ν̄` is length 3; charge in thirds, odd fermion parity, weak partner; `muon_list_mem`, `electron_list_not`, `electron_neutrino_list_not` | nuclear candidate set with the same rule |
 | `TransitionSelection` | a channel fixes the payload; persistence selects a least-cost transition family (`exists_least_cost`, `selectedFamily_min`, `selectedRate_le`) | the candidate set of substrate families |
-| `RateModel` | reads the per-channel cost from `PMSubstrate.NetCost` (toll × expected transitions) and proves `rate = β·costRate` on the actual event family; lifetime follows from `MeanLife` |
 
 ## The rule
 

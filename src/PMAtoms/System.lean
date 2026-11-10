@@ -1,7 +1,7 @@
 import PMAtoms.SystemTower
 import PMAtoms.NuclearLedger
 import PMAtoms.ElectronCloud
-import PMAtoms.Particle
+import PMHadrons.Particle
 
 /-!
 # The unified system type
@@ -20,6 +20,8 @@ the certified nuclide mass sits below the free lattice sum by the binding.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
+open PMHadrons
 
 open PMElementaryParticles
 

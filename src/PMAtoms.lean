@@ -1,3 +1,4 @@
+import PMHadrons
 import PMAtoms.Invariants
 import PMAtoms.E8AtomValues
 import PMAtoms.NuclearShells
@@ -8,11 +9,7 @@ import PMAtoms.ElectronCloud
 import PMAtoms.Aufbau
 import PMAtoms.PeriodicTable
 import PMAtoms.Hydrogen
-import PMAtoms.Nucleon
 import PMAtoms.Nucleus
-import PMAtoms.Particle
-import PMAtoms.MeanLife
-import PMAtoms.RateModel
 import PMAtoms.TransitionSelection
 import PMAtoms.ProtocolCandidates
 import PMAtoms.ListCohorts
@@ -27,21 +24,14 @@ import PMAtoms.LatticeGreen3D
 import PMAtoms.LatticeCharge
 import PMAtoms.LatticeCharge3
 import PMAtoms.LatticeCharge3Energy
-import PMAtoms.LatticeSpectral
 import PMAtoms.NuclearPacking3D
 import PMAtoms.NuclearDeformation
 import PMAtoms.ShapePotential
 import PMAtoms.NuclearRegime
 import PMAtoms.NuclearLedger
 import PMAtoms.BetaDecay
-import PMAtoms.BetaLattice
 import PMAtoms.SpectralMeasure
-import PMAtoms.LeptonLifetime
 import PMAtoms.CollectiveFinite
-import PMAtoms.LeptonLattice
-import PMAtoms.BetaCalibration
-import PMAtoms.NeutronPrediction
-import PMAtoms.MesonFiniteChannels
 import PMAtoms.SpectralWaveBridge
 import PMAtoms.SpectralDecoherenceInstances
 import PMAtoms.CollectiveWaveBridge
@@ -52,7 +42,6 @@ import PMAtoms.NuclearDecay
 import PersistenceMechanics.DecayChannel
 import PMAtoms.DecayInstantiation
 import PMAtoms.PersistenceComplex
-import PMAtoms.WeakTransition
 import PMAtoms.FermiFunction
 import PMAtoms.CollectiveRegime
 import PMAtoms.CollectiveRate

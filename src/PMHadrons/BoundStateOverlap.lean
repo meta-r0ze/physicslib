@@ -1,4 +1,4 @@
-import PMElementaryParticles.HadronicMatrixElement
+import PMHadrons.HadronicMatrixElement
 
 /-! **Bound-state overlap interface.**
 
@@ -8,9 +8,10 @@ overlap) without pretending that the wavefunction itself is derived.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.BoundStateOverlap
+namespace PMHadrons.BoundStateOverlap
+open PMElementaryParticles
 
-open PMElementaryParticles.CompositeStates
+open PMHadrons.CompositeStates
 
 /-- A finite constituent wavefunction. -/
 structure Wavefunction (ι : Type*) [Fintype ι] where
@@ -31,7 +32,7 @@ def toMatrixElement {ι : Type*} [Fintype ι] (initial : CompositeState)
 theorem rate_eq {ι : Type*} [Fintype ι] (initial : CompositeState)
     (final : List CompositeState) (ψ φ : Wavefunction ι) (parent m1 m2 : ℝ) :
     HadronicMatrixElement.rate (toMatrixElement initial final ψ φ) parent m1 m2 =
-      Complex.normSq (overlap ψ φ) * PMElementaryParticles.CompositePhaseSpace.twoBodyPhaseSpace parent m1 m2 :=
+      Complex.normSq (overlap ψ φ) * PMHadrons.CompositePhaseSpace.twoBodyPhaseSpace parent m1 m2 :=
   rfl
 
-end PMElementaryParticles.BoundStateOverlap
+end PMHadrons.BoundStateOverlap

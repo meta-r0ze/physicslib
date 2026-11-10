@@ -1,4 +1,4 @@
-import PMAtoms.BetaLattice
+import PMElementaryParticles.BetaLattice
 import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.LeptonMasses
 import Mathlib.Tactic
@@ -14,7 +14,7 @@ one.  The mass/phase-space coefficient remains the one proved in
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMElementaryParticles
 
 /-- Minimal-cube muon spectral fraction. -/
 noncomputable def muonSpectralFraction : ℝ :=
@@ -70,4 +70,4 @@ theorem muonFiniteLifetime_bounds :
   rw [muonFiniteLifetime_eq_continuum]
   exact PMElementaryParticles.MuonLifetime.muonLifetime_bounds
 
-end PMAtoms
+end PMElementaryParticles

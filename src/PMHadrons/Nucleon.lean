@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 import PMElementaryParticles.SubstrateLedger
-import PMAtoms.Shells
+import PMAction.WeakVertex
 import PMConstants.BaryonNumber
 
 /-!
@@ -26,7 +26,7 @@ neutron masses are compared separately through `E8PConstants.CompositeMassPulls.
 `e8p`.
 -/
 
-namespace PMAtoms
+namespace PMHadrons
 
 /-- The three colour slots of a confined quark system. -/
 inductive Colour
@@ -107,8 +107,12 @@ theorem baryon_from_three_colours :
 
 theorem colour_singlet_slots : (Finset.univ : Finset (Fin 3)).card = 3 := rfl
 
-/-- Two spin states per nucleon, inherited from the PM-2 chiral projector. -/
-def spinStates : ℕ := PMAtoms.spinStates
+/-- Two spin states per nucleon, the trace of the PM-2 chiral projector. -/
+def spinStates : ℕ := 2
+
+theorem spinStates_eq_trace : (spinStates : ℂ) = PMAction.WeakVertex.PL.trace := by
+  rw [PMAction.WeakVertex.PL_trace]
+  norm_num [spinStates]
 
 /-- Third component of isospin. -/
 def isospin3 : Nucleon → ℚ
@@ -165,4 +169,4 @@ abbrev ProtonSystem := { s : NucleonSystem // s.nucleon = .proton }
 /-- A neutron system: any spin state of the `udd` nucleon. -/
 abbrev NeutronSystem := { s : NucleonSystem // s.nucleon = .neutron }
 
-end PMAtoms
+end PMHadrons

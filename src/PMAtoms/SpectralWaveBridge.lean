@@ -1,4 +1,4 @@
-import PMAtoms.BetaLattice
+import PMElementaryParticles.BetaLattice
 import PersistenceMechanics.DecayChannel
 import PersistenceMechanics.EffectiveAction
 import Mathlib.Basic.Complex.Basic
@@ -18,6 +18,7 @@ separate phase-loss channel.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles
 
 open PersistenceMechanics
 open PersistenceMechanics.EffectiveAction

@@ -1,5 +1,5 @@
-import PMAtoms.BetaLattice
-import PMAtoms.NeutronPrediction
+import PMElementaryParticles.BetaLattice
+import PMHadrons.NeutronPrediction
 import PMElementaryParticles.LeptonMasses
 import PersistenceMechanics.ChannelMeasure
 import Mathlib.Tactic
@@ -13,6 +13,7 @@ The finite beta spectral weights as a `ChannelMeasure`.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 open PersistenceMechanics.ChannelCounting
 

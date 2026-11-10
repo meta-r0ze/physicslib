@@ -23,6 +23,7 @@ layer is separate.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- `β⁻` Q-value: parent minus daughter minus the emitted electron. -/
 def nuclearBetaMinusQ (p : Nuclide) : ℝ :=
@@ -104,6 +105,7 @@ def nuclearDecayRegime (p : Nuclide) : NuclearRegime :=
 end PMAtoms
 
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 theorem pb_nuclearDecayRegime :
     nuclearDecayRegime ⟨82, 126⟩ = .mid := by

@@ -1,4 +1,5 @@
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.MesonMasses
+import PMHadrons.CompositeMasses
 import PMElementaryParticles.LeptonMasses
 import PMConstants.FloorNeutrino
 import Mathlib.Tactic
@@ -18,9 +19,9 @@ proton is a baryon-number statement, not a mass coincidence.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMHadrons
 
-open PMElementaryParticles.CompositeMasses PMElementaryParticles.LeptonMasses
+open PMHadrons.CompositeMasses PMElementaryParticles.LeptonMasses
 
 /-- Species with a certified mass in `m_e` units and the three conserved
 quantum numbers used by the substrate ledger. -/
@@ -33,8 +34,8 @@ namespace Species
 
 /-- Mass in electron-mass units. Neutrinos are massless in this ledger. -/
 def mass : Species → ℝ
-  | .proton => PMElementaryParticles.CompositeMasses.proton
-  | .neutron => PMElementaryParticles.CompositeMasses.neutron
+  | .proton => PMHadrons.CompositeMasses.proton
+  | .neutron => PMHadrons.CompositeMasses.neutron
   | .electron => 1
   | .positron => 1
   | .neutrino => 0
@@ -42,10 +43,10 @@ def mass : Species → ℝ
   | .muon => PMElementaryParticles.LeptonMasses.muon
   | .antimuon => PMElementaryParticles.LeptonMasses.muon
   | .tau => PMElementaryParticles.LeptonMasses.tau
-  | .pion0 => PMElementaryParticles.CompositeMasses.pion0
-  | .pionPlus => PMElementaryParticles.LeptonMasses.pionPlus
-  | .kaon0 => PMElementaryParticles.CompositeMasses.kaon0
-  | .kaonPlus => PMElementaryParticles.CompositeMasses.kaonPlus
+  | .pion0 => PMHadrons.CompositeMasses.pion0
+  | .pionPlus => PMHadrons.MesonMasses.pionPlus
+  | .kaon0 => PMHadrons.CompositeMasses.kaon0
+  | .kaonPlus => PMHadrons.CompositeMasses.kaonPlus
 
 def charge : Species → ℚ
   | .proton => 1
@@ -108,8 +109,8 @@ theorem decay_lighter {p : Species} {ds : List Species} (h : ParticleDecay p ds)
     pMass ds < p.mass := h.2.2.2.2
 
 theorem mass_nonneg : ∀ s : Species, 0 ≤ s.mass
-  | .proton => le_of_lt (by simp [Species.mass]; linarith [PMElementaryParticles.CompositeMasses.proton_value.1])
-  | .neutron => le_of_lt (by simp [Species.mass]; linarith [PMElementaryParticles.CompositeMasses.neutron_value.1])
+  | .proton => le_of_lt (by simp [Species.mass]; linarith [PMHadrons.CompositeMasses.proton_value.1])
+  | .neutron => le_of_lt (by simp [Species.mass]; linarith [PMHadrons.CompositeMasses.neutron_value.1])
   | .electron => by norm_num [Species.mass]
   | .positron => by norm_num [Species.mass]
   | .neutrino => by norm_num [Species.mass]
@@ -117,10 +118,10 @@ theorem mass_nonneg : ∀ s : Species, 0 ≤ s.mass
   | .muon => le_of_lt (by simp [Species.mass]; linarith [PMElementaryParticles.LeptonMasses.muon_value.1])
   | .antimuon => le_of_lt (by simp [Species.mass]; linarith [PMElementaryParticles.LeptonMasses.muon_value.1])
   | .tau => by simp [Species.mass, PMElementaryParticles.LeptonMasses.tau_value]
-  | .pion0 => le_of_lt PMElementaryParticles.CompositeMasses.pion0_pos
-  | .pionPlus => le_of_lt (by simp [Species.mass]; linarith [PMElementaryParticles.LeptonMasses.pionPlus_value.1])
-  | .kaon0 => le_of_lt PMElementaryParticles.CompositeMasses.kaon0_pos
-  | .kaonPlus => le_of_lt PMElementaryParticles.CompositeMasses.kaonPlus_pos
+  | .pion0 => le_of_lt PMHadrons.CompositeMasses.pion0_pos
+  | .pionPlus => le_of_lt (by simp [Species.mass]; linarith [PMHadrons.MesonMasses.pionPlus_value.1])
+  | .kaon0 => le_of_lt PMHadrons.CompositeMasses.kaon0_pos
+  | .kaonPlus => le_of_lt PMHadrons.CompositeMasses.kaonPlus_pos
 
 theorem baryon_nonneg (s : Species) : 0 ≤ s.baryon := by
   cases s <;> norm_num [Species.baryon]
@@ -172,8 +173,8 @@ theorem proton_stable : Stable .proton := by
   have hdge : Species.mass .proton ≤ d.mass := by
     rcases hdcase with rfl | rfl
     · exact le_rfl
-    · have hp := PMElementaryParticles.CompositeMasses.proton_value
-      have hn := PMElementaryParticles.CompositeMasses.neutron_value
+    · have hp := PMHadrons.CompositeMasses.proton_value
+      have hn := PMHadrons.CompositeMasses.neutron_value
       simp [Species.mass]
       linarith
   have hle : Species.mass .proton ≤ pMass ds :=
@@ -211,8 +212,8 @@ theorem antineutrino_stable : Stable .antineutrino := by
 `m_p + m_e < m_n` from the certified mass enclosures. -/
 theorem neutron_beta :
     ParticleDecay .neutron [.proton, .electron, .antineutrino] := by
-  have hp := PMElementaryParticles.CompositeMasses.proton_value
-  have hn := PMElementaryParticles.CompositeMasses.neutron_value
+  have hp := PMHadrons.CompositeMasses.proton_value
+  have hn := PMHadrons.CompositeMasses.neutron_value
   refine ⟨by simp, ?_, ?_, ?_, ?_⟩
   · norm_num [pCharge, Species.charge]
   · norm_num [pBaryon, Species.baryon]
@@ -234,7 +235,7 @@ theorem muon_decay :
 /-- **Charged-pion decay is allowed**: `π⁺ → μ⁺ ν`. -/
 theorem pionPlus_decay :
     ParticleDecay .pionPlus [.antimuon, .neutrino] := by
-  have hp := PMElementaryParticles.LeptonMasses.pionPlus_value
+  have hp := PMHadrons.MesonMasses.pionPlus_value
   have hm := PMElementaryParticles.LeptonMasses.muon_value
   refine ⟨by simp, ?_, ?_, ?_, ?_⟩
   · norm_num [pCharge, Species.charge]
@@ -298,15 +299,17 @@ theorem one_le_mass_of_neutrino_ne {s : Species} (h : s ≠ .neutrino) (h' : s �
   cases s <;> simp_all [Species.mass, PMElementaryParticles.LeptonMasses.tau_value]
   all_goals
     first
-      | linarith [PMElementaryParticles.CompositeMasses.proton_value.1]
-      | linarith [PMElementaryParticles.CompositeMasses.neutron_value.1]
+      | linarith [PMHadrons.CompositeMasses.proton_value.1]
+      | linarith [PMHadrons.CompositeMasses.neutron_value.1]
       | linarith [PMElementaryParticles.LeptonMasses.muon_value.1]
-      | linarith [PMElementaryParticles.CompositeMasses.pion0_value.1]
-      | linarith [PMElementaryParticles.LeptonMasses.pionPlus_value.1]
-      | linarith [PMElementaryParticles.CompositeMasses.kaonPlus_value.1]
-      | (unfold PMElementaryParticles.CompositeMasses.kaon0
-         linarith [PMElementaryParticles.CompositeMasses.g_b.1,
-                   PMElementaryParticles.CompositeMasses.pi_b.2])
+      | linarith [PMHadrons.CompositeMasses.pion0_value.1]
+      | linarith [PMHadrons.MesonMasses.pionPlus_value.1]
+      | linarith [PMHadrons.CompositeMasses.kaonPlus_value.1]
+      | (unfold PMHadrons.CompositeMasses.kaon0
+         rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+           PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.nu_eq]
+         linarith [PMHadrons.CompositeMasses.g_b.1,
+                   PMHadrons.CompositeMasses.pi_b.2])
 
 /-- **The floor mass is below every species' mass** for `mν ∈ [0,1]` — the neutrino is the lightest. -/
 theorem massWith_ge (mν : ℝ) (h1 : mν ≤ 1) (s : Species) :
@@ -374,4 +377,4 @@ the floor mass, whose E8 origin is `PMConstants.FloorNeutrino.floor_bounds`. -/
 theorem neutrino_stable_floor : StableWith floorMassME .neutrino :=
   neutrino_stable_massive floorMassME floorMassME_bounds.1 floorMassME_bounds.2
 
-end PMAtoms
+end PMHadrons

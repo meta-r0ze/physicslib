@@ -1,7 +1,7 @@
 import PMAtoms.Shells
 import PMAtoms.Nucleus
 import PMAtoms.Hydrogen
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.CompositeMasses
 import Mathlib.Data.Finset.Basic
 import Mathlib.Tactic
 
@@ -93,8 +93,8 @@ theorem neutral_net_zero (a : AtomSystem) (h : a.neutral) : a.netCharge = 0 := b
 
 /-- Combined mass in `m_e` units: nucleons + electrons + cloud binding/c². -/
 def massME (a : AtomSystem) : ℝ :=
-  (a.nucleus.Z : ℝ) * PMElementaryParticles.CompositeMasses.proton +
-    (a.nucleus.N : ℝ) * PMElementaryParticles.CompositeMasses.neutron +
+  (a.nucleus.Z : ℝ) * PMHadrons.CompositeMasses.proton +
+    (a.nucleus.N : ℝ) * PMHadrons.CompositeMasses.neutron +
     (a.electrons : ℝ) + a.cloud.massCorrectionME
 
 end AtomSystem

@@ -1,4 +1,4 @@
-import PMElementaryParticles.CompositePhaseSpace
+import PMHadrons.CompositePhaseSpace
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 
 /-! **Massless three-body phase space.**
@@ -19,7 +19,8 @@ and `(1/(2π))·M²·(1/(8π))² = M²/(128π³)`.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.MultiBodyPhaseSpace
+namespace PMHadrons.MultiBodyPhaseSpace
+open PMElementaryParticles
 
 /-- Massless three-body phase space. -/
 def masslessThreeBody (M : ℝ) : ℝ :=
@@ -53,4 +54,4 @@ theorem threeBodyRate_nonneg (T : ℂ) {M : ℝ} (hM : 0 < M) :
   unfold threeBodyRate
   exact mul_nonneg (Complex.normSq_nonneg _) (masslessThreeBody_pos hM).le
 
-end PMElementaryParticles.MultiBodyPhaseSpace
+end PMHadrons.MultiBodyPhaseSpace

@@ -9,7 +9,8 @@ below are comparison labels; the structural object is the signed cohort.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.CompositeStates
+namespace PMHadrons.CompositeStates
+open PMElementaryParticles
 
 open PMElementaryParticles.ProtocolInventory
 open PMElementaryParticles.ProtocolDynamics
@@ -93,4 +94,4 @@ theorem kaonPlus_meson : kaonPlus.isMeson = true := rfl
 theorem proton_baryon : proton.isBaryon = true := rfl
 theorem neutron_baryon : neutron.isBaryon = true := rfl
 
-end PMElementaryParticles.CompositeStates
+end PMHadrons.CompositeStates

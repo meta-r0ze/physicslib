@@ -19,6 +19,7 @@ this can be called a prediction.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Nuclear spin and parity.  `spin2` is twice the spin. -/
 structure AlphaLevel where

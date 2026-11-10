@@ -1,4 +1,4 @@
-import PMAtoms.MeanLife
+import PMElementaryParticles.MeanLife
 import Mathlib.Data.Finset.Max
 import Mathlib.Tactic
 
@@ -18,6 +18,7 @@ fixes the “keeps going” rule, not the numerical rates.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles
 
 /-- A system is its list of channel hazards. -/
 structure RateSystem where

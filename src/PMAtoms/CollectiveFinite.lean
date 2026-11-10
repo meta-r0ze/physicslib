@@ -1,4 +1,4 @@
-import PMAtoms.BetaLattice
+import PMElementaryParticles.BetaLattice
 import PMAtoms.CollectiveRate
 import Mathlib.Tactic
 
@@ -13,6 +13,7 @@ finite spectral beta channel.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Boltzmann weight of one collective channel. -/
 noncomputable def collectiveBarrierWeight (barrier : ℝ) : ℝ :=

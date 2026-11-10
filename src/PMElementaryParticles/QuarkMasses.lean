@@ -1,4 +1,4 @@
-import PMElementaryParticles.CompositeMasses
+import PMElementaryParticles.SharedUnits
 import PMConstants.StrongRunning
 
 /-!
@@ -36,7 +36,7 @@ These are the formulas Paper III's `StrongRunning` uses for the flavour threshol
 
 noncomputable section
 namespace PMElementaryParticles.QuarkMasses
-open PMElementaryParticles.CompositeMasses
+open PMElementaryParticles.SharedUnits
 open PMSubstrate.E8Values
 
 /-- Per-cell overhead `η = 171/172`. -/

@@ -1,4 +1,5 @@
-import PMAtoms.NeutronPrediction
+import PMHadrons.NeutronPrediction
+import PMAtoms.AlphaPersistence
 import PMSubstrate.Impedance
 import Mathlib.Tactic
 
@@ -27,6 +28,8 @@ credit spread over the `Δ` clock slots) with different credits:
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
+open PMHadrons
 
 /-! ## The f-vector of the packing complex -/
 
@@ -89,6 +92,19 @@ theorem alphaPhaseFraction_eq_governor (gap : Nat) (h : gap ≤ Δ) :
   rw [alphaPhaseFraction_eq gap h, Nat.cast_sub h]
   have : (Δ : ℝ) ≠ 0 := by norm_num [Δ, PMSubstrate.E8Values.Delta]
   field_simp
+
+/-- The boundary gap `χ=2` leaves `Δ−χ=41` surviving clock phases. -/
+theorem neutronMargin_survivingPhases :
+    (survivingPhases χ).card = 41 := by
+  rw [survivingPhases_card χ (by norm_num [χ, Δ, PMSubstrate.baseline])]
+  norm_num [χ, Δ, PMSubstrate.baseline]
+
+/-- The margin is the surviving-phase fraction after a boundary gap `χ`. -/
+theorem neutronMarginFactor_eq_phaseFraction :
+    neutronMarginFactor = alphaPhaseFraction χ := by
+  rw [neutronMarginFactor_eq]
+  rw [alphaPhaseFraction_eq χ (by norm_num [χ, Δ, PMSubstrate.baseline])]
+  norm_num [χ, Δ, PMSubstrate.baseline]
 
 /-- **The neutron margin is the substrate phase margin.** -/
 theorem neutronMargin_eq_phaseMargin :

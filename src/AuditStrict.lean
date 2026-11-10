@@ -4,6 +4,7 @@ import PMAction
 import PMConstants
 import PMFlavor
 import PMElementaryParticles
+import PMHadrons
 import PMAtoms
 import PMCosmology
 import Classification
@@ -17,7 +18,7 @@ run_cmd do
   let env ← getEnv
   let prefixes : List Name :=
     [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants,
-     `PMFlavor, `PMElementaryParticles, `PMAtoms, `PMCosmology,
+     `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology,
      `Classification, `CN1, `ELEM]
   let isProject (n : Name) : Bool := prefixes.any (fun p => p.isPrefixOf n)
   let mut checked : Nat := 0

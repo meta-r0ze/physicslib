@@ -1,5 +1,5 @@
-import PMElementaryParticles.CompositeMasses
-import PMAtoms.Nucleon
+import PMHadrons.CompositeMasses
+import PMHadrons.Nucleon
 import Mathlib.Tactic
 
 /-!
@@ -8,7 +8,7 @@ import Mathlib.Tactic
 The mass of a composite is not only the sum of its constituents. Each level —
 elementary protocol, nucleon, nucleus, atom — contributes its own CAP/MAP/PRO/
 GOV/TOL/MAR budget. The nucleon level is already fixed by
-`PMElementaryParticles.CompositeMasses` (`m_p`, `m_n` include all six pillars).
+`PMHadrons.CompositeMasses` (`m_p`, `m_n` include all six pillars).
 
 This module makes the tower explicit:
 
@@ -22,7 +22,8 @@ open E8 calculation.
 
 noncomputable section
 namespace PMAtoms
-open PMElementaryParticles.CompositeMasses
+open PMHadrons
+open PMHadrons.CompositeMasses
 
 /-- Levels of the persistence tower. -/
 inductive Level

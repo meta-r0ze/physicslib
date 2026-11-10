@@ -3,7 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Tactic
 
-/-! **Continuum comparison.** Coulomb Fermi function; it is not an E8 assumption. The E8-native alternative is the finite lattice channel of `PMAtoms.BetaLattice`.
+/-! **Continuum comparison.** Coulomb Fermi function; it is not an E8 assumption. The E8-native alternative is the finite lattice channel of `PMElementaryParticles.BetaLattice`.
 
  **Experimental/candidate module.** Not part of `certifiedMass`.
 

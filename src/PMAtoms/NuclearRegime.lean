@@ -11,6 +11,7 @@ Cm/Cf residuals are a regime change, not a missing coefficient.
 -/
 
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Coarse nuclear regimes. -/
 inductive NuclearRegime

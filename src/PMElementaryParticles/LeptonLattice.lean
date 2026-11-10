@@ -1,4 +1,4 @@
-import PMAtoms.BetaLattice
+import PMElementaryParticles.BetaLattice
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.** Not part of `certifiedMass`.
@@ -12,7 +12,7 @@ eigenvalue input; the structural rate and lifetime are shared with `BetaLattice`
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMElementaryParticles
 
 /-- A lepton spectral channel is a finite `BetaLatticeChannel`. -/
 abbrev LeptonLatticeChannel := BetaLatticeChannel
@@ -37,4 +37,4 @@ theorem leptonLatticeRate_pos (β c0 : ℝ) (c : LeptonLatticeChannel)
     0 < leptonLatticeRate β c0 c :=
   betaLatticeRate_pos β c0 c hβ hc0 hactive
 
-end PMAtoms
+end PMElementaryParticles

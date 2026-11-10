@@ -15,6 +15,7 @@ the channel barrier to a hazard and then to `MeanLife`/`PersistsOn`.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Schematic barrier suppression.  The physical barrier/clock normalization is
 still an open E8 input. -/

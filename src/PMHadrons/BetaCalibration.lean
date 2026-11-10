@@ -1,5 +1,5 @@
-import PMAtoms.BetaLattice
-import PMElementaryParticles.NeutronRate
+import PMElementaryParticles.BetaLattice
+import PMHadrons.NeutronRate
 import PMElementaryParticles.MuonLifetime
 import PMSubstrate.E8Values
 import Mathlib.Tactic
@@ -26,9 +26,10 @@ remainder.  This is a candidate, not a fitted number.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMHadrons
+open PMElementaryParticles
 
-open PMElementaryParticles.NeutronRate
+open PMHadrons.NeutronRate
 open PMSubstrate
 
 /-- Squared weak contact amplitude, in `m_e⁻⁴`. -/
@@ -88,4 +89,4 @@ theorem betaNeutronLifetimeE8_pos {f : ℝ} (hf : 0 < f) :
     0 < betaNeutronLifetimeE8 f :=
   betaLifetimeFromFraction_pos betaHazardE8_pos hf
 
-end PMAtoms
+end PMHadrons

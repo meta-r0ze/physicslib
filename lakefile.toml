@@ -2,7 +2,7 @@ name = "physicslib"
 version = "0.1.0"
 defaultTargets = [
   "PersistenceMechanics", "PMSubstrate", "PMAction", "PMConstants",
-  "PMFlavor", "PMElementaryParticles", "PMAtoms", "PMCosmology",
+  "PMFlavor", "PMElementaryParticles", "PMHadrons", "PMAtoms", "PMCosmology",
   "CN1", "ELEM", "Classification"
 ]
 
@@ -40,6 +40,11 @@ globs = ["PMFlavor", "PMFlavor.+"]
 name = "PMElementaryParticles"
 srcDir = "src"
 globs = ["PMElementaryParticles", "PMElementaryParticles.+"]
+
+[[lean_lib]]
+name = "PMHadrons"
+srcDir = "src"
+globs = ["PMHadrons", "PMHadrons.+"]
 
 [[lean_lib]]
 name = "PMAtoms"

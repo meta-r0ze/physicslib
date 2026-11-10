@@ -1,4 +1,4 @@
-import PMElementaryParticles.ParticleChannels
+import PMHadrons.ParticleChannels
 import PMElementaryParticles.FinalStateBridge
 
 /-! **Link the particle-channel inventory to final-state species.**
@@ -9,9 +9,10 @@ bridge; the physical matrix elements remain open.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.ChannelFinalStateLink
+namespace PMHadrons.ChannelFinalStateLink
+open PMElementaryParticles
 
-open PMElementaryParticles.ParticleChannels
+open PMHadrons.ParticleChannels
 open PMElementaryParticles.FinalStateBridge.ParticleFinalStates
 
 theorem muon_names :
@@ -36,4 +37,4 @@ theorem finalStates_charge_conserved
         (ParticleFinalStateChannel.final c) :=
   ParticleFinalStateChannel.charge_conserved c
 
-end PMElementaryParticles.ChannelFinalStateLink
+end PMHadrons.ChannelFinalStateLink

@@ -111,7 +111,7 @@ theorem and is not needed for the current mass ledger.
 
 The particle ledger treats neutrinos as massless, with no channel lighter than
 zero.  `neutrino_stable` and `antineutrino_stable` are proved in
-`PMAtoms/Particle.lean`.  The **massive ledger** is now also built: `Species.massWith mν`
+`PMHadrons/Particle.lean`.  The **massive ledger** is now also built: `Species.massWith mν`
 gives the neutrino/antineutrino the E8 floor mass, and `neutrino_stable_massive` proves the
 neutrino stays stable for every `mν ∈ [0,1]` (it remains the lightest species), instantiated at
 the floor mass by `neutrino_stable_floor` (`floorMassME ≈ 1.8×10⁻⁸ m_e`).  There is still no
@@ -164,14 +164,11 @@ single-closure Cm case in range.  The simpler open fraction `(d+1)/(d+ν)` is
 recorded but too weak.
 
 
-### Neutron prediction
+### Neutron prediction (moved)
 
-`NeutronPrediction` fixes the minimal cube `n=3` and the exact endpoint
-`m_n−m_p`.  With `f ≈ 0.452840`, `h = G_F²/(σ−χ)`, and the E8 margin factor
-`1−χ/Δ = 41/43`, the corrected lifetime is `≈877.2 s`, within `0.1%` of the
-measured `878 s`.  The off-diagonal carrier entries vanish by
-`weakCarrierOperator_offdiag_zero`; the numerical fraction remains a comparison
-calculation, not a theorem input.
+The neutron lifetime prediction is hadron-level and now lives in
+[`PMHadrons/OVERVIEW.md`](../PMHadrons/OVERVIEW.md) and
+[`PMHadrons/REVIEW-AND-NEXT.md`](../PMHadrons/REVIEW-AND-NEXT.md).
 
 ### Finite alpha channel
 
@@ -213,7 +210,7 @@ The E8-native beta route is `BetaLattice`; these are comparison/legacy pieces:
 
 | module | continuum content | E8 conversion |
 | --- | --- | --- |
-| `PMElementaryParticles.NeutronRate` | continuum massive-electron phase space, `G_F`, `g_A` | finite spectral beta rate |
+| `PMHadrons.NeutronRate` | continuum massive-electron phase space, `G_F`, `g_A` | finite spectral beta rate |
 | `PMAtoms.BetaDecay` | continuum beta phase-space integral, Fermi function | finite spectral beta rate |
 | `PMAtoms.FermiFunction` | Coulomb Fermi factor | lattice Coulomb phase / finite channel |
 | `PMAtoms.SingleParticle` | Nilsson/Strutinsky shell model | E8 level ladder / finite shell count |

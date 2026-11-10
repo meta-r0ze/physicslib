@@ -1,3 +1,5 @@
+import PMHadrons.MesonMasses
+import PMHadrons.CompositeMasses
 import PMElementaryParticles.LeptonMasses
 
 /-!
@@ -11,7 +13,8 @@ live here. No measured number enters a theorem statement used by the derivation.
 noncomputable section
 namespace E8PConstants.LeptonMassPulls
 open PMElementaryParticles.LeptonMasses
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.MesonMasses
+open PMHadrons.CompositeMasses
 
 theorem muon_tension : -2.5 < (muon - 206.7682827) / 0.0000046 ∧
     (muon - 206.7682827) / 0.0000046 < -2.3 := by
@@ -48,14 +51,16 @@ theorem kaon_inversion : 3.93 < (kaon0 - kaonPlus) * me ∧ (kaon0 - kaonPlus) *
     · rw [lt_div_iff₀ hpos]; nlinarith
     · rw [div_lt_iff₀ hpos]; nlinarith
   unfold kaon0 kaonPlus me
+  rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
+    PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.nu_eq]
   constructor <;> nlinarith [hp.1, hp.2, hs.1, hs.2, ha.1, ha.2]
 
 theorem pion_splitting : 4.5933 < (pionPlus - pion0) * me ∧ (pionPlus - pion0) * me < 4.5935 := by
   have ha := a_b
   rw [pionPlus_ledger]
+  unfold pion0 me
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
     PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
-  unfold pion0 me
   constructor <;> nlinarith [ha.1, ha.2]
 
 end E8PConstants.LeptonMassPulls

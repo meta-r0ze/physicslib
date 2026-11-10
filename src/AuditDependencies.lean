@@ -4,6 +4,7 @@ import PMAction
 import PMConstants
 import PMFlavor
 import PMElementaryParticles
+import PMHadrons
 import PMAtoms
 import PMCosmology
 import Classification
@@ -18,7 +19,7 @@ run_cmd do
   -- Modules that make up the checked paper tree (the `src` libraries).
   let paperMod (n : Name) : Bool :=
     anyPrefix [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMFlavor,
-      `PMElementaryParticles, `PMAtoms, `PMCosmology] n
+      `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] n
   -- The `tools/e8p` value tool; it may import `src`, but `src` must not import it.
   let toolsMod (n : Name) : Bool :=
     anyPrefix [`E8PConstants, `E8PConstantsProof, `ConstantsMain] n
@@ -26,20 +27,24 @@ run_cmd do
     if paperMod mod && toolsMod dep then
       true
     else if (`PMAction).isPrefixOf mod then
-      anyPrefix [`PMConstants, `PMFlavor, `PMElementaryParticles, `PMAtoms, `PMCosmology] dep
+      anyPrefix [`PMConstants, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`PMConstants).isPrefixOf mod then
-      anyPrefix [`PMFlavor, `PMElementaryParticles, `PMAtoms, `PMCosmology] dep
+      anyPrefix [`PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`PMFlavor).isPrefixOf mod then
-      anyPrefix [`PMElementaryParticles, `PMAtoms, `PMCosmology] dep
-    else if (`PMElementaryParticles).isPrefixOf mod || (`PMAtoms).isPrefixOf mod then
+      anyPrefix [`PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
+    else if (`PMElementaryParticles).isPrefixOf mod then
+      anyPrefix [`PMHadrons, `PMAtoms, `PMCosmology] dep
+    else if (`PMHadrons).isPrefixOf mod then
+      anyPrefix [`PMAtoms, `PMCosmology] dep
+    else if (`PMAtoms).isPrefixOf mod then
       (`PMCosmology).isPrefixOf dep
     else if (`PMSubstrate).isPrefixOf mod then
-      anyPrefix [`PMAction, `PMConstants, `PMFlavor, `PMElementaryParticles, `PMAtoms, `PMCosmology] dep
+      anyPrefix [`PMAction, `PMConstants, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`PersistenceMechanics).isPrefixOf mod then
-      anyPrefix [`PMSubstrate, `PMAction, `PMConstants, `PMFlavor, `PMElementaryParticles, `PMAtoms, `PMCosmology] dep
+      anyPrefix [`PMSubstrate, `PMAction, `PMConstants, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`Classification).isPrefixOf mod || (`CN1).isPrefixOf mod || (`ELEM).isPrefixOf mod then
       anyPrefix [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMFlavor,
-        `PMElementaryParticles, `PMAtoms, `PMCosmology] dep
+        `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else
       false
   let mut checked : Nat := 0

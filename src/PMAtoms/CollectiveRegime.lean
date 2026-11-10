@@ -13,6 +13,7 @@ persists only if no allowed channel lowers the collective mass.
 -/
 
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- A collective exit channel with its mass and barrier. -/
 structure CollectiveChannel where

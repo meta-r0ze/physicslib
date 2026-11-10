@@ -1,4 +1,4 @@
-import PMElementaryParticles.CompositePhaseSpace
+import PMHadrons.CompositePhaseSpace
 
 /-! **Composite binding interface.**
 
@@ -8,7 +8,8 @@ bound-state equation.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.CompositeBinding
+namespace PMHadrons.CompositeBinding
+open PMElementaryParticles
 
 /-- Binding ledger for one composite state. -/
 structure BindingLedger where
@@ -30,7 +31,7 @@ theorem compositeMassSq_lt_constituent (B : BindingLedger)
 
 /-- Phase space from the bound-state mass and two daughter masses. -/
 def compositePhase (B : BindingLedger) (m1 m2 : ℝ) : ℝ :=
-  PMElementaryParticles.CompositePhaseSpace.twoBodyPhaseSpace
+  PMHadrons.CompositePhaseSpace.twoBodyPhaseSpace
     (Real.sqrt (compositeMassSq B)) m1 m2
 
-end PMElementaryParticles.CompositeBinding
+end PMHadrons.CompositeBinding

@@ -1,5 +1,6 @@
-import PMElementaryParticles.CompositeTransition
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.MesonMasses
+import PMHadrons.CompositeTransition
+import PMHadrons.CompositeMasses
 import PMElementaryParticles.LeptonMasses
 
 /-! **Composite two-body phase space.**
@@ -16,12 +17,14 @@ numerical hadronic matrix element.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.CompositePhaseSpace
+namespace PMHadrons.CompositePhaseSpace
+open PMElementaryParticles
 
-open PMElementaryParticles.CompositeStates
-open PMElementaryParticles.CompositeTransition
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.CompositeStates
+open PMHadrons.CompositeTransition
+open PMHadrons.CompositeMasses
 open PMElementaryParticles.LeptonMasses
+open PMHadrons.MesonMasses
 
 /-- Two-body phase space for `M → m1 + m2`. -/
 def twoBodyPhaseSpace (M m1 m2 : ℝ) : ℝ :=
@@ -70,4 +73,4 @@ theorem kaonPionRate_nonneg : 0 ≤ kaonPionRate := by
   rw [kaonPionRate_eq]
   exact mul_nonneg (Complex.normSq_nonneg _) kaonPionPhase_pos.le
 
-end PMElementaryParticles.CompositePhaseSpace
+end PMHadrons.CompositePhaseSpace

@@ -8,7 +8,8 @@ The proofs are grouped based on their area:
  * Constants - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
  * Flavor - Information transfer across the substrate (flavor mixing, wall spectra, propagation)
  * Elementary Particles - Systems that can persist on top of the substrate. (protocols, decay rates)
- * Atoms - Further recursive systems: nucleon (proton, neutron), nucleus (the shape is sort of like chemistry), shell, atom (ending with the full periodic table list of particles that can persist)
+ * Hadrons - Quark composites: nucleons (proton, neutron) with the full six-pillar mass ledger, mesons, and their decays
+ * Atoms - Further recursive systems: nucleus (the shape is sort of like chemistry), shell, atom (ending with the full periodic table list of particles that can persist)
  * Cosmology - The lifetime of the substrate systems (expansion of the universe equations, etc)
  * e8p command line tool to output the lean values you can compare against experimental physics values.
 
@@ -29,7 +30,7 @@ You do not need to compile anything to start. Point your AI at this repo and the
 
  * Does this cross the "too many coincidences and requires further investigation" line?
  * Give me an overview of how the systems stack from persistence through the E8 system followed by elementary particles, nucleons, nucleus, shell, and atoms
- * Give me a dependency-ordered map of the eight Lean libraries and `e8p`, and say in one sentence what each one owns.
+ * Give me a dependency-ordered map of the nine Lean libraries and `e8p`, and say in one sentence what each one owns.
  * Why E8? Walk me through the substrate argument in `src/PMSubstrate/OVERVIEW.md` and the `Research/` alternatives. What is forced, and what is assumed?
  * What exactly does PM prove about Yang–Mills, and what does it explicitly not prove? (See PMAction. In short: the classical continuum limit and finite-volume Euclidean setup of the gauge layer, plus a proved volume-uniform mass gap for PM's distinction substrate in `PMAction/MassGap`; the gap of the continuous gauge layer is the general quantum Yang–Mills problem and is out of scope.)
  * How does the muon width and lifetime come out of `PMElementaryParticles`?

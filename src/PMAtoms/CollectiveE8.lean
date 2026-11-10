@@ -1,6 +1,6 @@
 import PMAtoms.CollectiveRegime
 import PMAtoms.NuclearShells
-import PMAtoms.MeanLife
+import PMElementaryParticles.MeanLife
 import PMAtoms.E8Tick
 import Mathlib.Tactic
 
@@ -20,6 +20,7 @@ barrier energies in `m_e` units.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Alpha barrier: one substrate clock period. -/
 def alphaBarrier : ℝ := e8Tick

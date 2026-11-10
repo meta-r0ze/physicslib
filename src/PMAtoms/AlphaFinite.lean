@@ -19,6 +19,7 @@ lifetimes; its absolute E8 value is still open.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- Finite alpha channel rate for a supplied attempt frequency. -/
 noncomputable def alphaFiniteRate (attempt : ℝ) (p : Nuclide) : ℝ :=

@@ -1,5 +1,8 @@
 # PMElementaryParticles — open work (todo)
 
+Open work on the hadron level (neutron width, kaon and neutral pion, composite states,
+phase space and bound-state matrix elements) is in [`PMHadrons/REVIEW-AND-NEXT.md`](../PMHadrons/REVIEW-AND-NEXT.md).
+
 Checked mathematics and the module map are in [`OVERVIEW.md`](OVERVIEW.md). This
 file is only what remains, split by what a Lean proof can close (**Part A**) and
 what needs a physical model law or measured/selected input (**Part B**). Paper V's elementary-particle library builds clean; run `./build.sh PMElementaryParticles` for current
@@ -101,10 +104,10 @@ example.  SM names below are comparison labels, not the derivation target.
 
 `FinalStateBridge` now supplies a comparison final-state ledger: each channel carries an
 initial species, a final species list, and a proof of conserved charge.  The
-`ParticleFinalStates` inventory covers μ, τ, π and K channels, and
-`ChannelFinalStateLink` matches their names to `ParticleChannels`
-(`muon_names`, `tau_first_name`, `pion_names`, `kaon_prefix`).  It does not yet
-supply the physical matrix element or the full hadronic inventory.
+`ParticleFinalStates` inventory covers μ, τ, π and K channels.  It does not yet
+supply the physical matrix element or the full hadronic inventory.  The name-level
+bridge to the hadron channel inventory (`ChannelFinalStateLink`, `ParticleChannels`)
+is in `PMHadrons`.
 
 `CarrierSpecies` now supplies the channel-label → base-protocol → species bridge
 and proves `channelSpecies_charge`: the bridge respects the E8 charge grading.
@@ -165,35 +168,12 @@ promote a numerical fit or a symmetry-class count to a particle classification.
 ### Lepton / pion / quark mass ledger naming (A7)
 `LeptonMasses` and `QuarkMasses` now write every mass purely in the canonical
 `E8Values` invariants and decompose it into named tier costs (`muon_ledger`,
-`tau_ledger`, `pionPlus_ledger`; `up_ledger` … `top_ledger`), so no bare
+`tau_ledger`, and `pionPlus_ledger` now in `PMHadrons.MesonMasses`; `up_ledger` … `top_ledger`), so no bare
 measurement literal remains. The muon's vacuum feedback `(χ+σ)α/(1−α)` is
 *derived* as the fixed point of its recursive loop (`muonFeedback_fixpoint`), not
 fitted. What stays a declared model input (`M`) is the **assignment** of which
 invariant pays which tier cost (the paper's proposed protocol ledger): there is no
 option family/cost functional over tier ledgers yet.
-
-### Neutron width
-The massless-pair diagnostic is superseded by `NeutronRate`, which uses the
-massive-electron phase space
-
-```
-f = ∫_{1}^{m_n−m_p} E√(E²−1)(m_n−m_p−E)² dE
-```
-
-and the E8 axial assignment `g_A = σ/D = 5/4`.  The width is
-
-```
-Γ = G_F²|Vud|²/(2π³)·(1+3g_A²)·f.
-```
-
-With `f ≈ 1.636`, `Vud² ≈ 0.949`, this gives `τ ≈ 9.8×10² s`, about 11% above
-the measured `8.78×10² s`.  The recoil-corrected endpoint
-`E_rec = (m_n² + 1 − m_p²)/(2m_n)` gives `f ≈ 1.630` and `τ ≈ 9.8×10² s`; a
-supplied `4%` radiative factor brings it to `≈9.4×10² s`.  The residual few
-percent is the remaining strong/electroweak correction, not a free fit.  The
-full angular Dalitz density and a derived radiative correction are still open.
-The environmental `beamLifetime = (215/213)·neutronLifetime` is formalized as a
-conditional rescaling.
 
 ### Muon lifetime
 
@@ -201,27 +181,18 @@ conditional rescaling.
 below the measured value.  The phase space is still the continuum one; the E8
 finite-channel replacement remains open.
 
-### Tau and pion
+### Tau
 
 `TauE8` gives the tau lifetime from the E8-input muon lifetime and E8 lepton
-masses; `B_e` remains comparison data.  `PionWidth` now uses `fπ = v/(Δ²+Δ−χ) = v/1890`; the resulting lifetime is
-`≈2.52×10⁻⁸ s`, about 3% below the measured `2.60×10⁻⁸ s`.
-
-### Kaon and neutral pion
-
-`KaonWidth` now uses `fK = v/(Δ²−ν²) = v/1593` and `|Vus| = s₁₂c₂₃`; the
-partial `K⁺ → μ⁺ν` lifetime is about `2.0×10⁻⁸ s` versus `1.95×10⁻⁸ s`.
-`NeutralPionWidth` uses `fπ` and the identical-photon factor `32` in the
-`130 MeV` convention (the earlier `128` was a factor-four error), giving
-`τ(π⁰) ≈ 8.46×10⁻¹⁷ s` versus `8.52×10⁻¹⁷ s`.
+masses; `B_e` remains comparison data.  The pion/kaon lifetimes are hadron-level
+(`PMHadrons/REVIEW-AND-NEXT.md`).
 
 ### B4 status
 
-`ParticleChannels` now has concrete μ, τ, π, and K inventories with provenance
-labels (`e8`, `calibrated`, `modelInput`, `blocked`).  The pion electron mode has an E8 rate (`pionElectronWidthE8`).  The tau hadronic
-channels and kaon multibody modes are inventoried but blocked on hadronic matrix
-elements.  B1/B2 (physical final states and measure normalization), A5, and A4
-remain model/analysis inputs.
+The hadron channel inventory (`ParticleChannels`, the pion electron mode, and the
+blocked tau-hadronic / kaon multibody modes) is in `PMHadrons/REVIEW-AND-NEXT.md`.
+B1/B2 (physical final states and measure normalization), A5, and A4 remain
+model/analysis inputs.
 
 ### B5 status
 
@@ -302,54 +273,14 @@ not the full nonperturbative interaction; charged pion/kaon matrix elements stil
 need composite states.
 
 
-### Composite states and transition
-
-`CompositeStates` adds signed constituent cohorts: `pionPlus`, `pionZero`,
-`kaonPlus`, `proton`, `neutron`, with charges proved from the base-protocol
-charges.  `CompositeTransition` extends the carrier-product operator to composite
-cohorts and proves `K⁺ → π⁺ π⁰` charge conservation and its operator entry.  These
-are structural/comparison states, not a derivation of the bound-state spectrum.
-
-
-### Composite phase space and rate
-
-`CompositePhaseSpace` adds the standard two-body phase space
-
-```
-Φ₂ = √((M² − (m1+m2)²)(M² − (m1−m2)²)) / (8πM²)
-```
-
-and the structural rate `compositePartialWidth = |T|²·Φ₂`.  The `K⁺ → π⁺ π⁰`
-instance uses the E8 composite masses; `kaonPionPhase_pos` proves it is above
-threshold and `kaonPionRate_nonneg` proves the structural rate is nonnegative.
-The hadronic matrix element is still the carrier-product operator, not a full
-bound-state calculation.
-
-
-### Bound-state matrix element
-
-`HadronicMatrixElement` makes the nonperturbative object explicit:
-
-```
-⟨π⁺π⁰|T|K⁺⟩
-```
-
-`BoundStateMatrixElement.value` is a supplied complex input; `kaonPionRate` proves
-the rate consequence `|value|²·Φ₂` and its nonnegativity.  The value is **not**
-derived here.  This is a deliberate interface, not a fake calculation.
-
-
 ### Five-task sweep
 
-Completed structural versions of the five follow-ups:
+Completed structural follow-ups at this level:
 
 ```
-BoundStateOverlap      overlap as a finite inner product (wavefunction supplied)
-CompositeBinding       mass = constituent mass − binding (binding supplied)
-MultiBodyPhaseSpace    massless three-body Φ₃ and rate form
 TopTransition          top → bottom + charged vector, charge + structural rate
 NeutrinoPropagation    two-flavour phase, survival/transition, bounds
 ```
 
-The first two remain genuine model inputs: no bound-state wavefunction or binding
-energy is derived.  The last three are concrete structural additions.
+The composite / bound-state follow-ups (`BoundStateOverlap`, `CompositeBinding`,
+`MultiBodyPhaseSpace`) are in `PMHadrons`.

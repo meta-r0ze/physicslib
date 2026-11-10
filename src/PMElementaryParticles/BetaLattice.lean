@@ -1,6 +1,6 @@
-import PMAtoms.RateModel
-import PMAtoms.MeanLife
-import PMAtoms.LatticeSpectral
+import PMElementaryParticles.RateModel
+import PMElementaryParticles.MeanLife
+import PMElementaryParticles.LatticeSpectral
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.** Not part of `certifiedMass`.
@@ -14,7 +14,7 @@ finite family; no continuum phase space is inserted.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMElementaryParticles
 open scoped BigOperators
 
 /-- A finite beta channel: total label count `modes+1`, with `active` active modes. -/
@@ -391,4 +391,4 @@ theorem betaSpectralRateCutoff_mono (β c0 : ℝ) (n : Nat) {E E' : ℝ}
   exact betaWeightedRate_mono β c0 _ (betaOpenModes_mono h) hβ hc0
     (fun p => betaSpectralWeight_pos n _ _ _)
 
-end PMAtoms
+end PMElementaryParticles

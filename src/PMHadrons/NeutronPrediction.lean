@@ -1,10 +1,8 @@
-import PMAtoms.BetaCalibration
-import PMAtoms.BetaLattice
-import PMAtoms.NuclearPacking3D
-import PMAtoms.Invariants
-import PMAtoms.AlphaPersistence
+import PMHadrons.BetaCalibration
+import PMHadrons.MinimalCube
+import PMElementaryParticles.BetaLattice
 import PMSubstrate.E8Margin
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.CompositeMasses
 import PMElementaryParticles.PhysicalUnits
 import Mathlib.Tactic
 import Mathlib.Analysis.Complex.ExponentialBounds
@@ -20,7 +18,8 @@ Boltzmann weight ratio, and the lifetime follows from `betaHazardE8`.
 -/
 
 noncomputable section
-namespace PMAtoms
+namespace PMHadrons
+open PMElementaryParticles
 
 /-- Minimal volume-persistent cube. -/
 def neutronCube : Nat := 3
@@ -54,8 +53,8 @@ theorem neutronLifetimeE8_pos (hf : 0 < neutronSpectralFraction) :
 
 /-- Exact neutron endpoint `m_n − m_p` in `m_e` units. -/
 noncomputable def neutronCutoffExact : ℝ :=
-  PMElementaryParticles.CompositeMasses.neutron -
-    PMElementaryParticles.CompositeMasses.proton
+  PMHadrons.CompositeMasses.neutron -
+    PMHadrons.CompositeMasses.proton
 
 /-- Exact-cutoff spectral fraction; the open set automatically includes any
 higher mode that crosses the cutoff. -/
@@ -68,11 +67,12 @@ noncomputable def neutronLifetimeExactCutoff : ℝ :=
 
 /-- E8 margin factor `1 − χ/Δ = 41/43`. -/
 def neutronMarginFactor : ℝ :=
-  (((Δ - χ : Nat)) : ℝ) / (Δ : ℝ)
+  (((PMSubstrate.E8Values.Delta - PMSubstrate.E8Values.chi : Nat)) : ℝ) /
+    (PMSubstrate.E8Values.Delta : ℝ)
 
 theorem neutronMarginFactor_eq : neutronMarginFactor = 41 / 43 := by
   unfold neutronMarginFactor
-  norm_num [Δ, χ, PMSubstrate.baseline]
+  norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.E8Values.chi, PMSubstrate.baseline]
 
 theorem neutronMarginFactor_pos : 0 < neutronMarginFactor := by
   rw [neutronMarginFactor_eq]; norm_num
@@ -84,19 +84,6 @@ def neutronLifetimeCorrected : ℝ :=
 theorem neutronLifetimeCorrected_eq :
     neutronLifetimeCorrected =
       neutronMarginFactor * neutronLifetimeExactCutoff := rfl
-
-/-- The boundary gap `χ=2` leaves `Δ−χ=41` surviving clock phases. -/
-theorem neutronMargin_survivingPhases :
-    (survivingPhases χ).card = 41 := by
-  rw [survivingPhases_card χ (by norm_num [χ, Δ, PMSubstrate.baseline])]
-  norm_num [χ, Δ, PMSubstrate.baseline]
-
-/-- The margin is the surviving-phase fraction after a boundary gap `χ`. -/
-theorem neutronMarginFactor_eq_phaseFraction :
-    neutronMarginFactor = alphaPhaseFraction χ := by
-  rw [neutronMarginFactor_eq]
-  rw [alphaPhaseFraction_eq χ (by norm_num [χ, Δ, PMSubstrate.baseline])]
-  norm_num [χ, Δ, PMSubstrate.baseline]
 
 theorem neutronMarginFactor_eq_substrate :
     neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin := by
@@ -519,4 +506,4 @@ theorem neutronLifetimeSeconds_bounds :
   constructor <;> nlinarith [hprodlo, hprodhi]
 
 
-end PMAtoms
+end PMHadrons

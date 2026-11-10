@@ -27,6 +27,7 @@ src/PMAction.lean            + src/PMAction/
 src/PMConstants.lean         + src/PMConstants/
 src/PMFlavor.lean            + src/PMFlavor/
 src/PMElementaryParticles.lean + src/PMElementaryParticles/
+src/PMHadrons.lean           + src/PMHadrons/
 src/PMAtoms.lean             + src/PMAtoms/
 src/PMCosmology.lean         + src/PMCosmology/
 

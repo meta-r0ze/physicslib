@@ -1,3 +1,4 @@
+import PMHadrons.CompositeMasses
 import PMElementaryParticles.QuarkMasses
 
 /-!
@@ -13,7 +14,7 @@ The E8 quark-mass formulas and their E8-only enclosures stay in
 noncomputable section
 namespace E8PConstants.QuarkMassPulls
 open PMElementaryParticles PMElementaryParticles.QuarkMasses
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.CompositeMasses
 
 theorem pulls :
     (-1.5 < (up * me - 2.16) / 0.07 ∧ (up * me - 2.16) / 0.07 < -1.4) ∧

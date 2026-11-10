@@ -1,4 +1,4 @@
-import PMElementaryParticles.CompositeMasses
+import PMHadrons.CompositeMasses
 import PMElementaryParticles.Widths
 import PMConstants.Values
 import PMSubstrate.E8Values
@@ -6,7 +6,7 @@ import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
-/-! **Continuum comparison.** This follows the usual continuum treatment; it is not an E8 assumption. The E8-native route is `PMAtoms.BetaLattice`.
+/-! **Continuum comparison.** This follows the usual continuum treatment; it is not an E8 assumption. The E8-native route is `PMElementaryParticles.BetaLattice`.
 
 
 # Neutron beta width with a massive electron
@@ -36,24 +36,13 @@ theorem input.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.NeutronRate
+namespace PMHadrons.NeutronRate
+open PMElementaryParticles
 
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.CompositeMasses
 open PMElementaryParticles.Widths
 open PMConstants
-
-/-- `G_F` in `m_e⁻²`. -/
-def fermiME : ℝ :=
-  Values.fermi Values.electronGeV *
-    Values.electronGeV ^ 2
-
-theorem fermiME_pos : 0 < fermiME := by
-  have h := Values.fermi_bounds
-  have he : 0 < Values.electronGeV ^ 2 := by
-    unfold Values.electronGeV PMConstants.ElectroweakBounds.electronGeV
-    positivity
-  unfold fermiME
-  exact mul_pos (lt_trans (by norm_num) h.1) he
+export PMElementaryParticles.SharedUnits (fermiME fermiME_pos)
 
 /-- Electron endpoint `m_n − m_p` in `m_e` units. -/
 def endpoint : ℝ := neutron - proton
@@ -155,11 +144,12 @@ def beamLifetime (Vud : ℝ) : ℝ := environmentFactor * neutronLifetime Vud
 theorem beamLifetime_eq (Vud : ℝ) :
     beamLifetime Vud = environmentFactor * neutronLifetime Vud := rfl
 
-end PMElementaryParticles.NeutronRate
+end PMHadrons.NeutronRate
 
-namespace PMElementaryParticles.NeutronRate
+namespace PMHadrons.NeutronRate
+open PMElementaryParticles
 
-open PMElementaryParticles.CompositeMasses
+open PMHadrons.CompositeMasses
 open PMElementaryParticles.Widths
 open PMConstants
 
@@ -262,4 +252,4 @@ theorem neutronLifetimeRecoil_pos (Vud R : ℝ)
 def beamLifetimeRecoil (Vud R : ℝ) : ℝ :=
   environmentFactor * neutronLifetimeRecoil Vud R
 
-end PMElementaryParticles.NeutronRate
+end PMHadrons.NeutronRate

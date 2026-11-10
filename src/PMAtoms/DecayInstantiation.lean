@@ -1,5 +1,5 @@
 import PersistenceMechanics.DecayChannel
-import PMAtoms.BetaLattice
+import PMElementaryParticles.BetaLattice
 import PMAtoms.AlphaFinite
 import PMAtoms.FissionYield
 import Mathlib.Tactic
@@ -30,6 +30,7 @@ Each factor found for the chains sits in its own pillar slot:
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 open PersistenceMechanics.Decay
 

@@ -31,11 +31,11 @@ only when their values are Lean-backed here.
   `pmns_jarlskog` (`PMFlavor.PMNSIntervals.jarlskog_bounds`).
 - Paper 5 / Atoms (`PMAtoms`): `rydberg_ev`, `bohr_radius`,
   `shell_capacity_n4`.
-- Paper 5: `proton_ratio`, `neutron_ratio` (`PMElementaryParticles.CompositeMasses.*_value`),
+- Paper 5: `proton_ratio`, `neutron_ratio` (`PMHadrons.CompositeMasses.*_value`),
   `muon_ratio`, `tau_ratio` (`PMElementaryParticles.LeptonMasses.*_value`), `proton_radius`,
   `pion0_mev`, `kaon0_mev`, `kaon_plus_mev` (`CompositeMasses` pulls), and the six
   quark masses `up/down/strange/charm/bottom/top_mev` (`QuarkMasses.*_value`),
-  `pion_plus_mev` (`LeptonMasses.pionPlus_mev_value`), `neutrino_floor_mass`
+  `pion_plus_mev` (`PMHadrons.MesonMasses.pionPlus_mev_value`), `neutrino_floor_mass`
   (`FloorNeutrino.floor_bounds`), and `tau_lifetime_fs`
   (`PMElementaryParticles.TauLifetime.tau_lifetime_tree`).
 - Paper 6: `baryon_pmJ`, `baryon_pm3J` (`PMCosmology.Primordial.baryon_windows`),

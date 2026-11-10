@@ -12,6 +12,7 @@ fragment (`Z=50`, `N=82`), the double E8 closure, plus its complement.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- `Sn-132`: `Z = magic50`, `N = magic82`. -/
 def sn132 : Nuclide := ⟨magic50, magic82⟩

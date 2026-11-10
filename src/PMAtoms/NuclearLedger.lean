@@ -11,6 +11,7 @@ the deformed-actinide frontier; the post-frontier collective regime is separate.
 
 noncomputable section
 namespace PMAtoms
+open PMElementaryParticles PMHadrons
 
 /-- The smooth certified mass ledger. -/
 def certifiedMass (z n : Nat) : ℝ :=

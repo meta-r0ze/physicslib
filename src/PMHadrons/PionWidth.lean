@@ -1,5 +1,6 @@
+import PMHadrons.MesonMasses
 import PMElementaryParticles.LeptonMasses
-import PMElementaryParticles.NeutronRate
+import PMHadrons.NeutronRate
 import PMConstants.Values
 import PMElementaryParticles.MuonLifetime
 import PMSubstrate.E8Values
@@ -18,10 +19,12 @@ The pion decay constant `f_π` is still a supplied input.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.PionWidth
+namespace PMHadrons.PionWidth
+open PMElementaryParticles
 
 open PMElementaryParticles.LeptonMasses
-open PMElementaryParticles.NeutronRate
+open PMHadrons.MesonMasses
+open PMHadrons.NeutronRate
 
 def pionWidth (fPi : ℝ) : ℝ :=
   fermiME ^ 2 * fPi ^ 2 * pionPlus * muon ^ 2 *
@@ -151,4 +154,4 @@ noncomputable def pionElectronWidthE8 : ℝ :=
 noncomputable def pionElectronLifetimeE8 : ℝ :=
   1 / pionElectronWidthE8
 
-end PMElementaryParticles.PionWidth
+end PMHadrons.PionWidth

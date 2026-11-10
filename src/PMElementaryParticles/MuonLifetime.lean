@@ -1,6 +1,6 @@
 import PMElementaryParticles.MuonRate
 import PMElementaryParticles.LeptonMasses
-import PMElementaryParticles.NeutronRate
+import PMElementaryParticles.SharedUnits
 import PMElementaryParticles.Widths
 import PMConstants.Values
 import PMSubstrate.E8Values
@@ -24,7 +24,7 @@ noncomputable section
 namespace PMElementaryParticles.MuonLifetime
 
 open PMElementaryParticles.LeptonMasses
-open PMElementaryParticles.NeutronRate
+open PMElementaryParticles.SharedUnits
 open PMElementaryParticles.Widths
 
 /-- Muon width in `m_e` units. -/
