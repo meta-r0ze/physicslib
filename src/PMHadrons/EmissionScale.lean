@@ -25,6 +25,12 @@ occupancy. If it were, `|Ω_π| = χ`, `|Ω_K| = σ + χ`, so `fK/fπ = χ/(σ+�
 enclosures give `fK/fπ > 1` (`302.47/254.95 ≈ 1.186`, `fK_over_fPi_gt_one`). So the emission space
 is a **separate** structure from the occupancy — the one remaining construction. The assigned
 denominators are `|Ω_π| = Δ² + Δ − χ = 1890` and `|Ω_K| = Δ² − ν² = 1593`.
+
+**Readings tested and failed (do not re-try).** GMOR on the derived masses gives `fK/fπ ≈ 1.08`;
+the occupancy gives `2/7`; the boundary-event space (`ValidToll`, size `334`) over-scales `fπ`.
+Both assigned counts are perturbations of the one-cycle causal cone (`Δ²`), so a cone-derived
+mode space is the strongest lead; but since `fπ = v/(Δ²+Δ−χ)` is assigned, the count may be a
+coincidence.
 -/
 
 namespace PMHadrons.EmissionScale

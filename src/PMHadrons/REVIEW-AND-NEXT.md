@@ -93,6 +93,15 @@ separate structure; the assigned counts are `|Ω_π| = Δ²+Δ−χ = 1890 = cau
 (`pionModes_eq_causalCone`) and `|Ω_K| = Δ²−ν² = 1593`. Identifying that space is the remaining
 construction.
 
+**Readings tested and failed (do not re-try).** (i) GMOR on the derived PM masses,
+`fK²/fπ² = [(m_s+m̂)/(2m̂)]·(mπ²/mK²)`, gives ≈ 1.08 vs the measured 1.193. (ii) The uniform
+configuration over the *occupancy* gives `fK/fπ = χ/(σ+χ) = 2/7` (no-go above). (iii) The
+boundary-event space (`ValidToll`, `334`) over-scales `fπ` (~737 vs 130 MeV). So the emission mode
+space is not the occupancy, not the boundary event space, and not GMOR. Both assigned counts are
+perturbations of the one-cycle causal cone (`Δ²`), so a **cone-derived** mode space is the
+strongest remaining lead — but the physical modes are not yet identified, and because
+`fπ = v/(Δ²+Δ−χ)` is an assigned formula the count may be a coincidence.
+
 **Missing on E8.** the composite's configuration (a normalized many-carrier state, not just a
 constituent list); a single-carrier emission operator; and the composite → one-carrier overlap.
 
