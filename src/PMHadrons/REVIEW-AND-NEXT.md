@@ -26,9 +26,17 @@ placement holds ≥ `n` cells and a placement below `n` is not persistent (`minO
 bound is derived**. `tied_minimal_of_moved` gives the dichotomy: `n` is a result iff the
 persistence predicate forces a unique least-occupancy placement.
 
+**The kaon's extra `σ` now has a concrete candidate (`StrangeCarrier`).** `σ` is the **Protocol**
+pillar's interaction-direction / embedding-address count (three spatial + two boundary): the
+defect's embedding occupies `σ` of the `R_M` cycle addresses and Protocol routes among the
+`R_M − σ = 167` residual ones (`PMSubstrate.TollFilters.residual_card`). The strange quark is a
+**line-tier** carrier (`TierLedger.downTiers`), so under the premise "a line-tier carrier embeds
+the `σ` directions" it holds `σ` addresses, giving `nK = χ + σ` while the point-tier pion keeps
+`nπ = χ`. So the whole `n` reduces to the colour-singlet base plus line-tier direction counts.
+
 **Still missing on E8.** The persistence predicate itself (what makes a multi-carrier placement
-self-supporting); the kaon's extra `σ` (its strange carrier needs `σ` more cells than the
-colour-neutrality bound gives); and the `Δ²`-based nucleon account.
+self-supporting); the single premise that a line-tier carrier spans the `σ` directions; and the
+`Δ²`-based nucleon account.
 
 **Tasks.**
 1. State the **persistence/occupancy rule**: among the configurations of a carrier cohort,

@@ -13,6 +13,7 @@ import PMHadrons.ParticleChannels
 import PMHadrons.CompositeMasses
 import PMHadrons.MesonMasses
 import PMHadrons.Occupancy
+import PMHadrons.StrangeCarrier
 import PMHadrons.ChannelFinalStateLink
 import PMHadrons.CompositeStates
 import PMHadrons.CompositeTransition
