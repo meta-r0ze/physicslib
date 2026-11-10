@@ -1,291 +1,93 @@
-# PMAtoms — open work (todo)
+# PMAtoms — open work
 
-Checked results are in [`OVERVIEW.md`](OVERVIEW.md); build instructions are in
-[`README.md`](README.md). This file is only open work.
+Checked results are in [`OVERVIEW.md`](OVERVIEW.md); the Lean source is the ground truth. This
+file lists only what remains, triaged by the **E8 pattern** it uses. Everything here is an E8
+statement; measured masses and lifetimes are the comparison, never inputs.
 
-The nucleus mass ledger now has the layers
+A nucleus is a composite of nucleons (`Nucleus`), exactly as a hadron is a composite of carriers,
+and an atom is a composite of a nucleus and its electron cloud. So the same machinery the hadron
+level built (`PMHadrons`) applies:
 
-```
-free nucleons
-− 3D packing links
-− typed channel asymmetry
-− cycle closure
-− alpha-cluster closure
-− heavy shell correction
-+ charge
-− even-even collective deformation (candidate)
-```
-
-The main remaining issues are the heavy deformation shape, the charge tail, and
-the rate/lifetime layer.
-
-## Honest gaps
-
-| gap | status |
-| --- | --- |
-| alpha weight `Δ/D` | E8 expression; physical alpha assignment is model input |
-| shell cost `Δ/(D+χ)` | E8 expression; shell assignment is model input |
-| odd-A factor `3/4` | E8 expression; pairing assignment is model input |
-| `N>146` tail | deformation candidate exists but holdout even-even actinides scatter `−0.019` to `+0.018 u`; shape is not predictive yet |
-| `S(n) ~ n⁵/(16π)` | numerical evidence; asymptotic theorem open |
-| nuclear lifetimes/rates | beta/alpha/fission chains now have E8 cost models; fission is not universal |
-| electron shells / Aufbau | cloud + `Aufbau` order exist; screening/exchange and the order's justification are separate |
-
-## 1. Heavy deformation shape
-
-The candidate term is
-
-```
-− deformationWeight · max((Z−82)(N−126) − 82, 0)
-```
-
-for even-even nuclei, with
-
-```
-deformationWeight = shellWeight/(Δ+σ)
-                  = Δ/((D+χ)(σ−χ)ν)
-                  = 43/288.
-```
-
-Training set is inside `±0.008 u`, odd-A controls are fine, but holdout
-even-even nuclei Pu-244/246, Cm-248, Cf-246/248, Fm-254, No-252/254, Rf-256
-scatter from `−0.019` to `+0.018 u`.
-
-Likely missing: a Z-dependent or mid-shell deformation factor, or shape
-coexistence. Do **not** integrate the term into the table until the holdout
-passes.
-
-### Heavy-tail candidate ranking
-
-Short tests on the even-even residuals after the two-shape model:
-
-| candidate | test result | assessment |
+| E8 pattern | hadron level (`PMHadrons`) | this level |
 | --- | --- | --- |
-| cubic Landau / `P·(N−152)` | RMS `0.0052`, but needs a nonphysical intercept | most likely: it is the `Bβ³` term of the shape potential; coefficient ≈ `deformationWeight/ν` |
-| symmetry energy `(N−Z)²/A` | RMS `0.0056`, also intercept-dominated | plausible standard liquid-drop term |
-| closure at `N=152` | RMS `0.0061` | real but too sharp alone |
-| distance to nearest E8 magic | RMS `0.0062` | shell-ladder effect, not an energy law |
-| Z-linear deformation | RMS `0.0069` | partial, not predictive |
-| Nilsson/Strutinsky | fit collapses to zero | level ordering not realistic enough |
-| finite-size lattice charge | changes too slowly with A | ruled out for Cm/Cf |
-| pairing factor | fixes odd-odd Md-256 only | necessary bookkeeping, not the heavy slope |
-| alpha tail | untested | possible but no E8 coefficient yet |
+| **occupancy** — mass = substrate held | `n = χ + σ·ℓ` cells, `Δ²` cone (`Occupancy`, `NucleonBase`) | the nucleus link ledger `πD`/`σ/2` (`LinkWeights`) and the closure counts (`E8AtomValues`) |
+| **emission overlap** — a composite sheds parts | Toll boundary × overlap (`Emission`) | α / fission **fragment overlap** (hindrance) |
+| **Governor** — per-slot persistence | `χ/Δ` per slot (`TollGovernor`) | the nuclear **attempt frequency** / per-slot hazard |
+| **persistence selection** | `SelectionSymmetry` | **regime / valley** selection |
 
-The smooth-ledger boundary is now formalized in `NuclearRegime`: `Z=96`, `N=152` is the deformed-actinide frontier. `cm_at_frontier` and `cf_beyond_frontier` make Cm/Cf a regime change, not an outlier to be fitted. The remaining heavy work belongs to the collective/fission regime beyond that frontier. `CollectiveRegime` now supplies the lower-envelope mass, `CollectivePersists`, and the persistence/equality theorem. `alphaChannel` and `fissionChannel` now populate the collective envelope with smooth-ledger fragment masses and the E8 `shellWeight` barrier. The barrier is still schematic. `CollectiveRate` now wires barrier → hazard → `MeanLife` → `PersistsOn`, including the empty-channel indefinite-persistence case. A mass-only check shows the problem: symmetric fission fragments are already lower in the smooth ledger by `≈0.29 u`, so the lower-envelope criterion would predict immediate fission. Alpha is lower by `≈0.009 u` even with a `Δ`-scale barrier. Mass minimality alone is therefore the wrong persistence criterion for the post-frontier regime; the barrier/rate layer (`MeanLife`/`PersistenceRate`) is required. `not_collectivePersists_of_lower` records the mass-only consequence. `e8CubicPotential`/`nuclearMassPackingCubic` implement it with `cubicCoupling = deformationWeight/ν = (43/288)/16`, but the literal minimum still leaves the holdout at `≈0.0135 u`. The term is structurally E8-clean but not yet predictive.
+## 1. Occupancy: the nucleus ledger and closures — H/M
 
-## 1b. N=Z over-binding past O-16
+The nucleus mass is the free-nucleon sum minus the link/closure layers (`TwoLedger`,
+`NuclearLedger.certifiedMass`), reusing the nucleon terms (`LinkWeights.mapWeight = πD`,
+`boundaryWeight = σ/2`) and the E8 closure identities (`E8AtomValues`: `2(Δ−χ)=82`,
+`(σ−χ)(Δ−1)=126`, `2(Δ+σ)=96`, `(σ−χ)Δ+(ν+σ+χ)=152`, …).
 
-On the certified ledger, every N=Z nucleus past O-16 is over-bound by about `1.1–1.2 m_e` per
-alpha cluster (`RESIDUALS.md`: Ne-20 −7.6, Ca-40 −12.3, Ni-56 −16.4 `m_e`; He-4, C-12, O-16 within
-`±1.4`). Along isotope chains it is largest at N=Z (Ca-40 −12.3 vs Ca-44 −6.1; Ni-56 −16.4 vs
-Ni-62 +0.5). So the alpha closure lacks a saturation once a closed core exists.
+**Open.**
 
-Ruled out: giving the alpha layer the complex's surface law (`× F(A)/3A`). It raises per-alpha
-binding with `A`, the wrong direction, and pushes every N=Z residual positive (up to `+52 m_e`).
-No coefficient was fitted to this trend.
+1. **Deformed proton closure `2(Δ+σ)=96`** (§3). Recorded, but a simple closure term overcorrects
+   U-238; refine it (apply only past the frontier, or soften it).
+2. **N=Z saturation** (§1b). Every N=Z nucleus past O-16 is over-bound by ≈`1.1–1.2 m_e` per alpha
+   cluster (`RESIDUALS.md`: Ne-20 −7.6, Ca-40 −12.3, Ni-56 −16.4 `m_e`); the alpha closure lacks a
+   saturation once a closed core exists. The complex's surface law is ruled out (wrong direction).
+   Derive the saturation from the occupancy.
+3. **Heavy deformation shape** (§1). The collective occupancy of a heavy nucleus; the candidate
+   `− (43/288)·max((Z−82)(N−126) − 82, 0)` holds the training set to `±0.008 u` but the holdout
+   (Pu/Cm/Cf/Fm/No/Rf) scatters `−0.019…+0.018 u`. Needs a mid-shell/Z-dependent occupancy factor or
+   shape coexistence; do **not** integrate until the holdout passes.
 
-## 2. Charge tail
+## 2. Emission overlap: α and fission hindrance — C
 
-The exact `3×3×3` charge response is certified, but it does not scale to heavy
-nuclei by a global factor. A low-Z-anchored finite-size differential is the next
-principled target. It remains an alternative explanation for the same heavy tail.
+An α decay (`nucleus → α + daughter`) and fission (`nucleus → fragments`) are composite →
+fragment-cohort transitions. The amplitude is a **fragment overlap**, the analogue of
+`PMHadrons.BoundStateOverlap`/`Emission` (`Γ = boundary × overlap² × phase space`). Here the
+hindrance is *supplied*: `AlphaHindrance.alphaHindranceScale`, `AlphaConfiguration` mixing
+(`alphaMixingV = κμδ = 1/200`, `hindrance = σχ/(χ·gap+1)`), `CollectiveE8.fissionBarrier =
+shellWeight`, `FissionFissility`/`FissionFinite` fissility costs.
 
-## 3. Proton-shell / deformed closure
+**Task.** Build the fragment overlap so the hindrance is computed, not supplied: the α/fission
+fragment cohorts, the barrier as the boundary factor (`CollectiveE8.alphaBarrier_eq = 43`,
+`fissionBarrier_eq = 43/6`), and the overlap from the fragment configurations — the direct transfer
+of the hadron `Emission` construction. This reaches the collective/fission regime beyond the
+`Z=96`, `N=152` frontier.
 
-`protonShell = 2(Δ−χ) = 82` is proved. A candidate deformed proton closure
-`2(Δ+σ) = 96` is recorded, but a simple closure term is too large and
-overcorrects U-238.
+## 3. Governor: the nuclear rate / attempt-frequency layer — H/M
 
-## 4. Spectral asymptotic (optional for the mass table)
+The rate *structure* is complete: `RateModel.betaSpectralRate*` (bounded by `β·c0`, monotone in the
+cutoff, saturating), `CollectiveRate.barrierRate`/`MeanLife`, `PersistenceRate`, `AlphaFinite`;
+`MeanLife`/`PersistenceRate` give rate → lifetime. The one input named is the **absolute attempt
+frequency** `β·c0` and the E8 per-channel clock.
 
-```lean
-uniformResponse_asymptotic :
-  Tendsto (fun n => uniformResponse n / n^5) atTop
-    (𝓝 (1 / (16 * Real.pi)))
-```
+**Task.** Pin `β·c0` with the **Governor** per-slot credit (`χ/Δ = 2/43`,
+`PMHadrons.TollGovernor.governorPerSlot`) — the same per-slot share that fixes the hadron cycle
+persistence. This is the nuclear analogue of the hadron Governor work and closes the rate unit.
 
-The finite spectral machinery is complete; this is a genuine asymptotic analysis
-theorem and is not needed for the current mass ledger.
+## 4. Persistence selection: regime and valley — H
 
-## 4b. Neutrino decay
+`NuclearRegime`/`NuclearDecay` split the smooth ledger (through the `Z=96`, `N=152` frontier) from
+the collective ledger beyond it (`nuclearLedgerKind`, `regimePersists`); `NuclearSelection` /
+`TransitionSelection` / `PersistenceRate` give least-cost / least-hazard selection;
+`NuclearMass.PersistsMass` is mass-persistence.
 
-The particle ledger treats neutrinos as massless, with no channel lighter than
-zero.  `neutrino_stable` and `antineutrino_stable` are proved in
-`PMHadrons/Particle.lean`.  The **massive ledger** is now also built: `Species.massWith mν`
-gives the neutrino/antineutrino the E8 floor mass, and `neutrino_stable_massive` proves the
-neutrino stays stable for every `mν ∈ [0,1]` (it remains the lightest species), instantiated at
-the floor mass by `neutrino_stable_floor` (`floorMassME ≈ 1.8×10⁻⁸ m_e`).  There is still no
-neutrino decay width or lifetime, no neutrino mass ordering beyond the oscillation mixing, and
-no sterile-decay channel.  Neutrino **oscillation** is in `PMFlavor.PMNS`; it is not decay.
+**Open.** Which `(Z,N)` are stable (the valley) and the exact regime boundary — a persistence
+selection using the barrier/rate layer, not mass minimality alone
+(`CollectiveRate.not_collectivePersists_of_lower` shows mass minimality is the wrong criterion for
+the post-frontier regime).
 
-## 4c. Regime-aware decay selection
+## Not the pattern (analysis / lattice / model input)
 
-`NuclearDecay.nuclearLedgerKind` selects the smooth ledger through the deformed
-frontier and the collective ledger beyond it.  `regimePersists` is the
-regime-aware criterion: mass-allowed for Cm-244, collective envelope for Cf-252.
-`cm_regimePersists_iff` and `cf_regimePersists_iff` make the split explicit.
-`smooth_regimePersists_iff` and `collective_regimePersists_iff` are the general
-decision rules; `nuclearExits` is the β±/α/fission exit table with Q and barrier; `nuclearExitChannels` converts it to the `CollectiveChannel` form used by the rate layer; `cm/cf_exitTable_regimePersists_iff` and the alpha variants apply the rule to the actual exit table.
+- **Charge tail** (§2) — the exact `3×3×3` lattice Coulomb Green function (`LatticeCharge3`,
+  `LatticeCharge3Energy`: `q²·743/51`) does not scale to heavy nuclei by a global factor; needs a
+  low-Z-anchored finite-size differential. Lattice analysis, not selection.
+- **Spectral asymptotic** (§4) — `uniformResponse ~ n⁵/(16π)`; a limit theorem.
+- **Neutrino decay / ordering** (§4b) — needs a decay channel and mass ordering (model).
+- **Chemistry / Aufbau** (§6) — screening/exchange and the fill order are model inputs.
+- **Certified-mass enclosure** (§7) — a rational enclosure of the `π`/`√` `certifiedMass`;
+  interval analysis.
+- **Continuum-comparison modules** (§5b) — keep as numerical cross-checks until each E8
+  replacement has a numeric counterpart.
 
-## 5. Nuclear rates and lifetimes
+## Consolidation (checkpoint)
 
-The allowed beta Coulomb factor is now `FermiFunction.fermiFunction` with
-`fermiFunction_pos` and `fermiFunction_ge_one`.  The physical integrand contains
-`F·p`, not `F`; this product is finite at threshold.  `fermiMomentumFactor`
-records that product and `fermiMomentumFactor_pos` proves positivity.
-`one_sub_exp_neg_ge` and `fermiMomentumFactor_le` show the product is bounded by
-`p + 2πZαE`, so the threshold is integrable in the physical variable.  The exact
-three-body Dalitz density and the transport of this bound through the full
-measure remain open.  The E8-native alternative is `BetaLattice`: a finite
-family of open modes with the `RateModel` cost rate, replacing the continuum
-Dalitz measure.  `betaSpectralWeight = exp(−λ)` now supplies a spectral Boltzmann weight, and
-`betaSpectralRate` sums those weights over a chosen mode subset.  `betaOpenModes`
-selects modes below an energy cutoff and `betaSpectralRateCutoff` is positive for
-a nonempty cutoff.  The rate **structure is complete**: it is bounded by `β c0`
-(`betaSpectralRateCutoff_le`), monotone in the energy cutoff
-(`betaSpectralRateCutoff_mono`), saturates the bare rate when every mode is open
-(`betaWeightedRate_univ`) and is zero when none are (`betaWeightedRate_empty`);
-so the lifetime is bounded below by `1/(β c0)`.  What remains — the *numeric*
-spectral sum of a specific cube and the neutron benchmark comparison, plus the
-attempt-frequency unit `β c0` — is comparison/data, not a theorem.
-
-`MeanLife` and `PersistenceRate` give the structural rate → lifetime step. The
-missing input is the E8 per-channel rate/clock. Numeric lifetimes are deferred.
-
-Candidate: `alphaBarrierShellPreformed = alphaBarrierGeiger + (σ/2)·d`, with
-`d` the Euclidean daughter distance to the E8 magic ladder.  This is the first
-E8 preformation term with the correct Cm/Cf/U ordering; it still needs an
-independent test and a derivation of the absolute attempt frequency.  The
-reference-width model of Paper 5 supplies the natural next correction:
-`Γ = Γ₀·P·F·exp(−B)`, where `F` is phase space/hindrance; reducing `F`
-lengthens the lifetime, which is the direction needed for Cf-252.  The E8
-`F` is `exp(−ν/(d+1))`; it is strong enough at the double closure and keeps the
-single-closure Cm case in range.  The simpler open fraction `(d+1)/(d+ν)` is
-recorded but too weak.
-
-
-### Neutron prediction (moved)
-
-The neutron lifetime prediction is hadron-level and now lives in
-[`PMHadrons/OVERVIEW.md`](../PMHadrons/OVERVIEW.md) and
-[`PMHadrons/REVIEW-AND-NEXT.md`](../PMHadrons/REVIEW-AND-NEXT.md).
-
-### Finite alpha channel
-
-`AlphaFinite` applies the same finite-channel form as beta: `rate = attempt · P ·
-F · exp(−B)`.  `alphaFiniteLifetime_ratio` proves the unknown attempt frequency
-cancels in relative lifetimes.  `alphaAttempt` now supplies the E8 `cKf` form:
-`K = alphaCapacity`, `f = 1/Δ`, `c = 1`.  The absolute normalization is structural.  `alphaCostScale = Δ²/(ν+σ) = 1849/21`
-gives the leading collective scale and lands near the U-238 lifetime.  The improved candidate
-`alphaCostQ2 = (43/8)Z/√Q − 84` puts most tested alpha emitters within a factor
-of four, with U-235 the clear outlier.  The remaining task is deriving this cost
-from the collective link counting rather than selecting it from the table.
-Residual diagnosis (`ALPHA-TESTS.md`) points to a single-particle/spin-parity
-hindrance: even-even residuals are small, while U-235 is a strong odd-A outlier.
-`AlphaHindrance` now makes the spin-parity input explicit
-(`AlphaLevel.ofOrbital`, `spinMismatch`, `parityChange`, `alphaCostHindered`).
-The hindrance scale is still supplied.  Actual U-235/Pu-239 E8 orbital assignments
-(`2f7/2`, `2d5/2`, `3s1/2`) reproduce the spin-parity units `3` and `7`; no
-single scale fits both.  The remaining term is configuration mixing / Nilsson
-deformation.  `AlphaConfiguration` now supplies it with E8 parameters
-`κ=1/ν`, `μ=χ/σ`, `δ=1/σ` and `hindrance = σ/(|ΔE|+1/χ)`; this fixes U-235
-and Pu-239 while leaving even-even entries unchanged.  The mixing form still
-needs a first-principles derivation; its E8-normalized form is
-`σχ/(χ·gap+1)`, proved in `alphaMixingHindrance_eq`.  `AlphaConfiguration` now
-also records the two-level Hamiltonian `alphaTwoLevel` and the scalar resolvent
-`alphaMixingResolvent`; the hindrance is `σχ` times that resolvent.  The full non-zero mixing amplitude is now
-`alphaMixingV = κμδ = 1/200`; `alphaMixedGap` dresses the gap by
-`√(ΔE²+4V²)`, and `alphaMixingHindranceFull_zero` proves the old formula is the
-`V=0` limit.  Because `V` is small, the numerical table is unchanged.  `spinDegeneracy` tests the cheaper
-alternative `log((2Jp+1)(2Jd+1))`, which is the best single residual feature so
-far but still leaves Pu-239 overcorrected.  `alphaBlockingHindrance` adds the
-same `log 2` to both odd-A outliers and is insufficient.  The smooth-term list is
-exhausted; the remaining term is the actual level/configuration hindrance.  The
-existing comparison table still shows Cm/Cf near the frontier working while
-U-234/Pu-238 fail, so alpha remains frontier-local.
-
-## 5b. Continuum / standard-physics remnants to convert
-
-The E8-native beta route is `BetaLattice`; these are comparison/legacy pieces:
-
-| module | continuum content | E8 conversion |
-| --- | --- | --- |
-| `PMHadrons.NeutronRate` | continuum massive-electron phase space, `G_F`, `g_A` | finite spectral beta rate |
-| `PMAtoms.BetaDecay` | continuum beta phase-space integral, Fermi function | finite spectral beta rate |
-| `PMAtoms.FermiFunction` | Coulomb Fermi factor | lattice Coulomb phase / finite channel |
-| `PMAtoms.SingleParticle` | Nilsson/Strutinsky shell model | E8 level ladder / finite shell count |
-| `PMAtoms.ShapePotential` | Landau collective potential | E8 deformation ledger |
-| `PMAtoms.CollectiveE8` | Geiger–Nuttall WKB exponent | finite channel cost |
-| `PMElementaryParticles.MuonRate` | continuum contact/phase space | finite lattice spectral channel |
-| `PMElementaryParticles.MassiveDaughterSpectrum` | continuum massive-daughter phase space | finite lattice spectral channel |
-| `PMElementaryParticles.Widths` | supplied reference width | E8 channel hazard |
-| `PMAtoms.Nucleus` | supplied cost in `Persists` | E8 cost ledger |
-
-Converted at the structural level:
-
-- `NeutronRate` → `BetaLattice`
-- `BetaDecay` → `BetaLattice`
-- `FermiFunction` → lattice channel/threshold bound
-- `Widths` → `betaHazardE8` / `betaLatticeLifetime`
-- `Nucleus` → `e8Cost` / `e8NuclearCost`
-
-Converted structurally:
-
-- `MuonRate`/`MassiveDaughterSpectrum` → `LeptonLattice`
-- `SingleParticle` → `e8ShellLadder`/`e8ShellOccupations`
-- `ShapePotential` → `e8DeformationLedger`
-- `CollectiveE8` → `CollectiveFinite`
-
-The comparison modules remain for numerical checks; their E8 structural
-counterparts now exist.
-
-Do not delete the comparison modules until each E8 replacement has a numerical or
-structural counterpart.
-
-## 6. Electron cloud / chemistry pillar
-
-Missing: electron–electron screening/exchange, shell energy, and the chemistry-level
-60°/tetrahedral shell interaction. The fill order is a supplied model input (the
-hydrogenic energy `−R∞/n²` carries no `ℓ`-dependence), stated in `Aufbau`.
-
-## 7. Periodic table — certified-mass column
-
-The structure is done (`System`, `PeriodicTable`, shared `Aufbau`). Remaining: the
-`e8p --periodic-table` readout still prints the leading lattice weight; printing the
-**certified** mass needs a proved rational enclosure of the `π`/`√`-containing
-`certifiedMass` (the leading-vs-certified gap is exactly `binding`,
-`System.atomSystem_massME_eq`). No `certifiedMass` enclosure exists yet.
-
-## Decay validation
-
-A frozen validation table is in [`DECAY-VALIDATION.md`](DECAY-VALIDATION.md).
-Neutron, muon, tau, pion, alpha, and fission are recorded with provenance labels.
-The neutral-pion anomaly and E8 `f_K` remain open.
-
-## Checkpoint status
-
-See [`CHECKPOINT.md`](CHECKPOINT.md).  Certified core, beta/alpha/fission E8
-chains; the beta margin is now derived as the surviving clock-phase fraction
-after a boundary gap `χ=2`, and the five-nucleus fission surface are recorded there.  Open blockers:
-fission out-of-sample (U-234/Pu-242), full fragment-yield measure, and the
-continuum-comparison modules.
-
-## Checkpoint path
-
-PMAtoms is checkpoint-ready when:
-
-1. `NuclearLedger` exposes one `certifiedMass` with a proved domain.
-2. Candidate modules (`NuclearDeformation`, `ShapePotential`, `SingleParticle`,
-   `CollectiveRegime`, `CollectiveRate`, `CollectiveE8`) are explicitly marked
-   experimental and are not imported by `certifiedMass`.
-3. `README`, `OVERVIEW`, `ATOM-SYSTEM`, and this file agree on certified vs
-   experimental status.
-4. `RESIDUALS.md` records the comparison residuals outside the theorem tree.
-5. `./build.sh fast PMAtoms`, `./build.sh audit`, and `./build.sh e8p` pass.
-   Checkpoint decision: e8p keeps the leading lattice weight; wiring
-   `certifiedMass` into the printed table is deferred.
-6. A git checkpoint records the job/declaration counts.
-
-Not required for the checkpoint: solving Cm/Cf, the E8 clock/barrier
-normalization, alpha preformation, fission fragment asymmetry, the spectral
-asymptotic, or the electron/chemistry pillar.
+Mark the candidate modules experimental; align `README`/`OVERVIEW`/`ATOM-SYSTEM`; keep residuals in
+`RESIDUALS.md` outside the theorem tree; pass `./build.sh fast PMAtoms`, `./build.sh audit`,
+`./build.sh e8p`.
