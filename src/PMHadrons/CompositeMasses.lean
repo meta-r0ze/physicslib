@@ -5,12 +5,13 @@ import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
 
-# Paper V's composite (nucleon and meson) mass ledger
+# Composite masses: the occupancy cost of a persistent carrier cohort
 
-Masses in units of `m_e` unless stated. Every numeral is the canonical
+The mass of an E8 composite is what its persistent configuration costs on the
+substrate. Masses are in `m_e` unless stated. Every numeral is the canonical
 `PMSubstrate.E8Values` invariant (`D = 4`, `Δ = 43`, `ν = 16`, `σ = 5`, `χ = 2`,
-`R_M = 172`, `N = 32`, `L_embed = 31`), so no bare literal remains. `α⁻¹` is
-Paper I's derived `geometricIndex`, `α = 1/α⁻¹`.
+`R_M = 172`, `N = 32`, `L_embed = 31`), so no bare literal remains. `α⁻¹` is the
+derived six-pillar cell budget (`geometricIndex`), `α = 1/α⁻¹`.
 
 Paper I's Toll and Margin are the invariants
 
@@ -28,11 +29,13 @@ and the nucleons share the pillar base `Δ² − πD − 1/D`:
 | `m_K⁺ = (σ+χ)α⁻¹ − σ + Dπ − 1/√2 − α(σ−χ)/χ` | `493.6762` MeV | PDG `493.677(16)`: `kaonPlus_mass` within `0.1σ` |
 | `r_p = D ħ/(m_p c)` | `0.841236` fm | CODATA 2022 `0.84075(64)`: `proton_radius` within `0.8σ` |
 
-`m_e c² = 0.51099895069` MeV and `ħc = 197.3269804` MeV·fm (CODATA 2022); their
-uncertainties are far below the comparisons. These certify the stated formulas'
-values. They do not derive the formulas: each term's assignment (which dimensions
-a composite synchronizes, the charge-load factors) is the paper's proposed ledger
-(`M`). The cell-budget form of the mesons and the `e8p` pulls are in
+Standard-Model names above are **comparison labels** for the E8 composites; the
+right-hand column is the comparison (CODATA/PDG), the formula is the derived E8
+occupancy cost. `m_e c² = 0.51099895069` MeV and `ħc = 197.3269804` MeV·fm
+(CODATA 2022); their uncertainties are far below the comparisons. These certify
+the stated formulas' values. They do not derive the formulas: each term's
+assignment (which dimensions a composite synchronizes, the charge-load factors)
+is the paper's proposed ledger (`M`). The cell-budget form of the mesons and the `e8p` pulls are in
 `MesonMasses` and `tools/e8p/E8PConstants/CompositeMassPulls.lean`.
 -/
 

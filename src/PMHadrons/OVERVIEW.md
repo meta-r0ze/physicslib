@@ -1,16 +1,23 @@
 # PMHadrons — overview of checked results
 
-The map of what the hadron library proves. Open work is in
+The map of what the composite level of the E8 substrate proves. Open work is in
 [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in [`README.md`](README.md).
 
 ## Place in the tower
 
-A hadron is a level-`L` system whose constituents are elementary protocols (quarks, from
-`PMElementaryParticles`). Its mass is not its constituents' cost minus a binding budget: every
-hadron is far heavier than its current quarks (`MesonMasses.*_gt_constituents`). The mesons are
-whole substrate-cell budgets plus a residual, and the nucleons are a `Δ²` base minus pillar
-costs. Its decays are channels priced by the same pillars. The nucleons are the template: the
+A composite is a cohort of elementary carriers (`PMElementaryParticles`) that persists together
+as a new system on the substrate. Its **mass is the occupancy cost**: the mesons are a whole
+number of substrate cells, each cell paying the six-pillar budget `α⁻¹`, plus a short residual
+(`n·α⁻¹ + residual`); the nucleons are a `Δ²` base minus pillar costs. Its **decays are
+rearrangements** of that cohort, priced by the same pillars. The nucleons are the template: the
 nucleus ledger (`PMAtoms.LinkWeights`) reuses their `πD` and `σ/2` terms.
+
+The mass is not "constituents minus a binding budget": every composite is far heavier than its
+current carriers (`MesonMasses.*_gt_constituents`), and the mass is set by the occupancy, not by
+the constituent list.
+
+Standard-Model names (proton, neutron, pion, kaon) are **comparison labels** throughout this
+file; a measured value or a `σ` in a column is a comparison, not an input.
 
 Shared units and couplings (`me`, `ħc`, `α`, `α⁻¹`, their bounds, `G_F` in `m_e⁻²`) live in
 `PMElementaryParticles.SharedUnits` and are re-exported here by `CompositeMasses` and
@@ -30,20 +37,22 @@ Shared units and couplings (`me`, `ħc`, `α`, `α⁻¹`, their bounds, `G_F` in
 | electron | supplied `m_e` | no | no |
 
 `α⁻¹` is, by definition, one substrate cell's six-pillar budget
-(`PMSubstrate.impedance`; `MesonMasses.cellBudget_pillars`), and its Toll and Margin terms are
-exactly the nucleons' `Z_TOL` and `Z_MAR` (`tollTerm_eq_zTol`, `marginTerm_eq_zMar`). So
-**the nucleons and the mesons all carry the six pillars including TOL/MAR**, in two forms: the
-nucleons as a `Δ²` base minus pillar costs, the mesons as `n` whole cell budgets plus a
-residual. The cell counts `n` and the residuals are model inputs. The leptons and quarks still
-use separate E8 formulas (`η`, integer counts); that is elementary-particle work.
+(`PMSubstrate.impedance`; `MesonMasses.cellBudget_pillars`): a cell "has all six components"
+because its cost is the sum of all six pillar terms. Its Toll and Margin terms are exactly the
+nucleons' `Z_TOL` and `Z_MAR` (`tollTerm_eq_zTol`, `marginTerm_eq_zMar`). So **the nucleons and
+the mesons all carry the six pillars including TOL/MAR**, in two forms: the nucleons as a `Δ²`
+base minus pillar costs, the mesons as `n` whole cell budgets plus a residual. The **occupancy**
+`n` (how many cells the persistent configuration holds) and the residuals are the model inputs
+under study. The leptons and quarks still use separate E8 formulas (`η`, integer counts); that
+is elementary-particle work.
 
 ## Modules
 
-| Module | Checked result | Retained inputs |
+| Module | Checked result | Model inputs (E8 choices not yet derived) |
 | --- | --- | --- |
 | `Nucleon` | three colour-axis protocols (`slotChannel`); `ChargeProtocols.Q` on the actual channel equals the quark charge (`Q_slotChannel`, `charge_eq_channels`); three colour axes give `B=1` (`baryon_from_three_colours`); proton `uud` `Q=+1`, neutron `udd` `Q=0`, spin `2`, isospin gap `1` | spin-1/2, one protocol per colour axis |
 | `Particle` | `Species` with certified masses and `Q/B/L`; `ParticleDecay` = conserved numbers + lighter products; **`proton_stable`** (baryon number forbids a lighter channel), `neutrino_stable`/`antineutrino_stable` (massless ledger; no lighter channel); allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` | certified PM-5 mass enclosures; tree-level channels |
-| `CompositeMasses` | Proton, neutron, π⁰, K⁰, K⁺ formulas vs CODATA 2022 / PDG |  |
+| `CompositeMasses` | occupancy-cost formulas for the nucleon/meson composites (E8 values), compared with CODATA 2022 / PDG |  |
 | `MesonMasses` | `π⁺` tier ledger (`pionPlus_ledger`, `pionPlus_value`, `pionPlus_mev_value`); `α⁻¹` = six-pillar `cellBudget` (`cellBudget_pillars`; Toll/Margin = `Z_TOL`/`Z_MAR`); every meson = `n·cellBudget + residual` (`*_cells`); `π⁺`, `K⁺`, proton heavier than their current quarks (`*_gt_constituents`) | cell counts `n = χ, σ+χ`; residual terms |
 | `CompositeStates` | `SignedState`, `CompositeState`, `compositeCharge`, meson/baryon cohorts; `pionPlus`, `pionZero`, `kaonPlus`, `proton`, `neutron` charges. |  |
 | `CompositeBinding` | `BindingLedger`, `compositeMassSq`, positivity/mass-lowering, `compositePhase`; binding energy supplied. |  |
@@ -53,8 +62,8 @@ use separate E8 formulas (`η`, integer counts); that is elementary-particle wor
 | `HadronicMatrixElement` | `BoundStateMatrixElement` with supplied `value`; `kaonPion`, `kaonPionRate`, `kaonPionRate_eq`, `kaonPionRate_nonneg`; explicit nonperturbative-input interface. |  |
 | `BoundStateOverlap` | finite constituent `Wavefunction`, `overlap`, `toMatrixElement`, `rate_eq`; overlap as inner product. |  |
 | `NeutronRate` | Massive-electron phase space `phaseSpace = ∫ E√(E²−1)(m_n−m_p−E)²`; `g_A = σ/D = 5/4`, `axialFactor = 91/16`; `neutronWidth`, `neutronLifetime`, `beamLifetime`; recoil endpoint `recoilEndpoint`, `phaseSpaceRecoil`, `neutronWidthRecoil`, `neutronLifetimeRecoil` with supplied radiative factor `R` | full Dalitz angular density and derived radiative correction |
-| `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthTo`, `pionWidthE8`, `pionElectronWidthE8`, `pionLifetimeE8` | full E8 width |
-| `KaonWidth` | `kaonWidthCKM`, `kaonDecayConstantE8=v/(Δ²−ν²)`, `vusE8=s₁₂c₁₃` (the `(u,s)` entry of `PMFlavor.CKM.ckm`: `vusE8_eq_ckm`), `kaonWidthE8`, `kaonLifetimeE8` | `fK` formula |
+| `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthTo`, `pionWidthE8`, `pionElectronWidthE8`, `pionLifetimeE8` | `fπ` placeholder `v/(Δ²+Δ−χ)` until the carrier-emission overlap is computed |
+| `KaonWidth` | `kaonWidthCKM`, `kaonDecayConstantE8=v/(Δ²−ν²)`, `vusE8=s₁₂c₁₃` (the `(u,s)` entry of `PMFlavor.CKM.ckm`: `vusE8_eq_ckm`), `kaonWidthE8`, `kaonLifetimeE8` | `fK` placeholder `v/(Δ²−ν²)` until the carrier-emission overlap is computed |
 | `NeutralPionWidth` | `neutralPionWidthE8 = α²mπ⁰³/(32π³fπ²)`, `neutralPionLifetimeE8`; anomaly coefficient `A = N_c(Q_u²−Q_d²) = 1` from the three colour axes and the protocol charges (`anomalyCoefficient_eq_one`, `neutralPionWidthE8_anomaly`) | triangle-loop normalization `1/(32π³)` |
 | `KaonSemileptonic` | leading-order `K_ℓ3` width `G_F²|V_us|² m_K⁵·½·(phase(z)/4)/(192π³)`, `z=(m_π/m_K)²`, `f₊(0)=1`, `m_ℓ→0`; positivity (`kaonL3Width_pos`) | form factor `f₊(t)`, lepton masses, EW/isospin corrections |
 | `ParticleChannels` | `ParticleChannel`, `RateStatus`, `totalRate`, `branching`, `totalLifetime`; concrete μ/τ/π/K inventories with provenance labels; `K_ℓ3` at E8 leading order (`e8LeadingOrder`); nonleptonic kaon modes blocked on the bound-state matrix element | hadronic matrix elements |

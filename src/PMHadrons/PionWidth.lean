@@ -15,7 +15,11 @@ Two-body charged-pion width:
 Γ(π⁺ → μ⁺ν) = G_F² f_π² m_π m_μ² (1 − m_μ²/m_π²)² / (8π).
 ```
 
-The pion decay constant `f_π` is still a supplied input.
+On E8, `f_π` is the composite's **emission overlap** for a single carrier -- how readily the
+persistent configuration sheds one -- not an independent scale. It is currently the assigned
+placeholder `pionDecayConstantE8 = v/(Δ²+Δ−χ)` (`M`); the SM comparison is `f_π ≈ 130.2` MeV.
+Computing the overlap from the composite configuration is the open construction
+(`REVIEW-AND-NEXT.md` item 2).
 -/
 
 noncomputable section

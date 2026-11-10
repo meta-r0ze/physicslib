@@ -1,40 +1,56 @@
-# PMHadrons — the hadron level
+# PMHadrons — composite systems on the E8 substrate
 
-Lean 4 proofs for the hadron level of the persistence ladder: quark composites, that is the
-nucleons (proton, neutron) and the light mesons (π, K). It sits between
-[`PMElementaryParticles`](../PMElementaryParticles/README.md) (the protocols and leptons it is
-built from) and [`PMAtoms`](../PMAtoms/README.md) (nuclei and atoms built from nucleons).
+Lean 4 proofs for the **composite** level of the E8 substrate: elementary carriers persisting
+together as a bound many-carrier configuration. It sits between
+[`PMElementaryParticles`](../PMElementaryParticles/README.md) (the carriers) and
+[`PMAtoms`](../PMAtoms/README.md) (the larger systems built from composites).
 
 ```
 PMElementaryParticles  →  PMHadrons  →  PMAtoms
- protocols, leptons        nucleons,      nuclei,
-                           mesons         atoms
+ carriers                 composite      nuclei,
+ (protocols, leptons)      systems        atoms
 ```
+
+## The frame
+
+Everything here is an E8 statement. Elementary carriers combine into a configuration. A
+configuration is a *new persistent system* when it occupies enough substrate cells — each cell
+paying the six-pillar budget `α⁻¹` — and it can rearrange by emitting a carrier (a decay). So
+the two E8 quantities at this level are:
+
+* the configuration's **occupancy** → its mass (how much substrate the system holds);
+* its **overlap with a single outgoing carrier** → its emission amplitude (how readily the
+  system sheds a carrier).
+
+The Standard-Model names (proton, neutron, pion, kaon) are **comparison labels**: they say which
+E8 composite is being compared with which measured particle, so a derived value can be checked
+against data. They are never inputs and never the mechanism. A column headed `0.6σ` is a
+comparison, not a derivation.
 
 ## Main results
 
-- **Nucleons from the substrate.** `Nucleon` assembles the proton (`uud`, `Q = +1`) and neutron
-  (`udd`, `Q = 0`) from three colour-axis protocols; three colour axes give baryon number `1`.
-- **The six-pillar mass ledger.** `CompositeMasses` evaluates
-  `m_p = Δ² − πD − 1/D + 5Z_TOL − Z_MAR/χ − α(D + 1/D)` (CODATA within `0.6σ`) and
-  `m_n = Δ² − πD − 1/D + σ/2 + 3Z_TOL − Z_MAR` (within `0.1σ`); the nucleus ledger reuses
-  their terms. The mesons carry the same pillars another way: `α⁻¹` is one substrate cell's
-  six-pillar budget, with the same `Z_TOL` and `Z_MAR`, and each meson is a whole number of
-  cell budgets plus a short residual (`MesonMasses`).
-- **Stability and decays.** `Particle` proves `proton_stable` (baryon number forbids a lighter
-  channel) and the allowed tree-level channels. `NeutronRate`, `PionWidth`, `KaonWidth` and
-  `NeutralPionWidth` give the widths; `ParticleChannels` is the channel inventory.
-- **The neutron lifetime from E8.** `NeutronPrediction` gives `877.2 s` (measured `878 s`) from
-  the finite spectral channel on the minimal `3×3×3` cube (`MinimalCube`) with the `41/43`
-  margin; `MesonFiniteChannels` gives the π and K finite channels.
-- **Composite structure.** `CompositeStates`, `CompositeTransition`, `CompositePhaseSpace`,
-  `CompositeBinding`, `HadronicMatrixElement` and `BoundStateOverlap` make the composite objects,
-  and the missing bound-state input, explicit.
+- **Composites assembled from carriers.** `Nucleon` builds the proton/neutron configurations
+  from three colour-axis carrier slots — charge and baryon number are sums of substrate
+  quantities, not assertions. `CompositeStates` builds meson/baryon cohorts (signed constituent
+  lists).
+- **Composite mass = occupancy cost.** `CompositeMasses` and `MesonMasses`: a composite costs a
+  whole number of substrate cells (`n·α⁻¹ + residual`), or the `Δ²`-based nucleon account. The
+  E8 value is derived; the measured mass is only the comparison.
+- **Rearrangement and emission.** `Particle` (what persists, what rearranges),
+  `ParticleChannels` (the channel inventory), `CompositeTransition`,
+  `HadronicMatrixElement` / `BoundStateOverlap` (the missing emission overlap made explicit),
+  and the widths `NeutronRate`, `PionWidth`, `KaonWidth`, `NeutralPionWidth`,
+  `KaonSemileptonic`.
+- **The neutron lifetime from a minimal E8 cube.** `NeutronPrediction` uses the minimal
+  persistent cube `3×3×3` (`MinimalCube`) with the `41/43` margin — an E8 volume statement,
+  not a spatial box.
 
 ## Where to look
 
-- **[OVERVIEW.md](OVERVIEW.md)**: what is proved, module by module, and the pillar audit.
-- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)**: open work.
+- **[OVERVIEW.md](OVERVIEW.md)**: what is proved, module by module, the six-pillar occupancy
+  account, and the E8 decay checks.
+- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)**: open work — the composite's persistent
+  configuration (occupancy) and its emission overlap.
 
 ## Build and audit
 

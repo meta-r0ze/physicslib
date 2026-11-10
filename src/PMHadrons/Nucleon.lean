@@ -16,8 +16,9 @@ gives baryon number `1`. Spin `1/2` supplies the two states, and lepton number i
 `0` because no lepton axis is occupied.
 
 The equality `Q_slotChannel` is the key bridge: the substrate charge generator on
-the actual channel equals the quark charge. `charge_eq_channels` then says a
-nucleon's charge is literally the sum of three substrate channel charges, and
+the actual channel equals the carrier charge (the SM `u`/`d` names are the
+comparison labels for those carriers). `charge_eq_channels` then says a nucleon's
+charge is literally the sum of three substrate channel charges, and
 `baryon_from_three_colours` says the three colour axes carry baryon `1`.
 
 Nothing here postulates a nuclear force or binding energy; this module fixes the

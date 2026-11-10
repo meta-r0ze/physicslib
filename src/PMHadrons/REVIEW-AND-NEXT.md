@@ -1,51 +1,69 @@
 # PMHadrons — open work
 
 Only work that remains, in priority order. Checked results are in
-[`OVERVIEW.md`](OVERVIEW.md); **declared model inputs** (meson cell counts and residuals, the
-triangle-loop normalization, bound-state values, the `Nucleon` protocol assignment, and the
-decay-constant placeholders below) are terminal and recorded there, not here. The `fK`/`fπ`
-tension is recorded in `e8p` (`f_k_mev` ≈ 3.8σ).
+[`OVERVIEW.md`](OVERVIEW.md).
 
-## 1. Substrate axial current and the current-to-hadron overlap — construction, large
+**The frame.** One elementary carrier is not yet a new system; several carriers persisting
+together on E8 are. Two E8 quantities define such a composite: its **occupancy** (how much
+substrate the persistent configuration holds → its mass) and its **emission overlap** (how
+readily it sheds a carrier → its decay amplitude). Both are properties of one object — the
+composite's persistent configuration — which is the single thing still missing. The
+Standard-Model values below are comparison targets only, never inputs or mechanisms.
 
-This is the one big open item at the hadron level; the others below are separate research.
+## 1. Occupancy: the minimum substrate a persistent composite holds — research
 
-`fπ` and `fK` are **not** scales but matrix elements of the axial current:
-`⟨0|A_μ^a|π^b(p)⟩ = i f_π p_μ δ^{ab}` (and likewise for `K`). The current formulas
-`fπ = v/(Δ²+Δ−χ) = v/1890` and `fK = v/(Δ²−ν²) = v/1593` are **assigned placeholders** (`M`):
-their denominators are chosen, not derived, and no cost selects a cell count (so the "one rule"
-framing is retired — two points admit infinitely many rules). GMOR was tested with the derived PM
-masses, `fK²/fπ² = [(m_s+m̂)/(2m̂)]·(m_π²/m_K²)`, and gives ≈ 1.08 vs the measured 1.193, so it
-does not rescue the ratio either.
+A composite costs `m = n·α⁻¹ + residual`: `n` substrate cells, each paying the full six-pillar
+budget `α⁻¹` (so every held cell carries all six pillars), plus an interaction residual. The
+reading under test is: **a carrier cohort is a new persistent system exactly when it holds at
+least `n` cells; below that it has nowhere to stand and rearranges (decays).** Then `n` is the
+minimum room needed, not a fitted number.
+
+**Missing on E8.** The rule fixing `n`: `n = χ` for the pion composite, `σ+χ` for the kaon
+composite (`pion0_cells` … `kaonPlus_cells`), and the `Δ²`-based nucleon account.
 
 **Tasks.**
-1. Define the substrate **axial current** from the existing chirality structures
-   (`ChiralityConvention`, `PMConstants.CarrierRegisterChirality`, the weak current
-   `PMHadrons.WeakTransition` / `PMElementaryParticles.CarrierTransitionOperator`).
-2. Take the pion/kaon composite cohorts (`CompositeStates`) and compute the vacuum-to-one-particle
-   overlap `⟨0|A_μ|π⟩`, `⟨0|A_μ|K⟩`, giving `fπ`, `fK` and their ratio from one object.
-3. Reuse the same overlap machinery for the two things it also blocks:
-   - the nonleptonic `K⁺ → π⁺π⁰`, `π⁺π⁺π⁻` amplitudes (`⟨ππ|T|K⁺⟩`; `.blocked` in
-     `ParticleChannels`), currently a supplied `BoundStateMatrixElement.value`
-     (`CompositeTransition`, `CompositePhaseSpace`, `HadronicMatrixElement`, `BoundStateOverlap`);
-   - the `K_ℓ3` form factor `f₊(t)` (the leading-order `K_ℓ3` rate is in `KaonSemileptonic`,
-     labelled "E8 leading order, ~10%").
+1. State the **persistence/occupancy rule**: among the configurations of a carrier cohort,
+   which hold enough cells to persist? The framework's test is
+   `PersistenceMechanics.SelectionSymmetry.unique_minimizer_fixed` — a discrete option family
+   plus a cost. If the least-occupancy persistent set is unique, `n` is derived.
+2. A capacity derivation in the style of `PMConstants/VevLedger.slotCount = χΔ²−(ν+DΔ) = 3510`
+   (a count already derived from capacity rather than fitted).
+3. One account for the nucleon base `Δ²` and the meson cell budgets, or a stated reason they
+   differ (`m_p/α⁻¹ ≈ 13.4` is not a whole number).
 
-**Closes when** the axial-current overlap is computed from a substrate wavefunction. Until then
-`fπ`/`fK` stay declared model inputs.
+**Do not** integer-search for a rule matching `χ`, `σ+χ`: two points admit infinitely many rules,
+so only a cost or a capacity argument makes one a derivation. The candidate `n = χ + σ·N_s`
+(`N_s` = strange carriers) fits both but is not committed.
 
-## 2. Meson cell counts and the nucleon/meson base — research
+## 2. Emission overlap: how readily the composite sheds a carrier — construction, large
 
-Each meson is `n·α⁻¹ + residual`, with `n = χ` (pions) and `n = σ+χ` (kaons)
-(`pion0_cells` … `kaonPlus_cells`); the nucleons use base `Δ²`, and `m_p/α⁻¹ ≈ 13.4` is not a
-whole number. This is the *same* missing-cost problem as the decay-constant denominators: a
-discrete cell count with no selecting cost.
+When a persistent composite rearranges it emits a single carrier (e.g. a lepton carrying away the
+weak channel). That emission coupling is what the SM comparison calls the decay constant
+`fπ`/`fK`; on E8 it is the **overlap of the composite configuration with the outgoing
+single-carrier state, acted on by the substrate transition operator**. The current
+`fπ = v/(Δ²+Δ−χ)`, `fK = v/(Δ²−ν²)` are assigned placeholders (`M`), and no cost selects them
+(the standalone "one rule" framing is retired).
 
-**Tasks.** (a) a rule giving both `n` values — one candidate is `n = χ + σ·N_s` (`N_s` = number
-of strange constituents), but it is an ansatz, so it is not committed; (b) a mass form covering
-`Δ²` and whole cell budgets. Stop if no cost functional is supplied.
+**Exists on E8.** carriers (`CarrierSpecies`), the transition operator
+(`CarrierTransitionOperator`, `WeakTransition`), composite cohorts (`CompositeStates`), and an
+overlap interface (`BoundStateOverlap`); `HadronicMatrixElement` is `⟨f|T|i⟩` for two
+composites.
+
+**Missing on E8.** the composite's configuration (a normalized many-carrier state, not just a
+constituent list); a single-carrier emission operator; and the composite → one-carrier overlap.
+
+**Tasks.**
+1. **Single-occupancy test (cheap).** If item 1 gives a single cell/mode, compute the overlap as
+   a finite sum and read off the emission coupling; compare to `v/1890`.
+2. **Full configuration.** Build the composite mode explicitly and compute the overlap — this
+   also yields the rearrangement amplitudes `K→ππ` and the `K_ℓ3` form factor `f₊(t)`.
+3. **Consistency.** The SM rate form (`Γ ∝ G_F² f² m …`) and the measured `fπ`/`fK` are the
+   comparison; the E8 emission coupling must reproduce them.
+
+**Closes when** the emission overlap is computed from the composite configuration. Until then
+`fπ`/`fK` stay declared model inputs (now shown in `e8p`, `f_k_mev` ≈ 3.8σ).
 
 ## Not work
 
-The continuum neutron comparison (`NeutronRate`) is kept as a labelled cross-check, not an E8
+The continuum neutron comparison (`NeutronRate`) is a labelled cross-check, not an E8
 assumption; the E8-native route (`NeutronPrediction`) is the headline. No action.

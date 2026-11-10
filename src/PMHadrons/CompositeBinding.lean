@@ -1,10 +1,11 @@
 import PMHadrons.CompositePhaseSpace
 
-/-! **Composite binding interface.**
+/-! **Composite binding interface (comparison form).**
 
-A composite mass is written as constituent mass minus binding energy.  This is a
-structural ledger; the binding energy is supplied, not derived from a substrate
-bound-state equation.
+This writes a composite mass as "carrier sum minus binding energy". It is a
+*comparison* ledger, not the E8 mass: on E8 a composite's mass is the occupancy
+cost of its persistent configuration (`MesonMasses`). The binding energy here is
+supplied, not derived from the substrate configuration.
 -/
 
 noncomputable section

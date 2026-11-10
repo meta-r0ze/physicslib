@@ -6,10 +6,12 @@ import PMSubstrate.E8Values
 /-!
 # Meson masses as E8 tier ledgers and as six-pillar cell budgets
 
-Units of `m_e`; `α`, `α⁻¹` from `PMElementaryParticles.SharedUnits`. Every numeral is a
-canonical `PMSubstrate.E8Values` invariant.
+The mass of a meson composite is its **occupancy cost**: `n` substrate cells, each paying the
+full six-pillar budget `α⁻¹`, plus a short E8 residual. `n` is the room the persistent
+configuration holds. Units of `m_e`; `α`, `α⁻¹` from `PMElementaryParticles.SharedUnits`.
+Every numeral is a canonical `PMSubstrate.E8Values` invariant.
 
-* **Charged pion.** `2α⁻¹` (Coulomb self-energy of the two unit charges) − `χσ`
+* **Charged pion.** `2α⁻¹` (the two unit charges' cell budget) − `χσ`
   (topological/symmetry product) + `1/(ν−χ)` (chiral leak) + `σ` + `D` −
   `α(σ−χ)/χ` (charge load). `pionPlus_ledger` records the decomposition.
 
@@ -43,7 +45,7 @@ namespace PMHadrons.MesonMasses
 open PMElementaryParticles.SharedUnits
 open PMSubstrate.E8Values
 
-/-- Pion: Coulomb self-energy of the two unit charges. -/
+/-- Pion: the two unit charges' cell budget `2α⁻¹`. -/
 def pionCoulomb : ℝ := 2 * αinv
 /-- Pion: topological/symmetry product. -/
 def pionTopological : ℝ := (chi : ℝ) * (sigma : ℝ)
