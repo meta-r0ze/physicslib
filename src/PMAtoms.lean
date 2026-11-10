@@ -49,6 +49,7 @@ import PMAtoms.FragmentOverlap
 import PMAtoms.NuclearRateUnit
 import PMAtoms.PersistenceSelection
 import PMAtoms.NuclearOccupancy
+import PMAtoms.CertifiedNumerics
 import PMAtoms.CertifiedEnclosure
 import PMAtoms.CollectiveE8
 import PMAtoms.AlphaFinite
