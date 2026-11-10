@@ -53,4 +53,19 @@ theorem frontier_occupancy : occupancy ⟨96, 152⟩ = 248 := by
 theorem pb208_occupancy : occupancy ⟨82, 126⟩ = 208 := by
   unfold occupancy; norm_num
 
+/-! ## The frontier is the regime boundary
+
+The doubly-closed pair `(96, 152)` is exactly the smooth-ledger frontier
+(`NuclearRegime.deformedFrontier`), so the occupancy closures *are* the regime boundary. -/
+
+/-- The frontier closure pair sits exactly at the frontier. -/
+theorem frontier_atFrontier : deformedFrontier 96 152 := by
+  unfold deformedFrontier deformedProtonShell deformedNeutronShell; decide
+
+/-- The frontier closure pair is in the deformed-actinide regime. -/
+theorem frontier_regime : regimeOf 96 152 = .deformedActinide := by decide
+
+/-- Lead-208 is in the mid regime (below the frontier on both axes). -/
+theorem pb208_regime : regimeOf 82 126 = .mid := by decide
+
 end PMAtoms.NuclearOccupancy
