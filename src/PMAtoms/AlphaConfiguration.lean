@@ -21,6 +21,13 @@ and the level gap `|E_parent − E_daughter|`.  The odd-A hindrance is
 ```
 
 Even-even transitions get zero hindrance.
+
+**Level formula (`ShellGaps` §4).** `SingleParticle.nilssonEnergy` is not the standard
+Nilsson form (radial `n` for the shell, `+κμ·l(l+1)`, an extra `−δ(2l−n)`); it orders `3s₁/₂`
+above `2f₇/₂` (`ShellGaps.nilssonEnergy_inverts_shells`). The same strengths in the standard form
+give the observed shell closures (`ShellGaps.nilssonE8_gaps`) and hindrances `3.48`, `4.30`
+(`ShellGaps.alpha_standard_gaps`); this formula gives `6.4`, `1.86`, which match the observed
+need. Both are recorded in `ALPHA-TESTS.md`.
 -/
 
 noncomputable section

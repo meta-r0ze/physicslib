@@ -17,6 +17,16 @@ where the correction is the Strutinsky term of the proton and neutron spectra in
 The mass term is a `ℝ` expression; `shellMassCorrection_mem` gives its rational enclosure (for a
 printer such as `e8p`).
 
+**Scale.** This module still multiplies by the one-cell unit `shellEnergyUnit`; the nucleus
+quantum is `ShellSystem.shellQuantum (z+n)` (`= shellEnergyUnit / A^{1/3}`). Switch when the
+smooth reference is rebuilt; the rational enclosure then needs an `A^{1/3}` bound
+(`CertifiedNumerics.cbrt`).
+
+**Comparison (`REVIEW-AND-NEXT.md` §1).** With either E8 level scheme the shell term is 3–4×
+the `certifiedMass` residual and uncorrelated with it. The E8 ledger is not a liquid drop plus a
+shell correction; its smooth part already carries that structure. So `certifiedMassFull` is kept
+as the dependency edge for the comparison, not as a published mass.
+
 **Placeholder.**  `SingleParticle.strutinskyCorrection` is *crude*: for a uniform spectrum
 `e_i = i` it gives `cum(n) − smooth(n) = −n²/2`, i.e. a drifting trend, not a zero-mean shell
 correction.  So `certifiedMassFull` is a **placeholder** — the dependency edge is correct (a

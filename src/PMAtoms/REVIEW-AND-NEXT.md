@@ -12,138 +12,81 @@ level built (`PMHadrons`) applies:
 | --- | --- | --- |
 | **occupancy** — mass = substrate held | `n = χ + σ·ℓ` cells, `Δ²` cone (`Occupancy`, `NucleonBase`) | the nucleus link ledger `πD`/`σ/2` (`LinkWeights`) and the closure counts (`E8AtomValues`) |
 | **emission overlap** — a composite sheds parts | Toll boundary × overlap (`Emission`) | α / fission **fragment overlap** (hindrance) |
-| **Governor** — per-slot persistence | `χ/Δ` per slot (`TollGovernor`) | the nuclear **attempt frequency** / per-slot hazard |
+| **Governor** — per-slot persistence | `χ/Δ` per slot (`TollGovernor`) | the shell spacing `ℏω(A)`; the attempt-frequency candidate (`NuclearRateUnit`, compared in `ALPHA-TESTS.md`) |
 | **persistence selection** | `SelectionSymmetry` | **regime / valley** selection |
 
-## 1. Occupancy: the nucleus ledger and closures — H/M
+## 1. Occupancy: the nucleus ledger — H/M
 
 The nucleus mass is the free-nucleon sum minus the link/closure layers (`TwoLedger`,
-`NuclearLedger.certifiedMass`), reusing the nucleon terms (`LinkWeights.mapWeight = πD`,
-`boundaryWeight = σ/2`) and the E8 closure identities (`E8AtomValues`: `2(Δ−χ)=82`,
-`(σ−χ)(Δ−1)=126`, `2(Δ+σ)=96`, `(σ−χ)Δ+(ν+σ+χ)=152`, …).
+`NuclearLedger.certifiedMass`). Along the stable line it matches measured masses to `4.8 m_e` rms
+(`RESIDUALS.md`, which also holds the SEMF regression, the holographic check and the shell-term
+comparison).
 
-**Open.** A residual decomposition (`e8p --certified`, `R = certified − m_iso` in `m_e`) gives
-three E8 questions, in priority order. `R` splits into a **systematic** light-nucleus over-binding
-(`R/A ≈ −2` at Li-7 rising to `≈ −0.03` at Pb-208), a **shell oscillation** (±`5 m_e`, `R ≈ 0` at
-the doubly-magic O-16 and the closure-adjacent C-12/Fe-56/Ni-62), and a **frontier** term. None is
-a fitted correction; each is a derivation.
+1. **Volume/surface split (Q1).** `packingLinks(A) = (σ−χ)(A − A^{2/3})` is exact only at
+   `A = n³` (`packingLinks_cube`); elsewhere it is a mean-field interpolation. A discrete count
+   `(σ−χ)(A − ⌈A^{1/3}⌉²)` is worse (it jumps: `A = 9` gives 0 links). The residual regression
+   `R ≈ −12 + 1.2·A^{2/3} − 0.22·A` `m_e` points at the volume and surface coefficients (both
+   `σ−χ` now; surface ~±6%, volume ~1%). Open: a pillar derivation of the split. Do not fit it.
+2. **Isospin restoring term and the bulk.** `certifiedMass` has no `(N−Z)²/A` term
+   (`IsospinLedger`: links linear in `N−Z`, `typed_pn_mean`), so it has no valley above
+   `A ≈ 56`. E8 gives a clear reason for one: protons and neutrons fill separate shell ladders
+   (Capacity, spin `2`, spacing `ℏω(A)`), costing `occupancySymmetry ≈ 8.3 MeV·(N−Z)²/A`. It
+   replaces the alpha-cluster isospin suppression, which is a second `N ≈ Z` preference for the
+   same nucleons (`valleyMass`). With it the lowest isobar is `Z = 18, 24, 37, 47, 82, 92` at
+   `A = 40, 56, 90, 120, 208, 238` (stable `20, 26, 40, 50, 82, 92`). The stable-line masses
+   then come out `≈ 100 m_e` heavy on average (rms `53`): the bulk terms already carry the
+   average symmetry cost. Most of that offset is the alpha-cluster binding
+   itself (`Δ/D` per cluster, `43 m_e` at O-16 where the occupancy term is zero): the
+   suppression `(1 − |N−Z|/Δ)` both sets the stable-line masses and is the ledger's isospin
+   mechanism, so it cannot simply be swapped out. **Where it stops (no clear E8 rule).** A
+   consistent occupancy ledger also needs the symmetric part of the filling energy,
+   `(ℏω/2)(3/2)^{4/3}A^{1/3}` per nucleon `≈ 37.5` MeV with the E8 `ℏω(A)` (Fermi-gas mean kinetic
+   energy `≈ 22` MeV). The link weights would then be a potential, not the net binding they are
+   now (`πD`-based, matching the SEMF volume term), and nothing in the substrate gives a link
+   potential separate from the net cost. So the rebuild has no E8 rule past the asymmetric term;
+   `certifiedMass` stays the stable-line ledger and `valleyMass` the valley comparison. The potential part of the
+   symmetry energy has no E8 reason yet (`pn` weight = mean of `pp`, `nn`); the light valley
+   (`A = 40, 56` two units neutron-rich) is where it would show.
+3. **(Deferred) Deformed closure / frontier (Q3).** `Cm-244` is under-bound by `+44 m_e` at the
+   deformed closure `Z = 96, N = 152`. Hold until Q1 lands. Subsumes: the `2(Δ+σ)=96` term
+   overcorrects U-238, and the `−43/288` deformation candidate fails its holdout.
 
-1. **General finite-size link/closure count (Q1).** The ledger uses the *continuous*
-   `packingLinks(A) = (σ−χ)(A − A^{2/3})`, but `packingLinks_cube` proves it is exact **only at
-   cubic `A = n³`** — every other `A` is a mean-field interpolation. Derive the **exact
-   finite-complex count for arbitrary `A`** (the general `packingLinks`/`packingClosureRank`, given
-   the E8 filling rule). **Tested**: the natural discrete count `(σ−χ)(A − ⌈A^{1/3}⌉²)` (equal to
-   the cube count at cubes) is **worse** than the continuous mean-field (it jumps: `A=9` → 0 links),
-   so the count's discreteness is not the issue. A residual regression instead gives
-   `R ≈ −12 + 1.2·A^{2/3} − 0.22·A` `m_e` (mean `|R|` 8.5→3.3) — a **volume−surface** structure, i.e.
-   the link/surface coefficients (currently both `σ−χ`) are slightly off (surface ~±6%, volume ~1%).
-   So Q1 is a *derivation of the volume/surface split*, not a discrete-count patch. Do **not** fit the
-   coefficients (look-elsewhere); the split must come from the pillars.
-2. **Shell system as a six-pillar E8 system (Q2).** The smooth ledger is blind to the discrete
-   closure ladder (`NuclearShells`), so `R` oscillates between shells. `SingleParticle` is a
-   *candidate* module whose level energies are schematic (`n + l/10 − j/20`), not E8-derived — a
-   schematic Strutinsky does **not** reproduce the oscillation (wrong magnitude and shape). Build
-   the shell system out from the pillars, as was done at the atom level: the ladder `2,6,12,8,…`
-   is E8; its **spacings and couplings** are not yet. **Progress (`ShellSystem`)**: capacity
-   `2j+1`, the oscillator `2n+l` order (Capacity), and the cumulative ladder are proved; the
-   `l²`/spin–orbit ratio is **forced to `1/D`** by the order (`l2_ratio_forced`), and the E8
-   spacings (`κ=χ/Δ`, `κ₂=κ/D`) reproduce the recorded order (`e8OrbitalOrder`). Only the overall
-   scale `κ` is free — it needs an E8 energy scale, not a fit.
-3. **(Deferred) Deformed closure / frontier (Q3).** `Cm-244` is under-bound by `+44 m_e` — a
-   missing extra binding at the deformed closure `Z=96, N=152`. Localized to the frontier; hold
-   until Q1/Q2 land unless it turns out to help the bulk. Subsumes the old items: the
-   `2(Δ+σ)=96` term overcorrects U-238, and the `−43/288` deformation candidate fails its holdout.
+### Shell system (`ShellSystem`, `ShellGaps`)
 
-**SEMF comparison (evidence).**  Regressing the E8 binding on the Bethe–Weizsäcker basis
-`{A, A^(2/3), Z(Z−1)/A^(1/3), (N−Z)²/A, 1}` gives volume/surface/Coulomb/asymmetry
-`16.2 / 20.0 / 0.73 / 23.7` MeV against the empirical `15.75 / 17.8 / 0.71 / 23.7` — so the six
-pillars **reproduce the liquid-drop coefficients** (asymmetry exact, volume/Coulomb ~3%, surface
-~13% high). The residual is therefore leptodermous/shell refinement, and the surface/closure
-coefficients are already near-optimal (scan floor ~`4 m_e` ≈ 2 MeV; no clean E8 tweak closes it).
-**Holographic-capacity poke (negative).**  Nuclei are nowhere near saturation — mass is ~38 orders
-below the hoop bound `Rc²/2G`, and the Bekenstein entropy bound is `10²–10⁴` nats vs `~A` cells — so
-entropy-holography does not bind nuclei. The leptodermous **curvature** term (`A^{1/3}`), the next
-order of the area expansion, is collinear with `A, A^{2/3}` and does not help (floor `3.34 → 3.13 m_e`
-with cancelling coefficients). So the residual floor is `~3.3 m_e ≈ 1.7 MeV`, and holographic
-capacity is a **horizon/cosmology** question (`R_M`), not a nuclear one.
+The pillar roles, the spacing `ℏω(A)`, the closures and the smooth reference are in
+`OVERVIEW.md`. Open:
 
-**Built (`NuclearOccupancy`).** The occupancy `A = Z + N`, the closure predicates
-(`ProtonClosed`/`NeutronClosed`/`DoublyClosed`), and the frontier closure pair
-(`frontier_doublyClosed`: `Z=96`, `N=152`; `frontier_occupancy = 248`) are named — so "why these
-counts / where does it saturate" is a cost-functional question, not arithmetic.
+- **Spin–orbit as a uniform channel coupling.** `κ = 1/ν` gives the observed closures, and one
+  sector's symmetries act transitively on its `ν = 16` channels (`ShellGaps.sector_orbit`), so a
+  symmetric per-channel weight is `1/ν`. That spin–orbit *is* such a weight is still a reading.
+- **The `l²` ratio `μ = χ/σ`.** Only identified as the quark ledger's latency ratio
+  (`nilssonMu_eq_latency`); no shell-level reading yet. Empirically Nilsson's `μ` grows with the
+  shell (`≈ 0` for `N ≤ 2` to `≈ 0.6` for `N = 5`); the E8 value is one constant.
+- **Light-nucleus spacing.** `ℏω(A)` has no `A^{-2/3}` term (the two-term empirical fit is
+  `45 A^{-1/3} − 25 A^{-2/3}` MeV); E8 is 24% high at `A = 16`.
+- **Recorded fine order.** The standard form reorders five near-degenerate pairs of
+  `SingleParticle.nuclearOrbitals126`, the pairs `l2_ratio_forced` used. That list is a textbook
+  order, not data; decide whether to keep `e8OrbitalOrder` as a theorem about it.
 
 ## 2. Emission overlap: α and fission hindrance — C
 
-An α decay (`nucleus → α + daughter`) and fission (`nucleus → fragments`) are composite →
-fragment-cohort transitions. The amplitude is a **fragment overlap**, the analogue of
-`PMHadrons.BoundStateOverlap`/`Emission` (`Γ = boundary × overlap² × phase space`). Here the
-hindrance is *supplied*: `AlphaHindrance.alphaHindranceScale`, `AlphaConfiguration` mixing
-(`alphaMixingV = κμδ = 1/200`, `hindrance = σχ/(χ·gap+1)`), `CollectiveE8.fissionBarrier =
-shellWeight`, `FissionFissility`/`FissionFinite` fissility costs.
+An α decay and fission are composite → fragment-cohort transitions with amplitude a **fragment
+overlap**, the analogue of `PMHadrons.Emission` (`FragmentOverlap.fragmentWidth = barrierRate ·
+|overlap|² · phase`). The barriers are E8 (`CollectiveE8.alphaBarrier_eq = 43`,
+`fissionBarrier_eq = 43/6`).
 
-**Task.** Build the fragment overlap so the hindrance is computed, not supplied: the α/fission
-fragment cohorts, the barrier as the boundary factor (`CollectiveE8.alphaBarrier_eq = 43`,
-`fissionBarrier_eq = 43/6`), and the overlap from the fragment configurations — the direct transfer
-of the hadron `Emission` construction. This reaches the collective/fission regime beyond the
-`Z=96`, `N=152` frontier.
+**Open.** The overlap value, i.e. the fragment configuration. The E8 level schemes compared so
+far (`ALPHA-TESTS.md`, `ShellGaps` §4) give the level *costs*; the observed odd-A hindrances
+(U-235 `≈ +6.3`, Pu-239 `≈ +1.8`) match only the nonstandard `SingleParticle.nilssonEnergy`
+formula. Both parents are deformed in the standard model; the E8 spectrum is spherical.
 
-**Built (`FragmentOverlap`).** The interface exists: `fragmentOverlap` (fragment vs parent
-configuration), `fragmentWidth = barrierRate · |overlap|² · phase` and `fragmentWidth_eq_partialWidth`
-(`= |T|²·Φ` with `T = √barrierRate · overlap`). The barrier plays the Toll-boundary role; only the
-fragment configuration (the overlap value) remains.
+## 3. Persistence selection: regime and valley — H
 
-**Unlocked by the shell work (`ShellSystem`, Q2).**  The shell system now supplies the **E8 level
-ladder** that `AlphaHindrance` needs — so the α hindrance scale is no longer a free input:
-
-- **The alpha's orbital on the ladder.**  The alpha carries the parent→daughter spin mismatch as its
-  angular momentum `L`: `alphaOrbital` with `l = spinMismatch`, `s = 0`, `j2 = l`, so its level cost is
-  the ladder's `orbitalCost κ κ₂` (`AlphaLevel.ofOrbital alphaOrbital = alphaLevel`).
-- **The per-unit costs.**  The spin cost is the `l·s` coefficient `κ = χ/Δ = 2/43`
-  (`ShellSystem.spinOrbitCoupling`); the parity cost is the `l(l+1)` coefficient `κ₂ = κ/D = 1/86`
-  (`l2_ratio_forced`).  So the supplied `alphaHindranceScale = 1` can be replaced by the *derived*
-  `κ·Δspin + κ₂·Δparity` — the hindrance is a projection of the E8 level cost, not a fitted number.
-- **The same pattern as the shell Toll.**  `shellEmissionWidth = boundary × |overlap|² × phase`
-  (`ShellSystem`) is structurally identical to `fragmentWidth`; the α/fission fragment overlap is the
-  shell-emission pattern applied to a fragment cohort.
-- **The honest test.**  `κ = 2/43 ≈ 0.0465` is ~21× smaller than the supplied `1`; the two differ by
-  ~21× in the α hindrance cost.  That is a *testable prediction* against the odd-A α lifetimes
-  (Th-231, U-235, Pu-239 levels already in `AlphaHindrance`), not an assertion — do not integrate
-  until it is checked.  The remaining blocker is the same **fragment configuration** (the overlap
-  value) that blocks the hadron `fπ`; the ladder now gives its *costs*, not yet its *amplitudes*.
-
-## 3. Governor: the nuclear rate / attempt-frequency layer — H/M
-
-The rate *structure* is complete: `RateModel.betaSpectralRate*` (bounded by `β·c0`, monotone in the
-cutoff, saturating), `CollectiveRate.barrierRate`/`MeanLife`, `PersistenceRate`, `AlphaFinite`;
-`MeanLife`/`PersistenceRate` give rate → lifetime. The one input named is the **absolute attempt
-frequency** `β·c0` and the E8 per-channel clock.
-
-**Task.** Pin `β·c0` with the **Governor** per-slot credit (`χ/Δ = 2/43`,
-`PMHadrons.TollGovernor.governorPerSlot`) — the same per-slot share that fixes the hadron cycle
-persistence. This is the nuclear analogue of the hadron Governor work and closes the rate unit.
-
-**Built (`NuclearRateUnit`).** The candidate identification is recorded: the per-slot attempt
-frequency is the Governor credit `χ/Δ = 2/43` (`attemptFrequency`, `attemptFrequency_eq`), and a
-channel's rate is `χ/Δ · Σ prob`, an instance of `RateModel.channelRate` with `β·c0 = χ/Δ`
-(`governorChannelRate_eq`). The identification is the named model foundation to test.
-
-## 4. Persistence selection: regime and valley — H
-
-`NuclearRegime`/`NuclearDecay` split the smooth ledger (through the `Z=96`, `N=152` frontier) from
-the collective ledger beyond it (`nuclearLedgerKind`, `regimePersists`); `NuclearSelection` /
-`TransitionSelection` / `PersistenceRate` give least-cost / least-hazard selection;
-`NuclearMass.PersistsMass` is mass-persistence.
-
-**Open.** Which `(Z,N)` are stable (the valley) and the exact regime boundary — a persistence
-selection using the barrier/rate layer, not mass minimality alone
-(`CollectiveRate.not_collectivePersists_of_lower` shows mass minimality is the wrong criterion for
-the post-frontier regime).
-
-**Built (`PersistenceSelection`).** The exit table is wired into the rate layer:
-`nuclearExitRateSystem` (its hazard is `collectiveRate (nuclearExitChannels …)`), and
-`nuclearPersistsOn_iff` (`PersistsOn T ↔ T ≤ meanLife`, the exit table being nonempty). The
-persistence-selected nuclide is the least-hazard one (`selectedNuclide_min`, from
-`PersistenceRate`).
+The selection layer is built (`NuclearRegime`, `NuclearDecay`, `PersistenceSelection`,
+`PersistenceRate`; see `OVERVIEW.md`). **Open:** the valley itself depends on §1 item 2: with the
+current ledger, mass persistence selects the stable isobar only up to `A ≈ 40`. Past the
+`Z = 96, N = 152` frontier, mass minimality is the wrong criterion
+(`CollectiveRate.not_collectivePersists_of_lower`), and the barrier/rate layer selects.
 
 ## Not the pattern (analysis / lattice / model input)
 
@@ -153,12 +96,6 @@ persistence-selected nuclide is the least-hazard one (`selectedNuclide_min`, fro
 - **Spectral asymptotic** (§4) — `uniformResponse ~ n⁵/(16π)`; a limit theorem.
 - **Neutrino decay / ordering** (§4b) — needs a decay channel and mass ordering (model).
 - **Chemistry / Aufbau** (§6) — screening/exchange and the fill order are model inputs.
-- **Certified-mass enclosure** (§7) — a rational enclosure of the `π`/`√` `certifiedMass`;
-  interval analysis. **Built (`CertifiedNumerics`, `CertifiedEnclosure`)**: the `certifiedMass_eq`
-  expansion, an `O(log n)` integer cube root (`cbrt`), computable `ℚ` bounds (`rpow23Lo`/
-  `sqrtLo`…), and the **general** enclosure `certifiedMass_bounds` — `cmLo Z N d ≤
-  certifiedMass Z N ≤ cmHi Z N d` for *any* nuclide at `d` digits (not an enumeration);
-  `certifiedMass_c12` is the regression instance. Remaining: wire e8p's `--certified` readout.
 - **Continuum-comparison modules** (§5b) — keep as numerical cross-checks until each E8
   replacement has a numeric counterpart.
 

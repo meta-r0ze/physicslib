@@ -70,6 +70,9 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `NuclearRegime` | `NuclearRegime`, `deformedFrontier`, `regimeOf`; `pb_regime`, `u_regime`, `cm_regime`, `cf_regime`, `cm_at_frontier`, `cf_beyond_frontier`; Cm/Cf boundary as a theorem |
 | `SingleParticle` | `NuclearOrbital`, `nuclearOrbitals126`, `nuclearOrbitals184`, `totalOccupation`; `126`/`184` occupations proved; `orbitalEnergy`, `orbitalLevels`, `cumulativeEnergy`, `smoothEnergy`, `strutinskyCorrection` scaffold; `spinOrbit`, `nilssonEnergy`, `nilssonLevels`, `nilssonCumulative`, `nilssonCorrection` |
 | `NuclearShells` | E8 shell ladder/occupation aliases; E8 nuclear magic ladder: `magic2=χ`, `magic8=Dχ`, `magic20=Dσ`, `magic28=D(σ+χ)`, `magic50=χσ²`, `magic82=2(Δ−χ)`, `magic96=2(Δ+σ)`, `magic126=(σ−χ)(Δ−1)`, `magic152`, `magic184=D(Δ+σ−χ)`; shell occupations `nuclearShellSizes=[2,6,12,8,22,32,14,30,26,32]` |
+| `ShellSystem` | shell pillars (Capacity `2j+1`/`2n+l`, Map = closure boundary, Protocol = successor, Toll = emission, Margin = reference cone); spacing `ℏω(A) = χ·m_p/(Δ·A^{1/3})` | spin–orbit reading |
+| `ShellGaps` | closures as gaps: `κ = χ/Δ` gives `20, 40, 70`; `κ = 1/ν`, `μ = χ/σ` gives `2, 8, 20, 28, 50, 82, 126`; plain-oscillator smooth reference | uniform-coupling reading of `1/ν` |
+| `IsospinLedger` | the link binding is linear in `N−Z` (`packingBindingTyped_closed`); comparison with the stability valley | isospin restoring cost |
 | `Shells` | `orbitalCapacity l = 2(2l+1)`, `shellCapacity n = 2n²`, first shells `2,8,18,32` |
 | `Hydrogen` | Rydberg energy and Bohr radius from the certified `α`; `E_n = E_1/n²`; ground state lowest |
 | `PersistenceRate` | dynamical persistence: `Persists` = total hazard zero, else `MeanLife = 1/λ`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | the E8 channel rates |

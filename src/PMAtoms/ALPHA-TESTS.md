@@ -224,3 +224,26 @@ With `V = κμδ = 1/200`:
 
 The tiny size is expected: the dressed gap changes by `≈2V²/ΔE`, which is of
 order `10⁻⁵`.  The scalar `V=0` formula is therefore an excellent approximation.
+
+## E8 level schemes compared (`ShellGaps` §4)
+
+Observed need over the smooth E8 cost: U-235 `≈ +6.2–6.4`, Pu-239 `≈ +1.8`.
+
+| E8 hindrance | U-235 | Pu-239 |
+|---|---:|---:|
+| `κ·Δspin + κ₂·Δparity`, `κ = χ/Δ = 2/43`, `κ₂ = 1/86` | 0.105 | 0.29 |
+| `σ/(gap + 1/χ)`, `SingleParticle.nilssonEnergy` (gaps `9/32`, `351/160`) | 6.40 | 1.86 |
+| `σ/(gap + 1/χ)`, standard Nilsson, `κ = 1/16`, `μ = 2/5` (gaps `15/16`, `53/80`) | 3.48 | 4.30 |
+
+The spin-parity form's units (3 vs 7) run opposite to the need at any scale. `nilssonEnergy` uses
+the radial `n` for the shell, `+κμ·l(l+1)` and an extra `−δ(2l−n)`, and orders `3s₁/₂` (`N=4`)
+above `2f₇/₂` (`N=5`); it is the row that matches. The standard form is the one whose closures
+match observation (`2, 8, 20, 28, 50, 82, 126`), and its hindrances do not. In the standard model
+both parents are deformed (`7/2⁻[743]`, `1/2⁺[631]`); the E8 spectrum here is spherical.
+
+## Attempt frequency: capacity flux vs Governor (`NuclearRateUnit`)
+
+`AlphaFinite.alphaAttempt = min(Z,N)/2 · 1/Δ` (≈ `1.07` for U-238). The Governor candidate
+`χ/Δ = 2/43` replaces it by a factor `min(Z,N)/4` (≈ 23–25 here); `χ/Δ` per alpha cluster doubles
+it. On the even-even entries of the `(43/8)Z/√Q − 84` table the geometric mean of model/obs is
+`0.71` with the capacity flux, `≈ 17` with `χ/Δ` alone, and `0.36` with `χ/Δ` per cluster.

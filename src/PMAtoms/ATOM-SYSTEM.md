@@ -168,7 +168,8 @@ The atom ladder does **not** currently claim:
 - numeric nuclear lifetimes
 - a complete fission/alpha barrier from E8
 - electron screening/chemistry-level shell interaction
-- a unique periodic-table valley from the mass ledger alone
+- a unique periodic-table valley from the mass ledger alone (above `A ≈ 56` the ledger has no
+  valley at all: the link binding is linear in `N−Z`, `IsospinLedger`, `RESIDUALS.md`)
 
 Those are open, and some are PMSubstrate or separate-pillar work.
 
