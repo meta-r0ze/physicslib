@@ -48,7 +48,7 @@ EXPECTED = {
     "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
     "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
@@ -114,14 +114,14 @@ def main():
                       "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
                       "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
                       "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
     "pion_finite_lifetime_s", "kaon_finite_lifetime_s",
     "neutral_pion_finite_lifetime_s",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
@@ -192,6 +192,10 @@ def main():
     assert "11/4" in nuc.stdout and "16/5" in nuc.stdout and "mirror difference" in nuc.stdout
     assert run(binary, "--line-table").returncode == 2
     assert "2S+1" in table.stdout
+    shells = run(binary, "--shells")
+    assert shells.returncode == 0
+    assert "1h11/2" in shells.stdout and "same set" in shells.stdout
+    assert "[2, 8, 20, 28, 50, 82, 126]" in shells.stdout
     assert run(binary, "--help").returncode == 0
     print(f"e8p reporter checks passed: {len(EXPECTED)} rows, five precisions, paper/only filters, audit, latex, CLI")
 

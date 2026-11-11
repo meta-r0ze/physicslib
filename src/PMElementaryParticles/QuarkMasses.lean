@@ -28,7 +28,7 @@ paper's reading (`up_ledger` … `top_ledger`). The **assignment** of which inva
 pays which tier cost is the paper's proposed protocol ledger — a declared model
 input (`M`), not cost-selected (there is no option family/cost functional over
 tier ledgers). The measured PDG 2024 pulls live in
-`tools/e8p/E8PConstants/QuarkMassPulls.lean`.
+`tools/e8p/E8PConstants/PMElementaryParticles/QuarkMassPulls.lean`.
 
 These are the formulas Paper III's `StrongRunning` uses for the flavour thresholds
 (`m_c`, `m_b`, `threshold_match`).

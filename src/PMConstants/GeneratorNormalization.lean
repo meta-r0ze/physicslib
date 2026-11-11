@@ -23,7 +23,7 @@ unit:
   `1849/8295` (`charge_units_give_effective`).
 
 The measured W-mass decision (`normalization_decided`) lives in
-`tools/e8p/E8PConstants/ReadoutPulls.lean`: with the measured `m_Z`, the trace-form
+`tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`: with the measured `m_Z`, the trace-form
 normalization puts the W mass more than `289σ` above the direct average, while the
 charge-unit normalization lies within `1.3σ`. So the substrate's own trace form is
 **not** the normalization of the gauge stiffness; the charge quanta are. The vacuum is

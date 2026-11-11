@@ -18,7 +18,7 @@ reference type. It follows from the premise that already fixes `η = 171/172`.
 
 The measured selection (a quark reference puts the W mass more than `2400σ` below the direct
 average, so the shared reference is the lepton doublet) lives in
-`tools/e8p/E8PConstants/ReadoutPulls.lean` (`quark_w_window`, `quark_reference_excluded`,
+`tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean` (`quark_w_window`, `quark_reference_excluded`,
 `reference_selected_wmass`). No colour-invariance premise is needed.
 * `colour_not_reserved`: if the colour refresh also read against the single reserved reference,
   that type would need colour response as well, which only `Q` has, and `Q` is excluded. So the
@@ -71,7 +71,7 @@ def quarkWMass (mZ : ℝ) : ℝ := mZ * Real.sqrt (1 - 16641 / 23087)
 
 /-- **The E8 part of the shared-reference selection.** Given a layout whose shared reference
 responds to both refreshes, it is `Q` or `L`, and `L` gives the manuscript mixing. The measured
-exclusion of `Q` is `tools/e8p/E8PConstants/ReadoutPulls.lean`. -/
+exclusion of `Q` is `tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`. -/
 theorem reference_selected (L : ReferenceLayout)
     (hresp : 0 < weakIndex (ref (L.refOf 0)) ∧ 0 < hyperIndex (ref (L.refOf 0))) :
     L.refOf 0 = L.refOf 1 ∧ (L.refOf 0 = .Q ∨ L.refOf 0 = .L) ∧

@@ -37,7 +37,7 @@ instead of whole cell budgets.
 
 **Model inputs.** The cell counts `n` and the residual terms are the paper's assignments; no
 cost functional selects them. The measured comparison lives in
-`tools/e8p/E8PConstants/LeptonMassPulls.lean` and the `CompositeMasses` pulls.
+`tools/e8p/E8PConstants/PMElementaryParticles/LeptonMassPulls.lean` and the `CompositeMasses` pulls.
 -/
 
 noncomputable section

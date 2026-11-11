@@ -73,7 +73,7 @@ Governor (`χ/Δ` per slot, `PMSubstrate.ImpedanceTerms.governor_baseline`) and 
 (`PMSubstrate.uniform_toll`). Its per-slot lifetime is `1/rate`; the physical lifetime is
 `tick · (1/rate)`. The only remaining input is the tick `Δ` — the E8 clock period `Δ = 43`
 (`PMAtoms.E8Tick.e8Tick_eq`) and its SI value (a unit anchor,
-`tools/e8p/E8PConstants/E8TickUnit`). -/
+`tools/e8p/E8PConstants/PMAtoms/E8TickUnit`). -/
 
 /-- The per-slot hazard is exactly the six-pillar channel rate. -/
 theorem rate_eq_pillars (β : ℝ) (c : PersistenceMechanics.Decay.DecayChannel) :

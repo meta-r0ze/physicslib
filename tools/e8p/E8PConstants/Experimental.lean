@@ -35,7 +35,7 @@ def expRefs : Key → List ExpRef
   | .hubbleLate => [
       ⟨73.0, 1.0, "riess_sh0es_2022"⟩,
       ⟨67.4, 0.5, "planck_2018"⟩,
-      ⟨67.4, 0.5, "edwards_des_2023"⟩]
+      ⟨67.4, 1.2, "abbott_des_y1_2018"⟩]
   | .clusteringLate => [
       ⟨0.776, 0.017, "abbott_des_2022"⟩,
       ⟨0.832, 0.013, "planck_2018"⟩,
@@ -56,6 +56,8 @@ def expRefs : Key → List ExpRef
   | .vud | .vudDressed => [⟨0.97373, 0.00031, "pdg_2024"⟩]
   | .tauLifetimeFs => [⟨290.3, 0.82, "pdg_2024"⟩]
   | .neutronLifetimePredicted => [⟨878.4, 0.5, "pdg_2024"⟩]
+  | .pionLifetimePredicted => [⟨2.6033e-8, 0.0005e-8, "pdg_2024"⟩]
+  | .muonLifetimeSeconds => [⟨2.1969811e-6, 0.0000022e-6, "pdg_2024"⟩]
   | .neutralPionFiniteLifetimeSeconds => [⟨8.43e-17, 0.13e-17, "pdg_2024"⟩]
   | .zEq => [⟨3387, 21, "planck_2018"⟩]
   | .ckmS13 => [⟨0.00382, 0.00020, "pdg_2024"⟩]
@@ -101,11 +103,14 @@ context, with `·` instead of a glyph:
 * `baryon_pmJ`, the Paper IV Jarlskog proposal that `PMFlavor.CKM.papers_disagree` sets against
   Paper III's `baryon_pm3J` (the scored candidate);
 * early-universe (CMB) references against late-universe values (`hubble_late`, `clustering_late`):
-  that gap is the Hubble / `S₈` tension, not a model miss. -/
+  that gap is the Hubble / `S₈` tension, not a model miss (DES Y1 + BAO + BBN is calibrated by the
+  BBN sound horizon, so it is grouped with the early-universe references);
+* `muon_lifetime_s`, the tree-level width: the measurement includes the SM QED factor, and the E8
+  `G_F` it tests is already scored in `fermi_constant`. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
-  | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ => false
-  | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "edwards_des_2023"
+  | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds => false
+  | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "abbott_des_y1_2018"
   | _ => true
 
 /-- Primary experimental reference for display compatibility (first recorded). -/

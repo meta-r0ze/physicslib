@@ -16,9 +16,9 @@ rows are treated as the address frame with weight `1` in these formulas.
   - `extensive_w_mass`, `extensive_strong`: `w = 1` gives `m_W` in `(80.3882, 80.3926)` GeV and
     `α_s` in `(0.11736, 0.11737)`;
   - the intensive values are `ColourChannels.strong_from_channels` (and the measured
-    `w_window`, now living in `tools/e8p/E8PConstants/ReadoutPulls.lean`).
+    `w_window`, now living in `tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`).
 * The summed squared-pull comparison (`intensive_preferred`) lives in
-  `tools/e8p/E8PConstants/ReadoutPulls.lean`: against the direct `m_W` average `80.3692 ± 0.0133`
+  `tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`: against the direct `m_W` average `80.3692 ± 0.0133`
   and `α_s = 0.1180 ± 0.0009`, the summed squared pulls are below `1.70` for `w = η` and above
   `2.5` for `w = 1`. Both observables move the same way; the preference is mild (Δχ² ≈ 0.8).
 * `economy_selects_intensive` proves only the two numerical cost inequalities

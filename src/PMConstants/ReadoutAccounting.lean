@@ -25,7 +25,7 @@ Two inputs now settle it.
   direct world average, while the effective reading is within `1.3σ`.
 
 The measured W-mass comparison (`raw_w_window`, `raw_excluded`, `ledgers_are_effective`) lives in
-`tools/e8p/E8PConstants/ReadoutPulls.lean`; this module keeps the E8 selection and the raw mixing.
+`tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`; this module keeps the E8 selection and the raw mixing.
 The comparison shows the ledgers are effective stiffness: each already contains its sector's
 trace index, and multiplying by the index again is excluded. Consequently the raw-floor
 throughput criterion of `GaugePersistenceChoice` is not the operative selection: it picks the

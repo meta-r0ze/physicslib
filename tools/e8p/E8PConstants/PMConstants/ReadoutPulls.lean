@@ -1,4 +1,4 @@
-import E8PConstants.WeakMassPulls
+import E8PConstants.PMConstants.WeakMassPulls
 import PMConstants.ReadoutAccounting
 import PMConstants.GeneratorNormalization
 import PMConstants.TableConsequences

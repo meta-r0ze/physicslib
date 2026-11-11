@@ -16,7 +16,7 @@ overall scale, so the cleanest test of the scalar sector is one in which `v` can
   `m_H = √(2λ) v_F` lies in `(125.26, 125.28)` GeV for `G_F` in `(1.1663782, 1.1663794)·10⁻⁵ GeV⁻²`.
   This uses neither the proposed VEV formula nor the electron mass.
 The measured-Higgs pull against `m_H = 125.20 ± 0.11` GeV (PDG 2024) lives in
-`tools/e8p/E8PConstants/ScalarAccounting.lean` (`higgs_pull`).
+`tools/e8p/E8PConstants/PMConstants/ScalarAccounting.lean` (`higgs_pull`).
 
 So `λ = 128/989` passes a test independent of the VEV derivation. The VEV formula itself,
 `v = (χΔ² − L)α⁻¹m_e(1 ± corrections)`, remains outside the event-law chain and was found not

@@ -28,7 +28,7 @@ is *derived* as the fixed point of its recursive loop; the **assignment** of whi
 invariant pays which tier cost is the paper's proposed ledger — a declared model
 input (`M`), not a cost-selected choice (there is no option family/cost
 functional over tier ledgers yet). The measured CODATA/PDG comparisons live in
-`tools/e8p/E8PConstants/LeptonMassPulls.lean`.
+`tools/e8p/E8PConstants/PMElementaryParticles/LeptonMassPulls.lean`.
 -/
 
 noncomputable section

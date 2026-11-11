@@ -2,7 +2,7 @@ import PMAtoms.CertifiedEnclosure
 import PMAtoms.NuclearRegime
 import PMAtoms.HundRule
 import E8PConstants.Format
-import E8PConstants.Periodic
+import E8PConstants.PMAtoms.Periodic
 
 /-!
 # Nuclear and atomic readouts
@@ -151,6 +151,20 @@ def certifiedNuclide (z n : Nat) : List String :=
 
 /-! ## Periodic table -/
 
+/-- `2S+1` from Hund's rule, with the observed term when it differs (`Z ≤ 54`). -/
+def multiplicityStr (z : Nat) : String :=
+  let g := PMAtoms.Hund.groundMultiplicity z
+  match PMAtoms.Hund.observedMultiplicity[z - 1]? with
+  | some o => if o == g then toString g else s!"{g}≠{o}"
+  | none => toString g
+
+/-- `(matches, compared)` of Hund `2S+1` against the observed terms for `Z = 1..maxZ`. -/
+def multiplicityScore (maxZ : Nat) : Nat × Nat :=
+  let zs := (List.range maxZ).map (· + 1)
+  let cmp := zs.filterMap fun z =>
+    (PMAtoms.Hund.observedMultiplicity[z - 1]?).map (· == PMAtoms.Hund.groundMultiplicity z)
+  (cmp.count true, cmp.length)
+
 def periodicTable (maxZ : Nat) : List String :=
   let header :=
     "Z   Sym  configuration                  K  L  M  N  2S+1  A   E8 ledger(u)  measured(u)  E8−meas(m_e)  z(scatter)  cloud(eV)  regime"
@@ -165,10 +179,10 @@ def periodicTable (maxZ : Nat) : List String :=
       | some r => signed (r / electronMassU) 2
       | none => "—"
     let shells := String.intercalate "  " ((shellCounts z).map toString)
-    s!"{z}  {symbol z}  {configuration z}  |  {shells}  {PMAtoms.Hund.groundMultiplicity z}  {a}  {e8}  {isoStr z a}  {res}  {zStr z n}  {fixedDecimal (lowerScaled (cloudEnergyRat z) 2) 2}  {regimeStr z n}")
+    s!"{z}  {symbol z}  {configuration z}  |  {shells}  {multiplicityStr z}  {a}  {e8}  {isoStr z a}  {res}  {zStr z n}  {fixedDecimal (lowerScaled (cloudEnergyRat z) 2) 2}  {regimeStr z n}")
   let notes := [
     "configuration = PMAtoms.Aufbau.configuration: capacities 2(2ℓ+1) proved (PMAtoms.Shells); the fill order is a supplied input.",
-    "2S+1 = PMAtoms.Hund.groundMultiplicity: Hund's first rule derived by counting same-spin pairs (PMAtoms.HundRule).",
+    s!"2S+1 = PMAtoms.Hund.groundMultiplicity: Hund's first rule derived by counting same-spin pairs (PMAtoms.HundRule); g≠o marks an observed term o that differs; {(multiplicityScore maxZ).1} of {(multiplicityScore maxZ).2} match (misses are Aufbau configuration exceptions).",
     "E8 ledger = midpoint of the PMAtoms.certifiedMass enclosure (— for A ≤ 4); z = residual / 4.8 m_e (the ledger's stable-line scatter).",
     "cloud = hydrogenic electron binding Σ −R∞/n² (PMAtoms.ElectronCloud, certified R∞), no screening.",
     "measured = frozen isotope mass (comparison only)." ]

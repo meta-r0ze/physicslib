@@ -13,7 +13,7 @@ interface factor `k`, no `α` and no VEV:
 
 This module keeps only the scale-free ratio. The measured `m_Z` window and the
 labelled pulls (`w_window`, `pull_world`, `pull_cms`, `pull_cdf`, `pull_sm`) live
-in `tools/e8p/E8PConstants/WeakMassPulls.lean`.
+in `tools/e8p/E8PConstants/PMConstants/WeakMassPulls.lean`.
 -/
 
 noncomputable section

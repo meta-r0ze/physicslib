@@ -15,7 +15,7 @@ cancels `G_F` and `192π³`:
   `τ_μ = 2.1969811 μs` and `B_e = 17.82 %`, `291.15 < τ_τ < 291.17` fs.
 
 The measured-lifetime pull (`tau_lifetime_pull`, against PDG `290.3 ± 0.5` fs) lives
-in `tools/e8p/E8PConstants/TauLifetimePulls.lean`.
+in `tools/e8p/E8PConstants/PMElementaryParticles/TauLifetimePulls.lean`.
 
 So the tau lifetime is consistent with the derived masses. It does not resolve the `−2σ` tau-mass
 tension: that tension moves `τ_τ` by only about `0.15` fs, below the lifetime's precision.

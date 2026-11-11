@@ -9,12 +9,12 @@ import PMCosmology.Scaling
 import PMCosmology.SubstrateLoad
 import PMCosmology.Tensions
 import PMCosmology.Primordial
-import E8PConstants.CompositeMassPulls
-import E8PConstants.LeptonMassPulls
-import E8PConstants.QuarkMassPulls
-import E8PConstants.WeakMassPulls
-import E8PConstants.ReadoutPulls
-import E8PConstants.TauLifetimePulls
+import E8PConstants.PMHadrons.CompositeMassPulls
+import E8PConstants.PMElementaryParticles.LeptonMassPulls
+import E8PConstants.PMElementaryParticles.QuarkMassPulls
+import E8PConstants.PMConstants.WeakMassPulls
+import E8PConstants.PMConstants.ReadoutPulls
+import E8PConstants.PMElementaryParticles.TauLifetimePulls
 import PMElementaryParticles.LeptonMasses
 import PMHadrons.MesonMasses
 import PMHadrons.PionWidth
@@ -26,15 +26,15 @@ import PMConstants.GaugeLedgers
 import PMConstants.ColourChannels
 import PMCosmology.Background
 import PMSubstrate.Readouts
-import E8PConstants.PlanckReadout
-import E8PConstants.ExperimentalComparison
-import E8PConstants.AlphaClockComparison
-import E8PConstants.E8TickUnit
-import E8PConstants.ExperimentalPulls
-import E8PConstants.ScalarAccounting
-import E8PConstants.FlavourPulls
-import E8PConstants.CompositeMassPulls
-import E8PConstants.HyperScope
+import PMConstants.PlanckReadout
+import E8PConstants.PMSubstrate.ExperimentalComparison
+import E8PConstants.PMAtoms.AlphaClockComparison
+import E8PConstants.PMAtoms.E8TickUnit
+import E8PConstants.PMFlavor.ExperimentalPulls
+import E8PConstants.PMConstants.ScalarAccounting
+import E8PConstants.PMFlavor.FlavourPulls
+import E8PConstants.PMHadrons.CompositeMassPulls
+import E8PConstants.PMConstants.HyperScope
 import PMConstants.ElectroweakBounds
 import PMConstants.ElectroweakE8
 import PMConstants.JointConstants
@@ -141,7 +141,7 @@ def value : Key → ℝ
   | .vonKlitzing => PMSubstrate.vonKlitzing
   | .planckChargeAtt => PMSubstrate.planckChargeAttenuation
   | .planckChargeRatio => PMSubstrate.planckChargeRatio
-  | .planckMass => E8PConstants.PlanckReadout.planckMass
+  | .planckMass => PMConstants.PlanckReadout.planckMass
   | .ckmS13 => PMFlavor.CKM.s13
   | .ckmS23 => PMFlavor.CKM.s23
   | .ckmVcb => PMFlavor.CKM.vcb
@@ -160,6 +160,7 @@ def value : Key → ℝ
   | .muonLifetimeSeconds => PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds
   | .neutronLifetimeSeconds => PMHadrons.neutronLifetimeSeconds
   | .neutronLifetimePredicted => PMHadrons.neutronLifetimeCorrectedSeconds
+  | .pionLifetimePredicted => PMHadrons.pionLifetimeCorrectedSeconds
   | .pionFiniteWidth => PMHadrons.pionFiniteWidth
   | .pionFiniteLifetime => PMHadrons.pionFiniteLifetime
   | .kaonFiniteWidth => PMHadrons.kaonFiniteWidth
@@ -400,7 +401,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | muonLifetimeSeconds =>
-    have h := PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_bounds
+    have h := PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_tight
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronLifetimeSeconds =>
@@ -409,6 +410,10 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     exact ⟨h.1.le, h.2.le⟩
   | neutronLifetimePredicted =>
     have h := PMHadrons.neutronLifetimeCorrectedSeconds_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | pionLifetimePredicted =>
+    have h := PMHadrons.pionLifetimeCorrectedSeconds_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pionFiniteWidth =>
@@ -489,7 +494,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | planckMass =>
-    have h := E8PConstants.PlanckReadout.planckMass_bounds
+    have h := PMConstants.PlanckReadout.planckMass_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmS13 =>
@@ -544,23 +549,19 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
       PMElementaryParticles.LeptonMasses.tauCoreLatency,
       PMElementaryParticles.LeptonMasses.tauAnchors]
   | protonRadius =>
-    have h := E8PConstants.CompositeMassPulls.proton_radius
-    rw [abs_lt] at h
+    have h := PMHadrons.CompositeMasses.protonRadius_value
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]
   | pion0MeV =>
-    have h := E8PConstants.CompositeMassPulls.pion_mass
-    rw [abs_lt] at h
+    have h := PMHadrons.CompositeMasses.pion0_mev_value
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]
   | kaon0MeV =>
-    have h := E8PConstants.CompositeMassPulls.kaon0_mass
-    rw [abs_lt] at h
+    have h := PMHadrons.CompositeMasses.kaon0_mev_value
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]
   | kaonPlusMeV =>
-    have h := E8PConstants.CompositeMassPulls.kaonPlus_mass
-    rw [abs_lt] at h
+    have h := PMHadrons.CompositeMasses.kaonPlus_mev_value
     norm_num [bounds, value] at h ⊢
     constructor <;> linarith [h.1, h.2]
   | baryonPmJ =>

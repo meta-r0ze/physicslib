@@ -2,16 +2,17 @@ import PMConstants.GravityAccounting
 import PMConstants.Depth
 
 /-!
-# Planck mass from the certified gravitational coupling (comparison readout)
+**Comparison / unit conversion.**
 
-`m_P = m_e/√α_G`. The electron mass is the supplied CODATA input — a comparison
-value, so this readout lives with the e8p comparison tool rather than in the
-axiom-checked derivation tree. The only E8 content is the enclosure of `α_G` in
-`GravityAccounting.channels_as_frame`.
+# Planck mass from the certified gravitational coupling
+
+`m_P = m_e/√α_G`. The E8 content is the enclosure of `α_G` in
+`GravityAccounting.channels_as_frame`; the electron mass is the CODATA unit input, as in
+`PMElementaryParticles.PhysicalUnits`. Reported by `e8p` as `planck_mass`.
 -/
 
 noncomputable section
-namespace E8PConstants.PlanckReadout
+namespace PMConstants.PlanckReadout
 
 open PMConstants
 open PMConstants.CertifiedConstants
@@ -39,4 +40,4 @@ theorem planckMass_bounds :
   · rw [div_lt_iff₀ hpos]
     nlinarith [hs1]
 
-end E8PConstants.PlanckReadout
+end PMConstants.PlanckReadout

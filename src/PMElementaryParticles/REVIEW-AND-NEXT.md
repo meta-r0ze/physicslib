@@ -124,7 +124,7 @@ The per-slot hazard is the six-pillar `Decay.rate` (including the Governor `χ/�
 `DecayLaw.rate_eq_pillars`; the exponential law is `ticks_exact` / `ticks_are_survive`; and the
 physical lifetime is `tick · (1/rate)` (`DecayLaw.physicalLifetime_eq_tick_mul`). The only input
 is the tick `Δ` — the E8 clock period `Δ = 43` (`PMAtoms.E8Tick`) and its SI value (a unit anchor,
-`tools/e8p/E8PConstants/E8TickUnit`).
+`tools/e8p/E8PConstants/PMAtoms/E8TickUnit`).
 
 ### B3. Decay law from the chosen dynamics
 Specify subsystem, environment/readout and the controlled approximation giving

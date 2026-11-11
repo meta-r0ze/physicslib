@@ -88,14 +88,14 @@ is elementary-particle work.
 | `BetaCalibration` | `weakAmplitudeSquared = G_F²`, `weakChannelCost = 1/(σ−χ) = 1/3`, `betaHazardE8 = weakAmplitudeSquared · weakChannelCost`, positivity; `betaLifetimeFromFraction`, `betaNeutronLifetimeE8` | independent derivation/validation of the hazard |
 | `WeakTransition` | `WeakChannel = Fin (σ−χ)`, `weakChannel_card = 3`, `weakChannelAmplitude`, `weakTransitionHazard`; `weakCurrent`, `weakCurrentWeight`, `weakHazardFromCurrent`; `weakCurrentEntries`, `weakCurrentEntries_norm`, `weakHazardFromEntries_eq`; `weakCarrierEntry`, `weakCarrierEntry_eq_one`, `weakCarrierEntryReal`, `weakCarrierEntries_eq`; `weakCarrierOperator`, `weakCarrierOperator_eq_one`, `weakCarrierOperator_apply`, `weakCarrierOperator_offdiag_zero`, `weakOperatorEntry`, `weakOperatorEntry_eq_entries`; `weakTransitionHazard_eq = G²/3`, `weakHazardFromAmplitude_eq` | equal channel distribution from the weak current |
 | `NeutronPrediction` | `neutronCube = 3` (minimal volume-persistent cube), `neutronCutoff`, `neutronCutoffExact`, `neutronSpectralFractionExact`, `neutronLifetimeExactCutoff`, `neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin = 41/43` (`neutronMarginFactor_eq_substrate`), `neutronLifetimeCorrected`; `neutronCube_minimal` | numerical fraction is external comparison |
-| `MesonFiniteChannels` | minimal-cube finite channels for π⁺, K⁺, π⁰; `pion/kaon/neutralPion_openModes`, `*SpectralFraction_eq_one`, `*FiniteWidth`, `*FiniteLifetime`, `*FiniteLifetimeSeconds`, certified bounds | all modes open; finite equals continuum |
+| `MesonFiniteChannels` | minimal-cube finite channels for π⁺, K⁺, π⁰; `pion/kaon/neutralPion_openModes`, `*SpectralFraction_eq_one`, `*FiniteWidth`, `*FiniteLifetime`, `*FiniteLifetimeSeconds`, certified bounds; `pionLifetimeCorrectedSeconds` (`32/33` margin, tight bounds) | all modes open; finite equals continuum |
 
 ## E8 decay checks at this level
 
 | decay | E8 model | comparison | status |
 |---|---:|---:|---|
 | n → p e ν̄ | 877.1–877.2 s (proved, `neutronLifetimeCorrectedSeconds_bounds`) | 878.4 ± 0.5 s (PDG 2024; −2.5σ) | E8 finite-spectral + `41/43` margin (`NeutronPrediction`) |
-| π⁺ → μ⁺ν | 2.52×10⁻⁸ s | 2.60×10⁻⁸ s | E8 `fπ` |
-| K⁺ → μ⁺ν | ≈2.0×10⁻⁸ s | 1.95×10⁻⁸ s | E8 `fK`, `Vus` |
-| π⁰ → γγ | ≈8.46×10⁻¹⁷ s | 8.52×10⁻¹⁷ s | E8 `fπ`; anomaly `A = 1` derived |
+| π⁺ → μ⁺ν | 2.60188–2.60192×10⁻⁸ s (proved, `pionLifetimeCorrectedSeconds_bounds`); 2.52×10⁻⁸ s before the margin | 2.6033 ± 0.0005×10⁻⁸ s (PDG 2024; −2.8σ) | E8 `fπ` + `32/33` pion-channel margin (SM: `|V_ud|²(1+δ_rad) ≈ 0.970`) |
+| K⁺ → μ⁺ν | ≈2.015×10⁻⁸ s | 1.948×10⁻⁸ s (K_μ2 partial, +3.5%) | E8 `fK`, `Vus`; no margin |
+| π⁰ → γγ | 8.44–8.48×10⁻¹⁷ s | 8.43 ± 0.13×10⁻¹⁷ s (PDG 2024; +0.2σ) | E8 `fπ`; anomaly `A = 1` derived |
 | K⁺ → π⁰ ℓ⁺ν | leading order | measured rate | E8 `f₊(0)=1`, `m_ℓ→0` (`kaonL3Width`); ~10% low, labelled `e8LeadingOrder` |

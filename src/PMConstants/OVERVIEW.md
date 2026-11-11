@@ -186,6 +186,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `General` | Aggregator for the substrate-independent general rules (capacity, encoding, matching, nesting, service) |
 | `Partition` | Conditional arithmetic of the paper's partition rules, with no empirical identification. |
 | `Depth` | Positivity of the stipulated gravity formula; Planck normalization and impedance ordering |
+| `PlanckReadout` | `planckMass = m_e/√α_G` with the CODATA `m_e` as unit input; `planckMass_bounds` (`1.22089354–1.22089358 × 10¹⁹` GeV), reported by `e8p` as `planck_mass` |
 | `ReviewChecks` | Small review checks: tensor trace 8·3 = 24; idempotent projections have eigenvalues 0 and 1 |
 | `Interface` | Exact versions of reversible remainder storage and a chosen real impedance |
 | `Hypercharge` | Charge selection from specified conservation and coupling constraints |

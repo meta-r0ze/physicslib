@@ -20,7 +20,7 @@ row (the reference's row) to weak and weak confined to it.
   stiffness proportional to the ledger, `1/e² = 1/g² + 1/g'²` is the sum over that partition
   (`GaugeStiffness.electric`).
 The measured `m_Z` W-mass comparison (`w_mass`) lives in
-`tools/e8p/E8PConstants/ReadoutPulls.lean`.
+`tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`.
 -/
 
 noncomputable section

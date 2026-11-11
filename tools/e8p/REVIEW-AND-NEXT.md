@@ -65,25 +65,22 @@ Not yet in `e8p`, compared against `PM-1-Arch/calculations/constants.txt`:
 
 ## Decay coverage
 
-Catalogued decay quantities now include `tau_lifetime_fs`, the finite-channel
-muon and neutron lifetimes (`muon_lifetime_finite`, `muon_lifetime_s`,
-`neutron_spectral_fraction`, `neutron_lifetime_e8`, `neutron_lifetime_s`), the
-natural-unit E8 tau lifetime (`tau_lifetime_e8_natural`), and the meson finite
-channels: `pion_finite_width`, `pion_finite_lifetime`, `kaon_finite_width`,
-`kaon_finite_lifetime`, `neutral_pion_finite_width`, and
-`neutral_pion_finite_lifetime`, plus their physical-unit forms
-`pion_finite_lifetime_s`, `kaon_finite_lifetime_s`, and
-`neutral_pion_finite_lifetime_s`. The intervals are still broad; they are
-certified, but not yet precise enough for meaningful σ comparisons.
+Lifetimes compared with measurement:
 
-The meson channels use the minimal `3×3×3` cube and the parent mass as cutoff.
-Since all three cutoffs exceed the universal eigenvalue bound `12`, every mode
-is open and the finite spectral fraction is exactly one; the finite width is
-therefore the continuum width. The neutron remains the special case because its
-cutoff lies in the first spectral gap.
+- `neutron_lifetime_predicted_s` — finite channel with the `41/43` margin, `877.1–877.2` s
+  against PDG 2024 `878.4 ± 0.5` s (−2.5σ).
+- `pion_lifetime_predicted_s` — E8 two-body width with the `32/33` pion-channel margin,
+  `2.60188–2.60192 ×10⁻⁸` s against `2.6033 ± 0.0005 ×10⁻⁸` s (−2.8σ).
+- `neutral_pion_finite_lifetime_s` — `8.44–8.48 ×10⁻¹⁷` s against `8.43 ± 0.13` (+0.2σ).
+- `muon_lifetime_s` — tree level, `2.187343–2.187352` µs. The measured `2.1969811` µs includes
+  the QED factor and the `m_e²/m_μ²` phase space (`0.99562` together, which matches the ratio);
+  shown, not scored, since the E8 `G_F` it tests is scored in `fermi_constant`.
 
-Known comparison caveats (uncorrected W/Z, undressed Vud, documented mass
-tensions) are printed by `--audit` and included as `caveat` fields in JSON.
+Still broad: the natural-unit rows (`muon_lifetime_finite`, `tau_lifetime_e8_natural`,
+`neutron_lifetime_e8`), the unmargined `neutron_lifetime_s`, `pion_finite_*` and `kaon_finite_*`.
+The meson channels use the minimal `3×3×3` cube with the parent mass as cutoff; all three cutoffs
+exceed the eigenvalue bound `12`, so every mode is open and the finite width is the continuum
+width. The neutron is the special case: its cutoff lies in the first spectral gap.
 
 ## Not catalog values
 
@@ -142,8 +139,7 @@ exist unless noted):
   `N_eff`, `Y_p`, `D/H`, and recombination `z_*`. These are not missing proofs:
   the papers define no Lean densities/amplitudes for them, so adding them would
   mean new model postulates, not a catalog row.
-- **Precision/QCD**: `g-2` (muon anomaly), neutron lifetime, `Λ_QCD`,
-  `f_pi`, W/Z widths; none has a Lean enclosure yet.
+- **Precision/QCD**: `g-2` (muon anomaly), `Λ_QCD`, W/Z widths; none has a Lean enclosure yet.
 
 ## Scripts to retire, once fully covered
 
@@ -170,22 +166,28 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
 - The hydrogenic cloud column (`cloudSum`) is a rational mirror of
   `PMAtoms.ElectronCloud.bindingEV`; move a `ℚ` form into `src/` to drop the mirror.
 - Add `--particle <spec>`: accept `6 7` aka carbon 13 v.s. the more stable carbon 12, print `Z/N/A`, configuration, shell counts, `2S+1`, E8 nuclear mass (`certifiedMass`), tabulated isotopic mass and half-life/decay. This is a lookup/display feature over frozen isotope data, not a new model value.
-- **Lifetime enclosures too wide to compare.** `muon_lifetime_s` (1.6–3.23 µs), `pion_finite_lifetime_s`
-  and `kaon_finite_lifetime_s` have enclosures wider than the measurement, so a midpoint σ would
-  mislead; they carry no reference. Tighten them in `src/` the way
-  `neutronLifetimeCorrectedSeconds_bounds` was (closed form, tight `G_F`, `m_e`, `ħc`), then add
-  the PDG references. `neutral_pion_finite_lifetime_s` and `neutron_lifetime_predicted_s` are tight
-  and compared.
+- **Kaon lifetime.** `kaon_finite_lifetime_s` (1.98–2.12 ×10⁻⁸ s) is still the broad enclosure and
+  carries no reference. The E8 value is `≈ 2.015×10⁻⁸` s against the K_μ2 partial lifetime
+  `τ_K/BR(μν) = 1.948×10⁻⁸` s (+3.5%): `f_K` (−0.7%) accounts for +1.5%; the pion's `32/33`
+  margin is not applied to the kaon, and the SM radiative correction is about −2%. Tighten it
+  (needs tight `kaonPlus` and `|V_us|` bounds) before adding the reference.
 - **Electron-mass inputs.** `ElectroweakBounds.electronGeV`, `FloorNeutrino.meEV` and
   `StrongRunning.mZ` use `0.51099895` (CODATA truncated by `1.35×10⁻⁹`); `SharedUnits.me` and
   `Hydrogen.electronMassEV` use the full `0.51099895069`. Negligible at those rows' precision;
   unify on `SharedUnits.me` when their proofs are next touched. `SharedUnits.hbarc = 197.3269804`
   is likewise truncated (`2×10⁻¹⁰`).
-- **Candidate rows from `src/`**: `K_ℓ3` at leading order (`PMHadrons.KaonSemileptonic`), the shell
-  closures (`PMAtoms.ShellGaps.nilssonE8_gaps`), the shell spacing coefficient `χ·m_p/Δ`, the O-17
-  spin–orbit splitting, Hund multiplicities (50/54). Scalar rows need a theorem with bounds each.
-- Verify `edwards_des_2023` (`H₀ = 67.4 ± 0.5`): the numbers match Planck 2018; DES BAO+BBN values
-  in the literature are `67.4 ± ~1.1`.
+- **Moved to `src/`**: the E8 MeV enclosures for `pion0_mev`, `kaon0_mev`, `kaon_plus_mev` and
+  `proton_radius` (`PMHadrons.CompositeMasses.*_mev_value`, `protonRadius_value`; before, the
+  rows read their interval off the pull theorems, so the midpoint was the measured value and the
+  σ was ~0 by construction), and the Planck readout (`PMConstants.PlanckReadout`).
+- `E8TickUnit` and `AlphaClockComparison` (now `E8PConstants/PMAtoms/`) are model definitions no row uses; move them to `src/`
+  or drop them from `PMAtoms/OVERVIEW.md`. `ledgerScatterME = 4.8` is typed in; compute it from
+  the isotope table.
+- **Candidate scalar rows from `src/`**: `K_ℓ3` at leading order (`PMHadrons.KaonSemileptonic`),
+  the shell spacing coefficient `χ·m_p/Δ`, the O-17 spin–orbit splitting. Each needs a theorem
+  with numeric bounds.
+- **Shell adjacency in Lean.** `--shells` sorts `nilssonE8CostQ`; a `decide` theorem that the
+  sorted ladder is the one printed would move the adjacency from the tool into `src/`.
 - Add a `--cite` mode.
 - Point the papers' `\CatchFileBetweenTags` at `e8p --latex` output.
 - Rename the directory to the final package name if `e8p` is kept as the binary.
