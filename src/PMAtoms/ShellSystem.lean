@@ -22,11 +22,11 @@ is **derived** from what is still a model input.
 | pillar | shell role |
 | --- | --- |
 | Capacity `πΔ` | the `2n+l` oscillator count — the primary shell order |
-| Map `χ` | the `l` angular structure of an orbital |
-| Protocol `−1/167` | candidate spin–orbit coupling |
-| Governor `−χ/Δ` | per-slot level spacing |
-| Toll | the closure boundary (a magic number) |
-| Margin | the smooth background (Strutinsky) |
+| Map `χ` | the **shell boundary** (a closure is a capacity-saturation edge) — *label only* |
+| Protocol `−1/167` | **unassigned** |
+| Governor `−χ/Δ` | candidate spin–orbit coupling `κ`; level spacing (the scale is free) |
+| Toll | **emission** (de-excitation), *not* closure: `ValidToll = Fin 2 × Fin 167` is the shedding boundary |
+| Margin | the smooth background (Strutinsky) — *label only* |
 
 **Result — the `l²`/spin–orbit ratio is forced.**  The recorded shell order is
 reproducible **iff** the `l²` coefficient is exactly `κ/D` (`l2_ratio_forced`; the
@@ -69,6 +69,16 @@ theorem cumulativeOccupations_126 :
 theorem closures_on_ladder :
     ∀ m ∈ [2, 8, 20, 28, 50, 82, 126], m ∈ cumulativeOccupations nuclearOrbitals126 := by
   decide
+
+/-- A shell closure: an occupation that is an E8 magic number. -/
+def isClosure (n : Nat) : Prop := n ∈ nuclearMagic
+
+/-- Every spherical closure is a **capacity-saturation boundary**: an E8 magic number *and* a
+cumulative capacity of the ladder. (The closure *value* — why `Dχ`, `Dσ`, … — is the Capacity
+pillar's open derivation; the boundary *structure* is Capacity saturation.) -/
+theorem closure_eq_saturation :
+    ∀ m ∈ [2, 8, 20, 28, 50, 82, 126],
+      m ∈ nuclearMagic ∧ m ∈ cumulativeOccupations nuclearOrbitals126 := by decide
 
 /-! ## The six-pillar budget per orbital -/
 
@@ -140,5 +150,23 @@ theorem e8OrbitalOrder :
     (nuclearOrbitals126.zip (nuclearOrbitals126.drop 1)).all
       (fun p => orbitalCostZ p.1 ≤ orbitalCostZ p.2) = true := by
   decide
+
+/-! ## The shell energy unit (Q2 item 4) -/
+
+/-- Candidate shell oscillator spacing `ℏω`: the nucleon mass times the Governor credit `χ/Δ`.
+In `m_e`: `m_p·χ/Δ ≈ 85.4 m_e ≈ 43.6 MeV`, against the empirical oscillator `ℏω ≈ 41 A^{-1/3}`
+MeV.  Pinning this from an E8 *spectral* scale (rather than the empirical value) is the open
+item. -/
+noncomputable def shellEnergyUnit : ℝ := PMHadrons.CompositeMasses.proton * spinOrbitCoupling
+
+theorem shellEnergyUnit_eq : shellEnergyUnit = PMHadrons.CompositeMasses.proton * (2 / 43) := by
+  unfold shellEnergyUnit; rw [spinOrbitCoupling_eq]
+
+/-- The spin–orbit splitting `κ·ℏω = m_p·(χ/Δ)²`. -/
+noncomputable def spinOrbitEnergy : ℝ := shellEnergyUnit * spinOrbitCoupling
+
+theorem spinOrbitEnergy_eq :
+    spinOrbitEnergy = PMHadrons.CompositeMasses.proton * (2 / 43) ^ 2 := by
+  unfold spinOrbitEnergy; rw [shellEnergyUnit_eq, spinOrbitCoupling_eq]; ring
 
 end PMAtoms
