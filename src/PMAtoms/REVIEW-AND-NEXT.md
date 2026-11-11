@@ -15,56 +15,34 @@ level built (`PMHadrons`) applies:
 | **Governor** — per-slot persistence | `χ/Δ` per slot (`TollGovernor`) | the shell spacing `ℏω(A)`; the attempt-frequency candidate (`NuclearRateUnit`, compared in `ALPHA-TESTS.md`) |
 | **persistence selection** | `SelectionSymmetry` | **regime / valley** selection |
 
-## 1. Occupancy: the nucleus ledger — H/M
+## 1. Isospin: the potential part of the symmetry energy — H
 
-The nucleus mass is the free-nucleon sum minus the link/closure layers (`TwoLedger`,
-`NuclearLedger.certifiedMass`). Along the stable line it matches measured masses to `4.8 m_e` rms
-(`RESIDUALS.md`, which also holds the SEMF regression, the holographic check and the shell-term
-comparison).
+`certifiedMass` is a stable-line ledger: it matches measured masses to `4.8 m_e` rms on the stable
+line and has no valley above `A ≈ 56` (`IsospinLedger`, `RESIDUALS.md`). The E8 occupancy term
+(separate `p`/`n` filling, `occupancySymmetry ≈ 8.3 MeV·(N−Z)²/A`) is the kinetic half of a
+symmetry energy and puts Pb and U on the stable isobar (`valleyMass`); a consistent occupancy
+ledger stops for lack of an E8 link potential (`IsospinLedger` docstring).
 
-1. **Isospin restoring term and the bulk.** `certifiedMass` has no `(N−Z)²/A` term
-   (`IsospinLedger`: links linear in `N−Z`, `typed_pn_mean`), so it has no valley above
-   `A ≈ 56`. E8 gives a clear reason for one: protons and neutrons fill separate shell ladders
-   (Capacity, spin `2`, spacing `ℏω(A)`), costing `occupancySymmetry ≈ 8.3 MeV·(N−Z)²/A`. It
-   replaces the alpha-cluster isospin suppression, which is a second `N ≈ Z` preference for the
-   same nucleons (`valleyMass`). With it the lowest isobar is `Z = 18, 24, 37, 47, 82, 92` at
-   `A = 40, 56, 90, 120, 208, 238` (stable `20, 26, 40, 50, 82, 92`). The stable-line masses
-   then come out `≈ 100 m_e` heavy on average (rms `53`): the bulk terms already carry the
-   average symmetry cost. Most of that offset is the alpha-cluster binding
-   itself (`Δ/D` per cluster, `43 m_e` at O-16 where the occupancy term is zero): the
-   suppression `(1 − |N−Z|/Δ)` both sets the stable-line masses and is the ledger's isospin
-   mechanism, so it cannot simply be swapped out. **Where it stops (no clear E8 rule).** A
-   consistent occupancy ledger also needs the symmetric part of the filling energy,
-   `(ℏω/2)(3/2)^{4/3}A^{1/3}` per nucleon `≈ 37.5` MeV with the E8 `ℏω(A)` (Fermi-gas mean kinetic
-   energy `≈ 22` MeV). The link weights would then be a potential, not the net binding they are
-   now (`πD`-based, matching the SEMF volume term), and nothing in the substrate gives a link
-   potential separate from the net cost. So the rebuild has no E8 rule past the asymmetric term;
-   `certifiedMass` stays the stable-line ledger and `valleyMass` the valley comparison. The potential part of the
-   symmetry energy has no E8 reason yet (`pn` weight = mean of `pp`, `nn`); the light valley
-   (`A = 40, 56` two units neutron-rich) is where it would show.
-2. **(Deferred) Deformed closure / frontier (Q3).** `Cm-244` is under-bound by `+44 m_e` at the
-   deformed closure `Z = 96, N = 152`. Held (boundary data past the certified domain). Subsumes: the `2(Δ+σ)=96` term
-   overcorrects U-238, and the `−43/288` deformation candidate fails its holdout.
+**Open.** The potential half: the substrate gives `pn` exactly the mean of `pp` and `nn`
+(`typed_pn_mean`), so nothing makes unlike pairs bind more. A substrate reason for
+`w_pn > (w_pp + w_nn)/2` would supply it; the light valley (`A = 40, 56`, two units
+neutron-rich in `valleyMass`) is where it would show. Until then the valley (which `(Z, N)` are
+stable, the persistence-selection question of `NuclearRegime`/`PersistenceSelection`) is a
+comparison, not a result.
 
-## 2. Emission overlap: α and fission hindrance — C
+## Retained inputs and not pursued
 
-An α decay and fission are composite → fragment-cohort transitions with amplitude a **fragment
-overlap**, the analogue of `PMHadrons.Emission` (`FragmentOverlap.fragmentWidth = barrierRate ·
-|overlap|² · phase`). The barriers are E8 (`CollectiveE8.alphaBarrier_eq = 43`,
-`fissionBarrier_eq = 43/6`).
-
-**Open.** The overlap value, i.e. the fragment configuration. The E8 level schemes compared so
-far (`ALPHA-TESTS.md`, `ShellGaps` §4) give the level *costs*; the observed odd-A hindrances
-(U-235 `≈ +6.3`, Pu-239 `≈ +1.8`) match only the nonstandard `SingleParticle.nilssonEnergy`
-formula. Both parents are deformed in the standard model; the E8 spectrum is spherical.
-
-## 3. Persistence selection: regime and valley — H
-
-The selection layer is built (`NuclearRegime`, `NuclearDecay`, `PersistenceSelection`,
-`PersistenceRate`; see `OVERVIEW.md`). **Open:** the valley itself depends on §1 item 1: with the
-current ledger, mass persistence selects the stable isobar only up to `A ≈ 40`. Past the
-`Z = 96, N = 152` frontier, mass minimality is the wrong criterion
-(`CollectiveRate.not_collectivePersists_of_lower`), and the barrier/rate layer selects.
+- **Fragment overlap (α / fission hindrance).** The amplitude is a fragment overlap
+  (`FragmentOverlap.fragmentWidth = barrierRate · |overlap|² · phase`, barriers E8:
+  `alphaBarrier_eq = 43`, `fissionBarrier_eq = 43/6`). The overlap value is the same retained input
+  as the hadron level's composite configuration (`PMHadrons.Emission`, `EmissionScale`), and is
+  handled there. The E8 level schemes give the level costs; the odd-A α comparison is in
+  `ALPHA-TESTS.md`.
+- **Deformed frontier (Q3).** `Cm-244` is under-bound by `+44 m_e` at `Z = 96, N = 152`; it and
+  `Cf-252` are boundary data past the certified domain (`RESIDUALS.md`). The `2(Δ+σ)=96` term
+  overcorrects U-238 and the `−43/288` deformation candidate fails its holdout. Not pursued.
+- **Volume/surface split (Q1).** Closed as a floor (`~3.3 m_e`); the persistence-selected packing
+  count does not lower it (`RESIDUALS.md`).
 
 ## Not the pattern (analysis / lattice / model input)
 
