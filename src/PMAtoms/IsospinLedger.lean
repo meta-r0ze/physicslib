@@ -1,6 +1,7 @@
 import PMAtoms.TwoLedger
 import PMAtoms.NuclearLedger
 import PMAtoms.ShellSystem
+import PMAtoms.Shells
 
 /-! **Comparison module.** Not part of `certifiedMass`.
 
@@ -45,6 +46,23 @@ itself, which the swap removes. A consistent occupancy ledger would also carry t
 filling energy (`≈ 37.5` MeV per nucleon with `ℏω(A)`), turning the link weights into a potential;
 the substrate has no link potential separate from the net link cost, so that rebuild is not
 attempted (`REVIEW-AND-NEXT.md` §1 item 1).
+
+**The potential part: a persistence filter on like pairs.** A link joins two nucleons, each with
+`spinStates = 2` (`Shells.spinStates_eq_trace`, from `PL.trace`), so a link has `2² = 4` spin
+states. For two identical nucleons in the same link only the antisymmetric (singlet) state
+persists; the three symmetric (triplet) states are excluded. An unlike (`pn`) link persists in all
+four (`linkStates`, `likePersistingStates`). Weighting each link by its persisting states,
+normalized so a link averages `w` when half the pairs are unlike, gives unlike `8w/5` and like
+`2w/5` (`persistWeightUnlike`, `persistWeightLike`). The mean-field binding is then
+`L(A)·(l + (u − l)·(A² − (N−Z)²)/(2A(A−1)))` (`persistBinding_eq`): quadratic in `N − Z`, with
+coefficient `(3/5)·w·L(A)/A ≈ 5.8–6.9 MeV·(N−Z)²/A`. The `3/5` is `(4 − 1)/(4 + 1)`; it equals
+`(σ−χ)/σ` numerically. The same split reads `NuclearCoordination`'s `3` hetero + `1` homo
+channels as triplet + singlet. Kinetic (occupancy) plus this potential part is `≈ 14–15` MeV,
+against the standard `23.7`. Comparison (outside Lean): with both terms in place of the
+alpha-cluster suppression, the lowest isobar is `Z = 8, 13, 19, 26, 40, 52, 59, 69, 84, 101` at
+`A = 16, 27, 40, 56, 90, 120, 140, 165, 208, 238` (stable `8, 13, 20, 26, 40, 50, 58, 67, 82,
+92`): within two units through Pb, nine at U-238. The stable-line masses are then `≈ 110 m_e`
+heavy on average, for the bulk reason above.
 
 **Comparison (outside Lean, `RESIDUALS.md`).** The isobar of lowest `certifiedMass`
 matches the stable isobar for `A = 12, 16, 27, 40`. It is `Z = 28` at `A = 56` (stable `26`), `45`
@@ -126,5 +144,56 @@ theorem occupancySymmetry_self (z : Nat) : occupancySymmetry z z = 0 := by
 suppression) replaced by the occupancy term. Comparison only. -/
 noncomputable def valleyMass (z n : Nat) : ℝ :=
   certifiedMass z n + alphaClosureBinding z n + occupancySymmetry z n
+
+/-! ## The persistence filter on like pairs -/
+
+/-- Spin states of a two-nucleon link: `spinStates² = 4`. -/
+def linkStates : ℕ := spinStates * spinStates
+
+/-- Spin states in which two identical nucleons in one link persist: the antisymmetric one. -/
+def likePersistingStates : ℕ := spinStates * (spinStates - 1) / 2
+
+theorem linkStates_eq : linkStates = 4 := by decide
+theorem likePersistingStates_eq : likePersistingStates = 1 := by decide
+
+/-- Unlike-link weight: persisting states `4`, normalized so the `N = Z` mean is `w`. -/
+noncomputable def persistWeightUnlike : ℝ :=
+  packingWeight * (2 * (linkStates : ℝ) / ((linkStates : ℝ) + (likePersistingStates : ℝ)))
+
+/-- Like-link weight: persisting states `1`, same normalization. -/
+noncomputable def persistWeightLike : ℝ :=
+  packingWeight * (2 * (likePersistingStates : ℝ) / ((linkStates : ℝ) + (likePersistingStates : ℝ)))
+
+theorem persistWeights_eq :
+    persistWeightUnlike = packingWeight * (8 / 5) ∧ persistWeightLike = packingWeight * (2 / 5) := by
+  constructor <;>
+    simp [persistWeightUnlike, persistWeightLike, linkStates_eq, likePersistingStates_eq] <;> norm_num
+
+/-- Mean of the two persistence weights is the ledger weight `w`. -/
+theorem persistWeights_mean : (persistWeightUnlike + persistWeightLike) / 2 = packingWeight := by
+  obtain ⟨hu, hl⟩ := persistWeights_eq
+  rw [hu, hl]; ring
+
+/-- Mean-field link binding with the persistence weights (`pn` unlike, `pp`/`nn` like). -/
+noncomputable def persistBinding (z n : Nat) : ℝ :=
+  bindingFromRealCounts persistWeightLike persistWeightUnlike persistWeightLike
+    (packingTypedCounts z n)
+
+/-- **The persistence filter gives a quadratic isospin term.** For `A = Z + N > 4`,
+`persistBinding = L(A)·(l + (u − l)·(A² − (N−Z)²)/(2A(A−1)))`. -/
+theorem persistBinding_eq (z n : Nat) (h : 4 < z + n) :
+    persistBinding z n =
+      packingLinks (z + n) *
+        (persistWeightLike + (persistWeightUnlike - persistWeightLike) *
+          ((((z : ℝ) + (n : ℝ)) ^ 2 - ((n : ℝ) - (z : ℝ)) ^ 2) /
+            (2 * ((z : ℝ) + (n : ℝ)) * (((z : ℝ) + (n : ℝ)) - 1)))) := by
+  have hA : (4 : ℝ) < (z : ℝ) + (n : ℝ) := by exact_mod_cast h
+  have h1 : ((z : ℝ) + (n : ℝ)) ≠ 0 := by linarith
+  have h2 : ((z : ℝ) + (n : ℝ) - 1) ≠ 0 := by linarith
+  unfold persistBinding packingTypedCounts bindingFromRealCounts
+  have hle : ¬ (z + n ≤ 4) := by omega
+  simp only [hle, ↓reduceIte, mixedPP, mixedPN, mixedNN]
+  field_simp
+  ring
 
 end PMAtoms

@@ -15,7 +15,7 @@ level built (`PMHadrons`) applies:
 | **Governor** — per-slot persistence | `χ/Δ` per slot (`TollGovernor`) | the shell spacing `ℏω(A)`; the attempt-frequency candidate (`NuclearRateUnit`, compared in `ALPHA-TESTS.md`) |
 | **persistence selection** | `SelectionSymmetry` | **regime / valley** selection |
 
-## 1. Isospin: the potential part of the symmetry energy — H
+## 1. Isospin and the bulk — H
 
 `certifiedMass` is a stable-line ledger: it matches measured masses to `4.8 m_e` rms on the stable
 line and has no valley above `A ≈ 56` (`IsospinLedger`, `RESIDUALS.md`). The E8 occupancy term
@@ -23,12 +23,20 @@ line and has no valley above `A ≈ 56` (`IsospinLedger`, `RESIDUALS.md`). The E
 symmetry energy and puts Pb and U on the stable isobar (`valleyMass`); a consistent occupancy
 ledger stops for lack of an E8 link potential (`IsospinLedger` docstring).
 
-**Open.** The potential half: the substrate gives `pn` exactly the mean of `pp` and `nn`
-(`typed_pn_mean`), so nothing makes unlike pairs bind more. A substrate reason for
-`w_pn > (w_pp + w_nn)/2` would supply it; the light valley (`A = 40, 56`, two units
-neutron-rich in `valleyMass`) is where it would show. Until then the valley (which `(Z, N)` are
-stable, the persistence-selection question of `NuclearRegime`/`PersistenceSelection`) is a
-comparison, not a result.
+**Potential half (persistence filter).** Two identical nucleons in one link persist only in the
+spin singlet (`1` of `spinStates² = 4` states); an unlike pair persists in all `4`. Weighting
+links by persisting states, normalized to mean `w` at `N = Z`, gives a quadratic isospin term
+(`IsospinLedger.persistBinding_eq`), `≈ 6 MeV·(N−Z)²/A`; with the occupancy term the total is
+`≈ 14–15` MeV (standard `23.7`). With both in place of the alpha-cluster suppression the lowest
+isobar is within two units of the stable one through Pb (`Z = 84` at `A = 208`) and nine at
+U-238 (`101` vs `92`).
+
+**Open.** The bulk: with both isospin terms present the stable-line masses are `≈ 110 m_e`
+heavy on average, because `certifiedMass`'s bulk terms (and the alpha-cluster binding) already
+carry the average symmetry cost along the line. A full-chart ledger needs the bulk re-derived
+with the isospin terms present; the occupancy ledger's symmetric filling energy has no E8 link
+potential to pair with (`IsospinLedger` docstring). Until then the valley (which `(Z, N)` are
+stable, `NuclearRegime`/`PersistenceSelection`) is a comparison, not a result.
 
 ## Retained inputs and not pursued
 

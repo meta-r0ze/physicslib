@@ -94,3 +94,11 @@ mean `4.84 → 5.76`. So the count's discreteness is not the lever, confirming t
 test. Volume and surface share one link weight `w = πD(σ−χ)/σ` because both come from the same
 link count; the regression's ~5% surface offset would need surface links weighted differently,
 and the substrate gives no reason for that. The ledger's floor stays `~3.3 m_e ≈ 1.7 MeV`.
+
+**Spin-persistence potential term (`persistBinding`).** Like links persist in `1` of `4` spin
+states, unlike in `4`; normalized to mean `w` at `N = Z` (`8w/5`, `2w/5`). With it and the
+occupancy term in place of the alpha-cluster suppression: lowest isobar `Z = 8, 13, 19, 26, 40,
+52, 59, 69, 84, 101` at `A = 16, 27, 40, 56, 90, 120, 140, 165, 208, 238` (stable `8, 13, 20, 26,
+40, 50, 58, 67, 82, 92`). Stable-line residual mean `+111 m_e`, rms `77`. The potential term
+alone (with the alpha binding removed, no occupancy) gives `Z = 17, 22, 34, 43, 76, 85` at
+`A = 40, 56, 90, 120, 208, 238`.
