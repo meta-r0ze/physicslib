@@ -32,8 +32,13 @@ a fitted correction; each is a derivation.
    `packingLinks(A) = (σ−χ)(A − A^{2/3})`, but `packingLinks_cube` proves it is exact **only at
    cubic `A = n³`** — every other `A` is a mean-field interpolation. Derive the **exact
    finite-complex count for arbitrary `A`** (the general `packingLinks`/`packingClosureRank`, given
-   the E8 filling rule). Largest lever: it is the systematic term. Not a special-case patch — the
-   cube result is the `A = n³` instance of the general count.
+   the E8 filling rule). **Tested**: the natural discrete count `(σ−χ)(A − ⌈A^{1/3}⌉²)` (equal to
+   the cube count at cubes) is **worse** than the continuous mean-field (it jumps: `A=9` → 0 links),
+   so the count's discreteness is not the issue. A residual regression instead gives
+   `R ≈ −12 + 1.2·A^{2/3} − 0.22·A` `m_e` (mean `|R|` 8.5→3.3) — a **volume−surface** structure, i.e.
+   the link/surface coefficients (currently both `σ−χ`) are slightly off (surface ~±6%, volume ~1%).
+   So Q1 is a *derivation of the volume/surface split*, not a discrete-count patch. Do **not** fit the
+   coefficients (look-elsewhere); the split must come from the pillars.
 2. **Shell system as a six-pillar E8 system (Q2).** The smooth ledger is blind to the discrete
    closure ladder (`NuclearShells`), so `R` oscillates between shells. `SingleParticle` is a
    *candidate* module whose level energies are schematic (`n + l/10 − j/20`), not E8-derived — a
