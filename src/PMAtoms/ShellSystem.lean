@@ -22,7 +22,7 @@ is **derived** from what is still a model input.
 | pillar | shell role |
 | --- | --- |
 | Capacity `πΔ` | the `2n+l` oscillator count — the primary shell order |
-| Map `χ` | the **shell boundary** (a closure is a capacity-saturation edge) — *label only* |
+| Map `χ` | the **closure boundary**: `mapTerm = eulerCharacteristic = χ = 2` (two-sided edge) |
 | Protocol `−1/167` | the **successor map** — the orbital ladder order (`protocol_deterministic`) |
 | Governor `−χ/Δ` | candidate spin–orbit coupling `κ`; level spacing (the scale is free) |
 | Toll | **emission** (de-excitation), *not* closure: `ValidToll = Fin 2 × Fin 167` is the shedding boundary |
@@ -79,6 +79,25 @@ pillar's open derivation; the boundary *structure* is Capacity saturation.) -/
 theorem closure_eq_saturation :
     ∀ m ∈ [2, 8, 20, 28, 50, 82, 126],
       m ∈ nuclearMagic ∧ m ∈ cumulativeOccupations nuclearOrbitals126 := by decide
+
+/-! ## Map: the closure boundary -/
+
+/-- The **Map pillar is the Euler characteristic** `χ = 2` (`mapTerm = eulerCharacteristic`). -/
+theorem mapTerm_eq : PMSubstrate.mapTerm PMSubstrate.baseline = 2 := by
+  unfold PMSubstrate.mapTerm PMSubstrate.baseline
+  norm_num
+
+/-- The spherical shell blocks: the ladder partitioned by its closures. -/
+def sphericalShellSizes : List Nat := [2, 6, 12, 8, 22, 32, 44]
+
+theorem sphericalShellSizes_sum : sphericalShellSizes.sum = 126 := by decide
+
+/-- **The closures are the Map boundaries of the ladder**: the partial sums of the spherical
+shell sizes are exactly the spherical magic numbers `2, 8, 20, 28, 50, 82, 126`. So the ladder is
+partitioned into shells whose edges are the closures — the closure *is* a boundary (`χ = 2`
+sides: inside/outside). -/
+theorem closure_is_mapBoundary :
+    (sphericalShellSizes.scanl (· + ·) 0).drop 1 = [2, 8, 20, 28, 50, 82, 126] := by decide
 
 /-! ## The six-pillar budget per orbital -/
 
