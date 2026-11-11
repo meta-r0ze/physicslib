@@ -1,7 +1,6 @@
 import E8PConstants
 import E8PConstants.Periodic
 import E8PConstants.Nuclear
-import E8PConstants.LineTable
 import E8PConstants.Certified
 
 open E8PConstants
@@ -14,11 +13,11 @@ private def usage : String :=
   "  --latex       %<*tag>...%</tag> blocks for the manuscript\n" ++
   "  --audit       compare each value with its experimental reference (σ), with status glyphs\n" ++
   "  --digits N    0..50 (default 18); more digits do not narrow the intervals\n" ++
-  "  --periodic-table [N]  shell-capacity periodic table (default 20)\n" ++
+  "  --periodic-table [N]  configuration, Hund multiplicity, E8 nuclear mass vs measured (default 20)\n" ++
   "  --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)\n" ++
-  "  --line-table    line/ring mass diagnostic (E8 weights, Coulomb omitted)\n" ++
-  "  --certified     certified nuclear-ledger readout (rational interval vs measured)\n" ++
-  "  --certified=Z,N one nucleus (protons Z, neutrons N) with its interval\n"
+  "  --masses        E8 nuclear ledger masses vs measured: residual and z in ledger-scatter units\n" ++
+  "  --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)\n" ++
+  ""
 
 structure Opts where
   json : Bool := false
@@ -26,7 +25,6 @@ structure Opts where
   audit : Bool := false
   periodic : Option Nat := none
   nuclear : Bool := false
-  lineTable : Bool := false
   certified : Bool := false
   certifiedNuc : Option (Nat × Nat) := none
   paper : Option Nat := none
@@ -48,7 +46,7 @@ private def parse : List String → Except String Opts
   | "--audit" :: rest => do let o ← parse rest; .ok { o with audit := true }
   | "--nuclear" :: rest => do let o ← parse rest; .ok { o with nuclear := true }
   | "--certified" :: rest => do let o ← parse rest; .ok { o with certified := true }
-  | "--line-table" :: rest => do let o ← parse rest; .ok { o with lineTable := true }
+  | "--masses" :: rest => do let o ← parse rest; .ok { o with certified := true }
   | "--periodic-table" :: n :: rest =>
       match n.toNat? with
       | some k =>
@@ -72,13 +70,13 @@ private def parse : List String → Except String Opts
         let o ← parse rest; .ok { o with paper := some p }
       else if s.startsWith "--only=" then do
         let o ← parse rest; .ok { o with only := some (splitIds (s.drop 7).toString) }
-      else if s.startsWith "--certified=" then
-        match (s.drop 12).toString.splitOn "," with
+      else if s.startsWith "--certified=" || s.startsWith "--masses=" then
+        match (s.drop (if s.startsWith "--masses=" then 9 else 12)).toString.splitOn "," with
         | [zs, ns] =>
             match zs.toNat?, ns.toNat? with
             | some z, some n => do let o ← parse rest; .ok { o with certifiedNuc := some (z, n) }
-            | _, _ => .error "--certified=Z,N requires two integers"
-        | _ => .error "--certified=Z,N requires two integers"
+            | _, _ => .error "--masses=Z,N requires two integers"
+        | _ => .error "--masses=Z,N requires two integers"
       else if s.startsWith "--periodic-table=" then
         match (s.drop 17).toString.toNat? with
         | some k =>
@@ -109,7 +107,7 @@ private def printText (ks : List Key) (o : Opts) : IO Unit := do
   if ks.isEmpty then
     out.putStrLn "e8p: no values match the filter."
     return
-  out.putStrLn "e8p: certified enclosures of conditional model values, with experimental comparisons."
+  out.putStrLn "e8p: proved enclosures of conditional model values, with experimental comparisons."
   out.putStrLn "Intervals are exact-rational roundings; 'supplied input' rows are not predictions.\n"
   for s in sections ks do
     out.putStrLn s
@@ -119,8 +117,8 @@ private def printText (ks : List Key) (o : Opts) : IO Unit := do
 
 private def printAudit (ks : List Key) (o : Opts) : IO Unit := do
   let out ← IO.getStdout
-  out.putStrLn "e8p audit — certified model vs experimental reference (display σ is exact rational)."
-  out.putStrLn "glyph: ✓ |σ|≤1, ~ |σ|≤2, ! >2; intervals are the model's certified enclosure.\n"
+  out.putStrLn "e8p audit — model value (proved enclosure) vs experimental reference (display σ is exact rational)."
+  out.putStrLn "glyph: ✓ |σ|≤1, ~ |σ|≤2, ! >2, · shown for context and not scored; intervals are proved enclosures of the model value, not its uncertainty.\n"
   let mut withRef : List Key := []
   for s in sections ks do
     let group := ks.filter (fun k => k.section = s)
@@ -131,14 +129,17 @@ private def printAudit (ks : List Key) (o : Opts) : IO Unit := do
       for line in auditBlocks k o.digits do out.putStrLn line
       withRef := k :: withRef
     out.putStrLn ""
-  let sigs := withRef.flatMap (fun k => (expRefs k).map (fun r => sigmaRat k r))
+  let sigs := withRef.flatMap (fun k =>
+    ((expRefs k).filter (fun r => scoredRef k r)).map (fun r => sigmaRat k r))
+  let context := withRef.foldl (fun acc k => acc + ((expRefs k).filter (fun r => !scoredRef k r)).length) 0
   let n := sigs.length
   let within (t : Rat) := (sigs.filter (fun s => absRat s ≤ t)).length
   out.putStrLn s!"{n} comparisons over {withRef.length} values:"
   out.putStrLn s!"  |σ| ≤ 1: {within 1}   |σ| ≤ 2: {within 2}   |σ| ≤ 3: {within 3}"
+  out.putStrLn s!"  {context} context references not scored (·): uncorrected intermediates, the superseded Jarlskog proposal, CMB references for late-universe values."
   let noRef := ks.filter (fun k => (expRefs k).isEmpty)
   if !noRef.isEmpty then
-    out.putStrLn s!"  {noRef.length} values have no experimental reference (certified intervals only)."
+    out.putStrLn s!"  {noRef.length} values have no experimental reference (proved intervals only)."
 
 def main (args : List String) : IO UInt32 := do
   if args == ["--help"] || args == ["-h"] then
@@ -151,9 +152,7 @@ def main (args : List String) : IO UInt32 := do
   | .ok o =>
     let out ← IO.getStdout
     let ks := keysFor o
-    if o.lineTable then
-      for line in lineTable 20 do out.putStrLn line
-    else if o.nuclear then
+    if o.nuclear then
       for line in nuclearTable do out.putStrLn line
     else if let some (z, n) := o.certifiedNuc then
       for line in certifiedNuclide z n do out.putStrLn line

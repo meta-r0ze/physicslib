@@ -7,6 +7,7 @@ import PMAtoms.ShellSystem
 import PMAtoms.ShellMass
 import PMAtoms.ShellGaps
 import PMAtoms.IsospinLedger
+import PMAtoms.HundRule
 import PMAtoms.LinkWeights
 import PMAtoms.Shells
 import PMAtoms.ElectronCloud

@@ -14,11 +14,13 @@ noncomputable section
 namespace PMAtoms
 open PMConstants
 
-/-- Electron rest energy in eV (CODATA 2022), a supplied unit input. -/
-def electronMassEV : ℝ := 510998.95
+/-- Electron rest energy in eV (CODATA 2022, `510998.95069(16)`), a supplied unit input. Same
+value as `PMElementaryParticles.SharedUnits.me` (in MeV). -/
+def electronMassEV : ℝ := 510998.95069
 
-/-- `ħc` in eV·Å, a supplied unit input. -/
-def hbarCEVAngstrom : ℝ := 1973.269804
+/-- `ħc` in eV·Å. Exact in the SI (`h`, `c`, `e` fixed): `1973.269804593024658…`; the 19 digits
+kept here are far below every comparison. -/
+def hbarCEVAngstrom : ℝ := 1973.269804593024659
 
 /-- Rydberg energy `α² m_e c²/2` in the same units as `me`. -/
 def rydbergEnergy (α me : ℝ) : ℝ := α ^ 2 * me / 2
@@ -35,21 +37,39 @@ def rydbergEV : ℝ := rydbergEnergy Values.alpha electronMassEV
 /-- Bohr radius in Å. -/
 def bohrRadiusAngstrom : ℝ := bohrRadius Values.alpha electronMassEV hbarCEVAngstrom
 
+/-- `R = m_e/(2(α⁻¹)²)` with the certified `α⁻¹ = geometricIndex` (20-digit enclosure). -/
 theorem rydbergEV_bounds :
-    (13.60569309 : ℝ) < rydbergEV ∧ rydbergEV < 13.60569310 := by
-  have h := Values.alpha_bounds
-  unfold rydbergEV rydbergEnergy electronMassEV
-  constructor <;> nlinarith [h.1, h.2]
-
-theorem bohrRadius_bounds :
-    (0.5291772110 : ℝ) < bohrRadiusAngstrom ∧ bohrRadiusAngstrom < 0.5291772114 := by
-  have h := Values.alpha_bounds
-  unfold bohrRadiusAngstrom bohrRadius electronMassEV hbarCEVAngstrom
-  have ha : 0 < Values.alpha := by linarith [h.1]
-  have hd : 0 < Values.alpha * 510998.95 := mul_pos ha (by norm_num)
+    (13.6056931158 : ℝ) < rydbergEV ∧ rydbergEV < 13.6056931159 := by
+  have hG := PMSubstrate.geometricIndex_bounds
+  have hz : 0 < PMSubstrate.geometricIndex := by linarith [hG.1]
+  have hne : PMSubstrate.geometricIndex ≠ 0 := hz.ne'
+  have heq : rydbergEV = 510998.95069 / (2 * PMSubstrate.geometricIndex ^ 2) := by
+    show (1 / PMSubstrate.geometricIndex) ^ 2 * 510998.95069 / 2 = _
+    field_simp
+  have hsq1 : (137.035999212381397211 : ℝ) ^ 2 < PMSubstrate.geometricIndex ^ 2 :=
+    pow_lt_pow_left₀ hG.1 (by norm_num) (by norm_num)
+  have hsq2 : PMSubstrate.geometricIndex ^ 2 < (137.035999212381397213 : ℝ) ^ 2 :=
+    pow_lt_pow_left₀ hG.2 hz.le (by norm_num)
+  have h2 : 0 < 2 * PMSubstrate.geometricIndex ^ 2 := by positivity
+  rw [heq]
   constructor
-  · rw [lt_div_iff₀ hd]; nlinarith [h.2]
-  · rw [div_lt_iff₀ hd]; nlinarith [h.1]
+  · rw [lt_div_iff₀ h2]; nlinarith [hsq2]
+  · rw [div_lt_iff₀ h2]; nlinarith [hsq1]
+
+/-- `a₀ = ħc·α⁻¹/m_e` with the certified `α⁻¹ = geometricIndex`. -/
+theorem bohrRadius_bounds :
+    (0.5291772106829 : ℝ) < bohrRadiusAngstrom ∧ bohrRadiusAngstrom < 0.5291772106830 := by
+  have hG := PMSubstrate.geometricIndex_bounds
+  have hz : 0 < PMSubstrate.geometricIndex := by linarith [hG.1]
+  have hne : PMSubstrate.geometricIndex ≠ 0 := hz.ne'
+  have heq : bohrRadiusAngstrom =
+      1973.269804593024659 * PMSubstrate.geometricIndex / 510998.95069 := by
+    show 1973.269804593024659 / ((1 / PMSubstrate.geometricIndex) * 510998.95069) = _
+    field_simp
+  rw [heq]
+  constructor
+  · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hG.1]
+  · rw [div_lt_iff₀ (by norm_num)]; nlinarith [hG.2]
 
 /-- The `n = 1` level is `-R`. -/
 theorem hydrogenLevel_one (α me : ℝ) : hydrogenLevel α me 1 = -rydbergEnergy α me := by

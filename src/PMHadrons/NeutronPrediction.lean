@@ -506,4 +506,207 @@ theorem neutronLifetimeSeconds_bounds :
   constructor <;> nlinarith [hprodlo, hprodhi]
 
 
+/-! ## The margin-corrected prediction in seconds
+
+The headline `τ_n ≈ 877.2 s` is `neutronMarginFactor · neutronLifetimeExactCutoff`, in seconds.
+The pieces: the exact cutoff `m_n − m_p` opens only the lowest mode (as `2.53` does), so the
+fraction is `1/P(r)`, `P(r) = Σ c_s r^s = (1 + r + r²)³`, `r = e^{−√2}`; the hazard is `G_F² m_e⁴/3`.
+`neutronLifetimeCorrectedSeconds_bounds` encloses the result in `(877.1, 877.2)` s. -/
+
+lemma neutron_cutoffExact_bounds :
+    (2.53098 : ℝ) < neutronCutoffExact ∧ neutronCutoffExact < 2.53100 := by
+  have hp := PMHadrons.CompositeMasses.proton_value
+  have hn := PMHadrons.CompositeMasses.neutron_value
+  unfold neutronCutoffExact
+  constructor <;> linarith [hp.1, hp.2, hn.1, hn.2]
+
+lemma neutron_low_eigenvalue_le_exact :
+    dirichletEigenvalue 3 1 1 1 ≤ neutronCutoffExact := by
+  rw [neutron_low_eigenvalue_eq]
+  have hs : (1.16 : ℝ) ≤ Real.sqrt 2 := by
+    rw [Real.le_sqrt (by norm_num) (by norm_num)]
+    norm_num
+  have hc := neutron_cutoffExact_bounds
+  nlinarith [hc.1]
+
+lemma neutron_next_eigenvalue_gt_exact :
+    neutronCutoffExact < dirichletEigenvalue 3 2 1 1 := by
+  rw [neutron_next_eigenvalue_eq]
+  have hs : Real.sqrt 2 < (1.5 : ℝ) := by
+    rw [Real.sqrt_lt' (by norm_num)]
+    norm_num
+  have hc := neutron_cutoffExact_bounds
+  nlinarith [hc.2]
+
+/-- At the exact endpoint `m_n − m_p` only the lowest `3×3×3` mode is open, as at `2.53`. -/
+theorem neutron_openModes_exact :
+    betaOpenModes neutronCube neutronCutoffExact =
+      {(⟨0, by decide⟩, (⟨0, by decide⟩, ⟨0, by decide⟩))} := by
+  unfold neutronCube
+  exact betaOpenModes_eq_singleton_of_gap (n := 3) (by norm_num)
+    neutron_low_eigenvalue_le_exact neutron_next_eigenvalue_gt_exact
+
+theorem neutronSpectralFractionExact_eq :
+    neutronSpectralFractionExact = neutronSpectralFraction := by
+  unfold neutronSpectralFractionExact neutronSpectralFraction betaSpectralRateCutoff
+  rw [neutron_openModes_exact, neutron_openModes]
+
+/-- The fraction is `1/P(r)` with `P(r) = Σ_s c_s r^s`, `r = e^{−√2}`. -/
+theorem neutronSpectralFraction_eq_inv_poly :
+    neutronSpectralFraction =
+      1 / ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val := by
+  rw [neutronSpectralFraction_eq_lowest_weight]
+  let low : Fin 3 × (Fin 3 × Fin 3) :=
+    (⟨0, by norm_num⟩, (⟨0, by norm_num⟩, ⟨0, by norm_num⟩))
+  set w : Fin 3 × (Fin 3 × Fin 3) → ℝ :=
+    fun p => betaSpectralWeight 3 (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1) with hwdef
+  let r : ℝ := Real.exp (-Real.sqrt 2)
+  have hw_eq : ∀ p, w p = w low * r ^ (neutronModeWeight p).val := by
+    intro p
+    have hlam := dirichletEigenvalue_three_mode_eq p
+    calc
+      w p = Real.exp (-dirichletEigenvalue 3 (p.1.val + 1) (p.2.1.val + 1) (p.2.2.val + 1)) := rfl
+      _ = Real.exp (-(dirichletEigenvalue 3 1 1 1 +
+          Real.sqrt 2 * ((neutronModeWeight p).val : ℝ))) := by rw [hlam]
+      _ = Real.exp (-dirichletEigenvalue 3 1 1 1) *
+          Real.exp (-(Real.sqrt 2 * ((neutronModeWeight p).val : ℝ))) := by
+        rw [← Real.exp_add]
+        ring_nf
+      _ = Real.exp (-dirichletEigenvalue 3 1 1 1) *
+          Real.exp (-Real.sqrt 2) ^ (neutronModeWeight p).val := by
+        congr 1
+        rw [show -(Real.sqrt 2 * ((neutronModeWeight p).val : ℝ)) =
+            ((neutronModeWeight p).val : ℝ) * (-Real.sqrt 2) by ring,
+          Real.exp_nat_mul]
+      _ = w low * r ^ (neutronModeWeight p).val := by
+        simp [w, low, r, betaSpectralWeight]
+  have htotal_eq : ∑ p, w p = w low * ∑ p, r ^ (neutronModeWeight p).val := by
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro p _
+    rw [hw_eq p]
+  have hlow_ne : w low ≠ 0 := (betaSpectralWeight_pos 3 _ _ _).ne'
+  rw [htotal_eq, neutron_weight_sum_eq]
+  rw [show betaSpectralWeight 3 1 1 1 = w low from rfl, div_mul_cancel_left₀ hlow_ne, one_div]
+
+/-- `e^{−√2}` to about `10⁻⁷`: a Taylor lower bound for `e^{√2}` and the `exp_bound'`
+upper bound for `e^{√2/2}`, squared. -/
+lemma exp_neg_sqrt_two_tight :
+    (0.2431167 : ℝ) ≤ Real.exp (-Real.sqrt 2) ∧ Real.exp (-Real.sqrt 2) ≤ (0.2431169 : ℝ) := by
+  have hs1 : (1.414213562 : ℝ) ≤ Real.sqrt 2 := by
+    rw [Real.le_sqrt (by norm_num) (by norm_num)]
+    norm_num
+  have hs2 : Real.sqrt 2 < (1.414213563 : ℝ) := by
+    rw [Real.sqrt_lt' (by norm_num)]
+    norm_num
+  constructor
+  · -- lower: `e^{1.414213563} = (e^{0.7071067815})² ≤ U² ≤ 4.1132504`
+    have hx := Real.exp_bound' (x := (0.7071067815 : ℝ)) (by norm_num) (by norm_num)
+      (n := 12) (by norm_num)
+    have hpos : 0 < Real.exp (0.7071067815 : ℝ) := Real.exp_pos _
+    have hsq : Real.exp (1.414213563 : ℝ) = Real.exp (0.7071067815 : ℝ) ^ 2 := by
+      rw [sq, ← Real.exp_add]
+      norm_num
+    have hE := pow_le_pow_left₀ hpos.le hx 2
+    rw [← hsq] at hE
+    have hE2 : Real.exp (1.414213563 : ℝ) ≤ 4.1132504 := by
+      norm_num [Finset.sum_range_succ, Nat.factorial] at hE
+      linarith
+    have hEpos : 0 < Real.exp (1.414213563 : ℝ) := Real.exp_pos _
+    have hinv : 1 / (4.1132504 : ℝ) ≤ Real.exp (-(1.414213563 : ℝ)) := by
+      rw [Real.exp_neg, ← one_div]
+      exact one_div_le_one_div_of_le hEpos hE2
+    have hmono : Real.exp (-(1.414213563 : ℝ)) ≤ Real.exp (-Real.sqrt 2) :=
+      Real.exp_le_exp.mpr (by linarith)
+    have hc : (0.2431167 : ℝ) ≤ 1 / 4.1132504 := by norm_num
+    exact hc.trans (hinv.trans hmono)
+  · have hmono : Real.exp (-Real.sqrt 2) ≤ Real.exp (-(1.414213562 : ℝ)) :=
+      Real.exp_le_exp.mpr (by linarith)
+    have ht := exp_neg_le_inv_taylor10 (x := 1.414213562) (by norm_num)
+    have hc : 1 / ((Finset.range 11).sum (fun i => (1.414213562 : ℝ) ^ i / (i.factorial : ℝ))) ≤
+        (0.2431169 : ℝ) := by
+      norm_num [Finset.sum_range_succ, Nat.factorial]
+    exact hmono.trans (ht.trans hc)
+
+/-- `P(r)` for `r = e^{−√2}`. -/
+lemma neutron_poly_bounds :
+    (2.20828699 : ℝ) ≤ ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val ∧
+    ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val ≤
+      (2.20828851 : ℝ) := by
+  obtain ⟨hr1, hr2⟩ := exp_neg_sqrt_two_tight
+  have hr0 : (0 : ℝ) ≤ 0.2431167 := by norm_num
+  constructor
+  · calc (2.20828699 : ℝ)
+        ≤ ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * (0.2431167 : ℝ) ^ s.val := by
+          simp [Fin.sum_univ_succ, neutronWeightCount]
+          norm_num
+      _ ≤ ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val := by
+          apply Finset.sum_le_sum
+          intro s _
+          exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hr0 hr1 _) (by positivity)
+  · calc ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val
+        ≤ ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * (0.2431169 : ℝ) ^ s.val := by
+          apply Finset.sum_le_sum
+          intro s _
+          exact mul_le_mul_of_nonneg_left
+            (pow_le_pow_left₀ (le_of_lt (Real.exp_pos _)) hr2 _) (by positivity)
+      _ ≤ (2.20828851 : ℝ) := by
+          simp [Fin.sum_univ_succ, neutronWeightCount]
+          norm_num
+
+/-- The hazard `G_F² m_e⁴/3` to about `2×10⁻⁶`. -/
+lemma betaHazardE8_tight :
+    (3.0919850e-24 : ℝ) < betaHazardE8 ∧ betaHazardE8 < 3.0919962e-24 := by
+  rw [betaHazardE8_eq]
+  have h := PMConstants.Values.fermi_bounds
+  have he : (2.611199269e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
+      PMConstants.Values.electronGeV ^ 2 < (2.611199270e-7 : ℝ) := by
+    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
+  have hf : (3.0456453e-12 : ℝ) < PMElementaryParticles.SharedUnits.fermiME ∧
+      PMElementaryParticles.SharedUnits.fermiME < (3.0456507e-12 : ℝ) := by
+    unfold PMElementaryParticles.SharedUnits.fermiME
+    constructor <;> nlinarith [h.1, h.2, he.1, he.2]
+  constructor <;> nlinarith [hf.1, hf.2]
+
+/-- Margin-corrected neutron lifetime in seconds. -/
+def neutronLifetimeCorrectedSeconds : ℝ :=
+  neutronLifetimeCorrected * PMElementaryParticles.PhysicalUnits.electronTime
+
+/-- **The E8 neutron lifetime is between `877.1` and `877.2` s** (measured `≈ 878` s). -/
+theorem neutronLifetimeCorrectedSeconds_bounds :
+    (877.1 : ℝ) < neutronLifetimeCorrectedSeconds ∧ neutronLifetimeCorrectedSeconds < 877.2 := by
+  obtain ⟨hP1, hP2⟩ := neutron_poly_bounds
+  obtain ⟨hh1, hh2⟩ := betaHazardE8_tight
+  have he : (1.28808866e-21 : ℝ) < PMElementaryParticles.PhysicalUnits.electronTime ∧
+      PMElementaryParticles.PhysicalUnits.electronTime < 1.28808867e-21 := by
+    unfold PMElementaryParticles.PhysicalUnits.electronTime
+      PMElementaryParticles.PhysicalUnits.cFmPerSecond
+      PMElementaryParticles.SharedUnits.hbarc PMElementaryParticles.SharedUnits.me
+    constructor <;> norm_num
+  set P := ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val with hPdef
+  have hPpos : 0 < P := lt_of_lt_of_le (by norm_num) hP1
+  have hhpos : 0 < betaHazardE8 := lt_trans (by norm_num) hh1
+  have hτ : neutronLifetimeCorrectedSeconds =
+      (41 / 43) * (P / betaHazardE8) * PMElementaryParticles.PhysicalUnits.electronTime := by
+    unfold neutronLifetimeCorrectedSeconds
+    rw [neutronLifetimeCorrected_eq, neutronMarginFactor_eq]
+    unfold neutronLifetimeExactCutoff betaLifetimeFromFraction
+    rw [neutronSpectralFractionExact_eq, neutronSpectralFraction_eq_inv_poly, ← hPdef]
+    have hPne : P ≠ 0 := hPpos.ne'
+    have hhne : betaHazardE8 ≠ 0 := hhpos.ne'
+    field_simp
+  have hXlo : (2.20828699 : ℝ) / 3.0919962e-24 < P / betaHazardE8 := by
+    rw [div_lt_div_iff₀ (by norm_num) hhpos]
+    nlinarith
+  have hXhi : P / betaHazardE8 < (2.20828851 : ℝ) / 3.0919850e-24 := by
+    rw [div_lt_div_iff₀ hhpos (by norm_num)]
+    nlinarith
+  have hXpos : 0 < P / betaHazardE8 := div_pos hPpos hhpos
+  rw [hτ, mul_assoc]
+  constructor
+  · have := mul_lt_mul'' hXlo he.1 (by norm_num) (by norm_num)
+    nlinarith
+  · have := mul_lt_mul'' hXhi he.2 hXpos.le (lt_trans (by norm_num) he.1).le
+    nlinarith
+
 end PMHadrons

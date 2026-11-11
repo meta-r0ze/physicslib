@@ -10,7 +10,7 @@ Binary: **`e8p`** (E8-Persistence). Directory: `e8p`.
 ## Usage
 
 ```
-e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--periodic-table [N]] [--nuclear]
+e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--periodic-table [N]] [--nuclear] [--masses[=Z,N]]
 
   --paper=N     only values derived in Paper N (0 = substrate invariants)
   --only=IDS    comma-separated ids (cheap debugging), e.g. --only=wolf_rho,omega_ratio
@@ -18,8 +18,10 @@ e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--per
   --latex     %<*tag>...%</tag> blocks for the manuscript
   --audit     compare each value with its experimental reference (σ) + a summary
   --digits N  0..50 (default 18); more digits do not narrow the intervals
-  --periodic-table [N]  shell-capacity periodic table (default 20 rows)
+  --periodic-table [N]  configuration, Hund 2S+1, E8 nuclear mass vs measured (default 20 rows)
   --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)
+  --masses        E8 nuclear ledger masses vs measured: residual, z in ledger-scatter units, summary
+  --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)
 ```
 
 Examples:
@@ -30,9 +32,10 @@ e8p --paper=5                # elementary particles + atoms
 e8p --audit                  # per-value σ with ✓ / ~ / ! status, grouped by paper
 e8p --audit --only=wolf_rho  # debug a single value cheaply
 e8p --latex                  # tags for \CatchFileBetweenTags
-e8p --periodic-table 20      # shell configurations + E8 lattice weight vs standard weight
+e8p --periodic-table 20      # configuration, Hund 2S+1, E8 nuclear mass (certifiedMass) vs measured
 e8p --nuclear                # typed pp/pn/nn counts and tetrahedron closure
-e8p --line-table             # line/ring mass diagnostic (E8 weights, Coulomb omitted)
+e8p --masses                 # all nuclei: residuals, z in scatter units, |z| ≤ 1/2/3 counts
+e8p --masses=6,6             # C-12: E8 ledger mass, measured, E8 − measured, z
 e8p --json | jq .constants
 ```
 

@@ -47,10 +47,17 @@ def expRefs : Key → List ExpRef
   | .darkRaw => [⟨5.36, 0.05, "planck2018"⟩]
   | .vonKlitzing => [⟨25812.80745, 0.00001, "mohr_codata_2025"⟩]
   | .planckMass => [⟨1.22091e19, 1.0e14, "mohr_codata_2025"⟩]
-  | .rydbergEV => [⟨13.605693123, 0.000000012, "codata_2022"⟩]
-  | .bohrRadius => [⟨0.529177210903, 0.000000000080, "codata_2018"⟩]
+  -- `R∞hc` and `a₀` use `m_e` as an input, and CODATA derives `m_e` from `R∞` and `α`, so these two
+  -- rows are `α` comparisons. Their σ uses the `m_e` input uncertainty (`3.1×10⁻¹⁰` relative),
+  -- combined with the reference's own; CODATA 2022 `R∞hc = 13.605693122990(15)` eV.
+  | .rydbergEV => [⟨13.605693122990, 0.0000000043, "codata_2022"⟩]
+  -- CODATA 2022 `a₀ = 0.529177210544(82)` Å; σ combines it with the `m_e` input (`1.6×10⁻¹⁰` Å).
+  | .bohrRadius => [⟨0.529177210544, 0.00000000018, "codata_2022"⟩]
   | .vud | .vudDressed => [⟨0.97373, 0.00031, "pdg_2024"⟩]
   | .tauLifetimeFs => [⟨290.3, 0.82, "pdg_2024"⟩]
+  | .neutronLifetimePredicted => [⟨878.4, 0.5, "pdg_2024"⟩]
+  | .neutralPionFiniteLifetimeSeconds => [⟨8.43e-17, 0.13e-17, "pdg_2024"⟩]
+  | .zEq => [⟨3387, 21, "planck_2018"⟩]
   | .ckmS13 => [⟨0.00382, 0.00020, "pdg_2024"⟩]
   | .ckmS23 => [⟨0.0415, 0.0008, "pdg_2024"⟩]
   | .ckmVcb => [⟨0.0415, 0.0008, "pdg_2024"⟩]
@@ -86,6 +93,20 @@ def expRefs : Key → List ExpRef
       ⟨80.4335, 0.0094, "cdf_2022"⟩]
   | .zMassUnc => [⟨91.1876, 0.0021, "pdg_2024"⟩]
   | _ => []
+
+/-- Whether a reference is **scored** in the audit summary. Unscored references are shown for
+context, with `·` instead of a glyph:
+* intermediate (tree-level / uncorrected) values, whose corrected counterparts are scored:
+  `w_mass_uncorrected`, `z_mass_uncorrected` (→ `w_ratio`), `dark_raw` (→ `omega_ratio`);
+* `baryon_pmJ`, the Paper IV Jarlskog proposal that `PMFlavor.CKM.papers_disagree` sets against
+  Paper III's `baryon_pm3J` (the scored candidate);
+* early-universe (CMB) references against late-universe values (`hubble_late`, `clustering_late`):
+  that gap is the Hubble / `S₈` tension, not a model miss. -/
+def scoredRef (k : Key) (r : ExpRef) : Bool :=
+  match k with
+  | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ => false
+  | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "edwards_des_2023"
+  | _ => true
 
 /-- Primary experimental reference for display compatibility (first recorded). -/
 def expRef (k : Key) : Option ExpRef := (expRefs k).head?

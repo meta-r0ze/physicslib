@@ -22,7 +22,7 @@ inductive Key where
   | wMassUnc | zMassUnc | gWeak | gPrime | electronClosure
   | vud | vudDressed | bRes | neutrinoFloor | tauLifetimeFs
   | muonLifetimeFinite | tauLifetimeE8Natural | neutronSpectralFraction
-  | neutronLifetimeE8 | muonLifetimeSeconds | neutronLifetimeSeconds
+  | neutronLifetimeE8 | muonLifetimeSeconds | neutronLifetimeSeconds | neutronLifetimePredicted
   | pionFiniteWidth | pionFiniteLifetime
   | kaonFiniteWidth | kaonFiniteLifetime
   | neutralPionFiniteWidth | neutralPionFiniteLifetime
@@ -47,7 +47,7 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .wMassUnc, .zMassUnc, .gWeak, .gPrime, .electronClosure,
   .vud, .vudDressed, .bRes, .neutrinoFloor, .tauLifetimeFs, .muonLifetimeFinite,
   .tauLifetimeE8Natural, .neutronSpectralFraction, .neutronLifetimeE8,
-  .muonLifetimeSeconds, .neutronLifetimeSeconds,
+  .muonLifetimeSeconds, .neutronLifetimeSeconds, .neutronLifetimePredicted,
   .pionFiniteWidth, .pionFiniteLifetime,
   .kaonFiniteWidth, .kaonFiniteLifetime,
   .neutralPionFiniteWidth, .neutralPionFiniteLifetime,
@@ -131,6 +131,7 @@ def Key.id : Key → String
   | .neutronLifetimeE8 => "neutron_lifetime_e8"
   | .muonLifetimeSeconds => "muon_lifetime_s"
   | .neutronLifetimeSeconds => "neutron_lifetime_s"
+  | .neutronLifetimePredicted => "neutron_lifetime_predicted_s"
   | .pionFiniteWidth => "pion_finite_width"
   | .pionFiniteLifetime => "pion_finite_lifetime"
   | .kaonFiniteWidth => "kaon_finite_width"
@@ -245,6 +246,7 @@ def bounds : Key → Rat × Rat
   | .neutronLifetimeE8 => (2.9e23, 8.0e23)
   | .muonLifetimeSeconds => (1.60e-6, 3.23e-6)
   | .neutronLifetimeSeconds => (3.7e2, 1.04e3)
+  | .neutronLifetimePredicted => (877.1, 877.2)
   | .pionFiniteWidth => (4.9e-14, 5.16e-14)
   | .pionFiniteLifetime => (1.9e13, 2.05e13)
   | .kaonFiniteWidth => (6.1e-14, 6.47e-14)
@@ -254,8 +256,8 @@ def bounds : Key → Rat × Rat
   | .pionFiniteLifetimeSeconds => (2.44e-8, 2.65e-8)
   | .kaonFiniteLifetimeSeconds => (1.98e-8, 2.12e-8)
   | .neutralPionFiniteLifetimeSeconds => (8.44e-17, 8.48e-17)
-  | .rydbergEV => (13.60569309, 13.60569310)
-  | .bohrRadius => (0.5291772110, 0.5291772114)
+  | .rydbergEV => (13.6056931158, 13.6056931159)
+  | .bohrRadius => (0.5291772106829, 0.5291772106830)
   | .shell4 => (32, 32)
 
 def Key.unit : Key → String
@@ -268,7 +270,7 @@ def Key.unit : Key → String
   | .tauLifetimeFs => "fs"
   | .muonLifetimeFinite | .tauLifetimeE8Natural | .neutronLifetimeE8 => "m_e^-1"
   | .neutronSpectralFraction => "1"
-  | .muonLifetimeSeconds | .neutronLifetimeSeconds
+  | .muonLifetimeSeconds | .neutronLifetimeSeconds | .neutronLifetimePredicted
   | .pionFiniteLifetimeSeconds | .kaonFiniteLifetimeSeconds
   | .neutralPionFiniteLifetimeSeconds => "s"
   | .pionFiniteWidth | .kaonFiniteWidth | .neutralPionFiniteWidth => "m_e"
@@ -381,6 +383,7 @@ def Key.theoremName : Key → String
   | .neutronLifetimeE8 => "PMHadrons.neutronLifetimeE8_bounds"
   | .muonLifetimeSeconds => "PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_bounds"
   | .neutronLifetimeSeconds => "PMHadrons.neutronLifetimeSeconds_bounds"
+  | .neutronLifetimePredicted => "PMHadrons.neutronLifetimeCorrectedSeconds_bounds"
   | .pionFiniteWidth => "PMHadrons.pionFiniteWidth_bounds"
   | .pionFiniteLifetime => "PMHadrons.pionFiniteLifetime_bounds"
   | .kaonFiniteWidth => "PMHadrons.kaonFiniteWidth_bounds"
@@ -450,7 +453,7 @@ def Key.paper : Key → Nat
   | .neutrinoFloor => 5
   | .tauLifetimeFs | .muonLifetimeFinite | .tauLifetimeE8Natural
   | .neutronSpectralFraction | .neutronLifetimeE8
-  | .muonLifetimeSeconds | .neutronLifetimeSeconds => 5
+  | .muonLifetimeSeconds | .neutronLifetimeSeconds | .neutronLifetimePredicted => 5
   | .pionFiniteWidth | .pionFiniteLifetime
   | .kaonFiniteWidth | .kaonFiniteLifetime
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime => 5
@@ -565,12 +568,17 @@ def Key.formula : Key → String
   | .rydbergEV => "R_\\infty=\\alpha^2 m_e c^2/2"
   | .bohrRadius => "a_0=\\hbar c/(\\alpha m_e c^2)"
   | .shell4 => "\\sum_{\\ell=0}^{n-1}2(2\\ell+1)=2n^2"
+  | .neutronLifetimePredicted => "\\frac{41}{43}\\,\\frac{3(1+r+r^2)^3}{G_F^2 m_e^4},\\ r=e^{-\\sqrt2}"
   | _ => ""
 
 /-- Known interpretation caveats shown alongside an audit row. -/
 def Key.caveat : Key → String
-  | .wMassUnc => "uncorrected; omits the interface/correction factor"
-  | .zMassUnc => "uncorrected; omits the interface/correction factor"
+  | .wMassUnc => "uncorrected (tree-level); not scored, compare w_ratio"
+  | .zMassUnc => "uncorrected (tree-level); not scored, compare w_ratio"
+  | .darkRaw => "raw ratio before correction; not scored, compare omega_ratio"
+  | .baryonPmJ => "Paper IV J; disagrees with Paper III (papers_disagree); not scored, compare baryon_pm3J"
+  | .hubbleLate => "late-universe value; CMB references show the Hubble tension and are not scored"
+  | .clusteringLate => "late-universe value; the CMB reference shows the S8 tension and is not scored"
   | .vud => "undressed; compare vud_dressed"
   | .muonRatio => "documented ~2.4σ model tension"
   | .tauRatio => "documented ~2.1σ model tension"
@@ -583,7 +591,8 @@ def Key.caveat : Key → String
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
   | .neutronLifetimeE8 => "finite 3x3x3 channel; broad natural-unit interval"
   | .muonLifetimeSeconds => "unit conversion using measured m_e and hbar c; broad interval"
-  | .neutronLifetimeSeconds => "unit conversion using measured m_e and hbar c; broad interval"
+  | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"
+  | .neutronLifetimePredicted => "E8 finite channel with the 41/43 margin; m_e and hbar c are unit inputs; the PDG average combines bottle and beam"
   | .pionFiniteWidth | .pionFiniteLifetime
   | .kaonFiniteWidth | .kaonFiniteLifetime
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime =>

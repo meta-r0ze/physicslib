@@ -50,6 +50,7 @@ def indexed (xs : List α) : List (Nat × α) :=
 
 /-- Audit status glyph: within 1σ, within 2σ, else flag. -/
 def statusGlyph (k : Key) (r : ExpRef) : String :=
+  if !scoredRef k r then "·" else
   let a := let s := sigmaRat k r; if s ≥ 0 then s else -s
   if a ≤ 1 then "✓" else if a ≤ 2 then "~" else "!"
 

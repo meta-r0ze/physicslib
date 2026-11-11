@@ -22,6 +22,11 @@ Results:
 
 The corrected prediction is within about `0.1%` of the measured lifetime.
 
+**Proved enclosure.** `PMHadrons.neutronLifetimeCorrectedSeconds_bounds`:
+`877.1 s < τ_n < 877.2 s` (the margin-corrected lifetime, exact cutoff `m_n − m_p`, `r = e^{−√2}` to
+`10⁻⁷`, `G_F` and the unit inputs `m_e`, `ħc`). Against the PDG 2024 average `878.4 ± 0.5` s it is
+`−2.5σ` (`e8p` row `neutron_lifetime_predicted_s`).
+
 This is a candidate E8 prediction, not a fit. The finite spectral fraction is an
 external comparison calculation; the Lean side formalizes the cutoff, fraction
 expression, margin factor, and lifetime expression.

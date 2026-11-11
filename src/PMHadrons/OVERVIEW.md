@@ -94,7 +94,7 @@ is elementary-particle work.
 
 | decay | E8 model | comparison | status |
 |---|---:|---:|---|
-| n → p e ν̄ | 877.2 s | 878 s | E8 finite-spectral + `41/43` margin (`NeutronPrediction`) |
+| n → p e ν̄ | 877.1–877.2 s (proved, `neutronLifetimeCorrectedSeconds_bounds`) | 878.4 ± 0.5 s (PDG 2024; −2.5σ) | E8 finite-spectral + `41/43` margin (`NeutronPrediction`) |
 | π⁺ → μ⁺ν | 2.52×10⁻⁸ s | 2.60×10⁻⁸ s | E8 `fπ` |
 | K⁺ → μ⁺ν | ≈2.0×10⁻⁸ s | 1.95×10⁻⁸ s | E8 `fK`, `Vus` |
 | π⁰ → γγ | ≈8.46×10⁻¹⁷ s | 8.52×10⁻¹⁷ s | E8 `fπ`; anomaly `A = 1` derived |

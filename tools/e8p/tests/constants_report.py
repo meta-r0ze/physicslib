@@ -48,7 +48,7 @@ EXPECTED = {
     "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
     "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
@@ -114,14 +114,14 @@ def main():
                       "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
                       "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
                       "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
     "pion_finite_lifetime_s", "kaon_finite_lifetime_s",
     "neutral_pion_finite_lifetime_s",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
@@ -177,20 +177,21 @@ def main():
     assert table3.returncode == 0 and "3  Li" in table3.stdout and "4  Be" not in table3.stdout
     cert = run(binary, "--certified")
     assert cert.returncode == 0
-    assert "certified(m_e)" in cert.stdout and "12.000" in cert.stdout
+    assert "E8 ledger (m_e)" in cert.stdout and "12.000" in cert.stdout and "z(scatter)" in cert.stdout and "nuclei compared" in cert.stdout
+    assert run(binary, "--masses").stdout == cert.stdout
+    assert "C-12" in run(binary, "--masses=6,6").stdout
     cert12 = run(binary, "--certified=6,6")
     assert cert12.returncode == 0
-    assert "C-12" in cert12.stdout and "12.000" in cert12.stdout
+    assert "C-12" in cert12.stdout and "12.000" in cert12.stdout and "E8 − measured" in cert12.stdout
     certcf = run(binary, "--certified=98,154")
-    assert certcf.returncode == 0 and "no certified enclosure" in certcf.stdout
+    assert certcf.returncode == 0 and "no enclosure printed" in certcf.stdout
     nuc = run(binary, "--nuclear")
     assert nuc.returncode == 0
     assert "He-4" in nuc.stdout and "pp=1" in nuc.stdout and "0.012985" in nuc.stdout
     assert "0.000820" in nuc.stdout
     assert "11/4" in nuc.stdout and "16/5" in nuc.stdout and "mirror difference" in nuc.stdout
-    lt = run(binary, "--line-table")
-    assert lt.returncode == 0
-    assert "C" in lt.stdout and "res_line" in lt.stdout and "Coulomb" in lt.stdout
+    assert run(binary, "--line-table").returncode == 2
+    assert "2S+1" in table.stdout
     assert run(binary, "--help").returncode == 0
     print(f"e8p reporter checks passed: {len(EXPECTED)} rows, five precisions, paper/only filters, audit, latex, CLI")
 

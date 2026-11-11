@@ -158,14 +158,34 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
 ## Tool backlog
 
 - Emit `--audit` tiers (bosonic / spectrum / combined).
-- `--line-table` reports the line/ring mass diagnostic (E8 weights, RMS 0.0096 u
-  vs 0.0168 u for the A-link budget); the Coulomb/valley term is not included.
-- `--nuclear` reports the proved typed counts and He-4 closure; the periodic
-  table still uses the mean `A`-link budget, not the graph weights.
-- `--periodic-table` is implemented for Z=1..20 (shell occupations + E8 lattice
-  weight vs standard weight). Extend it once the E8 persistence/rate ledger can
-  mark persistent nuclides.
-- Add `--particle <spec>`: accept `6 7` aka carbon 13 v.s. the more stable carbon 12, print `Z/N/A`, configuration, shell counts, E8 lattice mass, tabulated isotopic mass and half-life/decay. This is a lookup/display feature over frozen isotope data, not a new model value.
+- **One source for nuclear masses.** `--periodic-table` and `--certified` both print
+  `PMAtoms.certifiedMass` (its proved enclosure), with residuals as `E8 − measured` and the
+  ledger scatter (4.8 m_e rms) beside them. The old separate computations are gone: the
+  `A`-link budget (`linkUnitU`, `boundWeightU`), the `--line-table` line/ring diagnostic and
+  e8p's own Aufbau fill. Configurations come from `PMAtoms.Aufbau.configuration`, the
+  `2S+1` column from `PMAtoms.Hund.groundMultiplicity`.
+- `--nuclear` still prints the He-4 closure gap, the mirror link difference and the static
+  charge energies as text citing their theorems; print them from `src/` values if a computable
+  form is added there.
+- The hydrogenic cloud column (`cloudSum`) is a rational mirror of
+  `PMAtoms.ElectronCloud.bindingEV`; move a `ℚ` form into `src/` to drop the mirror.
+- Add `--particle <spec>`: accept `6 7` aka carbon 13 v.s. the more stable carbon 12, print `Z/N/A`, configuration, shell counts, `2S+1`, E8 nuclear mass (`certifiedMass`), tabulated isotopic mass and half-life/decay. This is a lookup/display feature over frozen isotope data, not a new model value.
+- **Lifetime enclosures too wide to compare.** `muon_lifetime_s` (1.6–3.23 µs), `pion_finite_lifetime_s`
+  and `kaon_finite_lifetime_s` have enclosures wider than the measurement, so a midpoint σ would
+  mislead; they carry no reference. Tighten them in `src/` the way
+  `neutronLifetimeCorrectedSeconds_bounds` was (closed form, tight `G_F`, `m_e`, `ħc`), then add
+  the PDG references. `neutral_pion_finite_lifetime_s` and `neutron_lifetime_predicted_s` are tight
+  and compared.
+- **Electron-mass inputs.** `ElectroweakBounds.electronGeV`, `FloorNeutrino.meEV` and
+  `StrongRunning.mZ` use `0.51099895` (CODATA truncated by `1.35×10⁻⁹`); `SharedUnits.me` and
+  `Hydrogen.electronMassEV` use the full `0.51099895069`. Negligible at those rows' precision;
+  unify on `SharedUnits.me` when their proofs are next touched. `SharedUnits.hbarc = 197.3269804`
+  is likewise truncated (`2×10⁻¹⁰`).
+- **Candidate rows from `src/`**: `K_ℓ3` at leading order (`PMHadrons.KaonSemileptonic`), the shell
+  closures (`PMAtoms.ShellGaps.nilssonE8_gaps`), the shell spacing coefficient `χ·m_p/Δ`, the O-17
+  spin–orbit splitting, Hund multiplicities (50/54). Scalar rows need a theorem with bounds each.
+- Verify `edwards_des_2023` (`H₀ = 67.4 ± 0.5`): the numbers match Planck 2018; DES BAO+BBN values
+  in the literature are `67.4 ± ~1.1`.
 - Add a `--cite` mode.
 - Point the papers' `\CatchFileBetweenTags` at `e8p --latex` output.
 - Rename the directory to the final package name if `e8p` is kept as the binary.

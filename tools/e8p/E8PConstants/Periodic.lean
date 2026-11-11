@@ -1,58 +1,48 @@
 import PMAtoms.Shells
 import PMAtoms.Aufbau
 import PMAtoms.ElectronCloud
-import PMAtoms.NuclearRegime
 import E8PConstants.Format
 
 /-!
-# Periodic-table readout from the proved shell capacities
+# Periodic-table data and the electron configuration readout
 
-`PMAtoms.Shells` proves `orbitalCapacity l = 2(2l+1)` and `shellCapacity n = 2n²`.
-This module fills the subshells in the supplied Aufbau order (a model input, not
-derived) and prints the resulting electron configuration. The capacities are
-Lean-proved; the order is the usual Madelung/experimental rule.
+Frozen comparison data (standard weights, isotope masses, element symbols) and the electron
+configuration, read from `PMAtoms.Aufbau.configuration` (capacities `2(2ℓ+1)` proved in
+`PMAtoms.Shells`; the fill order is a supplied input there). No mass model lives here: the
+nuclear mass column of `--periodic-table` is `PMAtoms.certifiedMass` (`E8PConstants.Certified`).
 -/
 
 namespace E8PConstants
 
-structure Orbital where
-  n : Nat
-  l : Nat
-  deriving Repr, BEq, DecidableEq
+/-- `nℓ` label of a subshell. -/
+def subshellLabel (nl : Nat × Nat) : String :=
+  toString nl.1 ++ ["s", "p", "d", "f"].getD nl.2 "?"
 
-/-- Madelung/Aufbau order, read from `PMAtoms.Aufbau` (a model input there). -/
-def aufbau : List Orbital :=
-  PMAtoms.Aufbau.aufbau.map (fun nl => ⟨nl.1, nl.2⟩)
-
-def orbitalLabel (o : Orbital) : String :=
-  let shell := ["s","p","d","f"].getD o.l "?"
-  toString o.n ++ shell
-
-/-- Fill `z` electrons in the Aufbau order, returning `(orbital, occupation)`. -/
-def fill : List Orbital → Nat → List (Orbital × Nat)
-  | [], _ => []
-  | o :: rest, z =>
-      let cap := PMAtoms.orbitalCapacity o.l
-      let taken := min z cap
-      if taken = 0 then [] else (o, taken) :: fill rest (z - taken)
-
+/-- Electron configuration of `z` electrons, from `PMAtoms.Aufbau.configuration`. -/
 def configuration (z : Nat) : String :=
-  let parts := (fill aufbau z).map (fun (o, k) => orbitalLabel o ++ toString k)
-  String.intercalate " " parts
+  String.intercalate " "
+    ((PMAtoms.Aufbau.configuration z).map (fun (nl, k) => subshellLabel nl ++ toString k))
 
-/-- Electron mass in atomic mass units (CODATA), a unit conversion input. -/
+/-- Electrons per principal shell `[K, L, M, N]`, from the same configuration. -/
+def shellCounts (z : Nat) : List Nat :=
+  (List.range 4).map (fun i =>
+    ((PMAtoms.Aufbau.configuration z).filter (fun (nl, _) => nl.1 = i + 1)).foldl
+      (fun acc (_, k) => acc + k) 0)
+
+/-- Electron mass in atomic mass units (CODATA 2022), a unit conversion input. -/
 def electronMassU : Rat := 548579909065 / 10^15
 
-/-- Leading E8 proton weight in u, from the certified `m_p/m_e`. -/
-def protonMassU : Rat := (bounds .protonRatio).1 * electronMassU
+/-- Electron rest energy in MeV (CODATA 2022), a unit conversion input. -/
+def electronMassMeV : Rat := 51099895069 / 10^11
 
-/-- Leading E8 neutron weight in u, from the certified `m_n/m_e`. -/
-def neutronMassU : Rat := (bounds .neutronRatio).1 * electronMassU
+/-- Hydrogenic cloud series `Σ 1/n²` over the first `z` spin-orbitals of
+`PMAtoms.orbitalList` (the `ElectronCloud` filling; no screening). -/
+def cloudSum (z : Nat) : Rat :=
+  ((PMAtoms.orbitalList.take z).map
+    (fun o => (1 : Rat) / ((o.n : Nat) : Rat) ^ 2)).sum
 
-/-- Leading E8 weight of `Z` protons, `N` neutrons and `Z` electrons, in u.
-The nuclear binding/link term is deliberately not included here. -/
-def leadingWeightU (z n : Nat) : Rat :=
-  (z : Rat) * protonMassU + (n : Rat) * neutronMassU + (z : Rat) * electronMassU
+/-- Hydrogenic cloud binding in eV (`ElectronCloud.bindingEV` with the certified Rydberg bound). -/
+def cloudEnergyRat (z : Nat) : Rat := -((bounds .rydbergEV).1) * cloudSum z
 
 /-- Standard atomic weights (IUPAC, u) for Z = 1..20, frozen comparison data. -/
 def standardWeightU : List Rat := [
@@ -61,7 +51,7 @@ def standardWeightU : List Rat := [
   30.973761998, 32.06, 35.45, 39.948, 39.0983, 40.078]
 
 /-- Standard mass number (rounded atomic weight) for Z = 1..20, used only to
-pick the isotope `N = A - Z` for the E8 lattice weight. -/
+pick the isotope `N = A - Z` compared in the tables. -/
 def standardMassNumber : List Nat := [
   1, 4, 7, 9, 11, 12, 14, 16, 19, 20, 23, 24, 27, 28, 31, 32, 35, 40, 39, 40]
 
@@ -77,58 +67,6 @@ def isotopeMassU : List ((Nat × Nat) × Rat) := [
 
 def findIsotopeMass (z a : Nat) : Option Rat :=
   (isotopeMassU.find? (fun ((z', a'), _) => z' = z ∧ a' = a)).map (fun (_, m) => m)
-
-/-- E8 toll per link in u (`Z_TOL = 167/14090240 m_e`). -/
-def zTolU : Rat := (167 / 14090240 : Rat) * electronMassU
-
-/-- E8 margin per link in u (`Z_MAR = 1/343914 m_e`). -/
-def zMarU : Rat := (1 / 343914 : Rat) * electronMassU
-
-/-- `πD` read from the certified CAP value: `CAP = πΔ`, so `CAP/Δ`. -/
-def piOverD : Rat := 4 * (bounds .cap).1 / 43
-
-/-- One inter-nucleon link carries map (`πD`), protocol (`1/D`), boundary (`σ/2`),
-plus toll/margin. This is the link-layer six-pillar budget. -/
-def linkUnitU : Rat := (piOverD + 1/4 + 5/2 + 1/167 + 2/43) * electronMassU + zTolU + zMarU
-
-/-- Per-shell electron count `[K,L,M,N,...]` from the configuration. -/
-def shellCounts (z : Nat) : List Nat :=
-  let occ := fill aufbau z
-  (List.range 4).map (fun i =>
-    (occ.filter (fun (o, _) => o.n = i+1)).foldl (fun acc (_, k) => acc + k) 0)
-
-/-- Links within a shell: a ring of `n` nucleons for `n ≥ 2`, none for a
-singleton. This is the shell-resolved version of the `linkOverlap` row count. -/
-def shellLinks (counts : List Nat) : Nat :=
-  (counts.map (fun n => if n ≤ 1 then 0 else n)).sum
-
-/-- Capacity-use score of one species: `Σ n_s(cap_s − n_s)`. -/
-def shellMid (counts : List Nat) : Nat :=
-  (counts.zip [2,8,18,32]).foldl (fun acc (n, c) => acc + n * (c - n)) 0
-
-/-- Proton + neutron capacity-use score. -/
-def midScore (z n : Nat) : Nat := shellMid (shellCounts z) + shellMid (shellCounts n)
-
-/-- E8 link count for the mass: `linkOverlap` row sum 4, two endpoints, so
-`A` effective links (none for a single nucleon). The Aufbau shell occupation is
-display-only and does not enter the mass. -/
-def linkCount (z n : Nat) : Rat :=
-  if z + n ≤ 1 then 0 else ((z + n : Nat) : Rat)
-
-/-- Hydrogen-cloud binding series `Σ 1/n²` over the filled orbitals. -/
-def cloudSum (z : Nat) : Rat :=
-  ((PMAtoms.orbitalList.take z).map
-    (fun o => (1 : Rat) / ((o.n : Nat) : Rat) ^ 2)).sum
-
-/-- Cloud binding energy in eV, using the certified Rydberg bound. -/
-def cloudEnergyRat (z : Nat) : Rat := -((bounds .rydbergEV).1) * cloudSum z
-
-/-- Cloud mass correction in u (binding is negative; 1 u = 931.494e6 eV). -/
-def cloudMassU (z : Nat) : Rat := cloudEnergyRat z / 931494000
-
-/-- Six-pillar nucleon sum minus the link budget plus the cloud binding/c². -/
-def boundWeightU (z n : Nat) : Rat :=
-  leadingWeightU z n - linkCount z n * linkUnitU + cloudMassU z
 
 /-- Symbols through krypton; a label table, not a derivation. -/
 def symbols : List String := [
@@ -146,31 +84,15 @@ def symbols : List String := [
 
 def symbol (z : Nat) : String := symbols.getD (z-1) "?"
 
-/-- Regime label for the certified-ledger boundary. -/
-def regimeLabel (z n : Nat) : String :=
-  match PMAtoms.regimeOf z n with
-  | .light => "light"
-  | .mid => "mid"
-  | .deformedActinide => "deformed"
-  | .beyondFrontier => "beyond"
+/-- Extended frozen comparison masses (AME-style, u) for nuclei beyond Z=20. -/
+def extendedIsotopeMassU : List ((Nat × Nat) × Rat) := [
+  ((20,48), 47.9525228), ((26,56), 55.93493633), ((28,58), 57.93534241),
+  ((28,62), 61.9283451), ((50,120), 119.9022016), ((54,132), 131.9041551),
+  ((56,138), 137.9052472), ((60,142), 141.9077290), ((74,184), 183.9509312),
+  ((79,197), 196.9665687), ((82,208), 207.9766525), ((92,238), 238.0507882),
+  ((96,244), 244.0627526), ((98,252), 252.081626)]
 
-def periodicTable (maxZ : Nat) : List String :=
-  let header := "Z   Sym  configuration                  K  L  M  N  A  regime     m_E8(u)*  m_iso(u)  shell  cloud(eV)"
-  let rows := (List.range maxZ).map (fun i =>
-    let z := i+1
-    let aExp := standardMassNumber.getD i (2*z)
-    let n := aExp - z
-    let w := boundWeightU z n
-    let ws := fixedDecimal (lowerScaled w 6) 6
-    let mexp := (findIsotopeMass z aExp).getD (standardWeightU.getD i 0)
-    let mes := fixedDecimal (lowerScaled mexp 6) 6
-    let counts := shellCounts z
-    let shells := String.intercalate "  " (counts.map toString)
-    s!"{z}  {symbol z}  {configuration z}  |  {shells}  {aExp}  {regimeLabel z n}  {ws}  {mes}  {midScore z n}  {fixedDecimal (lowerScaled (cloudEnergyRat z) 2) 2}")
-  (header :: rows) ++ ["", "* m_E8 = Z m_p + N m_n + Z m_e minus the E8 link budget: A effective links from the substrate link spectrum 4,1,1 (row sum 4 / two endpoints), each carrying map πD + protocol 1/D + boundary σ/2 + PRO (1/167) + GOV (2/43) + toll/margin, all positive costs subtracted. m_iso = isotopic mass. The Aufbau shell column is display-only; `2l+1` is standard SO(3), not E8, and does not enter the mass. regime = smooth-ledger validity: `beyond` rows are post-frontier comparison data, not certified smooth-ledger fits."]
-
-
-theorem aufbau_length : aufbau.length = 19 := by decide
+theorem extendedIsotopeMassU_length : extendedIsotopeMassU.length = 14 := by decide
 
 theorem standardWeightU_length : standardWeightU.length = 20 := by decide
 
@@ -182,19 +104,5 @@ theorem symbols_length : symbols.length = 98 := by decide
 
 theorem shellCounts_length (z : Nat) : (shellCounts z).length = 4 := by
   simp [shellCounts]
-
-theorem periodicTable_length (maxZ : Nat) : (periodicTable maxZ).length = maxZ + 3 := by
-  simp [periodicTable]
-
-
-/-- Extended frozen comparison masses (AME-style, u) for nuclei beyond Z=20. -/
-def extendedIsotopeMassU : List ((Nat × Nat) × Rat) := [
-  ((20,48), 47.9525228), ((26,56), 55.93493633), ((28,58), 57.93534241),
-  ((28,62), 61.9283451), ((50,120), 119.9022016), ((54,132), 131.9041551),
-  ((56,138), 137.9052472), ((60,142), 141.9077290), ((74,184), 183.9509312),
-  ((79,197), 196.9665687), ((82,208), 207.9766525), ((92,238), 238.0507882),
-  ((96,244), 244.0627526), ((98,252), 252.081626)]
-
-theorem extendedIsotopeMassU_length : extendedIsotopeMassU.length = 14 := by decide
 
 end E8PConstants
