@@ -44,7 +44,7 @@ Coulomb / asymmetry `16.2 / 20.0 / 0.73 / 23.7` MeV against the empirical
 `15.75 / 17.8 / 0.71 / 23.7`. The residual floor of a scan is `~3.3 m_e ≈ 1.7 MeV`. The
 curvature term `A^{1/3}` is collinear with `A, A^{2/3}` and does not lower it
 (`3.34 → 3.13 m_e`, cancelling coefficients). A residual regression gives
-`R ≈ −12 + 1.2·A^{2/3} − 0.22·A` `m_e` (`REVIEW-AND-NEXT.md` Q1).
+`R ≈ −12 + 1.2·A^{2/3} − 0.22·A` `m_e` (Q1, below).
 
 **Holographic capacity.** Nuclei are ~38 orders below the hoop bound `Rc²/2G`, and the Bekenstein
 entropy bound is `10²–10⁴` nats against `~A` cells, so entropy-holography does not bind nuclei.
@@ -82,3 +82,15 @@ surface over `(Z, N)`.
 24, 37, 47, 82, 92` at `A = 40, 56, 90, 120, 208, 238` (stable `20, 26, 40, 50, 82, 92`).
 Stable-line residual mean `+102.5 m_e`, rms `53`. Keeping the alpha term as a plain count
 (`min(Z,N)/2`, no suppression) instead gives `Z = 19, 26, 40, 51, 82, 99` but rms `86`.
+
+**Volume/surface split (Q1, closed as a floor).** `packingLinks(A) = (σ−χ)(A − A^{2/3})` is the
+cube count, exact at `A = n³` (`packingLinks_cube`), and the closure rank is its cycle rank
+`E − A + 1`. Persistence selects the packing with the fewest missing links, i.e. the
+edge-isoperimetric optimum on the cubic lattice (quasi-cubes plus an optimal partial layer). That
+exact count is `1–2` links below the continuous form between cubes (`A = 208`: `517` vs `518.7`).
+Used in place of the continuous form (links and closure rank, no other change) on the 26 stable
+nuclides with `12 ≤ A ≤ 208`: mean `|R|` `8.05 → 6.76 m_e`, mean `−7.9 → +5.5`, rms about the
+mean `4.84 → 5.76`. So the count's discreteness is not the lever, confirming the earlier crude
+test. Volume and surface share one link weight `w = πD(σ−χ)/σ` because both come from the same
+link count; the regression's ~5% surface offset would need surface links weighted differently,
+and the substrate gives no reason for that. The ledger's floor stays `~3.3 m_e ≈ 1.7 MeV`.

@@ -44,7 +44,7 @@ already absorb the average symmetry cost along the line, and most of the offset 
 itself, which the swap removes. A consistent occupancy ledger would also carry the symmetric
 filling energy (`≈ 37.5` MeV per nucleon with `ℏω(A)`), turning the link weights into a potential;
 the substrate has no link potential separate from the net link cost, so that rebuild is not
-attempted (`REVIEW-AND-NEXT.md` §1 item 2).
+attempted (`REVIEW-AND-NEXT.md` §1 item 1).
 
 **Comparison (outside Lean, `RESIDUALS.md`).** The isobar of lowest `certifiedMass`
 matches the stable isobar for `A = 12, 16, 27, 40`. It is `Z = 28` at `A = 56` (stable `26`), `45`

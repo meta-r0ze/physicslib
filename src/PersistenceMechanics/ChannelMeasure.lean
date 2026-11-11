@@ -56,7 +56,7 @@ of the labels is uniform — the same Closure argument as
 theorem probability_perm_uniform [DecidableEq ι] (m : ChannelMeasure ι) (h : total m ≠ 0)
     (hinv : ∀ σ : Equiv.Perm ι, ∀ a, probability m (σ a) = probability m a) (a : ι) :
     probability m a = 1 / Fintype.card ι := by
-  haveI : Nonempty ι := ⟨a⟩
+  have : Nonempty ι := ⟨a⟩
   have hsum := probability_sum m h
   have hall : ∀ b, probability m b = probability m a := by
     intro b

@@ -131,3 +131,11 @@ masses that use the full six-pillar ledger, and they are the template the nucleu
 - Compared, not matched: the stability valley above `A ≈ 56` (`IsospinLedger`; the ledger has no
   `(N−Z)²` restoring term), shell closures with `κ = χ/Δ` (`ShellGaps`).
 - Not yet derived: nuclear lifetimes and numeric particle lifetimes (deferred).
+- Readings (stated with their comparison, not theorems):
+  - spin–orbit as a uniform coupling over the coordinate sector's `ν = 16` channels, strength
+    `1/ν` (`ShellGaps.sector_orbit` proves the transitivity; the closures `2, 8, 20, 28, 50, 82,
+    126` and O-17 `d` splitting `5.29` vs `5.08` MeV compare; N-15 `p` `3.32` vs `6.32`);
+  - the `l²` ratio `μ = χ/σ`, the same ratio as the quark latency leak (`nilssonMu_eq_latency`);
+    empirical Nilsson `μ` grows from `≈ 0` (`N ≤ 2`) to `≈ 0.6` (`N = 5`), E8 has one constant;
+  - the shell spacing `ℏω(A) = χ·m_p/(Δ·A^{1/3})` has no `A^{-2/3}` term: 6% above
+    `41 A^{-1/3}` MeV at all `A`, 24% above the two-term fit `45 A^{-1/3} − 25 A^{-2/3}` at `A = 16`.

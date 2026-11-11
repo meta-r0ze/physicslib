@@ -279,9 +279,9 @@ theorem certifiedMass_c12 :
         unfold shellCorrectionPaired shellPairingFactor neutronExcess neutronShell
         norm_num [shellWeight, D, χ, Δ, PMSubstrate.baseline]]
   rw [show packingLinks 12 = 36 - 3 * (12 : ℝ) ^ ((2 : ℝ) / 3) by
-        unfold packingLinks; ring]
+        unfold packingLinks; ring_nf]
   rw [show packingClosureRank 12 = 25 - 3 * (12 : ℝ) ^ ((2 : ℝ) / 3) by
-        unfold packingClosureRank; ring]
+        unfold packingClosureRank; ring_nf]
   norm_num
   have hu := rpow23_bounds (a := 12) (lo := 5.24148) (hi := 5.24149)
     (by norm_num) (by norm_num) (by norm_num) (by norm_num)

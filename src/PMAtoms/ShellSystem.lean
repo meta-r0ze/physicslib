@@ -29,15 +29,14 @@ is **derived** from what is still a model input.
 | Toll | **emission** (de-excitation): the boundary `ValidToll`, weight `tollTerm` |
 | Margin | the **reference cone** (smooth background): `marginTerm = 1/(L_embed(σ+1)Δ²)` |
 
-**Result — the `l²`/spin–orbit ratio is forced.**  The recorded shell order is
-reproducible **iff** the `l²` coefficient is exactly `κ/D` (`l2_ratio_forced`; the
-equal-`2n+l` ties `2s½ ≤ 1d₃/₂` and `1g₇/₂ ≤ 2d₅/₂` bracket it). With
-`κ = χ/Δ`, `κ₂ = κ/D` the E8 orbital cost is nondecreasing down the ladder
-(`e8OrbitalOrder`). So the *shape* of the shell spectrum is E8; only the overall
-**scale** `κ` is free — the order bounds it to `(0, 1/14]` but does not single it
-out, so it needs an E8 energy scale (the mass gap / ℏω), not a fit. The energy scale is
-`ℏω(A) = χ·m_p/(Δ·A^{1/3})` (`shellQuantum`): the Governor budget over the packing-cube side. See
-`REVIEW-AND-NEXT.md` §1 (Q2).
+**The textbook order list.** `SingleParticle.nuclearOrbitals126` is one textbook fine order of
+the orbitals. In the form `2n+l − κ·l·s − κ₂·l(l+1)` (no shell-mean subtraction) that list is
+reproducible only with `κ₂ = κ/D` (`l2_ratio_forced`; the equal-`2n+l` ties `2s½ ≤ 1d₃/₂` and
+`1g₇/₂ ≤ 2d₅/₂`), and with `κ = χ/Δ`, `κ₂ = κ/D` the cost is nondecreasing down it
+(`e8OrbitalOrder`). Both are statements about that list. The list's near-degenerate pairs are not
+data, the standard Nilsson form reorders five of them, and the closures (gap sizes) favour
+`κ = 1/ν`, `μ = χ/σ` (`ShellGaps`). The energy scale is `ℏω(A) = χ·m_p/(Δ·A^{1/3})`
+(`shellQuantum`): the Governor budget over the packing-cube side.
 -/
 
 noncomputable section
@@ -143,8 +142,9 @@ theorem spinOrbit_eq_Q (o : NuclearOrbital) : spinOrbit o = (spinOrbitQ o : ℝ)
 noncomputable def orbitalCost (k k2 : ℝ) (o : NuclearOrbital) : ℝ :=
   (oscIndex o : ℝ) - k * spinOrbit o - k2 * ((o.l : ℝ) * ((o.l : ℝ) + 1))
 
-/-- **The `l²` coefficient is forced to `κ/D` by the shell order.**  The two equal-`2n+l`
-ties `2s½ ≤ 1d₃/₂` and `1g₇/₂ ≤ 2d₅/₂` bracket it to `κ₂ = κ/4`. -/
+/-- **The textbook order list fixes `κ₂ = κ/D` in this form.**  The two equal-`2n+l` ties
+`2s½ ≤ 1d₃/₂` and `1g₇/₂ ≤ 2d₅/₂` of `nuclearOrbitals126` bracket it to `κ₂ = κ/4`. A statement
+about that list, not a substrate constraint (`ShellGaps`). -/
 theorem l2_ratio_forced {k k2 : ℝ}
     (h1 : orbitalCost k k2 ⟨2, 0, 1, 2⟩ ≤ orbitalCost k k2 ⟨1, 2, 3, 4⟩)
     (h2 : orbitalCost k k2 ⟨1, 4, 7, 8⟩ ≤ orbitalCost k k2 ⟨2, 2, 5, 6⟩) :
@@ -167,10 +167,9 @@ theorem orbitalCostZ_eq (o : NuclearOrbital) :
   push_cast
   ring
 
-/-- **The E8 spacings reproduce the recorded shell order.**  With `κ = χ/Δ` and
-`κ₂ = κ/D` (scaled by `172`), the orbital cost is nondecreasing down
-`nuclearOrbitals126`; ties at the E8 ratio are the degenerate pairs the recorded
-order resolves. -/
+/-- **`κ = χ/Δ`, `κ₂ = κ/D` order the textbook list.**  Scaled by `172`, the orbital cost is
+nondecreasing down `nuclearOrbitals126`; ties at the E8 ratio are degenerate pairs the list
+resolves. The closures these strengths give are `2, 8, 20, 40, 70` (`ShellGaps.shellSystem_gaps`). -/
 theorem e8OrbitalOrder :
     (nuclearOrbitals126.zip (nuclearOrbitals126.drop 1)).all
       (fun p => orbitalCostZ p.1 ≤ orbitalCostZ p.2) = true := by
