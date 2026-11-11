@@ -54,6 +54,13 @@ a fitted correction; each is a derivation.
    until Q1/Q2 land unless it turns out to help the bulk. Subsumes the old items: the
    `2(Δ+σ)=96` term overcorrects U-238, and the `−43/288` deformation candidate fails its holdout.
 
+**SEMF comparison (evidence).**  Regressing the E8 binding on the Bethe–Weizsäcker basis
+`{A, A^(2/3), Z(Z−1)/A^(1/3), (N−Z)²/A, 1}` gives volume/surface/Coulomb/asymmetry
+`16.2 / 20.0 / 0.73 / 23.7` MeV against the empirical `15.75 / 17.8 / 0.71 / 23.7` — so the six
+pillars **reproduce the liquid-drop coefficients** (asymmetry exact, volume/Coulomb ~3%, surface
+~13% high). The residual is therefore leptodermous/shell refinement, and the surface/closure
+coefficients are already near-optimal (scan floor ~`4 m_e` ≈ 2 MeV; no clean E8 tweak closes it).
+
 **Built (`NuclearOccupancy`).** The occupancy `A = Z + N`, the closure predicates
 (`ProtonClosed`/`NeutronClosed`/`DoublyClosed`), and the frontier closure pair
 (`frontier_doublyClosed`: `Z=96`, `N=152`; `frontier_occupancy = 248`) are named — so "why these
