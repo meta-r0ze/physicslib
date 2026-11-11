@@ -3,6 +3,7 @@ import PMAtoms.Invariants
 import PMAtoms.E8AtomValues
 import PMAtoms.NuclearShells
 import PMAtoms.SingleParticle
+import PMAtoms.ShellSystem
 import PMAtoms.LinkWeights
 import PMAtoms.Shells
 import PMAtoms.ElectronCloud

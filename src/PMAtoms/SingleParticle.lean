@@ -9,7 +9,9 @@ import Mathlib.Tactic
 The E8 closure ladder fixes the shell capacities `2,6,12,8,22,32,14,30,26,32`.
 This module records the standard `nlj` orbital sequence with those occupations.
 It is the spectrum input a Strutinsky calculation needs; the level energies are
-not fixed here.
+not fixed here. `ShellSystem` is the E8 occupancy foundation (capacity `2j+1`, the
+oscillator `2n+l` order, the cumulative closure ladder); the spacings remain the
+derivation target (Q2 in `REVIEW-AND-NEXT.md` §1).
 -/
 
 namespace PMAtoms
