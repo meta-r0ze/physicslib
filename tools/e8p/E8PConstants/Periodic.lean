@@ -135,7 +135,14 @@ def symbols : List String := [
   "H","He","Li","Be","B","C","N","O","F","Ne",
   "Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca",
   "Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn",
-  "Ga","Ge","As","Se","Br","Kr"]
+  "Ga","Ge","As","Se","Br","Kr",
+  "Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd",
+  "Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba",
+  "La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy",
+  "Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os",
+  "Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn",
+  "Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm",
+  "Bk","Cf"]
 
 def symbol (z : Nat) : String := symbols.getD (z-1) "?"
 
@@ -171,7 +178,7 @@ theorem standardMassNumber_length : standardMassNumber.length = 20 := by decide
 
 theorem isotopeMassU_length : isotopeMassU.length = 20 := by decide
 
-theorem symbols_length : symbols.length = 36 := by decide
+theorem symbols_length : symbols.length = 98 := by decide
 
 theorem shellCounts_length (z : Nat) : (shellCounts z).length = 4 := by
   simp [shellCounts]

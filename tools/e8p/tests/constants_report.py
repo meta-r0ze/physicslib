@@ -175,6 +175,14 @@ def main():
     assert table5.returncode == 0 and "5  B" in table5.stdout and "6  C" not in table5.stdout
     table3 = run(binary, "--periodic-table=3")
     assert table3.returncode == 0 and "3  Li" in table3.stdout and "4  Be" not in table3.stdout
+    cert = run(binary, "--certified")
+    assert cert.returncode == 0
+    assert "certified(m_e)" in cert.stdout and "12.000" in cert.stdout
+    cert12 = run(binary, "--certified=6,6")
+    assert cert12.returncode == 0
+    assert "C-12" in cert12.stdout and "12.000" in cert12.stdout
+    certcf = run(binary, "--certified=98,154")
+    assert certcf.returncode == 0 and "no certified enclosure" in certcf.stdout
     nuc = run(binary, "--nuclear")
     assert nuc.returncode == 0
     assert "He-4" in nuc.stdout and "pp=1" in nuc.stdout and "0.012985" in nuc.stdout

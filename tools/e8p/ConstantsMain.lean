@@ -2,6 +2,7 @@ import E8PConstants
 import E8PConstants.Periodic
 import E8PConstants.Nuclear
 import E8PConstants.LineTable
+import E8PConstants.Certified
 
 open E8PConstants
 
@@ -15,7 +16,9 @@ private def usage : String :=
   "  --digits N    0..50 (default 18); more digits do not narrow the intervals\n" ++
   "  --periodic-table [N]  shell-capacity periodic table (default 20)\n" ++
   "  --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)\n" ++
-  "  --line-table    line/ring mass diagnostic (E8 weights, Coulomb omitted)\n"
+  "  --line-table    line/ring mass diagnostic (E8 weights, Coulomb omitted)\n" ++
+  "  --certified     certified nuclear-ledger readout (rational interval vs measured)\n" ++
+  "  --certified=Z,N one nucleus (protons Z, neutrons N) with its interval\n"
 
 structure Opts where
   json : Bool := false
@@ -24,6 +27,8 @@ structure Opts where
   periodic : Option Nat := none
   nuclear : Bool := false
   lineTable : Bool := false
+  certified : Bool := false
+  certifiedNuc : Option (Nat × Nat) := none
   paper : Option Nat := none
   only : Option (List String) := none
   digits : Nat := 18
@@ -42,6 +47,7 @@ private def parse : List String → Except String Opts
   | "--latex" :: rest => do let o ← parse rest; .ok { o with latex := true }
   | "--audit" :: rest => do let o ← parse rest; .ok { o with audit := true }
   | "--nuclear" :: rest => do let o ← parse rest; .ok { o with nuclear := true }
+  | "--certified" :: rest => do let o ← parse rest; .ok { o with certified := true }
   | "--line-table" :: rest => do let o ← parse rest; .ok { o with lineTable := true }
   | "--periodic-table" :: n :: rest =>
       match n.toNat? with
@@ -66,6 +72,13 @@ private def parse : List String → Except String Opts
         let o ← parse rest; .ok { o with paper := some p }
       else if s.startsWith "--only=" then do
         let o ← parse rest; .ok { o with only := some (splitIds (s.drop 7).toString) }
+      else if s.startsWith "--certified=" then
+        match (s.drop 12).toString.splitOn "," with
+        | [zs, ns] =>
+            match zs.toNat?, ns.toNat? with
+            | some z, some n => do let o ← parse rest; .ok { o with certifiedNuc := some (z, n) }
+            | _, _ => .error "--certified=Z,N requires two integers"
+        | _ => .error "--certified=Z,N requires two integers"
       else if s.startsWith "--periodic-table=" then
         match (s.drop 17).toString.toNat? with
         | some k =>
@@ -142,6 +155,10 @@ def main (args : List String) : IO UInt32 := do
       for line in lineTable 20 do out.putStrLn line
     else if o.nuclear then
       for line in nuclearTable do out.putStrLn line
+    else if let some (z, n) := o.certifiedNuc then
+      for line in certifiedNuclide z n do out.putStrLn line
+    else if o.certified then
+      for line in certifiedTable 20 do out.putStrLn line
     else if let some n := o.periodic then
       for line in periodicTable n do out.putStrLn line
     else if o.json then
