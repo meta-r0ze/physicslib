@@ -22,18 +22,28 @@ The nucleus mass is the free-nucleon sum minus the link/closure layers (`TwoLedg
 `boundaryWeight = σ/2`) and the E8 closure identities (`E8AtomValues`: `2(Δ−χ)=82`,
 `(σ−χ)(Δ−1)=126`, `2(Δ+σ)=96`, `(σ−χ)Δ+(ν+σ+χ)=152`, …).
 
-**Open.**
+**Open.** A residual decomposition (`e8p --certified`, `R = certified − m_iso` in `m_e`) gives
+three E8 questions, in priority order. `R` splits into a **systematic** light-nucleus over-binding
+(`R/A ≈ −2` at Li-7 rising to `≈ −0.03` at Pb-208), a **shell oscillation** (±`5 m_e`, `R ≈ 0` at
+the doubly-magic O-16 and the closure-adjacent C-12/Fe-56/Ni-62), and a **frontier** term. None is
+a fitted correction; each is a derivation.
 
-1. **Deformed proton closure `2(Δ+σ)=96`** (§3). Recorded, but a simple closure term overcorrects
-   U-238; refine it (apply only past the frontier, or soften it).
-2. **N=Z saturation** (§1b). Every N=Z nucleus past O-16 is over-bound by ≈`1.1–1.2 m_e` per alpha
-   cluster (`RESIDUALS.md`: Ne-20 −7.6, Ca-40 −12.3, Ni-56 −16.4 `m_e`); the alpha closure lacks a
-   saturation once a closed core exists. The complex's surface law is ruled out (wrong direction).
-   Derive the saturation from the occupancy.
-3. **Heavy deformation shape** (§1). The collective occupancy of a heavy nucleus; the candidate
-   `− (43/288)·max((Z−82)(N−126) − 82, 0)` holds the training set to `±0.008 u` but the holdout
-   (Pu/Cm/Cf/Fm/No/Rf) scatters `−0.019…+0.018 u`. Needs a mid-shell/Z-dependent occupancy factor or
-   shape coexistence; do **not** integrate until the holdout passes.
+1. **General finite-size link/closure count (Q1).** The ledger uses the *continuous*
+   `packingLinks(A) = (σ−χ)(A − A^{2/3})`, but `packingLinks_cube` proves it is exact **only at
+   cubic `A = n³`** — every other `A` is a mean-field interpolation. Derive the **exact
+   finite-complex count for arbitrary `A`** (the general `packingLinks`/`packingClosureRank`, given
+   the E8 filling rule). Largest lever: it is the systematic term. Not a special-case patch — the
+   cube result is the `A = n³` instance of the general count.
+2. **Shell system as a six-pillar E8 system (Q2).** The smooth ledger is blind to the discrete
+   closure ladder (`NuclearShells`), so `R` oscillates between shells. `SingleParticle` is a
+   *candidate* module whose level energies are schematic (`n + l/10 − j/20`), not E8-derived — a
+   schematic Strutinsky does **not** reproduce the oscillation (wrong magnitude and shape). Build
+   the shell system out from the pillars, as was done at the atom level: the ladder `2,6,12,8,…`
+   is E8; its **spacings and couplings** are not yet.
+3. **(Deferred) Deformed closure / frontier (Q3).** `Cm-244` is under-bound by `+44 m_e` — a
+   missing extra binding at the deformed closure `Z=96, N=152`. Localized to the frontier; hold
+   until Q1/Q2 land unless it turns out to help the bulk. Subsumes the old items: the
+   `2(Δ+σ)=96` term overcorrects U-238, and the `−43/288` deformation candidate fails its holdout.
 
 **Built (`NuclearOccupancy`).** The occupancy `A = Z + N`, the closure predicates
 (`ProtonClosed`/`NeutronClosed`/`DoublyClosed`), and the frontier closure pair
