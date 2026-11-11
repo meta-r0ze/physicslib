@@ -1,6 +1,7 @@
 import PMAtoms.NuclearShells
 import PMAtoms.SingleParticle
 import PMHadrons.MesonMasses
+import PMHadrons.Emission
 import Mathlib.Tactic
 
 /-!
@@ -25,8 +26,8 @@ is **derived** from what is still a model input.
 | Map `χ` | the **closure boundary**: `mapTerm = eulerCharacteristic = χ = 2` (two-sided edge) |
 | Protocol `−1/167` | the **successor map** — the orbital ladder order (`protocol_deterministic`) |
 | Governor `−χ/Δ` | candidate spin–orbit coupling `κ`; level spacing (the scale is free) |
-| Toll | **emission** (de-excitation), *not* closure: `ValidToll = Fin 2 × Fin 167` is the shedding boundary |
-| Margin | the smooth background (Strutinsky) — *label only* |
+| Toll | **emission** (de-excitation): the boundary `ValidToll`, weight `tollTerm` |
+| Margin | the **reference cone** (smooth background): `marginTerm = 1/(L_embed(σ+1)Δ²)` |
 
 **Result — the `l²`/spin–orbit ratio is forced.**  The recorded shell order is
 reproducible **iff** the `l²` coefficient is exactly `κ/D` (`l2_ratio_forced`; the
@@ -213,5 +214,84 @@ theorem protocol_credit :
     -(PMSubstrate.protocolTerm PMSubstrate.baseline) = 1 / 167 := by
   unfold PMSubstrate.protocolTerm PMSubstrate.baseline PMSubstrate.Parameters.resolution
   norm_num
+
+/-! ## Toll: the shell emission boundary
+
+A single-particle **de-excitation** (a nucleon dropping between orbitals) is a boundary
+transition, exactly as in `PMHadrons.Emission`: `Γ = Toll × |overlap|² × phase space`, with the
+Toll boundary weight `tollTerm` (`χ = 2` exposed-leg orientations × the `R_M − σ = 167` non-aliased
+addresses, card 334). -/
+
+/-- The shell emission overlap: the initial and final single-particle configurations. -/
+def shellEmissionOverlap {ι : Type*} [Fintype ι] (ψ φ : PMHadrons.BoundStateOverlap.Wavefunction ι) : ℂ :=
+  PMHadrons.BoundStateOverlap.overlap ψ φ
+
+/-- **The shell emission boundary is the Toll**: weight `emissionWeight = tollTerm`. -/
+theorem shellEmissionWeight_eq :
+    PMHadrons.TollGovernor.emissionWeight = PMSubstrate.tollTerm PMSubstrate.baseline := rfl
+
+theorem shellEmissionWeight_pos : 0 < PMHadrons.TollGovernor.emissionWeight :=
+  PMHadrons.TollGovernor.emissionWeight_pos
+
+theorem shellEmissionBoundary_card :
+    Fintype.card PMHadrons.TollGovernor.EmissionBoundary = 334 :=
+  PMHadrons.TollGovernor.emissionBoundary_card
+
+/-- The shell emission width: `Toll × |overlap|² × phase` — a single-particle de-excitation. -/
+noncomputable def shellEmissionWidth {ι : Type*} [Fintype ι]
+    (ψ φ : PMHadrons.BoundStateOverlap.Wavefunction ι) (phase : ℝ) : ℝ :=
+  PMHadrons.TollGovernor.emissionWeight * Complex.normSq (shellEmissionOverlap ψ φ) * phase
+
+theorem shellEmissionWidth_nonneg {ι : Type*} [Fintype ι]
+    (ψ φ : PMHadrons.BoundStateOverlap.Wavefunction ι) {phase : ℝ} (hphase : 0 ≤ phase) :
+    0 ≤ shellEmissionWidth ψ φ phase := by
+  unfold shellEmissionWidth shellEmissionOverlap
+  exact mul_nonneg
+    (mul_nonneg shellEmissionWeight_pos.le (Complex.normSq_nonneg _)) hphase
+
+/-- **The shell de-excitation is the general rate form** `|T|²·phase` with `T = √Toll · overlap`. -/
+theorem shellEmissionWidth_eq_partialWidth {ι : Type*} [Fintype ι]
+    (ψ φ : PMHadrons.BoundStateOverlap.Wavefunction ι) (phase : ℝ) :
+    shellEmissionWidth ψ φ phase =
+      Complex.normSq ((Real.sqrt PMHadrons.TollGovernor.emissionWeight : ℂ) *
+        shellEmissionOverlap ψ φ) * phase := by
+  unfold shellEmissionWidth
+  rw [Complex.normSq_mul, Complex.normSq_ofReal,
+    Real.mul_self_sqrt shellEmissionWeight_pos.le]
+
+/-- The shell transition gap between two orbitals, in oscillator units (`orbitalCostZ` is `× 172`). -/
+noncomputable def shellTransitionGap (hi lo : NuclearOrbital) : ℝ :=
+  ((orbitalCostZ hi - orbitalCostZ lo : ℤ) : ℝ) / 172
+
+/-- The shell transition energy: the orbital gap in the E8 unit `ℏω = χ·m_p/Δ`. -/
+noncomputable def shellTransitionEnergy (hi lo : NuclearOrbital) : ℝ :=
+  shellTransitionGap hi lo * shellEnergyUnit
+
+/-! ## Margin: the reference cone (smooth background)
+
+The Margin pillar is the **reference cone**: `marginTerm = 1/(L_embed·(σ+1)·Δ²)`, a state space of
+`31·6·43·43 = 343914`. At the shell level it is the **smooth background** a shell correction is
+measured against (Strutinsky). -/
+
+/-- The Margin pillar is the reference-cone weight `1/(L_embed(σ+1)Δ²) = 1/343914`. -/
+theorem marginTerm_eq : PMSubstrate.marginTerm PMSubstrate.baseline = 1 / 343914 := by
+  unfold PMSubstrate.marginTerm PMSubstrate.baseline
+  norm_num [PMSubstrate.Parameters.embeddingLoad, PMSubstrate.Parameters.intrinsicLoad]
+
+/-- The reference cone has `L_embed·(σ+1)·Δ² = 343914` states. -/
+theorem marginSpace_card : Fintype.card PMSubstrate.MarginSpace = 343914 := by
+  simp [PMSubstrate.MarginSpace]
+
+/-- The shell smooth background — the Margin role: the reference cone against which the shell
+correction is measured (`SingleParticle.smoothEnergy`). -/
+noncomputable def shellBackground (xs : List NuclearOrbital) (N w : Nat) : ℝ :=
+  PMAtoms.smoothEnergy xs N w
+
+theorem shellBackground_eq (xs : List NuclearOrbital) (N w : Nat) :
+    shellBackground xs N w = PMAtoms.smoothEnergy xs N w := rfl
+
+/-- The shell correction is the difference from the Margin background. -/
+noncomputable def shellStrutinskyCorrection (xs : List NuclearOrbital) (N w : Nat) : ℝ :=
+  PMAtoms.strutinskyCorrection xs N w
 
 end PMAtoms
