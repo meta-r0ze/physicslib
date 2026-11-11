@@ -1,4 +1,5 @@
 import PMAtoms.CertifiedEnclosure
+import PMAtoms.ShellMass
 import E8PConstants.Format
 import E8PConstants.Periodic
 
@@ -28,6 +29,12 @@ def certifiedME (z n : Nat) : Option (Rat × Rat) :=
 /-- Certified enclosure in atomic mass units (via the electron-mass unit input). -/
 def certifiedU (z n : Nat) : Option (Rat × Rat) :=
   (certifiedME z n).map (fun p => (p.1 * electronMassU, p.2 * electronMassU))
+
+/-- The **full** E8 nuclear mass (smooth certified ledger + the single-particle shell correction)
+in atomic mass units, at Strutinsky window `w`. -/
+def certifiedFullU (z n w : Nat) : Option (Rat × Rat) :=
+  (certifiedME z n).map (fun p =>
+    ((p.1 + shellMassLo z n w) * electronMassU, (p.2 + shellMassHi z n w) * electronMassU))
 
 def regimeStr (z n : Nat) : String :=
   match PMAtoms.regimeOf z n with
