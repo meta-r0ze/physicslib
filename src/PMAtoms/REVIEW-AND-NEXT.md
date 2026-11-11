@@ -60,6 +60,12 @@ a fitted correction; each is a derivation.
 pillars **reproduce the liquid-drop coefficients** (asymmetry exact, volume/Coulomb ~3%, surface
 ~13% high). The residual is therefore leptodermous/shell refinement, and the surface/closure
 coefficients are already near-optimal (scan floor ~`4 m_e` ≈ 2 MeV; no clean E8 tweak closes it).
+**Holographic-capacity poke (negative).**  Nuclei are nowhere near saturation — mass is ~38 orders
+below the hoop bound `Rc²/2G`, and the Bekenstein entropy bound is `10²–10⁴` nats vs `~A` cells — so
+entropy-holography does not bind nuclei. The leptodermous **curvature** term (`A^{1/3}`), the next
+order of the area expansion, is collinear with `A, A^{2/3}` and does not help (floor `3.34 → 3.13 m_e`
+with cancelling coefficients). So the residual floor is `~3.3 m_e ≈ 1.7 MeV`, and holographic
+capacity is a **horizon/cosmology** question (`R_M`), not a nuclear one.
 
 **Built (`NuclearOccupancy`).** The occupancy `A = Z + N`, the closure predicates
 (`ProtonClosed`/`NeutronClosed`/`DoublyClosed`), and the frontier closure pair
