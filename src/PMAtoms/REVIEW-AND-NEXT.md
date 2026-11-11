@@ -92,6 +92,25 @@ configuration), `fragmentWidth = barrierRate · |overlap|² · phase` and `fragm
 (`= |T|²·Φ` with `T = √barrierRate · overlap`). The barrier plays the Toll-boundary role; only the
 fragment configuration (the overlap value) remains.
 
+**Unlocked by the shell work (`ShellSystem`, Q2).**  The shell system now supplies the **E8 level
+ladder** that `AlphaHindrance` needs — so the α hindrance scale is no longer a free input:
+
+- **The alpha's orbital on the ladder.**  The alpha carries the parent→daughter spin mismatch as its
+  angular momentum `L`: `alphaOrbital` with `l = spinMismatch`, `s = 0`, `j2 = l`, so its level cost is
+  the ladder's `orbitalCost κ κ₂` (`AlphaLevel.ofOrbital alphaOrbital = alphaLevel`).
+- **The per-unit costs.**  The spin cost is the `l·s` coefficient `κ = χ/Δ = 2/43`
+  (`ShellSystem.spinOrbitCoupling`); the parity cost is the `l(l+1)` coefficient `κ₂ = κ/D = 1/86`
+  (`l2_ratio_forced`).  So the supplied `alphaHindranceScale = 1` can be replaced by the *derived*
+  `κ·Δspin + κ₂·Δparity` — the hindrance is a projection of the E8 level cost, not a fitted number.
+- **The same pattern as the shell Toll.**  `shellEmissionWidth = boundary × |overlap|² × phase`
+  (`ShellSystem`) is structurally identical to `fragmentWidth`; the α/fission fragment overlap is the
+  shell-emission pattern applied to a fragment cohort.
+- **The honest test.**  `κ = 2/43 ≈ 0.0465` is ~21× smaller than the supplied `1`; the two differ by
+  ~21× in the α hindrance cost.  That is a *testable prediction* against the odd-A α lifetimes
+  (Th-231, U-235, Pu-239 levels already in `AlphaHindrance`), not an assertion — do not integrate
+  until it is checked.  The remaining blocker is the same **fragment configuration** (the overlap
+  value) that blocks the hadron `fπ`; the ladder now gives its *costs*, not yet its *amplitudes*.
+
 ## 3. Governor: the nuclear rate / attempt-frequency layer — H/M
 
 The rate *structure* is complete: `RateModel.betaSpectralRate*` (bounded by `β·c0`, monotone in the
