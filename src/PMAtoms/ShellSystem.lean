@@ -23,7 +23,7 @@ is **derived** from what is still a model input.
 | --- | --- |
 | Capacity `πΔ` | the `2n+l` oscillator count — the primary shell order |
 | Map `χ` | the **shell boundary** (a closure is a capacity-saturation edge) — *label only* |
-| Protocol `−1/167` | **unassigned** |
+| Protocol `−1/167` | the **successor map** — the orbital ladder order (`protocol_deterministic`) |
 | Governor `−χ/Δ` | candidate spin–orbit coupling `κ`; level spacing (the scale is free) |
 | Toll | **emission** (de-excitation), *not* closure: `ValidToll = Fin 2 × Fin 167` is the shedding boundary |
 | Margin | the smooth background (Strutinsky) — *label only* |
@@ -154,9 +154,11 @@ theorem e8OrbitalOrder :
 /-! ## The shell energy unit (Q2 item 4) -/
 
 /-- Candidate shell oscillator spacing `ℏω`: the nucleon mass times the Governor credit `χ/Δ`.
-In `m_e`: `m_p·χ/Δ ≈ 85.4 m_e ≈ 43.6 MeV`, against the empirical oscillator `ℏω ≈ 41 A^{-1/3}`
-MeV.  Pinning this from an E8 *spectral* scale (rather than the empirical value) is the open
-item. -/
+With Protocol identified as the *ordering* (successor) and Capacity as the *room* (`2j+1`),
+Governor is the *spacing* — so `ℏω = χ·(m_p/Δ)` (the spectral gap `χ` per clock step `m_p/Δ`).
+In `m_e`: `m_p·χ/Δ ≈ 85.4 m_e ≈ 43.6 MeV`, against the empirical `ℏω ≈ 41 A^{-1/3}` MeV.
+The Protocol assignment (1/167) and Capacity (πΔ) give the wrong scales (5.6, 69 MeV), which
+is what fixes Governor as the spacing. -/
 noncomputable def shellEnergyUnit : ℝ := PMHadrons.CompositeMasses.proton * spinOrbitCoupling
 
 theorem shellEnergyUnit_eq : shellEnergyUnit = PMHadrons.CompositeMasses.proton * (2 / 43) := by
@@ -168,5 +170,29 @@ noncomputable def spinOrbitEnergy : ℝ := shellEnergyUnit * spinOrbitCoupling
 theorem spinOrbitEnergy_eq :
     spinOrbitEnergy = PMHadrons.CompositeMasses.proton * (2 / 43) ^ 2 := by
   unfold spinOrbitEnergy; rw [shellEnergyUnit_eq, spinOrbitCoupling_eq]; ring
+
+/-! ## Protocol: the orbital successor (coordinates the next level)
+
+`PMSubstrate.PersistenceEvents.protocol_persistence` gives the Protocol as a **function**
+`X → Fin 167`: exactly one successor per state, reached with probability
+`1/(R_M − σ) = 1/167`. At the shell level the successor is the **next orbital** — the ladder
+order is the Protocol's orbit. -/
+
+/-- The Protocol's transitions at the shell level: consecutive orbitals of the ladder. -/
+def protocolSteps : List (NuclearOrbital × NuclearOrbital) :=
+  nuclearOrbitals126.zip (nuclearOrbitals126.drop 1)
+
+theorem protocolSteps_length : protocolSteps.length = 21 := by decide
+
+/-- **The successor is deterministic**: each orbital has exactly one successor (the Protocol is
+a function, not a relation), matching `protocol_persistence`. -/
+theorem protocol_deterministic : (protocolSteps.map Prod.fst).Nodup := by decide
+
+/-- **The Protocol credit** is one successor among the `R_M − σ = 167` residual addresses,
+`−(protocolTerm) = 1/167`. -/
+theorem protocol_credit :
+    -(PMSubstrate.protocolTerm PMSubstrate.baseline) = 1 / 167 := by
+  unfold PMSubstrate.protocolTerm PMSubstrate.baseline PMSubstrate.Parameters.resolution
+  norm_num
 
 end PMAtoms
