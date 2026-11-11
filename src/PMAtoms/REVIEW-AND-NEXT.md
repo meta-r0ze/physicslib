@@ -39,7 +39,11 @@ a fitted correction; each is a derivation.
    *candidate* module whose level energies are schematic (`n + l/10 − j/20`), not E8-derived — a
    schematic Strutinsky does **not** reproduce the oscillation (wrong magnitude and shape). Build
    the shell system out from the pillars, as was done at the atom level: the ladder `2,6,12,8,…`
-   is E8; its **spacings and couplings** are not yet.
+   is E8; its **spacings and couplings** are not yet. **Progress (`ShellSystem`)**: capacity
+   `2j+1`, the oscillator `2n+l` order (Capacity), and the cumulative ladder are proved; the
+   `l²`/spin–orbit ratio is **forced to `1/D`** by the order (`l2_ratio_forced`), and the E8
+   spacings (`κ=χ/Δ`, `κ₂=κ/D`) reproduce the recorded order (`e8OrbitalOrder`). Only the overall
+   scale `κ` is free — it needs an E8 energy scale, not a fit.
 3. **(Deferred) Deformed closure / frontier (Q3).** `Cm-244` is under-bound by `+44 m_e` — a
    missing extra binding at the deformed closure `Z=96, N=152`. Localized to the frontier; hold
    until Q1/Q2 land unless it turns out to help the bulk. Subsumes the old items: the

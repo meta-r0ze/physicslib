@@ -28,10 +28,13 @@ is **derived** from what is still a model input.
 | Toll | the closure boundary (a magic number) |
 | Margin | the smooth background (Strutinsky) |
 
-**Open — the derivation target.** The *spacings* (oscillator scale, spin–orbit,
-`l²`) are model inputs in `SingleParticle` (`kappa`, `mu`, `delta`). Turning them
-into pillar ratios (`spinOrbitCoupling` is a candidate) would make the
-shell-correction energy an E8 prediction instead of a schematic one. See
+**Result — the `l²`/spin–orbit ratio is forced.**  The recorded shell order is
+reproducible **iff** the `l²` coefficient is exactly `κ/D` (`l2_ratio_forced`; the
+equal-`2n+l` ties `2s½ ≤ 1d₃/₂` and `1g₇/₂ ≤ 2d₅/₂` bracket it). With
+`κ = χ/Δ`, `κ₂ = κ/D` the E8 orbital cost is nondecreasing down the ladder
+(`e8OrbitalOrder`). So the *shape* of the shell spectrum is E8; only the overall
+**scale** `κ` is free — the order bounds it to `(0, 1/14]` but does not single it
+out, so it needs an E8 energy scale (the mass gap / ℏω), not a fit. See
 `REVIEW-AND-NEXT.md` §1 (Q2).
 -/
 
@@ -93,5 +96,49 @@ noncomputable def spinOrbitCoupling : ℝ := -(PMSubstrate.governorTerm PMSubstr
 theorem spinOrbitCoupling_eq : spinOrbitCoupling = 2 / 43 := by
   unfold spinOrbitCoupling PMSubstrate.governorTerm PMSubstrate.baseline
   norm_num
+
+/-- Rational `l·s` expectation (the `ℚ` mirror of `SingleParticle.spinOrbit`). -/
+def spinOrbitQ (o : NuclearOrbital) : ℚ :=
+  (((o.j2 : ℚ) * ((o.j2 : ℚ) + 2) / 4) - ((o.l : ℚ) * ((o.l : ℚ) + 1)) - 3 / 4) / 2
+
+theorem spinOrbit_eq_Q (o : NuclearOrbital) : spinOrbit o = (spinOrbitQ o : ℝ) := by
+  unfold spinOrbit spinOrbitQ; push_cast; ring
+
+/-- Orbital cost `2n+l − κ·l·s − κ₂·l(l+1)`: the Capacity order plus the two splittings. -/
+noncomputable def orbitalCost (k k2 : ℝ) (o : NuclearOrbital) : ℝ :=
+  (oscIndex o : ℝ) - k * spinOrbit o - k2 * ((o.l : ℝ) * ((o.l : ℝ) + 1))
+
+/-- **The `l²` coefficient is forced to `κ/D` by the shell order.**  The two equal-`2n+l`
+ties `2s½ ≤ 1d₃/₂` and `1g₇/₂ ≤ 2d₅/₂` bracket it to `κ₂ = κ/4`. -/
+theorem l2_ratio_forced {k k2 : ℝ}
+    (h1 : orbitalCost k k2 ⟨2, 0, 1, 2⟩ ≤ orbitalCost k k2 ⟨1, 2, 3, 4⟩)
+    (h2 : orbitalCost k k2 ⟨1, 4, 7, 8⟩ ≤ orbitalCost k k2 ⟨2, 2, 5, 6⟩) :
+    k2 = k / 4 := by
+  unfold orbitalCost oscIndex spinOrbit at h1 h2
+  push_cast at h1 h2
+  nlinarith [h1, h2]
+
+/-- The E8 orbital cost `κ=χ/Δ`, `κ₂=κ/D` scaled by `172 = D·Δ`, as an integer:
+`172·(2n+l) − (j2(j2+2) − 4l(l+1) − 3) − 2·l(l+1)`. -/
+def orbitalCostZ (o : NuclearOrbital) : ℤ :=
+  172 * (oscIndex o : ℤ)
+    - ((o.j2 : ℤ) * ((o.j2 : ℤ) + 2) - 4 * ((o.l : ℤ) * ((o.l : ℤ) + 1)) - 3)
+    - 2 * ((o.l : ℤ) * ((o.l : ℤ) + 1))
+
+/-- `orbitalCostZ` is `172 = D·Δ` times the real E8 cost `κ = χ/Δ`, `κ₂ = κ/D`. -/
+theorem orbitalCostZ_eq (o : NuclearOrbital) :
+    (orbitalCostZ o : ℝ) = 172 * orbitalCost (2 / 43) (1 / 86) o := by
+  unfold orbitalCostZ orbitalCost oscIndex spinOrbit
+  push_cast
+  ring
+
+/-- **The E8 spacings reproduce the recorded shell order.**  With `κ = χ/Δ` and
+`κ₂ = κ/D` (scaled by `172`), the orbital cost is nondecreasing down
+`nuclearOrbitals126`; ties at the E8 ratio are the degenerate pairs the recorded
+order resolves. -/
+theorem e8OrbitalOrder :
+    (nuclearOrbitals126.zip (nuclearOrbitals126.drop 1)).all
+      (fun p => orbitalCostZ p.1 ≤ orbitalCostZ p.2) = true := by
+  decide
 
 end PMAtoms
