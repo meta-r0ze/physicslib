@@ -73,6 +73,7 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `ShellSystem` | shell pillars (Capacity `2j+1`/`2n+l`, Map = closure boundary, Protocol = successor, Toll = emission, Margin = reference cone); spacing `ℏω(A) = χ·m_p/(Δ·A^{1/3})` | spin–orbit reading |
 | `ShellGaps` | closures as gaps: `κ = χ/Δ` gives `20, 40, 70`; `κ = 1/ν`, `μ = χ/σ` gives `2, 8, 20, 28, 50, 82, 126`; plain-oscillator smooth reference | uniform-coupling reading of `1/ν` |
 | `IsospinLedger` | the link binding is linear in `N−Z` (`packingBindingTyped_closed`); comparison with the stability valley | isospin restoring cost |
+| `HundRule` | Hund's first rule from the persistence filter (same-spin pairs maximized); ground multiplicities `Z = 1–54` match except the Aufbau exceptions Cr, Nb, Mo, Pd | the fill order |
 | `Shells` | `orbitalCapacity l = 2(2l+1)`, `shellCapacity n = 2n²`, first shells `2,8,18,32` |
 | `Hydrogen` | Rydberg energy and Bohr radius from the certified `α`; `E_n = E_1/n²`; ground state lowest |
 | `PersistenceRate` | dynamical persistence: `Persists` = total hazard zero, else `MeanLife = 1/λ`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | the E8 channel rates |

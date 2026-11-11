@@ -167,7 +167,8 @@ The atom ladder does **not** currently claim:
 - a derived nuclear rate/clock
 - numeric nuclear lifetimes
 - a complete fission/alpha barrier from E8
-- electron screening/chemistry-level shell interaction
+- electron screening/chemistry-level shell interaction (the spin rule is derived: `HundRule`;
+  screening and the fill order are not)
 - a unique periodic-table valley from the mass ledger alone (above `A ≈ 56` the ledger has no
   valley at all: the link binding is linear in `N−Z`, `IsospinLedger`, `RESIDUALS.md`)
 

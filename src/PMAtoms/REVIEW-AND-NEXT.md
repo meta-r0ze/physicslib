@@ -59,7 +59,10 @@ stable, `NuclearRegime`/`PersistenceSelection`) is a comparison, not a result.
   low-Z-anchored finite-size differential. Lattice analysis, not selection.
 - **Spectral asymptotic** (§4) — `uniformResponse ~ n⁵/(16π)`; a limit theorem.
 - **Neutrino decay / ordering** (§4b) — needs a decay channel and mass ordering (model).
-- **Chemistry / Aufbau** (§6) — screening/exchange and the fill order are model inputs.
+- **Chemistry / Aufbau** (§6) — screening and the fill order are model inputs. The spin rule is
+  derived (`HundRule`: same-spin pairs maximized, Hund's first rule; ground multiplicities match
+  `Z = 1–54` except the four Aufbau-order exceptions Cr, Nb, Mo, Pd, which match on their
+  observed configurations).
 - **Continuum-comparison modules** (§5b) — keep as numerical cross-checks until each E8
   replacement has a numeric counterpart.
 
