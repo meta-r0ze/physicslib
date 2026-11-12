@@ -48,7 +48,10 @@ not a surface delta, so this likely needs an energy-shell/fiber (coarea)
 construction plus `MeasureTheory` change of variables. **Started:** `PhaseSpace.solidAngle_one` derives the `4π` angular weight from the
 iterated direction integral over `(z,φ)`, `average_one` normalizes it, and
 `electron_measure_radial` records the massless radial measure. Remaining: the
-energy-shell **delta** reduction and the full two-body measure. This is the "not a
+energy-shell **delta** reduction and the full two-body measure. Since then the angular
+part is on the real sphere measure (`PolarMeasure.two_body_phase_space` over
+`volume.toSphere`) and the mass-shell Jacobian is derived (`PolarMeasure.massShell_reduction`).
+Remaining: one construction of `δ⁴(q − k − k̄)` that composes the two. This is the "not a
 constructed delta-function measure" gap.
 
 ### A3. Three-body phase-space factorization
@@ -91,7 +94,9 @@ is in `PMHadrons`.
 
 `CarrierSpecies` now supplies the channel-label → base-protocol → species bridge
 and proves `channelSpecies_charge`: the bridge respects the E8 charge grading.
-Base-species masses are assigned (`CarrierSpecies.mass`) and `CarrierCouplings.amplitude` supplies E8 em/weak/strong amplitude slots; `weakCoupling_eq_fermi` connects the weak slot to the W-exchange Fermi coupling.  The physical amplitude model remains open.
+Base-species masses are assigned (`CarrierSpecies.mass`) and `CarrierCouplings.amplitude` supplies E8 em/weak/strong amplitude slots; `weakCoupling_eq_fermi` connects the weak slot to the W-exchange Fermi coupling.  The carrier
+statistics (`PMAction.CarrierStatistics`) and the squared readout (`PMAction.ReadoutRule.born`)
+are now derived.  The physical amplitude model remains open.
 
 ### B1. Physical interaction and final states
 Connect the substrate update / reference / charged-current operators to the contact
@@ -180,8 +185,11 @@ model/analysis inputs.
 
 `RadiativeCorrection` is the supplied-`R` interface (`correctedRate` / `correctedLifetime`), and
 the hadronic matrix elements are the `PMHadrons.BoundStateOverlap` / `PMHadrons.Emission` overlap
-construction (`emissionWidth` = Toll boundary × overlap² × phase space). The radiative factors and
-bound-state values remain supplied inputs (`M`).
+construction (`emissionWidth` = Toll boundary × overlap² × phase space). The short-distance
+radiative factor is derived: its one-loop coefficient `(3/4π)(1+2Q̄)` comes from
+`PMAction.ContactRunning` (Fierz in `ContactFierz`, loop weight in `LoopMeasure`) and gives
+`PMHadrons.ShortDistanceRunning.runningFactor_from_contact`. The low-energy radiative part and
+the bound-state values remain supplied inputs (`M`).
 
 ### B5. Absolute coupling and corrections
 Radiative corrections, hadronic final states, bound-state matrix elements, and an

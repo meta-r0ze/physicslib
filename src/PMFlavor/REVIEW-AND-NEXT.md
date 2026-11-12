@@ -39,9 +39,10 @@ impedance from the physical energy-ratio diagnostic.
 
 ## Modelling boundary
 
-Realizing the E8 carrier-parity statistics and the reference-stabilizer mediator in
-a physical interaction is a modelling boundary (like the Yang–Mills scope note), not
-a missing theorem. Do not reopen cycle-weight scans and do not fit `V`.
+The carrier statistics are now derived in `PMAction.CarrierStatistics` (a `2π` turn
+is `−1`, `exchange_is_minus_one`, `exclusion`). Realizing the reference-stabilizer
+mediator in a physical interaction is still a modelling boundary (like the Yang–Mills
+scope note), not a missing theorem. Do not reopen cycle-weight scans and do not fit `V`.
 
 ## Verification
 
