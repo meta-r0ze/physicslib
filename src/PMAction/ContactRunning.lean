@@ -1,4 +1,5 @@
 import PMAction.VATrace
+import PMAction.D4Isotropy
 
 /-!
 # The one-loop running of the charged-current contact
@@ -31,9 +32,14 @@ blocks in `ContactFierz.triple_blk`.
 * `rate_factor`: the rate gets `1 + 2c(α/4π)ln(M²/μ²) = 1 + (3α/4π)(1 + 2Q̄)ln(M²/μ²)`, the form
   `PMHadrons.ShortDistanceRunning` uses.
 
-**Inputs still taken from the continuum.** The overall normalization: one unit of
-`(α/4π)·ln(M²/μ²)` per unit of `W`, together with the `¼` from averaging the loop momentum over
-directions and the opposite-orientation sign. These are the photon loop's log coefficient. In the
+**The `¼` is the substrate's.** Averaging the loop momentum's `k^ρk^σ` over directions gives
+`¼ δ^{ρσ} k²`. On the substrate the directions are the 24 D₄ link roots, and their second moment
+is exactly isotropic (`D4Isotropy.second_moment`), so `4 Σ k_μk_ν = (Σ k²) δ_{μν}`
+(`loop_direction_average`): the `¼` follows from the D₄ geometry.
+
+**Inputs still taken from the continuum.** The overall normalization, one unit of
+`(α/4π)·ln(M²/μ²)` per unit of `W` (the 4D phase-space factor `|S³|/(2π)⁴ = 1/(8π²)` times
+`e² = 4πα`), and the opposite-orientation sign. These are the photon loop's log coefficient. In the
 substrate this would be the response of the link field to a pair of charged legs, the analogue
 of `RunningResponse`'s Landau-sum derivation of the vacuum-polarization coefficient.
 -/
@@ -47,6 +53,14 @@ set_option maxHeartbeats 4000000 in
 theorem contraction (μ : Fin 4) : ∑ σ, η σ • (g σ * g μ * g σ) = (-2 : ℂ) • g μ := by
   fin_cases μ <;> ext a b <;> fin_cases a <;> fin_cases b <;>
     simp [g, η, Fin.sum_univ_four, Matrix.mul_apply, Matrix.sum_apply] <;> norm_num <;> ring
+
+/-- **The direction average from the D₄ roots.** Over the substrate's link directions,
+`4 Σ_k k_μ k_ν = (Σ_k |k|²) δ_{μν}`: the loop momentum's `k^ρ k^σ` averages to `¼ |k|² δ^{ρσ}`. -/
+theorem loop_direction_average (μ ν : Fin 4) :
+    4 * ∑ k ∈ D4Gauge.roots, D4Gauge.vec k μ * D4Gauge.vec k ν =
+      (∑ k ∈ D4Gauge.roots, ∑ ρ, D4Gauge.vec k ρ * D4Gauge.vec k ρ) * D4Isotropy.δ μ ν := by
+  revert μ ν
+  decide +kernel
 
 /-- Vertex plus self-energies within one bilinear: the Ward-identity combination. -/
 theorem ward_combination (Q₁ Q₂ W : ℝ) :

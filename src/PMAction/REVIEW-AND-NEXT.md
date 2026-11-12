@@ -23,9 +23,10 @@ new construction, not a missing Lean statement, unless marked otherwise.
    `a_e = ħ/(√2 m_e c)` from the channel's own unit (`lepton_hop`), which fixes the Coulomb `κ`.
    Remaining here: the carrier rms radius `1.354` in Lean (it is a numerical eigenvector property).
 3. **The photon loop's normalization in `ContactRunning`.** The coefficient's Dirac and charge
-   structure is derived; the overall `(α/4π)` per unit, the `¼` direction average and the
-   orientation sign are continuum inputs. Target: the substrate link response to a pair of
-   charged legs, as `RunningResponse` did for vacuum polarization.
+   structure is derived, and the `¼` direction average follows from the D₄ link roots
+   (`loop_direction_average`). Still continuum inputs: the overall `(α/4π)` per unit (the 4D
+   phase-space factor `|S³|/(2π)⁴ = 1/(8π²)`; a target for Mathlib's Euclidean ball volume) and the
+   opposite-orientation sign.
 
 The `g_A` gap itself (`+8%` after every PMAction input is fixed) is now a PMHadrons question: the
 next candidate is emission (`PMHadrons.EmissionSpace`, `TollGovernor.emissionWeight`). The PMAction
@@ -39,6 +40,11 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
 2. **Primitive admission.** Derive admission and implementation of the local amplitude factors in
    the microscopic E8 gate library, and their prices; identify the directional-exponential
    completion with the on-site one.
+   Checked (Nov 2026): `CommonResponse`'s `toll` is a price per flag (an additive cost), while
+   `PMSubstrate.tollTerm` (`9.5×10⁻⁵`, used by `PMHadrons.TollGovernor`) is a probability, the
+   fraction of valid Toll events. They are different kinds of object, and no PM statement links
+   them (a link via the survival law `w = e^{−β·cost}` would still need Paper I's `β` and the
+   repair length `m`). So the toll does not yet fix the gauge `β`.
 3. **Prepared initial reference.** Closed basis-preserving controls cannot supply it
    (`ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`); its per-tick ledger and
    the physical allocation of the reference/record banks remain.
