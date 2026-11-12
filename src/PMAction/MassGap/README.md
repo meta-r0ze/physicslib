@@ -11,7 +11,7 @@ generated coherently by the E8 root-response operators under smooth controls
 (`NativePacketRouting.pure_permutation_refinement_trivial`). The Wilson action is not derived as a
 survival cost (`LatticeGibbs`), and the gauge group and `β` are not selected (`D4Gauge`,
 `LinkConsistency`). So the gap of the gauge layer is the general quantum Yang–Mills problem, which
-is out of scope (`AGENTS.md`; `OPEN-PROBLEMS.md` P4). The gauge layer's classical continuum
+is out of scope (`AGENTS.md`; `OPEN-PROBLEMS.md` §4). The gauge layer's classical continuum
 limit and finite-volume Euclidean setup live in `PMAction` proper (`LatticeGibbs`,
 `ReciprocalReflection`, `OsterwalderSchrader`, `LatticeSiteAction`, …).
 

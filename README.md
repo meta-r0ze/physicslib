@@ -49,9 +49,9 @@ REVIEW-AND-NEXT.md  what remains open or is a model input
 The Lean source is the ground truth.  Notes that are only comparison data or
 validation tables live with the module they describe; they are not theorem inputs.
 The cross-cutting map of open physics questions — where the papers discuss them and
-whether the tree covers them — is [`SCOPE.md`](SCOPE.md); the consolidated,
-prioritized register of every open item (why it is flagged, what E8/persistence would
-produce, the quickest test) is [`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md).
+whether the tree covers them — is [`SCOPE.md`](SCOPE.md); the premises,
+inputs and open physics a reader should know about are in
+[`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md); each folder's `REVIEW-AND-NEXT.md` has the working list.
 
 For more English background, it is helpful to clone the following older draft repositories and place them where the AI can access them.
 https://github.com/meta-r0ze/Persistence-Mechanics
