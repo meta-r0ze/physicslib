@@ -49,8 +49,9 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
    `PMConstants.EventStiffness.calibration` and `ChainCouplings.chain_calibration` fix the product
    from the electric coupling: `e² = 1/(toll·m·N_sys) = 4πα` (Paper I's `α`, Paper III's footprint
    `N_sys`), which gives every primitive event a price. (`PMSubstrate.tollTerm`, a probability, is a
-   different object.) What remains here is admission: which local amplitude factors the E8 gate
-   library implements.
+   different object.) What remains here is admission, which is the same question as B.5's: the
+   split's factors are already exponentials of native Hermitian generators (`NativeSplit`), so
+   the open step is admitting coherent evolution by those generators as substrate dynamics.
 3. **Prepared initial reference: closed by selection** (`ReferenceSelection`, Nov 2026). PM does
    not require dynamics to prepare the reference: the survival law selects it, and the most
    persistent configuration is the uniform background (`selected_reference`). Its per-tick ledger
@@ -60,10 +61,11 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
    (`needs_unbounded`). Remaining, small: a formal map from the background `Config` to
    `RecordSupply`'s stream (now an identification in the docstring), and the physical allocation
    of the reference/record banks (with B.1).
-4. **Clock and event ledger.** With `toll·m` fixed (B.2), the prices are numeric once the events
-   are counted. Remaining: the event count of the setup, controls, transport/source/export and
-   maintenance. Four factor applications are not four primitive E8 events; which primitive events
-   a factor application costs is the open count.
+4. **Clock and event ledger: closed** (`ClockLedger`). The priced event is a flag, so a factor
+   costs its expected flags, not one event: a tick costs `(toll·m/2) Σⱼ (1 − Re tr Fⱼ/N)`
+   (`tick_cost`), doing nothing is free (`identity_free`), and the clock advance flags half the
+   time (`clock_step_flag`), so the clock costs `2·toll·m` per tick (`clock_tick_cost`). With
+   `toll·m` calibrated (B.2) every term is a number.
 5. **Microscopic gauge transport.** The gauge `β` is derived downstream:
    `CarrierResponse.common_response_limit` gives `β = toll·m·W/2`, and with the calibration above
    `g² = 1/(κ_R·toll·m·W)` for each sector's ledger `W` (`PMConstants.ChainCouplings.
