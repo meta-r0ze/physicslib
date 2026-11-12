@@ -116,16 +116,58 @@ left three gaps; each is a missing construction here, not in PMHadrons:
    `γ⁵ = Γ = −iα₁α₂α₃` (`WallChiralCurrent`, `VATrace`) is `Σ_z`, and projecting onto the
    zero-mode chiralities raises the value (`0.867` on `3³`), so the operator is not what is missing.
    Lean: `ConfinedCarrier.axisStep_unitary` (the identity-completed axis step is unitary for any
-   Hermitian hop with `N³ = N`) and `coefficient_partial` (`c c† c = c`); still to prove in Lean:
-   the open shift's `S Sᵀ S = S` and the Kronecker step to `N³ = N`.
+   Hermitian hop with `N³ = N`), `coefficient_partial` (`c c† c = c`), and `ConfinedWalk`
+   (`truncHop_cube`: `N³ = N` for any partial-isometry shift; `shift3_partial` and the three cube
+   axes; `cube_axisStep_unitary`: the walk on the `3×3×3` cube is unitary for every `τ`).
    **Status, recorded so it is not fitted:** every input is fixed (count, cube, hard wall, Wilson
    point, small tick, `Σ_z`), and the single free carrier gives `1.377` (+8%). The gap is what a
    free carrier leaves out. Next candidates: carrier–carrier interaction that touches spin or
    position, and the pion emission space. Rejected as fits: 4-site cube, soft wall, finite tick,
    `25/27`.
-2. **The lattice-to-energy unit.** The beta spectral route reads lattice Dirichlet eigenvalues as
-   energies in `m_e`; the lattice Coulomb potential needs the same link (`κ` in
-   `PMHadrons/REVIEW-AND-NEXT.md` §0.2). One statement of the physical lattice spacing fixes both.
+   **Carrier–carrier channels in PMAction (Nov 2026 survey):** pure colour routing leaves spin and
+   position unchanged (no effect). Load on the links (`SpatialResponse`, clock speed `(ν−K)/ν`):
+   the other two carriers' density gives `K/ν ≈ 0.004`; even an exaggerated 20% central slowdown
+   moves `⟨Σ_z⟩` by 0.5%, so it is ruled out. Colour Coulomb (`CoulombKernel`): for a singlet with
+   all three carriers in one mode the mean field vanishes and the exchange term does not reshape
+   the mode. Colour-magnetic coupling through the gauge links (`GaugeTransport`, `CommonResponse`)
+   is the remaining candidate. It touches spin and mixes the ground `G6` level with excited `G6`
+   levels (the first, at `E = 1.543` on `3³`, has `⟨Σ_z⟩ = 0.10`), so it lowers `g_A`. Its size
+   needs the colour coupling at the cube scale, which is not fixed (`D4Gauge`: `β` free; the E8
+   `α_s` is at `M_Z`). Blocked on the same scale link as 8.2.
+2. **The lattice-to-energy unit.** Candidate (Nov 2026, `tools/confined_walk.py`): the proton's
+   charge radius is the rms radius of its carriers' charge, which for three carriers in one mode
+   (`2/3 + 2/3 − 1/3 = 1`) is the mode's rms radius, `1.354` sites on `3³`. With the E8
+   `r_p = Dħ/(m_p c) = 0.8412 fm` (`PMHadrons.protonRadius_value`) one site is `a = 0.621 fm`,
+   `1/a = 318 MeV`. Independent check, not fitted: the carrier's lowest level `0.841/a = 267 MeV`,
+   three carriers `≈ 800 MeV` against the nucleon's 939 (−15%, free carriers, no binding). Inputs:
+   the free single-carrier mode and the charge-radius identification. This also gives the
+   lattice Coulomb's `κ` (`PMHadrons/REVIEW-AND-NEXT.md` §0.2).
+   **Colour coupling at this scale (open).** `1/a ≈ 318 MeV` is at the confinement scale, so the
+   ledger `α_s = 0.1180` (read at `M_Z`, `PMConstants.ReadoutScales`) cannot be run down
+   perturbatively. The PM-native route is the gauge `β` on the cube lattice. `CommonResponse`
+   prices a minimal loop at `toll·m·(1 − Re tr U/N)/2` per carrier-averaged flag, the same
+   `toll·m` that prices the fermion's Wilson flag; but no value of `toll·m` (times Paper I's
+   survival `β`) is fixed anywhere, and matching it to the walk's fermion normalization needs an
+   action–cost identification for fermions that PM does not state. By `ReadoutScales`' own
+   principle (a readout is matched where it is maintained), the coupling inside a hadron is read
+   where the hadron maintains its colour, per channel (Paper III's `12η` colour requirement).
+   Deriving that readout is the open step.
+   **What persists inside the hadron (Nov 2026; the flat-link part is `FlatPersistence.flat_iff`):**
+   - Not each carrier's colour: routing keeps re-addressing it. What persists is the singlet
+     relation among the three channels, which every routing leaves invariant and which is
+     invisible outside (zero external cost, Paper V).
+   - Each carrier's spin and position persist under routing (`ColourRouting`: the boundary map is
+     unchanged), so routing alone cannot move `⟨Σ_z⟩`.
+   - The links: every curved minimal loop raises flags at the common toll (`CommonResponse`), so
+     the most persistent link configuration is flat, by the same positive-change-price argument
+     as `PersistentBackground` and `CompletionSelection`. The singlet's mean colour density and
+     current vanish at every site for three carriers in one mode, so nothing sources a mean field.
+   Consequence: at the persistence optimum there is no colour-magnetic field acting on spin; what
+   remains is the fluctuation part, suppressed by the toll. So the colour coupling at the cube
+   scale is not needed for the leading `g_A` correction, and colour-magnetic coupling is unlikely
+   to be the `8%`. Next candidate: emission (the hadron spending part of its time with a pion
+   emitted, `PMHadrons.TollGovernor.emissionWeight`, `EmissionSpace`). That moves spin into the
+   pion's orbital motion, and it is priced by persistence.
 3. **Spin and orbital response from the substrate.** Done in `RunningResponse`: the spin term
    `(2s)²` from the Clifford relations (`zeeman`, `concrete_spin`; spin 1 by
    `GaugeFluctuation.vector_kernel`), the orbital `−1/3` from the Landau sum (`landau_sum`,

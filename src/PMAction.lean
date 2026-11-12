@@ -21,6 +21,8 @@ import PMAction.DetuningMass
 import PMAction.GaugeContinuum
 import PMAction.DomainWallSpectrum
 import PMAction.ConfinedCarrier
+import PMAction.ConfinedWalk
+import PMAction.FlatPersistence
 import PMAction.ConcreteFermion
 import PMAction.ConcreteSpectrum
 import PMAction.SignedSpectrum

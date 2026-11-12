@@ -161,3 +161,13 @@ for tau in (0.0,0.02,0.05,0.1,0.2,0.3,0.5):
   for Sg in (Sx4,Sy4,Sz4):
     S=sub.conj().T@np.kron(np.eye(2*V),Sg)@sub; out.append(np.linalg.eigvalsh((S+S.conj().T)/2).max())
   print(n,'tau',tau,'E %.4f deg %d  <Sx> %.4f <Sy> %.4f <Sz> %.4f'%(e,sel.sum(),*out),flush=True)
+
+print('--- lattice scale from the E8 proton radius (PMHadrons.protonRadius_value) ---')
+n=3; Ns=[]
+for j in range(3): M,sites=Nw(n,j,'0'); Ns.append(M)
+V=len(sites); w,Vv=np.linalg.eigh(np.kron(np.eye(V),H0)-sum(Ns))
+e=w[w>1e-7].min(); sel=np.isclose(w,e,atol=1e-6); sub=Vv[:,sel]
+rho=(abs(sub)**2).sum(1).reshape(V,8).sum(1)/sel.sum()
+rms=np.sqrt(sum(rho[i]*sum((x-1)**2 for x in s) for i,s in enumerate(sites)))
+rp=0.8412356; hbarc=197.3269804; a=rp/rms
+print('carrier rms %.4f sites; a = r_p/rms = %.4f fm; 1/a = %.1f MeV; E0 = %.1f MeV; 3 E0 = %.0f MeV'%(rms,a,hbarc/a,e*hbarc/a,3*e*hbarc/a))
