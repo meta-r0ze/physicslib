@@ -1,6 +1,6 @@
 import PMElementaryParticles.CarrierSpecies
 import PMConstants.Values
-import PMFlavor.CKM
+import PMFlavor.Values
 import PMAction.WeakVertex
 import PMAction.AmplitudeTrace
 import PMConstants.MatterRunning
@@ -29,7 +29,7 @@ structure CarrierAmplitude where
 def alpha : ℝ := PMConstants.Values.alpha
 def weakCoupling : ℝ := PMConstants.Values.fermi 1
 def strongCoupling : ℝ := Real.sqrt PMConstants.Values.strong
-def vud : ℝ := PMFlavor.CKM.c12 * PMFlavor.CKM.c13
+abbrev vud : ℝ := PMFlavor.Values.vud
 
 /-- E8 amplitude assignment for each base species. -/
 def amplitude : CarrierSpecies → CarrierAmplitude

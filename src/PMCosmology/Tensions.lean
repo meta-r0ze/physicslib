@@ -1,5 +1,5 @@
 import PMCosmology.Scaling
-import PMFlavor.CKM
+import PMSubstrate.Impedance
 
 /-!
 # The tension arithmetic, certified in Lean
@@ -14,7 +14,7 @@ parametric ones given the frozen inputs and Paper I's `α⁻¹` bounds:
   `(13/1000)/L = 2236/186375 ∈ (0.011997, 0.011998)` (paper `0.011997317…`).
 * `omegaRatio_bounds` — the corrected dark count
   `248/(3ν(1−χ/Δ+α)) = 248/(48(1−2/43+α))` is in `(5.3775, 5.3776)`
-  (paper `5.377543123…`), using `CKM.ai_bounds`.
+  (paper `5.377543123…`), using `PMSubstrate.geometricIndex_bounds`.
 
 The inputs (`0.5`, `0.013`, `5.36`) and the response/dark-count rules remain
 model inputs; only the arithmetic is certified.
@@ -22,7 +22,7 @@ model inputs; only the arithmetic is certified.
 
 noncomputable section
 namespace PMCosmology.Tensions
-open PMCosmology PMFlavor
+open PMCosmology
 
 /-- Exact propagated early-rate uncertainty `(1/2)·L`. -/
 theorem hubbleInputSigma_exact : (1 / 2 : ℝ) * loadFactor = 1491 / 2752 := by
@@ -47,18 +47,20 @@ theorem s8InputSigma_bounds :
   exact ⟨by norm_num, by norm_num⟩
 
 /-- The corrected dark count `248/(3ν(1−χ/Δ+α))` with `α = 1/α⁻¹`. -/
-def omegaRatio : ℝ := 248 / (48 * (1 - 2 / 43 + 1 / CKM.αinv))
+def omegaRatio : ℝ := 248 / (48 * (1 - 2 / 43 + 1 / PMSubstrate.geometricIndex))
 
 /-- Certified enclosure `5.3775 < OmegaRatio < 5.3776`. -/
 theorem omegaRatio_bounds : (5.3775 : ℝ) < omegaRatio ∧ omegaRatio < 5.3776 := by
-  have hs := CKM.ai_bounds
-  have hs0 : (0 : ℝ) < CKM.αinv := by linarith [hs.1]
-  have hu : 1 / CKM.αinv < 1 / 137.0359992 :=
+  have hs : (137.0359992 : ℝ) < PMSubstrate.geometricIndex ∧
+      PMSubstrate.geometricIndex < 137.0359993 := by
+    have h := PMSubstrate.geometricIndex_bounds; constructor <;> linarith [h.1, h.2]
+  have hs0 : (0 : ℝ) < PMSubstrate.geometricIndex := by linarith [hs.1]
+  have hu : 1 / PMSubstrate.geometricIndex < 1 / 137.0359992 :=
     one_div_lt_one_div_of_lt (by norm_num) hs.1
-  have hl : 1 / 137.0359993 < 1 / CKM.αinv :=
+  have hl : 1 / 137.0359993 < 1 / PMSubstrate.geometricIndex :=
     one_div_lt_one_div_of_lt hs0 hs.2
-  have hx0 : (0 : ℝ) < 1 / CKM.αinv := by positivity
-  have hD : (0 : ℝ) < 48 * (1 - 2 / 43 + 1 / CKM.αinv) := by nlinarith
+  have hx0 : (0 : ℝ) < 1 / PMSubstrate.geometricIndex := by positivity
+  have hD : (0 : ℝ) < 48 * (1 - 2 / 43 + 1 / PMSubstrate.geometricIndex) := by nlinarith
   unfold omegaRatio
   constructor
   · rw [lt_div_iff₀ hD]

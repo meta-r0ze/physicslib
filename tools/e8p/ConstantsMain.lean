@@ -3,6 +3,7 @@ import E8PConstants.PMAtoms.Periodic
 import E8PConstants.PMAtoms.Nuclear
 import E8PConstants.PMAtoms.Certified
 import E8PConstants.PMAtoms.Shells
+import E8PConstants.Summary
 
 open E8PConstants
 
@@ -17,6 +18,7 @@ private def usage : String :=
   "  --periodic-table [N]  configuration, Hund multiplicity, E8 nuclear mass vs measured (default 20)\n" ++
   "  --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)\n" ++
   "  --shells        E8 Nilsson single-particle ladder, gaps and closures vs the magic numbers\n" ++
+  "  --summary       one Markdown page: scoreboard, every comparison by agreeing digits, tensions\n" ++
   "  --masses        E8 nuclear ledger masses vs measured: residual and z in ledger-scatter units\n" ++
   "  --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)\n" ++
   ""
@@ -28,6 +30,7 @@ structure Opts where
   periodic : Option Nat := none
   nuclear : Bool := false
   shells : Bool := false
+  summary : Bool := false
   certified : Bool := false
   certifiedNuc : Option (Nat × Nat) := none
   paper : Option Nat := none
@@ -49,6 +52,7 @@ private def parse : List String → Except String Opts
   | "--audit" :: rest => do let o ← parse rest; .ok { o with audit := true }
   | "--nuclear" :: rest => do let o ← parse rest; .ok { o with nuclear := true }
   | "--shells" :: rest => do let o ← parse rest; .ok { o with shells := true }
+  | "--summary" :: rest => do let o ← parse rest; .ok { o with summary := true }
   | "--certified" :: rest => do let o ← parse rest; .ok { o with certified := true }
   | "--masses" :: rest => do let o ← parse rest; .ok { o with certified := true }
   | "--periodic-table" :: n :: rest =>
@@ -158,6 +162,8 @@ def main (args : List String) : IO UInt32 := do
     let ks := keysFor o
     if o.nuclear then
       for line in nuclearTable do out.putStrLn line
+    else if o.summary then
+      for line in Summary.summaryLines do out.putStrLn line
     else if o.shells then
       for line in Shells.shellsTable do out.putStrLn line
     else if let some (z, n) := o.certifiedNuc then

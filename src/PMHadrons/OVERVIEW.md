@@ -3,6 +3,10 @@
 The map of what the composite level of the E8 substrate proves. Open work is in
 [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in [`README.md`](README.md).
 
+Downstream code (`PMAtoms`, `e8p`) imports `PMHadrons.Values`: nucleon and meson masses,
+decay constants, the corrected lifetimes and their bounds, the K/π ratio, the neutron margin and
+the Toll/Governor emission names (same pattern as `PMElementaryParticles.Values`).
+
 ## Place in the tower
 
 A composite is a cohort of elementary carriers (`PMElementaryParticles`) that persists together

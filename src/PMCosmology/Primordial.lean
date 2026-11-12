@@ -1,5 +1,5 @@
 import PMCosmology.SubstrateLoad
-import PMFlavor.CKM
+import PMFlavor.Values
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 
 /-! Bookkeeping and conditional primordial formulas. Channel labels are not
@@ -50,20 +50,20 @@ theorem baryon_ratio_strictMono : StrictMono baryonRatio := by
 /-- The CKM matrix's invariant and the separate geometric formula give
 strictly different primordial outputs under the same conversion rule. -/
 theorem cp_input_changes_prediction :
-    baryonRatio PMFlavor.CKM.pmJ < baryonRatio PMFlavor.CKM.pm3J := by
+    baryonRatio PMFlavor.Values.jarlskog < baryonRatio PMFlavor.Values.jarlskogGeo := by
   apply baryon_ratio_strictMono
-  have h1 := PMFlavor.CKM.pmJ_bounds
-  have h2 := PMFlavor.CKM.pm3J_bounds
+  have h1 := PMFlavor.Values.jarlskog_bounds
+  have h2 := PMFlavor.Values.jarlskogGeo_bounds
   linarith
 
 /-- Frozen rational windows, not a likelihood analysis or new measurements. -/
 theorem baryon_windows :
-    5.94e-10 < baryonRatio PMFlavor.CKM.pmJ ∧
-    baryonRatio PMFlavor.CKM.pmJ < 5.97e-10 ∧
-    6.07e-10 < baryonRatio PMFlavor.CKM.pm3J ∧
-    baryonRatio PMFlavor.CKM.pm3J < 6.08e-10 := by
-  have h1 := PMFlavor.CKM.pmJ_bounds
-  have h2 := PMFlavor.CKM.pm3J_bounds
+    5.94e-10 < baryonRatio PMFlavor.Values.jarlskog ∧
+    baryonRatio PMFlavor.Values.jarlskog < 5.97e-10 ∧
+    6.07e-10 < baryonRatio PMFlavor.Values.jarlskogGeo ∧
+    baryonRatio PMFlavor.Values.jarlskogGeo < 6.08e-10 := by
+  have h1 := PMFlavor.Values.jarlskog_bounds
+  have h2 := PMFlavor.Values.jarlskogGeo_bounds
   have hp1 := Real.pi_gt_d6
   have hp2 := Real.pi_lt_d6
   have hd : 0 < 16168*Real.pi := by positivity

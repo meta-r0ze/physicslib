@@ -10,6 +10,11 @@ truth. Paper V builds on Papers I–IV and imports nothing from Paper VI.
 
 Hadron-level modules (composite masses, composite states and transitions, pion/kaon/neutron
 widths, the particle channel inventory) live in [`PMHadrons`](../PMHadrons/OVERVIEW.md).
+Downstream libraries import `PMElementaryParticles.Values` (like `PMSubstrate.E8Values`,
+`PMConstants.Values`, `PMFlavor.Values`): `me`, `hbarc`, `electronTime` (+ `electronTime_tight`),
+`αe`, `αinv`, `fermiME` (+ `fermiME_tight`), `muon`, `tau`, the six quark masses and the muon/tau
+lifetimes in seconds, with their bounds. Prove a bound there once rather than inline.
+
 Shared units and couplings used by every level are in `SharedUnits` (`me`, `ħc`, `α`, `α⁻¹`,
 their bounds, and `G_F` in `m_e⁻²`).
 

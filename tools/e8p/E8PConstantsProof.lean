@@ -4,6 +4,7 @@ import PMConstants.GravityAccounting
 import PMConstants.Depth
 import PMFlavor.PMNSIntervals
 import PMFlavor.CKM
+import PMFlavor.Values
 import PMFlavor.CabibboDressing
 import PMCosmology.Scaling
 import PMCosmology.SubstrateLoad
@@ -19,6 +20,7 @@ import PMElementaryParticles.LeptonMasses
 import PMHadrons.MesonMasses
 import PMHadrons.PionWidth
 import PMHadrons.KaonWidth
+import PMHadrons.KaonPionRatio
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.TauLifetime
 import PMConstants.WMassTest
@@ -66,7 +68,7 @@ def value : Key → ℝ
   | .vev => ElectroweakE8.vev CertifiedConstants.α ElectroweakBounds.electronGeV
   | .higgsMass => ElectroweakE8.higgsMass CertifiedConstants.α ElectroweakBounds.electronGeV
   | .fermi => ElectroweakE8.fermi CertifiedConstants.α ElectroweakBounds.electronGeV
-  | .jarlskog => PMFlavor.CKM.pmJ
+  | .jarlskog => PMFlavor.Values.jarlskog
   | .load => PMCosmology.loadFactor
   | .hubbleLate => (674 : ℝ) / 10 * PMCosmology.loadFactor
   | .clusteringLate => (832 : ℝ) / 1000 / PMCosmology.loadFactor
@@ -100,7 +102,7 @@ def value : Key → ℝ
   | .lSubstrate => (PMSubstrate.baseline.substrateLoad : ℝ)
   | .nSites => (PMSubstrate.baseline.nodeCapacity : ℝ)
   | .rm => (PMSubstrate.baseline.resolution : ℝ)
-  | .pm3J => PMFlavor.CKM.pm3J
+  | .pm3J => PMFlavor.Values.jarlskogGeo
   | .cabibbo => PMFlavor.CKM.s12
   | .nc => ((PMSubstrate.baseline.embeddingDimension - PMSubstrate.baseline.eulerCharacteristic : ℕ) : ℝ)
   | .weinbergGut => ((PMSubstrate.baseline.embeddingDimension - PMSubstrate.baseline.eulerCharacteristic : ℕ) : ℝ) / (2 * (PMSubstrate.baseline.dimension : ℝ))
@@ -121,8 +123,8 @@ def value : Key → ℝ
   | .pion0MeV => PMHadrons.CompositeMasses.pion0 * PMHadrons.CompositeMasses.me
   | .kaon0MeV => PMHadrons.CompositeMasses.kaon0 * PMHadrons.CompositeMasses.me
   | .kaonPlusMeV => PMHadrons.CompositeMasses.kaonPlus * PMHadrons.CompositeMasses.me
-  | .baryonPmJ => PMCosmology.Primordial.baryonRatio PMFlavor.CKM.pmJ
-  | .baryonPm3J => PMCosmology.Primordial.baryonRatio PMFlavor.CKM.pm3J
+  | .baryonPmJ => PMCosmology.Primordial.baryonRatio PMFlavor.Values.jarlskog
+  | .baryonPm3J => PMCosmology.Primordial.baryonRatio PMFlavor.Values.jarlskogGeo
   | .upMeV => PMElementaryParticles.QuarkMasses.up * PMHadrons.CompositeMasses.me
   | .downMeV => PMElementaryParticles.QuarkMasses.down * PMHadrons.CompositeMasses.me
   | .strangeMeV => PMElementaryParticles.QuarkMasses.strange * PMHadrons.CompositeMasses.me
@@ -144,14 +146,14 @@ def value : Key → ℝ
   | .planckMass => PMConstants.PlanckReadout.planckMass
   | .ckmS13 => PMFlavor.CKM.s13
   | .ckmS23 => PMFlavor.CKM.s23
-  | .ckmVcb => PMFlavor.CKM.vcb
+  | .ckmVcb => PMFlavor.Values.vcb
   | .wMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.wMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
   | .zMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.zMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
   | .gWeak => Real.sqrt (PMConstants.ElectroweakE8.weakSquared PMConstants.CertifiedConstants.α)
   | .gPrime => Real.sqrt (PMConstants.ElectroweakE8.hyperchargeSquared PMConstants.CertifiedConstants.α)
   | .electronClosure => PMConstants.JointConstants.electronClosureRatio
-  | .vud => PMFlavor.CKM.c12 * PMFlavor.CKM.c13
-  | .vudDressed => PMFlavor.CabibboDressing.vudDressed
+  | .vud => PMFlavor.Values.vud
+  | .vudDressed => PMFlavor.Values.vudDressed
   | .tauLifetimeFs => PMElementaryParticles.TauLifetime.tauLife
   | .muonLifetimeFinite => PMElementaryParticles.muonFiniteLifetime
   | .tauLifetimeE8Natural => PMElementaryParticles.TauE8.tauLifetimeE8
@@ -161,6 +163,7 @@ def value : Key → ℝ
   | .neutronLifetimeSeconds => PMHadrons.neutronLifetimeSeconds
   | .neutronLifetimePredicted => PMHadrons.neutronLifetimeCorrectedSeconds
   | .pionLifetimePredicted => PMHadrons.pionLifetimeCorrectedSeconds
+  | .kaonPionRatio => PMHadrons.KaonPionRatio.kaonPionWidthRatio
   | .pionFiniteWidth => PMHadrons.pionFiniteWidth
   | .pionFiniteLifetime => PMHadrons.pionFiniteLifetime
   | .kaonFiniteWidth => PMHadrons.kaonFiniteWidth
@@ -212,7 +215,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | jarlskog =>
-    have h := PMFlavor.CKM.pmJ_bounds
+    have h := PMFlavor.Values.jarlskog_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | protonRatio =>
@@ -296,11 +299,11 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
   | weinbergGut => norm_num [bounds, value, PMSubstrate.baseline]
   | boundaryStorage => norm_num [bounds, value, PMSubstrate.baseline]
   | pm3J =>
-    have h := PMFlavor.CKM.pm3J_bounds
+    have h := PMFlavor.Values.jarlskogGeo_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | cabibbo =>
-    have h := PMFlavor.CKM.s12_bounds
+    have h := PMFlavor.Values.s12_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | beta0 => norm_num [bounds, value, PMConstants.beta0]
@@ -373,11 +376,11 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.2.2.2.le, h.2.2.2.le⟩
   | vud =>
-    have h := PMFlavor.CKM.vud_bounds
+    have h := PMFlavor.Values.vud_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | vudDressed =>
-    have h := PMFlavor.CabibboDressing.vudDressed_bounds
+    have h := PMFlavor.Values.vudDressed_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | tauLifetimeFs =>
@@ -414,6 +417,10 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     exact ⟨h.1.le, h.2.le⟩
   | pionLifetimePredicted =>
     have h := PMHadrons.pionLifetimeCorrectedSeconds_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | kaonPionRatio =>
+    have h := PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pionFiniteWidth =>
@@ -498,15 +505,15 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmS13 =>
-    have h := PMFlavor.CKM.s13_bounds
+    have h := PMFlavor.Values.s13_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmS23 =>
-    have h := PMFlavor.CKM.s23_bounds
+    have h := PMFlavor.Values.s23_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmVcb =>
-    have h := PMFlavor.CKM.vcb_bounds
+    have h := PMFlavor.Values.vcb_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | gaugeHyper =>
@@ -590,6 +597,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
       overhead, footprint, clockRatio, selfCoupling, scalarToll, ElectroweakBounds.electronGeV]
 
 theorem keys_complete (k : Key) : k ∈ keys := by cases k <;> simp [keys]
+set_option maxRecDepth 8000 in
 theorem keys_unique : keys.Nodup := by decide
 
 /-- Exact outward rounding of arbitrary rational endpoints, including negatives. -/

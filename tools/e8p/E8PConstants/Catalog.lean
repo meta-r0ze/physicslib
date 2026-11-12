@@ -23,7 +23,7 @@ inductive Key where
   | vud | vudDressed | bRes | neutrinoFloor | tauLifetimeFs
   | muonLifetimeFinite | tauLifetimeE8Natural | neutronSpectralFraction
   | neutronLifetimeE8 | muonLifetimeSeconds | neutronLifetimeSeconds | neutronLifetimePredicted
-  | pionLifetimePredicted
+  | pionLifetimePredicted | kaonPionRatio
   | pionFiniteWidth | pionFiniteLifetime
   | kaonFiniteWidth | kaonFiniteLifetime
   | neutralPionFiniteWidth | neutralPionFiniteLifetime
@@ -49,7 +49,7 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .vud, .vudDressed, .bRes, .neutrinoFloor, .tauLifetimeFs, .muonLifetimeFinite,
   .tauLifetimeE8Natural, .neutronSpectralFraction, .neutronLifetimeE8,
   .muonLifetimeSeconds, .neutronLifetimeSeconds, .neutronLifetimePredicted,
-  .pionLifetimePredicted,
+  .pionLifetimePredicted, .kaonPionRatio,
   .pionFiniteWidth, .pionFiniteLifetime,
   .kaonFiniteWidth, .kaonFiniteLifetime,
   .neutralPionFiniteWidth, .neutralPionFiniteLifetime,
@@ -135,6 +135,7 @@ def Key.id : Key → String
   | .neutronLifetimeSeconds => "neutron_lifetime_s"
   | .neutronLifetimePredicted => "neutron_lifetime_predicted_s"
   | .pionLifetimePredicted => "pion_lifetime_predicted_s"
+  | .kaonPionRatio => "kaon_pion_width_ratio"
   | .pionFiniteWidth => "pion_finite_width"
   | .pionFiniteLifetime => "pion_finite_lifetime"
   | .kaonFiniteWidth => "kaon_finite_width"
@@ -217,7 +218,7 @@ def bounds : Key → Rat × Rat
   | .charmMeV => (1267.02, 1267.48)
   | .bottomMeV => (4180.9, 4182.3)
   | .topMeV => (172657, 172686)
-  | .pionPlusMeV => (139.570354, 139.570426)
+  | .pionPlusMeV => (139.570411, 139.570412)
   | .fPiMeV => (130.27, 130.28)
   | .fKMeV => (154.56, 154.57)
   | .wRatio => (0.8815297, 0.8815298)
@@ -251,6 +252,7 @@ def bounds : Key → Rat × Rat
   | .neutronLifetimeSeconds => (3.7e2, 1.04e3)
   | .neutronLifetimePredicted => (877.1, 877.2)
   | .pionLifetimePredicted => (2.60188e-8, 2.60192e-8)
+  | .kaonPionRatio => (1.318922, 1.318923)
   | .pionFiniteWidth => (4.9e-14, 5.16e-14)
   | .pionFiniteLifetime => (1.9e13, 2.05e13)
   | .kaonFiniteWidth => (6.1e-14, 6.47e-14)
@@ -316,7 +318,7 @@ def Key.theoremName : Key → String
   | .vev => "PMConstants.ElectroweakBounds.vev_bounds"
   | .higgsMass => "PMConstants.ElectroweakBounds.higgs_bounds"
   | .fermi => "PMConstants.ElectroweakBounds.fermi_bounds"
-  | .jarlskog => "PMFlavor.CKM.pmJ_bounds"
+  | .jarlskog => "PMFlavor.Values.jarlskog_bounds"
   | .load => "PMCosmology.Scaling.exact_ratios"
   | .hubbleLate | .clusteringLate => "PMCosmology.SubstrateLoad.revised_numerical_outputs"
   | .protonRatio => "PMHadrons.CompositeMasses.proton_value"
@@ -336,7 +338,7 @@ def Key.theoremName : Key → String
   | .protocol => "PMSubstrate.protocolTerm" | .governor => "PMSubstrate.governorTerm"
   | .toll => "PMSubstrate.tollTerm" | .margin => "PMSubstrate.marginTerm"
   | .lIntrinsic | .lEmbed | .lSubstrate | .nSites | .rm => "PMSubstrate.Derived.parameters_forced"
-  | .pm3J => "PMFlavor.CKM.pm3J_bounds" | .cabibbo => "PMFlavor.CKM.s12_bounds"
+  | .pm3J => "PMFlavor.Values.jarlskogGeo_bounds" | .cabibbo => "PMFlavor.Values.s12_bounds"
   | .nc | .weinbergGut | .boundaryStorage => "PMSubstrate.Derived.parameters_forced"
   | .alphaG => "PMConstants.GravityAccounting.channels_as_frame"
   | .beta0 => "PMConstants.beta_positive_iff"
@@ -370,16 +372,16 @@ def Key.theoremName : Key → String
   | .planckChargeAtt => "PMSubstrate.planckChargeAttenuation_bounds"
   | .planckChargeRatio => "PMSubstrate.planckChargeRatio_bounds"
   | .planckMass => "PMConstants.PlanckReadout.planckMass_bounds"
-  | .ckmS13 => "PMFlavor.CKM.s13_bounds"
-  | .ckmS23 => "PMFlavor.CKM.s23_bounds"
-  | .ckmVcb => "PMFlavor.CKM.vcb_bounds"
+  | .ckmS13 => "PMFlavor.Values.s13_bounds"
+  | .ckmS23 => "PMFlavor.Values.s23_bounds"
+  | .ckmVcb => "PMFlavor.Values.vcb_bounds"
   | .wMassUnc => "PMConstants.ElectroweakBounds.w_mass_bounds"
   | .zMassUnc => "PMConstants.ElectroweakBounds.z_mass_bounds"
   | .gWeak => "PMConstants.ElectroweakBounds.coupling_bounds"
   | .gPrime => "PMConstants.ElectroweakBounds.coupling_bounds"
   | .electronClosure => "PMConstants.JointConstants.electron_closure_bounds"
-  | .vud => "PMFlavor.CKM.vud_bounds"
-  | .vudDressed => "PMFlavor.CabibboDressing.vudDressed_bounds"
+  | .vud => "PMFlavor.Values.vud_bounds"
+  | .vudDressed => "PMFlavor.Values.vudDressed_bounds"
   | .bRes => "PMConstants.GravityAccounting.residual_tight_bounds"
   | .tauLifetimeFs => "PMElementaryParticles.TauLifetime.tau_lifetime_tree"
   | .muonLifetimeFinite => "PMElementaryParticles.muonFiniteLifetime_bounds"
@@ -390,6 +392,7 @@ def Key.theoremName : Key → String
   | .neutronLifetimeSeconds => "PMHadrons.neutronLifetimeSeconds_bounds"
   | .neutronLifetimePredicted => "PMHadrons.neutronLifetimeCorrectedSeconds_bounds"
   | .pionLifetimePredicted => "PMHadrons.pionLifetimeCorrectedSeconds_bounds"
+  | .kaonPionRatio => "PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds"
   | .pionFiniteWidth => "PMHadrons.pionFiniteWidth_bounds"
   | .pionFiniteLifetime => "PMHadrons.pionFiniteLifetime_bounds"
   | .kaonFiniteWidth => "PMHadrons.kaonFiniteWidth_bounds"
@@ -460,7 +463,7 @@ def Key.paper : Key → Nat
   | .tauLifetimeFs | .muonLifetimeFinite | .tauLifetimeE8Natural
   | .neutronSpectralFraction | .neutronLifetimeE8
   | .muonLifetimeSeconds | .neutronLifetimeSeconds | .neutronLifetimePredicted
-  | .pionLifetimePredicted => 5
+  | .pionLifetimePredicted | .kaonPionRatio => 5
   | .pionFiniteWidth | .pionFiniteLifetime
   | .kaonFiniteWidth | .kaonFiniteLifetime
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime => 5
@@ -576,6 +579,7 @@ def Key.formula : Key → String
   | .bohrRadius => "a_0=\\hbar c/(\\alpha m_e c^2)"
   | .shell4 => "\\sum_{\\ell=0}^{n-1}2(2\\ell+1)=2n^2"
   | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5)"
+  | .kaonPionRatio => "\\frac{\\Gamma_K}{\\Gamma_\\pi}=\\frac{\\pi^2}{196-\\pi^2}\\left(\\frac{70}{59}\\right)^2\\frac{m_K}{m_\\pi}\\frac{(1-m_\\mu^2/m_K^2)^2}{(1-m_\\mu^2/m_\\pi^2)^2}"
   | .pionLifetimePredicted => "\\frac{33}{32}\\,\\frac{8\\pi}{G_F^2 f_\\pi^2 m_\\pi m_\\mu^2(1-m_\\mu^2/m_\\pi^2)^2}"
   | .neutronLifetimePredicted => "\\frac{41}{43}\\,\\frac{3(1+r+r^2)^3}{G_F^2 m_e^4},\\ r=e^{-\\sqrt2}"
   | _ => ""
@@ -600,6 +604,7 @@ def Key.caveat : Key → String
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
   | .neutronLifetimeE8 => "finite 3x3x3 channel; broad natural-unit interval"
   | .muonLifetimeSeconds => "tree level, E8 G_F and m_mu; the measured value includes the QED factor 1-(alpha/2pi)(pi^2-25/4) and the m_e^2/m_mu^2 phase space (together 0.99562); reference not scored"
+  | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); the rest is f_K/f_pi = 70/59 (FLAG 1.1934)"
   | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; pi->mu nu is 99.988% of the total width"
   | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"
   | .neutronLifetimePredicted => "E8 finite channel with the 41/43 margin; m_e and hbar c are unit inputs; the PDG average combines bottle and beam"

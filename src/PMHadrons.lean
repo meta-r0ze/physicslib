@@ -27,6 +27,8 @@ import PMHadrons.MultiBodyPhaseSpace
 import PMHadrons.CompositeBinding
 import PMHadrons.BoundStateOverlap
 import PMHadrons.NeutronRate
+import PMHadrons.KaonPionRatio
+import PMHadrons.Values
 
 /-! # PMHadrons
 

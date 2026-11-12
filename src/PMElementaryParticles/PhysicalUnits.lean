@@ -31,6 +31,12 @@ theorem electronTime_bounds :
   unfold electronTime cFmPerSecond hbarc me
   constructor <;> norm_num
 
+/-- The electron time unit to `10⁻⁸`: `1.28808866–1.28808867 × 10⁻²¹` s. -/
+theorem electronTime_tight :
+    (1.28808866e-21 : ℝ) < electronTime ∧ electronTime < 1.28808867e-21 := by
+  unfold electronTime cFmPerSecond hbarc me
+  constructor <;> norm_num
+
 /-- Muon lifetime in seconds. -/
 def muonLifetimeSeconds : ℝ :=
   PMElementaryParticles.MuonLifetime.muonLifetime * electronTime
@@ -55,19 +61,11 @@ This is the E8 `G_F` and E8 `m_μ/m_e` in the massless-pair tree formula. The me
 `m_e²/m_μ²` phase-space factor (together `≈ 0.99562`), which are not part of this row. -/
 theorem muonLifetimeSeconds_tight :
     (2.187343e-6 : ℝ) < muonLifetimeSeconds ∧ muonLifetimeSeconds < 2.187352e-6 := by
-  have h := PMConstants.Values.fermi_bounds
-  have hge : (2.611199269e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
-      PMConstants.Values.electronGeV ^ 2 < (2.611199270e-7 : ℝ) := by
-    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
-  have hf : (3.0456453e-12 : ℝ) < fermiME ∧ fermiME < (3.0456507e-12 : ℝ) := by
-    unfold PMElementaryParticles.SharedUnits.fermiME
-    constructor <;> nlinarith [h.1, h.2, hge.1, hge.2]
+  have hf := PMElementaryParticles.SharedUnits.fermiME_tight
   have hm := PMElementaryParticles.LeptonMasses.muon_value
   have hp1 : (3.14159265358979 : ℝ) < Real.pi := by linarith [Real.pi_gt_d20]
   have hp2 : Real.pi < (3.14159265358980 : ℝ) := by linarith [Real.pi_lt_d20]
-  have he : (1.28808866e-21 : ℝ) < electronTime ∧ electronTime < 1.28808867e-21 := by
-    unfold electronTime cFmPerSecond hbarc me
-    constructor <;> norm_num
+  have he := electronTime_tight
   have hmpos : (0 : ℝ) < PMElementaryParticles.LeptonMasses.muon := by linarith [hm.1]
   have hfpos : (0 : ℝ) < fermiME := by linarith [hf.1]
   have hppos : (0 : ℝ) < Real.pi := Real.pi_pos

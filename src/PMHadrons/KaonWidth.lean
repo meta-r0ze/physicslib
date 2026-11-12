@@ -1,7 +1,7 @@
 import PMElementaryParticles.LeptonMasses
 import PMHadrons.CompositeMasses
 import PMHadrons.NeutronRate
-import PMFlavor.CKM
+import PMFlavor.Values
 import PMConstants.Values
 import PMElementaryParticles.MuonLifetime
 import PMSubstrate.E8Values
@@ -47,13 +47,13 @@ noncomputable def kaonDecayConstantE8 : ℝ :=
     (((PMSubstrate.E8Values.Delta : ℝ) ^ 2 - (PMSubstrate.E8Values.nu : ℝ) ^ 2))
 
 /-- E8 `|Vus| = s₁₂ c₁₃`, the `(u,s)` entry of the standard-parametrization CKM matrix. -/
-def vusE8 : ℝ := PMFlavor.CKM.s12 * PMFlavor.CKM.c13
+abbrev vusE8 : ℝ := PMFlavor.Values.vus
 
 /-- `vusE8` is the `(0,1)` entry of `PMFlavor.CKM.ckm` with Paper IV's angles, for any phase. -/
 theorem vusE8_eq_ckm (u : ℂ) :
     PMFlavor.CKM.ckm PMFlavor.CKM.c12 PMFlavor.CKM.s12 PMFlavor.CKM.c23 PMFlavor.CKM.s23
       PMFlavor.CKM.c13 PMFlavor.CKM.s13 u 0 1 = (vusE8 : ℂ) := by
-  simp [PMFlavor.CKM.ckm, vusE8]
+  simp [PMFlavor.CKM.ckm, vusE8, PMFlavor.Values.vus]
 
 /-- E8 kaon width. -/
 noncomputable def kaonWidthE8 : ℝ :=
@@ -74,9 +74,9 @@ theorem kaonDecayConstantE8_bounds :
 
 /-- Broad enclosure of `|V_us| = s₁₂ c₁₃`. -/
 theorem vusE8_bounds : (0.2242 : ℝ) < vusE8 ∧ vusE8 < (0.2245 : ℝ) := by
-  have hs := PMFlavor.CKM.s12_bounds
-  have hc := PMFlavor.CKM.c13_bounds
-  unfold vusE8
+  have hs := PMFlavor.Values.s12_bounds
+  have hc := PMFlavor.Values.c13_bounds
+  unfold vusE8 PMFlavor.Values.vus
   constructor <;> nlinarith [hs.1, hs.2, hc.1, hc.2]
 
 /-- Broad enclosure of the kaon two-body phase-space factor. -/

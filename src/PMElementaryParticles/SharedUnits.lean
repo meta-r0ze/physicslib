@@ -41,4 +41,13 @@ theorem fermiME_pos : 0 < fermiME := by
   unfold fermiME
   exact mul_pos (lt_trans (by norm_num) h.1) he
 
+/-- `G_F` in `m_e⁻²` to about `2×10⁻⁶`: `3.0456453–3.0456507 × 10⁻¹²`. -/
+theorem fermiME_tight : (3.0456453e-12 : ℝ) < fermiME ∧ fermiME < 3.0456507e-12 := by
+  have h := Values.fermi_bounds
+  have he : (2.611199269e-7 : ℝ) < Values.electronGeV ^ 2 ∧
+      Values.electronGeV ^ 2 < (2.611199270e-7 : ℝ) := by
+    unfold Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
+  unfold fermiME
+  constructor <;> nlinarith [h.1, h.2, he.1, he.2]
+
 end PMElementaryParticles.SharedUnits

@@ -77,8 +77,8 @@ theorem pionPlus_value : (273.1 : ℝ) < pionPlus ∧ pionPlus < 273.2 := by
     PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
   constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
 
-/-- The charged-pion mass in MeV, as an E8-only enclosure (no measured reference). -/
-theorem pionPlus_mev_value : (139.570354 : ℝ) < pionPlus * me ∧ pionPlus * me < 139.570426 := by
+/-- The charged-pion mass in MeV, as an E8-only enclosure (no measured reference): `139.5704112…`. -/
+theorem pionPlus_mev_value : (139.570411 : ℝ) < pionPlus * me ∧ pionPlus * me < 139.570412 := by
   have hg := g_b; have ha := a_b
   rw [pionPlus_ledger]
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,

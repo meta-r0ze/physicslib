@@ -4,6 +4,7 @@ import PMHadrons.PionWidth
 import PMHadrons.KaonWidth
 import PMHadrons.NeutralPionWidth
 import PMElementaryParticles.PhysicalUnits
+import PMElementaryParticles.Values
 import PMSubstrate.E8Margin
 import Mathlib.Tactic
 
@@ -263,14 +264,7 @@ theorem pionLifetimeCorrectedSeconds_bounds :
     rw [one_div_div]
     ring
   -- `G_F` in `m_e⁻²`
-  have hfb := PMConstants.Values.fermi_bounds
-  have hge : (2.611199269e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
-      PMConstants.Values.electronGeV ^ 2 < (2.611199270e-7 : ℝ) := by
-    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
-  have hG : (3.0456453e-12 : ℝ) < PMElementaryParticles.SharedUnits.fermiME ∧
-      PMElementaryParticles.SharedUnits.fermiME < (3.0456507e-12 : ℝ) := by
-    unfold PMElementaryParticles.SharedUnits.fermiME
-    constructor <;> nlinarith [hfb.1, hfb.2, hge.1, hge.2]
+  have hG := PMElementaryParticles.Values.fermiME_tight
   -- `f_π = v/1890`
   have hf : (254.9416992 : ℝ) < PionWidth.pionDecayConstantE8 ∧
       PionWidth.pionDecayConstantE8 < (254.9416993 : ℝ) := by
@@ -346,12 +340,7 @@ theorem pionLifetimeCorrectedSeconds_bounds :
   -- `π`, electron time
   have hp1 : (3.14159265358979 : ℝ) < Real.pi := by linarith [Real.pi_gt_d20]
   have hp2 : Real.pi < (3.14159265358980 : ℝ) := by linarith [Real.pi_lt_d20]
-  have he : (1.28808866e-21 : ℝ) < PMElementaryParticles.PhysicalUnits.electronTime ∧
-      PMElementaryParticles.PhysicalUnits.electronTime < 1.28808867e-21 := by
-    unfold PMElementaryParticles.PhysicalUnits.electronTime
-      PMElementaryParticles.PhysicalUnits.cFmPerSecond
-      PMElementaryParticles.SharedUnits.hbarc PMElementaryParticles.SharedUnits.me
-    constructor <;> norm_num
+  have he := PMElementaryParticles.Values.electronTime_tight
   have hepos : (0 : ℝ) < PMElementaryParticles.PhysicalUnits.electronTime := by linarith [he.1]
   have hAlo := mul_lt_mul'' hp1 he.1 (by norm_num) (by norm_num)
   have hAhi := mul_lt_mul'' hp2 he.2 Real.pi_pos.le hepos.le

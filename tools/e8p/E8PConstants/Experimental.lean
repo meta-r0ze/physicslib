@@ -57,6 +57,8 @@ def expRefs : Key → List ExpRef
   | .tauLifetimeFs => [⟨290.3, 0.82, "pdg_2024"⟩]
   | .neutronLifetimePredicted => [⟨878.4, 0.5, "pdg_2024"⟩]
   | .pionLifetimePredicted => [⟨2.6033e-8, 0.0005e-8, "pdg_2024"⟩]
+  -- τ_π / (τ_K / BR(K→μν)) = 2.6033 / (1.2380 / 0.6356); errors 0.02%, 0.16%, 0.17% in quadrature
+  | .kaonPionRatio => [⟨1.336557, 0.003176, "pdg_2024"⟩]
   | .muonLifetimeSeconds => [⟨2.1969811e-6, 0.0000022e-6, "pdg_2024"⟩]
   | .neutralPionFiniteLifetimeSeconds => [⟨8.43e-17, 0.13e-17, "pdg_2024"⟩]
   | .zEq => [⟨3387, 21, "planck_2018"⟩]

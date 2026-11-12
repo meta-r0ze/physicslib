@@ -35,6 +35,11 @@ The flavour angles are now geometry-first, not operator-fit-first.
 
 ## What is checked
 
+**Canonical values.** `PMFlavor.Values` is the single import for downstream libraries
+(mirroring `PMSubstrate.E8Values` and `PMConstants.Values`): `vud = c₁₂c₁₃`, `vus = s₁₂c₁₃`,
+`vub`, `vcb`, `q2 = 687/688`, `vudDressed`, the angle bounds, Pythagorean identities and
+`vus_div_vud = s₁₂/c₁₂`.
+
 **Matrices and mixing.** `CKM`, `PMNS`: complete complex matrices with exact
 unitarity, determinant 1, the Jarlskog quartet, and certified squared-entry /
 Jarlskog intervals (`PMNSIntervals`: `−0.0217 < J < −0.0215`). The PMNS phase is

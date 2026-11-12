@@ -4,6 +4,7 @@ import PMElementaryParticles.BetaLattice
 import PMSubstrate.E8Margin
 import PMHadrons.CompositeMasses
 import PMElementaryParticles.PhysicalUnits
+import PMElementaryParticles.Values
 import Mathlib.Tactic
 import Mathlib.Analysis.Complex.ExponentialBounds
 
@@ -65,14 +66,11 @@ noncomputable def neutronSpectralFractionExact : ℝ :=
 noncomputable def neutronLifetimeExactCutoff : ℝ :=
   betaLifetimeFromFraction betaHazardE8 neutronSpectralFractionExact
 
-/-- E8 margin factor `1 − χ/Δ = 41/43`. -/
-def neutronMarginFactor : ℝ :=
-  (((PMSubstrate.E8Values.Delta - PMSubstrate.E8Values.chi : Nat)) : ℝ) /
-    (PMSubstrate.E8Values.Delta : ℝ)
+/-- E8 margin factor `1 − χ/Δ = 41/43`: the substrate's `E8Margin.phaseMargin`. -/
+abbrev neutronMarginFactor : ℝ := PMSubstrate.E8Margin.phaseMargin
 
-theorem neutronMarginFactor_eq : neutronMarginFactor = 41 / 43 := by
-  unfold neutronMarginFactor
-  norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.E8Values.chi, PMSubstrate.baseline]
+theorem neutronMarginFactor_eq : neutronMarginFactor = 41 / 43 :=
+  PMSubstrate.E8Margin.phaseMargin_eq
 
 theorem neutronMarginFactor_pos : 0 < neutronMarginFactor := by
   rw [neutronMarginFactor_eq]; norm_num
@@ -86,8 +84,7 @@ theorem neutronLifetimeCorrected_eq :
       neutronMarginFactor * neutronLifetimeExactCutoff := rfl
 
 theorem neutronMarginFactor_eq_substrate :
-    neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin := by
-  rw [neutronMarginFactor_eq, PMSubstrate.E8Margin.phaseMargin_eq]
+    neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin := rfl
 
 
 /-- The lowest `3×3×3` Dirichlet eigenvalue is `6 − 3√2`. -/
@@ -658,14 +655,7 @@ lemma neutron_poly_bounds :
 lemma betaHazardE8_tight :
     (3.0919850e-24 : ℝ) < betaHazardE8 ∧ betaHazardE8 < 3.0919962e-24 := by
   rw [betaHazardE8_eq]
-  have h := PMConstants.Values.fermi_bounds
-  have he : (2.611199269e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
-      PMConstants.Values.electronGeV ^ 2 < (2.611199270e-7 : ℝ) := by
-    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
-  have hf : (3.0456453e-12 : ℝ) < PMElementaryParticles.SharedUnits.fermiME ∧
-      PMElementaryParticles.SharedUnits.fermiME < (3.0456507e-12 : ℝ) := by
-    unfold PMElementaryParticles.SharedUnits.fermiME
-    constructor <;> nlinarith [h.1, h.2, he.1, he.2]
+  have hf := PMElementaryParticles.Values.fermiME_tight
   constructor <;> nlinarith [hf.1, hf.2]
 
 /-- Margin-corrected neutron lifetime in seconds. -/
@@ -677,12 +667,7 @@ theorem neutronLifetimeCorrectedSeconds_bounds :
     (877.1 : ℝ) < neutronLifetimeCorrectedSeconds ∧ neutronLifetimeCorrectedSeconds < 877.2 := by
   obtain ⟨hP1, hP2⟩ := neutron_poly_bounds
   obtain ⟨hh1, hh2⟩ := betaHazardE8_tight
-  have he : (1.28808866e-21 : ℝ) < PMElementaryParticles.PhysicalUnits.electronTime ∧
-      PMElementaryParticles.PhysicalUnits.electronTime < 1.28808867e-21 := by
-    unfold PMElementaryParticles.PhysicalUnits.electronTime
-      PMElementaryParticles.PhysicalUnits.cFmPerSecond
-      PMElementaryParticles.SharedUnits.hbarc PMElementaryParticles.SharedUnits.me
-    constructor <;> norm_num
+  have he := PMElementaryParticles.Values.electronTime_tight
   set P := ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val with hPdef
   have hPpos : 0 < P := lt_of_lt_of_le (by norm_num) hP1
   have hhpos : 0 < betaHazardE8 := lt_trans (by norm_num) hh1

@@ -10,7 +10,7 @@ Binary: **`e8p`** (E8-Persistence). Directory: `e8p`.
 ## Usage
 
 ```
-e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--periodic-table [N]] [--nuclear] [--shells] [--masses[=Z,N]]
+e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--periodic-table [N]] [--nuclear] [--shells] [--summary] [--masses[=Z,N]]
 
   --paper=N     only values derived in Paper N (0 = substrate invariants)
   --only=IDS    comma-separated ids (cheap debugging), e.g. --only=wolf_rho,omega_ratio
@@ -20,6 +20,7 @@ e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--per
   --digits N  0..50 (default 18); more digits do not narrow the intervals
   --periodic-table [N]  configuration, Hund 2S+1, E8 nuclear mass vs measured (default 20 rows)
   --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)
+  --summary       one Markdown page (scoreboard, comparisons by agreeing digits, tensions); `e8p --summary > PREDICTIONS.md`
   --shells        E8 Nilsson single-particle ladder (PMAtoms.nilssonE8CostQ), gaps, closures vs magic numbers
   --masses        E8 nuclear ledger masses vs measured: residual, z in ledger-scatter units, summary
   --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)
