@@ -67,3 +67,33 @@ for gA in (1.25, 1.2754):
 fT = f_phase(1 + 0.0364, False, 20000)
 print('   phase-space ratio tritium/neutron: %.2e (Boltzmann template on the unbounded lattice: %.2e)'
       % (fT / f0, f_boltzmann(121, 0.0364) / f_boltzmann(121, E0)))
+
+
+# 3. The electron's own low-energy QED (Sirlin's outer correction, one loop), with E8 alpha and
+#    E8 m_p. The electron and photon are not confined, so this is the continuum calculation, the
+#    same status as the Fermi factor. The short-distance part above m_p is R (already in the rate).
+from scipy.integrate import quad
+
+mp_e = 1836.15267
+
+
+def spence(x):  # L(x) = int_0^x ln(1 - t)/t dt
+    return quad(lambda t: math.log(1 - t) / t, 0, x)[0]
+
+
+def sirlin_g(E):
+    p = math.sqrt(E * E - 1)
+    b = p / E
+    at = math.atanh(b)
+    return (3 * math.log(mp_e) - 0.75 + 4 * (at / b - 1) * ((E0 - E) / (3 * E) - 1.5 + math.log(2 * (E0 - E)))
+            + 4 / b * spence(2 * b / (1 + b)) + at / b * (2 * (1 + b * b) + (E0 - E) ** 2 / (6 * E * E) - 4 * at))
+
+
+wF = lambda E: math.sqrt(E * E - 1) * E * (E0 - E) ** 2 * fermi(E)
+norm = quad(wF, 1, E0, limit=200)[0]
+gbar = quad(lambda E: wF(E) * sirlin_g(E), 1, E0 - 1e-9, limit=200)[0] / norm
+dR = alpha / (2 * math.pi) * gbar
+print('3. outer radiative correction (alpha/2pi)<g> = %.4f' % dR)
+for gA in (1.25, 1.2754):
+    G = GF ** 2 * Vud ** 2 * (1 + 3 * gA ** 2) * fC * R * (1 + dR) / (2 * math.pi ** 3)
+    print('   g_A %.4f  Coulomb + outer RC  tau = %.1f s  (%+.2f%% vs 878.4 s)' % (gA, t_me / G, 100 * (t_me / G / 878.4 - 1)))

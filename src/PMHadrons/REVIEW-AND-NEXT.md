@@ -78,8 +78,11 @@ low-energy radiative (1.018), times spectral-vs-continuum (0.994). The product i
    * `NeutronRate.gA = σ/D = 5/4` stays the assigned value until the cube coupling is derived.
 
 Net (Nov 2026): the E8 neutron is the continuum route (§2, `NeutronContinuum`):
-`923.37–923.39 s` proved, +5.1%. It supplies the spectral and Coulomb factors from E8 inputs, so
-of the four neutron-only factors two remain open: `g_A` and the low-energy radiative correction.
+`923.37–923.39 s` proved, +5.1%. It supplies the spectral and Coulomb factors from E8 inputs. The
+low-energy radiative correction is the electron's own one-loop QED on the same route (Sirlin's
+outer correction with E8 `α` and `m_p`, `+1.51%`, `tools/beta_channel_modes.py`, not yet in Lean):
+`909.2 s`, +3.5%. **What is left is `g_A` alone:** this route needs `g_A = 1.2763` to give
+`878.4 s`; the measurement is `1.2754` (0.07%). The E8 `5/4` is 2% low (PMAction A.3).
 `NeutronCorrection` (all four factors supplied from outside E8) stays as bookkeeping. Direction: the rate goes as `1 + 3g_A²`, so a higher `g_A`
 shortens the lifetime. The rate now uses `5/4`; the measured `1.2754` shortens it by 3.4%. The
 single free carrier's `1.377` would shorten it by 17.6% (to about 806 s, −8%), overshooting, so
@@ -158,8 +161,8 @@ low-energy radiative correction, and gives every beta decay open modes for any `
 integral, the leading Coulomb integral, the rate, and the lifetimes `954.32–954.34 s` (no Coulomb)
 and `923.37–923.39 s` (Fermi factor to first order); `PMHadrons.Values` and e8p
 (`neutron_lifetime_predicted_s`) use the latter. The `3³` template stays as an unscored comparison.
-Open here: a Lean bound for the full Fermi factor (`922.9 s` numerically), and the low-energy
-radiative correction.
+Open here, in Lean: a bound for the full Fermi factor (`922.9 s` numerically) and the outer
+radiative correction (`909.2 s`; needs bounds on the Spence function).
 
 ## 3. The emission space (f_π, f_K) — C
 

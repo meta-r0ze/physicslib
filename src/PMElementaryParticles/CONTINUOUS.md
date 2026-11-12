@@ -59,7 +59,8 @@ Neutron decay shows all three rules (`PMHadrons/REVIEW-AND-NEXT.md` §2,
 3. Apply Rule 2. The electron's modes are continuum modes. The rate then uses the same phase
    space as the muon (`PMElementaryParticles.MuonRate`, `PolarMeasure`). All inputs are E8
    values. The result is `954.3 s` without the proton's Coulomb pull and `923.4 s` with it
-   (`PMHadrons.NeutronContinuum`). The measured value is `878.4 s`.
+   (`PMHadrons.NeutronContinuum`). The electron's own low-energy QED, on the same route, gives
+   `909.2 s`. The measured value is `878.4 s`. The rest is the axial coupling `g_A`.
 4. The small cube was `0.6%` from the continuum value without Coulomb. That was a coincidence of
    the neutron's energy, not a law.
 
