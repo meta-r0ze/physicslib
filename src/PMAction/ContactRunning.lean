@@ -1,5 +1,6 @@
 import PMAction.VATrace
 import PMAction.D4Isotropy
+import PMAction.LoopMeasure
 
 /-!
 # The one-loop running of the charged-current contact
@@ -37,9 +38,19 @@ blocks in `ContactFierz.triple_blk`.
 is exactly isotropic (`D4Isotropy.second_moment`), so `4 Σ k_μk_ν = (Σ k²) δ_{μν}`
 (`loop_direction_average`): the `¼` follows from the D₄ geometry.
 
-**Inputs still taken from the continuum.** The overall normalization, one unit of
-`(α/4π)·ln(M²/μ²)` per unit of `W` (the 4D phase-space factor `|S³|/(2π)⁴ = 1/(8π²)` times
-`e² = 4πα`), and the opposite-orientation sign. These are the photon loop's log coefficient. In the
+**The normalization.** The unit `(α/4π)·ln(M²/μ²)` is the 4D measure between the two scales
+(`LoopMeasure.log_unit`: `|S³|/(2π)⁴ = 1/(8π²)` times `e² = 4πα`), and the self-energy weight
+`W = −1` is the contraction `−2` times the Feynman-parameter average `½`
+(`LoopMeasure.self_energy_weight`).
+
+**The orientation sign.** A photon of loop momentum `k` leaves one leg and enters the other, so
+the two legs' propagator numerators carry `η_i k̸` and `−η_j k̸`, with `η = +1` for an outgoing
+(`ψ̄`) leg and `−1` for an incoming (`ψ`) leg: the pair's sign is `−η_iη_j` (`orientation_sign`).
+Legs `1,3` (both `ψ̄`) and `2,4` (both `ψ`) get `−`; legs `1,4` and `2,3` get `+`. This is the
+sign in `sameWeight` and `oppositeWeight` (`weights_from_orientation`).
+
+What is still the continuum's: the Feynman parametrization step itself and the identification of
+the leading log region with the lattice sum far below the cutoff. These are the photon loop's log coefficient. In the
 substrate this would be the response of the link field to a pair of charged legs, the analogue
 of `RunningResponse`'s Landau-sum derivation of the vacuum-polarization coefficient.
 -/
@@ -71,6 +82,20 @@ theorem ward_combination (Q₁ Q₂ W : ℝ) :
 signs. -/
 def sameWeight : ℝ := -(1 / 4 * 16)
 def oppositeWeight : ℝ := 1 / 4 * 4
+
+/-- The sign of a photon exchange between legs with orientations `ηᵢ, ηⱼ` (`+1` for `ψ̄`, `−1`
+for `ψ`): the numerators carry `ηᵢ k̸` and `−ηⱼ k̸`. -/
+def pairSign (ηi ηj : ℝ) : ℝ := ηi * (-ηj)
+
+theorem orientation_sign (ηi ηj : ℝ) : pairSign ηi ηj = -(ηi * ηj) := by
+  unfold pairSign; ring
+
+/-- The two cross-bilinear weights are `pairSign · ¼ · (Dirac factor)`: same orientation
+(`η = (1, 1)` or `(−1, −1)`, factor `16`) and opposite orientation (`(1, −1)`, factor `4`). -/
+theorem weights_from_orientation :
+    sameWeight = pairSign 1 1 * (1 / 4) * 16 ∧ sameWeight = pairSign (-1) (-1) * (1 / 4) * 16 ∧
+      oppositeWeight = pairSign 1 (-1) * (1 / 4) * 4 := by
+  refine ⟨?_, ?_, ?_⟩ <;> norm_num [sameWeight, oppositeWeight, pairSign]
 
 /-- The amplitude coefficient, in units of `(α/4π)·ln(M²/μ²)`, with `W = −1`. -/
 def contactCoefficient (Q₁ Q₂ Q₃ Q₄ : ℝ) : ℝ :=

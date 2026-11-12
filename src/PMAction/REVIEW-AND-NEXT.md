@@ -22,11 +22,13 @@ new construction, not a missing Lean statement, unless marked otherwise.
    cube `a ≈ 0.621 fm` from the E8 proton radius (the carrier's rms radius, numerical); lepton cube
    `a_e = ħ/(√2 m_e c)` from the channel's own unit (`lepton_hop`), which fixes the Coulomb `κ`.
    Remaining here: the carrier rms radius `1.354` in Lean (it is a numerical eigenvector property).
-3. **The photon loop's normalization in `ContactRunning`.** The coefficient's Dirac and charge
-   structure is derived, and the `¼` direction average follows from the D₄ link roots
-   (`loop_direction_average`). Still continuum inputs: the overall `(α/4π)` per unit (the 4D
-   phase-space factor `|S³|/(2π)⁴ = 1/(8π²)`; a target for Mathlib's Euclidean ball volume) and the
-   opposite-orientation sign.
+3. **The contact running, remaining step.** Derived: Dirac and charge structure
+   (`ContactRunning`, `ContactFierz`), the `¼` from the D₄ roots, the unit `(α/4π)ln(M²/μ²)` from
+   the 4D measure (`LoopMeasure.log_unit`), the self-energy weight `W = −1`
+   (`self_energy_weight`) and the orientation sign (`weights_from_orientation`). Still the
+   continuum's: the Feynman parametrization step and the identification of the leading-log region
+   with the lattice sum far below the cutoff. A lattice version (the D₄ sum approaching the
+   integral) would close it; low priority, since `R` already matches the pion to `7×10⁻⁵`.
 
 The `g_A` gap itself (`+8%` after every PMAction input is fixed) is now a PMHadrons question: the
 next candidate is emission (`PMHadrons.EmissionSpace`, `TollGovernor.emissionWeight`). The PMAction
