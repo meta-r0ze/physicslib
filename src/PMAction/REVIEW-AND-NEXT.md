@@ -38,10 +38,13 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
 
 1. **Physical states and observations.** Three pieces, each to be derived from PM:
    (a) the readout rule: **done**, `ReadoutRule.born` (an additive, basis-invariant, monotone
-   readout weight is `r²`); (b) the carrier class allocation: all three glue classes admitted
-   (`CarrierClassBundle`'s class-independent vacuum, so excluding one breaks a substrate symmetry
-   with no persistence gain); (c) many-particle statistics: the antisymmetric space from
-   `CarrierParity`, occupancy bounded by node capacity.
+   readout weight is `r²`); (b) the carrier class allocation: **done**,
+   `ClassAdmission.all_classes_admitted` (the observed vacuum is class-symmetric, so the admitted
+   set of most-persistent classes is permutation-invariant and nonempty: all three);
+   (c) many-particle statistics: **done**, `CarrierStatistics` (exchange acts as `±1`; with the
+   geometric premise that an exchange in three spatial dimensions is a relative full turn, the
+   phase is the spin-½ full turn `−1`, matching `CarrierParity`; antisymmetry and exclusion
+   follow). At most 24 carriers per site's observed modes; this is not the `nodeCapacity` 32.
 2. **Primitive admission.** Derive admission and implementation of the local amplitude factors in
    the microscopic E8 gate library, and their prices; identify the directional-exponential
    completion with the on-site one.

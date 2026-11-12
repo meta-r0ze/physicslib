@@ -48,6 +48,8 @@ import PMAction.Machine.CarrierResponse
 import PMAction.SubstrateReflection
 import PMAction.CommonResponse
 import PMAction.ReadoutRule
+import PMAction.ClassAdmission
+import PMAction.CarrierStatistics
 import PMAction.LinkExpansion
 import PMAction.RunningCoefficients
 import PMAction.ContactRunning
