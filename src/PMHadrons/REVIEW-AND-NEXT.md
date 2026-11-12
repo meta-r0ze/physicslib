@@ -75,14 +75,32 @@ low-energy radiative (1.018), times spectral-vs-continuum (0.994). The product i
      `3×3×3` cube (`PMAction.Dirac`, `ConcreteFermion`; `cube_interior_iff`): the fraction of its
      density in the spin-carrying component. The measurement needs `1.2754/(5/3) = 0.765`; the
      cube's number is the answer either way.
-   * `NeutronRate.gA = σ/D = 5/4` stays the assigned value until the cube coupling is derived.
+   * `NeutronRate.gA = σ/D = 5/4` is the strong-interaction value (see the `g_A` note under Net):
+     the carrier computation should be compared with lattice `1.246(28)`, not with `1.2754`. On
+     that target the reduction from `5/3` is `(σ−χ)/D = 3/4`; the single carrier gives `0.826`
+     and one-gluon exchange calibrated by N–Δ gives `0.761` (`g_A ≈ 1.269`, inside the lattice
+     error).
 
 Net (Nov 2026): the E8 neutron is the continuum route (§2, `NeutronContinuum`):
 `923.37–923.39 s` proved, +5.1%. It supplies the spectral and Coulomb factors from E8 inputs. The
 low-energy radiative correction is the electron's own one-loop QED on the same route (Sirlin's
 outer correction with E8 `α` and `m_p`, `+1.51%`, `tools/beta_channel_modes.py`, not yet in Lean):
 `909.2 s`, +3.5%. **What is left is `g_A` alone:** this route needs `g_A = 1.2763` to give
-`878.4 s`; the measurement is `1.2754` (0.07%). The E8 `5/4` is 2% low (PMAction A.3).
+`878.4 s`; the measurement is `1.2754` (0.07%).
+
+**`g_A` (Nov 2026): the E8 `5/4` is the strong-interaction axial charge; the measured `λ` is not.**
+The decay measures `λ = g_A/g_V`, which includes a percent-level electromagnetic correction from
+virtual charged pions (Cirigliano, de Vries, Hayen, Mereghetti, Walker-Loud, PRL 129, 121801
+(2022), arXiv:2202.10439): `λ = g_A^QCD (1 + δ_RC^λ)`, `δ_RC^λ ∈ (1.4, 2.6)%`. Lattice QCD, which
+has no QED, gives `g_A^QCD = 1.246(28)` (2+1+1) and `1.248(23)` (2+1) (FLAG 2021). Against this:
+* E8 `σ/D = 5/4 = 1.25` agrees with the lattice values;
+* `1.2754/(5/4) = 1.0203` and the continuum route's `1.2763/(5/4) = 1.0210` both lie inside
+  the published `δ_RC^λ` range; with that range the route gives `871–889 s` (measured `878.4`).
+So the 2% between `5/4` and `1.2754` is the size of the known electromagnetic correction, not a
+missing strong-interaction effect. The correction is `(α/2π)(Δ_A − Δ_V)` with
+`Δ ∝ Z_π = (m_π±² − m_π0²)/(2e²F_π²)`; the E8 pion masses and `f_π = v/1890` give `Z_π = 0.810`
+(the paper uses `0.81`). The rest of `Δ` is set by nucleon low-energy constants (`c₃`, `c₄`, a
+counterterm) that the substrate does not yet supply. Open: derive `δ_RC^λ` on the substrate.
 `NeutronCorrection` (all four factors supplied from outside E8) stays as bookkeeping. Direction: the rate goes as `1 + 3g_A²`, so a higher `g_A`
 shortens the lifetime. The rate now uses `5/4`; the measured `1.2754` shortens it by 3.4%. The
 single free carrier's `1.377` would shorten it by 17.6% (to about 806 s, −8%), overshooting, so

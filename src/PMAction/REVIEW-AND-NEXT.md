@@ -35,6 +35,12 @@ Checked mathematics, the module map and everything established are in
    but nothing yet derives it. Open: a non-perturbative colour computation on the `3³` cube itself
    (for example the static potential from Wilson loops at the cube's own coupling). No E8 value
    for the Δ mass exists yet, so the N–Δ calibration stays a comparison.
+
+   **Target corrected (Nov 2026).** The carrier computation gives the strong-interaction axial
+   charge, so its target is lattice QCD's `1.246(28)`, not the measured `1.2754`, which carries a
+   `1.4–2.6%` electromagnetic correction (PMHadrons REVIEW §0). E8's `5/4` sits on the lattice
+   value. The N–Δ-calibrated exchange (`1.269`) is within the lattice error; the single free
+   carrier (`1.377`) is not. The question for this item is unchanged: the cube's colour coupling.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
