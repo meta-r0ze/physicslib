@@ -16,13 +16,12 @@ new construction, not a missing Lean statement, unless marked otherwise.
    `12η` colour requirement). **Lower priority than it looked:** `FlatPersistence.flat_iff` and the
    singlet's vanishing mean colour density mean the persistent links carry no colour field, so the
    colour-magnetic correction to `g_A` enters only through fluctuations.
-2. **The lattice-to-energy unit and the two cubes.** Candidate for the carrier cube: the proton's
-   charge radius is the rms radius of its carriers (`1.354` sites on `3³`), so with the E8
-   `r_p = 0.8412 fm` one site is `a = 0.621 fm` (`tools/confined_walk.py`); check: three free
-   carriers `≈ 800 MeV` against 939. But the neutron's spectral channel reads the same `3³`
-   geometry in units of `m_e` (`PMElementaryParticles.BetaLattice`), a site of `≈ 273–386 fm`.
-   Open: are the carrier cube and the lepton (final-state) cube the same object? The lattice
-   Coulomb `κ` (PMHadrons §0.2) belongs to the lepton cube and stays open until this is settled.
+2. **The lattice-to-energy unit.** Settled for both cubes (`PMHadrons.CubeScales`): the carrier
+   cube and the decay's lepton cube cannot share a spacing (E8 masses and radius force a factor
+   `> 300`, `two_units`); each persistent system has its own minimal cube at its own scale. Carrier
+   cube `a ≈ 0.621 fm` from the E8 proton radius (the carrier's rms radius, numerical); lepton cube
+   `a_e = ħ/(√2 m_e c)` from the channel's own unit (`lepton_hop`), which fixes the Coulomb `κ`.
+   Remaining here: the carrier rms radius `1.354` in Lean (it is a numerical eigenvector property).
 3. **The photon loop's normalization in `ContactRunning`.** The coefficient's Dirac and charge
    structure is derived; the overall `(α/4π)` per unit, the `¼` direction average and the
    orientation sign are continuum inputs. Target: the substrate link response to a pair of

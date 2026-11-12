@@ -29,8 +29,9 @@ spectral-vs-continuum (0.994). The three, worked:
    0.13–0.19% (all modes shift together), and the open mode's density at the proton rises by
    0.8% (`κ = 4π`) to 1.1% (`κ = 4π√2`, the non-relativistic link `a = 1/(√2 m_e)`). The SM's
    3.2% comes from the continuum electron at low velocity; on three sites per side the electron
-   is spread over the cube. So the lattice Coulomb as built supplies about a third of the gap;
-   the unit link `κ` is itself a choice to settle.
+   is spread over the cube. So the lattice Coulomb as built supplies about a third of the gap.
+   The unit link is now forced: `κ = 4π√2`, the non-relativistic link `a_e = ħ/(√2 m_e c)` of the
+   lepton cube (`CubeScales.lepton_hop`; the lepton cube is not the carrier cube, `two_units`).
 3. **`g_A` — step 1 done, step 2 open.** `g_A` = how much of a carrier spin flip survives as a
    nucleon spin flip = (count) × (motion reduction).
    * **Count** (`AxialCount`): three carriers (one per colour, `σ − χ = 3`), one spin bit each
