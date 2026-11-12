@@ -26,6 +26,7 @@ import PMAction.LatticeGreen3D
 import PMAction.CubeGreen3
 import PMAction.ConfinedWalk
 import PMAction.FlatPersistence
+import PMAction.ColourSinglet
 import PMAction.ConcreteFermion
 import PMAction.ConcreteSpectrum
 import PMAction.SignedSpectrum

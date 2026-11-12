@@ -6,16 +6,12 @@ new construction, not a missing Lean statement, unless marked otherwise.
 
 ## A. Open for the hadrons (active)
 
-1. **The colour coupling inside a hadron.** The carrier cube's scale is `1/a ≈ 318 MeV` (candidate,
-   below), at the confinement scale, so the ledger `α_s = 0.1180` (read at `M_Z`,
-   `PMConstants.ReadoutScales`) cannot be run down. `CommonResponse` prices gauge loops and the
-   fermion's Wilson term with one `toll·m`, but no value of `toll·m` (times Paper I's survival `β`)
-   is fixed, and matching it to the fermion's normalization needs an action–cost identification
-   for fermions that PM does not state. By `ReadoutScales`' principle (a readout is matched where
-   it is maintained), the hadron's colour is read where it is maintained, per channel (Paper III's
-   `12η` colour requirement). **Lower priority than it looked:** `FlatPersistence.flat_iff` and the
-   singlet's vanishing mean colour density mean the persistent links carry no colour field, so the
-   colour-magnetic correction to `g_A` enters only through fluctuations.
+1. **The colour coupling inside a hadron: closed at leading order.** `ColourSinglet` shows the
+   three-carrier singlet in one spatial mode has zero mean colour charge and current
+   (`singlet_mean_one/two/three`: every traceless one-body colour operator averages to zero), and
+   `FlatPersistence.flat_iff` shows unsourced persistent links are flat. So no colour-magnetic
+   field acts on spin at leading order; the fluctuation correction would need the gauge `β`
+   (B.5). The cube-scale `α_s` is not needed.
 2. **The lattice-to-energy unit.** Settled for both cubes (`PMHadrons.CubeScales`): the carrier
    cube and the decay's lepton cube cannot share a spacing (E8 masses and radius force a factor
    `> 300`, `two_units`); each persistent system has its own minimal cube at its own scale. Carrier
