@@ -28,15 +28,25 @@ low-energy radiative (1.018), times spectral-vs-continuum (0.994). The product i
    one-loop coefficient `(3/4π)(1+2Q̄)` is derived in `PMAction.ContactRunning` from the Dirac
    algebra and the leg charges (`runningFactor_from_contact`); the loop's overall normalization is
    still a continuum input.
-2. **Coulomb — the cube's own Green function gives ~1%, not ~3%** (floating point, outside Lean).
-   With `PMAction.CubeGreen3`'s exact Green function (`greenCube3`) as the proton's potential on the
-   `3×3×3` cube, `H = L − κα G(·, centre)`: the open-mode weight fraction moves by only
-   0.13–0.19% (all modes shift together), and the open mode's density at the proton rises by
-   0.8% (`κ = 4π`) to 1.1% (`κ = 4π√2`, the non-relativistic link `a = 1/(√2 m_e)`). The SM's
-   3.2% comes from the continuum electron at low velocity; on three sites per side the electron
-   is spread over the cube. So the lattice Coulomb as built supplies about a third of the gap.
-   The unit link is now forced: `κ = 4π√2`, the non-relativistic link `a_e = ħ/(√2 m_e c)` of the
-   lepton cube (`CubeScales.lepton_hop`; the lepton cube is not the carrier cube, `two_units`).
+2. **Coulomb — the lepton cube computes the right physics for the one mode it has**
+   (floating point, `tools/lepton_coulomb.py`). On the lepton cube (`CubeScales.lepton_hop`:
+   hop `= m_e`, `κ = 4π√2`) with `PMAction.CubeGreen3`'s Green function as the proton's potential,
+   the electron density at the proton rises by 1.13%. Diagnosis (Nov 2026):
+   * this matches the non-relativistic Sommerfeld factor `πα/v = 1.22%` at the mode's own
+     velocity: the single open mode has `T = 1.757 m_e`, so the non-relativistic reading gives
+     `v = 1.87c`. Refining the spacing inside the same box lowers it to 0.84% (the gain is not a
+     lattice artefact being cut off);
+   * larger cubes at the same spacing have slower lowest modes and a larger gain (1.5% at `5³`,
+     2.3% at `9³`, 3.6% at `15³`), as the Sommerfeld factor requires;
+   * the continuum Fermi factor `2πη/(1−e^{−2πη})`, `η = αE/p`, averaged over the continuum
+     spectrum to the E8 endpoint `m_n − m_p`, is `1.0340` (supplied `1.0322`); slow electrons
+     carry most of it (`β = 0.3`: 7.8%; `β = 0.9`: 2.6%).
+   So the missing ~2% is not a wrong Coulomb law. It comes from the channel's reading: one mode,
+   read with the non-relativistic Laplacian at a relativistic energy, carries no slow electrons.
+   It is the same question as the spectral-vs-continuum factor and the beta cube rule (§2): which
+   electron modes the channel opens. Candidate E8 counterpart: the continuum Fermi factor with
+   E8 `α` and the E8 endpoint (`1.034`), the same status as `R` (a continuum calculation with E8
+   inputs); not adopted.
 3. **`g_A` — the count is done; the reduction has a candidate.** `g_A` = how much of a carrier spin flip survives as a
    nucleon spin flip = (count) × (motion reduction).
    * **Count** (`AxialCount`): three carriers (one per colour, `σ − χ = 3`), one spin bit each
@@ -129,3 +139,12 @@ without the survivors the pion keeps. The missing premise: how a direction-holdi
 restricts the cone. The cone is one spatial direction; a `σ`-direction carrier probably needs the
 cone in more directions. This is the `f_K` tension's source (f_k_mev −3.8σ and the K/π ratio
 −5.6σ are the same gap).
+
+Tried Nov 2026 (one more premise, outside Lean): a line carrier is massive, so it leaves
+slower than the light cone. A cone `|x| ≤ v t` over the same `Δ` ticks, with or without the
+`Δ − χ` survivors, gives `|Ω_K| = 1494` (`v = 4/5`), `1597` / `1638` (`v = (Δ−σ)/Δ`), `1764`
+(`v = (Δ−χ)/Δ`); none lands in `1581–1586`, and no persistence rule fixes `v`. Searching rule
+families against the window is numerology, so this stops here until a premise says how the
+`σ`-direction register restricts emission. What would decide it: the kaon's emission as a
+computation (the line carrier's walk on the meson's own cube, as `PMAction.ConfinedCarrier` does
+for the light carrier), not a count.
