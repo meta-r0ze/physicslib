@@ -6,8 +6,8 @@ phase space. This note tells you why that is correct, and when it is not correct
 
 ## The short answer
 
-The lattice does not change. What changes is the scale of the physics compared with the
-lattice spacing.
+The lattice does not change. Continuous values come from it in two ways: as a limit when the
+physics is large compared with the spacing, and as a bound that every discrete shape approaches.
 
 * When a process is much larger than the spacing, a sum over sites is very close to an
   integral. Then we use the integral.
@@ -67,7 +67,30 @@ The Coulomb pull shows the same thing. On the small cube the electron has one fa
 the pull is `1.1%`. Over the continuum spectrum the pull is `3.4%`. The difference comes from
 slow electrons. The small cube has none (`tools/lepton_coulomb.py`).
 
-## Other places that use the continuum
+## Example: `π` in `α⁻¹` (Capacity)
+
+`α⁻¹` contains the Capacity term `πΔ` (`PMSubstrate.CapacityBarbier`). Here the continuum
+appears in a different way. It is not a limit of small spacing. It is the largest value that
+any shape made of nodes can reach.
+
+1. A cycle is a closed boundary. Causality limits it: any two points on it are at most `Δ`
+   apart, because a signal must cross and return in one cycle (`CapacityEnvelope.width_le`).
+2. Make the boundary from nodes. It is then a polygon: straight edges between nodes. Its length
+   is the sum of the edges (`CauchyPolygon`). Every such polygon has length at most `πΔ`
+   (`perimeter_le_of_causal`).
+3. Add more nodes. A regular polygon with `n` nodes on a circle of radius `r` has length
+   `2nr·sin(π/n)`. This is less than `2πr` and more than `2πr − rπ³/(3n²)`
+   (`CircleLength.inscribed_sum`). The gap goes to zero as `n` grows.
+4. The circle is the least upper bound of all these polygons. Its length is exactly `πΔ`
+   (`CircleLength.circle_length`, `CauchyPolygon.capacity_is_max_length`).
+
+So the nodes are discrete, and each path between two nodes is a straight segment. The
+continuous value, `π`, is not added to the lattice. It is the limit that every node boundary
+approaches and none goes past. The shape is a circle in a plane, not a sphere. Its value does
+not depend on the shape: every boundary of constant width `Δ` has length `πΔ`
+(`CapacityBarbier.barbier`).
+
+
 
 | Result | Continuum object | Where |
 | --- | --- | --- |
