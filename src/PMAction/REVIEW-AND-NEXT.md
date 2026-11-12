@@ -49,9 +49,9 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
    `PMConstants.EventStiffness.calibration` and `ChainCouplings.chain_calibration` fix the product
    from the electric coupling: `e² = 1/(toll·m·N_sys) = 4πα` (Paper I's `α`, Paper III's footprint
    `N_sys`), which gives every primitive event a price. (`PMSubstrate.tollTerm`, a probability, is a
-   different object.) What remains here is admission, which is the same question as B.5's: the
-   split's factors are already exponentials of native Hermitian generators (`NativeSplit`), so
-   the open step is admitting coherent evolution by those generators as substrate dynamics.
+   different object.) Admission: `Admission` states the rule (admit what is unitary, local and
+   priced unless persistence excludes it) and checks the split's factors (`direction_admitted`,
+   `coin_admitted`). The rule itself is a PM premise, stated in that file.
 3. **Prepared initial reference: closed by selection** (`ReferenceSelection`, Nov 2026). PM does
    not require dynamics to prepare the reference: the survival law selects it, and the most
    persistent configuration is the uniform background (`selected_reference`). Its per-tick ledger
@@ -69,10 +69,10 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
 5. **Microscopic gauge transport.** The gauge `β` is derived downstream:
    `CarrierResponse.common_response_limit` gives `β = toll·m·W/2`, and with the calibration above
    `g² = 1/(κ_R·toll·m·W)` for each sector's ledger `W` (`PMConstants.ChainCouplings.
-   chain_couplings`: weak, hypercharge, colour). Remaining here: the E8 realization of the
-   abstract hop, shared group/trace normalization across spacings, and admission of the coherent
-   root-generator evolution as the substrate dynamics (for the packet subsystem: the `C²` control
-   one-forms and that admission).
+   chain_couplings`: weak, hypercharge, colour; the generic part now in `EventCoupling`).
+   Admission of the coherent evolution: `Admission` (B.2). Remaining here: the E8 realization of
+   the abstract hop (which root words the native generators come from), shared group/trace
+   normalization across spacings, and for the packet subsystem the `C²` control one-forms.
 6. **Full field and integrated limits.** Real-space field/PDE mode–domain control, the integrated
    Hessian, the full real-space fermion field, interacting-field estimates.
 7. **Applications.** Normalization, measure and regulator (and the trace/running reading); gravity

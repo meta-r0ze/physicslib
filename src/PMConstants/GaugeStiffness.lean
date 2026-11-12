@@ -1,4 +1,5 @@
 import PMConstants.Partition
+import PMAction.EventCoupling
 
 /-!
 # One rule for the gauge readouts: link stiffness proportional to refresh workload
@@ -28,19 +29,7 @@ noncomputable section
 namespace PMConstants.GaugeStiffness
 open PMConstants
 
-theorem refresh_ledger (c₀ S : ℝ) (W : ℕ) :
-    (∑ _k : Fin W, c₀ * S) = (c₀ * W) * S := by
-  simp [Finset.sum_const]; ring
-
-def gsq (β : ℝ) : ℝ := 1 / (2 * β)
-
-theorem mixing {c W Y : ℝ} (hc : 0 < c) (hW : 0 < W) (hY : 0 < Y) :
-    gsq (c*Y) / (gsq (c*W) + gsq (c*Y)) = W / (W + Y) := by
-  unfold gsq; field_simp; ring
-
-theorem electric {c W Y : ℝ} (hc : 0 < c) (hW : 0 < W) (hY : 0 < Y) :
-    gsq (c*W) * gsq (c*Y) / (gsq (c*W) + gsq (c*Y)) = gsq (c*(W + Y)) := by
-  unfold gsq; field_simp; ring
+export PMAction.EventCoupling (refresh_ledger gsq mixing electric)
 
 theorem paper_electroweak {c : ℝ} (hc : 0 < c) :
     let W : ℝ := 43

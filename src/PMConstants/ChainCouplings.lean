@@ -1,3 +1,4 @@
+import PMAction.EventCoupling
 import PMAction.Machine.SummedReference
 import PMConstants.ReferenceStiffness
 import PMConstants.EventStiffness
@@ -35,13 +36,7 @@ namespace PMConstants.ChainCouplings
 open Matrix PMAction VaryingFields LinkConsistency ReferenceSampling SummedReference
 open scoped Matrix.Norms.L2Operator
 
-/-- Canonical summed-read coupling `g² = 1/(κ_R·toll·m·W)`. -/
-def chainCoupling (κ toll : ℝ) (m : ℕ) (W : ℝ) : ℝ := 1 / (κ * toll * m * W)
-
-theorem chain_canonical {toll κ W g : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m)
-    (hκ : 0 < κ) (hW : 0 < W) (hg : g ≠ 0) :
-    (toll * m * W / 4) * (κ * g ^ 2) = 1 / 4 ↔ g ^ 2 = chainCoupling κ toll m W :=
-  sum_canonical_iff ht hm hκ hW hg
+export PMAction.EventCoupling (chainCoupling chain_canonical)
 
 lemma hf : (0 : ℝ) < footprint - 43 := by norm_num [footprint, overhead]
 lemma hfp : (0 : ℝ) < footprint := by norm_num [footprint, overhead]

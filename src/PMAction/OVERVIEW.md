@@ -190,6 +190,9 @@ controls/admission premises and the selection of group, representation and β.
 - **Running:** `RunningResponse` (spin `(2s)²` and orbital `−1/3` from the substrate response);
   `ContactRunning` + `ContactFierz` (the weak contact's coefficient `(3/2)(1 + 2Q̄)` from the Ward
   combination and the `16`/`4` Dirac identities, proved on the Weyl blocks via `triple_blk`).
+- **Event pricing and admission:** `EventCoupling` (event price to stiffness and coupling,
+  moved from PMConstants), `ClockLedger` (a factor costs its flags; the clock `2·toll·m` per tick),
+  `Admission` (the split's factors are unitary, local and priced).
 - **Lattice kernels:** `CoulombKernel`, `LatticeGreen3D`, `CubeGreen3` (exact `3×3×3` Green
   function).
 

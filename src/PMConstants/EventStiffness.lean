@@ -1,3 +1,4 @@
+import PMAction.EventCoupling
 import PMAction.CommonResponse
 import PMConstants.GaugeLedgers
 
@@ -36,21 +37,13 @@ noncomputable section
 namespace PMConstants.EventStiffness
 open PMConstants PMAction
 
-def c0 (toll : ℝ) (m : ℕ) : ℝ := toll * m / 2
-
-theorem refresh_from_events (toll θ : ℝ) (m W : ℕ) :
-    (∑ _ : Fin W, CarrierResponse.repairCost toll m (InterferenceReadout.phase θ)) =
-      (c0 toll m * W) * (1 - Real.cos θ) := by
-  rw [CarrierResponse.refreshed_phase_cost]; unfold c0; ring
+export PMAction.EventCoupling (c0 refresh_from_events coupling_from_events
+  scalar_shares_prefactor)
 
 theorem matches_refresh_ledger (toll θ : ℝ) (m W : ℕ) :
     (∑ _ : Fin W, CarrierResponse.repairCost toll m (InterferenceReadout.phase θ)) =
       ∑ _ : Fin W, c0 toll m * (1 - Real.cos θ) := by
   rw [refresh_from_events, GaugeStiffness.refresh_ledger]
-
-theorem coupling_from_events (toll : ℝ) (m : ℕ) (W : ℝ) :
-    GaugeStiffness.gsq (c0 toll m * W) = 1 / (toll * m * W) := by
-  unfold GaugeStiffness.gsq c0; congr 1; ring
 
 theorem calibration {toll α : ℝ} {m : ℕ} (hα : 0 < α)
     (he : GaugeStiffness.gsq (c0 toll m * footprint) = 4 * Real.pi * α) :
@@ -82,15 +75,5 @@ theorem couplings_from_alpha {toll α : ℝ} {m : ℕ} (hα : 0 < α)
     rw [ColourChannels.colour_ledger]; norm_num
   have hy : (0 : ℝ) < 129 + 5 + 16 * overhead := by norm_num [overhead]
   refine ⟨?_, ?_, ?_⟩ <;> field_simp
-
-theorem scalar_shares_prefactor (toll θ : ℝ) (m : ℕ) {κ : Type*} [Fintype κ] [DecidableEq κ]
-    (U : Matrix κ κ ℂ) (φ φ' : κ → ℂ) :
-    CommonResponse.responseCost toll m (CommonResponse.linkFlag U φ φ') =
-        toll * m / 4 * CommonResponse.nsq (φ' - U.mulVec φ) ∧
-      CarrierResponse.repairCost toll m (InterferenceReadout.phase θ) =
-        toll * m / 4 * CommonResponse.nsq
-          ((fun _ => (1 : ℂ)) - (InterferenceReadout.phase θ).mulVec (fun _ => 1)) := by
-  obtain ⟨h1, h2, -, h4⟩ := CommonResponse.common_normalization toll m θ U φ φ'
-  exact ⟨h2, h4 ▸ h1⟩
 
 end PMConstants.EventStiffness

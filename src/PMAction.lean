@@ -48,6 +48,7 @@ import PMAction.SelectedSampling
 import PMAction.Machine.CarrierResponse
 import PMAction.SubstrateReflection
 import PMAction.CommonResponse
+import PMAction.EventCoupling
 import PMAction.ReadoutRule
 import PMAction.ClassAdmission
 import PMAction.CarrierStatistics
@@ -260,6 +261,7 @@ import PMAction.PersistenceSelection
 import PMAction.PersistentBackground
 import PMAction.ReferenceSelection
 import PMAction.ClockLedger
+import PMAction.Admission
 import PMAction.CompletionSelection
 
 import PMAction.Machine.ReadoutAdditivity
