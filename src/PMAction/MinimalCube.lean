@@ -5,11 +5,12 @@ import Mathlib.Tactic
 
 An `n × n × n` cubic block persists as a volume only if some vertex has a full 3D
 neighbourhood. `cube_interior_iff`: that first happens at `n = 3`. This selects the `3×3×3`
-cube used for the neutron's finite spectral channel (`NeutronPrediction`) and for the nuclear
-packing and charge lattices (`PMAtoms.NuclearPacking3D`, `PMAtoms.LatticeCharge3`).
+cube used for the confined carrier (`ConfinedCarrier`), the neutron's finite spectral channel
+(`PMHadrons.NeutronPrediction`) and the nuclear packing and charge lattices
+(`PMAtoms.NuclearPacking3D`, `PMAtoms.LatticeCharge3`). Moved from `PMHadrons` (Nov 2026).
 -/
 
-namespace PMHadrons
+namespace PMAction.MinimalCube
 
 /-- Vertices of the `n × n × n` cubic packing. -/
 abbrev CubeVertex (n : Nat) := Fin n × Fin n × Fin n
@@ -87,4 +88,4 @@ theorem boundaryVertices_three_card : (boundaryVertices 3).card = 26 := by
 theorem cubeVertices_three_card : (Finset.univ : Finset (CubeVertex 3)).card = 27 := by
   decide
 
-end PMHadrons
+end PMAction.MinimalCube

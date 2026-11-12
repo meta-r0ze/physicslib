@@ -1,5 +1,5 @@
 import PMHadrons.BetaCalibration
-import PMHadrons.MinimalCube
+import PMAction.MinimalCube
 import PMElementaryParticles.BetaLattice
 import PMSubstrate.E8Margin
 import PMHadrons.CompositeMasses
@@ -21,6 +21,7 @@ Boltzmann weight ratio, and the lifetime follows from `betaHazardE8`.
 noncomputable section
 namespace PMHadrons
 open PMElementaryParticles
+open PMAction.MinimalCube
 
 /-- Minimal volume-persistent cube. -/
 def neutronCube : Nat := 3

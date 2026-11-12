@@ -1,4 +1,4 @@
-import PMAtoms.LatticeGreen3D
+import PMAction.LatticeGreen3D
 import PMAtoms.NuclearFolding
 import Mathlib.Tactic
 
@@ -14,6 +14,7 @@ The nearest-neighbour pair has `E = 46/105`, below the continuum sphere value.
 -/
 
 namespace PMAtoms
+open PMAction.LatticeGreen
 
 /-- Two unit charges on the `2×2×2` cube. -/
 def twoProtonEnergy (i j : Fin 8) : Rat :=

@@ -1,4 +1,5 @@
 import PMHadrons.DecayInstantiation
+import PMAction.ContactRunning
 import PMConstants.ElectroweakBounds
 import PMConstants.Values
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
@@ -15,9 +16,9 @@ correction to a charged-current contact between the two scales is
 Every input here is an E8 value: `α` (Paper I), the carrier charges `2/3`, `−1/3`
 (`PMElementaryParticles.CarrierAmplitude`), the tree-level E8 `m_Z`
 (`ElectroweakBounds.z_mass_bounds`) and the E8 proton (`CompositeMasses.proton_value`). The
-coefficient `(3/4π)(1 + 2Q̄)` is the standard one-loop result, in the same status as
-`PMAction.RunningCoefficients`' spin/orbital inputs (continuum results, not yet derived from the
-substrate's response).
+coefficient `(3/4π)(1 + 2Q̄)` is derived in `PMAction.ContactRunning` from Paper II's Dirac
+matrices and the leg charges (`runningFactor_from_contact`); only the photon loop's overall log
+normalization is still a continuum input.
 
 **Result.** `runningFactor_bounds`: `1.021178 < R < 1.021180`. The pion's assigned
 `32/33 = |V_ud|²·sharedFactor` gives `sharedFactor ∈ (1.021111, 1.021131)`
@@ -46,6 +47,16 @@ def chargeAverage : ℝ := ((2 / 3 : ℝ) + (-1 / 3)) / 2
 def runningFactor : ℝ :=
   1 + 3 * PMElementaryParticles.SharedUnits.αe / (4 * π) * (1 + 2 * chargeAverage) *
     (2 * Real.log (mZ / mpGeV))
+
+/-- The coefficient is `PMAction.ContactRunning`'s: twice the contact's amplitude coefficient
+`c = 2` (carrier charges `2/3`, `−1/3`, lepton pair `−1`, `0`), in units of
+`(α/4π)·ln(m_Z²/m_p²)`. -/
+theorem runningFactor_from_contact :
+    runningFactor = 1 + 2 * PMAction.ContactRunning.contactCoefficient (2 / 3) (-1 / 3) (-1) 0 *
+      (PMElementaryParticles.SharedUnits.αe / (4 * π)) * (2 * Real.log (mZ / mpGeV)) := by
+  rw [PMAction.ContactRunning.contact_neutron]
+  unfold runningFactor chargeAverage
+  ring
 
 theorem runningFactor_eq :
     runningFactor = 1 + 2 * PMElementaryParticles.SharedUnits.αe / π * Real.log (mZ / mpGeV) := by

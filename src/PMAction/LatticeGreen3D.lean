@@ -10,10 +10,10 @@ rational inverse below. Diagonal entries are `58/315`; off-diagonals are
 `11/315`, `4/315`, or `2/315` according to the cube geometry.
 
 This is the 3D lattice self-energy (`58/315`), the analogue of the 1D
-`pathGreen_diag`.
+`pathGreen_diag`. Moved from `PMAtoms` (Nov 2026).
 -/
 
-namespace PMAtoms
+namespace PMAction.LatticeGreen
 
 /-- `58/315` self-energy, then the off-diagonal rows. -/
 def greenRows : List (List Rat) :=
@@ -66,4 +66,4 @@ theorem cubeLap_green (j : Fin 8) :
   fin_cases j <;> fin_cases v <;>
     simp [cubeLap, cubeAdj, greenCube, greenRows, adjRows] <;> norm_num
 
-end PMAtoms
+end PMAction.LatticeGreen

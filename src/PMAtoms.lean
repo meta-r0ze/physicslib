@@ -25,7 +25,6 @@ import PMAtoms.NuclearLine
 import PMAtoms.NuclearCharge
 import PMAtoms.NuclearFolding
 import PMAtoms.LatticeGreen
-import PMAtoms.LatticeGreen3D
 import PMAtoms.LatticeCharge
 import PMAtoms.LatticeCharge3
 import PMAtoms.LatticeCharge3Energy

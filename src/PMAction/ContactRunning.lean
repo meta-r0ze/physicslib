@@ -1,0 +1,83 @@
+import PMAction.VATrace
+
+/-!
+# The one-loop running of the charged-current contact
+
+`WeakVertex` gives the charged-current contact `(G/√2)[ψ̄₁γ^μ(1−γ⁵)ψ₂][ψ̄₃γ_μ(1−γ⁵)ψ₄]` at the
+W/Z scale. Between that scale and the decay scale, photon exchange among the four charged legs
+rescales the contact's amplitude by `1 + c·(α/4π)·ln(M²/μ²)`. This module derives the coefficient
+`c` from the Dirac algebra of Paper II's matrices and the leg charges, leaving one normalization
+as input (see below).
+
+**The three kinds of photon exchange.**
+* Within one bilinear (legs `1,2` or `3,4`): the vertex exchange and the two legs' self-energies
+  combine as `Q₁Q₂·(−W) + ½(Q₁² + Q₂²)·W = ½W(Q₁ − Q₂)²` (`ward_combination`). The vertex weight
+  is `−W` because a conserved current (`Q₁ = Q₂`) is not renormalized (the Ward identity). The
+  vertex's Dirac factor is the contraction `γ^σγ^μγ_σ = −2γ^μ` (`contraction`).
+* Between bilinears, same orientation (legs `1,3` and `2,4`): the loop momentum gives
+  `¼ γ^ργ^σΓ ⊗ γ_ργ_σΓ`, and with `Γ = γ^μ(1−γ⁵)` this is `16 Γ ⊗ Γ`.
+* Between bilinears, opposite orientation (legs `1,4` and `2,3`): `¼ γ^ργ^σΓ ⊗ Γγ_σγ_ρ = 4 Γ ⊗ Γ`,
+  with the opposite sign (one leg's fermion flow is reversed).
+
+The two tensor identities (`16`, `4`) are verified numerically with these matrices
+(`tools/contact_running.py`); their Lean proof is still to be done.
+
+**Result.** With `W = −1` (in units of `α/4π · ln(M²/μ²)`):
+`c = −½(Q₁−Q₂)² − ½(Q₃−Q₄)² − 4(Q₁Q₃ + Q₂Q₄) + (Q₁Q₄ + Q₂Q₃)` (`contactCoefficient`).
+* `contact_semileptonic`: for a lepton pair `(−1, 0)` and quarks `(Q, Q − 1)`, `c = 3Q`, which is
+  `(3/2)(1 + 2Q̄)` with `Q̄ = (Q₁ + Q₂)/2`. The constant parts cancel exactly.
+* `contact_neutron`: with Paper V's carrier charges `2/3`, `−1/3`, `c = 2`.
+* `rate_factor`: the rate gets `1 + 2c(α/4π)ln(M²/μ²) = 1 + (3α/4π)(1 + 2Q̄)ln(M²/μ²)`, the form
+  `PMHadrons.ShortDistanceRunning` uses.
+
+**Inputs still taken from the continuum.** The overall normalization: one unit of
+`(α/4π)·ln(M²/μ²)` per unit of `W`, together with the `¼` from averaging the loop momentum over
+directions and the opposite-orientation sign. These are the photon loop's log coefficient. In the
+substrate this would be the response of the link field to a pair of charged legs, the analogue
+of `RunningResponse`'s Landau-sum derivation of the vacuum-polarization coefficient.
+-/
+
+noncomputable section
+namespace PMAction.ContactRunning
+open Matrix VATrace
+
+set_option maxHeartbeats 4000000 in
+/-- **The vertex contraction.** `Σ_σ η_σ γ^σ γ^μ γ^σ = −2 γ^μ` with Paper II's matrices. -/
+theorem contraction (μ : Fin 4) : ∑ σ, η σ • (g σ * g μ * g σ) = (-2 : ℂ) • g μ := by
+  fin_cases μ <;> ext a b <;> fin_cases a <;> fin_cases b <;>
+    simp [g, η, Fin.sum_univ_four, Matrix.mul_apply, Matrix.sum_apply] <;> norm_num <;> ring
+
+/-- Vertex plus self-energies within one bilinear: the Ward-identity combination. -/
+theorem ward_combination (Q₁ Q₂ W : ℝ) :
+    Q₁ * Q₂ * (-W) + (Q₁ ^ 2 + Q₂ ^ 2) / 2 * W = W / 2 * (Q₁ - Q₂) ^ 2 := by
+  ring
+
+/-- Same-orientation and opposite-orientation exchange weights: `¼·16` and `¼·4`, with opposite
+signs. -/
+def sameWeight : ℝ := -(1 / 4 * 16)
+def oppositeWeight : ℝ := 1 / 4 * 4
+
+/-- The amplitude coefficient, in units of `(α/4π)·ln(M²/μ²)`, with `W = −1`. -/
+def contactCoefficient (Q₁ Q₂ Q₃ Q₄ : ℝ) : ℝ :=
+  (-1) / 2 * (Q₁ - Q₂) ^ 2 + (-1) / 2 * (Q₃ - Q₄) ^ 2 +
+    sameWeight * (Q₁ * Q₃ + Q₂ * Q₄) + oppositeWeight * (Q₁ * Q₄ + Q₂ * Q₃)
+
+/-- **The semileptonic coefficient.** Lepton pair `(−1, 0)`, quark pair `(Q, Q − 1)`:
+`c = 3Q = (3/2)(1 + 2Q̄)`. -/
+theorem contact_semileptonic (Q : ℝ) :
+    contactCoefficient Q (Q - 1) (-1) 0 = 3 / 2 * (1 + 2 * ((Q + (Q - 1)) / 2)) := by
+  unfold contactCoefficient sameWeight oppositeWeight
+  ring
+
+theorem contact_neutron : contactCoefficient (2 / 3) (-1 / 3) (-1) 0 = 2 := by
+  unfold contactCoefficient sameWeight oppositeWeight
+  norm_num
+
+/-- The rate factor: twice the amplitude coefficient. -/
+theorem rate_factor (α L Q : ℝ) :
+    1 + 2 * contactCoefficient Q (Q - 1) (-1) 0 * (α / (4 * Real.pi)) * L =
+      1 + 3 * α / (4 * Real.pi) * (1 + 2 * ((Q + (Q - 1)) / 2)) * L := by
+  rw [contact_semileptonic]
+  ring
+
+end PMAction.ContactRunning

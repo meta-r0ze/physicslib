@@ -3,7 +3,6 @@ import PMHadrons.BetaCalibration
 import PMHadrons.WeakTransition
 import PMHadrons.NeutronPrediction
 import PMHadrons.MesonFiniteChannels
-import PMHadrons.MinimalCube
 import PMHadrons.Particle
 import PMHadrons.PionWidth
 import PMHadrons.KaonWidth

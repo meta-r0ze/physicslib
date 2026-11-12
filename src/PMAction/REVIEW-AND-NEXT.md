@@ -140,8 +140,16 @@ left three gaps; each is a missing construction here, not in PMHadrons:
    `r_p = Dħ/(m_p c) = 0.8412 fm` (`PMHadrons.protonRadius_value`) one site is `a = 0.621 fm`,
    `1/a = 318 MeV`. Independent check, not fitted: the carrier's lowest level `0.841/a = 267 MeV`,
    three carriers `≈ 800 MeV` against the nucleon's 939 (−15%, free carriers, no binding). Inputs:
-   the free single-carrier mode and the charge-radius identification. This also gives the
-   lattice Coulomb's `κ` (`PMHadrons/REVIEW-AND-NEXT.md` §0.2).
+   the free single-carrier mode and the charge-radius identification.
+   **It does not fix the Coulomb `κ`.** The neutron's spectral channel reads the same `3³` cube's
+   eigenvalues in units of `m_e` (`PMElementaryParticles.BetaLattice`), which puts that cube's
+   site at `a_e = 1/(√2 m_e) ≈ 273 fm` (non-relativistic) or `1/m_e ≈ 386 fm` (Dirac), about
+   450–600 times the carrier cube's `0.621 fm`. So "the `3³` cube" carries two different physical
+   spacings: the hadron's carriers and the decay's final-state lepton modes. Either they are two
+   different cubes (same `MinimalCube` geometry, different readout scale), or one of the two
+   readings is wrong. The lattice Coulomb acts on the electron, so its `κ` belongs to the lepton
+   cube and stays open. One statement of the spacing does not fix both, contrary to the
+   original framing of this item ("one statement of the spacing fixes both").
    **Colour coupling at this scale (open).** `1/a ≈ 318 MeV` is at the confinement scale, so the
    ledger `α_s = 0.1180` (read at `M_Z`, `PMConstants.ReadoutScales`) cannot be run down
    perturbatively. The PM-native route is the gauge `β` on the cube lattice. `CommonResponse`
@@ -171,10 +179,15 @@ left three gaps; each is a missing construction here, not in PMHadrons:
 3. **Spin and orbital response from the substrate.** Done in `RunningResponse`: the spin term
    `(2s)²` from the Clifford relations (`zeeman`, `concrete_spin`; spin 1 by
    `GaugeFluctuation.vector_kernel`), the orbital `−1/3` from the Landau sum (`landau_sum`,
-   `pair_kernel`, `pair_coefficient`), assembled in `spin_term_from_response`. What
-   `PMHadrons.ShortDistanceRunning` still takes from the continuum is different: the weak
-   contact's own one-loop coefficient `(3/4π)(1 + 2Q̄)` is a box/vertex correction to a
-   four-fermion contact, not vacuum polarization, and has no substrate derivation yet.
+   `pair_kernel`, `pair_coefficient`), assembled in `spin_term_from_response`. The weak contact's
+   own coefficient is now `ContactRunning` (Nov 2026): within a bilinear the Ward combination gives
+   `½W(Q₁−Q₂)²`; across bilinears the Dirac factors are `16` (same orientation) and `4`
+   (opposite), with Paper II's matrices; assembled, `c = 3Q = (3/2)(1 + 2Q̄)` for any quark pair
+   `(Q, Q−1)` and lepton pair `(−1, 0)`, `c = 2` for `u, d`; `PMHadrons.ShortDistanceRunning.
+   runningFactor_from_contact` uses it. Still open: Lean proofs of the two tensor identities
+   (checked numerically, `tools/contact_running.py`), and the photon loop's overall log
+   normalization (`(α/4π)` per unit, the `¼` direction average, the orientation sign) from the
+   substrate's link response, as `RunningResponse` did for vacuum polarization.
 
 ## Downstream boundary
 

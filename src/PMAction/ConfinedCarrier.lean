@@ -42,7 +42,7 @@ measured `1.2754` (`+8%`):
 | input | value | fixed by |
 |---|---|---|
 | count | `5/3 = σ/(σ−χ)` | `PMHadrons.AxialCount` |
-| region | `3×3×3` | `PMHadrons.MinimalCube` (smallest volume-persistent cube) |
+| region | `3×3×3` | `MinimalCube` (smallest volume-persistent cube) |
 | wall | hard | identity completion (`CompletionSelection`, `axisStep_unitary`) |
 | `r`, `M` | `1`, `1` | `DomainWall` (Wilson point) |
 | tick | small-tick limit | isotropy: finite `τ` makes `⟨Σ_x⟩, ⟨Σ_y⟩, ⟨Σ_z⟩` differ (`VacuumTangent`) |
@@ -69,7 +69,7 @@ measured `g_A = 1.2754` needs `0.765`.
 
 **The wall is hard, by persistence.** A phase persists only if each of its resources is
 refreshed (Paper III, `RequirementComplement`). The hadron's resources are the sites of its cube
-(`PMHadrons.MinimalCube`), so carrier amplitude on a site outside the cube is not refreshed and
+(`MinimalCube`), so carrier amplitude on a site outside the cube is not refreshed and
 does not persist. Infinite cost means zero amplitude, which is the Dirichlet wall `M_out = ∞`.
 Paper V gives the same answer from the other side: colour is internal routing with no external
 Map projection (`3_info_transit`), so a carrier has no admissible state outside the hadron. A

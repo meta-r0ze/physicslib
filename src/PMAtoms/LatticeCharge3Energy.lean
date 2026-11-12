@@ -9,6 +9,7 @@ module so the large finite-check table does not rebuild during iteration.
 -/
 
 namespace PMAtoms
+open PMAction.LatticeGreen
 
 /-- A single unit charge has energy `G(i,i)`. -/
 theorem latticeChargeEnergy3_single (i : Fin 27) :

@@ -1,4 +1,4 @@
-import PMHadrons.MinimalCube
+import PMAction.MinimalCube
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Tactic
 
@@ -21,8 +21,7 @@ bulk coordination.  The count is combinatorial, not a fitted coefficient.
 
 noncomputable section
 namespace PMAtoms
-open PMHadrons
-open PMHadrons
+open PMAction.MinimalCube
 
 
 /-- The lower endpoint of a step in the first coordinate. -/
