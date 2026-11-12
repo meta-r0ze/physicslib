@@ -36,9 +36,12 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
 
 ## B. Foundational (long-term)
 
-1. **Physical states and observations.** Justify the complex-amplitude/coordinate readout contract
-   and the carrier class/wall allocation; identify any many-particle state space or its statistics
-   algebra. Equal dimensions and reversible persistence do not select the physical state space.
+1. **Physical states and observations.** Three pieces, each to be derived from PM:
+   (a) the readout rule: **done**, `ReadoutRule.born` (an additive, basis-invariant, monotone
+   readout weight is `r²`); (b) the carrier class allocation: all three glue classes admitted
+   (`CarrierClassBundle`'s class-independent vacuum, so excluding one breaks a substrate symmetry
+   with no persistence gain); (c) many-particle statistics: the antisymmetric space from
+   `CarrierParity`, occupancy bounded by node capacity.
 2. **Primitive admission.** Derive admission and implementation of the local amplitude factors in
    the microscopic E8 gate library, and their prices; identify the directional-exponential
    completion with the on-site one.
