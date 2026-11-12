@@ -190,6 +190,13 @@ controls/admission premises and the selection of group, representation and β.
 - **Running:** `RunningResponse` (spin `(2s)²` and orbital `−1/3` from the substrate response);
   `ContactRunning` + `ContactFierz` (the weak contact's coefficient `(3/2)(1 + 2Q̄)` from the Ward
   combination and the `16`/`4` Dirac identities, proved on the Weyl blocks via `triple_blk`).
+- **States, statistics and readout (B.1):** `ReadoutRule` (an additive, basis-invariant,
+  monotone readout weight is `r²`: `born`), `ClassAdmission` (all three glue classes admitted),
+  `CarrierStatistics` (exchange is a relative full turn, `−1`; antisymmetry and exclusion).
+- **Colour inside a hadron:** `ColourSinglet` (the three-carrier singlet has zero mean colour
+  source), with `FlatPersistence`: no colour field on spin at leading order.
+- **Loop normalization:** `LoopMeasure` (the 4D measure gives `(α/4π)ln(M²/μ²)`; the self-energy
+  weight `W = −1`), used by `ContactRunning` with the orientation sign.
 - **Event pricing and admission:** `EventCoupling` (event price to stiffness and coupling,
   moved from PMConstants), `ClockLedger` (a factor costs its flags; the clock `2·toll·m` per tick),
   `Admission` (the split's factors are unitary, local and priced).
