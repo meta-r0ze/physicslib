@@ -10,8 +10,8 @@ new construction, not a missing Lean statement, unless marked otherwise.
    three-carrier singlet in one spatial mode has zero mean colour charge and current
    (`singlet_mean_one/two/three`: every traceless one-body colour operator averages to zero), and
    `FlatPersistence.flat_iff` shows unsourced persistent links are flat. So no colour-magnetic
-   field acts on spin at leading order; the fluctuation correction would need the gauge `β`
-   (B.5). The cube-scale `α_s` is not needed.
+   field acts on spin at leading order. The fluctuation correction would use the gauge `β`,
+   which is fixed downstream (B.5); the cube-scale `α_s` is not needed.
 2. **The lattice-to-energy unit.** Settled for both cubes (`PMHadrons.CubeScales`): the carrier
    cube and the decay's lepton cube cannot share a spacing (E8 masses and radius force a factor
    `> 300`, `two_units`); each persistent system has its own minimal cube at its own scale. Carrier
@@ -44,11 +44,13 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
 2. **Primitive admission.** Derive admission and implementation of the local amplitude factors in
    the microscopic E8 gate library, and their prices; identify the directional-exponential
    completion with the on-site one.
-   Checked (Nov 2026): `CommonResponse`'s `toll` is a price per flag (an additive cost), while
-   `PMSubstrate.tollTerm` (`9.5×10⁻⁵`, used by `PMHadrons.TollGovernor`) is a probability, the
-   fraction of valid Toll events. They are different kinds of object, and no PM statement links
-   them (a link via the survival law `w = e^{−β·cost}` would still need Paper I's `β` and the
-   repair length `m`). So the toll does not yet fix the gauge `β`.
+   **Prices are fixed downstream (found Nov 2026).** Survival sees only the product `toll·m`
+   (with Paper I's `β`), never `toll` and `m` separately, so they need no separate derivation.
+   `PMConstants.EventStiffness.calibration` and `ChainCouplings.chain_calibration` fix the product
+   from the electric coupling: `e² = 1/(toll·m·N_sys) = 4πα` (Paper I's `α`, Paper III's footprint
+   `N_sys`), which gives every primitive event a price. (`PMSubstrate.tollTerm`, a probability, is a
+   different object.) What remains here is admission: which local amplitude factors the E8 gate
+   library implements.
 3. **Prepared initial reference: closed by selection** (`ReferenceSelection`, Nov 2026). PM does
    not require dynamics to prepare the reference: the survival law selects it, and the most
    persistent configuration is the uniform background (`selected_reference`). Its per-tick ledger
@@ -58,14 +60,17 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
    (`needs_unbounded`). Remaining, small: a formal map from the background `Config` to
    `RecordSupply`'s stream (now an identification in the docstring), and the physical allocation
    of the reference/record banks (with B.1).
-4. **Clock and event ledger.** Price the setup, controls, transport/source/export and maintenance.
-   Four factor applications are not four primitive E8 events; survival minimization orders a
-   supplied cost but does not determine it.
-5. **Microscopic gauge transport.** The E8 realization of the abstract hop, its readout and price
-   law, shared group/trace normalization across spacings, and admission of the coherent
+4. **Clock and event ledger.** With `toll·m` fixed (B.2), the prices are numeric once the events
+   are counted. Remaining: the event count of the setup, controls, transport/source/export and
+   maintenance. Four factor applications are not four primitive E8 events; which primitive events
+   a factor application costs is the open count.
+5. **Microscopic gauge transport.** The gauge `β` is derived downstream:
+   `CarrierResponse.common_response_limit` gives `β = toll·m·W/2`, and with the calibration above
+   `g² = 1/(κ_R·toll·m·W)` for each sector's ledger `W` (`PMConstants.ChainCouplings.
+   chain_couplings`: weak, hypercharge, colour). Remaining here: the E8 realization of the
+   abstract hop, shared group/trace normalization across spacings, and admission of the coherent
    root-generator evolution as the substrate dynamics (for the packet subsystem: the `C²` control
-   one-forms and that admission). Reopens the gauge gap only if PM derives `β` or identifies the
-   Wilson cost with the survival cost (connects to A.1).
+   one-forms and that admission).
 6. **Full field and integrated limits.** Real-space field/PDE mode–domain control, the integrated
    Hessian, the full real-space fermion field, interacting-field estimates.
 7. **Applications.** Normalization, measure and regulator (and the trace/running reading); gravity

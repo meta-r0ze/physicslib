@@ -24,8 +24,9 @@ squared-amplitude readout and common repair-length contracts
   is that pricing premise (`CommonResponse.common_normalization` only factors it out); it is not
   derived from the carrier events.
 
-What remains outside this chain: the squared-amplitude readout and repair length `m` as Paper II
-inputs (only their product with the toll enters, and the chosen electric calibration fixes it),
+What remains outside this chain: the repair length `m` as a Paper II input (only its product
+with the toll enters, and the chosen electric calibration fixes it; the squared-amplitude readout
+is now derived, `PMAction.ReadoutRule.born`),
 the resource/refresh weights W, and the matching of the lattice couplings to measured ones
 at a stated scale. ColourPhaseMaintenance supplies an exact three-axis response
 interpretation of the conditional colour factor 12η; it does not derive η or its cadence.
