@@ -37,22 +37,10 @@ its value. Each names the current placeholder to replace.
 > the continuum measure for the E8 rates.  Keep them as comparison/mathematics
 > projects, not blockers.
 
-### A1. Two-body phase space from a delta function
-`MuonRate.two_body` currently proves only the arithmetic
-`4π/(2π)²·(1/4)·(1/2) = 1/(8π)`; it does **not** construct a measure. Target:
-build the massless two-body integral
-`Φ₂ = ∫ d³k/((2π)³ 2E_k) · d³k̄/((2π)³ 2E_k̄) · (2π)⁴ δ⁴(q − k − k̄)`
-and **compute** `Φ₂ = 1/(8π)` from it, then re-derive `pair_coeffs`
-(`A = 1/(96π)`, `B = 2A`). Note Mathlib's `integral_dirac` handles point masses,
-not a surface delta, so this likely needs an energy-shell/fiber (coarea)
-construction plus `MeasureTheory` change of variables. **Started:** `PhaseSpace.solidAngle_one` derives the `4π` angular weight from the
-iterated direction integral over `(z,φ)`, `average_one` normalizes it, and
-`electron_measure_radial` records the massless radial measure. Remaining: the
-energy-shell **delta** reduction and the full two-body measure. Since then the angular
-part is on the real sphere measure (`PolarMeasure.two_body_phase_space` over
-`volume.toSphere`) and the mass-shell Jacobian is derived (`PolarMeasure.massShell_reduction`).
-Remaining: one construction of `δ⁴(q − k − k̄)` that composes the two. This is the "not a
-constructed delta-function measure" gap.
+### A1. Two-body phase space from a delta function — done
+`PolarMeasure.two_body_from_lebesgue`: the cumulative pair integral over `ℝ³`
+(`cumulative_two_body`, from `integral_radial_three`) is `M/(8π)`, and its energy-shell
+derivative is `Φ₂ = 1/(8π)`. No supplied step remains.
 
 ### A3. Three-body phase-space factorization
 The three-body measure is used but not factored. Target: factor it into
@@ -74,7 +62,7 @@ uniform-sphere average is invariant under rotations on `L¹` (change of variable
 Haar invariance of the sphere), so the pair tensor's covariance is a consequence of
 the measure, not only of degree-≤2 moments.
 
-Suggested order: **A1 → A3**, then **A5**, then **A4** (A4 reuses A1–A3).
+Suggested order (A1 done): **A3**, then **A5**, then **A4** (A4 reuses A1–A3).
 
 ## Part B — physical model inputs (not Lean-provable)
 

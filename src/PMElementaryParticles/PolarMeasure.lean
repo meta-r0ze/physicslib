@@ -190,4 +190,53 @@ theorem massShell_reduction (h : ℝ → ℝ) (hh : Continuous h) {s : ℝ} (hs 
   rw [mul_one_div] at h3
   exact h3
 
+/-! ## A1: the two-body factor from one genuine `ℝ³` integral
+
+`twoBody_from_delta` starts from the radial form `∫₀^{M/2} 1/(4π) dr`. Here that form is
+derived from the Lebesgue integral over `ℝ³`: the cumulative massless two-body integral
+`C(M) = (2π)⁴/(4(2π)⁶) ∫_{ℝ³} 1_{2‖k‖ ≤ M}/‖k‖² d³k` (back-to-back pair, energy `2‖k‖`,
+Lorentz weights `1/(2‖k‖)²`) equals `M/(8π)` by the spherical change of variables
+(`integral_radial_three`), and its `M`-derivative, the energy-shell delta, is `Φ₂ = 1/(8π)`.
+So the delta-function measure is composed from the sphere measure and the shell Jacobian with
+no supplied step. -/
+
+/-- The cumulative pair integrand: `1/‖k‖²` inside the energy shell `2‖k‖ ≤ M`. -/
+def pairCumulant (M r : ℝ) : ℝ := if 2 * r ≤ M then 1 / r ^ 2 else 0
+
+private lemma radial_pairCumulant (M : ℝ) (hM : 0 ≤ M) :
+    ∫ r in Ioi (0 : ℝ), r ^ 2 * pairCumulant M r = M / 2 := by
+  have hc : ∫ r in Ioi (0 : ℝ), r ^ 2 * pairCumulant M r =
+      ∫ r in Ioi (0 : ℝ), (Iic (M / 2)).indicator (fun _ => (1 : ℝ)) r := by
+    refine setIntegral_congr_fun measurableSet_Ioi (fun r hr => ?_)
+    have hr0 : r ≠ 0 := ne_of_gt hr
+    simp only [pairCumulant, Set.indicator, Set.mem_Iic]
+    by_cases h : 2 * r ≤ M
+    · rw [if_pos h, if_pos (by linarith)]
+      field_simp
+    · rw [if_neg h, if_neg (by linarith)]
+      ring
+  rw [hc, setIntegral_indicator measurableSet_Iic, Set.Ioi_inter_Iic,
+    ← intervalIntegral.integral_of_le (by linarith : (0 : ℝ) ≤ M / 2),
+    intervalIntegral.integral_const]
+  simp
+
+/-- **The cumulative two-body integral over `ℝ³` is `M/(8π)`.** -/
+theorem cumulative_two_body {M : ℝ} (hM : 0 ≤ M) :
+    (2 * Real.pi) ^ 4 / (4 * (2 * Real.pi) ^ 6) *
+        ∫ k : EuclideanSpace ℝ (Fin 3), pairCumulant M ‖k‖ = M / (8 * Real.pi) := by
+  rw [integral_radial_three (pairCumulant M), radial_pairCumulant M hM]
+  have hp : Real.pi ≠ 0 := ne_of_gt Real.pi_pos
+  field_simp
+  ring
+
+/-- **A1 closed: `Φ₂ = 1/(8π)` is the energy-shell derivative of a genuine `∫_{ℝ³}`.** -/
+theorem two_body_from_lebesgue {M : ℝ} (hM : 0 < M) :
+    HasDerivAt (fun M' => (2 * Real.pi) ^ 4 / (4 * (2 * Real.pi) ^ 6) *
+        ∫ k : EuclideanSpace ℝ (Fin 3), pairCumulant M' ‖k‖) (1 / (8 * Real.pi)) M := by
+  have hlin : HasDerivAt (fun M' : ℝ => M' / (8 * Real.pi)) (1 / (8 * Real.pi)) M := by
+    simpa using (hasDerivAt_id M).div_const (8 * Real.pi)
+  refine hlin.congr_of_eventuallyEq ?_
+  filter_upwards [Ioi_mem_nhds hM] with M' hM'
+  exact cumulative_two_body (le_of_lt hM')
+
 end PMElementaryParticles.PolarMeasure

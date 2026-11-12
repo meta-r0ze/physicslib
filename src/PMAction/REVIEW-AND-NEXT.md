@@ -20,8 +20,21 @@ Checked mathematics, the module map and everything established are in
    Both effects are linear in the coupling, so their ratio is coupling-free: calibrated by the
    observed `293 MeV`, first-order exchange gives `g_A ≈ 1.27` (measured `1.2754`), i.e. the `+8%`
    is the same hyperfine physics that splits N and Δ. Caveats: first order at a large coupling,
-   positive-energy modes only, static propagator. Open: a persistence derivation of the carrier
-   cube's effective colour coupling (no E8 value for the Δ mass exists yet).
+   positive-energy modes only, static propagator.
+
+   **Running to the cube (Nov 2026, `tools/cube_coupling_running.py`).** Persistence says where
+   the coupling is read: colour is read at the executing mass (`PMConstants.ReadScale`), so the
+   carrier cube reads it at `1/a = 318 MeV`, not at the Z. Every input to the running is already
+   in the library: `α_s(m_Z)`, the derived one-loop `b₀ = 11N/3 − 2n_f/3`
+   (`RunningCoefficients.b0`), and the thresholds at the E8 masses `m_c = 1267 MeV`,
+   `m_b = 4182 MeV` (`PMConstants.StrongRunning`). One loop gives `α_s(1/a) = 0.87`, with
+   `Λ₃ = 142 MeV`, so `1/a ≈ 2.2 Λ₃`. Two loops (continuum `b₁`, as a stability test) reach a
+   pole near `400 MeV`, above `1/a`. So the scale is now fixed by persistence, but the value is
+   not: the carrier cube sits in the non-perturbative region, where running does not determine
+   the coupling. The needed effective `5.6` is above the one-loop `0.87`, as it should be there,
+   but nothing yet derives it. Open: a non-perturbative colour computation on the `3³` cube itself
+   (for example the static potential from Wilson loops at the cube's own coupling). No E8 value
+   for the Δ mass exists yet, so the N–Δ calibration stays a comparison.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
