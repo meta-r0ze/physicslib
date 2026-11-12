@@ -118,12 +118,7 @@ With the `3×3×3` cube only the lowest mode is open for any cutoff in `[6−3�
 `τ_n` does not depend on `m_n − m_p` there; below `6−3√2 = 1.757 m_e` no mode opens (tritium,
 C-14 would not decay). Nuclear beta decay needs a rule for the cube (`≥ 5×5×5` for tritium).
 
-## 3. e8p hadron rows — C
-
-`PMHadrons.Values` and `PMFlavor.Values` are the single import for hadron and CKM values. e8p
-still cites the defining modules for the hadron rows; re-point them at `PMHadrons.Values`.
-
-## 4. The emission space (f_π, f_K) — C
+## 3. The emission space (f_π, f_K) — C
 
 `EmissionSpace` makes the pion's count a set: `pionEmission = cone ⊔ survivingPhases`
 (Margin's `Δ²` one-cycle cone plus the Governor's `Δ − χ` boundary survivors), `|Ω_π| = 1890`.
