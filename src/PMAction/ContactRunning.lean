@@ -19,8 +19,9 @@ as input (see below).
 * Between bilinears, opposite orientation (legs `1,4` and `2,3`): `¼ γ^ργ^σΓ ⊗ Γγ_σγ_ρ = 4 Γ ⊗ Γ`,
   with the opposite sign (one leg's fermion flow is reversed).
 
-The two tensor identities (`16`, `4`) are verified numerically with these matrices
-(`tools/contact_running.py`); their Lean proof is still to be done.
+The two tensor identities (`16`, `4`) are proved in `ContactFierz` on the 2×2 Weyl blocks of
+these matrices (`same_identity'`, `opp_identity`), with the reduction from the 4×4 form to the
+blocks in `ContactFierz.triple_blk`.
 
 **Result.** With `W = −1` (in units of `α/4π · ln(M²/μ²)`):
 `c = −½(Q₁−Q₂)² − ½(Q₃−Q₄)² − 4(Q₁Q₃ + Q₂Q₄) + (Q₁Q₄ + Q₂Q₃)` (`contactCoefficient`).

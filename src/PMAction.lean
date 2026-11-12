@@ -50,6 +50,7 @@ import PMAction.CommonResponse
 import PMAction.LinkExpansion
 import PMAction.RunningCoefficients
 import PMAction.ContactRunning
+import PMAction.ContactFierz
 import PMAction.ContactMatching
 import PMAction.ChargedCurrent
 import PMAction.NeutralCurrent

@@ -43,7 +43,7 @@ Hermitian `H`, unitary transport of a normalized `φ`, with two-branch response
 | Fermion spectrum and split | `Dirac`, `DomainWall`, `DetuningMass`, `DomainWallSpectrum`, `ConfinedCarrier`, `ConfinedWalk`, `ConcreteFermion`, `ConcreteSpectrum`, `SignedSpectrum`, `EnergyCounts`, `WallDispersion`, `DiracEnergy`, `WallSeesaw`, `WallExchange` | Supplied two-wall Hamiltonian, signed branches, positive-state existence, link-dependent seesaw and parity-combined covariance. Representation, link, occupied branches and statistics are not selected. |
 | Controlled propagation | `LocalUnitary`, `SplitUpdate`, `PropagationBounds`, `WilsonSplit`, `VacuumSplit`, `VacuumGenerator`, `VacuumUniform`, `GlobalTickInterval`, `VacuumIteration`, `VacuumErrorRate`, `RealSpaceFourier`, `SpatialContinuum`, `ProjectedEvolution`, `JointSpaceTime`, `SplitCovariance`, `ReferenceWalkParity` | Corrected local unitary split, global safe-tick existence, uniform time-refinement bound, torus Fourier/spectrum identification, branch dispersion and joint fixed-momentum vacuum-sector evolution. Physical refinement/clock and full field/interacting limits remain open. |
 | Gauge and scalar transport | `D4Gauge`, `GaugeContinuum`, `VaryingFields`, `LinkConsistency`, `GaugeTransport`, `ReferenceSampling`, `SummedReference`, `ReadoutAdditivity`, `ScalarTransport` | Pointwise D₄ density limits, cubic-consistent link robustness, link extraction from a supplied linear hop, reference readout and scalar kinetic normalization. |
-| Gauge fluctuations and running | `RunningCoefficients`, `RunningResponse`, `ContactRunning`, `FlatPersistence`, `GaugeFluctuation`, `FluctuationPremises`, `FluctuationClosure`, `ContinuumFields`, `LandauDegeneracy`, `LatticeToContinuum` | Spin/orbital kernel coefficients, gauge-fixed Hessian and Ward algebra, finite-dimensional ghost determinant power, concrete field identities, strip-centre density and pointwise lattice-to-continuum second variation. No quantum continuum measure or integrated lattice action limit. |
+| Gauge fluctuations and running | `RunningCoefficients`, `RunningResponse`, `ContactRunning`, `ContactFierz`, `FlatPersistence`, `GaugeFluctuation`, `FluctuationPremises`, `FluctuationClosure`, `ContinuumFields`, `LandauDegeneracy`, `LatticeToContinuum` | Spin/orbital kernel coefficients, gauge-fixed Hessian and Ward algebra, finite-dimensional ghost determinant power, concrete field identities, strip-centre density and pointwise lattice-to-continuum second variation. No quantum continuum measure or integrated lattice action limit. |
 | Currents and decay foundations | `ChargedCurrent`, `NeutralCurrent`, `ContactMatching`, `WallChiralCurrent`, `ChiralityConvention`, `VATrace`, `MassiveVATrace`, `SpinorCompleteness`, `AmplitudeTrace`, `WeakVertex` | Charged/neutral normalization, su(2) doublet algebra (`T3`, `commutator_*`, `anticommutator_Tp_Tm`), V−A projector `P_L` (idempotent/Hermitian/rank two), wall-projector algebra, spin sums, bilinear-to-trace amplitude and factor 64, contact matching and kernel-basis existence. `ChiralityConvention.projector_eq_fromBlocks_PL` identifies the wall projector with block-diagonal `P_L`; `projector_unique_on_kernel` forces it on the zero kernel from the reference conditions. Physical interaction, mediator, external states and phase-space remain application inputs. |
 
 ## Shared state/controller and register layer
@@ -152,6 +152,45 @@ reconstruction, the mass gap and nontriviality — are the general
 quantum-Yang–Mills problem, not PM-specific consequences, and are out of scope
 here. The remaining PM-specific inputs are the two `NativePacketUpdate`
 controls/admission premises and the selection of group, representation and β.
+
+## Established results formerly tracked in REVIEW-AND-NEXT (moved Nov 2026)
+
+- **States and observation:** native representation, dependent-sector observation
+  (`SectorObservation`), class bundle (`CarrierClassBundle`), odd-carrier sector with identity even
+  modes.
+- **Completion selection:** `LocalIsometricDynamics` (finite-support on-site completion, unitary on
+  all labels, same stencil); `CompletionSelection` (persistence selects it:
+  `most_persistent_completion`, `selected_is_identity`).
+- **Reference and records:** `RegisterReference`, exact maintenance (`RecordSupply`,
+  `HomogeneousRouting`), stationary preparation (`PersistentBackground`, `ReversibleStationarity`),
+  unboundedness from persistence (`HomogeneousRouting.forever_iff_open`, `forever_needs_infinite`);
+  boundary results `ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`.
+- **Clock:** `RegisterSplit` (four-phase schedule), `ClockDynamics`, `ClockPeriod` (period `Δ`).
+- **Gauge transport and OS:** `CompositionalTransport`, `NativePacketUpdate`, `GeometricGauge`,
+  `ReciprocalReflection`, `OsterwalderSchrader` (OS semi-inner-product, `os_cauchy_schwarz`), the
+  assembled OS quotient (`osCore_normSq_eq`, `mem_osNullSubmodule_iff`, `quotientForm`,
+  `quotientInnerProductSpace`), `QuotientClosure.gibbs_quotient_invariant`; per-step maintenance in
+  PM-4 (`PerStepContract`).
+- **Gap:** `DefectGap`, `GapStability`, and the substrate gap `MassGap.SlabGap.slab_gap_explicit`
+  (mass `≥ β/2` per tick, `CubicBox.box_mass_gap`). The gauge layer is a separate continuous field
+  (`NativePacketRouting.pure_permutation_refinement_trivial`); its gap is the quantum Yang–Mills
+  problem (out of scope, below).
+- **Limits:** `JointSpaceTime`, `UniformGaugeAction`, `IntegratedGaugeAction`,
+  `IntegratedScalarAction`, `ClassicalYangMills`, `LatticeSiteAction`, `LatticeToContinuum`.
+- **Chirality and weak structure:** `projector_unique_on_kernel`, `projector_eq_fromBlocks_PL`,
+  `WeakCurrentBridge`, `ReferenceStabilizer.electroweak_stabilizer`.
+- **Confined carrier (for the hadrons):** `ConfinedCarrier` (two-slice Hermiticity, the wall
+  preserves `Σ_z`, `α₁, α₂` anticommute with it, `axisStep_unitary`, and the fixed-input status
+  table: single free carrier `(5/3)⟨Σ_z⟩ = 1.377`, `+8%`, with the rejected fits), `ConfinedWalk`
+  (`cube_axisStep_unitary`: the walk on the `3×3×3` cube is unitary for every tick),
+  `MinimalCube`; numerics in `tools/confined_carrier.py`, `tools/confined_walk.py` (hard wall from
+  the identity completion; small tick forced by isotropy, `VacuumTangent`).
+- **Flat links:** `FlatPersistence.flat_iff` (zero loop cost iff every holonomy is `1`).
+- **Running:** `RunningResponse` (spin `(2s)²` and orbital `−1/3` from the substrate response);
+  `ContactRunning` + `ContactFierz` (the weak contact's coefficient `(3/2)(1 + 2Q̄)` from the Ward
+  combination and the `16`/`4` Dirac identities, proved on the Weyl blocks via `triple_blk`).
+- **Lattice kernels:** `CoulombKernel`, `LatticeGreen3D`, `CubeGreen3` (exact `3×3×3` Green
+  function).
 
 ## Interpretation boundaries (what is *not* selected)
 
