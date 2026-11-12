@@ -59,6 +59,7 @@ def expRefs : Key → List ExpRef
   | .pionLifetimePredicted => [⟨2.6033e-8, 0.0005e-8, "pdg_2024"⟩]
   -- τ_π / (τ_K / BR(K→μν)) = 2.6033 / (1.2380 / 0.6356); errors 0.02%, 0.16%, 0.17% in quadrature
   | .kaonPionRatio => [⟨1.336557, 0.003176, "pdg_2024"⟩]
+  | .neutronLifetimeUnified => [⟨878.4, 0.5, "pdg_2024"⟩]
   | .muonLifetimeSeconds => [⟨2.1969811e-6, 0.0000022e-6, "pdg_2024"⟩]
   | .neutralPionFiniteLifetimeSeconds => [⟨8.43e-17, 0.13e-17, "pdg_2024"⟩]
   | .zEq => [⟨3387, 21, "planck_2018"⟩]
@@ -107,11 +108,14 @@ context, with `·` instead of a glyph:
 * early-universe (CMB) references against late-universe values (`hubble_late`, `clustering_late`):
   that gap is the Hubble / `S₈` tension, not a model miss (DES Y1 + BAO + BBN is calibrated by the
   BBN sound horizon, so it is grouped with the early-universe references);
+* `neutron_lifetime_predicted_s`: its `41/43` acts as a Governor above one; the template value is
+  `neutron_lifetime_unified_s`;
 * `muon_lifetime_s`, the tree-level width: the measurement includes the SM QED factor, and the E8
   `G_F` it tests is already scored in `fermi_constant`. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
-  | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds => false
+  | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds
+  | .neutronLifetimePredicted => false
   | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "abbott_des_y1_2018"
   | _ => true
 

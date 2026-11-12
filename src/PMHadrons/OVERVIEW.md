@@ -98,7 +98,7 @@ is elementary-particle work.
 
 | decay | E8 model | comparison | status |
 |---|---:|---:|---|
-| n → p e ν̄ | 877.1–877.2 s (proved, `neutronLifetimeCorrectedSeconds_bounds`) | 878.4 ± 0.5 s (PDG 2024; −2.5σ) | E8 finite-spectral + `41/43` margin (`NeutronPrediction`) |
+| n → p e ν̄ | 948.69–948.70 s (proved, `DecayInstantiation.neutronLifetimeUnifiedSeconds_bounds`; same template as π: `|V_ud|²R = 32/33`) | 878.4 ± 0.5 s (PDG 2024; +8.0%) | residual = Coulomb, `g_A`, low-energy radiative (REVIEW-AND-NEXT §0); the earlier 877.15 s used 41/43 as a Governor above one |
 | π⁺ → μ⁺ν | 2.60188–2.60192×10⁻⁸ s (proved, `pionLifetimeCorrectedSeconds_bounds`); 2.52×10⁻⁸ s before the margin | 2.6033 ± 0.0005×10⁻⁸ s (PDG 2024; −2.8σ) | E8 `fπ` + `32/33` pion-channel margin (SM: `|V_ud|²(1+δ_rad) ≈ 0.970`) |
 | K⁺ → μ⁺ν | ≈2.015×10⁻⁸ s | 1.948×10⁻⁸ s (K_μ2 partial, +3.5%) | E8 `fK`, `Vus`; no margin |
 | π⁰ → γγ | 8.44–8.48×10⁻¹⁷ s | 8.43 ± 0.13×10⁻¹⁷ s (PDG 2024; +0.2σ) | E8 `fπ`; anomaly `A = 1` derived |

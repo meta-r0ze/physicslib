@@ -23,7 +23,7 @@ inductive Key where
   | vud | vudDressed | bRes | neutrinoFloor | tauLifetimeFs
   | muonLifetimeFinite | tauLifetimeE8Natural | neutronSpectralFraction
   | neutronLifetimeE8 | muonLifetimeSeconds | neutronLifetimeSeconds | neutronLifetimePredicted
-  | pionLifetimePredicted | kaonPionRatio
+  | pionLifetimePredicted | kaonPionRatio | neutronLifetimeUnified
   | pionFiniteWidth | pionFiniteLifetime
   | kaonFiniteWidth | kaonFiniteLifetime
   | neutralPionFiniteWidth | neutralPionFiniteLifetime
@@ -49,7 +49,7 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .vud, .vudDressed, .bRes, .neutrinoFloor, .tauLifetimeFs, .muonLifetimeFinite,
   .tauLifetimeE8Natural, .neutronSpectralFraction, .neutronLifetimeE8,
   .muonLifetimeSeconds, .neutronLifetimeSeconds, .neutronLifetimePredicted,
-  .pionLifetimePredicted, .kaonPionRatio,
+  .pionLifetimePredicted, .kaonPionRatio, .neutronLifetimeUnified,
   .pionFiniteWidth, .pionFiniteLifetime,
   .kaonFiniteWidth, .kaonFiniteLifetime,
   .neutralPionFiniteWidth, .neutralPionFiniteLifetime,
@@ -136,6 +136,7 @@ def Key.id : Key → String
   | .neutronLifetimePredicted => "neutron_lifetime_predicted_s"
   | .pionLifetimePredicted => "pion_lifetime_predicted_s"
   | .kaonPionRatio => "kaon_pion_width_ratio"
+  | .neutronLifetimeUnified => "neutron_lifetime_unified_s"
   | .pionFiniteWidth => "pion_finite_width"
   | .pionFiniteLifetime => "pion_finite_lifetime"
   | .kaonFiniteWidth => "kaon_finite_width"
@@ -253,6 +254,7 @@ def bounds : Key → Rat × Rat
   | .neutronLifetimePredicted => (877.1, 877.2)
   | .pionLifetimePredicted => (2.60188e-8, 2.60192e-8)
   | .kaonPionRatio => (1.318922, 1.318923)
+  | .neutronLifetimeUnified => (948.69, 948.70)
   | .pionFiniteWidth => (4.9e-14, 5.16e-14)
   | .pionFiniteLifetime => (1.9e13, 2.05e13)
   | .kaonFiniteWidth => (6.1e-14, 6.47e-14)
@@ -277,7 +279,7 @@ def Key.unit : Key → String
   | .muonLifetimeFinite | .tauLifetimeE8Natural | .neutronLifetimeE8 => "m_e^-1"
   | .neutronSpectralFraction => "1"
   | .muonLifetimeSeconds | .neutronLifetimeSeconds | .neutronLifetimePredicted
-  | .pionLifetimePredicted
+  | .pionLifetimePredicted | .neutronLifetimeUnified
   | .pionFiniteLifetimeSeconds | .kaonFiniteLifetimeSeconds
   | .neutralPionFiniteLifetimeSeconds => "s"
   | .pionFiniteWidth | .kaonFiniteWidth | .neutralPionFiniteWidth => "m_e"
@@ -393,6 +395,7 @@ def Key.theoremName : Key → String
   | .neutronLifetimePredicted => "PMHadrons.neutronLifetimeCorrectedSeconds_bounds"
   | .pionLifetimePredicted => "PMHadrons.pionLifetimeCorrectedSeconds_bounds"
   | .kaonPionRatio => "PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds"
+  | .neutronLifetimeUnified => "PMHadrons.DecayInstantiation.neutronLifetimeUnifiedSeconds_bounds"
   | .pionFiniteWidth => "PMHadrons.pionFiniteWidth_bounds"
   | .pionFiniteLifetime => "PMHadrons.pionFiniteLifetime_bounds"
   | .kaonFiniteWidth => "PMHadrons.kaonFiniteWidth_bounds"
@@ -463,7 +466,7 @@ def Key.paper : Key → Nat
   | .tauLifetimeFs | .muonLifetimeFinite | .tauLifetimeE8Natural
   | .neutronSpectralFraction | .neutronLifetimeE8
   | .muonLifetimeSeconds | .neutronLifetimeSeconds | .neutronLifetimePredicted
-  | .pionLifetimePredicted | .kaonPionRatio => 5
+  | .pionLifetimePredicted | .kaonPionRatio | .neutronLifetimeUnified => 5
   | .pionFiniteWidth | .pionFiniteLifetime
   | .kaonFiniteWidth | .kaonFiniteLifetime
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime => 5
@@ -607,7 +610,8 @@ def Key.caveat : Key → String
   | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); the rest is f_K/f_pi = 70/59 (FLAG 1.1934)"
   | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; pi->mu nu is 99.988% of the total width"
   | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"
-  | .neutronLifetimePredicted => "E8 finite channel with the 41/43 margin; m_e and hbar c are unit inputs; the PDG average combines bottle and beam"
+  | .neutronLifetimePredicted => "41/43 applied as a Governor above one (DecayInstantiation.neutronCorrected_governor_gt_one), which a restriction cannot be; not scored, see neutron_lifetime_unified_s"
+  | .neutronLifetimeUnified => "same template as the pion: |V_ud|^2 R = 32/33, no Governor; the +8.0% is the neutron-only Coulomb (1.032), g_A (5/4 vs 1.2754, 1.034) and low-energy radiative (1.018) pieces, not yet built on the substrate"
   | .pionFiniteWidth | .pionFiniteLifetime
   | .kaonFiniteWidth | .kaonFiniteLifetime
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime =>

@@ -21,6 +21,7 @@ import PMHadrons.MesonMasses
 import PMHadrons.PionWidth
 import PMHadrons.KaonWidth
 import PMHadrons.KaonPionRatio
+import PMHadrons.DecayInstantiation
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.TauLifetime
 import PMConstants.WMassTest
@@ -164,6 +165,7 @@ def value : Key → ℝ
   | .neutronLifetimePredicted => PMHadrons.neutronLifetimeCorrectedSeconds
   | .pionLifetimePredicted => PMHadrons.pionLifetimeCorrectedSeconds
   | .kaonPionRatio => PMHadrons.KaonPionRatio.kaonPionWidthRatio
+  | .neutronLifetimeUnified => PMHadrons.DecayInstantiation.neutronLifetimeUnifiedSeconds
   | .pionFiniteWidth => PMHadrons.pionFiniteWidth
   | .pionFiniteLifetime => PMHadrons.pionFiniteLifetime
   | .kaonFiniteWidth => PMHadrons.kaonFiniteWidth
@@ -421,6 +423,10 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     exact ⟨h.1.le, h.2.le⟩
   | kaonPionRatio =>
     have h := PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | neutronLifetimeUnified =>
+    have h := PMHadrons.DecayInstantiation.neutronLifetimeUnifiedSeconds_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pionFiniteWidth =>

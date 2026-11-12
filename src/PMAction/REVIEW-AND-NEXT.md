@@ -89,6 +89,23 @@ regulator (and the trace/running reading), each a construction; gravity and meas
 need their own state/update/observable; quantum continuum and Lorentzian continuation
 are distinct obligations.
 
+## 8. What the hadron decays need from here (found in PMHadrons, Nov 2026)
+
+Working the neutron, pion and kaon widths in the six-pillar template (`PMHadrons.DecayInstantiation`)
+left three gaps; each is a missing construction here, not in PMHadrons:
+
+1. **A confined light carrier.** `DomainWall` gives the chiral zero mode for the infinite two-sector
+   slab (continuous time; the walk version is still to be built). A hadron needs that mode confined
+   to a finite region (the `3×3×3` cube). The Wilson carrier at `r = 1` confined to the cube is only
+   half relativistic (`⟨Σ_z⟩ = 0.893`, giving `g_A = 1.488`); the zero mode should be closer to
+   massless. Feeds `g_A` and the composite overlaps behind `f_π`, `f_K`.
+2. **The lattice-to-energy unit.** The beta spectral route reads lattice Dirichlet eigenvalues as
+   energies in `m_e`; the lattice Coulomb potential needs the same link (`κ` in
+   `PMHadrons/REVIEW-AND-NEXT.md` §0.2). One statement of the physical lattice spacing fixes both.
+3. **Spin and orbital response from the substrate.** `RunningCoefficients` takes `(2s)²` and `1/3` as
+   the continuum results. The weak contact's running (`PMHadrons.ShortDistanceRunning`, which
+   matches the pion's `32/33` to `7×10⁻⁵`) uses the same kind of one-loop coefficient.
+
 ## Downstream boundary
 
 Generic proofs do not move a downstream paper's physical identification with them.

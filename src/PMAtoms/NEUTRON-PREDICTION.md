@@ -30,3 +30,14 @@ The corrected prediction is within about `0.1%` of the measured lifetime.
 This is a candidate E8 prediction, not a fit. The finite spectral fraction is an
 external comparison calculation; the Lean side formalizes the cutoff, fraction
 expression, margin factor, and lifetime expression.
+
+## Update: one template for π, K and n
+
+The `41/43` above is the Governor's surviving-phase fraction, and it is applied here as a factor
+above one on the rate, which a Governor cannot be
+(`PMHadrons.DecayInstantiation.neutronCorrected_governor_gt_one`). Put in the same
+`DecayChannel` template as the pion (`|V_ud|²` in map, shared margin `R` with `|V_ud|²R = 32/33`,
+no Governor), the neutron is `948.69–948.70 s` (`neutronLifetimeUnifiedSeconds_bounds`), +8.0%.
+The 8.0% is the neutron-only Coulomb, `g_A` and low-energy radiative pieces
+(`PMHadrons/REVIEW-AND-NEXT.md` §0).
+

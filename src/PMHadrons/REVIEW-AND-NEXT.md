@@ -1,5 +1,62 @@
 # PMHadrons — open work
 
+## 0. One template for π, K, n — the neutron gap — H
+
+`DecayInstantiation` puts the three semileptonic decays in one `DecayChannel` template:
+`|V|²` in map (PMFlavor), no Governor (a Governor only restricts; PMAtoms' beta channel has
+none), and one shared margin `R = (32/33)/|V_ud|² ≈ 1.0211` fixed by the pion.
+
+* pion unchanged (`pionChannelCKM_rate`), `−2.8σ`;
+* kaon gets the same `R` (`kaonChannelCKM_rate`): +1.28%, the `f_K` tension;
+* neutron: `τ = τ_exact · 33/32 = 948.69–948.70 s` (`neutronLifetimeUnifiedSeconds_bounds`,
+  e8p `neutron_lifetime_unified_s`), +8.0%. The old `877.15 s` row used `41/43` as a Governor
+  above one (`neutronCorrected_governor_gt_one`) and is now shown unscored.
+
+The neutron's +8.0% equals, to 0.01%, what it has and the mesons do not: Coulomb on the outgoing
+electron (1.032), `g_A` (1.034; E8 `5/4` vs `1.2754`), low-energy radiative (1.018), times
+spectral-vs-continuum (0.994). The three, worked:
+
+1. **`R` — done as the running of the contact** (`ShortDistanceRunning`). With E8 `α`, the E8
+   carrier charges, the E8 tree-level `m_Z` and the E8 proton,
+   `R = 1 + (3α/4π)(1+2Q̄) ln(m_Z²/m_p²) ∈ (1.021178, 1.021180)` (`runningFactor_bounds`); the
+   pion's assigned `32/33` gives `R ∈ (1.021111, 1.021131)`; they agree to `< 7×10⁻⁵`
+   (`runningFactor_sub_shared`). So `32/33 = |V_ud|²·R` is the running, not a free margin. The
+   one-loop coefficient `(3/4π)(1+2Q̄)` is the standard result (same status as
+   `RunningCoefficients`' spin/orbital inputs).
+2. **Coulomb — the cube's own Green function gives ~1%, not ~3%** (floating point, outside Lean).
+   With `PMAtoms.LatticeCharge3`'s exact Green function as the proton's potential on the
+   `3×3×3` cube, `H = L − κα G(·, centre)`: the open-mode weight fraction moves by only
+   0.13–0.19% (all modes shift together), and the open mode's density at the proton rises by
+   0.8% (`κ = 4π`) to 1.1% (`κ = 4π√2`, the non-relativistic link `a = 1/(√2 m_e)`). The SM's
+   3.2% comes from the continuum electron at low velocity; on three sites per side the electron
+   is spread over the cube. So the lattice Coulomb as built supplies about a third of the gap;
+   the unit link `κ` is itself a choice to settle.
+3. **`g_A` — step 1 done, step 2 open.** `g_A` = how much of a carrier spin flip survives as a
+   nucleon spin flip = (count) × (motion reduction).
+   * **Count** (`AxialCount`): three carriers (one per colour, `σ − χ = 3`), one spin bit each
+     (`leg_state_binary`), the `u/d` doublet (`PMAction.ChargedCurrent`), symmetric in
+     spin ⊗ label because the three-colour singlet is antisymmetric. Exact computation on the 64
+     states: vector `1`, axial `5/3` (`axial_ratio`), and `5/3 = σ/(σ − χ)`
+     (`axial_ratio_eq_invariants`).
+   * **Reduction** (tried, not settled; floating point): PMAction's Wilson carrier at its Wilson
+     point `r = 1`, confined to the `3×3×3` cube (hard edge, or a domain-wall mass outside on a
+     `7³` lattice — both converge), gives `⟨Σ_z⟩ = 0.893`, so `g_A = 1.488` (+16.7%); a massless
+     continuum carrier (bag model) gives `0.65` (`g_A = 1.09`). The measurement needs `0.765`.
+     At `r = 1` the Wilson term is a mass of `≈ 0.88` against `≈ 1.2` kinetic at the cube's
+     momentum `π/4`, so the carrier is only half relativistic. `r` is fixed by `DomainWall`, not
+     tuned. The physical light carrier is PMAction's chiral zero mode, which has no finite-region
+     form yet (see PMAction `REVIEW-AND-NEXT`).
+   * **Reduction** (what it is): the carriers are confined and moving, so part of their spin is
+     orbital. On the substrate this is the lowest confined Dirac mode on the neutron's own
+     `3×3×3` cube (`PMAction.Dirac`, `ConcreteFermion`; `cube_interior_iff`): the fraction of its
+     density in the spin-carrying component. The measurement needs `1.2754/(5/3) = 0.765`; the
+     cube's number is the answer either way.
+   * `NeutronRate.gA = σ/D = 5/4` stays the assigned value until step 2 replaces it.
+
+Net: with `R` from the running, the neutron stands at +8.0%, of which the lattice Coulomb can
+account for ~1% and the rest is `g_A` (~3.4%) plus the low-energy radiative part (~1.8%) plus
+the Coulomb shortfall (~2%).
+
 ## 1. Decay margins — what the substrate number is, and what it matches — H
 
 Each channel has one substrate number on its rate. Read from the substrate side, then matched to
@@ -55,3 +112,15 @@ lifetimes, the K/π ratio, `neutronMarginFactor` and the Toll/Governor emission 
 `αinv`/`s12`/`s13`/`vus`/`vcb` copies. `PMCosmology.Tensions` takes `α⁻¹` from
 `PMSubstrate.geometricIndex` instead of `PMFlavor.CKM`. `NeutronPrediction.neutronMarginFactor` is
 `PMSubstrate.E8Margin.phaseMargin`.
+
+## 4. The emission space (f_π, f_K) — C
+
+`EmissionSpace` makes the pion's count a set: `pionEmission = cone ⊔ survivingPhases`
+(Margin's `Δ²` one-cycle cone plus the Governor's `Δ − χ` boundary survivors), `|Ω_π| = 1890`.
+The kaon needs the same rule plus what its line carrier (`σ`-direction register) does to the set.
+Five simple rules are tabulated in the module; none reaches FLAG's `fK/fπ = 1.1934(19)`
+(`|Ω_K| ≈ 1581–1586`). The assigned `Δ² − ν²` is the cone with its first `ν` slices removed, but
+without the survivors the pion keeps. The missing premise: how a direction-holding carrier
+restricts the cone. The cone is one spatial direction; a `σ`-direction carrier probably needs the
+cone in more directions. This is the `f_K` tension's source (f_k_mev −3.8σ and the K/π ratio
+−5.6σ are the same gap).
