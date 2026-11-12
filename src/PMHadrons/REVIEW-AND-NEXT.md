@@ -77,12 +77,10 @@ low-energy radiative (1.018), times spectral-vs-continuum (0.994). The product i
      cube's number is the answer either way.
    * `NeutronRate.gA = σ/D = 5/4` stays the assigned value until the cube coupling is derived.
 
-Net: with `R` from the running, the neutron stands at +8.0% (948.7 s) on the Boltzmann template, or
-+5.1% (922.9 s) on the continuum route (§2), which supplies the spectral and Coulomb factors. `NeutronCorrection`
-shows that four supplied, non-E8 factors (Coulomb, measured `g_A`, low-energy radiative,
-spectral-vs-continuum) account for the whole gap; that closure is bookkeeping, not a prediction.
-The E8 counterparts are still open: the lattice Coulomb, the confined axial overlap and the
-low-energy radiative correction. Direction: the rate goes as `1 + 3g_A²`, so a higher `g_A`
+Net (Nov 2026): the E8 neutron is the continuum route (§2, `NeutronContinuum`):
+`923.37–923.39 s` proved, +5.1%. It supplies the spectral and Coulomb factors from E8 inputs, so
+of the four neutron-only factors two remain open: `g_A` and the low-energy radiative correction.
+`NeutronCorrection` (all four factors supplied from outside E8) stays as bookkeeping. Direction: the rate goes as `1 + 3g_A²`, so a higher `g_A`
 shortens the lifetime. The rate now uses `5/4`; the measured `1.2754` shortens it by 3.4%. The
 single free carrier's `1.377` would shorten it by 17.6% (to about 806 s, −8%), overshooting, so
 it is not fed in.
@@ -156,9 +154,12 @@ those of the unbounded lattice at its own spacing, not of a minimal cube. Tested
 So the persistence reading removes two of the four neutron-only factors (spectral: it is the
 continuum; Coulomb: the Fermi factor with E8 `α`), leaves `g_A` (PMAction A.3) and the
 low-energy radiative correction, and gives every beta decay open modes for any `Q > 0`.
-**Decision for Kate:** adopt the continuum route as the neutron's E8 template (replacing the
-Boltzmann fraction, or keeping it as a comparison). Lean next: the closed-form `f₀` with bounds
-and a monotone bound on the Fermi factor's average.
+**Adopted (Nov 2026).** `PMHadrons.NeutronContinuum` proves the closed-form phase space as the
+integral, the leading Coulomb integral, the rate, and the lifetimes `954.32–954.34 s` (no Coulomb)
+and `923.37–923.39 s` (Fermi factor to first order); `PMHadrons.Values` and e8p
+(`neutron_lifetime_predicted_s`) use the latter. The `3³` template stays as an unscored comparison.
+Open here: a Lean bound for the full Fermi factor (`922.9 s` numerically), and the low-energy
+radiative correction.
 
 ## 3. The emission space (f_π, f_K) — C
 

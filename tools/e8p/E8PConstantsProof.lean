@@ -163,7 +163,7 @@ def value : Key → ℝ
   | .neutronLifetimeE8 => PMHadrons.neutronLifetimeE8
   | .muonLifetimeSeconds => PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds
   | .neutronLifetimeSeconds => PMHadrons.neutronLifetimeSeconds
-  | .neutronLifetimePredicted => PMHadrons.Values.neutronLifetimeCorrectedSeconds
+  | .neutronLifetimePredicted => PMHadrons.Values.neutronLifetimeContinuumCoulombSeconds
   | .pionLifetimePredicted => PMHadrons.Values.pionLifetimeCorrectedSeconds
   | .kaonPionRatio => PMHadrons.Values.kaonPionWidthRatio
   | .neutronLifetimeUnified => PMHadrons.Values.neutronLifetimeUnifiedSeconds
@@ -415,7 +415,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronLifetimePredicted =>
-    have h := PMHadrons.Values.neutronLifetimeCorrectedSeconds_bounds
+    have h := PMHadrons.Values.neutronLifetimeContinuumCoulombSeconds_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pionLifetimePredicted =>

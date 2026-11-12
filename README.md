@@ -52,6 +52,8 @@ The cross-cutting map of open physics questions — where the papers discuss the
 whether the tree covers them — is [`SCOPE.md`](SCOPE.md); the premises,
 inputs and open physics a reader should know about are in
 [`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md); each folder's `REVIEW-AND-NEXT.md` has the working list.
+How a lattice gives continuum results, and when it does not, is explained in
+[`src/PMElementaryParticles/CONTINUOUS.md`](src/PMElementaryParticles/CONTINUOUS.md).
 
 For more English background, it is helpful to clone the following older draft repositories and place them where the AI can access them.
 https://github.com/meta-r0ze/Persistence-Mechanics

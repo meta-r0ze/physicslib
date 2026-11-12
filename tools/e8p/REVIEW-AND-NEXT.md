@@ -67,8 +67,10 @@ Not yet in `e8p`, compared against `PM-1-Arch/calculations/constants.txt`:
 
 Lifetimes compared with measurement:
 
-- `neutron_lifetime_predicted_s` — finite channel with the `41/43` margin, `877.1–877.2` s
-  against PDG 2024 `878.4 ± 0.5` s (−2.5σ).
+- `neutron_lifetime_predicted_s` — continuum route (`PMHadrons.NeutronContinuum`), E8 inputs with
+  `g_A = 5/4` and the Fermi factor to first order, `923.37–923.39` s against PDG 2024
+  `878.4 ± 0.5` s (+5.1%); the gap is `g_A` and the low-energy radiative correction.
+  `neutron_lifetime_unified_s` (`948.69–948.70` s, the `3³` template) is unscored.
 - `pion_lifetime_predicted_s` — E8 two-body width with the `32/33` pion-channel margin,
   `2.60188–2.60192 ×10⁻⁸` s against `2.6033 ± 0.0005 ×10⁻⁸` s (−2.8σ).
 - `neutral_pion_finite_lifetime_s` — `8.44–8.48 ×10⁻¹⁷` s against `8.43 ± 0.13` (+0.2σ).

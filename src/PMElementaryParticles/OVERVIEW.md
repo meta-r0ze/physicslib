@@ -1,5 +1,7 @@
 # PMElementaryParticles — overview of checked results
 
+Why continuum phase space is correct on a lattice substrate, and when it is not: [`CONTINUOUS.md`](CONTINUOUS.md).
+
 The single map of what Paper V proves and what later work can reuse. Open work is
 in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in
 [`README.md`](README.md). Sources are under `PMElementaryParticles/`, imported by `PMElementaryParticles.lean`.

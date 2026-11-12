@@ -251,7 +251,7 @@ def bounds : Key → Rat × Rat
   | .neutronLifetimeE8 => (2.9e23, 8.0e23)
   | .muonLifetimeSeconds => (2.187343e-6, 2.187352e-6)
   | .neutronLifetimeSeconds => (3.7e2, 1.04e3)
-  | .neutronLifetimePredicted => (877.1, 877.2)
+  | .neutronLifetimePredicted => (923.37, 923.39)
   | .pionLifetimePredicted => (2.60188e-8, 2.60192e-8)
   | .kaonPionRatio => (1.318922, 1.318923)
   | .neutronLifetimeUnified => (948.69, 948.70)
@@ -392,7 +392,7 @@ def Key.theoremName : Key → String
   | .neutronLifetimeE8 => "PMHadrons.neutronLifetimeE8_bounds"
   | .muonLifetimeSeconds => "PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_tight"
   | .neutronLifetimeSeconds => "PMHadrons.neutronLifetimeSeconds_bounds"
-  | .neutronLifetimePredicted => "PMHadrons.neutronLifetimeCorrectedSeconds_bounds"
+  | .neutronLifetimePredicted => "PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds"
   | .pionLifetimePredicted => "PMHadrons.pionLifetimeCorrectedSeconds_bounds"
   | .kaonPionRatio => "PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds"
   | .neutronLifetimeUnified => "PMHadrons.DecayInstantiation.neutronLifetimeUnifiedSeconds_bounds"
@@ -584,7 +584,7 @@ def Key.formula : Key → String
   | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5)"
   | .kaonPionRatio => "\\frac{\\Gamma_K}{\\Gamma_\\pi}=\\frac{\\pi^2}{196-\\pi^2}\\left(\\frac{70}{59}\\right)^2\\frac{m_K}{m_\\pi}\\frac{(1-m_\\mu^2/m_K^2)^2}{(1-m_\\mu^2/m_\\pi^2)^2}"
   | .pionLifetimePredicted => "\\frac{33}{32}\\,\\frac{8\\pi}{G_F^2 f_\\pi^2 m_\\pi m_\\mu^2(1-m_\\mu^2/m_\\pi^2)^2}"
-  | .neutronLifetimePredicted => "\\frac{41}{43}\\,\\frac{3(1+r+r^2)^3}{G_F^2 m_e^4},\\ r=e^{-\\sqrt2}"
+  | .neutronLifetimePredicted => "\\frac{2\\pi^3}{G_F^2 |V_{ud}|^2 R\\,(1+3g_A^2)\\,(f_0+\\pi\\alpha P)},\\ g_A=5/4"
   | _ => ""
 
 /-- Known interpretation caveats shown alongside an audit row. -/
@@ -610,8 +610,8 @@ def Key.caveat : Key → String
   | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); the rest is f_K/f_pi = 70/59 (FLAG 1.1934)"
   | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; pi->mu nu is 99.988% of the total width"
   | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"
-  | .neutronLifetimePredicted => "41/43 applied as a Governor above one (DecayInstantiation.neutronCorrected_governor_gt_one), which a restriction cannot be; not scored, see neutron_lifetime_unified_s"
-  | .neutronLifetimeUnified => "same template as the pion: |V_ud|^2 R = 32/33, no Governor; the +8.0% is the neutron-only Coulomb (1.032), g_A (5/4 vs 1.2754, 1.034) and low-energy radiative (1.018) pieces, not yet built on the substrate"
+  | .neutronLifetimePredicted => "continuum route: the emitted electron is not confined, so its modes are the continuum limit of the lattice; phase space as for the muon, Fermi factor to first order (full factor 922.9 s); remaining gap: g_A (5/4 vs 1.2754) and the low-energy radiative correction"
+  | .neutronLifetimeUnified => "3x3x3 spectral template (comparison): the continuum route without Coulomb to 0.6%; see neutron_lifetime_predicted_s"
   | .pionFiniteWidth | .pionFiniteLifetime
   | .kaonFiniteWidth | .kaonFiniteLifetime
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime =>

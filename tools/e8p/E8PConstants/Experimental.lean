@@ -108,14 +108,14 @@ context, with `·` instead of a glyph:
 * early-universe (CMB) references against late-universe values (`hubble_late`, `clustering_late`):
   that gap is the Hubble / `S₈` tension, not a model miss (DES Y1 + BAO + BBN is calibrated by the
   BBN sound horizon, so it is grouped with the early-universe references);
-* `neutron_lifetime_predicted_s`: its `41/43` acts as a Governor above one; the template value is
-  `neutron_lifetime_unified_s`;
+* `neutron_lifetime_unified_s`: the `3³` spectral template, kept as a comparison; the scored E8
+  neutron is `neutron_lifetime_predicted_s` (continuum route);
 * `muon_lifetime_s`, the tree-level width: the measurement includes the SM QED factor, and the E8
   `G_F` it tests is already scored in `fermi_constant`. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
   | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds
-  | .neutronLifetimePredicted => false
+  | .neutronLifetimeUnified => false
   | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "abbott_des_y1_2018"
   | _ => true
 

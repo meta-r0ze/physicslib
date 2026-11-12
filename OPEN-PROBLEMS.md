@@ -31,11 +31,9 @@ A continuous magnitude or unit cannot be the unique minimizer of a scale-invaria
 
 | Problem | Status | Detail |
 | --- | --- | --- |
-| **Neutron lifetime** | E8 gives 948.7 s, +8.0% vs 878.4 s. The gap is four neutron-only factors: Coulomb, `g_A`, low-energy radiative, spectral-vs-continuum. `R` (the short-distance running) is derived. | `PMHadrons/REVIEW-AND-NEXT.md` §0 |
-| ↳ Coulomb and spectral factors | The lepton cube's Coulomb law is right for its one mode; the missing ~2% is which electron modes the decay channel opens (a single fast mode, read non-relativistically). | same, §0.2 and §2 |
+| **Neutron lifetime** | E8 gives 923.4 s on the continuum route (the emitted electron is not confined; see `src/PMElementaryParticles/CONTINUOUS.md`), +5.1% vs 878.4 s. The phase space, Coulomb factor and short-distance running are derived; `g_A` and the low-energy radiative correction are not. | `PMHadrons/REVIEW-AND-NEXT.md` §0, §2 |
 | ↳ `g_A` | Count `5/3` is exact; a single confined carrier gives `1.377`. Colour exchange between the carriers would close it, but the carrier-cube colour coupling is non-perturbative (running from the Z hits the pole above the cube's `318 MeV`) and not yet derived. | `PMAction/REVIEW-AND-NEXT.md` A.3 |
 | **`f_K` and the K/π ratio** | `f_K` −3.8σ, K/π −5.6σ (one gap). The pion's emission count `1890` is a defined set; no premise yet says how the kaon's strange carrier restricts it. | `PMHadrons/REVIEW-AND-NEXT.md` §3 |
-| **Nuclear beta decay beyond the neutron** | The minimal `3³` lepton cube opens no mode below `1.757 m_e`, so tritium and C-14 would not decay; a cube-size rule is missing. | `PMHadrons/REVIEW-AND-NEXT.md` §2 |
 | **Heavy nuclei** | Actinide deformation scatters ±0.019 u; heavy charge-radius scaling and the deformed proton closure `2(Δ+σ) = 96` are candidates. | `PMAtoms/REVIEW-AND-NEXT.md` |
 | **Cosmology** | Background evolution, primordial source, baryon-changing event, metric/causal structure and entropy normalization are not constructed. | `PMCosmology/REVIEW-AND-NEXT.md` |
 
