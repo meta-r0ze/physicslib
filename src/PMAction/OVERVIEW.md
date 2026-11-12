@@ -164,7 +164,8 @@ controls/admission premises and the selection of group, representation and β.
 - **Reference and records:** `RegisterReference`, exact maintenance (`RecordSupply`,
   `HomogeneousRouting`), stationary preparation (`PersistentBackground`, `ReversibleStationarity`),
   unboundedness from persistence (`HomogeneousRouting.forever_iff_open`, `forever_needs_infinite`);
-  boundary results `ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`.
+  boundary results `ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`;
+  `ReferenceSelection` (the reference is selected, not prepared; per-tick ledger).
 - **Clock:** `RegisterSplit` (four-phase schedule), `ClockDynamics`, `ClockPeriod` (period `Δ`).
 - **Gauge transport and OS:** `CompositionalTransport`, `NativePacketUpdate`, `GeometricGauge`,
   `ReciprocalReflection`, `OsterwalderSchrader` (OS semi-inner-product, `os_cauchy_schwarz`), the

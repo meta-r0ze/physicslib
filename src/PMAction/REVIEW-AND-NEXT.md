@@ -47,9 +47,15 @@ piece it may need is the carrier–pion vertex (the pion couples to the carrier'
    fraction of valid Toll events. They are different kinds of object, and no PM statement links
    them (a link via the survival law `w = e^{−β·cost}` would still need Paper I's `β` and the
    repair length `m`). So the toll does not yet fix the gauge `β`.
-3. **Prepared initial reference.** Closed basis-preserving controls cannot supply it
-   (`ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`); its per-tick ledger and
-   the physical allocation of the reference/record banks remain.
+3. **Prepared initial reference: closed by selection** (`ReferenceSelection`, Nov 2026). PM does
+   not require dynamics to prepare the reference: the survival law selects it, and the most
+   persistent configuration is the uniform background (`selected_reference`). Its per-tick ledger
+   is one clean record consumed and one exported per tick at the coupling site
+   (`one_record_per_tick`), from distinct sites on an open orbit (`consumed_records_distinct`);
+   maintenance is exact forever (`reference_forever`) and needs the unbounded substrate
+   (`needs_unbounded`). Remaining, small: a formal map from the background `Config` to
+   `RecordSupply`'s stream (now an identification in the docstring), and the physical allocation
+   of the reference/record banks (with B.1).
 4. **Clock and event ledger.** Price the setup, controls, transport/source/export and maintenance.
    Four factor applications are not four primitive E8 events; survival minimization orders a
    supplied cost but does not determine it.

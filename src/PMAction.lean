@@ -254,6 +254,7 @@ import PMAction.Machine.RecordSupply
 import PMAction.HomogeneousRouting
 import PMAction.PersistenceSelection
 import PMAction.PersistentBackground
+import PMAction.ReferenceSelection
 import PMAction.CompletionSelection
 
 import PMAction.Machine.ReadoutAdditivity
