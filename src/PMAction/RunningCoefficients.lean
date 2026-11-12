@@ -19,9 +19,9 @@ and `1/3` the orbital (diamagnetic) one, and the sign is the statistics.
 * `bContent`, `bContent_formula`: the same rule for arbitrary content, given the gauge index and the
   summed Weyl and complex-scalar indices; `b0_eq_content` recovers `b0`.
 
-Open (substrate): the two inputs of the decomposition, the spin response `(2s)²` and the orbital
-`1/3`, are the standard continuum results; deriving them from the substrate's response is not done
-here. A natural target is the `1/3` as an average over the three spatial directions.
+Substrate derivation: `RunningResponse` (which imports this file) derives both inputs. The spin
+response `(2s)²` follows from the Clifford relations (`zeeman`, `concrete_spin`), the orbital `1/3`
+from the Landau sum (`pair_coefficient`), and `spin_term_from_response` matches them to `spinTerm`.
 -/
 
 namespace PMAction.RunningCoefficients

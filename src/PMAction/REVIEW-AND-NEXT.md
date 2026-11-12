@@ -94,17 +94,45 @@ are distinct obligations.
 Working the neutron, pion and kaon widths in the six-pillar template (`PMHadrons.DecayInstantiation`)
 left three gaps; each is a missing construction here, not in PMHadrons:
 
-1. **A confined light carrier.** `DomainWall` gives the chiral zero mode for the infinite two-sector
-   slab (continuous time; the walk version is still to be built). A hadron needs that mode confined
-   to a finite region (the `3×3×3` cube). The Wilson carrier at `r = 1` confined to the cube is only
-   half relativistic (`⟨Σ_z⟩ = 0.893`, giving `g_A = 1.488`); the zero mode should be closer to
-   massless. Feeds `g_A` and the composite overlaps behind `f_π`, `f_K`.
+1. **A confined light carrier.** Built: `ConfinedCarrier` (two-slice Hamiltonian on a finite
+   region is Hermitian; the wall preserves `Σ_z`), numerics in `tools/confined_carrier.py`. The
+   wall is hard by persistence: sites outside the hadron's cube are not its resources, so they
+   are not refreshed and carry no amplitude (`M_out = ∞`). On the `3×3×3` cube this gives
+   `⟨Σ_z⟩ = 0.826`, a single free carrier's `(5/3)⟨Σ_z⟩ = 1.377` (`+8%`; not the neutron's
+   `g_A`; the Wilson carrier gave `+17%`). The number depends only
+   on the edge site count, which `MinimalCube` fixes at 3. Open: the remaining `+8%` is beyond the
+   single free carrier, in the three carriers' mutual synchronization (gluon dressing), and the
+   discrete-time version is still to be built.
+   **Walk version** (`tools/confined_walk.py`): `CompletionSelection` applied to each axis step
+   leaves the face modes the truncated hop misses unchanged (`R_j = cos τ N_t² + i sin τ N_t +
+   P_j`), which is unitary, local, and has the plain truncation as generator. So the hard wall is
+   the walk's wall, and the truncation's `⟨Σ_z⟩` levels off toward the bag value as the cube grows
+   (`0.826 → 0.677` for edge `3 → 7`). The tick: in Paper II's
+   vacuum-preserving update the axis steps are ordered, so finite `τ` makes the carrier anisotropic
+   (speeds `sin τ (cos 5τ, cos 3τ, cos τ)`, `VacuumTangent`; on `3³` at `τ = 0.3`,
+   `⟨Σ_x, Σ_y, Σ_z⟩ = 0.785, 0.797, 0.776`). The cube's isotropy then fixes the small-tick regime
+   (`VacuumErrorRate`), where the carrier is the Hamiltonian's `0.826`. (An earlier scan with the
+   uncorrected ordering, which Paper II warns against, showed spurious reductions.) Also checked: the physical axial density with
+   `γ⁵ = Γ = −iα₁α₂α₃` (`WallChiralCurrent`, `VATrace`) is `Σ_z`, and projecting onto the
+   zero-mode chiralities raises the value (`0.867` on `3³`), so the operator is not what is missing.
+   Lean: `ConfinedCarrier.axisStep_unitary` (the identity-completed axis step is unitary for any
+   Hermitian hop with `N³ = N`) and `coefficient_partial` (`c c† c = c`); still to prove in Lean:
+   the open shift's `S Sᵀ S = S` and the Kronecker step to `N³ = N`.
+   **Status, recorded so it is not fitted:** every input is fixed (count, cube, hard wall, Wilson
+   point, small tick, `Σ_z`), and the single free carrier gives `1.377` (+8%). The gap is what a
+   free carrier leaves out. Next candidates: carrier–carrier interaction that touches spin or
+   position, and the pion emission space. Rejected as fits: 4-site cube, soft wall, finite tick,
+   `25/27`.
 2. **The lattice-to-energy unit.** The beta spectral route reads lattice Dirichlet eigenvalues as
    energies in `m_e`; the lattice Coulomb potential needs the same link (`κ` in
    `PMHadrons/REVIEW-AND-NEXT.md` §0.2). One statement of the physical lattice spacing fixes both.
-3. **Spin and orbital response from the substrate.** `RunningCoefficients` takes `(2s)²` and `1/3` as
-   the continuum results. The weak contact's running (`PMHadrons.ShortDistanceRunning`, which
-   matches the pion's `32/33` to `7×10⁻⁵`) uses the same kind of one-loop coefficient.
+3. **Spin and orbital response from the substrate.** Done in `RunningResponse`: the spin term
+   `(2s)²` from the Clifford relations (`zeeman`, `concrete_spin`; spin 1 by
+   `GaugeFluctuation.vector_kernel`), the orbital `−1/3` from the Landau sum (`landau_sum`,
+   `pair_kernel`, `pair_coefficient`), assembled in `spin_term_from_response`. What
+   `PMHadrons.ShortDistanceRunning` still takes from the continuum is different: the weak
+   contact's own one-loop coefficient `(3/4π)(1 + 2Q̄)` is a box/vertex correction to a
+   four-fermion contact, not vacuum polarization, and has no substrate derivation yet.
 
 ## Downstream boundary
 

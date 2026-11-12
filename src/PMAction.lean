@@ -20,6 +20,7 @@ import PMAction.DomainWall
 import PMAction.DetuningMass
 import PMAction.GaugeContinuum
 import PMAction.DomainWallSpectrum
+import PMAction.ConfinedCarrier
 import PMAction.ConcreteFermion
 import PMAction.ConcreteSpectrum
 import PMAction.SignedSpectrum
