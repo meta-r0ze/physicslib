@@ -11,8 +11,19 @@ Checked mathematics, the module map and everything established are in
 2. **The contact running on the lattice (optional).** Everything in `(3α/4π)(1 + 2Q̄)` is derived
    except the Feynman parametrization step and the identification of the leading-log region with
    the D₄ lattice sum far below the cutoff. Low priority: `R` already matches the pion to `7×10⁻⁵`.
-3. **The carrier–pion vertex**, if the `g_A` emission route in PMHadrons needs it: the pion couples
-   to the carrier's axial current.
+3. **The colour coupling on the carrier cube (open, Nov 2026).** `tools/colour_fluctuation.py`
+   computes one-gluon exchange among the three confined carriers (ground mode, singlet factor
+   `−2/3`, `CubeGreen3` propagator). With the ledger coupling `α_s = 0.118` on the cube, the
+   `g_A` correction is `−0.16%` and the N–Δ splitting is `6 MeV` (observed `293 MeV`). So the
+   argument "the same dimensionless lattice coupling on every persistent cube" is contradicted by
+   the N–Δ splitting: the observed splitting needs an effective `α_s ≈ 5.6` on the carrier cube.
+   Both effects are linear in the coupling, so their ratio is coupling-free: calibrated by the
+   observed `293 MeV`, first-order exchange gives `g_A ≈ 1.27` (measured `1.2754`), i.e. the `+8%`
+   is the same hyperfine physics that splits N and Δ. Caveats: first order at a large coupling,
+   positive-energy modes only, static propagator. Open: a persistence derivation of the carrier
+   cube's effective colour coupling (no E8 value for the Δ mass exists yet).
+4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
+   boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
 ## B. Foundational (long-term)
 
