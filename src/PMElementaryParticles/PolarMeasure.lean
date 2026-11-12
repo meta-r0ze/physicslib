@@ -211,9 +211,11 @@ private lemma radial_pairCumulant (M : ℝ) (hM : 0 ≤ M) :
     have hr0 : r ≠ 0 := ne_of_gt hr
     simp only [pairCumulant, Set.indicator, Set.mem_Iic]
     by_cases h : 2 * r ≤ M
-    · rw [if_pos h, if_pos (by linarith)]
+    · have h' : r ≤ M / 2 := by linarith
+      rw [ite_cond_eq_true _ _ (eq_true h), ite_cond_eq_true _ _ (eq_true h')]
       field_simp
-    · rw [if_neg h, if_neg (by linarith)]
+    · have h' : ¬ r ≤ M / 2 := fun hr' => h (by linarith)
+      rw [ite_cond_eq_false _ _ (eq_false h), ite_cond_eq_false _ _ (eq_false h')]
       ring
   rw [hc, setIntegral_indicator measurableSet_Iic, Set.Ioi_inter_Iic,
     ← intervalIntegral.integral_of_le (by linarith : (0 : ℝ) ≤ M / 2),
