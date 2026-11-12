@@ -77,7 +77,8 @@ low-energy radiative (1.018), times spectral-vs-continuum (0.994). The product i
      cube's number is the answer either way.
    * `NeutronRate.gA = σ/D = 5/4` stays the assigned value until the cube coupling is derived.
 
-Net: with `R` from the running, the neutron stands at +8.0% (948.7 s). `NeutronCorrection`
+Net: with `R` from the running, the neutron stands at +8.0% (948.7 s) on the Boltzmann template, or
++5.1% (922.9 s) on the continuum route (§2), which supplies the spectral and Coulomb factors. `NeutronCorrection`
 shows that four supplied, non-E8 factors (Coulomb, measured `g_A`, low-energy radiative,
 spectral-vs-continuum) account for the whole gap; that closure is bookkeeping, not a prediction.
 The E8 counterparts are still open: the lattice Coulomb, the confined axial overlap and the
@@ -87,6 +88,12 @@ single free carrier's `1.377` would shorten it by 17.6% (to about 806 s, −8%),
 it is not fed in.
 
 ## 1. Decay margins — what the substrate number is, and what it matches — H
+
+*Partly superseded:* §0 puts the neutron on the pion's template (`|V_ud|²R = 32/33`, no
+Governor), so the neutron's `41/43` below is history; what stays open here is the reading of
+`32/33` (now `|V_ud|²R`, §0.1) and the kaon's factor. `E8Margin` vs
+`neutronLifetimeCorrected` can be settled by retiring the latter once the continuum route (§2) is
+adopted.
 
 Each channel has one substrate number on its rate. Read from the substrate side, then matched to
 the SM factors it lines up with (comparison, floating point, outside Lean):
@@ -122,11 +129,36 @@ Open, from the substrate side:
 - The SM side's `g_A`: `NeutronRate.gA = σ/D = 5/4` against `1.2754`; on the spectral route `g_A`
   does not appear separately.
 
-## 2. Beta cube rule — C/H
+## 2. Which modes the emitted electron has — H (Nov 2026)
 
-With the `3×3×3` cube only the lowest mode is open for any cutoff in `[6−3√2, 6−2√2) m_e`, so
-`τ_n` does not depend on `m_n − m_p` there; below `6−3√2 = 1.757 m_e` no mode opens (tritium,
-C-14 would not decay). Nuclear beta decay needs a rule for the cube (`≥ 5×5×5` for tritium).
+The spectral template is `rate = (G_F²/3)·f_B`, with `f_B` the Boltzmann-weighted fraction of the
+lepton cube's Dirichlet modes below the cutoff. On the minimal `3×3×3` cube only the lowest mode is
+open, and below `6−3√2 = 1.757 m_e` none is (tritium and C-14 would not decay).
+
+**Persistence reading.** The emitted electron is not a resource of any persistent volume: it
+leaves through the Toll boundary (`TollGovernor`). By the same rule that makes the carrier's wall
+hard (only a persistent volume's own sites are refreshed), nothing confines it, so its modes are
+those of the unbounded lattice at its own spacing, not of a minimal cube. Tested
+(`tools/beta_channel_modes.py`, floating point):
+
+* **The Boltzmann template does not survive this.** As the cube grows `f_B` rises from `0.453`
+  (`3³`) to `0.741` (unbounded), so the neutron moves from 948.7 s to about 580 s. The template
+  saturates at one as the cutoff grows, so it has no `Q⁵` law: the tritium/neutron ratio comes
+  out `4×10⁻³` against the phase-space `1.2×10⁻⁶`. Its 3³ agreement with the neutron is not
+  a law that extends to other decays.
+* **The continuum route does.** With the phase space PMElementaryParticles already derives for
+  the muon (`MuonRate`, `PolarMeasure`), `Γ = G_F²|V_ud|²(1+3g_A²) R f/(2π³)`,
+  `f = ∫ F(E) p E (E₀−E)² dE`, and only E8 inputs (`G_F`, `|V_ud|`, `R`, `α`,
+  `E₀ = m_n − m_p`, `g_A = 5/4`): `954.2 s` without Coulomb (+8.6%; the 3³ template's 948.7 s is
+  this to 0.6%, the "spectral factor"), `922.9 s` with the Fermi factor (+5.1%). With measured
+  `g_A` it is `892.7 s` (+1.6%); the rest is the low-energy radiative correction.
+
+So the persistence reading removes two of the four neutron-only factors (spectral: it is the
+continuum; Coulomb: the Fermi factor with E8 `α`), leaves `g_A` (PMAction A.3) and the
+low-energy radiative correction, and gives every beta decay open modes for any `Q > 0`.
+**Decision for Kate:** adopt the continuum route as the neutron's E8 template (replacing the
+Boltzmann fraction, or keeping it as a comparison). Lean next: the closed-form `f₀` with bounds
+and a monotone bound on the Fermi factor's average.
 
 ## 3. The emission space (f_π, f_K) — C
 
