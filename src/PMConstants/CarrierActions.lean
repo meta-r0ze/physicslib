@@ -2,8 +2,10 @@ import PMConstants.CarrierRepresentation
 import PMAction.Machine.CarrierResponse
 
 /-! Actual finite carrier operations behind two representation columns.
-The axis/sign interpretation is inherited; no continuous gauge group or
-clock-refresh assignment is inferred from the cardinalities alone. -/
+No continuous gauge group or clock-refresh assignment is inferred from the
+cardinalities alone. `same_axis_iff`: the sign is the only move that keeps a
+carrier's axis, so a refresh that keeps the reference's axis acts on the sign
+pair; that is why the sign is the doublet index. -/
 noncomputable section
 namespace PMConstants.CarrierActions
 open PMAction.CarrierEvents PMConstants.CarrierRepresentation
@@ -131,5 +133,12 @@ theorem weak_unitary : weak.permMatrix ℂ ∈ unitary (Matrix Packet Packet ℂ
 
 theorem colour_unitary (a b : Fin 3) : (colour a b).permMatrix ℂ ∈ unitary (Matrix Packet Packet ℂ) :=
   PMAction.CarrierResponse.perm_unitary (colour a b)
+
+/-- **The sign is the only move that keeps a carrier's axis.** Two carriers lie on the same axis
+exactly when they are equal or sign-exchanged. So a refresh that moves the reference while keeping
+its axis (weak, `RequirementRows`) relates exactly the sign pair: the sign is the doublet index. -/
+theorem same_axis_iff (v w : V) :
+    (∀ i, (coord v i ≠ 0 ↔ coord w i ≠ 0)) ↔ (w = v ∨ w = signExchange v) := by
+  revert v w; decide +kernel
 
 end PMConstants.CarrierActions

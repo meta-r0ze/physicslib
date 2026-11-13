@@ -27,8 +27,9 @@ lepton number as the fourth "colour".
 
 Premises: both domain-wall sectors use a class carried to the vector class by triality (any
 nontrivial class is, keeping the roots: `PMSubstrate.ChannelSymmetry.class_to_vector`; and all
-three classes are admitted, `PMAction.ClassAdmission`), the sign is the doublet index, and one
-axis is the lepton axis. The last is the reserved cell's: the frame reserves one cell for its
+three classes are admitted, `PMAction.ClassAdmission`), the sign is the doublet index (the only
+move keeping a carrier's axis, `CarrierActions.same_axis_iff`, so the refresh that moves the
+reference within its axis acts on the sign pair), and one axis is the lepton axis. The last is the reserved cell's: the frame reserves one cell for its
 tone (`ReferenceFrames`, η), the cell holds one carrier state (`ReferenceEconomy.cell_inj_of_content`),
 and a carrier lies on exactly one axis (`one_axis`), so the reference singles out one axis
 (`ReferenceAxis`). Which axis that is breaks `SU(4)` to colour
