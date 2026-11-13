@@ -21,8 +21,8 @@ scalar normalization follows from the same calibration with a continuum theorem.
   toll·m and α. The common prefactor cancels between the gauge and scalar terms.
 * `mass_ratio`: `m_W²/m_Z² = 1 − clockRatio`, the tree-level `cos²θ_W`.
 
-Premises (not derived): event pricing of scalar and gauge links with one toll and repair
-length, the link weight `1/4` (each undirected link once per cell), summed charge-unit reads
+Premises (not derived): event pricing of scalar and gauge links with one repair length (one
+toll is PM's cost definition, `PMSubstrate.NetCost`), the link weight `1/4` (each undirected link once per cell), summed charge-unit reads
 for the couplings, cubic link consistency, and the substrate amplitude `v_sub` itself.
 -/
 

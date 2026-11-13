@@ -27,10 +27,13 @@ conservation and the unit link, the standard charges and `Y_ν = 0`.
 positive transfer weights, and `theta_pi_costlier` separates `0` from `π`.
 `strict_vafa_witten`: with the unit winding sector weighted, `Re Z(θ) < Z(0)` for every `θ ≠ 0` in
 `(-π, π]`, so `θ = 0` is the unique least-cost vacuum on the whole circle **when the cost is read
-from `Re Z`**. That reading is a premise: `abs_not_unique` gives positive weights for which `‖Z(π)‖ = Z(0)`.
+from `Re Z`**. `abs_not_unique` gives positive weights (on `{−1, 1}` only) for which
+`‖Z(π)‖ = Z(0)`; once the trivial sector is weighted the modulus decides too
+(`VacuumModulus.strict_modulus`), and `WindingWeights` derives that weight.
 `strict_selects_zero` records the selection step: a least-cost `θ` under a strict inequality is `0`.
-Premise (unchanged): `θ̄` is a vacuum variable the selection acts on, and `θ̄ = θ` needs the
-sector-exchange-invariant update of `HermitianMass`.
+Premise: `θ̄` is a vacuum variable the selection acts on. `θ̄ = θ` via Hermitian masses
+(`HermitianMass`, `WallParityExchange`) is no longer needed: with the chiral-anomaly premise the
+selection lands on `θ̄ = 0` for any mass phase (`ThetaBarSelection`).
 
 **One repair, from persistence and Economy.** `one_repair`: an unmaintained state does not persist,
 so the repair count is positive, and Economy takes the least such count, `1`. This fixes the count

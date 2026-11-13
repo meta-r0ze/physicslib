@@ -26,7 +26,9 @@ triplet for colour (`colour_limit` takes its trace normalization as hypothesis).
   multiplied by `3/2`; the electroweak mixing is unchanged. So the current strong formula
   selects the summed read.
 
-Premises (not derived): pricing by the common readout event, summed reads of charge-unit
+Premises (not derived; the common toll is PM's cost definition, `PMSubstrate.NetCost`, so
+the open part of the pricing is the common repair length `m`):
+pricing by the common readout event, summed reads of charge-unit
 references (`L` for both electroweak refreshes, a colour triplet for colour), the ledgers
 and cubic link consistency.
 -/

@@ -21,8 +21,11 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
 
 ## Physical inputs (not Lean gaps)
 
-- **Primitive admission.** The local amplitude factors / four-phase schedule are
-  not yet admitted in a microscopic E8 gate library, and the *overall price scale*
+- **Primitive admission.** The admission *rule* is stated (`PMAction.Admission`: a
+  unitary, local, priced factor is admitted unless a persistence reason excludes it),
+  and the split update's directional rotations and on-site coin satisfy it
+  (`direction_admitted`, `coin_admitted`). Not yet done: which E8 root words realize
+  those factors (the microscopic hop, PMAction REVIEW B.2). The *overall price scale*
   is a model input (four factor applications are not four primitive events). What
   is derived: the minimum-execution cost of a supplied task
   (`ReferenceMaintenance.minimum_executable_cost`; PMConstants `TypedRepairWork`
@@ -42,6 +45,9 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
   values are supplied.
 - **Native control one-forms.** The packet subsystem's two explicit inputs are the
   C² control one-forms and the admission of the coherent root-generator evolution.
+  Under `Admission`'s rule the second reduces to unitarity and locality: the root
+  generators are Hermitian (`NativeRootGenerators.packet_hermitian`), so `exp(−iτH)` is
+  unitary; the locality statement on the packet stencil is not yet written.
 
 No missing Lean *statement* is hidden behind these; each needs a model law or a
 new construction.

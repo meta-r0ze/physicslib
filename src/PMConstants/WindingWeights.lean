@@ -50,7 +50,8 @@ box; PM's region sits in the persisting vacuum, so its boundary is pure gauge), 
 of a non-exceptional history of charge `1` (every integer sector is nonempty on a large enough
 region; the substrate is unbounded).
 
-The sector-exchange premise of `SectorExchange` (`θ̄ = θ`) is separate and unchanged.
+With quark masses, `ThetaBarSelection` applies the same weights to `θ̄ = θ − arg det M`, so no
+sector-exchange (Hermiticity) premise is needed for `θ̄ = 0`.
 -/
 
 noncomputable section

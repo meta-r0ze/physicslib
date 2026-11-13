@@ -22,8 +22,9 @@ squared-amplitude readout and common repair-length contracts
 * `scalar_shares_prefactor`: if the scalar link is priced by the same readout event as the gauge
   plaquette (`CommonResponse.responseCost`, same toll and repair length `m`), both have prefactor
   `toll·m/4` and the scalar normalization follows from the same calibration. The shared prefactor
-  is that pricing premise (`CommonResponse.common_normalization` only factors it out); it is not
-  derived from the carrier events.
+  is that pricing premise (`CommonResponse.common_normalization` only factors it out). Its toll
+  half is PM's cost definition (one toll per transition, `PMSubstrate.NetCost`); the common repair
+  length `m` is not derived from the carrier events.
 
 What remains outside this chain: the repair length `m` as a Paper II input (only its product
 with the toll enters, and the chosen electric calibration fixes it; the squared-amplitude readout

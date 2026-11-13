@@ -34,7 +34,9 @@ weight is `Z(θ) = Σₙ wₙ e^{inθ}`:
 * `theta_pi_costlier`: if any odd winding sector has positive weight, `Re Z(π) < Z(0)` strictly.
 
 So the persistent vacuum is `θ = 0`, and with Hermitian positive link masses `θ̄ = 0`.
-Remaining premise: sector-exchange invariance of the link coefficients.
+Remaining premise: sector-exchange invariance of the link coefficients. For `θ̄` alone this route
+is superseded: `ThetaBarSelection` gives `θ̄ = 0` for any mass phase from the chiral-anomaly
+premise. Hermitian links still matter for `cp_with_hermitian` (CP violation in mixing).
 -/
 
 noncomputable section

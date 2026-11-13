@@ -30,6 +30,11 @@ gives the Dirac mass `M = δ² Y⁻¹` (a seesaw: `M Mᴴ = δ⁴ (Yᴴ Y)⁻¹`
 Hermitian positive link gives a Hermitian positive light mass, so with exchange-symmetric,
 positive up and down links the light masses give `θ̄ = θ`.
 
+For `θ̄ = 0` this route is no longer needed (`ThetaBarSelection`: any mass phase, given the
+chiral-anomaly premise). The walls are where that premise lives: the chiral zero modes
+(`WallSeesaw`) are the modes the index theorem counts per winding; the count itself is not in
+the library.
+
 Premise (narrowed): the vacuum update is invariant under the wall-parity exchange, the symmetry of
 the actual Hamiltonian that relates the two identical sectors, and the zero-mode mass matrices
 are these inter-wall links.

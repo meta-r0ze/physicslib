@@ -25,11 +25,13 @@ What is proved here is that one readout, `stateFlag`/`linkFlag`, produces the ga
 Wilson fermion form and the covariant scalar difference (`state_flag_formula`, `gauge_case`,
 `wilson_form`, `link_on_diagonal`), and that on Paper I's carriers it averages to `toll·m/4`
 (`carrier_chain`). That the three sectors share one normalization is the **premise** that they
-are priced by the same readout event with the same toll and the same repair length `m`. It is
-not derived from the carrier events.
+are priced by the same readout event with the same toll and the same repair length `m`. The
+common toll is not a separate premise: PM's cost is toll × number of transitions, with one toll
+`c₀` for every transition (`PMSubstrate.NetCost`). What remains is that the repair length `m` is
+the same in every sector; it is not derived from the carrier events.
 
-Remaining inputs, unchanged from `CarrierResponse`: the repair length `m`, the preparation of the
-reference branch, and the squared-amplitude readout itself (not a Born-rule derivation).
+Remaining inputs, unchanged from `CarrierResponse`: the repair length `m` and the preparation of
+the reference branch. The squared-amplitude readout is derived (`ReadoutRule.born`).
 -/
 
 noncomputable section

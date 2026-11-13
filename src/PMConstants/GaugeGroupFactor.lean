@@ -36,7 +36,9 @@ weight `1/12`.
   current ledgers, the event-priced couplings give exactly the uniform-readout mixing
   `5547/37777` of `GaugeReadoutWeights`, not the manuscript value.
 
-Premises (not derived): the pricing of holonomies by the common readout event, the uniform
+Premises (not derived; the common toll is PM's cost definition, `PMSubstrate.NetCost`, so
+the open part of the pricing is the common repair length `m`):
+the pricing of holonomies by the common readout event, the uniform
 carrier sampler, the refresh count `W`, the generator normalization `κ`, and cubic link
 consistency. No coupling value is changed here.
 -/
