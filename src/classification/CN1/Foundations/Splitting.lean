@@ -127,6 +127,7 @@ theorem minpoly_int_omegaInt (hm0 : m ≠ 0) :
   simp [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_pow]
 
 include hα hK in
+set_option linter.unusedSectionVars false in
 /-- The same, in case-split shape: `X² - X + (m+1)/4` if `m ≡ 3 (mod 4)`, else `X² + m`. `hK` is
 unused and kept for the argument order. -/
 theorem minpoly_omegaInt (hm0 : m ≠ 0) :
@@ -134,7 +135,7 @@ theorem minpoly_omegaInt (hm0 : m ≠ 0) :
       if m % 4 = 3 then X ^ 2 - X + C (((m + 1) / 4 : ℕ) : ℤ) else X ^ 2 + C (m : ℤ) := by
   rw [minpoly_int_omegaInt hα hm0]
   unfold bInt cInt
-  split_ifs <;> simp <;> ring
+  split_ifs <;> simp; ring
 
 /-! ### Reduction mod `p` and the Kummer–Dedekind factor set. -/
 
@@ -174,6 +175,7 @@ lemma irreducible_quad_of_no_root (b c : ZMod p) (h : ∀ x : ZMod p, x ^ 2 + b 
     exact hx
 
 include hα hK hm in
+set_option linter.unusedSectionVars false in
 /-- If `X² + bX + c` has a root `r` mod `p`, the Kummer–Dedekind factor set is
 `{X - r, X - (-b - r)}`. -/
 theorem monicFactorsMod_of_root {r : ZMod p} (hr : r ^ 2 + (bInt m : ZMod p) * r + cInt m = 0) :
@@ -188,6 +190,7 @@ theorem monicFactorsMod_of_root {r : ZMod p} (hr : r ^ 2 + (bInt m : ZMod p) * r
     Multiset.singleton_add, Multiset.toFinset_cons, Multiset.toFinset_singleton]
 
 include hα hK hm in
+set_option linter.unusedSectionVars false in
 /-- If `X² + bX + c` has no root mod `p`, the Kummer–Dedekind factor set is `{X² + bX + c}`. -/
 theorem monicFactorsMod_of_no_root
     (h : ∀ x : ZMod p, x ^ 2 + (bInt m : ZMod p) * x + cInt m ≠ 0) :
@@ -275,7 +278,7 @@ theorem exists_root_iff_isSquare (hp2 : p ≠ 2) :
 theorem exists_root_two_iff (h3 : m % 4 = 3) :
     (∃ x : ZMod 2, x ^ 2 + (bInt m : ZMod 2) * x + cInt m = 0) ↔ m % 8 = 7 := by
   unfold bInt cInt
-  rw [if_pos h3, if_pos h3]
+  rw [ite_eq_left h3, ite_eq_left h3]
   obtain ⟨c, hc⟩ : (4 : ℕ) ∣ m + 1 := by omega
   have hc' : ((m + 1) / 4 : ℕ) = c := by omega
   rw [hc']
@@ -300,10 +303,10 @@ theorem kroneckerChar_eq_one_iff_exists_root (hpd : ¬ p ∣ disc m) :
       kroneckerChar_apply_two h3, ZMod.χ₈_nat_eq_if_mod_eight]
     have h8 : m % 8 = 3 ∨ m % 8 = 7 := by omega
     rcases h8 with h | h
-    · rw [if_neg (by omega), if_neg (by omega)]
+    · rw [ite_eq_right (by omega), ite_eq_right (by omega)]
       norm_num
       omega
-    · rw [if_neg (by omega), if_pos (by omega)]
+    · rw [ite_eq_right (by omega), ite_eq_left (by omega)]
       norm_num
       exact h
   · rw [kroneckerChar_apply_prime_eq_one_iff hm hp2 hpd, exists_root_iff_isSquare p hp2]

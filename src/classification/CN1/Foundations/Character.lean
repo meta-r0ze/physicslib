@@ -228,9 +228,9 @@ theorem kroneckerChar_neg_one (hm : Squarefree m) : kroneckerChar m (-1) = -1 :=
       jacobiSym.at_neg_one (Nat.odd_iff.mpr (by omega))]
     have hm' : m / 2 % 4 = 1 ∨ m / 2 % 4 = 3 := by omega
     rcases hm' with h | h
-    · rw [if_pos h, χ₄_nat_one_mod_four h, χ₈'_int_eq_if_mod_eight]
+    · rw [ite_eq_left h, χ₄_nat_one_mod_four h, χ₈'_int_eq_if_mod_eight]
       norm_num
-    · rw [if_neg (by omega), χ₄_nat_three_mod_four h, χ₈_int_eq_if_mod_eight]
+    · rw [ite_eq_right (by omega), χ₄_nat_three_mod_four h, χ₈_int_eq_if_mod_eight]
       norm_num
   · rw [kroneckerChar_apply_of_three_mod_four h3 hcop,
       jacobiSym.at_neg_one (Nat.odd_iff.mpr (by omega)), χ₄_nat_three_mod_four h3]
@@ -278,8 +278,8 @@ lemma chi8_mul_jacobiSym_eq_legendreSym_neg_of_two_mod_four (h2 : m % 4 = 2) (hp
     jacobiSym.legendreSym.to_jacobiSym]
   have hm' : m / 2 % 4 = 1 ∨ m / 2 % 4 = 3 := by omega
   rcases hm' with h | h
-  · rw [if_pos h, jacobiSym.quadratic_reciprocity_one_mod_four' (Nat.odd_iff.mpr hpodd) h]
-  · rw [if_neg (by omega)]
+  · rw [ite_eq_left h, jacobiSym.quadratic_reciprocity_one_mod_four' (Nat.odd_iff.mpr hpodd) h]
+  · rw [ite_eq_right (by omega)]
     have h8 : χ₈' (p : ZMod 8) = χ₄ (p : ZMod 4) * χ₈ (p : ZMod 8) := by
       have := χ₈'_int_eq_χ₄_mul_χ₈ (p : ℤ)
       simpa using this

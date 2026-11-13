@@ -73,8 +73,8 @@ theorem classNumber_ne_one_of_witness {t c : ℤ} (D : QuadInt K t c) (ht : t = 
     (p : ℕ) (hp : p.Prime) (y : ℤ) (hy : (p : ℤ) ∣ y ^ 2 - t * y + c)
     (hb : 4 * (p : ℤ) ≤ 4 * c - t ^ 2) (hpc : (p : ℤ) ≠ c) : classNumber K ≠ 1 := by
   intro h1
-  haveI := Fact.mk hp
-  haveI hpid : IsPrincipalIdealRing (𝓞 K) := classNumber_eq_one_iff.mp h1
+  have := Fact.mk hp
+  have hpid : IsPrincipalIdealRing (𝓞 K) := classNumber_eq_one_iff.mp h1
   -- Kummer–Dedekind applies: `p ∤ exponent θ = 1`
   have hexp : ¬ p ∣ RingOfIntegers.exponent D.θ := by
     rw [RingOfIntegers.exponent_eq_one_iff.mpr D.adjoin_eq_top]
@@ -100,8 +100,8 @@ theorem classNumber_ne_one_of_witness {t c : ℤ} (D : QuadInt K t c) (ht : t = 
     ((Ideal.primesOverSpanEquivMonicFactorsMod hexp).symm ⟨_, hQ⟩ : Ideal (𝓞 K)) with hPdef
   have hPmem : P ∈ primesOver (span {(p : ℤ)}) (𝓞 K) :=
     ((Ideal.primesOverSpanEquivMonicFactorsMod hexp).symm ⟨_, hQ⟩).prop
-  haveI hPprime : P.IsPrime := hPmem.1
-  haveI hPlies : P.LiesOver (span {(p : ℤ)}) := hPmem.2
+  have hPprime : P.IsPrime := hPmem.1
+  have hPlies : P.LiesOver (span {(p : ℤ)}) := hPmem.2
   have hdeg1 : P.inertiaDeg ℤ = 1 := by
     rw [hPdef, Ideal.inertiaDeg_primesOverSpanEquivMonicFactorsMod_symm_apply hexp hQ,
       Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, natDegree_X_sub_C]

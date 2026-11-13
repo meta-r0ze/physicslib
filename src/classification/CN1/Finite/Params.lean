@@ -28,7 +28,7 @@ theorem tOf_eq_zero_or_one (m : ℕ) : tOf m = 0 ∨ tOf m = 1 := by
   unfold tOf; split_ifs <;> simp
 
 theorem four_mul_cOf (m : ℕ) : 4 * cOf m = dOf m + tOf m ^ 2 := by
-  unfold cOf dOf tOf; split_ifs with h <;> norm_num <;> omega
+  unfold cOf dOf tOf; split_ifs with h <;> norm_num; omega
 
 theorem le_dOf (m : ℕ) : m ≤ dOf m := by
   unfold dOf; split_ifs <;> omega
@@ -36,7 +36,7 @@ theorem le_dOf (m : ℕ) : m ≤ dOf m := by
 theorem tOf_of_mod (m : ℕ) (h : m % 4 = 3) : tOf m = 1 := by simp [tOf, h]
 
 theorem four_mul_cOf_of_mod (m : ℕ) (h : m % 4 = 3) : 4 * cOf m = m + 1 := by
-  simp only [cOf, h, if_true]; omega
+  simp only [cOf, h, ite_true]; omega
 
 theorem dOf_of_mod (m : ℕ) (h : m % 4 = 3) : dOf m = m := by simp [dOf, h]
 

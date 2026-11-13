@@ -74,8 +74,8 @@ or `absNorm P = q²` and `P = (q)`. -/
 theorem absNorm_maximal_cases (hK : finrank ℚ K = 2) (P : Ideal (𝓞 K)) [hP : P.IsMaximal] :
     ∃ q : ℕ, q.Prime ∧ (q : 𝓞 K) ∈ P ∧
       (absNorm P = q ∨ (absNorm P = q ^ 2 ∧ P = span {(q : 𝓞 K)})) := by
-  letI : Field (𝓞 K ⧸ P) := Ideal.Quotient.field P
-  letI : Fintype (𝓞 K ⧸ P) := Fintype.ofFinite _
+  let : Field (𝓞 K ⧸ P) := Ideal.Quotient.field P
+  let : Fintype (𝓞 K ⧸ P) := Fintype.ofFinite _
   obtain ⟨q, hq⟩ := CharP.exists (𝓞 K ⧸ P)
   obtain ⟨n, hqprime, hcard⟩ := FiniteField.card (𝓞 K ⧸ P) q
   have hN : absNorm P = q ^ (n : ℕ) := by
@@ -111,12 +111,12 @@ theorem not_absNorm_eq_of_no_root (θ : 𝓞 K) (t c : ℤ)
     (hθ : θ ^ 2 = (t : 𝓞 K) * θ - (c : 𝓞 K))
     (P : Ideal (𝓞 K)) [hP : P.IsMaximal] (q : ℕ) (hq : q.Prime) (hN : absNorm P = q)
     (hroot : ∀ z : ZMod q, z ^ 2 - (t : ZMod q) * z + (c : ZMod q) ≠ 0) : False := by
-  haveI := Fact.mk hq
-  letI : Field (𝓞 K ⧸ P) := Ideal.Quotient.field P
-  letI : Fintype (𝓞 K ⧸ P) := Fintype.ofFinite _
+  have := Fact.mk hq
+  let : Field (𝓞 K ⧸ P) := Ideal.Quotient.field P
+  let : Fintype (𝓞 K ⧸ P) := Fintype.ofFinite _
   have hcard : Fintype.card (𝓞 K ⧸ P) = q := by
     rw [← Nat.card_eq_fintype_card, ← Submodule.cardQuot_apply, ← absNorm_apply, hN]
-  haveI : CharP (𝓞 K ⧸ P) q := charP_of_card_eq_prime hcard
+  have : CharP (𝓞 K ⧸ P) q := charP_of_card_eq_prime hcard
   let f : ZMod q →+* 𝓞 K ⧸ P := ZMod.castHom dvd_rfl _
   have hf : Function.Bijective f :=
     (Fintype.bijective_iff_injective_and_card f).mpr ⟨f.injective, by rw [ZMod.card, hcard]⟩
@@ -166,7 +166,7 @@ theorem classNumber_eq_one_of_mem_nine (hK : finrank ℚ K = 2) (m : ℕ)
   refine RingOfIntegers.isPrincipalIdealRing_of_isPrincipal_of_norm_le_of_isPrime
     fun I hI hle ↦ ?_
   have hI0 : (I : Ideal (𝓞 K)) ≠ ⊥ := nonZeroDivisors.coe_ne_zero I
-  haveI hmax : (I : Ideal (𝓞 K)).IsMaximal := hI.isMaximal hI0
+  have hmax : (I : Ideal (𝓞 K)).IsMaximal := hI.isMaximal hI0
   have hbound := le_two_thirds_sqrt_of_le_minkowski hK hdisc hle
   obtain ⟨q, hq, -, hcase⟩ := absNorm_maximal_cases hK (I : Ideal (𝓞 K))
   rcases hcase with hN | ⟨-, hspan⟩
@@ -181,34 +181,21 @@ theorem classNumber_eq_one_of_mem_nine (hK : finrank ℚ K = 2) (m : ℕ)
     · have := nat_lt_of_le_two_thirds_sqrt hbound (B := 2) (by norm_num [dOf]); omega
     · obtain ⟨θ, hθ⟩ := exists_theta (by norm_num) α hα
       have := nat_lt_of_le_two_thirds_sqrt hbound (B := 3) (by norm_num [dOf])
-      interval_cases q <;>
-        first
-        | exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
-        | norm_num at hq
+      interval_cases q
+      exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
     · obtain ⟨θ, hθ⟩ := exists_theta (by norm_num) α hα
       have := nat_lt_of_le_two_thirds_sqrt hbound (B := 3) (by norm_num [dOf])
-      interval_cases q <;>
-        first
-        | exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
-        | norm_num at hq
+      interval_cases q
+      exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
     · obtain ⟨θ, hθ⟩ := exists_theta (by norm_num) α hα
       have := nat_lt_of_le_two_thirds_sqrt hbound (B := 5) (by norm_num [dOf])
-      interval_cases q <;>
-        first
-        | exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
-        | norm_num at hq
+      interval_cases q <;> exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
     · obtain ⟨θ, hθ⟩ := exists_theta (by norm_num) α hα
       have := nat_lt_of_le_two_thirds_sqrt hbound (B := 6) (by norm_num [dOf])
-      interval_cases q <;>
-        first
-        | exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
-        | norm_num at hq
+      interval_cases q <;> exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
     · obtain ⟨θ, hθ⟩ := exists_theta (by norm_num) α hα
       have := nat_lt_of_le_two_thirds_sqrt hbound (B := 9) (by norm_num [dOf])
-      interval_cases q <;>
-        first
-        | exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
-        | norm_num at hq
+      interval_cases q <;> exact not_absNorm_eq_of_no_root θ _ _ hθ _ _ hq hN (by decide)
   · rw [hspan]
     exact ⟨⟨_, rfl⟩⟩
 

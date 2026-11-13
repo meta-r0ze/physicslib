@@ -125,7 +125,7 @@ theorem Umat_diag (K : Type*) [CommRing K] (R S p : ℕ) (a : Fin R × Fin S) :
 theorem Umat_low (K : Type*) [CommRing K] (R S p : ℕ) (hp : 0 < p) (a b : Fin R × Fin S)
     (hab : a ≠ b) (hlt : ¬ (b.1 < a.1)) : Umat K R S p a b = 0 := by
   unfold Umat
-  rw [if_neg]
+  rw [ite_eq_right]
   rintro ⟨h1, -, h3⟩
   rcases Nat.eq_zero_or_pos ((b.2 : ℕ) - a.2) with h0 | h0
   · apply hab
@@ -161,10 +161,10 @@ theorem sum_fst_Umat_mul (p : ℕ) (rs : Row R) (zk : Col q R) (y : Fin (Sof R))
       (Nat.mul_le_mul_left p hc.2).trans (mul_hgt_le p (Sof R) r s)
     have hlt : (r : ℕ) - p * ((y : ℕ) - s) < R := by omega
     rw [sum_eq_single ⟨(r : ℕ) - p * ((y : ℕ) - s), hlt⟩]
-    · rw [Umat, if_pos ⟨hc.1, hc.2, by simp only; omega⟩]
+    · rw [Umat, ite_eq_left ⟨hc.1, hc.2, by simp only; omega⟩]
       rfl
     · intro x _ hx
-      rw [Umat, if_neg, zero_mul]
+      rw [Umat, ite_eq_right, zero_mul]
       rintro ⟨-, -, h3⟩
       apply hx
       ext
@@ -172,7 +172,7 @@ theorem sum_fst_Umat_mul (p : ℕ) (rs : Row R) (zk : Col q R) (y : Fin (Sof R))
       omega
     · simp
   · refine sum_eq_zero fun x _ => ?_
-    rw [Umat, if_neg (fun h' => hc ⟨h'.1, h'.2.1⟩), zero_mul]
+    rw [Umat, ite_eq_right (fun h' => hc ⟨h'.1, h'.2.1⟩), zero_mul]
 
 /-- **Green's row replacement is `U * M`.** -/
 theorem Umat_mul_M (p : ℕ) : Umat (OK (cq q)) R (Sof R) p * M q R = Mtil q R p := by
@@ -204,12 +204,12 @@ theorem Umat_mul_M (p : ℕ) : Umat (OK (cq q)) R (Sof R) p * M q R = Mtil q R p
     refine sum_congr rfl fun i hi => ?_
     have hi' : i ≤ h := Nat.lt_succ_iff.mp (mem_range.mp hi)
     rw [hF]
-    simp only [Nat.add_sub_cancel_left, le_add_iff_nonneg_right, zero_le, true_and, hi', if_true]
+    simp only [Nat.add_sub_cancel_left, le_add_iff_nonneg_right, zero_le, true_and, hi', ite_true]
   · intro y _ hy
     simp only [mem_Ico, not_and, not_lt] at hy
     rw [hF]
     simp only
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro ⟨h1, h2⟩
     have := hy h1
     omega

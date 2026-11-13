@@ -48,9 +48,11 @@ lemma disc_of_three_mod_four {m : ℕ} (h : m % 4 = 3) : disc m = m := by simp [
 
 lemma disc_of_not_three_mod_four {m : ℕ} (h : m % 4 ≠ 3) : disc m = 4 * m := by simp [disc, h]
 
+omit [NumberField K] in
 lemma omega_of_three_mod_four {m : ℕ} (α : K) (h : m % 4 = 3) : omega m α = (1 + α) / 2 := by
   simp [omega, h]
 
+omit [NumberField K] in
 lemma omega_of_not_three_mod_four {m : ℕ} (α : K) (h : m % 4 ≠ 3) : omega m α = α := by
   simp [omega, h]
 
