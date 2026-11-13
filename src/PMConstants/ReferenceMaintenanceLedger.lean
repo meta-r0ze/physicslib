@@ -4,8 +4,9 @@ import PMConstants.TableConsequences
 /-!
 # Executable conditional ledgers and a partition countermodel
 
-The retained-record protocol realizes the supplied resource tasks. Its events
-are coordinate swaps in a finite task model, not certified substrate primitives.
+The retained-record protocol realizes the supplied resource tasks. Its events are root
+reflections acting on a two-carrier cell at each job's site (`PMAction.RootMaintenance`), so the
+minimal schedule is one root event per required resource.
 The ledger weights remain supplied prices, including the fractional payload price.
 
 An alternative partition moves the spatial resource to weak. It restores exactly

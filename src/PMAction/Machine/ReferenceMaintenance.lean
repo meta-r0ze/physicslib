@@ -5,8 +5,8 @@ import PMAction.RefreshSchedule
 
 A job has a Boolean discrepancy relative to its reference and a Boolean record.
 Its event swaps discrepancy and record. A clean record therefore permits exact
-restoration without erasure. This is a finite reversible *task model*, not an
-identification of a swap with one E8 event or of a bit with a carrier amplitude.
+restoration without erasure. This is a finite reversible *task model*; `RootMaintenance`
+identifies each swap with a root reflection acting on a two-carrier cell at the job's site.
 
 Every universally restoring schedule must visit every required job. Listing
 each required job once is executable and achieves the minimum additive cost.
