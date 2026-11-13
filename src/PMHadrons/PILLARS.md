@@ -111,6 +111,26 @@ readings, so the core moment itself (the carrier's spatial extent) is the larger
 The Toll question is therefore not settled by this test: `g_A` favours (a) at full size, the null
 test favours a cloud about half as large.
 
+**The scale (Nov 2026).** The spacing `a` was fixed by setting the carrier's rms radius, measured
+from the cube centre, equal to `r_p`. Experiment measures the charge radius relative to the
+nucleon's centre of mass, and for three carriers in independent identical modes
+`⟨(r_i − R_cm)²⟩ = (2/3)⟨r²⟩`. So `r_p² = (2/3)ρ²a²`, `a = 0.761 fm`, `1/a = 259 MeV` (was
+`0.621 fm`, `318 MeV`). This is a correction of the reading, not a fit. With it (reading (a),
+source-confined cloud, on-site core):
+
+| quantity | `1/a = 318` | `1/a = 259` (CM radius) | measured / target |
+|---|---|---|---|
+| `μ_p` | `1.79` | `2.15` | `2.793` |
+| `μ_n + (2/3)μ_p` | `−0.123` | `−0.089` | `−0.051` |
+| cloud `δg_A/g_A` | `−7.6%` | `−4.8%` | `−9.2%` to `5/4` |
+| cloud `Δ − N` | `79 MeV` | `41 MeV` | (part of `293`) |
+
+(with the physical splitting in the denominators). The CM-relative radius moves `μ_p` and the null
+test toward the data and `g_A` away from it. Not yet included: the centre-of-mass corrections to
+`μ` and `g_A` themselves (a projected, translation-invariant nucleon state), which in bag models
+change both by tens of percent. That is the next consistent step; without it the three
+observables cannot be weighed against each other.
+
 ## Next
 
 * Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
