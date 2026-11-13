@@ -36,10 +36,12 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
   maintenance forever holds iff the backward orbit is open
   (`HomogeneousRouting.forever_iff_open`), and a finite substrate always closes
   (`finite_closes`), so persistence forever forces an infinite substrate
-  (`forever_needs_infinite`). What remains is the **prepared initial reference**:
+  (`forever_needs_infinite`). The **prepared reference** is the vacuum:
   closed basis-preserving controls cannot supply it (`ReferenceSourceBoundary`,
-  `PrimitiveRecordBoundary.cannot_prepare`, `OpenReferenceFlow`) — a preparation /
-  implementation input, not a missing theorem.
+  `PrimitiveRecordBoundary.cannot_prepare`), but the open line's incoming sites are vacuum,
+  the unique uniform zero-cost state (`MassGap.DefectGap.cost_eq_zero_iff`), so every incoming
+  site holds the same reference (`OpenReferenceFlow.vacuum_restores`). What remains is the
+  coherent two-support preparation at the gate (`cannot_prepare`), an implementation input.
 - **Bank/preparation and calibration.** Physical allocation of the
   reference/record banks, clock calibration, amplitude preparation and charge
   values are supplied.

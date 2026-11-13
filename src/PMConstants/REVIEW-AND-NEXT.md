@@ -11,13 +11,16 @@ premise not yet derived from persistence, geometry or constraints.
    comparison gates, clean-cell allocation, and the clock/spatial/wire requirements
    (PMAction REVIEW B.2, the microscopic hop). The admission rule is stated
    (`PMAction.Admission`) and the controller's selection is fixed (`ControllerLedger`, typed
-   repairs `(2,1,1,1,1)`); the implementation is not. Blocks: weak fraction, VEV, G_F, m_H, η
-   maintenance.
-2. **The preparation contract.** Identifying the carrier preparation with the survival model
-   (`PreparationSelection`) is the same input as Machine's prepared initial reference
-   (`PrimitiveRecordBoundary.cannot_prepare`). Blocks: η, weak fraction.
-3. **Update and propagation dynamics.** Generations, running thresholds, the gravity loop and
-   neutrino mixing. Mostly companion-paper work (Papers IV–VI).
+   repairs `(2,1,1,1,1)`); the implementation is not. Blocks: weak fraction, VEV, G_F, m_H.
+2. **The preparation contract.** The reference supply is now the persisting vacuum: the open
+   line's incoming sites are vacuum, the unique uniform zero-cost state, so each holds the same
+   reference (`PMAction.OpenReferenceFlow.vacuum_restores`); this also supplies clean records for
+   η's maintenance. Still open: the coherent two-support state the comparison gate needs
+   (`PrimitiveRecordBoundary.cannot_prepare`: basis-preserving words cannot make it), and
+   identifying the carrier preparation with the survival model (`PreparationSelection`).
+   Blocks: weak fraction.
+3. **Update and propagation dynamics.** The generation tag's dynamics, the physical running
+   controls and neutrino mixing. Mostly companion-paper work (Papers IV–VI).
 4. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
    priority.
@@ -27,7 +30,7 @@ premise not yet derived from persistence, geometry or constraints.
 | Constant | Status | Still open |
 | --- | --- | --- |
 | D, Δ, ν, σ, χ; α | Forced given Paper I's postulates | Paper I's postulates themselves (`PMSubstrate` REVIEW). |
-| η = 171/172 | One reserved tone (frame synchronization) is needed and optimal (`ReferenceFrames`, `no_total_origin_readout`, `inband_optimal_iff`); no cell-width premise | Maintenance is required (`ReferenceAxis.skipped_maintenance_fails`) and its task model exists: reversible restoration with a retained record, each required job visited once at minimal cost (`PMAction.Machine.ReferenceMaintenance`). Clean records are not renewable inside that model, so their supply is the preparation contract (blocker 2); that is the only open part. |
+| η = 171/172 | One reserved tone (frame synchronization) is needed and optimal (`ReferenceFrames`, `no_total_origin_readout`, `inband_optimal_iff`); no cell-width premise | Maintenance is required (`ReferenceAxis.skipped_maintenance_fails`) and its task model exists: reversible restoration with a retained record, each required job visited once at minimal cost (`PMAction.Machine.ReferenceMaintenance`). Clean records are not renewable inside that model; the open line's vacuum supplies them (`OpenReferenceFlow.vacuum_restores`). Nothing open. |
 | Weak fraction 1849/8295 | End to end (`TableConsequences.end_to_end`); charge-unit normalization from the lepton-doublet reference (`ReferenceCharge`, `ReferenceEconomy`) | The controller implementation (blocker 1). Premises: one reserved cell per reference type; both electroweak refreshes read it. |
 | α_s | Formula, colour normalization (`ColourNormalization`), twelve reads (`SectorObligations`), read scale (`ReadScale`) | The coupling on the hadron carrier cube (PMAction REVIEW A.3). (Colour's required resources are now derived: `ColourReference.coloured_iff_triplet`.) |
 | g_W, g_Y, g_3 | From the D₄ gauge action and summed charge-unit reads (`ChainCouplings`) | Cubic link consistency reduces to exact subdivision: an update that composes under subdivision with a differentiable response obeys the transport ODE (`PMAction.CompositionalTransport.ode_of_composes`), and transport links are cubically consistent (`ParallelTransport.transport_consistent`). Proved for the native packet subsystem (`NativePacketUpdate.native_composes`, `packet_contracts`, C² controls); open: that the full gauge sectors' updates compose exactly. The physical scale convention. |

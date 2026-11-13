@@ -10,6 +10,15 @@ for nonzero reference population the incoming population through N trials is
 N times that population. An indefinitely replenished source is not derived
 from finite-memory closed persistence, nor is this infinite background claimed
 to be a normalized one-particle state.
+
+**The source is the vacuum.** Persisting forever forces an unbounded substrate
+(`HomogeneousRouting.forever_needs_infinite`), so the incoming line exists. Away from a
+defect the persisting state is the vacuum: the zero-cost configurations are exactly the
+uniform ones (`MassGap.DefectGap.cost_eq_zero_iff`), and every excitation decays
+(`transfer_contracts_excitations`). A uniform incoming stream holds the same state at every
+site, which is a prepared reference at every site (`vacuum_restores`). So the replenished
+source is the persisting vacuum itself, not an added preparation; what it costs to read it is
+the existing toll.
 -/
 noncomputable section
 namespace PMAction.OpenReferenceFlow
@@ -119,4 +128,10 @@ theorem source_unbounded (s : State ℤ (n → ℂ)) (reference : n → ℂ)
   exact (div_lt_iff₀ hpop).mp hN
 
 end Population
+/-- **The vacuum supplies the reference.** If the incoming stream is uniform (the vacuum), every
+incoming site holds the same reference, so the coupling output is restored at every time. -/
+theorem vacuum_restores (s : State ℤ V) (r : V) (hvac : ∀ x : ℤ, (s x).2 = r) (t : ℕ) :
+    (((evolution 0 line)^[t+1] s) 0).1 = r :=
+  open_restores s r (fun _ => hvac _) t
+
 end PMAction.OpenReferenceFlow
