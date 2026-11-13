@@ -15,9 +15,11 @@ premise not yet derived from persistence, geometry or constraints.
 2. **The preparation contract.** The reference supply is now the persisting vacuum: the open
    line's incoming sites are vacuum, the unique uniform zero-cost state, so each holds the same
    reference (`PMAction.OpenReferenceFlow.vacuum_restores`); this also supplies clean records for
-   η's maintenance. Still open: the coherent two-support state the comparison gate needs
-   (`PrimitiveRecordBoundary.cannot_prepare`: basis-preserving words cannot make it), and
-   identifying the carrier preparation with the survival model (`PreparationSelection`).
+   η's maintenance. The coherent two-support state the comparison gate needs is one quarter-period of
+   admitted evolution under a Hermitian involution such as a root-response operator
+   (`PMAction.CoherentPreparation.quarter_gate_prepares`); `cannot_prepare` excludes only
+   basis-preserving words. Still open: identifying the carrier preparation with the survival
+   model (`PreparationSelection`).
    Blocks: weak fraction.
 3. **Update and propagation dynamics.** The generation tag's dynamics, the physical running
    controls and neutrino mixing. Mostly companion-paper work (Papers IV–VI).

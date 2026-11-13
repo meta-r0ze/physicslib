@@ -40,8 +40,10 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
   closed basis-preserving controls cannot supply it (`ReferenceSourceBoundary`,
   `PrimitiveRecordBoundary.cannot_prepare`), but the open line's incoming sites are vacuum,
   the unique uniform zero-cost state (`MassGap.DefectGap.cost_eq_zero_iff`), so every incoming
-  site holds the same reference (`OpenReferenceFlow.vacuum_restores`). What remains is the
-  coherent two-support preparation at the gate (`cannot_prepare`), an implementation input.
+  site holds the same reference (`OpenReferenceFlow.vacuum_restores`). The coherent two-support
+  state at the gate is one quarter-period of admitted evolution under a Hermitian involution
+  (`CoherentPreparation.quarter_gate_prepares`, `quarter_gate_unitary`); `cannot_prepare`
+  excludes only the basis-preserving library.
 - **Bank/preparation and calibration.** Physical allocation of the
   reference/record banks, clock calibration, amplitude preparation and charge
   values are supplied.
