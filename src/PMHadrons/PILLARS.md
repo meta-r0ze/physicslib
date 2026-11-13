@@ -195,6 +195,21 @@ pair at the moment it annihilates?** The pillar view also shows why the earlier 
 they cut the cone (Margin) or the survivors (Governor), the two pillars the kaon shares with the
 pion.
 
+**What `PMAction/Machine` says about the register (Nov 2026).** `IndependentRegisters` builds an
+internal label as a separate occupied register bank: the configuration is a product, relabelling
+one bank leaves the other untouched (`left_untouched`, `right_untouched`), the two updates
+commute (`updates_commute`), and the readout is the tensor product (`tensor_observed`).
+`RegisterReference` shows the carrier's chiral-charge evolution and the record routing commute at
+the readout (`charge_observed`, `route_observed`). If the kaon's direction register is such a
+bank, keeping it coherent costs nothing at the emission readout: Protocol removes **no** emission
+modes, `|Ω_K| = |Ω_π|` from counting, and `f_K = f_π`, against the measured `1.19`. So, given that
+reading, the `f_K` difference is not a register effect in the emission count; it has to come from
+what the count leaves out. The count `f = v/|Ω|` contains no carrier mass, while in QCD
+`f_K/f_π − 1` is driven by the strange mass. The kaon's Margin to `μν` (`388 MeV` vs `34 MeV`)
+is the pillar value that carries that mass, and it is the next place to look. `WalkSpeed` (a
+massive species is slower, `|cos r|`) is the other mass channel; a slower cone was tried
+(`REVIEW-AND-NEXT` §3) and needs a persistence-fixed speed.
+
 ## Next
 
 * Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
