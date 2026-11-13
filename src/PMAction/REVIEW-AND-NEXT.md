@@ -59,9 +59,21 @@ Checked mathematics, the module map and everything established are in
    `Δ = 43`-step cycle. It is not persistent, so the minimum-room rule does not give it a mass;
    its mass is a level of the carrier cube's dynamics, which needs the same colour coupling.
 
-   Open, in order: (a) why the cube's `g_A` is `8%` above `5/4` with the persistence-consistent
-   boundary (candidates: the cube's site count — `4` sites per edge gives `1.265`; the finite
-   tick; the carrier's own mass); (b) the cube's colour coupling.
+   **Candidate: the hadron cube has 4 sites per edge (Nov 2026).** With a hard wall the carrier
+   is scale-free, so `g_A` depends only on the edge site count `n`: `1.377` (`3`), `1.265`
+   (`4`), `1.195` (`5`), `1.153` (`6`), toward the continuum bag value `1.09`. A rule that would
+   select `n`: `MinimalCube` asks for an interior vertex (a site all of whose links are the
+   volume's own), and `Occupancy` places one carrier per cell. If each persistent carrier needs
+   its own interior vertex, `k` carriers need `(n−2)³ ≥ k`: one carrier gives `n = 3` (the old
+   lepton cube), two or three carriers give `n = 4`. On `4³` (`1/a = 434 MeV` from the
+   carrier's rms radius `1.85` sites = `r_p`), with the no-link-out boundary, N–Δ needs
+   `α_s ≈ 2.4`, and exchange at that coupling gives **`g_A = 1.246`** (lattice QCD
+   `1.246(28)`, E8 `5/4`). Caution: the rule is proposed after seeing that `n = 4` fits, and the
+   coupling is still calibrated by the observed Δ. To adopt it: (a) derive "one interior vertex
+   per carrier" from the persistence predicate (`Occupancy.tied_minimal_of_moved` says occupancy
+   alone does not select, so this needs the predicate); (b) check its other consequences (the
+   meson cube, `CubeScales`, the proton radius reading); (c) the cube's colour coupling without
+   the Δ.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 

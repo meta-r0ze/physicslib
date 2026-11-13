@@ -20,12 +20,13 @@ Computes, at first order (positive-energy intermediate modes only):
   * the N-Delta splitting from the ground-sector interaction.
 Both are linear in g^2, so their ratio is coupling-free.
 
-Usage: [BC=D] python3 tools/colour_fluctuation.py [alpha_s]   (default 0.1180, the ledger value)
+Usage: [BC=D] [NCUBE=4] python3 tools/colour_fluctuation.py [alpha_s]
+(NCUBE: sites per cube edge, default 3; 1/a follows from the carrier's rms radius = r_p.)   (default 0.1180, the ledger value)
 """
 import sys, itertools, os, numpy as np
 src=open("tools/confined_walk.py").read().split('for n in (3,5):')[0]
 exec(src)
-n=3; Ns=[]
+n=int(os.environ.get('NCUBE','3')); Ns=[]
 for j in range(3): M,sites=Nw(n,j,'0'); Ns.append(M)
 V=len(sites); D=8*V
 H=np.kron(np.eye(V),H0)-sum(Ns)
@@ -67,6 +68,9 @@ exc=[i for i in pos if i not in gs]
 SzD=np.kron(np.eye(2*V),Sz4)
 SxD=np.kron(np.eye(2*V),-1j*al[1]@al[2])
 sub=Vv[:,gs]
+_d=(abs(sub)**2).sum(1).reshape(V,8).sum(1)/2; _c=(n-1)/2
+rho=np.sqrt(sum(_d[i]*sum((q-_c)**2 for q in x) for i,x in enumerate(sites)))
+a_inv=197.327*rho/0.841236   # carrier rms radius = E8 proton radius D hbar/(m_p c)
 # spin basis in doublet
 S=sub.conj().T@SzD@sub; ws,vs=np.linalg.eigh(S)
 up=sub@vs[:,1]; dn=sub@vs[:,0]
@@ -179,6 +183,5 @@ def stateSI(S,I,sz_,iz):
   v=B@xv[:,np.isclose(xw,S*(S+1)+I*(I+1))]; return v[:,0]
 N=stateSI(.5,.5,.5,.5); Dl=stateSI(1.5,1.5,.5,.5)
 EN=(N.conj()@Hground(N.reshape(4,4,4)).ravel()).real; ED=(Dl.conj()@Hground(Dl.reshape(4,4,4)).ravel()).real
-a_inv=317.5
 print('ground-sector OGE: E_N %.4f E_D %.4f  Delta-N = %.4f lattice = %.1f MeV (observed 293 MeV)'%(EN,ED,ED-EN,(ED-EN)*a_inv))
 print('alpha_s needed for 293 MeV: %.2f'%(0.1180*293/((ED-EN)*a_inv)))
