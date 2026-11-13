@@ -17,8 +17,10 @@ premise not yet derived from persistence, geometry or constraints.
    Still open: the full gate sequence and its register/clean-cell layout. Blocks: weak fraction,
    VEV, G_F, m_H.
 2. **C² controls and flavour entries.** The native packet's C² control one-forms (shared by the
-   gauge couplings' continuum interpolation and the running), and the flavour link `Y` that
-   carries the generation tag (`PMFlavor`, Paper IV).
+   gauge couplings' continuum interpolation and the running). They are the gauge-field
+   configuration; homogeneous substrate links are realized by constant controls
+   (`PMAction.Machine.ConstantControls`); site-varying ones are open. Also the flavour link `Y`
+   that carries the generation tag (`PMFlavor`, Paper IV).
 3. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
    priority.
@@ -30,7 +32,6 @@ beyond the Closure premise) are left out; their modules record how they close.
 
 | Constant | Still open |
 | --- | --- |
-| D, Δ, ν, σ, χ; α | Paper I's postulates themselves (`PMSubstrate` REVIEW). |
 | Weak fraction 1849/8295 | The controller implementation (blocker 1). (Its two reference premises are derived: one carrier state per reserved cell, `ReferenceEconomy.cell_inj_of_content`; both electroweak refreshes read the reserved cell, `reads_reserved`.) |
 | VEV v, G_F | The controller implementation (blocker 1). |
 | m_H | Response corrections, which are below current precision: the tree value `125.2692638–125.2692640` GeV is `+0.6σ` from PDG `125.20 ± 0.11`. |

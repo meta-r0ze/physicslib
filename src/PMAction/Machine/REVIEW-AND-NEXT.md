@@ -51,7 +51,10 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
   C² control one-forms and the admission of the coherent root-generator evolution.
   Under `Admission`'s rule the second is discharged: the update conserves norm
   (`NativePacketUpdate.native_conserving`) and reads one neighbour (`native_local`,
-  `packet_local`). Only the control one-forms remain.
+  `packet_local`). Only the control one-forms remain. They are the gauge-field configuration
+  (rates of the root-cost generators), so the question is whether the substrate's links are
+  realized by C² controls. Homogeneous configurations are, by constant (smooth) controls
+  (`ConstantControls.homogeneous_realized`); site-varying configurations are open.
 
 No missing Lean *statement* is hidden behind these; each needs a model law or a
 new construction.
