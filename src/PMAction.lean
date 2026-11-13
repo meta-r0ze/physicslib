@@ -85,6 +85,8 @@ import PMAction.GaugeRecordLinks
 import PMAction.Machine.OpenReferenceFlow
 import PMAction.Machine.PrimitiveRecordBoundary
 import PMAction.Machine.CoherentPreparation
+import PMAction.Machine.AxisHop
+import PMAction.Machine.CarrierRootGate
 import PMAction.WallChiralCurrent
 import PMAction.WallExchange
 import PMAction.WallSeesaw

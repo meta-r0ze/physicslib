@@ -35,7 +35,11 @@ Checked mathematics, the module map and everything established are in
 1. **The reference/record banks.** A formal map from the background `Config` to `RecordSupply`'s
    stream (an identification in `ReferenceSelection`'s docstring), and the physical allocation of
    the banks.
-2. **The microscopic hop.** Which E8 root words the native generators come from; shared
+2. **The microscopic hop.** The internal generators have root words (`Machine.CarrierWeyl`), and an
+   axis step is exactly a two-root word, six of them with none preferred (`Machine.AxisHop`), and
+   the comparison gate's coherent step is one root reflection at quarter period
+   (`Machine.CarrierRootGate`). Still
+   open: which root word the native generators' site transport uses; shared
    group/trace normalization across spacings; for the packet subsystem the `C²` control
    one-forms. (The gauge `β` and admission are settled: `EventCoupling` with
    `PMConstants.ChainCouplings`, and `Admission`, whose rule is a stated PM premise.)
