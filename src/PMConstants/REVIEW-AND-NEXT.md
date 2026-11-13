@@ -18,8 +18,11 @@ premise not yet derived from persistence, geometry or constraints.
    η's maintenance. The coherent two-support state the comparison gate needs is one quarter-period of
    admitted evolution under a Hermitian involution such as a root-response operator
    (`PMAction.CoherentPreparation.quarter_gate_prepares`); `cannot_prepare` excludes only
-   basis-preserving words. Still open: identifying the carrier preparation with the survival
-   model (`PreparationSelection`).
+   basis-preserving words. The uniform carrier preparation follows from Closure symmetry
+   without identifying the preparation with the survival model
+   (`PreparationSelection.symmetric_preparation_uniform` with
+   `PMSubstrate.ChannelSymmetry.invariant_constant`). Open: wiring the packet's 16 channels to
+   `ChannelSymmetry`'s indexing in Lean (stated, not yet formal).
    Blocks: weak fraction.
 3. **Update and propagation dynamics.** The generation tag's dynamics, the physical running
    controls and neutrino mixing. Mostly companion-paper work (Papers IV–VI).

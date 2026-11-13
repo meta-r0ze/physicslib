@@ -21,7 +21,14 @@ instantiates the framework theorem that selects it.
 Premises (now explicit, as the framework theorem states them): the candidates are positive laws on
 the carriers, survival is the framework's hazard model with the average-rate reading, and the
 actions grow at that rate. The physical identification of the carrier preparation process with this
-survival model is the remaining input.
+survival model is the remaining input of this route.
+
+**A second route needs no such identification.** Under Closure the preparation law is defined
+inside the substrate, so it is invariant under the substrate's own symmetries, and those act
+transitively on the channels (`PMSubstrate.ChannelSymmetry.invariant_constant`: an invariant law
+takes one value on all 32 channels). `symmetric_preparation_uniform`: a law on the packet that
+takes one value everywhere is the uniform law. This is the premise Toll's channel measure already
+uses (`ChannelSymmetry.invariant_uniform`); the survival route above then agrees with it.
 -/
 
 noncomputable section
@@ -78,5 +85,18 @@ theorem any_family_selects_uniform {ι : Type*} [Fintype ι] [Nonempty ι] (L : 
       PersistenceMechanics.Selection.survivor w β (fun k => averageRate (L k) * T) i) atTop (𝓝 1) :=
   selected_uniform_average L hL hu hw hβ _ (fun i => by
     simp only [sub_self, zero_div]; exact tendsto_const_nhds)
+
+/-- **A symmetric preparation is uniform.** A law on the packet channels that takes one value
+everywhere (as Closure and the transitive channel symmetries force) is the uniform law. -/
+theorem symmetric_preparation_uniform (p : Ch → ℝ) (hconst : ∀ c d, p c = p d)
+    (hsum : ∑ c, p c = 1) : p = uniform := by
+  funext c
+  have h : ∑ d, p d = (Fintype.card Ch : ℝ) * p c := by
+    rw [Finset.sum_congr rfl (fun d _ => hconst d c)]; simp
+  have hc : (0 : ℝ) < Fintype.card Ch := by exact_mod_cast Fintype.card_pos
+  rw [hsum] at h
+  unfold uniform
+  field_simp
+  linarith
 
 end PMConstants.PreparationSelection
