@@ -220,7 +220,12 @@ tick before the pair can annihilate, the kaon's emission cone starts `ν` ticks 
 `Σ_{t=ν}^{Δ−1}(2t+1) = Δ² − ν²`. So Protocol's cost is paid in Toll time, not in amplitude. Two
 things are not explained: why routing takes all `ν` channels, and why the kaon keeps none of the
 `Δ − χ` survivors the pion keeps (with them, `1634`, ratio `1.157`). As assigned, `f_K/f_π =
-1890/1593 = 1.1864` against FLAG `1.1934(19)`: `0.6%` low.
+1890/1593 = 1.1864` against FLAG `1.1934(19)`: `0.6%` low. A persistence reading of the second point: the
+survivors are the boundary phases at the end of the cycle through which the pion leaves
+(`EmissionSpace.survivingPhases`); the kaon's register routing starts at the cycle boundary, so
+those exits are occupied by the next cycle's routing and the kaon keeps none. This gives a
+mechanism for E8's whole count, but it was found by asking what reproduces `Δ² − ν²`, so it
+explains the assigned number rather than predicting a new one, and the `0.6%` stays open.
 
 ## Next
 
