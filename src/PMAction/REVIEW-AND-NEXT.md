@@ -8,6 +8,17 @@ Checked mathematics, the module map and everything established are in
 1. **The carrier's rms radius in Lean.** `PMHadrons.CubeScales` uses the carrier's rms radius
    (`1.354` sites on `3³`, numerical, `tools/confined_walk.py`); its theorems assume only `ρ ≥ 1`.
    A Lean value needs the lowest eigenvector of the confined two-slice Hamiltonian.
+   **Exact data (Nov 2026, `tools/carrier_mode_exact.py`).** `H` has entries in `ℚ(i)`. The
+   Krylov space from one spinor component on the centre site is 28-dimensional and holds the
+   spin-up ground mode; its minimal polynomial factors over `ℚ` into two degree-14 integer
+   polynomials `p(x)`, `p(−x)`, and `E₀ = 0.8411986` is the smallest positive root of `p(−x)`
+   (sign change on `[0.84119, 0.84120]`; next level `1.4554`, so the gap is `0.61`). The mode's
+   weights by orbit are centre `0.0552`, faces `0.2799`, edges `0.4424`, corners `0.2225`, so
+   `ρ² = W₁ + 2W₂ + 3W₃ = 1.8322`. Lean plan: (1) the root interval of the degree-14 polynomial
+   (`norm_num` sign evaluation); (2) the 28-dimensional invariant subspace with a small-integer,
+   symmetry-adapted basis, and `H` restricted to it, checked entrywise; (3) the eigenvector as a
+   polynomial in `E₀` and `ρ²` as a rational function of `E₀`, bounded on the interval. Step (2)
+   is the large one; `CubeScales` only needs `ρ ≥ 1`, which step (3) gives with room to spare.
 2. **The contact running on the lattice (optional).** Everything in `(3α/4π)(1 + 2Q̄)` is derived
    except the Feynman parametrization step and the identification of the leading-log region with
    the D₄ lattice sum far below the cutoff. Low priority: `R` already matches the pion to `7×10⁻⁵`.
@@ -131,6 +142,11 @@ Checked mathematics, the module map and everything established are in
    known to overshoot: Δ intermediate states cancel much of it (exactly at large `N_c`), and there
    is no E8 Δ. So the cloud can supply the `−9%`, but not without the Δ sector; this is not yet a
    prediction.
+
+   *Last perturbative try.* Converting the one-loop `α_s(1/a) = 0.87` to the static-potential
+   scheme (`α_V = α(1 + a₁α/4π)`, `a₁ = 31/3 − 10n_f/9`) gives `α_V ≈ 1.3`, against the `2.9`
+   the N–Δ splitting needs with the persistence-consistent boundary. The coupling on the cube
+   stays a non-perturbative open item.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
