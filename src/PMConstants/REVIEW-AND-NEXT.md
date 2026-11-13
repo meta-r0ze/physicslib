@@ -12,9 +12,10 @@ premise not yet derived from persistence, geometry or constraints.
    (PMAction REVIEW B.2, the microscopic hop). The admission rule, the controller's selection
    (`ControllerLedger`, typed repairs `(2,1,1,1,1)`) and the gate's coherent state
    (`PMAction.CoherentPreparation`) are settled. Root words so far: the coherent step is one root
-   reflection at quarter period (`Machine.CarrierRootGate`), and an axis step is a two-root word
-   (`Machine.AxisHop`). Still open: the full gate sequence and its register/clean-cell layout. Blocks: weak
-   fraction, VEV, G_F, m_H.
+   reflection at quarter period (`Machine.CarrierRootGate`), and a within-tick axis step is the
+   equal-weight sum of the four in-slice two-root words (`Machine.AxisHop`, `Machine.SliceHop`).
+   Still open: the full gate sequence and its register/clean-cell layout. Blocks: weak fraction,
+   VEV, G_F, m_H.
 2. **C² controls and flavour entries.** The native packet's C² control one-forms (shared by the
    gauge couplings' continuum interpolation and the running), and the flavour link `Y` that
    carries the generation tag (`PMFlavor`, Paper IV).

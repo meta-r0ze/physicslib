@@ -18,8 +18,8 @@ moves are the 24 roots (two entries `±1`, the rest `0`; norm `2`). Coordinates 
 * `axis_words_count`: exactly six ordered pairs of roots sum to `2e₀` (three choices of `k`, two
   orders), and the same holds on every axis by symmetry.
 
-So the shortest axis hop is a word of exactly two root events, with six equally short words and
-no preferred one (Closure: the update cannot prefer a `k`). This is the microscopic content of a
+So the shortest axis hop is a word of exactly two root events, with six equally short words.
+`SliceHop` shows the within-tick hop uses the four that stay in the clock slice, with equal weight. This is the microscopic content of a
 directional factor: one axis step is two primitive root events. (`ClockLedger.clock_tick_cost`'s
 factor `2` comes from four flags of probability `1/2`, a different count; the two are not
 identified here.)
