@@ -31,7 +31,11 @@ Premises (not derived; the common toll is PM's cost definition, `PMSubstrate.Net
 the open part of the pricing is the common repair length `m`):
 pricing by the common readout event, summed reads of charge-unit
 references (`L` for both electroweak refreshes, a colour triplet for colour), the ledgers
-and cubic link consistency.
+and cubic link consistency. (Cubic consistency is automatic for links that are parallel transports
+of a `C^{1,1}` connection, `ParallelTransport.transport_consistent`; the native packet's links are
+such transports, with C² controls that follow from the substrate,
+`PMAction.Machine.D4EdgeSeparation`. Identifying each gauge factor's links with them is still a
+premise.)
 -/
 
 noncomputable section
