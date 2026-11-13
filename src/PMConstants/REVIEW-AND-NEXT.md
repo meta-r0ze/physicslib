@@ -9,51 +9,43 @@ premise not yet derived from persistence, geometry or constraints.
 
 1. **The physical controller and register implementation.** Which E8 root words realize the
    comparison gates, clean-cell allocation, and the clock/spatial/wire requirements
-   (PMAction REVIEW B.2, the microscopic hop). The admission rule is stated
-   (`PMAction.Admission`) and the controller's selection is fixed (`ControllerLedger`, typed
-   repairs `(2,1,1,1,1)`); the implementation is not. Blocks: weak fraction, VEV, G_F, m_H, η
-   maintenance.
-2. **The preparation contract.** Identifying the carrier preparation with the survival model
-   (`PreparationSelection`) is the same input as Machine's prepared initial reference
-   (`PrimitiveRecordBoundary.cannot_prepare`). Blocks: η, weak fraction.
-3. **Update and propagation dynamics.** Generations, running thresholds, the gravity loop and
-   neutrino mixing. Mostly companion-paper work (Papers IV–VI).
-4. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
+   (PMAction REVIEW B.2, the microscopic hop). The admission rule, the controller's selection
+   (`ControllerLedger`, typed repairs `(2,1,1,1,1)`) and the gate's coherent state
+   (`PMAction.CoherentPreparation`) are settled; the implementation is not. Blocks: weak
+   fraction, VEV, G_F, m_H.
+2. **Update and propagation dynamics.** The generation tag's dynamics, the physical running
+   controls and neutrino mixing. Mostly companion-paper work (Papers IV–VI).
+3. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
    priority.
 
 ## Open, by constant
 
-| Constant | Status | Still open |
-| --- | --- | --- |
-| D, Δ, ν, σ, χ; α | Forced given Paper I's postulates | Paper I's postulates themselves (`PMSubstrate` REVIEW). |
-| η = 171/172 | One reserved tone (frame synchronization) is needed and optimal (`ReferenceFrames`, `no_total_origin_readout`, `inband_optimal_iff`); no cell-width premise | The maintenance contract (`ReferenceAxis.skipped_maintenance_fails` shows it is required) and the preparation contract (blocker 2). |
-| Weak fraction 1849/8295 | End to end (`TableConsequences.end_to_end`); charge-unit normalization from the lepton-doublet reference (`ReferenceCharge`, `ReferenceEconomy`) | The controller implementation (blocker 1). Premises: one reserved cell per reference type; both electroweak refreshes read it. |
-| α_s | Formula, colour normalization (`ColourNormalization`), twelve reads (`SectorObligations`), read scale (`ReadScale`) | Colour's required resources are the channels it acts on (requirement table). The coupling on the hadron carrier cube (PMAction REVIEW A.3). |
-| g_W, g_Y, g_3 | From the D₄ gauge action and summed charge-unit reads (`ChainCouplings`) | Cubic link consistency across spacings; the physical scale convention. |
-| λ = 128/989 | Persistent gain within `1.4·10⁻⁹` below 128/989 (`ReflectionCharge.gain_at_three`) | Premises: one unit is one restored direction; the clock resynchronizes once per cycle; reflected load is restored by the same kind of repair. |
-| Scalar Toll, μ² | `Z_φ` from scalar transport (`ScalarNormalization`) | Budget dynamics. |
-| VEV v | Factorized and composed (`VevLedger`, `VevClosure`); wire share, linear form and noise divisor derived | The controller implementation (blocker 1). `m_e` is the mass unit by proof (`PMSubstrate.SIUnits`). |
-| y_e | Closure `√2 m_e/v` | An independent dressing only if it is to be a separate prediction. |
-| G_F | W exchange on the reference (`MatterRunning.fermi_from_reference`) | Same as the VEV. |
-| m_H | `m_H² = 2λv²` | Physical scalar normalization; response corrections. |
-| W/Z masses | `m_W² = (3/344)v_sub²`, ρ = 1, `Δr_sub = 5α/(1+5α)` in the Z-anchor window (`InterfaceResponseLaw`) | `Δα`, `m_t` and the remainder are comparison diagnostics; a measured `m_Z` tests the W relation but does not predict both masses. |
-| Hypercharges / generations | Charges up to the `e`/`ν` labeling (`ReferenceLink`); three glue-class pair types; one binary wall tag suffices (`GenerationEncoding`) | Chirality/triality interpretation; the physical generation classification (accessibility, current and update of the tag); a vector-faithful readout for equal-class packets. |
-| Strong CP θ̄ | θ̄ = 0 for any invertible masses (`ThetaBarSelection`, `WindingWeights`) | Blocker 4. Premise: the vacuum phase is a variable the selection acts on. |
-| Running | b₃, b₂, b_Y from derived content; all spin terms derived in Paper II | Thresholds; the physical controls and the matter-fluctuation identification; smooth C² controls for the native packet. |
-| Jarlskog J | Matrix value from Paper IV | Nothing here; the CKM inputs are `PMFlavor`'s. |
-| α_G | `α^{43/2}` from the event law and loop; handoff probability `α` from admittance (`HandoffAdmittance`) | That a gravitational handoff is an admittance channel; the closed-loop realization. |
-| Planck scale | Unity scale `m_e/√α_G` | Physical `α_G` normalization. |
-| Thermal floor | Proposed floor ≈ 9.21 meV | Propagation depth, mode population, coupling, and its reading as a density. |
-| Neutrinos | The bare tower is excluded (gap ratios 1:1849:1850) | A derived propagation/mixing Hamiltonian (Papers V/VI). |
+Rows with nothing open (η, λ, scalar Toll and μ², y_e, W/Z beyond the VEV, Jarlskog J) are left
+out; their modules record how they close.
+
+| Constant | Still open |
+| --- | --- |
+| D, Δ, ν, σ, χ; α | Paper I's postulates themselves (`PMSubstrate` REVIEW). |
+| Weak fraction 1849/8295 | The controller implementation (blocker 1). Premises: one reserved cell per reference type; both electroweak refreshes read it. |
+| VEV v, G_F | The controller implementation (blocker 1). |
+| m_H | Response corrections. |
+| α_s | The coupling on the hadron carrier cube (PMAction REVIEW A.3). |
+| g_W, g_Y, g_3 | That the full gauge sectors' updates compose exactly under subdivision (proved for the native packet subsystem; this is what cubic link consistency reduces to). The physical scale convention. |
+| Hypercharges / generations | The generation tag's dynamics: accessibility, current and update (blocker 2). Premise: refreshes act uniformly on a sector (`CarrierActions.weak_chiral`). |
+| Strong CP θ̄ | Blocker 3. Premise: the vacuum phase is a variable the selection acts on. |
+| Running | The physical controls and the matter-fluctuation identification; smooth C² controls for the native packet. |
+| α_G, Planck scale | That a gravitational handoff sees the node's admittance: argued from Closure (`HandoffAdmittance`), not proved. |
+| Thermal floor | Propagation depth, mode population, coupling, and its reading as a density. |
+| Neutrinos | A derived propagation/mixing Hamiltonian (Papers V/VI). |
 
 ## Candidates (explain a selection; not independent derivations)
 
 * `RootRepairRule`, `SectorRepair`: one root event per non-abelian factor, at least one per
   gauge-charged object. Reproduces the unique least-cost typed repair `(2,1,1,1,1)` that gives
-  `clockRatio`, and makes the gauge and scalar sectors share one repair length (fermion counts are
-  field rescalings). Found post hoc.
-* `HandoffAdmittance`: transmission linear in admittance with a unit channel open (Landauer).
+  `clockRatio`, and makes the gauge and scalar sectors share one repair length. Found post hoc.
+* `HandoffAdmittance`: transmission linear in admittance with a unit channel open (Landauer),
+  and the Closure reading for the gravitational handoff.
 
 ## Failure tests that narrow the controller
 
@@ -67,8 +59,8 @@ protocol work and more general dynamics remain open routes.
 
 - Values and bounds: `CurrentConstants`, `CertifiedConstants`, `StrongLedgerBounds`.
 - Controller and work: `ControllerLedger`, `TypedRepairWork`, `RootRepairRule`, `SectorRepair`.
-- Readout: `GaugeReadoutWeights`, `WeightedReadoutResponse`, `ReferenceCharge`, `ReferenceFrames`.
-- Scalar and scale: `ScalarLedger`, `ReflectionCharge`, `VevLedger`, `VevReadout`.
+- Readout and preparation: `ReferenceCharge`, `ReferenceFrames`, `PreparationSelection`.
+- Scalar and scale: `ScalarLedger`, `BudgetReadout`, `ReflectionCharge`, `VevLedger`.
 - Update and propagation: `ThetaBarSelection`, `WindingWeights`, `DepthEvents`, `HandoffAdmittance`.
 
 See [`README.md`](README.md) for build instructions.
