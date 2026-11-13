@@ -172,6 +172,27 @@ Checked mathematics, the module map and everything established are in
    vertex correction to `g_A` and `K` for the splitting, under each pion-boundary premise; (3) the
    magnetic null test on any proposed dressing.
 
+   **First pass, no free parameters (Nov 2026, `tools/pion_cloud_cube.py`).** Pion source:
+   derivative coupling to the ground doublet's on-site axial density on the cube's interior links
+   (bare cube current, no `5/4`); `1/a = 318 MeV`, E8 `F_π = 92.1 MeV`, `m_π = 138 MeV`; static
+   second-order dressing on the 20 `N + Δ` states (degenerate result checked against the double
+   commutator).
+
+   | pion boundary premise | `δg_A/g_A` (N, Δ degenerate → physical splitting) | `Δ − N` from the cloud |
+   |---|---|---|
+   | field confined (no link out) | `−16.6%` → `−22.7%` | `172 MeV` |
+   | source confined (pion on the unbounded lattice) | `−5.8%` → `−7.6%` | `79 MeV` |
+   | needed | `−9.2%` (to `5/4`) | `293 MeV` observed |
+
+   Field-confined overshoots `g_A` (`1.06–1.15`); source-confined gives `1.272–1.297`, within the
+   lattice-QCD `1.246(28)`, and a cloud share of the splitting (`27%`) like the cloudy bag's
+   (about a third). Caution: the source-confined premise looks better *after* the numbers; the
+   a-priori case for it is that the pion is a colour singlet, not a resource of the host's colour
+   flux, so like the emitted electron (`PMElementaryParticles/CONTINUOUS.md`, rule 2) it is not
+   walled in; the case for field-confined is that its carriers are. Still to do: derive the source
+   from the local axial variation of the two-slice update (the wall gives a surface term), recoil
+   (non-static) corrections, and the magnetic null test.
+
    *Last perturbative try.* Converting the one-loop `α_s(1/a) = 0.87` to the static-potential
    scheme (`α_V = α(1 + a₁α/4π)`, `a₁ = 31/3 − 10n_f/9`) gives `α_V ≈ 1.3`, against the `2.9`
    the N–Δ splitting needs with the persistence-consistent boundary. The coupling on the cube
