@@ -1,5 +1,6 @@
 import PMConstants.ReadoutAccounting
 import PersistenceMechanics.LawSelection
+import PMSubstrate.ChannelSymmetry
 
 /-!
 # The uniform preparation as an instance of law selection
@@ -27,7 +28,9 @@ survival model is the remaining input of this route.
 inside the substrate, so it is invariant under the substrate's own symmetries, and those act
 transitively on the channels (`PMSubstrate.ChannelSymmetry.invariant_constant`: an invariant law
 takes one value on all 32 channels). `symmetric_preparation_uniform`: a law on the packet that
-takes one value everywhere is the uniform law. This is the premise Toll's channel measure already
+takes one value everywhere is the uniform law. `packet_preparation_uniform` wires it: the packet's
+channels are the vector-class carriers of the two sectors among the 32 (`toChannel`), so a packet
+law proportional to an invariant channel law is uniform. This is the premise Toll's channel measure already
 uses (`ChannelSymmetry.invariant_uniform`); the survival route above then agrees with it.
 -/
 
@@ -98,5 +101,28 @@ theorem symmetric_preparation_uniform (p : Ch → ℝ) (hconst : ∀ c d, p c = 
   unfold uniform
   field_simp
   linarith
+
+/-- The packet's channels among the 32 substrate channels: the vector-class carriers of the two
+sectors (`chanTable` entries `0–7` and `16–23`), in `channelIndex` order. -/
+def embed16 (i : Fin 16) : Fin 32 :=
+  ⟨if i.val < 8 then i.val else i.val + 8, by have := i.isLt; split_ifs <;> omega⟩
+
+def toChannel (c : Ch) : Bool × PMSubstrate.ChannelSymmetry.V4 :=
+  PMSubstrate.ChannelSymmetry.chanTable (embed16 (PacketGaugeActions.channelIndex c))
+
+theorem toChannel_mem : ∀ c : Ch, toChannel c ∈ PMSubstrate.ChannelSymmetry.channels := by
+  decide +kernel
+
+/-- **The packet preparation is uniform under Closure.** If the channel law `P` on the 32
+substrate channels is invariant under the substrate's symmetries, and the packet's law is
+proportional to `P` on the packet's channels, the packet's law is uniform. -/
+theorem packet_preparation_uniform (P : Bool × PMSubstrate.ChannelSymmetry.V4 → ℝ)
+    (hP : ∀ i, ∀ x ∈ PMSubstrate.ChannelSymmetry.channels,
+      P (PMSubstrate.ChannelSymmetry.gen i x) = P x)
+    (p : Ch → ℝ) (k : ℝ) (hp : ∀ c, p c = k * P (toChannel c)) (hsum : ∑ c, p c = 1) :
+    p = uniform := by
+  refine symmetric_preparation_uniform p (fun c d => ?_) hsum
+  rw [hp c, hp d, PMSubstrate.ChannelSymmetry.invariant_constant P hP _ (toChannel_mem c),
+    PMSubstrate.ChannelSymmetry.invariant_constant P hP _ (toChannel_mem d)]
 
 end PMConstants.PreparationSelection
