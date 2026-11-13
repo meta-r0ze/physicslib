@@ -19,7 +19,8 @@ premise not yet derived from persistence, geometry or constraints.
 2. **C² controls and flavour entries.** The native packet's C² control one-forms (shared by the
    gauge couplings' continuum interpolation and the running). They are the gauge-field
    configuration; homogeneous substrate links are realized by constant controls
-   (`PMAction.Machine.ConstantControls`); site-varying ones are open. Also the flavour link `Y`
+   (`PMAction.Machine.ConstantControls`), a fixed generator with a site-varying rate by smooth
+   profiles (`ProfileControls`); a general configuration is open. Also the flavour link `Y`
    that carries the generation tag (`PMFlavor`, Paper IV).
 3. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low

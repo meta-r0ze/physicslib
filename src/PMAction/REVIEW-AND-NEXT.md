@@ -42,8 +42,9 @@ Checked mathematics, the module map and everything established are in
    two-root words; the two clock-moving words each run the clock backwards for one event
    (`Machine.SliceHop`). Still open: shared
    group/trace normalization across spacings; for the packet subsystem the `C²` control
-   one-forms of site-varying configurations (homogeneous ones are realized by constant controls,
-   `Machine.ConstantControls`). (The gauge `β` and admission are settled: `EventCoupling` with
+   one-forms of general site-varying configurations (homogeneous ones are realized by constant
+   controls, `Machine.ConstantControls`; a fixed generator with a site-varying rate by smooth
+   profiles, `Machine.ProfileControls`). (The gauge `β` and admission are settled: `EventCoupling` with
    `PMConstants.ChainCouplings`, and `Admission`, whose rule is a stated PM premise.)
 3. **The directional-exponential completion** is not yet identified with the on-site one.
 4. **Full field and integrated limits.** Real-space field/PDE mode–domain control, the integrated
