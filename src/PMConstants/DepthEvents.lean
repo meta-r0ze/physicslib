@@ -1,4 +1,5 @@
 import PMConstants.Bulk
+import PMSubstrate.ClockPlane
 
 /-!
 # The gravitational attenuation from the event law: why `α`, and why `α^{43/2}`
@@ -19,6 +20,11 @@ probability `α^43`. A loop is an outbound trip followed by a return. The update
 time-reversal symmetric (`CPPhases.real_update_commutes_conj`), so the two legs have equal
 probability; the loop probability is their product. `one_way_from_loop`: the one-way transmission
 is then uniquely `√(α^43) = α^{43/2}`, the exponent the paper uses, without any half-hop.
+
+**The loop.** `clock_loop_minimal`: in the clock's glue group `ℤ/43` (`PMSubstrate.ClockPlane`,
+the cycle Paper I visits in one period) every nonzero step has order exactly `43`, since `43` is
+prime. A closed loop of unit handoffs along the clock returns only after a multiple of `Δ = 43`,
+so the shortest closed causal loop is the `Δ`-handoff loop used above.
 
 Remaining premises: the handoff probability is the coupling `α` (reduced in `HandoffAdmittance`
 to transmission being linear in admittance with a unit channel open), and the residual factor
@@ -62,5 +68,14 @@ theorem gravity_from_events {α : ℝ} (hα : 0 ≤ α) {out : ℝ} (ho : 0 ≤ 
     Depth.gravity α = residual α * out := by
   rw [required_handoffs] at hloop
   rw [Depth.gravity, one_way_from_loop hα ho rfl hloop]
+
+/-- **The shortest closed loop along the clock has `Δ = 43` steps.** Every nonzero element of the
+clock's glue group `ℤ/43` has additive order `43`. -/
+theorem clock_loop_minimal (x : ZMod 43) (hx : x ≠ 0) : addOrderOf x = 43 := by
+  haveI : Fact (Nat.Prime 43) := ⟨by norm_num⟩
+  have h : 43 • x = 0 := by
+    have := card_nsmul_eq_zero (x := x)
+    rwa [ZMod.card] at this
+  exact addOrderOf_eq_prime h hx
 
 end PMConstants.DepthEvents
