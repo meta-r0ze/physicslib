@@ -16,10 +16,7 @@ premise not yet derived from persistence, geometry or constraints.
    equal-weight sum of the four in-slice two-root words (`Machine.AxisHop`, `Machine.SliceHop`).
    Still open: the full gate sequence and its register/clean-cell layout. Blocks: weak fraction,
    VEV, G_F, m_H.
-2. **Flavour entries.** The flavour link `Y` that carries the generation tag (`PMFlavor`,
-   Paper IV). (The native packet's C² controls are no longer a blocker: they follow from the
-   substrate's links for every finite `D₄` configuration, `PMAction.Machine.D4EdgeSeparation`.)
-3. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
+2. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
    priority.
 
@@ -34,9 +31,9 @@ g_3, and α_G beyond the Closure premise) are left out; their modules record how
 | VEV v, G_F | The controller implementation (blocker 1). |
 | m_H | Response corrections, which are below current precision: the tree value `125.2692638–125.2692640` GeV is `+0.6σ` from PDG `125.20 ± 0.11`. |
 | α_s | The coupling on the hadron carrier cube (PMAction REVIEW A.3). |
-| Hypercharges / generations | The tag is the wall, so its dynamics is the inter-wall link `Y` (`WallExchange`, `WallSeesaw`: light masses `δ²/σᵢ(Y)`); its entries are the flavour sector's (`PMFlavor`). Premise: refreshes act uniformly on a sector (`CarrierActions.weak_chiral`). |
-| Strong CP θ̄ | Blocker 3. Premise: the θ-vacua are vacuum candidates, selected by least cost like the substrate's own vacuum (`PMSubstrate.Vacuum.vacuum_selects`). |
-| Running | The matter-fluctuation identification. (Its C² controls follow from the substrate, `PMAction.Machine.D4EdgeSeparation`.) |
+| Hypercharges / generations | The tag is the wall, so its dynamics is the inter-wall link `Y` (`WallExchange`, `WallSeesaw`: light masses `δ²/σᵢ(Y)`); its entries belong to `PMFlavor`, which builds on this folder. Premise: refreshes act uniformly on a sector (`CarrierActions.weak_chiral`). |
+| Strong CP θ̄ | Blocker 2. Premise: the θ-vacua are vacuum candidates, selected by least cost like the substrate's own vacuum (`PMSubstrate.Vacuum.vacuum_selects`). |
+| Running | The matter-fluctuation identification. |
 
 ## Candidates (explain a selection; not independent derivations)
 
