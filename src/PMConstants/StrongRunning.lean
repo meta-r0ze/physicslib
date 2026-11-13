@@ -1,4 +1,5 @@
 import PMConstants.ScaleResponse
+import PMSubstrate.SIUnits
 
 /-!
 # The strong-coupling running test to the tau mass
@@ -36,10 +37,10 @@ def mTau : ℝ := -(PMSubstrate.E8Values.D : ℝ) +
 def mBottom : ℝ := (PMSubstrate.E8Values.Delta : ℝ)^2 *
   ((PMSubstrate.E8Values.D : ℝ) +
     (PMSubstrate.E8Values.chi : ℝ) / (PMSubstrate.E8Values.sigma : ℝ)) / overhead
-def mZ : ℝ := 91187.6 / 0.51099895
+def mZ : ℝ := 91187.6 / PMSubstrate.SIUnits.electronMassMeV
 
 theorem flavour_order : mCharm < mTau ∧ mTau < mBottom ∧ mBottom < mZ := by
-  norm_num [mCharm, mTau, mBottom, mZ, overhead,
+  norm_num [mCharm, mTau, mBottom, mZ, PMSubstrate.SIUnits.electronMassMeV, overhead,
     PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
     PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
 

@@ -366,7 +366,7 @@ noncomputable def floorMassME : ℝ :=
 
 theorem floorMassME_bounds : 0 ≤ floorMassME ∧ floorMassME ≤ 1 := by
   have hb := PMConstants.FloorNeutrino.floor_bounds
-  have hme : PMConstants.FloorNeutrino.meEV = 510998.95 := rfl
+  have hme : PMConstants.FloorNeutrino.meEV = 510998.95069 := rfl
   have hm : (0 : ℝ) < PMConstants.FloorNeutrino.meEV := by rw [hme]; norm_num
   refine ⟨?_, ?_⟩
   · unfold floorMassME; exact div_nonneg (by linarith [hb.1]) hm.le

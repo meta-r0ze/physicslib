@@ -76,7 +76,7 @@ theorem fermiME_bounds : (2.9e-12 : ℝ) < fermiME ∧ fermiME < (3.2e-12 : ℝ)
   have h := PMConstants.Values.fermi_bounds
   have he : (2.6e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
       PMConstants.Values.electronGeV ^ 2 < (2.62e-7 : ℝ) := by
-    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
+    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV PMSubstrate.SIUnits.electronMassGeV; norm_num
   unfold fermiME
   change (2.9e-12 : ℝ) <
     PMConstants.Values.fermi PMConstants.Values.electronGeV *
@@ -90,7 +90,7 @@ theorem fermiME_bounds_tight : (3.04e-12 : ℝ) < fermiME ∧ fermiME < (3.05e-1
   have h := PMConstants.Values.fermi_bounds
   have he : (2.6111e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
       PMConstants.Values.electronGeV ^ 2 < (2.6113e-7 : ℝ) := by
-    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV; norm_num
+    unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV PMSubstrate.SIUnits.electronMassGeV; norm_num
   unfold fermiME
   change (3.04e-12 : ℝ) <
     PMConstants.Values.fermi PMConstants.Values.electronGeV *

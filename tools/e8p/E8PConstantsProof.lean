@@ -601,7 +601,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
   | clusteringLate => norm_num [bounds, value, PMCosmology.loadFactor]
   | overhead | footprint | weakFraction | scalar | scalarToll | electronMassInput =>
     norm_num [bounds, value, CurrentConstants.weakFraction, CurrentConstants.scalar,
-      overhead, footprint, clockRatio, selfCoupling, scalarToll, ElectroweakBounds.electronGeV]
+      overhead, footprint, clockRatio, selfCoupling, scalarToll, ElectroweakBounds.electronGeV, PMSubstrate.SIUnits.electronMassGeV]
 
 theorem keys_complete (k : Key) : k ∈ keys := by cases k <;> simp [keys]
 set_option maxRecDepth 8000 in

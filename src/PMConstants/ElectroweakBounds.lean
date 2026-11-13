@@ -1,8 +1,9 @@
 import PMConstants.JointConstants
 import PMConstants.GaugeSpectrum
+import PMSubstrate.SIUnits
 
 /-! Certified consequences of the proposed formulas. `electronGeV` is the
-existing calculator's experimental mass-unit input, not an E8-derived number.
+mass unit (CODATA 2022, `PMSubstrate.SIUnits`), not an E8-derived number.
 Gauge masses here use the displayed quadratic response at the same coupling
 and VEV; running/response corrections are not silently supplied.
 -/
@@ -10,12 +11,12 @@ noncomputable section
 namespace PMConstants.ElectroweakBounds
 open ElectroweakE8 CertifiedConstants JointConstants GaugeSpectrum
 
-def electronGeV : ℝ := 0.00051099895
+def electronGeV : ℝ := PMSubstrate.SIUnits.electronMassGeV
 
-theorem vev_bounds : (246.2196378 : ℝ) < vev α electronGeV ∧
-    vev α electronGeV < 246.2196379 := by
+theorem vev_bounds : (246.2196381 : ℝ) < vev α electronGeV ∧
+    vev α electronGeV < 246.2196382 := by
   have h := vev_ratio_bounds
-  unfold vev electronGeV
+  unfold vev electronGeV PMSubstrate.SIUnits.electronMassGeV
   constructor <;> nlinarith [h.1, h.2]
 
 theorem scalar_root_bounds :
@@ -27,15 +28,15 @@ theorem scalar_root_bounds :
   have hn := Real.sqrt_nonneg (2*selfCoupling)
   constructor <;> nlinarith
 
-theorem higgs_bounds : (125.2692637 : ℝ) < higgsMass α electronGeV ∧
-    higgsMass α electronGeV < 125.2692639 := by
+theorem higgs_bounds : (125.2692638 : ℝ) < higgsMass α electronGeV ∧
+    higgsMass α electronGeV < 125.2692640 := by
   have h := product_bounds (by norm_num) (by norm_num) scalar_root_bounds vev_bounds
   unfold higgsMass
   constructor <;> nlinarith [h.1, h.2]
 
 theorem vev_squared_bounds :
-    (246.2196378 : ℝ)^2 < (vev α electronGeV)^2 ∧
-      (vev α electronGeV)^2 < (246.2196379 : ℝ)^2 := by
+    (246.2196381 : ℝ)^2 < (vev α electronGeV)^2 ∧
+      (vev α electronGeV)^2 < (246.2196382 : ℝ)^2 := by
   have h := vev_bounds
   constructor <;> nlinarith [h.1, h.2]
 

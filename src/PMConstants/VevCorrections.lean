@@ -7,7 +7,7 @@ import PMConstants.RequirementRows
 
 The VEV is `v = (χΔ² - 188) α⁻¹ m_e (1 + x)(1 - Y/3)`, `x = α/D_eff`, `D_eff = D + χ/(4π)`,
 `Y = 1/(Δ² L_embed (σ+1))` (Paper I's margin). `ElectroweakBounds.vev_bounds` pins it to
-`(246.2196378, 246.2196379)`, and the measured Fermi constant fixes `v_F ∈ (246.21957, 246.21971)`
+`(246.2196381, 246.2196382)`, and the measured Fermi constant fixes `v_F ∈ (246.21957, 246.21971)`
 (`VevAccounting.fermi_window`), a relative width of about `2.8·10⁻⁷`. Alternatives below are
 written as the formula times the ratio of correction factors.
 
@@ -44,7 +44,7 @@ def V : ℝ := vev α electronGeV
 def Y : ℝ := bareYukawa
 def x : ℝ := α / effectiveDimension
 
-lemma V_bounds : (246.2196378 : ℝ) < V ∧ V < 246.2196379 := vev_bounds
+lemma V_bounds : (246.2196381 : ℝ) < V ∧ V < 246.2196382 := vev_bounds
 
 lemma Y_val : Y = 1 / (31 * 6 * 43 ^ 2) := by
   unfold Y bareYukawa
@@ -83,9 +83,9 @@ theorem divisor_window (k : ℕ) (hk : 0 < k) :
         have : Y / k = Y * (1 / k) := by ring
         rw [this]; nlinarith [show (0 : ℝ) < Y by norm_num [Y_val]]
       norm_num [Y_val] at h2 this; nlinarith
-    have hr2 : 1 / (k : ℝ) < 0.4282 := by
+    have hr2 : 1 / (k : ℝ) < 0.4286 := by
       by_contra hc; push Not at hc
-      have : V * (1 - Y / k) ≤ V * (1 - Y * 0.4282) := by
+      have : V * (1 - Y / k) ≤ V * (1 - Y * 0.4286) := by
         apply mul_le_mul_of_nonneg_left _ (by linarith)
         have : Y / k = Y * (1 / k) := by ring
         rw [this]; nlinarith [show (0 : ℝ) < Y by norm_num [Y_val]]

@@ -38,7 +38,7 @@ theorem wire_share_excluded {GF s : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.16637
   rw [e]
   have : vev α electronGeV * (1 - s / 702) ≤ vev α electronGeV * (1 - (1/1000) / 702) := by
     apply mul_le_mul_of_nonneg_left _ hpos.le; linarith
-  have h2 : vev α electronGeV * (1 - (1/1000) / 702) < 246.2196379 * (1 - (1/1000) / 702) := by
+  have h2 : vev α electronGeV * (1 - (1/1000) / 702) < 246.2196382 * (1 - (1/1000) / 702) := by
     apply mul_lt_mul_of_pos_right hv.2; norm_num
   linarith [hw.1]
 

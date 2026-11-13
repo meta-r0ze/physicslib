@@ -1,5 +1,6 @@
 import PMConstants.Bulk
 import PMConstants.CertifiedConstants
+import PMSubstrate.SIUnits
 
 /-!
 # Bare thermal tower and common-scale splitting obstruction
@@ -23,12 +24,12 @@ noncomputable section
 namespace PMConstants.FloorNeutrino
 open PMConstants CertifiedConstants
 
-def meEV : ℝ := 510998.95
+def meEV : ℝ := PMSubstrate.SIUnits.electronMassEV
 
 theorem floor_bounds : 0.009208 < Bulk.floorMass α meEV ∧ Bulk.floorMass α meEV < 0.009210 := by
   have ha := alpha_bounds
   have hp1 := Real.pi_gt_d6; have hp2 := Real.pi_lt_d6
-  unfold Bulk.floorMass Bulk.floorRatio meEV
+  unfold Bulk.floorMass Bulk.floorRatio meEV PMSubstrate.SIUnits.electronMassEV
   rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.Delta_eq]
   constructor <;> nlinarith [mul_pos (by linarith : (0:ℝ) < Real.pi) (by linarith : (0:ℝ) < α)]
 
