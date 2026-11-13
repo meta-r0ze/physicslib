@@ -53,7 +53,10 @@ def perm (p : List ℕ) (v : Vec) : Vec :=
 
 /-- A one-carrier operator `M` acting on carrier `i`. -/
 def oneBody (M : ℕ → ℕ → ℚ) (i : ℕ) (v : Vec) : Vec :=
-  (List.range 64).map fun x => ((List.range 4).map fun a => M (car x i) a * get v (setc x i a)).sum
+  (List.range 64).map fun x =>
+    ((List.range 4).map fun a =>
+      let coefficient := M (car x i) a
+      if coefficient = 0 then 0 else coefficient * get v (setc x i a)).sum
 
 /-- The operator summed over the three carriers. -/
 def total (M : ℕ → ℕ → ℚ) (v : Vec) : Vec :=

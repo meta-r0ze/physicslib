@@ -63,9 +63,15 @@ def sMinus (o i : ℕ) : ℚ := if o / 2 = 1 ∧ i / 2 = 0 ∧ o % 2 = i % 2 the
 /-- The four nucleon states `p↑, p↓, n↑, n↓` (orthogonal, each of norm `72`). -/
 def nucleons : List Vec := [proton, total sMinus proton, neutron, total sMinus neutron]
 
+/-- All four basis states use the same projector denominator. -/
+theorem nucleon_norms : nucleons.map (fun b => inner b b) = [72, 72, 72, 72] := by
+  change [inner proton proton, _, inner neutron neutron, _] = _
+  rw [norms.1, norms.2]
+  decide +kernel
+
 /-- Projection onto the nucleon states. -/
 def projN (v : Vec) : Vec :=
-  nucleons.foldl (fun acc b => vadd acc b (inner b v / inner b b)) zero
+  nucleons.foldl (fun acc b => vadd acc b (inner b v / 72)) zero
 
 def dcNucleon (v : Vec) : Vec :=
   idx9.foldl (fun acc jb =>
@@ -76,6 +82,7 @@ def dcNucleon (v : Vec) : Vec :=
 `9/25` of the nucleon-only cubic term. -/
 theorem dc_nucleon_only :
     inner proton (dcNucleon neutron) = 25 / 9 * inner proton (dcFull neutron) := by
+  rw [dc_full, A, axial_count]
   decide +kernel
 
 end PMHadrons.SpinFlavour
