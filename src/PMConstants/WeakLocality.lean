@@ -28,8 +28,12 @@ it can cover the spatial rows without events of its own, and weak cannot without
 which are not weak's. The countermodel of `ReferenceMaintenanceLedger` prices rows but not this
 reach.
 
-Premise: a sector refreshes a frame address only with its own events (or, for the abelian phase,
-riding on events that occur). The wire and payload resources are not covered here.
+* `weak_misses_wires`: a wire is a 1-cell between the node and a neighbour, displaced along a root
+  (two nonzero coordinates, so at least one spatial); weak's own events never reach it either.
+
+Premise: a sector refreshes an address only with its own events (or, for the abelian phase,
+riding on events that occur). The payload resources sit at the node, so this argument does not
+decide them.
 -/
 
 namespace PMConstants.WeakLocality
@@ -78,5 +82,21 @@ theorem frame_from_locality (f : Fin 4 → Sector) (hw : f 0 = .weak)
     (Finset.univ.filter fun r => f r = .weak).card * rowWeight = 43 ∧
       (Finset.univ.filter fun r => f r = .hyper).card * rowWeight = 129 :=
   frame_ledgers f hw fun r h => (weak_covers_iff r).1 (hcap r h)
+
+/-- **Weak's own events never reach a wire.** A wire cell is displaced from the node along a root,
+which has two nonzero coordinates, so at least one spatial. -/
+theorem weak_misses_wires (r : Fin 4 → ℤ) (hr : ∃ i j, i ≠ j ∧ r i ≠ 0 ∧ r j ≠ 0) (t : ℕ)
+    (L : List (Fin 4 → ℤ)) (hL : ∀ d ∈ L, d = 0) : (t : ℤ) • e 0 + L.sum ≠ r := by
+  rw [internal_stays L hL t]
+  obtain ⟨i, j, hij, hi, hj⟩ := hr
+  intro h
+  by_cases hi0 : i = 0
+  · have hj0 : j ≠ 0 := fun h' => hij (hi0.trans h'.symm)
+    apply hj
+    rw [← h]
+    simp [e, hj0]
+  · apply hi
+    rw [← h]
+    simp [e, hi0]
 
 end PMConstants.WeakLocality
