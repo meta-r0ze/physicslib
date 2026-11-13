@@ -19,8 +19,9 @@ part of the area it fills.
 `toll·m = 1/(4πα N_sys)` (`EventStiffness.calibration`), the handoff factor is exactly
 `α⁻¹ = 4π · N_sys · (toll·m)`. Each interface slot costs one repair of the whole footprint,
 read over the full solid angle, in units of the single repair that maintains the electron (the
-Margin). This identity is exact; whether the electron's maintenance is one repair is the remaining
-premise, together with the two correction factors.
+Margin). This identity is exact. That the electron's maintenance is one repair is derived: the
+electron is a singlet of colour and weak, so its repair is exactly one root event
+(`RootRepairRule.electron_one_event`). The two correction factors remain.
 -/
 
 noncomputable section

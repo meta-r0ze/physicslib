@@ -31,8 +31,12 @@ structure, without the mixing constraint:
   which is now a consequence rather than the constraint the rule was fitted to.
 * `rule_least`: it costs no more than any positive typed repair that gives `clockRatio`.
 
-Premises: a disturbance displaces a carrier in the factors it is charged under, each undone by one
-event of that factor; and a phase-only displacement (the electron) is repaired by one event.
+* `electron_one_event`: the electron is a singlet of colour and weak, so any root event acts on it
+  only through its phase; its repair is exactly one event (`PMAction.FactorRepair.singlet_least`).
+  This is the "electron's maintenance is one repair" of `VevPremises`.
+
+Premise: a disturbance displaces a carrier in the factors it is charged under, each undone by one
+event of that factor.
 -/
 
 noncomputable section
@@ -105,5 +109,15 @@ theorem repairs_least {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
     simp only [hc, hw, hp]
   rw [← h]
   exact PMAction.FactorRepair.repair_least g
+
+/-- **The electron's repair is one event.** It is a singlet of colour and weak, so a root event
+acts on it only through its phase: one event, carrying the phase, repairs it, and none does not. -/
+theorem electron_one_event {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
+    (p : P) (hp : p ≠ 1) (r : Gc × Gw) (hr : r.1 = 1 ∨ r.2 = 1) :
+    colourDim .e = 1 ∧ isoDim .e = 1 ∧ repairs .e = 1 ∧
+      IsLeast {n | ∃ L : List (Gc × Gw × P), (∀ e ∈ L, PMAction.FactorRepair.IsEvent e) ∧
+        (L.map fun e => e.2.2).prod = p ∧ L.length = n} 1 := by
+  classical
+  exact ⟨rfl, rfl, rfl, PMAction.FactorRepair.singlet_least p hp r hr⟩
 
 end PMConstants.RootRepairRule

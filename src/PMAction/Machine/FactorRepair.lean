@@ -21,9 +21,12 @@ A repair is a word of events whose product undoes the displacement `g = (c, w, p
   repair of exactly that length.
 * `repair_least` (Economy): the least repair length is `need g`.
 
-Premises: a displacement in one factor is undone by one event of that factor (a disturbance is a
-single root event, so its undo is one); and a phase-only displacement is repaired by one event
-(the electron's case, the single remaining premise of `PMConstants.RootRepairRule`).
+* `singlet_least`: on a carrier that is a singlet of both non-abelian factors (the electron), any
+  root event acts only through its phase, so the phase displacement is repaired by exactly one
+  event.
+
+Premise: a displacement in one factor is undone by one event of that factor (a disturbance is a
+single root event, so its undo is one).
 -/
 
 namespace PMAction.FactorRepair
@@ -140,5 +143,19 @@ theorem repair_least (g : Gc × Gw × P) :
   refine ⟨events_attained g, ?_⟩
   rintro n ⟨L, hL, rfl, rfl⟩
   exact events_ge L hL
+
+omit [DecidableEq Gc] [DecidableEq Gw] [DecidableEq P] in
+/-- **A singlet's phase is repaired by one root event.** On a carrier that is a singlet of both
+non-abelian factors, a root event `(c, w)` of either factor acts only through the phase it carries.
+So the singlet's phase displacement `p` is undone by one event, any root event carrying `p`, and
+not by zero events. No phase-only event needs to exist. -/
+theorem singlet_least (p : P) (hp : p ≠ 1) (r : Gc × Gw) (hr : r.1 = 1 ∨ r.2 = 1) :
+    IsLeast {n | ∃ L : List (Gc × Gw × P), (∀ e ∈ L, IsEvent e) ∧
+      (L.map fun e => e.2.2).prod = p ∧ L.length = n} 1 := by
+  refine ⟨⟨[(r.1, r.2, p)], by simpa [IsEvent] using hr, by simp, rfl⟩, ?_⟩
+  rintro n ⟨L, -, hprod, rfl⟩
+  rcases L with _ | ⟨a, L⟩
+  · exact absurd (by simpa using hprod.symm) hp
+  · simp
 
 end PMAction.FactorRepair
