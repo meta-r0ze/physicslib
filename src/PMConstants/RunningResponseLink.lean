@@ -30,7 +30,9 @@ Clifford relations (`zeeman`, `concrete_spin`). For spin `0`, `a = 0`.
 
 **Premises** (from Paper II's modules):
 
-- the Landau spectrum `(2n+1)|b|` and the degeneracy of a continuum charged field;
+- the Landau spectrum `(2n+1)|b|` and the degeneracy of a continuum charged field (the
+  substrate's matter hops are the continuum covariant operators: `PMAction.Machine.MatterContinuum`;
+  open is reading them in the leading-log region far below the cutoff);
 - background Feynman gauge;
 - two Faddeev–Popov ghost components with fermionic sign;
 - the charge action `[f, ·] = i q b` on a charged adjoint mode.

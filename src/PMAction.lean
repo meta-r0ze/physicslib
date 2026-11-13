@@ -98,6 +98,7 @@ import PMAction.Machine.ConfigurationControls
 import PMAction.Machine.D4EdgeSeparation
 import PMAction.Machine.NativeConsistency
 import PMAction.Machine.CompactLimits
+import PMAction.Machine.MatterContinuum
 import PMAction.Machine.FactorRepair
 import PMAction.Machine.RootMaintenance
 import PMAction.Machine.CarrierRootGate
