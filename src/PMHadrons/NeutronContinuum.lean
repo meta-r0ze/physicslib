@@ -32,7 +32,7 @@ with `E₀ = m_n − m_p` (`neutronCutoffExact`), `|V_ud|² R = 32/33` (`vud_sq_
 
 The `3×3×3` spectral template (`DecayInstantiation`, `948.69–948.70 s`) is this route without
 Coulomb to `0.6%`; it is kept as a comparison. What remains between `923 s` and `878.4 s` is `g_A`
-(`PMAction/REVIEW-AND-NEXT.md` A.3) and the low-energy radiative correction.
+(`PMAction/REVIEW-AND-NEXT.md` A.2) and the low-energy radiative correction.
 -/
 
 noncomputable section

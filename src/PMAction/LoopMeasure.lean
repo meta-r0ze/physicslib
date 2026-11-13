@@ -19,11 +19,11 @@ shell `μ < |k| < M` of 4D (Euclidean) momentum space with the measure `d⁴k/(2
 
 So the unit used in `ContactRunning` is the 4D measure's, not an extra input. It is the leading
 log, set by the region between the two scales. On the substrate that region is far below the
-lattice cutoff, where the lattice sum approaches this integral. The per-diagram weights (the Ward
-identity's `W`, the `¼` from `ContactRunning.loop_direction_average`, the `16`/`4` from
-`ContactFierz`) multiply this unit. What stays outside this module is the self-energy's own
-weight is `self_energy_weight` (`W = −1` from the contraction `−2` and the Feynman-parameter
-average `½`); the parametrization itself is the standard continuum step.
+lattice cutoff: `LeadingLog.leading_log` shows the D₄ shell of the link Laplacian's kernel gives
+this unit up to `a²(M² − μ²)/(24π²)`. The per-diagram weights (the Ward identity's `W`, the `¼`
+from `ContactRunning.loop_direction_average`, the `16`/`4` from `ContactFierz`) multiply it.
+`self_energy_weight` below is the continuum form of `W = −1` (a Feynman-parameter average); the
+substrate's is `LeadingLog.self_energy_weight`, where the `½` is the D₄ direction average.
 -/
 
 noncomputable section

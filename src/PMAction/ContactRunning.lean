@@ -39,9 +39,11 @@ is exactly isotropic (`D4Isotropy.second_moment`), so `4 Σ k_μk_ν = (Σ k²) 
 (`loop_direction_average`): the `¼` follows from the D₄ geometry.
 
 **The normalization.** The unit `(α/4π)·ln(M²/μ²)` is the 4D measure between the two scales
-(`LoopMeasure.log_unit`: `|S³|/(2π)⁴ = 1/(8π²)` times `e² = 4πα`), and the self-energy weight
-`W = −1` is the contraction `−2` times the Feynman-parameter average `½`
-(`LoopMeasure.self_energy_weight`).
+(`LoopMeasure.log_unit`: `|S³|/(2π)⁴ = 1/(8π²)` times `e² = 4πα`). On the substrate it is the D₄
+shell of the link Laplacian's kernel, with the cutoff entering only as `a²(M² − μ²)/(24π²)`
+(`LeadingLog.leading_log`). The self-energy weight `W = −1` is the contraction `−2` times `½`,
+and the `½` is the D₄ direction average of the propagator's first order in the external momentum,
+`1 − 2·¼` (`LeadingLog.averaged_propagator`, `LeadingLog.self_energy_weight`).
 
 **The orientation sign.** A photon of loop momentum `k` leaves one leg and enters the other, so
 the two legs' propagator numerators carry `η_i k̸` and `−η_j k̸`, with `η = +1` for an outgoing
@@ -49,10 +51,8 @@ the two legs' propagator numerators carry `η_i k̸` and `−η_j k̸`, with `η
 Legs `1,3` (both `ψ̄`) and `2,4` (both `ψ`) get `−`; legs `1,4` and `2,3` get `+`. This is the
 sign in `sameWeight` and `oppositeWeight` (`weights_from_orientation`).
 
-What is still the continuum's: the Feynman parametrization step itself and the identification of
-the leading log region with the lattice sum far below the cutoff. These are the photon loop's log coefficient. In the
-substrate this would be the response of the link field to a pair of charged legs, the analogue
-of `RunningResponse`'s Landau-sum derivation of the vacuum-polarization coefficient.
+The photon loop's log is therefore the substrate's: the window between the two scales, read on
+the D₄ link geometry (`LeadingLog`).
 -/
 
 noncomputable section

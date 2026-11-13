@@ -17,8 +17,10 @@ Every input here is an E8 value: `α` (Paper I), the carrier charges `2/3`, `−
 (`PMElementaryParticles.CarrierAmplitude`), the tree-level E8 `m_Z`
 (`ElectroweakBounds.z_mass_bounds`) and the E8 proton (`CompositeMasses.proton_value`). The
 coefficient `(3/4π)(1 + 2Q̄)` is derived in `PMAction.ContactRunning` from Paper II's Dirac
-matrices and the leg charges (`runningFactor_from_contact`); only the photon loop's overall log
-normalization is still a continuum input.
+matrices and the leg charges (`runningFactor_from_contact`). Its log unit is the substrate's: the
+D₄ shell between the two scales gives `(α/4π)·ln(M²/μ²)` up to `a²(M² − μ²)/(24π²)`
+(`PMAction.LeadingLog.leading_log`), and the self-energy's `½` is the D₄ direction average
+(`PMAction.LeadingLog.self_energy_weight`).
 
 **Result.** `runningFactor_bounds`: `1.021178 < R < 1.021180`. The pion's assigned
 `32/33 = |V_ud|²·sharedFactor` gives `sharedFactor ∈ (1.021111, 1.021131)`

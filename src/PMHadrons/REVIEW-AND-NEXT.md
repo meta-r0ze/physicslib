@@ -26,8 +26,8 @@ low-energy radiative (1.018), times spectral-vs-continuum (0.994). The product i
    pion's assigned `32/33` gives `R ∈ (1.021111, 1.021131)`; they agree to `< 7×10⁻⁵`
    (`runningFactor_sub_shared`). So `32/33 = |V_ud|²·R` is the running, not a free margin. The
    one-loop coefficient `(3/4π)(1+2Q̄)` is derived in `PMAction.ContactRunning` from the Dirac
-   algebra and the leg charges (`runningFactor_from_contact`); the loop's overall normalization is
-   still a continuum input.
+   algebra and the leg charges (`runningFactor_from_contact`); its log unit is the D₄ shell's
+   (`PMAction.LeadingLog.leading_log`).
 2. **Coulomb — the lepton cube computes the right physics for the one mode it has**
    (floating point, `tools/lepton_coulomb.py`). On the lepton cube (`CubeScales.lepton_hop`:
    hop `= m_e`, `κ = 4π√2`) with `PMAction.CubeGreen3`'s Green function as the proton's potential,
@@ -145,7 +145,7 @@ those of the unbounded lattice at its own spacing, not of a minimal cube. Tested
   `g_A` it is `892.7 s` (+1.6%); the rest is the low-energy radiative correction.
 
 So the persistence reading removes two of the four neutron-only factors (spectral: it is the
-continuum; Coulomb: the Fermi factor with E8 `α`), leaves `g_A` (PMAction A.3) and the
+continuum; Coulomb: the Fermi factor with E8 `α`), leaves `g_A` (PMAction A.2) and the
 low-energy radiative correction, and gives every beta decay open modes for any `Q > 0`.
 **Adopted (Nov 2026).** `PMHadrons.NeutronContinuum` proves the closed-form phase space as the
 integral, the leading Coulomb integral, the rate, and the lifetimes `954.32–954.34 s` (no Coulomb)

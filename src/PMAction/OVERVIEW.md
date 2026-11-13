@@ -44,7 +44,7 @@ Hermitian `H`, unitary transport of a normalized `φ`, with two-branch response
 | Controlled propagation | `LocalUnitary`, `SplitUpdate`, `PropagationBounds`, `WilsonSplit`, `VacuumSplit`, `VacuumGenerator`, `VacuumUniform`, `GlobalTickInterval`, `VacuumIteration`, `VacuumErrorRate`, `RealSpaceFourier`, `SpatialContinuum`, `ProjectedEvolution`, `JointSpaceTime`, `SplitCovariance`, `ReferenceWalkParity` | Corrected local unitary split, global safe-tick existence, uniform time-refinement bound, torus Fourier/spectrum identification, branch dispersion and joint fixed-momentum vacuum-sector evolution. Physical refinement/clock and full field/interacting limits remain open. |
 | Chiral anomaly on the substrate | `FermionFlip`, `WallTransfer`, `InertiaStability` | Fermion statistics make the many-flavour flip amplitude `det M` (`flip_amplitude`); chirality changes only by transfer between the walls and a flavour-blind background transfers equally (`chirality_change`, `flavour_blind_transfer`), so a winding-`n` history carries `(det M)ⁿ`; the negative-mode count of an invertible Hermitian family is locally constant (`negCount_locallyConstant`, Sylvester's inertia), giving an integer charge without Lüscher. |
 | Gauge and scalar transport | `D4Gauge`, `GaugeContinuum`, `VaryingFields`, `LinkConsistency`, `GaugeTransport`, `ReferenceSampling`, `SummedReference`, `ReadoutAdditivity`, `ScalarTransport`, `CompactTransport` | Pointwise D₄ density limits, cubic-consistent link robustness, link extraction from a supplied linear hop, reference readout and scalar kinetic normalization. `CompactTransport.compact_transport_premises`: transports of a compactly supported C² connection are cubically consistent with it and it is `C^{1,1}`, so those two premises reduce to "the links are transports". |
-| Gauge fluctuations and running | `RunningCoefficients`, `RunningResponse`, `ContactRunning`, `ContactFierz`, `FlatPersistence`, `GaugeFluctuation`, `FluctuationPremises`, `FluctuationClosure`, `ContinuumFields`, `LandauDegeneracy`, `LatticeToContinuum` | Spin/orbital kernel coefficients, gauge-fixed Hessian and Ward algebra, finite-dimensional ghost determinant power, concrete field identities, strip-centre density and pointwise lattice-to-continuum second variation. No quantum continuum measure or integrated lattice action limit. |
+| Gauge fluctuations and running | `RunningCoefficients`, `RunningResponse`, `ContactRunning`, `ContactFierz`, `LoopMeasure`, `LeadingLog`, `FlatPersistence`, `GaugeFluctuation`, `FluctuationPremises`, `FluctuationClosure`, `ContinuumFields`, `LandauDegeneracy`, `LatticeToContinuum` | Spin/orbital kernel coefficients, gauge-fixed Hessian and Ward algebra, finite-dimensional ghost determinant power, concrete field identities, strip-centre density and pointwise lattice-to-continuum second variation. No quantum continuum measure or integrated lattice action limit. |
 | Currents and decay foundations | `ChargedCurrent`, `NeutralCurrent`, `ContactMatching`, `WallChiralCurrent`, `ChiralityConvention`, `VATrace`, `MassiveVATrace`, `SpinorCompleteness`, `AmplitudeTrace`, `WeakVertex` | Charged/neutral normalization, su(2) doublet algebra (`T3`, `commutator_*`, `anticommutator_Tp_Tm`), V−A projector `P_L` (idempotent/Hermitian/rank two), wall-projector algebra, spin sums, bilinear-to-trace amplitude and factor 64, contact matching and kernel-basis existence. `ChiralityConvention.projector_eq_fromBlocks_PL` identifies the wall projector with block-diagonal `P_L`; `projector_unique_on_kernel` forces it on the zero kernel from the reference conditions. Physical interaction, mediator, external states and phase-space remain application inputs. |
 
 ## Shared state/controller and register layer
@@ -190,7 +190,7 @@ controls/admission premises and the selection of group, representation and β.
   radius `ρ = 1.3535970…` sites is certified with exact and interval arithmetic
   (`tools/carrier_rms_certificate.py`; Lean proof deferred, REVIEW A.1). The on-site `Σ_z` has unit
   spin normalization for free axial motion (`tools/axial_ward.py`); the confined Ward identity is
-  open (REVIEW A.3).
+  open (REVIEW A.2).
 - **Flat links:** `FlatPersistence.flat_iff` (zero loop cost iff every holonomy is `1`).
 - **Running:** `RunningResponse` (spin `(2s)²` and orbital `−1/3` from the substrate response);
   `ContactRunning` + `ContactFierz` (the weak contact's coefficient `(3/2)(1 + 2Q̄)` from the Ward
@@ -200,8 +200,12 @@ controls/admission premises and the selection of group, representation and β.
   `CarrierStatistics` (exchange is a relative full turn, `−1`; antisymmetry and exclusion).
 - **Colour inside a hadron:** `ColourSinglet` (the three-carrier singlet has zero mean colour
   source), with `FlatPersistence`: no colour field on spin at leading order.
-- **Loop normalization:** `LoopMeasure` (the 4D measure gives `(α/4π)ln(M²/μ²)`; the self-energy
-  weight `W = −1`), used by `ContactRunning` with the orientation sign.
+- **Loop normalization:** `LoopMeasure` (the 4D measure gives `(α/4π)ln(M²/μ²)`), used by
+  `ContactRunning` with the orientation sign. `LeadingLog` derives it on the substrate: the
+  self-energy's `½` (so `W = −1`) is the D₄ direction average, not a Feynman parameter
+  (`averaged_propagator`, `self_energy_weight`); the link Laplacian's symbol is `|k|²` up to
+  `a²|k|⁴/12` (`symbol_gap`); and the D₄ shell `μ < |k| < M` gives `ln(M/μ)/(8π²)` per
+  `d⁴k/(2π)⁴` up to `a²(M² − μ²)/(24π²)` (`leading_log`).
 - **Event pricing and admission:** `EventCoupling` (event price to stiffness and coupling,
   moved from PMConstants), `ClockLedger` (a factor costs its flags; the clock `2·toll·m` per tick),
   `Admission` (the split's factors are unitary, local and priced).

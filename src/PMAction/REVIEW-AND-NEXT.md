@@ -15,10 +15,7 @@ Checked mathematics, the module map and everything established are in
    the 216-dimensional operator and its powers in the kernel (`native_decide` is not among the
    permitted axioms), so it is deferred as a certified-numerics task; the plan (root interval,
    invariant subspace, eigenvector as a polynomial in `E₀`) is in `tools/carrier_mode_exact.py`.
-2. **The contact running on the lattice (optional).** Everything in `(3α/4π)(1 + 2Q̄)` is derived
-   except the Feynman parametrization step and the identification of the leading-log region with
-   the D₄ lattice sum far below the cutoff. Low priority: `R` already matches the pion to `7×10⁻⁵`.
-3. **The carrier cube's `g_A` and colour coupling (Nov 2026; status, details in
+2. **The carrier cube's `g_A` and colour coupling (Nov 2026; status, details in
    `PMHadrons/PILLARS.md`).** E8's `5/4` is the strong-interaction axial charge (lattice QCD
    `1.246(28)`; the measured `1.2754` carries a `1.4–2.6%` electromagnetic correction). On the
    substrate: the carrier resolved inside the 3-cell hadron volume and projected to zero total
