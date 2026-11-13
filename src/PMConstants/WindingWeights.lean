@@ -33,9 +33,22 @@ existence is lattice gauge geometry; the admissible set it lives in is an input 
   an open admissible set has open sectors, so the premise becomes "some admissible history has
   charge `1`". Without an admissible set there are no integer sectors at all: the SU(N) link space
   is connected and every lattice pure gauge is gauge-equivalent to the identity
-  (`PMAction.MassGap.SlabGeometry`: time is an open path, no winding cycle). Reading admissibility
-  as Margin (Finiteness: a history persists only while each plaquette's defect stays within the
-  margin) is a candidate, not yet derived.
+  (`PMAction.MassGap.SlabGeometry`: time is an open path, no winding cycle).
+
+**The admissible set needs no cutoff.** Lüscher's lattice charge (Commun. Math. Phys. 85 (1982);
+Phillips–Stone, Commun. Math. Phys. 103 (1986)) is defined on every field outside an
+*exceptional* set of measure zero, is an integer, and does not change under deformations that
+avoid that set. So `Adm` = the non-exceptional fields: open, of full measure, with `Q` locally
+constant, which are exactly the premises above. A hard plaquette bound (Margin) is not needed, and
+would conflict with `PMAction.Admission` (a local, conserving, priced factor is admitted unless a
+persistence reason excludes it; the repair cost `1 − cos` is finite on every plaquette). For
+`U(1)` the exceptional fields are those with some plaquette at `−1`, exactly where the least-cost
+repair of the plaquette phase is tied between two directions.
+
+Cited, not formalised here: the construction on PM's region (the literature works on a periodic
+box; PM's region sits in the persisting vacuum, so its boundary is pure gauge), and the existence
+of a non-exceptional history of charge `1` (every integer sector is nonempty on a large enough
+region; the substrate is unbounded).
 
 The sector-exchange premise of `SectorExchange` (`θ̄ = θ`) is separate and unchanged.
 -/
