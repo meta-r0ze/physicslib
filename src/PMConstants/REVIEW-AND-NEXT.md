@@ -20,9 +20,9 @@ premise not yet derived from persistence, geometry or constraints.
    (`SectorRepair.sector_least`). Refresh events are root reflections on two-carrier cells
    (`Machine.RootMaintenance`), and the comparison circuit's supplied contracts (admission,
    preparation, clean record cell, primitive gates, prices) are each discharged
-   (`PMAction.SpatialComparison`'s docstring lists them). Still open: weak confined to the clock
-   row (the weak fraction's ledger split), and whether the nine-call comparison circuit is the
-   minimal schedule (its count does not enter any constant).
+   (`PMAction.SpatialComparison`'s docstring lists them). Weak's confinement to the clock row
+   follows from where its events reach (`WeakConfinement`). Still open: whether the nine-call
+   comparison circuit is the minimal schedule (its count does not enter any constant).
 2. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
    priority.
@@ -34,7 +34,7 @@ g_3, and α_G beyond the Closure premise) are left out; their modules record how
 
 | Constant | Still open |
 | --- | --- |
-| Weak fraction 1849/8295 | The ledgers `43` and `N_sys − 43`: weak confined to the clock row (`TableConsequences.Premises.weak_confined`; what a frame row stores). (Refresh events are substrate primitives: one root reflection per refreshed resource, `PMAction.RootMaintenance`.) Given the ledgers, the equal weak and hypercharge indices that give `clockRatio` are derived twice: the shared lepton-doublet reference (`ReferenceStiffness.lepton_event_mixing`; its premises `ReferenceEconomy.cell_inj_of_content`, `reads_reserved`) and the typed repairs from the gauge factors (`RootRepairRule.rule_chain_mixing`, indices `7/32` each). |
+| Weak fraction 1849/8295 | Premise: a sector refreshes a resource only where its own events reach or restore something, the abelian phase riding on events that occur (`PMAction.FactorRepair`'s reading). With it, weak is confined to the clock (`WeakConfinement.weak_fraction`: spatial rows and wires are out of reach of weak's non-moving events, and restoring the reference restores every channel's weak state), and the requirement table gives `1849/8295`. The equal indices are derived twice (`ReferenceStiffness.lepton_event_mixing`, `RootRepairRule.rule_chain_mixing`). |
 | VEV v, G_F | The VEV's correction factors (`VevPremises`). (The electron's maintenance is one repair: derived, `RootRepairRule.electron_one_event`.) |
 | m_H | Response corrections, which are below current precision: the tree value `125.2692638–125.2692640` GeV is `+0.6σ` from PDG `125.20 ± 0.11`. |
 | α_s | The coupling on the hadron carrier cube (PMAction REVIEW A.3). |
