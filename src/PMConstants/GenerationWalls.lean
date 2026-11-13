@@ -21,6 +21,12 @@ capacity needed (`encode`, `wall_native_card`); the companion-carrier history
 `no_further_modes`: the 48 wall labels are then used exactly by the three generations, so an
 equal-class packet has no room as a further state; no vector-faithful readout contract is needed
 to exclude it.
+
+**The tag's dynamics.** The tag is the wall, so it changes exactly through the inter-wall hop of
+the two-wall Hamiltonian, `hop ⊗ Y` (`PMAction.WallExchange`): `Y` is the current between tags,
+every mode is reachable when `Y` is invertible, and the zero-energy reduction gives the light
+masses `δ²/σᵢ(Y)` (`PMAction.WallSeesaw.seesaw`). So the generation tag's dynamics is the flavour
+link `Y`, whose entries are the flavour sector's (`PMFlavor`), not a new law here.
 -/
 
 noncomputable section

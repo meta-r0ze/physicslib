@@ -30,8 +30,8 @@ single-channel relation and holds for `T ≤ 1`; `α < 1` (`causalCoupling_bound
 Why a gravitational handoff sees this admittance: under Closure a node cannot price a crossing by
 what it carries, since no internal label distinguishes a gravitational handoff from any other
 transition (`PMSubstrate.ClosureSymmetry`). So every crossing sees the node's one impedance
-`Z_geo`, the same one that sets the electromagnetic `α⁻¹`. This is a reading of Closure, stated
-here rather than proved. The residual factor `16 − 2/3 − α` is
+`Z_geo`, the same one that sets the electromagnetic `α⁻¹`. `closure_one_price`: a price on
+crossing labels that no relabeling changes takes one value on all of them. The residual factor `16 − 2/3 − α` is
 unchanged.
 -/
 
@@ -59,5 +59,14 @@ theorem attenuation_from_admittance (T : ℝ →ₗ[ℝ] ℝ) (h1 : T 1 = 1) (n 
     DepthEvents.crossProb (T (1 / PMSubstrate.geometricIndex)) n =
       PMSubstrate.causalCoupling ^ n := by
   rw [handoff_is_alpha T h1, DepthEvents.required_handoffs]
+
+/-- **Under Closure a node has one price for every crossing.** If relabeling what a crossing
+carries never changes its price (no internal label distinguishes the carried signal), all
+crossings have the same price. -/
+theorem closure_one_price {L : Type*} [DecidableEq L] (price : L → ℝ)
+    (h : ∀ σ : Equiv.Perm L, ∀ a, price (σ a) = price a) (a b : L) : price a = price b := by
+  have := h (Equiv.swap a b) a
+  rw [Equiv.swap_apply_left] at this
+  exact this.symm
 
 end PMConstants.HandoffAdmittance
