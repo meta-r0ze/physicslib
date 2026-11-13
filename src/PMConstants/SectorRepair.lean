@@ -1,8 +1,7 @@
 import PMConstants.RootRepairRule
 import PMConstants.ReflectionCharge
 
-/-! **Experimental/candidate module.**
-
+/-!
 # Do the gauge, scalar and fermion sectors share one repair length?
 
 `CommonResponse` prices every sector by one readout (`stateFlag`, `linkFlag`) at one toll; what
@@ -23,9 +22,14 @@ what the same rule says about the three sectors.
   a rescaling of that type's field and changes no gauge or scalar normalization. It moves only
   the field's normalization, which the Yukawa couplings absorb.
 
+* `sector_least`: for any object displaced in the non-abelian factors it is charged under, and
+  gauge-charged, the least repair has `repairsOf c w` events (`PMAction.FactorRepair`). So the
+  gauge link's and the scalar's single event are Economy's minimum, not a reading.
+
 Status: the sector sharing that the gauge and scalar normalizations need follows from the same
-rule as the typed repair lengths. The rule itself is the `RootRepairRule` candidate (found by
-reproducing the selected repair vector), so this is consistency, not an independent derivation.
+derivation as the typed repair lengths (`RootRepairRule`, `PMAction.FactorRepair`), with the same
+premises: a disturbance displaces an object in the factors it is charged under, each undone by one
+event; a phase-only displacement costs one event.
 -/
 
 noncomputable section
@@ -64,5 +68,19 @@ theorem fermion_absorbed {ι : Type*} [Fintype ι] [DecidableEq ι] (U : Matrix 
   unfold responseCost
   push_cast
   ring
+
+/-- **The rule is Economy's minimum for any gauge-charged object.** -/
+theorem sector_least {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
+    [DecidableEq Gc] [DecidableEq Gw] [DecidableEq P] (c w : ℕ) (g : Gc × Gw × P)
+    (hc : g.1 ≠ 1 ↔ 1 < c) (hw : g.2.1 ≠ 1 ↔ 1 < w) (hch : 1 < c ∨ 1 < w ∨ g.2.2 ≠ 1) :
+    IsLeast {n | ∃ L : List (Gc × Gw × P), (∀ e ∈ L, PMAction.FactorRepair.IsEvent e) ∧
+      L.prod = g ∧ L.length = n} (repairsOf c w) := by
+  have h : PMAction.FactorRepair.need g = repairsOf c w := by
+    unfold PMAction.FactorRepair.need PMAction.FactorRepair.displaced repairsOf
+    simp only [hc, hw]
+    by_cases h1 : 1 < c <;> by_cases h2 : 1 < w <;> by_cases h3 : g.2.2 = 1 <;>
+      simp [h1, h2, h3] at hch ⊢
+  rw [← h]
+  exact PMAction.FactorRepair.repair_least g
 
 end PMConstants.SectorRepair
