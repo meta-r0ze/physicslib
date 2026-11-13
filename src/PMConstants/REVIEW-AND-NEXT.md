@@ -7,9 +7,9 @@ premise not yet derived from persistence, geometry or constraints.
 
 ## Shared blockers, in priority order
 
-1. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
-   region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
-   priority.
+1. **Imported or cited inputs.** Lüscher's lattice charge on PM's region (its identification with
+   the substrate's wall-transfer count) and a charge-1 history (strong CP). The chiral-anomaly
+   relation itself is derived on the substrate (`PMAction.WallTransfer`, `PMAction.FermionFlip`).
 
 ## Open, by constant
 

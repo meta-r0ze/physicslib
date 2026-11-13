@@ -14,9 +14,13 @@ mass phase:
 
 **Premise (chiral anomaly).** Write `α = arg det(M_u M_d)`. A history of winding `n` carries the
 mass phase `e^{−inα}` times a nonnegative weight `w n` computed with the masses made real and
-positive. (Index theorem: each unit winding flips the chirality of one zero mode per flavour, and
-the mass term that absorbs it contributes `det M`; with real positive masses the vector-like
-fermion determinant is positive, so `w n ≥ 0`.)
+positive. On the substrate this is derived with the winding read as the transfer count
+(`PMAction.WallTransfer`): chirality changes only by carriers moving between the two walls
+(Conservation, `chirality_change`); a flavour-blind background moves the same number `n` in every
+flavour (`flavour_blind_transfer`); and fermion statistics make the amplitude of those moves through
+`M` carry `(det M)ⁿ`, phase `n·arg det M` (`history_factor`, `FermionFlip.winding_phase`). With real
+positive masses the factor is positive, so `w n ≥ 0`. What stays imported is the identification of
+the transfer count with the lattice topological charge (Lüscher).
 
 * `Zm`: the vacuum weight with that phase, `Σₙ wₙ e^{−inα} e^{inθ}`.
 * `Zm_eq`: `Zm(θ) = Z(θ − α)`; the vacuum only sees `θ̄ = θ − α`.
