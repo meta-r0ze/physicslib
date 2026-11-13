@@ -45,6 +45,12 @@ persistence reason excludes it; the repair cost `1 − cos` is finite on every p
 `U(1)` the exceptional fields are those with some plaquette at `−1`, exactly where the least-cost
 repair of the plaquette phase is tied between two directions.
 
+**Lüscher is not needed on the substrate.** `SubstrateCharge` gives the charge from the substrate's
+own transfer count: the negative-mode count of the invertible transfer operator is locally constant
+(Sylvester's law of inertia, `PMAction.InertiaStability`), so `theta_zero_admissible` applies with
+it directly (`SubstrateCharge.theta_zero_substrate`). The literature route below is kept as the
+identification with the usual topological charge.
+
 Cited, not formalised here: the construction on PM's region (the literature works on a periodic
 box; PM's region sits in the persisting vacuum, so its boundary is pure gauge), and the existence
 of a non-exceptional history of charge `1` (every integer sector is nonempty on a large enough

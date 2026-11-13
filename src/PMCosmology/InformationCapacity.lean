@@ -27,6 +27,23 @@ abbrev CellStates (cells statesPerCell : ℕ) := Fin cells → Fin statesPerCell
 theorem states_count (cells statesPerCell : ℕ) :
     Fintype.card (CellStates cells statesPerCell) = statesPerCell^cells := by simp [CellStates]
 
+/-- Recovering the initial state and every input requires room for every possible history. -/
+theorem retained_history_capacity {Initial Final : Type*} [Fintype Initial] [Fintype Final]
+    {ticks choices : ℕ} (encode : Initial × CellStates ticks choices → Final)
+    (decode : Final → Initial × CellStates ticks choices) (recover : Function.LeftInverse decode encode) :
+    Fintype.card Initial * choices ^ ticks ≤ Fintype.card Final := by
+  simpa only [Fintype.card_prod, states_count] using
+    Fintype.card_le_of_injective encode recover.injective
+
+/-- Retaining every initial binary cell and one independent bit per tick needs this many cells. -/
+theorem retained_binary_history_cells {initial ticks final : ℕ}
+    (encode : CellStates initial 2 × CellStates ticks 2 → CellStates final 2)
+    (decode : CellStates final 2 → CellStates initial 2 × CellStates ticks 2)
+    (recover : Function.LeftInverse decode encode) : initial + ticks ≤ final := by
+  have bound := retained_history_capacity encode decode recover
+  rw [states_count, states_count, ← pow_add] at bound
+  exact (pow_right_strictMono₀ (by decide : 1 < (2 : ℕ))).le_iff_le.mp bound
+
 /-- Information in nats: the logarithm of the number of equal-weight configurations. -/
 def information (cells statesPerCell : ℕ) : ℝ :=
   Real.log (Fintype.card (CellStates cells statesPerCell))

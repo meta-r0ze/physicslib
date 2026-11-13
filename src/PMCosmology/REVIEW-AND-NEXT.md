@@ -9,6 +9,10 @@ This file is only what remains, split by what a Lean proof can close (**Part A**
 and what needs a physical/model law (**Part B**). Paper VI builds clean; run `./build.sh PMCosmology` for current counts. This is
 the most draft-stage paper, so also read **Draft-status risks** first.
 
+## Retained history and expansion
+
+Does the PM update admit independent inputs at successive ticks, and which later observable can recover them together with the initial state? The capacity bound in `InformationCapacity.retained_history_capacity` assumes such recovery. To connect it to expansion, identify when existing storage is exhausted and derive why retaining the record requires new spatial cells. An expansion rate would also require a rate of record production and a physical volume per cell.
+
 ## Draft-status risks / possible bugs
 
 - `H_late`, `S8_late` are **conditional rescalings** of frozen draft inputs

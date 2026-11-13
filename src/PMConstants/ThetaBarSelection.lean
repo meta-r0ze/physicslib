@@ -19,8 +19,8 @@ positive. On the substrate this is derived with the winding read as the transfer
 (Conservation, `chirality_change`); a flavour-blind background moves the same number `n` in every
 flavour (`flavour_blind_transfer`); and fermion statistics make the amplitude of those moves through
 `M` carry `(det M)ⁿ`, phase `n·arg det M` (`history_factor`, `FermionFlip.winding_phase`). With real
-positive masses the factor is positive, so `w n ≥ 0`. What stays imported is the identification of
-the transfer count with the lattice topological charge (Lüscher).
+positive masses the factor is positive, so `w n ≥ 0`. The transfer count is itself a continuous
+integer charge on invertible histories (`SubstrateCharge`), so Lüscher's charge is not needed.
 
 * `Zm`: the vacuum weight with that phase, `Σₙ wₙ e^{−inα} e^{inθ}`.
 * `Zm_eq`: `Zm(θ) = Z(θ − α)`; the vacuum only sees `θ̄ = θ − α`.

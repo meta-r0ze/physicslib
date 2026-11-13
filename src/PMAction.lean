@@ -54,6 +54,7 @@ import PMAction.ClassAdmission
 import PMAction.CarrierStatistics
 import PMAction.FermionFlip
 import PMAction.WallTransfer
+import PMAction.InertiaStability
 import PMAction.LinkExpansion
 import PMAction.RunningCoefficients
 import PMAction.ContactRunning
