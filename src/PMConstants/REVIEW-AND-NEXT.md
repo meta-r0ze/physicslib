@@ -64,7 +64,10 @@ Premises stated here that another part of the library already settles or changes
   `RootRepairRule` (candidate) produces it from representation content: one root event per
   non-abelian factor, at least one per gauge-active carrier (each root lies in one simple factor;
   the hypercharge phase adds no event). Found post hoc, so it explains the selection rather than
-  predicting. Whether the gauge, scalar and fermion sectors share `m` stays open.
+  predicting. Across sectors (`SectorRepair`, same rule): a gauge link holonomy lies in one factor
+  and the scalar is a colourless weak doublet, so both are one event and share `m`, which is what
+  `ScalarNormalization` needs; fermion types differ (`Q` two), but a count `k` on `ψ` equals one on
+  `√k·ψ` (`fermion_absorbed`), a field rescaling that no gauge or scalar normalization sees.
 * **Squared-amplitude readout.** Derived (`PMAction.ReadoutRule.born`); `CommonResponse` still
   listed it as an input (fixed).
 * **Admission.** `PMAction.Admission` admits by default, which rules out a hard plaquette

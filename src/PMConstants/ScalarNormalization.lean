@@ -22,7 +22,8 @@ scalar normalization follows from the same calibration with a continuum theorem.
 * `mass_ratio`: `m_W²/m_Z² = 1 − clockRatio`, the tree-level `cos²θ_W`.
 
 Premises (not derived): event pricing of scalar and gauge links with one repair length (one
-toll is PM's cost definition, `PMSubstrate.NetCost`), the link weight `1/4` (each undirected link once per cell), summed charge-unit reads
+toll is PM's cost definition, `PMSubstrate.NetCost`; the shared length follows from the
+`RootRepairRule` candidate, `SectorRepair.scalar_matches_gauge`), the link weight `1/4` (each undirected link once per cell), summed charge-unit reads
 for the couplings, cubic link consistency, and the substrate amplitude `v_sub` itself.
 -/
 

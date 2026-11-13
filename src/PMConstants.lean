@@ -168,6 +168,7 @@ import PMConstants.RootRepairRule
 import PMConstants.ColourNormalization
 import PMConstants.HandoffAdmittance
 import PMConstants.RegisterWidth
+import PMConstants.SectorRepair
 
 import PMConstants.PrimitiveReadoutSymmetry
 
