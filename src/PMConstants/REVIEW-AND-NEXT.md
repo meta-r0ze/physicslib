@@ -37,8 +37,6 @@ g_3, and α_G beyond the Closure premise) are left out; their modules record how
 | Hypercharges / generations | The tag is the wall, so its dynamics is the inter-wall link `Y` (`WallExchange`, `WallSeesaw`: light masses `δ²/σᵢ(Y)`); its entries are the flavour sector's (`PMFlavor`). Premise: refreshes act uniformly on a sector (`CarrierActions.weak_chiral`). |
 | Strong CP θ̄ | Blocker 3. Premise: the θ-vacua are vacuum candidates, selected by least cost like the substrate's own vacuum (`PMSubstrate.Vacuum.vacuum_selects`). |
 | Running | The matter-fluctuation identification. (Its C² controls follow from the substrate, `PMAction.Machine.D4EdgeSeparation`.) |
-| Thermal floor | Out of scope here (Papers V/VI): propagation depth, mode population and its reading as a density. |
-| Neutrinos | Out of scope here (Papers V/VI): a derived propagation/mixing Hamiltonian. |
 
 ## Candidates (explain a selection; not independent derivations)
 

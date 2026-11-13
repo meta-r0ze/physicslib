@@ -27,7 +27,8 @@ Premises (not derived; the common toll is PM's cost definition, `PMSubstrate.Net
 the open part of the pricing is the common repair length `m`):
 pricing by the common readout event, both refreshes reading the
 reserved lepton-doublet reference (`SharedReference`), the ledgers, and cubic link
-consistency. The full 16-carrier embedding is represented by the doublet's own generators.
+consistency (`CompactCouplings.lepton_weak_limit_c2` replaces it, and the `C^{1,1}` premise, by:
+the links are the transports of a compactly supported C² connection). The full 16-carrier embedding is represented by the doublet's own generators.
 -/
 
 noncomputable section

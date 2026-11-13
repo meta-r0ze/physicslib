@@ -40,7 +40,9 @@ Premises (not derived; the common toll is PM's cost definition, `PMSubstrate.Net
 the open part of the pricing is the common repair length `m`):
 the pricing of holonomies by the common readout event, the uniform
 carrier sampler, the refresh count `W`, the generator normalization `κ`, and cubic link
-consistency. No coupling value is changed here.
+consistency. No coupling value is changed here. (`CompactCouplings.event_limit_c2` replaces the
+`C^{1,1}` and cubic-consistency premises by: the links are the transports of a compactly
+supported C² connection.)
 -/
 
 noncomputable section

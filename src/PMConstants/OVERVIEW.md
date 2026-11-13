@@ -243,6 +243,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `GaugeGroupFactor` | Gauge group factors from the event-priced D₄ action |
 | `ReferenceStiffness` | Reference stiffness from the event-priced D₄ continuum limit |
 | `ChainCouplings` | All three gauge couplings from the event-priced D₄ chain |
+| `CompactCouplings` | The coupling limits (`event_limit`, `lepton_weak_limit`, `colour_limit`) for transports of a compactly supported C² connection, with no separate cubic-consistency premise |
 | `ScalarNormalization` | Scalar normalization from the event-priced D₄ chain |
 | `RunningResponseLink` | Matter running coefficients from Paper II's spin and orbital response |
 | `RunningDerived` | Paper III's running tests on derived coefficients |

@@ -19,7 +19,9 @@ an isometry `E`, instead of a uniform basis sample.
 
 So the continuum stiffness of a refresh is the **reference's own response index** `κ_R`
 times the ledger, not the packet trace. The pricing by the common readout, the reference
-states, `W` and cubic link consistency are premises.
+states, `W` and cubic link consistency are premises. (`CompactLimits.ref_limit_c2` and
+`sum_limit_c2` replace cubic consistency and `C^{1,1}` by: the links are the transports of a
+compactly supported C² connection.)
 -/
 
 noncomputable section

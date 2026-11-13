@@ -63,6 +63,7 @@ import PMConstants.EventStiffness
 import PMConstants.GaugeGroupFactor
 import PMConstants.ReferenceStiffness
 import PMConstants.ChainCouplings
+import PMConstants.CompactCouplings
 import PMConstants.ScalarNormalization
 import PMConstants.RunningResponseLink
 import PMConstants.RunningDerived
