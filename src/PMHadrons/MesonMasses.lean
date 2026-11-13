@@ -83,7 +83,7 @@ theorem pionPlus_mev_value : (139.570411 : ℝ) < pionPlus * me ∧ pionPlus * m
   rw [pionPlus_ledger]
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
     PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
-  unfold me
+  unfold me PMSubstrate.SIUnits.electronMassMeV
   constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
 
 /-! ## Six-pillar cell budget -/
@@ -172,7 +172,7 @@ theorem pionPlus_gt_constituents :
   have hu := PMElementaryParticles.QuarkMasses.up_value
   have hd := PMElementaryParticles.QuarkMasses.down_value
   have hp := pionPlus_value
-  unfold me at hu hd
+  unfold me PMSubstrate.SIUnits.electronMassMeV at hu hd
   nlinarith [hu.2, hd.2, hp.1]
 
 /-- `K⁺ = u s̄` is heavier than its current quarks. -/
@@ -182,7 +182,7 @@ theorem kaonPlus_gt_constituents :
   have hu := PMElementaryParticles.QuarkMasses.up_value
   have hs := PMElementaryParticles.QuarkMasses.strange_value
   have hk := PMHadrons.CompositeMasses.kaonPlus_value
-  unfold me at hu hs
+  unfold me PMSubstrate.SIUnits.electronMassMeV at hu hs
   nlinarith [hu.2, hs.2, hk.1]
 
 /-- The proton `uud` is heavier than its current quarks. -/
@@ -192,7 +192,7 @@ theorem proton_gt_constituents :
   have hu := PMElementaryParticles.QuarkMasses.up_value
   have hd := PMElementaryParticles.QuarkMasses.down_value
   have hp := PMHadrons.CompositeMasses.proton_value
-  unfold me at hu hd
+  unfold me PMSubstrate.SIUnits.electronMassMeV at hu hd
   nlinarith [hu.2, hd.2, hp.1]
 
 end PMHadrons.MesonMasses

@@ -96,7 +96,7 @@ lemma mZ_bounds : (89.57 : ℝ) < mZ ∧ mZ < 89.58 := by
 lemma mp_bounds : (0.938272089 : ℝ) < mpGeV ∧ mpGeV < 0.938272091 := by
   have h := CompositeMasses.proton_value
   unfold mpGeV
-  simp only [PMElementaryParticles.SharedUnits.me]
+  simp only [PMElementaryParticles.SharedUnits.me, PMSubstrate.SIUnits.electronMassMeV]
   constructor <;> linarith [h.1, h.2]
 
 lemma ratio_bounds : (95.462 : ℝ) < mZ / mpGeV ∧ mZ / mpGeV < 95.4735 := by

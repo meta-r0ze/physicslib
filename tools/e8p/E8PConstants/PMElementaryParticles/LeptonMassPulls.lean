@@ -24,14 +24,14 @@ theorem muon_tension : -2.5 < (muon - 206.7682827) / 0.0000046 ∧
   · rw [div_lt_iff₀ (by norm_num)]; linarith
 
 theorem tau_tension : -2.1 < (tau * me - 1776.93) / 0.09 ∧ (tau * me - 1776.93) / 0.09 < -2.0 := by
-  rw [tau_value]; unfold me; constructor <;> norm_num
+  rw [tau_value]; unfold me PMSubstrate.SIUnits.electronMassMeV; constructor <;> norm_num
 
 theorem pionPlus_mass : |(pionPlus * me - 139.57039) / 0.00018| < 0.2 := by
   have hg := g_b; have ha := a_b
   rw [pionPlus_ledger]
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
     PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
-  unfold me
+  unfold me PMSubstrate.SIUnits.electronMassMeV
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1, ha.2]
   · rw [div_lt_iff₀ (by norm_num)]; nlinarith [hg.2, ha.1]
@@ -50,7 +50,7 @@ theorem kaon_inversion : 3.93 < (kaon0 - kaonPlus) * me ∧ (kaon0 - kaonPlus) *
     constructor
     · rw [lt_div_iff₀ hpos]; nlinarith
     · rw [div_lt_iff₀ hpos]; nlinarith
-  unfold kaon0 kaonPlus me
+  unfold kaon0 kaonPlus me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
     PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.nu_eq]
   constructor <;> nlinarith [hp.1, hp.2, hs.1, hs.2, ha.1, ha.2]
@@ -58,7 +58,7 @@ theorem kaon_inversion : 3.93 < (kaon0 - kaonPlus) * me ∧ (kaon0 - kaonPlus) *
 theorem pion_splitting : 4.5933 < (pionPlus - pion0) * me ∧ (pionPlus - pion0) * me < 4.5935 := by
   have ha := a_b
   rw [pionPlus_ledger]
-  unfold pion0 me
+  unfold pion0 me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
     PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
   constructor <;> nlinarith [ha.1, ha.2]

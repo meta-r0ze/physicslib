@@ -48,7 +48,7 @@ lemma meson_masses :
     (273.13248 : ℝ) < MesonMasses.pionPlus ∧ MesonMasses.pionPlus < 273.132483 := by
   have hK := CompositeMasses.kaonPlus_mev_value
   have hP := MesonMasses.pionPlus_mev_value
-  simp only [PMElementaryParticles.SharedUnits.me] at hK hP
+  simp only [PMElementaryParticles.SharedUnits.me, PMSubstrate.SIUnits.electronMassMeV] at hK hP
   exact ⟨by linarith [hK.1], by linarith [hK.2], by linarith [hP.1], by linarith [hP.2]⟩
 
 lemma kaon_phase :

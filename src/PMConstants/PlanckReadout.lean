@@ -1,5 +1,6 @@
 import PMConstants.GravityAccounting
 import PMConstants.Depth
+import PMSubstrate.SIUnits
 
 /-!
 **Comparison / unit conversion.**
@@ -18,7 +19,7 @@ open PMConstants
 open PMConstants.CertifiedConstants
 
 /-- Electron mass in GeV (CODATA 2022), a supplied comparison input. -/
-def electronMassGeV : ℝ := 0.00051099895069
+def electronMassGeV : ℝ := PMSubstrate.SIUnits.electronMassGeV
 
 /-- Planck mass in GeV read out from the certified `α_G`. -/
 def planckMass : ℝ := PMConstants.Depth.planck electronMassGeV (PMConstants.Depth.gravity α)
@@ -33,7 +34,7 @@ theorem planckMass_bounds :
     rw [Real.sqrt_lt' (by norm_num)]
     linarith [hg.2]
   have hpos : 0 < Real.sqrt (PMConstants.Depth.gravity α) := by linarith
-  unfold planckMass PMConstants.Depth.planck electronMassGeV
+  unfold planckMass PMConstants.Depth.planck electronMassGeV PMSubstrate.SIUnits.electronMassGeV
   constructor
   · rw [lt_div_iff₀ hpos]
     nlinarith [hs2]

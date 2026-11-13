@@ -50,7 +50,7 @@ theorem binding_nonpos (C : Cloud) : bindingEV C ≤ 0 := by
   intro o _
   unfold orbitalEnergyEV
   have hR : 0 ≤ rydbergEV := by
-    unfold rydbergEV rydbergEnergy electronMassEV
+    unfold rydbergEV rydbergEnergy electronMassEV PMSubstrate.SIUnits.electronMassEV
     positivity
   have hn : 0 ≤ (o.n : ℝ) ^ 2 := by positivity
   exact div_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hR) hn

@@ -1,4 +1,5 @@
 import PMConstants.Values
+import PMSubstrate.SIUnits
 import PMSubstrate.Impedance
 import Mathlib.Analysis.Real.Pi.Bounds
 
@@ -18,8 +19,10 @@ open PMSubstrate PMConstants
 def αe : ℝ := PMConstants.Values.alpha
 def αinv : ℝ := geometricIndex
 
-def me : ℝ := 0.51099895069
-def hbarc : ℝ := 197.3269804
+/-- Electron mass in MeV (`PMSubstrate.SIUnits`, CODATA 2022). -/
+def me : ℝ := PMSubstrate.SIUnits.electronMassMeV
+/-- `ħc` in MeV·fm (`PMSubstrate.SIUnits`). -/
+def hbarc : ℝ := PMSubstrate.SIUnits.hbarcMeVFm
 
 lemma pi_b : (3.14159265358979323846 : ℝ) < Real.pi ∧ Real.pi < 3.14159265358979323847 :=
   ⟨Real.pi_gt_d20, Real.pi_lt_d20⟩

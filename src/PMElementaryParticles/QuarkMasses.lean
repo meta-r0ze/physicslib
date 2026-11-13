@@ -107,40 +107,40 @@ theorem top_ledger : top = anchorVolume + capLeakTerm := by
 theorem up_value : (2.055 : ℝ) < up * me ∧ up * me < (2.062 : ℝ) := by
   unfold up η
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.overhead_eq]
-  norm_num [me]
+  norm_num [me, PMSubstrate.SIUnits.electronMassMeV]
 
 /-- E8-only enclosure of the down-quark mass. -/
 theorem down_value : (4.623 : ℝ) < down * me ∧ down * me < (4.63 : ℝ) := by
   unfold down η
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.overhead_eq]
-  norm_num [me]
+  norm_num [me, PMSubstrate.SIUnits.electronMassMeV]
 
 /-- E8-only enclosure of the strange-quark mass. -/
 theorem strange_value : (93.5 : ℝ) < strange * me ∧ strange * me < (93.58 : ℝ) := by
   unfold strange η
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
     PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.overhead_eq]
-  norm_num [me]
+  norm_num [me, PMSubstrate.SIUnits.electronMassMeV]
 
 /-- E8-only enclosure of the charm-quark mass. -/
 theorem charm_value : (1267.02 : ℝ) < charm * me ∧ charm * me < (1267.48 : ℝ) := by
   unfold charm η
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
     PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.overhead_eq]
-  norm_num [me]
+  norm_num [me, PMSubstrate.SIUnits.electronMassMeV]
 
 /-- E8-only enclosure of the bottom-quark mass. -/
 theorem bottom_value : (4180.9 : ℝ) < bottom * me ∧ bottom * me < (4182.3 : ℝ) := by
   unfold bottom η
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
     PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.overhead_eq]
-  norm_num [me]
+  norm_num [me, PMSubstrate.SIUnits.electronMassMeV]
 
 /-- E8-only enclosure of the top-quark mass. -/
 theorem top_value : (172657 : ℝ) < top * me ∧ top * me < (172686 : ℝ) := by
   unfold top
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq]
-  norm_num [me]
+  norm_num [me, PMSubstrate.SIUnits.electronMassMeV]
 
 /-- The thresholds Paper III orders are these formulas. -/
 theorem threshold_match : charm = PMConstants.StrongRunning.mCharm ∧ bottom = PMConstants.StrongRunning.mBottom := by

@@ -160,7 +160,7 @@ pull against the measurement. -/
 /-- E8 neutral pion in MeV: `134.97701…`. -/
 theorem pion0_mev_value : (134.977014 : ℝ) < pion0 * me ∧ pion0 * me < 134.977015 := by
   have hg := g_b
-  unfold pion0 me
+  unfold pion0 me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
     PMSubstrate.E8Values.nu_eq]
   constructor <;> nlinarith [hg.1, hg.2]
@@ -168,7 +168,7 @@ theorem pion0_mev_value : (134.977014 : ℝ) < pion0 * me ∧ pion0 * me < 134.9
 /-- E8 neutral kaon in MeV: `497.61241…`. -/
 theorem kaon0_mev_value : (497.612411 : ℝ) < kaon0 * me ∧ kaon0 * me < 497.612412 := by
   have hg := g_b; have hp := pi_b
-  unfold kaon0 me
+  unfold kaon0 me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.D_eq,
     PMSubstrate.E8Values.nu_eq]
   constructor <;> nlinarith [hg.1, hg.2, hp.1, hp.2]
@@ -183,7 +183,7 @@ theorem kaonPlus_mev_value :
     constructor
     · rw [lt_div_iff₀ hpos]; nlinarith
     · rw [div_lt_iff₀ hpos]; nlinarith
-  unfold kaonPlus me
+  unfold kaonPlus me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.D_eq]
   constructor <;> nlinarith [hg.1, hg.2, hp.1, hp.2, hs.1, hs.2, ha.1, ha.2]
 
@@ -191,7 +191,7 @@ theorem kaonPlus_mev_value :
 theorem protonRadius_value :
     (0.8412356 : ℝ) < 4 * hbarc / (proton * me) ∧ 4 * hbarc / (proton * me) < 0.8412357 := by
   have h := proton_value
-  have hpos : 0 < proton * me := by unfold me; nlinarith
+  have hpos : 0 < proton * me := by unfold me PMSubstrate.SIUnits.electronMassMeV; nlinarith
   constructor
-  · rw [lt_div_iff₀ hpos]; unfold hbarc me; nlinarith
-  · rw [div_lt_iff₀ hpos]; unfold hbarc me; nlinarith
+  · rw [lt_div_iff₀ hpos]; unfold hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV; nlinarith
+  · rw [div_lt_iff₀ hpos]; unfold hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV; nlinarith

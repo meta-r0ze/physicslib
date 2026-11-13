@@ -277,7 +277,7 @@ theorem pionLifetimeCorrectedSeconds_bounds :
   -- `m_π`, `m_μ`
   have hmp : (273.13236 : ℝ) < MesonMasses.pionPlus ∧ MesonMasses.pionPlus < 273.13251 := by
     have h := MesonMasses.pionPlus_mev_value
-    simp only [PMElementaryParticles.SharedUnits.me] at h
+    simp only [PMElementaryParticles.SharedUnits.me, PMSubstrate.SIUnits.electronMassMeV] at h
     constructor <;> linarith [h.1, h.2]
   have hm := PMElementaryParticles.LeptonMasses.muon_value
   have hGpos : (0 : ℝ) < PMElementaryParticles.SharedUnits.fermiME := by linarith [hG.1]

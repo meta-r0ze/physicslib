@@ -16,25 +16,25 @@ namespace PMElementaryParticles.PhysicalUnits
 open PMElementaryParticles.SharedUnits
 
 /-- Speed of light in `fm/s` (unit conversion). -/
-def cFmPerSecond : ℝ := 2.99792458e23
+def cFmPerSecond : ℝ := PMSubstrate.SIUnits.cFmPerSecond
 
 /-- Electron time unit `ħ/(m_e c²)` in seconds. -/
 def electronTime : ℝ := hbarc / (me * cFmPerSecond)
 
 theorem electronTime_pos : 0 < electronTime := by
-  unfold electronTime cFmPerSecond hbarc me
+  unfold electronTime cFmPerSecond PMSubstrate.SIUnits.cFmPerSecond hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV
   norm_num
 
 /-- Broad certified enclosure of the electron time unit. -/
 theorem electronTime_bounds :
     (1.2880e-21 : ℝ) < electronTime ∧ electronTime < 1.2882e-21 := by
-  unfold electronTime cFmPerSecond hbarc me
+  unfold electronTime cFmPerSecond PMSubstrate.SIUnits.cFmPerSecond hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV
   constructor <;> norm_num
 
 /-- The electron time unit to `10⁻⁸`: `1.28808866–1.28808867 × 10⁻²¹` s. -/
 theorem electronTime_tight :
     (1.28808866e-21 : ℝ) < electronTime ∧ electronTime < 1.28808867e-21 := by
-  unfold electronTime cFmPerSecond hbarc me
+  unfold electronTime cFmPerSecond PMSubstrate.SIUnits.cFmPerSecond hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV
   constructor <;> norm_num
 
 /-- Muon lifetime in seconds. -/

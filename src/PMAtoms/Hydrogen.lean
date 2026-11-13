@@ -1,4 +1,5 @@
 import PMConstants.Values
+import PMSubstrate.SIUnits
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic
 
@@ -14,13 +15,11 @@ noncomputable section
 namespace PMAtoms
 open PMConstants
 
-/-- Electron rest energy in eV (CODATA 2022, `510998.95069(16)`), a supplied unit input. Same
-value as `PMElementaryParticles.SharedUnits.me` (in MeV). -/
-def electronMassEV : ℝ := 510998.95069
+/-- Electron rest energy in eV (CODATA 2022), a supplied unit input (`PMSubstrate.SIUnits`). -/
+def electronMassEV : ℝ := PMSubstrate.SIUnits.electronMassEV
 
-/-- `ħc` in eV·Å. Exact in the SI (`h`, `c`, `e` fixed): `1973.269804593024658…`; the 19 digits
-kept here are far below every comparison. -/
-def hbarCEVAngstrom : ℝ := 1973.269804593024659
+/-- `ħc` in eV·Å, exact in the SI (`PMSubstrate.SIUnits`). -/
+def hbarCEVAngstrom : ℝ := PMSubstrate.SIUnits.hbarcEVAngstrom
 
 /-- Rydberg energy `α² m_e c²/2` in the same units as `me`. -/
 def rydbergEnergy (α me : ℝ) : ℝ := α ^ 2 * me / 2

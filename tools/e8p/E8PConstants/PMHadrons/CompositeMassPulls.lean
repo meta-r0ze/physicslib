@@ -27,7 +27,7 @@ theorem neutron_ratio : |(neutron - 1838.68366200) / 0.00000074| < 0.2 := by
 
 theorem pion_mass : |(pion0 * me - 134.9768) / 0.0005| < 0.9 := by
   have hg := g_b
-  unfold pion0 me
+  unfold pion0 me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.nu_eq]
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1]
@@ -35,7 +35,7 @@ theorem pion_mass : |(pion0 * me - 134.9768) / 0.0005| < 0.9 := by
 
 theorem kaon0_mass : |(kaon0 * me - 497.611) / 0.013| < 0.2 := by
   have hg := g_b; have hp := pi_b
-  unfold kaon0 me
+  unfold kaon0 me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.D_eq,
     PMSubstrate.E8Values.nu_eq]
   rw [abs_lt]; constructor
@@ -52,7 +52,7 @@ theorem kaonPlus_mass : |(kaonPlus * me - 493.677) / 0.016| < 0.1 := by
     constructor
     · rw [lt_div_iff₀ hpos]; nlinarith
     · rw [div_lt_iff₀ hpos]; nlinarith
-  unfold kaonPlus me
+  unfold kaonPlus me PMSubstrate.SIUnits.electronMassMeV
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.D_eq]
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; nlinarith [hg.1, hp.1, hs.2, ha.2]
@@ -60,11 +60,11 @@ theorem kaonPlus_mass : |(kaonPlus * me - 493.677) / 0.016| < 0.1 := by
 
 theorem proton_radius : |(4 * hbarc / (proton * me) - 0.84075) / 0.00064| < 0.8 := by
   have h := proton_value
-  have hpos : 0 < proton * me := by unfold me; nlinarith
+  have hpos : 0 < proton * me := by unfold me PMSubstrate.SIUnits.electronMassMeV; nlinarith
   have r1 : 4 * hbarc / (proton * me) < 0.841237 := by
-    rw [div_lt_iff₀ hpos]; unfold hbarc me; nlinarith
+    rw [div_lt_iff₀ hpos]; unfold hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV; nlinarith
   have r2 : 0.841235 < 4 * hbarc / (proton * me) := by
-    rw [lt_div_iff₀ hpos]; unfold hbarc me; nlinarith
+    rw [lt_div_iff₀ hpos]; unfold hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV; nlinarith
   rw [abs_lt]; constructor
   · rw [lt_div_iff₀ (by norm_num)]; linarith
   · rw [div_lt_iff₀ (by norm_num)]; linarith
