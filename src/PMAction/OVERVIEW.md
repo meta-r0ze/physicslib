@@ -185,7 +185,10 @@ controls/admission premises and the selection of group, representation and β.
   table: single free carrier `(5/3)⟨Σ_z⟩ = 1.377`, `+8%`, with the rejected fits), `ConfinedWalk`
   (`cube_axisStep_unitary`: the walk on the `3×3×3` cube is unitary for every tick),
   `MinimalCube`; numerics in `tools/confined_carrier.py`, `tools/confined_walk.py` (hard wall from
-  the identity completion; small tick forced by isotropy, `VacuumTangent`).
+  the identity completion; small tick forced by isotropy, `VacuumTangent`). The ground mode's rms
+  radius `ρ = 1.3535970…` sites is certified with exact and interval arithmetic
+  (`tools/carrier_rms_certificate.py`; Lean proof deferred, REVIEW A.1). The axial current is the
+  on-site `Σ_z` with `Z_A = 1` (`tools/axial_ward.py`).
 - **Flat links:** `FlatPersistence.flat_iff` (zero loop cost iff every holonomy is `1`).
 - **Running:** `RunningResponse` (spin `(2s)²` and orbital `−1/3` from the substrate response);
   `ContactRunning` + `ContactFierz` (the weak contact's coefficient `(3/2)(1 + 2Q̄)` from the Ward
