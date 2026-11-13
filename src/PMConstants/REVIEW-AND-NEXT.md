@@ -16,22 +16,17 @@ premise not yet derived from persistence, geometry or constraints.
    equal-weight sum of the four in-slice two-root words (`Machine.AxisHop`, `Machine.SliceHop`).
    Still open: the full gate sequence and its register/clean-cell layout. Blocks: weak fraction,
    VEV, G_F, m_H.
-2. **C² controls and flavour entries.** The native packet's C² control one-forms (shared by the
-   gauge couplings' continuum interpolation and the running). They are the gauge-field
-   configuration; homogeneous substrate links are realized by constant controls
-   (`PMAction.Machine.ConstantControls`), a fixed generator with a site-varying rate by smooth
-   profiles (`ProfileControls`), and an ordered root word on one edge (`RootWordControls`); edge links are local
-   in the controls (`EdgeLocality`); every finite configuration of distinct `D₄` edges is
-   realized (`D4EdgeSeparation.d4_configuration_realized`). Also the flavour link `Y`
-   that carries the generation tag (`PMFlavor`, Paper IV).
+2. **Flavour entries.** The flavour link `Y` that carries the generation tag (`PMFlavor`,
+   Paper IV). (The native packet's C² controls are no longer a blocker: they follow from the
+   substrate's links for every finite `D₄` configuration, `PMAction.Machine.D4EdgeSeparation`.)
 3. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
    priority.
 
 ## Open, by constant
 
-Rows with nothing open (η, λ, scalar Toll and μ², y_e, W/Z beyond the VEV, Jarlskog J, and α_G
-beyond the Closure premise) are left out; their modules record how they close.
+Rows with nothing open (η, λ, scalar Toll and μ², y_e, W/Z beyond the VEV, Jarlskog J, g_W, g_Y,
+g_3, and α_G beyond the Closure premise) are left out; their modules record how they close.
 
 | Constant | Still open |
 | --- | --- |
@@ -39,10 +34,9 @@ beyond the Closure premise) are left out; their modules record how they close.
 | VEV v, G_F | The controller implementation (blocker 1). |
 | m_H | Response corrections, which are below current precision: the tree value `125.2692638–125.2692640` GeV is `+0.6σ` from PDG `125.20 ± 0.11`. |
 | α_s | The coupling on the hadron carrier cube (PMAction REVIEW A.3). |
-| g_W, g_Y, g_3 | Only the continuum interpolation of an edge: on lattice steps the update is the tick map iterated, which composes exactly; between steps, composition with a C² response gives the transport ODE and cubic consistency (`CompositionalTransport.ode_of_composes`, `ParallelTransport.transport_consistent`), proved for the native packet with C² controls. The scale convention is the electric calibration (`ChainCouplings.chain_calibration`). |
 | Hypercharges / generations | The tag is the wall, so its dynamics is the inter-wall link `Y` (`WallExchange`, `WallSeesaw`: light masses `δ²/σᵢ(Y)`); its entries are the flavour sector's (`PMFlavor`). Premise: refreshes act uniformly on a sector (`CarrierActions.weak_chiral`). |
 | Strong CP θ̄ | Blocker 3. Premise: the θ-vacua are vacuum candidates, selected by least cost like the substrate's own vacuum (`PMSubstrate.Vacuum.vacuum_selects`). |
-| Running | The C² controls of the native packet (shared with the gauge row); the matter-fluctuation identification. |
+| Running | The matter-fluctuation identification. (Its C² controls follow from the substrate, `PMAction.Machine.D4EdgeSeparation`.) |
 | Thermal floor | Out of scope here (Papers V/VI): propagation depth, mode population and its reading as a density. |
 | Neutrinos | Out of scope here (Papers V/VI): a derived propagation/mixing Hamiltonian. |
 

@@ -5,8 +5,8 @@ import PMAction.FiniteMatrixTransport
 Smooth real control one-forms weight the certified roots. The full eight-label
 carrier generator and its four-coordinate packet generator are derived together;
 the resulting links are not arbitrary matrices supplied at the packet level.
-The controls and admission of the existing coherent amplitude dynamics remain
-physical inputs. No claim of unique selection or a separate internal gauge factor
+The controls are the gauge-field configuration and follow from the substrate's links
+(`D4EdgeSeparation.d4_configuration_realized`); admission holds under `Admission`'s rule. No claim of unique selection or a separate internal gauge factor
 inside the full vacuum spinor is made. -/
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

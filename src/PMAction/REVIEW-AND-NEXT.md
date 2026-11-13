@@ -40,14 +40,13 @@ Checked mathematics, the module map and everything established are in
    the comparison gate's coherent step is one root reflection at quarter period
    (`Machine.CarrierRootGate`). The within-tick hop is the equal-weight sum of the four in-slice
    two-root words; the two clock-moving words each run the clock backwards for one event
-   (`Machine.SliceHop`). Still open: shared
-   group/trace normalization across spacings; for the packet subsystem the `C²` control
-   one-forms of general site-varying configurations (homogeneous ones are realized by constant
-   controls, `Machine.ConstantControls`; a fixed generator with a site-varying rate by smooth
-   profiles, `Machine.ProfileControls`; an ordered root word on one edge by staggered profiles,
-   `Machine.RootWordControls`; edge links are local in the controls, `Machine.EdgeLocality`; every finite configuration of distinct
-   `D₄` edges with its own root word on each, `Machine.D4EdgeSeparation`). (The gauge `β` and admission are settled: `EventCoupling` with
-   `PMConstants.ChainCouplings`, and `Admission`, whose rule is a stated PM premise.)
+   (`Machine.SliceHop`). The packet's `C²` control one-forms are derived, not supplied: every
+   finite configuration of distinct `D₄` edges, each carrying one ordered pass of the four root
+   generators, is realized by C² controls (`Machine.D4EdgeSeparation`). Still open: shared
+   group/trace normalization across spacings; edges carrying longer root words (several passes;
+   the same staggering, not formalized). (The gauge `β` and admission are settled:
+   `EventCoupling` with `PMConstants.ChainCouplings`, and `Admission`, whose rule is a stated PM
+   premise.)
 3. **The directional-exponential completion** is not yet identified with the on-site one.
 4. **Full field and integrated limits.** Real-space field/PDE mode–domain control, the integrated
    Hessian, the full real-space fermion field, interacting-field estimates. Probably not needed for

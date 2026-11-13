@@ -47,21 +47,10 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
 - **Bank/preparation and calibration.** Physical allocation of the
   reference/record banks, clock calibration, amplitude preparation and charge
   values are supplied.
-- **Native control one-forms.** The packet subsystem's two explicit inputs are the
-  C² control one-forms and the admission of the coherent root-generator evolution.
-  Under `Admission`'s rule the second is discharged: the update conserves norm
-  (`NativePacketUpdate.native_conserving`) and reads one neighbour (`native_local`,
-  `packet_local`). Only the control one-forms remain. They are the gauge-field configuration
-  (rates of the root-cost generators), so the question is whether the substrate's links are
-  realized by C² controls. Homogeneous configurations are, by constant (smooth) controls
-  (`ConstantControls.homogeneous_realized`). Site-varying configurations along a fixed generator
-  are realized by smooth profiles (`ProfileControls.profile_link`, the wall `wall_link`), and an
-  ordered root word `exp R₀ · exp R₁ · exp R₂ · exp R₃` on one edge by staggered profiles
-  (`RootWordControls.root_word_link`). An edge's link depends only on the controls along it, so
-  controls vanishing on an edge do not disturb it (`EdgeLocality`), and a finite configuration with
-  its own root word on every edge is realized by one set of C² controls, for any finite configuration
-  of distinct `D₄` edges (`D4EdgeSeparation.d4_configuration_realized`). So for finite
-  configurations the C² controls follow from the substrate's links; they are not an input.
+- **Native control one-forms: longer root words.** The controls are derived for finite
+  configurations whose edges each carry one ordered pass of the four root generators (see
+  OVERVIEW). An edge carrying several passes needs the same staggering with more sub-intervals;
+  not formalized.
 
 No missing Lean *statement* is hidden behind these; each needs a model law or a
 new construction.

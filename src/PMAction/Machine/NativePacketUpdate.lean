@@ -30,7 +30,10 @@ root-response cost operators weighted by smooth control one-forms.
   `native_conserving` this meets `PMAction.Admission`'s rule (conserving, local, priced), so the
   coherent evolution is admitted by default.
 
-**What remains input.** The control one-forms `w` (C²) that weight the root generators. The
+**The controls.** The C² control one-forms `w` that weight the root generators are the
+gauge-field configuration. They are not a separate input: every finite configuration of distinct
+`D₄` edges, each carrying its own ordered root word, is realized by C² controls
+(`D4EdgeSeparation.d4_configuration_realized`). The
 admission of coherent Hermitian evolution as the substrate's dynamics is no longer a separate
 input under `Admission`'s rule (`native_conserving`, `native_local`). Pure root-word permutations cannot supply a
 continuous refinement on a fixed packet (`NativePacketRouting.pure_permutation_refinement_trivial`),
