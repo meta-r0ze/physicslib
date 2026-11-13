@@ -1,12 +1,13 @@
 import PMConstants.RequirementRows
+import PMConstants.CarrierActions
 
 /-!
 # Why weak refreshes only the clock row: its events do not move
 
 `RequirementRows.rows_assigned` needs weak to refresh no frame row but the reference's, and
-`ReferenceMaintenanceLedger` shows Economy over the ledger weights alone does not force it: moving the
-spatial rows to weak keeps the same total. This module gives the missing distinction from the factor
-structure.
+`ReferenceMaintenanceLedger` shows Economy over the ledger weights alone does not force it:
+moving the spatial rows to weak keeps the same total. This module gives the missing
+distinction from the factor structure.
 
 A frame row is a direction `μ` of the node, with `43` phase addresses along it (`RequirementRows`);
 row `0` is time (the reference's axis), so its addresses are the node's own site at successive
@@ -31,9 +32,20 @@ reach.
 * `weak_misses_wires`: a wire is a 1-cell between the node and a neighbour, displaced along a root
   (two nonzero coordinates, so at least one spatial); weak's own events never reach it either.
 
+**Payloads.** The payload channels sit at the node, so reach does not decide them. What does is
+that weak acts uniformly on its sector: the weak action is the sign exchange of every left carrier
+at once (`CarrierActions.weak`, the minimal sector-uniform action, `weak_chiral`), and it is an
+involution.
+* `weak_pow`: every weak displacement is the identity or the sign exchange itself.
+* `weak_moves_left`: the sign exchange moves every left carrier, the reference among them.
+* `reference_restores_all`: so a weak displacement that leaves the reference restored is the
+  identity on every channel. Restoring the reference (the clock-row refresh) restores every
+  channel's weak state; what is left of a payload channel's displacement has no weak component, and
+  its repair is the abelian phase (`PMAction.FactorRepair`), hypercharge's. A weak refresh of a
+  payload would restore nothing the clock refresh had not.
+
 Premise: a sector refreshes an address only with its own events (or, for the abelian phase,
-riding on events that occur). The payload resources sit at the node, so this argument does not
-decide them.
+riding on events that occur).
 -/
 
 namespace PMConstants.WeakLocality
@@ -98,5 +110,38 @@ theorem weak_misses_wires (r : Fin 4 → ℤ) (hr : ∃ i j, i ≠ j ∧ r i ≠
   · apply hi
     rw [← h]
     simp [e, hi0]
+
+/-- The weak action is an involution. -/
+theorem weak_sq : CarrierActions.weak * CarrierActions.weak = 1 :=
+  Equiv.ext fun p => CarrierActions.weak.left_inv p
+
+/-- **Every weak displacement is the identity or the sign exchange.** -/
+theorem weak_pow (n : ℕ) :
+    CarrierActions.weak ^ n = 1 ∨ CarrierActions.weak ^ n = CarrierActions.weak := by
+  induction n with
+  | zero => left; rfl
+  | succ n ih =>
+    rw [pow_succ]
+    rcases ih with h | h
+    · right; rw [h, one_mul]
+    · left; rw [h, weak_sq]
+
+/-- **The sign exchange moves every left carrier.** -/
+theorem weak_moves_left : ∀ v : CarrierRepresentation.V,
+    CarrierActions.weak (Sum.inl v) ≠ Sum.inl v := by
+  intro v h
+  have hm := (CarrierActions.weak_support_column (Sum.inl v)).2 (by
+    simp only [CarrierActions.channelType, Sum.elim_inl, CarrierRepresentation.leftType]
+    split <;> rfl)
+  exact (Finset.mem_filter.1 hm).2 h
+
+/-- **Restoring the reference restores every channel's weak state.** -/
+theorem reference_restores_all (n : ℕ) (ref : CarrierRepresentation.V)
+    (h : (CarrierActions.weak ^ n) (Sum.inl ref) = Sum.inl ref) :
+    CarrierActions.weak ^ n = 1 := by
+  rcases weak_pow n with h1 | h1
+  · exact h1
+  · rw [h1] at h
+    exact absurd h (weak_moves_left ref)
 
 end PMConstants.WeakLocality
