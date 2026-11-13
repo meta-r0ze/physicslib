@@ -1,47 +1,26 @@
-# OPEN-PROBLEMS
+# Open problems
 
-What a reader checking this library should know is **not** derived. The Lean tree is the
-ground truth for what is checked; [`SCOPE.md`](SCOPE.md) says what is claimed. The working
-lists, with module-level detail, are each folder's `src/*/REVIEW-AND-NEXT.md`.
+This index collects the assumptions and unresolved constructions that affect how the library's results can be interpreted. Each linked folder review tracks the corresponding work. [Project scope](SCOPE.md)
 
-## 1. Premises (stated, not derived)
+## Foundations and calibration
 
-| Premise | Where | Note |
-| --- | --- | --- |
-| **Postulate L — the address lattice**: additive discrete addresses with an integral quadratic cost, finitely generated | `PMSubstrate/Address.lean` | Finite generation is a real extra premise: `Address.DInf_not_finite` gives an infinite-rank lattice that meets every other condition. |
-| **The vacuum uses E8's clock, sectors and costs** | `PMSubstrate` (`Clock`, `Sectors`, `NetCost`) | Given the postulates, `Δ = 43, ν = 16, σ = 5, χ = 2` are forced (`persistence_selects`); `VacuumIndependence` shows each postulate is needed. |
-| **The physical readout is the coordinate observation** | `PMAction.Machine.CarrierClassBundle`, `CarrierParity` | The readout itself is constructed and its squared form is derived (`PMAction.ReadoutRule.born`); identifying it with what an apparatus records is the admission. |
-| **Strong CP: the vacuum phase is selected by least cost; the chiral anomaly is imported** | `PMConstants/ThetaBarSelection.lean`, `WindingWeights.lean` | With these, `θ̄ = 0` for any quark masses. The anomaly relation (index theorem), Lüscher's lattice charge on PM's region and a charge-1 history are cited, not formalised. In the Standard Model this is the axion's job. |
-| **Lorentzian signature, origin of ℂ** | `SCOPE.md` | Signature is stated as "volume element squares to −1" (`Derived.SignaturePostulate`). |
-
-## 2. Inputs (not selectable by any cost)
-
-A continuous magnitude or unit cannot be the unique minimizer of a scale-invariant cost
-(`SelectionSymmetry.scale_no_unique_min`), so these are anchors by proof, not by omission.
-
-* **Dimensionful anchors:** `m_e`, the SI tick (`E8TickUnit`), the absolute wall-mass scale, the
-  `α_G` normalization, the Planck scale, the toll unit `c₀`.
-* **Continuous choices:** the CP-sign branch (`conjugate_cost_tie`), the flavour wall magnitude `δ`.
-* **Discrete readings with no cost functional yet:** which invariant pays which lepton/quark tier
-  cost (`LeptonMasses`, `QuarkMasses`); the dark-matter ratio reading `31/6` vs `25/6`
-  (`PMCosmology.Scaling`); the Aufbau fill order (`PMAtoms`); nuclear shell, α and pairing labels.
-  Supplying a cost for any of these would turn it into a derivation.
-
-## 3. Open physics (where the numbers do not yet follow)
-
-| Problem | Status | Detail |
-| --- | --- | --- |
-| **Neutron lifetime** | E8 gives 923.4 s on the continuum route (the emitted electron is not confined; see `src/PMElementaryParticles/CONTINUOUS.md`), +5.1% vs 878.4 s. The phase space, Coulomb factor and short-distance running are derived; the electron's low-energy QED (computed, not yet in Lean) gives 909.2 s, +3.5%. E8's `g_A = 5/4` matches lattice QCD (1.246(28)); the 2% to the measured 1.2754 is the size of the known electromagnetic correction to `g_A` (1.4–2.6%), which gives 871–889 s on this route. Open: that correction from the substrate. | `PMHadrons/REVIEW-AND-NEXT.md` §0, §2 |
-| ↳ `g_A` | E8's `5/4` matches lattice QCD. On the substrate: carrier resolved inside the 3-cell hadron volume, centre-of-mass projected (`≈ 1.34`), with a source-confined pion cloud (`−5` to `−8%`) gives `≈ 1.24–1.28`, no fitted parameter; the cloud is still computed with the coarse carrier, and the Toll rule for a returning pion pair is open. Resonances (Δ) are out of scope: documented as hosted transients. | `PMHadrons/PILLARS.md`, `PMAction/REVIEW-AND-NEXT.md` A.3 |
-| **`f_K` and the K/π ratio** | E8's kaon count `Δ² − ν² = 1593` now has a pillar mechanism (register routing costs `ν` ticks of Toll and takes the pion's boundary survivors), giving `f_K/f_π = 1.1864`, `0.6%` below FLAG `1.1934(19)`. The mechanism explains the assigned count; why routing takes all `ν` channels, and the `0.6%`, are open. | `PMHadrons/REVIEW-AND-NEXT.md` §3, `PMHadrons/PILLARS.md` |
-| **Heavy nuclei** | Actinide deformation scatters ±0.019 u; heavy charge-radius scaling and the deformed proton closure `2(Δ+σ) = 96` are candidates. | `PMAtoms/REVIEW-AND-NEXT.md` |
-| **Cosmology** | Background evolution, primordial source, baryon-changing event, metric/causal structure and entropy normalization are not constructed. | `PMCosmology/REVIEW-AND-NEXT.md` |
-
-## 4. Out of scope
-
-| Item | Note |
+| Question | What remains open |
 | --- | --- |
-| General quantum Yang–Mills (infinite volume, continuum limit, mass gap) | Finite-volume OS core is built; see `PMAction/OVERVIEW.md` and `PMAction/MassGap/README.md`. |
-| Full gravity (metric, Einstein equations, diffeomorphisms) | Weak field only. |
-| Inflation / primordial spectrum | Source left free (`Modes.amplitude_free`, `power_free`). |
-| Grand unification, hierarchy/naturalness, CPT | Not addressed beyond a value. |
+| Why an E8 substrate? | Derive the finitely generated address lattice and integral quadratic cost, justify the theta symmetries and rank selection, and identify the clock, sectors and costs with the physical vacuum. Finite generation matters: `Address.DInf_not_finite` supplies a counterexample when it is dropped. [Substrate review](src/PMSubstrate/REVIEW-AND-NEXT.md) |
+| What does an apparatus record? | Identify the constructed coordinate observation with a physical readout and allocate the reference and record banks. The squared readout rule is already proved for the model. [Action review](src/PMAction/REVIEW-AND-NEXT.md) · [Machine review](src/PMAction/Machine/REVIEW-AND-NEXT.md) |
+| Which scales and orientations must be supplied? | Dimensionful readouts require unit anchors, including the electron mass and SI tick. A scale-invariant cost cannot single out a scale along a nontrivial rescaling orbit. For flavour, a cost depending only on squared mixing moduli ties the conjugate CP branches. The wall magnitude and the functional forms of the mixing relations have separate selection problems. [Selection symmetries](src/PersistenceMechanics/SelectionSymmetry.lean) · [Flavour review](src/PMFlavor/REVIEW-AND-NEXT.md) |
+| What selects the physical constants? | The VEV correction factors, gravitational handoff interpretation and integrated polarization remainder remain open. Strong-CP selection uses the anomaly relation and least-cost selection among candidate vacua. The unit-transfer history has an external numerical certificate; its Lean verification remains open. [Constants review](src/PMConstants/REVIEW-AND-NEXT.md) |
+| What selects the spacetime and amplitude structures? | Lorentzian signature and complex amplitudes enter as modelling premises. The finite gauge measure has site-reflection positivity; a continuum relativistic gauge theory and its mass gap are outside the present construction. [Scope](SCOPE.md) · [Gauge-layer scope](src/PMAction/MassGap/README.md) |
+
+## Observable consequences
+
+| Observable | What would advance it |
+| --- | --- |
+| Elementary masses and widths | Derive the assignment of invariant costs to lepton and quark tiers, the allowed transition histories and their rates. Connect the charged-current operator to the physical contact vertex and final-state readout. [Elementary-particle review](src/PMElementaryParticles/REVIEW-AND-NEXT.md) |
+| Nucleon axial charge and magnetic moments | Compute pion dressing, recoil and intrinsic currents on the same finely resolved, centre-of-mass-projected carrier state. The quoted axial range 1.24–1.28 combines a refined core with a coarse-source correction. The local axial variation, the Toll for a returning pair and the cube-scale colour coupling remain open. [Hadron review](src/PMHadrons/REVIEW-AND-NEXT.md) · [Calculation and premises](src/PMHadrons/PILLARS.md) |
+| Neutron lifetime | Lean bounds the continuum lifetime with the leading Fermi correction at 923.37–923.39 s. The external interval calculation includes further corrections; its 871–889 s range uses a supplied electromagnetic axial shift. Derive that shift from the substrate. Lean verification of the full Fermi and outer-radiative integrals is a separate task. [Continuum theorem](src/PMHadrons/NeutronContinuum.lean) · [Interval calculation](tools/neutron_rc_certificate.py) |
+| Pion and kaon emission | Derive the meson channel factor 32/33 and explain why kaon routing uses all ν channels and occupies the surviving exits. The proposed routing reproduces the assigned kaon count of 1593; the resulting decay-constant ratio is about 0.6% below the comparison in the hadron ledger. [Hadron pillars](src/PMHadrons/PILLARS.md) |
+| Nuclear masses and atomic structure | Re-derive nuclear bulk binding with both isospin terms present, avoiding double counting along the stable line. Fragment overlaps, finite-size charge scaling, electron screening and fill order also need physical inputs. [Atoms review](src/PMAtoms/REVIEW-AND-NEXT.md) |
+| Cosmic composition and expansion | Determine which substrate sectors carry dark and baryonic density and how their occupations and energies weight the count. The baryon fractions inherit this identification. The retained-history bound assumes recoverability; explaining expansion requires a source of such records and a reason added capacity takes the form of spatial cells. Background evolution, the primordial source, baryon-changing dynamics, metric and entropy normalization remain open. [Cosmology review](src/PMCosmology/REVIEW-AND-NEXT.md) · [Prediction ledger](src/PMCosmology/PREDICTIONS.md) |
+
+Full gravity, inflationary dynamics, grand unification, hierarchy and naturalness, and CPT are covered in the [project scope map](SCOPE.md).

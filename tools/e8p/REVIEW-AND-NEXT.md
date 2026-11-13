@@ -1,52 +1,4 @@
-# e8p — open work (todo)
-
-`e8p` reports every value whose Lean proof exists as an exact-rational enclosure,
-compares it with a frozen experimental reference, and can emit manuscript tags or an
-audit. This file tracks coverage so the per-paper Python calculators can be retired
-only when their values are Lean-backed here.
-
-## Certified now (121 values)
-
-- Paper 0: `delta`, `nu`, `sigma`, `chi`, `D` (substrate invariants); derived loads
-  `l_intrinsic`, `l_embed`, `l_substrate`, `n`, `rm`; `nc`, `weinberg_gut`,
-  `boundary_storage`.
-- Paper 1: `alpha_inv`, `alpha`; the six α⁻¹ pillars `cap`, `map`, `protocol`,
-  `governor`, `toll`, `margin` (the `Impedance` terms); and the readouts `c_light`,
-  `von_klitzing`, `planck_charge_attenuation`, `planck_charge_ratio`, `planck_mass`.
-- Paper 3: `eta` (overhead), `footprint`, `weak_fraction`, `lambda` (scalar),
-  `scalar_toll`, `electron_yukawa`, `alpha_s`, `vev_over_me`, `electron_mass_input`,
-  `vev`, `higgs_mass`, `fermi_constant`.
-- Paper 3 extra: `alpha_G` (`PMConstants.GravityAccounting.channels_as_frame`),
-  `beta_0` (`PMConstants.beta_positive_iff`), `w_ratio`
-  (`PMConstants.WMassTest.ratio_bounds`), `gauge_hyper` / `gauge_colour`
-  (`GaugeLedgers.hyper_value`, `ColourChannels.colour_ledger`), the uncorrected
-  `w_mass_uncorrected` / `z_mass_uncorrected`, the couplings `g_weak` / `g_prime`,
-  `electron_closure`, and `b_res`.
-- Paper 4: `jarlskog` (`PMFlavor.CKM.pmJ_bounds`), `jarlskog_geo`
-  (`pm3J_bounds`), `cabibbo` (`CKM.s12_bounds`); `wolf_lambda`, `wolf_A`,
-  `wolf_rho`, `wolf_eta` (`PMFlavor.Wolfenstein.*_bounds`); `sin2_theta12`,
-  `sin2_theta23`, `sin2_theta13` (`PMFlavor.PMNSIntervals.input_bounds`);
-  `ckm_s13`, `ckm_s23`, `ckm_vcb`, `vud`, `vud_dressed` (`PMFlavor.CKM.*_bounds`,
-  `PMFlavor.CabibboDressing.vudDressed_bounds`);
-  `pmns_jarlskog` (`PMFlavor.PMNSIntervals.jarlskog_bounds`).
-- Paper 5 / Atoms (`PMAtoms`): `rydberg_ev`, `bohr_radius`,
-  `shell_capacity_n4`.
-- Paper 5: `proton_ratio`, `neutron_ratio` (`PMHadrons.CompositeMasses.*_value`),
-  `muon_ratio`, `tau_ratio` (`PMElementaryParticles.LeptonMasses.*_value`), `proton_radius`,
-  `pion0_mev`, `kaon0_mev`, `kaon_plus_mev` (`CompositeMasses` pulls), and the six
-  quark masses `up/down/strange/charm/bottom/top_mev` (`QuarkMasses.*_value`),
-  `pion_plus_mev` (`PMHadrons.MesonMasses.pionPlus_mev_value`), the decay constants
-  `f_pi_mev` / `f_k_mev` (`PMHadrons.PionWidth.pionDecayConstantMeV_bounds`,
-  `PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds`; FLAG 2024, `f_k_mev` is ~3.8σ low),
-  `neutrino_floor_mass` (`FloorNeutrino.floor_bounds`), and `tau_lifetime_fs`
-  (`PMElementaryParticles.TauLifetime.tau_lifetime_tree`).
-- Paper 6: `baryon_pmJ`, `baryon_pm3J` (`PMCosmology.Primordial.baryon_windows`),
-  `z_eq` (`PMCosmology.Background.z_eq_bounds`), `dark_raw` (`Scaling.exact_ratios`),
-  `omega_ratio` (`PMCosmology.Tensions.omegaRatio_bounds`);
-  `load` (`PMCosmology.Scaling.exact_ratios`), `hubble_late`,
-  `clustering_late` (`PMCosmology.SubstrateLoad.revised_numerical_outputs`),
-  `hubble_sigma`, `s8_sigma` (`PMCosmology.Tensions.*`), `omega_ratio`
-  (`PMCosmology.Tensions.omegaRatio_bounds`).
+# e8p — open work
 
 ## constants.txt parity — remaining values
 
@@ -60,55 +12,6 @@ Not yet in `e8p`, compared against `PM-1-Arch/calculations/constants.txt`:
   readout with `k`, the radiative correction `1−1/k`, the anti-screening term `X`,
   Higgs impedance, weak aperture, vacuum-energy scaling, and the physical
   wavelength `λ_min`.
-- **Global audit/χ²**: now provided by `e8p --audit` (per-value σ and summary);
-  a tiered audit can be added as `--audit --tier` if wanted.
-
-## Decay coverage
-
-Lifetimes compared with measurement:
-
-- `neutron_lifetime_predicted_s` — continuum route (`PMHadrons.NeutronContinuum`), E8 inputs with
-  `g_A = 5/4` and the Fermi factor to first order, `923.37–923.39` s against PDG 2024
-  `878.4 ± 0.5` s (+5.1%); the gap is `g_A` and the low-energy radiative correction.
-  `neutron_lifetime_unified_s` (`948.69–948.70` s, the `3³` template) is unscored.
-- `pion_lifetime_predicted_s` — E8 two-body width with the `32/33` pion-channel margin,
-  `2.60188–2.60192 ×10⁻⁸` s against `2.6033 ± 0.0005 ×10⁻⁸` s (−2.8σ).
-- `neutral_pion_finite_lifetime_s` — `8.44–8.48 ×10⁻¹⁷` s against `8.43 ± 0.13` (+0.2σ).
-- `muon_lifetime_s` — tree level, `2.187343–2.187352` µs. The measured `2.1969811` µs includes
-  the QED factor and the `m_e²/m_μ²` phase space (`0.99562` together, which matches the ratio);
-  shown, not scored, since the E8 `G_F` it tests is scored in `fermi_constant`.
-
-Still broad: the natural-unit rows (`muon_lifetime_finite`, `tau_lifetime_e8_natural`,
-`neutron_lifetime_e8`), the unmargined `neutron_lifetime_s`, `pion_finite_*` and `kaon_finite_*`.
-The meson channels use the minimal `3×3×3` cube with the parent mass as cutoff; all three cutoffs
-exceed the eigenvalue bound `12`, so every mode is open and the finite width is the continuum
-width. The neutron is the special case: its cutoff lies in the first spectral gap.
-
-## Not catalog values
-
-Several "easy" items turned out not to be numeric values, so they stay out of `e8p`:
-`LinkMass` / `ChainCouplings` are symbolic mass-term identities, `MassiveWidth`
-widths are parametric, `ScalarAccounting.payload_*` is parametric in `G_F`, and
-`NeutrinoCompatibility` is a negative result. `WMassTest` contributes the certified
-`w_ratio`; its absolute mass still needs the measured `M_Z` as a supplied input.
-
-## Comparison leaves (measured pulls out of `src`)
-
-The measured comparisons were extracted from the `src` derivation modules into
-`tools/e8p/E8PConstants/` leaves, leaving only E8-only enclosures in `src`:
-
-- `LeptonMassPulls` — `muon_tension`, `tau_tension`, `pionPlus_mass`, `kaon_inversion`,
-  `pion_splitting` (from `PMElementaryParticles.LeptonMasses`).
-- `QuarkMassPulls` — `pulls` (from `PMElementaryParticles.QuarkMasses`).
-- `WeakMassPulls` — `w_window`, `pull_world/cms/cdf/sm` (from `PMConstants.WMassTest`).
-- `TauLifetimePulls` — `tau_lifetime_pull` (from `PMElementaryParticles.TauLifetime`).
-- `ScalarAccounting.higgs_pull` (from `PMConstants.ScalarSector`).
-- `ReadoutPulls` — `raw_w_window`, `raw_excluded`, `ledgers_are_effective`,
-  `normalization_decided`, `w_mass`, `intensive_preferred`, `quark_w_window`,
-  `quark_reference_excluded`, `reference_selected_wmass`.
-
-The catalog proofs now cite the E8-only enclosures (`up_value`…`top_value`,
-`pionPlus_mev_value`) in `src`; the comparison leaves do not feed any derivation.
 
 ## Harder: Python value exists, no Lean enclosure yet
 
@@ -122,6 +25,7 @@ enter the catalog:
   invariants `ε_K`, `sin2β`.
 - Paper 6: the neutrino mass sum (only the one-sided `FloorNeutrino.tower_sum`
   bound exists).
+
 
 ## Experimental comparison backlog
 
@@ -137,10 +41,7 @@ exist unless noted):
 - **CKM/PMNS**: `delta_CP` (NuFIT), the two neutrino mass splittings
   `Δm²21`, `|Δm²31|`, and `|V_td|`, `|V_ts|`, `ε_K`, `sin2β` (`|V_ud|` is now
   catalogued). The PMNS δ angle is currently only bounded as `(π, 2π)`.
-- **Cosmology**: `Omega_b h²`, `Omega_c h²`, `Omega_Lambda`, `n_s`, `A_s`,
-  `N_eff`, `Y_p`, `D/H`, and recombination `z_*`. These are not missing proofs:
-  the papers define no Lean densities/amplitudes for them, so adding them would
-  mean new model postulates, not a catalog row.
+
 - **Precision/QCD**: `g-2` (muon anomaly), `Λ_QCD`, W/Z widths; none has a Lean enclosure yet.
 
 ## Scripts to retire, once fully covered
@@ -153,15 +54,11 @@ exist unless noted):
 Keep `check_load_consistency.py` as the independent exact-rational tag-freshness check
 until the LaTeX pipeline is pointed at `e8p --latex`.
 
+
 ## Tool backlog
 
 - Emit `--audit` tiers (bosonic / spectrum / combined).
-- **One source for nuclear masses.** `--periodic-table` and `--certified` both print
-  `PMAtoms.certifiedMass` (its proved enclosure), with residuals as `E8 − measured` and the
-  ledger scatter (4.8 m_e rms) beside them. The old separate computations are gone: the
-  `A`-link budget (`linkUnitU`, `boundWeightU`), the `--line-table` line/ring diagnostic and
-  e8p's own Aufbau fill. Configurations come from `PMAtoms.Aufbau.configuration`, the
-  `2S+1` column from `PMAtoms.Hund.groundMultiplicity`.
+
 - `--nuclear` still prints the He-4 closure gap, the mirror link difference and the static
   charge energies as text citing their theorems; print them from `src/` values if a computable
   form is added there.
@@ -178,10 +75,7 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
   `Hydrogen.electronMassEV` use the full `0.51099895069`. Negligible at those rows' precision;
   unify on `SharedUnits.me` when their proofs are next touched. `SharedUnits.hbarc = 197.3269804`
   is likewise truncated (`2×10⁻¹⁰`).
-- **Moved to `src/`**: the E8 MeV enclosures for `pion0_mev`, `kaon0_mev`, `kaon_plus_mev` and
-  `proton_radius` (`PMHadrons.CompositeMasses.*_mev_value`, `protonRadius_value`; before, the
-  rows read their interval off the pull theorems, so the midpoint was the measured value and the
-  σ was ~0 by construction), and the Planck readout (`PMConstants.PlanckReadout`).
+
 - `E8TickUnit` and `AlphaClockComparison` (now `E8PConstants/PMAtoms/`) are model definitions no row uses; move them to `src/`
   or drop them from `PMAtoms/OVERVIEW.md`. `ledgerScatterME = 4.8` is typed in; compute it from
   the isotope table.
@@ -193,3 +87,5 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
 - Add a `--cite` mode.
 - Point the papers' `\CatchFileBetweenTags` at `e8p --latex` output.
 - Rename the directory to the final package name if `e8p` is kept as the binary.
+
+Tighten the broad natural-unit muon, tau and neutron lifetime rows and finite meson bounds when their source enclosures improve.

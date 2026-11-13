@@ -21,6 +21,5 @@ Specify the microscopic vacuum state, update, probe and physical operator sector
 mentioning E8, 43, the six-term expression or the target decimal. Then require each
 selection theorem to rule out alternatives within that explicitly stated class.
 
-`PMSubstrate/Research/` contains the alternative routes, counterexamples and necessity
-tests referred to above; those modules are not on the main path. The live module
-docstrings are the source of truth. Historical research notes were removed.
+
+The alternative routes and necessity tests are in `PMSubstrate/Research/`.
