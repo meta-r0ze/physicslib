@@ -179,8 +179,11 @@ low-energy radiative correction, and gives every beta decay open modes for any `
 integral, the leading Coulomb integral, the rate, and the lifetimes `954.32–954.34 s` (no Coulomb)
 and `923.37–923.39 s` (Fermi factor to first order); `PMHadrons.Values` and e8p
 (`neutron_lifetime_predicted_s`) use the latter. The `3³` template stays as an unscored comparison.
-Open here, in Lean: a bound for the full Fermi factor (`922.9 s` numerically) and the outer
-radiative correction (`909.2 s`; needs bounds on the Spence function).
+Certified outside Lean (Nov 2026, `tools/neutron_rc_certificate.py`, interval arithmetic on the
+E8 bounds proved in Lean): full Fermi factor `922.91–923.06 s`; with the outer radiative
+correction `909.22–909.37 s`; with `λ = (5/4)(1+δ)`, `δ ∈ (1.4, 2.6)%`, `871.4–888.7 s`. A Lean
+proof of these two integrals (Fermi-factor inequalities, Spence-function bounds, integrability at
+`E = 1`) is deferred: it moves the proved value by `0.05%` and `1.5%`.
 
 ## 3. The emission space (f_π, f_K) — C
 
