@@ -37,7 +37,10 @@ roles are not tuned to the numbers.
 
 1. **Which pillar fails for the Δ: Margin.** It has a cheaper configuration with the same
    charges (`N + π`), so its distance to the non-viable set is negative. That is why it has no
-   occupancy mass, and it is a level of the cube, not a persistent system.
+   occupancy mass, and it is a level of the cube, not a persistent system. **Scope decision
+   (Nov 2026):** this library is a study of what persists. Resonances such as the Δ (and the
+   virtual pion) are documented as hosted transients: they exist, decay, and depend on their host
+   and environment; their masses and widths are not targets here.
 2. **The pion boundary question is a Map question.** Map holds the host's retained reference, the
    colour singlet, inside the wall. A colour-singlet pion carries its own reference, so the host's
    Map does not bound it: the host confines the pion's **source**, not its field. This follows from
@@ -164,6 +167,33 @@ the source-confined cloud at the size computed above (`−4.8%` to `−7.6%`; to
 the fine carrier as its source), the cells reading gives `g_A ≈ 1.24–1.28`, on lattice QCD's
 `1.246(28)`; the sites reading gives `≈ 1.42`. This is the standard bag + CM + cloud structure,
 here with no fitted parameter. Next: the cloud and the magnetic moments with the fine carrier.
+
+## The meson system (step 1 for `f_π`, `f_K`; Nov 2026)
+
+Roles first, from the mechanisms and the library, before counting:
+
+| Pillar | Pion (`u d̄`, two point carriers) | Kaon (`u s̄`, one line carrier) |
+|---|---|---|
+| Capacity (room) | `χ = 2` cells (`pionPlus_cells`) | `χ + σ = 7` cells (`kaonPlus_cells`) |
+| Map (retained reference) | the pair's colour singlet; two-sided closure `χ` | same |
+| Protocol (exchange keeps components coherent) | two point carriers: nothing to keep aligned beyond the pair | the line carrier's `σ`-direction register must stay coherent with its partner (`StrangeCarrier`) |
+| Toll (cost per transition) | emission boundary: `χ` leg orientations × `R_M − σ = 167` targets (`TollGovernor`) | same boundary, plus the register's own `σ` addresses held |
+| Governor (feedback bound) | per-slot `χ/Δ`; `Δ − χ = 41` surviving phases | same |
+| Margin (distance to non-viable; cone) | one-cycle cone `Δ²`; Margin to `μν` `+33.9 MeV` | same cone; Margin to `μν` `+388 MeV` |
+
+`|Ω_π| = Δ² + (Δ − χ) = 1890` is Margin's cone plus Governor's survivors (`EmissionSpace`). The
+table says the kaon differs only in Capacity (room) and Protocol (the register), so its emission
+set must differ through those. The target is `|Ω_K| ≈ 1581–1586`, about `306` fewer modes.
+
+**Where it stands.** The Protocol mechanism says *that* the register must be kept coherent while
+the pair annihilates, but not *how many* emission events that removes: the answer depends on
+whether the register restricts events of the cone (a spatial cut), phases of the cycle (a
+Governor-like cut), or targets (a Toll cut, which acts on the rate, not on `f`). Each choice is a
+further premise. Counting all three and keeping the one that lands in the window would be a fit,
+so this is recorded as the open premise: **what does keeping a direction register coherent cost a
+pair at the moment it annihilates?** The pillar view also shows why the earlier rules failed:
+they cut the cone (Margin) or the survivors (Governor), the two pillars the kaon shares with the
+pion.
 
 ## Next
 
