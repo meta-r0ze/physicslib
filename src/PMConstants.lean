@@ -125,6 +125,7 @@ import PMConstants.ReferenceEconomy
 import PMConstants.PersistenceClosures
 import PMConstants.ReferenceAxis
 import PMConstants.RequirementRows
+import PMConstants.WeakLocality
 import PMConstants.RequirementComplement
 import PMConstants.TableConsequences
 import PMConstants.ReadoutScales
