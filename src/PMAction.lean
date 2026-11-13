@@ -93,6 +93,7 @@ import PMAction.Machine.RootWordControls
 import PMAction.Machine.EdgeLocality
 import PMAction.Machine.ConfigurationControls
 import PMAction.Machine.D4EdgeSeparation
+import PMAction.Machine.NativeConsistency
 import PMAction.Machine.CarrierRootGate
 import PMAction.WallChiralCurrent
 import PMAction.WallExchange
@@ -243,6 +244,7 @@ import PMAction.GaugeInvariance
 import PMAction.UnitaryHaar
 import PMAction.SpecialUnitaryHaar
 import PMAction.ParallelTransport
+import PMAction.CompactTransport
 import PMAction.LatticeSiteAction
 
 import PMAction.RunningResponse
