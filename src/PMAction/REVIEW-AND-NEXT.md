@@ -95,9 +95,15 @@ Checked mathematics, the module map and everything established are in
      (ratio `0.66, 0.74, 0.78, 0.80, 0.84` for `n = 3…8`). The target `0.75` lies between them.
      This is lattice QCD's `Z_A` problem: a bare lattice axial matrix element is normalized by an
      axial Ward identity before it is compared (typical `Z_A` for Wilson-type actions is below one;
-     `5/4` needs `Z_A = 0.908` on the on-site operator). **Next:** derive the walk's axial-current
-     normalization from its own Ward identity (the chiral zero mode's axial symmetry), instead of
-     choosing either operator.
+     `5/4` needs `Z_A = 0.908` on the on-site operator).
+   * *Normalization, settled (Nov 2026, `tools/axial_ward.py`).* The walk's axial symmetry is
+     slice sign × `γ5` (it commutes with `H(k)` at `k = 0`, and nearly so at small `k`). Fixing
+     the current by an on-shell free carrier, as lattice QCD fixes `Z_A`: a massless carrier
+     moving along `z` must have `⟨A^z⟩ = 1` (its helicity). The on-site `Σ_z` gives exactly `1`
+     at every momentum; the link current gives `cos k` (`0.71` at the cube's `k = π/4`). So the
+     on-site operator is the normalized axial current (`Z_A = 1`) and the link current is
+     under-normalized by the lattice dispersion. The `1.377` therefore stands as the cube's
+     value; the `8%` is not an operator normalization.
 
    **Cross-checks that do not depend on the axial normalization (Nov 2026).**
    * *Magnetic moment* (`tools/proton_moment.py`; the vector current is conserved, so no `Z`).
