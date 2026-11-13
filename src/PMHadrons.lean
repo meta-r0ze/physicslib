@@ -35,6 +35,7 @@ import PMHadrons.ShortDistanceRunning
 import PMHadrons.AxialCount
 import PMHadrons.NeutronCorrection
 import PMHadrons.NeutronContinuum
+import PMHadrons.SpinFlavour
 
 /-! # PMHadrons
 

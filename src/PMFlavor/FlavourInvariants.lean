@@ -41,12 +41,11 @@ physical postulate.
 
 ## What this does NOT fix
 
-Three further inputs remain genuinely underived, and stating them as open is the
-point of this file:
+Status of the further inputs (updated Nov 2026):
 
-* **φ.** `FlavourPulls.φ = (1 + √5)/2` occurs nowhere else in Papers I–III; no
-  theorem derives the golden ratio from the lattice. The solar angle is therefore
-  still a postulated form, and `solar_eq` only relabels it.
+* **φ — derived.** `GoldenGeometry.pentagon_ratio_eq_phi` and `SixHundredCell` derive the golden
+  ratio from pentagon Ptolemy on the 600-cell, so `solar_eq` now evaluates a derived constant; the
+  form `sin²θ₁₂ = 1/(2φ)` itself is still an ansatz.
 * **q² = 687/688.** `CKMDressing.q2` is the dressing that turns the geometrically
   exact first-row sum `1` into `1 − 1/688`, i.e. the entire claimed resolution of
   the Cabibbo Angle Anomaly (`E8PConstants.FlavourPulls.first_row_deficit_test` shows the undressed value is
@@ -54,8 +53,9 @@ point of this file:
   `PMConstants.FlavourDressing.cabibbo_deficit_per_direction` identifies it as the
   per-direction reference exclusion `1 − (1−η)/D`; the remaining physical claim is
   that the CKM first row inherits that deficit.
-* **The octant.** Paper IV §IV claims the geometric running "resolves the apparent
-  octant anomaly"; there is no Lean statement of that claim at all.
+* **The octant.** The branches are stated (`PMNSGeometry.atmos_upper_octant`,
+  `WolfensteinOctant.solar_first_octant`); Paper IV's claim that geometric running "resolves the
+  octant anomaly" still has no Lean statement.
 -/
 
 noncomputable section

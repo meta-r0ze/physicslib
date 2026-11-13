@@ -9,6 +9,9 @@
    1. Compare the on-site Sigma_z and the link current sym(gamma5 v_z), v_z = dH/dk_z.
 3. On the confined ground mode, the slice-odd axial operators.
 
+4. On the confined ground mode, per cube edge n: the on-site <Sigma_z> against the link current
+   sym(gamma5 v_z), v_z = i[H, z] (formerly tools/axial_link.py).
+
 Usage: python3 tools/axial_ward.py
 """
 import numpy as np
@@ -52,3 +55,17 @@ for kz in (0.05,0.2,np.pi/4,1.2):
     i=np.argsort(w); posi=[j for j in i if w[j]>1e-9][:2]
     sub=v[:,posi]; m=sub.conj().T@Sz8@sub; ww,vv=np.linalg.eigh((m+m.conj().T)/2); up=sub@vv[:,-1]
     print('kz %.3f E %.4f  <Sz> %.4f  <sym g5 v_z> %.4f  group v %.4f'%(kz,w[posi[0]],(up.conj()@Sz8@up).real,(up.conj()@((G5@vz+vz@G5)/2)@up).real,(up.conj()@vz@up).real))
+
+print('--- confined ground mode: on-site Sigma_z vs link axial current ---')
+g5=bd(gam)
+for n in (3,4,5,6,8):
+    Ns=[];
+    for j in range(3): M,sites=Nw(n,j,'0'); Ns.append(M)
+    V=n**3; H=np.kron(np.eye(V),H0)-sum(Ns)
+    Z=np.kron(np.diag([x[2] for x in sites]).astype(float),np.eye(8))
+    vz=1j*(H@Z-Z@H)
+    Az=(np.kron(np.eye(V),g5)@vz+vz@np.kron(np.eye(V),g5))/2
+    Sz=np.kron(np.eye(2*V),Sz4)
+    w,Vv=np.linalg.eigh(H); pos=w>1e-7; e0=w[pos].min(); sel=np.isclose(w,e0,atol=1e-6); sub=Vv[:,sel]
+    S=sub.conj().T@Sz@sub; ws,vs=np.linalg.eigh((S+S.conj().T)/2); up=sub@vs[:,-1]
+    print(n,'Sz %.4f  <g5 v_z> %.4f  <v_z> %.1e  ratio %.4f'%((up.conj()@Sz@up).real,(up.conj()@Az@up).real,abs(up.conj()@vz@up),(up.conj()@Az@up).real/(up.conj()@Sz@up).real))

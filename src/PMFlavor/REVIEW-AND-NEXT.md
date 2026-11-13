@@ -11,31 +11,38 @@ breaking direction, carrier-current objects) is derived or E8-sourced; see
 squared-moduli is `u ↦ ū`-invariant, so the two branches **tie** and a symmetric cost
 cannot pick a sign — the continuous-symmetry case of
 `PersistenceMechanics.SelectionSymmetry`. The branch is symmetry-breaking (the
-reference orientation, `ChiralityConvention.Orientation.referenceOrientation`). Only
-the two inputs below remain.
+reference orientation, `ChiralityConvention.Orientation.referenceOrientation`).
 
 ## Open items
 
-Two genuine inputs remain; both are non-derivable.
+The numerals in the flavour formulas are derived invariants (`FlavourInvariants`), `φ` is derived
+(`GoldenGeometry`), and the CP sign is a proven tie. What is still open (Nov 2026):
 
-### 1. Wall anchor magnitude `δ`
+### 1. The six functional forms are ansätze
 
-`BreakingPhase` records `(δ, ε)` and `PhysicalWall = 0<δ ∧ 0<ε<2` (the `2` is `χ`);
-`physicalWall_off_exceptional` keeps physical points off the exceptional curve, and
-the curve/eigenvalue constants are E8 (`MixingMatrix.rootP/rootM_eq_substrate`,
-`rootMInv_eq_substrate`: the block numerals `5,8,4,3` are `σ, Dχ, D, σ−χ`). The
-breaking *direction* (lepton axis) and functional form are E8; the *magnitude* is a
-model input — neither E8-forced nor persistence-selected (there is no cost
-functional in `δ`). Anchors recorded: `TransferFlavor.unitWall` (`δ = ε = 1`) and
-the E8 candidate `TransferFlavor.ckmWall` (`δ = ε = χ/ν`).
+`s₁₂ = π/(ν−χ)`, `s₁₃ = 1/(χα⁻¹+π)`, `|V_cb| = (π+χ)/(α⁻¹−Dπ)`, `δ_CP = arctan(σ/χ)`,
+`sin²θ₁₂ = 1/(2φ)`, `sin²θ₂₃ = (1/χ)(1 + π/(ν+σ))`, `sin²θ₁₃ = (σ−χ)/α⁻¹`. Each evaluates
+derived invariants, but the form (which invariants, combined how) is supplied. This is the main
+derivation gap of Paper IV.
 
-### 2. Absolute wall-mass scale
+### 2. The `687/688` first-row dressing
 
-Both ratios are E8: `WallMassRatio.capacity_ratio_sq` (`256/441 = (ν/(ν+σ))²`),
-`coupling_ratio` (`25/336 = σ²/(ν(ν+σ))`), `wall_coupling_ratio_substrate`. The
-absolute mass scale and physical momentum are the usual external unit/anchor input
-(like `m_e`), not derived. `WallImpedanceChoice` separates the capacity mass-ratio
-impedance from the physical energy-ratio diagnostic.
+`PMConstants.FlavourDressing` identifies `1/688` as the per-direction reference deficit
+`(1−η)/D`; the claim that the CKM first row inherits it is the model step.
+
+### 3. The V−A projector off the kernel
+
+`PMAction.ChiralityConvention.projector_unique_on_kernel` forces the projector on the zero
+kernel; attaching the weak gauge representation and extending it off the kernel are inputs.
+
+### 4. Inputs that are not derivable
+
+* **Wall anchor magnitude `δ` (and `ε`).** `BreakingPhase` records `(δ, ε)`; the direction
+  (lepton axis) and functional form are E8 (`MixingMatrix.rootP/rootM_eq_substrate`), the
+  magnitude has no cost functional. Anchors: `TransferFlavor.unitWall`, `ckmWall` (`χ/ν`).
+* **Absolute wall-mass scale.** The ratios are E8 (`WallMassRatio.capacity_ratio_sq`,
+  `coupling_ratio`); the absolute scale is the usual external unit, like `m_e`.
+* **Octant running.** Paper IV's "running resolves the octant anomaly" has no Lean statement.
 
 ## Modelling boundary
 

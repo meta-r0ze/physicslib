@@ -47,39 +47,11 @@ low-energy radiative (1.018), times spectral-vs-continuum (0.994). The product i
    electron modes the channel opens. Candidate E8 counterpart: the continuum Fermi factor with
    E8 `α` and the E8 endpoint (`1.034`), the same status as `R` (a continuum calculation with E8
    inputs); not adopted.
-3. **`g_A` — the count is done; the reduction has a candidate.** `g_A` = how much of a carrier spin flip survives as a
-   nucleon spin flip = (count) × (motion reduction).
-   * **Count** (`AxialCount`): three carriers (one per colour, `σ − χ = 3`), one spin bit each
-     (`leg_state_binary`), the `u/d` doublet (`PMAction.ChargedCurrent`), symmetric in
-     spin ⊗ label because the three-colour singlet is antisymmetric. Exact computation on the 64
-     states: vector `1`, axial `5/3` (`axial_ratio`), and `5/3 = σ/(σ − χ)`
-     (`axial_ratio_eq_invariants`).
-   * **Reduction** (floating point, `tools/confined_carrier.py`, `tools/colour_fluctuation.py`):
-     PMAction's chiral zero mode on the `3×3×3` cube (`PMAction.ConfinedCarrier`) with the hard
-     wall forced by persistence (outside sites are not refreshed) and spin preserved by the wall
-     (`spin_commutes_beta_alpha4`) gives `⟨Σ_z⟩ = 0.826`; a single free carrier's
-     `(5/3)⟨Σ_z⟩ = 1.377` (+8.0%). Not the neutron's `g_A`; not fed into the rate. Ruled out as
-     the remaining +8%: wall depth (hard, `PMAction.ConfinedWalk`), tick (small, isotropy), the
-     axial operator, link load (`< 0.5%`), the mean colour field (zero: `PMAction.ColourSinglet`,
-     `FlatPersistence`), and real emission through the Toll boundary
-     (`tollTerm ≈ 1.2×10⁻⁵`, about `7000×` too small).
-   * **Colour exchange between the carriers** (one-gluon exchange on the cube,
-     `tools/colour_fluctuation.py`). At the substrate's `α_s = 0.118` it moves `g_A` by `−0.16%`
-     and gives an N–Δ splitting of 6 MeV (observed 293), so the substrate-scale coupling does not
-     act unchanged on the carrier cube. With the persistence-consistent boundary for the colour
-     field (no link out of the cube: `n·E = 0`, `n×B = 0`), fixing the cube coupling by the N–Δ
-     splitting gives `α_s ≈ 2.9` and moves `g_A` by only `−1.7%` (to `1.353`). The earlier
-     `α_s ≈ 5.6`, `g_A ≈ 1.269` used a Dirichlet boundary and is retracted
-     (`PMAction/REVIEW-AND-NEXT` A.3).
-   * **Reduction** (what it is): the carriers are confined and moving, so part of their spin is
-     orbital. On the substrate this is the lowest confined Dirac mode on the neutron's own
-     `3×3×3` cube (`PMAction.Dirac`, `ConcreteFermion`; `cube_interior_iff`): the fraction of its
-     density in the spin-carrying component. The measurement needs `1.2754/(5/3) = 0.765`; the
-     cube's number is the answer either way.
-   * `NeutronRate.gA = σ/D = 5/4` is the strong-interaction value (see the `g_A` note under Net):
-     the carrier computation should be compared with lattice `1.246(28)`, not with `1.2754`. On
-     that target the reduction from `5/3` is `(σ−χ)/D = 3/4`; the single carrier gives `0.826`
-     and with exchange `0.812` (`g_A ≈ 1.35`), still `8%` above. Open (PMAction A.3).
+3. **`g_A` — count done; reduction has a parameter-free candidate.** Count `5/3` (`AxialCount`);
+   E8's `σ/D = 5/4` is the strong-interaction value (`NeutronRate.gA`). The carrier cube gives
+   `1.38` on 3 sites per edge; resolved inside the 3-cell volume and centre-of-mass projected,
+   `≈ 1.34`; with the source-confined pion cloud, `≈ 1.24–1.28`. Status and open items:
+   `PMAction/REVIEW-AND-NEXT.md` A.3; calculations and log: `PILLARS.md`.
 
 Net (Nov 2026): the E8 neutron is the continuum route (§2, `NeutronContinuum`):
 `923.37–923.39 s` proved, +5.1%. It supplies the spectral and Coulomb factors from E8 inputs. The
