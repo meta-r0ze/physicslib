@@ -116,6 +116,15 @@ Checked mathematics, the module map and everything established are in
    So the strongest single lead is the pion cloud: it is the one mechanism that moves `g_A` down
    and `μ_p` up together. It needs the carrier–pion vertex, and that vertex is fixed by the same
    axial current (Goldberger–Treiman), so it and `Z_A` are one problem.
+
+   *Pion-cloud estimate (Nov 2026, floating point).* One loop with the Goldberger–Treiman vertex,
+   E8 `F_π = 92.1 MeV`, `m_π`, nucleon intermediate states only, and a dipole form factor:
+   `δg_A/g_A = −(1+2g_A²)/(12π²F²) ∫k⁴u²/ω³` (normalized to the chiral log). The sign is right,
+   but the size is set by the cutoff: `−19%`, `−39%`, `−65%` for `Λ = 600, 800, 1000 MeV`; the
+   cube's own form factor (dipole matching `r_p`) gives `Λ ≈ 810 MeV`. The nucleon-only loop is
+   known to overshoot: Δ intermediate states cancel much of it (exactly at large `N_c`), and there
+   is no E8 Δ. So the cloud can supply the `−9%`, but not without the Δ sector; this is not yet a
+   prediction.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
