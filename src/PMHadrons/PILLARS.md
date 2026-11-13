@@ -93,6 +93,24 @@ fixes the cap there, and with what E8 number, is open.
 cohort is 20 spin–flavour states; the nucleon base is Margin's cone `Δ²` (proved). A Capacity
 value for the nucleon that is not one of these counts has not been identified.
 
+**Magnetic null test, reading (a)** (`tools/pion_cloud_cube.py`, source-confined cloud; core
+moment from `tools/proton_moment.py`, dressed like `g_A`; pion current `e m/(2ω)` per p-wave
+charged pion):
+
+| core current | N–Δ in denominators | `μ_p` (cloud) | `μ_n` (cloud) | `P_π` | `μ_n + (2/3)μ_p` |
+|---|---|---|---|---|---|
+| on-site | 0 | `1.88` (`+0.25`) | `−1.35` (`−0.25`) | `0.42` | `−0.097` |
+| on-site | 293 MeV | `1.79` (`+0.21`) | `−1.31` (`−0.21`) | `0.27` | `−0.123` |
+| link | 293 MeV | `1.15` (`+0.21`) | `−0.87` (`−0.21`) | `0.27` | `−0.102` |
+| measured | | `2.793` | `−1.913` | | `−0.051` |
+
+Reading (b) gives `0` for the null combination. The measured `−0.051` lies between: (a) has the
+right sign and about twice the size. The cloud is close to isovector (`δμ_n ≈ −δμ_p`), as
+expected, and adds only `0.2` to `μ_p`; the proton's moment stays low by `1.0` under both
+readings, so the core moment itself (the carrier's spatial extent) is the larger issue there.
+The Toll question is therefore not settled by this test: `g_A` favours (a) at full size, the null
+test favours a cloud about half as large.
+
 ## Next
 
 * Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
