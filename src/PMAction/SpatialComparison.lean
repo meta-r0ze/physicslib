@@ -10,10 +10,23 @@ The two comparison branches embed into two supplied distinct cells, with every
 payload label retained in each. Supplied permutations extend by identity outside
 those cells. Their spectral phases therefore realize the marker-free comparison
 with exact all-state readout and no use of the chirality wall as a spare branch.
-The cell allocation, clean/prepared input, coherent phase admission, times and
-prices are still supplied. This is a construction, not the selected vacuum
-schedule or a claim that an occupied cell can be cleared for free.
-An arbitrary payload permutation is not thereby certified as an E8 primitive.
+This is a construction, not the selected vacuum schedule or a claim that an
+occupied cell can be cleared for free. An arbitrary payload permutation is not
+thereby certified as an E8 primitive.
+
+Where the supplied contracts are now discharged:
+- coherent phase admission: `Admission` (conserving, local, priced);
+- the prepared input: one quarter period of a root reflection (`Machine.CarrierRootGate`,
+  `Machine.CoherentPreparation`), with the vacuum as the reference supply
+  (`Machine.OpenReferenceFlow.vacuum_restores`);
+- the clean record cell: the upstream neighbour along a root, clean at every tick on the lattice
+  (`Machine.RecordSupply.lattice_forever`);
+- the packet permutations: the weak and colour actions are one root reflection of one gauge factor
+  each (`PMConstants.RootRepairRule.weak_acts_on_sign`, `colour_acts_on_axis`), and every refresh
+  event is a root reflection on a two-carrier cell (`Machine.RootMaintenance`);
+- prices: one toll per root event (`CommonResponse.responseCost`), with the event counts of
+  `Machine.FactorRepair`.
+The nine forward spectral-phase calls are a construction, not a proved minimum.
 -/
 
 noncomputable section

@@ -17,8 +17,12 @@ premise not yet derived from persistence, geometry or constraints.
    The repair counts are derived: a root event acts in one gauge factor, so Conservation and
    Economy give one event per displaced factor (`Machine.FactorRepair`), hence the typed repairs
    `(2,1,1,1,1)` (`RootRepairRule.repairs_least`) and one event for the gauge links and the scalar
-   (`SectorRepair.sector_least`). Still open: the full gate sequence and its register/clean-cell
-   layout. Blocks: weak fraction, VEV, G_F, m_H.
+   (`SectorRepair.sector_least`). Refresh events are root reflections on two-carrier cells
+   (`Machine.RootMaintenance`), and the comparison circuit's supplied contracts (admission,
+   preparation, clean record cell, primitive gates, prices) are each discharged
+   (`PMAction.SpatialComparison`'s docstring lists them). Still open: weak confined to the clock
+   row (the weak fraction's ledger split), and whether the nine-call comparison circuit is the
+   minimal schedule (its count does not enter any constant).
 2. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low
    priority.
