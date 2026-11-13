@@ -44,8 +44,8 @@ involution.
   its repair is the abelian phase (`PMAction.FactorRepair`), hypercharge's. A weak refresh of a
   payload would restore nothing the clock refresh had not.
 
-Premise: a sector refreshes an address only with its own events (or, for the abelian phase,
-riding on events that occur).
+A sector refreshes an address only with its own events (or, for the abelian phase, riding on
+events that occur): that is what a repair is in `PMAction.Machine.FactorRepair`.
 -/
 
 namespace PMConstants.WeakLocality
