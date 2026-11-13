@@ -3,7 +3,12 @@ import PMConstants.General.GridEncoding
 import PMSubstrate.ThetaE8
 
 /-!
-# Register width: what `η = 171/172` needs from a cell
+# Register width: what `η = 171/172` needs from a cell, if the reference is a stored value
+
+**Scope.** The reserved cell has two readings. As a tone (`ReferenceFrames.encode`: one cell holds a
+known symbol and the origin is its position), `η = 171/172` needs one extra symbol and no width
+condition at all. This module covers the other reading, an independent 172-valued reference
+stored in full-width cells, and shows what width that would need.
 
 The η row of the REVIEW lists "physical register width / reference factorization" as open.
 `General.ReferenceCapacity` already reduces it to two numbers: a closed state of `N` registers over
