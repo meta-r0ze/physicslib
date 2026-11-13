@@ -1,4 +1,5 @@
 import PMConstants.ReferenceFrames
+import PMConstants.General.GridEncoding
 import PMSubstrate.ThetaE8
 
 /-!
@@ -23,7 +24,12 @@ be carried inside the 172. The reference is an origin among them, `r = 172`.
   `η`.
 * `channel_width_optimal`: if a cell held only a channel label (`a = ν = 16`), the origin would
   need two cells and the optimum would be `K = 170`, a different overhead `170/172`.
-* `width_threshold`: the one-slot optimum holds exactly when `172 ≤ a`.
+* `width_threshold`: statically, the one-slot optimum holds exactly when `172 ≤ a`.
+* `clock_width_threshold`, `e8_width_clock`: the physical update advances the 43 phases of the
+  `4 × 43` grid (`GridEncoding.gridTick`). A one-slot code that commutes with it exists exactly
+  when `173 ≤ a` (`GridEncoding.grid_one_slot_iff`); a cell of exactly 172 symbols is enough
+  statically but not under the clock (`ReferenceCapacity.grid_172_payload_bound`). Root-wide cells
+  (`240`) clear the clock threshold, so `η = 171/172` holds with the clock running.
 
 Status: η's register premise is now one statement, "a cell holds one transition"
 (`a = |Φ(E₈)| = 240`), with the alternative it excludes stated. The closed-register step uses the
@@ -47,6 +53,18 @@ theorem root_alphabet :
 theorem width_threshold (a : ℕ) (ha : 1 ≤ a) :
     Encodable 172 171 a 172 ↔ 172 ≤ a :=
   one_slot_iff 172 a 172 (by decide) ha
+
+/-- **Under the clock the threshold is `173`.** -/
+theorem clock_width_threshold (a : ℕ) (ha : 1 ≤ a) :
+    (∃ code : Grid × (Fin 171 → Fin a) → (Grid → Fin a), Function.Injective code ∧
+      ∀ o p, gridUpdate (code (o, p)) = code (gridTick o, p)) ↔ 173 ≤ a :=
+  GridEncoding.grid_one_slot_iff ha
+
+/-- **Root-wide cells carry the reference in one slot with the clock running.** -/
+theorem e8_width_clock :
+    ∃ code : Grid × (Fin 171 → Fin 240) → (Grid → Fin 240), Function.Injective code ∧
+      ∀ o p, gridUpdate (code (o, p)) = code (gridTick o, p) :=
+  GridEncoding.grid_one_slot_sufficient (by decide)
 
 /-- **With root-wide cells the optimum payload is `171`.** -/
 theorem e8_width_optimal (K : ℕ) : OptimalPayload 172 K 240 172 ↔ K = 171 :=
