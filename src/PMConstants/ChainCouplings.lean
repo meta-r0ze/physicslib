@@ -13,7 +13,8 @@ multiplicity drops out.
 
 Charge-unit references have `κ_R = 1/2`: the lepton doublet for weak and hypercharge
 (`ReferenceStiffness.doublet_weak_trace`, `doublet_hyper_trace`) and a fundamental colour
-triplet for colour (`colour_limit` takes its trace normalization as hypothesis). Then:
+triplet for colour (`colour_limit` takes its trace normalization as hypothesis; `ColourNormalization`
+shows both normalization rules give that value). Then:
 
 * `chain_electric`: `e² = g²g'²/(g² + g'²) = 2/(toll·m·N_sys)`.
 * `chain_mixing`: `g'²/(g² + g'²) = clockRatio = 1849/8295`.
