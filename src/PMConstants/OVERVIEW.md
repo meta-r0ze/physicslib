@@ -338,7 +338,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `RequirementRows` | Which frame rows the electroweak refreshes cover |
 | `RequirementComplement` | The rest of the requirement table: complement and per-channel routing |
 | `TableConsequences` | What the derived requirement table gives end to end |
-| `SubstrateCharge` | The winding charge from the substrate's transfer count, continuous on invertible histories; `θ = 0` without Lüscher's construction |
+| `SubstrateCharge` | The winding charge from the substrate's transfer count, continuous on invertible histories; `θ = 0` without Lüscher's construction; the unit-transfer history is certified outside Lean (`tools/unit_transfer_certificate.py`) |
 | `WeakLocality` | Weak's events do not move: they reach the clock row only, miss the wires, and are restored with the reference |
 | `WeakConfinement` | Weak confined to the clock from its reach; the weak fraction end to end |
 | `ReadoutScales` | Where each readout is matched |

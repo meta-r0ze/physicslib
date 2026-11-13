@@ -19,8 +19,15 @@ history, `negCount (H x) − N₀`.
 * `theta_zero_substrate`: so `θ = 0` is the unique least-cost vacuum, given an invertible history
   with one more filled mode than the trivial one.
 
-What remains is that existence (a unit-transfer history on a finite region); Lüscher's charge is no
-longer needed.
+That existence is certified outside Lean (`tools/unit_transfer_certificate.py`). The history
+operator is the Hermitian Wilson kernel `γ₅(D_W − M)` at the Wilson point `M = r = 1` of
+`PMAction.DomainWall`, with the gauge field entering through the link transports on the hop
+(`PMAction.Machine.MatterContinuum.spinor_hop`). On the `3⁴` torus, the trivial history has `162`
+filled modes and a constant colour-`U(1)` background with one flux quantum through each of two
+orthogonal planes has `163`; both are invertible (smallest certified distance from zero `0.3455`).
+The certificate is rigorous ball arithmetic: a congruence `QᴴHQ` with `Q` provably invertible and
+its off-diagonal part bounded below every diagonal entry (Sylvester's law and Weyl's inequality).
+Lüscher's charge is not needed, and a Lean proof of the two counts is a certified-numerics task.
 -/
 
 noncomputable section
