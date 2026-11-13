@@ -19,8 +19,13 @@ response scaling, it is fixed.
   `3·10⁻⁸/23 < 1.4·10⁻⁹` of `128/989` (`PersistentGain.persistent_maximum`), so `λ` and `m_H` are
   unchanged at the displayed precision.
 
-Premises: what is reflected is a fraction of the complete repair's displacement (not of a single
-label's), and it is restored by the same kind of repair, read out in the same unit. The second
+* `labels_sum_to_whole`: reflecting per label gives the same total. Under the maximin allocation
+  every label carries the same gain (`RegulatoryMaximin`), so each reflects the same fraction `R` of
+  its equal share `B/N`; over `N` labels that is `R·B`, the fraction of the complete repair.
+
+Premises: what is reflected is a fraction of the complete repair's displacement (by
+`labels_sum_to_whole`, the same as every label reflecting its share at the common gain), and it is
+restored by the same kind of repair, read out in the same unit. The second
 needs no new rule: the reflected part is a displacement in the same space, and
 `BudgetReadout.budget_readout` reads every exact repair of that space the same way.
 -/
@@ -47,5 +52,13 @@ theorem gain_at_three :
       gs < selfCoupling ∧ selfCoupling - gs < 0.0000000014 := by
   obtain ⟨gs, hp, hmax, -, hlt, hclose⟩ := PersistentGain.persistent_maximum (c := 3) (by norm_num)
   exact ⟨gs, hp, hmax, hlt, by linarith⟩
+
+/-- **Per-label reflection sums to the complete repair's.** With equal gain each of `N` labels
+reflects `R` of its share `B/N`. -/
+theorem labels_sum_to_whole (N : ℕ) (hN : 0 < N) (R B : ℝ) :
+    (N : ℝ) * (R * (B / N)) = R * B := by
+  have : (N : ℝ) ≠ 0 := by exact_mod_cast hN.ne'
+  field_simp
+  try ring
 
 end PMConstants.ReflectionCharge
