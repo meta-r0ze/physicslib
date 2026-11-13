@@ -20,7 +20,8 @@ premise not yet derived from persistence, geometry or constraints.
    gauge couplings' continuum interpolation and the running). They are the gauge-field
    configuration; homogeneous substrate links are realized by constant controls
    (`PMAction.Machine.ConstantControls`), a fixed generator with a site-varying rate by smooth
-   profiles (`ProfileControls`); a general configuration is open. Also the flavour link `Y`
+   profiles (`ProfileControls`), and an ordered root word on one edge (`RootWordControls`); every
+   edge at once with its own rates is open. Also the flavour link `Y`
    that carries the generation tag (`PMFlavor`, Paper IV).
 3. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low

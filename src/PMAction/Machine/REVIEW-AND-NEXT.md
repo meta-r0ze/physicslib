@@ -55,8 +55,10 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
   (rates of the root-cost generators), so the question is whether the substrate's links are
   realized by C² controls. Homogeneous configurations are, by constant (smooth) controls
   (`ConstantControls.homogeneous_realized`). Site-varying configurations along a fixed generator
-  are realized by smooth profiles (`ProfileControls.profile_link`, the wall `wall_link`); a general
-  configuration with its own rates on every edge is open.
+  are realized by smooth profiles (`ProfileControls.profile_link`, the wall `wall_link`), and an
+  ordered root word `exp R₀ · exp R₁ · exp R₂ · exp R₃` on one edge by staggered profiles
+  (`RootWordControls.root_word_link`). Open: every edge at once with its own rates (profiles
+  localized to edges).
 
 No missing Lean *statement* is hidden behind these; each needs a model law or a
 new construction.

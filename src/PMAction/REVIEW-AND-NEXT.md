@@ -44,7 +44,8 @@ Checked mathematics, the module map and everything established are in
    group/trace normalization across spacings; for the packet subsystem the `C²` control
    one-forms of general site-varying configurations (homogeneous ones are realized by constant
    controls, `Machine.ConstantControls`; a fixed generator with a site-varying rate by smooth
-   profiles, `Machine.ProfileControls`). (The gauge `β` and admission are settled: `EventCoupling` with
+   profiles, `Machine.ProfileControls`; an ordered root word on one edge by staggered profiles,
+   `Machine.RootWordControls`). (The gauge `β` and admission are settled: `EventCoupling` with
    `PMConstants.ChainCouplings`, and `Admission`, whose rule is a stated PM premise.)
 3. **The directional-exponential completion** is not yet identified with the on-site one.
 4. **Full field and integrated limits.** Real-space field/PDE mode–domain control, the integrated
