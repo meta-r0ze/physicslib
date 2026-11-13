@@ -146,10 +146,8 @@ theorem root_word_link (c : Fin 3) (f : V →L[ℝ] ℝ) (a : Fin 4 → ℝ)
     have h23 := stagger_mul (hE 2 s) (hE 3 s)
       (running_comm c a 2 s _ fun h => later_idle c a (by decide) h)
     have h123 := stagger_mul (hE 1 s) h23 (running_comm c a 1 s _ fun h => by
-      beta_reduce
       rw [later_idle c a (i := 2) (by decide) h, later_idle c a (i := 3) (by decide) h, one_mul])
     exact stagger_mul (hE 0 s) h123 (running_comm c a 0 s _ fun h => by
-      beta_reduce
       rw [later_idle c a (i := 1) (by decide) h, later_idle c a (i := 2) (by decide) h,
         later_idle c a (i := 3) (by decide) h, one_mul, one_mul])
   have hskew : ∀ t, star (B t) = -B t := fun t => by

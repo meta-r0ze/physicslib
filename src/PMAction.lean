@@ -90,6 +90,7 @@ import PMAction.Machine.SliceHop
 import PMAction.Machine.ConstantControls
 import PMAction.Machine.ProfileControls
 import PMAction.Machine.RootWordControls
+import PMAction.Machine.EdgeLocality
 import PMAction.Machine.CarrierRootGate
 import PMAction.WallChiralCurrent
 import PMAction.WallExchange
