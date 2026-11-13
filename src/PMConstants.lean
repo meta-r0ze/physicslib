@@ -138,6 +138,7 @@ import PMConstants.StableReadout
 import PMConstants.RegulatoryLabels
 import PMConstants.VevCorrections
 import PMConstants.VevLedger
+import PMConstants.VevNoise
 import PMConstants.VevClosure
 import PMConstants.VevDownstream
 import PMConstants.ScalarVevLink

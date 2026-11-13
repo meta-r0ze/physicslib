@@ -31,10 +31,10 @@ written as the formula times the ratio of correction factors.
   compounding; the anchor's maintenance is one repair, which is exactly first order. That count is
   derived: the electron is a colour and weak singlet, so its repair is one root event
   (`RootRepairRule.electron_one_event`). The data reject both iterated forms.
-* *The noise lands on the axes orthogonal to the reference.* The reference sits on the time axis
-  (`RequirementRows.axis_symmetry_kept`) and is the maintained axis; the temporal noise is shared by
-  the other `D - 1 = 3` axes, which are also the colour axes `σ - χ`. This picks `3` over `4`,
-  which the data allow equally.
+* *The noise lands on the axes orthogonal to the reference.* Derived in `VevNoise.noise_share`:
+  the clock refresh removes noise on the time axis (weak refreshes the clock row,
+  `WeakConfinement`), and the kept axis symmetry makes the three spatial axes equivalent, so each
+  carries `Y/3`. This picks `3` over `4`, which the data allow equally.
 -/
 
 noncomputable section
