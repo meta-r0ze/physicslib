@@ -21,7 +21,8 @@ premise not yet derived from persistence, geometry or constraints.
    configuration; homogeneous substrate links are realized by constant controls
    (`PMAction.Machine.ConstantControls`), a fixed generator with a site-varying rate by smooth
    profiles (`ProfileControls`), and an ordered root word on one edge (`RootWordControls`); edge links are local
-   in the controls (`EdgeLocality`). Every edge at once needs per-edge controls in disjoint tubes. Also the flavour link `Y`
+   in the controls (`EdgeLocality`); every finite configuration of distinct `D₄` edges is
+   realized (`D4EdgeSeparation.d4_configuration_realized`). Also the flavour link `Y`
    that carries the generation tag (`PMFlavor`, Paper IV).
 3. **Imported or cited inputs.** The chiral-anomaly relation, Lüscher's lattice charge on PM's
    region, a charge-1 history (strong CP). Standard results; formalizing them is heavy and low

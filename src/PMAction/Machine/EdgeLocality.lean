@@ -18,9 +18,7 @@ each other. This module proves the principle that makes that possible.
 * `root_word_add_vanishing`: so the root word of `RootWordControls.root_word_link` survives any
   added controls that vanish on its edge.
 
-**Still open:** the geometry. For a finite set of edges, choose per-edge staggered controls
-supported in a thin tube around the middle of each edge, so that each tube misses every other
-edge's segment. Then the sum realizes every edge's root word at once.
+`ConfigurationControls` uses this to realize every edge of a finite configuration at once.
 -/
 
 noncomputable section
@@ -81,14 +79,14 @@ theorem edge_add_vanishing (c : Fin 3) {w z : Controls} (r : Realization c (w + 
     rw [h0, add_zero]
 
 /-- **The root word survives added controls that vanish on its edge.** -/
-theorem root_word_add_vanishing (c : Fin 3) (f : V →L[ℝ] ℝ) (a : Fin 4 → ℝ) {z : Controls}
-    (r : Realization c (RootWordControls.stagger f a + z))
-    (y v : V) (hv : f v = 1) (hy : f y = 0)
+theorem root_word_add_vanishing (c : Fin 3) (f : V →L[ℝ] ℝ) (b : ℝ) (a : Fin 4 → ℝ)
+    {z : Controls} (r : Realization c (RootWordControls.stagger f b a + z))
+    (y v : V) (hv : f v = 1) (hy : f y = b)
     (hz : ∀ t ∈ Icc (0 : ℝ) 1, ∀ j, z j (y + t • v) v = 0) :
     r.packet y v 1 = NormedSpace.exp (RootWordControls.R c a 0) *
       (NormedSpace.exp (RootWordControls.R c a 1) *
         (NormedSpace.exp (RootWordControls.R c a 2) * NormedSpace.exp (RootWordControls.R c a 3))) := by
-  rw [edge_add_vanishing c r (realized c _ (RootWordControls.stagger_c2 f a)) y v hz]
-  exact RootWordControls.root_word_link c f a _ y v hv hy
+  rw [edge_add_vanishing c r (realized c _ (RootWordControls.stagger_c2 f b a)) y v hz]
+  exact RootWordControls.root_word_link c f b a _ y v hv hy
 
 end PMAction.EdgeLocality

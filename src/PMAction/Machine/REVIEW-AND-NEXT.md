@@ -58,8 +58,10 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
   are realized by smooth profiles (`ProfileControls.profile_link`, the wall `wall_link`), and an
   ordered root word `exp R₀ · exp R₁ · exp R₂ · exp R₃` on one edge by staggered profiles
   (`RootWordControls.root_word_link`). An edge's link depends only on the controls along it, so
-  controls vanishing on an edge do not disturb it (`EdgeLocality`). Open: the geometry of
-  per-edge controls in thin tubes that miss every other edge.
+  controls vanishing on an edge do not disturb it (`EdgeLocality`), and a finite configuration with
+  its own root word on every edge is realized by one set of C² controls, for any finite configuration
+  of distinct `D₄` edges (`D4EdgeSeparation.d4_configuration_realized`). So for finite
+  configurations the C² controls follow from the substrate's links; they are not an input.
 
 No missing Lean *statement* is hidden behind these; each needs a model law or a
 new construction.

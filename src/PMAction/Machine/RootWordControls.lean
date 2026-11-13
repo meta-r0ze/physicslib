@@ -8,8 +8,10 @@ is not one exponential: the substrate's root events happen one after another, so
 all four root generators gives the ordered product `exp R₀ · exp R₁ · exp R₂ · exp R₃`,
 `Rⱼ = aⱼ • packetRoot c j`. This module realizes that root word by smooth controls.
 
-The controls stagger the roots across the slab `0 ≤ f ≤ 1`: root `j` runs only while `4f − j` is in
-`(0, 1)`, with profile `Gⱼ(t) = smoothTransition (4t − j)` and rate `gⱼ = Gⱼ'`.
+The controls stagger the roots across the middle half of the slab `b ≤ f ≤ b + 1`: root `j` runs
+only while `8(f − b) − 2 − j` is in `(0, 1)`, with profile `Gⱼ(t) = smoothTransition (8t − 2 − j)`
+and rate `gⱼ = Gⱼ'`. All four run inside `(1/4, 3/4)` (`rate_outside`), so the controls vanish
+near the slab's faces, where an edge meets its neighbours.
 
 * `deriv_transition_zero_of_nonpos`, `deriv_transition_zero_of_one_le`: the smooth transition is
   flat outside `(0, 1)` (its extreme values are attained there), so `gⱼ t ≠ 0` only while root `j`
@@ -17,12 +19,12 @@ The controls stagger the roots across the slab `0 ≤ f ≤ 1`: root `j` runs on
 * `later_idle`: while root `j` runs, every later root `i > j` has not started, so its factor is the
   identity. This is what lets the generators that do not commute be ordered: `stagger_mul`.
 * `stagger_c2`: the controls are C².
-* `root_word_link`: on an edge leaving the slab `f = 0` along `v` (`f v = 1`), the realized link
+* `root_word_link`: on an edge leaving the slab `f = b` along `v` (`f v = 1`), the realized link
   is exactly `exp R₀ · (exp R₁ · (exp R₂ · exp R₃))`.
 
 So a general one-step substrate link on an edge, an ordered word of root exponentials with any
-rates, is realized by C² controls. **Still open:** doing this on every edge at once with different
-rates, which needs the staggered profiles localized to each edge rather than to a slab.
+rates, is realized by C² controls. `ConfigurationControls` does every edge of a finite
+configuration at once.
 -/
 
 noncomputable section
@@ -41,21 +43,22 @@ theorem deriv_transition_zero_of_one_le {t : ℝ} (h : 1 ≤ t) : deriv st t = 0
   IsLocalMax.deriv_eq_zero (Filter.Eventually.of_forall fun x => by
     rw [Real.smoothTransition.one_of_one_le h]; exact Real.smoothTransition.le_one x)
 
-/-- Profile of root `j`: it runs while `4t − j ∈ (0, 1)`. -/
-def G (j : Fin 4) (t : ℝ) : ℝ := st (4 * t - (j.val : ℝ))
+/-- Profile of root `j`: it runs while `8t − 2 − j ∈ (0, 1)`. -/
+def G (j : Fin 4) (t : ℝ) : ℝ := st (8 * t - (2 + (j.val : ℝ)))
 
 /-- Rate of root `j`. -/
-def g (j : Fin 4) (t : ℝ) : ℝ := 4 * deriv st (4 * t - (j.val : ℝ))
+def g (j : Fin 4) (t : ℝ) : ℝ := 8 * deriv st (8 * t - (2 + (j.val : ℝ)))
 
 theorem hasDerivAt_G (j : Fin 4) (t : ℝ) : HasDerivAt (G j) (g j t) t := by
-  have h := (transition_diff.1 (4 * t - (j.val : ℝ))).hasDerivAt
-  have hi : HasDerivAt (fun x : ℝ => 4 * x - (j.val : ℝ)) (4 * 1) t :=
-    ((hasDerivAt_id' t).const_mul 4).sub_const _
+  have h := (transition_diff.1 (8 * t - (2 + (j.val : ℝ)))).hasDerivAt
+  have hi : HasDerivAt (fun x : ℝ => 8 * x - (2 + (j.val : ℝ))) (8 * 1) t :=
+    ((hasDerivAt_id' t).const_mul 8).sub_const _
   have hc := h.comp t hi
-  rw [show g j t = deriv st (4 * t - (j.val : ℝ)) * (4 * 1) by unfold g; ring]
+  rw [show g j t = deriv st (8 * t - (2 + (j.val : ℝ))) * (8 * 1) by unfold g; ring]
   exact hc
 
-theorem rate_ne {j : Fin 4} {t : ℝ} (h : g j t ≠ 0) : 0 < 4 * t - j.val ∧ 4 * t - j.val < 1 := by
+theorem rate_ne {j : Fin 4} {t : ℝ} (h : g j t ≠ 0) :
+    0 < 8 * t - (2 + (j.val : ℝ)) ∧ 8 * t - (2 + (j.val : ℝ)) < 1 := by
   unfold g at h
   constructor
   · by_contra h1
@@ -113,29 +116,40 @@ theorem stagger_mul {T U : ℝ → Matrix (Fin 4) (Fin 4) ℂ} {B C : Matrix (Fi
   simp only [mul_add, mul_assoc, hc]
 
 /-- Staggered root controls. -/
-def stagger (f : V →L[ℝ] ℝ) (a : Fin 4 → ℝ) : Controls := fun j x => (a j * g j (f x)) • f
+def stagger (f : V →L[ℝ] ℝ) (b : ℝ) (a : Fin 4 → ℝ) : Controls :=
+  fun j x => (a j * g j (f x - b)) • f
 
-theorem stagger_c2 (f : V →L[ℝ] ℝ) (a : Fin 4 → ℝ) : ∀ j, ContDiff ℝ 2 (stagger f a j) := by
+theorem stagger_c2 (f : V →L[ℝ] ℝ) (b : ℝ) (a : Fin 4 → ℝ) :
+    ∀ j, ContDiff ℝ 2 (stagger f b a j) := by
   intro j
   unfold stagger g
   exact (contDiff_const.mul ((contDiff_const.mul (transition_diff.2.comp
-    ((contDiff_const.mul contDiff_id).sub contDiff_const))).comp f.contDiff)).smul contDiff_const
+    ((contDiff_const.mul contDiff_id).sub contDiff_const))).comp
+      (f.contDiff.sub contDiff_const))).smul contDiff_const
 
-lemma packetA_stagger (c : Fin 3) (f : V →L[ℝ] ℝ) (a : Fin 4 → ℝ) (y v : V) :
-    packetA c (stagger f a) y v = ∑ j, (g j (f y) * f v) • R c a j := by
+/-- **All roots run inside the middle half.** -/
+theorem rate_outside (j : Fin 4) {t : ℝ} (ht : t ≤ 1 / 4 ∨ 3 / 4 ≤ t) : g j t = 0 := by
+  by_contra h
+  have hr := rate_ne h
+  have hj0 : (0 : ℝ) ≤ j.val := Nat.cast_nonneg _
+  have hj3 : (j.val : ℝ) ≤ 3 := by exact_mod_cast Nat.le_of_lt_succ j.isLt
+  rcases ht with ht | ht <;> linarith [hr.1, hr.2]
+
+lemma packetA_stagger (c : Fin 3) (f : V →L[ℝ] ℝ) (b : ℝ) (a : Fin 4 → ℝ) (y v : V) :
+    packetA c (stagger f b a) y v = ∑ j, (g j (f y - b) * f v) • R c a j := by
   simp [packetA, form, stagger, R, ContinuousLinearMap.smulRight_apply, smul_smul]
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 1
   ring
 
 /-- **A root word on one edge is realized by C² controls.** -/
-theorem root_word_link (c : Fin 3) (f : V →L[ℝ] ℝ) (a : Fin 4 → ℝ)
-    (r : Realization c (stagger f a)) (y v : V) (hv : f v = 1) (hy : f y = 0) :
+theorem root_word_link (c : Fin 3) (f : V →L[ℝ] ℝ) (b : ℝ) (a : Fin 4 → ℝ)
+    (r : Realization c (stagger f b a)) (y v : V) (hv : f v = 1) (hy : f y = b) :
     r.packet y v 1 = NormedSpace.exp (R c a 0) * (NormedSpace.exp (R c a 1) *
       (NormedSpace.exp (R c a 2) * NormedSpace.exp (R c a 3))) := by
   let B : ℝ → Matrix (Fin 4) (Fin 4) ℂ := fun t =>
     g 0 t • R c a 0 + (g 1 t • R c a 1 + (g 2 t • R c a 2 + g 3 t • R c a 3))
-  have key : ∀ t : ℝ, packetA c (stagger f a) (y + t • v) v = B t := by
+  have key : ∀ t : ℝ, packetA c (stagger f b a) (y + t • v) v = B t := by
     intro t
     rw [packetA_stagger, map_add, map_smul, hy, hv]
     simp [B, Fin.sum_univ_four, add_assoc]
@@ -151,7 +165,7 @@ theorem root_word_link (c : Fin 3) (f : V →L[ℝ] ℝ) (a : Fin 4 → ℝ)
       rw [later_idle c a (i := 1) (by decide) h, later_idle c a (i := 2) (by decide) h,
         later_idle c a (i := 3) (by decide) h, one_mul, one_mul])
   have hskew : ∀ t, star (B t) = -B t := fun t => by
-    have hs := packet_skew c (stagger f a) (y + t • v) v
+    have hs := packet_skew c (stagger f b a) (y + t • v) v
     rwa [key] at hs
   have hU : ∀ t, HasDerivAt (r.packet y v) (r.packet y v t * B t) t := fun t => by
     have hd := r.packet_deriv y v t
