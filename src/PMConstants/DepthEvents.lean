@@ -20,8 +20,10 @@ time-reversal symmetric (`CPPhases.real_update_commutes_conj`), so the two legs 
 probability; the loop probability is their product. `one_way_from_loop`: the one-way transmission
 is then uniquely `√(α^43) = α^{43/2}`, the exponent the paper uses, without any half-hop.
 
-Remaining premises: the handoff probability is the coupling `α`, and the residual factor
-`16 − 2/3 − α`.
+Remaining premises: the handoff probability is the coupling `α` (reduced in `HandoffAdmittance`
+to transmission being linear in admittance with a unit channel open), and the residual factor
+`16 − 2/3 − α` (its `2/3` read as the boundary's colour-axis charge quanta,
+`BoundaryStorage.storage_is_charge_quantum`).
 -/
 
 noncomputable section

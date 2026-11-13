@@ -166,6 +166,7 @@ import PMConstants.ControllerLedger
 import PMConstants.ControllerIdentification
 import PMConstants.RootRepairRule
 import PMConstants.ColourNormalization
+import PMConstants.HandoffAdmittance
 
 import PMConstants.PrimitiveReadoutSymmetry
 
