@@ -147,6 +147,7 @@ import PMConstants.WalkTrials
 import PMConstants.GaugeWalkBudget
 import PMConstants.NoiseShare
 import PMConstants.VacuumModulus
+import PMConstants.WindingWeights
 import PMConstants.WallParityExchange
 import PMConstants.ChannelOccupancy
 import PMConstants.ReflectionCharge
