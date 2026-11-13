@@ -45,9 +45,9 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
   values are supplied.
 - **Native control one-forms.** The packet subsystem's two explicit inputs are the
   C² control one-forms and the admission of the coherent root-generator evolution.
-  Under `Admission`'s rule the second reduces to unitarity and locality: the root
-  generators are Hermitian (`NativeRootGenerators.packet_hermitian`), so `exp(−iτH)` is
-  unitary; the locality statement on the packet stencil is not yet written.
+  Under `Admission`'s rule the second is discharged: the update conserves norm
+  (`NativePacketUpdate.native_conserving`) and reads one neighbour (`native_local`,
+  `packet_local`). Only the control one-forms remain.
 
 No missing Lean *statement* is hidden behind these; each needs a model law or a
 new construction.

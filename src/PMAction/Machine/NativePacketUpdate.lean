@@ -26,9 +26,13 @@ root-response cost operators weighted by smooth control one-forms.
   four contracts; its infinitesimal response is the native packet generator `packetA`.
 * `native_packet_yang_mills`: so `update_to_yang_mills_c2` applies to the native packet update.
 
-**What remains input.** The control one-forms `w` (C²) that weight the root generators, and the
-admission of coherent Hermitian evolution by the response cost operators as the substrate's
-dynamics (the existing amplitude/spectral contract). Pure root-word permutations cannot supply a
+* `native_local`, `packet_local`: a hop at `y` reads only the field at `y + h • v`. With
+  `native_conserving` this meets `PMAction.Admission`'s rule (conserving, local, priced), so the
+  coherent evolution is admitted by default.
+
+**What remains input.** The control one-forms `w` (C²) that weight the root generators. The
+admission of coherent Hermitian evolution as the substrate's dynamics is no longer a separate
+input under `Admission`'s rule (`native_conserving`, `native_local`). Pure root-word permutations cannot supply a
 continuous refinement on a fixed packet (`NativePacketRouting.pure_permutation_refinement_trivial`),
 so the coherent generator is necessary, not decorative. No uniqueness of the controls, gauge
 group or `β` is claimed, and the subsystem is not asserted to be an independent gauge factor of the
@@ -126,6 +130,18 @@ theorem native_conserving (r : Realization c w) (v : V) (h : ℝ) (Ψ : CarrierF
     star (nativeHop r v h Ψ y) ⬝ᵥ nativeHop r v h Ψ y = star (Ψ (y + h • v)) ⬝ᵥ Ψ (y + h • v) := by
   simp only [nativeHop, star_mulVec, dotProduct_mulVec, vecMul_vecMul]
   rw [← star_eq_conjTranspose, (Unitary.mem_iff.mp (r.native_unitary y v h)).1, vecMul_one]
+
+/-- **Locality of the full native update.** A hop at `y` reads the field only at `y + h • v`, its
+one neighbour along the edge. With `native_conserving` and a defined repair cost, this is
+`Admission`'s rule (conserving, local, priced). -/
+theorem native_local (r : Realization c w) (v : V) (h : ℝ) (Ψ Φ : CarrierField c) (y : V)
+    (heq : Ψ (y + h • v) = Φ (y + h • v)) : nativeHop r v h Ψ y = nativeHop r v h Φ y := by
+  simp only [nativeHop, heq]
+
+/-- **Locality of the packet update.** -/
+theorem packet_local (r : Realization c w) (v : V) (h : ℝ) (ψ φ : GaugeTransport.Field 4) (y : V)
+    (heq : ψ (y + h • v) = φ (y + h • v)) : packetHop r v h ψ y = packetHop r v h φ y := by
+  simp only [packetHop, heq]
 
 /-- **Packet readout of the native update.** Reading the packet after a native hop equals the
 packet hop of the read packet: no unobserved carrier amplitude feeds the packet. -/
