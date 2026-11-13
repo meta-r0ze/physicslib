@@ -187,8 +187,9 @@ controls/admission premises and the selection of group, representation and β.
   `MinimalCube`; numerics in `tools/confined_carrier.py`, `tools/confined_walk.py` (hard wall from
   the identity completion; small tick forced by isotropy, `VacuumTangent`). The ground mode's rms
   radius `ρ = 1.3535970…` sites is certified with exact and interval arithmetic
-  (`tools/carrier_rms_certificate.py`; Lean proof deferred, REVIEW A.1). The axial current is the
-  on-site `Σ_z` with `Z_A = 1` (`tools/axial_ward.py`).
+  (`tools/carrier_rms_certificate.py`; Lean proof deferred, REVIEW A.1). The on-site `Σ_z` has unit
+  spin normalization for free axial motion (`tools/axial_ward.py`); the confined Ward identity is
+  open (REVIEW A.3).
 - **Flat links:** `FlatPersistence.flat_iff` (zero loop cost iff every holonomy is `1`).
 - **Running:** `RunningResponse` (spin `(2s)²` and orbital `−1/3` from the substrate response);
   `ContactRunning` + `ContactFierz` (the weak contact's coefficient `(3/2)(1 + 2Q̄)` from the Ward

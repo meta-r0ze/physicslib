@@ -103,14 +103,13 @@ Checked mathematics, the module map and everything established are in
      This is lattice QCD's `Z_A` problem: a bare lattice axial matrix element is normalized by an
      axial Ward identity before it is compared (typical `Z_A` for Wilson-type actions is below one;
      `5/4` needs `Z_A = 0.908` on the on-site operator).
-   * *Normalization, settled (Nov 2026, `tools/axial_ward.py`).* The walk's axial symmetry is
-     slice sign × `γ5` (it commutes with `H(k)` at `k = 0`, and nearly so at small `k`). Fixing
-     the current by an on-shell free carrier, as lattice QCD fixes `Z_A`: a massless carrier
-     moving along `z` must have `⟨A^z⟩ = 1` (its helicity). The on-site `Σ_z` gives exactly `1`
-     at every momentum; the link current gives `cos k` (`0.71` at the cube's `k = π/4`). So the
-     on-site operator is the normalized axial current (`Z_A = 1`) and the link current is
-     under-normalized by the lattice dispersion. The `1.377` therefore stands as the cube's
-     value; the `8%` is not an operator normalization.
+   * *Normalization — partly checked (Nov 2026, `tools/axial_ward.py`).* A free carrier moving
+     along `z` gives `⟨Σ_z⟩ = 1` (its helicity) at every momentum, and the link current gives
+     `cos k`. That checks the on-site operator's spin normalization for free axial motion; it is
+     not a Ward identity for the confined current (review by a second model, Nov 2026: the script
+     also mixes the slice-odd `Sγ5` with the slice-even `γ5`). The decisive check, not yet done,
+     is the local axial variation of the actual two-slice update with the wall and inter-slice
+     terms kept; it could confirm the on-site operator without an adjustable `Z_A`.
 
    **Cross-checks that do not depend on the axial normalization (Nov 2026).**
    * *Magnetic moment* (`tools/proton_moment.py`; the vector current is conserved, so no `Z`).
@@ -138,6 +137,40 @@ Checked mathematics, the module map and everything established are in
    known to overshoot: Δ intermediate states cancel much of it (exactly at large `N_c`), and there
    is no E8 Δ. So the cloud can supply the `−9%`, but not without the Δ sector; this is not yet a
    prediction.
+
+   **Second-model review (Nov 2026) — what is fixed and what is not.**
+   * *The ground-orbital Δ already exists.* Three carriers in the common ground doublet span the
+     symmetric spin–flavour space `Sym³(4) = (S=I=½) ⊕ (S=I=3/2)`, dimensions `4 + 16 = 20`, both
+     at energy `3E₀`. So the Δ multiplet is available without a Δ mass or occupancy rule.
+   * *The N–Δ cancellation is fixed for the cubic term.* With `G^{ia} = Σ_q σ^i_q τ^a_q/4` and a
+     common static source, the double commutator `Σ[G^{jb},[G^{jb},G^{ia}]]` equals `G^{ia}` on the
+     full 20 states, but `(5/3)²` times it with nucleon-only intermediate states. Checked
+     numerically here: `1.000` and `2.778 = 25/9`. So the full multiplet keeps `9/25` of the
+     nucleon-only cubic term. This is not a factor for the whole `−39%` (the term linear in the
+     coupling and nonzero splittings differ).
+   * *The `−39%` is not a prediction.* Normalized to the chiral log, the integral still carries a
+     `Λ²` piece whose split between core and cloud is free; a radius fixes a form factor's slope,
+     not the emission matrix element across the zone.
+   * *The cube cannot split N and Δ as it stands.* Independent carriers give `3E₀` to both; a term
+     `cJ²` respects every symmetry and moves the splitting by `3c`. The economical source is the
+     same pion interaction: its static self-energy contains `−K Σ G^{ia}G^{ia}`, and
+     `Σ G² = 3.5625` on N and `2.0625` on Δ (checked here), so it makes the **nucleon lighter** by
+     `1.5K` with no colour coupling or observed splitting as input. `K` needs the pion modes and
+     source.
+   * *Two persistence premises, different physics:* the host confines the pion **source** (pion
+     propagates freely), or the host confines the pion **field** (discrete modes on the cube).
+     The carrier's no-link-out rule does not by itself select the pion's boundary. Choosing it, the
+     form factor, or `5/4` in the vertex because they give `−9.2%` would be a fit; the vertex should
+     use the bare cube current.
+   * *Null test:* `μ_n + (2/3)μ_p` vanishes at every resolution in the one-body common-orbital model;
+     measured `−0.051` n.m. A purely isovector cloud shifts it by `−δμ_p/3`, so raising `μ_p` from
+     `1.04` to `2.79` that way would overshoot it tenfold: a cloud must also change the isoscalar
+     part. Caveat on `tools/proton_moment.py`: it sets the bare carrier radius equal to the dressed
+     charge radius, which a charged cloud invalidates.
+   **Plan:** (1) the local axial variation of the two-slice update (current and pion source from
+   one update); (2) the degenerate 20-state second-order self-energy with that source, giving the
+   vertex correction to `g_A` and `K` for the splitting, under each pion-boundary premise; (3) the
+   magnetic null test on any proposed dressing.
 
    *Last perturbative try.* Converting the one-loop `α_s(1/a) = 0.87` to the static-potential
    scheme (`α_V = α(1 + a₁α/4π)`, `a₁ = 31/3 − 10n_f/9`) gives `α_V ≈ 1.3`, against the `2.9`
