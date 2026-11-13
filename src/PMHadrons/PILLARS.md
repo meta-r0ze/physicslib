@@ -210,6 +210,18 @@ is the pillar value that carries that mass, and it is the next place to look. `W
 massive species is slower, `|cos r|`) is the other mass channel; a slower cone was tried
 (`REVIEW-AND-NEXT` §3) and needs a persistence-fixed speed.
 
+**What E8 itself says (Nov 2026).** E8's assigned kaon count is `|Ω_K| = Δ² − ν² = 1593`
+(`EmissionScale.kaonModes`): the one-cycle cone with its first `ν` time slices removed, and no
+Governor survivors. In pillar terms this has a reading that combines the two `Machine` facts: the
+register's routing costs nothing at the readout (`RegisterReference`), but every transition costs
+at least one tick (Toll, `Pillars.toll_excludes_zeno`). If the line carrier's register is routed
+through the `ν = 16` chiral channels of its sector (`Channels`: `ν` per sector) one transition per
+tick before the pair can annihilate, the kaon's emission cone starts `ν` ticks late:
+`Σ_{t=ν}^{Δ−1}(2t+1) = Δ² − ν²`. So Protocol's cost is paid in Toll time, not in amplitude. Two
+things are not explained: why routing takes all `ν` channels, and why the kaon keeps none of the
+`Δ − χ` survivors the pion keeps (with them, `1634`, ratio `1.157`). As assigned, `f_K/f_π =
+1890/1593 = 1.1864` against FLAG `1.1934(19)`: `0.6%` low.
+
 ## Next
 
 * Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
