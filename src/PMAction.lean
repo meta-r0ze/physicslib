@@ -61,6 +61,7 @@ import PMAction.ContactRunning
 import PMAction.ContactFierz
 import PMAction.LoopMeasure
 import PMAction.LeadingLog
+import PMAction.PolarizationAverage
 import PMAction.ContactMatching
 import PMAction.ChargedCurrent
 import PMAction.NeutralCurrent

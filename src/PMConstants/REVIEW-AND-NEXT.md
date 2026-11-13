@@ -24,7 +24,7 @@ g_3, and α_G beyond the Closure premise) are left out; their modules record how
 | m_H | Response corrections, which are below current precision: the tree value `125.2692638–125.2692640` GeV is `+0.6σ` from PDG `125.20 ± 0.11`. |
 | Hypercharges / generations | The tag is the wall, so its dynamics is the inter-wall link `Y` (`WallExchange`, `WallSeesaw`: light masses `δ²/σᵢ(Y)`); its entries belong to `PMFlavor`, which builds on this folder. Premise: refreshes act uniformly on a sector (`CarrierActions.weak_chiral`). |
 | Strong CP θ̄ | Blocker 1. Premise: the θ-vacua are vacuum candidates, selected by least cost like the substrate's own vacuum (`PMSubstrate.Vacuum.vacuum_selects`). |
-| Running | The vacuum-polarization window: `RunningResponse`'s heat-kernel coefficient read in the proper-time window far above the cutoff (`s ≫ a²`) on the substrate's link Laplacian. The contact's leading log is derived (`PMAction.LeadingLog`), and the matter fluctuations are the continuum operators (`PMAction.Machine.MatterContinuum`). |
+| Running | One assembly step: the polarization integral's error bound over the window, from `symbol_gap`, `vertex_gap` and `inv_expand`'s remainder, as `LeadingLog.shell_lattice` does for the contact. The pieces are derived: the orbital `−1/3` is the D₄ second and fourth moments (`PMAction.PolarizationAverage.orbital_third`), the vertex and propagator are the continuum's in the window, the unit is the D₄ shell (`LeadingLog.leading_log`) with `running_unit` giving the `2π`, and the matter operators are the continuum's (`Machine.MatterContinuum`). |
 
 ## Candidates (explain a selection; not independent derivations)
 

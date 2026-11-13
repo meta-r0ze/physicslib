@@ -32,8 +32,8 @@ Clifford relations (`zeeman`, `concrete_spin`). For spin `0`, `a = 0`.
 
 - the Landau spectrum `(2n+1)|b|` and the degeneracy of a continuum charged field (the
   substrate's matter hops are the continuum covariant operators: `PMAction.Machine.MatterContinuum`;
-  open is reading their heat kernel in the proper-time window `s ≫ a²`, the counterpart of
-  `PMAction.LeadingLog`'s momentum shell);
+  in momentum space the orbital `−1/3` is the D₄ moment average
+  `PMAction.PolarizationAverage.orbital_third` over the shell `PMAction.LeadingLog.leading_log`);
 - background Feynman gauge;
 - two Faddeev–Popov ghost components with fermionic sign;
 - the charge action `[f, ·] = i q b` on a charged adjoint mode.
