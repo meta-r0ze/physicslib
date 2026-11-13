@@ -11,6 +11,7 @@ lists, with module-level detail, are each folder's `src/*/REVIEW-AND-NEXT.md`.
 | **Postulate L — the address lattice**: additive discrete addresses with an integral quadratic cost, finitely generated | `PMSubstrate/Address.lean` | Finite generation is a real extra premise: `Address.DInf_not_finite` gives an infinite-rank lattice that meets every other condition. |
 | **The vacuum uses E8's clock, sectors and costs** | `PMSubstrate` (`Clock`, `Sectors`, `NetCost`) | Given the postulates, `Δ = 43, ν = 16, σ = 5, χ = 2` are forced (`persistence_selects`); `VacuumIndependence` shows each postulate is needed. |
 | **The physical readout is the coordinate observation** | `PMAction.Machine.CarrierClassBundle`, `CarrierParity` | The readout itself is constructed and its squared form is derived (`PMAction.ReadoutRule.born`); identifying it with what an apparatus records is the admission. |
+| **Strong CP: the vacuum phase is selected by least cost; the chiral anomaly is imported** | `PMConstants/ThetaBarSelection.lean`, `WindingWeights.lean` | With these, `θ̄ = 0` for any quark masses. The anomaly relation (index theorem), Lüscher's lattice charge on PM's region and a charge-1 history are cited, not formalised. In the Standard Model this is the axion's job. |
 | **Lorentzian signature, origin of ℂ** | `SCOPE.md` | Signature is stated as "volume element squares to −1" (`Derived.SignaturePostulate`). |
 
 ## 2. Inputs (not selectable by any cost)
@@ -20,8 +21,7 @@ A continuous magnitude or unit cannot be the unique minimizer of a scale-invaria
 
 * **Dimensionful anchors:** `m_e`, the SI tick (`E8TickUnit`), the absolute wall-mass scale, the
   `α_G` normalization, the Planck scale, the toll unit `c₀`.
-* **Continuous choices:** the CP-sign branch (`conjugate_cost_tie`), strong-CP `θ̄`
-  (`ReferenceSelection.invariant_cost_tie`), the flavour wall magnitude `δ`.
+* **Continuous choices:** the CP-sign branch (`conjugate_cost_tie`), the flavour wall magnitude `δ`.
 * **Discrete readings with no cost functional yet:** which invariant pays which lepton/quark tier
   cost (`LeptonMasses`, `QuarkMasses`); the dark-matter ratio reading `31/6` vs `25/6`
   (`PMCosmology.Scaling`); the Aufbau fill order (`PMAtoms`); nuclear shell, α and pairing labels.

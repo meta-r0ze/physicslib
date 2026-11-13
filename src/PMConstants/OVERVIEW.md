@@ -333,6 +333,8 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `GaugeWalkBudget` | The scalar's repair with the weak doublet on its own payload index |
 | `NoiseShare` | Why the VEV's noise divisor is `3`, not `4` |
 | `VacuumModulus` | θ = 0 is unique under the modulus too, once the trivial sector counts |
+| `WindingWeights` | The winding-sector weights are positive: what `θ = 0` still needs |
+| `ThetaBarSelection` | The selected vacuum has `θ̄ = 0` for any quark mass phase |
 | `WallParityExchange` | θ̄ = θ from the wall exchange that is a symmetry |
 | `ChannelOccupancy` | The sixteen channels are one observed generation, with no slot to spare |
 | `ReflectionCharge` | The reflection charge rate `c` |
