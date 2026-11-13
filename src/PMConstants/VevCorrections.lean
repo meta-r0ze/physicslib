@@ -28,8 +28,9 @@ written as the formula times the ratio of correction factors.
 
 **Persistence readings (premises, named).**
 * *One repair gives the linear form.* `1/(1 - x)` is repairs of repairs, `exp x` continuous
-  compounding; the anchor's maintenance is one repair (`PersistenceClosures.one_repair`), which is
-  exactly first order. The data reject both iterated forms.
+  compounding; the anchor's maintenance is one repair, which is exactly first order. That count is
+  derived: the electron is a colour and weak singlet, so its repair is one root event
+  (`RootRepairRule.electron_one_event`). The data reject both iterated forms.
 * *The noise lands on the axes orthogonal to the reference.* The reference sits on the time axis
   (`RequirementRows.axis_symmetry_kept`) and is the maintained axis; the temporal noise is shared by
   the other `D - 1 = 3` axes, which are also the colour axes `σ - χ`. This picks `3` over `4`,

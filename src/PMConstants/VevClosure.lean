@@ -3,6 +3,7 @@ import PMConstants.VevPremises
 import PMConstants.VevCorrections
 import PMConstants.PersistenceClosures
 import PMConstants.ReferenceDirections
+import PMConstants.RootRepairRule
 
 /-! **VEV closure ledger.**
 
@@ -37,7 +38,7 @@ inductive VevStatus
 def factorStatus : VevFactor → VevStatus
   | .slotCount => .conditional
   | .handoff => .conditional
-  | .repair => .conditional
+  | .repair => .closed
   | .boundary => .conditional
   | .margin => .conditional
   | .anchor => .input
@@ -75,5 +76,16 @@ theorem boundary_closed :
 /-- The one-repair count is the least positive repair count. -/
 theorem oneRepair_closed : IsLeast {k : ℕ | 0 < k} 1 :=
   PersistenceClosures.one_repair
+
+/-- **The repair factor is one repair.** The electron, a colour and weak singlet, is repaired by
+exactly one root event (`RootRepairRule.electron_one_event`), so the repair factor is first order,
+`1 + x`. -/
+theorem repair_one_event {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
+    (p : P) (hp : p ≠ 1) (r : Gc × Gw) (hr : r.1 = 1 ∨ r.2 = 1) :
+    RootRepairRule.repairs .e = 1 ∧
+      IsLeast {n | ∃ L : List (Gc × Gw × P), (∀ e ∈ L, PMAction.FactorRepair.IsEvent e) ∧
+        (L.map fun e => e.2.2).prod = p ∧ L.length = n} 1 :=
+  let h := RootRepairRule.electron_one_event p hp r hr
+  ⟨h.2.2.1, h.2.2.2⟩
 
 end PMConstants.VevClosure
