@@ -131,6 +131,18 @@ test toward the data and `g_A` away from it. Not yet included: the centre-of-mas
 change both by tens of percent. That is the next consistent step; without it the three
 observables cannot be weighed against each other.
 
+**Centre-of-mass projection of `g_A`** (`tools/cm_projection.py`, Peierls–Yoccoz on the lattice:
+the product state summed over translations of the whole system to zero total momentum). It
+**raises** the cube's axial charge: `⟨Σ_z⟩ 0.826 → 0.895` (`+8.4%`), `g_A 1.377 → 1.492` on `3³`
+(`1.265 → 1.426` on `4³`). Removing the spurious centre-of-mass motion lowers the carriers'
+relative momenta, so they are less relativistic. Combined with the cloud at the CM-relative scale
+(`−4.8%`), `g_A ≈ 1.42`, `14%` above `5/4`. So the translation-invariant cube is further from
+`g_A` than the bare one; the cloud alone (at its computed size) does not close it.
+
+The same projection for the magnetic moment needs the intrinsic current (velocities relative to
+the centre of mass and the recoil term); a first attempt with positions alone was not consistent
+and is not recorded. Bag-model studies find that the centre-of-mass correction raises `μ`.
+
 ## Next
 
 * Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
