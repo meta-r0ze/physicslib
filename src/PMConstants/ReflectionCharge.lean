@@ -20,7 +20,9 @@ response scaling, it is fixed.
   unchanged at the displayed precision.
 
 Premises: what is reflected is a fraction of the complete repair's displacement (not of a single
-label's), and it is restored by the same kind of repair, read out in the same unit.
+label's), and it is restored by the same kind of repair, read out in the same unit. The second
+needs no new rule: the reflected part is a displacement in the same space, and
+`BudgetReadout.budget_readout` reads every exact repair of that space the same way.
 -/
 
 noncomputable section

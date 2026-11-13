@@ -22,9 +22,15 @@ than the reference. The single-reference result supplies that.
 * `strong_from_payload`: hence `0.11799 < α N_sys/L₃ < 0.11800`
   (`ColourChannels.strong_from_channels`).
 
-The step "colour maintains the payload, not the reference" is now a consequence. What remains
-inherited: colour's required resources are the channels it acts on (the requirement table), and
-the coupling is read at the matching scale.
+The step "colour maintains the payload, not the reference" is now a consequence.
+
+* `coloured_eq_bulk`, `coloured_iff_triplet`: the twelve channels are exactly the requirement
+  table's colour column (`ResourceLedger.colouredSet`), which `RequirementTable.colour_column`
+  derives from the representation: a channel routes through the colour bulk exactly when its type
+  is a colour triplet. With `MinimalRefresh` (Conservation: every acted-on channel is refreshed;
+  Economy: nothing else), colour's required resources are the channels it acts on, derived.
+
+The coupling's read scale is derived separately (`ReadScale.colour_exact_read`).
 -/
 
 noncomputable section
@@ -84,5 +90,14 @@ def witness : ColourLayout where
   sharedIsLepton := rfl
   colourRef := .Q
   colourResponds := by norm_num [colourIndex, ref]
+
+/-- **Colour's channels are the requirement table's colour column.** -/
+theorem coloured_eq_bulk : colouredChannels = ResourceLedger.colouredSet := by decide
+
+/-- **A channel is one of colour's required resources exactly when its type is a triplet.** -/
+theorem coloured_iff_triplet (i : Fin 16) :
+    i ∈ colouredChannels ↔ colourDim (ty i) = 3 := by
+  rw [coloured_eq_bulk, ResourceLedger.colouredSet, mem_filter, ← colour_column]
+  simp
 
 end PMConstants.ColourReference

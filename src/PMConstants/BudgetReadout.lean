@@ -34,8 +34,16 @@ phase-invariant charge spread over the 43-phase cycle is `1/43` per phase
 (`RegulatoryBudget.clock_credit`). So both terms of `(3 − 1/43)/23` are now readouts in one unit:
 the reference repair's `3` and the clock's one direction per cycle.
 
-Premises: linear, frame-independent readout; unit = one restored direction; the clock phase is
-re-synchronized once per cycle and charged per phase.
+Premises, with where each comes from:
+* linear, frame-independent readout: additivity of independent repairs and Covariance;
+* unit = one restored direction: by Closure there is no external unit, and the smallest nonzero
+  exact repair is one direction, the same choice as `PMSubstrate.NetCost`'s toll `c₀ = 1` per
+  transition;
+* the clock resynchronized once per cycle: skipped maintenance does not persist
+  (`ReferenceAxis.skipped_maintenance_fails`), so at least once, and Economy takes the least count
+  (`PersistenceClosures.one_repair`). It is the one sync per frame that also fixes `η`
+  (`ReferenceFrames.inband_optimal_iff`);
+* charged per phase: a phase-invariant charge is uniform (`RegulatoryBudget.clock_credit`).
 -/
 
 set_option linter.unnecessarySeqFocus false
