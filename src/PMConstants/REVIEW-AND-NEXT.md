@@ -37,9 +37,11 @@ g_3, and α_G beyond the Closure premise) are left out; their modules record how
 
 ## Candidates (explain a selection; not independent derivations)
 
-* `RootRepairRule`, `SectorRepair`: one root event per non-abelian factor, at least one per
-  gauge-charged object. Reproduces the unique least-cost typed repair `(2,1,1,1,1)` that gives
-  `clockRatio`, and makes the gauge and scalar sectors share one repair length. Found post hoc.
+* `SectorRepair`: makes the gauge and scalar sectors share one repair length. Found post hoc.
+  (`RootRepairRule` is no longer a candidate: one event per displaced factor is derived from the
+  factor structure, `PMAction.Machine.FactorRepair`, and gives `(2,1,1,1,1)` and `clockRatio`.
+  Its premises: a disturbance displaces a carrier in the factors it is charged under, each undone
+  by one event; a phase-only displacement, the electron's, costs one event.)
 * `HandoffAdmittance`: transmission linear in admittance with a unit channel open (Landauer),
   and the Closure reading for the gravitational handoff.
 

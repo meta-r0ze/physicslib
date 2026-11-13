@@ -95,6 +95,7 @@ import PMAction.Machine.ConfigurationControls
 import PMAction.Machine.D4EdgeSeparation
 import PMAction.Machine.NativeConsistency
 import PMAction.Machine.CompactLimits
+import PMAction.Machine.FactorRepair
 import PMAction.Machine.CarrierRootGate
 import PMAction.WallChiralCurrent
 import PMAction.WallExchange
