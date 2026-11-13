@@ -69,11 +69,19 @@ Checked mathematics, the module map and everything established are in
    carrier's rms radius `1.85` sites = `r_p`), with the no-link-out boundary, N–Δ needs
    `α_s ≈ 2.4`, and exchange at that coupling gives **`g_A = 1.246`** (lattice QCD
    `1.246(28)`, E8 `5/4`). Caution: the rule is proposed after seeing that `n = 4` fits, and the
-   coupling is still calibrated by the observed Δ. To adopt it: (a) derive "one interior vertex
-   per carrier" from the persistence predicate (`Occupancy.tied_minimal_of_moved` says occupancy
-   alone does not select, so this needs the predicate); (b) check its other consequences (the
-   meson cube, `CubeScales`, the proton radius reading); (c) the cube's colour coupling without
-   the Δ.
+   coupling is still calibrated by the observed Δ.
+
+   **Verdict: not adopted — persistence as stated does not require it.** (1) `MinimalCube`'s
+   criterion is one interior vertex for the *volume*; nothing in it is per carrier. (2) The
+   carriers are not cell occupants in this computation: all three sit in the same spatial mode,
+   and exclusion is met by the antisymmetric colour (`ColourSinglet`, `CarrierStatistics`), so a
+   per-carrier site rule would contradict the model it is meant to fix. (3) "One cell per carrier"
+   in `Occupancy` is the meson ledger's lower bound, stated as an input there, and the nucleon's
+   base is the causal cone, not a cell count. (4) Economy picks the smallest valid volume, which
+   is `3³`. So `n = 3` stands and the `8%` stays open. The `4³` number is kept as a sensitivity
+   result: `g_A` is very sensitive to the carrier's resolution. Remaining candidates: virtual
+   colour-singlet pairs inside the cube (a pion cloud; the Toll bound covers only real emission
+   through the boundary), and the colour coupling without the Δ.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
