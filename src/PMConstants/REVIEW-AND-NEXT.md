@@ -51,6 +51,33 @@ fields. Open inputs: the anomaly relation (index theorem, imported), Lüscher's 
 PM's region, a charge-1 history (both cited), and whether a cost reading other than these two is
 admissible.
 
+## Cross-link audit (Nov 2026)
+
+Premises stated here that another part of the library already settles or changes:
+
+* **Common toll.** "Pricing by the common readout event" (`ChainCouplings`, `GaugeGroupFactor`,
+  `ReferenceStiffness`, `ScalarNormalization`, `EventStiffness`): the common toll is PM's cost
+  definition, one toll `c₀` per transition (`PMSubstrate.NetCost`). The open part is the repair
+  length `m`. It is **not** common across carrier types: `TypedRepairWork.common_repair_cannot_match`
+  (a common length misses E8's `clockRatio`; uniform gives `5547/37777`). The least-cost typed
+  repair that gives `clockRatio` is unique, `(Q,u,d,L,e) = (2,1,1,1,1)` (`target_budget_unique`).
+  `RootRepairRule` (candidate) produces it from representation content: one root event per
+  non-abelian factor, at least one per gauge-active carrier (each root lies in one simple factor;
+  the hypercharge phase adds no event). Found post hoc, so it explains the selection rather than
+  predicting. Whether the gauge, scalar and fermion sectors share `m` stays open.
+* **Squared-amplitude readout.** Derived (`PMAction.ReadoutRule.born`); `CommonResponse` still
+  listed it as an input (fixed).
+* **Admission.** `PMAction.Admission` admits by default, which rules out a hard plaquette
+  cutoff as admissibility for the lattice charge (`WindingWeights` uses Lüscher's
+  non-exceptional fields instead). Machine REVIEW updated: the admission rule is stated; the
+  root-generator evolution needs only its locality statement.
+* **Strong CP.** `HermitianMass`, `SectorExchange`, `WallParityExchange`, `PersistenceClosures`
+  docstrings now point to `ThetaBarSelection`. The walls' chiral zero modes (`WallSeesaw`) are
+  where the imported anomaly premise lives.
+* **Preparation.** `PreparationSelection`'s remaining input (identifying the carrier preparation
+  with the survival model) matches Machine's "prepared initial reference" input
+  (`PrimitiveRecordBoundary.cannot_prepare`): one input, stated in two places.
+
 ## Interface correction — closed
 
 `InterfaceResponseLaw.substrate_deltaR_in_window`: the E8 carrier/spectral response
