@@ -143,6 +143,28 @@ The same projection for the magnetic moment needs the intrinsic current (velocit
 the centre of mass and the recoil term); a first attempt with positions alone was not consistent
 and is not recorded. Bag-model studies find that the centre-of-mass correction raises `μ`.
 
+**Sites or cells? (Nov 2026)** The minimal cube's 3 per edge can be read as substrate *sites*
+(the carrier lives on a 3-point lattice; everything above) or as persistence *cells* (each cell
+holds many substrate sites, and the carrier is resolved on the finer substrate inside a 3-cell
+volume). A structural argument, made before the numbers below: `CubeScales.two_units` proves the
+carrier cube and the lepton cube cannot share one spacing, and each system has "its own minimal
+cube at its own scale". A per-system spacing cannot be the substrate's fundamental spacing for
+both, so at least one cube is a cube of cells; the cells reading is the consistent one.
+
+Refining the lattice inside the same box (`tools/cm_projection.py`):
+
+| sites per edge | `g_A` bare | `g_A` CM-projected |
+|---|---|---|
+| 3 (sites reading) | `1.377` | `1.492` |
+| 6 | `1.153` | `1.361` |
+| 9 (toward the cells reading) | `1.105` | `1.344` |
+
+The bare value tends to the bag's `1.09`; centre-of-mass projection raises it to about `1.34`. With
+the source-confined cloud at the size computed above (`−4.8%` to `−7.6%`; to be recomputed with
+the fine carrier as its source), the cells reading gives `g_A ≈ 1.24–1.28`, on lattice QCD's
+`1.246(28)`; the sites reading gives `≈ 1.42`. This is the standard bag + CM + cloud structure,
+here with no fitted parameter. Next: the cloud and the magnetic moments with the fine carrier.
+
 ## Next
 
 * Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
