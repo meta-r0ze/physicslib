@@ -249,7 +249,8 @@ the actual trace indices (`2` weak, `10/3` for `Y/2`) and the current ledgers (`
 `g'²/(g² + g'²) = GaugeReadoutWeights.mixing uniformWeights = 5547/37777`, independent of the
 common toll·m. The manuscript value therefore needs a non-uniform readout preparation
 (`GaugeReadoutWeights.target_mixing_iff`) or different ledgers; the continuum chain does not
-supply it. -/
+supply it. The typed repairs derived from the gauge factors do: with them the same chain gives
+`clockRatio` (`RootRepairRule.rule_chain_mixing`). -/
 theorem uniform_packet_mixing {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
     eventCoupling 16 (10 / 3) toll m (footprint - 43) /
         (eventCoupling 16 2 toll m 43 + eventCoupling 16 (10 / 3) toll m (footprint - 43)) =

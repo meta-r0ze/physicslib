@@ -1,5 +1,6 @@
 import PMConstants.ControllerIdentification
 import PMAction.Machine.FactorRepair
+import PMConstants.GaugeGroupFactor
 
 /-!
 # The typed repair lengths from the gauge factors
@@ -30,6 +31,12 @@ structure, without the mixing constraint:
 * `rule_eq_witness`, `rule_mixing`: the rule gives `(2, 1, 1, 1, 1, 0)` and hence `clockRatio`,
   which is now a consequence rather than the constraint the rule was fitted to.
 * `rule_least`: it costs no more than any positive typed repair that gives `clockRatio`.
+* `chain_mixing`, `rule_chain_mixing`: the event-priced chain (`GaugeGroupFactor.eventCoupling`,
+  `g² = n/(κ·toll·m·W)` with ledgers `43` and `N_sys − 43`) gives the mixing
+  `GaugeReadoutWeights.mixing` for any positive weights, independent of toll·m. With the derived
+  repairs the weak and hypercharge indices are equal (`7/32` each), so the chain gives
+  `clockRatio`. This is the non-uniform readout `GaugeGroupFactor.uniform_packet_mixing` says the
+  manuscript value needs.
 
 * `electron_one_event`: the electron is a singlet of colour and weak, so any root event acts on it
   only through its phase; its repair is exactly one event (`PMAction.FactorRepair.singlet_least`).
@@ -133,5 +140,30 @@ theorem repairs_cover {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
         (hyper Hypercharge.standard t ≠ 0)) n} (repairs t) := by
   rw [repairs_from_factors t]
   exact PMAction.FactorRepair.covering_least _ _ _ c₀ hc₀ w₀ hw₀ p₀ hp₀
+
+/-- **The event-priced chain gives the weighted mixing.** -/
+theorem chain_mixing (w : Ty → ℝ) (hw : 0 < weakIndex w) (hy : 0 < hyperIndex w)
+    {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
+    GaugeGroupFactor.eventCoupling 16 (hyperIndex w) toll m (footprint - 43) /
+        (GaugeGroupFactor.eventCoupling 16 (weakIndex w) toll m 43 +
+          GaugeGroupFactor.eventCoupling 16 (hyperIndex w) toll m (footprint - 43)) =
+      mixing w := by
+  have hm' : (0 : ℝ) < m := by exact_mod_cast hm
+  have hf : (0 : ℝ) < footprint - 43 := by norm_num [footprint, overhead]
+  have htm : 0 < toll * m := by positivity
+  simp only [GaugeGroupFactor.eventCoupling, mixing]
+  field_simp
+  ring
+
+/-- **With the derived repairs, the chain gives `clockRatio`.** -/
+theorem rule_chain_mixing {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
+    GaugeGroupFactor.eventCoupling 16 (hyperIndex (weights ruleRepairs)) toll m (footprint - 43) /
+        (GaugeGroupFactor.eventCoupling 16 (weakIndex (weights ruleRepairs)) toll m 43 +
+          GaugeGroupFactor.eventCoupling 16 (hyperIndex (weights ruleRepairs)) toll m
+            (footprint - 43)) =
+      PMConstants.clockRatio := by
+  obtain ⟨hw, hy⟩ := weak_hyper_positive ruleRepairs (by
+    rw [rule_eq_witness]; norm_num [Positive, weakWitness])
+  rw [chain_mixing _ hw hy ht hm, rule_mixing]
 
 end PMConstants.RootRepairRule
