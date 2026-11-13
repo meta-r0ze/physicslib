@@ -25,8 +25,13 @@ so that one unit-admittance channel passes it with certainty.
 
 Status: the identification `p = α` is replaced by "transmission is linear in admittance, unit
 channel open", which is how the library already reads channels. Linearity is Landauer's
-single-channel relation and holds for `T ≤ 1`; `α < 1` (`causalCoupling_bounds`). Not derived:
-that a gravitational handoff is a channel of this kind. The residual factor `16 − 2/3 − α` is
+single-channel relation and holds for `T ≤ 1`; `α < 1` (`causalCoupling_bounds`).
+
+Why a gravitational handoff sees this admittance: under Closure a node cannot price a crossing by
+what it carries, since no internal label distinguishes a gravitational handoff from any other
+transition (`PMSubstrate.ClosureSymmetry`). So every crossing sees the node's one impedance
+`Z_geo`, the same one that sets the electromagnetic `α⁻¹`. This is a reading of Closure, stated
+here rather than proved. The residual factor `16 − 2/3 − α` is
 unchanged.
 -/
 

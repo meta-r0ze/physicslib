@@ -5,7 +5,9 @@ import PMAction.Machine.CarrierResponse
 No continuous gauge group or clock-refresh assignment is inferred from the
 cardinalities alone. `same_axis_iff`: the sign is the only move that keeps a
 carrier's axis, so a refresh that keeps the reference's axis acts on the sign
-pair; that is why the sign is the doublet index. -/
+pair; that is why the sign is the doublet index. `weak_chiral`: the minimal sector-uniform sign
+action that moves the reference acts on the reference's sector only, so the weak refresh is
+chiral; which sector is called left is the name for the reference's sector. -/
 noncomputable section
 namespace PMConstants.CarrierActions
 open PMAction.CarrierEvents PMConstants.CarrierRepresentation
@@ -140,5 +142,38 @@ its axis (weak, `RequirementRows`) relates exactly the sign pair: the sign is th
 theorem same_axis_iff (v w : V) :
     (∀ i, (coord v i ≠ 0 ↔ coord w i ≠ 0)) ↔ (w = v ∨ w = signExchange v) := by
   revert v w; decide +kernel
+
+/-- A sign action that flips each sector entirely or not at all. -/
+def sectorSign (a b : Bool) : Equiv.Perm Packet :=
+  Equiv.sumCongr (if a then signExchange else Equiv.refl V) (if b then signExchange else Equiv.refl V)
+
+/-- Each sector flip moves all eight carriers of its sector. -/
+theorem sectorSign_support_card (a b : Bool) :
+    (univ.filter fun p => sectorSign a b p ≠ p).card = (if a then 8 else 0) + (if b then 8 else 0) := by
+  cases a <;> cases b <;> decide +kernel
+
+/-- A sector flip moves a left carrier exactly when it flips the left sector. -/
+theorem moves_left_iff (a b : Bool) :
+    (∃ v : V, sectorSign a b (Sum.inl v) ≠ Sum.inl v) ↔ a = true := by
+  cases a <;> cases b <;> decide +kernel
+
+theorem sectorSign_weak (p : Packet) : sectorSign true false p = weak p := by
+  cases p <;> rfl
+
+/-- **The weak refresh is chiral.** Call left the sector that holds the reference (one reserved
+cell, one carrier state). Among sector-uniform sign actions, any that moves the reference moves at
+least the eight carriers `weak` moves, and one that moves only eight is `weak`: it acts on the
+reference's sector and leaves the other fixed. Economy (`MinimalRefresh.strict_if_extra`) takes the
+minimal one, so the weak refresh acts on one sector only. -/
+theorem weak_chiral (a b : Bool) (h : ∃ v : V, sectorSign a b (Sum.inl v) ≠ Sum.inl v) :
+    weakSupport.card ≤ (univ.filter fun p => sectorSign a b p ≠ p).card ∧
+      ((univ.filter fun p => sectorSign a b p ≠ p).card = weakSupport.card →
+        ∀ p, sectorSign a b p = weak p) := by
+  have ha := (moves_left_iff a b).mp h
+  subst ha
+  rw [sectorSign_support_card, support_counts.1]
+  cases b
+  · exact ⟨by norm_num, fun _ => sectorSign_weak⟩
+  · exact ⟨by norm_num, fun h16 => absurd h16 (by norm_num)⟩
 
 end PMConstants.CarrierActions

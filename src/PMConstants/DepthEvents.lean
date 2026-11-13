@@ -26,6 +26,12 @@ the cycle Paper I visits in one period) every nonzero step has order exactly `43
 prime. A closed loop of unit handoffs along the clock returns only after a multiple of `Δ = 43`,
 so the shortest closed causal loop is the `Δ`-handoff loop used above.
 
+**Why the gravity loop is a clock loop.** A signal moves at speed one: one layer, so one handoff,
+per tick (Paper I's causal cone, `2t + 1` positions at tick `t`). A loop is closed when the signal
+is back in the same state, which includes the clock phase: no external clock can relabel it
+(Postulate I). `closed_loop_handoffs`: a loop of `n` ticks with one handoff each returns to its
+phase only if `43 ∣ n`, so it has at least `Δ = 43` handoffs, and the clock cycle attains it.
+
 Remaining premises: the handoff probability is the coupling `α` (reduced in `HandoffAdmittance`
 to transmission being linear in admittance with a unit channel open), and the residual factor
 `16 − 2/3 − α` (its `2/3` read as the boundary's colour-axis charge quanta,
@@ -72,10 +78,18 @@ theorem gravity_from_events {α : ℝ} (hα : 0 ≤ α) {out : ℝ} (ho : 0 ≤ 
 /-- **The shortest closed loop along the clock has `Δ = 43` steps.** Every nonzero element of the
 clock's glue group `ℤ/43` has additive order `43`. -/
 theorem clock_loop_minimal (x : ZMod 43) (hx : x ≠ 0) : addOrderOf x = 43 := by
-  haveI : Fact (Nat.Prime 43) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 43) := ⟨by norm_num⟩
   have h : 43 • x = 0 := by
     have := card_nsmul_eq_zero (x := x)
     rwa [ZMod.card] at this
   exact addOrderOf_eq_prime h hx
+
+/-- **A closed loop at one handoff per tick has at least `Δ` handoffs.** Returning to the same
+clock phase after `n` ticks needs `n ≡ 0 (mod 43)`. -/
+theorem closed_loop_handoffs (n : ℕ) (hn : 0 < n) (hret : (n : ZMod 43) = 0) : 43 ≤ n :=
+  Nat.le_of_dvd hn ((ZMod.natCast_eq_zero_iff n 43).mp hret)
+
+/-- The clock cycle attains it. -/
+theorem clock_cycle_closes : ((43 : ℕ) : ZMod 43) = 0 := ZMod.natCast_self 43
 
 end PMConstants.DepthEvents
