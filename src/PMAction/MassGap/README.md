@@ -116,7 +116,9 @@ including numerical lattice evidence, do not count: the object is the continuum 
 This branch cannot reach that, for structural reasons rather than lack of effort:
 
 1. **PM answers a different question.** PM's substrate is discrete, and the continuum is a
-   readout. The prize asks for the continuum theory as the fundamental object.
+   readout. A lattice construction could reach the continuum target if its interacting gauge
+   correlations had a controlled, nontrivial limit as the spacing tends to zero. PM currently
+   establishes a classical action limit and a separate gap for its distinction substrate.
 2. **The missing piece is not in PM.** The unsolved part is control across scales as the lattice
    spacing goes to zero (a renormalization group for 4D non-Abelian theory). Nothing in the tree
    addresses it.
