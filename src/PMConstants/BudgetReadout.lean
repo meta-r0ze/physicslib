@@ -44,6 +44,9 @@ Premises, with where each comes from:
   (`PersistenceClosures.one_repair`). It is the one sync per frame that also fixes `η`
   (`ReferenceFrames.inband_optimal_iff`);
 * charged per phase: a phase-invariant charge is uniform (`RegulatoryBudget.clock_credit`).
+
+`budget_normalization_free`: the readout is unchanged by any frame change, the field rescaling
+`Φ ↦ √Z_φ Φ` included, so `λ` is the canonical quartic `m_H²/(2v²)`.
 -/
 
 set_option linter.unnecessarySeqFocus false
@@ -157,5 +160,15 @@ theorem ledger_from_readouts (R : RepairBudget.ExactRepair) (f : Module.End ℝ 
       (0.1286 : ℝ) < (3 - 1 / 43) / 23 ∧ (3 - 1 / 43 : ℝ) / 23 < 0.1300 := by
   rw [budget_readout R f hf hone, RegulatoryBudget.clock_credit clock hinv hsum]
   norm_num
+
+/-- **The budget does not depend on the field's normalization.** Any frame change `g` of the
+displacement space, including the rescaling `Φ ↦ √Z_φ Φ` that makes the scalar canonical, leaves
+the readout of an exact repair at `3`. So `λ = (3 − 1/43)/23` is a ratio of readouts and counts
+that no field rescaling changes: it is the canonical quartic `m_H²/(2v²)`, not the quartic of the
+unnormalized substrate field (which would carry `1/Z_φ²`). -/
+theorem budget_normalization_free (R : RepairBudget.ExactRepair) (f : Module.End ℝ D →ₗ[ℝ] ℝ)
+    (hf : FrameIndependent f) (hone : f P₁ = 1) (g : D ≃ₗ[ℝ] D) :
+    f (g.toLinearMap ∘ₗ R.K.toLinearMap ∘ₗ g.symm.toLinearMap) = 3 := by
+  rw [hf]; exact budget_readout R f hf hone
 
 end PMConstants.BudgetReadout

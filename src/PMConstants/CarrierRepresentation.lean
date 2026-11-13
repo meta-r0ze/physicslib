@@ -25,8 +25,10 @@ lepton number as the fourth "colour".
   (`T₃ = ±1/2` from the sign), the carriers reproduce Paper III's forced charges
   (`Hypercharge.standard`): `1/3, 4/3, −2/3, −1, −2, 0`.
 
-Premises: both domain-wall sectors use a class carried to the vector class by triality, the sign
-is the doublet index, and one axis is the lepton axis. Which axis that is breaks `SU(4)` to colour
+Premises: both domain-wall sectors use a class carried to the vector class by triality (any
+nontrivial class is, keeping the roots: `PMSubstrate.ChannelSymmetry.class_to_vector`; and all
+three classes are admitted, `PMAction.ClassAdmission`), the sign is the doublet index, and one
+axis is the lepton axis. Which axis that is breaks `SU(4)` to colour
 times lepton number; a natural reading is the temporal axis, whose clock SU(2) refreshes.
 -/
 

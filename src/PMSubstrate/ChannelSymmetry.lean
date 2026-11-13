@@ -225,4 +225,15 @@ theorem pair_choice :
       ((carriers 2 ∪ carriers 3).image (flip ∘ hada) = carriers 1 ∪ carriers 2) := by
   decide +kernel
 
+/-- **Triality carries every glue class to the vector class, keeping the roots.** The vector
+class is `1` (`±2eᵢ` in doubled coordinates). `hada` sends class `2` to it; `hada ∘ flip` sends
+class `3` to it; both preserve the 24 sector roots. So a sector built on any nontrivial class has
+the vector class's carrier structure. -/
+theorem class_to_vector :
+    (carriers 2).image hada = carriers 1 ∧ (carriers 3).image (hada ∘ flip) = carriers 1 ∧
+      roots.image hada = roots ∧ roots.image (hada ∘ flip) = roots := by
+  refine ⟨hada_class.2.1, ?_, hada_roots, ?_⟩
+  · rw [← Finset.image_image, flip_class.2.2, hada_class.2.1]
+  · rw [← Finset.image_image, flip_roots, hada_roots]
+
 end PMSubstrate.ChannelSymmetry
