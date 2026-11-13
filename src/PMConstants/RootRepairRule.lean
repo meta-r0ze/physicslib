@@ -35,8 +35,10 @@ structure, without the mixing constraint:
   only through its phase; its repair is exactly one event (`PMAction.FactorRepair.singlet_least`).
   This is the "electron's maintenance is one repair" of `VevPremises`.
 
-Premise: a disturbance displaces a carrier in the factors it is charged under, each undone by one
-event of that factor.
+* `repairs_cover`: Persistence requires a carrier's repair to cover every displacement its factors
+  can produce; the least budget that does is `repairs t` (`PMAction.FactorRepair.covering_least`).
+  So "a disturbance displaces the charged factors" is the worst case the repair must cover, not a
+  premise, and each displacement is one event undone by one (`FactorRepair.event_inv`).
 -/
 
 noncomputable section
@@ -119,5 +121,17 @@ theorem electron_one_event {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
         (L.map fun e => e.2.2).prod = p ∧ L.length = n} 1 := by
   classical
   exact ⟨rfl, rfl, rfl, PMAction.FactorRepair.singlet_least p hp r hr⟩
+
+/-- **The least budget covering every displacement a type's factors can produce is
+`repairs t`.** -/
+theorem repairs_cover {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
+    [DecidableEq Gc] [DecidableEq Gw] [DecidableEq P] (t : Ty)
+    (c₀ : Gc) (hc₀ : c₀ ≠ 1) (w₀ : Gw) (hw₀ : w₀ ≠ 1) (p₀ : P) (hp₀ : p₀ ≠ 1) :
+    IsLeast {n | PMAction.FactorRepair.Covers
+      (PMAction.FactorRepair.Admissible (Gc := Gc) (Gw := Gw) (P := P)
+        (colourDim t = 3) (isoDim t = 2)
+        (hyper Hypercharge.standard t ≠ 0)) n} (repairs t) := by
+  rw [repairs_from_factors t]
+  exact PMAction.FactorRepair.covering_least _ _ _ c₀ hc₀ w₀ hw₀ p₀ hp₀
 
 end PMConstants.RootRepairRule
