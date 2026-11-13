@@ -25,7 +25,7 @@ Single import for the hadron-level values that `PMAtoms` and `e8p` use, mirrorin
 * Lifetimes: `neutronLifetimeContinuumCoulombSeconds` (the E8 neutron: continuum route with the
   Fermi factor's leading term, `923.37–923.39 s`), `neutronLifetimeContinuumSeconds` (no Coulomb),
   `neutronLifetimeUnifiedSeconds` (the `3³` spectral template, comparison),
-  `neutronLifetimeCorrectedSeconds`, `pionLifetimeCorrectedSeconds`,
+  `pionLifetimeCorrectedSeconds`,
   `neutralPionFiniteLifetimeSeconds` with bounds; `kaonPionWidthRatio` with bounds.
 * Margins and emission: `neutronMarginFactor` (`= E8Margin.phaseMargin = 41/43`),
   `emissionWeight` (Toll), `governorPerSlot`.
@@ -44,8 +44,8 @@ export PMHadrons.KaonWidth
   (kaonDecayConstantE8 kaonDecayConstantE8_bounds kaonDecayConstantMeV_bounds)
 export PMHadrons.KaonPionRatio (kaonPionWidthRatio kaonPionWidthRatio_bounds)
 export PMHadrons
-  (neutronLifetimeCorrectedSeconds neutronLifetimeCorrectedSeconds_bounds neutronMarginFactor
-    neutronMarginFactor_eq pionLifetimeCorrectedSeconds pionLifetimeCorrectedSeconds_bounds
+  (neutronMarginFactor neutronMarginFactor_eq pionLifetimeCorrectedSeconds
+    pionLifetimeCorrectedSeconds_bounds
     neutralPionFiniteLifetimeSeconds neutralPionFiniteLifetimeSeconds_bounds)
 export PMHadrons.NeutronContinuum
   (neutronLifetimeContinuumSeconds neutronLifetimeContinuumSeconds_bounds

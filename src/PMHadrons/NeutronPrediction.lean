@@ -76,7 +76,10 @@ theorem neutronMarginFactor_eq : neutronMarginFactor = 41 / 43 :=
 theorem neutronMarginFactor_pos : 0 < neutronMarginFactor := by
   rw [neutronMarginFactor_eq]; norm_num
 
-/-- Margin-corrected endpoint prediction. -/
+/-- **Retired (Nov 2026).** The `41/43`-margin endpoint value. It applies `41/43` as a Governor
+above one (`DecayInstantiation.neutronCorrected_governor_gt_one`), which a restriction cannot be,
+and it disagrees with `E8Margin.phaseCorrected` (which lowers the rate). Kept for that record; the
+E8 neutron is `NeutronContinuum.neutronLifetimeContinuumCoulombSeconds`. -/
 def neutronLifetimeCorrected : ℝ :=
   neutronMarginFactor * neutronLifetimeExactCutoff
 
@@ -659,7 +662,7 @@ lemma betaHazardE8_tight :
   have hf := PMElementaryParticles.Values.fermiME_tight
   constructor <;> nlinarith [hf.1, hf.2]
 
-/-- Margin-corrected neutron lifetime in seconds. -/
+/-- **Retired (Nov 2026)**: see `neutronLifetimeCorrected`. -/
 def neutronLifetimeCorrectedSeconds : ℝ :=
   neutronLifetimeCorrected * PMElementaryParticles.PhysicalUnits.electronTime
 

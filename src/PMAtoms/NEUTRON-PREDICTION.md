@@ -1,5 +1,10 @@
 # Neutron beta prediction
 
+**Superseded (Nov 2026).** This is the old `3³` spectral template with the `41/43` margin
+(`877.1–877.2 s`), now retired: the margin acted as a Governor above one. The E8 neutron is the
+continuum route, `PMHadrons.NeutronContinuum` (`923.37–923.39 s`; see
+`src/PMHadrons/REVIEW-AND-NEXT.md` §0, §2 and `src/PMElementaryParticles/CONTINUOUS.md`).
+
 Comparison calculation, not a theorem input.
 
 Inputs:

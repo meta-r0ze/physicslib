@@ -111,8 +111,9 @@ it is not fed in.
 *Partly superseded:* §0 puts the neutron on the pion's template (`|V_ud|²R = 32/33`, no
 Governor), so the neutron's `41/43` below is history; what stays open here is the reading of
 `32/33` (now `|V_ud|²R`, §0.1) and the kaon's factor. `E8Margin` vs
-`neutronLifetimeCorrected` can be settled by retiring the latter once the continuum route (§2) is
-adopted.
+`neutronLifetimeCorrected`: settled (Nov 2026) — `neutronLifetimeCorrected(Seconds)` is retired
+(docstring note, no longer exported by `Values`), so `E8Margin`'s reading (the margin lowers the
+rate) is the only one in use.
 
 Each channel has one substrate number on its rate. Read from the substrate side, then matched to
 the SM factors it lines up with (comparison, floating point, outside Lean):
@@ -140,9 +141,8 @@ Open, from the substrate side:
   the one use that applies it the other way, and it is the use that matches 878 s.
 - **32/33 has no reading yet.** Why the two-body meson channel loses `χ` over the
   `Δ+ν+σ = 64` slots.
-- **`E8Margin` disagrees with the neutron's use.** `phaseCorrected w = (41/43)·w` and
-  `phaseCorrectedLifetime τ = τ/(41/43)` lower the rate; `neutronLifetimeCorrected = (41/43)·τ`
-  raises it. One reading has to be chosen and the other definition changed.
+- **`E8Margin` vs the neutron's old use — settled (Nov 2026).** `phaseCorrected` lowers the rate;
+  the neutron's `neutronLifetimeCorrected = (41/43)·τ` raised it. The latter is retired.
 - **The kaon channel's factor.** On the pion's pattern the kaon would carry `|V_us|²` times the
   substrate counterpart of `S_EW`; the substrate supplies `|V_us|²` but not that counterpart.
 - The SM side's `g_A`: `NeutronRate.gA = σ/D = 5/4` against `1.2754`; on the spectral route `g_A`
