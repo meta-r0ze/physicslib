@@ -229,9 +229,8 @@ explains the assigned number rather than predicting a new one, and the `0.6%` st
 
 ## Next
 
-* Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
-  `−0.051` n.m.): (b) gives `0` (no cloud); (a) shifts it by the cloud's isovector and isoscalar
-  moments, which needs the pion current added to `tools/pion_cloud_cube.py`.
+* The Toll question (a)/(b) for a returning pion pair: the magnetic null test (done, above)
+  favours a cloud about half the size `g_A` favours; it needs a substrate rule, not another test.
 * Governor: an E8 statement for the cap on the colour coupling at the cube scale.
 * Step 3: compare with the mass ledgers (`CompositeMasses`, `MesonMasses`).
 

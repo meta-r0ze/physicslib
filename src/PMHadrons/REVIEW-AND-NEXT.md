@@ -177,3 +177,11 @@ families against the window is numerology, so this stops here until a premise sa
 `σ`-direction register restricts emission. What would decide it: the kaon's emission as a
 computation (the line carrier's walk on the meson's own cube, as `PMAction.ConfinedCarrier` does
 for the light carrier), not a count.
+
+**E8's own count has a mechanism (Nov 2026; `PILLARS.md`, meson system).** E8 assigns
+`|Ω_K| = Δ² − ν² = 1593` (`EmissionScale.kaonModes`). Reading: register routing is free at the
+readout (`Machine.RegisterReference`) but each transition costs a tick (Toll), so routing the
+line carrier through its sector's `ν` chiral channels delays the cone by `ν` ticks; routing that
+starts at the cycle boundary occupies the `Δ − χ` exits the pion's survivors use. This explains
+the assigned number rather than predicting a new one: `f_K/f_π = 1890/1593 = 1.1864`, `0.6%`
+below FLAG's `1.1934(19)`. Open: why all `ν` channels, and the `0.6%`.
