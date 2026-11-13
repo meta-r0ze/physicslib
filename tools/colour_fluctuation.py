@@ -21,7 +21,8 @@ Computes, at first order (positive-energy intermediate modes only):
 Both are linear in g^2, so their ratio is coupling-free.
 
 Usage: [BC=D] [NCUBE=4] python3 tools/colour_fluctuation.py [alpha_s]
-(NCUBE: sites per cube edge, default 3; 1/a follows from the carrier's rms radius = r_p.)   (default 0.1180, the ledger value)
+(PAIRS=1 adds negative-energy intermediate modes: colour-exchange Z-graphs.
+NCUBE: sites per cube edge, default 3; 1/a follows from the carrier's rms radius = r_p.)   (default 0.1180, the ledger value)
 """
 import sys, itertools, os, numpy as np
 src=open("tools/confined_walk.py").read().split('for n in (3,5):')[0]
@@ -64,7 +65,7 @@ else:
 w,Vv=np.linalg.eigh(H)
 pos=np.where(w>1e-7)[0]; e0=w[pos].min()
 gs=np.where(np.isclose(w,e0,atol=1e-6))[0]; assert len(gs)==2
-exc=[i for i in pos if i not in gs]
+exc=[i for i in range(len(w)) if i not in gs] if os.environ.get('PAIRS') else [i for i in pos if i not in gs]
 SzD=np.kron(np.eye(2*V),Sz4)
 SxD=np.kron(np.eye(2*V),-1j*al[1]@al[2])
 sub=Vv[:,gs]
@@ -184,4 +185,4 @@ def stateSI(S,I,sz_,iz):
 N=stateSI(.5,.5,.5,.5); Dl=stateSI(1.5,1.5,.5,.5)
 EN=(N.conj()@Hground(N.reshape(4,4,4)).ravel()).real; ED=(Dl.conj()@Hground(Dl.reshape(4,4,4)).ravel()).real
 print('ground-sector OGE: E_N %.4f E_D %.4f  Delta-N = %.4f lattice = %.1f MeV (observed 293 MeV)'%(EN,ED,ED-EN,(ED-EN)*a_inv))
-print('alpha_s needed for 293 MeV: %.2f'%(0.1180*293/((ED-EN)*a_inv)))
+print('alpha_s needed for 293 MeV: %.2f'%(g2/(4*np.pi)*293/((ED-EN)*a_inv)))

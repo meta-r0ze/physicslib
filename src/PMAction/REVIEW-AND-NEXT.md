@@ -82,6 +82,22 @@ Checked mathematics, the module map and everything established are in
    result: `g_A` is very sensitive to the carrier's resolution. Remaining candidates: virtual
    colour-singlet pairs inside the cube (a pion cloud; the Toll bound covers only real emission
    through the boundary), and the colour coupling without the Δ.
+
+   **Tried (Nov 2026).**
+   * *Pairs through colour exchange* (`PAIRS=1` in `tools/colour_fluctuation.py`: negative-energy
+     intermediate modes, the Z-graphs): at the N–Δ coupling they move `g_A` by `+3.7%`, the wrong
+     direction (net `+1.95%`, `1.404`). A pion cloud proper (a colour-singlet pair emitted by one
+     carrier and absorbed by another) needs a carrier–pion vertex, which is not built.
+   * *Which operator is the axial current* (`tools/axial_link.py`). A gauge boson couples to the
+     walk through its links, so the spatial current is the velocity `v_z = i[H, z]`
+     (point-split), and the axial one is `γ5 v_z`. On `3³` it gives `0.542` against the on-site
+     `Σ_z = 0.826` (`g_A = 0.904` against `1.377`); the two converge only slowly as the cube grows
+     (ratio `0.66, 0.74, 0.78, 0.80, 0.84` for `n = 3…8`). The target `0.75` lies between them.
+     This is lattice QCD's `Z_A` problem: a bare lattice axial matrix element is normalized by an
+     axial Ward identity before it is compared (typical `Z_A` for Wilson-type actions is below one;
+     `5/4` needs `Z_A = 0.908` on the on-site operator). **Next:** derive the walk's axial-current
+     normalization from its own Ward identity (the chiral zero mode's axial symmetry), instead of
+     choosing either operator.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
