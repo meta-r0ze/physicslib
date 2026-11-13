@@ -98,6 +98,24 @@ Checked mathematics, the module map and everything established are in
      `5/4` needs `Z_A = 0.908` on the on-site operator). **Next:** derive the walk's axial-current
      normalization from its own Ward identity (the chiral zero mode's axial symmetry), instead of
      choosing either operator.
+
+   **Cross-checks that do not depend on the axial normalization (Nov 2026).**
+   * *Magnetic moment* (`tools/proton_moment.py`; the vector current is conserved, so no `Z`).
+     SU(6) gives `μ_n/μ_p = −2/3` (measured `−0.685`). The size is low: on `3³` with the carrier
+     rms radius set to `r_p`, `μ_p = 1.74` n.m. (on-site current) or `1.04` (link current),
+     measured `2.793`; larger `n` raises it slowly (`2.11` / `1.67` at `6³`). MIT bag fits are also
+     low (`≈ 1.9`). So the carrier core is too small or too relativistic for `μ_p` while too
+     non-relativistic for `g_A`: one cube does not fit both. In hadron models the pion cloud
+     raises `μ` and lowers `g_A`, which is the direction both need.
+   * *Goldberger–Treiman* `g_πNN = g_A m_N/F_π`: E8 `5/4`, `m_N`, `F_π = f_π/√2 = 92.1 MeV` give
+     `12.74`; from `g_πN²/4π ≈ 13.7`, `g_πNN ≈ 13.1` (the usual `≈ 2%` GT discrepancy, plus the
+     electromagnetic `2%`).
+   * *Big gaps elsewhere that point the same way:* the singlet axial charge (quark spin fraction)
+     is `ΔΣ ≈ 0.3` measured against `0.83` here (the axial anomaly; `PMConstants.ChiralAnomalies`),
+     and hyperon decays give `F/D ≈ 0.58` against SU(6)'s `2/3`.
+   So the strongest single lead is the pion cloud: it is the one mechanism that moves `g_A` down
+   and `μ_p` up together. It needs the carrier–pion vertex, and that vertex is fixed by the same
+   axial current (Goldberger–Treiman), so it and `Z_A` are one problem.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 
