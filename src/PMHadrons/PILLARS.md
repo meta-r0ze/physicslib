@@ -50,8 +50,53 @@ roles are not tuned to the numbers.
    states kept coherent by inter-carrier exchange. In the shell system the spacing was Governor's;
    here the competing states are distinguished by the exchange, so Protocol is the candidate.
 
+## Step 2: values (Nov 2026, first pass)
+
+**Margin** (energy distance to the nearest cheaper state with the same charges; E8 masses):
+
+| system | nearest cheaper state | Margin |
+|---|---|---|
+| proton | none | stable |
+| neutron | `p e ν̄` (weak) | `+0.782 MeV` (`m_n − m_p − m_e`) |
+| `π±` | `μ ν` (weak) | `+33.9 MeV` |
+| Δ | `N π` (strong) | `−154 MeV` (observed Δ; no E8 Δ) |
+| virtual pion | — | `−m_π` for `ħ/m_π` |
+
+The persistent systems have positive Margin and decay only through Toll (weak); the Δ and the
+virtual pion have negative Margin and are hosted transients.
+
+**Protocol** (exchange between the carriers; sets N–Δ and dresses `g_A`). Two exchanges, both
+computed without fitting (`tools/pion_cloud_cube.py`, `tools/colour_fluctuation.py`):
+
+* pion exchange, source confined: `Δ − N = 79 MeV`, `δg_A/g_A = −7.6%`;
+* colour exchange at the coupling the running reaches at the cube (`α_V ≈ 1.3`, one loop in the
+  static-potential scheme, `tools/cube_coupling_running.py`): `Δ − N ≈ 131 MeV`,
+  `δg_A/g_A ≈ −0.8%`.
+
+**The two Toll readings, side by side:**
+
+| Toll reading | `g_A` (bare `1.377`) | `Δ − N` | comparison |
+|---|---|---|---|
+| (a) a returning pair is one Protocol exchange; Toll weights only irreversible boundary events | `≈ 1.26` | `≈ 210 MeV` | lattice `1.246(28)`; observed `293` |
+| (b) every boundary crossing pays `tollTerm` | `≈ 1.37` | `≈ 131 MeV` | |
+
+Reading (a) lands `g_A` on the lattice value and gives `72%` of the splitting with no calibration;
+(b) leaves both where the bare cube is. The colour coupling here is the perturbative one-loop value,
+the least reliable input.
+
+**Governor** (bound on feedback). The running coupling grows without bound just above the cube
+scale (two-loop pole near `400 MeV`). A Governor at the hadron level would cap that growth. The
+value the one-loop running reaches at the cube, `α_V ≈ 1.3`, is used above; whether Governor
+fixes the cap there, and with what E8 number, is open.
+
+**Capacity** (intake covers consumption). The cube's refreshed room is 27 sites and the ground
+cohort is 20 spin–flavour states; the nucleon base is Margin's cone `Δ²` (proved). A Capacity
+value for the nucleon that is not one of these counts has not been identified.
+
 ## Next
 
-* Step 2: values per system — the cube's Capacity room, the Protocol exchange cost (N–Δ), the
-  Governor cap (colour coupling), and the Toll rule for a returning pair.
-* Step 3: compare with the mass ledgers (`CompositeMasses`, `MesonMasses`), `g_A`, N–Δ.
+* Discriminate the Toll readings with the magnetic null test `μ_n + (2/3)μ_p` (measured
+  `−0.051` n.m.): (b) gives `0` (no cloud); (a) shifts it by the cloud's isovector and isoscalar
+  moments, which needs the pion current added to `tools/pion_cloud_cube.py`.
+* Governor: an E8 statement for the cap on the colour coupling at the cube scale.
+* Step 3: compare with the mass ledgers (`CompositeMasses`, `MesonMasses`).
