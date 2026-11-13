@@ -39,8 +39,29 @@ Checked mathematics, the module map and everything established are in
    **Target corrected (Nov 2026).** The carrier computation gives the strong-interaction axial
    charge, so its target is lattice QCD's `1.246(28)`, not the measured `1.2754`, which carries a
    `1.4–2.6%` electromagnetic correction (PMHadrons REVIEW §0). E8's `5/4` sits on the lattice
-   value. The N–Δ-calibrated exchange (`1.269`) is within the lattice error; the single free
-   carrier (`1.377`) is not. The question for this item is unchanged: the cube's colour coupling.
+   value.
+
+   **Boundary condition for the colour field (Nov 2026) — retracts the `1.27` above.** The
+   exchange above used the Dirichlet Green function (field zero on outside sites), which links the
+   cube to sites it does not refresh. The carrier uses the opposite rule: no link out of the cube
+   (`ConfinedCarrier`, plain truncation). Applied to the colour field, no link out means no colour
+   flux leaves (`n·E = 0`, Neumann for the electric part) and, for the magnetic part, component
+   `k` has no link out along axis `k` (`n×B = 0`). These are the bag-model conditions, here from
+   the lattice rule. With them (`tools/colour_fluctuation.py`, now the default; `BC=D` for the
+   old one): N–Δ is `12 MeV` at `0.118`, so the observed `293 MeV` needs `α_s ≈ 2.9` (Dirichlet:
+   `5.6`; MIT bag fits: `≈ 2.2`), and at that coupling exchange moves `g_A` by only `−1.7%`, to
+   `1.353`. So one-gluon exchange does **not** close `g_A`; the Dirichlet result was an artefact
+   of the boundary. The cube's `g_A` is `1.35–1.38` against lattice QCD's `1.246(28)`.
+
+   **The Δ has no occupancy mass.** Masses in PMHadrons are occupancy costs of persistent
+   placements (`Occupancy`). The Δ decays strongly (`Γ ≈ 117 MeV`, lifetime `≈ 5.6×10⁻²⁴ s`),
+   about 3 time steps of the carrier cube (`ħ/(318 MeV) ≈ 2.1×10⁻²⁴ s`), far less than one
+   `Δ = 43`-step cycle. It is not persistent, so the minimum-room rule does not give it a mass;
+   its mass is a level of the carrier cube's dynamics, which needs the same colour coupling.
+
+   Open, in order: (a) why the cube's `g_A` is `8%` above `5/4` with the persistence-consistent
+   boundary (candidates: the cube's site count — `4` sites per edge gives `1.265`; the finite
+   tick; the carrier's own mass); (b) the cube's colour coupling.
 4. **The carrier–pion vertex** is no longer needed for `g_A`: real emission through the Toll
    boundary is `~10⁻⁵` (PMHadrons REVIEW).
 

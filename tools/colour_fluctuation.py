@@ -7,14 +7,22 @@ factor -2/3, PMAction.ColourSinglet's eps algebra), interacting through the stat
 V_ij = g^2 sum_xy G(x,y) [rho_i(x) rho_j(y) - J_i(x).J_j(y)], with G the exact Dirichlet Green
 function of the cube (PMAction.CubeGreen3) and J = psi^dag alpha psi.
 
+Boundary conditions for the colour field (Nov 2026). Default (BC=N): the persistence rule used
+for the carrier (only the hadron's own sites and links are refreshed; links out of the cube are
+not its resources) removes the links out of the cube. For the static electric part that is the
+Neumann Laplacian (n.E = 0, no colour flux leaves); for the magnetic part, component k has no
+link out along axis k (A_k = 0 there) and Neumann along the other axes (n x B = 0). These are
+the bag-model conditions, here from the lattice rule. BC=D keeps the earlier Dirichlet G
+(field zero on outside sites), which connects the cube to unrefreshed sites.
+
 Computes, at first order (positive-energy intermediate modes only):
   * the change of g_A = <p| sum tau+ Sigma_z |n> from mixing ground with excited modes;
   * the N-Delta splitting from the ground-sector interaction.
 Both are linear in g^2, so their ratio is coupling-free.
 
-Usage: python3 tools/colour_fluctuation.py [alpha_s]   (default 0.1180, the ledger value)
+Usage: [BC=D] python3 tools/colour_fluctuation.py [alpha_s]   (default 0.1180, the ledger value)
 """
-import sys, itertools, numpy as np
+import sys, itertools, os, numpy as np
 src=open("tools/confined_walk.py").read().split('for n in (3,5):')[0]
 exec(src)
 n=3; Ns=[]
@@ -28,7 +36,30 @@ for x in sites:
     for d in (-1,1):
       y=list(x); y[j]+=d
       if 0<=y[j]<n: Lap[idx[x],idx[tuple(y)]]-=1
-G=np.linalg.inv(Lap)
+import os
+if os.environ.get('BC','N')=='N':
+  Lap2=np.zeros((V,V))
+  for x in sites:
+    for j in range(3):
+      for d in (-1,1):
+        y=list(x); y[j]+=d
+        if 0<=y[j]<n: Lap2[idx[x],idx[tuple(y)]]-=1; Lap2[idx[x],idx[x]]+=1
+  ww_,vv_=np.linalg.eigh(Lap2); keep=ww_>1e-9; G=(vv_[:,keep]/ww_[keep])@vv_[:,keep].T
+else:
+  G=np.linalg.inv(Lap)
+def lapmix(k):  # component k: Dirichlet along axis k (normal links absent beyond wall -> A_k = 0 there), Neumann along others
+  M=np.zeros((V,V))
+  for x in sites:
+    for j in range(3):
+      for d in (-1,1):
+        y=list(x); y[j]+=d
+        if 0<=y[j]<n: M[idx[x],idx[tuple(y)]]-=1; M[idx[x],idx[x]]+=1
+        elif j==k: M[idx[x],idx[x]]+=1
+  return M
+if os.environ.get('BC','N')=='N':
+  GM=[np.linalg.inv(lapmix(k)) for k in range(3)]
+else:
+  GM=[G,G,G]
 w,Vv=np.linalg.eigh(H)
 pos=np.where(w>1e-7)[0]; e0=w[pos].min()
 gs=np.where(np.isclose(w,e0,atol=1e-6))[0]; assert len(gs)==2
@@ -95,7 +126,7 @@ for a in range(2):
     Ge=G@gg[a][b]
     K[:,:,a,b]+=cf*g2*np.einsum('esx,x->es',dE,Ge)
     for k in range(3):
-      K[:,:,a,b]-=cf*g2*np.einsum('esx,x->es',jE[k],G@gk[k][a][b])
+      K[:,:,a,b]-=cf*g2*np.einsum('esx,x->es',jE[k],GM[k]@gk[k][a][b])
 def ST(s,t): return 2*s+t
 # delta = sum_m [<p|H|m><m|A|n> + <p|A|m><m|H|n>]/(E0-Em); positions by symmetry: excited at position 0, times 3
 delta=0j
@@ -128,7 +159,7 @@ print('imag part %.2e'%delta.imag)
 # ground-sector pair interaction and N-Delta splitting
 Vg=np.zeros((2,2,2,2),complex)   # [s'i,s'j,si,sj]
 for a,b,c,d in itertools.product(range(2),repeat=4):
-  Vg[a,b,c,d]=cf*g2*(gg[a][c]@G@gg[b][d]-sum(gk[k][a][c]@G@gk[k][b][d] for k in range(3)))
+  Vg[a,b,c,d]=cf*g2*(gg[a][c]@G@gg[b][d]-sum(gk[k][a][c]@GM[k]@gk[k][b][d] for k in range(3)))
 def Hground(T):   # sum over pairs on 3-carrier tensor (s,t) labels; flavour blind
   out=np.zeros_like(T,dtype=complex)
   for (i,j) in [(0,1),(0,2),(1,2)]:
