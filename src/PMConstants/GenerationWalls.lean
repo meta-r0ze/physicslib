@@ -13,6 +13,14 @@ This is an exact representation using all three classes in both walls. It does
 not prove that the physical vacuum admits every such mode, identify the update,
 or turn a sector-exchange symmetry into a quotient of physical states. In
 particular it does not derive generation masses or mixing parameters.
+
+**Why this realization.** The tag needs one bit. The walls already supply it, with exactly the
+capacity needed (`encode`, `wall_native_card`); the companion-carrier history
+(`GenerationHistory`) spends a second carrier per mode. Economy (no spare coordinate,
+`PMSubstrate.FinalPremises.description_minimal`) takes the existing wall label.
+`no_further_modes`: the 48 wall labels are then used exactly by the three generations, so an
+equal-class packet has no room as a further state; no vector-faithful readout contract is needed
+to exclude it.
 -/
 
 noncomputable section
@@ -97,5 +105,16 @@ that depends on the occupied class. It cannot silently be treated as a wall
 swap acting identically on an independent generation factor. -/
 theorem exchange_not_generation_only : ¬ ∃ f : Fin 3 → Fin 3,
     ∀ g c : Fin 3, g ≠ c → omitted (!(side g c)) c = f g := by decide
+
+/-- **No room for a further packet type on the walls.** The 48 wall-carrier labels are used
+exactly by the three distinct-class generations (`encode` is a bijection), so no further mode
+type, such as an equal-class packet, fits injectively beside them. -/
+theorem no_further_modes (E : Type*) [Fintype E] [Nonempty E] :
+    ¬ ∃ f : Mode ⊕ E → WallNative, Function.Injective f := by
+  rintro ⟨f, hf⟩
+  have h1 := Fintype.card_le_of_injective f hf
+  rw [Fintype.card_sum, Fintype.card_congr encode] at h1
+  have := Fintype.card_pos (α := E)
+  omega
 
 end PMConstants.GenerationWalls
