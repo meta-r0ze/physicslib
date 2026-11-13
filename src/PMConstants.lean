@@ -148,6 +148,7 @@ import PMConstants.GaugeWalkBudget
 import PMConstants.NoiseShare
 import PMConstants.VacuumModulus
 import PMConstants.WindingWeights
+import PMConstants.ThetaBarSelection
 import PMConstants.WallParityExchange
 import PMConstants.ChannelOccupancy
 import PMConstants.ReflectionCharge
