@@ -24,8 +24,8 @@ the boundary in parallel. Series addition is exactly first order, which is why t
 forms `exp x` and `1/(1 − x)` fail (`VevCorrections.exp_excluded`, `geometric_excluded`).
 
 Open: the boundary admittance `χ/(Dπ)` (the data single it out among `a/(bπ)`,
-`VevCorrections.boundary_unique`), and that the margin factor is one spatial axis's share
-(`VevNoise`).
+`VevCorrections.boundary_unique`). The margin factor's one-axis share is derived
+(`VevEvent.vev_reads_spatial_share`).
 -/
 
 noncomputable section

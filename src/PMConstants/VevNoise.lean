@@ -21,7 +21,9 @@ a share `s : Fin 4 → ℝ`.
   (`VevLedger.noiseDenominator_eq_orthogonal`). The divisor `4` would put noise on the time axis,
   which the clock refresh removes.
 
-What remains a reading is that the VEV's margin factor is one axis's share, `1 − Y/3`.
+That the VEV's margin factor reads one axis's share, `1 − Y/3`, is derived in `VevReadout`
+(`normalized_share`) and `VevEvent` (`vev_reads_spatial_share`: a readout is an event, and the
+time-axis comparison never fires under exact repair).
 -/
 
 noncomputable section
