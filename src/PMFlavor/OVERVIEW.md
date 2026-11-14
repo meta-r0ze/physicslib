@@ -183,6 +183,16 @@ composite is a correction to `δ`, linear in the carrier amplitude, so the large
 is the heaviest generation. The carrier is a chirality flip on its wall through the Wilson part of its
 hop (`PMAction.CarrierFlip`, `κ = −r t/2`), given that the class carrier is an in-wall Wilson hop.
 
+**The composite with equal light carriers is excluded for leptons and up quarks** (external scan,
+`tools/composite_mass_scan.py`; a sample, not a bound). Up to scale the light mass is
+`δ S + diag(κ_v, κ₁, κ₂)`. With real amplitudes (no phase source), `|κ_light| ≤ κ_v` and the two light
+carriers equal (the composite's order: both spinor-class through the node), the samples never give
+middle/light above heavy/middle; the maximum is the geometric limit `(κ_v, δ, δ²/κ_v)`. Leptons
+(`16.8`, `207`) and up quarks at `M_Z` (`277`, `488`) need it above; down (`54`, `20`) does not. So
+the light-pair split (`κ₁ ≠ κ₂`) is required, not a correction. With it every sector is reachable
+(three parameters, two ratios), so there is no test until `κ₁/κ₂` is derived. Signed amplitudes reach
+large ratios only by cancelling `det = κ_v κ₁ κ₂ + δ³`.
+
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay

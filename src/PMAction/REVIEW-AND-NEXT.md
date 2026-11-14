@@ -9,8 +9,9 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   `PMConstants.GenerationMass`) and the suppression of `|V_ub|`, `|V_cb|`
   (`PMConstants.GenerationWeak`), so one value must fit both. The two-leg/one-leg rule
   (`PMFlavor.NodeElimination`) does not fit the masses; do not tune it.
-- **Light-pair split.** At the composite's order the two light generations are degenerate. The weak
-  wall distinguishes the two spinor classes; derive the size of that difference.
+- **Light-pair split.** At the composite's order the two light carriers are equal, and then
+  leptons and up quarks are excluded (`PMFlavor` OVERVIEW, `tools/composite_mass_scan.py`). The weak
+  wall distinguishes the two spinor classes; derive the ratio of their carrier amplitudes.
 
 ## Carrier update
 
