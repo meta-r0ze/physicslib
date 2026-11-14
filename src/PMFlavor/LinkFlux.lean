@@ -24,7 +24,7 @@ its wall (`legA`: `u` on one wall, `ū` on the other, moduli free):
 * `wall_swap_conj`, `flux_swapped`: exchanging the wall names (the other balanced convention of
   `GenerationWalls`) conjugates every leg, so the flux becomes `u⁶` and `J → −J`.
 * `swap_reverses_orientation`: the `μ`–`τ` swap (`1 ↔ 2` on generations and classes) maps every
-  leg to the other wall. So a phase pattern invariant under the residual `Z₂` of
+  leg to the other wall (the `v = 0` case of `ExchangeChirality.swap_reverses_side`). So a phase pattern invariant under the residual `Z₂` of
   `GenerationBreaking` has flux equal to its conjugate, a real flux, and conserves CP.
 
 So: CP violation needs the incidence orientation, i.e. the `Z₂` broken by which wall is which;

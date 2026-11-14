@@ -56,6 +56,25 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
     `P` built from the same legs and boundary, and the same `P` must give `|V_cb|`. If the
     required `P` has no library source, the amplitude-is-admittance premise of `VubSeriesPath` is
     the error; record it.
+  * Status (numerical, `tools/flavour_link_fits.py`, recorded in OVERVIEW): the eigenvector
+    reading is excluded for quarks (`χ² ≈ 1040`, from `m_s/m_d`), seesaw or exact masses. The
+    transfer reading survives: masses generation-diagonal, `V = e^{−iK}` (or Cayley) with `K` the
+    fluxed incidence network; it needs a flux of `43°`–`49°` and `|K₁₃| ≈ 0.0045`. Do not match
+    the flux to a fraction of `π`; it moves by several degrees with the generator form.
+  * Next, in order:
+    1. Decide the generator. The transfer reading needs a rule for `V` from `K` (exponential,
+       Cayley, or Landauer scattering through the network). The library's charged-current event
+       (`DressingEvent`, `ExchangeChirality`: a single-wall hop on the weak wall) should say
+       which; the flux and `|K₁₃|` above differ by several degrees and `10%` between them.
+    2. Then `VubSeriesPath`: its `1/(2α⁻¹ + π)` matches `|V_ub|` (1σ), not `|K₁₃|` (`0.0045`).
+       In the transfer reading `V_ub = −iK₁₃ − ½(K²)₁₃ + …`, so either the series-path premise is
+       about the full amplitude including the route through the in-cycle pair (check whether
+       the Kron reduction already contains that route), or the match is not structural.
+    3. Then the flux: with the generator fixed, the flux is a data number with `±1°`; a wall-side
+       leg phase gives `6θ` (`LinkFlux`). Look for the substrate source only after 1.
+    4. `GenerationWalls` and `WallSeesaw` read `Y` as the mass link; the eigenvector exclusion says
+       that reading does not carry the quark mixing. Update those modules' docs once 1 is settled
+       (the change of reading is library-wide, so do it in one pass).
   * `|V_ub|` and `|V_cb|` cross different class vertices (`s` and `c`), not one shared node
     (`shared_node_three_legs`). So the factor `≈ 10` is a difference between those two vertices.
     `ExchangeChirality` says which: the weak current couples to one of them. Model that as a third

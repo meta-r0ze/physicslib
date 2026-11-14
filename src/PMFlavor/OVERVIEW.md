@@ -131,6 +131,29 @@ link against a diagonal up basis would give a democratic `1/√3` column instead
 `3α/2` and `a + α/2` (`in_cycle_spectrum`), so `VubSeriesPath`'s amplitude is not an eigenvector
 overlap of the conserving network itself.
 
+**Real legs are excluded in either reading of the mixing** (numerical, outside Lean). If instead the
+masses are generation-diagonal and the CKM is the charged current's transfer `V = e^{−iK}` through
+the network (`GenerationLabel`'s single-wall hop read as a transfer; not the library's
+`WallSeesaw` reading), then with real `K` the second-order term `−½K₁₂K₂₃` adds to `−iK₁₃` in
+quadrature, so `|V_ub| ≳ |V_us||V_cb|/2` (exact minimum at the PDG `|V_us|, |V_cb|`: `0.00477`,
+against `0.00373`; the PDG ratio `|V_ub|/(|V_us||V_cb|)` is `0.40`). The same holds for any
+`1 − iK − K²/2 + …` (Cayley included). So in both readings a real conserving network fails the
+third generation, and a flux (or leak) is required. Fitting the PDG
+2024 Wolfenstein values with a fluxed generator gives a flux of `43°`–`49°` (statistical `±1°`;
+the spread is the choice of generator form and diagonal, so no sharper value is a data statement)
+and `|K₁₃| = 0.0043`–`0.0047`, above `VubSeriesPath`'s `1/(2α⁻¹ + π) = 0.0036`, which matches
+`|V_ub|` itself rather than the coupling.
+
+**The eigenvector reading fails for quarks** (numerical). Both sectors as fluxed incidence links
+(three moduli and a flux each; the overall scale drops out), masses from the seesaw, CKM as
+`U_uᴴ U_d`: 8 constraints (four mass ratios at `M_Z`, four CKM invariants) on 6 parameters. Best
+`χ² ≈ 1040`, from `m_s/m_d` (the fit reaches about `4`, against `20`) together with the CKM; up
+masses and the CKM alone fit. With the exact one-flavour mass and a free `δ₀` per sector (8
+parameters) it is unchanged (`χ² ≈ 1039`). So the library's `WallSeesaw` reading, mixing as the
+mismatch of two incidence mass links, is excluded for quarks; the transfer reading (masses
+generation-diagonal, `GenerationLabel`) is the one that survives, and it needs the flux above.
+Scripts: `tools/flavour_link_fits.py`.
+
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional
 forms themselves are ansätze, not E8 theorems. Upstream
