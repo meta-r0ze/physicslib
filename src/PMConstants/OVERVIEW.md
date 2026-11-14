@@ -359,6 +359,8 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `VevDownstream` | `vev_downstream`: positivity, `G_F=1/(√2v²)`, `m_H²=2λv²`, exact electron closure; `w_mass_from_canonical_vev` conditional on `vev = canonicalVev`. |
 | `VevClosure` | `VevFactor`, `VevStatus`, `factorStatus`, `factorProduct`, `vev_closure`, `slotCount_closed`, `noiseAxes_closed`, `boundary_closed`, `oneRepair_closed`; composed VEV closure ledger. |
 | `VevCorrections` | What the Fermi window says about the VEV corrections |
+| `VevNoise` | The VEV's noise divisor is the three spatial axes |
+| `VevImpedance` | The VEV's topological factor as a series impedance: node `α⁻¹` then the `D` axes in parallel with the boundary admittance `χ/(Dπ)` |
 | `NeutralCurrent` | The photon and Z couplings from the reference's mass form |
 | `RepairBudget` | The scalar budget from one exact repair of the reference |
 | `BudgetReadout` | What the scalar budget reads from a repair |
