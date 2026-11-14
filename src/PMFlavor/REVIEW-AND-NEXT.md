@@ -62,7 +62,10 @@ PMAction.
   (`PMConstants.GenerationMass`): within one convention the generation-diagonal mass is a composite,
   an equal-class crossing plus a single-wall carrier of the label class; with a class-independent
   crossing and `ExchangeAxis`' node rule for the carrier it gives one heavy (label `v`) and two light
-  generations, the observed pattern. For the ordering, the
+  generations, the observed pattern. `PMConstants.GenerationCurrent`: generation changes are a
+  single-wall carrier plus a glue move, a directed 3-cycle per wall; the vector-carrier edge joins
+  the two light generations and the heavy generation's edges use spinor carriers (coarse CKM
+  pattern), and masses and mixings share the carrier amplitudes. For the ordering, the
   label-`v` generation has the only in-cycle insertion and the only two node-crossing mixings
   (`MassInsertion`), and the data put it heaviest. Sizes: the node-passage rule (`NodeElimination`:
   quarks two legs, `≈ α⁻¹`; leptons one leg, `≈ α^{−1/2}`) does not match the heavy/middle ratios

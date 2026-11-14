@@ -26,10 +26,14 @@
      generation (label `v`, the weakly mixed one) and two light. Open: the node factor's size, and
      the light pair's split (degenerate at this order; the weak wall distinguishes the two spinor
      classes). Not pursued: an update containing both conventions (`no_further_modes` leaves no room).
-  4. The charged-current operator on this space: weak is the sign exchange on the reference's
-     sector (`PMConstants.CarrierActions.weak`), which keeps every class. Show which single-wall
-     carrier events, if any, accompany it, and on which wall; that decides which generation
-     changes the charged current makes.
+  4. Generation changes. Done (`PMConstants.GenerationCurrent`): within one convention no single-wall
+     shift changes the generation; a single-wall carrier (the other wall's class) plus an `E₈` glue
+     move (the intermediate's label) does, `g → g + 1` on wall `true` and `g → g − 1` on wall `false`,
+     a directed 3-cycle per wall. The vector-class carrier edge joins the two non-`v` generations;
+     both edges at the label-`v` generation use spinor carriers (the coarse CKM pattern with
+     `PMFlavor.ExchangeAxis`). Open here: tie this to the charged-current operator itself (weak is
+     the sign exchange on the reference's sector and keeps every class, `CarrierActions.weak`): show
+     the carrier event accompanies it, and which wall (`true` or `false`) is the reference's.
   5. Symmetries: the wall-parity exchange (`WallExchange`) on the generation-changing part. This
      settles whether the inter-wall link is Hermitian (the seesaw fork in `PMFlavor`).
   6. Then hand to `PMFlavor`: the mass matrix and the mixing as whatever steps 1 to 5 give.
