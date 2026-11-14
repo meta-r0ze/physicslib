@@ -214,6 +214,13 @@ Node passage acts on both walls (`LeptonAxisRestriction.cycle_root_axis_zero` co
 root, which acts on both sectors). With the swap × exchange symmetry the light ratio is
 `κ_R(s)/κ_O(s)`.
 
+**Masses and mixing together** (external fit, `tools/reference_wall_mixing_scan.py`; a sample, not
+a bound). Each sector is `diag(K, k_s, k_c)(d + C)` with the other wall's carriers fixed by the
+symmetry. Carriers shared by up and down quarks (only `d` differs): 4 parameters for 4 mass ratios
+and 3 CKM magnitudes; the best fit misses by factors up to `2.8` (`|V_ub|`): disfavoured. Carriers
+per sector: 6 parameters, everything within about `30%`: consistent, but nearly a fit. A test needs
+the carriers derived.
+
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay

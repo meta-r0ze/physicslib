@@ -60,8 +60,11 @@ PMAction.
   (`PMAction/REVIEW-AND-NEXT.md`, generation sector). The light-pair split (`207`, about `20`, about
   `500`) needs the `s`/`c` asymmetry. `ReferenceWallMass` (with `PMAction.ReferenceDetuning`): `M = D_R (δ_O + cyc κ_O)`, so the masses
   are the reference-wall carriers and the light ratio is `κ_R(s)/κ_O(s)`; the earlier equal-carrier
-  exclusion assumed equal `δ` on both walls and does not apply. Next: scan masses and mixing together
-  for this form; the right factor ties the left rotation (seen by the CKM) to the carriers. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
+  exclusion assumed equal `δ` on both walls and does not apply. Masses and mixing together
+  (`tools/reference_wall_mixing_scan.py`): carriers shared by up and down are disfavoured (misses up
+  to `2.8×`); per-sector carriers fit within `30%` with 6 parameters for 7 numbers, no test. What
+  makes it a test: derive the carriers (PMAction node-passage cost per wall), or derive why up and
+  down carriers differ. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
   which mixes generations at relative size `δ/κ`; once `κ` is derived that mixing is a CKM
   prediction, not a fit. Its premise holds for a Wilson-form carrier (`PMAction.CarrierFlip`), so the
   mass ratios are the carrier amplitude ratios.
