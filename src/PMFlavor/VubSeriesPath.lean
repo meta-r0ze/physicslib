@@ -27,6 +27,11 @@ data's `m = 2` without a separate count.
 **What the data do not fix.** The boundary term: `1/(2Z)` and `1/(2Z + π)` differ by `1%`, below the
 error on `|V_ub|` (`boundary_unresolved`). It rests on the construction.
 
+**`|V_cb|` stays open.** `vcb_not_two_leg`: no two-leg passive path reaches `|V_cb|`. Within single
+node impedances the data admit several forms equally (`(π + χ)/(Z − 4π)`, `σ/(Z − 5π)`,
+`2π/(Z + 5π)` all within `0.2σ`), and the inclusive/exclusive `|V_cb|` tension widens this, so no
+construction can be singled out yet.
+
 Premise: the mixing amplitude of a passive path is its admittance (the transfer per unit drive, as
 `HandoffAdmittance` reads a node's through weight as its conductance). That the two legs are equal
 is Closure (`HandoffAdmittance.closure_one_price`).
@@ -53,5 +58,19 @@ theorem boundary_unresolved :
     |(1 / (2 * 137.036) : ℝ) - 0.00382| / 0.0002 < 2 ∧
       |(1 / (2 * 137.036 + 3.1416) : ℝ) - 0.00382| / 0.0002 < 2 := by
   constructor <;> (rw [abs_of_neg (by norm_num)]; norm_num)
+
+/-- **`|V_cb|` is not a two-leg passive path.** Two legs with any boundary count `|k| ≤ 6` give at
+most `1/(2Z − 6π) ≈ 0.0039`, far below `|V_cb| = 0.0411 ± 0.0012`. So the `c`-side node-crossing
+mixing carries a drive of order `π + χ` that the `|V_ub|` path does not: the `s`/`c` parity
+asymmetry (`ExchangeChirality`) shows up as a factor `≈ 10` in the drive, not only in the path. -/
+theorem vcb_not_two_leg (k : ℤ) (hk : -6 ≤ k) :
+    1 / (2 * CKM.αinv + k * Real.pi) < 0.0411 - 3 * 0.0012 := by
+  have ha := CKM.ai_bounds
+  have hp1 := Real.pi_gt_d4; have hp2 := Real.pi_lt_d4
+  have hk' : (-6 : ℝ) ≤ k := by exact_mod_cast hk
+  have hkp : -6 * Real.pi ≤ k * Real.pi := by nlinarith
+  have hden : 255 < 2 * CKM.αinv + k * Real.pi := by linarith
+  rw [div_lt_iff₀ (by linarith)]
+  nlinarith
 
 end PMFlavor.VubSeriesPath

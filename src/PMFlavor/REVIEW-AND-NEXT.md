@@ -22,8 +22,10 @@ what remains:
   be a through weight (Landauer, as in `PMConstants.HandoffAdmittance`).
 * **The node-crossing coefficients.** `|V_ub| = 1/(2α⁻¹ + π)` is constructed (`VubSeriesPath`): the
   admittance of the two node legs and a unit boundary in series; the data's `m = 2` is the leg count.
-  The reactor's `3` is constructed (`ReactorConductance`). Open: `|V_cb| = (π + χ)/(α⁻¹ − Dπ)` (its
-  denominator is not fixed by data, `MixingTests`).
+  The reactor's `3` is constructed (`ReactorConductance`). Open: `|V_cb| = (π + χ)/(α⁻¹ − Dπ)`. It is not a
+  two-leg passive path (`VubSeriesPath.vcb_not_two_leg`: it needs a drive `≈ π + χ` over about one
+  node impedance), and several single-impedance forms fit equally (`σ/(Z − 5π)`, `2π/(Z + 5π)`),
+  so it needs a structural reason for the drive before data can test it.
 * **The size of the parity breaking** that splits `s` from `c` (`ExchangeChirality`): large for
   quarks (`|V_ub|/|V_cb| ≈ 0.09`), small for leptons (`θ₂₃` near maximal; Paper IV's octant
   "running" is this breaking and has no Lean statement).
