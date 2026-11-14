@@ -22,11 +22,12 @@ capacity needed (`encode`, `wall_native_card`); the companion-carrier history
 equal-class packet has no room as a further state; no vector-faithful readout contract is needed
 to exclude it.
 
-**The tag's dynamics.** The tag is the wall, so it changes exactly through the inter-wall hop of
-the two-wall Hamiltonian, `hop ⊗ Y` (`PMAction.WallExchange`): `Y` is the current between tags,
-every mode is reachable when `Y` is invertible, and the zero-energy reduction gives the light
-masses `δ²/σᵢ(Y)` (`PMAction.WallSeesaw.seesaw`). So the generation tag's dynamics is the flavour
-link `Y`, whose entries are the flavour sector's (`PMFlavor`), not a new law here.
+**The inter-wall crossing (candidate reading of the tag's dynamics).** The tag is the wall, so in
+this encoding it changes through the inter-wall hop of the two-wall Hamiltonian, `hop ⊗ Y_gap`
+(`PMAction.WallExchange`): every mode is reachable when `Y_gap` is invertible, and for that
+Hamiltonian the zero-energy reduction gives `δ²Y_gap⁻¹` (`PMAction.WallSeesaw.seesaw`). This is a
+result for that Hamiltonian; that it is the physical generation dynamics is a reading, distinct from
+`PMFlavor.GenerationLabel`'s single-wall shift (below).
 
 **Caution (audit).** In this encoding a carrier crossing the walls at a fixed class changes the
 generation and flips chirality in one step, so the generation-changing part of `Y` and the mass are

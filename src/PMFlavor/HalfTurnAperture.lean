@@ -36,9 +36,15 @@ The `π` in both roles is one quantity, the measure of Barbier's half-turn of di
 (`half_turn_measure`): a boundary is that measure times a width (`boundary_is_measure_times_width`),
 and the refresh, a half-turn, sweeps the same measure as its aperture (`aperture_share`).
 
-The equal share is Closure (`equal_share_from_closure`, from `HandoffAdmittance.closure_one_price`).
-Remaining premise: the transfer crosses the refresh through its half-turn of directions (aperture),
-rather than along it. Status: candidate.
+Premises, listed separately (status: candidate):
+1. cross-orbit label-blindness: `equal_share_from_closure` assumes invariance under **every**
+   permutation of the channels; the physical type-preserving symmetries keep vector and spinor
+   channels in separate orbits, so the equal share across orbits is Closure's label-blind pricing,
+   not a symmetry;
+2. conductance normalization: the channels together carry the whole half-turn measure `π` as
+   conductance (Barbier gives the measure, not that the transport exhausts it);
+3. the aperture reading: the transfer crosses the refresh through its half-turn of directions,
+   rather than along it.
 -/
 
 namespace PMFlavor.HalfTurnAperture

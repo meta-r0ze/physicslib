@@ -16,13 +16,13 @@ ticks, and a spatial row's addresses lie at other sites, `k` steps along `μ`.
 * An event acts in one factor (`PMAction.FactorRepair`). Weak's events are internal: the weak
   action permutes internal carrier labels (`CarrierActions.weak`) and moves no site. This enters the
   proofs as the hypothesis that weak's displacements have no spatial component (`hL`; the time
-  component is absorbed into the ticks). An earlier wording justified it by reading `E₈ = D₄ ⊕ D₄`
-  as "spacetime and internal", which conflicts with the two-wall reading of the summands
-  (`PMAction.DomainWall`); the proofs do not use that reading. Caution: `CarrierActions.weak` flips
-  all eight vector carriers of the reference's sector, six of them on colour axes. Under the premise
-  that carrier vectors are lattice hop directions (`PMFlavor.DressingInheritance`), flipping a
-  colour-axis carrier is a spatial displacement `−2v`, and `hL` fails for it. `hL` holds if carrier
-  labels are not hop displacements; the two premises conflict (`REVIEW-AND-NEXT.md`). So a word of
+  component is absorbed into the ticks). An earlier wording justified it by reading the two `D₄` summands of
+  `E₈`'s gluing construction (the sublattice `D₄ ⊕ D₄` plus its glue classes) as "spacetime and
+  internal", which conflicts with the two-wall reading of the summands
+  (`PMAction.DomainWall`); the proofs do not use that reading. `CarrierActions.weak` flips all eight
+  vector carriers of the reference's sector, six of them on colour axes; this is consistent with `hL`
+  because a carrier label is not a site (the library shares axis labels between carrier space and
+  the lattice, `PMFlavor.DressingInheritance`, but does not make a label change a hop). So a word of
   weak events has zero spatial displacement (`internal_stays`); between ticks only the clock moves.
 * `weak_covers_iff`: weak's own events, over any number of ticks, reach every address of row `μ`
   exactly when `μ` is the time row.

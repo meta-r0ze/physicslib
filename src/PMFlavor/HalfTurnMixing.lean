@@ -30,6 +30,9 @@ type. So the type-preserving channels are the sector's own vector carriers plus 
 The amplitude-versus-probability split matches `NodeElimination` (quarks reach the reference node
 by two legs, lepton-axis states by one). Open: why the in-cycle share reads the generator element
 `π/N` (which would make the solar prediction `π/10`, `0.005` above `1/(2φ)`, resolvable by JUNO).
+
+The fit inequalities here are Lean theorems about arithmetic against frozen input numbers; they do not
+certify the experimental inputs or their interpretation.
 -/
 
 namespace PMFlavor.HalfTurnMixing

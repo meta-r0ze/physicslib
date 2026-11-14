@@ -35,7 +35,10 @@ is in the library.
 
 **The real network shares its zero mode.** `kronLink_zero_mode`: every real-leg reduced link
 annihilates `(1, 1, 1)`, whatever the legs. Two sectors on real legs therefore share that state;
-under `WallSeesaw` it is the zero-`σ` (heaviest) generation, and it does not mix with the others.
+it is the heaviest state: `σ = 0` is outside `WallSeesaw`'s `Y⁻¹`, but the exact one-flavour light branch
+`(√(y² + 4δ²) − y)/2` (`PMAction.WallSeesaw.light_heavy`, `PMAction.WallDispersion`) decreases in `y`
+and is largest, `δ`, at `y = 0`; naming it the third generation assumes the zero mode is
+nondegenerate and the generation labels follow the mass order, and it does not mix with the others.
 So the third-generation CKM entries (`|V_ub|`, `|V_cb|`, `|V_td|`, `|V_ts|`) need something that
 lifts the zero mode differently in the two sectors: a flux or a non-conserving leak. Numerically
 (outside Lean) a common wall-side `θ` with different leg moduli does this and gives `J ≠ 0`; with

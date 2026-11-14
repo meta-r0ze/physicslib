@@ -13,15 +13,25 @@ already uses.
 * The dressing is a transfer out of the generation block (`DressingEvent`), transmission is
   admittance (Landauer, `PMConstants.HandoffAdmittance`), and the light sector is the zero-energy
   reduction (`KronSeries`). Zero-energy scattering through a Hermitian network `K` with equal
-  leads of width `γ` on the three generations (Closure's one price,
-  `HandoffAdmittance.closure_one_price`) is `S = 1 − 2iγ (−K + iγ)⁻¹` (Mahaux–Weidenmüller).
+  leads of width `γ` on the three generations is `S = 1 − 2iγ (−K + iγ)⁻¹` (Mahaux–Weidenmüller).
+  Two premises, kept separate: (a) the transfer is zero-energy scattering with leads on the three
+  generations; (b) the lead widths are equal, `Γ = γ·1`. Neither is derived here. `mw_eq_cayley`
+  and `cayley_unimodular` are scalar identities; they do not construct the leads or fix their
+  widths. (b) is motivated by `HandoffAdmittance.closure_one_price`, but that theorem is about a
+  price function invariant under relabelling; applying it to lead widths needs the lead coupling to
+  be symmetric under a transitive relabelling of the generations, which the node (distinguishing
+  the reference-free generation) does not obviously allow.
 * `mw_eq_cayley`: on each eigenvalue `k = xγ` of `K` this is `−(1 − ix)/(1 + ix)`, the Cayley
   transform of `K/γ` up to a global sign (a rephasing). `cayley_unimodular`: it is a phase, so `S`
   is unitary.
 * So the generator is Cayley, not the exponential; the lead width `γ` is one overall scale, and
   only ratios of couplings are data.
 
-**What the data then say** (numerical, `tools/flavour_link_fits.py`; PDG 2024 CKM): a flux of
+**Observable.** The CKM entries are `S_ij`, not `K_ij`: `S₁₃ = −iK₁₃ − ½(K²)₁₃ + …` (with `K` in units
+of `γ/2`). A path admittance is a statement about `K`.
+
+**What the data then say** (external numerical fits, `tools/flavour_link_fits.py`, conditional on
+(a) and (b); PDG 2024 CKM): a flux of
 `49.1 ± 1.1°` and `K₁₃/K₁₂ = 0.0185 ± 0.0005`, `K₂₃/K₁₂ = 0.183`. `VubSeriesPath`'s construction
 is the direct first-order path, `K₁₃`; its value over the in-cycle coupling,
 `(1/(2α⁻¹ + π))/(π/14) = 0.0161`, is `4.7σ` below `0.0185`. The `1σ` agreement of
@@ -29,8 +39,9 @@ is the direct first-order path, `K₁₃`; its value over the in-cycle coupling,
 through the in-cycle pair (`−½K₁₂K₂₃`, as large as `K₁₃`). So in this reading the series-path
 match is not structural.
 
-Premise: equal lead widths for the three generations. Unequal leads would add two scales and
-remove the ratio test.
+With unequal leads (a diagonal width matrix), the scalar identities still hold eigenvalue by
+eigenvalue only when the widths commute with `K`; in general the common-scale reading and the ratio
+test both fail. So the numbers above stand or fall with (b).
 -/
 
 namespace PMFlavor.TransferGenerator

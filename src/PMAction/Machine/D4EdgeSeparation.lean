@@ -20,9 +20,10 @@ A lattice edge is `Y + [0, 1] r` with `Y ∈ ℤ⁴` of even coordinate sum and 
 * `comb` (finite check): if the coordinates where `r'` reverses `r` are neither none nor all, the
   difference `Y − Y'` has odd coordinate sum, contradicting `D₄`.
 * `separated`: so the two edges are the same segment: `(Y', r') = (Y, r)` or `(Y + r, −r)`.
-* `d4_configuration_realized`: **every finite configuration of distinct `D₄` edges, each with its
-  own root rates, is realized by one set of C² controls**, and each edge carries its own root
-  word.
+* `d4_configuration_realized`: **given** a finite configuration of distinct `D₄` edges with supplied
+  root-word data on each, there are C² controls whose realizations all carry that data on those
+  edges. This is smooth interpolation of supplied finite data; it does not reconstruct unique
+  controls from measured links, and it is not by itself a physical realization.
 -/
 
 noncomputable section

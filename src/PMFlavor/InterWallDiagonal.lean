@@ -12,10 +12,12 @@ of `PMConstants.GenerationWalls` (the native label is kept), and the inter-wall 
 
 * `crossing_changes_generation`: the generation that has class `c` on one wall is never the
   generation that has class `c` on the other wall (`GenerationWalls.omitted`). So an equal-class
-  crossing always changes the generation: the inter-wall link `Y` has **zero generation diagonal**,
-  hence trace zero.
+  crossing always changes the generation: the inter-wall link `Y_gap` (the `Y` of `WallSeesaw`) has
+  **zero generation diagonal**.
 * `traceless_close_pair`: three reals summing to zero have their largest absolute value at most
-  twice the middle one.
+  twice the middle one. This applies to the singular values only when `Y_gap` is **Hermitian**
+  (its eigenvalues are then real and sum to zero); `WallExchange.exchange_symmetry_iff` makes it
+  Hermitian exactly under the wall-parity exchange symmetry.
 * `seesaw_close_pair`: so under `WallSeesaw` (light masses `c/σᵢ`) the two lightest generations
   have masses within a factor `2`. The exact one-flavour mass `(√(σ² + 4δ₀²) − σ)/2` keeps the
   factor `2` (it is `2δ₀²/(√(σ² + 4δ₀²) + σ)`, and doubling `σ` at most halves it).
@@ -23,7 +25,17 @@ of `PMConstants.GenerationWalls` (the native label is kept), and the inter-wall 
   `4` apart (`LinkHierarchy.measured_gaps`), so no such link gives them. The same holds for every
   quark sector (smallest ratio `m_s/m_d ≈ 20`).
 
-**Result.** With the gluing premise (the inter-wall term pairs equal classes), the mass hierarchy
+**Scope (audit).** The equal-class crossing is directional: class `c` sits in generation `c − 1` on
+wall 1 and in `c + 1` on wall 2, so the wall-2-to-wall-1 block has one entry per row, a weighted
+cyclic shift. Its singular values are the three class amplitudes and can be anything (e.g.
+`1, 10, 100`); the traceless argument does not apply. Two cases follow. (i) Under the wall-parity
+symmetry `Y_gap` is Hermitian, so it holds both directions, and the results below apply. (ii)
+Without it, the seesaw gives one Dirac pair per class with mass `δ²/|y_c|`; with the library's
+amplitudes (vector class in-cycle, order `1`; spinor classes through the node, order `α`) that is one
+light pair and two heavy ones, the reverse of the data. Case (ii) is excluded only through that
+amplitude assignment, not by this module's theorems.
+
+**Result (case (i)).** With the gluing premise and a Hermitian `Y_gap`, the mass hierarchy
 cannot come from the inter-wall link alone: it needs a generation-diagonal term. An equal-class
 crossing cannot supply one. A crossing that changes the class by the generation label (class `b` on
 one wall to class `c` on the other, `b ≠ c`) would, but it is not an E₈ vector, so it is a

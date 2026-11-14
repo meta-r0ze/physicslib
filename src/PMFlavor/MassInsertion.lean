@@ -23,6 +23,9 @@ label `m = b + c`).
   `m + m'`). So the generation with the unsuppressed mass insertion is the one with two
   node-suppressed mixings, and the other two mix with each other in-cycle.
 
+Names used below: `Y_gap` is the inter-wall link of `WallSeesaw`; `M_direct` a term joining the two
+light modes directly; `K_cc` the charged-current transfer network of `TransferGenerator`.
+
 **The data fix which way the insertion acts** (ordering only, no fitted numbers). If the insertion
 enters the mass directly (larger amplitude, heavier), the label-`v` generation is the heaviest and
 weakly mixed: `|V_ub|, |V_cb|` node-suppressed and `|V_us|` in-cycle, as observed
@@ -37,12 +40,16 @@ light masses with `δ²/σ(Y)` (stated there as an input) does not hold for it.
 (`D = diag(δ_m)` in place of `PMAction.WallExchange`'s flavour-blind `δ`) and keep the inter-wall
 link the equal-class crossing (zero diagonal, `InterWallDiagonal`). The zero-energy reduction gives
 `D Y⁻¹ D`; eliminating the heavy generation leaves `D_l (Y_ll)⁻¹ D_l` (block inverse, the Schur
-complement of `Y⁻¹` is the inverse of `Y`'s light block). `Y_ll = [[0, x], [x̄, 0]]`, whose inverse is
-off-diagonal (`light_block_inverse`), so both light masses are `δ_s δ_c/|x|`
-(`light_pair_degenerate`): a degenerate pair at leading order, whatever the moduli, flux or
-insertions. Numerically (outside Lean) the full ratio stays below `1.52` over random parameters;
-every sector's light pair is at least `16.8` apart. So the light masses do not come from inverting
-a link (`δ²Y⁻¹` or `D Y⁻¹ D`). What is left is a term that joins the two chiral zero modes directly
+complement of `Y⁻¹` is the inverse of `Y`'s light block). Three levels, kept apart:
+* exact (Lean): `light_block_inverse` inverts the block `[[0, x], [x̄, 0]]`, and
+  `light_pair_degenerate` shows the two resulting entries have equal modulus;
+* leading order (prose): for a **Hermitian** zero-diagonal `Y_gap`, the light block is that form and
+  both light masses are `δ_s δ_c/|x|`, a degenerate pair;
+* sampled (outside Lean, not a bound): over random Hermitian parameters the full ratio stayed below
+  `1.52`; every sector's light pair is at least `16.8` apart.
+For the directional (non-Hermitian) crossing of `InterWallDiagonal` the light pair is not degenerate
+(sampled ratios up to `10⁶`), so this exclusion holds only in the Hermitian case. There, the light
+masses do not come from inverting the link (`δ²Y⁻¹` or `D Y⁻¹ D`). What is left is a term that joins the two chiral zero modes directly
 (wall 1 `Γ = +1` to wall 2 `Γ = −1`, the slot of `WallSeesaw`'s effective `M`), carrying the label
 class, so the mass matrix is generation-diagonal with entries set by the insertions. This is the
 premise of the transfer reading (`TransferGenerator`). It is what survives, not yet a derivation:

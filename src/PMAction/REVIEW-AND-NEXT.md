@@ -11,23 +11,15 @@
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
-- The phase of a node-crossing hop. `WallHopPhase` shows in-wall spatial hops carry a quarter turn
-  that cancels in every reduced coupling, so the CKM flux (`PMFlavor/REVIEW-AND-NEXT.md`, about
-  `49°`) must come from elsewhere. The node crossings are spinor-class displacements with a
-  time-axis component `±1` (`PMFlavor.ExchangeAxis.spinor_touch`), which is not a spatial `αⱼ`
-  hop. Compute the amplitude of such a displacement on one chirality, in the discrete-time update
-  (the time component is a tick, not a hopping term), and its phase relative to the in-wall legs.
-  Also state the lead model (equal leads per generation) here as a premise, since
-  `PMFlavor.TransferGenerator` uses it.
-- A direct zero-mode mass term. `ZeroModeCoupling`: the direct light-mode coupling is the
-  off-Wilson part of the inter-sector hop, `(r − 1)·βx`, zero at the Wilson point; the equal-class
-  crossing reaches the light modes only through the gapped components. Resolved on the flavour side
-  (`PMFlavor.TickPlacement`): the class dependence of the masses is not a class-dependent `r_m`. With
-  time on axis `0` (the library's premise that carrier vectors and hop directions share the `D₄`
-  coordinates), spinor carriers sit at half ticks, but an insertion's light-mode element does not
-  depend on where in the tick it sits (`placement_invisible`), and the weak refresh has no special
-  tick. The class dependence is the node passage. Open here: (1) the common off-Wilson source,
-  `r ≠ 1` or another term joining the light modes directly; the two-slice wall at `r = 1` has none;
-  (2) whether the equal-class crossing's seesaw leak `δ²/|Y|` is small against it (else
-  generation off-diagonal mass entries return); (3) the lead model (equal leads per generation),
-  used by `PMFlavor.TransferGenerator`, stated here as a premise.
+- Mass terms of the two-wall Hamiltonian. (1) A direct light-mode term: `ZeroModeCoupling` locates
+  it as the off-Wilson part of the inter-sector hop, `(r − 1)·βx`; the wall at `r = 1` has none, and
+  no source of `r ≠ 1` (or another direct term) is identified. (2) The inter-wall link `Y_gap` the
+  E₈ gluing allows is directional (a weighted cyclic shift, `PMFlavor.InterWallDiagonal`); it is
+  Hermitian only under the wall-parity exchange symmetry (`WallExchange`). Decide whether the
+  physical update has that symmetry for the generation-changing crossing: if yes, `Y_gap` cannot
+  carry a charged hierarchy through `WallSeesaw`; if no, `WallSeesaw` gives one Dirac pair per class
+  with mass `δ²/|y_c|`, and the class amplitudes decide the pattern. (3) Bound the seesaw
+  contribution against any direct term (else generation off-diagonal mass entries return).
+- Lead coupling (if pursued): a microscopic derivation of how the generations couple to the leads of
+  the charged-current transfer. The equal-width assumption itself is a flavour-model premise owned
+  by `PMFlavor.TransferGenerator`.

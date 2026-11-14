@@ -44,12 +44,15 @@ generation move is a single-wall shift that keeps chirality (`PMFlavor.Generatio
 conserving `Y` (a Laplacian of the generation–class incidence) carrying the CKM is excluded by the
 quark masses and mixing together (`PMFlavor.ThirdGenerationMixing`, `tools/flavour_link_fits.py`).
 A `Y` with independent diagonal entries is not excluded, but then this formula does not fix them;
-and if `Y` is the equal-class crossing the E₈ gluing allows, its diagonal is zero and it cannot carry
-the hierarchy (`PMFlavor.InterWallDiagonal`). With flavour-dependent on-site insertions and that
-link, the reduction `D Y⁻¹ D` leaves the two light generations degenerate at leading order
-(`PMFlavor.MassInsertion.light_pair_degenerate`), so this formula does not give the charged
-masses. What the flavour sector needs instead is a term joining the two zero modes directly (the
-slot of `M` itself), which this Hamiltonian does not contain.
+and if `Y` is the equal-class crossing the E₈ gluing allows (the flavour sector's `Y_gap`), its
+diagonal is zero. If it is also Hermitian (the exchange symmetry of `WallExchange`), it cannot carry
+a charged hierarchy through this formula (`PMFlavor.InterWallDiagonal`), and with flavour-dependent
+on-site insertions the reduction `D Y⁻¹ D` leaves the two light generations degenerate at leading
+order (`PMFlavor.MassInsertion`); the flavour sector then needs a term joining the two zero modes
+directly, which this Hamiltonian does not contain. The crossing itself is directional (a weighted
+cyclic shift); without the exchange symmetry these exclusions do not apply, and this formula gives one
+Dirac pair per class with mass `δ²/|y_c|`. These are statements about this Hamiltonian; the physical
+reading is the flavour sector's.
 -/
 
 noncomputable section

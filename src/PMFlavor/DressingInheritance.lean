@@ -19,10 +19,14 @@ from what is already in the library.
 * Along the time axis the transport of the maintained reference is the maintenance update itself
   (`PMConstants.VevEvent`). So the time direction is the reference's axis, which is the lepton axis
   (`ReferenceAxis`), and the three colour axes are the three spatial ones. This uses one premise:
-  carrier vectors and lattice hop directions share the `D₄` coordinates.
+  carrier vectors and lattice hop directions share the `D₄` coordinates, i.e. the axes are the same
+  labels. It does not make a change of carrier label a move of site: `refresh_along_own_axis` is a
+  statement about the carrier vector's coordinates, and weak moves no site
+  (`PMConstants.WeakLocality`).
 
 **Which transitions are dressed.**
-* A colour-carrier transition moves along a spatial axis, where a loss is registered into the
+* A colour-carrier transition is labelled by a spatial axis (an outlet label, not a site move), and a
+  loss is registered into the
   spatial outlets (`DressingEvent`): amplitude factor `q`, `q² = 515/516`.
 * A lepton-axis transition (muon decay, `μ → e ν ν̄`) moves along the time axis, where the
   comparison never fires under exact repair (`VevEvent.time_never_fires`): no loss, factor `1`.

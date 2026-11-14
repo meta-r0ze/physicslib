@@ -15,8 +15,11 @@ seesaw limit). The mixing matrix is the overlap of the two sectors' eigenvectors
 * `nonzero_mode_sumzero`: an eigenvector of a real conserving link with nonzero eigenvalue sums to
   zero (the columns sum to zero).
 * `zero_mode_unmixed`: so `(1, 1, 1)` has zero overlap with every nonzero mode of any other real
-  conserving link. Two sectors on real conserving networks share their heaviest state
-  (`WallSeesaw`: zero `σ`), and its row and column of the mixing matrix are `(1, 0, 0)`:
+  conserving link. Two sectors on real conserving networks share their zero mode, which is
+  the heaviest state: `σ = 0` is outside `WallSeesaw`'s `Y⁻¹`, but the exact one-flavour light branch
+  `(√(y² + 4δ²) − y)/2` (`PMAction.WallSeesaw.light_heavy`, `PMAction.WallDispersion`) decreases in `y`
+  and is largest, `δ`, at `y = 0`; naming it the third generation assumes the zero mode is
+  nondegenerate and the generation labels follow the mass order. Its row and column of the mixing matrix are `(1, 0, 0)`:
   `|V_tb| = 1`, `V_ub = V_cb = V_td = V_ts = 0`.
 * Contrast (numerical, outside Lean): a conserving down link against a diagonal up link gives a
   democratic column, all entries `1/√3`, excluded by data.

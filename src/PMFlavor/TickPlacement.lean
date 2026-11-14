@@ -9,9 +9,12 @@ import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 light-mode coupling as the off-Wilson part of the inter-wall hop. This module asks whether the
 discrete-time update makes the classes differ.
 
-**The classes in time.** The library already identifies time with axis `0`, the reference (lepton)
-axis, under the premise that carrier vectors and lattice hop directions share the `D₄` coordinates
-(`DressingInheritance`). In the doubled coordinates of `PMAction.Machine.CarrierEvents` a `D₄`
+**The classes in time (stronger than the library).** The library identifies time with axis `0`,
+the reference (lepton) axis, as a shared axis label (`DressingInheritance`). The counts below read
+carrier vectors as spacetime displacements, which the library does not hold: a carrier label is not a
+site (`PMConstants.WeakLocality`). They are kept as the strongest case; `placement_invisible` and
+`node_denominator_real` do not depend on them, and with the library's weaker premise there is no
+placement in time to vary at all. In the doubled coordinates of `PMAction.Machine.CarrierEvents` a `D₄`
 root one tick forward is `(2, ±2, 0, 0)` up to spatial permutation, an axis move of the walk, so one
 tick is `2` units on axis `0`. Then (`ExchangeAxis`):
 * vector-class carriers: `6` are equal-time axis displacements (`vector_free`), `2` are pure ticks

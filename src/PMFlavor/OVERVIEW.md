@@ -159,15 +159,15 @@ the in-wall kinetic hop.
 
 **The gluing forbids a generation-diagonal crossing.** `InterWallDiagonal`: E₈ pairs equal classes
 across the walls, so the inter-wall term keeps the class, and an equal-class crossing always
-changes the generation (`crossing_changes_generation`). The inter-wall link therefore has zero
-generation diagonal and trace zero; then two of its singular values are within a factor `2`
-(`traceless_close_pair`), and under `WallSeesaw` the two lightest masses are too
-(`seesaw_close_pair`; the exact one-flavour mass keeps the factor). Every charged sector has its
-closest pair more than `16` apart (`no_measured_lepton_traceless` for leptons). So the hierarchy needs
-a generation-diagonal mass that the equal-class crossing cannot give: a composite (crossing plus a
-single-wall carrier shift by the generation label) or a flavour-dependent on-site term. The
-`GenerationWalls` reading "the tag dynamics is `Y`, light masses `δ²/σ(Y)`" is excluded as the
-source of the hierarchy under the gluing premise.
+changes the generation (`crossing_changes_generation`): `Y_gap` has zero generation diagonal. If
+`Y_gap` is Hermitian (wall-parity exchange symmetry, `WallExchange`), its eigenvalues sum to zero, two
+of its singular values are within a factor `2` (`traceless_close_pair`), and under `WallSeesaw` two
+light masses are too (`seesaw_close_pair`); every charged sector has its closest pair more than `16`
+apart (`no_measured_lepton_traceless`). The crossing itself is directional (a weighted cyclic shift,
+whose singular values are the three class amplitudes and can be anything), so without that symmetry
+the argument does not apply; the seesaw then gives one Dirac pair per class with mass `δ²/|y_c|`,
+which with the library's amplitudes (vector in-cycle, spinor through the node) is one light and two
+heavy, the reverse of the data, an exclusion that rests on the amplitude assignment.
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
@@ -178,9 +178,12 @@ the insertion enters the mass directly, that generation is the heavy, weakly mix
 (`|V_ub|, |V_cb| ≪ |V_us|`, as observed). If it enters `Y` and is read through `δ²/σ(Y)`, it is the
 lightest, and `|V_us|` would be node-suppressed while `|V_cb|` is in-cycle, the reverse of the data.
 So the diagonal mass is an in-wall (on-site) chirality flip, or `WallSeesaw`'s `δ²/σ(Y)` does not
-apply to it. The on-site version reduced through the seesaw also fails: `D Y⁻¹ D` with the
-equal-class link leaves the light pair degenerate at leading order (`light_pair_degenerate`; ratio
-below `1.52` numerically). So the light masses do not come from inverting a link. What survives is
+apply to it. For a Hermitian `Y_gap` the on-site version reduced through the seesaw also fails:
+`D Y⁻¹ D` leaves the light pair degenerate at leading order (exact block identities
+`light_block_inverse`, `light_pair_degenerate`; the leading-order reading is prose; a random scan
+stayed below `1.52`, which is a sample, not a bound). For the directional crossing it does not
+(sampled ratios up to `10⁶`). So, for a Hermitian `Y_gap`, the light masses do not come from
+inverting the link. What survives is
 a term joining the two chiral zero modes directly and carrying the label class, which makes the
 mass matrix generation-diagonal: the transfer reading's premise, reached from the mass side. Not
 yet derived: the wall Hamiltonian has no such term, and the equal-class crossing would add
@@ -220,7 +223,9 @@ one price, Closure) is `1 − 2iγ(−K + iγ)⁻¹`, eigenvalue by eigenvalue `
 this generator the PDG CKM gives a flux of `49.1 ± 1.1°` and `K₁₃/K₁₂ = 0.0185 ± 0.0005`;
 `VubSeriesPath`'s `(1/(2α⁻¹ + π))/(π/14) = 0.0161` is `4.7σ` low, so its agreement with `|V_ub|` is
 with the full amplitude (which includes the route through the in-cycle pair), not with the path it
-constructs. Retired as structural; the formula stays as a numerical observation.
+constructs. Retired as structural; the formula stays as a numerical observation. These numbers are
+external fits conditional on two premises, zero-energy scattering on generation leads and equal lead
+widths, neither derived (`TransferGenerator`).
 
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional
@@ -240,14 +245,17 @@ reactor octants, and that the solar octant is exactly `1 < φ < 2`.
 `ReferenceFlavour.column2_difference_conj` shows the persistence balance is blind
 to `sign(sin δ)`, so the CP branch is a separate substrate-orientation input.
 
-**Where the mixing comes from.** `GenerationLabel`: `E₈` roots conserve the generation label, so
-mixing is a single-wall hop of the class two generations share. `ExchangeAxis`: only the pair
+**Where the mixing comes from.** `GenerationLabel`: `E₈` roots conserve the generation label, so a
+generation change needs a single-wall carrier move of the class two generations share (a glue-label
+operation; identifying it with the charged current is open). `ExchangeAxis`: only the pair
 mixing through the reference's class mixes inside the cycle; the other two cross the reference
 node. `ExchangeChirality`: their `s`/`c` split is the charged current's parity violation.
 `NodePassage`, `NodeElimination`: the quark node-crossing mixings are amplitudes `∝ α`, a
 lepton-axis state's mixing a probability `∝ α` (the reactor angle). `KronSeries`: a conserving link
 is a Laplacian, so eliminating the node is Kron reduction and a quark coupling is a series
-admittance; `VubSeriesPath`: `|V_ub| = 1/(2α⁻¹ + π)` is two node legs and a unit boundary in series.
+admittance; `VubSeriesPath`: the path admittance `1/(2α⁻¹ + π)` (two node legs and a unit boundary in
+series) is derived; it matches the measured `|V_ub|`, but as the transfer's generator entry `K₁₃` it
+fails the ratio test (`TransferGenerator`), so the match is not explained by the path.
 Candidates with data tests: `VcbEnvelope` (`|V_cb|` as a refresh-tick envelope over the free cycle),
 `HalfTurnMixing` and `HalfTurnAperture` (the in-cycle mixings as the half-turn refresh shared over
 the type-preserving channels: `s₁₂ = π/14`, `sin²θ₁₂ = π/10`, with `π` a length along boundaries
@@ -275,11 +283,17 @@ to a data fit (the fit itself is data work, outside the axiom-checked tree).
 ## What is *not* derived
 
 `φ = (1+√5)/2` is now derived from pentagon Ptolemy and the explicit 600-cell
-pentagon (`GoldenGeometry`, `SixHundredCell`). The six mixing functional forms are
-still supplied geometric ansätze; `FlavourInvariants` only removes the literal-numeral
-duplication. The `515/516` Cabibbo dressing is derived (`DressingEvent`,
-`DressingInheritance`) under one premise, that carrier vectors and lattice hop directions share the
-`D₄` coordinates. The wall anchor magnitudes `δ, ε` (`BreakingPhase`) and the absolute wall-mass
+pentagon (`GoldenGeometry`, `SixHundredCell`). Status of each mixing observable (the operator it
+refers to in brackets):
+* `s₁₂ = π/14` [`2K₁₂/γ`], `sin²θ₁₂ = π/10`: candidates with listed premises (`HalfTurnAperture`);
+* `|V_ub|`: the path admittance is derived; its identification with `|S₁₃|` is not (`VubSeriesPath`);
+* `|V_cb|`: candidate formula, no schedule basis for its reading (`VcbEnvelope`);
+* `δ_CKM`: supplied (`arctan(σ/χ)`), no mechanism in the library;
+* `sin²θ₁₃ = 3α`: candidate formula with named outlets and readout (`ReactorConductance`);
+* `sin²θ₂₃`: supplied (`PMNSGeometry`), no construction.
+`FlavourInvariants` only removes the literal-numeral duplication. The `515/516` Cabibbo dressing is
+derived (`DressingEvent`, `DressingInheritance`) under one premise, that carrier space and the
+lattice share axis labels (not that a carrier label change is a site move). The wall anchor magnitudes `δ, ε` (`BreakingPhase`) and the absolute wall-mass
 scale are inputs: their directions, forms and ratios are E8 (`MixingMatrix.rootP/rootM_eq_substrate`,
 `WallMassRatio`), but no cost functional fixes the magnitudes, and the scale is an external unit
 like `m_e`. Link

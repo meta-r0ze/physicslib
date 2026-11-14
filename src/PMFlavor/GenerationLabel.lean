@@ -21,8 +21,13 @@ gluing into an even unimodular lattice reduces to this by a triality in one sect
 * `transition_class`: going from generation `m` to `m'` takes the single-wall class `a = m + m'`,
   and for distinct nontrivial `m, m'` this is the third nontrivial class (`third_class`).
 
-So all of the CKM/PMNS mixing comes from single-wall carrier exchange, and each pair of
-generations mixes through its own class: three mixings, three classes. The class amplitudes, and
+Two operators, kept distinct (audit): the **single-wall shift** here acts on the glue labels only,
+`(b, c) ↦ (b + a, c)`, and contains no chirality operator; the **inter-wall crossing** of
+`PMConstants.GenerationWalls` moves a fixed class to the other wall, changing the wall and so the
+chirality. Both change the generation label. Identifying either with the charged current needs a map
+intertwining it with the physical chiral projector, which is open. Within that caveat: generation
+change needs a single-wall carrier move, and each pair of generations changes through its own class:
+three changes, three classes. The class amplitudes, and
 how the reference (which singles out one class) and chirality (which separates the other two)
 break the triality `S₃` among them, are what determine the angles.
 

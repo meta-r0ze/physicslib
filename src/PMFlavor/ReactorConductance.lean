@@ -11,8 +11,11 @@ established readings:
 * `σ − χ = D − 1` are the spatial axes (`PMConstants.VevLedger.noiseDenominator_eq_orthogonal`),
   the axes on which readout events occur (`PMConstants.VevEvent`).
 
-**Construction.** A transfer through the node into any of the `D − 1` spatial-axis channels in
-parallel (admittances add, `PMSubstrate.ProtocolToll`) has probability `(D − 1)/Z_geo`.
+**Construction (candidate formula).** Premises named: the outlets are the `D − 1` spatial-axis
+labels, and the mixing probability is read as a conductance (Landauer). A transfer through the node
+into those channels in parallel (admittances add, `PMSubstrate.ProtocolToll`) then has probability
+`(D − 1)/Z_geo`. The data comparison below tests that formula; it does not by itself select this
+channel model over alternatives (`series_corrections_unresolved`).
 
 **Tests (NuFIT `0.02225 ± 0.00056`).**
 * `channel_count_unique`: among `n/Z_geo` for every natural `n`, only `n = 3` lies within `3σ`;

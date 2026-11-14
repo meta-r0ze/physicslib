@@ -32,6 +32,11 @@ node impedances the data admit several forms equally (`(π + χ)/(Z − 4π)`, `
 `2π/(Z + 5π)` all within `0.2σ`), and the inclusive/exclusive `|V_cb|` tension widens this, so no
 construction can be singled out yet.
 
+**Which number this is.** The theorems here derive a path admittance; `vub_is_path` identifies it
+with the *defined* `CKM.s13`. Whether the measured `|V_ub|` is that admittance depends on the
+reading: in the transfer reading the path is the generator entry `K₁₃`, and the observable is
+`|S₁₃|`, which also receives the route through the in-cycle pair.
+
 **Status after `TransferGenerator`.** In the transfer reading (masses generation-diagonal, the CKM
 the zero-energy transfer through the fluxed network), this path is the
 direct coupling `K₁₃`, and `|V_ub|` also contains the second-order route through the in-cycle pair,
