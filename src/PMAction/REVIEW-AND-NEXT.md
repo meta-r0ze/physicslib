@@ -5,17 +5,14 @@
 The six-step plan is done, and the wire's mass form is derived (OVERVIEW: `GenerationSector`,
 `CarrierFlip`, `ReferenceDetuning`; `PMFlavor.ReferenceWallMass`: `M = D_R (δ_O + cyc κ_O)`). How
 each species uses the wire is protocol work in
-[PMElementaryParticles](../PMElementaryParticles/REVIEW-AND-NEXT.md). Open, wire only:
+[PMElementaryParticles](../PMElementaryParticles/REVIEW-AND-NEXT.md). The node amplitude is
+derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 
-- **Node amplitude.** The amplitude of a spinor-class carrier through the reference node, in units
-  of the vector-class edge. The wire fixes its structure: node passage acts on both walls with one
-  leg weight (`PMFlavor.LeptonAxisRestriction.cycle_root_axis_zero`,
-  `PMConstants.HandoffAdmittance.closure_one_price`), and the repair adds only a sign
-  (`weak_type`), so the two light carriers have equal magnitude. Derive that magnitude from the
-  wire: the leg weight `α` per crossing (`HandoffAdmittance.handoff_is_alpha`) and the node's own
-  conductance (`PMFlavor.KronSeries`: two legs reduce to `α/2`, not the bare `α`), and the vector
-  edge's normalization. The same number sets the `|V_ub|`, `|V_cb|` suppression
-  (`PMConstants.GenerationWeak`).
+- **Size of the other wall's detuning.** `ReferenceDetuning` puts the reference's wall at the
+  Wilson point (`δ_R = 0`), so the seesaw term `δ_F δ_T Y⁻¹` vanishes and the light mass is
+  `D_R (δ_O + cyc κ_O)` with no competing direct term on the reference's wall. The other wall's
+  detuning `δ_O` (in `ZeroModeCoupling`'s terms, its departure from `r = 1`) sets the mass scale and,
+  relative to the carriers, the mixing. Find what fixes it on the substrate.
 
 ## Carrier update
 
@@ -36,11 +33,6 @@ each species uses the wire is protocol work in
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
-- **Size of the other wall's detuning.** `ReferenceDetuning` puts the reference's wall at the
-  Wilson point (`δ_R = 0`), so the seesaw term `δ_F δ_T Y⁻¹` vanishes and the light mass is
-  `D_R (δ_O + cyc κ_O)` with no competing direct term on the reference's wall. The other wall's
-  detuning `δ_O` (in `ZeroModeCoupling`'s terms, its departure from `r = 1`) sets the mass scale and,
-  relative to the carriers, the mixing. Find what fixes it on the substrate.
 - Lead coupling (if pursued): a microscopic derivation of how the generations couple to the leads of
   the charged-current transfer. The equal-width assumption itself is a flavour-model premise owned
   by `PMFlavor.TransferGenerator`.

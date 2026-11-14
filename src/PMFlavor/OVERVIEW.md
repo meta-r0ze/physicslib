@@ -204,6 +204,12 @@ Node passage acts on both walls (`LeptonAxisRestriction.cycle_root_axis_zero` co
 root, which acts on both sectors). With the swap × exchange symmetry the light ratio is
 `κ_R(s)/κ_O(s)`.
 
+**The node amplitude.** `NodeAmplitude`: the vector carrier is an in-cycle event, which passes
+with certainty, so `K = 1` (`HandoffAdmittance.transmission_of_linear`); the spinor carrier crosses
+the node by two legs of admittance `α`, which Kron reduction puts in series (`KronSeries.kron_two`),
+so `k = α/2` (`node_series`, `node_kron`, `node_amplitude_value`: `1/(2Z)`). The mass carrier has no
+lead boundary; the CKM transfer adds the `1/π` boundary (`KronSeries.vub_from_kron`).
+
 **Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the shape of every
 sector's mass matrix and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
 `DoubletReflection`). How each species uses it (the node-carrier scan, the mixing scan, the up-sector

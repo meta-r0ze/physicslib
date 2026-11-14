@@ -114,6 +114,7 @@ import PMFlavor.CompositeMass
 import PMFlavor.LightSplit
 import PMFlavor.ReferenceWallMass
 import PMFlavor.DoubletReflection
+import PMFlavor.NodeAmplitude
 import PMFlavor.TickPlacement
 import PMFlavor.WeakCurrentBridge
 import PMFlavor.FalsifiablePredictions
