@@ -9,15 +9,13 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   `PMConstants.GenerationMass`) and the suppression of `|V_ub|`, `|V_cb|`
   (`PMConstants.GenerationWeak`), so one value must fit both. The two-leg/one-leg rule
   (`PMFlavor.NodeElimination`) does not fit the masses; do not tune it.
-- **Light-pair split.** At the composite's order the two light carriers are equal, and then
-  leptons and up quarks are excluded (`PMFlavor` OVERVIEW, `tools/composite_mass_scan.py`). The weak
-  wall distinguishes the two spinor classes. `PMFlavor.LightSplit`: the split is
-  `(δ_T − δ_F)(κ_F(s) − κ_T(s))`, so it needs two wall asymmetries: a wall-dependent on-site chirality
-  flip (`δ_T ≠ δ_F`; the two-wall Hamiltonian has one `δ`, and `ZeroModeCoupling`'s `r ≠ 1` residual
-  is the same on both walls) and a wall-dependent carrier amplitude. Both must be near maximal for
-  leptons and up quarks (`near_maximal`: within about `1%` of living on one wall) and may vanish for
-  down quarks, so a perturbative source is excluded. Find an `O(1)` source that distinguishes the
-  sectors; the weak current enters at coupling order and is not enough by itself.
+- **Light-pair split.** Reduced to the carriers. `ReferenceDetuning` gives `δ = 0` on the reference's
+  wall (premise: the reference is a stationary zero mode of the same update), so
+  `PMFlavor.ReferenceWallMass` factors `M = D_R (δ_O + cyc κ_O)` and the light ratio is
+  `κ_R(s)/κ_O(s)`, one spinor-class carrier on versus off the reference's wall. Node passage acts on
+  both walls (`PMFlavor.LeptonAxisRestriction`); the difference must come from the repair, whose weak
+  sign exchange acts on the left sector only (`weak_type`). Derive the node-passage cost on each
+  wall; the same numbers fix the node amplitude item above.
 
 ## Carrier update
 

@@ -58,12 +58,10 @@ PMAction.
   (`m_t/m_c` `136`–`271`, scale-dependent; `m_b/m_s ≈ 54`; `m_τ/m_μ = 16.8`); not supported, do not
   tune. The node amplitude must fit these and the `|V_ub|`, `|V_cb|` suppression together
   (`PMAction/REVIEW-AND-NEXT.md`, generation sector). The light-pair split (`207`, about `20`, about
-  `500`) needs the `s`/`c` asymmetry. It is required, not a correction: with equal light carriers
-  the composite is excluded for leptons and up quarks (OVERVIEW; `tools/composite_mass_scan.py`).
-  Two follow-ups: prove the equal-carrier bound in Lean (`s₂² ≥ s₁ s₃` for real positive
-  `δ S + diag(κ_v, ε, ε)`, `ε ≤ κ_v`), and derive the split. `LightSplit`: it is `(δ_T − δ_F)(κ_F(s) − κ_T(s))`, so it needs a
-  wall-dependent on-site flip as well as a wall-dependent carrier (PMAction item); the derived sizes
-  then predict the mass ratios of all three sectors. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
+  `500`) needs the `s`/`c` asymmetry. `ReferenceWallMass` (with `PMAction.ReferenceDetuning`): `M = D_R (δ_O + cyc κ_O)`, so the masses
+  are the reference-wall carriers and the light ratio is `κ_R(s)/κ_O(s)`; the earlier equal-carrier
+  exclusion assumed equal `δ` on both walls and does not apply. Next: scan masses and mixing together
+  for this form; the right factor ties the left rotation (seen by the CKM) to the carriers. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
   which mixes generations at relative size `δ/κ`; once `κ` is derived that mixing is a CKM
   prediction, not a fit. Its premise holds for a Wilson-form carrier (`PMAction.CarrierFlip`), so the
   mass ratios are the carrier amplitude ratios.

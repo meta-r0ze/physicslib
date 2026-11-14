@@ -204,6 +204,16 @@ pair stays degenerate at this order. Size: a light ratio `R` forces `u + x ≤ 2
 `1` (down). So for leptons and up both asymmetries are near maximal; a perturbative source is
 excluded.
 
+**No detuning on the reference's wall.** `PMAction.ReferenceDetuning.stationary_iff`: the reference
+background is a stationary zero mode exactly when its wall's on-site detuning vanishes. That wall is
+the `D₂` slot, so `δ_F = 0`, and `ReferenceWallMass.reference_wall_mass` factors the light mass as
+`M = D_R (δ_O + cyc κ_O)`, `D_R = diag(κ_R/y)`: the hierarchy is the reference-wall carriers of each
+generation's label class, the other factor rotates. The seesaw term `δ_F δ_T Y⁻¹` is gone, so the
+equal-carrier exclusion above (which assumed equal `δ` on both walls) does not apply to this form.
+Node passage acts on both walls (`LeptonAxisRestriction.cycle_root_axis_zero` constrains the event
+root, which acts on both sectors). With the swap × exchange symmetry the light ratio is
+`κ_R(s)/κ_O(s)`.
+
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay

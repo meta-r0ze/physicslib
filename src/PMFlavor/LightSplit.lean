@@ -25,6 +25,20 @@ incidence (`swap_with_exchange`), and only the weak current, on one wall, breaks
   So for leptons and up quarks both asymmetries are near maximal (each `≲ 1%`): the on-site flip and
   the carrier each sit almost entirely on one wall. A perturbative source (a weak-coupling-order
   correction on one wall) is excluded.
+* `one_wall_flip`: with the flip on one wall only (`δ_F = 0`), the light entries are `δ_T κ_F(s)`
+  and `δ_T κ_T(s)`, so the light ratio is one class's carrier off versus on the flip's wall.
+
+**The one `O(1)` wall asymmetry in the library** is the reference background, a stationary zero
+mode on one wall (`PMAction.ChiralityConvention.weak_acts_on_reference`, `physicalBackground`);
+every other wall distinction enters through the weak current at coupling order. Candidate (not
+derived): the on-site flip lives on the reference's wall `R` and node passage (`ExchangeAxis`)
+happens only there. The second half is excluded: `LeptonAxisRestriction.cycle_root_axis_zero`
+constrains the event root, which acts on both sectors (`event_bl_left`, `event_bl_right`), so a
+spinor exchange passes the node on either wall. With the flip on `R` only, `one_wall_flip` makes the
+light ratio `κ_O(s)/κ_R(s)`: both node-suppressed, so it is the ratio of the node-passage costs on
+the two walls. The library's discrete difference there is the repair: the weak sign exchange acts on
+the left sector only (`LeptonAxisRestriction.weak_type`). Whether the flip needs the reference
+background, and what the repair difference does to the node cost, are not derived.
 
 `WallSeesaw` and `CompositeMass` take one `δ` for both walls; with that the light pair stays
 degenerate at this order whatever the carriers do. So the light-pair split needs a source for
@@ -65,9 +79,16 @@ theorem split_needs_both (δT δF kFs kTs kFc kTc : ℂ) (h1 : kFs = kTc) (h2 : 
 
 /-- **A large split forces both asymmetries near maximal.** With `x = δ_F/δ_T`, `u = κ_T(s)/κ_F(s)`
 in `[0, 1]`, the light ratio is `(1 + x u)/(u + x)`; if it is at least `R`, then `u + x ≤ 2/R`. -/
-theorem near_maximal (x u R : ℝ) (hx0 : 0 ≤ x) (hx1 : x ≤ 1) (hu0 : 0 ≤ u) (hu1 : u ≤ 1)
+theorem near_maximal (x u R : ℝ) (_hx0 : 0 ≤ x) (hx1 : x ≤ 1) (hu0 : 0 ≤ u) (hu1 : u ≤ 1)
     (hR : 0 < R) (h : R * (u + x) ≤ 1 + x * u) : u + x ≤ 2 / R := by
   rw [le_div_iff₀ hR]
-  nlinarith [mul_le_one₀ hx1 hu0 hu1]
+  nlinarith [mul_le_mul hx1 hu1 hu0 zero_le_one]
+
+/-- **Flip on one wall only.** With `δ_F = 0` (the flip only on wall `true`) and the swap ×
+exchange symmetry, the two light entries are `δ_T κ_F(s)` and `δ_T κ_T(s)`: their ratio is the
+same class's carrier off versus on the flip's wall. -/
+theorem one_wall_flip (δT kFs kTs kFc kTc : ℂ) (h1 : kFs = kTc) (h2 : kTs = kFc) :
+    δT * kFs + 0 * kTs = δT * kFs ∧ δT * kFc + 0 * kTc = δT * kTs := by
+  subst h1 h2; constructor <;> ring
 
 end PMFlavor.LightSplit

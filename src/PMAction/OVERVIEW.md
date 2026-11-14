@@ -117,6 +117,13 @@ shows closed injective updates cannot finitely prepare a stationary state.
   is the on-site mass operator (`hop_split`, `keep_commutes`, `flip_anticommutes`). So a carrier hop
   of amplitude `t` puts `−r t/2` in the slot of `δβ`: the premise of `PMFlavor.CompositeMass`, for a
   carrier of this Wilson form. At `r = 1` the composite mass ratios are the carrier amplitude ratios.
+- `ReferenceDetuning`: with a separate on-site detuning per wall, `Hw δ₁ δ₂` (`Hw_equal`: equal
+  values give `hamiltonian 0 δ`), the second-wall reference background `(0, 0, a, b)` is sent to
+  `δ₂ (a, b, 0, 0)` (`second_wall_action`), so it is a zero mode exactly when `δ₂ = 0`
+  (`stationary_iff`); the other wall's detuning is free. If the reference persists as a stationary
+  zero mode of the update the flavour fermions see, the on-site chirality flip lives only on the
+  wall without the reference: the maximal wall asymmetry `PMFlavor.LightSplit` needs, from a
+  structural source.
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
   zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct

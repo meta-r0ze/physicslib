@@ -1,4 +1,8 @@
-"""External scan (not a proof): singular values of the composite light mass of
+"""Superseded form: this scan assumes equal on-site detuning on both walls. PMAction.ReferenceDetuning
+puts it to zero on the reference's wall, and PMFlavor.ReferenceWallMass gives M = D_R (d + cyc k_O)
+instead; findings 1 and 4 below do not apply to that form.
+
+External scan (not a proof): singular values of the composite light mass of
 PMFlavor.CompositeMass, up to the overall scale delta/y:
 
     A = d * S + diag(k_v, k_1, k_2),   S the reverse 3-cycle (cycInv with y = 1),
