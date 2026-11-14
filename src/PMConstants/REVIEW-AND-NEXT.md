@@ -6,8 +6,17 @@
   as "spacetime and internal" (one summand each); `PMAction.DomainWall` and the 38 modules built on
   it read the two summands as the two walls, copies of one lattice with opposite chirality
   (`GenerationWalls`, `WallExchange`, the flavour sector). These cannot both hold. Check whether
-  `WeakLocality`'s argument (weak's events are internal, so they move no site) needs the
-  spacetime/internal reading or only `FactorRepair`'s factor structure (one root event acts in one
-  gauge factor); if the latter, reword the docstring. If it needs the former, the conflict with the
-  wall reading is real and has to be settled before either is used further.
+  `WeakLocality`'s argument needs the spacetime/internal reading. Checked: it does not; the proofs
+  take "weak's displacements have no spatial component" as a hypothesis (`hL`), and the docstring
+  is reworded. **Found a real conflict instead:** `CarrierActions.weak` flips all eight vector
+  carriers of the reference's sector, six on colour axes. Two premises disagree about those six.
+  `PMFlavor.DressingInheritance` (and `PMFlavor.TickPlacement`) take carrier vectors to be lattice
+  hop directions; then flipping a colour-axis carrier is a spatial displacement `−2v`. `WeakLocality`
+  takes weak to move no site (`hL`), which the frame ledgers `43`/`129` (`rows_from_locality`) rest
+  on. Both hold only if carrier labels are not hop displacements, which is the negation of the
+  first premise. Settle which is right, or restrict one: e.g. the shared-coordinates premise only
+  for the reference carrier (time axis), which is all `DressingInheritance.refresh_along_own_axis`
+  uses; then check whether `DressingEvent`'s spatial-outlet count (`3`) and `TickPlacement`'s
+  class-in-time counts still follow. Results that depend on this: the `515/516` dressing, the frame
+  ledgers, `TickPlacement`.
 

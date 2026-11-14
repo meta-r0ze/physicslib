@@ -159,6 +159,11 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
          (b/s) and `130`–`270` (t/c, scale-dependent), so no single power of `α` fits all; record
          that rather than choosing.
 
+Premise under review (`PMConstants/REVIEW-AND-NEXT.md`): "carrier vectors are lattice hop
+directions" (`DressingInheritance`) conflicts with `WeakLocality`'s "weak moves no site" for the six
+colour-axis vector carriers. `DressingInheritance`, `DressingEvent` (`515/516`) and `TickPlacement`
+use it; recheck them once it is settled.
+
 Working notes for the next session: there is no Lean toolchain in the device shell, so write
 proofs to be deterministic and ask Kate for `./build.sh fast PMFlavor`. Avoid `simp` on a
 transposed matrix literal or a product of three literals; name the intermediate literal and use
