@@ -113,9 +113,15 @@ to `sign(sin δ)`, so the CP branch is a separate substrate-orientation input.
 mixing is a single-wall hop of the class two generations share. `ExchangeAxis`: only the pair
 mixing through the reference's class mixes inside the cycle; the other two cross the reference
 node. `ExchangeChirality`: their `s`/`c` split is the charged current's parity violation.
-`NodePassage`, `NodeElimination`: the quark node-crossing mixings are two-leg amplitudes `∝ α`,
-a lepton-axis state needs one leg (probability `∝ α`, the reactor angle). `ReactorConductance`,
-`MixingTests`, `CabibboDressing`: which integers the data fix in each supplied form.
+`NodePassage`, `NodeElimination`: the quark node-crossing mixings are amplitudes `∝ α`, a
+lepton-axis state's mixing a probability `∝ α` (the reactor angle). `KronSeries`: a conserving link
+is a Laplacian, so eliminating the node is Kron reduction and a quark coupling is a series
+admittance; `VubSeriesPath`: `|V_ub| = 1/(2α⁻¹ + π)` is two node legs and a unit boundary in series.
+Candidates with data tests: `VcbEnvelope` (`|V_cb|` as a refresh-tick envelope over the free cycle),
+`HalfTurnMixing` and `HalfTurnAperture` (the in-cycle mixings as the half-turn refresh shared over
+the type-preserving channels: `s₁₂ = π/14`, `sin²θ₁₂ = π/10`, with `π` a length along boundaries
+and an aperture through the refresh). `ReactorConductance`, `MixingTests`, `CabibboDressing`: which
+integers the data fix in each supplied form.
 
 **Current chirality tied to Paper II.** `WeakCurrentBridge.spinProjector_eq_PL`: the
 native flavour current's chiral projector is Paper II's `P_L` **within Paper II's
