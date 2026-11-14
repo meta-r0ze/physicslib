@@ -44,8 +44,8 @@ rephased on their distinguished generations, so a phase on the link legs does no
 Data. No CKM entry is near `1/4` (PDG: off-diagonal `|V|² ≤ 0.051`, diagonal `|V|² ≥ 0.947`), so
 picture A is not the quark mixing for any `δ, ε`; the quark mixings are picture B's. For the
 leptons `|U| = 1/2` lies inside the NuFIT 6.0 `3σ` ranges of `|U_μ1|`, `|U_μ2|`, `|U_τ1|`,
-`|U_τ2|` only (arXiv:2410.05380), so picture A survives there as a candidate with a test; the
-resulting `θ₂₃` branches are listed in `REVIEW-AND-NEXT.md` (computed numerically, not in Lean).
+`|U_τ2|` only (arXiv:2410.05380). `LinkHierarchy` then retires it for leptons too: the same link
+fixes the mass ratios, and it cannot give a charged-lepton hierarchy.
 -/
 
 noncomputable section
@@ -122,7 +122,7 @@ theorem Lgc_mul_inv (a b c : ℝ) (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0) :
 theorem half_schur (a b c : ℝ) : Lgg a b c - halfIncidence * Lcg a b c = kronLink a b c := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [Lgg, Lcg, halfIncidence, kronLink, Matrix.mul_apply, Fin.sum_univ_three] <;> ring
+    simp [Lgg, Lcg, halfIncidence, kronLink] <;> ring
 
 /-- **Eliminating the class vertices is the Schur complement, and gives `kronLink`.** -/
 theorem kron_schur (a b c : ℝ) (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0) :

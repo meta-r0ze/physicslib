@@ -102,9 +102,29 @@ change for any `δ ≠ 0` (`diagonal_breaking_not_network`), so Kron-reducing th
 does not give `|V_ub|`. Independently of `δ, ε` the eigenvector picture fixes one mixing entry at
 `|U|² = 1/4` (`protected_overlap_quarter`), also when the link legs carry phases
 (`protected_overlap_phase_blind`). No CKM entry is near `1/4`, so the quark mixings are the
-network's; for the leptons `|U| = 1/2` is inside the NuFIT 6.0 `3σ` ranges of `|U_μ1|`, `|U_μ2|`,
-`|U_τ1|`, `|U_τ2|`, so the eigenvector link remains a lepton-sector candidate (tests in
-`REVIEW-AND-NEXT.md`).
+network's. `LinkHierarchy` closes the lepton side: through `PMAction.WallSeesaw` the same link
+fixes the light-mass ratios, and `(rootP − 3)(rootM − 3) = −2` (`block_product`) forces two of
+its eigenvalues within a factor `4` for every `δ, ε` (`brokenLink_close_pair`,
+`brokenLinkB_close_pair`; the sharp factor is `2 + √3`, numerically). The measured charged leptons
+are pairwise more than `4` apart (smallest ratio `m_τ/m_μ ≈ 16.8`), so neither sector is the
+charged leptons (`no_measured_lepton_link`; the library's `LeptonMasses` agree, but the test does
+not use them). This rests on `WallSeesaw`'s premise that the mass matrix is the same `Y`, and with diagonal charged leptons a single sector's
+protected state puts a zero in the PMNS. So `Y = brokenLink` is retired for leptons as well. The
+only surviving reading takes the eigenvectors of the cardinality link with masses from another
+matrix: a new premise with three free spectral values, whose one content is the `|U| = 1/2` entry.
+Before the retirement, the `1/4` entry with `sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10` gave (numerically)
+`sin²θ₂₃ ∈ {0.4425, 0.4589, 0.5411, 0.5575}` for real legs and `0.5873` (`δ_CP = 208.7°`) with
+phased legs and the `ReferenceFlavour` sum rule; these are recorded as negative results, not
+predictions.
+
+**Where a CP phase can sit.** `LinkFlux`: with complex legs the reduced coupling through a class is
+`−t₁ t̄₂/(g₁ + g₂)`, class phases cancel, and each sector keeps one invariant, the flux of the
+reduced triangle. A wall-side leg phase gives flux `ū⁶` (`flux_cyclic`); exchanging the wall names
+conjugates it (`flux_swapped`); the `μ`–`τ` swap reverses the incidence orientation
+(`swap_reverses_orientation`), so CP violation needs that `Z₂` broken by the wall assignment, and
+its sign is the wall-naming convention. Its size is not fixed. `kronLink_zero_mode`: a real
+conserving network shares `(1, 1, 1)` between sectors, so the heaviest generation mixes only once
+the zero mode is lifted differently in the two sectors.
 
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional

@@ -8,8 +8,8 @@ derived (`VubSeriesPath`, `KronSeries`); the reactor `sin²θ₁₃ = 3α` is co
 Shared frame for all items (`LinkKronComparison`): flavour lives on the generation–class incidence
 graph, three generation vertices and three class vertices, two legs per class. The quark mixings
 are Kron reductions of it (per-class node crossings). The eigenvector link `B Bᵀ` is retired for
-quarks and is a lepton candidate only. Suggested order: the lepton label question (cheapest, it can
-kill or keep the candidate), then the leg phases, then `|V_cb|`, then the aperture. Each
+quarks (`LinkKronComparison`) and leptons (`LinkHierarchy`), so every remaining item is to be solved
+on the network. Suggested order: the leg phases, then `|V_cb|`, then the aperture, then `θ₂₃`. Each
 "Suggested attack" below is a candidate route with its test, not a result.
 
 * **The in-cycle mixings** (`HalfTurnMixing`, `HalfTurnAperture`, candidate): `s₁₂ = π/14` and
@@ -46,6 +46,13 @@ kill or keep the candidate), then the leg phases, then `|V_cb|`, then the apertu
   convention on the spectator side must recover `VubSeriesPath`. If the weak update acts within
   each generation, the drive is the inter-wall link's and refresh placement does not fix `|V_cb|`.
   Suggested attack:
+  * Constraint first (`LinkFlux.shared_zero_mode`): every real conserving reduced link annihilates
+    `(1, 1, 1)`, so two sectors on real legs share their heaviest state and the third generation
+    does not mix at all. `|V_cb|` and `|V_ub|` as eigenvector mixings therefore need the zero mode
+    lifted differently in the two sectors (a flux or a leak). Settle how this squares with
+    `VubSeriesPath`, which reads `|V_ub|` as a coupling, not an eigenvector overlap: either the
+    amplitude-is-admittance premise is a statement about couplings that the eigenvector mixing
+    must reproduce at leading order, or one of the two is wrong. This is the first thing to decide.
   * `|V_ub|` and `|V_cb|` cross different class vertices (`s` and `c`), not one shared node
     (`shared_node_three_legs`). So the factor `≈ 10` is a difference between those two vertices.
     `ExchangeChirality` says which: the weak current couples to one of them. Model that as a third
@@ -70,12 +77,13 @@ kill or keep the candidate), then the leg phases, then `|V_cb|`, then the apertu
   wall overlaps correlated with the readout (`wall_only`); a weak-wall versus spectator-wall
   asymmetry shared by both generations, such as the carrier's axial current ([action
   review](../PMAction/REVIEW-AND-NEXT.md)), does not move `θ₂₃` by itself.
-  Suggested attack: the eigenvector-link item at the end of this file is the only construction that
-  currently outputs a `θ₂₃`. `brokenLinkB ε` is a `μ`–`τ`-asymmetric generation factor of the kind
-  `Theta23Wall` requires, so check that its asymmetry is the `(W_μ − W_τ)/(W_μ + W_τ)` of
-  `Theta23Wall` and not a common wall factor. If that item's label test fails, `θ₂₃` needs the
-  lepton legs of the network instead (one-leg reactor passage plus in-cycle aperture), which so far
-  give no `θ₂₃`.
+  Suggested attack: the eigenvector link no longer supplies a `θ₂₃` (`LinkHierarchy`), so it has to
+  come from the lepton legs of the network: the one-leg reactor passage (`ReactorConductance`) and
+  the in-cycle aperture. On the incidence graph the `μ` and `τ` generations reach the reference
+  through different class vertices (`s` and `c`), so the `μ`–`τ`-asymmetric factor `Theta23Wall`
+  requires can be the same `s`/`c` vertex difference that the `|V_cb|` item finds. Do `|V_cb|`
+  first and carry its `c`-vertex terminal to the lepton side; test against both NuFIT values
+  (`2 sin²θ₂₃ − 1 = +0.122` or `−0.060`).
 * **The CKM phase** (supplied, `δ = arctan(σ/χ) ≈ 68.2°`). It puts the triangle angle `α` at
   `89.5°`; exact `α = π/2` would give `δ = 67.7°` (in the library's convention,
   `cos δ = c₁₂c₂₃s₁₃/(s₁₂s₂₃)`; HFLAV `α = 84.1 (+4.5/−3.8)°`). The right angle is the modulus
@@ -90,68 +98,26 @@ kill or keep the candidate), then the leg phases, then `|V_cb|`, then the apertu
   not decide it: any mixing, any `δ`, is realized by Hermitian positive links
   (`MassMixing.positive_masses_allow_any_mixing`), and the structural constraints fix moduli, not
   the phases of the link entries. Open: a constraint on the phases of the inter-wall link `Y`.
-  Suggested attack:
-  * Phases live on the legs of the incidence graph. Kron reduction of a Hermitian (magnetic)
-    Laplacian keeps every series modulus and passes the leg phases to the reduced couplings, which
-    matches "the constraints fix moduli, not phases". Prove that first: `kron_schur` with complex
-    legs `t₁, t₂`, class self-term `|t₁| + |t₂|`, reduced coupling `−t₁ t̄₂ / (|t₁| + |t₂|)`.
-  * One sector has a single gauge-invariant phase: the flux around the hexagon, which after
-    reduction is `arg(Y₀₁ Y₁₂ Y₂₀)`. A CKM phase needs two sectors with different flux. The
-    library has exactly two balanced incidence conventions, exchanged by swapping the wall names
-    (`PMConstants.GenerationWalls`), and they are cyclic in opposite senses. Candidate: the up and
-    down sectors are the two conventions, and `δ` is their relative flux. Compute that flux from
-    the glue-class structure (the cyclic `side g c = (c = g + 1)` orientation) before looking at
-    data.
-  * Test: feed the reduced couplings with that flux into `CPQuarterTurn.quadrature_pythagoras`.
-    The target is `α = π/2`; the data are HFLAV `α = 84.1 (+4.5/−3.8)°` and `|V_td|`. Do not
-    reuse the closed routes: the flux here comes from the incidence orientation, not from the
-    refresh (which lifts to `±1`) or an imaginary in-cycle coupling. If the two conventions give
-    equal flux, this route is closed too; record it.
-  * `protected_overlap_phase_blind` is the lepton version of the same statement (leg phases leave
-    the protected overlap alone), so one flux computation serves both sectors.
-* **The eigenvector link as a lepton candidate** (`LinkKronComparison`). It is retired for quarks
-  (a fixed `|V|² = 1/4` entry). For leptons the fixed entry is a test. The numbers below are
-  computed numerically outside Lean, with `sin²θ₁₃ = 3α` and the candidate `sin²θ₁₂ = π/10` as
-  inputs.
-  * Real link (no phases, so `δ_CP ∈ {0, π}`): the `1/4` entry gives `sin²θ₂₃ = 0.5575`
-    (`|U_τ1|`, `δ_CP = π`), `0.4425` (`|U_μ1|`, `0`), `0.5411` (`|U_μ2|`, `0`) or `0.4589`
-    (`|U_τ2|`, `π`); the four other sign branches (`0.086`, `0.268`, `0.732`, `0.914`) are outside
-    the NuFIT 6.0 `3σ` range. Each allowed branch is realized by some `(δ, ε)`, e.g. `0.5575` at
-    `(1.944, 6.243)` and `(−3.421, 16.119)`. All four contradict the sum rule `|U_μ2| = |U_τ2|`
-    (`ReferenceFlavour`) and the library's `J ≠ 0`.
-  * Legs with phases (`protected_overlap_phase_blind`) and the sum rule kept: the `1/4` must sit in
-    column 1, giving `sin²θ₂₃ = 0.5873`, `cos δ_CP = −0.877` (`δ_CP = 208.7°` on the `sin δ < 0`
-    branch, `|J| = 0.0159`) for `|U_τ1| = 1/2`, or the mirror `0.4127`, `cos δ_CP = +0.877` for
-    `|U_μ1| = 1/2`. Against NuFIT 6.0 `3σ` (arXiv:2410.05380): the first has `|U_μ3| = 0.758`,
-    `|U_τ3| = 0.635`, inside the ranges without Super-Kamiokande atmospheric data
-    (`0.649–0.764`, `0.628–0.746`) and `0.002` outside with it (`0.652–0.756`, `0.637–0.743`); the
-    mirror is outside both (`|U_μ3| = 0.635`). A realization exists (`δ, ε ≈ 4.57, 3.97` with two
-    leg phases), so this is four parameters meeting four numbers, not a derivation.
-  * Open: which mass labels the two protected states carry (this picks the branch), and what
-    fixes `δ`, `ε` and the leg phases. At the real solution points the link eigenvalue order does
-    not follow the mass order of the labels the angles require (the electron row is the middle
-    eigenvalue at `(1.944, 6.243)`), so a monotone eigenvalue-to-mass map fails there; not yet
-    checked for the phased case.
-  * Open: the network has no `δ, ε`. The lepton-side legs that would replace them (one-leg
-    reactor passage, in-cycle aperture) do not yet give a `θ₂₃`, so the two lepton descriptions
-    are not reconciled.
-  Suggested attack:
-  * Labels first. `PMAction.WallSeesaw` gives light masses `δ²/σᵢ(Y)`, so the eigenvalue order
-    fixes which rows and columns the protected states are. Enumerate the orders for the phased
-    solutions and keep only those matching `e < μ < τ` and a neutrino ordering. If none survives,
-    the eigenvector link is retired for leptons too; record that and delete this item.
-  * Bounds already known by hand (worth one small Lean lemma each): as `δ, ε → 0` the two sectors
-    share the democratic state and the matrix has an entry `1`; as `δ, ε → ∞` it has an entry `0`.
-    Both are excluded by data, so `δ, ε` are of order one in leg units and cannot be small node
-    conductances `∝ α`. A reading of `δ, ε` as one-leg shunts to the reference is therefore closed
-    unless the unit is changed.
-  * The sum rule decides real versus phased. Check whether `ReferenceFlavour`'s `|U_μ2| = |U_τ2|`
-    is derived independently of the link. If it is, the four real branches are dead and the single
-    prediction is `sin²θ₂₃ = 0.5873`, `δ_CP = 208.7°`, to be tested against the next global fit
-    (it is `0.002` outside the with-SK `3σ` range now).
-  * Then remove the freedom: the two leg phases should be the incidence flux of the CKM-phase item,
-    leaving `δ, ε`. Two inputs for `θ₁₂, θ₁₃` is still a fit; it becomes a derivation only if a
-    cost (`RelativeFrameCost`, `TransferWorkLaw`) or Closure fixes them.
+  Done (`LinkFlux`): with complex legs the reduction keeps one invariant per sector, the flux of the
+  reduced triangle. A leg phase set by the leg's wall (`GenerationWalls.side`) gives flux `ū⁶`
+  (`flux_cyclic`); exchanging the wall names conjugates it (`flux_swapped`, `J → −J`); the `μ`–`τ`
+  swap reverses the orientation (`swap_reverses_orientation`), so a `Z₂`-invariant pattern conserves
+  CP. The sign of `δ` is the wall-naming convention, which is the same orientation input
+  `ReferenceFlavour.column2_difference_conj` leaves open, now located.
+  Open: the size. Suggested attack:
+  * Find a substrate source for a wall-dependent leg phase `θ` (flux `6θ`, CP-conserving iff
+    `θ ∈ (π/6)ℤ`). The walls are the two `D₄` copies of opposite chirality and the inter-wall
+    hop is `hop ⊗ Y` (`PMAction.WallExchange`); look for a phase in how a single-wall class hop
+    enters that hop, before considering any angle. Do not reuse the closed routes in
+    `CPQuarterTurn`: a refresh phase lifts to `±1`, and an imaginary in-cycle coupling puts the
+    right angle at `γ`.
+  * Moduli and phase are not independent tests: `J` vanishes for uniform legs in each sector (all
+    moduli equal), so the CP size needs the leg moduli too. Do `|V_cb|` (which fixes how the legs
+    differ between sectors) before testing a `θ`.
+  * Test once both exist: `CPQuarterTurn.quadrature_pythagoras` (target `α = π/2`, HFLAV
+    `84.1 (+4.5/−3.8)°`) and `|V_td| = 0.0086 ± 0.0002`. If no wall-side `θ` gives `α` in range
+    with the derived moduli, the wall-side phase route is closed; record it.
+  * The same flux with the lepton legs is the candidate PMNS phase.
 
 Working notes for the next session: there is no Lean toolchain in the device shell, so write
 proofs to be deterministic and ask Kate for `./build.sh fast PMFlavor`. Avoid `simp` on a

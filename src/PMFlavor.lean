@@ -108,6 +108,8 @@ import PMFlavor.Theta23Wall
 import PMFlavor.TransferAmount
 import PMFlavor.MixingMatrix
 import PMFlavor.LinkKronComparison
+import PMFlavor.LinkHierarchy
+import PMFlavor.LinkFlux
 import PMFlavor.WeakCurrentBridge
 import PMFlavor.FalsifiablePredictions
 import PMFlavor.Downstream
