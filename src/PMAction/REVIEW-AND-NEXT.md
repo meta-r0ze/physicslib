@@ -25,8 +25,17 @@
   components (the `WallSeesaw` route, size `δ²/|Y|`). The flavour sector (`PMFlavor.MassInsertion`)
   needs generation-diagonal masses set by a label-class insertion, so the candidate is a
   class-dependent `r_m − 1`. Open: (1) why a label-class insertion would shift the Wilson
-  parameter (the Wilson term is the doubler-removal term; check whether the label class changes the
-  doubler structure of that generation's carrier); (2) whether `δ²/|Y|` from the equal-class
+  parameter. Closed route: the plane-wave phase. A class-`a` inter-wall hop joins `x` to `x + d`
+  (`d` a minimal vector of class `a`) and carries `Σ_d e^{ip·d}`; at `p = 0` this is the class size
+  `8` for every class, so the class offset reaches only the doublers, not the zero mode's `r − 1`.
+  What is left is the hop's spinor structure: every spinor-class displacement has a time-axis
+  component `±1` (`PMFlavor.ExchangeAxis.spinor_touch`), six of eight vector-class ones have none
+  (`vector_free`), and a time-axis step is a tick of the update, not an `αⱼ` hop. So build the
+  two-slice wall as a discrete-time walk (the `DomainWall` note: not built yet) with class-`a`
+  inter-wall hops whose time component advances the tick, and compute the zero-mode element
+  per class. Test: the vector class must give the larger direct coupling (the heavy, weakly mixed
+  generation, `PMFlavor.MassInsertion`), and the two spinor classes must differ only through which
+  one sits on the weak wall (`PMFlavor.ExchangeChirality`); (2) whether `δ²/|Y|` from the equal-class
   crossing is small against `r_m − 1`, else it puts generation off-diagonal entries back into the
   mass matrix; (3) the discrete-time version (`DomainWall` is the continuous-time Hamiltonian).
 
