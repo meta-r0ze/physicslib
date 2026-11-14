@@ -45,7 +45,7 @@ derived (`VubSeriesPath`, `KronSeries`); the reactor `sin²θ₁₃ = 3α` is co
   imaginary in-cycle coupling (right angle at `γ`, excluded); a spinor quarter turn from the refresh
   (the derived refresh lifts to `±1`); route non-interference (the `u` and `t` routes share
   endpoints, so they interfere); maximal `|J|` with the derived angles fixed (gives `δ = π/2`, right
-  angle at `γ`, excluded). Next: compute the quartet
-  `tr(P_u P_d P_t P_b) = V_ud V_td* V_tb V_ub*` from spectral projectors of the up and down wall mass
-  operators, and ask whether a constraint on the pair forces `Re = 0` with `Im ≠ 0`; one admissible
-  example with `Re ≠ 0` disproves exact quadrature from the current constraints.
+  angle at `γ`, excluded). The current link constraints do
+  not decide it: any mixing, any `δ`, is realized by Hermitian positive links
+  (`MassMixing.positive_masses_allow_any_mixing`), and the structural constraints fix moduli, not
+  the phases of the link entries. Open: a constraint on the phases of the inter-wall link `Y`.

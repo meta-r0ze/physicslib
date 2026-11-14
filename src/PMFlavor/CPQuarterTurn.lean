@@ -24,7 +24,26 @@ flip is excluded by the `D₄` roots). That is a half-turn in two orthogonal pla
 and the same class sits on both sides of the 1–3 crossing. So the refresh gives no relative quarter
 turn, and this route to `α = π/2` is closed.
 
-Open: a source of the quadrature on the substrate, or else `δ` stays supplied.
+**Two further routes, both closed.**
+* Non-interference (`noninterference_iff`): quadrature is exactly the statement that the `u` and `t`
+  routes add their probabilities. But both routes join the same endpoints (`d` and `b`), so
+  distinguishable intermediates (for instance opposite walls) do not stop them interfering; that
+  reading gives no constraint.
+* Maximal CP violation: with the derived magnitudes (`s₁₂`, `s₁₃ = |V_ub|`, `s₂₃` from `|V_cb|`) held
+  fixed, `|J|` is largest at `δ = π/2`, which puts the right angle at `γ` (`γ = 90.0°`); HFLAV's
+  `γ = 66.4°` excludes it. `α = π/2` maximizes `|J|` only if `|V_td|` is held fixed instead, which no
+  construction supplies.
+
+**The current link constraints do not decide it.** `MassMixing.positive_masses_allow_any_mixing`:
+every unitary mixing, any `δ` included, is realized by Hermitian positive-definite links with the
+same positive masses, and the structural constraints derived since (root moves diagonal,
+`GenerationLabel`; which pairs mix in-cycle or through the node, `ExchangeAxis`; the
+amplitude/probability rule, `KronSeries`) fix moduli, not the phases of the link entries. So the
+quartet `Re(V_ud V_td* V_tb V_ub*)` is not forced to zero by anything in the library; a source of
+the right angle has to constrain the phases of the inter-wall link `Y`.
+
+Equivalently, `α = π/2` predicts `|V_td| = 0.00858` from the other magnitudes, against
+`0.0086 ± 0.0002`: a regularity of the data and the draft, without a substrate source yet.
 -/
 
 namespace PMFlavor.CPQuarterTurn
@@ -59,5 +78,14 @@ theorem two_plane_lift_sq {R : Type*} [Ring R] (p q : R) (hp : p * p = -1) (hq :
     _ = p * (p * q) * q := by rw [hpq]
     _ = (p * p) * (q * q) := by noncomm_ring
     _ = 1 := by rw [hp, hq, neg_mul_neg, one_mul]
+
+/-- **Quadrature is non-interference.** Two route amplitudes add their probabilities exactly when
+their interference term vanishes, `Re(a c̄) = 0`: the right angle at `α` says the `u`- and
+`t`-mediated `d → b` routes do not interfere. -/
+theorem noninterference_iff (a c : ℂ) :
+    Complex.normSq (a + c) = Complex.normSq a + Complex.normSq c ↔
+      (a * (starRingEnd ℂ) c).re = 0 := by
+  rw [Complex.normSq_add]
+  constructor <;> intro h <;> linarith
 
 end PMFlavor.CPQuarterTurn
