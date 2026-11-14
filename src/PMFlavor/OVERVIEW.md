@@ -97,22 +97,34 @@ forms themselves are ansätze, not E8 theorems. Upstream
 `PMConstants.FlavourDressing` identifies `515/516` as the reference deficit over the spatial
 outlets `1 − (1−η)/(D − 1)`: the minimal dilation has exactly three outlet channels
 (`DressingChannels`) and a registered loss puts no weight on the time axis (`DressingEvent`); the
-earlier four-axis share `687/688` needs the time comparison to fire. The remaining
-model step is the claim that the CKM first row inherits that deficit. `Wolfenstein` defines
+earlier four-axis share `687/688` needs the time comparison to fire. `DressingInheritance`:
+the reference's refresh moves along its own axis, which is the time (lepton) axis, so only
+charged-current transitions of colour carriers (spatial) are dressed; muon decay and neutral
+currents are not, so the deficit does not cancel against `G_F`. Every CKM row and column then
+loses `1/516`, within `1σ` of all four measured sums (`row_column_tests`); a dressed `Z → q q̄` is
+excluded by `R_ℓ` (`z_pole_undressed`). `Wolfenstein` defines
 λ, A, ρ̄, η̄ on the paper's own matrix and proves `η̄ > ρ̄` (from `σ > 2χ`) and the
 `O(λ³)` truncation structure. `WolfensteinOctant` proves the solar/atmospheric/
 reactor octants, and that the solar octant is exactly `1 < φ < 2`.
 `ReferenceFlavour.column2_difference_conj` shows the persistence balance is blind
 to `sign(sin δ)`, so the CP branch is a separate substrate-orientation input.
 
+**Where the mixing comes from.** `GenerationLabel`: `E₈` roots conserve the generation label, so
+mixing is a single-wall hop of the class two generations share. `ExchangeAxis`: only the pair
+mixing through the reference's class mixes inside the cycle; the other two cross the reference
+node. `ExchangeChirality`: their `s`/`c` split is the charged current's parity violation.
+`NodePassage`, `NodeElimination`: the quark node-crossing mixings are two-leg amplitudes `∝ α`,
+a lepton-axis state needs one leg (probability `∝ α`, the reactor angle). `ReactorConductance`,
+`MixingTests`, `CabibboDressing`: which integers the data fix in each supplied form.
+
 **Current chirality tied to Paper II.** `WeakCurrentBridge.spinProjector_eq_PL`: the
 native flavour current's chiral projector is Paper II's `P_L` **within Paper II's
 chosen four-component representation**. PMAction
 `ChiralityConvention.projector_unique_on_kernel` now forces that projector on the
 zero kernel from the reference conditions, and
-`projector_eq_fromBlocks_PL` matches it to block-diagonal `P_L`. The remaining input
-is attaching the weak gauge representation and extending the projector off the
-kernel. The projector is rank two, so `modelCurrent G = P_L ⊗ G` is inherited within
+`projector_eq_fromBlocks_PL` matches it to block-diagonal `P_L`. Attaching the weak
+representation is derived (`PMConstants.WeakUniform`), and `PMAction.ChiralLightBand` extends the
+projector to the light band through first order in `k`. The projector is rank two, so `modelCurrent G = P_L ⊗ G` is inherited within
 that representation, not chosen separately.
 
 **CP for the next papers.** `Downstream`: `pmJ > 0` (CKM CP violated, positive
