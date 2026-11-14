@@ -100,6 +100,7 @@ import PMFlavor.DressingEvent
 import PMFlavor.DressingInheritance
 import PMFlavor.HalfTurnMixing
 import PMFlavor.VubSeriesPath
+import PMFlavor.VcbEnvelope
 import PMFlavor.TransferAmount
 import PMFlavor.MixingMatrix
 import PMFlavor.WeakCurrentBridge

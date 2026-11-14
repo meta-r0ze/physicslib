@@ -29,12 +29,14 @@ what remains:
   The reactor's `3` is constructed (`ReactorConductance`). Open: `|V_cb| = (π + χ)/(α⁻¹ − Dπ)`. It is not a
   two-leg passive path (`VubSeriesPath.vcb_not_two_leg`: it needs a drive `≈ π + χ` over about one
   node impedance), and several single-impedance forms fit equally (`σ/(Z − 5π)`, `2π/(Z + 5π)`),
-  so it needs a structural reason for the drive before data can test it. Candidate from the node
-  impedance itself: `Z_geo = πΔ + χ + …` is a causal envelope's boundary `πw` (Barbier) plus its
-  `χ` closures (Descartes) at width `w = Δ` (`PMSubstrate.Impedance`, `PMConstants.VevBoundary`).
-  Writing `Z(w) = πw + χ`, the drive `π + χ` is `Z(1)`, a unit-width envelope, and
-  `Z_geo − Dπ ≈ Z(Δ − D)`, so `|V_cb| ≈ Z(1)/Z(Δ − D)`: a divider between two envelopes. Open: why
-  the `c`-side hop drives with a unit envelope and why `D` of the `Δ` widths drop out.
+  so it needs a structural reason for the drive before data can test it. `VcbEnvelope` (candidate):
+  with `env w = πw + χ` (Barbier boundary plus Descartes closures, as in `VevBoundary`), `Z_geo ≈
+  env Δ` and `|V_cb| ≈ env 1 / env (Δ − D)`: one refresh tick's envelope against the cycle's free
+  ticks, since each of the `D` frame rows is refreshed once per cycle (`RequirementRows`). The
+  `c`-side hop is on the weak wall, which that refresh acts on; the `s`-side (`|V_ub|`) is on the
+  spectator wall with a bare drive. Tests: the unit-tick drive is singled out (`1`, `χ`, `π`,
+  `env 2` excluded by `>13σ`); `0` or `1` removed ticks are `>2σ` low. Open: derive that the hop
+  amplitude is this divider.
 * **The size of the parity breaking** that splits `s` from `c` (`ExchangeChirality`): large for
   quarks (`|V_ub|/|V_cb| ≈ 0.09`, mostly a drive ratio, `VubSeriesPath.vcb_not_two_leg`), small for
   leptons (`θ₂₃` near maximal; Paper IV's octant "running" is this breaking and has no Lean
