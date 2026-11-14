@@ -68,7 +68,22 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        kinetic hop (`PMAction.WallHopPhase`: a quarter turn that cancels in `t₁t̄₂`). Left: the
        node-crossing hops (time-axis component, `PMAction/REVIEW-AND-NEXT.md`) or a background
        holonomy around the loop. A wall-side leg phase would give `6θ` (`LinkFlux`), i.e.
-       `θ ≈ 8.2°`; find the substrate source from structure first and compare after. The same flux must also give `J`, which is now an output, not an input: the
+       `θ ≈ 8.2°`; but `LinkFlux`'s legs carry `GenerationWalls`' wall sides, which describe the
+       inter-wall crossing, not the charged-current transfer (a single-wall shift on the weak wall),
+       so that model may not apply to the CKM. Lead: the node crossing itself. The node crossings are
+       spinor carriers (half ticks, `TickPlacement`), and the refresh is the antipodal inversion
+       `v ↦ −v`, whose reconstructed phase on the odd (spinor) sector is `e^{−i·gap(p)·t}`
+       (`PMAction.Machine.OddCarrierPhase.phase_sector`): continuous in the transfer time, a quarter
+       turn only at three quarter-times. `CPQuarterTurn` closed the refresh as a discrete event
+       (`±1`); a time-extended crossing is a different object. If each node crossing carries
+       `e^{iφ}` and the in-cycle coupling is real, the loop flux is `2φ` when both crossings are
+       traversed with the same time orientation and `0` when opposite. Checks, in order: (a) the
+       orientation of the two crossings around the loop (if opposite, close this route); (b) the
+       crossing time in `RootTransferPhase`'s units (the spinor time component is half a tick, but
+       that module's generator is defined on the two-tick transfer); (c) then `φ = gap(p)·t` has one
+       input, the attempt rate `p` (`gap(p) = −2 log(1 − 2p)`, not selected in the library); the CKM
+       flux `49.1 ± 1.1°` then fixes `p`, and `J` and `α` from a refit on the three magnitudes are
+       the independent tests. Do not fix `p` from the flux alone. The same flux must also give `J`, which is now an output, not an input: the
        fit uses `J`, so refit with `|V_us|, |V_cb|, |V_ub|` only and check `J` and `α` as
        predictions of a derived flux.
     2. The couplings: the data give the scale-free `K₂₃/K₁₂ = 0.183` and `K₁₃/K₁₂ = 0.0185`. The
