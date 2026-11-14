@@ -14,13 +14,13 @@ form `(π + χ)/(α⁻¹ − Dπ)` is read with the pieces that already build th
 cycle's envelope plus small terms, `Z_geo = env Δ + …` (`PMSubstrate.Impedance`: capacity `πΔ`, map
 `χ`).
 
-**Reading.** In each clock cycle every frame row is refreshed exactly once
-(`PMConstants.RequirementRows.rows_assigned`: weak the clock row, hypercharge the three spatial
-rows), so `D` of the `Δ` ticks are refresh ticks and `Δ − D` are free. The `c`-side node-crossing
-hop runs on the weak (reference) wall (`ExchangeChirality`) and is carried by one refresh tick, an
-envelope of unit width. Its amplitude is the divider `env 1 / env (Δ − D)`, the refresh tick against
-the free part of the cycle. The `s`-side hop (`|V_ub|`, `VubSeriesPath`) is on the spectator wall,
-which the weak refresh does not act on, and has a bare unit drive.
+**Reading, and what the schedule says about it.** The first reading was that each of the `D`
+frame rows is refreshed once per cycle at its own tick, leaving `Δ − D` free ticks, and that the
+`c`-side hop on the weak wall is carried by one refresh tick against the free part. The library does
+not support the tick count: `RequirementRows.rows_assigned` assigns whole rows to sectors and has no
+clock-slot variable, and `PMConstants.WeakLocality` shows weak's events reach every one of the `43`
+addresses of the clock row, one per tick. So the subtraction of `D` from `Δ` has no schedule basis at
+present; the tests below hold for the formula, not for that reading.
 
 * `matches_paper`: `env 1 / env 39` agrees with `CKM.vcb = (π + χ)/(α⁻¹ − 4π)` to `3·10⁻⁵`, far
   below the error.
