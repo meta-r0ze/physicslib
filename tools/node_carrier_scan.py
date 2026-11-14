@@ -25,6 +25,11 @@ Findings (grid over d of both signs; a sample, not a bound):
    k = 0.00338 or 0.0059 (alpha/2 = 0.00365 is 7% from the first); up k = 8.8e-5 or 3.0e-4
    (12-40x below alpha/2); leptons k = 0.0011-0.0013 or 0.0145-0.0166 (5-80x below sqrt(alpha)).
    Up and leptons need an extra suppression of the light carrier that the library does not supply.
+5. down_rotation: at the down fit point (k = alpha/2, d = 0.0251) the left rotation has no free
+   parameters. The heavy state is the label-v generation (0.990); the rotation angles are about
+   0.16 (light-middle), 0.14 (middle-heavy), 0.024 (light-heavy). The CKM is U_u^T U_d, so this is
+   not the CKM by itself; it shows the wire's mass carries Cabibbo-size mixing, and the up rotation
+   must cancel most of the 0.14 to reach |V_cb| = 0.041.
 """
 import numpy as np
 
@@ -55,8 +60,14 @@ def required_k(seed=0, starts=400):
                     sols.add((round(10 ** r.x[0], 6), round(abs(r.x[1]), 5)))
         print(sec, "required (k, |d|):", sorted(sols))
 
+def down_rotation(d=0.0251):
+    U, s, _ = np.linalg.svd(mass(1.0, ALPHA / 2, ALPHA / 2, d)); o = np.argsort(s)
+    print("down rotation |U| (rows v, s, c; columns light, middle, heavy):")
+    print(np.round(np.abs(U[:, o]), 4))
+
 if __name__ == "__main__":
     required_k()
+    down_rotation()
     D = np.concatenate([-np.logspace(-6, 2, 4000), np.logspace(-6, 2, 4000)])
     for sec, (r1, r2) in DATA.items():
         for name, k in CASES[sec]:

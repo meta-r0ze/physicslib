@@ -9,7 +9,12 @@ Working reading (candidate, with its premises): masses are generation-diagonal a
 zero-energy scattering transfer `S(K_cc)` on generation space, three leads of equal width. The two
 premises, zero-energy scattering on generation leads and equal lead widths, are this folder's own
 model assumptions (`TransferGenerator`); a microscopic lead derivation, if pursued, belongs to
-PMAction.
+PMAction. **Tension with the wire:** the derived light mass `M = D_R (δ_O + cyc κ_O)`
+(`ReferenceWallMass`) is not generation-diagonal; at the down quarks' fit point its left rotation
+has angles near `0.16`, `0.14`, `0.024` (`tools/node_carrier_scan.py`, `down_rotation`). So the
+"masses generation-diagonal" premise of this reading does not hold for the wire's mass, and the two
+CKM readings (transfer `S(K_cc)` versus `U_uᴴ U_d` from the masses) must be reconciled or one
+dropped; see the last mixing item.
 
 * **The in-cycle mixings** (`HalfTurnMixing`, `HalfTurnAperture`, candidate): `s₁₂ = π/14` and
   `sin²θ₁₂ = π/10`. Premises, listed in `HalfTurnAperture`: cross-orbit label-blindness (the
@@ -55,7 +60,11 @@ PMAction.
   masses over the wire"). Flavour-level open: the left rotation of `M` is fixed by the same carriers
   and `δ_O`, so once those are derived (PMAction: node amplitude, the other wall's detuning) the
   rotation predicts the CKM magnitudes with no new parameters. Relate it to the transfer reading
-  above (`S(K_cc)`): either the two agree or one of them is not the CKM.
+  above (`S(K_cc)`): either the two agree or one of them is not the CKM. Down's side is fixed now
+  (`NodeAmplitude`: `k = α/2`; `δ_O` from down's two mass ratios): the heavy state is the label-`v`
+  generation, angles near `0.16` (light–middle), `0.14` (middle–heavy), `0.024` (light–heavy). The
+  CKM needs the up rotation (protocol work); it must cancel most of the `0.14` to give
+  `|V_cb| = 0.041`, a constraint on the up protocol.
 * **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only (no site move);
   open is whether the actual CKM loss realizes that event law and the row-to-outlet identification
   (`PMConstants/REVIEW-AND-NEXT.md`).
