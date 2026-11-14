@@ -23,6 +23,15 @@ solar angle the data favour the linear pentagon cosine `cos(2π/5) = 1/(2φ)` ov
 norm share `1/(1 + φ²)` (`−2.3σ`) and tribimaximal `1/3` (`+2.4σ`) (`MixingTests.solar_candidates`),
 so its construction must give a probability linear in a pentagon cosine.
 
+**Where the mixing comes from (`GenerationLabel`).** Every `E₈` root shifts both walls by the same
+glue class, so it conserves the generation label (the omitted class): root dynamics cannot mix
+generations, and links built from root moves are diagonal. Mixing needs a single-wall carrier
+move, and generations `m`, `m'` mix through the class `m + m'`, a different class for each pair.
+Next: the amplitude of a single-wall carrier exchange per class. The reading in `GenerationLabel`
+(exchange through the reference's class stays in the reference cell, the other two cross the node)
+matches the CKM split, `s₁₂` free of `α` and `|V_cb|`, `s₁₃` of order `α`; the leptons' near-maximal
+`θ₂₃` needs its own account.
+
 ### 2. The `687/688` first-row dressing
 
 `PMConstants.FlavourDressing` identifies `1/688` as the per-direction reference deficit
