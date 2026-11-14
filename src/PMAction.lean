@@ -290,6 +290,7 @@ import PMAction.CompletionSelection
 import PMAction.Machine.ReadoutAdditivity
 
 import PMAction.ChiralityConvention
+import PMAction.ChiralLightBand
 
 import PMAction.LocalIsometricDynamics
 

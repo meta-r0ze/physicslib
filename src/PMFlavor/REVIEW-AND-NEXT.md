@@ -18,7 +18,11 @@ derivation gap of Paper IV.
 kernel. Attaching weak to one wall is derived: the weak refresh is the sign exchange of the whole
 sector that holds the reference (`PMConstants.WeakUniform.refresh_uniform`, uniform from the D₄
 roots and commutation with colour) and acts on that sector only (`CarrierActions.weak_chiral`),
-with the tag read as the wall. Open: extending the projector off the kernel.
+with the tag read as the wall. Off the kernel, the light band's effective Hamiltonian (projected
+on the zero modes) commutes with the wall chirality, and on it `(1 − Γ)/2` is exactly the second
+wall's block (`PMAction.ChiralLightBand.light_conserves_chirality`, `projector_on_light_band`):
+the identification holds through first order in `k`. Open: the `O(k²/gap)` wall mixing through
+the gapped modes, if a constant needs it.
 
 ### 4. Inputs that are not derivable
 

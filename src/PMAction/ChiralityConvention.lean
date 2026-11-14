@@ -37,8 +37,9 @@ and leaves calling it left-handed as an input. Here that label is a convention, 
 So which wall is called left depends on the orientation convention. The parity-related
 description is an equivalent theory with the labels swapped. The physical content is that the
 charged current couples to exactly one wall, which `WallChiralCurrent.selected_iff` derives;
-"left-handed" names that wall. Still inputs: attaching the weak representation, and extending the
-identification away from the zero kernel.
+"left-handed" names that wall. Attaching the weak representation is derived
+(`PMConstants.WeakUniform`, `CarrierActions.weak_chiral`); the identification extends to the light
+band through first order in `k` (`ChiralLightBand`).
 -/
 
 noncomputable section

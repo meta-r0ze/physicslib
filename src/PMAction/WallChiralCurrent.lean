@@ -9,8 +9,8 @@ when restricted to the concrete zero-momentum kernel. It is not the full
 zero-mode projector: its range also contains gapped states. Calling this
 wall physical left chirality is naming (left is the reference's sector). The weak refresh acts
 on that sector only and uniformly on it (`PMConstants.CarrierActions.weak_chiral`,
-`PMConstants.WeakUniform.refresh_uniform`). Extending the identification away from the zero
-kernel remains an input.
+`PMConstants.WeakUniform.refresh_uniform`). Away from the zero kernel the identification holds on
+the light band through first order in `k` (`ChiralLightBand`).
 -/
 noncomputable section
 namespace PMAction.WallChiralCurrent
