@@ -2,49 +2,15 @@
 
 ## Generation sector
 
-- **Generation sector of the update (foundation for `PMFlavor`; work through in order).** The flavour
-  sector's open forks all reduce to what the update does to generations. Steps:
-  1. Moves on the glue labels. Done (`GenerationSector`): `E₈` translations conserve the label, keep
-     a generation state only for `a ∈ {0, label}`, and translation by the label swaps the walls'
-     classes (keeps the label, reverses the orientation: it maps between the two conventions, not
-     within one); generation changes need a
-     single-wall `D₄*` carrier, and from `(b, c)` the change to label `b` is a class-`c` carrier on
-     wall 1, the change to `c` a class-`b` carrier on wall 2.
-  2. Relate the two encodings. Done (`PMConstants.GenerationOrientation`, for every identification of
-     `Fin 3` with the classes): `GenerationWalls`' generation `g` is the pair
-     `(e (g + 1), e (g − 1))` with label `e g`; `side` picks one orientation per label; swapping a
-     whole generation's walls keeps the label and leaves the convention. So `GenerationWalls`' index
-     is the label with the orientation frozen, and its "crossing changes generation" is, in label
-     terms, an orientation reversal. Its single-component crossing changes the two walls' classes by
-     different amounts, which is not a move `GenerationSector` allows; whether it is physical is
-     step 3.
-  3. Chirality and the diagonal mass. Done (`PMConstants.GenerationMass`): within one convention no
-     single allowed move is a generation-diagonal mass; an equal-class crossing plus a single-wall
-     carrier of the generation's own label class is, in either order (second order, through another
-     generation). Reading: the crossing is class-independent (`DomainWall`'s hop), the carrier
-     follows `PMFlavor.ExchangeAxis` (vector mostly in-cycle, spinor through the node), so one heavy
-     generation (label `v`, the weakly mixed one) and two light. Open: the node factor's size, and
-     the light pair's split (degenerate at this order; the weak wall distinguishes the two spinor
-     classes). Not pursued: an update containing both conventions (`no_further_modes` leaves no room).
-  4. Generation changes. Done (`PMConstants.GenerationCurrent`): within one convention no single-wall
-     shift changes the generation; a single-wall carrier (the other wall's class) plus an `E₈` glue
-     move (the intermediate's label) does, `g → g + 1` on wall `true` and `g → g − 1` on wall `false`,
-     a directed 3-cycle per wall. The vector-class carrier edge joins the two non-`v` generations;
-     both edges at the label-`v` generation use spinor carriers (the coarse CKM pattern with
-     `PMFlavor.ExchangeAxis`). `PMConstants.GenerationWeak`: the weak carrier is vector class, so it
-     makes exactly the change between the two light generations (`1 ↔ 2`, the Cabibbo transition);
-     every change at the heavy generation `0` needs a spinor carrier, which weak's events do not
-     supply, so it comes through the reference node: the structural reason `|V_ub|`, `|V_cb|` are
-     suppressed. Which wall is "the reference's" is a convention; only the relative orientation of
-     convention and charged-current wall is physical (`relative_orientation`). Open: the
-     amplitude with which the node supplies a spinor carrier, in the same units as the vector edge.
-  5. Wall-parity symmetry. Done (`PMConstants.GenerationParity`): within one convention the
-     equal-class crossing sits only at `(h + 1, h)` (one direction around the cycle), never at a
-     transposed position, so the link is Hermitian only if zero. The exchange symmetry is broken by
-     the vacuum's convention, as chirality is. `PMFlavor`'s seesaw fork is the directional case; with
-     `DomainWall`'s single hop the three seesaw masses are equal, so the hierarchy is the composite
-     of `GenerationMass`.
-  6. Then hand to `PMFlavor`: the mass matrix and the mixing as whatever steps 1 to 5 give.
+The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector`). Open:
+
+- **Node amplitude.** The amplitude with which the reference node supplies a spinor-class carrier,
+  in the units of the vector-class edge. It sets both the heavy/light mass ratio (the composite of
+  `PMConstants.GenerationMass`) and the suppression of `|V_ub|`, `|V_cb|`
+  (`PMConstants.GenerationWeak`), so one value must fit both. The two-leg/one-leg rule
+  (`PMFlavor.NodeElimination`) does not fit the masses; do not tune it.
+- **Light-pair split.** At the composite's order the two light generations are degenerate. The weak
+  wall distinguishes the two spinor classes; derive the size of that difference.
 
 ## Carrier update
 
@@ -59,12 +25,11 @@
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
 - Mass terms of the two-wall Hamiltonian. (1) A direct light-mode term: `ZeroModeCoupling` locates
   it as the off-Wilson part of the inter-sector hop, `(r − 1)·βx`; the wall at `r = 1` has none, and
-  no source of `r ≠ 1` (or another direct term) is identified. (2) The inter-wall link `Y_gap` the
-  E₈ gluing allows is directional (a weighted cyclic shift, `PMFlavor.InterWallDiagonal`); it is
-  Hermitian only under the wall-parity exchange symmetry (`WallExchange`). Decide whether the
-  physical update has that symmetry for the generation-changing crossing: if yes, `Y_gap` cannot
-  carry a charged hierarchy through `WallSeesaw`; if no, `WallSeesaw` gives one Dirac pair per class
-  with mass `δ²/|y_c|`, and the class amplitudes decide the pattern. (3) Bound the seesaw
+  no source of `r ≠ 1` (or another direct term) is identified. (2) The inter-wall link `Y_gap`: decided, one-directional within a convention
+  (`PMConstants.GenerationParity`), equal seesaw masses (`PMFlavor.CyclicSeesaw`). The hierarchy is
+  the composite of `PMConstants.GenerationMass` (crossing then label-class carrier), a
+  second-order, generation-diagonal term. Show where it enters this Hamiltonian: as the direct term
+  of (1), or as a correction to `δ`. (3) Bound the seesaw
   contribution against any direct term (else generation off-diagonal mass entries return).
 - Lead coupling (if pursued): a microscopic derivation of how the generations couple to the leads of
   the charged-current transfer. The equal-width assumption itself is a flavour-model premise owned

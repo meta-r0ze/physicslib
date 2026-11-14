@@ -50,31 +50,15 @@ PMAction.
   readout (`wall_only`). On the incidence graph `μ` and `τ` reach the reference through different
   class vertices (`s` and `c`); the factor may be the same `s`/`c` vertex difference the `|V_cb|`
   item needs. Test against both NuFIT values.
-* **The masses.** Two cases (`InterWallDiagonal`, `MassInsertion`):
-  * if `Y_gap` is Hermitian (wall-parity exchange symmetry), it cannot carry a charged hierarchy
-    through `WallSeesaw`, and the masses need `M_direct`, a generation-diagonal term carrying the
-    label class (`MassInsertion.bilinear_gap`); `PMAction.ZeroModeCoupling` locates a direct term as
-    the off-Wilson part of the hop, `(r − 1)`, with no source for `r ≠ 1` yet;
-  * if not, the directional crossing gives one Dirac pair per class, mass `δ²/|y_c|`; with the
-    library's amplitudes (vector in-cycle, spinor through the node) that is one light and two heavy,
-    the reverse of the data. That exclusion rests on the amplitude assignment.
-  Decided (`PMConstants.GenerationParity`): within one convention the crossing is one-directional, so
-  the second case holds, with equal seesaw masses for a class-independent crossing. Upstream result
-  (`PMConstants.GenerationMass`): within one convention the generation-diagonal mass is a composite,
-  an equal-class crossing plus a single-wall carrier of the label class; with a class-independent
-  crossing and `ExchangeAxis`' node rule for the carrier it gives one heavy (label `v`) and two light
-  generations, the observed pattern. `PMConstants.GenerationCurrent`: generation changes are a
-  single-wall carrier plus a glue move, a directed 3-cycle per wall; the vector-carrier edge joins
-  the two light generations and the heavy generation's edges use spinor carriers (coarse CKM
-  pattern), and masses and mixings share the carrier amplitudes. `PMConstants.GenerationWeak`: the
-  weak carrier (vector class) makes only the light-pair change (Cabibbo); changes at the heavy
-  generation need a spinor carrier through the reference node, the structural reason `|V_ub|`,
-  `|V_cb|` are suppressed. For the ordering, the
-  label-`v` generation has the only in-cycle insertion and the only two node-crossing mixings
-  (`MassInsertion`), and the data put it heaviest. Sizes: the node-passage rule (`NodeElimination`:
+* **The masses.** Settled upstream (OVERVIEW; `CyclicSeesaw`, `PMConstants.GenerationMass`): the
+  seesaw on the one-directional crossing gives three equal masses, so the hierarchy is the composite
+  diagonal term (crossing plus a carrier of the label class), with one heavy generation (label `v`,
+  the weakly mixed one) and two light. Open: its sizes. The node-passage rule (`NodeElimination`:
   quarks two legs, `≈ α⁻¹`; leptons one leg, `≈ α^{−1/2}`) does not match the heavy/middle ratios
   (`m_t/m_c` `136`–`271`, scale-dependent; `m_b/m_s ≈ 54`; `m_τ/m_μ = 16.8`); not supported, do not
-  tune. The light-pair split (`207`, about `20`, about `500`) needs the `s`/`c` asymmetry.
+  tune. The node amplitude must fit these and the `|V_ub|`, `|V_cb|` suppression together
+  (`PMAction/REVIEW-AND-NEXT.md`, generation sector). The light-pair split (`207`, about `20`, about
+  `500`) needs the `s`/`c` asymmetry.
 * **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only (no site move);
   open is whether the actual CKM loss realizes that event law and the row-to-outlet identification
   (`PMConstants/REVIEW-AND-NEXT.md`).

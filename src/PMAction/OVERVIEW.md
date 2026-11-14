@@ -104,6 +104,14 @@ shows closed injective updates cannot finitely prepare a stationary state.
   (`glue_keeps_iff`); translation by the label swaps the walls' classes (`label_glue_swaps`), keeping the label and
   reversing the orientation (between the two conventions, not within one). Generation changes need a single-wall `D₄*`
   carrier equal to the other wall's class (`shift_keeps_iff`, `shift2_keeps_iff`).
+  Built on it (generation-sector plan, done): `PMConstants.GenerationOrientation` (the two encodings
+  agree; `GenerationWalls`' index is the label with the orientation frozen), `GenerationMass` (the
+  diagonal mass is a composite: equal-class crossing plus a carrier of the label class),
+  `GenerationCurrent` and `GenerationWeak` (generation changes are a carrier plus a glue move; the
+  weak vector carrier makes only the light-pair change), `GenerationParity` (within one convention
+  the crossing link is one-directional, never Hermitian), and `PMFlavor.CyclicSeesaw` (the seesaw on
+  that link: masses `δ²/|y_h|`, equal for a class-independent crossing; `det Y` the product of the
+  amplitudes).
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
   zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct

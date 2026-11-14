@@ -164,10 +164,15 @@ changes the generation (`crossing_changes_generation`): `Y_gap` has zero generat
 of its singular values are within a factor `2` (`traceless_close_pair`), and under `WallSeesaw` two
 light masses are too (`seesaw_close_pair`); every charged sector has its closest pair more than `16`
 apart (`no_measured_lepton_traceless`). The crossing itself is directional (a weighted cyclic shift,
-whose singular values are the three class amplitudes and can be anything), so without that symmetry
-the argument does not apply; the seesaw then gives one Dirac pair per class with mass `δ²/|y_c|`,
-which with the library's amplitudes (vector in-cycle, spinor through the node) is one light and two
-heavy, the reverse of the data, an exclusion that rests on the amplitude assignment.
+whose singular values are the three class amplitudes), so without that symmetry the argument does
+not apply. Within one convention the symmetry is broken (`PMConstants.GenerationParity`). The
+seesaw on that link (`CyclicSeesaw`): `Yᴴ Y` is diagonal (`gram_cyc`), so one Dirac pair per class
+with mass `δ²/|y_h|`, pairing generation `h` on one wall with `h + 1` on the other; the crossing is
+`DomainWall`'s one hop, the same for every class, so the three seesaw masses are equal
+(`gram_equal`). The hierarchy must come from the composite diagonal term
+(`PMConstants.GenerationMass`). `det Y = y₀y₁y₂` (`det_cyc`), real for real amplitudes
+(`light_det_real`), which replaces the Hermitian premise of the strong-CP argument for the seesaw
+part.
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
