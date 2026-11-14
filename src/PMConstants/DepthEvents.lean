@@ -34,8 +34,9 @@ is back in the same state, which includes the clock phase: no external clock can
 (Postulate I). `closed_loop_handoffs`: a loop of `n` ticks with one handoff each returns to its
 phase only if `43 ∣ n`, so it has at least `Δ = 43` handoffs, and the clock cycle attains it.
 
-Remaining premises: the handoff probability is the coupling `α` (reduced in `HandoffAdmittance`
-to transmission being linear in admittance with a unit channel open), and the residual factor
+The handoff probability is the coupling `α`: a node's through weight is its conductance in units of
+one open channel (`HandoffAdmittance.node_current`, `through_eq_conductance`), which is the node
+admittance `1/Z_geo = α` (`handoff_from_conductance`). Remaining premise: the residual factor
 `16 − 2/3 − α` (its `2/3` read as the boundary's colour-axis charge quanta,
 `BoundaryStorage.storage_is_charge_quantum`).
 -/

@@ -19,9 +19,11 @@ channels add (`parallel_current`), and a unit admittance is one open channel
 (`protocol_from_unit_channels`). Landauer's reading of a channel is the same: its dimensionless
 conductance is its transmission probability, `G/G₀ = Σ Tᵢ`.
 
-**Premise (transmission is admittance).** The probability that a layer passes the signal on is a
-linear function of the layer's admittance (parallel channels add their transmissions), normalized
-so that one unit-admittance channel passes it with certainty.
+**Transmission is admittance.** The probability that a layer passes the signal on is a linear
+function of the layer's admittance (parallel channels add their transmissions), normalized so that
+one unit-admittance channel passes it with certainty. At the register level this is derived
+(`node_current`, `through_eq_conductance` below): a node's conductance in units of one open
+channel is its through weight.
 
 * `transmission_of_linear`: any such map is the identity, `T(y) = y`.
 * `handoff_is_alpha`: so a layer of impedance `Z_geo` hands off with probability `1/Z_geo = α`.
@@ -66,7 +68,13 @@ unchanged.
   (`direct_crossing_prob`). This is `DepthEvents`' survival law at the register level: the factor
   per layer is the through weight; the exchanged histories return toward the source.
 
-Open: why the node's pulse has through weight `1/Z_geo` (the pulse angle).
+* `node_current`: with incoming populations `nL`, `nR`, the net current across a node of through
+  weight `w` is `w (nR − nL)`; an open channel (`w = 1`) conducts with unit admittance. So the
+  through weight is the node's conductance in units of one open channel
+  (`through_eq_conductance`): Landauer's relation, derived from the two streams rather than
+  assumed. With the node's admittance `1/Z_geo = α` in those units (how `ProtocolToll` reads
+  channels), the through weight is `α` (`handoff_from_conductance`), which fixes the pulse:
+  `cos² t = α`. The premise "transmission is linear in admittance" above is this computation.
 -/
 
 noncomputable section
@@ -223,8 +231,7 @@ theorem full_displacement_iff : ∀ (bs : List Bool) (d : ℤ), (d = 1 ∨ d = -
       · intro h; exfalso; push_cast at h; rcases hd with rfl | rfl <;> omega
       · intro h; exact absurd (h false (by simp)) (by decide)
     · have ih := full_displacement_iff bs d hd
-      simp only [disp, ↓reduceIte, List.length_cons, List.mem_cons, forall_eq_or_imp,
-        eq_self_iff_true, true_and]
+      simp only [disp, ↓reduceIte, List.length_cons, List.mem_cons, forall_eq_or_imp, true_and]
       push_cast
       rw [← ih]
       constructor <;> intro h <;> linarith
@@ -243,5 +250,39 @@ theorem direct_crossing_prob (w : ℝ) (n : ℕ) :
     ((List.replicate n true).map fun b => if b then w else 1 - w).prod =
       DepthEvents.crossProb w n := by
   simp [DepthEvents.required_handoffs]
+
+/-! ## The through weight is the node's conductance (Landauer, derived) -/
+
+/-- The left-moving flux leaving a node on its left side when the two incoming streams carry
+populations `nL` (from the left) and `nR` (from the right): the right stream's passed part and the
+left stream's exchanged (returned) part. -/
+def leftOutflow (w nL nR : ℝ) : ℝ := w * nR + (1 - w) * nL
+
+/-- **The node current.** The net current across the node is the through weight times the
+population difference: `w (nR − nL)`. -/
+theorem node_current (w nL nR : ℝ) : leftOutflow w nL nR - nL = w * (nR - nL) := by
+  unfold leftOutflow; ring
+
+/-- An open channel (`w = 1`) has unit conductance. -/
+theorem open_channel_unit (nL nR : ℝ) : leftOutflow 1 nL nR - nL = 1 * (nR - nL) :=
+  node_current 1 nL nR
+
+/-- **The conductance is the through weight.** If the node conducts with admittance `y` in units
+of one open channel, its through weight is `y`. -/
+theorem through_eq_conductance {w y : ℝ}
+    (h : ∀ nL nR, leftOutflow w nL nR - nL = y * (nR - nL)) : w = y := by
+  have := h 0 1
+  rw [node_current] at this
+  simpa using this
+
+/-- **The handoff weight is `α`.** A node of admittance `1/Z_geo = α` (in units of one open
+channel, `PMSubstrate.ProtocolToll`) has through weight `α`, so `n` layers pass `α ^ n`
+(`direct_crossing`, `direct_crossing_prob`). -/
+theorem handoff_from_conductance {w : ℝ}
+    (h : ∀ nL nR, leftOutflow w nL nR - nL = PMSubstrate.causalCoupling * (nR - nL)) (n : ℕ) :
+    w = PMSubstrate.causalCoupling ∧
+      DepthEvents.crossProb w n = PMSubstrate.causalCoupling ^ n := by
+  have hw := through_eq_conductance h
+  exact ⟨hw, by rw [hw, DepthEvents.required_handoffs]⟩
 
 end PMConstants.HandoffAdmittance
