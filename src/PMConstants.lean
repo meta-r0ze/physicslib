@@ -194,6 +194,8 @@ import PMConstants.GenerationWalls
 import PMConstants.GenerationOrientation
 import PMConstants.GenerationMass
 import PMConstants.GenerationCurrent
+import PMConstants.GenerationWeak
+import PMConstants.GenerationParity
 import PMConstants.GenerationVacuumChoice
 import PMConstants.CarrierPhaseComparison
 import PMConstants.CarrierRegisterModel

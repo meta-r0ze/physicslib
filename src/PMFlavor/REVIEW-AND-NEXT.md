@@ -58,14 +58,18 @@ PMAction.
   * if not, the directional crossing gives one Dirac pair per class, mass `δ²/|y_c|`; with the
     library's amplitudes (vector in-cycle, spinor through the node) that is one light and two heavy,
     the reverse of the data. That exclusion rests on the amplitude assignment.
-  Decide which case holds (PMAction item on the wall-parity symmetry). Upstream result
+  Decided (`PMConstants.GenerationParity`): within one convention the crossing is one-directional, so
+  the second case holds, with equal seesaw masses for a class-independent crossing. Upstream result
   (`PMConstants.GenerationMass`): within one convention the generation-diagonal mass is a composite,
   an equal-class crossing plus a single-wall carrier of the label class; with a class-independent
   crossing and `ExchangeAxis`' node rule for the carrier it gives one heavy (label `v`) and two light
   generations, the observed pattern. `PMConstants.GenerationCurrent`: generation changes are a
   single-wall carrier plus a glue move, a directed 3-cycle per wall; the vector-carrier edge joins
   the two light generations and the heavy generation's edges use spinor carriers (coarse CKM
-  pattern), and masses and mixings share the carrier amplitudes. For the ordering, the
+  pattern), and masses and mixings share the carrier amplitudes. `PMConstants.GenerationWeak`: the
+  weak carrier (vector class) makes only the light-pair change (Cabibbo); changes at the heavy
+  generation need a spinor carrier through the reference node, the structural reason `|V_ub|`,
+  `|V_cb|` are suppressed. For the ordering, the
   label-`v` generation has the only in-cycle insertion and the only two node-crossing mixings
   (`MassInsertion`), and the data put it heaviest. Sizes: the node-passage rule (`NodeElimination`:
   quarks two legs, `≈ α⁻¹`; leptons one leg, `≈ α^{−1/2}`) does not match the heavy/middle ratios

@@ -31,11 +31,19 @@
      move (the intermediate's label) does, `g → g + 1` on wall `true` and `g → g − 1` on wall `false`,
      a directed 3-cycle per wall. The vector-class carrier edge joins the two non-`v` generations;
      both edges at the label-`v` generation use spinor carriers (the coarse CKM pattern with
-     `PMFlavor.ExchangeAxis`). Open here: tie this to the charged-current operator itself (weak is
-     the sign exchange on the reference's sector and keeps every class, `CarrierActions.weak`): show
-     the carrier event accompanies it, and which wall (`true` or `false`) is the reference's.
-  5. Symmetries: the wall-parity exchange (`WallExchange`) on the generation-changing part. This
-     settles whether the inter-wall link is Hermitian (the seesaw fork in `PMFlavor`).
+     `PMFlavor.ExchangeAxis`). `PMConstants.GenerationWeak`: the weak carrier is vector class, so it
+     makes exactly the change between the two light generations (`1 ↔ 2`, the Cabibbo transition);
+     every change at the heavy generation `0` needs a spinor carrier, which weak's events do not
+     supply, so it comes through the reference node: the structural reason `|V_ub|`, `|V_cb|` are
+     suppressed. Which wall is "the reference's" is a convention; only the relative orientation of
+     convention and charged-current wall is physical (`relative_orientation`). Open: the
+     amplitude with which the node supplies a spinor carrier, in the same units as the vector edge.
+  5. Wall-parity symmetry. Done (`PMConstants.GenerationParity`): within one convention the
+     equal-class crossing sits only at `(h + 1, h)` (one direction around the cycle), never at a
+     transposed position, so the link is Hermitian only if zero. The exchange symmetry is broken by
+     the vacuum's convention, as chirality is. `PMFlavor`'s seesaw fork is the directional case; with
+     `DomainWall`'s single hop the three seesaw masses are equal, so the hierarchy is the composite
+     of `GenerationMass`.
   6. Then hand to `PMFlavor`: the mass matrix and the mixing as whatever steps 1 to 5 give.
 
 ## Carrier update
