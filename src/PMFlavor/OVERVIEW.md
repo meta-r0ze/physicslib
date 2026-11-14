@@ -205,7 +205,10 @@ transfer (`d ↔ u` only) does not allow. So the flat network fails, a flux is s
 constructions, and the library has no source for it yet; the cyclic wall orientation is the only
 CP-odd candidate. The six-vertex form models a different object: the charged current is
 generation-universal with isospin a separate factor (`FlavourCurrent`), so the transfer is the
-three-lead network of `TransferGenerator`, with one loop.
+three-lead network of `TransferGenerator`, with one loop. Searched for a source on that loop: none
+in the library (no `Z₃` phase anywhere; `CommonResponse` compares with the untransported reference,
+so every readout prefers offset `0`). The library therefore has no mechanism for the CKM phase;
+the supplied `δ = arctan(σ/χ)` stands without one.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a

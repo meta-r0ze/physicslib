@@ -102,7 +102,21 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        it, and the six-lead networks model a different object; candidate closed. The source
        question stands for the single loop: the cyclic wall orientation, or a `Z₃` twist from the
        cyclic generation order (a competition between offsets `0` and `2π/3` has its minimum strictly
-       between them; any competition among offsets `0` and `π` only has minima at `0` or `π`). The same flux must also give `J`, which is now an output, not an input: the
+       between them; any competition among offsets `0` and `π` only has minima at `0` or `π`).
+       **Status: the library has no source for the CKM phase.** Searched: no `Z₃` phase exists in
+       PMSubstrate, PMConstants, PMAction or PMFlavor; the loop readout (`PMAction.CommonResponse`,
+       flag `(1 − Re⟨φ, Uφ⟩)/2`) compares the transported amplitude with its own untransported
+       reference, so every readout's preferred offset is `0`, and an offset other than `0` would
+       need the reference to return rotated after one generation loop, which nothing in the
+       library does (the loop returns each generation to itself with the same native label, and
+       `GenerationWalls.side` is a labelling, not a phase). Closed sources: in-wall kinetic hops
+       (`PMAction.WallHopPhase`), class- or generation-only leg phases (`LinkFlux`), the node's
+       own odd-sector phase (`TickPlacement`), two sector loops (one loop on generation space).
+       The supplied `δ = arctan(σ/χ)` (`FlavourInvariants`) has no mechanism behind it. What would
+       supply one: a loop readout whose reference is rotated by the generation cycle, i.e. a
+       generation-space holonomy that persistence cannot remove. Look for it in the refresh
+       schedule over the `43` clock addresses (does one full clock cycle permute the generations
+       or rotate their reference phases?) before anything else. The same flux must also give `J`, which is now an output, not an input: the
        fit uses `J`, so refit with `|V_us|, |V_cb|, |V_ub|` only and check `J` and `α` as
        predictions of a derived flux.
     2. The couplings: the data give the scale-free `K₂₃/K₁₂ = 0.183` and `K₁₃/K₁₂ = 0.0185`. The
