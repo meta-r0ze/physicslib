@@ -59,5 +59,8 @@ what remains:
   modulus condition, `|V_cd V_cb|² = |V_ud V_ub|² + |V_td V_tb|²` (unitarity triangle with
   hypotenuse `V_cd V_cb*`), so it may follow from the network without a phase input. The simplest
   phase mechanism (the in-cycle coupling a rotation generator `i π/N`, node couplings real) puts the
-  right angle at `γ` instead, which the data exclude. Open: a reason for the Pythagorean relation.
-
+  right angle at `γ` instead, which the data exclude. `CPQuarterTurn` tests the spinor route: a
+  single-plane half-turn relating up and down would lift to a quarter turn (`plane_lift_sq`) and give
+  `α = π/2` (`quadrature_pythagoras`), but the substrate's weak refresh is the full sign exchange
+  (`WeakUniform.refresh_uniform`), which lifts to `±1` (`two_plane_lift_sq`). So that route is closed.
+  Open: a source of the quadrature on the substrate; until then `δ` is supplied.
