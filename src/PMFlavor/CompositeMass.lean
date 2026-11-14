@@ -25,8 +25,9 @@ So the composite is a correction to `δ`, not a separate direct term: item (2) o
 terms". The diagonal mass is linear in `κ`, so the generation with the largest carrier amplitude is
 the heaviest. That agrees with the direction `MassInsertion` says the data choose.
 
-**Premise (candidate).** The single-wall carrier acts as a chirality flip on its wall, in the slot of
-`δβ`. A carrier that keeps chirality acts on the zero modes and does not give a mass this way.
+**Premise.** The single-wall carrier acts as a chirality flip on its wall, in the slot of `δβ`.
+`PMAction.CarrierFlip`: for an in-wall Wilson hop this is its Wilson part, `−(r/2)β`; its kinetic part
+keeps chirality and gives no mass. What stays assumed is that the class carrier has the Wilson form.
 
 **Test.** `M` is not generation-diagonal. With `|κ| ≫ |δ|` the masses are near `δ|κ_g|/|y|`, and the
 cyclic `δ²/y` term mixes the generations at relative size `δ/κ`. If the carrier amplitudes are

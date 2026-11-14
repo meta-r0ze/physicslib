@@ -30,8 +30,8 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   the composite of `PMConstants.GenerationMass` (crossing then label-class carrier), a
   second-order, generation-diagonal term. It enters as a correction to `δ`
   (`PMFlavor.CompositeMass`: `M = D₂ Y⁻¹ D₁ᴴ`, and a carrier with the crossing's support turns `Y⁻¹`
-  diagonal), under the candidate premise that the single-wall carrier is a chirality flip in the
-  slot of `δβ`. Open: derive or refute that premise from the carrier's action on `Γ`. (3) Bound the seesaw
+  diagonal). The carrier's chirality-flip part is the Wilson part of the hop, `−(r/2)β`, the
+  on-site mass operator (`CarrierFlip`), provided the class carrier is an in-wall Wilson hop. (3) Bound the seesaw
   contribution against any direct term (else generation off-diagonal mass entries return).
 - Lead coupling (if pursued): a microscopic derivation of how the generations couple to the leads of
   the charged-current transfer. The equal-width assumption itself is a flavour-model premise owned

@@ -180,7 +180,8 @@ part.
 (`cyc_mul_cycInv`, `cycInv_mul_cyc`). So with `D = δ + carrier`,
 `M = δ² Y⁻¹ + δ · diag(κ/y) + δ · diag(κ'/y) + (second order, cyclic)` (`composite_expansion`): the
 composite is a correction to `δ`, linear in the carrier amplitude, so the largest carrier amplitude
-is the heaviest generation. Premise (candidate): the carrier is a chirality flip on its wall.
+is the heaviest generation. The carrier is a chirality flip on its wall through the Wilson part of its
+hop (`PMAction.CarrierFlip`, `κ = −r t/2`), given that the class carrier is an in-wall Wilson hop.
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the

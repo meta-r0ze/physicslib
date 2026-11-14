@@ -112,6 +112,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
   the crossing link is one-directional, never Hermitian), and `PMFlavor.CyclicSeesaw` (the seesaw on
   that link: masses `δ²/|y_h|`, equal for a class-independent crossing; `det Y` the product of the
   amplitudes).
+- `CarrierFlip`: an in-wall hop `−(i αⱼ + r β)/2` is a kinetic part `−(i/2) αⱼ`, which commutes
+  with `Γ` (keeps chirality, no mass), plus a Wilson part `−(r/2) β`, which anticommutes with `Γ` and
+  is the on-site mass operator (`hop_split`, `keep_commutes`, `flip_anticommutes`). So a carrier hop
+  of amplitude `t` puts `−r t/2` in the slot of `δβ`: the premise of `PMFlavor.CompositeMass`, for a
+  carrier of this Wilson form. At `r = 1` the composite mass ratios are the carrier amplitude ratios.
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
   zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct
