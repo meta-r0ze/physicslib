@@ -50,24 +50,12 @@ PMAction.
   readout (`wall_only`). On the incidence graph `μ` and `τ` reach the reference through different
   class vertices (`s` and `c`); the factor may be the same `s`/`c` vertex difference the `|V_cb|`
   item needs. Test against both NuFIT values.
-* **The masses.** Settled upstream (OVERVIEW; `CyclicSeesaw`, `PMConstants.GenerationMass`): the
-  seesaw on the one-directional crossing gives three equal masses, so the hierarchy is the composite
-  diagonal term (crossing plus a carrier of the label class), with one heavy generation (label `v`,
-  the weakly mixed one) and two light. Open: its sizes. The node-passage rule (`NodeElimination`:
-  quarks two legs, `≈ α⁻¹`; leptons one leg, `≈ α^{−1/2}`) does not match the heavy/middle ratios
-  (`m_t/m_c` `136`–`271`, scale-dependent; `m_b/m_s ≈ 54`; `m_τ/m_μ = 16.8`); not supported, do not
-  tune. The node amplitude must fit these and the `|V_ub|`, `|V_cb|` suppression together
-  (`PMAction/REVIEW-AND-NEXT.md`, generation sector). The light-pair split (`207`, about `20`, about
-  `500`) needs the `s`/`c` asymmetry. `ReferenceWallMass` (with `PMAction.ReferenceDetuning`): `M = D_R (δ_O + cyc κ_O)`, so the masses
-  are the reference-wall carriers and the light ratio is `κ_R(s)/κ_O(s)`; the earlier equal-carrier
-  exclusion assumed equal `δ` on both walls and does not apply. Masses and mixing together
-  (`tools/reference_wall_mixing_scan.py`): carriers shared by up and down are disfavoured (misses up
-  to `2.8×`); per-sector carriers fit within `30%` with 6 parameters for 7 numbers, no test. What
-  makes it a test: derive the carriers (PMAction node-passage cost per wall), or derive why up and
-  down carriers differ. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
-  which mixes generations at relative size `δ/κ`; once `κ` is derived that mixing is a CKM
-  prediction, not a fit. Its premise holds for a Wilson-form carrier (`PMAction.CarrierFlip`), so the
-  mass ratios are the carrier amplitude ratios.
+* **Mixing from the wire's mass form.** The masses' form is settled (OVERVIEW: `ReferenceWallMass`,
+  `M = D_R (δ_O + cyc κ_O)`); the species sizes are protocol work (PMElementaryParticles, "Species
+  masses over the wire"). Flavour-level open: the left rotation of `M` is fixed by the same carriers
+  and `δ_O`, so once those are derived (PMAction: node amplitude, the other wall's detuning) the
+  rotation predicts the CKM magnitudes with no new parameters. Relate it to the transfer reading
+  above (`S(K_cc)`): either the two agree or one of them is not the CKM.
 * **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only (no site move);
   open is whether the actual CKM loss realizes that event law and the row-to-outlet identification
   (`PMConstants/REVIEW-AND-NEXT.md`).

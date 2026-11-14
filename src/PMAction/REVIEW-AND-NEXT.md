@@ -2,38 +2,20 @@
 
 ## Generation sector
 
-The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector`). Open:
+The six-step plan is done, and the wire's mass form is derived (OVERVIEW: `GenerationSector`,
+`CarrierFlip`, `ReferenceDetuning`; `PMFlavor.ReferenceWallMass`: `M = D_R (δ_O + cyc κ_O)`). How
+each species uses the wire is protocol work in
+[PMElementaryParticles](../PMElementaryParticles/REVIEW-AND-NEXT.md). Open, wire only:
 
-- **Node amplitude.** The amplitude with which the reference node supplies a spinor-class carrier,
-  in the units of the vector-class edge. It sets both the heavy/light mass ratio (the composite of
-  `PMConstants.GenerationMass`) and the suppression of `|V_ub|`, `|V_cb|`
-  (`PMConstants.GenerationWeak`), so one value must fit both. The two-leg/one-leg rule
-  (`PMFlavor.NodeElimination`) does not fit the masses; do not tune it.
-- **Light-pair split.** Reduced to the carriers. `ReferenceDetuning` gives `δ = 0` on the reference's
-  wall (premise: the reference is a stationary zero mode of the same update), so
-  `PMFlavor.ReferenceWallMass` factors `M = D_R (δ_O + cyc κ_O)` and the light ratio is
-  `κ_R(s)/κ_O(s)`, one spinor-class carrier on versus off the reference's wall. Node passage acts on
-  both walls (`PMFlavor.LeptonAxisRestriction`); the difference must come from the repair, whose weak
-  sign exchange acts on the left sector only (`weak_type`). Node passage has one leg weight on
-  both walls and the repair adds only a sign, so `|κ_R(s)| = |κ_O(s)|`; with that the node rule
-  passes for down quarks (`9%`) and fails for up and leptons (`tools/node_carrier_scan.py`, PMFlavor
-  OVERVIEW). Open: what makes up-type and lepton light carriers differ from the equal-magnitude node
-  rule while down's do not (a sector difference in the node passage, more legs, or a carrier that
-  is not a single Wilson hop). Required sizes (`tools/node_carrier_scan.py`, `required_k`): up
-  `12`–`40×` below the quark rule, leptons `5`–`80×` below `√α`. Derive the suppression; do not
-  match these numbers to constants. Tried and failed: the up-type conjugate link
-  (`PMConstants.SectorExchange.one_doublet_phase_cancels`: up uses `v̄`), read as the transposed
-  cycle in `d + C_O`, gives heavy/middle near `10⁴` for up (data `277`) at the node-rule `k`; it does
-  not explain the up sector. The doublet sign as geometry is excluded
-  (`PMFlavor.DoubletReflection`). Charge-weighted node legs are
-  excluded too (wrong direction for up, and they break `closure_one_price`). So, by the no-go in the
-  PMFlavor OVERVIEW, one of four premises fails for up-type quarks: one crossing price, the `D₄`
-  geometry with the reference axis, the `s ↔ c` swap, or the reference-wall factorization. Tested: moving the detuning-free
-  wall for up (a reading of `SectorExchange`'s `v̄`) gives the same curve, by the swap × exchange
-  symmetry. Left: a failure of one crossing price, or an `O(1)` breaking of the `s ↔ c` swap, for
-  up-type quarks only; neither has a source in the library yet. This is a real gap, not a tuning
-  problem: record any new premise narrowly and test it on up and leptons together. Leptons are separate: their states sit on the
-  reference axis, so their leg geometry differs from the quarks'; derive their leg count.
+- **Node amplitude.** The amplitude of a spinor-class carrier through the reference node, in units
+  of the vector-class edge. The wire fixes its structure: node passage acts on both walls with one
+  leg weight (`PMFlavor.LeptonAxisRestriction.cycle_root_axis_zero`,
+  `PMConstants.HandoffAdmittance.closure_one_price`), and the repair adds only a sign
+  (`weak_type`), so the two light carriers have equal magnitude. Derive that magnitude from the
+  wire: the leg weight `α` per crossing (`HandoffAdmittance.handoff_is_alpha`) and the node's own
+  conductance (`PMFlavor.KronSeries`: two legs reduce to `α/2`, not the bare `α`), and the vector
+  edge's normalization. The same number sets the `|V_ub|`, `|V_cb|` suppression
+  (`PMConstants.GenerationWeak`).
 
 ## Carrier update
 
@@ -54,16 +36,11 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
-- Mass terms of the two-wall Hamiltonian. (1) A direct light-mode term: `ZeroModeCoupling` locates
-  it as the off-Wilson part of the inter-sector hop, `(r − 1)·βx`; the wall at `r = 1` has none, and
-  no source of `r ≠ 1` (or another direct term) is identified. (2) The inter-wall link `Y_gap`: decided, one-directional within a convention
-  (`PMConstants.GenerationParity`), equal seesaw masses (`PMFlavor.CyclicSeesaw`). The hierarchy is
-  the composite of `PMConstants.GenerationMass` (crossing then label-class carrier), a
-  second-order, generation-diagonal term. It enters as a correction to `δ`
-  (`PMFlavor.CompositeMass`: `M = D₂ Y⁻¹ D₁ᴴ`, and a carrier with the crossing's support turns `Y⁻¹`
-  diagonal). The carrier's chirality-flip part is the Wilson part of the hop, `−(r/2)β`, the
-  on-site mass operator (`CarrierFlip`), provided the class carrier is an in-wall Wilson hop. (3) Bound the seesaw
-  contribution against any direct term (else generation off-diagonal mass entries return).
+- **Size of the other wall's detuning.** `ReferenceDetuning` puts the reference's wall at the
+  Wilson point (`δ_R = 0`), so the seesaw term `δ_F δ_T Y⁻¹` vanishes and the light mass is
+  `D_R (δ_O + cyc κ_O)` with no competing direct term on the reference's wall. The other wall's
+  detuning `δ_O` (in `ZeroModeCoupling`'s terms, its departure from `r = 1`) sets the mass scale and,
+  relative to the carriers, the mixing. Find what fixes it on the substrate.
 - Lead coupling (if pursued): a microscopic derivation of how the generations couple to the leads of
   the charged-current transfer. The equal-width assumption itself is a flavour-model premise owned
   by `PMFlavor.TransferGenerator`.

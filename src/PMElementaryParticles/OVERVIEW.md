@@ -110,6 +110,45 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `NeutrinoContext` | Contextual neutrino masses excluded by oscillation data (`weak_minus_rest_excluded`, `no_moderate_gap_ratio`) |
 | `TauLifetime` | `τ_τ = τ_μ (m_μ/m_τ)⁵ B_e` (`rate_ratio`, `tau_lifetime_tree`); measured pull in `tools/e8p/E8PConstants/PMElementaryParticles/TauLifetimePulls.lean` |
 
+## Species masses over the wire
+
+The wire is `PMFlavor`/`PMAction`'s generation sector: with no detuning on the reference's wall
+(`PMAction.ReferenceDetuning`) every charged sector's light mass is
+`M = D_R (δ_O + cyc κ_O)` (`PMFlavor.ReferenceWallMass`): one heavy generation (vector-class carrier,
+in-cycle), two light ones (spinor-class carriers through the reference node), and the other wall's
+detuning `δ_O`. The wire is blind to the species it carries: one crossing price
+(`PMConstants.HandoffAdmittance.closure_one_price`), and the `D₄` geometry with the reference's axis
+cannot tell up from down (`PMFlavor.DoubletReflection`). So the wire fixes the form; how each
+species (protocol) uses it is recorded here. All results below are external scans, samples, not
+bounds.
+
+**Carriers from the node rule** (`tools/node_carrier_scan.py`). Node passage acts on both walls with
+one leg weight, and the weak repair is a sign on the left sector (`PMFlavor.LeptonAxisRestriction.weak_type`),
+so the two light carriers have equal magnitude `k`, set by `PMFlavor.NodeElimination` (quarks `α/2`
+via `KronSeries`, leptons `√α`), with the vector carrier `K = 1`. One free parameter, `d`, for two
+mass ratios per sector. Down quarks: within `9%` on both ratios (`(47.8, 18.9)` against `(52, 19)` at
+`M_Z`): a candidate pass. Up quarks and charged leptons: the curve misses by about `6×` and `3×` on
+heavy/middle. Solving for the light carrier each sector needs (`required_k`, two branches): down
+`0.0034` or `0.0059` (`α/2 = 0.0036` is `7%` from the first); up `8.8 × 10⁻⁵` or `3.0 × 10⁻⁴`,
+`12`–`40×` below `α/2`; leptons `0.0011`–`0.0013` or `0.015`–`0.017`, `5`–`80×` below `√α`.
+
+**The wire alone cannot separate up from down.** Under one crossing price, the `D₄` geometry with
+the reference's axis, the `s ↔ c` swap and the reference-wall form, up and down quarks lie on one
+curve; down does (`9%`), up does not (`6×`). This is what a protocol-blind wire should give: the
+split belongs to the protocols. Readings tested and excluded as wire-level sources: the conjugate
+link (`PMConstants.SectorExchange`: up uses `v̄`) as a transposed cycle (heavy/middle near `10⁴`);
+moving the detuning-free wall (same singular values, by the swap × exchange symmetry);
+charge-weighted node legs (`Q²` or `Y²` make the up light carrier larger, the data need it smaller,
+and they break the one-price premise).
+
+**Masses and mixing together** (`tools/reference_wall_mixing_scan.py`). Carriers shared by up and
+down (only `d` differs): 4 parameters for 4 mass ratios and 3 CKM magnitudes; misses by up to `2.8×`
+(`|V_ub|`): disfavoured. Carriers per sector: 6 parameters, everything within about `30%`:
+consistent, but nearly a fit.
+
+**Superseded.** `tools/composite_mass_scan.py` assumed equal detuning on both walls; its exclusion of
+equal light carriers for leptons and up does not apply to the reference-wall form.
+
 ## External states
 
 `ExternalStates.persistent_on_shell`: a persisting state (Paper IV

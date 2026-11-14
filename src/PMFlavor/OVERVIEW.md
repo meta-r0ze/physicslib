@@ -183,16 +183,6 @@ composite is a correction to `δ`, linear in the carrier amplitude, so the large
 is the heaviest generation. The carrier is a chirality flip on its wall through the Wilson part of its
 hop (`PMAction.CarrierFlip`, `κ = −r t/2`), given that the class carrier is an in-wall Wilson hop.
 
-**The composite with equal light carriers is excluded for leptons and up quarks** (external scan,
-`tools/composite_mass_scan.py`; a sample, not a bound). Up to scale the light mass is
-`δ S + diag(κ_v, κ₁, κ₂)`. With real amplitudes (no phase source), `|κ_light| ≤ κ_v` and the two light
-carriers equal (the composite's order: both spinor-class through the node), the samples never give
-middle/light above heavy/middle; the maximum is the geometric limit `(κ_v, δ, δ²/κ_v)`. Leptons
-(`16.8`, `207`) and up quarks at `M_Z` (`277`, `488`) need it above; down (`54`, `20`) does not. So
-the light-pair split (`κ₁ ≠ κ₂`) is required, not a correction. With it every sector is reachable
-(three parameters, two ratios), so there is no test until `κ₁/κ₂` is derived. Signed amplitudes reach
-large ratios only by cancelling `det = κ_v κ₁ κ₂ + δ³`.
-
 **The light split needs two wall asymmetries.** `LightSplit`: with on-site flips `δ_F`, `δ_T` and
 carriers on both walls, generation `g`'s composite entry is `δ_T κ_F(e g) + δ_F κ_T(e g)` (one term
 per order of `GenerationMass`; `composite_expansion2`). If the carriers keep the class-swap ×
@@ -214,42 +204,11 @@ Node passage acts on both walls (`LeptonAxisRestriction.cycle_root_axis_zero` co
 root, which acts on both sectors). With the swap × exchange symmetry the light ratio is
 `κ_R(s)/κ_O(s)`.
 
-**Masses and mixing together** (external fit, `tools/reference_wall_mixing_scan.py`; a sample, not
-a bound). Each sector is `diag(K, k_s, k_c)(d + C)` with the other wall's carriers fixed by the
-symmetry. Carriers shared by up and down quarks (only `d` differs): 4 parameters for 4 mass ratios
-and 3 CKM magnitudes; the best fit misses by factors up to `2.8` (`|V_ub|`): disfavoured. Carriers
-per sector: 6 parameters, everything within about `30%`: consistent, but nearly a fit. A test needs
-the carriers derived.
-
-**Carriers from the node rule** (external scan, `tools/node_carrier_scan.py`). Node passage acts on
-both walls with one leg weight (`HandoffAdmittance.closure_one_price`), and the weak repair is a
-sign on the left sector (`LeptonAxisRestriction.weak_type`), so the two light carriers have equal
-magnitude `k`, set by `NodeElimination` (quarks `α/2` via `KronSeries`, leptons `√α`), with the
-vector carrier `K = 1`. One free parameter, `d`, for two mass ratios per sector. Down quarks: within
-`9%` on both ratios (`(47.8, 18.9)` against `(52, 19)` at `M_Z`): a candidate pass. Up quarks and
-charged leptons: the curve misses by about `6×` and `3×` on heavy/middle. So the equal-magnitude
-node carriers are excluded for up and leptons in this form. Solving for the light carrier each
-sector needs (`required_k`, two branches): down `0.0034` or `0.0059` (the two-leg Kron value `α/2 =
-0.0036` is `7%` from the first); up `8.8 × 10⁻⁵` or `3.0 × 10⁻⁴`, `12`–`40×` below `α/2`; leptons
-`0.0011`–`0.0013` or `0.015`–`0.017`, `5`–`80×` below `√α`. Up and leptons need an extra suppression
-of the light carrier that the library does not supply. `DoubletReflection`: reflecting a colour axis
-fixes the reference's axis, reverses the doublet sign (up ↔ down) and exchanges spinor and cospinor
-(the `s ↔ c` swap the mass formula already treats as a symmetry), so the `D₄` geometry with the
-reference cannot tell up from down; the difference needs a charge (the right-sector hypercharge) or
-a breaking of the swap.
-
-**No-go for the up sector.** Under four premises the up and down quarks have the same mass formula
-up to the free `d`: one crossing price (`PMConstants.HandoffAdmittance.closure_one_price`), the
-`D₄` geometry with the reference's axis (`DoubletReflection`), the `s ↔ c` swap, and the
-reference-wall factorization (`ReferenceWallMass`). Both must then lie on one curve; down does
-(`9%`), up does not (`6×`). So at least one premise fails for up-type quarks. Two readings tested
-and excluded: the conjugate link (`SectorExchange`: up uses `v̄`) as a transposed cycle, and
-charge-weighted node legs (`Q²` or `Y²` make the up light carrier larger, the data need it smaller,
-and they break the one-price premise). Moving the detuning-free wall (`δ_T = 0` instead of
-`δ_F = 0`, a reading of the conjugate vacuum value) gives the same singular values: the swap ×
-exchange symmetry maps one form to the other (checked numerically for all three sectors). So within
-the library the up/down split needs a failure of one crossing price or of the `s ↔ c` swap beyond
-the weak current's perturbative breaking.
+**Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the shape of every
+sector's mass matrix and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
+`DoubletReflection`). How each species uses it (the node-carrier scan, the mixing scan, the up-sector
+no-go) is recorded in [PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md), "Species masses
+over the wire".
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the

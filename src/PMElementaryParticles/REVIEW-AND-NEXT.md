@@ -22,6 +22,16 @@ the measure, not only of degree-≤2 moments.
 
 ## Elementary interactions and protocols
 
+- **Species masses over the wire.** The wire gives every charged sector `M = D_R (δ_O + cyc κ_O)`
+  and treats species alike (OVERVIEW, "Species masses over the wire"). Down quarks fit the node rule
+  (`9%`, one free `d`); up quarks and charged leptons need light carriers `12`–`40×` and `5`–`80×`
+  smaller. Derive from the protocols what each species occupies and how it routes over the wire:
+  channel count (colour carriers three-fold, lepton-axis one-fold, `PMConstants.CarrierRepresentation`),
+  series versus parallel routes (`PMSubstrate.ProtocolToll`: parallel admittances add, so a smaller
+  carrier points to routes in series), node handoffs per round trip, and the leptons' on-axis
+  geometry. Relate to the existing tier ledgers (`TierLedger.tiersFor`: up `{0, 2, 3}`, down and
+  lepton `{0, 1, 2}`; `QuarkMasses`, `LeptonMasses`). Do not match the required factors to
+  constants; derive them and test on up quarks and leptons together.
 - Connect the charged-current operator to the contact vertex in `AmplitudeTrace`. Identify the external carrier states, physical mode weights, and readout normalization.
 - Supply the physical tick calibration for `DecayLaw`. Identify the low-energy radiative contribution for elementary widths.
 - Derive the allowed routing histories and rates, their resource costs, and the subset of tiers assigned to each protocol. The lepton and quark ledgers still need a cost or selection rule for the assignment of invariants to tiers.
