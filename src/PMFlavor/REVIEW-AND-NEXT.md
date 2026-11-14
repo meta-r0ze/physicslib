@@ -15,7 +15,10 @@ derivation gap of Paper IV.
 ### 3. The V−A projector off the kernel
 
 `PMAction.ChiralityConvention.projector_unique_on_kernel` forces the projector on the zero
-kernel; attaching the weak gauge representation and extending it off the kernel are inputs.
+kernel. Attaching weak to one wall is derived: the weak refresh is the sign exchange of the whole
+sector that holds the reference (`PMConstants.WeakUniform.refresh_uniform`, uniform from the D₄
+roots and commutation with colour) and acts on that sector only (`CarrierActions.weak_chiral`),
+with the tag read as the wall. Open: extending the projector off the kernel.
 
 ### 4. Inputs that are not derivable
 
