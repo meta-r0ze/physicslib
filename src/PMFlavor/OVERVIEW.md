@@ -140,8 +140,12 @@ to a data fit (the fit itself is data work, outside the axiom-checked tree).
 `φ = (1+√5)/2` is now derived from pentagon Ptolemy and the explicit 600-cell
 pentagon (`GoldenGeometry`, `SixHundredCell`). The six mixing functional forms are
 still supplied geometric ansätze; `FlavourInvariants` only removes the literal-numeral
-duplication. The `515/516` Cabibbo dressing's divisor is derived
-(`DressingEvent`); that the first row inherits the deficit is not. The numerical breaking weights `δ, ε` are dynamical, not fixed. Link
+duplication. The `515/516` Cabibbo dressing is derived (`DressingEvent`,
+`DressingInheritance`) under one premise, that carrier vectors and lattice hop directions share the
+`D₄` coordinates. The wall anchor magnitudes `δ, ε` (`BreakingPhase`) and the absolute wall-mass
+scale are inputs: their directions, forms and ratios are E8 (`MixingMatrix.rootP/rootM_eq_substrate`,
+`WallMassRatio`), but no cost functional fixes the magnitudes, and the scale is an external unit
+like `m_e`. Link
 eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
 energies. The V−A projector is forced on the zero kernel by reference persistence
 (PM-2 `ChiralityConvention.projector_unique_on_kernel`); attaching it to the weak representation
