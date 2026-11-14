@@ -18,7 +18,10 @@ What the data fix within each form's natural family (`MixingTests`, `ReactorCond
 Constructed so far: the PMNS reactor angle as the node's conductance into the `D − 1` spatial-axis
 channels (`ReactorConductance`, Landauer derived in `PMConstants.HandoffAdmittance`). Open: E8
 constructions for the other fixed integers (the `14` of the Cabibbo amplitude, the `χ` of `|V_ub|`,
-the `2φ` of the solar angle); the unfixed forms cannot be tested until the data sharpen.
+the `2φ` of the solar angle); the unfixed forms cannot be tested until the data sharpen. For the
+solar angle the data favour the linear pentagon cosine `cos(2π/5) = 1/(2φ)` over the `E8 → H₄`
+norm share `1/(1 + φ²)` (`−2.3σ`) and tribimaximal `1/3` (`+2.4σ`) (`MixingTests.solar_candidates`),
+so its construction must give a probability linear in a pentagon cosine.
 
 ### 2. The `687/688` first-row dressing
 

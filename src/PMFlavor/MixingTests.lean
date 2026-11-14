@@ -1,4 +1,5 @@
 import PMFlavor.CKM
+import PMFlavor.FlavourPostulates
 
 /-!
 # Which mixing forms the data constrain
@@ -80,5 +81,38 @@ theorem vub_count_unique (m : ℕ) (hm : 0 < m) :
     rw [abs_lt]; constructor
     · rw [lt_div_iff₀ (by norm_num)]; linarith
     · rw [div_lt_iff₀ (by norm_num)]; linarith
+
+/-! ## The solar angle: a linear pentagon cosine, not the `H₄` norm share
+
+NuFIT `sin²θ₁₂ = 0.304 ± 0.012`. Under `E8 → H₄` the roots project to two 600-cells with radii
+in ratio `φ`, so the natural norm share of one half is `1/(1 + φ²)`. -/
+
+open PMFlavor.FlavourPulls in
+/-- `1/(2φ) = cos(2π/5)` (half the pentagon edge at unit diagonal) fits within `0.5σ`; the
+`H₄` norm share `1/(1 + φ²)` and the tribimaximal `1/3` are both more than `2σ` away, and
+`sin²(π/5)`-sized `0.3455` and `1/φ²` are excluded. -/
+theorem solar_candidates :
+    |(1 / (2 * φ) - 0.304) / 0.012| < 0.5 ∧
+      2 < |(1 / (1 + φ ^ 2) - 0.304) / 0.012| ∧
+      2 < |((1 : ℝ) / 3 - 0.304) / 0.012| ∧
+      3 < |(1 / φ ^ 2 - 0.304) / 0.012| := by
+  have h := sqrt5_b
+  have hφ1 : (1.6180339 : ℝ) < φ := by unfold φ; linarith [h.1]
+  have hφ2 : φ < (1.6180341 : ℝ) := by unfold φ; linarith [h.2]
+  have hp : 0 < φ := by linarith
+  have a1 : 1 / (2 * φ) < 0.30902 := by rw [div_lt_iff₀ (by linarith)]; nlinarith
+  have a2 : 0.30901 < 1 / (2 * φ) := by rw [lt_div_iff₀ (by linarith)]; nlinarith
+  have b1 : 1 / (1 + φ ^ 2) < 0.2765 := by rw [div_lt_iff₀ (by positivity)]; nlinarith
+  have c1 : 0.3819 < 1 / φ ^ 2 := by rw [lt_div_iff₀ (by positivity)]; nlinarith
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [abs_lt]; constructor
+    · rw [lt_div_iff₀ (by norm_num)]; linarith
+    · rw [div_lt_iff₀ (by norm_num)]; linarith
+  · have x : (1 / (1 + φ ^ 2) - 0.304) / 0.012 < -2 := by
+      rw [div_lt_iff₀ (by norm_num)]; linarith
+    exact lt_abs.2 (Or.inr (by linarith))
+  · rw [abs_of_pos (by norm_num)]; norm_num
+  · rw [abs_of_pos (by rw [lt_div_iff₀ (by norm_num)]; linarith)]
+    rw [lt_div_iff₀ (by norm_num)]; linarith
 
 end PMFlavor.MixingTests
