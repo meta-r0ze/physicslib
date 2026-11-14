@@ -40,7 +40,9 @@ namespace PMFlavor.ExchangeChirality
 open PMConstants.GenerationWalls
 
 theorem hop_class : ∀ g g' : Fin 3, g ≠ g' →
-    ∃! c : Fin 3, c ≠ g ∧ c ≠ g' := by decide
+    ∃! c : Fin 3, c ≠ g ∧ c ≠ g' := by
+  simp only [ExistsUnique]
+  decide
 
 theorem free_generation_split : ∀ v : Fin 3, side v (v + 1) = true ∧ side v (v - 1) = false := by
   decide

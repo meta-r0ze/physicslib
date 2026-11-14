@@ -35,9 +35,14 @@ of `α`; `|V_cb|`, `s₁₃` of order `α`). `ExchangeChirality` places
 the `s`/`c` split: in the reference-free generation the two spinor classes sit on opposite walls,
 and the class swap is a symmetry of the wall incidence only together with the wall exchange, the
 parity that flips chirality. So `|V_ub| ≠ |V_cb|` is the charged current's parity violation, in
-leptons as well (consistent with `GenerationBreaking.pmns_no_shared_state`). Open: the node passage
-costing exactly `α`, the in-cycle amplitude through `v` (the `14` of `s₁₂`), and the size of the
-parity breaking in each sector (large for quarks, `|V_ub|/|V_cb| ≈ 0.09`; small for leptons,
+leptons as well (consistent with `GenerationBreaking.pmns_no_shared_state`). The price of a node
+passage is the derived through weight `α` (`PMConstants.HandoffAdmittance`), but `NodePassage` shows
+the quark node-crossing mixings cannot be passage probabilities with whole channels (`|V_cb|²`,
+`|V_ub|² < α`, and `|V_ub|² < α²`): they enter as link amplitudes linear in `α`, while for the
+reactor angle the data allow both the conductance `3α` and an amplitude `20α` or `21α`. Open: why
+quarks mix at amplitude level and the reactor angle (if its construction holds) at probability
+level, the in-cycle amplitude through `v` (the `14` of `s₁₂`), and the size of the parity breaking
+in each sector (large for quarks, `|V_ub|/|V_cb| ≈ 0.09`; small for leptons,
 `θ₂₃` near maximal).
 
 ### 2. The `687/688` first-row dressing
