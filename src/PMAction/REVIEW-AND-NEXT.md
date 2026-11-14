@@ -11,7 +11,11 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   (`PMFlavor.NodeElimination`) does not fit the masses; do not tune it.
 - **Light-pair split.** At the composite's order the two light carriers are equal, and then
   leptons and up quarks are excluded (`PMFlavor` OVERVIEW, `tools/composite_mass_scan.py`). The weak
-  wall distinguishes the two spinor classes; derive the ratio of their carrier amplitudes.
+  wall distinguishes the two spinor classes. `PMFlavor.LightSplit`: the split is
+  `(δ_T − δ_F)(κ_F(s) − κ_T(s))`, so it needs two wall asymmetries: a wall-dependent on-site chirality
+  flip (`δ_T ≠ δ_F`; the two-wall Hamiltonian has one `δ`, and `ZeroModeCoupling`'s `r ≠ 1` residual
+  is the same on both walls) and a wall-dependent carrier amplitude. Find a source for each; the weak
+  current is the candidate for both.
 
 ## Carrier update
 

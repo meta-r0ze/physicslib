@@ -193,6 +193,14 @@ the light-pair split (`κ₁ ≠ κ₂`) is required, not a correction. With it 
 (three parameters, two ratios), so there is no test until `κ₁/κ₂` is derived. Signed amplitudes reach
 large ratios only by cancelling `det = κ_v κ₁ κ₂ + δ³`.
 
+**The light split needs two wall asymmetries.** `LightSplit`: with on-site flips `δ_F`, `δ_T` and
+carriers on both walls, generation `g`'s composite entry is `δ_T κ_F(e g) + δ_F κ_T(e g)` (one term
+per order of `GenerationMass`; `composite_expansion2`). If the carriers keep the class-swap ×
+wall-exchange symmetry of `ExchangeChirality`, the light pair's difference is
+`(δ_T − δ_F)(κ_F(s) − κ_T(s))` (`light_split`), zero unless both the on-site flip and the carrier
+differ between the walls (`split_needs_both`). With one `δ` for both walls, as in `WallSeesaw`, the
+pair stays degenerate at this order.
+
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay

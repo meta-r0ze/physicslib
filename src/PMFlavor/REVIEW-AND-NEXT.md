@@ -61,8 +61,9 @@ PMAction.
   `500`) needs the `s`/`c` asymmetry. It is required, not a correction: with equal light carriers
   the composite is excluded for leptons and up quarks (OVERVIEW; `tools/composite_mass_scan.py`).
   Two follow-ups: prove the equal-carrier bound in Lean (`s₂² ≥ s₁ s₃` for real positive
-  `δ S + diag(κ_v, ε, ε)`, `ε ≤ κ_v`), and derive `κ₁/κ₂` from the weak wall's distinction of the two
-  spinor classes; that ratio then predicts the mass ratios of all three sectors. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
+  `δ S + diag(κ_v, ε, ε)`, `ε ≤ κ_v`), and derive the split. `LightSplit`: it is `(δ_T − δ_F)(κ_F(s) − κ_T(s))`, so it needs a
+  wall-dependent on-site flip as well as a wall-dependent carrier (PMAction item); the derived sizes
+  then predict the mass ratios of all three sectors. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
   which mixes generations at relative size `δ/κ`; once `κ` is derived that mixing is a CKM
   prediction, not a fit. Its premise holds for a Wilson-form carrier (`PMAction.CarrierFlip`), so the
   mass ratios are the carrier amplitude ratios.
