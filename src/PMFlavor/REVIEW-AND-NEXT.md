@@ -79,8 +79,18 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        shift), so class- or generation-only leg phases cancel or are gauge
        (`LinkFlux.class_phase_cancels`). The next question is therefore whether the weak wall's
        transfer loop encloses a substrate holonomy (a gauge background on the generation–class
-       hexagon); if the library has none, it has no source for the CKM phase, and that should be
-       stated plainly. The same flux must also give `J`, which is now an output, not an input: the
+       hexagon). Found: the library's gauge fields live on spatial links only, and
+       `PMAction.FlatPersistence` prices any loop holonomy `e^{iΦ}` by a flag probability
+       `sin²(Φ/2)` per readout, minimized by `Φ = 0`. So, if the generation loop is priced like a
+       transport loop (`CommonResponse`), persistence sets the CKM flux to zero unless the loop has a
+       source, and the data (`Φ ≈ 49°`, `J ≠ 0`) say it has one. The library has no such source
+       now; this is the missing ingredient for the CKM phase. The only CP-odd structure in the
+       library is the cyclic wall orientation (`PMConstants.GenerationWalls.side`; its two
+       conventions are exchanged by the wall swap, which conjugates the flux, `LinkFlux`). Next:
+       treat that orientation as the source and find the least-cost holonomy with it present
+       (the analogue of a field with a mean source in `FlatPersistence`); if the minimum is `0` or
+       `π`, the orientation is not a source and the CKM phase has no origin in the library; record
+       that. The same flux must also give `J`, which is now an output, not an input: the
        fit uses `J`, so refit with `|V_us|, |V_cb|, |V_ub|` only and check `J` and `α` as
        predictions of a derived flux.
     2. The couplings: the data give the scale-free `K₂₃/K₁₂ = 0.183` and `K₁₃/K₁₂ = 0.0185`. The

@@ -195,7 +195,10 @@ axis), not a class-dependent Wilson parameter. The node's own odd-sector phase
 (`PMAction.Machine.OddCarrierPhase`, continuous in time) gives no CP flux: it is the same in both
 directions and enters the zero-energy reduction as a real denominator (`node_denominator_real`).
 The remaining sources for the CKM flux are leg phases that differ at a class vertex, or a holonomy
-around the generation–class loop.
+around the generation–class loop. `PMAction.FlatPersistence` prices a holonomy `e^{iΦ}` by
+`sin²(Φ/2)` per readout and is minimized by `Φ = 0`, so without a source on the generation loop
+persistence predicts no CKM phase; the data say there is one. The library has no source for it yet;
+the cyclic wall orientation is the only CP-odd candidate.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a
