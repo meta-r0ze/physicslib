@@ -7,6 +7,19 @@
 derived invariants, but the form (which invariants, combined how) is supplied. This is the main
 derivation gap of Paper IV.
 
+What the data fix within each form's natural family (`MixingTests`, `ReactorConductance`):
+* fixed: `|V_us|` among `π/n` only `n = 14 = ν − χ` (`cabibbo_count_unique`); `|V_ub|` among
+  `1/(m Z_geo)` only `m = χ` (`vub_count_unique`, the `π` is a `1%` correction below the error);
+  PMNS `sin²θ₁₃` among `n/Z_geo` only `n = σ − χ = 3` (`channel_count_unique`); solar among
+  `1/(nφ)` only `n = 2`;
+* not fixed at present precision: the `|V_cb|` denominator `Z_geo − nπ` (`n = 2…5`), the
+  atmospheric `(1 + π/n)/2` (`n = 15…37`), `δ = arctan(n/2)` (`n = 4…6`).
+
+Constructed so far: the PMNS reactor angle as the node's conductance into the `D − 1` spatial-axis
+channels (`ReactorConductance`, Landauer derived in `PMConstants.HandoffAdmittance`). Open: E8
+constructions for the other fixed integers (the `14` of the Cabibbo amplitude, the `χ` of `|V_ub|`,
+the `2φ` of the solar angle); the unfixed forms cannot be tested until the data sharpen.
+
 ### 2. The `687/688` first-row dressing
 
 `PMConstants.FlavourDressing` identifies `1/688` as the per-direction reference deficit
