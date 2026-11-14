@@ -18,13 +18,14 @@
      terms, an orientation reversal. Its single-component crossing changes the two walls' classes by
      different amounts, which is not a move `GenerationSector` allows; whether it is physical is
      step 3.
-  3. Chirality within one convention (wall = chirality, `DomainWall`). Found, to formalize: a
-     generation-diagonal chirality flip changes the class by the label, which is not an equal-class
-     move; the equal-class crossing changes the generation (`PMFlavor.InterWallDiagonal`); the label
-     translation keeps each component's wall (no chirality flip) and leaves the convention. So within
-     one convention `E₈` supplies no generation-diagonal mass. Then decide the physical source of the
-     diagonal mass (a composite of a crossing and a single-wall carrier, or the update containing both
-     conventions) and whether spinor-class crossings carry the node suppression.
+  3. Chirality and the diagonal mass. Done (`PMConstants.GenerationMass`): within one convention no
+     single allowed move is a generation-diagonal mass; an equal-class crossing plus a single-wall
+     carrier of the generation's own label class is, in either order (second order, through another
+     generation). Reading: the crossing is class-independent (`DomainWall`'s hop), the carrier
+     follows `PMFlavor.ExchangeAxis` (vector mostly in-cycle, spinor through the node), so one heavy
+     generation (label `v`, the weakly mixed one) and two light. Open: the node factor's size, and
+     the light pair's split (degenerate at this order; the weak wall distinguishes the two spinor
+     classes). Not pursued: an update containing both conventions (`no_further_modes` leaves no room).
   4. The charged-current operator on this space: weak is the sign exchange on the reference's
      sector (`PMConstants.CarrierActions.weak`), which keeps every class. Show which single-wall
      carrier events, if any, accompany it, and on which wall; that decides which generation
