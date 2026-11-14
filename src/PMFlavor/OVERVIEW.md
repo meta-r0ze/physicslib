@@ -123,8 +123,13 @@ reduced triangle. A wall-side leg phase gives flux `ū⁶` (`flux_cyclic`); exch
 conjugates it (`flux_swapped`); the `μ`–`τ` swap reverses the incidence orientation
 (`swap_reverses_orientation`), so CP violation needs that `Z₂` broken by the wall assignment, and
 its sign is the wall-naming convention. Its size is not fixed. `kronLink_zero_mode`: a real
-conserving network shares `(1, 1, 1)` between sectors, so the heaviest generation mixes only once
-the zero mode is lifted differently in the two sectors.
+conserving network shares `(1, 1, 1)` between sectors. `ThirdGenerationMixing`: with a
+flavour-blind on-site mass the eigenvectors of `Y` are exact, so two real conserving sectors give
+third row and column `(1, 0, 0)` (`zero_mode_unmixed`), the data's leading order (a conserving down
+link against a diagonal up basis would give a democratic `1/√3` column instead). `|V_ub|` and
+`|V_cb|` are then first-order effects of what lifts the zero mode, divided by the gaps
+`3α/2` and `a + α/2` (`in_cycle_spectrum`), so `VubSeriesPath`'s amplitude is not an eigenvector
+overlap of the conserving network itself.
 
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional

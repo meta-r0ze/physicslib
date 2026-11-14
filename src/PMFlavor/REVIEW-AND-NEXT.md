@@ -46,13 +46,16 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
   convention on the spectator side must recover `VubSeriesPath`. If the weak update acts within
   each generation, the drive is the inter-wall link's and refresh placement does not fix `|V_cb|`.
   Suggested attack:
-  * Constraint first (`LinkFlux.shared_zero_mode`): every real conserving reduced link annihilates
-    `(1, 1, 1)`, so two sectors on real legs share their heaviest state and the third generation
-    does not mix at all. `|V_cb|` and `|V_ub|` as eigenvector mixings therefore need the zero mode
-    lifted differently in the two sectors (a flux or a leak). Settle how this squares with
-    `VubSeriesPath`, which reads `|V_ub|` as a coupling, not an eigenvector overlap: either the
-    amplitude-is-admittance premise is a statement about couplings that the eigenvector mixing
-    must reproduce at leading order, or one of the two is wrong. This is the first thing to decide.
+  * Settled (`ThirdGenerationMixing`): two real conserving sectors share `(1, 1, 1)` and their
+    third row and column are `(1, 0, 0)` exactly (`zero_mode_unmixed`); that is the data's leading
+    order, so `|V_ub|`, `|V_cb|` are first-order effects of what lifts the zero mode differently in
+    the two sectors, `⟨v_k, P w⟩/λ_k`, not couplings read off directly. Next: identify `P`. Two
+    candidates in the library: a flux (`LinkFlux`) and a non-conserving leak. Test each against
+    the gaps `in_cycle_spectrum` gives (`3α/2` for the node-class generation, `a + α/2` for the
+    in-cycle pair): `VubSeriesPath`'s `1/(2α⁻¹ + π)` must come out as `⟨v_k, P w⟩/λ_k` with
+    `P` built from the same legs and boundary, and the same `P` must give `|V_cb|`. If the
+    required `P` has no library source, the amplitude-is-admittance premise of `VubSeriesPath` is
+    the error; record it.
   * `|V_ub|` and `|V_cb|` cross different class vertices (`s` and `c`), not one shared node
     (`shared_node_three_legs`). So the factor `≈ 10` is a difference between those two vertices.
     `ExchangeChirality` says which: the weak current couples to one of them. Model that as a third
