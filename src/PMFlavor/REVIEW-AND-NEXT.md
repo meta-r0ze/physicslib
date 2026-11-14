@@ -55,8 +55,12 @@ in each sector (large for quarks, `|V_ub|/|V_cb| ≈ 0.09`; small for leptons,
 sum `0.9984 ± 0.0007` the whole-frame share `1/172` and one row's `1/43` are excluded, but the
 share over all `D` directions (`1/688`) and over the `D − 1` spatial ones (`1/516`) both fit
 within `1σ` (`CabibboDressing.frame_share_excluded`, `direction_shares_fit`), so the data do not
-fix the divisor. Open with it: the three or more channels that must carry the lost probability
-(`CKMDressing.dilation_needs_three`), and the `>2%` Jarlskog disagreement with Paper III once
+fix the divisor. `DressingChannels`: the minimal dilation has exactly three extra
+channels (`dilation_three` attains `dilation_needs_three`), and economy takes it; the reading is
+that they are the `D − 1` spatial-axis readout channels (`VevEvent`, `ReactorConductance`). With
+three rows losing `ε` each into them, the two divisors become a physical question: `1/688` if the
+temporal direction's share of the deficit `1 − η` stays with the reference, `1/516` if the whole
+deficit leaves through the spatial channels. Open with it: that question, and the `>2%` Jarlskog disagreement with Paper III once
 dressed (`papers_disagree_dressed`).
 
 ### 3. The V−A projector off the kernel
