@@ -214,6 +214,17 @@ lead boundary; the CKM transfer adds the `1/π` boundary (`KronSeries.vub_from_k
 cyclic shift with entries `a_{h+1} c_h` (`diag_cyc`, `undetuned_gram`), which with the symmetry are
 `(kK, k², kK)` (`undetuned_masses`): two heavy, one light, the reverse of every charged sector.
 
+**Which CKM reading the wire supports** (external numerics, `tools/node_carrier_scan.py`). In
+general the mixing is `U_uᴴ J U_d`: the transfer reading takes `U = 1` and `J = S(K_cc)`, the mass
+reading `J = 1`. With the wire's couplings the transfer reading fails structurally: the two heavy
+`K_cc` edges are both spinor-class through the node (`PMConstants.GenerationWeak`), with one leg
+weight and the `s ↔ c` swap, so `K₁₃ = K₂₃`, while its own fit needs `K₂₃/K₁₃ ≈ 10`. The wire's mass
+rotation is asymmetric by itself: at the down fit point its middle–heavy element (`≈ 0.14`) exceeds
+the light–heavy one (`≈ 0.024`), and the ratio stays between `2.7` and `31` over `δ_O ∈ [0.01, 0.04]`
+because the `s` and `c` generations take different places in the mass (middle versus light) though
+their carriers are equal. So the CKM pattern `|V_cb| ≫ |V_ub|` comes from the masses, and the
+transfer is at most a correction.
+
 **Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the shape of every
 sector's mass matrix and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
 `DoubletReflection`). How each species uses it (the node-carrier scan, the mixing scan, the up-sector

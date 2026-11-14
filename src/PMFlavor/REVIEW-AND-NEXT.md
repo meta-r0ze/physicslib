@@ -14,7 +14,11 @@ PMAction. **Tension with the wire:** the derived light mass `M = D_R (δ_O + cyc
 has angles near `0.16`, `0.14`, `0.024` (`tools/node_carrier_scan.py`, `down_rotation`). So the
 "masses generation-diagonal" premise of this reading does not hold for the wire's mass, and the two
 CKM readings (transfer `S(K_cc)` versus `U_uᴴ U_d` from the masses) must be reconciled or one
-dropped; see the last mixing item.
+dropped. Reconciled as far as the wire allows (OVERVIEW, "Which CKM reading the wire supports"):
+with wire couplings the transfer gives `K₁₃ = K₂₃` against its own fit's ratio `≈ 10`, while the
+mass rotation produces `|V_cb| ≫ |V_ub|` itself. So the working reading is now `CKM ≈ U_uᴴ U_d`, with
+the transfer at most a correction; the transfer-based items below are kept as candidates under
+that demotion.
 
 * **The in-cycle mixings** (`HalfTurnMixing`, `HalfTurnAperture`, candidate): `s₁₂ = π/14` and
   `sin²θ₁₂ = π/10`. Premises, listed in `HalfTurnAperture`: cross-orbit label-blindness (the
@@ -25,7 +29,9 @@ dropped; see the last mixing item.
   terminals (an aperture adds them in parallel, a length in series); the six axis-free vector
   displacements (`ExchangeAxis.vector_free`) are a candidate for the separately addressable
   directions. JUNO's full precision separates `π/10` from the draft's `1/(2φ)`.
-* **The couplings of `K_cc`.** The data (external fit, conditional on the two premises) give the
+* **The couplings of `K_cc`** (transfer reading, demoted). With the wire's couplings `K₁₃ = K₂₃`
+  (both spinor edges through the node), against the ratio below; a transfer correction must also be
+  consistent with that. The data (external fit, conditional on the two premises) give the
   scale-free ratios `K₁₃/K₁₂ = 0.0185 ± 0.0005` and `K₂₃/K₁₂ = 0.183`. The network (`kronLink`: two
   legs per class) must produce them from leg values. `VubSeriesPath`'s path admittance is a candidate
   for `K₁₃`; its ratio to `π/14` is `0.0161`, `4.7σ` low, so as a statement about `K₁₃` it fails;
@@ -36,7 +42,9 @@ dropped; see the last mixing item.
   addresses does not fix a schedule). To derive the denominator, exhibit the schedule and count its
   unused ticks; separately identify the drive or the terminals. In the transfer reading `|V_cb|` is
   `|S₂₃|`, and its generator entry `K₂₃` is fixed by the ratio above.
-* **The CKM phase.** The transfer `S(K_cc)` needs a flux on its single generation loop to fit the
+* **The CKM phase.** In the mass reading the wire's amplitudes are real (`DomainWall`'s hop,
+  `CarrierFlip`'s `κ = −t/2`), so `U_uᴴ U_d` is real orthogonal and `J = 0`: the phase still has no
+  source, in either reading. The transfer `S(K_cc)` needs a flux on its single generation loop to fit the
   magnitudes (`49.1 ± 1.1°`, external fit). `FlatPersistence` makes a sourceless holonomy flat, and
   the library has no source: every candidate searched is closed (OVERVIEW, "Where a CP phase can
   sit"). The supplied `δ = arctan(σ/χ)` has no mechanism. A new premise would have to give a
@@ -55,12 +63,12 @@ dropped; see the last mixing item.
   readout (`wall_only`). On the incidence graph `μ` and `τ` reach the reference through different
   class vertices (`s` and `c`); the factor may be the same `s`/`c` vertex difference the `|V_cb|`
   item needs. Test against both NuFIT values.
-* **Mixing from the wire's mass form.** The masses' form is settled (OVERVIEW: `ReferenceWallMass`,
-  `M = D_R (δ_O + cyc κ_O)`); the species sizes are protocol work (PMElementaryParticles, "Species
-  masses over the wire"). Flavour-level open: the left rotation of `M` is fixed by the same carriers
-  and `δ_O`, so once those are derived (PMAction: node amplitude, the other wall's detuning) the
-  rotation predicts the CKM magnitudes with no new parameters. Relate it to the transfer reading
-  above (`S(K_cc)`): either the two agree or one of them is not the CKM. Down's side is fixed now
+* **Mixing from the wire's mass form** (the working CKM reading). The masses' form is settled
+  (OVERVIEW: `ReferenceWallMass`, `M = D_R (δ_O + cyc κ_O)`); the species sizes are protocol work
+  (PMElementaryParticles, "Species masses over the wire"). The row index of `M` is the reference's
+  wall, which is the weak wall (`PMAction.ChiralityConvention.weak_acts_on_reference`), so the weak
+  current sees `M`'s left rotation. The node amplitude is derived (`NodeAmplitude`); `δ_O`'s size is
+  open (PMAction). Down's side is fixed now
   (`NodeAmplitude`: `k = α/2`; `δ_O` from down's two mass ratios): the heavy state is the label-`v`
   generation, angles near `0.16` (light–middle), `0.14` (middle–heavy), `0.024` (light–heavy). The
   CKM needs the up rotation (protocol work); it must cancel most of the `0.14` to give
