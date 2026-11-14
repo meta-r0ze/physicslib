@@ -114,9 +114,15 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        own odd-sector phase (`TickPlacement`), two sector loops (one loop on generation space).
        The supplied `δ = arctan(σ/χ)` (`FlavourInvariants`) has no mechanism behind it. What would
        supply one: a loop readout whose reference is rotated by the generation cycle, i.e. a
-       generation-space holonomy that persistence cannot remove. Look for it in the refresh
-       schedule over the `43` clock addresses (does one full clock cycle permute the generations
-       or rotate their reference phases?) before anything else. The same flux must also give `J`, which is now an output, not an input: the
+       generation-space holonomy that persistence cannot remove. Also closed: the clock cycle.
+       Weak's events are internal and act on the clock row alone (`PMConstants.WeakLocality`), and
+       weak is the sign exchange on the vector-class carriers and the identity elsewhere
+       (`PMConstants.CarrierActions.weak`): it keeps every carrier's class, so it never permutes
+       generations, and as a permutation its phases are `±1`. So a full clock cycle gives no
+       generation-space holonomy. Within the current library the CKM phase has no origin. A new
+       premise would have to supply a generation-space holonomy with an offset other than `0` or `π`
+       around the three-lead loop; any such premise must be stated narrowly and tested by predicting
+       `J` and `α` from a refit on the three magnitudes, not by matching `49°`. The same flux must also give `J`, which is now an output, not an input: the
        fit uses `J`, so refit with `|V_us|, |V_cb|, |V_ub|` only and check `J` and `α` as
        predictions of a derived flux.
     2. The couplings: the data give the scale-free `K₂₃/K₁₂ = 0.183` and `K₁₃/K₁₂ = 0.0185`. The

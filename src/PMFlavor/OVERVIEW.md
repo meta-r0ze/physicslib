@@ -208,7 +208,9 @@ generation-universal with isospin a separate factor (`FlavourCurrent`), so the t
 three-lead network of `TransferGenerator`, with one loop. Searched for a source on that loop: none
 in the library (no `Z₃` phase anywhere; `CommonResponse` compares with the untransported reference,
 so every readout prefers offset `0`). The library therefore has no mechanism for the CKM phase;
-the supplied `δ = arctan(σ/χ)` stands without one.
+the supplied `δ = arctan(σ/χ)` stands without one. The clock cycle does not supply one either: weak is
+the sign exchange on vector carriers (`CarrierActions.weak`), which keeps every class, so it never
+permutes generations, and its phases are `±1`.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a
