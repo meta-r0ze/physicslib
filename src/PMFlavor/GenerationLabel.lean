@@ -23,8 +23,10 @@ gluing into an even unimodular lattice reduces to this by a triality in one sect
 
 Two operators, kept distinct (audit): the **single-wall shift** here acts on the glue labels only,
 `(b, c) ↦ (b + a, c)`, and contains no chirality operator; the **inter-wall crossing** of
-`PMConstants.GenerationWalls` moves a fixed class to the other wall, changing the wall and so the
-chirality. Both change the generation label. Identifying either with the charged current needs a map
+`PMConstants.GenerationWalls` moves a fixed class to the other wall. `PMConstants.GenerationOrientation`
+relates them: `GenerationWalls`' index is this label with the orientation frozen, and its crossing
+changes the two walls' classes by unequal amounts, which is not a move of
+`PMAction.GenerationSector`; the single-wall shift is (`shift_keeps_iff`). Identifying either with the charged current needs a map
 intertwining it with the physical chiral projector, which is open. Within that caveat: generation
 change needs a single-wall carrier move, and each pair of generations changes through its own class:
 three changes, three classes. The class amplitudes, and

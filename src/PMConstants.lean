@@ -191,6 +191,7 @@ import PMConstants.SectorCapabilities
 import PMConstants.GenerationEncoding
 import PMConstants.GenerationHistory
 import PMConstants.GenerationWalls
+import PMConstants.GenerationOrientation
 import PMConstants.GenerationVacuumChoice
 import PMConstants.CarrierPhaseComparison
 import PMConstants.CarrierRegisterModel

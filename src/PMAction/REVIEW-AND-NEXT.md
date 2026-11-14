@@ -9,11 +9,14 @@
      classes (a generation-diagonal move with class gap `b + c`); generation changes need a
      single-wall `D₄*` carrier, and from `(b, c)` the change to label `b` is a class-`c` carrier on
      wall 1, the change to `c` a class-`b` carrier on wall 2.
-  2. Relate the two state spaces: the pair picture here (`(b, c)` on the two walls) and
-     `PMConstants.GenerationWalls`' single-carrier modes (one carrier on one wall, `encode`). Decide
-     from the gluing which one the update acts on, or prove they are the same space under a map
-     (the 48 modes and the 6 ordered pairs × 8 must be reconciled; orientation: `GenerationWalls`'
-     `side` picks one of the two orientations per label, and the label swap maps between them).
+  2. Relate the two encodings. Done (`PMConstants.GenerationOrientation`, for every identification of
+     `Fin 3` with the classes): `GenerationWalls`' generation `g` is the pair
+     `(e (g + 1), e (g − 1))` with label `e g`; `side` picks one orientation per label; swapping a
+     whole generation's walls keeps the label and leaves the convention. So `GenerationWalls`' index
+     is the label with the orientation frozen, and its "crossing changes generation" is, in label
+     terms, an orientation reversal. Its single-component crossing changes the two walls' classes by
+     different amounts, which is not a move `GenerationSector` allows; whether it is physical is
+     step 3.
   3. Put the spinor/chirality structure on it: which walls carry which chirality (`DomainWall`), so
      the label swap's action on chirality is known (it reverses orientation; does it flip
      chirality, i.e. is it a mass term?).

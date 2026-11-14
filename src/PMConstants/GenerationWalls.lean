@@ -29,15 +29,15 @@ Hamiltonian the zero-energy reduction gives `δ²Y_gap⁻¹` (`PMAction.WallSees
 result for that Hamiltonian; that it is the physical generation dynamics is a reading, distinct from
 `PMFlavor.GenerationLabel`'s single-wall shift (below).
 
-**Caution (audit).** In this encoding a carrier crossing the walls at a fixed class changes the
-generation and flips chirality in one step, so the generation-changing part of `Y` and the mass are
-the same operation. `PMFlavor.GenerationLabel` encodes the generation change differently: a shift
-of one wall's class, which keeps chirality, as the charged current requires (it acts on one wall).
-The two are different moves. For quarks, a conserving `Y` carrying both the masses and the CKM is
-excluded (`PMFlavor.ThirdGenerationMixing`); which move the charged current uses is open in
-`PMFlavor/REVIEW-AND-NEXT.md`. `PMFlavor.InterWallDiagonal`: with the gluing (equal classes), the
-crossing never keeps the generation, so this `Y` has zero diagonal and cannot carry the mass
-hierarchy through `δ²/σ(Y)`. The counting results here do not depend on it.
+**How this index relates to the glue label (`GenerationOrientation`).** Generation `g` here is the
+glue pair `(class g + 1, class g − 1)` on the two walls, whose label is `g`; `side` fixes one of the
+two orientations of every label. So this index is the label with the orientation frozen. A
+whole-generation wall swap keeps the label and reverses the orientation, and this encoding reads
+the reversed pair as two different generations; that is what `exchange_not_generation_only`
+records. A single-component crossing at a fixed class changes the two walls' classes by unequal
+amounts, which is neither an `E₈` move nor a single-wall shift (`PMAction.GenerationSector`); whether
+it is physical is open (`PMAction/REVIEW-AND-NEXT.md`, generation sector, step 3). The counting
+results here do not depend on it.
 -/
 
 noncomputable section
