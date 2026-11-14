@@ -37,7 +37,7 @@ The flavour angles are now geometry-first, not operator-fit-first.
 
 **Canonical values.** `PMFlavor.Values` is the single import for downstream libraries
 (mirroring `PMSubstrate.E8Values` and `PMConstants.Values`): `vud = c₁₂c₁₃`, `vus = s₁₂c₁₃`,
-`vub`, `vcb`, `q2 = 687/688`, `vudDressed`, the angle bounds, Pythagorean identities and
+`vub`, `vcb`, `q2 = 515/516`, `vudDressed`, the angle bounds, Pythagorean identities and
 `vus_div_vud = s₁₂/c₁₂`.
 
 **Matrices and mixing.** `CKM`, `PMNS`: complete complex matrices with exact
@@ -94,8 +94,10 @@ point (`all_nonzero_mixing_witness`).
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional
 forms themselves are ansätze, not E8 theorems. Upstream
-`PMConstants.FlavourDressing` identifies `687/688` as the per-direction reference
-deficit `1 − (1−η)/D`; `CabibboDressing` connects it to `1 − 1/(νΔ)`. The remaining
+`PMConstants.FlavourDressing` identifies `515/516` as the reference deficit over the spatial
+outlets `1 − (1−η)/(D − 1)`: the minimal dilation has exactly three outlet channels
+(`DressingChannels`) and a registered loss puts no weight on the time axis (`DressingEvent`); the
+earlier four-axis share `687/688` needs the time comparison to fire. The remaining
 model step is the claim that the CKM first row inherits that deficit. `Wolfenstein` defines
 λ, A, ρ̄, η̄ on the paper's own matrix and proves `η̄ > ρ̄` (from `σ > 2χ`) and the
 `O(λ³)` truncation structure. `WolfensteinOctant` proves the solar/atmospheric/
@@ -126,8 +128,8 @@ to a data fit (the fit itself is data work, outside the axiom-checked tree).
 `φ = (1+√5)/2` is now derived from pentagon Ptolemy and the explicit 600-cell
 pentagon (`GoldenGeometry`, `SixHundredCell`). The six mixing functional forms are
 still supplied geometric ansätze; `FlavourInvariants` only removes the literal-numeral
-duplication. The `687/688` Cabibbo dressing is re-expressed, not
-derived. The numerical breaking weights `δ, ε` are dynamical, not fixed. Link
+duplication. The `515/516` Cabibbo dressing's divisor is derived
+(`DressingEvent`); that the first row inherits the deficit is not. The numerical breaking weights `δ, ε` are dynamical, not fixed. Link
 eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
 energies. The V−A projector is forced on the zero kernel by reference persistence
 (PM-2 `ChiralityConvention.projector_unique_on_kernel`); attaching the gauge

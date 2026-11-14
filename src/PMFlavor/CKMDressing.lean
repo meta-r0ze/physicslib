@@ -5,26 +5,27 @@ import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 
 /-!
-# What the 1/688 dressing predicts, and what it needs
+# What the 1/516 dressing predicts, and what it needs
 
-The calculator multiplies every CKM amplitude by `q = √(1 − 1/688)`, `688 = νΔ`.
+The calculator multiplies every CKM amplitude by `q = √(1 − 1/516)`, `516 = (D − 1)·D·Δ`
+(`PMConstants.FlavourDressing`, `DressingEvent`).
 
 * `ckm_unitary_matrix`, `ckm_unitary_cols`: the undressed matrix satisfies `VV† = V†V = 1`.
-* `dressed_gram`, `dressed_gram_cols`: the dressed matrix `A = qV` has `AA† = A†A = (687/688)·1`.
-  Every row and every column loses the same `1/688`; `first_row_sum` states it for the first row.
+* `dressed_gram`, `dressed_gram_cols`: the dressed matrix `A = qV` has `AA† = A†A = (515/516)·1`.
+  Every row and every column loses the same `1/516`; `first_row_sum` states it for the first row.
 * The fixed first-row benchmark test (CKM 2023 workshop) now lives in
   `E8PConstants.FlavourPulls.first_row_deficit_test`; this module contains only the dressing algebra.
 * `dilation_needs_three`: if a dressed block `A` with `AA† = c·1`, `c ≠ 1`, is the
-  upper-left `3×3` block of any unitary matrix of size `3 + m`, then `m ≥ 3`. The lost `1/688`
+  upper-left `3×3` block of any unitary matrix of size `3 + m`, then `m ≥ 3`. The lost `1/516`
   cannot go into one extra outcome: Conservation requires at least three further channels
   (by the same argument applied to `A†A`, three more on the input side).
 * `arg_dressing_invariant`, `jarlskog_dressed`: phases, hence the unitarity-triangle angles,
-  are unchanged; the Jarlskog invariant scales by `(687/688)²` to `(3.011, 3.022)×10⁻⁵`, and
+  are unchanged; the Jarlskog invariant scales by `(515/516)²` to `(3.008, 3.019)×10⁻⁵`, and
   Paper III's `φ²T_geo η` then exceeds it by more than 2% (`papers_disagree_dressed`).
 
 So the dressing and the paper's stated exact unitarity ("probability cannot be lost") cannot
-both hold for the three-generation matrix. The dressing is close to that fixed first-row benchmark; keeping
-it requires naming the three or more channels that carry the `1/688`.
+both hold for the three-generation matrix. The dressing is close to that fixed first-row benchmark; the three
+channels that carry the `1/516` are named in `DressingChannels`.
 -/
 
 noncomputable section
@@ -49,7 +50,7 @@ theorem ckm_unitary_cols (r12 : c12^2 + s12^2 = 1) (r23 : c23^2 + s23^2 = 1)
   mul_eq_one_comm.mp (ckm_unitary_matrix r12 r23 r13 hu)
 
 /-- The dressing amplitude squared. -/
-def q2 : ℝ := 687/688
+def q2 : ℝ := 515/516
 
 theorem dressed_gram (q : ℝ) (hq : q^2 = q2) (r12 : c12^2 + s12^2 = 1)
     (r23 : c23^2 + s23^2 = 1) (r13 : c13^2 + s13^2 = 1) (hu : u * conj u = 1) :
@@ -73,7 +74,7 @@ theorem dressed_gram_cols (q : ℝ) (hq : q^2 = q2) (r12 : c12^2 + s12^2 = 1)
 
 theorem first_row_sum (q : ℝ) (hq : q^2 = q2) (r12 : c12^2 + s12^2 = 1)
     (r23 : c23^2 + s23^2 = 1) (r13 : c13^2 + s13^2 = 1) (hu : u * conj u = 1) :
-    (∑ k, Complex.normSq (((q:ℂ) • V c12 s12 c23 s23 c13 s13 u) 0 k) : ℂ) = ((687/688 : ℝ) : ℂ) := by
+    (∑ k, Complex.normSq (((q:ℂ) • V c12 s12 c23 s23 c13 s13 u) 0 k) : ℂ) = ((515/516 : ℝ) : ℂ) := by
   have h := congrFun (congrFun (dressed_gram q hq r12 r23 r13 hu) 0) 0
   rw [Matrix.mul_apply] at h
   simp only [Matrix.conjTranspose_apply, Complex.star_def, Complex.mul_conj] at h
@@ -102,7 +103,7 @@ theorem arg_dressing_invariant {q : ℝ} (hq : 0 < q) (z : ℂ) : ((q:ℂ) * z).
   Complex.arg_real_mul z hq
 
 theorem jarlskog_dressed :
-    (3.011e-5 : ℝ) < q2^2 * pmJ ∧ q2^2 * pmJ < 3.022e-5 := by
+    (3.008e-5 : ℝ) < q2^2 * pmJ ∧ q2^2 * pmJ < 3.019e-5 := by
   have h := pmJ_bounds
   unfold q2
   constructor <;> nlinarith [h.1, h.2]

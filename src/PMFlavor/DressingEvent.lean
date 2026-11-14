@@ -27,8 +27,8 @@ event. The same principle applies.
 
 Premise: the dressing loss is registered (an event), as the VEV readout is. Data: the first-row sum
 `1 − 1/516 = 0.99806` lies `0.5σ` from `0.9984 ± 0.0007` (`CabibboDressing.direction_shares_fit`).
-The library's value `q² = 687/688` (`CKMDressing.q2`, `Mixing.dressing`, `Values`) is the
-four-axis share; under this derivation it becomes `515/516`.
+The library's dressing is now `q² = 515/516` (`CKMDressing.q2`, `Mixing.dressing`, `Values`); the
+earlier `687/688` was the four-axis share.
 -/
 
 namespace PMFlavor.DressingEvent

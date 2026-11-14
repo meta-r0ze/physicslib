@@ -15,9 +15,9 @@ theorem first_row_normalized (c12 s12 c13 s13 : ℝ)
     (c12*c13)^2+(s12*c13)^2+s13^2 = (c12^2+s12^2)*c13^2+s13^2 := by ring
     _ = 1 := by rw [h12, one_mul, h13]
 
-def dressing : ℝ := Real.sqrt (1-1/688)
+def dressing : ℝ := Real.sqrt (1-1/516)
 
-theorem dressing_squared : dressing^2 = 687/688 := by
+theorem dressing_squared : dressing^2 = 515/516 := by
   rw [dressing, Real.sq_sqrt (by norm_num)]
   norm_num
 
@@ -32,12 +32,12 @@ theorem dressed_row_mass {ι : Type*} [Fintype ι] (q : ℝ) (row : ι → ℂ) 
 /-- Uniform dressing is a visible-channel probability loss, not a unitary 3×3 change. -/
 theorem dressed_normalization_deficit {ι : Type*} [Fintype ι] (row : ι → ℂ)
     (h : rowMass row = 1) :
-    rowMass (fun i => (dressing : ℂ)*row i) = 687/688 ∧
+    rowMass (fun i => (dressing : ℂ)*row i) = 515/516 ∧
     rowMass (fun i => (dressing : ℂ)*row i) ≠ 1 := by
   rw [dressed_row_mass, h, mul_one, dressing_squared]
   norm_num
 
-theorem missing_outcome_restores_total : (687 : ℝ)/688 + 1/688 = 1 := by norm_num
+theorem missing_outcome_restores_total : (515 : ℝ)/516 + 1/516 = 1 := by norm_num
 
 def quartet (a b c d : ℂ) : ℝ := (a*b*star c*star d).im
 

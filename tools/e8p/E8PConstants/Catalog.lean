@@ -241,7 +241,7 @@ def bounds : Key → Rat × Rat
   | .gPrime => (0.3435, 0.3436)
   | .electronClosure => (0.99972687, 0.99972689)
   | .vud => (0.97449, 0.974499)
-  | .vudDressed => (0.97377, 0.97380)
+  | .vudDressed => (0.97354, 0.97357)
   | .bRes => (15.3260359807, 15.3260359808)
   | .neutrinoFloor => (0.009208, 0.00921)
   | .tauLifetimeFs => (291.15, 291.17)

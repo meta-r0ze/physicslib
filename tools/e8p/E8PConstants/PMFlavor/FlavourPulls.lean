@@ -68,7 +68,7 @@ theorem reactor_pull : |((5 - 2) / PMFlavor.CKM.αinv - 0.02225) / 0.00056| < 0.
 /-- Measured first-row sum `0.9984 ± 0.0007` against the two hypotheses. This is
 a benchmark comparison, not an input to any derivation. -/
 theorem first_row_deficit_test :
-    |(1 - 1/688 : ℝ) - 0.9984| / 0.0007 < 0.22 ∧ 2.28 < |(1 : ℝ) - 0.9984| / 0.0007 := by
+    |(1 - 1/516 : ℝ) - 0.9984| / 0.0007 < 0.49 ∧ 2.28 < |(1 : ℝ) - 0.9984| / 0.0007 := by
   constructor
   · rw [abs_of_pos (by norm_num)]; norm_num
   · rw [abs_of_pos (by norm_num)]; norm_num

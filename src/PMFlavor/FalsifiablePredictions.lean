@@ -18,7 +18,7 @@ This module is that ledger. Every claim below is a theorem with no measured inpu
 each is stated so that a future measurement can refute it.
 
 **Unconditional relative to the supplied model inputs** — the six angle
-ansätze, the solar postulate `φ`, and the Cabibbo dressing `q² = 687/688`. These
+ansätze, the solar postulate `φ`, and the Cabibbo dressing `q² = 515/516`. These
 are not unconditional consequences of E8.
 
 * `wEta_gt_wRho` — `ρ̄ < η̄`: the CKM unitarity-triangle apex lies above the `ρ̄`

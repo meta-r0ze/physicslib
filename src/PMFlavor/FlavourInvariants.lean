@@ -46,13 +46,13 @@ Status of the further inputs (updated Nov 2026):
 * **φ — derived.** `GoldenGeometry.pentagon_ratio_eq_phi` and `SixHundredCell` derive the golden
   ratio from pentagon Ptolemy on the 600-cell, so `solar_eq` now evaluates a derived constant; the
   form `sin²θ₁₂ = 1/(2φ)` itself is still an ansatz.
-* **q² = 687/688.** `CKMDressing.q2` is the dressing that turns the geometrically
-  exact first-row sum `1` into `1 − 1/688`, i.e. the entire claimed resolution of
+* **q² = 515/516.** `CKMDressing.q2` is the dressing that turns the geometrically
+  exact first-row sum `1` into `1 − 1/516`, i.e. the entire claimed resolution of
   the Cabibbo Angle Anomaly (`E8PConstants.FlavourPulls.first_row_deficit_test` shows the undressed value is
-  2.28σ from the measured deficit, the dressed one 0.22σ). Upstream
-  `PMConstants.FlavourDressing.cabibbo_deficit_per_direction` identifies it as the
-  per-direction reference exclusion `1 − (1−η)/D`; the remaining physical claim is
-  that the CKM first row inherits that deficit.
+  2.28σ from the measured deficit, the dressed one 0.49σ). Upstream
+  `PMConstants.FlavourDressing.cabibbo_deficit_spatial` identifies it as the reference exclusion
+  over the spatial outlets `1 − (1−η)/(D − 1)` (`DressingChannels`, `DressingEvent`); the
+  remaining physical claim is that the CKM first row inherits that deficit.
 * **The octant.** The branches are stated (`PMNSGeometry.atmos_upper_octant`,
   `WolfensteinOctant.solar_first_octant`); Paper IV's claim that geometric running "resolves the
   octant anomaly" still has no Lean statement.

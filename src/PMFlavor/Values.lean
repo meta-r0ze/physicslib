@@ -11,7 +11,7 @@ Single source for the CKM magnitudes used by later libraries, mirroring
 
 * `vud = c₁₂c₁₃`, `vus = s₁₂c₁₃`, `vub = s₁₃`, `vcb` — the standard-parametrization magnitudes
   with Paper IV's angles (`s₁₂ = π/14`, `s₁₃ = 1/(2α⁻¹+π)`).
-* `q2 = 687/688`, `vudDressed = q·vud` — the Cabibbo dressing (`CabibboDressing`).
+* `q2 = 515/516`, `vudDressed = q·vud` — the Cabibbo dressing (`CabibboDressing`).
 * `jarlskog = pmJ`, `jarlskogGeo = pm3J`.
 * Re-exported facts: the angle bounds, Pythagorean identities, signs, `vus/vud = s₁₂/c₁₂`.
 -/
@@ -27,7 +27,7 @@ abbrev vus : ℝ := CKM.s12 * CKM.c13
 abbrev vub : ℝ := CKM.s13
 /-- `|V_cb|`. -/
 abbrev vcb : ℝ := CKM.vcb
-/-- Cabibbo dressing `q² = 687/688 = 1 − 1/(νΔ)`. -/
+/-- Cabibbo dressing `q² = 515/516 = 1 − (1 − η)/(D − 1)`. -/
 abbrev q2 : ℝ := CKMDressing.q2
 /-- Dressed `|V_ud| = q·c₁₂c₁₃`. -/
 abbrev vudDressed : ℝ := CabibboDressing.vudDressed
@@ -53,7 +53,7 @@ theorem jarlskogGeo_bounds : (3.0848e-5 : ℝ) < jarlskogGeo ∧ jarlskogGeo < 3
   CKM.pm3J_bounds
 
 theorem vud_bounds : (0.974490 : ℝ) < vud ∧ vud < 0.974499 := CKM.vud_bounds
-theorem vudDressed_bounds : (0.97377 : ℝ) < vudDressed ∧ vudDressed < 0.97380 :=
+theorem vudDressed_bounds : (0.97354 : ℝ) < vudDressed ∧ vudDressed < 0.97357 :=
   CabibboDressing.vudDressed_bounds
 
 /-- `c₁₃` cancels in the ratio: `|V_us|/|V_ud| = s₁₂/c₁₂ = tan θ₁₂`. -/

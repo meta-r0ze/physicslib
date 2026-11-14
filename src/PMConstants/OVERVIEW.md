@@ -14,7 +14,7 @@ dependencies are in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md).
 - `CurrentConstants.current_snapshot`: the current manuscript values.
 - `Partition`: partition constants written directly from the E8 record.
 - `ElectroweakE8`: canonical electroweak constants written from the E8 record.
-- `FlavourDressing`: the per-direction reference deficit `1 − (1−η)/D = 687/688`.
+- `FlavourDressing`: the reference deficit over the spatial outlets `1 − (1−η)/(D − 1) = 515/516`.
 - `TableConsequences.end_to_end`: the weak fraction from the derived requirement table.
 - `ChainCouplings.chain_couplings`: all three couplings from Paper II's D₄ gauge action.
 - `SectorObligations`: the reference/update contract (exact refresh, weak ownership, colour reads).

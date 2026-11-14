@@ -48,25 +48,15 @@ coefficients (`1/χ`, `π + χ`), the in-cycle amplitude through `v` (the `14` o
 in each sector (large for quarks, `|V_ub|/|V_cb| ≈ 0.09`; small for leptons,
 `θ₂₃` near maximal).
 
-### 2. The `687/688` first-row dressing
+### 2. The first-row dressing: inheritance and the Jarlskog value
 
-`PMConstants.FlavourDressing` identifies `1/688` as the per-direction reference deficit
-`(1−η)/D`; the claim that the CKM first row inherits it is the model step. Against the first-row
-sum `0.9984 ± 0.0007` the whole-frame share `1/172` and one row's `1/43` are excluded, but the
-share over all `D` directions (`1/688`) and over the `D − 1` spatial ones (`1/516`) both fit
-within `1σ` (`CabibboDressing.frame_share_excluded`, `direction_shares_fit`), so the data do not
-fix the divisor. `DressingChannels`: the minimal dilation has exactly three extra
-channels (`dilation_three` attains `dilation_needs_three`), and economy takes it; the reading is
-that they are the `D − 1` spatial-axis readout channels (`VevEvent`, `ReactorConductance`). With
-three rows losing `ε` each into them, the two divisors become a physical question: `1/688` if the
-temporal direction's share of the deficit `1 − η` stays with the reference, `1/516` if the whole
-deficit leaves through the spatial channels. `DressingEvent` answers it with the VEV's event
-principle (`PMConstants.VevEvent`): the loss is a registered transfer, the time comparison never
-fires under exact repair, so the event-conditioned law puts no weight on time and each spatial
-outlet carries `(1 − η)/3 = 1/516`. Next: switch the library's `q² = 687/688` (`CKMDressing.q2`,
-`Mixing.dressing`, `Values`, `CabibboDressing`, `FlavourDressing`, docs) to `515/516`. Open with it:
-the `>2%` Jarlskog disagreement with Paper III once
-dressed (`papers_disagree_dressed`).
+The dressing is now `q² = 515/516`: the minimal dilation has exactly three outlet channels
+(`DressingChannels`), and a registered loss puts no weight on the time axis, so the reference
+deficit `1 − η` is shared over the `D − 1` spatial outlets (`DressingEvent`, the event principle of
+`PMConstants.VevEvent`). The earlier `687/688` was the four-axis share. First-row sum
+`1 − 1/516` is `0.5σ` from `0.9984 ± 0.0007`. Open: the claim that the CKM first row inherits the
+reference deficit at all (the outlets being the spatial readout channels is the reading), and the
+`>2%` Jarlskog disagreement with Paper III once dressed (`papers_disagree_dressed`).
 
 ### 3. The V−A projector off the kernel
 
