@@ -8,27 +8,17 @@ invariants, but which invariants and how they combine is supplied. This is the m
 of Paper IV. The structure behind the forms is derived (OVERVIEW, "Where the mixing comes from");
 what remains:
 
-* **The in-cycle mixings (`HalfTurnMixing`, candidate).** A half-turn (the sign-exchange refresh)
-  shared over the type-preserving channels gives `π/14` for quarks (`6` colour + `8` spinor) and
-  `π/10` for leptons (`2` lepton-axis + `8` spinor); the supplied `1/(2φ)` is exactly `sin(π/10)`.
-  Data: the quark share must be the generator element `π/14` (the rotation `sin(π/14)` is `>2σ`
-  low); the lepton probability fits either `π/10` or `sin(π/10)`. Open: derive why the share is the
-  generator element and is read as an amplitude for quarks and a probability for leptons. That
-  fixes the solar prediction (`π/10 = 0.3142` versus `0.3090`). One rule would cover all four
-  constructed mixings: each is a leg weight `w` (node `α`, in-cycle `π/N`); quarks reach the
-  junction by two legs, so `w` is their amplitude (`|V_ub|, |V_cb| ∝ α`, `s₁₂ = π/14`), and
-  lepton-axis states by one, so `w` is their probability (`sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10`).
-  For the node this is now derived: quark couplings are Kron-reduced admittances of a conserving
-  link (`KronSeries`), and the lepton side is a node passage whose probability is its conductance
-  (Landauer, `PMConstants.HandoffAdmittance`). `HalfTurnAperture` reconciles the in-cycle case with
-  Ohm's geometric law (conductance = aperture / length): along a Barbier boundary `π` is a length
-  (impedance, the node-crossing paths), through the half-turn refresh it is an aperture shared by
-  the `N` channels in parallel (admittance `π/N`). Remaining premise: the refresh's half-turn is
-  such an aperture, shared equally. This selects `sin²θ₁₂ = π/10` over the supplied `1/(2φ)`. Upstream tools do not yet
-  supply it: the event-law link cost and the branch pulse are quadratic in the angle
-  (`PMAction.LinkExpansion`: `ε²‖θφ‖²`; `HandoffAdmittance`: `sin² t`), so a share linear in `π/N`
-  needs a rate per channel rather than a pulse. The closest upstream item is the routing histories
-  and rates of the [elementary-particle review](../PMElementaryParticles/REVIEW-AND-NEXT.md).
+* **The in-cycle mixings** (`HalfTurnMixing`, `HalfTurnAperture`, candidate). The half-turn
+  refresh (the sign exchange) shared over a sector's type-preserving channels, `14` for quarks
+  (`6` colour + `8` spinor) and `10` for leptons (`2` lepton-axis + `8` spinor), gives
+  `s₁₂ = π/14` (quark amplitude) and `sin²θ₁₂ = π/10` (lepton probability), by the rule derived for
+  the node (`KronSeries`: quark amplitude = admittance; Landauer: lepton probability =
+  conductance). Derived pieces: the channel counts; `π` is Barbier's half-turn measure, a length
+  along a boundary and an aperture through the refresh (`half_turn_measure`); the equal share is
+  Closure (`equal_share_from_closure`). Remaining premise: the transfer crosses the refresh through
+  its half-turn of directions (aperture) rather than along it. Data: `π/14` fits (`0.15σ`) and the
+  rotation `sin(π/14)` is `>2σ` low; `π/10` fits JUNO and differs from the draft's `1/(2φ)` by
+  `0.005`, which JUNO's full precision resolves.
 * **The node-crossing coefficients.** `|V_ub| = 1/(2α⁻¹ + π)` is constructed (`VubSeriesPath`): the
   admittance of the two node legs and a unit boundary in series; the data's `m = 2` is the leg count.
   Its series premise follows from Conservation (`KronSeries`): a conserving link is a Laplacian, so

@@ -1,6 +1,7 @@
 import PMFlavor.HalfTurnMixing
 import PMFlavor.KronSeries
 import PMSubstrate.CapacityBarbier
+import PMConstants.HandoffAdmittance
 
 /-!
 # `π` as a length and as an aperture: one Ohmic law for every mixing element
@@ -35,8 +36,9 @@ The `π` in both roles is one quantity, the measure of Barbier's half-turn of di
 (`half_turn_measure`): a boundary is that measure times a width (`boundary_is_measure_times_width`),
 and the refresh, a half-turn, sweeps the same measure as its aperture (`aperture_share`).
 
-Premise: the refresh's half-turn of directions is shared equally by the type-preserving channels in
-parallel. Status: candidate.
+The equal share is Closure (`equal_share_from_closure`, from `HandoffAdmittance.closure_one_price`).
+Remaining premise: the transfer crosses the refresh through its half-turn of directions (aperture),
+rather than along it. Status: candidate.
 -/
 
 namespace PMFlavor.HalfTurnAperture
@@ -86,5 +88,19 @@ theorem boundary_is_measure_times_width (h : ℝ → ℝ) (hc : Continuous h) (w
 theorem aperture_share (N : ℕ) :
     ohmic ((∫ _θ in (0 : ℝ)..Real.pi, (1 : ℝ)) / N) 1 = Real.pi / N := by
   rw [half_turn_measure, channel_element]
+
+/-- **The equal share is Closure.** A share of the half-turn over the `N` channels that no
+relabeling of the channels changes (`PMConstants.HandoffAdmittance.closure_one_price`: a node cannot
+price a crossing by what it carries) and that exhausts the half-turn gives each channel `π/N`. -/
+theorem equal_share_from_closure (N : ℕ) (hN : 0 < N) (share : Fin N → ℝ)
+    (hsym : ∀ σ : Equiv.Perm (Fin N), ∀ a, share (σ a) = share a)
+    (htot : ∑ i, share i = Real.pi) (i : Fin N) : share i = Real.pi / N := by
+  have hc : ∀ j, share j = share i := fun j =>
+    PMConstants.HandoffAdmittance.closure_one_price share hsym j i
+  have hN' : (N : ℝ) ≠ 0 := by exact_mod_cast hN.ne'
+  rw [Finset.sum_congr rfl (fun j _ => hc j), Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul] at htot
+  field_simp
+  linarith
 
 end PMFlavor.HalfTurnAperture
