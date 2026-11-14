@@ -31,10 +31,14 @@ move, and generations `m`, `m'` mix through the class `m + m'`, a different clas
 the reference axis, while every spinor and conjugate-spinor displacement touches it, so by
 `LeptonAxisRestriction` only the pair mixing through the reference's class `v` has gauge-repairable
 exchange; the other two pairs must pass the reference node. This matches the CKM split (`s₁₂` free
-of `α`; `|V_cb|`, `s₁₃` of order `α`). Open: the node passage costing exactly `α`, the in-cycle
-amplitude through `v` (the `14` of `s₁₂`), and the `s`/`c` split (`|V_ub|` vs `|V_cb|`), which the
-axis test cannot see (`flip` swaps `s`, `c` and keeps the axis), so it needs an orientation input;
-an unbroken `s ↔ c` is what the leptons' near-maximal `θ₂₃` looks like.
+of `α`; `|V_cb|`, `s₁₃` of order `α`). `ExchangeChirality` places
+the `s`/`c` split: in the reference-free generation the two spinor classes sit on opposite walls,
+and the class swap is a symmetry of the wall incidence only together with the wall exchange, the
+parity that flips chirality. So `|V_ub| ≠ |V_cb|` is the charged current's parity violation, in
+leptons as well (consistent with `GenerationBreaking.pmns_no_shared_state`). Open: the node passage
+costing exactly `α`, the in-cycle amplitude through `v` (the `14` of `s₁₂`), and the size of the
+parity breaking in each sector (large for quarks, `|V_ub|/|V_cb| ≈ 0.09`; small for leptons,
+`θ₂₃` near maximal).
 
 ### 2. The `687/688` first-row dressing
 

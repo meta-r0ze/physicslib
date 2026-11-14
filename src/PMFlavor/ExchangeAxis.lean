@@ -32,8 +32,7 @@ a derived split, not a reading: in-cycle exchange counts are `(6, 0, 0)` for `(v
 What it does not fix. The axis test treats `s` and `c` identically (each displacement has
 `|axis-0 component| = 1`, and `flip` keeps axis `0` while swapping them,
 `GenerationBreaking.flip_keeps_axis`), so the `s`/`c` split (`|V_ub|` vs `|V_cb|`) must come from
-an orientation (chirality) input, and the leptons' near-maximal `θ₂₃` is what an unbroken `s ↔ c`
-looks like. That the node passage costs exactly the admittance `α` per crossing, and the in-cycle
+an orientation input; `ExchangeChirality` shows it is the weak current's parity violation. That the node passage costs exactly the admittance `α` per crossing, and the in-cycle
 amplitude through `v`, are not derived here.
 -/
 

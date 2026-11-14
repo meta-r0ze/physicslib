@@ -35,7 +35,7 @@ inside the reference cell while exchange through `s` or `c` crosses the node (ad
 the reference-free generation is the weakly mixed one. The CKM forms follow that split:
 `s₁₂ = π/(ν − χ)` carries no `α`, while `|V_cb| = (π + χ)/(α⁻¹ − Dπ)` and
 `s₁₃ = 1/(χα⁻¹ + π)` are both of order `α`. The PMNS reactor angle `3α` fits it as well; the
-near-maximal PMNS `θ₂₃` instead suggests an `s ↔ c` pair kept symmetric by the leptons.
+`s`/`c` split is the weak current's parity violation (`ExchangeChirality`).
 -/
 
 namespace PMFlavor.GenerationLabel
