@@ -191,7 +191,11 @@ off-diagonal mass entries unless absent or small.
 half ticks, but an insertion's light-mode element is the same wherever in the tick it sits
 (`placement_invisible`), and the weak refresh has no special tick. So the class dependence of the
 diagonal masses is the node passage already in the library (spinor insertions touch the reference
-axis), not a class-dependent Wilson parameter.
+axis), not a class-dependent Wilson parameter. The node's own odd-sector phase
+(`PMAction.Machine.OddCarrierPhase`, continuous in time) gives no CP flux: it is the same in both
+directions and enters the zero-energy reduction as a real denominator (`node_denominator_real`).
+The remaining sources for the CKM flux are leg phases that differ at a class vertex, or a holonomy
+around the generation–class loop.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a

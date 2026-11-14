@@ -70,20 +70,17 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        holonomy around the loop. A wall-side leg phase would give `6θ` (`LinkFlux`), i.e.
        `θ ≈ 8.2°`; but `LinkFlux`'s legs carry `GenerationWalls`' wall sides, which describe the
        inter-wall crossing, not the charged-current transfer (a single-wall shift on the weak wall),
-       so that model may not apply to the CKM. Lead: the node crossing itself. The node crossings are
-       spinor carriers (half ticks, `TickPlacement`), and the refresh is the antipodal inversion
-       `v ↦ −v`, whose reconstructed phase on the odd (spinor) sector is `e^{−i·gap(p)·t}`
-       (`PMAction.Machine.OddCarrierPhase.phase_sector`): continuous in the transfer time, a quarter
-       turn only at three quarter-times. `CPQuarterTurn` closed the refresh as a discrete event
-       (`±1`); a time-extended crossing is a different object. If each node crossing carries
-       `e^{iφ}` and the in-cycle coupling is real, the loop flux is `2φ` when both crossings are
-       traversed with the same time orientation and `0` when opposite. Checks, in order: (a) the
-       orientation of the two crossings around the loop (if opposite, close this route); (b) the
-       crossing time in `RootTransferPhase`'s units (the spinor time component is half a tick, but
-       that module's generator is defined on the two-tick transfer); (c) then `φ = gap(p)·t` has one
-       input, the attempt rate `p` (`gap(p) = −2 log(1 − 2p)`, not selected in the library); the CKM
-       flux `49.1 ± 1.1°` then fixes `p`, and `J` and `α` from a refit on the three magnitudes are
-       the independent tests. Do not fix `p` from the flux alone. The same flux must also give `J`, which is now an output, not an input: the
+       so that model may not apply to the CKM. Closed: the node crossing's own phase. The odd-sector
+       phase of the refresh is continuous in time (`PMAction.Machine.OddCarrierPhase`), but it is the
+       same in both directions, and in the zero-energy reduction it is a real denominator
+       (`TickPlacement.node_denominator_real`), so it never enters the flux. What is left: leg
+       phases that differ between the two legs at a class vertex, or a background holonomy around
+       the loop. In the transfer reading both legs of a crossing are on the weak wall (a single-wall
+       shift), so class- or generation-only leg phases cancel or are gauge
+       (`LinkFlux.class_phase_cancels`). The next question is therefore whether the weak wall's
+       transfer loop encloses a substrate holonomy (a gauge background on the generation–class
+       hexagon); if the library has none, it has no source for the CKM phase, and that should be
+       stated plainly. The same flux must also give `J`, which is now an output, not an input: the
        fit uses `J`, so refit with `|V_us|, |V_cb|, |V_ub|` only and check `J` and `α` as
        predictions of a derived flux.
     2. The couplings: the data give the scale-free `K₂₃/K₁₂ = 0.183` and `K₁₃/K₁₂ = 0.0185`. The

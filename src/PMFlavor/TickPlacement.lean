@@ -33,6 +33,14 @@ diagonal masses is then the node passage the library already has: spinor inserti
 reference axis and cross the node (`NodeElimination`), while six of eight vector insertions stay
 in-cycle. A class-dependent Wilson departure `r_m − 1` (`ZeroModeCoupling`) is not needed; the
 direct light-mode term needs `r ≠ 1` (or another off-Wilson source) only as a common factor.
+
+**The node's own phase gives no CP flux.** A spinor carrier crossing the node evolves for some time
+on the odd sector, phase `e^{−i·gap(p)·t}` (`PMAction.Machine.OddCarrierPhase.phase_sector`), the same
+in both directions since time runs forward. In the zero-energy reduction that evolution becomes a
+real energy denominator: `node_denominator_real`, the coupling `t₁ t̄₂ / d` with real `d` is the
+conjugate of the reverse coupling, so the reduced link stays Hermitian and the loop flux is the
+product of the leg phases alone. A crossing time or node energy, however large its phase, does not
+enter the flux.
 -/
 
 namespace PMFlavor.TickPlacement
@@ -51,5 +59,10 @@ theorem placement_invisible (A X B : Matrix n n ℂ) (v w : n → ℂ)
     have h := congrArg star hA
     rwa [Matrix.star_mulVec, conjTranspose_conjTranspose] at h
   rw [h1, Matrix.dotProduct_mulVec, h2]
+
+/-- **A real node denominator keeps the reduced coupling Hermitian.** -/
+theorem node_denominator_real (t₁ t₂ : ℂ) (d : ℝ) :
+    (starRingEnd ℂ) (t₁ * (starRingEnd ℂ) t₂ / d) = t₂ * (starRingEnd ℂ) t₁ / d := by
+  rw [map_div₀, map_mul, Complex.conj_conj, Complex.conj_ofReal, mul_comm]
 
 end PMFlavor.TickPlacement
