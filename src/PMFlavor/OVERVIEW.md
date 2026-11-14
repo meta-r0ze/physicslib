@@ -228,7 +228,11 @@ magnitude `k`, set by `NodeElimination` (quarks `α/2` via `KronSeries`, leptons
 vector carrier `K = 1`. One free parameter, `d`, for two mass ratios per sector. Down quarks: within
 `9%` on both ratios (`(47.8, 18.9)` against `(52, 19)` at `M_Z`): a candidate pass. Up quarks and
 charged leptons: the curve misses by about `6×` and `3×` on heavy/middle. So the equal-magnitude
-node carriers are excluded for up and leptons in this form.
+node carriers are excluded for up and leptons in this form. Solving for the light carrier each
+sector needs (`required_k`, two branches): down `0.0034` or `0.0059` (the two-leg Kron value `α/2 =
+0.0036` is `7%` from the first); up `8.8 × 10⁻⁵` or `3.0 × 10⁻⁴`, `12`–`40×` below `α/2`; leptons
+`0.0011`–`0.0013` or `0.015`–`0.017`, `5`–`80×` below `√α`. Up and leptons need an extra suppression
+of the light carrier that the library does not supply.
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the

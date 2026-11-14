@@ -12,15 +12,19 @@ Inputs from the library (no tuning):
   leptons one leg, sqrt(alpha).
 * d, the other wall's on-site detuning relative to K: the one free parameter per sector.
 
-Findings:
-1. For fixed k the pair (heavy/middle, middle/light) runs along a one-parameter curve in d, and the
-   total hierarchy m_heavy/m_light has a maximum (about 1000 for k = alpha/2, about 140 for
-   k = sqrt(alpha)).
-2. Down quarks (M_Z: 52, 19; total 988) with k = alpha/2: best d = 0.025 gives (47.8, 18.9), within
-   9% on both ratios, near the curve's maximum hierarchy. With k = alpha: within 19%.
-3. Up quarks (277, 488; total about 135000) and charged leptons (16.8, 207; total about 3500) exceed
-   the maximum hierarchy for any d: excluded for this form. They need smaller or unequal light
-   carriers than the equal-magnitude node rule gives.
+Findings (grid over d of both signs; a sample, not a bound):
+1. For fixed k the pair (heavy/middle, middle/light) runs along a one-parameter curve in d. One
+   free parameter for two ratios, so each sector is a test.
+2. Down quarks (M_Z: 52, 19) with k = alpha/2: best d = 0.025 gives (47.8, 18.9), within 9% on both
+   ratios. With k = alpha: (43.4, 18.9), within 19%.
+3. Up quarks (277, 488) and charged leptons (16.8, 207): the curve misses. Best points are
+   (45.4, 476) for up (heavy/middle about 6x low) and (5.6, 223) for leptons (about 3x low). The
+   total hierarchy is not the obstruction (the curve reaches larger totals); the shape is. Up and
+   leptons need light carriers other than the equal-magnitude node rule gives.
+4. required_k: solving (k, d) exactly for each sector's two ratios (two branches each): down
+   k = 0.00338 or 0.0059 (alpha/2 = 0.00365 is 7% from the first); up k = 8.8e-5 or 3.0e-4
+   (12-40x below alpha/2); leptons k = 0.0011-0.0013 or 0.0145-0.0166 (5-80x below sqrt(alpha)).
+   Up and leptons need an extra suppression of the light carrier that the library does not supply.
 """
 import numpy as np
 
@@ -38,7 +42,21 @@ def ratios(k, sign, d):
     s = np.sort(np.linalg.svd(mass(1.0, k, sign * k, d), compute_uv=False))[::-1]
     return s[0] / s[1], s[1] / s[2]
 
+def required_k(seed=0, starts=400):
+    from scipy.optimize import least_squares
+    rng = np.random.default_rng(seed)
+    for sec, t in DATA.items():
+        sols = set()
+        for sign in (1, -1):
+            for _ in range(starts):
+                f = lambda p: np.log(ratios(10 ** p[0], sign, p[1])) - np.log(t)
+                r = least_squares(f, [rng.uniform(-6, 0), rng.uniform(-1, 1)])
+                if r.cost < 1e-10:
+                    sols.add((round(10 ** r.x[0], 6), round(abs(r.x[1]), 5)))
+        print(sec, "required (k, |d|):", sorted(sols))
+
 if __name__ == "__main__":
+    required_k()
     D = np.concatenate([-np.logspace(-6, 2, 4000), np.logspace(-6, 2, 4000)])
     for sec, (r1, r2) in DATA.items():
         for name, k in CASES[sec]:

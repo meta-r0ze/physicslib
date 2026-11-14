@@ -19,7 +19,9 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   passes for down quarks (`9%`) and fails for up and leptons (`tools/node_carrier_scan.py`, PMFlavor
   OVERVIEW). Open: what makes up-type and lepton light carriers differ from the equal-magnitude node
   rule while down's do not (a sector difference in the node passage, more legs, or a carrier that
-  is not a single Wilson hop).
+  is not a single Wilson hop). Required sizes (`tools/node_carrier_scan.py`, `required_k`): up
+  `12`–`40×` below the quark rule, leptons `5`–`80×` below `√α`. Derive the suppression; do not
+  match these numbers to constants.
 
 ## Carrier update
 
