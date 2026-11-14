@@ -25,9 +25,14 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   (`PMConstants.SectorExchange.one_doublet_phase_cancels`: up uses `v̄`), read as the transposed
   cycle in `d + C_O`, gives heavy/middle near `10⁴` for up (data `277`) at the node-rule `k`; it does
   not explain the up sector. The doublet sign as geometry is excluded
-  (`PMFlavor.DoubletReflection`). Next candidates: the right-sector hypercharge
-  (`Y = B − L + 2T₃`, which does tell up from down) entering the node passage on the other wall, and
-  the lepton/quark leg count beyond `NodeElimination`'s leading reading.
+  (`PMFlavor.DoubletReflection`). Charge-weighted node legs are
+  excluded too (wrong direction for up, and they break `closure_one_price`). So, by the no-go in the
+  PMFlavor OVERVIEW, one of four premises fails for up-type quarks: one crossing price, the `D₄`
+  geometry with the reference axis, the `s ↔ c` swap, or the reference-wall factorization. Next:
+  test the last one for up. Up-type masses use the conjugate vacuum value (`SectorExchange`); check
+  whether that changes which wall is detuning-free for the up composite (`ReferenceDetuning`), which
+  would move the up masses off the down curve. Leptons are separate: their states sit on the
+  reference axis, so their leg geometry differs from the quarks'; derive their leg count.
 
 ## Carrier update
 

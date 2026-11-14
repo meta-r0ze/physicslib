@@ -238,6 +238,15 @@ fixes the reference's axis, reverses the doublet sign (up ↔ down) and exchange
 reference cannot tell up from down; the difference needs a charge (the right-sector hypercharge) or
 a breaking of the swap.
 
+**No-go for the up sector.** Under four premises the up and down quarks have the same mass formula
+up to the free `d`: one crossing price (`PMConstants.HandoffAdmittance.closure_one_price`), the
+`D₄` geometry with the reference's axis (`DoubletReflection`), the `s ↔ c` swap, and the
+reference-wall factorization (`ReferenceWallMass`). Both must then lie on one curve; down does
+(`9%`), up does not (`6×`). So at least one premise fails for up-type quarks. Two readings tested
+and excluded: the conjugate link (`SectorExchange`: up uses `v̄`) as a transposed cycle, and
+charge-weighted node legs (`Q²` or `Y²` make the up light carrier larger, the data need it smaller,
+and they break the one-price premise).
+
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay
