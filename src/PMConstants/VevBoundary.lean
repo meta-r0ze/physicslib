@@ -29,6 +29,11 @@ three ingredients as the node impedance `Z_geo` and tests the alternatives.
 
 With `D = 4`, `χ/(πD)` equals `χ/(4π)` (the closures shared over the full solid angle); the data do
 not separate the two.
+
+Status: this is what persists, in the sense `VevAccounting` uses for the slot count: within the
+construction from Barbier, Descartes and Ohm, the measured Fermi constant admits exactly one form.
+With `VevImpedance` (series structure), `VevReadout` (linear form) and `VevEvent` (one-axis margin
+share), every factor of the VEV is accounted for.
 -/
 
 noncomputable section
