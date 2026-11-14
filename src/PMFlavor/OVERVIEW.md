@@ -221,6 +221,15 @@ and 3 CKM magnitudes; the best fit misses by factors up to `2.8` (`|V_ub|`): dis
 per sector: 6 parameters, everything within about `30%`: consistent, but nearly a fit. A test needs
 the carriers derived.
 
+**Carriers from the node rule** (external scan, `tools/node_carrier_scan.py`). Node passage acts on
+both walls with one leg weight (`HandoffAdmittance.closure_one_price`), and the weak repair is a
+sign on the left sector (`LeptonAxisRestriction.weak_type`), so the two light carriers have equal
+magnitude `k`, set by `NodeElimination` (quarks `α/2` via `KronSeries`, leptons `√α`), with the
+vector carrier `K = 1`. One free parameter, `d`, for two mass ratios per sector. Down quarks: within
+`9%` on both ratios (`(47.8, 18.9)` against `(52, 19)` at `M_Z`): a candidate pass. Up quarks and
+charged leptons: the curve misses by about `6×` and `3×` on heavy/middle. So the equal-magnitude
+node carriers are excluded for up and leptons in this form.
+
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay

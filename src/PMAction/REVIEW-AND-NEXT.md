@@ -14,8 +14,12 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   `PMFlavor.ReferenceWallMass` factors `M = D_R (δ_O + cyc κ_O)` and the light ratio is
   `κ_R(s)/κ_O(s)`, one spinor-class carrier on versus off the reference's wall. Node passage acts on
   both walls (`PMFlavor.LeptonAxisRestriction`); the difference must come from the repair, whose weak
-  sign exchange acts on the left sector only (`weak_type`). Derive the node-passage cost on each
-  wall; the same numbers fix the node amplitude item above.
+  sign exchange acts on the left sector only (`weak_type`). Node passage has one leg weight on
+  both walls and the repair adds only a sign, so `|κ_R(s)| = |κ_O(s)|`; with that the node rule
+  passes for down quarks (`9%`) and fails for up and leptons (`tools/node_carrier_scan.py`, PMFlavor
+  OVERVIEW). Open: what makes up-type and lepton light carriers differ from the equal-magnitude node
+  rule while down's do not (a sector difference in the node passage, more legs, or a carrier that
+  is not a single Wilson hop).
 
 ## Carrier update
 
@@ -24,33 +28,14 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
 
 ## Dynamics and limits
 
-- **Subtracted lattice polarization** (unblocks `PMConstants` running couplings). The missing link
-  is a theorem about the same subtracted observable on the lattice that `PMConstants` can consume.
-  (a) The finite-`q` vertex. Done in part (`FiniteVertex`): the Ward identity is exact
-  (`ward`), and the conserved vertex is the midpoint vertex with each root weighted by
-  `sin x / x`, `x = a r·q/2`; the midpoint vertex alone misses it by `O(a²|k||q|³)`
-  (`midpoint_gap`). Still open: the two-field contact (seagull) term of the gauged hop, and the
-  transversality of the lattice `Π_μν` it should restore. (b) Bound lattice minus continuum after
-  subtracting the `q = 0` value, on the shell of `PolarizationRemainder.polarization_window`, with
-  `symbol_gap` at both `k` and `k + q` and the weighted vertex. Acceptance: the bound must resolve
-  the `q²` coefficient. An `O(a²)` estimate independent of `q` proves convergence at fixed `q` but
-  is useless after division by `q²`. Whether the existing estimates are sharp enough after the
-  subtraction is open.
-- **Inertia certificate** (unblocks `PMConstants` strong CP: the unit-winding witness). One reusable
-  theorem beside `InertiaStability`, mirroring `tools/unit_transfer_certificate.py`: for Hermitian
-  `H`, a proposed basis `Q` and `B = Qᴴ H Q`,
-  (a) `‖Qᴴ Q − 1‖ < 1` makes `Q` invertible;
-  (b) if every row's off-diagonal sum of `B` is below its `|diagonal|`, the path
-  `diag B + t · offdiag B`, `t ∈ [0, 1]`, stays invertible (Gershgorin,
-  `Matrix.det_ne_zero_of_sum_row_lt_diag`), so by `negCount_locallyConstant` the negative count of
-  `B` is the number of negative diagonal entries;
-  (c) Sylvester's law of inertia: `negCount (Qᴴ H Q) = negCount H` for invertible `Q` (not in the
-  library; `count_le` has the needed form estimates).
-  Then the certificate checks only inequalities and signs, not a dense eigensolve. Still required:
-  a checked correspondence between the certificate's matrices and the library's two Wilson
-  backgrounds. The physical premise that the vacuum selects among the weighted phases stays
-  explicit (`ThetaBarSelection`).
-
+- **Subtracted lattice polarization** (unblocks `PMConstants` running couplings). The vertex
+  bookkeeping is done (OVERVIEW: `FiniteVertex`, `PolarizationContact`). Open: bound lattice minus
+  continuum after subtracting the `q = 0` value, on the shell of
+  `PolarizationRemainder.polarization_window`, with `symbol_gap` at both `k` and `k + q`, the
+  sinc-weighted vertex and the contact term; on a cut shell the longitudinal part leaves the
+  routing difference of `bubble_sub_contact`, which the bound must carry. Acceptance: the bound must
+  resolve the `q²` coefficient. An `O(a²)` estimate independent of `q` proves convergence at fixed
+  `q` but is useless after division by `q²`.
 - Construct the map from background `Config` to the `RecordSupply` stream used by `ReferenceSelection`. Physical allocation of the banks is a [machine-layer dependency](Machine/REVIEW-AND-NEXT.md).
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.

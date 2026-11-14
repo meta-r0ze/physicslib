@@ -6,10 +6,10 @@
   phase are flavour questions). What is missing is the unit-winding witness: two kernels whose
   negative-mode counts differ by one. `WallTransfer` gives the determinant factor for a given
   count and `PMAction.InertiaStability` keeps the count locally constant; neither produces the
-  witness. Bring the external unit-transfer certificate into Lean: verify invertibility and the change from 162 to 163 filled modes for the two Wilson kernels, using the inertia-certificate theorem (PMAction item). The anomaly relation is derived (`PMAction.WallTransfer`, `FermionFlip`); the selection argument admits the θ-vacua as least-cost candidates. [Certificate](../../tools/unit_transfer_certificate.py) · [Selection theorem](ThetaBarSelection.lean)
+  witness. Bring the external unit-transfer certificate into Lean: verify invertibility and the change from 162 to 163 filled modes for the two Wilson kernels with `PMAction.WilsonCertificate.wilson_certificate` (or `wilson_certificate_of_squared_error`): exhibit `Q` for each kernel, certify the row gaps or the Frobenius margin, and check that the certificate's matrices are the library's two backgrounds. The anomaly relation is derived (`PMAction.WallTransfer`, `FermionFlip`); the selection argument admits the θ-vacua as least-cost candidates. [Certificate](../../tools/unit_transfer_certificate.py) · [Selection theorem](ThetaBarSelection.lean)
 - **Running couplings.** Consume a theorem on the subtracted lattice polarization from PMAction
-  (PMAction item "Subtracted lattice polarization": the finite-`q` vertex with its Ward weight
-  `FiniteVertex`, the contact term, and a bound that resolves the `q²` coefficient), in place of
+  (PMAction item "Subtracted lattice polarization": vertex and contact done in `FiniteVertex`,
+  `PolarizationContact`; open is a bound that resolves the `q²` coefficient), in place of
   the continuum integrand inside `PMAction.PolarizationRemainder.polarization_window`, whose
   continuum `q`-expansion remainder is already bounded (`500|q|³/μ · 2π² ln(M/μ)`). Inserting
   `w = k + q/2` into `vertex_gap` alone is not the physical vertex (`FiniteVertex.midpoint_gap`). [Polarization remainder](../PMAction/PolarizationRemainder.lean) · [Leading log](../PMAction/LeadingLog.lean)

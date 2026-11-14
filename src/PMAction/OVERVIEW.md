@@ -124,6 +124,22 @@ shows closed injective updates cannot finitely prepare a stationary state.
   zero mode of the update the flavour fermions see, the on-site chirality flip lives only on the
   wall without the reference: the maximal wall asymmetry `PMFlavor.LightSplit` needs, from a
   structural source.
+- `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
+  Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each
+  root weighted by `sinc(a r·q/2)`; the midpoint vertex alone misses it by `O(a²|k||q|³)`
+  (`midpoint_gap`). The two-field contact term is the mixed second variation of the cosine link
+  (`link_second_variation`), with its own Ward identity (`contact_ward`: it is the difference of the
+  two shifted legs). Contracting bubble minus contact leaves the difference of two momentum routings
+  (`bubble_sub_contact`), which cancels by a shift on the full zone but not on a cut shell.
+- `InertiaCertificate`, `InertiaCongruence`, `WilsonCertificate`: the inertia certificate for the
+  winding witness. A strictly row-dominant Hermitian `B` has as many negative modes as negative
+  diagonal entries (`negCount_eq_sign_count`: deform the off-diagonal part to zero, Gershgorin keeps
+  it invertible, `InertiaStability` keeps the count). Sylvester's law: `negCount (Qᴴ A Q) = negCount A`
+  for invertible `A`, `Q` (`negCount_congruence`: the pencil `1 + z(Q − 1)` is singular at finitely
+  many `z ∈ ℂ`, whose complement is connected). So `wilson_certificate`: if `B = Qᴴ H Q` is strictly
+  row-dominant, then `H` is invertible and its negative count is the sign count of `B`'s diagonal;
+  `row_gap_of_squared_error` certifies the rows from one Frobenius bound. No Gram estimate on `Q` is
+  needed.
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
   zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct
