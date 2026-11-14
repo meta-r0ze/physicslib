@@ -39,9 +39,12 @@ leptons as well (consistent with `GenerationBreaking.pmns_no_shared_state`). The
 passage is the derived through weight `α` (`PMConstants.HandoffAdmittance`), but `NodePassage` shows
 the quark node-crossing mixings cannot be passage probabilities with whole channels (`|V_cb|²`,
 `|V_ub|² < α`, and `|V_ub|² < α²`): they enter as link amplitudes linear in `α`, while for the
-reactor angle the data allow both the conductance `3α` and an amplitude `20α` or `21α`. Open: why
-quarks mix at amplitude level and the reactor angle (if its construction holds) at probability
-level, the in-cycle amplitude through `v` (the `14` of `s₁₂`), and the size of the parity breaking
+reactor angle the data allow both the conductance `3α` and an amplitude `20α` or `21α`. `NodeElimination`
+accounts for that split: with no in-cycle exchange the node-crossing coupling is the Schur
+complement `t₁t₂/(e − E)`, two legs of through weight `α` each, so an amplitude `∝ α` for states
+reaching the node from off the reference axis (quarks) and one leg, a probability `∝ α`, for states
+on the reference's own axis (leptons). Open: the energy denominators that set the `O(1)`
+coefficients (`1/χ`, `π + χ`), the in-cycle amplitude through `v` (the `14` of `s₁₂`), and the size of the parity breaking
 in each sector (large for quarks, `|V_ub|/|V_cb| ≈ 0.09`; small for leptons,
 `θ₂₃` near maximal).
 
