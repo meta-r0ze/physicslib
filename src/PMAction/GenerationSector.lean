@@ -21,10 +21,13 @@ relating the two state spaces is the next step (`REVIEW-AND-NEXT.md`).
 * `glue_keeps_iff`: on a generation state they give a generation state exactly for `a = 0` (a `D₄`
   root move, classes unchanged) or `a = b + c`, the label.
 * `label_glue_swaps`: translation by the label swaps the two classes between the walls,
-  `(b, c) ↦ (c, b)`. It keeps the generation, reverses the orientation, and carries the label
-  class. So the only inter-wall operation `E₈` allows within the generation space is
-  generation-diagonal with class gap `b + c`, the form of the diagonal mass insertion of
-  `PMFlavor.MassInsertion` (`bilinear_gap`).
+  `(b, c) ↦ (c, b)`. It keeps the label and reverses the orientation. Caution: the vacuum fixes
+  one orientation per label (`PMConstants.GenerationWalls.side`, one of two balanced conventions),
+  and the 48 modes leave no room for the other (`no_further_modes`), so this translation maps
+  between the two conventions; it is not an operator within the physical mode space of one
+  convention (`PMConstants.GenerationOrientation`). Within one convention a generation-diagonal
+  chirality flip changes the class by the label, which the gluing (equal classes) does not allow
+  as a single move.
 
 **Single-wall moves (a `D₄*` carrier on one wall, not an `E₈` vector).**
 * `shift_keeps_iff`: shifting wall 1 by a nontrivial class `a` keeps a generation state exactly when
@@ -34,8 +37,8 @@ relating the two state spaces is the next step (`REVIEW-AND-NEXT.md`).
   change to label `b` is a class-`c` carrier on wall 1 and the change to label `c` a class-`b`
   carrier on wall 2: one wall for each target.
 
-What this fixes for flavour: masses can be generation-diagonal `E₈` moves (the label swap), and
-mixing cannot be an `E₈` move; it needs single-carrier events, each tied to one wall. Which wall the
+What this fixes for flavour: within one convention no `E₈` move is a generation-diagonal mass, and
+mixing cannot be an `E₈` move either; it needs single-carrier events, each tied to one wall. Which wall the
 charged current acts on (the reference's) then decides which generation changes the charged current
 can make; that, the orientation, and the relation to the wall-encoded modes are the next items.
 -/

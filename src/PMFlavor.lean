@@ -35,7 +35,6 @@ import PMFlavor.WallSpectrumLink
 
 import PMFlavor.FlavourWallReduction
 import PMFlavor.WallLatticeSpectrum
-import PMFlavor.WallRanks
 import PMFlavor.PMNSIntervals
 
 import PMFlavor.OscillationStability
@@ -77,10 +76,6 @@ import PMFlavor.FlavourCoherence
 import PMFlavor.PerStepContract
 import PMFlavor.BreakingPhase
 import PMFlavor.TransferFlavor
-import PMFlavor.WallMassRatio
-import PMFlavor.WallDispersion
-import PMFlavor.WallMassModel
-import PMFlavor.WallImpedanceChoice
 import PMFlavor.CapacityImpedance
 import PMFlavor.PathOperator
 import PMFlavor.HierarchicalPathOperator

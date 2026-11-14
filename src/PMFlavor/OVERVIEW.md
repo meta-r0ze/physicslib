@@ -295,7 +295,7 @@ refers to in brackets):
 derived (`DressingEvent`, `DressingInheritance`) under one premise, that carrier space and the
 lattice share axis labels (not that a carrier label change is a site move). The wall anchor magnitudes `δ, ε` (`BreakingPhase`) and the absolute wall-mass
 scale are inputs: their directions, forms and ratios are E8 (`MixingMatrix.rootP/rootM_eq_substrate`,
-`WallMassRatio`), but no cost functional fixes the magnitudes, and the scale is an external unit
+`PMAction.WallMassRatio`), but no cost functional fixes the magnitudes, and the scale is an external unit
 like `m_e`. Link
 eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
 energies. The V−A projector is forced on the zero kernel by reference persistence

@@ -10,7 +10,7 @@ The absolute momentum and masses remain physical inputs.
 -/
 
 noncomputable section
-namespace PMFlavor.WallDispersion
+namespace PMAction.WallEnergy
 
 /-- Relativistic wall energy. -/
 def wallEnergy (p m : ℝ) : ℝ := Real.sqrt (p ^ 2 + m ^ 2)
@@ -38,4 +38,4 @@ theorem wallSpread_zero (p m : ℝ) : wallSpread p m m = 0 := by
   unfold wallSpread
   ring
 
-end PMFlavor.WallDispersion
+end PMAction.WallEnergy

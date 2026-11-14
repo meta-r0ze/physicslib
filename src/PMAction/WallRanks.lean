@@ -5,7 +5,7 @@ import Mathlib.LinearAlgebra.Matrix.Rank
 /-! Turn the upstream idempotent trace certificates into actual eigenspace
 ranks. This counts complex linear modes, not physical fermion statistics. -/
 noncomputable section
-namespace PMFlavor.WallRanks
+namespace PMAction.WallRanks
 open Matrix PMAction.WallDispersion
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
@@ -40,4 +40,4 @@ theorem branch_ranks (k : Fin 3 → ℝ) (δ y : ℝ) (hy : y ≠ 0)
   exact ⟨rank_two_of_trace _ hp.2.1 ((ht.1 σ hσ).2),
     rank_two_of_trace _ hm.2.1 ((ht.2 σ hσ).2)⟩
 
-end PMFlavor.WallRanks
+end PMAction.WallRanks

@@ -6,7 +6,8 @@
   sector's open forks all reduce to what the update does to generations. Steps:
   1. Moves on the glue labels. Done (`GenerationSector`): `E₈` translations conserve the label, keep
      a generation state only for `a ∈ {0, label}`, and translation by the label swaps the walls'
-     classes (a generation-diagonal move with class gap `b + c`); generation changes need a
+     classes (keeps the label, reverses the orientation: it maps between the two conventions, not
+     within one); generation changes need a
      single-wall `D₄*` carrier, and from `(b, c)` the change to label `b` is a class-`c` carrier on
      wall 1, the change to `c` a class-`b` carrier on wall 2.
   2. Relate the two encodings. Done (`PMConstants.GenerationOrientation`, for every identification of
@@ -17,9 +18,13 @@
      terms, an orientation reversal. Its single-component crossing changes the two walls' classes by
      different amounts, which is not a move `GenerationSector` allows; whether it is physical is
      step 3.
-  3. Put the spinor/chirality structure on it: which walls carry which chirality (`DomainWall`), so
-     the label swap's action on chirality is known (it reverses orientation; does it flip
-     chirality, i.e. is it a mass term?).
+  3. Chirality within one convention (wall = chirality, `DomainWall`). Found, to formalize: a
+     generation-diagonal chirality flip changes the class by the label, which is not an equal-class
+     move; the equal-class crossing changes the generation (`PMFlavor.InterWallDiagonal`); the label
+     translation keeps each component's wall (no chirality flip) and leaves the convention. So within
+     one convention `E₈` supplies no generation-diagonal mass. Then decide the physical source of the
+     diagonal mass (a composite of a crossing and a single-wall carrier, or the update containing both
+     conventions) and whether spinor-class crossings carry the node suppression.
   4. The charged-current operator on this space: weak is the sign exchange on the reference's
      sector (`PMConstants.CarrierActions.weak`), which keeps every class. Show which single-wall
      carrier events, if any, accompany it, and on which wall; that decides which generation

@@ -1,4 +1,4 @@
-import PMFlavor.WallDispersion
+import PMAction.WallEnergy
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
@@ -17,11 +17,11 @@ gap exceeds `π/43`.
 -/
 
 noncomputable section
-namespace PMFlavor.WallMassModel
+namespace PMAction.WallMassModel
 
-open PMFlavor.WallDispersion
+open PMAction.WallEnergy
 
 def wallImpedanceAt (p m0 m2 : ℝ) : ℝ :=
   Real.sqrt (wallEnergy p m0 / wallEnergy p m2)
 
-end PMFlavor.WallMassModel
+end PMAction.WallMassModel

@@ -1,4 +1,4 @@
-import PMFlavor.WallImpedanceChoice
+import PMAction.WallImpedanceChoice
 import PMFlavor.TransferFlavor
 
 /-! **Experimental/candidate module.**
@@ -12,7 +12,7 @@ The capacity impedance is the zero-momentum mass ratio.  With mass ratio
 noncomputable section
 namespace PMFlavor.CapacityImpedance
 
-open PMFlavor.WallImpedanceChoice PMFlavor.TransferFlavor
+open PMAction.WallImpedanceChoice PMFlavor.TransferFlavor
 
 /-- Squared mass ratio selected by the capacity split. -/
 def capacityMassRatio : ℝ := 256 / 441

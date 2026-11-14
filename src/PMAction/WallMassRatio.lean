@@ -20,7 +20,7 @@ y² = (25/336) δ²,   i.e. y/δ = 5/√336.
 -/
 
 noncomputable section
-namespace PMFlavor.WallMassRatio
+namespace PMAction.WallMassRatio
 
 open PMAction.WallDispersion
 
@@ -85,4 +85,4 @@ theorem wall_coupling_ratio_substrate (δ y : ℝ) (hδ : δ ≠ 0)
   rw [coupling_ratio] at h2
   exact h2
 
-end PMFlavor.WallMassRatio
+end PMAction.WallMassRatio

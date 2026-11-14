@@ -90,15 +90,19 @@ shows closed injective updates cannot finitely prepare a stationary state.
   (`a→0`, `1/(a²N)→0`; explicit family `a=1/(r+1)`, `N=(r+1)³` via `ProjectedEvolution`).
 - `WallDispersion`, `DiracEnergy`, `WallSeesaw`, `WallExchange`, `SplitCovariance`:
   exact nonzero-link masses `m₊²+m₋²=y²+2δ²`, `m₊²m₋²=δ⁴`, positive eigenstates,
-  multi-flavour seesaw, parity-combined covariance. `Y` is the chirality-flipping (mass) term;
+  multi-flavour seesaw, parity-combined covariance. `WallRanks`: eigenspace ranks from the trace
+  certificates. Candidate wall-mass models (moved from PMFlavor): `WallEnergy` (the energy
+  `√(p² + m²)` of a wall branch), `WallMassModel` (the branch-energy impedance at momentum `p`),
+  `WallImpedanceChoice` (zero-momentum mass ratio versus energy ratio), `WallMassRatio` (the wall
+  couplings if the mass ratio is the capacity ratio `16/21`). `Y` is the chirality-flipping (mass) term;
   whether it also carries generation mixing is open (`WallSeesaw` docstring).
 - `WallHopPhase`: on one chirality the Wilson term drops out (`sandwich_beta`) and an in-wall hop
   is a quarter turn times a Hermitian matrix (`chiral_hop`); two such legs give a real reduced
   coupling (`quarter_turns_cancel`), so in-wall kinetic hops give no CP flux.
 - `GenerationSector`: moves on the generation labels (glue classes on the two walls). `E₈`
   translations conserve the label and keep a generation state only for `a ∈ {0, label}`
-  (`glue_keeps_iff`); translation by the label swaps the walls' classes (`label_glue_swaps`), a
-  generation-diagonal move with class gap `b + c`. Generation changes need a single-wall `D₄*`
+  (`glue_keeps_iff`); translation by the label swaps the walls' classes (`label_glue_swaps`), keeping the label and
+  reversing the orientation (between the two conventions, not within one). Generation changes need a single-wall `D₄*`
   carrier equal to the other wall's class (`shift_keeps_iff`, `shift2_keeps_iff`).
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct

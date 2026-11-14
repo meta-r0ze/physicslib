@@ -1,4 +1,4 @@
-import PMFlavor.WallMassModel
+import PMAction.WallMassModel
 
 /-! **Experimental/candidate module.**
 
@@ -10,9 +10,9 @@ need not agree at the preparation momentum.
 -/
 
 noncomputable section
-namespace PMFlavor.WallImpedanceChoice
+namespace PMAction.WallImpedanceChoice
 
-open PMFlavor.WallMassModel
+open PMAction.WallMassModel
 
 inductive ImpedanceConvention
   | zeroMomentumMassRatio
@@ -28,4 +28,4 @@ def physicalImpedance (p m0 m2 : ℝ) : ℝ := wallImpedanceAt p m0 m2
 /-- The selected convention for the capacity calculation. -/
 def selectedConvention : ImpedanceConvention := .zeroMomentumMassRatio
 
-end PMFlavor.WallImpedanceChoice
+end PMAction.WallImpedanceChoice
