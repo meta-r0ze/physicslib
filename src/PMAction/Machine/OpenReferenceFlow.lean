@@ -134,4 +134,15 @@ theorem vacuum_restores (s : State ℤ V) (r : V) (hvac : ∀ x : ℤ, (s x).2 =
     (((evolution 0 line)^[t+1] s) 0).1 = r :=
   open_restores s r (fun _ => hvac _) t
 
+/-- **Exchange at the node reflects.** A bit arriving on the incoming stream from site `1` is put
+in the node's live register, which the next tick carries back to site `1`, toward where it came
+from. -/
+theorem exchange_reflects (s : State ℤ V) :
+    (streamShift line (evolution 0 line s) 1).1 = (s 1).2 := rfl
+
+/-- **Bypass transmits.** Without the exchange the same bit stays on the incoming stream and is at
+site `-1`, past the node, one tick later. -/
+theorem bypass_transmits (s : State ℤ V) :
+    (streamShift line (streamShift line s) (-1)).2 = (s 1).2 := rfl
+
 end PMAction.OpenReferenceFlow

@@ -92,11 +92,37 @@ def T (a b : Fin 4 → ℂ) : Fin 4 → Fin 4 → ℂ := ![
 lemma I3 : Complex.I ^ 3 = -Complex.I := by rw [pow_succ, Complex.I_sq]; ring
 lemma I4 : Complex.I ^ 4 = 1 := Complex.I_pow_four
 
-set_option maxHeartbeats 4000000 in
+/-- `a̸ γ^μ`, written out: block-diagonal, since both factors are block off-diagonal. -/
+def SG (a : Fin 4 → ℂ) : Fin 4 → Spin := ![
+    !![a 0 + a 3, a 1 - Complex.I*a 2, 0, 0;
+      a 1 + Complex.I*a 2, a 0 - a 3, 0, 0;
+      0, 0, a 0 - a 3, -a 1 + Complex.I*a 2;
+      0, 0, -a 1 - Complex.I*a 2, a 0 + a 3],
+    !![a 1 - Complex.I*a 2, a 0 + a 3, 0, 0;
+      a 0 - a 3, a 1 + Complex.I*a 2, 0, 0;
+      0, 0, a 1 - Complex.I*a 2, -a 0 + a 3;
+      0, 0, -a 0 - a 3, a 1 + Complex.I*a 2],
+    !![Complex.I*a 1 + a 2, -Complex.I*a 0 - Complex.I*a 3, 0, 0;
+      Complex.I*a 0 - Complex.I*a 3, -Complex.I*a 1 + a 2, 0, 0;
+      0, 0, Complex.I*a 1 + a 2, Complex.I*a 0 - Complex.I*a 3;
+      0, 0, -Complex.I*a 0 - Complex.I*a 3, -Complex.I*a 1 + a 2],
+    !![a 0 + a 3, -a 1 + Complex.I*a 2, 0, 0;
+      a 1 + Complex.I*a 2, -a 0 + a 3, 0, 0;
+      0, 0, -a 0 + a 3, -a 1 + Complex.I*a 2;
+      0, 0, a 1 + Complex.I*a 2, a 0 + a 3]]
+
+theorem slg (a : Fin 4 → ℂ) (μ : Fin 4) : sl a * g μ = SG a μ := by
+  fin_cases μ <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+    simp [sl, g, SG, mul_apply, Fin.sum_univ_four] <;> ring_nf <;> simp only [Complex.I_sq] <;> ring
+
+/-- `Tr[(a̸γ^μ)(b̸γ^ν)(1−γ⁵)]`, from the block-diagonal products: only the lower block survives
+`L`. -/
 theorem tr4_closed (a b : Fin 4 → ℂ) (μ ν : Fin 4) : tr4 a b μ ν = T a b μ ν := by
+  rw [tr4, show sl a * g μ * sl b * g ν * L = sl a * g μ * (sl b * g ν) * L by
+    simp only [Matrix.mul_assoc], slg, slg]
   fin_cases μ <;> fin_cases ν <;>
-    simp [tr4, T, trace, sl, g, L, Fin.sum_univ_four] <;>
-    ring_nf <;> simp only [Complex.I_sq, I4] <;> ring
+    simp [SG, T, trace, L, Fin.sum_univ_four] <;>
+    ring_nf <;> simp only [Complex.I_sq] <;> ring
 
 set_option maxHeartbeats 4000000 in
 /-- **The contraction of two V−A traces.** -/
@@ -108,12 +134,12 @@ theorem contraction (a b c d : Fin 4 → ℂ) :
   simp only [Complex.I_sq]
   ring
 
-set_option maxHeartbeats 4000000 in
 /-- Moving the second projector through `b̸ γ^ν` and using `(1−γ⁵)² = 2(1−γ⁵)`. -/
 theorem projector_twice (b : Fin 4 → ℂ) (ν : Fin 4) :
     L * sl b * g ν * L = (2 : ℂ) • (sl b * g ν * L) := by
+  rw [show L * sl b * g ν * L = L * (sl b * g ν) * L by simp only [Matrix.mul_assoc], slg]
   fin_cases ν <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp [L, sl, g, mul_apply, Fin.sum_univ_four] <;> ring
+    simp [L, SG, mul_apply, Fin.sum_univ_four] <;> ring
 
 /-- The trace with a projector after each vertex. -/
 def W (a b : Fin 4 → ℂ) (μ ν : Fin 4) : ℂ := (sl a * g μ * L * sl b * g ν * L).trace

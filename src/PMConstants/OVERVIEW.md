@@ -397,3 +397,9 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `CarrierRegisterModel` | Independent occupied banks for actual vacuum and packet labels |
 | `CarrierRegisterVacuum` | Full native vacuum generator on those configuration banks |
 | `CarrierRegisterChirality` | Full-state matching obstructions and zero-kernel agreement |
+
+The gravitational handoff has a finite route interpretation: one exclusive open/closed mixture gives the calibrated coupling if its open-route weight equals the node admittance and the crossing labels share the stated symmetry. Requiring two independent successes preserves both endpoint calibrations and changes the interior probability (`HandoffAdmittance.two_pass_alternative`).
+
+For the actual glue-class reflection, a uniform incoming carrier gives outgoing-event probabilities in multiples of 1/8, excluding α. The coherent branch-exchange pulse instead gives a label-independent transfer probability sin²(t). `HandoffAdmittance.pulse_calibration_transfers` transfers a reference calibration when both preparations and detectors use this same pulse.
+
+In the open reference flow, exchanging the two arriving registers puts the incoming bit in the receiver's live register, which the next tick carries back toward its source (`PMAction.OpenReferenceFlow.exchange_reflects`); bypass leaves it on the through-stream, past the node (`bypass_transmits`). A crossing is the bit ending on the through-stream: the pulse's through weight `cos² t`, Landauer's transmission. One local maintenance swap converts the exchanged state to the bypass state. Either register pair retains the bit. With fixed branch costs and both endpoints available, the one-tick expected cost has an endpoint minimizer (`HandoffAdmittance.one_tick_cost_endpoint`).

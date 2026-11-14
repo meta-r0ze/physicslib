@@ -1,3 +1,8 @@
+import PMAction.Machine.OpenReferenceFlow
+import PMAction.Machine.ReferenceMaintenance
+import PMAction.Machine.CarrierEvents
+import PMAction.BranchPulseContract
+import PMConstants.CertifiedConstants
 import PMConstants.DepthEvents
 import PMSubstrate.ProtocolToll
 
@@ -33,6 +38,29 @@ transition (`PMSubstrate.ClosureSymmetry`). So every crossing sees the node's on
 `Z_geo`, the same one that sets the electromagnetic `α⁻¹`. `closure_one_price`: a price on
 crossing labels that no relabeling changes takes one value on all of them. The residual factor `16 − 2/3 − α` is
 unchanged.
+
+**At the register level (open reference flow).** What the receiver can do with an arriving bit:
+* `PMAction.OpenReferenceFlow.exchange_reflects`, `bypass_transmits`: exchange puts the bit in the
+  node's live register, which the next tick carries back toward its source; bypass keeps it on
+  the through-stream, past the node. `receiver_exchange_or_bypass`,
+  `repair_receiver_after_exchange`: one maintenance swap turns the exchanged state into the
+  bypassed one. So a crossing is the bit ending the tick on the through-stream.
+* `gravity_handoff_of_route_mixture`: an exclusive mixture of a closed route (transmission `0`)
+  and an open one (transmission `1`) passes with the open route's weight; with that weight the
+  node admittance, Closure gives `p = α`. `two_pass_alternative`: requiring two successes is also
+  normalized and label-blind but gives a different law, so the single-pass form is a statement.
+* Excluded: a uniformly prepared carrier followed by its reflection (`reflected_event_ne_alpha`,
+  weights `k/8`), and fixed per-branch costs (`one_tick_cost_endpoint`: an interior probability
+  never beats both deterministic endpoints).
+* The coherent branch-exchange pulse moves weight `sin² t` between the two registers at every label
+  (`pulse_calibration_transfers`), so a calibration at the reference transfers to the
+  gravitational crossing under the same pulse. Its through weight is `cos² t`, which is
+  Landauer's transmission: the reading above is `cos² t = 1/Z_geo`. A node of impedance
+  `Z_geo ≈ 137` then mostly exchanges (renews its live state, `OpenReferenceFlow.open_restores`)
+  and passes `α` on.
+
+Open: why the node's pulse has through weight `1/Z_geo` (the pulse angle), and the reading of
+`DepthEvents`' survival argument at this level, where the passing route is the bypass.
 -/
 
 noncomputable section
@@ -68,5 +96,92 @@ theorem closure_one_price {L : Type*} [DecidableEq L] (price : L → ℝ)
   have := h (Equiv.swap a b) a
   rw [Equiv.swap_apply_left] at this
   exact this.symm
+
+/-- If a crossing is an exclusive mixture of closed and open routes, its
+probability follows from the route weights and the two endpoint responses.
+Closure transfers the calibrated admittance to the gravitational label. -/
+theorem gravity_handoff_of_route_mixture {L : Type*} [DecidableEq L]
+    (y p : L → ℝ) (gravity reference : L)
+    (hinv : ∀ σ : Equiv.Perm L, ∀ a, y (σ a) = y a)
+    (href : y reference = PMSubstrate.causalCoupling)
+    (closed opened : ℝ) (hc : closed = 0) (ho : opened = 1)
+    (hmix : p gravity = (1 - y gravity) * closed + y gravity * opened) :
+    p gravity = PMSubstrate.causalCoupling := by
+  rw [hmix, hc, ho, mul_zero, mul_one, zero_add,
+    closure_one_price y hinv gravity reference, href]
+
+/-- Two independent successful passes also give a label-blind, normalized
+probability law. It differs strictly from a single pass at the substrate coupling. -/
+theorem two_pass_alternative :
+    DepthEvents.crossProb 0 2 = 0 ∧ DepthEvents.crossProb 1 2 = 1 ∧
+    (∀ y ∈ Set.Icc (0 : ℝ) 1, DepthEvents.crossProb y 2 ∈ Set.Icc (0 : ℝ) 1) ∧
+    DepthEvents.crossProb PMSubstrate.causalCoupling 2 < PMSubstrate.causalCoupling := by
+  simp only [DepthEvents.required_handoffs, pow_two]
+  refine ⟨by norm_num, by norm_num, ?_, ?_⟩
+  · intro y hy
+    exact ⟨mul_nonneg hy.1 hy.1, by simpa using mul_le_mul hy.2 hy.2 hy.1 zero_le_one⟩
+  · obtain ⟨hp, hlt⟩ := PMSubstrate.causalCoupling_bounds
+    simpa using mul_lt_mul_of_pos_left hlt hp
+
+/-- A uniformly prepared incoming glue-class carrier followed by its reversible reflection
+cannot give α for any sharp outgoing event: every event has weight k/8. -/
+theorem reflected_event_ne_alpha (c : Fin 3) (outgoing : Finset (PMAction.CarrierEvents.Carrier c)) :
+    PMSubstrate.NetCost.prob (outgoing.map (PMAction.CarrierEvents.reflect c).symm.toEmbedding) ≠
+      PMSubstrate.causalCoupling := by
+  rw [PMSubstrate.NetCost.prob, Finset.card_map, PMAction.CarrierEvents.carrier_card]
+  have h := CertifiedConstants.alpha_bounds
+  change _ < PMSubstrate.causalCoupling ∧ PMSubstrate.causalCoupling < _ at h
+  by_cases he : outgoing.card = 0
+  · rw [he]
+    norm_num
+    linarith [h.1]
+  · have hk : (1 : ℝ) ≤ (outgoing.card : ℝ) := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr he
+    push_cast
+    linarith [h.2]
+
+/-- For a prepared left basis state, detecting its right partner after the
+exchange pulse gives the same probability at every carrier label. Calibration
+at one label therefore transfers to any other under this same pulse/readout. -/
+theorem pulse_calibration_transfers {n : Type*} [Fintype n] [DecidableEq n]
+    (t : ℝ) (reference carrier : n)
+    (href : Complex.normSq (PMAction.BranchMixerSynthesis.xPulse t (.inr reference) (.inl reference)) =
+      PMSubstrate.causalCoupling) :
+    Complex.normSq (PMAction.BranchMixerSynthesis.xPulse t (.inr carrier) (.inl carrier)) =
+      PMSubstrate.causalCoupling := by
+  rw [PMAction.BranchPulseContract.transfer_weight] at href ⊢
+  exact href
+
+/-- At the receiver, exchange and bypass deliver the same incoming bit to
+different registers. Both comparisons use the same stream and a blank other input. -/
+theorem receiver_exchange_or_bypass (s : PMAction.OpenReferenceFlow.State ℤ Bool)
+    (blank : (s (-1)).1 = false) :
+    PMAction.OpenReferenceFlow.evolution 0 PMAction.OpenReferenceFlow.line s 0 =
+        ((s 1).2, false) ∧
+    PMAction.OpenReferenceFlow.streamShift PMAction.OpenReferenceFlow.line s 0 =
+        (false, (s 1).2) := by
+  change ((s 1).2, (s (-1)).1) = _ ∧ ((s (-1)).1, (s 1).2) = _
+  rw [blank]
+  exact ⟨rfl, rfl⟩
+
+/-- If the next task requires a blank live bit and the incoming bit in the
+record, one maintenance swap after exchange achieves the bypass state. -/
+theorem repair_receiver_after_exchange (s : PMAction.OpenReferenceFlow.State ℤ Bool) :
+    PMAction.ReferenceMaintenance.event (0 : ℤ)
+      (PMAction.OpenReferenceFlow.evolution 0 PMAction.OpenReferenceFlow.line s) =
+    PMAction.OpenReferenceFlow.streamShift PMAction.OpenReferenceFlow.line s := by
+  funext x
+  by_cases hx : x = 0 <;>
+    simp [PMAction.ReferenceMaintenance.event, PMAction.OpenReferenceFlow.evolution_apply,
+      PMAction.OpenReferenceFlow.streamShift, hx]
+
+/-- With probability-independent branch costs an interior probability cannot
+strictly beat both deterministic endpoints. This includes fixed repair tolls. -/
+theorem one_tick_cost_endpoint (p missed delivered : ℝ) (hp : p ∈ Set.Icc (0 : ℝ) 1) :
+    min missed delivered ≤ (1 - p) * missed + p * delivered := by
+  rcases le_total missed delivered with h | h
+  · rw [min_eq_left h]
+    nlinarith [mul_nonneg hp.1 (sub_nonneg.mpr h)]
+  · rw [min_eq_right h]
+    nlinarith [mul_nonneg (sub_nonneg.mpr hp.2) (sub_nonneg.mpr h)]
 
 end PMConstants.HandoffAdmittance

@@ -1,17 +1,6 @@
 # PMConstants — open work
 
-## Open, by constant
-
-
-| Constant | Still open |
-| --- | --- |
-| VEV v, G_F | The VEV's correction factors (`VevPremises`). |
-| m_H | Response corrections, which are below current precision: the tree value `125.2692638–125.2692640` GeV is `+0.6σ` from PDG `125.20 ± 0.11`. |
-| Hypercharges / generations | The tag is the wall, so its dynamics is the inter-wall link `Y` (`WallExchange`, `WallSeesaw`: light masses `δ²/σᵢ(Y)`); its entries belong to `PMFlavor`, which builds on this folder. Premise: refreshes act uniformly on a sector (`CarrierActions.weak_chiral`). |
-| Strong CP θ̄ | The unit-transfer history is certified outside Lean (`tools/unit_transfer_certificate.py`: on the `3⁴` torus the Hermitian Wilson kernel at the Wilson point has `162` filled modes for the trivial history and `163` for a unit-flux one, both invertible, by ball-arithmetic congruence and Sylvester's law); a Lean proof is a certified-numerics task like `PMAction` A.1. Premise: the θ-vacua are vacuum candidates, selected by least cost like the substrate's own vacuum (`PMSubstrate.Vacuum.vacuum_selects`). |
-| Running | Mechanical: the integrated remainder of the polarization integral over the window (the `q³` term of `inv_expand` and the `O(a²)` propagator and vertex corrections, `symbol_gap`, `vertex_gap`), as `LeadingLog.shell_lattice` does for the contact. |
-
-## Candidates (explain a selection; not independent derivations)
-
-* `HandoffAdmittance`: transmission linear in admittance with a unit channel open (Landauer),
-  and the Closure reading for the gravitational handoff.
+- **Electroweak scale (`v`, `G_F`).** Derive the two correction factors in the VEV formula from the update. The scalar mass relation uses the same scale. [VEV premises](VevPremises.lean) · [Scalar sector](ScalarSector.lean)
+- **Strong CP.** Bring the external unit-transfer certificate into Lean: verify invertibility and the change from 162 to 163 filled modes for the two Wilson kernels. The physical selection argument also assumes the anomaly relation and admits the θ-vacua as least-cost candidates. [Certificate](../../tools/unit_transfer_certificate.py) · [Selection theorem](ThetaBarSelection.lean)
+- **Running couplings.** Bound the integrated polarization remainder over the running window, including the cubic remainder in the inverse expansion and the finite-spacing propagator and vertex errors. This depends on the PMAction estimates. [Polarization average](../PMAction/PolarizationAverage.lean) · [Leading log](../PMAction/LeadingLog.lean)
+- **Gravitational handoff.** Derive the node pulse's through weight `cos² t = 1/Z_geo` (the pulse angle): a crossing is the bit ending on the through-stream (`PMAction.OpenReferenceFlow.exchange_reflects`, `bypass_transmits`), whose weight is Landauer's transmission, and Closure transfers the reference calibration under the same pulse (`pulse_calibration_transfers`). Then restate `DepthEvents`' survival argument at the register level, where the passing route is the bypass. Excluded so far: uniform single-carrier reflection, fixed branch costs, and the two-pass law as an alternative of the same form. [Handoff admittance](HandoffAdmittance.lean)
