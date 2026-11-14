@@ -11,3 +11,12 @@
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
+- The phase of a node-crossing hop. `WallHopPhase` shows in-wall spatial hops carry a quarter turn
+  that cancels in every reduced coupling, so the CKM flux (`PMFlavor/REVIEW-AND-NEXT.md`, about
+  `49°`) must come from elsewhere. The node crossings are spinor-class displacements with a
+  time-axis component `±1` (`PMFlavor.ExchangeAxis.spinor_touch`), which is not a spatial `αⱼ`
+  hop. Compute the amplitude of such a displacement on one chirality, in the discrete-time update
+  (the time component is a tick, not a hopping term), and its phase relative to the in-wall legs.
+  Also state the lead model (equal leads per generation) here as a premise, since
+  `PMFlavor.TransferGenerator` uses it.
+

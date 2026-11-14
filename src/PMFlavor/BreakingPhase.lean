@@ -15,6 +15,12 @@ The broken-link parameters are interpreted as:
 
 The amplitude is `exp(iδ − (β/2)ε)`.  Numerical values of `δ, ε` remain physical
 wall inputs.
+
+**Inconsistency (audit).** `brokenLinkOfPhase` feeds `δ` into `brokenLink` as a real diagonal
+weight, not as a phase, so the "phase mismatch" reading is not what the link uses. The broken link
+itself is retired as the quark and lepton mixing link (`LinkKronComparison`, `LinkHierarchy`); this
+module is kept for its exceptional-curve results, and the phase of a transfer leg is treated in
+`LinkFlux` and `PMAction.WallHopPhase`.
 -/
 
 noncomputable section

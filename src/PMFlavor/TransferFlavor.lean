@@ -10,6 +10,11 @@ import PMFlavor.PMNS
 
 CKM is boundary conduction, PMNS is capacity promotion, and the broken link is a
 coordinate jump.  The mixing overlap is the transfer amplitude ledger.
+
+Status (audit): the CKM as boundary conduction agrees with the surviving reading, a single-wall
+shift by a minimal vector on the weak wall (`GenerationLabel`), with the transfer the zero-energy
+scattering of `TransferGenerator`. `brokenLinkTransfer` and `mixingOverlapAmplitude` are built on
+the retired broken link (`LinkKronComparison`, `LinkHierarchy`).
 -/
 
 noncomputable section

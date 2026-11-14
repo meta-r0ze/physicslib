@@ -36,6 +36,16 @@ exactly (`light_heavy`).
 The Schur complement at zero energy is the leading-order effective mass for `δ ≪ σᵢ(Y)`; the
 energy-dependent corrections are `O(δ²/σ²)` relative. That the physical fermion masses are these
 light modes is the identification the formula proposes.
+
+**What `Y` is in flavour terms.** `Y` is the inter-wall term, so it flips chirality: it is the mass
+(`WallTransfer`: the only term joining the walls). Whether its generation off-diagonal entries also
+carry the quark mixing is not settled here. Two results bear on it: the charged current's own
+generation move is a single-wall shift that keeps chirality (`PMFlavor.GenerationLabel`), and a
+conserving `Y` (a Laplacian of the generation–class incidence) carrying the CKM is excluded by the
+quark masses and mixing together (`PMFlavor.ThirdGenerationMixing`, `tools/flavour_link_fits.py`).
+A `Y` with independent diagonal entries is not excluded, but then this formula does not fix them;
+and if `Y` is the equal-class crossing the E₈ gluing allows, its diagonal is zero and it cannot carry
+the hierarchy (`PMFlavor.InterWallDiagonal`).
 -/
 
 noncomputable section

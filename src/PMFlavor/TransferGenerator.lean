@@ -3,10 +3,11 @@ import PMFlavor.ThirdGenerationMixing
 /-!
 # The charged-current transfer is zero-energy scattering: the Cayley form
 
-`ThirdGenerationMixing` and the numerical fits (`tools/flavour_link_fits.py`, OVERVIEW) leave one
-reading of the CKM standing: the masses are generation-diagonal (`GenerationLabel`: root moves
-conserve the label) and the CKM is the charged current's transfer through the fluxed incidence
-network `K`. This module fixes how `K` generates the transfer, from conventions the library
+`ThirdGenerationMixing` and the numerical fits (`tools/flavour_link_fits.py`, OVERVIEW) exclude a
+conserving mass link carrying the CKM. The reading with a test is: the masses are generation-diagonal
+(`GenerationLabel`: root moves conserve the label) and the CKM is the charged current's transfer
+through the fluxed incidence network `K` (a mass link with free diagonal entries is not excluded, but
+is untestable until they are derived). This module fixes how `K` generates the transfer, from conventions the library
 already uses.
 
 * The dressing is a transfer out of the generation block (`DressingEvent`), transmission is

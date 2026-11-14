@@ -144,14 +144,30 @@ the spread is the choice of generator form and diagonal, so no sharper value is 
 and `|K₁₃| = 0.0043`–`0.0047`, above `VubSeriesPath`'s `1/(2α⁻¹ + π) = 0.0036`, which matches
 `|V_ub|` itself rather than the coupling.
 
-**The eigenvector reading fails for quarks** (numerical). Both sectors as fluxed incidence links
+**A conserving mass link fails for quarks** (numerical). Both sectors as fluxed incidence links
 (three moduli and a flux each; the overall scale drops out), masses from the seesaw, CKM as
 `U_uᴴ U_d`: 8 constraints (four mass ratios at `M_Z`, four CKM invariants) on 6 parameters. Best
 `χ² ≈ 1040`, from `m_s/m_d` (the fit reaches about `4`, against `20`) together with the CKM; up
 masses and the CKM alone fit. With the exact one-flavour mass and a free `δ₀` per sector (8
-parameters) it is unchanged (`χ² ≈ 1039`). So the library's `WallSeesaw` reading, mixing as the
-mismatch of two incidence mass links, is excluded for quarks; the transfer reading (masses
-generation-diagonal, `GenerationLabel`) is the one that survives, and it needs the flux above.
+parameters) it is unchanged (`χ² ≈ 1039`). So mixing as the mismatch of two conserving incidence
+mass links (diagonal = sum of the couplings) is excluded for quarks. A mass link with independent
+diagonal entries is not excluded, but it has no test until those entries are derived. The transfer
+reading (masses generation-diagonal, `GenerationLabel`; the charged current's own single-wall shift)
+is the one with a test, and it needs the flux above. `PMAction.WallHopPhase`: an in-wall hop on one
+chirality is a quarter turn that cancels in every reduced coupling, so that flux does not come from
+the in-wall kinetic hop.
+
+**The gluing forbids a generation-diagonal crossing.** `InterWallDiagonal`: E₈ pairs equal classes
+across the walls, so the inter-wall term keeps the class, and an equal-class crossing always
+changes the generation (`crossing_changes_generation`). The inter-wall link therefore has zero
+generation diagonal and trace zero; then two of its singular values are within a factor `2`
+(`traceless_close_pair`), and under `WallSeesaw` the two lightest masses are too
+(`seesaw_close_pair`; the exact one-flavour mass keeps the factor). Every charged sector has its
+closest pair more than `16` apart (`no_measured_lepton_traceless` for leptons). So the hierarchy needs
+a generation-diagonal mass that the equal-class crossing cannot give: a composite (crossing plus a
+single-wall carrier shift by the generation label) or a flavour-dependent on-site term. The
+`GenerationWalls` reading "the tag dynamics is `Y`, light masses `δ²/σ(Y)`" is excluded as the
+source of the hierarchy under the gluing premise.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a

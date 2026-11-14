@@ -27,6 +27,16 @@ the two-wall Hamiltonian, `hop ⊗ Y` (`PMAction.WallExchange`): `Y` is the curr
 every mode is reachable when `Y` is invertible, and the zero-energy reduction gives the light
 masses `δ²/σᵢ(Y)` (`PMAction.WallSeesaw.seesaw`). So the generation tag's dynamics is the flavour
 link `Y`, whose entries are the flavour sector's (`PMFlavor`), not a new law here.
+
+**Caution (audit).** In this encoding a carrier crossing the walls at a fixed class changes the
+generation and flips chirality in one step, so the generation-changing part of `Y` and the mass are
+the same operation. `PMFlavor.GenerationLabel` encodes the generation change differently: a shift
+of one wall's class, which keeps chirality, as the charged current requires (it acts on one wall).
+The two are different moves. For quarks, a conserving `Y` carrying both the masses and the CKM is
+excluded (`PMFlavor.ThirdGenerationMixing`); which move the charged current uses is open in
+`PMFlavor/REVIEW-AND-NEXT.md`. `PMFlavor.InterWallDiagonal`: with the gluing (equal classes), the
+crossing never keeps the generation, so this `Y` has zero diagonal and cannot carry the mass
+hierarchy through `δ²/σ(Y)`. The counting results here do not depend on it.
 -/
 
 noncomputable section

@@ -27,7 +27,8 @@ So the sector exchange that respects the walls' chirality is parity combined wit
 update is invariant under it (the two D₄ sectors are copies of one lattice), every inter-wall flavour
 link is Hermitian. That is the premise of Paper III's `HermitianMass.thetaBar_eq_theta`, now reduced
 to invariance under a concrete symmetry of the actual Hamiltonian. Still an input: that the vacuum
-update has this symmetry, and that the zero-mode mass matrix is this link `Y`.
+update has this symmetry, and that the zero-mode mass matrix is this link `Y` (see `WallSeesaw` for
+what that does and does not say about generation mixing).
 -/
 
 noncomputable section

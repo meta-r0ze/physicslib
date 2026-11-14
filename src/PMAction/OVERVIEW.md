@@ -90,7 +90,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
   (`a→0`, `1/(a²N)→0`; explicit family `a=1/(r+1)`, `N=(r+1)³` via `ProjectedEvolution`).
 - `WallDispersion`, `DiracEnergy`, `WallSeesaw`, `WallExchange`, `SplitCovariance`:
   exact nonzero-link masses `m₊²+m₋²=y²+2δ²`, `m₊²m₋²=δ⁴`, positive eigenstates,
-  multi-flavour seesaw, parity-combined covariance.
+  multi-flavour seesaw, parity-combined covariance. `Y` is the chirality-flipping (mass) term;
+  whether it also carries generation mixing is open (`WallSeesaw` docstring).
+- `WallHopPhase`: on one chirality the Wilson term drops out (`sandwich_beta`) and an in-wall hop
+  is a quarter turn times a Hermitian matrix (`chiral_hop`); two such legs give a real reduced
+  coupling (`quarter_turns_cancel`), so in-wall kinetic hops give no CP flux.
 - `LocalIsometricDynamics`: the finite-stencil full-label completion
   `E U E† + I − E E†` (unitary on all labels, same readout, no extra labels).
 
