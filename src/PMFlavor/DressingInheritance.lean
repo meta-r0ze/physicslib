@@ -29,11 +29,17 @@ from what is already in the library.
 * `measured_row`: so a quark row measured against muon decay has sum `q² · 1 / 1 = q²`, the
   deficit `1/516` does not cancel; `global_cancels` restates that equal dressing would cancel.
 
+**Only the charged current.** The loss is the reference's frame deficit, paid by the move that
+maintains the reference: the weak (charged-current) refresh, the sign exchange (`WeakUniform`).
+A neutral-current event does not refresh the reference, so it is undressed. The `Z` pole requires
+this (`z_pole_undressed`: dressing `Z → q q̄` would put `R_ℓ` `2.3σ` low), while the dressed hadronic
+`W` fraction stays within `1σ` (`w_hadronic_dressed`).
+
 Consequences: every CKM row and column loses `1/516`, within `1σ` of all four measured sums
 (`row_column_tests`: first row `0.9984(7)`, first column `0.9971(20)`, second row and column
 `1.001(12)`, `1.003(12)`); lepton-axis processes (muon decay, PMNS
-oscillation) are undressed, so PMNS stays unitary; a ratio of a hadronic to a leptonic rate of the
-same weak vertex (e.g. `W → q q̄'` against `W → ℓ ν`) carries `q²`. The underlying mixing is still the
+oscillation) are undressed, so PMNS stays unitary; a ratio of a hadronic to a leptonic charged-current rate
+(`W → q q̄'` against `W → ℓ ν`) carries `q²`; neutral-current rates do not. The underlying mixing is still the
 unitary basis change `U_uᴴ U_d` (`CKMClosure.basis_change_unitary`); the observed quark amplitude
 is `q` times it, which is why `CKMClosure.closure_excludes_dressing` does not apply to the
 observed block.
@@ -67,5 +73,19 @@ theorem row_column_tests :
   · rw [abs_of_pos (by norm_num)]; norm_num
   · rw [abs_of_neg (by norm_num)]; norm_num
   · rw [abs_of_neg (by norm_num)]; norm_num
+
+/-- **Only the charged current is dressed: the `Z` pole says so.** If `Z → q q̄` carried `q²`, the
+hadronic-to-leptonic ratio `R_ℓ` would drop from the SM fit `20.749` to `20.709`, `2.3σ` below the
+LEP value `20.767 ± 0.025` (the SM sits at `0.7σ`). The charged-current hadronic `W` branching
+fraction instead stays within `1σ` dressed (`0.6750` against `0.6741 ± 0.0027`, SM `0.6754`). -/
+theorem z_pole_undressed :
+    2 < |20.749 * (515/516 : ℝ) - 20.767| / 0.025 ∧ |(20.749 : ℝ) - 20.767| / 0.025 < 1 := by
+  constructor
+  · rw [abs_of_neg (by norm_num)]; norm_num
+  · rw [abs_of_neg (by norm_num)]; norm_num
+
+theorem w_hadronic_dressed :
+    |(515/516 * (0.6754 / 0.3246 : ℝ)) / (515/516 * (0.6754 / 0.3246) + 1) - 0.6741| / 0.0027 < 1 := by
+  rw [abs_of_pos (by norm_num)]; norm_num
 
 end PMFlavor.DressingInheritance

@@ -59,8 +59,10 @@ why the quark rows carry it and muon decay does not (so it does not cancel again
 reference's maintenance moves along its own axis, the time axis is the maintenance direction, so the
 lepton axis is time and colour transitions are spatial; only spatial transitions register a loss.
 Premise: carrier vectors and lattice hop directions share the `D₄` coordinates. Every row and column
-then loses `1/516`, within `1σ` of all four measured sums (`row_column_tests`). Open: sharper tests
-(PMNS unitary; hadronic/leptonic `W` ratio carries `q²`, a `0.2%` shift).
+then loses `1/516`, within `1σ` of all four measured sums (`row_column_tests`). Only the charged-current
+refresh pays the reference's deficit: the `Z` pole excludes a dressed `Z → q q̄` at `2.3σ`
+(`z_pole_undressed`) and the dressed hadronic `W` fraction fits (`w_hadronic_dressed`). Open: sharper
+tests (PMNS unitarity; the hadronic `W` fraction at `0.1%`).
 
 ### 3. Inputs that are not derivable
 
