@@ -59,8 +59,14 @@ unchanged.
   `Z_geo ≈ 137` then mostly exchanges (renews its live state, `OpenReferenceFlow.open_restores`)
   and passes `α` on.
 
-Open: why the node's pulse has through weight `1/Z_geo` (the pulse angle), and the reading of
-`DepthEvents`' survival argument at this level, where the passing route is the bypass.
+* `direct_crossing`: at speed one a bit is `n` layers deep after `n` ticks exactly when every node
+  passed it (`full_displacement_iff`: an exchange reverses its direction, and it can never make up
+  the lost ticks). So among the `2ⁿ` branch histories only the all-pass one crosses, and with an
+  independent through weight `w` per node its probability is `w ^ n = DepthEvents.crossProb w n`
+  (`direct_crossing_prob`). This is `DepthEvents`' survival law at the register level: the factor
+  per layer is the through weight; the exchanged histories return toward the source.
+
+Open: why the node's pulse has through weight `1/Z_geo` (the pulse angle).
 -/
 
 noncomputable section
@@ -183,5 +189,59 @@ theorem one_tick_cost_endpoint (p missed delivered : ℝ) (hp : p ∈ Set.Icc (0
     nlinarith [mul_nonneg hp.1 (sub_nonneg.mpr h)]
   · rw [min_eq_right h]
     nlinarith [mul_nonneg (sub_nonneg.mpr hp.2) (sub_nonneg.mpr h)]
+
+/-! ## The direct crossing at the register level -/
+
+/-- Displacement of a bit over a branch history: at each tick the node either passes it
+(`true`, direction kept) or exchanges it (`false`, direction reversed, `exchange_reflects`), then
+the bit moves one site in its direction. -/
+def disp : ℤ → List Bool → ℤ
+  | _, [] => 0
+  | d, b :: bs => (if b then d else -d) + disp (if b then d else -d) bs
+
+lemma disp_bound : ∀ (bs : List Bool) (d : ℤ), (d = 1 ∨ d = -1) →
+    -(bs.length : ℤ) ≤ disp d bs ∧ disp d bs ≤ bs.length
+  | [], _, _ => by simp [disp]
+  | b :: bs, d, hd => by
+    have hd' : (if b then d else -d) = 1 ∨ (if b then d else -d) = -1 := by
+      cases b <;> simp <;> omega
+    have ih := disp_bound bs _ hd'
+    simp only [disp, List.length_cons]
+    push_cast
+    rcases hd' with h | h <;> rw [h] at ih ⊢ <;> omega
+
+/-- **Speed one selects the direct history.** A bit moving in direction `d` covers `d · n` in `n`
+ticks exactly when every node passes it. -/
+theorem full_displacement_iff : ∀ (bs : List Bool) (d : ℤ), (d = 1 ∨ d = -1) →
+    (disp d bs = d * bs.length ↔ ∀ b ∈ bs, b = true)
+  | [], _, _ => by simp [disp]
+  | b :: bs, d, hd => by
+    cases b
+    · have hb := disp_bound bs (-d) (by omega)
+      simp only [disp, Bool.false_eq_true, ↓reduceIte, List.length_cons]
+      constructor
+      · intro h; exfalso; push_cast at h; rcases hd with rfl | rfl <;> omega
+      · intro h; exact absurd (h false (by simp)) (by decide)
+    · have ih := full_displacement_iff bs d hd
+      simp only [disp, ↓reduceIte, List.length_cons, List.mem_cons, forall_eq_or_imp,
+        eq_self_iff_true, true_and]
+      push_cast
+      rw [← ih]
+      constructor <;> intro h <;> linarith
+
+/-- **The direct crossing.** Of the `2ⁿ` branch histories over `n` ticks, the only one that puts
+the bit `n` layers deep is the all-pass one. With an independent through weight `w` per node its
+probability is `w ^ n`, which is `DepthEvents.crossProb w n`. -/
+theorem direct_crossing (n : ℕ) (bs : List Bool) (hn : bs.length = n) :
+    disp (-1) bs = -(n : ℤ) ↔ bs = List.replicate n true := by
+  have h := full_displacement_iff bs (-1) (Or.inr rfl)
+  rw [hn] at h
+  rw [show -(n : ℤ) = -1 * n by ring, h, ← hn, List.eq_replicate_iff]
+  simp
+
+theorem direct_crossing_prob (w : ℝ) (n : ℕ) :
+    ((List.replicate n true).map fun b => if b then w else 1 - w).prod =
+      DepthEvents.crossProb w n := by
+  simp [DepthEvents.required_handoffs]
 
 end PMConstants.HandoffAdmittance

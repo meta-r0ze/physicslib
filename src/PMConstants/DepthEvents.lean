@@ -13,7 +13,9 @@ requires one handoff event. If that event occurs with probability `p` per layer,
 `required_handoffs`: the probability of crossing `n` layers is `p^n`, and with no event the signal
 does not advance at all (`no_event_no_advance`). The law `(1 − α)^n` counts the histories in which
 no interaction occurs, which are exactly the histories in which the signal stays put. With the
-handoff probability equal to the coupling `α`, the attenuation is `α^n`.
+handoff probability equal to the coupling `α`, the attenuation is `α^n`. At the register level
+(`HandoffAdmittance.direct_crossing`): at speed one only the history in which every node passes
+the bit on reaches depth `n` in `n` ticks, so the per-layer factor is the node's through weight.
 
 **Half depth.** The only integer-count object is the closed causal loop of `Δ = 43` handoffs, with
 probability `α^43`. A loop is an outbound trip followed by a return. The update is real, hence
