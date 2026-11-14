@@ -26,6 +26,18 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
 
 ## Dynamics and limits
 
+- **Subtracted lattice polarization** (unblocks `PMConstants` running couplings). The missing link
+  is a theorem about the same subtracted observable on the lattice that `PMConstants` can consume.
+  (a) The finite-`q` vertex. Done in part (`FiniteVertex`): the Ward identity is exact
+  (`ward`), and the conserved vertex is the midpoint vertex with each root weighted by
+  `sin x / x`, `x = a r·q/2`; the midpoint vertex alone misses it by `O(a²|k||q|³)`
+  (`midpoint_gap`). Still open: the two-field contact (seagull) term of the gauged hop, and the
+  transversality of the lattice `Π_μν` it should restore. (b) Bound lattice minus continuum after
+  subtracting the `q = 0` value, on the shell of `PolarizationRemainder.polarization_window`, with
+  `symbol_gap` at both `k` and `k + q` and the weighted vertex. Acceptance: the bound must resolve
+  the `q²` coefficient. An `O(a²)` estimate independent of `q` proves convergence at fixed `q` but
+  is useless after division by `q²`. Whether the existing estimates are sharp enough after the
+  subtraction is open.
 - **Inertia certificate** (unblocks `PMConstants` strong CP: the unit-winding witness). One reusable
   theorem beside `InertiaStability`, mirroring `tools/unit_transfer_certificate.py`: for Hermitian
   `H`, a proposed basis `Q` and `B = Qᴴ H Q`,
