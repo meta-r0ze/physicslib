@@ -7,7 +7,7 @@ cardinalities alone. `same_axis_iff`: the sign is the only move that keeps a
 carrier's axis, so a refresh that keeps the reference's axis acts on the sign
 pair; that is why the sign is the doublet index. `weak_chiral`: the minimal sector-uniform sign
 action that moves the reference acts on the reference's sector only, so the weak refresh is
-chiral; which sector is called left is the name for the reference's sector. -/
+chiral (uniformity within a sector: `WeakUniform.refresh_uniform`); which sector is called left is the name for the reference's sector. -/
 noncomputable section
 namespace PMConstants.CarrierActions
 open PMAction.CarrierEvents PMConstants.CarrierRepresentation
@@ -164,7 +164,9 @@ theorem sectorSign_weak (p : Packet) : sectorSign true false p = weak p := by
 cell, one carrier state). Among sector-uniform sign actions, any that moves the reference moves at
 least the eight carriers `weak` moves, and one that moves only eight is `weak`: it acts on the
 reference's sector and leaves the other fixed. Economy (`MinimalRefresh.strict_if_extra`) takes the
-minimal one, so the weak refresh acts on one sector only. -/
+minimal one, so the weak refresh acts on one sector only. The restriction to sector-uniform actions
+is derived in `WeakUniform.refresh_uniform`: a D₄ root-reflection word that commutes with colour
+and moves the reference is the sign exchange of the whole sector. -/
 theorem weak_chiral (a b : Bool) (h : ∃ v : V, sectorSign a b (Sum.inl v) ≠ Sum.inl v) :
     weakSupport.card ≤ (univ.filter fun p => sectorSign a b p ≠ p).card ∧
       ((univ.filter fun p => sectorSign a b p ≠ p).card = weakSupport.card →

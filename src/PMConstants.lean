@@ -127,6 +127,7 @@ import PMConstants.ReferenceAxis
 import PMConstants.RequirementRows
 import PMConstants.WeakLocality
 import PMConstants.WeakConfinement
+import PMConstants.WeakUniform
 import PMConstants.RequirementComplement
 import PMConstants.TableConsequences
 import PMConstants.ReadoutScales
