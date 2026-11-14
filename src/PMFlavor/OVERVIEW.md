@@ -154,6 +154,15 @@ mismatch of two incidence mass links, is excluded for quarks; the transfer readi
 generation-diagonal, `GenerationLabel`) is the one that survives, and it needs the flux above.
 Scripts: `tools/flavour_link_fits.py`.
 
+**The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a
+Hermitian network with equal leads `γ` (Landauer, `HandoffAdmittance`; zero energy, `KronSeries`;
+one price, Closure) is `1 − 2iγ(−K + iγ)⁻¹`, eigenvalue by eigenvalue `−(1 − ix)/(1 + ix)` with
+`x = k/γ` (`mw_eq_cayley`), a phase (`cayley_unimodular`). Only coupling ratios are data. With
+this generator the PDG CKM gives a flux of `49.1 ± 1.1°` and `K₁₃/K₁₂ = 0.0185 ± 0.0005`;
+`VubSeriesPath`'s `(1/(2α⁻¹ + π))/(π/14) = 0.0161` is `4.7σ` low, so its agreement with `|V_ub|` is
+with the full amplitude (which includes the route through the in-cycle pair), not with the path it
+constructs. Retired as structural; the formula stays as a numerical observation.
+
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional
 forms themselves are ansätze, not E8 theorems. Upstream

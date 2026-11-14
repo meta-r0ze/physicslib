@@ -32,6 +32,13 @@ node impedances the data admit several forms equally (`(π + χ)/(Z − 4π)`, `
 `2π/(Z + 5π)` all within `0.2σ`), and the inclusive/exclusive `|V_cb|` tension widens this, so no
 construction can be singled out yet.
 
+**Status after `TransferGenerator`.** In the reading that survives the quark fits (masses
+generation-diagonal, the CKM the zero-energy transfer through the fluxed network), this path is the
+direct coupling `K₁₃`, and `|V_ub|` also contains the second-order route through the in-cycle pair,
+as large as `K₁₃`. The scale-free test `K₁₃/K₁₂ = 0.0185 ± 0.0005` (data) against this module's
+`(1/(2α⁻¹ + π))/(π/14) = 0.0161` fails at `4.7σ`, so the match with `|V_ub|` below is not
+structural in that reading.
+
 The amplitude being the path's series admittance is derived in `KronSeries`: a conserving link is a
 Laplacian, and eliminating the node (Kron reduction) gives exactly the series admittance. That the two legs are equal
 is Closure (`HandoffAdmittance.closure_one_price`).
