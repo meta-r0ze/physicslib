@@ -232,7 +232,11 @@ node carriers are excluded for up and leptons in this form. Solving for the ligh
 sector needs (`required_k`, two branches): down `0.0034` or `0.0059` (the two-leg Kron value `α/2 =
 0.0036` is `7%` from the first); up `8.8 × 10⁻⁵` or `3.0 × 10⁻⁴`, `12`–`40×` below `α/2`; leptons
 `0.0011`–`0.0013` or `0.015`–`0.017`, `5`–`80×` below `√α`. Up and leptons need an extra suppression
-of the light carrier that the library does not supply.
+of the light carrier that the library does not supply. `DoubletReflection`: reflecting a colour axis
+fixes the reference's axis, reverses the doublet sign (up ↔ down) and exchanges spinor and cospinor
+(the `s ↔ c` swap the mass formula already treats as a symmetry), so the `D₄` geometry with the
+reference cannot tell up from down; the difference needs a charge (the right-sector hypercharge) or
+a breaking of the swap.
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the

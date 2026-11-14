@@ -24,9 +24,10 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   match these numbers to constants. Tried and failed: the up-type conjugate link
   (`PMConstants.SectorExchange.one_doublet_phase_cancels`: up uses `v̄`), read as the transposed
   cycle in `d + C_O`, gives heavy/middle near `10⁴` for up (data `277`) at the node-rule `k`; it does
-  not explain the up sector. Next candidates: the doublet sign (`CarrierRepresentation`: `T₃` is the
-  carrier sign, entering the right-sector hypercharge) acting on the other wall's carriers, and the
-  lepton/quark leg count beyond `NodeElimination`'s leading reading.
+  not explain the up sector. The doublet sign as geometry is excluded
+  (`PMFlavor.DoubletReflection`). Next candidates: the right-sector hypercharge
+  (`Y = B − L + 2T₃`, which does tell up from down) entering the node passage on the other wall, and
+  the lepton/quark leg count beyond `NodeElimination`'s leading reading.
 
 ## Carrier update
 
