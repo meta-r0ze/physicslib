@@ -96,6 +96,7 @@ import PMFlavor.ExchangeChirality
 import PMFlavor.NodePassage
 import PMFlavor.NodeElimination
 import PMFlavor.DressingChannels
+import PMFlavor.DressingEvent
 import PMFlavor.TransferAmount
 import PMFlavor.MixingMatrix
 import PMFlavor.WeakCurrentBridge

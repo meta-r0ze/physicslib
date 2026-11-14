@@ -60,7 +60,12 @@ channels (`dilation_three` attains `dilation_needs_three`), and economy takes it
 that they are the `D − 1` spatial-axis readout channels (`VevEvent`, `ReactorConductance`). With
 three rows losing `ε` each into them, the two divisors become a physical question: `1/688` if the
 temporal direction's share of the deficit `1 − η` stays with the reference, `1/516` if the whole
-deficit leaves through the spatial channels. Open with it: that question, and the `>2%` Jarlskog disagreement with Paper III once
+deficit leaves through the spatial channels. `DressingEvent` answers it with the VEV's event
+principle (`PMConstants.VevEvent`): the loss is a registered transfer, the time comparison never
+fires under exact repair, so the event-conditioned law puts no weight on time and each spatial
+outlet carries `(1 − η)/3 = 1/516`. Next: switch the library's `q² = 687/688` (`CKMDressing.q2`,
+`Mixing.dressing`, `Values`, `CabibboDressing`, `FlavourDressing`, docs) to `515/516`. Open with it:
+the `>2%` Jarlskog disagreement with Paper III once
 dressed (`papers_disagree_dressed`).
 
 ### 3. The V−A projector off the kernel
