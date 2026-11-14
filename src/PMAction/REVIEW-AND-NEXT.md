@@ -19,14 +19,14 @@
   (the time component is a tick, not a hopping term), and its phase relative to the in-wall legs.
   Also state the lead model (equal leads per generation) here as a premise, since
   `PMFlavor.TransferGenerator` uses it.
-- A direct zero-mode mass term. The flavour sector (`PMFlavor.MassInsertion`,
-  `InterWallDiagonal`) excludes the charged masses as `δ²Y⁻¹` or `D Y⁻¹ D` with the equal-class
-  link the E₈ gluing allows: traceless, or a degenerate light pair. What it needs is a term
-  joining wall 1's `Γ = +1` zero mode to wall 2's `Γ = −1` zero mode directly, carrying the
-  generation's label class (class gap `b + c`). The two-wall Hamiltonian here has only the on-site
-  `δβ` (within a wall) and the inter-wall hop `hop ⊗ Y`, which joins the gapped components. Ask:
-  does the E₈ update contain a direct zero-mode term (a crossing combined with a label-class
-  carrier in one event)? And why is the equal-class crossing, which the gluing allows directly,
-  absent or small in the mass? If it is not small it puts generation off-diagonal entries back
-  into the mass matrix.
+- A direct zero-mode mass term. `ZeroModeCoupling`: the direct coupling of the two zero modes is
+  the off-Wilson part of the inter-sector hop, `(r − 1)·βx`; at the library's Wilson point `r = 1`
+  it vanishes and the equal-class crossing reaches the light modes only through the gapped
+  components (the `WallSeesaw` route, size `δ²/|Y|`). The flavour sector (`PMFlavor.MassInsertion`)
+  needs generation-diagonal masses set by a label-class insertion, so the candidate is a
+  class-dependent `r_m − 1`. Open: (1) why a label-class insertion would shift the Wilson
+  parameter (the Wilson term is the doubler-removal term; check whether the label class changes the
+  doubler structure of that generation's carrier); (2) whether `δ²/|Y|` from the equal-class
+  crossing is small against `r_m − 1`, else it puts generation off-diagonal entries back into the
+  mass matrix; (3) the discrete-time version (`DomainWall` is the continuous-time Hamiltonian).
 

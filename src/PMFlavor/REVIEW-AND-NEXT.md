@@ -85,7 +85,9 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
          parameter choice (ratio below `1.52` numerically, data at least `16.8`). So the light
          masses do not come from inverting a link; what survives is a direct zero-mode-to-zero-mode
          term carrying the label class (generation-diagonal), the transfer reading's premise.
-         Not derived yet: see the PMAction item on the direct zero-mode term.
+         Not derived yet: `PMAction.ZeroModeCoupling` locates the direct term as the off-Wilson
+         part of the inter-sector hop, `(r − 1)`; the PMAction item asks why a label class would
+         shift `r`.
        * Split of the two light generations: both insertions are spinor (node-crossing); what
          separates them is the `s`/`c` asymmetry (`ExchangeChirality`: one node class sits on the
          weak wall). Derive which insertion is on the weak wall and whether that costs a further

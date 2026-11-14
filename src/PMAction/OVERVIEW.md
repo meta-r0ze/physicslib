@@ -95,6 +95,10 @@ shows closed injective updates cannot finitely prepare a stationary state.
 - `WallHopPhase`: on one chirality the Wilson term drops out (`sandwich_beta`) and an in-wall hop
   is a quarter turn times a Hermitian matrix (`chiral_hop`); two such legs give a real reduced
   coupling (`quarter_turns_cancel`), so in-wall kinetic hops give no CP flux.
+- `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
+  zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
+  zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct
+  (non-seesaw) mass is a departure from `r = 1`, the two-slice wall's residual mass.
 - `LocalIsometricDynamics`: the finite-stencil full-label completion
   `E U E† + I − E E†` (unitary on all labels, same readout, no extra labels).
 
