@@ -38,14 +38,14 @@ def cyc (y : Fin 3 → ℂ) : Matrix (Fin 3) (Fin 3) ℂ := !![0, 0, y 2; y 0, 0
 /-- **`cyc y` lives on the crossing support `(h + 1, h)`.** -/
 theorem cyc_support (y : Fin 3 → ℂ) : ∀ i j : Fin 3, i ≠ j + 1 → cyc y i j = 0 := by
   intro i j h
-  fin_cases i <;> fin_cases j <;> first | exact (h (by decide)).elim | rfl | simp [cyc]
+  fin_cases i <;> fin_cases j <;> first | exact (h (by decide)).elim | rfl
 
 /-- **`Yᴴ Y` is diagonal**, entries `|y h|²`. -/
 theorem gram_cyc (y : Fin 3 → ℂ) :
     (cyc y)ᴴ * cyc y = diagonal fun j => star (y j) * y j := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [cyc, Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply] <;> ring
+    simp [cyc, Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply]
 
 /-- **Seesaw on the crossing link**: `M Mᴴ = δ⁴ · diag(|y h|²)⁻¹`. -/
 theorem seesaw_cyc (y : Fin 3 → ℂ) (δ : ℝ) :
@@ -60,7 +60,8 @@ theorem gram_equal (a : ℂ) : (cyc fun _ => a)ᴴ * cyc (fun _ => a) = (star a 
 /-- **`det Y = y 0 · y 1 · y 2`** (the 3-cycle is even). -/
 theorem det_cyc (y : Fin 3 → ℂ) : (cyc y).det = y 0 * y 1 * y 2 := by
   rw [Matrix.det_fin_three]
-  simp [cyc] <;> ring
+  simp [cyc]
+  ring
 
 /-- **Real amplitudes give a real determinant.** -/
 theorem det_cyc_real (y : Fin 3 → ℝ) :

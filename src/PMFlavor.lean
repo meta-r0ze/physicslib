@@ -110,6 +110,7 @@ import PMFlavor.TransferGenerator
 import PMFlavor.InterWallDiagonal
 import PMFlavor.MassInsertion
 import PMFlavor.CyclicSeesaw
+import PMFlavor.CompositeMass
 import PMFlavor.TickPlacement
 import PMFlavor.WeakCurrentBridge
 import PMFlavor.FalsifiablePredictions

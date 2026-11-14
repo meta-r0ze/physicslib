@@ -174,6 +174,14 @@ with mass `δ²/|y_h|`, pairing generation `h` on one wall with `h + 1` on the o
 (`light_det_real`), which replaces the Hermitian premise of the strong-CP argument for the seesaw
 part.
 
+**Where the composite enters.** `CompositeMass`: with generation-structured on-site chirality flips
+`D₁`, `D₂` the light mass is `M = D₂ Y⁻¹ D₁ᴴ` (`effective_mass_general`). `Y⁻¹` is the reverse shift
+(`inv_cyc`), and a carrier with the crossing's support on either side of it is diagonal
+(`cyc_mul_cycInv`, `cycInv_mul_cyc`). So with `D = δ + carrier`,
+`M = δ² Y⁻¹ + δ · diag(κ/y) + δ · diag(κ'/y) + (second order, cyclic)` (`composite_expansion`): the
+composite is a correction to `δ`, linear in the carrier amplitude, so the largest carrier amplitude
+is the heaviest generation. Premise (candidate): the carrier is a chirality flip on its wall.
+
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay

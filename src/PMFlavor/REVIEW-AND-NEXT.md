@@ -58,7 +58,9 @@ PMAction.
   (`m_t/m_c` `136`–`271`, scale-dependent; `m_b/m_s ≈ 54`; `m_τ/m_μ = 16.8`); not supported, do not
   tune. The node amplitude must fit these and the `|V_ub|`, `|V_cb|` suppression together
   (`PMAction/REVIEW-AND-NEXT.md`, generation sector). The light-pair split (`207`, about `20`, about
-  `500`) needs the `s`/`c` asymmetry.
+  `500`) needs the `s`/`c` asymmetry. Test from `CompositeMass`: `M` keeps the cyclic `δ²/y` term,
+  which mixes generations at relative size `δ/κ`; once `κ` is derived that mixing is a CKM
+  prediction, not a fit. Its premise (carrier as a chirality flip) is open in PMAction.
 * **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only (no site move);
   open is whether the actual CKM loss realizes that event law and the row-to-outlet identification
   (`PMConstants/REVIEW-AND-NEXT.md`).
