@@ -86,15 +86,22 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
          masses do not come from inverting a link; what survives is a direct zero-mode-to-zero-mode
          term carrying the label class (generation-diagonal), the transfer reading's premise.
          Not derived yet: `PMAction.ZeroModeCoupling` locates the direct term as the off-Wilson
-         part of the inter-sector hop, `(r − 1)`; the PMAction item asks why a label class would
-         shift `r`.
+         part of the inter-sector hop, `(r − 1)`, a common factor; the class dependence is the node
+         passage, not a class-dependent `r` (`TickPlacement`).
        * Split of the two light generations: both insertions are spinor (node-crossing); what
          separates them is the `s`/`c` asymmetry (`ExchangeChirality`: one node class sits on the
          weak wall). Derive which insertion is on the weak wall and whether that costs a further
          factor; the data need ratios `207` (μ/e), `about 20` (s/d), `about 500` (c/u).
        * Size: the light insertions cross the node. Whether that is one leg (amplitude `√α`) or two
          (`α`) is the same question `NodeElimination` answers for mixing; apply its rule, do not
-         fit. Data ratios of the heavy to the middle generation are `16.8` (τ/μ), about `50`
+         fit. `TickPlacement` closes the discrete-time route to any other class factor, so this
+         rule is now the whole class dependence at leading order. Applied (leading order, no
+         fit): quarks two legs, heavy/middle `≈ α⁻¹ = 137`; leptons one leg, `≈ α^{−1/2} = 11.7`.
+         Data: `m_t/m_c` `136` (`m_t` pole over `m_c(m_c)`) to `271` (both at `M_Z`), `m_b/m_s ≈ 54`,
+         `m_τ/m_μ = 16.8`. The up-quark ratio agrees only at one scale choice, and the down-quark
+         and lepton ratios miss by `2.5×` and `1.4×`. So the leg rule alone does not give the
+         heavy/middle ratios; an up/down asymmetry and a lepton correction are needed, or the rule
+         is wrong for masses. Recorded as not supported; do not tune it. Data ratios of the heavy to the middle generation are `16.8` (τ/μ), about `50`
          (b/s) and `130`–`270` (t/c, scale-dependent), so no single power of `α` fits all; record
          that rather than choosing.
 

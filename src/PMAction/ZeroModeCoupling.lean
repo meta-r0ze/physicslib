@@ -21,11 +21,10 @@ The inter-sector hop with Wilson parameter `r` is `−β(r + Γ)/2` (`DomainWall
   zero-mode coupling is proportional to `r − 1`**: zero at the Wilson point, the residual mass of
   the two-slice wall.
 
-For flavour: the generation-diagonal mass that `MassInsertion` needs is then a class-dependent
-departure from the Wilson point, `r_m − 1` set by the generation's label-class insertion, while the
-equal-class crossing, at `r = 1`, stays out of the direct mass. That is a candidate reading, not a
-derivation: nothing here says why a label-class insertion shifts `r`, and the seesaw contribution of
-the equal-class crossing (size `δ²/|Y|`) must be small against `r_m − 1` for the masses to stay
+For flavour: the direct light-mode term needs `r ≠ 1` (or another off-Wilson source) as a common
+factor; the class dependence of the masses is the node passage, not a class-dependent `r`
+(`PMFlavor.TickPlacement`). The equal-class crossing, at `r = 1`, stays out of the direct mass; its
+seesaw contribution (size `δ²/|Y|`) must be small against the direct term for the masses to stay
 generation-diagonal.
 -/
 

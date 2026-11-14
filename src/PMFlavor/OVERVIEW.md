@@ -185,6 +185,13 @@ a term joining the two chiral zero modes directly and carrying the label class, 
 mass matrix generation-diagonal: the transfer reading's premise, reached from the mass side. Not
 yet derived: the wall Hamiltonian has no such term, and the equal-class crossing would add
 off-diagonal mass entries unless absent or small.
+
+**Where in the tick does not matter.** `TickPlacement`: with time on axis `0` (the premise of
+`DressingInheritance`), vector carriers are equal-time moves or pure ticks and spinor carriers sit at
+half ticks, but an insertion's light-mode element is the same wherever in the tick it sits
+(`placement_invisible`), and the weak refresh has no special tick. So the class dependence of the
+diagonal masses is the node passage already in the library (spinor insertions touch the reference
+axis), not a class-dependent Wilson parameter.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a
