@@ -196,9 +196,15 @@ axis), not a class-dependent Wilson parameter. The node's own odd-sector phase
 directions and enters the zero-energy reduction as a real denominator (`node_denominator_real`).
 The remaining sources for the CKM flux are leg phases that differ at a class vertex, or a holonomy
 around the generation–class loop. `PMAction.FlatPersistence` prices a holonomy `e^{iΦ}` by
-`sin²(Φ/2)` per readout and is minimized by `Φ = 0`, so without a source on the generation loop
-persistence predicts no CKM phase; the data say there is one. The library has no source for it yet;
-the cyclic wall orientation is the only CP-odd candidate.
+`sin²(Φ/2)` per readout and is minimized by `Φ = 0`, so without a source persistence picks a real
+(flat) network. A real network still gives `J ≠ 0`, through the scattering's `i` (numerically), but it
+fails the magnitudes: `|V_ub| ≥ 0.0048` on three vertices, and on six (separate up and down
+generation vertices sharing the class vertices) the down-to-up block keeps only about `80%` of each
+row (best `χ² ≈ 440`), because up generations then couple to each other, which a charged-current
+transfer (`d ↔ u` only) does not allow. So the flat network fails, a flux is still needed in these
+constructions, and the library has no source for it yet; the cyclic wall orientation is the only
+CP-odd candidate. In the six-vertex form `J` depends on each sector's flux separately, not only on
+their difference.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a

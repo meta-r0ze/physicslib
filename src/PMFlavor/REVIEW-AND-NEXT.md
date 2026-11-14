@@ -90,7 +90,18 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        treat that orientation as the source and find the least-cost holonomy with it present
        (the analogue of a field with a mean source in `FlatPersistence`); if the minimum is `0` or
        `π`, the orientation is not a source and the CKM phase has no origin in the library; record
-       that. The same flux must also give `J`, which is now an output, not an input: the
+       that. Correction (numerical): a real network does give `J ≠ 0` through the scattering's `i`;
+       what fails without a flux is the magnitudes (`|V_ub|` on three vertices). Tried: separate up
+       and down generation vertices sharing the class vertices (six leads), real legs: best
+       `χ² ≈ 440`, and the down-to-up block keeps only `80%` of each row, because up generations
+       couple to each other through the class vertices. A charged-current transfer is `d ↔ u` only,
+       so the right network is bipartite: each class vertex joins down generations to up
+       generations, with no up–up or down–down path. Next: build that bipartite network (leads on all
+       six generations, equal widths), check that its down-to-up block can be near-unitary (deficit
+       to compare with the dressing `1/516`), then fit real legs to the CKM. If a real bipartite
+       network fits, the CKM phase needs no source (persistence-consistent); if not, record which
+       constraint fails and return to the source question. In the six-vertex form `J` depended on
+       each sector's flux separately, so a source common to both sectors is not excluded. The same flux must also give `J`, which is now an output, not an input: the
        fit uses `J`, so refit with `|V_us|, |V_cb|, |V_ub|` only and check `J` and `α` as
        predictions of a derived flux.
     2. The couplings: the data give the scale-free `K₂₃/K₁₂ = 0.183` and `K₁₃/K₁₂ = 0.0185`. The
