@@ -21,7 +21,12 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   rule while down's do not (a sector difference in the node passage, more legs, or a carrier that
   is not a single Wilson hop). Required sizes (`tools/node_carrier_scan.py`, `required_k`): up
   `12`–`40×` below the quark rule, leptons `5`–`80×` below `√α`. Derive the suppression; do not
-  match these numbers to constants.
+  match these numbers to constants. Tried and failed: the up-type conjugate link
+  (`PMConstants.SectorExchange.one_doublet_phase_cancels`: up uses `v̄`), read as the transposed
+  cycle in `d + C_O`, gives heavy/middle near `10⁴` for up (data `277`) at the node-rule `k`; it does
+  not explain the up sector. Next candidates: the doublet sign (`CarrierRepresentation`: `T₃` is the
+  carrier sign, entering the right-sector hypercharge) acting on the other wall's carriers, and the
+  lepton/quark leg count beyond `NodeElimination`'s leading reading.
 
 ## Carrier update
 
