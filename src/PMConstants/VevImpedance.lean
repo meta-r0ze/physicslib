@@ -23,8 +23,8 @@ electron's single event (`RootRepairRule.electron_one_event`), delivered through
 the boundary in parallel. Series addition is exactly first order, which is why the compounded
 forms `exp x` and `1/(1 − x)` fail (`VevCorrections.exp_excluded`, `geometric_excluded`).
 
-Open: the boundary admittance `χ/(Dπ)` (the data single it out among `a/(bπ)`,
-`VevCorrections.boundary_unique`). The margin factor's one-axis share is derived
+The boundary admittance `χ/(Dπ)` is built in `VevBoundary` (`χ` closures in parallel around a
+width-`D` boundary; every sibling fails the Fermi window). The margin factor's one-axis share is derived
 (`VevEvent.vev_reads_spatial_share`).
 -/
 
