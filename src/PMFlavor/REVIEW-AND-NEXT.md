@@ -10,7 +10,13 @@ derivation gap of Paper IV.
 ### 2. The `687/688` first-row dressing
 
 `PMConstants.FlavourDressing` identifies `1/688` as the per-direction reference deficit
-`(1−η)/D`; the claim that the CKM first row inherits it is the model step.
+`(1−η)/D`; the claim that the CKM first row inherits it is the model step. Against the first-row
+sum `0.9984 ± 0.0007` the whole-frame share `1/172` and one row's `1/43` are excluded, but the
+share over all `D` directions (`1/688`) and over the `D − 1` spatial ones (`1/516`) both fit
+within `1σ` (`CabibboDressing.frame_share_excluded`, `direction_shares_fit`), so the data do not
+fix the divisor. Open with it: the three or more channels that must carry the lost probability
+(`CKMDressing.dilation_needs_three`), and the `>2%` Jarlskog disagreement with Paper III once
+dressed (`papers_disagree_dressed`).
 
 ### 3. The V−A projector off the kernel
 

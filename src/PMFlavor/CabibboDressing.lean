@@ -109,4 +109,24 @@ theorem vudDressed_bounds :
   unfold vudDressed
   constructor <;> nlinarith [hq1, hq2, hv.1, hv.2]
 
+/-! ## Which reference-exclusion share the first row allows
+
+Against the measured first-row sum `0.9984 ± 0.0007` (the benchmark of
+`E8PConstants.FlavourPulls.first_row_deficit_test`), the shares of the reference exclusion
+`1 − η = 1/172`: -/
+
+/-- The whole frame's exclusion `1/172` is excluded (more than `6σ`), and so is one row's
+`1/43`. -/
+theorem frame_share_excluded :
+    6 < |(1 - 1/172 : ℝ) - 0.9984| / 0.0007 ∧ 6 < |(1 - 1/43 : ℝ) - 0.9984| / 0.0007 := by
+  constructor <;> (rw [abs_of_neg (by norm_num)]; norm_num)
+
+/-- Both per-direction shares fit within `1σ`: over all `D` directions (`1/688`) and over the
+`D − 1` spatial ones (`1/516`). The data do not separate them. -/
+theorem direction_shares_fit :
+    |(1 - 1/688 : ℝ) - 0.9984| / 0.0007 < 1 ∧ |(1 - 1/516 : ℝ) - 0.9984| / 0.0007 < 1 := by
+  constructor
+  · rw [abs_of_pos (by norm_num)]; norm_num
+  · rw [abs_of_neg (by norm_num)]; norm_num
+
 end PMFlavor.CabibboDressing
