@@ -53,3 +53,11 @@ what remains:
   (`PMNSGeometry.atmos_upper_octant`) is at risk. Upstream: the weak-wall versus spectator-wall
   asymmetry is what the carrier's axial current measures (slice-sign leakage, [action
   review](../PMAction/REVIEW-AND-NEXT.md)).
+* **The CKM phase `δ = arctan(σ/χ)`.** With the paper's angles this puts the unitarity triangle's
+  angle `α` at `89.5°`: `δ` is, to `0.5°`, the statement `α = π/2` (which gives `δ = 67.7°`,
+  `γ = 67.7°`; HFLAV `α = 84.1 (+4.5/−3.8)°`, `γ = 66.4 (+2.8/−3.0)°`). A right angle at `α` is a
+  modulus condition, `|V_cd V_cb|² = |V_ud V_ub|² + |V_td V_tb|²` (unitarity triangle with
+  hypotenuse `V_cd V_cb*`), so it may follow from the network without a phase input. The simplest
+  phase mechanism (the in-cycle coupling a rotation generator `i π/N`, node couplings real) puts the
+  right angle at `γ` instead, which the data exclude. Open: a reason for the Pythagorean relation.
+

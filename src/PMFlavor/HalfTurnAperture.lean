@@ -1,5 +1,6 @@
 import PMFlavor.HalfTurnMixing
 import PMFlavor.KronSeries
+import PMSubstrate.CapacityBarbier
 
 /-!
 # `π` as a length and as an aperture: one Ohmic law for every mixing element
@@ -30,7 +31,11 @@ This picks the generator reading of `HalfTurnMixing`, so the solar prediction is
 rather than the supplied `1/(2φ) = sin(π/10) = 0.3090`; JUNO's `0.3092 ± 0.0087` allows both
 (`HalfTurnMixing.lepton_share_fits`), and its full precision separates them.
 
-Premise: the refresh's half-turn is an aperture shared equally by the type-preserving channels in
+The `π` in both roles is one quantity, the measure of Barbier's half-turn of directions
+(`half_turn_measure`): a boundary is that measure times a width (`boundary_is_measure_times_width`),
+and the refresh, a half-turn, sweeps the same measure as its aperture (`aperture_share`).
+
+Premise: the refresh's half-turn of directions is shared equally by the type-preserving channels in
 parallel. Status: candidate.
 -/
 
@@ -64,5 +69,22 @@ theorem in_cycle_lepton :
       PMConstants.CarrierRepresentation.onLepton v = true).card +
         Fintype.card (PMAction.CarrierEvents.Carrier 1) : ℕ)) 1 = Real.pi / 10 := by
   rw [HalfTurnMixing.lepton_channels, channel_element]; norm_num
+
+/-- **The aperture is Barbier's half-turn of directions.** `PMSubstrate.Capacity.half_turn_split`
+writes an envelope's boundary as an integral over the half-turn `[0, π]` of directions; that
+half-turn has measure `π`. -/
+theorem half_turn_measure : ∫ _θ in (0 : ℝ)..Real.pi, (1 : ℝ) = Real.pi := by
+  simp
+
+/-- A constant-width boundary is that measure times the width (Barbier), so `π` there is a length
+per unit width; the refresh sweeps the same half-turn, so the same measure is its aperture. -/
+theorem boundary_is_measure_times_width (h : ℝ → ℝ) (hc : Continuous h) (w : ℝ)
+    (hw : ∀ θ, h θ + h (θ + Real.pi) = w) :
+    ∫ θ in (0 : ℝ)..(2 * Real.pi), h θ = (∫ _θ in (0 : ℝ)..Real.pi, (1 : ℝ)) * w := by
+  rw [PMSubstrate.Capacity.barbier h hc w hw, half_turn_measure]
+
+theorem aperture_share (N : ℕ) :
+    ohmic ((∫ _θ in (0 : ℝ)..Real.pi, (1 : ℝ)) / N) 1 = Real.pi / N := by
+  rw [half_turn_measure, channel_element]
 
 end PMFlavor.HalfTurnAperture

@@ -21,6 +21,9 @@ parallel (admittances add, `PMSubstrate.ProtocolToll`) has probability `(D − 1
   the value by about `2%`, which stays within `2σ`; the data do not resolve corrections of order
   `π/Z_geo`.
 * `four_boundaries_excluded`: four boundaries in series (`3/(Z_geo + 4π)`) are excluded.
+* `boundary_reading`: the bare passage (`0.64σ` low) is mildly preferred over one boundary (`>1.5σ`
+  low), as the leg picture predicts: a lepton-axis state is the node passage, with no boundary to
+  cross (`VubSeriesPath` has one because the quark path enters and leaves the node).
 
 So the construction fixes the channel count; corrections below the data's resolution stay open.
 -/
@@ -86,5 +89,23 @@ theorem four_boundaries_excluded : 3 < |(3 / (αinv + 4 * Real.pi) - 0.02225) / 
   have x : (3 / (αinv + 4 * Real.pi) - 0.02225) / 0.00056 < -3 := by
     rw [div_lt_iff₀ (by norm_num)]; linarith
   exact lt_abs.2 (Or.inr (by linarith))
+
+/-- **No boundary on the lepton passage, mildly preferred.** The quark `|V_ub|` path picks up a
+unit boundary because it enters and leaves the node (`VubSeriesPath`); a lepton-axis state is the
+node passage itself (`NodeElimination`, Landauer), so its path has none. The data agree mildly: the
+bare `3/Z_geo` is `0.64σ` low, with one boundary `3/(Z_geo + π)` is more than `1.5σ` low. -/
+theorem boundary_reading :
+    (3 / (αinv + Real.pi) - 0.02225) / 0.00056 < -1.5 ∧
+      -1 < ((3 : ℝ) / αinv - 0.02225) / 0.00056 := by
+  have ha := ai_bounds
+  have hp := Real.pi_gt_d2
+  have hp' := Real.pi_lt_d2
+  have d1 : 0 < αinv + Real.pi := by linarith
+  have d0 : 0 < αinv := by linarith
+  have a1 : 3 / (αinv + Real.pi) < 0.02141 := by rw [div_lt_iff₀ d1]; nlinarith
+  have q2 : 0.0218920 < (3 : ℝ) / αinv := by rw [lt_div_iff₀ d0]; nlinarith
+  constructor
+  · rw [div_lt_iff₀ (by norm_num)]; linarith
+  · rw [lt_div_iff₀ (by norm_num)]; linarith
 
 end PMFlavor.ReactorConductance

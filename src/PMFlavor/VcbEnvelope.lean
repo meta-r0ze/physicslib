@@ -39,7 +39,9 @@ cycle, driven by one refresh tick `env 1`, and crosses the free part of the cycl
 (`vcb_by_law`). Their ratio, the quark parity breaking, fits (`ratio_fits`, `1.1σ`).
 
 Readings that remain: the drive of a refresh tick is its envelope impedance `env 1`, and a refreshed
-hop crosses the free cycle once instead of entering and leaving the node. Status: candidate.
+hop crosses the free cycle once instead of entering and leaving the node. The first can be traded
+for the standard current divider with a unit source (`current_divider_fits`:
+`env 1/(env 1 + env 39)`, `1.2σ` low); the data do not separate the two. Status: candidate.
 -/
 
 namespace PMFlavor.VcbEnvelope
@@ -115,5 +117,20 @@ theorem ratio_fits :
   have u := mul_lt_mul_of_pos_right h.2 hpos
   rw [e, div_lt_iff₀ (by norm_num), abs_lt]
   constructor <;> linarith
+
+/-- **The standard current divider also fits.** A unit current entering the refreshed hop splits
+between the refresh-tick branch (`env 1`) and the free branch (`env 39`); the share through the free
+branch is `env 1 / (env 1 + env 39) ≈ 0.0397`, `1.2σ` low. This needs no drive of size `env 1`
+(unit source, as for `|V_ub|`), at the cost of `1σ` in the fit; the data do not separate it from the
+ratio form. -/
+theorem current_divider_fits : |env 1 / (env 1 + env 39) - 0.0411| / 0.0012 < 2 := by
+  have h1 := Real.pi_gt_d4; have h2 := Real.pi_lt_d4
+  have hp : 0 < env 1 + env 39 := by
+    have := env_pos 1 (by norm_num); have := env_pos 39 (by norm_num); linarith
+  unfold env at hp ⊢
+  rw [div_lt_iff₀ (by norm_num), abs_lt]
+  constructor
+  · rw [lt_sub_iff_add_lt, lt_div_iff₀ hp]; nlinarith
+  · rw [sub_lt_iff_lt_add, div_lt_iff₀ hp]; nlinarith
 
 end PMFlavor.VcbEnvelope
