@@ -24,9 +24,9 @@ exchange symmetry is broken by the vacuum's choice of convention (`GenerationWal
 on one wall with `h + 1` on the other; with a class-independent crossing (`DomainWall`'s hop is one
 fixed matrix) those three are equal, so the hierarchy comes from the composite of `GenerationMass`.
 
-Strong CP: `PMConstants.HermitianMass.thetaBar_eq_theta` assumes a Hermitian link. For this link
-`det Y` is the product of the three crossing amplitudes (a cyclic support), real if the crossing is
-the fixed real hop, so `θ̄ = 0` may still hold on that basis; recorded in `REVIEW-AND-NEXT.md`.
+Strong CP: the older route `PMConstants.HermitianMass.thetaBar_eq_theta` assumes a Hermitian link,
+which this excludes. The current route, `ThetaBarSelection`, gives `θ̄ = 0` for any invertible mass
+(`Zm_eq`: the vacuum sees only `θ − arg det M`), so the non-Hermitian link does not affect it.
 -/
 
 namespace PMConstants.GenerationParity

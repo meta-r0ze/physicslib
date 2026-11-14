@@ -26,6 +26,21 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
 
 ## Dynamics and limits
 
+- **Inertia certificate** (unblocks `PMConstants` strong CP: the unit-winding witness). One reusable
+  theorem beside `InertiaStability`, mirroring `tools/unit_transfer_certificate.py`: for Hermitian
+  `H`, a proposed basis `Q` and `B = Qᴴ H Q`,
+  (a) `‖Qᴴ Q − 1‖ < 1` makes `Q` invertible;
+  (b) if every row's off-diagonal sum of `B` is below its `|diagonal|`, the path
+  `diag B + t · offdiag B`, `t ∈ [0, 1]`, stays invertible (Gershgorin,
+  `Matrix.det_ne_zero_of_sum_row_lt_diag`), so by `negCount_locallyConstant` the negative count of
+  `B` is the number of negative diagonal entries;
+  (c) Sylvester's law of inertia: `negCount (Qᴴ H Q) = negCount H` for invertible `Q` (not in the
+  library; `count_le` has the needed form estimates).
+  Then the certificate checks only inequalities and signs, not a dense eigensolve. Still required:
+  a checked correspondence between the certificate's matrices and the library's two Wilson
+  backgrounds. The physical premise that the vacuum selects among the weighted phases stays
+  explicit (`ThetaBarSelection`).
+
 - Construct the map from background `Config` to the `RecordSupply` stream used by `ReferenceSelection`. Physical allocation of the banks is a [machine-layer dependency](Machine/REVIEW-AND-NEXT.md).
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.

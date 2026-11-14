@@ -171,8 +171,8 @@ with mass `δ²/|y_h|`, pairing generation `h` on one wall with `h + 1` on the o
 `DomainWall`'s one hop, the same for every class, so the three seesaw masses are equal
 (`gram_equal`). The hierarchy must come from the composite diagonal term
 (`PMConstants.GenerationMass`). `det Y = y₀y₁y₂` (`det_cyc`), real for real amplitudes
-(`light_det_real`), which replaces the Hermitian premise of the strong-CP argument for the seesaw
-part.
+(`light_det_real`). That matters only to the older Hermitian-mass route to `θ̄ = 0`; the current
+route (`PMConstants.ThetaBarSelection`) holds for any invertible mass.
 
 **Where the composite enters.** `CompositeMass`: with generation-structured on-site chirality flips
 `D₁`, `D₂` the light mass is `M = D₂ Y⁻¹ D₁ᴴ` (`effective_mass_general`). `Y⁻¹` is the reverse shift

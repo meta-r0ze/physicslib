@@ -20,9 +20,11 @@ crossing amplitude `y h` per class.
   composite of `PMConstants.GenerationMass` must.
 * `det_cyc`: `det Y = y 0 · y 1 · y 2`, with sign `+` (the 3-cycle is even).
   `det_cyc_real`, `light_det_real`: for real amplitudes `det Y` and `det M` are real, so
-  `arg det M ∈ {0, π}`. This is the replacement for the Hermitian premise of
-  `PMConstants.HermitianMass.thetaBar_eq_theta` on the seesaw part. It does not cover the composite
-  diagonal term, whose phase is open (`PMConstants/REVIEW-AND-NEXT.md`).
+  `arg det M ∈ {0, π}`. This bears only on the older Hermitian-mass route to `θ̄ = 0`
+  (`PMConstants.HermitianMass`), and reality alone still allows `π` there. The current route,
+  `PMConstants.ThetaBarSelection`, gives `θ̄ = 0` for any invertible mass, so neither this nor the
+  phase of the composite diagonal term is a strong-CP prerequisite; the composite phase is a flavour
+  question.
 
 Falsification: if the composite diagonal term is shown to vanish or to be class-independent, then
 this sector predicts three degenerate charged masses per sector, which the data exclude.
