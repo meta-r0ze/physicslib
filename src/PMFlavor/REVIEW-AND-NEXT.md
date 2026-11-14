@@ -48,29 +48,16 @@ coefficients (`1/χ`, `π + χ`), the in-cycle amplitude through `v` (the `14` o
 in each sector (large for quarks, `|V_ub|/|V_cb| ≈ 0.09`; small for leptons,
 `θ₂₃` near maximal).
 
-### 2. The first-row dressing: inheritance and the Jarlskog value
+### 2. The first-row dressing: inheritance
 
 The dressing is now `q² = 515/516`: the minimal dilation has exactly three outlet channels
 (`DressingChannels`), and a registered loss puts no weight on the time axis, so the reference
 deficit `1 − η` is shared over the `D − 1` spatial outlets (`DressingEvent`, the event principle of
 `PMConstants.VevEvent`). The earlier `687/688` was the four-axis share. First-row sum
 `1 − 1/516` is `0.5σ` from `0.9984 ± 0.0007`. Open: the claim that the CKM first row inherits the
-reference deficit at all (the outlets being the spatial readout channels is the reading), and the
-`>2%` Jarlskog disagreement with Paper III once dressed (`papers_disagree_dressed`).
+reference deficit at all (the outlets being the spatial readout channels is the reading).
 
-### 3. The V−A projector off the kernel
-
-`PMAction.ChiralityConvention.projector_unique_on_kernel` forces the projector on the zero
-kernel. Attaching weak to one wall is derived: the weak refresh is the sign exchange of the whole
-sector that holds the reference (`PMConstants.WeakUniform.refresh_uniform`, uniform from the D₄
-roots and commutation with colour) and acts on that sector only (`CarrierActions.weak_chiral`),
-with the tag read as the wall. Off the kernel, the light band's effective Hamiltonian (projected
-on the zero modes) commutes with the wall chirality, and on it `(1 − Γ)/2` is exactly the second
-wall's block (`PMAction.ChiralLightBand.light_conserves_chirality`, `projector_on_light_band`):
-the identification holds through first order in `k`. Open: the `O(k²/gap)` wall mixing through
-the gapped modes, if a constant needs it.
-
-### 4. Inputs that are not derivable
+### 3. Inputs that are not derivable
 
 * **Wall anchor magnitude `δ` (and `ε`).** `BreakingPhase` records `(δ, ε)`; the direction
   (lepton axis) and functional form are E8 (`MixingMatrix.rootP/rootM_eq_substrate`), the

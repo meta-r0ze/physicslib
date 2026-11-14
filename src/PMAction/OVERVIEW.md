@@ -230,8 +230,9 @@ bank/occupancy preparation, gate admission, clock calibration, primitive event
 tariffs, the current/mediator and decay measure, and the quantum continuum measure /
 Lorentzian limit. The V−A projector `P_L` and the su(2) doublet algebra are proved
 algebra; `ChiralityConvention.projector_unique_on_kernel` shows the projector is
-forced on the zero kernel by the reference, while attaching it to the physical weak
-interaction and extending it off the kernel remain model inputs.
+forced on the zero kernel by the reference; attaching it to the weak interaction is derived
+(`PMConstants.WeakUniform`), and `ChiralLightBand` extends it to the light band through first
+order in `k`.
 
 ## Ownership / downstream boundary
 

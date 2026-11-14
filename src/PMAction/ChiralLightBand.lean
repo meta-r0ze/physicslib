@@ -21,7 +21,9 @@ in `k`, by the Hamiltonian projected onto the zero-mode space (degenerate pertur
   effective theory.
 
 So the identification of the charged current's wall extends from the kernel to the light band at
-first order in `k`; wall mixing enters only through the gapped modes, at `O(k²/gap)`.
+first order in `k`; wall mixing enters only through the gapped modes, at `O(k²/gap)`. No constant
+in the library uses the projector beyond this order (weak observables are evaluated far below the
+wall gap), so that correction is not carried as open work.
 -/
 
 noncomputable section

@@ -219,8 +219,8 @@ theorem projector_eq_fromBlocks_PL :
 /-- **Uniqueness on the zero kernel.** Any operator that kills the unphysical
 first-wall background and fixes the exchanged physical background agrees with the
 chiral projector on every zero mode. The projector is therefore forced by the
-reference on the kernel, not chosen; extending it off the kernel remains the
-stated input. -/
+reference on the kernel, not chosen; its extension to the light band through first order in `k`
+is `ChiralLightBand.projector_on_light_band`. -/
 theorem projector_unique_on_kernel (P : Matrix Sites Sites ℂ)
     (hkill : ∀ r, P *ᵥ background r = 0)
     (hfix : ∀ r, P *ᵥ physicalBackground r = physicalBackground r)

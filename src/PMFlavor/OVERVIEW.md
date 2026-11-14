@@ -132,8 +132,9 @@ duplication. The `515/516` Cabibbo dressing's divisor is derived
 (`DressingEvent`); that the first row inherits the deficit is not. The numerical breaking weights `δ, ε` are dynamical, not fixed. Link
 eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
 energies. The V−A projector is forced on the zero kernel by reference persistence
-(PM-2 `ChiralityConvention.projector_unique_on_kernel`); attaching the gauge
-representation and extending it off the kernel remain inputs. The neutrino
+(PM-2 `ChiralityConvention.projector_unique_on_kernel`); attaching it to the weak representation
+is derived (`PMConstants.WeakUniform`, `CarrierActions.weak_chiral`), and it extends to the light
+band through first order in `k` (`PMAction.ChiralLightBand`). The neutrino
 Dirac-survival result is conditional on the upstream
 flux/one-link hypercharge representation; the `Y_L` sign is an `e`/`ν` convention
 (`ReferenceLink.standard_or_conjugate`), not a physical choice. Measured PDG/NuFIT
