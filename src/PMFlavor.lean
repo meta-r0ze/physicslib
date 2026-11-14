@@ -88,6 +88,7 @@ import PMFlavor.PMNSMassOperator
 import PMFlavor.WolfensteinOctant
 import PMFlavor.BreakingLink
 import PMFlavor.CabibboDressing
+import PMFlavor.ReactorConductance
 import PMFlavor.TransferAmount
 import PMFlavor.MixingMatrix
 import PMFlavor.WeakCurrentBridge
