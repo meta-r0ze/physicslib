@@ -18,8 +18,11 @@ what remains:
   constructed mixings: each is a leg weight `w` (node `α`, in-cycle `π/N`); quarks reach the
   junction by two legs, so `w` is their amplitude (`|V_ub|, |V_cb| ∝ α`, `s₁₂ = π/14`), and
   lepton-axis states by one, so `w` is their probability (`sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10`).
-  `NodeElimination` derives this for the node; the in-cycle case needs the share `π/N` shown to
-  be a through weight (Landauer, as in `PMConstants.HandoffAdmittance`). Upstream tools do not yet
+  For the node this is now derived: quark couplings are Kron-reduced admittances of a conserving
+  link (`KronSeries`), and the lepton side is a node passage whose probability is its conductance
+  (Landauer, `PMConstants.HandoffAdmittance`). The in-cycle case therefore needs one statement:
+  the type-preserving channel's admittance is `π/N`, the half-turn shared over `N` parallel
+  channels. In tension with this, `π` enters the node-crossing paths as a boundary impedance. Upstream tools do not yet
   supply it: the event-law link cost and the branch pulse are quadratic in the angle
   (`PMAction.LinkExpansion`: `ε²‖θφ‖²`; `HandoffAdmittance`: `sin² t`), so a share linear in `π/N`
   needs a rate per channel rather than a pulse. The closest upstream item is the routing histories

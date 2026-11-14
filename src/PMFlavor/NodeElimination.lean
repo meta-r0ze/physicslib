@@ -23,10 +23,14 @@ outside (colour carriers, off the reference axis) mix through two legs, amplitud
 (`|V_ub|`, `|V_cb|`); a state that sits on the reference's own axis needs only one leg, probability
 `∝ α` (`sin²θ₁₃ = 3α`, three spatial channels in parallel, `ReactorConductance`). The reading that
 the lepton-axis states are one leg from the reference node uses the reference's axis being the
-lepton axis (`PMConstants.ReferenceAxis`, `CarrierRepresentation`); the leg amplitude being the
-same `√α` for every leg is the Closure statement `HandoffAdmittance.closure_one_price`. For `|V_ub|`
-the denominator is the series impedance of the two legs and a boundary (`VubSeriesPath`); the
-`|V_cb|` coefficient `π + χ` is not derived.
+lepton axis (`PMConstants.ReferenceAxis`, `CarrierRepresentation`); the leg weight being the same
+for every leg is the Closure statement `HandoffAdmittance.closure_one_price`.
+
+**Refinement (`KronSeries`).** With a conserving (Laplacian) link the node's own conductance fixes
+`e − E`, and the quark coupling is the Kron-reduced series admittance, `α/2` for two legs (plus the
+boundary, `VubSeriesPath`), not the bare product `α`. The lepton side is the node passage itself,
+whose probability is its conductance (Landauer, `HandoffAdmittance.through_eq_conductance`); the
+`√w` amplitude of `one_leg` is that statement read as an amplitude.
 -/
 
 namespace PMFlavor.NodeElimination
