@@ -49,3 +49,30 @@ derived (`VubSeriesPath`, `KronSeries`); the reactor `sin²θ₁₃ = 3α` is co
   not decide it: any mixing, any `δ`, is realized by Hermitian positive links
   (`MassMixing.positive_masses_allow_any_mixing`), and the structural constraints fix moduli, not
   the phases of the link entries. Open: a constraint on the phases of the inter-wall link `Y`.
+* **The eigenvector link as a lepton candidate** (`LinkKronComparison`). It is retired for quarks
+  (a fixed `|V|² = 1/4` entry). For leptons the fixed entry is a test. The numbers below are
+  computed numerically outside Lean, with `sin²θ₁₃ = 3α` and the candidate `sin²θ₁₂ = π/10` as
+  inputs.
+  * Real link (no phases, so `δ_CP ∈ {0, π}`): the `1/4` entry gives `sin²θ₂₃ = 0.5575`
+    (`|U_τ1|`, `δ_CP = π`), `0.4425` (`|U_μ1|`, `0`), `0.5411` (`|U_μ2|`, `0`) or `0.4589`
+    (`|U_τ2|`, `π`); the four other sign branches (`0.086`, `0.268`, `0.732`, `0.914`) are outside
+    the NuFIT 6.0 `3σ` range. Each allowed branch is realized by some `(δ, ε)`, e.g. `0.5575` at
+    `(1.944, 6.243)` and `(−3.421, 16.119)`. All four contradict the sum rule `|U_μ2| = |U_τ2|`
+    (`ReferenceFlavour`) and the library's `J ≠ 0`.
+  * Legs with phases (`protected_overlap_phase_blind`) and the sum rule kept: the `1/4` must sit in
+    column 1, giving `sin²θ₂₃ = 0.5873`, `cos δ_CP = −0.877` (`δ_CP = 208.7°` on the `sin δ < 0`
+    branch, `|J| = 0.0159`) for `|U_τ1| = 1/2`, or the mirror `0.4127`, `cos δ_CP = +0.877` for
+    `|U_μ1| = 1/2`. Against NuFIT 6.0 `3σ` (arXiv:2410.05380): the first has `|U_μ3| = 0.758`,
+    `|U_τ3| = 0.635`, inside the ranges without Super-Kamiokande atmospheric data
+    (`0.649–0.764`, `0.628–0.746`) and `0.002` outside with it (`0.652–0.756`, `0.637–0.743`); the
+    mirror is outside both (`|U_μ3| = 0.635`). A realization exists (`δ, ε ≈ 4.57, 3.97` with two
+    leg phases), so this is four parameters meeting four numbers, not a derivation.
+  * Open: which mass labels the two protected states carry (this picks the branch), and what
+    fixes `δ`, `ε` and the leg phases. At the real solution points the link eigenvalue order does
+    not follow the mass order of the labels the angles require (the electron row is the middle
+    eigenvalue at `(1.944, 6.243)`), so a monotone eigenvalue-to-mass map fails there; not yet
+    checked for the phased case.
+  * Open: the network has no `δ, ε`. The lepton-side legs that would replace them (one-leg
+    reactor passage, in-cycle aperture) do not yet give a `θ₂₃`, so the two lepton descriptions
+    are not reconciled.
+

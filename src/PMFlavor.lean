@@ -107,6 +107,7 @@ import PMFlavor.CPQuarterTurn
 import PMFlavor.Theta23Wall
 import PMFlavor.TransferAmount
 import PMFlavor.MixingMatrix
+import PMFlavor.LinkKronComparison
 import PMFlavor.WeakCurrentBridge
 import PMFlavor.FalsifiablePredictions
 import PMFlavor.Downstream

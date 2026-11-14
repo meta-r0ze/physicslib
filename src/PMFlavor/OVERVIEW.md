@@ -91,6 +91,21 @@ explicit curve `δ = rootMInv (5 − rootM ε)` for `ε > 2` and empty for `ε �
 (`all_nonzero_mixing_global`, `rootM_sum_eq_five_iff_of_two_lt`), and a witness
 point (`all_nonzero_mixing_witness`).
 
+**The link and the network compared.** `LinkKronComparison`: both pictures are reductions of one
+graph, the generation–class incidence (each class vertex has two legs). The eigenvector link is its
+Gram matrix `B Bᵀ` (`linkOverlap_eq_gram`), a leg product with unit denominator; the admittance
+network is its Kron reduction (`kron_schur`), two legs in series, which is where the `2` of
+`|V_ub| = 1/(2α⁻¹ + π)` comes from (`two_leg_from_incidence`; one shared node with three legs would
+give `3`, `shared_node_three_legs`, excluded by `MixingTests.vub_count_unique`). They agree only at
+the symmetric point (`symmetric_point`): the diagonal breaking `brokenLink δ` is not a network
+change for any `δ ≠ 0` (`diagonal_breaking_not_network`), so Kron-reducing the existing broken link
+does not give `|V_ub|`. Independently of `δ, ε` the eigenvector picture fixes one mixing entry at
+`|U|² = 1/4` (`protected_overlap_quarter`), also when the link legs carry phases
+(`protected_overlap_phase_blind`). No CKM entry is near `1/4`, so the quark mixings are the
+network's; for the leptons `|U| = 1/2` is inside the NuFIT 6.0 `3σ` ranges of `|U_μ1|`, `|U_μ2|`,
+`|U_τ1|`, `|U_τ2|`, so the eigenvector link remains a lepton-sector candidate (tests in
+`REVIEW-AND-NEXT.md`).
+
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional
 forms themselves are ansätze, not E8 theorems. Upstream
