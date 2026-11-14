@@ -102,6 +102,7 @@ import PMFlavor.HalfTurnMixing
 import PMFlavor.VubSeriesPath
 import PMFlavor.VcbEnvelope
 import PMFlavor.KronSeries
+import PMFlavor.HalfTurnAperture
 import PMFlavor.TransferAmount
 import PMFlavor.MixingMatrix
 import PMFlavor.WeakCurrentBridge

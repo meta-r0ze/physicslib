@@ -20,9 +20,11 @@ what remains:
   lepton-axis states by one, so `w` is their probability (`sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10`).
   For the node this is now derived: quark couplings are Kron-reduced admittances of a conserving
   link (`KronSeries`), and the lepton side is a node passage whose probability is its conductance
-  (Landauer, `PMConstants.HandoffAdmittance`). The in-cycle case therefore needs one statement:
-  the type-preserving channel's admittance is `π/N`, the half-turn shared over `N` parallel
-  channels. In tension with this, `π` enters the node-crossing paths as a boundary impedance. Upstream tools do not yet
+  (Landauer, `PMConstants.HandoffAdmittance`). `HalfTurnAperture` reconciles the in-cycle case with
+  Ohm's geometric law (conductance = aperture / length): along a Barbier boundary `π` is a length
+  (impedance, the node-crossing paths), through the half-turn refresh it is an aperture shared by
+  the `N` channels in parallel (admittance `π/N`). Remaining premise: the refresh's half-turn is
+  such an aperture, shared equally. This selects `sin²θ₁₂ = π/10` over the supplied `1/(2φ)`. Upstream tools do not yet
   supply it: the event-law link cost and the branch pulse are quadratic in the angle
   (`PMAction.LinkExpansion`: `ε²‖θφ‖²`; `HandoffAdmittance`: `sin² t`), so a share linear in `π/N`
   needs a rate per channel rather than a pulse. The closest upstream item is the routing histories
