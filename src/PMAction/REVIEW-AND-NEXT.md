@@ -28,10 +28,11 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   (`PMFlavor.DoubletReflection`). Charge-weighted node legs are
   excluded too (wrong direction for up, and they break `closure_one_price`). So, by the no-go in the
   PMFlavor OVERVIEW, one of four premises fails for up-type quarks: one crossing price, the `D₄`
-  geometry with the reference axis, the `s ↔ c` swap, or the reference-wall factorization. Next:
-  test the last one for up. Up-type masses use the conjugate vacuum value (`SectorExchange`); check
-  whether that changes which wall is detuning-free for the up composite (`ReferenceDetuning`), which
-  would move the up masses off the down curve. Leptons are separate: their states sit on the
+  geometry with the reference axis, the `s ↔ c` swap, or the reference-wall factorization. Tested: moving the detuning-free
+  wall for up (a reading of `SectorExchange`'s `v̄`) gives the same curve, by the swap × exchange
+  symmetry. Left: a failure of one crossing price, or an `O(1)` breaking of the `s ↔ c` swap, for
+  up-type quarks only; neither has a source in the library yet. This is a real gap, not a tuning
+  problem: record any new premise narrowly and test it on up and leptons together. Leptons are separate: their states sit on the
   reference axis, so their leg geometry differs from the quarks'; derive their leg count.
 
 ## Carrier update

@@ -245,7 +245,11 @@ reference-wall factorization (`ReferenceWallMass`). Both must then lie on one cu
 (`9%`), up does not (`6×`). So at least one premise fails for up-type quarks. Two readings tested
 and excluded: the conjugate link (`SectorExchange`: up uses `v̄`) as a transposed cycle, and
 charge-weighted node legs (`Q²` or `Y²` make the up light carrier larger, the data need it smaller,
-and they break the one-price premise).
+and they break the one-price premise). Moving the detuning-free wall (`δ_T = 0` instead of
+`δ_F = 0`, a reading of the conjugate vacuum value) gives the same singular values: the swap ×
+exchange symmetry maps one form to the other (checked numerically for all three sectors). So within
+the library the up/down split needs a failure of one crossing price or of the `s ↔ c` swap beyond
+the weak current's perturbative breaking.
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
