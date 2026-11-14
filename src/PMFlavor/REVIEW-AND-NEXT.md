@@ -78,7 +78,13 @@ the gapped modes, if a constant needs it.
 * **Absolute wall-mass scale.** The ratios are E8 (`WallMassRatio.capacity_ratio_sq`,
   `coupling_ratio`); the absolute scale is the usual external unit, like `m_e`.
 * **Octant running.** Paper IV's "running resolves the octant anomaly" has no Lean statement.
+  `ExchangeChirality` now places the deviation of `θ₂₃` from maximal: it is the `s ↔ c` breaking,
+  which only the charged current's parity violation supplies; its size is not derived.
 
 
 - Identify the physical interaction that realizes the reference-stabilizer mediator.
-- The entries of the inter-wall link used by the generation model in PMConstants depend on the flavour dynamics.
+- The entries of the inter-wall link `Y` (`PMConstants.GenerationWalls`): the structure is now
+  fixed (`GenerationLabel`, `ExchangeAxis`, `ExchangeChirality`, `NodeElimination`): root moves are
+  diagonal, one pair mixes in-cycle through the reference's class, the other two through the node
+  as two-leg amplitudes `∝ α` (one leg for lepton-axis states), split by parity. The magnitudes
+  (node energy denominators, the in-cycle amplitude, the parity-breaking size) are open; see item 1.
