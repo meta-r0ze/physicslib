@@ -117,6 +117,7 @@ import PMAction.InertiaCertificate
 import PMAction.InertiaCongruence
 import PMAction.WilsonCertificate
 import PMAction.PolarizationContact
+import PMAction.PolarizationIngredients
 import PMAction.ZeroModeCoupling
 import PMAction.GenerationSector
 import PMAction.WallRanks
