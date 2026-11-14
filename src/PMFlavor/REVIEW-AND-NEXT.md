@@ -28,13 +28,13 @@ derived (`VubSeriesPath`, `KronSeries`); the reactor `sin²θ₁₃ = 3α` is co
 * **`θ₂₃`** (the lepton `s`/`c` parity breaking; the quark one follows from the two node
   constructions). No construction yet, and the data do not fix the octant: NuFIT 6.0 normal
   ordering gives `sin²θ₂₃ = 0.561` without the Super-Kamiokande atmospheric data and `0.470` with
-  it, so the draft's upper-octant `0.5748` (`PMNSGeometry.atmos_upper_octant`) is at risk. Test first
-  whether a wall asymmetry survives normalization: for the third neutrino state, the normalized
-  charged-current asymmetry `(W_μ − W_τ)/(W_μ + W_τ) = 2 sin²θ₂₃ − 1` (NuFIT: `+0.122` or
-  `−0.060`); with a common wall state and the factorized current `P_L ⊗ G`
-  (`WeakCurrentBridge`), a common wall factor cancels, so the asymmetry needs wall overlaps that
-  differ between the `μ` and `τ` readouts. The carrier's axial current ([action
-  review](../PMAction/REVIEW-AND-NEXT.md)) tests a possible common microscopic source.
+  it, so the draft's upper-octant `0.5748` (`PMNSGeometry.atmos_upper_octant`) is at risk. `Theta23Wall`: the
+  normalized asymmetry `(W_μ − W_τ)/(W_μ + W_τ)` is `2 sin²θ₂₃ − 1` (NuFIT: `+0.122` or `−0.060`),
+  and with the factorized current `P_L ⊗ G` a wall factor common to both readouts cancels
+  (`common_wall_cancels`). So a construction must supply a `μ`–`τ`-asymmetric generation factor or
+  wall overlaps correlated with the readout (`wall_only`); a weak-wall versus spectator-wall
+  asymmetry shared by both generations, such as the carrier's axial current ([action
+  review](../PMAction/REVIEW-AND-NEXT.md)), does not move `θ₂₃` by itself.
 * **The CKM phase** (supplied, `δ = arctan(σ/χ) ≈ 68.2°`). It puts the triangle angle `α` at
   `89.5°`; exact `α = π/2` would give `δ = 67.7°` (in the library's convention,
   `cos δ = c₁₂c₂₃s₁₃/(s₁₂s₂₃)`; HFLAV `α = 84.1 (+4.5/−3.8)°`). The right angle is the modulus
