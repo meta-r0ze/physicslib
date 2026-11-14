@@ -75,18 +75,26 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        network (`kronLink`: per-class two legs) must produce these from leg values; the
        in-cycle candidate `π/14` (`HalfTurnMixing`) is now a statement about the scaled coupling
        `2K₁₂/γ` (first order of `−(1 − iK/γ)(1 + iK/γ)⁻¹`), not `|V_us|`; they differ by under `1%`.
-    3. The generation-diagonal mass. `InterWallDiagonal`: the E₈ gluing makes the inter-wall link
-       zero on the generation diagonal, and a traceless link cannot carry any charged hierarchy.
-       So the masses need a diagonal term the equal-class crossing cannot give. Candidates, each
-       to be derived, not chosen: (a) a composite, an equal-class crossing followed by a
-       single-wall carrier shift by the generation label (the class difference `b + c = m`), which
-       is second order and so naturally small; (b) a flavour-dependent on-site term (the
-       library's `δβ ⊗ 1` is flavour-blind, `WallExchange`). Test: the composite gives diagonal
-       entries of order (crossing) × (carrier amplitude); check whether the carrier amplitudes
-       already in the library (node admittance `α` for spinor classes, the in-cycle unit for the
-       vector class) give hierarchies of the observed size, with the third generation (the one
-       whose label is the vector class) distinct. This also decides between the readings: if the
-       diagonal comes from (a), masses and mixing share the carrier amplitudes.
+    3. The generation-diagonal mass. Done (`InterWallDiagonal`, `MassInsertion`): the equal-class
+       crossing gives no diagonal; a diagonal mass needs an insertion of the generation's label
+       class; the label-`v` generation has the only in-cycle insertion and the only two
+       node-crossing mixings; the data put it heaviest, so the insertion acts directly, not through
+       `δ²/σ(Y)`. Next:
+       * Closed (`MassInsertion.light_pair_degenerate`): the insertions in the on-site slot with the
+         equal-class link, reduced as in `WallSeesaw`, give a degenerate light pair for every
+         parameter choice (ratio below `1.52` numerically, data at least `16.8`). So the light
+         masses do not come from inverting a link; what survives is a direct zero-mode-to-zero-mode
+         term carrying the label class (generation-diagonal), the transfer reading's premise.
+         Not derived yet: see the PMAction item on the direct zero-mode term.
+       * Split of the two light generations: both insertions are spinor (node-crossing); what
+         separates them is the `s`/`c` asymmetry (`ExchangeChirality`: one node class sits on the
+         weak wall). Derive which insertion is on the weak wall and whether that costs a further
+         factor; the data need ratios `207` (μ/e), `about 20` (s/d), `about 500` (c/u).
+       * Size: the light insertions cross the node. Whether that is one leg (amplitude `√α`) or two
+         (`α`) is the same question `NodeElimination` answers for mixing; apply its rule, do not
+         fit. Data ratios of the heavy to the middle generation are `16.8` (τ/μ), about `50`
+         (b/s) and `130`–`270` (t/c, scale-dependent), so no single power of `α` fits all; record
+         that rather than choosing.
 
 Working notes for the next session: there is no Lean toolchain in the device shell, so write
 proofs to be deterministic and ask Kate for `./build.sh fast PMFlavor`. Avoid `simp` on a

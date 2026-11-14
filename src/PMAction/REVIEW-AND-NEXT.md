@@ -19,4 +19,14 @@
   (the time component is a tick, not a hopping term), and its phase relative to the in-wall legs.
   Also state the lead model (equal leads per generation) here as a premise, since
   `PMFlavor.TransferGenerator` uses it.
+- A direct zero-mode mass term. The flavour sector (`PMFlavor.MassInsertion`,
+  `InterWallDiagonal`) excludes the charged masses as `δ²Y⁻¹` or `D Y⁻¹ D` with the equal-class
+  link the E₈ gluing allows: traceless, or a degenerate light pair. What it needs is a term
+  joining wall 1's `Γ = +1` zero mode to wall 2's `Γ = −1` zero mode directly, carrying the
+  generation's label class (class gap `b + c`). The two-wall Hamiltonian here has only the on-site
+  `δβ` (within a wall) and the inter-wall hop `hop ⊗ Y`, which joins the gapped components. Ask:
+  does the E₈ update contain a direct zero-mode term (a crossing combined with a label-class
+  carrier in one event)? And why is the equal-class crossing, which the gluing allows directly,
+  absent or small in the mass? If it is not small it puts generation off-diagonal entries back
+  into the mass matrix.
 

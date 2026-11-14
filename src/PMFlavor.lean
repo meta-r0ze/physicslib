@@ -113,6 +113,7 @@ import PMFlavor.LinkFlux
 import PMFlavor.ThirdGenerationMixing
 import PMFlavor.TransferGenerator
 import PMFlavor.InterWallDiagonal
+import PMFlavor.MassInsertion
 import PMFlavor.WeakCurrentBridge
 import PMFlavor.FalsifiablePredictions
 import PMFlavor.Downstream

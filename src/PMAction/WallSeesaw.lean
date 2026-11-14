@@ -45,7 +45,11 @@ conserving `Y` (a Laplacian of the generation–class incidence) carrying the CK
 quark masses and mixing together (`PMFlavor.ThirdGenerationMixing`, `tools/flavour_link_fits.py`).
 A `Y` with independent diagonal entries is not excluded, but then this formula does not fix them;
 and if `Y` is the equal-class crossing the E₈ gluing allows, its diagonal is zero and it cannot carry
-the hierarchy (`PMFlavor.InterWallDiagonal`).
+the hierarchy (`PMFlavor.InterWallDiagonal`). With flavour-dependent on-site insertions and that
+link, the reduction `D Y⁻¹ D` leaves the two light generations degenerate at leading order
+(`PMFlavor.MassInsertion.light_pair_degenerate`), so this formula does not give the charged
+masses. What the flavour sector needs instead is a term joining the two zero modes directly (the
+slot of `M` itself), which this Hamiltonian does not contain.
 -/
 
 noncomputable section

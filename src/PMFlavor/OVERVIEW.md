@@ -168,6 +168,23 @@ a generation-diagonal mass that the equal-class crossing cannot give: a composit
 single-wall carrier shift by the generation label) or a flavour-dependent on-site term. The
 `GenerationWalls` reading "the tag dynamics is `Y`, light masses `δ²/σ(Y)`" is excluded as the
 source of the hierarchy under the gluing premise.
+
+**What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
+(`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
+generation labelled by the reference's class `v` has a vector-class insertion, which can stay
+in-cycle (`label_is_reference_iff`); and it is the only generation whose two mixings both cross the
+node (`label_v_mixings_cross`, `other_has_in_cycle`). So one fact fixes both patterns. The data choose the direction: if
+the insertion enters the mass directly, that generation is the heavy, weakly mixed one
+(`|V_ub|, |V_cb| ≪ |V_us|`, as observed). If it enters `Y` and is read through `δ²/σ(Y)`, it is the
+lightest, and `|V_us|` would be node-suppressed while `|V_cb|` is in-cycle, the reverse of the data.
+So the diagonal mass is an in-wall (on-site) chirality flip, or `WallSeesaw`'s `δ²/σ(Y)` does not
+apply to it. The on-site version reduced through the seesaw also fails: `D Y⁻¹ D` with the
+equal-class link leaves the light pair degenerate at leading order (`light_pair_degenerate`; ratio
+below `1.52` numerically). So the light masses do not come from inverting a link. What survives is
+a term joining the two chiral zero modes directly and carrying the label class, which makes the
+mass matrix generation-diagonal: the transfer reading's premise, reached from the mass side. Not
+yet derived: the wall Hamiltonian has no such term, and the equal-class crossing would add
+off-diagonal mass entries unless absent or small.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a
