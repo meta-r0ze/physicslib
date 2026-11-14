@@ -27,10 +27,14 @@ so its construction must give a probability linear in a pentagon cosine.
 glue class, so it conserves the generation label (the omitted class): root dynamics cannot mix
 generations, and links built from root moves are diagonal. Mixing needs a single-wall carrier
 move, and generations `m`, `m'` mix through the class `m + m'`, a different class for each pair.
-Next: the amplitude of a single-wall carrier exchange per class. The reading in `GenerationLabel`
-(exchange through the reference's class stays in the reference cell, the other two cross the node)
-matches the CKM split, `s₁₂` free of `α` and `|V_cb|`, `s₁₃` of order `α`; the leptons' near-maximal
-`θ₂₃` needs its own account.
+`ExchangeAxis` derives which pair mixes in-cycle: `6` of the `8` vector-class displacements avoid
+the reference axis, while every spinor and conjugate-spinor displacement touches it, so by
+`LeptonAxisRestriction` only the pair mixing through the reference's class `v` has gauge-repairable
+exchange; the other two pairs must pass the reference node. This matches the CKM split (`s₁₂` free
+of `α`; `|V_cb|`, `s₁₃` of order `α`). Open: the node passage costing exactly `α`, the in-cycle
+amplitude through `v` (the `14` of `s₁₂`), and the `s`/`c` split (`|V_ub|` vs `|V_cb|`), which the
+axis test cannot see (`flip` swaps `s`, `c` and keeps the axis), so it needs an orientation input;
+an unbroken `s ↔ c` is what the leptons' near-maximal `θ₂₃` looks like.
 
 ### 2. The `687/688` first-row dressing
 
