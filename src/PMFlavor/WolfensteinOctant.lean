@@ -30,7 +30,7 @@ built from `π`, `α⁻¹` and the golden ratio `φ`.
 
 Together: the supplied model predicts **lower solar, upper atmospheric** octants,
 both with strict inequalities and no decimal input. These are the falsifiable
-statements review item 4 was missing.
+statements an earlier review item was missing.
 -/
 
 noncomputable section
@@ -88,8 +88,8 @@ theorem phi_lt_two : φ < 2 := by
 /-- **The solar octant is exactly `1 < φ < 2`.** The lower-octant bound
 `sin²θ₁₂ < 1/2` is equivalent to `1 < φ`, and the above-golden-point bound
 `1/4 < sin²θ₁₂` is equivalent to `φ < 2`. So the solar-octant claim carries no
-content beyond the size of the postulate `φ`: it is *not* an independent
-prediction, which is why review item 4 flags `φ` as underived. -/
+content beyond the size of `φ`: it is *not* an independent prediction. (`φ` itself is now derived,
+`GoldenGeometry.pentagon_ratio_eq_phi`.) -/
 theorem solar_lt_half_iff : PMNS.sineSquared 0 < 1 / 2 ↔ 1 < φ := by
   rw [solar_value]
   have hd : (0 : ℝ) < 2 * φ := by have := phi_pos; linarith

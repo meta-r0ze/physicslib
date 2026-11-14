@@ -7,7 +7,7 @@ import PMConstants.SectorObligations
 /-!
 # Which neutrino mass terms the hypercharge law and Economy allow
 
-Review item 4 asks for exclusions from an actual mass-term law. Paper III's law: a mass bilinear
+An earlier review item asked for exclusions from an actual mass-term law. Paper III's law: a mass bilinear
 is hypercharge neutral after `a` doublet and `b` conjugate insertions, and each insertion is one
 priced read of the vacuum (`VevEntry.economy_one_insertion`). Paper II derives Economy and positive
 prices from persistence (`PersistenceSelection`). Charges are the supplied Paper III

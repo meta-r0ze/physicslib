@@ -5,7 +5,7 @@ import Mathlib.Tactic
 /-!
 # The native flavour current *is* the Paper-II V−A chiral current
 
-Review item 6 asks whether the flavour current is a free choice. Within the
+An earlier review item asked whether the flavour current is a free choice. Within the
 chosen four-component chiral representation, part of it is not: the chiral
 projector the native current uses is exactly Paper II's `P_L = ½(1 − γ⁵)`.
 This module proves the identification, so the native current's chirality is

@@ -5,7 +5,7 @@ import Mathlib.LinearAlgebra.Matrix.Hermitian
 /-!
 # The generation update, its symmetric link, and what that selects
 
-Review items 1–3. Under the distinct-pair packet contract, Paper III classifies three unordered
+Under the distinct-pair packet contract, Paper III classifies three unordered
 pairs of nontrivial glue classes (`Generations.three_pairs`). Identifying these packet types
 with physical generations is an additional application premise. Paper I's substrate symmetries
 permute the three classes as `S₃` (`ChannelSymmetry.hada_class`, `flip_class`).

@@ -7,7 +7,7 @@ import Mathlib.Tactic
 
 `SubstrateLink` derived the symmetric link `linkOverlap` from the substrate glue
 classes and proved its spectrum is `{4, 1, 1}`: the light branch is a **doubly
-degenerate doublet**, so the symmetric link cannot produce mixing. Review item 1
+degenerate doublet**, so the symmetric link cannot produce mixing. An earlier review item
 names the missing object: the actual breaking link. This module constructs it and
 proves it does the one thing the symmetric link provably cannot — split the light
 doublet.

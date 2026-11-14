@@ -9,7 +9,7 @@ import Mathlib.Tactic
 /-!
 # The falsifiable prediction ledger
 
-Review item 5 asked for a global fit. That needs real data, provenance and a
+An earlier review item asked for a global fit. That needs real data, provenance and a
 covariance, which is not Lean's job. What *is* Lean's job — and what the review
 was missing — is a single, auditable list of the **falsifiable predictions** the
 framework actually makes, each with its proof, so a fit can be run against them.

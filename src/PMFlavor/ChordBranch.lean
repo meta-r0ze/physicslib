@@ -8,7 +8,7 @@ import Mathlib.Tactic
 
 `SpectralGapOrder` obtained the work-ordering theorems under a standing
 hypothesis `hband : t · (e₂ − e₀) ≤ π`: the whole spectrum must sit inside one
-chord branch of the circle. Review item 3 flagged this as an input, not a
+chord branch of the circle. An earlier review item flagged this as an input, not a
 derivation. This module removes the hypothesis as a *free* assumption by turning
 it into a **derived window on the tick**, and by exhibiting the substrate clock
 `Δ = 43` inside that window whenever the spectrum is wide enough.

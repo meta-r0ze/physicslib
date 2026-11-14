@@ -6,11 +6,11 @@ import Mathlib.Tactic
 
 This module isolates the two numerical inputs that the derivation modules need:
 the golden-ratio postulate `φ` and the certified enclosures for `π` and `√5`.
-Measured PDG/NuFIT comparisons live in `PMFlavor.FlavourPulls`, which is **not**
+Measured PDG/NuFIT comparisons live in `E8PConstants.FlavourPulls`, which is **not**
 imported by the CKM/PMNS derivation modules.
 
-`φ` is not derived from E8; it is the one-parameter solar-sector postulate flagged
-in `REVIEW-AND-NEXT.md`.
+`φ` itself is now derived (`GoldenGeometry.pentagon_ratio_eq_phi`, `SixHundredCell`); the solar
+form `1/(2φ)` that uses it is still supplied.
 -/
 
 noncomputable section
