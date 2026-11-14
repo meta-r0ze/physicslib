@@ -14,8 +14,10 @@ The six-step plan is done (results in [OVERVIEW](OVERVIEW.md), `GenerationSector
   wall distinguishes the two spinor classes. `PMFlavor.LightSplit`: the split is
   `(δ_T − δ_F)(κ_F(s) − κ_T(s))`, so it needs two wall asymmetries: a wall-dependent on-site chirality
   flip (`δ_T ≠ δ_F`; the two-wall Hamiltonian has one `δ`, and `ZeroModeCoupling`'s `r ≠ 1` residual
-  is the same on both walls) and a wall-dependent carrier amplitude. Find a source for each; the weak
-  current is the candidate for both.
+  is the same on both walls) and a wall-dependent carrier amplitude. Both must be near maximal for
+  leptons and up quarks (`near_maximal`: within about `1%` of living on one wall) and may vanish for
+  down quarks, so a perturbative source is excluded. Find an `O(1)` source that distinguishes the
+  sectors; the weak current enters at coupling order and is not enough by itself.
 
 ## Carrier update
 

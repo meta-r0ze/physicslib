@@ -199,7 +199,10 @@ per order of `GenerationMass`; `composite_expansion2`). If the carriers keep the
 wall-exchange symmetry of `ExchangeChirality`, the light pair's difference is
 `(δ_T − δ_F)(κ_F(s) − κ_T(s))` (`light_split`), zero unless both the on-site flip and the carrier
 differ between the walls (`split_needs_both`). With one `δ` for both walls, as in `WallSeesaw`, the
-pair stays degenerate at this order.
+pair stays degenerate at this order. Size: a light ratio `R` forces `u + x ≤ 2/R`
+(`near_maximal`, `x = δ_F/δ_T`, `u = κ_T/κ_F`), and the scan needs `R ≳ 200` (leptons), `≳ 500` (up),
+`1` (down). So for leptons and up both asymmetries are near maximal; a perturbative source is
+excluded.
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the

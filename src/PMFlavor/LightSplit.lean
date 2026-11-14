@@ -19,13 +19,21 @@ incidence (`swap_with_exchange`), and only the weak current, on one wall, breaks
   `(δ_T − δ_F) · (κ_F(s) − κ_T(s))`.
 * `split_needs_both`: so it vanishes if the on-site flip is the same on both walls or the carrier
   is. A split needs both to be wall-asymmetric.
+* `near_maximal`: with `x = δ_F/δ_T` and `u = κ_T(s)/κ_F(s)` in `[0, 1]` the light ratio is
+  `(1 + x u)/(u + x)`; a ratio `R` forces `u + x ≤ 2/R`. The scan (`tools/composite_mass_scan.py`,
+  `min_split`) needs `R ≳ 200` for leptons and `≳ 500` for up quarks, while down fits with `R = 1`.
+  So for leptons and up quarks both asymmetries are near maximal (each `≲ 1%`): the on-site flip and
+  the carrier each sit almost entirely on one wall. A perturbative source (a weak-coupling-order
+  correction on one wall) is excluded.
 
 `WallSeesaw` and `CompositeMass` take one `δ` for both walls; with that the light pair stays
 degenerate at this order whatever the carriers do. So the light-pair split needs a source for
 `δ_T ≠ δ_F`, a wall-dependent on-site chirality flip, which the library does not yet have
 (`PMAction.ZeroModeCoupling` places the residual on-site mass at `r ≠ 1`, but the same on both
-walls). The weak current is the candidate source for both asymmetries; derived sizes would give
-the light ratio `(δ_T κ_F + δ_F κ_T)/(δ_T κ_T + δ_F κ_F)` (class `s`) in each sector, a test.
+walls). `near_maximal` rules out a perturbative source for leptons and up quarks: the source must
+put each term almost entirely on one wall, and differ between sectors (down needs no split). Derived
+sizes would give the light ratio `(δ_T κ_F + δ_F κ_T)/(δ_T κ_T + δ_F κ_F)` (class `s`) in each
+sector, a test.
 -/
 
 noncomputable section
@@ -54,5 +62,12 @@ theorem split_needs_both (δT δF kFs kTs kFc kTc : ℂ) (h1 : kFs = kTc) (h2 : 
     δT * kFs + δF * kTs = δT * kFc + δF * kTc := by
   rw [← sub_eq_zero, light_split δT δF kFs kTs kFc kTc h1 h2]
   rcases h with h | h <;> simp [h]
+
+/-- **A large split forces both asymmetries near maximal.** With `x = δ_F/δ_T`, `u = κ_T(s)/κ_F(s)`
+in `[0, 1]`, the light ratio is `(1 + x u)/(u + x)`; if it is at least `R`, then `u + x ≤ 2/R`. -/
+theorem near_maximal (x u R : ℝ) (hx0 : 0 ≤ x) (hx1 : x ≤ 1) (hu0 : 0 ≤ u) (hu1 : u ≤ 1)
+    (hR : 0 < R) (h : R * (u + x) ≤ 1 + x * u) : u + x ≤ 2 / R := by
+  rw [le_div_iff₀ hR]
+  nlinarith [mul_le_one₀ hx1 hu0 hu1]
 
 end PMFlavor.LightSplit

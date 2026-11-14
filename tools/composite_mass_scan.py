@@ -13,6 +13,9 @@ Findings (seeded random samples; a sample, not a bound):
    need (m/l)/(h/m) > 1: excluded. Down (54, 20) is allowed.
 2. k_1 != k_2: every sector is reachable (three parameters, two ratios: no test). The required
    light-carrier ratios are about 1e5 (leptons), 6e3 (up), 20 (down).
+4. min_split: the smallest ratio of the two light diagonal entries that fits each sector
+   (grid, log error < 0.04): leptons about 200, up (M_Z) about 500, down 1. With
+   PMFlavor.LightSplit.near_maximal both wall asymmetries must be near maximal for leptons and up.
 3. Signed or complex amplitudes reach large ratios only by cancelling det A = k_v k_1 k_2 + d^3.
 """
 import numpy as np
@@ -42,7 +45,19 @@ def closest(target, n=400000, seed=2):
         if dist < best: best, arg = dist, (d, k1, k2, r1, r2)
     return best, arg
 
+def min_split(qs=(1, 10, 100, 200, 300, 500, 700, 1000)):
+    D = 10 ** np.linspace(-6, 0, 241); K = 10 ** np.linspace(-8, 0, 321)
+    dd, kk = np.meshgrid(D, K, indexing="ij")
+    for q in qs:
+        A = np.zeros(dd.shape + (3, 3)); A[..., 0, 1] = A[..., 1, 2] = A[..., 2, 0] = dd
+        A[..., 0, 0] = 1; A[..., 1, 1] = kk; A[..., 2, 2] = kk / q
+        s = np.linalg.svd(A, compute_uv=False); r1, r2 = s[..., 0] / s[..., 1], s[..., 1] / s[..., 2]
+        errs = {n: float((np.abs(np.log(r1 / t[0])) + np.abs(np.log(r2 / t[1]))).min())
+                for n, t in DATA.items()}
+        print("light-entry ratio", q, {n: round(e, 3) for n, e in errs.items()})
+
 if __name__ == "__main__":
+    min_split()
     print("equal light carriers, max (m/l)/(h/m):", max_q(True))
     for name, (r1, r2) in DATA.items():
         print(f"{name}: data (m/l)/(h/m) = {r2 / r1:.3g}; unequal-carrier closest:", closest((r1, r2)))
