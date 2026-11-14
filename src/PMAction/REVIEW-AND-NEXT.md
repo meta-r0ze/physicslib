@@ -32,7 +32,16 @@ derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   sinc-weighted vertex and the contact term; on a cut shell the longitudinal part leaves the
   routing difference of `bubble_sub_contact`, which the bound must carry. Acceptance: the bound must
   resolve the `q²` coefficient. An `O(a²)` estimate independent of `q` proves convergence at fixed
-  `q` but is useless after division by `q²`.
+  `q` but is useless after division by `q²`. Numeric check (`tools/lattice_polarization_check.py`):
+  the lattice minus continuum `q²` coefficient is `C a² (hi² − lo²)`, `C ≈ 1.38`, with exact `a²`
+  scaling and no `q` dependence, so the route resolves the coefficient. The correction is not
+  proportional to the transverse structure at `O(a²)` (lattice anisotropy), so the bound is
+  component-wise; the contact's sinc factors contribute at the same order. Formal target:
+  `|Π_lat,sub(q) − Π_cont,sub(q)|_{μν} ≤ q² · C' a² (hi² − lo²) + O(|q|³/lo)` on
+  `2|q| ≤ lo`, `a·hi ≤ 1`. Steps: (i) pointwise `O(a²)` bounds for the symbol at `k` and `k + q`
+  (`symbol_gap`), the sinc-weighted leg and the contact against `2k + q` and `2δ`; (ii) the lattice
+  integrand's `q²` Taylor coefficient against the continuum's `coefC`, `≤ C a²/|k|²`; (iii) a lattice
+  analogue of `scalar_remainder` for the `q³` tail; (iv) assembly as in `polarization_window`.
 - Construct the map from background `Config` to the `RecordSupply` stream used by `ReferenceSelection`. Physical allocation of the banks is a [machine-layer dependency](Machine/REVIEW-AND-NEXT.md).
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.

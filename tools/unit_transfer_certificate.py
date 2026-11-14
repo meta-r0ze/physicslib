@@ -17,6 +17,10 @@ Rigorous (python-flint ball arithmetic, 128 bits; floating point only proposes Q
 3. B is Hermitian; its eigenvalues lie within ||B - diag B||_F of its real diagonal (Weyl). If
    every |Re B_ii| exceeds that bound, the number of negative diagonal entries is exactly the
    number of negative eigenvalues of H, and H is invertible.
+4. The script also checks strict row dominance, sum_{j != i} |B_ij| < |B_ii| for every row, in ball
+   arithmetic: the hypothesis of PMAction.WilsonCertificate.wilson_certificate, which
+   PMConstants.UnitTransferWitness turns into the unit-winding witness. With step 4 the Gram bound
+   of step 2 is not needed by the Lean side (row dominance forces Q invertible).
 
 Result (L = 3, dimension 324): the trivial history has 162 filled modes, the unit history
 (n12, n34) = (1, -1) has 163, both invertible (smallest |Re B_ii| 1.0 and 0.3455 against
@@ -109,6 +113,12 @@ def certify(L,n12,n34):
             gF+=abs(G[i,j])**2
             if i!=j: eF+=abs(B[i,j])**2
     gF=gF.sqrt(); eF=eF.sqrt()
+    # the hypothesis of PMAction.WilsonCertificate.wilson_certificate: strict row dominance
+    for i in range(n):
+        rs=flint.arb(0)
+        for j in range(n):
+            if j!=i: rs+=abs(B[i,j])
+        assert rs<abs(B[i,i]), ("row dominance", i)
     for i in range(n):
         d=B[i,i].real
         m=abs(d)-eF

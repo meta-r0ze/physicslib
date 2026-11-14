@@ -1,12 +1,13 @@
 # PMConstants — open work
 
-- **Strong CP.** The mass phase is not on this route: `ThetaBarSelection.Zm_eq` makes the vacuum see
-  only `θ − arg det(M_u M_d)`, so `θ̄ = 0` holds for any invertible mass under its winding-weight and
-  vacuum-selection premises (the non-Hermitian crossing of `GenerationParity` and the composite's
-  phase are flavour questions). What is missing is the unit-winding witness: two kernels whose
-  negative-mode counts differ by one. `WallTransfer` gives the determinant factor for a given
-  count and `PMAction.InertiaStability` keeps the count locally constant; neither produces the
-  witness. Bring the external unit-transfer certificate into Lean: verify invertibility and the change from 162 to 163 filled modes for the two Wilson kernels with `PMAction.WilsonCertificate.wilson_certificate` (or `wilson_certificate_of_squared_error`): exhibit `Q` for each kernel, certify the row gaps or the Frobenius margin, and check that the certificate's matrices are the library's two backgrounds. The anomaly relation is derived (`PMAction.WallTransfer`, `FermionFlip`); the selection argument admits the θ-vacua as least-cost candidates. [Certificate](../../tools/unit_transfer_certificate.py) · [Selection theorem](ThetaBarSelection.lean)
+- **Strong CP: the correspondence check.** The witness is in place (OVERVIEW: `UnitTransferWitness`):
+  `theta_zero_of_certificates` takes two inertia certificates, and
+  `tools/unit_transfer_certificate.py` checks their hypotheses (strict row dominance, `162` and `163`
+  negative diagonal entries, `L = 3`) in ball arithmetic; that numerical step is an explicit external
+  premise. Open: check that the script's two matrices are the library's backgrounds (the Wilson
+  kernel `γ₅(D_W − M)` at `M = r = 1` of `PMAction.DomainWall`, link transports of
+  `PMAction.Machine.MatterContinuum`, the constant-flux link phases), for instance by stating the
+  kernel in Lean and checking a few matrix entries against the script's builder.
 - **Running couplings.** Consume a theorem on the subtracted lattice polarization from PMAction
   (PMAction item "Subtracted lattice polarization": vertex and contact done in `FiniteVertex`,
   `PolarizationContact`; open is a bound that resolves the `q²` coefficient), in place of
