@@ -210,6 +210,10 @@ the node by two legs of admittance `α`, which Kron reduction puts in series (`K
 so `k = α/2` (`node_series`, `node_kron`, `node_amplitude_value`: `1/(2Z)`). The mass carrier has no
 lead boundary; the CKM transfer adds the `1/π` boundary (`KronSeries.vub_from_kron`).
 
+**The other wall must be detuned.** `UndetunedWall`: at `δ_O = 0` the light mass `D_R cyc κ_O` is a
+cyclic shift with entries `a_{h+1} c_h` (`diag_cyc`, `undetuned_gram`), which with the symmetry are
+`(kK, k², kK)` (`undetuned_masses`): two heavy, one light, the reverse of every charged sector.
+
 **Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the shape of every
 sector's mass matrix and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
 `DoubletReflection`). How each species uses it (the node-carrier scan, the mixing scan, the up-sector

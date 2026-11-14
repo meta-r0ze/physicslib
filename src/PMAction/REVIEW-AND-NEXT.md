@@ -12,7 +12,11 @@ derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   Wilson point (`δ_R = 0`), so the seesaw term `δ_F δ_T Y⁻¹` vanishes and the light mass is
   `D_R (δ_O + cyc κ_O)` with no competing direct term on the reference's wall. The other wall's
   detuning `δ_O` (in `ZeroModeCoupling`'s terms, its departure from `r = 1`) sets the mass scale and,
-  relative to the carriers, the mixing. Find what fixes it on the substrate.
+  relative to the carriers, the mixing. It must be nonzero: at `δ_O = 0` the mass is a cyclic shift
+  with masses `(kK, k², kK)`, two heavy and one light (`PMFlavor.UndetunedWall`), the reverse of
+  every charged sector. Find what fixes its size on the substrate; the library has no source yet
+  (the wire's simplest protocol, down quarks, puts it near `0.025 K`, an external fit,
+  `tools/node_carrier_scan.py`).
 
 ## Carrier update
 
