@@ -203,8 +203,9 @@ generation vertices sharing the class vertices) the down-to-up block keeps only 
 row (best `χ² ≈ 440`), because up generations then couple to each other, which a charged-current
 transfer (`d ↔ u` only) does not allow. So the flat network fails, a flux is still needed in these
 constructions, and the library has no source for it yet; the cyclic wall orientation is the only
-CP-odd candidate. In the six-vertex form `J` depends on each sector's flux separately, not only on
-their difference.
+CP-odd candidate. The six-vertex form models a different object: the charged current is
+generation-universal with isospin a separate factor (`FlavourCurrent`), so the transfer is the
+three-lead network of `TransferGenerator`, with one loop.
 Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a

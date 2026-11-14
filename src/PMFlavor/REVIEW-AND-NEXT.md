@@ -94,14 +94,15 @@ on the network. Suggested order: the leg phases, then `|V_cb|`, then the apertur
        what fails without a flux is the magnitudes (`|V_ub|` on three vertices). Tried: separate up
        and down generation vertices sharing the class vertices (six leads), real legs: best
        `χ² ≈ 440`, and the down-to-up block keeps only `80%` of each row, because up generations
-       couple to each other through the class vertices. A charged-current transfer is `d ↔ u` only,
-       so the right network is bipartite: each class vertex joins down generations to up
-       generations, with no up–up or down–down path. Next: build that bipartite network (leads on all
-       six generations, equal widths), check that its down-to-up block can be near-unitary (deficit
-       to compare with the dressing `1/516`), then fit real legs to the CKM. If a real bipartite
-       network fits, the CKM phase needs no source (persistence-consistent); if not, record which
-       constraint fails and return to the source question. In the six-vertex form `J` depended on
-       each sector's flux separately, so a source common to both sectors is not excluded. The same flux must also give `J`, which is now an output, not an input: the
+       couple to each other through the class vertices. But the charged current is generation-universal with
+       isospin a separate factor (`FlavourCurrent`: the same raising on every generation), so the
+       transfer acts on generation space alone: three leads, one per generation, the `d → u` label
+       factored out. That is `TransferGenerator`'s three-vertex network, with one loop and one
+       flux. Separate up and down loops (candidate "two sectors sharing legs") have no place in
+       it, and the six-lead networks model a different object; candidate closed. The source
+       question stands for the single loop: the cyclic wall orientation, or a `Z₃` twist from the
+       cyclic generation order (a competition between offsets `0` and `2π/3` has its minimum strictly
+       between them; any competition among offsets `0` and `π` only has minima at `0` or `π`). The same flux must also give `J`, which is now an output, not an input: the
        fit uses `J`, so refit with `|V_us|, |V_cb|, |V_ub|` only and check `J` and `α` as
        predictions of a derived flux.
     2. The couplings: the data give the scale-free `K₂₃/K₁₂ = 0.183` and `K₁₃/K₁₂ = 0.0185`. The
