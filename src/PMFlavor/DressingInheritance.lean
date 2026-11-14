@@ -29,7 +29,9 @@ from what is already in the library.
 * `measured_row`: so a quark row measured against muon decay has sum `q² · 1 / 1 = q²`, the
   deficit `1/516` does not cancel; `global_cancels` restates that equal dressing would cancel.
 
-Consequences: every CKM row and column loses `1/516`; lepton-axis processes (muon decay, PMNS
+Consequences: every CKM row and column loses `1/516`, within `1σ` of all four measured sums
+(`row_column_tests`: first row `0.9984(7)`, first column `0.9971(20)`, second row and column
+`1.001(12)`, `1.003(12)`); lepton-axis processes (muon decay, PMNS
 oscillation) are undressed, so PMNS stays unitary; a ratio of a hadronic to a leptonic rate of the
 same weak vertex (e.g. `W → q q̄'` against `W → ℓ ν`) carries `q²`. The underlying mixing is still the
 unitary basis change `U_uᴴ U_d` (`CKMClosure.basis_change_unitary`); the observed quark amplitude
@@ -53,5 +55,17 @@ theorem global_cancels (q2 Γq Γμ : ℝ) (hq : q2 ≠ 0) (hμ : Γμ ≠ 0) :
 
 theorem deficit : 1 - CKMDressing.q2 = 1 / 516 := by
   unfold CKMDressing.q2; norm_num
+
+/-- **Every row and column, against the CKM 2023 workshop sums.** First row `0.9984(7)`, first
+column `0.9971(20)`, second row `1.001(12)`, second column `1.003(12)`: the uniform `1 − 1/516` lies
+within `1σ` of all four. -/
+theorem row_column_tests :
+    |(1 - 1/516 : ℝ) - 0.9984| / 0.0007 < 1 ∧ |(1 - 1/516 : ℝ) - 0.9971| / 0.0020 < 1 ∧
+      |(1 - 1/516 : ℝ) - 1.001| / 0.012 < 1 ∧ |(1 - 1/516 : ℝ) - 1.003| / 0.012 < 1 := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [abs_of_neg (by norm_num)]; norm_num
+  · rw [abs_of_pos (by norm_num)]; norm_num
+  · rw [abs_of_neg (by norm_num)]; norm_num
+  · rw [abs_of_neg (by norm_num)]; norm_num
 
 end PMFlavor.DressingInheritance

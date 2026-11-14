@@ -58,8 +58,9 @@ deficit `1 − η` is shared over the `D − 1` spatial outlets (`DressingEvent`
 why the quark rows carry it and muon decay does not (so it does not cancel against `G_F`): the
 reference's maintenance moves along its own axis, the time axis is the maintenance direction, so the
 lepton axis is time and colour transitions are spatial; only spatial transitions register a loss.
-Premise: carrier vectors and lattice hop directions share the `D₄` coordinates. Open: a test beyond
-the first row (each CKM row and column `1/516`, PMNS unitary, hadronic/leptonic `W` ratio `q²`).
+Premise: carrier vectors and lattice hop directions share the `D₄` coordinates. Every row and column
+then loses `1/516`, within `1σ` of all four measured sums (`row_column_tests`). Open: sharper tests
+(PMNS unitary; hadronic/leptonic `W` ratio carries `q²`, a `0.2%` shift).
 
 ### 3. Inputs that are not derivable
 
