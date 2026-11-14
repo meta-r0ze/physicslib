@@ -32,8 +32,8 @@ node impedances the data admit several forms equally (`(π + χ)/(Z − 4π)`, `
 `2π/(Z + 5π)` all within `0.2σ`), and the inclusive/exclusive `|V_cb|` tension widens this, so no
 construction can be singled out yet.
 
-Premise: the mixing amplitude of a passive path is its admittance (the transfer per unit drive, as
-`HandoffAdmittance` reads a node's through weight as its conductance). That the two legs are equal
+The amplitude being the path's series admittance is derived in `KronSeries`: a conserving link is a
+Laplacian, and eliminating the node (Kron reduction) gives exactly the series admittance. That the two legs are equal
 is Closure (`HandoffAdmittance.closure_one_price`).
 -/
 
