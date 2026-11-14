@@ -19,13 +19,25 @@ what remains:
   junction by two legs, so `w` is their amplitude (`|V_ub|, |V_cb| ∝ α`, `s₁₂ = π/14`), and
   lepton-axis states by one, so `w` is their probability (`sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10`).
   `NodeElimination` derives this for the node; the in-cycle case needs the share `π/N` shown to
-  be a through weight (Landauer, as in `PMConstants.HandoffAdmittance`).
+  be a through weight (Landauer, as in `PMConstants.HandoffAdmittance`). Upstream tools do not yet
+  supply it: the event-law link cost and the branch pulse are quadratic in the angle
+  (`PMAction.LinkExpansion`: `ε²‖θφ‖²`; `HandoffAdmittance`: `sin² t`), so a share linear in `π/N`
+  needs a rate per channel rather than a pulse. The closest upstream item is the routing histories
+  and rates of the [elementary-particle review](../PMElementaryParticles/REVIEW-AND-NEXT.md).
 * **The node-crossing coefficients.** `|V_ub| = 1/(2α⁻¹ + π)` is constructed (`VubSeriesPath`): the
   admittance of the two node legs and a unit boundary in series; the data's `m = 2` is the leg count.
   The reactor's `3` is constructed (`ReactorConductance`). Open: `|V_cb| = (π + χ)/(α⁻¹ − Dπ)`. It is not a
   two-leg passive path (`VubSeriesPath.vcb_not_two_leg`: it needs a drive `≈ π + χ` over about one
   node impedance), and several single-impedance forms fit equally (`σ/(Z − 5π)`, `2π/(Z + 5π)`),
-  so it needs a structural reason for the drive before data can test it.
+  so it needs a structural reason for the drive before data can test it. Candidate from the node
+  impedance itself: `Z_geo = πΔ + χ + …` is a causal envelope's boundary `πw` (Barbier) plus its
+  `χ` closures (Descartes) at width `w = Δ` (`PMSubstrate.Impedance`, `PMConstants.VevBoundary`).
+  Writing `Z(w) = πw + χ`, the drive `π + χ` is `Z(1)`, a unit-width envelope, and
+  `Z_geo − Dπ ≈ Z(Δ − D)`, so `|V_cb| ≈ Z(1)/Z(Δ − D)`: a divider between two envelopes. Open: why
+  the `c`-side hop drives with a unit envelope and why `D` of the `Δ` widths drop out.
 * **The size of the parity breaking** that splits `s` from `c` (`ExchangeChirality`): large for
-  quarks (`|V_ub|/|V_cb| ≈ 0.09`), small for leptons (`θ₂₃` near maximal; Paper IV's octant
-  "running" is this breaking and has no Lean statement).
+  quarks (`|V_ub|/|V_cb| ≈ 0.09`, mostly a drive ratio, `VubSeriesPath.vcb_not_two_leg`), small for
+  leptons (`θ₂₃` near maximal; Paper IV's octant "running" is this breaking and has no Lean
+  statement). Upstream: the same weak-wall versus spectator-wall asymmetry is what the carrier's
+  axial current measures (the slice-sign leakage in the [action review](../PMAction/REVIEW-AND-NEXT.md));
+  its many-slice limit may give the size.
