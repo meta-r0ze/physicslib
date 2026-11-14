@@ -14,7 +14,12 @@ what remains:
   Data: the quark share must be the generator element `π/14` (the rotation `sin(π/14)` is `>2σ`
   low); the lepton probability fits either `π/10` or `sin(π/10)`. Open: derive why the share is the
   generator element and is read as an amplitude for quarks and a probability for leptons. That
-  fixes the solar prediction (`π/10 = 0.3142` versus `0.3090`).
+  fixes the solar prediction (`π/10 = 0.3142` versus `0.3090`). One rule would cover all four
+  constructed mixings: each is a leg weight `w` (node `α`, in-cycle `π/N`); quarks reach the
+  junction by two legs, so `w` is their amplitude (`|V_ub|, |V_cb| ∝ α`, `s₁₂ = π/14`), and
+  lepton-axis states by one, so `w` is their probability (`sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10`).
+  `NodeElimination` derives this for the node; the in-cycle case needs the share `π/N` shown to
+  be a through weight (Landauer, as in `PMConstants.HandoffAdmittance`).
 * **The `χ` of `|V_ub|`** (`MixingTests.vub_count_unique`). The reactor's `3` is constructed
   (`ReactorConductance`).
 * **The `O(1)` coefficients of the node-crossing amplitudes** (`1/χ`, `π + χ`): the node energy
