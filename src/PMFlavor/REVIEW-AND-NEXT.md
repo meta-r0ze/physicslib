@@ -37,9 +37,12 @@ what remains:
   spectator wall with a bare drive. Tests: the unit-tick drive is singled out (`1`, `χ`, `π`,
   `env 2` excluded by `>13σ`); `0` or `1` removed ticks are `>2σ` low. Open: derive that the hop
   amplitude is this divider.
-* **The size of the parity breaking** that splits `s` from `c` (`ExchangeChirality`): large for
-  quarks (`|V_ub|/|V_cb| ≈ 0.09`, mostly a drive ratio, `VubSeriesPath.vcb_not_two_leg`), small for
-  leptons (`θ₂₃` near maximal; Paper IV's octant "running" is this breaking and has no Lean
-  statement). Upstream: the same weak-wall versus spectator-wall asymmetry is what the carrier's
-  axial current measures (the slice-sign leakage in the [action review](../PMAction/REVIEW-AND-NEXT.md));
-  its many-slice limit may give the size.
+* **The size of the parity breaking** that splits `s` from `c` (`ExchangeChirality`). Quarks: given
+  by the two node-crossing constructions, a bare drive on the spectator wall (`VubSeriesPath`) and a
+  refresh-tick drive on the weak wall (`VcbEnvelope`); it closes with them. Leptons: the deviation of
+  `θ₂₃` from maximal (Paper IV's octant "running", no Lean statement). The data do not yet fix even
+  its sign: NuFIT 6.0 normal ordering gives `sin²θ₂₃ = 0.561` without the Super-Kamiokande
+  atmospheric data and `0.470` with it, so the paper's upper-octant `0.5748`
+  (`PMNSGeometry.atmos_upper_octant`) is at risk. Upstream: the weak-wall versus spectator-wall
+  asymmetry is what the carrier's axial current measures (slice-sign leakage, [action
+  review](../PMAction/REVIEW-AND-NEXT.md)).
