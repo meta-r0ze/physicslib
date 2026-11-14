@@ -24,8 +24,9 @@ outside (colour carriers, off the reference axis) mix through two legs, amplitud
 `∝ α` (`sin²θ₁₃ = 3α`, three spatial channels in parallel, `ReactorConductance`). The reading that
 the lepton-axis states are one leg from the reference node uses the reference's axis being the
 lepton axis (`PMConstants.ReferenceAxis`, `CarrierRepresentation`); the leg amplitude being the
-same `√α` for every leg is the Closure statement `HandoffAdmittance.closure_one_price`. Not derived:
-the energy denominators `e − E`, which set the `O(1)` coefficients (`1/χ`, `π + χ`).
+same `√α` for every leg is the Closure statement `HandoffAdmittance.closure_one_price`. For `|V_ub|`
+the denominator is the series impedance of the two legs and a boundary (`VubSeriesPath`); the
+`|V_cb|` coefficient `π + χ` is not derived.
 -/
 
 namespace PMFlavor.NodeElimination

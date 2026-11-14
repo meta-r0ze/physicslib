@@ -20,10 +20,10 @@ what remains:
   lepton-axis states by one, so `w` is their probability (`sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10`).
   `NodeElimination` derives this for the node; the in-cycle case needs the share `π/N` shown to
   be a through weight (Landauer, as in `PMConstants.HandoffAdmittance`).
-* **The `χ` of `|V_ub|`** (`MixingTests.vub_count_unique`). The reactor's `3` is constructed
-  (`ReactorConductance`).
-* **The `O(1)` coefficients of the node-crossing amplitudes** (`1/χ`, `π + χ`): the node energy
-  denominators `e − E` of `NodeElimination`.
+* **The node-crossing coefficients.** `|V_ub| = 1/(2α⁻¹ + π)` is constructed (`VubSeriesPath`): the
+  admittance of the two node legs and a unit boundary in series; the data's `m = 2` is the leg count.
+  The reactor's `3` is constructed (`ReactorConductance`). Open: `|V_cb| = (π + χ)/(α⁻¹ − Dπ)` (its
+  denominator is not fixed by data, `MixingTests`).
 * **The size of the parity breaking** that splits `s` from `c` (`ExchangeChirality`): large for
   quarks (`|V_ub|/|V_cb| ≈ 0.09`), small for leptons (`θ₂₃` near maximal; Paper IV's octant
   "running" is this breaking and has no Lean statement).
