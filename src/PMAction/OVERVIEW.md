@@ -95,6 +95,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
 - `WallHopPhase`: on one chirality the Wilson term drops out (`sandwich_beta`) and an in-wall hop
   is a quarter turn times a Hermitian matrix (`chiral_hop`); two such legs give a real reduced
   coupling (`quarter_turns_cancel`), so in-wall kinetic hops give no CP flux.
+- `GenerationSector`: moves on the generation labels (glue classes on the two walls). `E₈`
+  translations conserve the label and keep a generation state only for `a ∈ {0, label}`
+  (`glue_keeps_iff`); translation by the label swaps the walls' classes (`label_glue_swaps`), a
+  generation-diagonal move with class gap `b + c`. Generation changes need a single-wall `D₄*`
+  carrier equal to the other wall's class (`shift_keeps_iff`, `shift2_keeps_iff`).
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
   zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct

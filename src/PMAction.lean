@@ -111,6 +111,7 @@ import PMAction.WallExchange
 import PMAction.WallSeesaw
 import PMAction.WallHopPhase
 import PMAction.ZeroModeCoupling
+import PMAction.GenerationSector
 import PMAction.VATrace
 import PMAction.FiniteRestorationBridge
 import PMAction.DifferentialRestoration

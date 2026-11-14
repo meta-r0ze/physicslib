@@ -1,5 +1,30 @@
 # PMAction — open work
 
+## Generation sector
+
+- **Generation sector of the update (foundation for `PMFlavor`; work through in order).** The flavour
+  sector's open forks all reduce to what the update does to generations. Steps:
+  1. Moves on the glue labels. Done (`GenerationSector`): `E₈` translations conserve the label, keep
+     a generation state only for `a ∈ {0, label}`, and translation by the label swaps the walls'
+     classes (a generation-diagonal move with class gap `b + c`); generation changes need a
+     single-wall `D₄*` carrier, and from `(b, c)` the change to label `b` is a class-`c` carrier on
+     wall 1, the change to `c` a class-`b` carrier on wall 2.
+  2. Relate the two state spaces: the pair picture here (`(b, c)` on the two walls) and
+     `PMConstants.GenerationWalls`' single-carrier modes (one carrier on one wall, `encode`). Decide
+     from the gluing which one the update acts on, or prove they are the same space under a map
+     (the 48 modes and the 6 ordered pairs × 8 must be reconciled; orientation: `GenerationWalls`'
+     `side` picks one of the two orientations per label, and the label swap maps between them).
+  3. Put the spinor/chirality structure on it: which walls carry which chirality (`DomainWall`), so
+     the label swap's action on chirality is known (it reverses orientation; does it flip
+     chirality, i.e. is it a mass term?).
+  4. The charged-current operator on this space: weak is the sign exchange on the reference's
+     sector (`PMConstants.CarrierActions.weak`), which keeps every class. Show which single-wall
+     carrier events, if any, accompany it, and on which wall; that decides which generation
+     changes the charged current makes.
+  5. Symmetries: the wall-parity exchange (`WallExchange`) on the generation-changing part. This
+     settles whether the inter-wall link is Hermitian (the seesaw fork in `PMFlavor`).
+  6. Then hand to `PMFlavor`: the mass matrix and the mixing as whatever steps 1 to 5 give.
+
 ## Carrier update
 
 - Certify the lowest positive carrier level on the full 216-dimensional operator, then certify the spin-up rms radius in Lean. The exact subspace calculation is in `tools/carrier_mode_exact.py` and `tools/carrier_rms_certificate.py`; the full-space level ordering still uses floating point.
