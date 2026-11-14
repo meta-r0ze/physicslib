@@ -54,8 +54,12 @@ The dressing is now `q² = 515/516`: the minimal dilation has exactly three outl
 (`DressingChannels`), and a registered loss puts no weight on the time axis, so the reference
 deficit `1 − η` is shared over the `D − 1` spatial outlets (`DressingEvent`, the event principle of
 `PMConstants.VevEvent`). The earlier `687/688` was the four-axis share. First-row sum
-`1 − 1/516` is `0.5σ` from `0.9984 ± 0.0007`. Open: the claim that the CKM first row inherits the
-reference deficit at all (the outlets being the spatial readout channels is the reading).
+`1 − 1/516` is `0.5σ` from `0.9984 ± 0.0007`. `DressingInheritance` derives
+why the quark rows carry it and muon decay does not (so it does not cancel against `G_F`): the
+reference's maintenance moves along its own axis, the time axis is the maintenance direction, so the
+lepton axis is time and colour transitions are spatial; only spatial transitions register a loss.
+Premise: carrier vectors and lattice hop directions share the `D₄` coordinates. Open: a test beyond
+the first row (each CKM row and column `1/516`, PMNS unitary, hadronic/leptonic `W` ratio `q²`).
 
 ### 3. Inputs that are not derivable
 
