@@ -48,17 +48,19 @@ theorem cyc_gram_offdiag (κ : Fin 3 → ℂ) (i j : Fin 3) (h : i ≠ j) :
   fin_cases i <;> fin_cases j <;>
     simp_all [cyc, Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply]
 
-/-- Off-diagonal entries of `X Xᴴ` for `X = δ · 1 + cyc κ`. -/
+/-- The other wall's factor `X = δ · 1 + cyc κ`. -/
+def X (δ : ℂ) (κ : Fin 3 → ℂ) : Matrix (Fin 3) (Fin 3) ℂ := δ • (1 : Matrix (Fin 3) (Fin 3) ℂ) + cyc κ
+
+/-- Off-diagonal entries of `X Xᴴ`. -/
 theorem x_gram_offdiag (δ : ℂ) (κ : Fin 3 → ℂ) (i j : Fin 3) (h : i ≠ j) :
-    ((δ • (1 : Matrix (Fin 3) (Fin 3) ℂ) + cyc κ) * (δ • 1 + cyc κ)ᴴ) i j =
-      star δ * cyc κ i j + δ * star (cyc κ j i) := by
+    (X δ κ * (X δ κ)ᴴ) i j = star δ * cyc κ i j + δ * star (cyc κ j i) := by
   fin_cases i <;> fin_cases j <;>
-    simp_all [cyc, Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply,
+    simp_all [X, cyc, Matrix.mul_apply, Fin.sum_univ_three, Matrix.conjTranspose_apply,
       Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply] <;> ring
 
 /-- **Off-diagonal entries of `M Mᴴ` carry `dᵢ d̄ⱼ` and are first order in the carriers.** -/
 theorem left_gram_entry (d : Fin 3 → ℂ) (δ : ℂ) (κ : Fin 3 → ℂ) (i j : Fin 3) (h : i ≠ j) :
-    ((diagonal d * (δ • 1 + cyc κ)) * (diagonal d * (δ • 1 + cyc κ))ᴴ) i j =
+    ((diagonal d * X δ κ) * (diagonal d * X δ κ)ᴴ) i j =
       d i * (star δ * cyc κ i j + δ * star (cyc κ j i)) * star (d j) := by
   rw [left_gram, Matrix.mul_diagonal, Matrix.diagonal_mul, x_gram_offdiag δ κ i j h, Pi.star_apply]
 
