@@ -29,16 +29,22 @@ data, and do not frame work as fitting Standard Model sectors.
    in reverse, and `1 + A` is unitary to second order (`first_order_unitary`). Second order
    (`second_order_unitary`, `corner_split`): unitarity forces the Hermitian part `A²/2`; exponential,
    Cayley and polar all have it and first differ at third order (`A³` coefficient `1/6`, `1/4`, `1/2`;
-   about `κ₀³/12 ≈ 1·10⁻³` on the in-cycle entry, near the `|V_us|` error). Open: the free
-   skew part, which is the order of the changes inside one event. It splits the two-step product
-   `κ̄₀κ̄₂` between the class-`1` entry and its reverse as `w, 1 − w̄`: `w = ½` all at once (any power
-   series in `A`, including `TransferGenerator`), `w = 0` class `0` (the refresh) before class `2`,
-   `w = 1` the reverse. Derive the order from the substrate (the refresh acts on the reference's
-   wall; the class-`2` change also sits on that wall and needs the node), or state it as a premise.
-   **Test:** only `w = 0` makes the class-`1` entry equal `κ₁` with no phase freedom, so
-   `TransferAmplitude.jump = 1/(2α⁻¹ + π) = 0.003606` against `|V_ub| = 0.00382 ± 0.00020` (PDG, 1.1σ)
-   tests `w = 0` together with the jump. With `w ≠ 0` the entry depends on the phase (item 5); the
-   Cayley fit recorded in OVERVIEW (`K₁₃` 4.7σ off the jump) is the `w = ½` case.
+   about `κ₀³/12 ≈ 1·10⁻³` on the in-cycle entry, near the `|V_us|` error). Open: the
+   free skew part, the order of the changes inside one event. It splits the two-step product `κ̄₀κ̄₂`
+   between the class-`1` entry and its reverse as `w, 1 − w̄` (`corner_split`): `w = ½` for any power
+   series in `A` (exponential, Cayley, `TransferGenerator`); `w = 0` for premise FC, forward
+   composition (`forward_completion`, `forward_two_step`, `forward_corner`: the second-order term is
+   two forward changes of the same event plus the Hermitian depletion, no reverse-reverse route);
+   `w = 1` the reverse order. FC reads `reverse_zero` as a statement about all routes inside an
+   event; derive that from the refresh (it acts on one wall, one way round the cycle) or keep FC as
+   the named premise.
+   **Test (recorded).** With `κ₁ = TransferAmplitude.jump = 0.003606` and `U = 1` (item 6), Stewart's
+   relation on the two corners (real `w`) gives `|κ₁|² = (1 − w)|V_ub|² + w|V_td|² − w(1 − w)|V_us V_cb|²`.
+   PDG (`|V_ub| = 3.82 ± 0.20`, `|V_td| = 8.6 ± 0.2` ×10⁻³, `|V_us| = 0.2243 ± 0.0008`,
+   `|V_cb| = 0.0408 ± 0.0014`): `w = 0` needs `0.00382 ± 0.00020` (1.1σ, survives); `w = ½` needs
+   `0.00483 ± 0.00025` (4.9σ, excluded together with the jump); `w = 1` needs `0.00860` (25σ,
+   excluded). So the jump and any power-series completion cannot both hold. This excludes pairs;
+   it does not derive FC.
 2. **The amplitude of each entry.**
    - In-cycle: the share `π/N` rests on the aperture premises (`HalfTurnAperture`); derive them or
      state them as the one premise of this entry.

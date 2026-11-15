@@ -38,6 +38,12 @@ the two-step product `κ̄₀κ̄₂` is carried once by the class-`1` entry and
 together (`corner_split`), split `½, ½` by any power series in `A`, `0, 1` when the class-`0` change
 precedes the class-`2` change, `1, 0` for the reverse order. Only the split `0` makes the class-`1`
 entry equal `κ₁`, which is what the comparison of `TransferAmplitude.jump` with `|V_ub|` presupposes.
+Premise FC (forward composition: the second-order term is two forward changes of the same event,
+`N²`, plus the Hermitian depletion) is a unitary completion with split `0` (`forward_completion`,
+`forward_two_step`, `forward_corner`). Test, with `U = 1`: from the two corners and `|V_us V_cb|`,
+the PDG values need `|κ₁| = 0.00382 ± 0.00020` for FC (jump `0.003606`, 1.1σ) and
+`0.00483 ± 0.00025` for any power series in `A` (4.9σ): the jump excludes the exponential and Cayley
+completions.
 
 **Three transfers, three types (`TransferGraph`).** Each pair of label states transfers through the
 one class both contain (`ends`, `every_pair`). Exactly the transfer through the reference's class
