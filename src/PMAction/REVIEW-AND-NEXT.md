@@ -19,7 +19,27 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   (how far persisting states turn from the label states; PMFlavor's `U_uᴴ J U_d`) can be bounded.
   Already without it (`ReferenceWallRotation`): on the reference's wall every off-diagonal entry of
   `M Mᴴ` is `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`, so the rotation there is about `|dᵢ/dⱼ| · |κ_O/δ_O|`, suppressed by the
-  label states' mass ratio; the charged current reads that side (rows of `D₂ Y⁻¹ D₁ᴴ` are the reference's wall, which `(1 − Γ)/2` selects; one step by name). Also open: whether it is a wire constant or set by
+  label states' mass ratio; the charged current reads that side (rows of `D₂ Y⁻¹ D₁ᴴ` are the reference's wall, which `(1 − Γ)/2` selects; one step by name).
+  **What the library already says about `δ_O` (numerical, outside Lean, 2026-11).** Units: flips in
+  the `δβ` slot, so a carrier of hop amplitude `t` is `−r t/2` (`CarrierFlip`); `NodeAmplitude`'s
+  "amplitude is admittance" with `K = 1` makes the vector flip `K_f = r/2` and the spinor flip
+  `k_f = rα/4`.
+  1. *Ordering.* `M = D_R (δ_O + cyc κ_O)` with the symmetric amplitudes (`UndetunedWall`'s
+     bookkeeping) has one heavy and two light singular values once `|δ_O| ≳ k_f`; at `δ_O = 0` it is
+     reversed (`UndetunedWall`). So the ordering needs `δ_O ≠ 0`, not `δ_O` dominant.
+  2. *Light pair.* With `|κ_R(s)| = |κ_R(c)|` (`NodeAmplitude`: one magnitude on both walls) the light
+     pair is degenerate for every `δ_O` (ratio `> 0.99` for `|δ_O| ≥ 0.1 K_f`; also with the repair
+     sign), and the reference-wall persisting states of labels `1`, `2` are `45°` mixtures. So the wire
+     alone gives a maximal persistence rotation in the light block; a light-pair split (protocol,
+     PMElementaryParticles) is what makes it small, then `θ₁₂ ≈ (m₁/m₂) · k_f/|δ_O|`.
+  3. *Heavy–light.* `θ₁₀ ≈ (m₁/m₀) · K_f/|δ_O|`, so `ε = K_f/|δ_O| = r/(2|δ_O|)` in hop units. The
+     light-mode reduction (Schur complement) needs the flips small against the crossing link,
+     `|δ_O| ≪ |y|`. PMFlavor's `U = 1` tests need `ε ≲ 0.04`, so `|δ_O| ≳ 12` and `|y| ≫ 12`: the crossing
+     link much stronger than one lattice hop. If the crossing amplitude is itself an admittance
+     (`≤ 1`, the carriers' normalization), `ε > 1/2` and `U` must be computed, not set to `1`.
+  So the open numbers are `|δ_O|` and `|y|` in hop units (or their ratio and `t_v`), and the
+  light-pair split. Candidate sources to examine: what normalizes the equal-class crossing `y`
+  (`GenerationParity`), and whether the other wall's chiral zero mode bounds `|δ_O|`. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 

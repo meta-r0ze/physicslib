@@ -95,7 +95,10 @@ data, and do not frame work as fitting Standard Model sectors.
    and `κ₂ · (m₁/m₂)_d · ε ≈ 0.002 ε` (its reverse); the up-type rotations add `< 0.001 ε`. Against
    `|V_ub|`'s error `0.0002`, the tests are tests only for `ε ≲ 0.04`. So: either the other wall is
    strongly detuned (`|δ_O| ≳ 25 |κ_O|`), or `U` is part of the corner values and the FC and phase
-   conclusions are open. This makes `ε` the next number to derive (PMAction, `δ_O`). Then redo the item 1
+   conclusions are open. This makes `ε` the next number to derive (PMAction, `δ_O`). PMAction's REVIEW (`δ_O` item) adds: in the library's
+   normalization `ε = r/(2|δ_O|)` in hop units, `U = 1` needs a crossing link `|y| ≫ 12`, and with the
+   symmetric light amplitudes the light block of `U` is a `45°` rotation until a protocol splits the
+   light pair. So the item 1 and 5 tests are conditional on both. Then redo the item 1
    and item 5 tests with this `U`.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
    event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three
