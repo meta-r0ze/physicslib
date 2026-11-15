@@ -69,7 +69,7 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 - **Triage of the `δ_O` leads (2026-11, one cheap check each).**
   | Lead | Cheap check | Result | Next |
   |---|---|---|---|
-  | Leakage bound (`ChiralLightBand`) | full two-wall, heavy state's weight off the zero kernel | `≈ 1.1 (K_f/|y|)²`, quadratic, stable for `K_f ≤ 0.2` | **do first**: a Lean first-order bound turns "`K_f ≪ |y|`" into "`K_f ≲ √L |y|` for allowed leakage `L`" |
+  | Leakage bound (`ChiralLightBand`) | full two-wall, heavy state's weight off the zero kernel | `≈ 1.1 (K_f/|y|)²`, quadratic, stable for `K_f ≤ 0.2` | done: `LightLeakage.leakage_bound` (exact): leakage `L` holds once the largest flip is `≤ √(L/(1−L)) (|y| − |E|)`; the allowed `L` is not fixed by the library |
   | Two-detuning native wall | `NativeFlavourWall`, `NativeSector.diag`, `WallExchange.H` use one `δ` | mechanical generalization (`Hw`-style blocks) | second: groundwork for the native measurement |
   | Native `δ_O` measurement | search for a reference-conditioned native update | none in the library | parked until the two-detuning wall exists |
   | Rate law (`RootTransferPhase`) | a vector attempt probability in the library | none (`RootPulseEvents`: one attempt is not the quarter pulse) | parked |

@@ -138,6 +138,9 @@ shows closed injective updates cannot finitely prepare a stationary state.
   (`block_char`, `block_product`), with `√(m₀/m₁) − √(m₁/m₀) = δ_O/k` (`ratio_relation`); at
   `δ_O = k` the block is the Fibonacci matrix (`golden_point`). The third mass is `≈ k²`
   (`ReferenceWallRotation.det_M`). So the wire itself splits the light pair in this regime.
+- `LightLeakage`: for a symmetric gapped block with `G² = g²` (`norm_map_of_sq`), `G − E` is coercive
+  (`coercive`), so a light eigenstate's gapped part is at most `v/(|g| − |E|)` (`leakage_bound`). For
+  the wire: allowed leakage `L` holds once the largest flip is `≤ √(L/(1−L)) (|y| − |E|)`.
 - `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
   Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each
   root weighted by `sinc(a r·q/2)`; the midpoint vertex alone misses it by `O(a²|k||q|³)`
