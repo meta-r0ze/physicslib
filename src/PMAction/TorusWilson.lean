@@ -21,9 +21,8 @@ library's.
   library's representation. `script_hermitian`, `script_anticomm` give the hypotheses of
   `wilsonH_hermitian`.
 
-Left as the correspondence premise of `UnitTransferWitness`: that the script's site indexing and its
-link-phase function (`phases`: constant flux `n₁₂`, `n₃₄` in the `(0,1)` and `(2,3)` planes) are
-`wilsonH` with those link values.
+The link phases are `PMAction.TorusFlux`. That the script assembles `wilsonH` from those links in
+its site order is a code-review statement, recorded in `PMConstants.UnitTransferWitness`.
 -/
 
 noncomputable section

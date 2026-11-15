@@ -19,10 +19,21 @@ inequality and sign check on `B = Qᴴ H Q`.
 row-dominant, with `162` and `163` negative diagonal entries. The script checks these inequalities
 and signs in ball arithmetic (python-flint, 128 bits; floating point only proposes `Q`); the 9th-root
 phases at `L = 3` make an exact check in Lean's kernel impractical (`L = 2`, where the phases are
-Gaussian, has no index: `32` and `32`). Still a premise as well: that the script's matrices are the
-library's two backgrounds (the Wilson kernel `γ₅(D_W − M)` at `M = r = 1` of `PMAction.DomainWall`,
-with the link transports of `PMAction.Machine.MatterContinuum`). The vacuum-selection premise of
-`ThetaBarSelection` stays separate.
+Gaussian, has no index: `32` and `32`).
+
+**Correspondence** (checked, partly by code review). The script's matrices are the library's two
+backgrounds: the spin matrices and Hermiticity are `PMAction.TorusWilson` (proved), the link phases
+carry the stated constant flux (`PMAction.TorusFlux.plaquette_flux`, proved), and the script's
+`build` was reviewed against `PMAction.TorusWilson.wilsonD`/`wilsonH`: the diagonal block is
+`(4r − M)·1`; for each site `x` and direction `μ`, with `j = x + μ̂` (mod `L`), the block `(x, j)`
+gets `−½(r − γ_μ) e^{2πi f_μ(x)}` and the block `(j, x)` gets `−½(r + γ_μ) e^{−2πi f_μ(x)}`, so
+`T_μ(x, x + μ̂) = e^{2πi f_μ(x)}` and the backward hop is `T_μᴴ`; the flat index `4·site + spin` is
+the `site × spin` Kronecker order; `H = (1 ⊗ γ₅) D` row block by row block; the phases are
+`PMAction.TorusFlux.phase`; the spin coefficients are exact rationals with denominator at most `4` (asserted) and the phases
+exact `exp(2πi f)` balls. The site ordering (`ravel_multi_index`) is a permutation `P`, and it does
+not matter: if `B = Qᴴ (P H Pᴴ) Q` then `B = (PᴴQ)ᴴ H (PᴴQ)`, the same `B`, so the certificate
+transfers unchanged.
+The vacuum-selection premise of `ThetaBarSelection` stays separate.
 -/
 
 noncomputable section

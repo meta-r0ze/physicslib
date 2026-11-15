@@ -16,9 +16,9 @@ gets `−n x_b / L`. `phase` is that formula, over `ℚ`.
   `−1` through the two planes and topological charge `n₁₂ n₃₄ = −1`.
 * `plaquette_flux_trivial`: with `(0, 0)` every plaquette is an integer (zero field).
 
-With `PMAction.TorusWilson` (the spin structure), what remains of the correspondence premise of
-`PMConstants.UnitTransferWitness` is bookkeeping: that the script assembles `wilsonH` with these
-links and its site ordering.
+With `PMAction.TorusWilson` (the spin structure), the rest of the correspondence (that the script
+assembles `wilsonH` with these links, in any site order) is the code review recorded in
+`PMConstants.UnitTransferWitness`.
 -/
 
 namespace PMAction.TorusFlux
