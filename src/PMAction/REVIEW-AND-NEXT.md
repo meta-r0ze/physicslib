@@ -31,6 +31,9 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
      `2|b|` with label-equal mixtures. So in the regime `δ_O ∼ k_f` the wire gives all three masses
      from one ratio `δ_O/k_f`: a one-parameter curve relating the two mass ratios of a sector. That
      curve is a wire prediction; comparing it with species is PMElementaryParticles work.
+     `WireLightSplit`: the two larger masses are `K` times the eigenvalues of `[[δ_O, k], [k, 0]]`
+     (`√(m₀/m₁) − √(m₁/m₀) = δ_O/k`; at `δ_O = k` the Fibonacci matrix, masses `K k φ`, `K k/φ`), the
+     third `≈ k²`; so `(m₂/m₁)√(m₀/m₁) ≈ k/K`, parameter-free in the ratios.
   3. *Heavy–light rotation* `≈ k_f/|δ_O|` (exact two-wall: falls faster above `δ_O ≈ 0.3 |y|`). In the
      regime of item 2 it is `O(0.1–1)`, so `U ≠ 1` there.
   4. *Full two-wall check* (blocks `a, b, c, d` of `WallSeesaw`): the reduction `D₂ Y⁻¹ D₁ᴴ` misses the

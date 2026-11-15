@@ -31,7 +31,13 @@ the measure, not only of degree-≤2 moments.
   all. Derive the routing histories and rates, their costs, and the tiers each protocol occupies
   (`TierLedger.tiersFor`: up `{0, 2, 3}`, down and lepton `{0, 1, 2}`; `QuarkMasses`,
   `LeptonMasses`); the ledgers still need a cost or selection rule for assigning invariants to tiers.
-  Do not fit species parameters to measured masses; derive, then test. Upstream: PMAction, "Size of
+  Do not fit species parameters to measured masses; derive, then test. A wire result to test against:
+  `PMAction.WireLightSplit` (regime `δ_O` a few spinor flips): a protocol whose masses are the wire's
+  singular values directly satisfies `(m₂/m₁)√(m₀/m₁) ≈ k/K` (`α/2` as an admittance ratio, `0.0385`
+  as a rate ratio). A protocol that does not satisfy it uses the wire differently; that is data
+  about the protocol, not a fit. Recorded (2026-11, PDG masses, quarks `MS̄` at mixed scales, so
+  rough): charged leptons `0.0012`, down-type `0.0075`, up-type `0.00015`; none equals either value,
+  so no charged sector reads the wire's singular values directly in that regime. Upstream: PMAction, "Size of
   the other wall's detuning".
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
