@@ -124,6 +124,7 @@ import PMAction.PolarizationOrders
 import PMAction.PolarizationAssembly
 import PMAction.PolarizationMagnitudes
 import PMAction.PolarizationCubic
+import PMAction.PolarizationQDiff
 import PMAction.TorusWilson
 import PMAction.TorusFlux
 import PMAction.ZeroModeCoupling

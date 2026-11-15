@@ -38,10 +38,18 @@ derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   proportional to the transverse structure at `O(a²)` (lattice anisotropy), so the bound is
   component-wise; the contact's sinc factors contribute at the same order. Formal target:
   `|Π_lat,sub(q) − Π_cont,sub(q)|_{μν} ≤ q² · C' a² (hi² − lo²) + O(|q|³/lo)` on
-  `2|q| ≤ lo`, `a·hi ≤ 1`. Steps: (i) pointwise `O(a²)` bounds for the symbol at `k` and `k + q`
-  (`symbol_gap`), the sinc-weighted leg and the contact against `2k + q` and `2δ`; (ii) the lattice
-  integrand's `q²` Taylor coefficient against the continuum's `coefC`, `≤ C a²/|k|²`; (iii) a lattice
-  analogue of `scalar_remainder` for the `q³` tail; (iv) assembly as in `polarization_window`.
+  `2|q| ≤ lo`, `a·hi ≤ 1`. Done (OVERVIEW): pointwise ingredient bounds
+  (`PolarizationIngredients`), per-root expansions in `x = a r·q/2` (`PolarizationTaylor`), the
+  ingredients to second order (`PolarizationSplit`), each order against the continuum
+  (`PolarizationOrders`), the exact assembly `L = L₀ + Lin + Q + R` with the odd part cancelling in
+  the second difference (`PolarizationAssembly`), magnitudes (`PolarizationMagnitudes`), the rest
+  cubic in `q` (`PolarizationCubic`), and the lattice `Q` against the continuum's by fraction
+  differences (`PolarizationQDiff`). Left: (a) the numerator differences of `Q_diff` from the
+  `PolarizationOrders` gaps and `symbol_gap`; (b) specialization on the shell with `u = e_μ`,
+  `v = e_ν`: `n(w) ≤ 2|w|`, `a|k| ≤ 1`, `|q| ≤ |k|/2`, `S ≥ |k|²/2`, giving `|R| ≤ c|q|³/|k|⁵` and
+  `|Q_lat − coefC| ≤ c a²|q|²/|k|²`; (c) the lattice symmetry `L(−q, −k) = L(q, k)`, continuity on
+  the shell, and the bridge from `Fin 4 → ℝ` (`sq4`) to `ShellMoments`' `EuclideanSpace`; (d) the
+  shell integral as in `polarization_window`.
 - Construct the map from background `Config` to the `RecordSupply` stream used by `ReferenceSelection`. Physical allocation of the banks is a [machine-layer dependency](Machine/REVIEW-AND-NEXT.md).
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
