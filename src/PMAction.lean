@@ -121,6 +121,7 @@ import PMAction.PolarizationIngredients
 import PMAction.PolarizationTaylor
 import PMAction.PolarizationSplit
 import PMAction.PolarizationOrders
+import PMAction.PolarizationAssembly
 import PMAction.TorusWilson
 import PMAction.TorusFlux
 import PMAction.ZeroModeCoupling
