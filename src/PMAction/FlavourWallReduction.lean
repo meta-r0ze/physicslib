@@ -5,7 +5,7 @@ import PMAction.HermitianTransport
 The flavour space is arbitrary finite dimension; no physical generation count,
 link, accessible state or mixing angle is selected by diagonalization. -/
 noncomputable section
-namespace PMFlavor.FlavourWallReduction
+namespace PMAction.FlavourWallReduction
 open Matrix PMAction
 open scoped Kronecker
 
@@ -226,4 +226,4 @@ theorem hermitian_light_state (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ
   obtain ⟨v,hv,heig⟩ := WallDispersion.eigenvector_of_projector k δ (hY.eigenvalues j) _ _ he ht
   exact ⟨j,v,hv,heig⟩
 
-end PMFlavor.FlavourWallReduction
+end PMAction.FlavourWallReduction

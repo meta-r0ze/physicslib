@@ -5,7 +5,7 @@ import Mathlib.Analysis.Real.Pi.Bounds
 /-!
 # `|V_cb|` as a divider between two causal envelopes (candidate)
 
-`VubSeriesPath.vcb_not_two_leg`: `|V_cb|` is not a passive path with unit drive. Here its supplied
+`|V_cb|` is not the two-leg passive path of `VubSeriesPath` (`E8PConstants.CandidateTests.vcb_not_two_leg`). Here its supplied
 form `(π + χ)/(α⁻¹ − Dπ)` is read with the pieces that already build the node impedance.
 
 **Envelopes.** A causal envelope of constant width `w` has boundary `πw` (Barbier,
@@ -22,13 +22,7 @@ clock-slot variable, and `PMConstants.WeakLocality` shows weak's events reach ev
 addresses of the clock row, one per tick. So the subtraction of `D` from `Δ` has no schedule basis at
 present; the tests below hold for the formula, not for that reading.
 
-* `matches_paper`: `env 1 / env 39` agrees with `CKM.vcb = (π + χ)/(α⁻¹ − 4π)` to `3·10⁻⁵`, far
-  below the error.
-* `divider_fits`: `env 1 / env 39` is `0.2σ` from `|V_cb| = 0.0411 ± 0.0012`.
-* `drive_unique`: other drives over the same free envelope are excluded (more than `13σ`): a bare
-  unit, `χ`, `π`, `env 2`.
-* `free_ticks_needed`: removing no refresh tick (`env 1 / env 43`) or one (`env 1 / env 42`) is more
-  than `2σ` low. The data allow `3`–`5` removed ticks; `D` is the refresh count.
+* `matches_paper`: `env 1 / env 39` agrees with `CKM.vcb = (π + χ)/(α⁻¹ − 4π)` to `3·10⁻⁵`.
 
 **One law with `|V_ub|`.** In the Kirchhoff network of `KronSeries` a transfer's amplitude is its
 drive over its path impedance (`amp`). `|V_ub|`: the spectator-wall hop is not refreshed by the
@@ -36,12 +30,12 @@ node, so it has a unit drive and must enter and leave the node, two legs and a b
 (`vub_by_law`). `|V_cb|`: the weak-wall hop is refreshed by the node (weak acts on the reference's
 wall, `PMAction.ChiralityConvention`, `PMConstants.WeakUniform`), so it starts inside the node's
 cycle, driven by one refresh tick `env 1`, and crosses the free part of the cycle once, `env (Δ − D)`
-(`vcb_by_law`). Their ratio, the quark parity breaking, fits (`ratio_fits`, `1.1σ`).
+(`vcb_by_law`).
 
 Readings that remain: the drive of a refresh tick is its envelope impedance `env 1`, and a refreshed
 hop crosses the free cycle once instead of entering and leaving the node. The first can be traded
-for the standard current divider with a unit source (`current_divider_fits`:
-`env 1/(env 1 + env 39)`, `1.2σ` low); the data do not separate the two. Status: candidate.
+for the standard current divider with a unit source, `env 1/(env 1 + env 39)`. Status: candidate. The
+data comparisons are in `E8PConstants.CandidateTests`.
 -/
 
 namespace PMFlavor.VcbEnvelope
@@ -66,32 +60,6 @@ theorem matches_paper : |env 1 / env 39 - CKM.vcb| < 0.00003 := by
   have hv := CKM.vcb_bounds
   rw [abs_lt]; constructor <;> linarith [h.1, h.2, hv.1, hv.2]
 
-theorem divider_fits : |env 1 / env 39 - 0.0411| / 0.0012 < 1 := by
-  have h := env_bounds_div
-  rw [div_lt_one (by norm_num), abs_lt]; constructor <;> linarith [h.1, h.2]
-
-theorem drive_unique :
-    1 / env 39 < 0.0411 - 13 * 0.0012 ∧ 2 / env 39 < 0.0411 - 13 * 0.0012 ∧
-      Real.pi / env 39 < 0.0411 - 13 * 0.0012 ∧ 0.0411 + 13 * 0.0012 < env 2 / env 39 := by
-  have h1 := Real.pi_gt_d4; have h2 := Real.pi_lt_d4
-  have hp : 0 < env 39 := env_pos 39 (by norm_num)
-  unfold env at hp ⊢
-  refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [div_lt_iff₀ hp]; nlinarith
-  · rw [div_lt_iff₀ hp]; nlinarith
-  · rw [div_lt_iff₀ hp]; nlinarith
-  · rw [lt_div_iff₀ hp]; nlinarith
-
-theorem free_ticks_needed :
-    env 1 / env 43 < 0.0411 - 2 * 0.0012 ∧ env 1 / env 42 < 0.0411 - 2 * 0.0012 := by
-  have h1 := Real.pi_gt_d4; have h2 := Real.pi_lt_d4
-  have hp3 : 0 < env 43 := env_pos 43 (by norm_num)
-  have hp2 : 0 < env 42 := env_pos 42 (by norm_num)
-  unfold env at hp3 hp2 ⊢
-  constructor
-  · rw [div_lt_iff₀ hp3]; nlinarith
-  · rw [div_lt_iff₀ hp2]; nlinarith
-
 /-- **One law for both node-crossing mixings: drive over path impedance.** `|V_ub|` is a unit drive
 through two node legs and a boundary (`KronSeries`); `|V_cb|` is the refresh tick's envelope driving
 the free part of the cycle. -/
@@ -101,36 +69,5 @@ theorem vub_by_law : amp 1 (2 * CKM.αinv + Real.pi) = CKM.s13 := by
   unfold amp; rfl
 
 theorem vcb_by_law : amp (env 1) (env 39) = env 1 / env 39 := rfl
-
-/-- The ratio `|V_cb|/|V_ub|`, the quark parity breaking, is within `2σ`
-(`11.45` against `0.0411/0.00382 = 10.76 ± 0.64`). -/
-theorem ratio_fits :
-    |amp (env 1) (env 39) / amp 1 (2 * CKM.αinv + Real.pi) - 10.76| / 0.645 < 2 := by
-  have h := env_bounds_div
-  have ha := CKM.ai_bounds
-  have hp1 := Real.pi_gt_d4; have hp2 := Real.pi_lt_d4
-  have hpos : 0 < 2 * CKM.αinv + Real.pi := by linarith
-  have e : amp (env 1) (env 39) / amp 1 (2 * CKM.αinv + Real.pi) =
-      env 1 / env 39 * (2 * CKM.αinv + Real.pi) := by
-    unfold amp; field_simp
-  have l := mul_lt_mul_of_pos_right h.1 hpos
-  have u := mul_lt_mul_of_pos_right h.2 hpos
-  rw [e, div_lt_iff₀ (by norm_num), abs_lt]
-  constructor <;> linarith
-
-/-- **The standard current divider also fits.** A unit current entering the refreshed hop splits
-between the refresh-tick branch (`env 1`) and the free branch (`env 39`); the share through the free
-branch is `env 1 / (env 1 + env 39) ≈ 0.0397`, `1.2σ` low. This needs no drive of size `env 1`
-(unit source, as for `|V_ub|`), at the cost of `1σ` in the fit; the data do not separate it from the
-ratio form. -/
-theorem current_divider_fits : |env 1 / (env 1 + env 39) - 0.0411| / 0.0012 < 2 := by
-  have h1 := Real.pi_gt_d4; have h2 := Real.pi_lt_d4
-  have hp : 0 < env 1 + env 39 := by
-    have := env_pos 1 (by norm_num); have := env_pos 39 (by norm_num); linarith
-  unfold env at hp ⊢
-  rw [div_lt_iff₀ (by norm_num), abs_lt]
-  constructor
-  · rw [lt_sub_iff_add_lt, lt_div_iff₀ hp]; nlinarith
-  · rw [sub_lt_iff_lt_add, div_lt_iff₀ hp]; nlinarith
 
 end PMFlavor.VcbEnvelope

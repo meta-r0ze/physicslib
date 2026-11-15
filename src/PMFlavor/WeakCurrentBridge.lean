@@ -77,7 +77,7 @@ theorem vertex_eq_native (gw : ℝ) (μ : Fin 4) :
 theorem modelCurrent_eq_PL {f : Type*} [Fintype f] [DecidableEq f] (G : Matrix f f ℂ) :
     NativeFlavourCurrent.modelCurrent G =
       (fromBlocks (PMAction.WeakVertex.PL ⊗ₖ G) 0 0 (PMAction.WeakVertex.PL ⊗ₖ G) :
-        Matrix (NativeFlavourWall.Modes (f := f)) (NativeFlavourWall.Modes (f := f)) ℂ) := by
+        Matrix (PMAction.NativeFlavourWall.Modes (f := f)) (PMAction.NativeFlavourWall.Modes (f := f)) ℂ) := by
   rw [NativeFlavourCurrent.modelCurrent, spinProjector_eq_PL]
 
 end PMFlavor.WeakCurrentBridge

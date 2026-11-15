@@ -1,6 +1,6 @@
 import PMFlavor.NativeMassBasis
 import PMFlavor.ReferenceFlavour
-import PMFlavor.FlavourEvolution
+import PMAction.FlavourEvolution
 
 /-!
 # What a persistent reference leaves available to a selection law
@@ -62,11 +62,11 @@ theorem reference_eigenstate (U : M) (hu : U * Uᴴ = 1) (c s : ℝ)
 
 theorem reference_propagation (U : M) (hu : U * Uᴴ = 1) (c s : ℝ)
     (h : c^2+s^2=1) (energy : Fin 3 → ℝ) (t : ℝ) :
-    FlavourEvolution.evolution (basis U c s) energy t *ᵥ reference U =
+    PMAction.FlavourEvolution.evolution (basis U c s) energy t *ᵥ reference U =
       Complex.exp (((-t*energy 1:ℝ):ℂ)*Complex.I) • reference U := by
   have hv : reference U = basis U c s *ᵥ (Pi.single 1 1) := by
     rw [reference_column, reference_fixed]
-  rw [hv, FlavourEvolution.evolution, mulVec_mulVec]
+  rw [hv, PMAction.FlavourEvolution.evolution, mulVec_mulVec]
   have hu' := mul_eq_one_comm.mp (basis_unitary U hu c s h)
   rw [Matrix.mul_assoc, hu', Matrix.mul_one, ← mulVec_mulVec]
   have hd : LinkExpansion.phaseDiag energy (-t) *ᵥ (Pi.single 1 1) =
@@ -105,8 +105,8 @@ theorem angle_family (U : M) (hu : U * Uᴴ=1) (θ : ℝ) :
 /-- The actual reference displacement cost is unchanged, at every time. -/
 theorem reference_transition_cost (U : M) (hu : U * Uᴴ=1) (c s : ℝ)
     (h : c^2+s^2=1) (energy : Fin 3 → ℝ) (t : ℝ) :
-    CommonResponse.nsq (reference U - FlavourEvolution.evolution (basis U c s) energy t *ᵥ reference U) =
-      CommonResponse.nsq (reference U - FlavourEvolution.evolution U energy t *ᵥ reference U) := by
+    CommonResponse.nsq (reference U - PMAction.FlavourEvolution.evolution (basis U c s) energy t *ᵥ reference U) =
+      CommonResponse.nsq (reference U - PMAction.FlavourEvolution.evolution U energy t *ᵥ reference U) := by
   have hzero : basis U 1 0 = U := by simp [basis, turn, ← Matrix.one_fin_three]
   have hbase := reference_propagation U hu 1 0 (by norm_num) energy t
   rw [hzero] at hbase

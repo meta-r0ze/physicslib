@@ -14,7 +14,7 @@ noncomputable section
 set_option synthInstance.maxSize 512
 set_option backward.isDefEq.respectTransparency false
 namespace PMFlavor.NativeFlavourStationarity
-open Matrix PMAction NativeFlavourWall NativeFlavourPropagation
+open Matrix PMAction PMAction.NativeFlavourWall NativeFlavourPropagation
 variable (c : Fin 3) {f r : Type*} [Fintype f] [DecidableEq f] [Fintype r] [DecidableEq r]
 
 def residual (p : ℝ) (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ)
@@ -30,10 +30,10 @@ def rayPersists (p : ℝ) (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ)
     z • (packet c Ψ ρ *ᵥ v)
 
 private theorem diagonal_phase (E : Fin 3 → ℝ) (t : ℝ) (v : Fin 3 → ℂ) :
-    FlavourEvolution.evolution 1 E t *ᵥ v =
+    PMAction.FlavourEvolution.evolution 1 E t *ᵥ v =
       fun i => v i * Complex.exp (-((E i*t : ℝ) : ℂ) * Complex.I) := by
   ext i
-  simp only [FlavourEvolution.evolution, Matrix.one_mul, Matrix.conjTranspose_one, Matrix.mul_one,
+  simp only [PMAction.FlavourEvolution.evolution, Matrix.one_mul, Matrix.conjTranspose_one, Matrix.mul_one,
     LinkExpansion.phaseDiag, Matrix.mulVec_diagonal]
   have hs : (((-t * E i : ℝ) : ℂ) * Complex.I) = -((E i*t : ℝ) : ℂ) * Complex.I := by
     push_cast
@@ -51,20 +51,20 @@ private theorem one_step_ray_iff (v : Fin 3 → ℂ) (t : ℝ) :
     (∃ z : ℂ, evolve (r := r) c p k δ Y t *ᵥ (packet c Ψ ρ *ᵥ v) = z • (packet c Ψ ρ *ᵥ v)) ↔
     ∃ z : ℂ, ∀ i, v i * Complex.exp (-((E i*t : ℝ) : ℂ) * Complex.I) = z * v i := by
   have hm : evolve (r := r) c p k δ Y t * packet c Ψ ρ =
-      packet c Ψ ρ * FlavourEvolution.evolution 1 E t := by
+      packet c Ψ ρ * PMAction.FlavourEvolution.evolution 1 E t := by
     simpa [frame] using evolution_intertwining c p hp hp1 k δ Y Ψ ρ E he 1 (by simp) t
   have hinj : Function.Injective (fun w => packet c Ψ ρ *ᵥ w) := by
     intro v w h
     have hh := congrArg (fun z => (packet c Ψ ρ)ᴴ *ᵥ z) h
     simpa only [mulVec_mulVec, packet_isometry c Ψ ρ hΨ hρ, one_mulVec] using hh
   have hs : evolve (r := r) c p k δ Y t *ᵥ (packet c Ψ ρ *ᵥ v) =
-      packet c Ψ ρ *ᵥ (FlavourEvolution.evolution 1 E t *ᵥ v) := by
+      packet c Ψ ρ *ᵥ (PMAction.FlavourEvolution.evolution 1 E t *ᵥ v) := by
     rw [mulVec_mulVec, hm, ← mulVec_mulVec]
   constructor
   · rintro ⟨z,hz⟩
-    have hh : FlavourEvolution.evolution 1 E t *ᵥ v = z • v := by
+    have hh : PMAction.FlavourEvolution.evolution 1 E t *ᵥ v = z • v := by
       apply hinj
-      change packet c Ψ ρ *ᵥ (FlavourEvolution.evolution 1 E t *ᵥ v) = packet c Ψ ρ *ᵥ (z • v)
+      change packet c Ψ ρ *ᵥ (PMAction.FlavourEvolution.evolution 1 E t *ᵥ v) = packet c Ψ ρ *ᵥ (z • v)
       rw [← hs, mulVec_smul]
       exact hz
     refine ⟨z,?_⟩
@@ -72,7 +72,7 @@ private theorem one_step_ray_iff (v : Fin 3 → ℂ) (t : ℝ) :
     simpa only [diagonal_phase, Pi.smul_apply, smul_eq_mul] using congrFun hh i
   · rintro ⟨z,hz⟩
     refine ⟨z,?_⟩
-    have hh : FlavourEvolution.evolution 1 E t *ᵥ v = z • v := by
+    have hh : PMAction.FlavourEvolution.evolution 1 E t *ᵥ v = z • v := by
       rw [diagonal_phase]
       exact funext hz
     rw [hs, hh, mulVec_smul]

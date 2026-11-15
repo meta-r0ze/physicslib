@@ -4,9 +4,7 @@ import Mathlib.Tactic
 # Mixing through the node: two legs give an amplitude `α`, one leg a probability `α`
 
 `ExchangeAxis`: for the two node-crossing generation pairs there is no in-cycle exchange, so the
-direct link entry between them vanishes. `NodePassage`: the quark mixings for those pairs are
-amplitudes linear in `α`, while the reactor angle fits a probability `3α`. This module shows what
-eliminating the node does.
+direct link entry between them vanishes. This module shows what eliminating the node does.
 
 * `eliminate_node`: two generation states `x₁, x₂` (link entries `a, b`, direct coupling `c`)
   coupled to one node state with leg amplitudes `t₁, t₂`, node energy `E`. At any energy `e ≠ E`
@@ -18,8 +16,7 @@ eliminating the node does.
   size `w` and enters the mixing **amplitude**; a single leg has amplitude `√w`, so `w` is a
   mixing **probability**.
 
-With `w = α` this is the split `NodePassage` found in the data: states that reach the node from
-outside (colour carriers, off the reference axis) mix through two legs, amplitude `∝ α`
+With `w = α` this gives the split: states that reach the node from outside (colour carriers, off the reference axis) mix through two legs, amplitude `∝ α`
 (`|V_ub|`, `|V_cb|`); a state that sits on the reference's own axis needs only one leg, probability
 `∝ α` (`sin²θ₁₃ = 3α`, three spatial channels in parallel, `ReactorConductance`). The reading that
 the lepton-axis states are one leg from the reference node uses the reference's axis being the

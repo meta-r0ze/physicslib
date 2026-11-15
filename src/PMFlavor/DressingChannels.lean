@@ -21,8 +21,7 @@ count `3 = D − 1` is checked.
 
 **What it says about the divisor.** Three rows each lose `ε` into the three spatial channels, so
 the block loses `3ε = (D − 1) ε` in all. The reference deficit is `1 − η = 1/172` per frame
-(`PMConstants.FlavourDressing`). The two divisors the data allow (`CabibboDressing.direction_shares_fit`)
-are the two ways that deficit can reach the spatial channels:
+(`PMConstants.FlavourDressing`). There are two ways that deficit can reach the spatial channels:
 * `ε = (1 − η)/D = 1/688`: the deficit is shared over all `D` directions and only the `D − 1`
   spatial shares leave (`total_if_spatial_shares`); the temporal share stays with the reference.
 * `ε = (1 − η)/(D − 1) = 1/516`: the whole deficit leaves through the spatial channels

@@ -28,9 +28,9 @@ two generations; a lepton-axis mixing probability is a conductance, Landauer), t
 are `s₁₂ = π/14` (quark amplitude, direct coupling, no node to eliminate) and
 `sin²θ₁₂ = π/10` (lepton probability) (`in_cycle_quark`, `in_cycle_lepton`).
 
-This picks the generator reading of `HalfTurnMixing`, so the solar prediction is `π/10 = 0.3142`
-rather than the supplied `1/(2φ) = sin(π/10) = 0.3090`; JUNO's `0.3092 ± 0.0087` allows both
-(`HalfTurnMixing.lepton_share_fits`), and its full precision separates them.
+This is the generator reading of `HalfTurnMixing`, so its solar value is `π/10 = 0.3142` rather than
+the supplied `1/(2φ) = sin(π/10) = 0.3090`; which rule holds is open (REVIEW), and JUNO's full
+precision separates them (`E8PConstants.CandidateTests`).
 
 The `π` in both roles is one quantity, the measure of Barbier's half-turn of directions
 (`half_turn_measure`): a boundary is that measure times a width (`boundary_is_measure_times_width`),

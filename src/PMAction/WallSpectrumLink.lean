@@ -1,5 +1,5 @@
 import PMAction.WallDispersion
-import PMFlavor.RelativisticPhase
+import PMAction.RelativisticPhase
 
 /-!
 # The two-wall spectrum gives Paper IV's relativistic energies
@@ -9,7 +9,7 @@ two-wall Hamiltonian is exactly two Dirac particles. Their energies are `±√(|
 two spin states, where `m₊² m₋² = δ⁴` and `m₊² + m₋² = y² + 2δ²`.
 
 * `wall_energy_collinear`: for collinear momentum `k = (p, 0, 0)`, each branch energy is
-  `RelativisticPhase.energy p m` with `m = √(m±²)`. This is the law `PropagationEnergy` uses.
+  `RelativisticPhase.energy p m` with `m = √(m±²)`.
 * `wall_seesaw`: the light mass is `m₋² = δ⁴/m₊²`.
 
 Still inputs: which flavour link `y` (or matrix `Y`) is physical, the identification of
@@ -19,7 +19,7 @@ The nondegenerate-branch rank statement is checked in `WallRanks`.
 -/
 
 noncomputable section
-namespace PMFlavor.WallSpectrumLink
+namespace PMAction.WallSpectrumLink
 open PMAction.WallDispersion
 
 theorem wall_energy_collinear (p δ : ℝ) (b : ℝ) (hb : 0 ≤ δ ^ 2 + b) :
@@ -37,4 +37,4 @@ theorem wall_seesaw (δ y : ℝ) (hy : y ≠ 0) : massSqM δ y = δ ^ 4 / massSq
   obtain ⟨h, -, hP, -⟩ := branch_masses δ y hy
   rw [eq_div_iff hP.ne', mul_comm, h]
 
-end PMFlavor.WallSpectrumLink
+end PMAction.WallSpectrumLink

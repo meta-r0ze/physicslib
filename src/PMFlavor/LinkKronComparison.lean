@@ -17,7 +17,7 @@ generations that contain it (`ExchangeAxis.one_pair_through`).
   (`pair_is_two_leg_series`). `kronLink_row_sum`: the reduced link still conserves.
 * `two_leg_from_incidence`: the `2` in `|V_ub| = 1/(2α⁻¹ + π)` is the degree of a class vertex.
   `shared_node_three_legs`: a single reference node joined to all three generations would give
-  `g/3`, which `MixingTests.vub_count_unique` excludes. So the node crossings are per class.
+  `g/3` instead; the incidence has a node per class, each of degree two.
 * `symmetric_point`: at unit legs the Gram link and the reduced Laplacian are affinely related,
   `1 + J = 4 − 2 L`.
 

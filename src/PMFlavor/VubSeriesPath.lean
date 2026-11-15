@@ -1,12 +1,13 @@
-import PMFlavor.MixingTests
+import PMFlavor.CKM
 import PMFlavor.NodeElimination
+import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
 # `|V_ub|` as the admittance of a two-leg series path
 
-`|V_ub| = s₁₃ = 1/(χα⁻¹ + π)` (`CKM.s13`). Among `1/(m Z_geo)` the data fix `m = 2`
-(`MixingTests.vub_count_unique`). This module reads the `2` as the two node legs of
-`NodeElimination` rather than as an independent count.
+`|V_ub| = s₁₃ = 1/(χα⁻¹ + π)` (`CKM.s13`). The `2` is the two node legs of `NodeElimination`, the
+degree of a class vertex in the generation–class incidence (`LinkKronComparison.two_leg_from_incidence`),
+not an independent count.
 
 **Construction.** The two node-crossing quark mixings pass the reference node (`ExchangeAxis`):
 in through the node and back out, two legs (`NodeElimination.two_legs`), each of impedance
@@ -20,29 +21,16 @@ adds its length `π` (Barbier, `PMSubstrate.Capacity.barbier`; the same boundary
   `α/(2 + πα)`: the energy denominator `e − E` left open there is the impedance of the legs and
   boundary, `2 + πα` in units of `Z`, not `1`.
 
-**Why the product reading fails.** The leg product `t₁t₂ = α` with a unit denominator is `1/Z`,
-the `m = 1` member, which `vub_count_unique` excludes (`m = 2` only). The series path gives the
-data's `m = 2` without a separate count.
+**Why the product reading fails.** The leg product `t₁t₂ = α` with a unit denominator misses the
+node's own conductance (`KronSeries.product_reading_wrong`).
 
-**What the data do not fix.** The boundary term: `1/(2Z)` and `1/(2Z + π)` differ by `1%`, below the
-error on `|V_ub|` (`boundary_unresolved`). It rests on the construction.
-
-**`|V_cb|` stays open.** `vcb_not_two_leg`: no two-leg passive path reaches `|V_cb|`. Within single
-node impedances the data admit several forms equally (`(π + χ)/(Z − 4π)`, `σ/(Z − 5π)`,
-`2π/(Z + 5π)` all within `0.2σ`), and the inclusive/exclusive `|V_cb|` tension widens this, so no
-construction can be singled out yet.
+**`|V_cb|` stays open.** The other node crossing is not given by this path; the comparison with data is
+in `E8PConstants.CandidateTests.vcb_not_two_leg`.
 
 **Which number this is.** The theorems here derive a path admittance; `vub_is_path` identifies it
 with the *defined* `CKM.s13`. Whether the measured `|V_ub|` is that admittance depends on the
 reading: in the transfer reading the path is the generator entry `K₁₃`, and the observable is
 `|S₁₃|`, which also receives the route through the in-cycle pair.
-
-**Status after `TransferGenerator`.** In the transfer reading (masses generation-diagonal, the CKM
-the zero-energy transfer through the fluxed network), this path is the
-direct coupling `K₁₃`, and `|V_ub|` also contains the second-order route through the in-cycle pair,
-as large as `K₁₃`. The scale-free test `K₁₃/K₁₂ = 0.0185 ± 0.0005` (data) against this module's
-`(1/(2α⁻¹ + π))/(π/14) = 0.0161` fails at `4.7σ`, so the match with `|V_ub|` below is not
-structural in that reading.
 
 The amplitude being the path's series admittance is derived in `KronSeries`: a conserving link is a
 Laplacian, and eliminating the node (Kron reduction) gives exactly the series admittance. That the two legs are equal
@@ -65,24 +53,5 @@ theorem as_node_elimination (Z : ℝ) (hZ : 0 < Z) :
     1 / (2 * Z + Real.pi) = (1 / Z) / (2 + Real.pi * (1 / Z)) := by
   have hp := Real.pi_pos
   field_simp
-
-theorem boundary_unresolved :
-    |(1 / (2 * 137.036) : ℝ) - 0.00382| / 0.0002 < 2 ∧
-      |(1 / (2 * 137.036 + 3.1416) : ℝ) - 0.00382| / 0.0002 < 2 := by
-  constructor <;> (rw [abs_of_neg (by norm_num)]; norm_num)
-
-/-- **`|V_cb|` is not a two-leg passive path.** Two legs with any boundary count `|k| ≤ 6` give at
-most `1/(2Z − 6π) ≈ 0.0039`, far below `|V_cb| = 0.0411 ± 0.0012`. So the `c`-side node-crossing
-mixing carries a drive of order `π + χ` that the `|V_ub|` path does not: the `s`/`c` parity
-asymmetry (`ExchangeChirality`) shows up as a factor `≈ 10` in the drive, not only in the path. -/
-theorem vcb_not_two_leg (k : ℤ) (hk : -6 ≤ k) :
-    1 / (2 * CKM.αinv + k * Real.pi) < 0.0411 - 3 * 0.0012 := by
-  have ha := CKM.ai_bounds
-  have hp1 := Real.pi_gt_d4; have hp2 := Real.pi_lt_d4
-  have hk' : (-6 : ℝ) ≤ k := by exact_mod_cast hk
-  have hkp : -6 * Real.pi ≤ k * Real.pi := by nlinarith
-  have hden : 255 < 2 * CKM.αinv + k * Real.pi := by linarith
-  rw [div_lt_iff₀ (by linarith)]
-  nlinarith
 
 end PMFlavor.VubSeriesPath

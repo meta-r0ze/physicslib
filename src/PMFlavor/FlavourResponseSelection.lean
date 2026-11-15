@@ -1,4 +1,4 @@
-import PMFlavor.FlavourEvolution
+import PMAction.FlavourEvolution
 import PMAction.CommonResponse
 
 /-!
@@ -18,15 +18,15 @@ open Matrix PMAction
 abbrev M := Matrix (Fin 3) (Fin 3) ℂ
 
 def response (U : M) (energy : Fin 3 → ℝ) (t : ℝ) (a : Fin 3) : ℝ :=
-  CommonResponse.stateFlag (FlavourEvolution.evolution U energy t) (Pi.single a 1)
+  CommonResponse.stateFlag (PMAction.FlavourEvolution.evolution U energy t) (Pi.single a 1)
 
 def average (w : Fin 3 → ℝ) (U : M) (energy : Fin 3 → ℝ) (t : ℝ) : ℝ :=
   ∑ a, w a * response U energy t a
 
 theorem diagonal_real (U : M) (energy : Fin 3 → ℝ) (t : ℝ) (a : Fin 3) :
-    (FlavourEvolution.evolution U energy t a a).re =
+    (PMAction.FlavourEvolution.evolution U energy t a a).re =
       ∑ i, Complex.normSq (U a i) * Real.cos (t * energy i) := by
-  rw [FlavourEvolution.evolution, Matrix.mul_apply]
+  rw [PMAction.FlavourEvolution.evolution, Matrix.mul_apply]
   simp only [LinkExpansion.phaseDiag, Matrix.mul_diagonal, conjTranspose_apply, Complex.re_sum]
   apply Finset.sum_congr rfl
   intro i _
@@ -40,8 +40,8 @@ theorem response_formula (U : M) (hu : U * Uᴴ=1) (energy : Fin 3 → ℝ)
     (t : ℝ) (a : Fin 3) :
     response U energy t a =
       (1 - ∑ i, Complex.normSq (U a i) * Real.cos (t * energy i))/2 := by
-  rw [response, CommonResponse.basis_case _ (FlavourEvolution.evolution_unitary U energy hu t),
-    InterferenceReadout.flag_formula _ (FlavourEvolution.evolution_unitary U energy hu t),
+  rw [response, CommonResponse.basis_case _ (PMAction.FlavourEvolution.evolution_unitary U energy hu t),
+    InterferenceReadout.flag_formula _ (PMAction.FlavourEvolution.evolution_unitary U energy hu t),
     diagonal_real]
 
 theorem weighted_formula (w : Fin 3 → ℝ) (U : M) (hu : U * Uᴴ=1)

@@ -9,7 +9,7 @@ noncomputable section
 set_option synthInstance.maxSize 512
 set_option backward.isDefEq.respectTransparency false
 namespace PMFlavor.NativeMassBasis
-open Matrix PMAction NativeFlavourWall NativeFlavourCurrent
+open Matrix PMAction PMAction.NativeFlavourWall NativeFlavourCurrent
 open scoped Kronecker
 
 def link (Uu Ud : FlavourCurrent.M) (mu md : Fin 3 → ℝ) : Matrix F F ℂ :=
@@ -47,19 +47,19 @@ theorem compressed_mass_hamiltonian (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
   have hb : (FlavourCurrent.basis Uu Ud)ᴴ * FlavourCurrent.basis Uu Ud = 1 := by
     simp [FlavourCurrent.basis, fromBlocks_conjTranspose, fromBlocks_multiply,
       mul_eq_one_comm.mp hu, mul_eq_one_comm.mp hd, fromBlocks_one]
-  have hred := FlavourWallReduction.conjugates (momentum k) δ (link Uu Ud mu md)
+  have hred := PMAction.FlavourWallReduction.conjugates (momentum k) δ (link Uu Ud mu md)
     (FlavourCurrent.basis Uu Ud) hb
   rw [diagonalizes_link Uu Ud mu md hu hd] at hred
   have hk : (embedding (r := r) c)ᴴ * generator c p k δ (link Uu Ud mu md) * embedding c =
       WallExchange.H (momentum k) δ (link Uu Ud mu md) ⊗ₖ (1 : Matrix r r ℂ) := by
-    rw [Matrix.mul_assoc, (NativeFlavourWall.observed c p hp hp1 k δ (link Uu Ud mu md)).1,
-      ← Matrix.mul_assoc, NativeFlavourWall.isometry, one_mul]
+    rw [Matrix.mul_assoc, (PMAction.NativeFlavourWall.observed c p hp hp1 k δ (link Uu Ud mu md)).1,
+      ← Matrix.mul_assoc, PMAction.NativeFlavourWall.isometry, one_mul]
   unfold massFrame
   rw [conjTranspose_mul]
   calc
-    _ = (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))ᴴ *
+    _ = (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))ᴴ *
       ((embedding c)ᴴ * generator c p k δ (link Uu Ud mu md) * embedding c) *
-      (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ)) := by
+      (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ)) := by
         simp only [Matrix.mul_assoc]
     _ = _ := by
       rw [hk, conjTranspose_kronecker, conjTranspose_one, ← mul_kronecker_mul,

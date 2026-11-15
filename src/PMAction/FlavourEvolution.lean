@@ -1,15 +1,21 @@
-import PMFlavor.MassMixing
-import PMFlavor.PMNS
 import PMAction.LinkEvolution
+import PMAction.CommonResponse
 
-/-! Exact finite flavour evolution from supplied eigenenergies and mixing.
+/-! Exact finite flavour evolution from supplied eigenenergies and mixing:
+`U · diag(e^{−iE t}) · Uᴴ`, a one-parameter unitary group. Valid algebra; the physical premise is
+in its use. That the substrate update at the clock acts on wall modes this way is open
+(`PMAction/REVIEW-AND-NEXT.md`, "Update as `e^{−iHt}` on wall modes"); `PMFlavor.NativeFlavourPropagation`
+shows the native wall generator's exponential is this evolution on prepared eigenmodes.
 The Hamiltonian and probability readout are inputs. This supplies no physical
 neutrino masses, relativistic energy approximation or exclusion of Majorana terms. -/
 noncomputable section
-namespace PMFlavor.FlavourEvolution
+namespace PMAction.FlavourEvolution
 open Matrix
 open scoped Matrix.Norms.Operator
 abbrev M := Matrix (Fin 3) (Fin 3) ℂ
+
+/-- The flavour Hamiltonian `U · diag(E) · Uᴴ` (`PMFlavor.MassMixing.mass` is the same matrix). -/
+def hamiltonian (U : M) (energy : Fin 3 → ℝ) : M := U * diagonal (fun i => (energy i : ℂ)) * Uᴴ
 
 def evolution (U : M) (energy : Fin 3 → ℝ) (t : ℝ) :=
   U * PMAction.LinkExpansion.phaseDiag energy (-t) * Uᴴ
@@ -18,7 +24,7 @@ def evolution (U : M) (energy : Fin 3 → ℝ) (t : ℝ) :=
 flavour Hamiltonian. Energies need not be mass eigenvalues. -/
 theorem equals_exponential (U : M) (energy : Fin 3 → ℝ) (hU : U*Uᴴ=1) (t : ℝ) :
     evolution U energy t =
-      NormedSpace.exp ((((-t : ℝ) : ℂ)*Complex.I) • MassMixing.mass U energy) := by
+      NormedSpace.exp ((((-t : ℝ) : ℂ)*Complex.I) • hamiltonian U energy) := by
   exact (PMAction.LinkEvolution.diagonalization_exponential U energy
     (mul_eq_one_comm.mp hU) hU (-t)).symm
 
@@ -68,30 +74,4 @@ theorem column_phases (U : M) (energy : Fin 3 → ℝ) (phase : Fin 3 → ℂ)
       simp only [Matrix.mul_assoc]
     _ = _ := by rw [hd]
 
-/-- The Jarlskog quartet is invariant under independent unit phases on rows
-and columns; det V=1 is a convention, not an observable mass-phase argument. -/
-theorem jarlskog_rephasing (U : Fin 3 → Fin 3 → ℂ) (r c : Fin 3 → ℂ)
-    (hr : ∀ i, r i*star (r i)=1) (hc : ∀ i, c i*star (c i)=1) :
-    CKM.jarlskog (fun i j => r i*U i j*star (c j))=CKM.jarlskog U := by
-  have he :
-      (r 0*U 0 0*star (c 0))*(r 1*U 1 1*star (c 1))*
-        star (r 0*U 0 1*star (c 1))*star (r 1*U 1 0*star (c 0)) =
-      (r 0*star (r 0))*(r 1*star (r 1))*(c 0*star (c 0))*(c 1*star (c 1))*
-        (U 0 0*U 1 1*star (U 0 1)*star (U 1 0)) := by
-    simp only [star_mul,star_star]
-    ring
-  have hf :
-      (r 0*U 0 0*star (c 0))*(r 1*U 1 1*star (c 1))*
-        star (r 0*U 0 1*star (c 1))*star (r 1*U 1 0*star (c 0)) =
-      U 0 0*U 1 1*star (U 0 1)*star (U 1 0) := by
-    rw [he,hr 0,hr 1,hc 0,hc 1]
-    simp
-  exact congrArg Complex.im hf
-
-/-- The checked proposed PMNS matrix supplies a conserving finite flavour
-propagator for every supplied real energy spectrum. Spectrum selection is open. -/
-theorem pmns_probability (energy : Fin 3 → ℝ) (t : ℝ) (incoming : Fin 3) :
-    ∑ outgoing, probability PMNS.matrix energy t outgoing incoming=1 :=
-  total_probability _ _ PMNS.rows t incoming
-
-end PMFlavor.FlavourEvolution
+end PMAction.FlavourEvolution

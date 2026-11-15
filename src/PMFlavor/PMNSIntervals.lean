@@ -1,5 +1,5 @@
 import PMFlavor.PMNS
-import PMFlavor.OscillationAlgebra
+import Mathlib.Analysis.Complex.Trigonometric
 
 /-! Certified enclosures for every squared PMNS entry and its CP quartet.
 The angle ansatz is supplied; the phase is the persistence sum-rule phase, and

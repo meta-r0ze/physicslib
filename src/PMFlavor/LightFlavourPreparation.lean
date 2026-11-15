@@ -13,7 +13,7 @@ not a physically admitted preparation protocol or a selection of the link.
 noncomputable section
 set_option synthInstance.maxSize 512
 namespace PMFlavor.LightFlavourPreparation
-open Matrix PMAction FlavourWallReduction
+open Matrix PMAction PMAction.FlavourWallReduction
 
 private def normalized (v : WallDispersion.Ix → ℂ) :=
   (((Real.sqrt (CommonResponse.nsq v))⁻¹ : ℝ) : ℂ) • v
@@ -103,7 +103,7 @@ theorem native_light_propagation_exists {r : Type*} [Fintype r] [DecidableEq r]
     (c : Fin 3) (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2) (k : Fin 3 → ℝ) (δ : ℝ)
     (Y : Matrix (Fin 3) (Fin 3) ℂ) (hY : Y.IsHermitian)
     (hy : ∀ j, hY.eigenvalues j ≠ 0)
-    (hM : ∀ j, 0 < WallDispersion.msq3 (NativeFlavourWall.momentum k) +
+    (hM : ∀ j, 0 < WallDispersion.msq3 (PMAction.NativeFlavourWall.momentum k) +
       WallDispersion.massSqM δ (hY.eigenvalues j)) (ρ : r → ℂ)
     (hρ : ∑ j, star (ρ j) * ρ j = 1) :
     ∃ Ψ : Matrix (Ix (Fin 3)) (Fin 3) ℂ, Ψᴴ * Ψ = 1 ∧
@@ -111,10 +111,10 @@ theorem native_light_propagation_exists {r : Type*} [Fintype r] [DecidableEq r]
       (NativeFlavourPropagation.frame c Ψ ρ U)ᴴ *
         NativeFlavourPropagation.evolve (r := r) c p k δ Y t *
         NativeFlavourPropagation.frame c Ψ ρ U =
-      FlavourEvolution.evolution U
-        (fun j => Real.sqrt (WallDispersion.msq3 (NativeFlavourWall.momentum k) +
+      PMAction.FlavourEvolution.evolution U
+        (fun j => Real.sqrt (WallDispersion.msq3 (PMAction.NativeFlavourWall.momentum k) +
           WallDispersion.massSqM δ (hY.eigenvalues j))) t := by
-  obtain ⟨Ψ,hΨ,he⟩ := light_frame_exists (NativeFlavourWall.momentum k) δ Y hY hy hM
+  obtain ⟨Ψ,hΨ,he⟩ := light_frame_exists (PMAction.NativeFlavourWall.momentum k) δ Y hY hy hM
   refine ⟨Ψ,hΨ,?_⟩
   intro U hU t
   exact NativeFlavourPropagation.compressed_evolution c p hp hp1 k δ Y Ψ ρ _ he hΨ hρ U hU t

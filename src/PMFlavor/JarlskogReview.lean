@@ -34,4 +34,24 @@ theorem eta_not_the_fix : 3.1028e-5 < geoNoEta ∧ geoNoEta < 3.1031e-5 := by
   unfold geoNoEta
   constructor <;> nlinarith [h1, h2]
 
+/-- The Jarlskog quartet is invariant under independent unit phases on rows
+and columns; det V=1 is a convention, not an observable mass-phase argument. -/
+theorem jarlskog_rephasing (U : Fin 3 → Fin 3 → ℂ) (r c : Fin 3 → ℂ)
+    (hr : ∀ i, r i*star (r i)=1) (hc : ∀ i, c i*star (c i)=1) :
+    PMFlavor.CKM.jarlskog (fun i j => r i*U i j*star (c j))=PMFlavor.CKM.jarlskog U := by
+  have he :
+      (r 0*U 0 0*star (c 0))*(r 1*U 1 1*star (c 1))*
+        star (r 0*U 0 1*star (c 1))*star (r 1*U 1 0*star (c 0)) =
+      (r 0*star (r 0))*(r 1*star (r 1))*(c 0*star (c 0))*(c 1*star (c 1))*
+        (U 0 0*U 1 1*star (U 0 1)*star (U 1 0)) := by
+    simp only [star_mul,star_star]
+    ring
+  have hf :
+      (r 0*U 0 0*star (c 0))*(r 1*U 1 1*star (c 1))*
+        star (r 0*U 0 1*star (c 1))*star (r 1*U 1 0*star (c 0)) =
+      U 0 0*U 1 1*star (U 0 1)*star (U 1 0) := by
+    rw [he,hr 0,hr 1,hc 0,hc 1]
+    simp
+  exact congrArg Complex.im hf
+
 end PMFlavor.JarlskogReview

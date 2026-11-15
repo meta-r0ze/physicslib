@@ -9,12 +9,12 @@ ground truth; theorem names below are entry points, not an exhaustive list.
 
 ## Scope
 
-Paper IV builds on the Paper I substrate (E8, clock Δ = 43, invariants
-D = 4, ν = 16, σ = 5, χ = 2) and Paper II/III wall and register results. It treats
-the flavour sector — CKM/PMNS mixing, wall spectra, propagation, reference
-persistence, and a transfer/work cost — as a constrained-persistence application.
-Nothing here compares to measurement; the falsifiable claims are collected in one
-ledger. No Paper V–VI imports are allowed.
+Paper IV builds on the Paper I substrate (E8, clock Δ = 43, invariants D = 4, ν = 16, σ = 5, χ = 2)
+and the Paper II wire (PMAction: the two-wall operator, its generation structure and light-mass
+form). It shows how information transfers between generations on E8, why a transfer persists
+(transfer selection and work), and how the transfers give the CKM and PMNS matrices whose values
+`e8p` outputs. Comparisons with measurement are in `tools/e8p/E8PConstants/PMFlavor`. No Paper V–VI
+imports are allowed.
 
 ## Current geometric status
 
@@ -33,7 +33,14 @@ The flavour angles are now geometry-first, not operator-fit-first.
 * Retired and removed (git history): the path/cycle operators (`PathOperator`,
   `HierarchicalPathOperator`, `PMNSMassOperator`, `CapacityImpedance`), the eigenvector-link picture
   (`BreakingLink`, `BreakingPhase`, `MixingMatrix`, `LinkHierarchy`), and the whole-matrix transfer
-  typing of `TransferFlavor`.
+  typing of `TransferFlavor`, and the oscillation/propagation readout layer (`OscillationAlgebra`,
+  `OscillationStability`, `OscillationObservables`, `CPAsymmetry`, `CPObservables`,
+  `PropagationEnergy`, `PropagationStability`, `NativeFlavourObservables`, `SymmetricMass`):
+  standard interference algebra on supplied energies and mixing, with no users outside itself.
+* Moved to PMAction (the wire): the generation-on-walls chain, the light-mass form
+  (`CyclicSeesaw` … `UndetunedWall`, `MassInsertion`, `InterWallDiagonal`, `GenerationLabel`), and
+  the multi-flavour wall operator (`FlavourWallReduction`, `NativeFlavourWall`, `WallSpectrumLink`,
+  `WallLatticeSpectrum`, `RelativisticPhase`).
 
 ## What is checked
 
@@ -88,8 +95,7 @@ matrix (`2` diagonal, `1` off), `S₃`-invariant with spectrum `{4,1,1}`: a dege
 vertex has two legs) has the glue-class overlap as its Gram matrix `B Bᵀ` (`linkOverlap_eq_gram`),
 and its conserving network reduces by Kron elimination of the class vertices (`kron_schur`) to two
 legs in series, which is where the `2` of `|V_ub| = 1/(2α⁻¹ + π)` comes from
-(`two_leg_from_incidence`; one shared node with three legs would give `3`, `shared_node_three_legs`,
-excluded by `MixingTests.vub_count_unique`). The eigenvector-link picture of mixing (a broken
+(`two_leg_from_incidence`; one shared node with three legs would give `3`, `shared_node_three_legs`). The eigenvector-link picture of mixing (a broken
 `linkOverlap` whose eigenvectors are the mixing) was retired: it fixes one mixing entry at
 `|U|² = 1/4` for every breaking and, through `WallSeesaw`, cannot carry a charged-lepton hierarchy.
 Its modules were removed (git history).
@@ -274,17 +280,20 @@ generation change needs a single-wall carrier move of the class two generations 
 operation; identifying it with the charged current is open). `ExchangeAxis`: only the pair
 mixing through the reference's class mixes inside the cycle; the other two cross the reference
 node. `ExchangeChirality`: their `s`/`c` split is the charged current's parity violation.
-`NodePassage`, `NodeElimination`: the quark node-crossing mixings are amplitudes `∝ α`, a
-lepton-axis state's mixing a probability `∝ α` (the reactor angle). `KronSeries`: a conserving link
+`NodeElimination`: the quark node-crossing mixings are amplitudes `∝ α` (two legs), a
+lepton-axis state's mixing a probability `∝ α` (one leg; the reactor angle). The data-based
+`NodePassage` that chose between the readings was removed. `KronSeries`: a conserving link
 is a Laplacian, so eliminating the node is Kron reduction and a quark coupling is a series
 admittance; `VubSeriesPath`: the path admittance `1/(2α⁻¹ + π)` (two node legs and a unit boundary in
-series) is derived; it matches the measured `|V_ub|`, but as the transfer's generator entry `K₁₃` it
-fails the ratio test (`TransferGenerator`), so the match is not explained by the path.
-Candidates with data tests: `VcbEnvelope` (`|V_cb|` as a refresh-tick envelope over the free cycle),
+series) is derived.
+Candidates: `VcbEnvelope` (`|V_cb|` as a refresh-tick envelope over the free cycle),
 `HalfTurnMixing` and `HalfTurnAperture` (the in-cycle mixings as the half-turn refresh shared over
 the type-preserving channels: `s₁₂ = π/14`, `sin²θ₁₂ = π/10`, with `π` a length along boundaries
-and an aperture through the refresh). `ReactorConductance`, `MixingTests`, `CabibboDressing`: which
-integers the data fix in each supplied form.
+and an aperture through the refresh), `ReactorConductance` (the reactor angle as a node conductance
+into the spatial outlets). The modules that picked integers by which fit the data (`MixingTests`,
+`ReactorConductance.channel_count_unique`, `VcbEnvelope.drive_unique`, `free_ticks_needed`) were
+removed; the remaining comparisons with data are in `E8PConstants.CandidateTests` and
+`E8PConstants.FlavourPulls`.
 
 **Current chirality tied to Paper II.** `WeakCurrentBridge.spinProjector_eq_PL`: the
 native flavour current's chiral projector is Paper II's `P_L` **within Paper II's

@@ -1,4 +1,4 @@
-import PMFlavor.NativeFlavourWall
+import PMAction.NativeFlavourWall
 import PMFlavor.FlavourCurrent
 
 /-!
@@ -16,7 +16,7 @@ noncomputable section
 set_option synthInstance.maxSize 512
 set_option backward.isDefEq.respectTransparency false
 namespace PMFlavor.NativeFlavourCurrent
-open Matrix PMAction NativeObservation NativeFlavourWall
+open Matrix PMAction NativeObservation PMAction.NativeFlavourWall
 open scoped Kronecker
 variable (c : Fin 3) {f r : Type*} [Fintype f] [DecidableEq f] [Fintype r] [DecidableEq r]
 
@@ -54,13 +54,13 @@ theorem observed (G : Matrix f f ℂ) :
 /-- Native bilinears equal their coordinate currents, with the record retained. -/
 theorem compressed (G : Matrix f f ℂ) :
     (embedding (r := r) c)ᴴ * operator c G * embedding c = modelCurrent G ⊗ₖ (1 : Matrix r r ℂ) := by
-  rw [Matrix.mul_assoc, (observed c G).1, ← Matrix.mul_assoc, NativeFlavourWall.isometry, one_mul]
+  rw [Matrix.mul_assoc, (observed c G).1, ← Matrix.mul_assoc, PMAction.NativeFlavourWall.isometry, one_mul]
 
 section Doublets
 abbrev F := Fin 3 ⊕ Fin 3
 
 def massFrame (Uu Ud : FlavourCurrent.M) : Matrix (Config (f := F) (r := r) c) (Modes (f := F) × r) ℂ :=
-  embedding c * (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))
+  embedding c * (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))
 
 theorem mass_frame_isometry (Uu Ud : FlavourCurrent.M)
     (hu : Uu * Uuᴴ = 1) (hd : Ud * Udᴴ = 1) :
@@ -68,15 +68,15 @@ theorem mass_frame_isometry (Uu Ud : FlavourCurrent.M)
   have hb : (FlavourCurrent.basis Uu Ud)ᴴ * FlavourCurrent.basis Uu Ud = 1 := by
     simp [FlavourCurrent.basis, fromBlocks_conjTranspose, fromBlocks_multiply,
       mul_eq_one_comm.mp hu, mul_eq_one_comm.mp hd, fromBlocks_one]
-  exact NativeObservation.compose_isometry _ _ (NativeFlavourWall.isometry (f := F) (r := r) c)
-    (NativeObservation.tensor_isometry _ _ (FlavourWallReduction.basis_left _ hb) (by simp))
+  exact NativeObservation.compose_isometry _ _ (PMAction.NativeFlavourWall.isometry (f := F) (r := r) c)
+    (NativeObservation.tensor_isometry _ _ (PMAction.FlavourWallReduction.basis_left _ hb) (by simp))
 
 private theorem charged_matrix (Uu Ud : FlavourCurrent.M) :
-    (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud))ᴴ *
+    (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud))ᴴ *
       modelCurrent FlavourCurrent.raising *
-      FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) =
+      PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) =
     modelCurrent (fromBlocks 0 (FlavourCurrent.mixing Uu Ud) 0 0) := by
-  simp only [FlavourWallReduction.basis, modelCurrent, fromBlocks_conjTranspose,
+  simp only [PMAction.FlavourWallReduction.basis, modelCurrent, fromBlocks_conjTranspose,
     fromBlocks_multiply, conjTranspose_zero, conjTranspose_kronecker, conjTranspose_one,
     mul_zero, zero_mul, zero_add, add_zero, ← mul_kronecker_mul, one_mul, mul_one,
     FlavourCurrent.charged_in_mass_basis]
@@ -88,9 +88,9 @@ theorem charged_in_mass_basis (Uu Ud : FlavourCurrent.M) :
   rw [conjTranspose_mul]
   have hh := compressed (r := r) c FlavourCurrent.raising
   calc
-    _ = (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))ᴴ *
+    _ = (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))ᴴ *
       ((embedding c)ᴴ * operator c FlavourCurrent.raising * embedding c) *
-      (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ)) := by
+      (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ)) := by
         simp only [Matrix.mul_assoc]
     _ = _ := by
       rw [hh, conjTranspose_kronecker, conjTranspose_one, ← mul_kronecker_mul,
@@ -107,14 +107,14 @@ theorem neutral_in_mass_basis (Uu Ud : FlavourCurrent.M)
   have hh := compressed (r := r) c
     (fromBlocks (cu • (1 : FlavourCurrent.M)) 0 0 (cd • (1 : FlavourCurrent.M)))
   calc
-    _ = (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))ᴴ *
+    _ = (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ))ᴴ *
       ((embedding c)ᴴ * operator c (fromBlocks (cu • (1 : FlavourCurrent.M)) 0 0 (cd • (1 : FlavourCurrent.M))) * embedding c) *
-      (FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ)) := by
+      (PMAction.FlavourWallReduction.basis (FlavourCurrent.basis Uu Ud) ⊗ₖ (1 : Matrix r r ℂ)) := by
         simp only [Matrix.mul_assoc]
     _ = _ := by
       rw [hh]
       simp only [conjTranspose_kronecker, conjTranspose_one, ← mul_kronecker_mul, one_mul,
-        FlavourWallReduction.basis, modelCurrent, fromBlocks_conjTranspose,
+        PMAction.FlavourWallReduction.basis, modelCurrent, fromBlocks_conjTranspose,
         fromBlocks_multiply, conjTranspose_zero, mul_zero, zero_mul, add_zero, zero_add, mul_one,
         FlavourCurrent.neutral_in_mass_basis Uu Ud hu hd]
 

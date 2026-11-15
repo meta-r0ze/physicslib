@@ -5,7 +5,7 @@ import Mathlib.Tactic
 Mathlib only: the energy law, common momentum and masses are supplied, not
 identified with physical substrate eigenstates by this module. Units have c=1. -/
 noncomputable section
-namespace PMFlavor.RelativisticPhase
+namespace PMAction.RelativisticPhase
 
 def energy (p m : ℝ) : ℝ := Real.sqrt (p^2+m^2)
 
@@ -91,4 +91,4 @@ theorem half_phase_error (p a b t : ℝ) (hp : 0<p) :
     _ ≤ |t/2| *((a^4+b^4)/(8*p^3)) := h
     _ = _ := by rw [abs_div]; norm_num; ring
 
-end PMFlavor.RelativisticPhase
+end PMAction.RelativisticPhase

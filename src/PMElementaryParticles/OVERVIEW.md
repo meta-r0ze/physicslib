@@ -114,9 +114,9 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 
 The wire is `PMFlavor`/`PMAction`'s generation sector: with no detuning on the reference's wall
 (`PMAction.ReferenceDetuning`) the light mass is `M = D_R (δ_O + cyc κ_O)`
-(`PMFlavor.ReferenceWallMass`): one generation with a vector-class carrier (in-cycle, `K = 1`), two
-with spinor-class carriers through the reference node (`k/K = α/2`, `PMFlavor.NodeAmplitude`), and
-the other wall's detuning `δ_O`, which must be nonzero (`PMFlavor.UndetunedWall`). The wire is blind
+(`PMAction.ReferenceWallMass`): one generation with a vector-class carrier (in-cycle, `K = 1`), two
+with spinor-class carriers through the reference node (`k/K = α/2`, `PMAction.NodeAmplitude`), and
+the other wall's detuning `δ_O`, which must be nonzero (`PMAction.UndetunedWall`). The wire is blind
 to the species it carries: one crossing price (`PMConstants.HandoffAdmittance.closure_one_price`),
 and the `D₄` geometry with the reference's axis cannot tell up from down
 (`PMFlavor.DoubletReflection`). So the wire fixes the form; species are protocols over it, and what

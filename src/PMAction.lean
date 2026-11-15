@@ -153,6 +153,12 @@ import PMAction.UndetunedWall
 import PMAction.GenerationLabel
 import PMAction.MassInsertion
 import PMAction.InterWallDiagonal
+import PMAction.RelativisticPhase
+import PMAction.WallSpectrumLink
+import PMAction.WallLatticeSpectrum
+import PMAction.FlavourWallReduction
+import PMAction.NativeFlavourWall
+import PMAction.FlavourEvolution
 import PMAction.WallRanks
 import PMAction.WallEnergy
 import PMAction.WallMassModel

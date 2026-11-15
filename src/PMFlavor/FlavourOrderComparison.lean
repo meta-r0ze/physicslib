@@ -2,7 +2,6 @@ import PMAction.OrderComparison
 import PMFlavor.ReferenceSelection
 import PMFlavor.FlavourResponseSelection
 import PMFlavor.NativeFlavourPropagation
-import PMFlavor.OscillationObservables
 
 /-!
 # A joint-sector comparison can observe relative flavour mixing
@@ -25,6 +24,9 @@ set_option backward.isDefEq.respectTransparency false
 namespace PMFlavor.FlavourOrderComparison
 open Matrix PMAction
 open scoped Kronecker
+
+/-- Entrywise complex conjugate. -/
+def conjugated (U : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin 3) (Fin 3) ℂ := fun i j => star (U i j)
 abbrev M := Matrix (Fin 3) (Fin 3) ℂ
 
 def meanFlag (A B : M) : ℝ := OrderComparison.total A B / 3
@@ -41,10 +43,10 @@ theorem mean_zero_iff (A B : M) : meanFlag A B = 0 ↔ A*B=B*A := by
 /-- This loop uses the supplied exact flavour evolutions at finite times. -/
 theorem evolution_loop_unitary (U V : M) (hu : U*Uᴴ=1) (hv : V*Vᴴ=1)
     (eu ev : Fin 3 → ℝ) (s t : ℝ) :
-    OrderComparison.compareLoop (FlavourEvolution.evolution U eu s)
-      (FlavourEvolution.evolution V ev t) ∈ unitary _ :=
-  OrderComparison.loop_unitary _ _ (FlavourEvolution.evolution_unitary U eu hu s)
-    (FlavourEvolution.evolution_unitary V ev hv t)
+    OrderComparison.compareLoop (PMAction.FlavourEvolution.evolution U eu s)
+      (PMAction.FlavourEvolution.evolution V ev t) ∈ unitary _ :=
+  OrderComparison.loop_unitary _ _ (PMAction.FlavourEvolution.evolution_unitary U eu hu s)
+    (PMAction.FlavourEvolution.evolution_unitary V ev hv t)
 
 /-- In the up eigenbasis, response resolves phase gaps and down-sector amplitudes. -/
 theorem diagonal_response (phase : Fin 3 → ℂ) (B : M) :
@@ -117,13 +119,13 @@ theorem response_zero_iff (c s : ℝ) : meanFlag flip (rotated c s) = 0 ↔ c=0 
 
 /-- This squared comparison is CP-even: it cannot select a conjugation branch. -/
 theorem conjugation_tie (A B : M) :
-    meanFlag (OscillationObservables.conjugated A) (OscillationObservables.conjugated B) =
+    meanFlag (conjugated A) (conjugated B) =
       meanFlag A B := by
-  have he : OscillationObservables.conjugated A * OscillationObservables.conjugated B -
-      OscillationObservables.conjugated B * OscillationObservables.conjugated A =
-      OscillationObservables.conjugated (A*B-B*A) := by
+  have he : conjugated A * conjugated B -
+      conjugated B * conjugated A =
+      conjugated (A*B-B*A) := by
     ext i j
-    simp [OscillationObservables.conjugated, Matrix.mul_apply, star_sub, star_sum, star_mul, mul_comm]
+    simp [conjugated, Matrix.mul_apply, star_sub, star_sum, star_mul, mul_comm]
   rw [mean_formula, mean_formula, he]
   congr 1
   apply Finset.sum_congr rfl
@@ -136,21 +138,21 @@ section Native
 variable (a : Fin 3) {f r : Type*} [Fintype f] [DecidableEq f] [Fintype r] [DecidableEq r]
 
 def wallStep (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) (t : ℝ) :
-    Matrix (NativeFlavourWall.Modes (f := f) × r) (NativeFlavourWall.Modes (f := f) × r) ℂ :=
+    Matrix (PMAction.NativeFlavourWall.Modes (f := f) × r) (PMAction.NativeFlavourWall.Modes (f := f) × r) ℂ :=
   NormedSpace.exp ((((-t:ℝ):ℂ)*Complex.I) •
-    (WallExchange.H (NativeFlavourWall.momentum k) δ Y ⊗ₖ (1:Matrix r r ℂ)))
+    (WallExchange.H (PMAction.NativeFlavourWall.momentum k) δ Y ⊗ₖ (1:Matrix r r ℂ)))
 
 theorem native_step_observed (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
     (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) (t : ℝ) :
-    NativeObservation.Obs (NativeFlavourWall.embedding (r := r) a)
+    NativeObservation.Obs (PMAction.NativeFlavourWall.embedding (r := r) a)
       (NativeFlavourPropagation.evolve (r := r) a p k δ Y t) (wallStep (r := r) k δ Y t) :=
-  NativeObservation.exp (NativeFlavourWall.observed a p hp hp1 k δ Y) (((-t:ℝ):ℂ)*Complex.I)
+  NativeObservation.exp (PMAction.NativeFlavourWall.observed a p hp hp1 k δ Y) (((-t:ℝ):ℂ)*Complex.I)
 
 /-- Both full wall evolutions use one embedding; no separate three-mode identification
 is silently used to compose the native sectors. -/
 theorem native_wall_loop (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
     (k : Fin 3 → ℝ) (δ : ℝ) (Y Z : Matrix f f ℂ) (s t : ℝ) :
-    NativeObservation.Obs (NativeFlavourWall.embedding (r := r) a)
+    NativeObservation.Obs (PMAction.NativeFlavourWall.embedding (r := r) a)
       (OrderComparison.compareLoop
         (NativeFlavourPropagation.evolve (r := r) a p k δ Y s)
         (NativeFlavourPropagation.evolve (r := r) a p k δ Z t))
@@ -160,12 +162,12 @@ theorem native_wall_loop (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
 
 theorem native_wall_flag (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
     (k : Fin 3 → ℝ) (δ : ℝ) (Y Z : Matrix f f ℂ) (s t : ℝ)
-    (ψ : NativeFlavourWall.Modes (f := f) × r → ℂ) :
+    (ψ : PMAction.NativeFlavourWall.Modes (f := f) × r → ℂ) :
     OrderComparison.flag (NativeFlavourPropagation.evolve (r := r) a p k δ Y s)
       (NativeFlavourPropagation.evolve (r := r) a p k δ Z t)
-      (NativeFlavourWall.embedding a *ᵥ ψ) =
+      (PMAction.NativeFlavourWall.embedding a *ᵥ ψ) =
     OrderComparison.flag (wallStep (r := r) k δ Y s) (wallStep (r := r) k δ Z t) ψ :=
-  OrderComparison.encoded_flag _ (NativeFlavourWall.isometry a) _ _ _ _
+  OrderComparison.encoded_flag _ (PMAction.NativeFlavourWall.isometry a) _ _ _ _
     (native_step_observed a p hp hp1 k δ Y s) (native_step_observed a p hp hp1 k δ Z t) ψ
 
 end Native

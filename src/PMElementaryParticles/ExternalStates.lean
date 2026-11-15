@@ -1,5 +1,4 @@
 import PMFlavor.ReferenceFlavour
-import PMFlavor.WallSpectrumLink
 
 /-!
 # External states are on-shell mass eigenstates, from persistence
@@ -8,7 +7,7 @@ import PMFlavor.WallSpectrumLink
 hypothesis. Part of it follows from persistence.
 
 Write a state in an energy eigenbasis of its Hamiltonian, with energies `E j` and
-`E j² = p² + m j²` (for the two-wall fermion, `WallSpectrumLink.wall_energies`). It evolves by
+`E j² = p² + m j²` (for the two-wall fermion, `PMAction.WallSpectrumLink.wall_energies`). It evolves by
 diagonal phases. A state that persists, staying on its ray for all times, has one frequency on its
 support (`ReferenceFlavour.persistent_single_frequency`, the beats argument). So:
 

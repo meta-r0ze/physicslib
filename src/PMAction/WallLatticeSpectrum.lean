@@ -1,10 +1,10 @@
-import PMFlavor.WallSpectrumLink
+import PMAction.WallSpectrumLink
 
 /-! Exact sine-momentum specialization of the wall Hamiltonian and branch
 phase bridge. This does not identify a finite-tick update with its Hamiltonian
 exponential, nor select detuning, link strengths or physical branch access. -/
 noncomputable section
-namespace PMFlavor.WallLatticeSpectrum
+namespace PMAction.WallLatticeSpectrum
 open Matrix PMAction PMAction.WallDispersion
 
 def latticeMomentum (k : Fin 3 → ℝ) : Fin 3 → ℝ := fun j => Real.sin (k j)
@@ -65,4 +65,4 @@ theorem lattice_half_phase_error (p δ yi yj t : ℝ) (hi : yi ≠ 0) (hj : yj �
     (Real.sqrt (massSqM δ yi)) (Real.sqrt (massSqM δ yj)) t hp using 1 <;>
     simp only [show (4:ℕ)=2*2 by decide,pow_mul,Real.sq_sqrt hmi,Real.sq_sqrt hmj]
 
-end PMFlavor.WallLatticeSpectrum
+end PMAction.WallLatticeSpectrum

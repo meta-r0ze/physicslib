@@ -149,7 +149,7 @@ theorem light_mixing_free (a b : ℂ) (θ : ℝ) (v₁ v₂ : Fin 3 → ℂ) (h�
 
 /-- **Below the heavy threshold only the light branch is accessible.** A preparation of energy `E`
 with `E² < m₊²` cannot populate a heavy-branch state at any momentum, since its energy squared is
-`p² + m₊²` (`WallSpectrumLink.wall_energies`). -/
+`p² + m₊²` (`PMAction.WallSpectrumLink.wall_energies`). -/
 theorem heavy_inaccessible (E mP : ℝ) (h : E ^ 2 < mP) (p : ℝ) : E ^ 2 < p ^ 2 + mP := by
   nlinarith [sq_nonneg p]
 

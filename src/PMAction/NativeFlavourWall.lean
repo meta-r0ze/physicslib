@@ -1,4 +1,4 @@
-import PMFlavor.FlavourWallReduction
+import PMAction.FlavourWallReduction
 import PMAction.Machine.RegisterHamiltonian
 import PMAction.GaugeRecordEmbedding
 
@@ -15,7 +15,7 @@ remain inputs. Neither three physical generations nor a breaking law is selected
 noncomputable section
 set_option synthInstance.maxSize 512
 set_option backward.isDefEq.respectTransparency false
-namespace PMFlavor.NativeFlavourWall
+namespace PMAction.NativeFlavourWall
 open Matrix PMAction NativeObservation
 open scoped Kronecker
 variable (c : Fin 3) {f r : Type*} [Fintype f] [DecidableEq f] [Fintype r] [DecidableEq r]
@@ -176,4 +176,4 @@ theorem register_count : Fintype.card (Labels (f := f) c ⊕ r) =
   simp [Labels, CarrierEvents.carrier_card]
   omega
 
-end PMFlavor.NativeFlavourWall
+end PMAction.NativeFlavourWall

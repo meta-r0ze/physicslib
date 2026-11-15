@@ -501,8 +501,8 @@ theorem sign_tie01 (phase : Fin 3 → ℂ) (c s : ℝ) :
 
 /-- **CP-even.** The response cannot select a conjugation branch. -/
 theorem conjugation_tie (A B : M) :
-    frameCost (OscillationObservables.conjugated A)
-      (OscillationObservables.conjugated B) = frameCost A B :=
+    frameCost (FlavourOrderComparison.conjugated A)
+      (FlavourOrderComparison.conjugated B) = frameCost A B :=
   FlavourOrderComparison.conjugation_tie A B
 
 end PMFlavor.RelativeFrameCost

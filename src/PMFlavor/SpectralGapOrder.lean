@@ -1,5 +1,5 @@
 import PMFlavor.TransferWorkLaw
-import PMFlavor.FlavourEvolution
+import PMAction.FlavourEvolution
 import PMFlavor.GenerationLink
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
@@ -14,7 +14,7 @@ module derives their ordering from the spectral data Paper IV already uses.
 
 Writing the mass-basis eigenphases `φ_j = exp(−i t e_j)` for the energy list
 `e : Fin 3 → ℝ` and tick `t` — exactly the diagonal of
-`FlavourEvolution.evolution 1 e t` (`eigenphase_is_evolution_diagonal`) — the
+`PMAction.FlavourEvolution.evolution 1 e t` (`eigenphase_is_evolution_diagonal`) — the
 chord laws `splitting_chord`, `gap_of_splitting` give
 
     gap i j = 2 − 2 cos(|t · (e i − e j)|).
@@ -63,7 +63,7 @@ def eigenphase (e : Fin 3 → ℝ) (t : ℝ) : Fin 3 → ℂ :=
 /-- **These are the phases the existing flavour evolution already uses.** No new
 dynamical input is introduced here. -/
 theorem eigenphase_is_evolution_diagonal (e : Fin 3 → ℝ) (t : ℝ) :
-    FlavourEvolution.evolution 1 e t = Matrix.diagonal (eigenphase e t) := by
+    PMAction.FlavourEvolution.evolution 1 e t = Matrix.diagonal (eigenphase e t) := by
   show (1 : M) * PMAction.LinkExpansion.phaseDiag e (-t) * (1 : M)ᴴ = _
   rw [Matrix.one_mul, Matrix.conjTranspose_one, Matrix.mul_one]
   refine congrArg Matrix.diagonal (funext fun k => ?_)

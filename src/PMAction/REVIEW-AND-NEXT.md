@@ -19,6 +19,15 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 
+- **Update as `e^{−iHt}` on wall modes.** `PMAction.FlavourEvolution` takes the flavour evolution as
+  `U e^{−iEt} Uᴴ` with supplied `U`, `E`, and the transfer-cost chain in PMFlavor
+  (`ReferenceSelection` → `RelativeFrameCost` → `TransferWorkLaw`) is built on it.
+  `WallLatticeSpectrum` states the gap: the finite-tick substrate update is not identified with the
+  wall Hamiltonian's exponential, and no physical clock is fixed. Show whether the update at the
+  clock acts on the wall modes (`NativeFlavourWall`) as `e^{−iHt}` for some `t` set by `Δ`; until
+  then the transfer-cost results are conditional on it. Falsification: an update whose action on
+  the light wall modes is not a function of `H` alone.
+
 ## Carrier update
 
 - Certify the lowest positive carrier level on the full 216-dimensional operator, then certify the spin-up rms radius in Lean. The exact subspace calculation is in `tools/carrier_mode_exact.py` and `tools/carrier_rms_certificate.py`; the full-space level ordering still uses floating point.

@@ -25,8 +25,8 @@ event. The same principle applies.
 * `per_direction_needs_time`: the per-direction share `(1 − η)/4 = 1/688` is the uniform four-axis
   law, which needs weight `1/4` on the time axis, i.e. the time comparison firing.
 
-Premise: the dressing loss is registered (an event), as the VEV readout is. Data: the first-row sum
-`1 − 1/516 = 0.99806` lies `0.5σ` from `0.9984 ± 0.0007` (`CabibboDressing.direction_shares_fit`).
+Premise: the dressing loss is registered (an event), as the VEV readout is. The comparison with the
+measured first-row sum is in e8p (`E8PConstants.FlavourPulls.first_row_deficit_test`).
 The library's dressing is now `q² = 515/516` (`CKMDressing.q2`, `Mixing.dressing`, `Values`); the
 earlier `687/688` was the four-axis share.
 -/
