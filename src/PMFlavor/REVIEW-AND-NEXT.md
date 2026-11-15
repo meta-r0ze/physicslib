@@ -97,8 +97,9 @@ data, and do not frame work as fitting Standard Model sectors.
    strongly detuned (`|δ_O| ≳ 25 |κ_O|`), or `U` is part of the corner values and the FC and phase
    conclusions are open. This makes `ε` the next number to derive (PMAction, `δ_O`). PMAction's REVIEW (`δ_O` item) adds: in the library's
    normalization `ε = r/(2|δ_O|)` in hop units, `U = 1` needs a crossing link `|y| ≫ 12`, and with the
-   symmetric light amplitudes the light block of `U` is a `45°` rotation until a protocol splits the
-   light pair. So the item 1 and 5 tests are conditional on both. On the full two-wall Hamiltonian
+   symmetric light amplitudes the light block of `U` is near `45°` at large `δ_O`; the wire itself
+   splits the light pair when `δ_O` is a few spinor flips, but there `U ≠ 1` (heavy–light `O(0.1–1)`;
+   PMAction REVIEW, corrected). So the item 1 and 5 tests are conditional on both. On the full two-wall Hamiltonian
    (PMAction REVIEW) `U ≈ 1` needs the other wall's detuning near the hop scale, which moves the heavy
    label off its walls unless the vector carrier's rate is small. `ChiralLightBand`'s premise (light
    states far below the wall gap) requires it small (PMAction REVIEW), leaving the window

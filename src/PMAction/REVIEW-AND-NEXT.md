@@ -8,80 +8,56 @@ each species uses the wire is protocol work in
 [PMElementaryParticles](../PMElementaryParticles/REVIEW-AND-NEXT.md). The node amplitude is
 derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 
-- **Size of the other wall's detuning.** `ReferenceDetuning` puts the reference's wall at the
-  Wilson point (`δ_R = 0`), so the seesaw term `δ_F δ_T Y⁻¹` vanishes and the light mass is
-  `D_R (δ_O + cyc κ_O)` with no competing direct term on the reference's wall. The other wall's
-  detuning `δ_O` (in `ZeroModeCoupling`'s terms, its departure from `r = 1`) sets the mass scale and,
-  relative to the carriers, the mixing. It must be nonzero: at `δ_O = 0` the mass is a cyclic shift
-  with masses `(kK, k², kK)`, two heavy and one light (`PMAction.UndetunedWall`), the reverse of
-  the observed ordering. Find what fixes its size on the substrate; the library has no source yet.
-  Once it is fixed the wire has no free number, and the persistence rotation `U` of each protocol
-  (how far persisting states turn from the label states; PMFlavor's `U_uᴴ J U_d`) can be bounded.
-  Already without it (`ReferenceWallRotation`): on the reference's wall every off-diagonal entry of
-  `M Mᴴ` is `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`, so the rotation there is about `|dᵢ/dⱼ| · |κ_O/δ_O|`, suppressed by the
-  label states' mass ratio; the charged current reads that side (rows of `D₂ Y⁻¹ D₁ᴴ` are the reference's wall, which `(1 − Γ)/2` selects; one step by name).
-  **What the library already says about `δ_O` (numerical, outside Lean, 2026-11).** Units: flips in
-  the `δβ` slot, so a carrier of hop amplitude `t` is `−r t/2` (`CarrierFlip`); `NodeAmplitude`'s
-  "amplitude is admittance" with `K = 1` makes the vector flip `K_f = r/2` and the spinor flip
-  `k_f = rα/4`.
-  1. *Ordering.* `M = D_R (δ_O + cyc κ_O)` with the symmetric amplitudes (`UndetunedWall`'s
-     bookkeeping) has one heavy and two light singular values once `|δ_O| ≳ k_f`; at `δ_O = 0` it is
-     reversed (`UndetunedWall`). So the ordering needs `δ_O ≠ 0`, not `δ_O` dominant.
-  2. *Light pair.* With `|κ_R(s)| = |κ_R(c)|` (`NodeAmplitude`: one magnitude on both walls) the light
-     pair is degenerate for every `δ_O` (ratio `> 0.99` for `|δ_O| ≥ 0.1 K_f`; also with the repair
-     sign), and the reference-wall persisting states of labels `1`, `2` are `45°` mixtures. So the wire
-     alone gives a maximal persistence rotation in the light block; a light-pair split (protocol,
-     PMElementaryParticles) is what makes it small, then `θ₁₂ ≈ (m₁/m₂) · k_f/|δ_O|`.
-  3. *Heavy–light.* `θ₁₀ ≈ (m₁/m₀) · K_f/|δ_O|`, so `ε = K_f/|δ_O| = r/(2|δ_O|)` in hop units. The
-     light-mode reduction (Schur complement) needs the flips small against the crossing link,
-     `|δ_O| ≪ |y|`. PMFlavor's `U = 1` tests need `ε ≲ 0.04`, so `|δ_O| ≳ 12` and `|y| ≫ 12`: the crossing
-     link much stronger than one lattice hop. If the crossing amplitude is itself an admittance
-     (`≤ 1`, the carriers' normalization), `ε > 1/2` and `U` must be computed, not set to `1`.
-  4. *The crossing's normalization.* `WallExchange`'s `H_Y` puts `Y` beside the domain-wall hop
-     (`hop ⊗ Y`), and the class-independent crossing is that hop (`GenerationParity`, `CyclicSeesaw`:
-     `DomainWall`'s one hop), so `|y| = 1` in hop units. Then `|δ_O| ≪ 1` and `ε > 1/2`, and the vector
-     flip `K_f = 1/2` is not small against the crossing: the zero-energy reduction behind
-     `M = D₂ Y⁻¹ D₁ᴴ` is not controlled for the heavy label (corrections of order `K_f²/|y|² = 1/4`).
-  **Tension (recorded).** "Carrier amplitude is admittance, `K = 1`" (`NodeAmplitude`), "a carrier of
-  hop amplitude `t` flips by `−r t/2`" (`CarrierFlip`) and `|y| = 1` together give `K_f = 1/2`
-  against a crossing of `1`. Checked on the full zero-momentum two-wall Hamiltonian (blocks
-  `a, b, c, d` of `WallSeesaw`, flips `D₁ = δ_O + cyc κ_O`, `D₂ = cyc κ_R`, link `−Y`; numerical):
-  - the reduction `D₂ Y⁻¹ D₁ᴴ` misses the heavy mass by `25%` at `δ_O = 0.3` and a factor `2` at
-    `δ_O = 2`; the light masses and ratios stay close;
-  - the reference-wall heavy–light rotation is `≈ k_f/δ_O` up to `δ_O ≈ 0.3` and falls faster beyond
-    (`0.007`, `0.0011`, `0.0002` at `δ_O = 0.3, 1, 2`); with a light-pair split the light block is also
-    small (`5·10⁻⁴` at `δ_O = 0.3`, split `0.05`); without it, `45°`;
-  - **persistence:** the heavy label's persisting state has `20%` of its weight on the gapped
-    components `b, c` at every `δ_O` (from `K_f/|y| = 1/2`), and for `δ_O ≳ 1` its right-handed part
-    sits more on `c` than on its own wall `a` (`a 0.28 / c 0.22` at `1`, `0.11 / 0.39` at `2`).
-  So with `t_v = 1`, `U ≈ 1` (PMFlavor's tests, needs `δ_O ≳ 1`) and a heavy state that persists on its
-  walls (needs `δ_O ≲ 0.5`, and `K_f ≪ |y|`) do not both hold. With `t_v ≪ 1` both hold for
-  `K_f ≪ δ_O ≪ |y|`.
-  **Where `t_v = 1` comes from.** `HandoffAdmittance` makes admittance a transmission probability
-  per event (Landauer; the pulse's through weight `cos² t`). `CarrierFlip`'s `t` is a Hamiltonian hop,
-  a rate. "Certain transmission" fixes the transfer over one event, not the rate: a hop of rate `t`
-  transfers fully after time `π/(2t)`. So `K = 1` fixes `t_v` only with the tick that relates the
-  update to `H` (`e^{−iτH}`), which is the open item below. Ratios of admittances (`k/K = α/2`) carry
-  over to rates only if both carriers act for the same time. `CertainTransferRate`: a certain transfer
-  of duration `τ` needs `t τ ≥ π/2`, so the flip is at least `r π/(4τ)`; `K_f ≪ 1` then needs one
-  carrier event to last `τ ≫ π/4` hop times (many ticks of the split update). **Correction (2026-11).** An
-  earlier entry took the heavy label's carrier event to be the weak refresh (once per tick,
-  `RequirementRows`, `WeakLocality`) and concluded `K_f/|y| ≥ r/2`. The refresh is a sign exchange of
-  carrier labels (`CarrierActions.weak`), not a carrier hop; `CarrierFlip`'s `t` is a hop. So the
-  refresh schedule does not fix `t_v`, and that conclusion is withdrawn.
-  **What does constrain `t_v`.** `ChiralLightBand` identifies the charged current's wall on the light
-  band under the premise that light states lie far below the wall gap, wall mixing entering only
-  through the gapped modes. The full two-wall check above shows a vector flip `K_f = |y|/2` puts
-  `≈ 20%` of the heavy state on the gapped components at every `δ_O`, which breaks that premise. So
-  the library's own chirality identification needs `K_f ≪ |y|`, i.e. `t_v ≪ 2|y|/r`: the vector
-  carrier's rate is small against the crossing, and `NodeAmplitude`'s `K = 1` is an admittance, not a
-  rate (only `k/K = α/2` carries over, for carriers whose events last equally long). With that, the
-  window `K_f ≪ |δ_O| ≪ |y|` is consistent: the reduction holds, the heavy state stays on its walls,
-  and `U ≈ 1` holds when `ε = K_f/|δ_O| ≲ 0.04` (PMFlavor item 6). Open: the ratio `ε` itself; whether
-  `δ_O` is a wire constant or set by what a protocol occupies on that wall (persistence of the
-  protocol there); and the light-pair split. The light-pair split (protocol) stays open. Also open: whether it is a wire constant or set by
-  what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
-  PMElementaryParticles' "Species masses over the wire".
+- **Size of the other wall's detuning `δ_O`.** `ReferenceDetuning`: the reference's wall is
+  stationary exactly when `δ_R = 0` (`stationary_iff`), and the other wall's chiral state exactly when
+  `δ_O = 0` (`stationary_first_iff`); so `δ_R = 0` and the light mass is `M = D_R (δ_O + cyc κ_O)`
+  (`ReferenceWallMass`). `δ_O = 0` gives `UndetunedWall`'s `(|K k_s|, |K k_s|, |k_c|²)`; calling that
+  "two heavy, the reverse of the data" uses its class bookkeeping and `|K k_s| > |k_c|²`, so the
+  exclusion of `δ_O = 0` rests on those premises plus the observed ordering, not on stationarity. No
+  library statement fixes `|δ_O|`. Note: `δ_O` is the on-site flip on wall `1` (`Γ = +1` to `Γ = −1`
+  on the same wall, `first_wall_action`); `ZeroModeCoupling`'s `r − 1` is the inter-wall hop's direct
+  light-to-light element. They are different entries; tying them to one parameter needs a derivation
+  (and a changed inter-wall Wilson hop also adds a direct light term the seesaw form omits).
+  **Rotation on the event's wall** (`ReferenceWallRotation`): off-diagonal `M Mᴴ` entries are
+  `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`; the charged current reads this side (rows of `D₂ Y⁻¹ D₁ᴴ`, the wall
+  `(1 − Γ)/2` selects; one step by name). First-order rotation `≈ |dᵢ/dⱼ| · |κ_O/δ_O|`.
+  **Numerical facts (outside Lean, 2026-11).** Symmetric bookkeeping, vector flip `K_f`, spinor
+  flip `k_f`:
+  1. *Ordering:* one heavy, two light once `|δ_O| ≳ k_f`.
+  2. *Light pair (corrected).* The wire itself splits the light pair when `|δ_O|` is a few `k_f`: the
+     light ratio runs from `≈ k/K`-level at `δ_O ≲ k_f` through `0.03–0.5` at `δ_O = 5 k_f` to near `1`
+     at `δ_O ≳ 30 k_f` (sign of the repair matters). An earlier entry said "degenerate for every
+     `δ_O`"; it scanned only `δ_O ≥ 0.1 K_f` and is withdrawn. At large `δ_O` the residual split is
+     `2|b|` with label-equal mixtures. So in the regime `δ_O ∼ k_f` the wire gives all three masses
+     from one ratio `δ_O/k_f`: a one-parameter curve relating the two mass ratios of a sector. That
+     curve is a wire prediction; comparing it with species is PMElementaryParticles work.
+  3. *Heavy–light rotation* `≈ k_f/|δ_O|` (exact two-wall: falls faster above `δ_O ≈ 0.3 |y|`). In the
+     regime of item 2 it is `O(0.1–1)`, so `U ≠ 1` there.
+  4. *Full two-wall check* (blocks `a, b, c, d` of `WallSeesaw`): the reduction `D₂ Y⁻¹ D₁ᴴ` misses the
+     heavy mass by `25%` at `δ_O = 0.3|y|` with `K_f = |y|/2`; then about `20%` of the heavy state lies
+     on the gapped components.
+  **Open premises, stated (from a review, 2026-11).**
+  - `|y| = 1`: `CyclicSeesaw.gram_equal` holds for any common crossing `a`; `|a| = 1` needs the added
+    premise that flavour transport across the bare hop is a unitary relabelling.
+  - Rates vs admittances (`CertainTransferRate`): admittance is a probability per event, `t` a rate.
+    With `P = sin²(tτ)` and equal durations on the first-transfer branch, `t_s/t_v =
+    (2/π) arcsin √(α/2) ≈ 0.0385`, not `α/2`; `k/K = α/2` is an admittance ratio and carries over to
+    rates only through a stated readout. Both values of `k_f/K_f` are kept as readings; item 2's
+    regime exists for both.
+  - The vector rate: if light states must have small weight off the zero kernel (`ChiralLightBand`
+    gives the projector identity, not a leakage bound), `K_f ≪ |y|`. Stated as a regime with an
+    allowed leakage, not derived.
+  - The weak refresh (every tick) is a label sign exchange, not a carrier hop: it does not fix `t_v`
+    (an earlier entry said it did; withdrawn).
+  **Leads.** (i) Compute the wall-`1` flip `δ_O` as the `0 → 2` element of an independently specified,
+  reference-conditioned native update (`first_wall_action` is the extraction formula; a generator
+  with `δ` already inserted would return the input; `NativeFlavourWall.encoded_eigenstate` is the
+  comparison target). (ii) `Machine.RootTransferPhase` (`gap`, `quarterTime`,
+  `integer_tick_calibration`) is a conditional event clock: a bridge for the carrier rate if a
+  carrier event is identified with that pulse and its tick count is obtained independently (its
+  quarter pulse is a `π/4` rotation, not the certain transfer). (iii) Whether the reference-fixed
+  symmetries still exchange the two light carriers' matrix elements (`LightSplit`,
+  `ChannelSymmetry.flip_class`, `closure_one_price`'s premise).
 
 - **Update as `e^{−iHt}` on wall modes.** `PMAction.FlavourEvolution` takes the flavour evolution as
   `U e^{−iEt} Uᴴ` with supplied `U`, `E`, and the transfer-cost chain in PMFlavor

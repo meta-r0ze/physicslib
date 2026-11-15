@@ -36,6 +36,10 @@ light ratio `κ_O(s)/κ_R(s)`: both node-suppressed, so it is the ratio of the n
 the two walls. The library's discrete difference there is the repair: the weak sign exchange acts on
 the left sector only (`LeptonAxisRestriction.weak_type`). Whether the flip needs the reference
 background, and what the repair difference does to the node cost, are not derived.
+*Update:* `ReferenceDetuning` places the flip on the other wall, not on `R` (`δ_R = 0` from the
+reference's stationarity), and `light_split` concerns the diagonal entries only: the full light mass
+`D_R (δ_O + cyc κ_O)` splits the light pair's singular values through the off-diagonal carrier terms
+when `δ_O` is a few spinor flips (numerical, PMAction REVIEW, `δ_O` item).
 
 `WallSeesaw` and `CompositeMass` take one `δ` for both walls; with that the light pair stays
 degenerate at this order whatever the carriers do. So the light-pair split needs a source for
