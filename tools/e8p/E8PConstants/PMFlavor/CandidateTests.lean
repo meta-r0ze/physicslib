@@ -1,6 +1,7 @@
 import PMFlavor.VcbEnvelope
 import PMFlavor.VubSeriesPath
 import PMFlavor.HalfTurnMixing
+import PMFlavor.TransferAmplitude
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Analysis.Real.Pi.Bounds
 
@@ -16,6 +17,8 @@ candidate's value with a frozen measured number; none selects a construction.
 * `vcb_not_two_leg`: no two-leg passive path with boundary count `|k| ≤ 6` reaches `|V_cb|`.
 * `frame_share_excluded`, `direction_shares_fit`: shares of `1 − η` against the first-row sum; the
   derived `515/516` (`DressingEvent`) does not rest on them.
+* `promo_rules_excluded`: the three amplitude rules of `PMFlavor.TransferAmplitude` give
+  `|promotion/jump| = 1`, `≈ 1.98`, `≈ 23.7`; each is more than `13σ` from `|V_cb|/|V_ub| = 10.76 ± 0.645`.
 * `divider_fits`, `current_divider_fits`, `ratio_fits`: the `VcbEnvelope` forms against
   `|V_cb| = 0.0411 ± 0.0012` and `|V_cb|/|V_ub| = 10.76 ± 0.64`.
 -/
@@ -115,5 +118,27 @@ theorem direction_shares_fit :
   constructor
   · rw [abs_of_pos (by norm_num)]; norm_num
   · rw [abs_of_neg (by norm_num)]; norm_num
+
+/-- **None of the library's node-crossing rules gives the measured `|V_cb|/|V_ub|`.** -/
+theorem promo_rules_excluded :
+    15 < |PMFlavor.TransferAmplitude.promoA / PMFlavor.TransferAmplitude.jump - 10.76| / 0.645 ∧
+      13 < |PMFlavor.TransferAmplitude.promoB / PMFlavor.TransferAmplitude.jump - 10.76| / 0.645 ∧
+      19 < |PMFlavor.TransferAmplitude.promoC / PMFlavor.TransferAmplitude.jump - 10.76| / 0.645 := by
+  have hA := PMFlavor.TransferAmplitude.promoA_ratio
+  have hB := PMFlavor.TransferAmplitude.promoB_ratio
+  have hC := PMFlavor.TransferAmplitude.promoC_ratio_sq
+  have hj : 0 < PMFlavor.TransferAmplitude.jump := by
+    rw [PMFlavor.TransferAmplitude.jump_eq]
+    have := Real.pi_pos; have := PMFlavor.TransferAmplitude.αinv_pos; positivity
+  have hc : 0 < PMFlavor.TransferAmplitude.promoC :=
+    Real.sqrt_pos.2 (by have := PMFlavor.TransferAmplitude.αinv_pos; positivity)
+  have hCpos : 0 < PMFlavor.TransferAmplitude.promoC / PMFlavor.TransferAmplitude.jump :=
+    div_pos hc hj
+  have hC' : 23.6 < PMFlavor.TransferAmplitude.promoC / PMFlavor.TransferAmplitude.jump := by
+    nlinarith [hC.1]
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hA, lt_div_iff₀ (by norm_num), abs_of_neg (by norm_num)]; norm_num
+  · rw [lt_div_iff₀ (by norm_num), abs_of_neg (by linarith [hB.2])]; linarith [hB.2]
+  · rw [lt_div_iff₀ (by norm_num), abs_of_pos (by linarith)]; linarith
 
 end E8PConstants.CandidateTests
