@@ -26,7 +26,11 @@ change through class `c`, from label `c − 1` to `c + 1` (`entry_of_class`); th
 transfers of `TransferGraph` (`entry_is_transfer`). One event makes no reverse change (`reverse_zero`).
 The change through class `0` (`2 → 1`) uses the weak carrier itself and stays in the cycle
 (`weak_carrier_entry`); the changes through `1` and `2` need a spinor carrier from the node
-(`node_entries`).
+(`node_entries`). The actual weak refresh (`CarrierActions.weak`) moves only vector-class
+carriers of the reference's sector (`refresh_moves_reference`, `refresh_fixes_other`): it supplies
+the in-cycle change and no spinor carrier. Completion: `A = N − Nᴴ` (`N` the off-diagonal part of `J`)
+is skew-Hermitian (`A_skew`), carries `κ c` forward and `−κ̄ c` in reverse (`forward_entry`,
+`reverse_entry`), and `1 + A` is unitary to second order (`first_order_unitary`).
 
 **Three transfers, three types (`TransferGraph`).** Each pair of label states transfers through the
 one class both contain (`ends`, `every_pair`). Exactly the transfer through the reference's class

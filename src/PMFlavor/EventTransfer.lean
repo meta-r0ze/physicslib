@@ -1,5 +1,6 @@
 import PMFlavor.TransferGraph
 import PMConstants.GenerationWeak
+import PMConstants.CarrierActions
 
 /-!
 # The label changes of one charged-current event
@@ -22,6 +23,18 @@ amplitude `1` for no change and `κ c` for the change that uses a carrier of cla
   the in-cycle transfer (`TransferGraph.inCycle_iff`).
 * `node_entries`: the changes through classes `1` and `2` (`0 → 2` and `1 → 0`) need a spinor carrier
   (`GenerationWeak.heavy_edges_spinor`), which only the reference node supplies (`TransferGraph`).
+
+**The actual weak refresh.** `PMConstants.CarrierActions.weak` acts on packets `V ⊕ V`, both copies
+vector-class carriers (`V = Carrier 0`): it reverses the sign of every carrier in the reference's
+sector (`refresh_moves_reference`) and fixes the other sector (`refresh_fixes_other`). So the refresh
+itself supplies only class-`0` single-wall moves on the reference's wall: the in-cycle entry of `J`.
+It moves no spinor carrier; the entries through classes `1` and `2` need the node.
+
+**Completion to a unitary transfer.** One event makes only the forward changes; the reverse entries
+come from the conjugate event. `A κ = N κ − (N κ)ᴴ`, with `N κ = J κ − 1` the off-diagonal part, is
+skew-Hermitian (`A_skew`), carries `κ c` forward and `−κ̄ c` in reverse (`forward_entry`,
+`reverse_entry`), and `1 + A κ` is unitary up to second order: `(1 + A)ᴴ(1 + A) = 1 + AᴴA`
+(`first_order_unitary`). Which exact completion (exponential or Cayley, `TransferGenerator`) is open.
 
 The amplitudes `κ c` depend on where the carriers sit relative to the reference axis (off the axis:
 two legs, amplitude; on the axis: one leg, probability; `NodeElimination`): `ConductionRule` gives the
@@ -67,5 +80,50 @@ theorem node_entries :
   refine ⟨rfl, rfl, ?_, ?_⟩
   · rw [TransferGraph.inCycle_iff]; decide
   · rw [TransferGraph.inCycle_iff]; decide
+
+/-! ## The actual weak refresh -/
+
+open PMConstants.CarrierActions PMConstants.CarrierRepresentation in
+/-- **The refresh fixes the other sector.** -/
+theorem refresh_fixes_other (v : V) : weak (Sum.inr v) = Sum.inr v := rfl
+
+open PMConstants.CarrierActions PMConstants.CarrierRepresentation in
+/-- **The refresh moves every carrier of the reference's sector**, by its sign. -/
+theorem refresh_moves_reference : ∀ v : V, weak (Sum.inl v) ≠ Sum.inl v := by
+  decide +kernel
+
+/-! ## Completion to a unitary transfer -/
+
+open Matrix
+
+/-- Off-diagonal part of `J`. -/
+def N (κ : Fin 3 → ℂ) : Matrix (Fin 3) (Fin 3) ℂ := J κ - 1
+
+/-- Forward changes minus their conjugates. -/
+def A (κ : Fin 3 → ℂ) : Matrix (Fin 3) (Fin 3) ℂ := N κ - (N κ)ᴴ
+
+/-- **`A` is skew-Hermitian.** -/
+theorem A_skew (κ : Fin 3 → ℂ) : (A κ)ᴴ = -A κ := by
+  unfold A
+  rw [conjTranspose_sub, conjTranspose_conjTranspose]
+  abel
+
+/-- **Forward entry: `κ c`.** -/
+theorem forward_entry (κ : Fin 3 → ℂ) (c : Fin 3) : A κ (c + 1) (c - 1) = κ c := by
+  have h : c + 1 ≠ c - 1 := by fin_cases c <;> decide
+  simp only [A, N, Matrix.sub_apply, Matrix.conjTranspose_apply, entry_of_class, reverse_zero,
+    Matrix.one_apply_ne h, Matrix.one_apply_ne h.symm, sub_zero, star_zero]
+
+/-- **Reverse entry: `−κ̄ c`.** -/
+theorem reverse_entry (κ : Fin 3 → ℂ) (c : Fin 3) : A κ (c - 1) (c + 1) = -star (κ c) := by
+  have h : c + 1 ≠ c - 1 := by fin_cases c <;> decide
+  simp only [A, N, Matrix.sub_apply, Matrix.conjTranspose_apply, entry_of_class, reverse_zero,
+    Matrix.one_apply_ne h, Matrix.one_apply_ne h.symm, sub_zero, zero_sub]
+
+/-- **`1 + A` is unitary up to second order.** -/
+theorem first_order_unitary (κ : Fin 3 → ℂ) :
+    (1 + A κ)ᴴ * (1 + A κ) = 1 + (A κ)ᴴ * A κ := by
+  rw [conjTranspose_add, conjTranspose_one, A_skew]
+  noncomm_ring
 
 end PMFlavor.EventTransfer

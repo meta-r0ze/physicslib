@@ -21,12 +21,14 @@ data, and do not frame work as fitting Standard Model sectors.
 
 ## Plan
 
-1. **`J` as the event operator** (`EventTransfer`, started). Done: `J κ` with the three changes at the
-   classes `GenerationCurrent` fixes, the weak carrier's own change in the cycle, the two node changes
-   out of it, one direction per event. Next: show that `J` is the label action of the actual weak
-   refresh (`PMConstants.CarrierActions.weak` on the reference's wall, through
-   `GenerationCurrent.shift_false_then_glue`), not only a matrix with the right support; and how `J`
-   becomes a normalized transfer (unitarity with the dressing, `CKMClosure`, `DressingChannels`).
+1. **`J` as the event operator** (`EventTransfer`). Done: `J κ` with the three changes at the
+   classes `GenerationCurrent` fixes, one direction per event; the actual weak refresh
+   (`CarrierActions.weak`) moves only vector-class carriers of the reference's sector
+   (`refresh_moves_reference`, `refresh_fixes_other`), so it supplies the in-cycle entry and the node
+   entries need the node; the completion `A = N − Nᴴ` is skew-Hermitian, carries `κ` forward and `−κ̄`
+   in reverse, and `1 + A` is unitary to second order (`first_order_unitary`). Open: the exact unitary
+   completion (exponential or Cayley, `TransferGenerator`); they differ at second order, which matters
+   for the small entries. Derive which one a sequence of events produces.
 2. **The amplitude of each entry.**
    - In-cycle: the share `π/N` rests on the aperture premises (`HalfTurnAperture`); derive them or
      state them as the one premise of this entry.
