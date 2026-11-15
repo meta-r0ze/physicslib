@@ -70,6 +70,18 @@ data, and do not frame work as fitting Standard Model sectors.
    the PDG sizes (as in item 1) need `Φ = 70 ± 5°`; a flat holonomy gives `|V_td| = 0.0053` or `0.0130`
    against `0.0086 ± 0.0002`, excluded (recorded). So with FC either the cycle carries a non-flat
    holonomy or `U ≠ 1` supplies the phase (item 6).
+   E8 candidates for a phase, and their status (all from structure already in the library):
+   - `0` or `π`: glue arithmetic (the three classes are a neutral triple,
+     `PMSubstrate.E8Invariants.neutral_distinct_classes`, so the cycle carries no net glue) and the
+     refresh's spinor lift (`CPQuarterTurn.two_plane_lift_sq`, `±1`). Flat: excluded under FC, `U = 1`.
+   - `π/2`: a single-plane half-turn lifts to a quarter turn (`plane_lift_sq`); the refresh is not one
+     (`CPQuarterTurn`). Not supplied; also `4σ` from `70 ± 5°`.
+   - `2π/3`: the triality rotation of the three classes (`ChannelSymmetry.class_to_vector`); no
+     mechanism in the library gives the event its character. Not supplied; `10σ` from `70 ± 5°`.
+   - The zero-energy node phase: real denominator (`TickPlacement.node_denominator_real`). Closed.
+   - A wall-side leg phase (`LinkFlux.flux_cyclic`, flux `ū⁶`): open, size not fixed.
+   With everything real (`κ`, `U_u`, `U_d`), the observed matrix is real and has no CP violation, so
+   one of these must be complex. The tests above assume `U = 1`; item 6 decides how far they hold.
 6. **The size of `U`.** Needs the other wall's detuning `δ_O` (PMAction REVIEW) and which protocol uses
    which carriers (PMElementaryParticles). With `δ_O` dominant the rotation is small; bound it.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
