@@ -5,16 +5,17 @@ the inter-wall link of `PMAction.WallSeesaw`; `M_direct` a term joining the two 
 `K_cc` the charged-current transfer network of `TransferGenerator`. The CKM entries are `S_ij` of that
 transfer, not `K_ij`.
 
-Working reading: the CKM is `U_uᴴ U_d` from the wire's masses (`ReferenceWallMass`,
-`M = D_R (δ_O + cyc κ_O)`), with the charged-current transfer `S(K_cc)` at most a correction (OVERVIEW,
-"Which CKM reading the wire supports": the wire gives `K₁₃ = K₂₃`). The transfer items below are kept
-as candidates under that demotion; their premises (zero-energy scattering on generation leads, equal
-lead widths) are this folder's model assumptions (`TransferGenerator`).
+Reading status. Neither CKM reading passes alone. The transfer `S(K_cc)` with the wire's couplings
+gives `K₁₃ = K₂₃` (OVERVIEW, "Which CKM reading the wire supports"). The mass reading `U_uᴴ U_d` from
+`ReferenceWallMass` (`M = D_R (δ_O + cyc κ_O)`) fails with any light carriers: the masses and the CKM
+cannot be fitted together (OVERVIEW, negative result; `tools/wire_ckm_scan.py`). Open between them:
+the combined `U_uᴴ J U_d`, or a change to the mass form. The transfer premises (zero-energy
+scattering on generation leads, equal lead widths) are this folder's model assumptions
+(`TransferGenerator`).
 
-Dependencies. The mass-reading items need, upstream: the other wall's detuning `δ_O` (PMAction,
-"Size of the other wall's detuning") and each species' carriers (PMElementaryParticles, "Species
-masses over the wire"). The equal-carrier form fails the CKM from masses alone (OVERVIEW, negative
-result), so the up protocol's `k_s/k_c` is the next input this folder waits on.
+Dependencies. Species protocol work (PMElementaryParticles, "Species masses over the wire") cannot
+rescue the CKM by itself, since no choice of light carriers does; the first open question is at the
+wire, here and in PMAction ("Size of the other wall's detuning").
 
 * **The in-cycle mixings** (`HalfTurnMixing`, `HalfTurnAperture`, candidate): `s₁₂ = π/14` and
   `sin²θ₁₂ = π/10`. Premises, listed in `HalfTurnAperture`: cross-orbit label-blindness (the
@@ -63,12 +64,13 @@ result), so the up protocol's `k_s/k_c` is the next input this folder waits on.
   item needs. Test against both NuFIT values. In the working (mass) reading the PMNS is
   `U_eᴴ U_ν`, so `θ₂₃` waits on the lepton and neutrino protocols (PMElementaryParticles) the same way
   the CKM waits on the up protocol.
-* **Mixing from the wire's mass form** (the working CKM reading). Negative result first
-  (OVERVIEW; `tools/wire_ckm_scan.py`): with equal light carriers in both sectors and each sector
-  fitted to its own mass ratios, no branch gives the CKM (`|V_cb| ≥ 0.071`). Test for the next step:
-  once the up protocol gives `k_s/k_c` (PMElementaryParticles), `U_uᴴ U_d` has no free parameter; it
-  must give `|V_us|`, `|V_cb|`, `|V_ub|` together. This also replaces the in-cycle mixing candidates
-  above as the source of `|V_us|` if it passes. The masses' form is settled
+* **Mixing from the wire's mass form.** Negative results first (OVERVIEW; `tools/wire_ckm_scan.py`):
+  with equal light carriers no branch gives the CKM (`|V_cb| ≥ 0.071`), and with free light carriers
+  in both sectors the masses and the CKM still cannot be fitted together (down `m_b/m_s` against
+  `|V_cb|`). Next: (i) the combined `U_uᴴ J U_d` with `J = S(K_cc)` built from the wire's own couplings
+  (`K₁₃ = K₂₃`); it is a test only if `J`'s remaining couplings (`K₁₂`, the scale `γ`) are derived,
+  for example `2K₁₂/γ = π/14` from the in-cycle item above; (ii) a mass-form change, which must keep
+  the reference stationary (`PMAction.ReferenceDetuning`: no detuning on its wall). The masses' form is settled
   (OVERVIEW: `ReferenceWallMass`, `M = D_R (δ_O + cyc κ_O)`); the species sizes are protocol work
   (PMElementaryParticles, "Species masses over the wire"). The row index of `M` is the reference's
   wall, which is the weak wall (`PMAction.ChiralityConvention.weak_acts_on_reference`), so the weak

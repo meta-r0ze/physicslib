@@ -230,9 +230,15 @@ numerics, `tools/wire_ckm_scan.py`). With both quark sectors on `ReferenceWallMa
 node rule's equal light carriers `|k_s| = |k_c|`, each fitted to its own two mass ratios at `M_Z`,
 `U_uᴴ U_d` has no free parameter. Over all `8` distinct branch and sign combinations, `|V_cb|` is
 `0.071`–`0.195` (data `0.042`) and `|V_us|` `0.08`–`0.38`; the closest `|V_us|` (`0.216`, `0.247`)
-come with `|V_cb| ≈ 0.07`, `1.7×` high. So the up sector cannot keep equal light carriers: the up
-protocol must give `|k_s| ≠ |k_c|` or change the form, and `k_s/k_c` must be derived, since fitting
-it spends the `|V_cb|` test. The same scan finds no common other-wall detuning: with `δ_O` one wire
+come with `|V_cb| ≈ 0.07`, `1.7×` high. Freeing the light carriers in both sectors does not rescue
+it: with `k_s`, `k_c`, `d` free per sector (`6` numbers) against the `4` mass ratios and `|V_us|`,
+`|V_cb|`, `|V_ub|` (`7` numbers), the best joint fit leaves down `m_b/m_s` `+28%` and `|V_cb|` `+25%`
+(equal log weights), or `m_b/m_s` `+63%` (`4.9σ` at an assumed `10%`) with the CKM fitted. So the
+wire's mass form with any light carriers does not give the quark masses and the CKM together, and
+protocol carriers cannot fix it: `U_uᴴ U_d` alone fails as the CKM reading. A factor `J ≠ 1`
+(`U_uᴴ J U_d`) or a change to the mass form is needed. Running the up sector around the cycle the
+other way (`Cᵀ`, a conjugate-doublet candidate) is excluded: `|V_cb| ≈ 0.04` but `|V_us| ≥ 0.81`,
+`|V_ub| ≥ 0.12`. The same scan finds no common other-wall detuning: with `δ_O` one wire
 constant and protocols setting only the carrier scale, `|d| √(m_heavy/h)` must agree across sectors;
 it is `0.50`/`0.94` for up against `0.26`/`0.35` for down (`≥ 1.4×`).
 

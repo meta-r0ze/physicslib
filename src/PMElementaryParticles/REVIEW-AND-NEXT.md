@@ -32,10 +32,10 @@ the measure, not only of degree-≤2 moments.
   geometry. Relate to the existing tier ledgers (`TierLedger.tiersFor`: up `{0, 2, 3}`, down and
   lepton `{0, 1, 2}`; `QuarkMasses`, `LeptonMasses`). Do not match the required factors to
   constants; derive them and test on up quarks and leptons together. Constraint from the CKM
-  (PMFlavor OVERVIEW, negative result; `tools/wire_ckm_scan.py`): the up protocol cannot keep equal
-  light carriers `|k_s| = |k_c|` (every equal-carrier branch gives `|V_cb| ≥ 0.071`), so it must
-  route the `s`- and `c`-label carriers differently; the derived `k_s/k_c` then predicts the CKM with
-  no free parameter. The same holds for the lepton protocol and the PMNS (`θ₂₃`). Includes the old
+  (PMFlavor OVERVIEW, negative result; `tools/wire_ckm_scan.py`): no choice of light carriers in the
+  wire's mass form fits the quark masses and the CKM together, so protocol carriers alone cannot
+  close the quark sector; this item depends on the PMFlavor reading question (`U_uᴴ J U_d` or a
+  mass-form change) being settled first. Includes the old
   tier item: derive the routing histories and rates, their costs, and the tiers each protocol occupies; the
   lepton and quark ledgers still need a cost or selection rule for assigning invariants to tiers.
   Upstream: PMAction, "Size of the other wall's detuning".
