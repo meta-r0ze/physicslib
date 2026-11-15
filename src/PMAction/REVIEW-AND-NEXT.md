@@ -58,7 +58,11 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   comparison target). (ii) `Machine.RootTransferPhase` (`gap`, `quarterTime`,
   `integer_tick_calibration`) is a conditional event clock: a bridge for the carrier rate if a
   carrier event is identified with that pulse and its tick count is obtained independently (its
-  quarter pulse is a `π/4` rotation, not the certain transfer). (iii) Whether the reference-fixed
+  quarter pulse is a `π/4` rotation, not the certain transfer). Read as a rate law: an attempt
+  probability `p` per tick gives the generator rate `gap/2 = −log(1 − 2p)` per tick, `≈ 2p` for small
+  `p` (rate proportional to admittance, so `k/K` carries over for two small attempt rates), and
+  unbounded as `p → 1/2`. So in this construction a certain vector event has no finite rate: one more
+  reason `K = 1` is not a rate, and the vector rate needs its own attempt probability. (iii) Whether the reference-fixed
   symmetries still exchange the two light carriers' matrix elements (`LightSplit`,
   `ChannelSymmetry.flip_class`, `closure_one_price`'s premise).
 
