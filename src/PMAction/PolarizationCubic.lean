@@ -6,7 +6,7 @@ import PMAction.PolarizationAssembly
 `PolarizationAssembly.Rg_bound` bounds the rest `R` by its terms. With magnitude bounds for every
 order (`PolarizationMagnitudes`, with `t = n(q)`): `|p₀|, |v₀| ≤ A`, `|p₁|, |v₁| ≤ B t`,
 `|p₂|, |v₂| ≤ C t²`, `|pₑ|, |vₑ| ≤ E t³`, `|d₁| ≤ F t`, `|d₂| ≤ G t²`, `|dₑ| ≤ H t³`,
-`|cₑ| ≤ J t³`, and `σ ≤ S` with `|D| ≤ σ/2`, `cubic_bound` gives `|R| ≤ cubicBound`, every term of
+`|cₑ| ≤ J t³`, and `σ ≤ S`, `σ/2 ≤ S + D` (`S + D = S(k + q)`), `cubic_bound` gives `|R| ≤ cubicBound`, every term of
 which is at least cubic in `t`. Pure algebra over `ℝ`.
 -/
 
@@ -32,7 +32,7 @@ def cubicBound (A B C E F G H J t σ : ℝ) : ℝ :=
     J * t ^ 3 / σ
 
 theorem cubic_bound {S σ t A B C E F G H J p0 p1 p2 pe v0 v1 v2 ve d1 d2 de ce : ℝ}
-    (hσ : 0 < σ) (hS : σ ≤ S) (hD : |d1 + d2 + de| ≤ σ / 2)
+    (hσ : 0 < σ) (hS : σ ≤ S) (hSD' : σ / 2 ≤ S + (d1 + d2 + de))
     (h0 : |p0| ≤ A) (h1 : |p1| ≤ B * t) (h2 : |p2| ≤ C * t ^ 2) (he : |pe| ≤ E * t ^ 3)
     (g0 : |v0| ≤ A) (g1 : |v1| ≤ B * t) (g2 : |v2| ≤ C * t ^ 2) (ge : |ve| ≤ E * t ^ 3)
     (k1 : |d1| ≤ F * t) (k2 : |d2| ≤ G * t ^ 2) (ke : |de| ≤ H * t ^ 3) (kc : |ce| ≤ J * t ^ 3) :
@@ -43,7 +43,7 @@ theorem cubic_bound {S σ t A B C E F G H J p0 p1 p2 pe v0 v1 v2 ve d1 d2 de ce 
   set PV := (p0 + p1 + p2 + pe) * (v0 + v1 + v2 + ve) with hPV
   set D := d1 + d2 + de with hDdef
   have hS0 : 0 < S := hσ.trans_le hS
-  have hSD : σ / 2 ≤ S + D := by linarith [neg_abs_le D]
+  have hSD : σ / 2 ≤ S + D := hSD'
   have hSD0 : 0 < S + D := by linarith
   have base := Rg_bound S PV D p0 p1 p2 v0 v1 v2 d1 d2 de ce hS0 hSD0
   -- the ten third-order products
