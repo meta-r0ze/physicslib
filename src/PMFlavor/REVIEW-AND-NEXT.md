@@ -98,7 +98,10 @@ data, and do not frame work as fitting Standard Model sectors.
    conclusions are open. This makes `ε` the next number to derive (PMAction, `δ_O`). PMAction's REVIEW (`δ_O` item) adds: in the library's
    normalization `ε = r/(2|δ_O|)` in hop units, `U = 1` needs a crossing link `|y| ≫ 12`, and with the
    symmetric light amplitudes the light block of `U` is a `45°` rotation until a protocol splits the
-   light pair. So the item 1 and 5 tests are conditional on both. Then redo the item 1
+   light pair. So the item 1 and 5 tests are conditional on both. On the full two-wall Hamiltonian
+   (PMAction REVIEW) `U ≈ 1` needs the other wall's detuning near the hop scale, which moves the heavy
+   label off its walls unless the vector carrier's rate is small; that rate waits on PMAction's
+   `e^{−iτH}` item. Then redo the item 1
    and item 5 tests with this `U`.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
    event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three

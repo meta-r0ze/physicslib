@@ -43,12 +43,27 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
      flip `K_f = 1/2` is not small against the crossing: the zero-energy reduction behind
      `M = D₂ Y⁻¹ D₁ᴴ` is not controlled for the heavy label (corrections of order `K_f²/|y|² = 1/4`).
   **Tension (recorded).** "Carrier amplitude is admittance, `K = 1`" (`NodeAmplitude`), "a carrier of
-  hop amplitude `t` flips by `−r t/2`" (`CarrierFlip`) and `|y| = 1` cannot all hold with a controlled
-  light-mode reduction and `U ≈ 1`. Resolve one of: (a) the vector carrier's hop amplitude is not its
-  admittance (`t_v ≪ 1`; only ratios like `k/K = α/2` are admittance statements); (b) the crossing
-  is stronger than one hop; (c) keep all three and compute the masses and `U` from the full two-wall
-  Hamiltonian, not the reduction. Until then PMFlavor's `U = 1` tests are not tests. The light-pair
-  split (protocol) is open in every case. Also open: whether it is a wire constant or set by
+  hop amplitude `t` flips by `−r t/2`" (`CarrierFlip`) and `|y| = 1` together give `K_f = 1/2`
+  against a crossing of `1`. Checked on the full zero-momentum two-wall Hamiltonian (blocks
+  `a, b, c, d` of `WallSeesaw`, flips `D₁ = δ_O + cyc κ_O`, `D₂ = cyc κ_R`, link `−Y`; numerical):
+  - the reduction `D₂ Y⁻¹ D₁ᴴ` misses the heavy mass by `25%` at `δ_O = 0.3` and a factor `2` at
+    `δ_O = 2`; the light masses and ratios stay close;
+  - the reference-wall heavy–light rotation is `≈ k_f/δ_O` up to `δ_O ≈ 0.3` and falls faster beyond
+    (`0.007`, `0.0011`, `0.0002` at `δ_O = 0.3, 1, 2`); with a light-pair split the light block is also
+    small (`5·10⁻⁴` at `δ_O = 0.3`, split `0.05`); without it, `45°`;
+  - **persistence:** the heavy label's persisting state has `20%` of its weight on the gapped
+    components `b, c` at every `δ_O` (from `K_f/|y| = 1/2`), and for `δ_O ≳ 1` its right-handed part
+    sits more on `c` than on its own wall `a` (`a 0.28 / c 0.22` at `1`, `0.11 / 0.39` at `2`).
+  So with `t_v = 1`, `U ≈ 1` (PMFlavor's tests, needs `δ_O ≳ 1`) and a heavy state that persists on its
+  walls (needs `δ_O ≲ 0.5`, and `K_f ≪ |y|`) do not both hold. With `t_v ≪ 1` both hold for
+  `K_f ≪ δ_O ≪ |y|`.
+  **Where `t_v = 1` comes from.** `HandoffAdmittance` makes admittance a transmission probability
+  per event (Landauer; the pulse's through weight `cos² t`). `CarrierFlip`'s `t` is a Hamiltonian hop,
+  a rate. "Certain transmission" fixes the transfer over one event, not the rate: a hop of rate `t`
+  transfers fully after time `π/(2t)`. So `K = 1` fixes `t_v` only with the tick that relates the
+  update to `H` (`e^{−iτH}`), which is the open item below. Ratios of admittances (`k/K = α/2`) carry
+  over to rates only if both carriers act for the same time. Next: fix `t_v τ` from the update; this
+  is the same work as "Update as `e^{−iHt}` on wall modes". The light-pair split (protocol) stays open. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 
