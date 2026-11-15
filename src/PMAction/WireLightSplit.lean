@@ -21,6 +21,22 @@ rows carry the two larger masses through the block of columns `0, 2`:
 * The third mass is `|det M|/(m₀ m₁) = |δ³ + K k²|/K` (`ReferenceWallRotation.det_M`), `≈ k²` when
   `δ³ ≪ K k²`.
 
+* `sign_blind`: the block's singular values depend on the two light carriers only through `(a b)²`,
+  so the relative repair sign does not change them.
+
+**Symmetry check (2026-11).** No symmetry that fixes the reference and both walls exchanges the two
+light classes: a single-axis reflection exchanges them (`PMSubstrate.ChannelSymmetry.flip_class`)
+but is not a symmetry alone; only the class swap with the wall exchange is (`LightSplit`), and the
+weak current breaks that. So `|κ(s)| = |κ(c)|` on a wall rests on Closure's label-blind node price
+(`NodeAmplitude`, `HandoffAdmittance.closure_one_price`), and the relative sign is the repair, which
+`sign_blind` shows does not matter here.
+
+**Geometry.** At `δ_O = k` the block is `[[1, 1], [1, 0]]`, multiplication by `φ` on `ℤ[φ]` in the
+basis `(φ, 1)`. `E₈` is a rank-4 `ℤ[φ]`-lattice (the icosians; its roots fold onto two `600`-cells in
+ratio `φ`). Candidate, not derived: `δ_O = k` from that self-similarity. Test: then the two larger
+masses of the wire are in ratio `φ²`; no charged sector reads the wire that way directly
+(PMElementaryParticles REVIEW), so the candidate needs a protocol reading to be tested.
+
 **Numerical check (outside Lean).** With `k/K = α/2` the three predicted masses match the singular
 values of `M` to `< 1%` for `δ_O/k ≤ 3` and to `3%` at `7`; with `k/K = 0.0385` (the rate reading of
 the admittance ratio) only up to `δ_O/k ≈ 1`.
@@ -62,5 +78,17 @@ theorem golden_point (k : ℝ) :
     (k * ((1 + Real.sqrt 5) / 2)) ^ 2 - k * (k * ((1 + Real.sqrt 5) / 2)) - k ^ 2 = 0 := by
   have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
   linear_combination (k ^ 2 / 4) * h5
+
+/-- **The repair sign does not change the singular values.** For `B = [[δ, a], [b, 0]]`, `B Bᵀ` has
+trace `δ² + a² + b²` and determinant `(a b)²`: the two singular values depend on `a b` only through
+its square, so a relative sign between the two light carriers (the repair) leaves them unchanged. -/
+theorem sign_blind (δ a b : ℝ) :
+    (!![δ, a; b, 0] * (!![δ, a; b, 0] : Matrix (Fin 2) (Fin 2) ℝ).transpose).trace =
+        δ ^ 2 + a ^ 2 + b ^ 2 ∧
+      (!![δ, a; b, 0] * (!![δ, a; b, 0] : Matrix (Fin 2) (Fin 2) ℝ).transpose).det = (a * b) ^ 2 := by
+  constructor
+  · simp [Matrix.trace_fin_two, Matrix.vecMul, dotProduct, Fin.sum_univ_two, Matrix.transpose_apply]
+    all_goals ring
+  · rw [Matrix.det_mul, Matrix.det_transpose, Matrix.det_fin_two_of]; ring
 
 end PMAction.WireLightSplit

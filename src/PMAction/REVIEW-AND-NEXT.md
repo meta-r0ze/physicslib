@@ -66,6 +66,19 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   symmetries still exchange the two light carriers' matrix elements (`LightSplit`,
   `ChannelSymmetry.flip_class`, `closure_one_price`'s premise).
 
+- **Triage of the `δ_O` leads (2026-11, one cheap check each).**
+  | Lead | Cheap check | Result | Next |
+  |---|---|---|---|
+  | Leakage bound (`ChiralLightBand`) | full two-wall, heavy state's weight off the zero kernel | `≈ 1.1 (K_f/|y|)²`, quadratic, stable for `K_f ≤ 0.2` | **do first**: a Lean first-order bound turns "`K_f ≪ |y|`" into "`K_f ≲ √L |y|` for allowed leakage `L`" |
+  | Two-detuning native wall | `NativeFlavourWall`, `NativeSector.diag`, `WallExchange.H` use one `δ` | mechanical generalization (`Hw`-style blocks) | second: groundwork for the native measurement |
+  | Native `δ_O` measurement | search for a reference-conditioned native update | none in the library | parked until the two-detuning wall exists |
+  | Rate law (`RootTransferPhase`) | a vector attempt probability in the library | none (`RootPulseEvents`: one attempt is not the quarter pulse) | parked |
+  | Golden point `δ_O = k` (`ℤ[φ]`) | icosian / `H₄` structure in the library | none; direct species reading fails (ratio `φ²`) | parked; candidate needs `H₄` folding in PMSubstrate and a protocol reading |
+  | Economy-minimal `δ_O` | sharp value? | crossover, not a point | dropped as a value source |
+  | Rate vs admittance ratio (`α/2` or `0.0385`) | `WireLightSplit` relation against species | both fail directly (recorded, EP) | kept as readings |
+  | `δ_O` vs `r − 1` | same parameter? | different matrix elements (`first_wall_action`, `zero_mode_element`) | needs a derivation tying them, or keep apart |
+  | Hygiene | unused hypotheses | removed (`node_series`, `one_wall_flip`) | done |
+
 - **Update as `e^{−iHt}` on wall modes.** `PMAction.FlavourEvolution` takes the flavour evolution as
   `U e^{−iEt} Uᴴ` with supplied `U`, `E`, and the transfer-cost chain in PMFlavor
   (`ReferenceSelection` → `RelativeFrameCost` → `TransferWorkLaw`) is built on it.

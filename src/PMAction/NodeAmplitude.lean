@@ -32,16 +32,16 @@ transmits with certainty. How each species uses the wire is protocol work
 namespace PMAction.NodeAmplitude
 
 /-- **Two node legs of admittance `α` in series give `α/2`.** -/
-theorem node_series (α : ℝ) (_hα : 0 < α) : 1 / (1 / α + 1 / α) = α / 2 := by
+theorem node_series (α : ℝ) : 1 / (1 / α + 1 / α) = α / 2 := by
   have h : (1 : ℝ) / α + 1 / α = 2 / α := by ring
   rw [h, one_div_div]
 
 /-- **The same from Kron reduction of the node** (`PMAction.KronReduction.kron_two`). -/
 theorem node_kron (α : ℝ) (hα : 0 < α) : (-α) * (-α) / (0 - (α + α)) = -(α / 2) := by
-  rw [PMAction.KronReduction.kron_two α α hα hα, node_series α hα]
+  rw [PMAction.KronReduction.kron_two α α hα hα, node_series α]
 
 /-- **In units of the vector edge (`K = 1`), with `α = 1/Z`: `k = 1/(2Z)`.** -/
-theorem node_amplitude_value (Z : ℝ) (hZ : 0 < Z) : 1 / (1 / (1 / Z) + 1 / (1 / Z)) = 1 / (2 * Z) := by
-  rw [node_series (1 / Z) (by positivity)]; ring
+theorem node_amplitude_value (Z : ℝ) (_hZ : 0 < Z) : 1 / (1 / (1 / Z) + 1 / (1 / Z)) = 1 / (2 * Z) := by
+  rw [node_series (1 / Z)]; ring
 
 end PMAction.NodeAmplitude

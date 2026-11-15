@@ -88,8 +88,8 @@ theorem near_maximal (x u R : ℝ) (_hx0 : 0 ≤ x) (hx1 : x ≤ 1) (hu0 : 0 ≤
 /-- **Flip on one wall only.** With `δ_F = 0` (the flip only on wall `true`) and the swap ×
 exchange symmetry, the two light entries are `δ_T κ_F(s)` and `δ_T κ_T(s)`: their ratio is the
 same class's carrier off versus on the flip's wall. -/
-theorem one_wall_flip (δT kFs kTs kFc kTc : ℂ) (h1 : kFs = kTc) (h2 : kTs = kFc) :
+theorem one_wall_flip (δT kFs kTs kFc kTc : ℂ) (h2 : kTs = kFc) :
     δT * kFs + 0 * kTs = δT * kFs ∧ δT * kFc + 0 * kTc = δT * kTs := by
-  subst h1 h2; constructor <;> ring
+  subst h2; constructor <;> ring
 
 end PMAction.LightSplit
