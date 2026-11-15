@@ -152,6 +152,7 @@ import PMAction.ReferenceWallRotation
 import PMAction.CertainTransferRate
 import PMAction.WireLightSplit
 import PMAction.LightLeakage
+import PMAction.NativeDetuning
 import PMAction.NodeAmplitude
 import PMAction.UndetunedWall
 import PMAction.GenerationLabel
