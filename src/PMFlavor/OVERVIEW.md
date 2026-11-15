@@ -48,6 +48,9 @@ The only rephasing invariant of `J` is the cycle product `κ₀κ₁κ₂` (`cyc
 one event is the holonomy `Φ` of the directed 3-cycle. Under FC the corners obey the law of cosines in
 `Φ` (`fc_corner`); with `U = 1` the PDG sizes need `Φ = 70 ± 5°`, and a flat holonomy (`0` or `π`)
 is excluded (`|V_td|` would be `0.0053` or `0.0130`, against `0.0086 ± 0.0002`).
+Both tests take `U = 1`. `PMAction.ReferenceWallRotation` bounds `U` on the event's wall by the label
+states' mass ratios times `ε = |κ_O/δ_O|`; the corner corrections are then about `0.005 ε`, so the
+tests hold for `ε ≲ 0.04`.
 
 **Three transfers, three types (`TransferGraph`).** Each pair of label states transfers through the
 one class both contain (`ends`, `every_pair`). Exactly the transfer through the reference's class

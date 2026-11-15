@@ -44,7 +44,7 @@ data, and do not frame work as fitting Standard Model sectors.
    `|V_cb| = 0.0408 ± 0.0014`): `w = 0` needs `0.00382 ± 0.00020` (1.1σ, survives); `w = ½` needs
    `0.00483 ± 0.00025` (4.9σ, excluded together with the jump); `w = 1` needs `0.00860` (25σ,
    excluded). So the jump and any power-series completion cannot both hold. This excludes pairs;
-   it does not derive FC.
+   it does not derive FC. Valid only for `ε = |κ_O/δ_O| ≲ 0.04` (item 6).
 2. **The amplitude of each entry.**
    - In-cycle: the share `π/N` rests on the aperture premises (`HalfTurnAperture`); derive them or
      state them as the one premise of this entry.
@@ -69,7 +69,7 @@ data, and do not frame work as fitting Standard Model sectors.
    the phase to find is the holonomy `Φ` of the directed 3-cycle. Under FC and `U = 1`, `fc_corner` and
    the PDG sizes (as in item 1) need `Φ = 70 ± 5°`; a flat holonomy gives `|V_td| = 0.0053` or `0.0130`
    against `0.0086 ± 0.0002`, excluded (recorded). So with FC either the cycle carries a non-flat
-   holonomy or `U ≠ 1` supplies the phase (item 6).
+   holonomy or `U ≠ 1` supplies the phase (item 6; `U ≈ 1` needs `ε ≲ 0.04`).
    E8 candidates for a phase, and their status (all from structure already in the library):
    - `0` or `π`: glue arithmetic (the three classes are a neutral triple,
      `PMSubstrate.E8Invariants.neutral_distinct_classes`, so the cycle carries no net glue) and the
@@ -88,7 +88,14 @@ data, and do not frame work as fitting Standard Model sectors.
    label states `i`, `j` is about `|dᵢ/dⱼ| · |κ_O/δ_O|`, the mass ratio times the other wall's
    carrier-to-detuning ratio, whatever `δ_O` is; no suppression for comparable `|dᵢ|`. The event reads
    that side (`ReferenceWallRotation`: rows of the light mass are the reference's wall, the wall
-   `(1 − Γ)/2` selects). Open: the sizes per protocol (EP). Then redo the item 1
+   `(1 − Γ)/2` selects). Open: the sizes per protocol (EP).
+   **How far the item 1 and 5 tests hold (numerical, outside Lean).** With `ε = |κ_O/δ_O|` and the
+   label states' mass ratios as `|dᵢ/dⱼ|` (protocol data, EP), the first-order corrections to the two
+   corners are about `κ₀ · (m₂/m₃)_d · ε ≈ 0.005 ε` (class-`1` corner, through the down-type 2–3 rotation)
+   and `κ₂ · (m₁/m₂)_d · ε ≈ 0.002 ε` (its reverse); the up-type rotations add `< 0.001 ε`. Against
+   `|V_ub|`'s error `0.0002`, the tests are tests only for `ε ≲ 0.04`. So: either the other wall is
+   strongly detuned (`|δ_O| ≳ 25 |κ_O|`), or `U` is part of the corner values and the FC and phase
+   conclusions are open. This makes `ε` the next number to derive (PMAction, `δ_O`). Then redo the item 1
    and item 5 tests with this `U`.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
    event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three
