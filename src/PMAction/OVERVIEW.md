@@ -124,6 +124,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
   zero mode of the update the flavour fermions see, the on-site chirality flip lives only on the
   wall without the reference: the maximal wall asymmetry `PMAction.LightSplit` needs, from a
   structural source.
+- `ReferenceWallRotation`: with `M = D_R (δ_O + cyc κ_O)` (`ReferenceWallMass`), the reference-wall
+  Gram matrix is `D_R (X Xᴴ) D_Rᴴ` (`left_gram`); `cyc κ (cyc κ)ᴴ` is diagonal (`cyc_gram_offdiag`), so
+  each off-diagonal entry is `dᵢ (δ̄ (cyc κ)ᵢⱼ + δ conj (cyc κ)ⱼᵢ) d̄ⱼ` (`left_gram_entry`): first order
+  in the carriers and scaled by `dᵢ d̄ⱼ`. The persistence rotation on the reference's wall is then about
+  `|dᵢ/dⱼ| · |κ_O/δ_O|` (perturbative reading), suppressed by the label states' mass ratio.
 - `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
   Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each
   root weighted by `sinc(a r·q/2)`; the midpoint vertex alone misses it by `O(a²|k||q|³)`

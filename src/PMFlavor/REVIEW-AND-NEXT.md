@@ -84,6 +84,11 @@ data, and do not frame work as fitting Standard Model sectors.
    one of these must be complex. The tests above assume `U = 1`; item 6 decides how far they hold.
 6. **The size of `U`.** Needs the other wall's detuning `δ_O` (PMAction REVIEW) and which protocol uses
    which carriers (PMElementaryParticles). With `δ_O` dominant the rotation is small; bound it.
+   `PMAction.ReferenceWallRotation`: on the reference's wall (the event's wall) the rotation between
+   label states `i`, `j` is about `|dᵢ/dⱼ| · |κ_O/δ_O|`, the mass ratio times the other wall's
+   carrier-to-detuning ratio, whatever `δ_O` is; no suppression for comparable `|dᵢ|`. Open: that the
+   event reads the reference-wall side (premise), and the sizes per protocol (EP). Then redo the item 1
+   and item 5 tests with this `U`.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
    event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three
    outlets (`ReactorConductance`) and the dressing's three (`DressingChannels`) should be one count.

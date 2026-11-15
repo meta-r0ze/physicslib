@@ -16,7 +16,10 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   with masses `(kK, k², kK)`, two heavy and one light (`PMAction.UndetunedWall`), the reverse of
   the observed ordering. Find what fixes its size on the substrate; the library has no source yet.
   Once it is fixed the wire has no free number, and the persistence rotation `U` of each protocol
-  (how far persisting states turn from the label states; PMFlavor's `U_uᴴ J U_d`) can be bounded. Also open: whether it is a wire constant or set by
+  (how far persisting states turn from the label states; PMFlavor's `U_uᴴ J U_d`) can be bounded.
+  Already without it (`ReferenceWallRotation`): on the reference's wall every off-diagonal entry of
+  `M Mᴴ` is `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`, so the rotation there is about `|dᵢ/dⱼ| · |κ_O/δ_O|`, suppressed by the
+  label states' mass ratio; open whether the event reads that side. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 
