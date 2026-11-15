@@ -133,6 +133,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
   so a certain event of duration `τ` has `tτ ≥ π/2` (`certain_min`) and flip at least `rπ/(4τ)`
   (`flip_lower`). Admittance (`NodeAmplitude`'s `K = 1`) fixes the carrier's rate only with the event's
   duration.
+- `WireLightSplit`: with `UndetunedWall`'s bookkeeping and `δ_O` a few spinor flips, the two larger
+  masses of `D_R (δ_O + cyc κ_O)` are `K` times the eigenvalues of `[[δ_O, k], [k, 0]]`
+  (`block_char`, `block_product`), with `√(m₀/m₁) − √(m₁/m₀) = δ_O/k` (`ratio_relation`); at
+  `δ_O = k` the block is the Fibonacci matrix (`golden_point`). The third mass is `≈ k²`
+  (`ReferenceWallRotation.det_M`). So the wire itself splits the light pair in this regime.
 - `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
   Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each
   root weighted by `sinc(a r·q/2)`; the midpoint vertex alone misses it by `O(a²|k||q|³)`
