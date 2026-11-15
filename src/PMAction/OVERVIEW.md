@@ -146,6 +146,10 @@ shows closed injective updates cannot finitely prepare a stationary state.
   certificate script's gammas are the library's: `γⱼ = i β αⱼ`, `γ₃ = β`, `γ₀γ₁γ₂γ₃ = Γ`
   (`script_gamma0_eq` … `script_gamma5_eq`), so its kernel is Hermitian for any links
   (`script_kernel_hermitian`).
+- `TorusFlux`: the certificate script's link phases (`phase`, its `phases` formula over `ℚ`) carry
+  the stated constant field: at `L = 3`, `(n₁₂, n₃₄) = (1, −1)`, every plaquette in the `(0,1)` plane
+  carries `1/9`, in the `(2,3)` plane `−1/9`, elsewhere `0`, mod `1` (`plaquette_flux`; topological
+  charge `−1`), and the trivial history none (`plaquette_flux_trivial`).
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
   zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct

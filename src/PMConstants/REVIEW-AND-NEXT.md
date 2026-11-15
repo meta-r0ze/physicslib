@@ -7,8 +7,10 @@
   premise. The spin structure is checked (`PMAction.TorusWilson`: the script's gammas are the
   library's `i β αⱼ`, `β`, with `γ₅ = Γ`, and `wilsonH` is Hermitian for any links). Open: that the
   script's site indexing and link-phase function (constant flux `n₁₂`, `n₃₄`) are `wilsonH` with those
-  link values; state the flux phases in Lean (`T_μ(x, x + μ̂) = e^{2πi f_μ(x)}` with the script's
-  `phases`) and check that the product of phases around each plaquette is the stated flux.
+  link values. The link phases are checked (`PMAction.TorusFlux`: constant flux `1/9`, `−1/9` per
+  plaquette, charge `−1`). What remains is bookkeeping: that the script assembles `wilsonH` from these
+  links in its site order (a code-review statement, or a Lean `build` plus an entry check at a few
+  sites).
 - **Running couplings.** Consume a theorem on the subtracted lattice polarization from PMAction
   (PMAction item "Subtracted lattice polarization": vertex and contact done in `FiniteVertex`,
   `PolarizationContact`; open is a bound that resolves the `q²` coefficient), in place of
