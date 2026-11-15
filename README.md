@@ -11,8 +11,8 @@ This output is the E8-Persistence theory, an informational theoretic dual to the
  * [Substrate](src/PMSubstrate): Applying PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
  * [Action](src/PMAction) - Applying PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport; `PMAction/MassGap` proves the mass gap of the distinction substrate
  * [Constants](src/PMConstants) - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
- * [Flavor](src/PMFlavor) - Information transfer across the substrate (flavor mixing, wall spectra, propagation)
  * [Elementary Particles](src/PMElementaryParticles) - Systems that can persist on top of the substrate. (protocols, decay rates)
+ * [Flavor](src/PMFlavor) - Information transfer (flavor mixing, wall spectra, propagation)
  * [Hadrons](src/PMHadrons) - Quark composites: nucleons (proton, neutron) with the full six-pillar mass ledger, mesons, and their decays
  * [Atoms](src/PMAtoms) - Further recursive systems: nucleus (the shape is sort of like chemistry), shell, atom (ending with the full periodic table list of particles that can persist)
  * [Cosmology](src/PMCosmology) - The lifetime of the substrate systems (expansion of the universe equations, etc)
