@@ -14,13 +14,10 @@ derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   detuning `δ_O` (in `ZeroModeCoupling`'s terms, its departure from `r = 1`) sets the mass scale and,
   relative to the carriers, the mixing. It must be nonzero: at `δ_O = 0` the mass is a cyclic shift
   with masses `(kK, k², kK)`, two heavy and one light (`PMFlavor.UndetunedWall`), the reverse of
-  every charged sector. Find what fixes its size on the substrate; the library has no source yet
-  (the wire's simplest protocol, down quarks, puts it near `0.025 K`, an external fit,
-  `tools/node_carrier_scan.py`). Whether it is one wire constant is open too: if it is, and protocols
-  set only the carrier scale, `|d| √(m_heavy/h)` must agree across sectors, and it does not (up
-  `0.50`/`0.94` against down `0.26`/`0.35`, `tools/wire_ckm_scan.py`). So either a protocol also sets
-  the other wall's detuning (occupancy on that wall), or the up carriers differ in form (see
-  PMElementaryParticles). This item is upstream of the species masses and of the CKM from masses.
+  the observed ordering. Find what fixes its size on the substrate; the library has no source yet.
+  Once it is fixed the wire has no free number. Also open: whether it is a wire constant or set by
+  what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
+  PMElementaryParticles' "Species masses over the wire".
 
 ## Carrier update
 

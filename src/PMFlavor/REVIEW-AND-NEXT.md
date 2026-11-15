@@ -5,17 +5,13 @@ the inter-wall link of `PMAction.WallSeesaw`; `M_direct` a term joining the two 
 `K_cc` the charged-current transfer network of `TransferGenerator`. The CKM entries are `S_ij` of that
 transfer, not `K_ij`.
 
-Reading status. Neither CKM reading passes alone. The transfer `S(K_cc)` with the wire's couplings
-gives `K₁₃ = K₂₃` (OVERVIEW, "Which CKM reading the wire supports"). The mass reading `U_uᴴ U_d` from
-`ReferenceWallMass` (`M = D_R (δ_O + cyc κ_O)`) fails with any light carriers: the masses and the CKM
-cannot be fitted together (OVERVIEW, negative result; `tools/wire_ckm_scan.py`). Open between them:
-the combined `U_uᴴ J U_d`, or a change to the mass form. The transfer premises (zero-energy
-scattering on generation leads, equal lead widths) are this folder's model assumptions
-(`TransferGenerator`).
-
-Dependencies. Species protocol work (PMElementaryParticles, "Species masses over the wire") cannot
-rescue the CKM by itself, since no choice of light carriers does; the first open question is at the
-wire, here and in PMAction ("Size of the other wall's detuning").
+Status. Per-species fits to measured masses and CKM magnitudes were removed (2026-11-14): they fit
+the Standard Model with wire-shaped parts rather than deriving what the substrate gives. What the
+wire has derived: the light-mass form `M = D_R (δ_O + cyc κ_O)` (`ReferenceWallMass`) and the
+charged-current couplings `K₁₃ = K₂₃` (OVERVIEW). One number is open, `δ_O/K` (PMAction). What
+"mixing" is in PM terms, a transfer between protocols over the wire, is not yet derived. The items
+below that compare candidate formulas with CKM or PMNS data are to be reviewed module by module:
+does each number come from structure, with data only as the test afterwards?
 
 * **The in-cycle mixings** (`HalfTurnMixing`, `HalfTurnAperture`, candidate): `s₁₂ = π/14` and
   `sin²θ₁₂ = π/10`. Premises, listed in `HalfTurnAperture`: cross-orbit label-blindness (the
@@ -26,15 +22,10 @@ wire, here and in PMAction ("Size of the other wall's detuning").
   terminals (an aperture adds them in parallel, a length in series); the six axis-free vector
   displacements (`ExchangeAxis.vector_free`) are a candidate for the separately addressable
   directions. JUNO's full precision separates `π/10` from the draft's `1/(2φ)`.
-* **The couplings of `K_cc`** (transfer reading, demoted). With the wire's couplings `K₁₃ = K₂₃`
-  (both spinor edges through the node), against the ratio below; a transfer correction must also be
-  consistent with that. The data (external fit, conditional on the two premises) give the
-  scale-free ratios `K₁₃/K₁₂ = 0.0185 ± 0.0005` and `K₂₃/K₁₂ = 0.183`. The network (`kronLink`: two
-  legs per class) must produce them from leg values. `VubSeriesPath`'s path admittance is a candidate
-  for `K₁₃`; its ratio to `π/14` is `0.0161`, `4.7σ` low, so as a statement about `K₁₃` it fails;
-  its agreement with `|S₁₃| = |V_ub|` is not explained by the path. A microscopic derivation of the
-  generation leads (and their equal widths) would be PMAction work, worth starting only if the
-  transfer reading is revived.
+* **The couplings of `K_cc`** (transfer reading). With the wire's couplings `K₁₃ = K₂₃` (both spinor
+  edges through the node). The network (`kronLink`: two legs per class) must give the couplings from
+  leg values. A microscopic derivation of the generation leads (and their equal widths) would be
+  PMAction work.
 * **`|V_cb|`** (`VcbEnvelope`, candidate formula): `env 1 / env (Δ − D)` or the unit-source divider;
   the data do not separate them. The supporting tick reading has no schedule basis
   (`RequirementRows` assigns sectors to rows, no service-time map; reachability of all `43`
@@ -61,25 +52,13 @@ wire, here and in PMAction ("Size of the other wall's detuning").
   construction must supply a `μ`–`τ`-asymmetric generation factor or wall overlaps correlated with the
   readout (`wall_only`). On the incidence graph `μ` and `τ` reach the reference through different
   class vertices (`s` and `c`); the factor may be the same `s`/`c` vertex difference the `|V_cb|`
-  item needs. Test against both NuFIT values. In the working (mass) reading the PMNS is
-  `U_eᴴ U_ν`, so `θ₂₃` waits on the lepton and neutrino protocols (PMElementaryParticles) the same way
-  the CKM waits on the up protocol.
-* **Mixing from the wire's mass form.** Negative results first (OVERVIEW; `tools/wire_ckm_scan.py`):
-  with equal light carriers no branch gives the CKM (`|V_cb| ≥ 0.071`), and with free light carriers
-  in both sectors the masses and the CKM still cannot be fitted together (down `m_b/m_s` against
-  `|V_cb|`). Next: (i) the combined `U_uᴴ J U_d` with `J = S(K_cc)` built from the wire's own couplings
-  (`K₁₃ = K₂₃`); it is a test only if `J`'s remaining couplings (`K₁₂`, the scale `γ`) are derived,
-  for example `2K₁₂/γ = π/14` from the in-cycle item above; (ii) a mass-form change, which must keep
-  the reference stationary (`PMAction.ReferenceDetuning`: no detuning on its wall). The masses' form is settled
-  (OVERVIEW: `ReferenceWallMass`, `M = D_R (δ_O + cyc κ_O)`); the species sizes are protocol work
-  (PMElementaryParticles, "Species masses over the wire"). The row index of `M` is the reference's
-  wall, which is the weak wall (`PMAction.ChiralityConvention.weak_acts_on_reference`), so the weak
-  current sees `M`'s left rotation. The node amplitude is derived (`NodeAmplitude`); `δ_O`'s size is
-  open (PMAction). Down's side is fixed now
-  (`NodeAmplitude`: `k = α/2`; `δ_O` from down's two mass ratios): the heavy state is the label-`v`
-  generation, angles near `0.16` (light–middle), `0.14` (middle–heavy), `0.024` (light–heavy). The
-  CKM needs the up rotation (protocol work); it must cancel most of the `0.14` to give
-  `|V_cb| = 0.041`, a constraint on the up protocol.
+  item needs. Test against both NuFIT values.
+* **The wire's own mixing.** The row index of `M` is the reference's wall, which is the weak wall
+  (`PMAction.ChiralityConvention.weak_acts_on_reference`), so the weak current sees `M`'s left
+  rotation. With `k/K = α/2` (`NodeAmplitude`) the rotation depends only on `δ_O/K`; once PMAction
+  fixes it, the wire's eigenvalues and left rotation have no free number. Open: compute them as a
+  function of `δ_O/K` (in Lean where exact, otherwise a scan labelled external), then how each
+  protocol reads them (PMElementaryParticles). Data enter only as the test of the result.
 * **Dressing outlets** (owned here; `PMConstants.FlavourDressing` consumes it).
   `DressingEvent.event_law_spatial` works on `Fin 4` axis labels only (no position or hop), so the
   outlet count needs no site move. Open: whether the actual CKM loss realizes that event law (zero
@@ -91,6 +70,6 @@ Working notes for the next session: there is no Lean toolchain in the device she
 to be deterministic and ask Kate for `./build.sh fast PMFlavor`. Avoid `simp` on a transposed matrix
 literal or a product of three literals; name the intermediate literal and use `rfl` for literal
 identities (`LinkKronComparison.Lcg_eq_transpose`, `Lgc_mul_inv`). Numerical scans belong outside
-Lean (`tools/flavour_link_fits.py`) and are labelled as external fits. When editing these files by
+Lean and are labelled as external; do not fit measured masses or mixings to set parameters. When editing these files by
 slicing between two anchors, check that nothing between them is lost (two items were dropped this
 way once and recovered from `a80311f`).

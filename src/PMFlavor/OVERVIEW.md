@@ -30,8 +30,10 @@ The flavour angles are now geometry-first, not operator-fit-first.
   gives an explicit 600-cell pentagon with edge `1/φ`, diagonal `1`, ratio `φ`;
   hence `sin²θ12 = 1/(2φ)`.
 * `α⁻¹` is imported from `PMSubstrate.geometricIndex`; it is substrate, not flavour.
-* Path/cycle operators were exploratory candidates.  They are not the primary
-  derivation and no longer have separate documents.
+* Retired and removed (git history): the path/cycle operators (`PathOperator`,
+  `HierarchicalPathOperator`, `PMNSMassOperator`, `CapacityImpedance`), the eigenvector-link picture
+  (`BreakingLink`, `BreakingPhase`, `MixingMatrix`, `LinkHierarchy`), and the whole-matrix transfer
+  typing of `TransferFlavor`.
 
 ## What is checked
 
@@ -80,42 +82,17 @@ to `t ≤ tStar` and discharges it at `tStar`; `TransferAmount` shows any positi
 transfer costs positive work.
 
 **The link, derived.** `SubstrateLink.linkOverlap` is the glue-class overlap
-matrix (`2` diagonal, `1` off), `S₃`-invariant with spectrum `{4,1,1}` — a
-degenerate light doublet. `BreakingLink.brokenLink δ` (lepton-axis weight on
-generation 0) splits it for any `δ ≠ 0`; `brokenLinkB ε` breaks the residual μ–τ
-`Z₂` and loses the protected antisymmetric state. `MixingMatrix` computes the
-protected-state overlap and shows the shared-state no-go is resolved
-(`anti_overlaps_all`), all-nonzero mixing on the physical square `0 < δ, ε ≤ 4`
-(`all_nonzero_mixing_interval`), a global version whose zero set is exactly the
-explicit curve `δ = rootMInv (5 − rootM ε)` for `ε > 2` and empty for `ε ≤ 2`
-(`all_nonzero_mixing_global`, `rootM_sum_eq_five_iff_of_two_lt`), and a witness
-point (`all_nonzero_mixing_witness`).
+matrix (`2` diagonal, `1` off), `S₃`-invariant with spectrum `{4,1,1}`: a degenerate light doublet.
 
-**The link and the network compared.** `LinkKronComparison`: both pictures are reductions of one
-graph, the generation–class incidence (each class vertex has two legs). The eigenvector link is its
-Gram matrix `B Bᵀ` (`linkOverlap_eq_gram`), a leg product with unit denominator; the admittance
-network is its Kron reduction (`kron_schur`), two legs in series, which is where the `2` of
-`|V_ub| = 1/(2α⁻¹ + π)` comes from (`two_leg_from_incidence`; one shared node with three legs would
-give `3`, `shared_node_three_legs`, excluded by `MixingTests.vub_count_unique`). They agree only at
-the symmetric point (`symmetric_point`): the diagonal breaking `brokenLink δ` is not a network
-change for any `δ ≠ 0` (`diagonal_breaking_not_network`), so Kron-reducing the existing broken link
-does not give `|V_ub|`. Independently of `δ, ε` the eigenvector picture fixes one mixing entry at
-`|U|² = 1/4` (`protected_overlap_quarter`), also when the link legs carry phases
-(`protected_overlap_phase_blind`). No CKM entry is near `1/4`, so the quark mixings are the
-network's. `LinkHierarchy` closes the lepton side: through `PMAction.WallSeesaw` the same link
-fixes the light-mass ratios, and `(rootP − 3)(rootM − 3) = −2` (`block_product`) forces two of
-its eigenvalues within a factor `4` for every `δ, ε` (`brokenLink_close_pair`,
-`brokenLinkB_close_pair`; the sharp factor is `2 + √3`, numerically). The measured charged leptons
-are pairwise more than `4` apart (smallest ratio `m_τ/m_μ ≈ 16.8`), so neither sector is the
-charged leptons (`no_measured_lepton_link`; the library's `LeptonMasses` agree, but the test does
-not use them). This rests on `WallSeesaw`'s premise that the mass matrix is the same `Y`, and with diagonal charged leptons a single sector's
-protected state puts a zero in the PMNS. So `Y = brokenLink` is retired for leptons as well. The
-only surviving reading takes the eigenvectors of the cardinality link with masses from another
-matrix: a new premise with three free spectral values, whose one content is the `|U| = 1/2` entry.
-Before the retirement, the `1/4` entry with `sin²θ₁₃ = 3α`, `sin²θ₁₂ = π/10` gave (numerically)
-`sin²θ₂₃ ∈ {0.4425, 0.4589, 0.5411, 0.5575}` for real legs and `0.5873` (`δ_CP = 208.7°`) with
-phased legs and the `ReferenceFlavour` sum rule; these are recorded as negative results, not
-predictions.
+**The network on the incidence.** `LinkKronComparison`: the generation–class incidence (each class
+vertex has two legs) has the glue-class overlap as its Gram matrix `B Bᵀ` (`linkOverlap_eq_gram`),
+and its conserving network reduces by Kron elimination of the class vertices (`kron_schur`) to two
+legs in series, which is where the `2` of `|V_ub| = 1/(2α⁻¹ + π)` comes from
+(`two_leg_from_incidence`; one shared node with three legs would give `3`, `shared_node_three_legs`,
+excluded by `MixingTests.vub_count_unique`). The eigenvector-link picture of mixing (a broken
+`linkOverlap` whose eigenvectors are the mixing) was retired: it fixes one mixing entry at
+`|U|² = 1/4` for every breaking and, through `WallSeesaw`, cannot carry a charged-lepton hierarchy.
+Its modules were removed (git history).
 
 **Where a CP phase can sit.** `LinkFlux`: with complex legs the reduced coupling through a class is
 `−t₁ t̄₂/(g₁ + g₂)`, class phases cancel, and each sector keeps one invariant, the flux of the
@@ -190,16 +167,14 @@ wall-exchange symmetry of `ExchangeChirality`, the light pair's difference is
 `(δ_T − δ_F)(κ_F(s) − κ_T(s))` (`light_split`), zero unless both the on-site flip and the carrier
 differ between the walls (`split_needs_both`). With one `δ` for both walls, as in `WallSeesaw`, the
 pair stays degenerate at this order. Size: a light ratio `R` forces `u + x ≤ 2/R`
-(`near_maximal`, `x = δ_F/δ_T`, `u = κ_T/κ_F`), and the scan needs `R ≳ 200` (leptons), `≳ 500` (up),
-`1` (down). So for leptons and up both asymmetries are near maximal; a perturbative source is
-excluded.
+(`near_maximal`, `x = δ_F/δ_T`, `u = κ_T/κ_F`), so a large light ratio needs both asymmetries near
+maximal, which a perturbative source cannot give.
 
 **No detuning on the reference's wall.** `PMAction.ReferenceDetuning.stationary_iff`: the reference
 background is a stationary zero mode exactly when its wall's on-site detuning vanishes. That wall is
 the `D₂` slot, so `δ_F = 0`, and `ReferenceWallMass.reference_wall_mass` factors the light mass as
 `M = D_R (δ_O + cyc κ_O)`, `D_R = diag(κ_R/y)`: the hierarchy is the reference-wall carriers of each
-generation's label class, the other factor rotates. The seesaw term `δ_F δ_T Y⁻¹` is gone, so the
-equal-carrier exclusion above (which assumed equal `δ` on both walls) does not apply to this form.
+generation's label class, the other factor rotates. The seesaw term `δ_F δ_T Y⁻¹` is gone.
 Node passage acts on both walls (`LeptonAxisRestriction.cycle_root_axis_zero` constrains the event
 root, which acts on both sectors). With the swap × exchange symmetry the light ratio is
 `κ_R(s)/κ_O(s)`.
@@ -214,39 +189,14 @@ lead boundary; the CKM transfer adds the `1/π` boundary (`KronSeries.vub_from_k
 cyclic shift with entries `a_{h+1} c_h` (`diag_cyc`, `undetuned_gram`), which with the symmetry are
 `(kK, k², kK)` (`undetuned_masses`): two heavy, one light, the reverse of every charged sector.
 
-**Which CKM reading the wire supports** (external numerics, `tools/node_carrier_scan.py`). In
-general the mixing is `U_uᴴ J U_d`: the transfer reading takes `U = 1` and `J = S(K_cc)`, the mass
-reading `J = 1`. With the wire's couplings the transfer reading fails structurally: the two heavy
-`K_cc` edges are both spinor-class through the node (`PMConstants.GenerationWeak`), with one leg
-weight and the `s ↔ c` swap, so `K₁₃ = K₂₃`, while its own fit needs `K₂₃/K₁₃ ≈ 10`. The wire's mass
-rotation is asymmetric by itself: at the down fit point its middle–heavy element (`≈ 0.14`) exceeds
-the light–heavy one (`≈ 0.024`), and the ratio stays between `2.7` and `31` over `δ_O ∈ [0.01, 0.04]`
-because the `s` and `c` generations take different places in the mass (middle versus light) though
-their carriers are equal. So the CKM pattern `|V_cb| ≫ |V_ub|` comes from the masses, and the
-transfer is at most a correction.
+**The wire's charged-current couplings.** The two `K_cc` edges at the label-`v` generation are both
+spinor-class through the node (`PMConstants.GenerationWeak`), with one leg weight and the `s ↔ c`
+swap, so `K₁₃ = K₂₃`.
 
-**The equal-carrier wire does not give the CKM from masses alone** (negative result, external
-numerics, `tools/wire_ckm_scan.py`). With both quark sectors on `ReferenceWallMass`'s form with the
-node rule's equal light carriers `|k_s| = |k_c|`, each fitted to its own two mass ratios at `M_Z`,
-`U_uᴴ U_d` has no free parameter. Over all `8` distinct branch and sign combinations, `|V_cb|` is
-`0.071`–`0.195` (data `0.042`) and `|V_us|` `0.08`–`0.38`; the closest `|V_us|` (`0.216`, `0.247`)
-come with `|V_cb| ≈ 0.07`, `1.7×` high. Freeing the light carriers in both sectors does not rescue
-it: with `k_s`, `k_c`, `d` free per sector (`6` numbers) against the `4` mass ratios and `|V_us|`,
-`|V_cb|`, `|V_ub|` (`7` numbers), the best joint fit leaves down `m_b/m_s` `+28%` and `|V_cb|` `+25%`
-(equal log weights), or `m_b/m_s` `+63%` (`4.9σ` at an assumed `10%`) with the CKM fitted. So the
-wire's mass form with any light carriers does not give the quark masses and the CKM together, and
-protocol carriers cannot fix it: `U_uᴴ U_d` alone fails as the CKM reading. A factor `J ≠ 1`
-(`U_uᴴ J U_d`) or a change to the mass form is needed. Running the up sector around the cycle the
-other way (`Cᵀ`, a conjugate-doublet candidate) is excluded: `|V_cb| ≈ 0.04` but `|V_us| ≥ 0.81`,
-`|V_ub| ≥ 0.12`. The same scan finds no common other-wall detuning: with `δ_O` one wire
-constant and protocols setting only the carrier scale, `|d| √(m_heavy/h)` must agree across sectors;
-it is `0.50`/`0.94` for up against `0.26`/`0.35` for down (`≥ 1.4×`).
-
-**Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the shape of every
-sector's mass matrix and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
-`DoubletReflection`). How each species uses it (the node-carrier scan, the mixing scan, the up-sector
-no-go) is recorded in [PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md), "Species masses
-over the wire".
+**Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the form of the
+light mass and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
+`DoubletReflection`). Species are protocols over it
+([PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md), "Species masses over the wire").
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
@@ -279,13 +229,9 @@ directions and enters the zero-energy reduction as a real denominator (`node_den
 The remaining sources for the CKM flux are leg phases that differ at a class vertex, or a holonomy
 around the generation–class loop. `PMAction.FlatPersistence` prices a holonomy `e^{iΦ}` by
 `sin²(Φ/2)` per readout and is minimized by `Φ = 0`, so without a source persistence picks a real
-(flat) network. A real network still gives `J ≠ 0`, through the scattering's `i` (numerically), but it
-fails the magnitudes: `|V_ub| ≥ 0.0048` on three vertices, and on six (separate up and down
-generation vertices sharing the class vertices) the down-to-up block keeps only about `80%` of each
-row (best `χ² ≈ 440`), because up generations then couple to each other, which a charged-current
-transfer (`d ↔ u` only) does not allow. So the flat network fails, a flux is still needed in these
-constructions, and the library has no source for it yet; the cyclic wall orientation is the only
-CP-odd candidate. The six-vertex form models a different object: the charged current is
+(flat) network; the library has no source for a flux, and the cyclic wall orientation is the only
+CP-odd candidate. A six-vertex form (separate up and down generation vertices) models a different
+object: the charged current is
 generation-universal with isospin a separate factor (`FlavourCurrent`), so the transfer is the
 three-lead network of `TransferGenerator`, with one loop. Searched for a source on that loop: none
 in the library (no `Z₃` phase anywhere; `CommonResponse` compares with the untransported reference,
@@ -293,7 +239,6 @@ so every readout prefers offset `0`). The library therefore has no mechanism for
 the supplied `δ = arctan(σ/χ)` stands without one. The clock cycle does not supply one either: weak is
 the sign exchange on vector carriers (`CarrierActions.weak`), which keeps every class, so it never
 permutes generations, and its phases are `±1`.
-Scripts: `tools/flavour_link_fits.py`.
 
 **The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a
 Hermitian network with equal leads `γ` (Landauer, `HandoffAdmittance`; zero energy, `KronSeries`;
@@ -372,10 +317,9 @@ refers to in brackets):
 * `sin²θ₂₃`: supplied (`PMNSGeometry`), no construction.
 `FlavourInvariants` only removes the literal-numeral duplication. The `515/516` Cabibbo dressing is
 derived (`DressingEvent`, `DressingInheritance`) under one premise, that carrier space and the
-lattice share axis labels (not that a carrier label change is a site move). The wall anchor magnitudes `δ, ε` (`BreakingPhase`) and the absolute wall-mass
-scale are inputs: their directions, forms and ratios are E8 (`MixingMatrix.rootP/rootM_eq_substrate`,
-`PMAction.WallMassRatio`), but no cost functional fixes the magnitudes, and the scale is an external unit
-like `m_e`. Link
+lattice share axis labels (not that a carrier label change is a site move). The absolute wall-mass
+scale is an input: ratios are E8 (`PMAction.WallMassRatio`), but no cost functional fixes the
+magnitudes, and the scale is an external unit like `m_e`. Link
 eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
 energies. The V−A projector is forced on the zero kernel by reference persistence
 (PM-2 `ChiralityConvention.projector_unique_on_kernel`); attaching it to the weak representation

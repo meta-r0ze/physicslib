@@ -3,8 +3,7 @@ import PMFlavor.ExchangeAxis
 /-!
 # The doublet sign is not a geometric source of the up/down split
 
-`tools/node_carrier_scan.py`: with equal-magnitude node carriers, down quarks fit and up quarks
-need a light carrier `12`–`40×` smaller. `PMConstants.CarrierRepresentation`: in the right sector
+Can the wire's geometry tell up from down? `PMConstants.CarrierRepresentation`: in the right sector
 the up and down quarks are the positive and negative colour carriers `±2eᵢ` (`i ≠ 0`), the doublet
 sign; the reference is on axis `0`.
 
@@ -17,11 +16,9 @@ Reflect one colour axis, `flip i` (`x_i ↦ −x_i`):
   `ExchangeChirality.swap_with_exchange`).
 
 So any amplitude built from the `D₄` carrier geometry and the reference's axis, and invariant
-under the `s ↔ c` swap, is the same for up and down. The up/down difference in the light carrier is
-not geometric: it needs a charge that tells the doublet sign apart (the right-sector hypercharge
-`Y = B − L + 2T₃`, `CarrierRepresentation.charges_from_carriers`) or a breaking of the swap. The
-conjugate-link reading (`SectorExchange`: up uses `v̄`) was tested and fails
-(`PMAction/REVIEW-AND-NEXT.md`).
+under the `s ↔ c` swap, is the same for up and down. Any up/down difference is not geometric: it
+needs a charge that tells the doublet sign apart (the right-sector hypercharge `Y = B − L + 2T₃`,
+`CarrierRepresentation.charges_from_carriers`) or a breaking of the swap, that is, protocol content.
 -/
 
 namespace PMFlavor.DoubletReflection

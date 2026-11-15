@@ -4,8 +4,7 @@ import Mathlib.Tactic.Module
 /-!
 # The light-pair split needs two wall asymmetries
 
-`tools/composite_mass_scan.py`: with equal light carriers the composite of `CompositeMass` is
-excluded for leptons and up quarks, so the two light generations' composite masses must differ.
+When do the two light generations' composite masses of `CompositeMass` differ?
 `ExchangeChirality`: the class swap fixing `v` combined with the wall exchange is a symmetry of the
 incidence (`swap_with_exchange`), and only the weak current, on one wall, breaks it.
 
@@ -20,11 +19,9 @@ incidence (`swap_with_exchange`), and only the weak current, on one wall, breaks
 * `split_needs_both`: so it vanishes if the on-site flip is the same on both walls or the carrier
   is. A split needs both to be wall-asymmetric.
 * `near_maximal`: with `x = δ_F/δ_T` and `u = κ_T(s)/κ_F(s)` in `[0, 1]` the light ratio is
-  `(1 + x u)/(u + x)`; a ratio `R` forces `u + x ≤ 2/R`. The scan (`tools/composite_mass_scan.py`,
-  `min_split`) needs `R ≳ 200` for leptons and `≳ 500` for up quarks, while down fits with `R = 1`.
-  So for leptons and up quarks both asymmetries are near maximal (each `≲ 1%`): the on-site flip and
-  the carrier each sit almost entirely on one wall. A perturbative source (a weak-coupling-order
-  correction on one wall) is excluded.
+  `(1 + x u)/(u + x)`; a ratio `R` forces `u + x ≤ 2/R`. A large light ratio therefore needs both
+  asymmetries near maximal: the on-site flip and the carrier each sit almost entirely on one wall,
+  and a perturbative source (a weak-coupling-order correction on one wall) cannot give it.
 * `one_wall_flip`: with the flip on one wall only (`δ_F = 0`), the light entries are `δ_T κ_F(s)`
   and `δ_T κ_T(s)`, so the light ratio is one class's carrier off versus on the flip's wall.
 

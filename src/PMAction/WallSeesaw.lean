@@ -42,7 +42,7 @@ light modes is the identification the formula proposes.
 carry the quark mixing is not settled here. Two results bear on it: the charged current's own
 generation move is a single-wall shift that keeps chirality (`PMFlavor.GenerationLabel`), and a
 conserving `Y` (a Laplacian of the generation–class incidence) carrying the CKM is excluded by the
-quark masses and mixing together (`PMFlavor.ThirdGenerationMixing`, `tools/flavour_link_fits.py`).
+quark masses and mixing together (`PMFlavor.ThirdGenerationMixing`).
 A `Y` with independent diagonal entries is not excluded, but then this formula does not fix them;
 and if `Y` is the equal-class crossing the E₈ gluing allows (the flavour sector's `Y_gap`), its
 diagonal is zero. If it is also Hermitian (the exchange symmetry of `WallExchange`), it cannot carry

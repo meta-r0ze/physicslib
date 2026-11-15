@@ -3,8 +3,7 @@ import PMFlavor.ThirdGenerationMixing
 /-!
 # The charged-current transfer is zero-energy scattering: the Cayley form
 
-`ThirdGenerationMixing` and the numerical fits (`tools/flavour_link_fits.py`, OVERVIEW) exclude a
-conserving mass link carrying the CKM. The reading with a test is: the masses are generation-diagonal
+`ThirdGenerationMixing` excludes a conserving mass link carrying the CKM. The reading with a test is: the masses are generation-diagonal
 (`GenerationLabel`: root moves conserve the label) and the CKM is the charged current's transfer
 through the fluxed incidence network `K` (a mass link with free diagonal entries is not excluded, but
 is untestable until they are derived). This module fixes how `K` generates the transfer, from conventions the library
@@ -30,18 +29,9 @@ already uses.
 **Observable.** The CKM entries are `S_ij`, not `K_ij`: `S₁₃ = −iK₁₃ − ½(K²)₁₃ + …` (with `K` in units
 of `γ/2`). A path admittance is a statement about `K`.
 
-**What the data then say** (external numerical fits, `tools/flavour_link_fits.py`, conditional on
-(a) and (b); PDG 2024 CKM): a flux of
-`49.1 ± 1.1°` and `K₁₃/K₁₂ = 0.0185 ± 0.0005`, `K₂₃/K₁₂ = 0.183`. `VubSeriesPath`'s construction
-is the direct first-order path, `K₁₃`; its value over the in-cycle coupling,
-`(1/(2α⁻¹ + π))/(π/14) = 0.0161`, is `4.7σ` below `0.0185`. The `1σ` agreement of
-`1/(2α⁻¹ + π)` with `|V_ub|` is with the full amplitude, which includes the second-order route
-through the in-cycle pair (`−½K₁₂K₂₃`, as large as `K₁₃`). So in this reading the series-path
-match is not structural.
-
 With unequal leads (a diagonal width matrix), the scalar identities still hold eigenvalue by
-eigenvalue only when the widths commute with `K`; in general the common-scale reading and the ratio
-test both fail. So the numbers above stand or fall with (b).
+eigenvalue only when the widths commute with `K`; in general the common-scale reading fails, so the
+reading stands or falls with (b).
 -/
 
 namespace PMFlavor.TransferGenerator

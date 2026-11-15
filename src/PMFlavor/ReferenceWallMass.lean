@@ -15,8 +15,7 @@ light mass of `LightSplit.composite_expansion2` factors:
 So the hierarchy is the reference-wall carriers `κ_R(e g)` of each generation's label class. The
 right factor `δ_O + cyc κ_O` carries the other wall's detuning and carriers. It is close to
 `δ_O · 1` when `|κ_O| ≪ |δ_O|`, and then the masses are `δ_O |κ_R(e g)|/|y|` and the left rotation
-is small. The seesaw term `δ_F δ_T Y⁻¹` is absent, so the equal-carrier exclusion of
-`tools/composite_mass_scan.py` (which assumed it) does not apply to this form.
+is small. The seesaw term `δ_F δ_T Y⁻¹` is absent.
 
 With the swap × exchange symmetry (`LightSplit.light_split`), `κ_O(s) = κ_R(c)` and
 `κ_O(c) = κ_R(s)`: the light ratio is `κ_R(s)/κ_R(c) = κ_R(s)/κ_O(s)`, one class's carrier on versus

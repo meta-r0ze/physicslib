@@ -25,8 +25,7 @@ same node amplitude sets `|V_ub|` only with that boundary added.
 
 Premises, all from the library: carrier amplitude is transmission is admittance
 (`HandoffAdmittance`), the link is a Laplacian (Conservation, `KronSeries`), and an in-cycle event
-transmits with certainty. With these, the down quarks' required light carrier (`0.0034`,
-`tools/node_carrier_scan.py`) is `7%` from `α/2 = 0.0036`; the other species are protocol work
+transmits with certainty. How each species uses the wire is protocol work
 (`PMElementaryParticles`).
 -/
 

@@ -1,4 +1,4 @@
-import PMFlavor.LinkHierarchy
+import Mathlib.Tactic
 import PMConstants.GenerationWalls
 
 /-!
@@ -22,7 +22,7 @@ of `PMConstants.GenerationWalls` (the native label is kept), and the inter-wall 
   have masses within a factor `2`. The exact one-flavour mass `(√(σ² + 4δ₀²) − σ)/2` keeps the
   factor `2` (it is `2δ₀²/(√(σ² + 4δ₀²) + σ)`, and doubling `σ` at most halves it).
 * `no_measured_lepton_traceless`: the measured charged leptons are pairwise more than a factor
-  `4` apart (`LinkHierarchy.measured_gaps`), so no such link gives them. The same holds for every
+  `4` apart (`measured_gaps`), so no such link gives them. The same holds for every
   quark sector (smallest ratio `m_s/m_d ≈ 20`).
 
 **Scope (audit).** The equal-class crossing is directional: class `c` sits in generation `c − 1` on
@@ -46,7 +46,15 @@ on-site term, and the off-diagonal (equal-class) part is what the gluing allows 
 
 noncomputable section
 namespace PMFlavor.InterWallDiagonal
-open PMConstants.GenerationWalls LinkHierarchy
+open PMConstants.GenerationWalls
+
+/-- Measured charged-lepton masses in MeV (PDG 2024). -/
+def IsMeasuredLepton (m : ℝ) : Prop := m = 0.51099895 ∨ m = 105.6583755 ∨ m = 1776.93
+
+theorem measured_gaps (a b : ℝ) (ha : IsMeasuredLepton a) (hb : IsMeasuredLepton b) (h : a < b) :
+    4 * a < b := by
+  rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;>
+    first | (norm_num at h; done) | norm_num
 
 /-- **An equal-class crossing always changes the generation.** -/
 theorem crossing_changes_generation : ∀ (b : Bool) (c : Fin 3), omitted b c ≠ omitted (!b) c := by

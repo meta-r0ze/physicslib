@@ -74,14 +74,7 @@ import PMFlavor.SubstrateLink
 import PMFlavor.ChordBranch
 import PMFlavor.FlavourCoherence
 import PMFlavor.PerStepContract
-import PMFlavor.BreakingPhase
-import PMFlavor.TransferFlavor
-import PMFlavor.CapacityImpedance
-import PMFlavor.PathOperator
-import PMFlavor.HierarchicalPathOperator
-import PMFlavor.PMNSMassOperator
 import PMFlavor.WolfensteinOctant
-import PMFlavor.BreakingLink
 import PMFlavor.CabibboDressing
 import PMFlavor.ReactorConductance
 import PMFlavor.MixingTests
@@ -101,9 +94,7 @@ import PMFlavor.HalfTurnAperture
 import PMFlavor.CPQuarterTurn
 import PMFlavor.Theta23Wall
 import PMFlavor.TransferAmount
-import PMFlavor.MixingMatrix
 import PMFlavor.LinkKronComparison
-import PMFlavor.LinkHierarchy
 import PMFlavor.LinkFlux
 import PMFlavor.ThirdGenerationMixing
 import PMFlavor.TransferGenerator
