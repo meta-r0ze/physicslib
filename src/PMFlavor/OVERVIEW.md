@@ -225,6 +225,17 @@ because the `s` and `c` generations take different places in the mass (middle ve
 their carriers are equal. So the CKM pattern `|V_cb| ≫ |V_ub|` comes from the masses, and the
 transfer is at most a correction.
 
+**The equal-carrier wire does not give the CKM from masses alone** (negative result, external
+numerics, `tools/wire_ckm_scan.py`). With both quark sectors on `ReferenceWallMass`'s form with the
+node rule's equal light carriers `|k_s| = |k_c|`, each fitted to its own two mass ratios at `M_Z`,
+`U_uᴴ U_d` has no free parameter. Over all `8` distinct branch and sign combinations, `|V_cb|` is
+`0.071`–`0.195` (data `0.042`) and `|V_us|` `0.08`–`0.38`; the closest `|V_us|` (`0.216`, `0.247`)
+come with `|V_cb| ≈ 0.07`, `1.7×` high. So the up sector cannot keep equal light carriers: the up
+protocol must give `|k_s| ≠ |k_c|` or change the form, and `k_s/k_c` must be derived, since fitting
+it spends the `|V_cb|` test. The same scan finds no common other-wall detuning: with `δ_O` one wire
+constant and protocols setting only the carrier scale, `|d| √(m_heavy/h)` must agree across sectors;
+it is `0.50`/`0.94` for up against `0.26`/`0.35` for down (`≥ 1.4×`).
+
 **Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the shape of every
 sector's mass matrix and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
 `DoubletReflection`). How each species uses it (the node-carrier scan, the mixing scan, the up-sector

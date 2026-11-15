@@ -5,20 +5,16 @@ the inter-wall link of `PMAction.WallSeesaw`; `M_direct` a term joining the two 
 `K_cc` the charged-current transfer network of `TransferGenerator`. The CKM entries are `S_ij` of that
 transfer, not `K_ij`.
 
-Working reading (candidate, with its premises): masses are generation-diagonal and the CKM is the
-zero-energy scattering transfer `S(K_cc)` on generation space, three leads of equal width. The two
-premises, zero-energy scattering on generation leads and equal lead widths, are this folder's own
-model assumptions (`TransferGenerator`); a microscopic lead derivation, if pursued, belongs to
-PMAction. **Tension with the wire:** the derived light mass `M = D_R (δ_O + cyc κ_O)`
-(`ReferenceWallMass`) is not generation-diagonal; at the down quarks' fit point its left rotation
-has angles near `0.16`, `0.14`, `0.024` (`tools/node_carrier_scan.py`, `down_rotation`). So the
-"masses generation-diagonal" premise of this reading does not hold for the wire's mass, and the two
-CKM readings (transfer `S(K_cc)` versus `U_uᴴ U_d` from the masses) must be reconciled or one
-dropped. Reconciled as far as the wire allows (OVERVIEW, "Which CKM reading the wire supports"):
-with wire couplings the transfer gives `K₁₃ = K₂₃` against its own fit's ratio `≈ 10`, while the
-mass rotation produces `|V_cb| ≫ |V_ub|` itself. So the working reading is now `CKM ≈ U_uᴴ U_d`, with
-the transfer at most a correction; the transfer-based items below are kept as candidates under
-that demotion.
+Working reading: the CKM is `U_uᴴ U_d` from the wire's masses (`ReferenceWallMass`,
+`M = D_R (δ_O + cyc κ_O)`), with the charged-current transfer `S(K_cc)` at most a correction (OVERVIEW,
+"Which CKM reading the wire supports": the wire gives `K₁₃ = K₂₃`). The transfer items below are kept
+as candidates under that demotion; their premises (zero-energy scattering on generation leads, equal
+lead widths) are this folder's model assumptions (`TransferGenerator`).
+
+Dependencies. The mass-reading items need, upstream: the other wall's detuning `δ_O` (PMAction,
+"Size of the other wall's detuning") and each species' carriers (PMElementaryParticles, "Species
+masses over the wire"). The equal-carrier form fails the CKM from masses alone (OVERVIEW, negative
+result), so the up protocol's `k_s/k_c` is the next input this folder waits on.
 
 * **The in-cycle mixings** (`HalfTurnMixing`, `HalfTurnAperture`, candidate): `s₁₂ = π/14` and
   `sin²θ₁₂ = π/10`. Premises, listed in `HalfTurnAperture`: cross-orbit label-blindness (the
@@ -35,7 +31,9 @@ that demotion.
   scale-free ratios `K₁₃/K₁₂ = 0.0185 ± 0.0005` and `K₂₃/K₁₂ = 0.183`. The network (`kronLink`: two
   legs per class) must produce them from leg values. `VubSeriesPath`'s path admittance is a candidate
   for `K₁₃`; its ratio to `π/14` is `0.0161`, `4.7σ` low, so as a statement about `K₁₃` it fails;
-  its agreement with `|S₁₃| = |V_ub|` is not explained by the path.
+  its agreement with `|S₁₃| = |V_ub|` is not explained by the path. A microscopic derivation of the
+  generation leads (and their equal widths) would be PMAction work, worth starting only if the
+  transfer reading is revived.
 * **`|V_cb|`** (`VcbEnvelope`, candidate formula): `env 1 / env (Δ − D)` or the unit-source divider;
   the data do not separate them. The supporting tick reading has no schedule basis
   (`RequirementRows` assigns sectors to rows, no service-time map; reachability of all `43`
@@ -62,8 +60,15 @@ that demotion.
   construction must supply a `μ`–`τ`-asymmetric generation factor or wall overlaps correlated with the
   readout (`wall_only`). On the incidence graph `μ` and `τ` reach the reference through different
   class vertices (`s` and `c`); the factor may be the same `s`/`c` vertex difference the `|V_cb|`
-  item needs. Test against both NuFIT values.
-* **Mixing from the wire's mass form** (the working CKM reading). The masses' form is settled
+  item needs. Test against both NuFIT values. In the working (mass) reading the PMNS is
+  `U_eᴴ U_ν`, so `θ₂₃` waits on the lepton and neutrino protocols (PMElementaryParticles) the same way
+  the CKM waits on the up protocol.
+* **Mixing from the wire's mass form** (the working CKM reading). Negative result first
+  (OVERVIEW; `tools/wire_ckm_scan.py`): with equal light carriers in both sectors and each sector
+  fitted to its own mass ratios, no branch gives the CKM (`|V_cb| ≥ 0.071`). Test for the next step:
+  once the up protocol gives `k_s/k_c` (PMElementaryParticles), `U_uᴴ U_d` has no free parameter; it
+  must give `|V_us|`, `|V_cb|`, `|V_ub|` together. This also replaces the in-cycle mixing candidates
+  above as the source of `|V_us|` if it passes. The masses' form is settled
   (OVERVIEW: `ReferenceWallMass`, `M = D_R (δ_O + cyc κ_O)`); the species sizes are protocol work
   (PMElementaryParticles, "Species masses over the wire"). The row index of `M` is the reference's
   wall, which is the weak wall (`PMAction.ChiralityConvention.weak_acts_on_reference`), so the weak
@@ -73,9 +78,12 @@ that demotion.
   generation, angles near `0.16` (light–middle), `0.14` (middle–heavy), `0.024` (light–heavy). The
   CKM needs the up rotation (protocol work); it must cancel most of the `0.14` to give
   `|V_cb| = 0.041`, a constraint on the up protocol.
-* **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only (no site move);
-  open is whether the actual CKM loss realizes that event law and the row-to-outlet identification
-  (`PMConstants/REVIEW-AND-NEXT.md`).
+* **Dressing outlets** (owned here; `PMConstants.FlavourDressing` consumes it).
+  `DressingEvent.event_law_spatial` works on `Fin 4` axis labels only (no position or hop), so the
+  outlet count needs no site move. Open: whether the actual CKM loss realizes that event law (zero
+  rate on the time label, equal rate-weighted shares on the three spatial labels) and the
+  row-to-outlet identification. Carrier space and the lattice share axis labels only; a carrier label
+  change is not a site move (`PMConstants.WeakLocality`, `hL`).
 
 Working notes for the next session: there is no Lean toolchain in the device shell, so write proofs
 to be deterministic and ask Kate for `./build.sh fast PMFlavor`. Avoid `simp` on a transposed matrix

@@ -31,9 +31,15 @@ the measure, not only of degree-≤2 moments.
   carrier points to routes in series), node handoffs per round trip, and the leptons' on-axis
   geometry. Relate to the existing tier ledgers (`TierLedger.tiersFor`: up `{0, 2, 3}`, down and
   lepton `{0, 1, 2}`; `QuarkMasses`, `LeptonMasses`). Do not match the required factors to
-  constants; derive them and test on up quarks and leptons together.
+  constants; derive them and test on up quarks and leptons together. Constraint from the CKM
+  (PMFlavor OVERVIEW, negative result; `tools/wire_ckm_scan.py`): the up protocol cannot keep equal
+  light carriers `|k_s| = |k_c|` (every equal-carrier branch gives `|V_cb| ≥ 0.071`), so it must
+  route the `s`- and `c`-label carriers differently; the derived `k_s/k_c` then predicts the CKM with
+  no free parameter. The same holds for the lepton protocol and the PMNS (`θ₂₃`). Includes the old
+  tier item: derive the routing histories and rates, their costs, and the tiers each protocol occupies; the
+  lepton and quark ledgers still need a cost or selection rule for assigning invariants to tiers.
+  Upstream: PMAction, "Size of the other wall's detuning".
 - Connect the charged-current operator to the contact vertex in `AmplitudeTrace`. Identify the external carrier states, physical mode weights, and readout normalization.
 - Supply the physical tick calibration for `DecayLaw`. Identify the low-energy radiative contribution for elementary widths.
-- Derive the allowed routing histories and rates, their resource costs, and the subset of tiers assigned to each protocol. The lepton and quark ledgers still need a cost or selection rule for the assignment of invariants to tiers.
 - Determine the physical finite-channel replacement for the muon continuum phase space. For the tau total width, the electronic branching fraction remains an input; hadronic channels depend on [PMHadrons](../PMHadrons/REVIEW-AND-NEXT.md).
 - A neutrino-decay prediction requires a physical channel and mass ordering. The corresponding cosmological propagation question is tracked in PMCosmology.

@@ -16,7 +16,11 @@ derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   with masses `(kK, k², kK)`, two heavy and one light (`PMFlavor.UndetunedWall`), the reverse of
   every charged sector. Find what fixes its size on the substrate; the library has no source yet
   (the wire's simplest protocol, down quarks, puts it near `0.025 K`, an external fit,
-  `tools/node_carrier_scan.py`).
+  `tools/node_carrier_scan.py`). Whether it is one wire constant is open too: if it is, and protocols
+  set only the carrier scale, `|d| √(m_heavy/h)` must agree across sectors, and it does not (up
+  `0.50`/`0.94` against down `0.26`/`0.35`, `tools/wire_ckm_scan.py`). So either a protocol also sets
+  the other wall's detuning (occupancy on that wall), or the up carriers differ in form (see
+  PMElementaryParticles). This item is upstream of the species masses and of the CKM from masses.
 
 ## Carrier update
 
@@ -35,6 +39,3 @@ derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
-- Lead coupling (if pursued): a microscopic derivation of how the generations couple to the leads of
-  the charged-current transfer. The equal-width assumption itself is a flavour-model premise owned
-  by `PMFlavor.TransferGenerator`.
