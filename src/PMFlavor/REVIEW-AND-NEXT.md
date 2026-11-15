@@ -1,86 +1,76 @@
 # PMFlavor — open work
 
-Closed tests and retired routes are recorded in [OVERVIEW](OVERVIEW.md).
+Closed results and retired routes are in [OVERVIEW](OVERVIEW.md); what flavour is here and the terms
+(wire, label state, protocol, event, `J`, `U`) are in [README](README.md).
 
-**Scope.** PMFlavor shows how information transfers between generations on the E8 substrate, and
-that the transfers give the CKM and PMNS matrices, with values `e8p` can output. Not here: the wire
-and its mass form (PMAction: `ReferenceWallMass`, `GenerationWalls`, `NativeFlavourWall`,
-`FlavourEvolution`); how species appear and propagate (PMElementaryParticles); comparisons with
-measurement (`tools/e8p/E8PConstants/PMFlavor`). Rule: every number comes from structure or from a
-narrowly stated premise; data are only the final test. Do not fit integers or parameters to data.
+**Purpose and rule.** PMFlavor finds `J`, the label-change amplitudes of one charged-current event,
+for carriers off and on the reference axis. The observed matrices are `U_uᴴ J U_d`; `U` belongs to the
+wire (PMAction) and the protocols (PMElementaryParticles). Every number comes from E8 structure or a
+narrowly stated premise; data are only the final test (e8p). Do not fit integers or parameters to
+data, and do not frame work as fitting Standard Model sectors.
 
-**Status of each output** (the formulas are `CKM.lean`, `PMNS.lean`; `e8p` outputs them via
-`Values`, `PMNSIntervals`, `Wolfenstein`, `TriangleAngles`):
+**Status of each entry of `J`** (e8p readout names in brackets).
 
-| Output | Formula | Status |
+| Label change | Off the axis | On the axis |
 |---|---|---|
-| `s₁₃ = \|V_ub\|` | `1/(χα⁻¹ + π)` | path derived: two node legs and a boundary in series (`KronSeries`, `LinkKronComparison.two_leg_from_incidence`); amplitude = path admittance is a premise |
-| `s₁₂` | `π/14` | candidate (`HalfTurnMixing`, `HalfTurnAperture`; premises listed there) |
-| `\|V_cb\|` | `(π + χ)/(α⁻¹ − Dπ)` | candidate formula, no mechanism (`VcbEnvelope`) |
-| `δ_CKM` | `arctan(σ/χ)` | supplied, no mechanism |
-| `sin²θ₁₂` | `1/(2φ) = sin(π/10)` | candidate (`GoldenGeometry`, `HalfTurnMixing`) |
-| `sin²θ₂₃` | `(1 + π/(ν + σ))/χ` | supplied, no construction |
-| `sin²θ₁₃` | `(σ − χ)/α⁻¹ = (D − 1)/α⁻¹` | candidate: node conductance into the spatial outlets (`ReactorConductance`) |
-| `δ_PMNS` | sum rule | derived from the other three angles (`ReferenceFlavour`) |
-| dressing | `q² = 515/516` | derived under one premise (`DressingEvent`, `DressingInheritance`) |
+| class `0`, `2 → 1`, in-cycle | `π/14` [`s₁₂`]: share candidate (`HalfTurnAperture`), readout rule derived (`ConductionRule`) | the same rule gives `π/10`; e8p prints `1/(2φ) = sin(π/10)` [`sin²θ₁₂`] (decision pending) |
+| class `2`, `1 → 0`, node, reference wall | no derived amplitude; the library's rules are excluded (`TransferAmplitude`) [`\|V_cb\|`, printed `(π+χ)/(α⁻¹−Dπ)`] | no construction [`sin²θ₂₃`, printed `(1+π/(ν+σ))/χ`] |
+| class `1`, `0 → 2`, node, other wall | `1/(2α⁻¹+π)`: two-leg series path derived; boundary `π` a premise [`s₁₃`] | `3/α⁻¹`: one leg into three outlets, candidate (`ReactorConductance`) [`sin²θ₁₃`] |
+| phase | none in the library [`δ = arctan(σ/χ)` printed] | derived from the angles (`ReferenceFlavour`) [`δ_PMNS`] |
+| loss | `q² = 515/516`, derived under one premise (`DressingEvent`) | — |
 
-## Information transfer on E8
+## Plan
 
-- **Type each mixing element by its transfer (replaces the retired `TransferFlavor`).** The library
-  has the transfer topology: root moves conserve the generation label, so mixing is a single-wall
-  carrier move of the shared class (`PMAction.GenerationLabel`); exactly one generation pair mixes
-  in-cycle and two must cross the reference node (`ExchangeAxis`); the two node crossings differ by
-  the wall their class sits on (`ExchangeChirality`); a node crossing is a series admittance
-  (`KronSeries`). `PersistenceMechanics.InformationTransfer` has the three modes (boundary
-  conduction, capacity promotion, coordinate jump) but nothing ties them to E8 transfers. Write
-  down, for each CKM and PMNS element, its transfer on the generation–class incidence graph, its
-  mode, and the amplitude rule that follows (in-cycle aperture or node series path). Note: the
-  library derives a 1 + 2 split (one in-cycle, two node crossings); whether the two node crossings
-  are two different modes, as the paper's promotion (`|V_cb|`) and jump (`s₁₃`) say, is to be
-  derived from `ExchangeChirality`, not assumed.
-- **Generator or finite rotation: one rule.** `s₁₂ = π/14` uses the generator (the aperture value
-  itself), while `sin²θ₁₂ = 1/(2φ)` is the finite rotation `sin(π/10)`; the generator would give
-  `π/10`. `HalfTurnAperture` reads both as the same half-turn aperture, so the rule must be the same
-  for both, or the difference derived (amplitude for quarks, probability for leptons,
-  `NodeElimination`). Falsification: JUNO separates `π/10` from `1/(2φ)`.
-- **`|V_cb|`** (`VcbEnvelope`, candidate): `env 1 / env (Δ − D)` or the unit-source divider. The tick
-  reading has no schedule basis (`RequirementRows` assigns sectors to rows, no service-time map).
-  To derive it, exhibit the schedule and count its unused ticks; separately identify the drive or the
-  terminals.
-- **The CKM phase.** No source in the library: every candidate searched is closed (OVERVIEW, "Where
-  a CP phase can sit"); `FlatPersistence` makes a sourceless holonomy flat. A new premise must give a
-  generation-space holonomy with offset other than `0` or `π`; state it narrowly and test it by the
-  triangle angle `α` and `J` it predicts. Sign: the wall-naming convention (`LinkFlux`,
-  `ReferenceFlavour.column2_difference_conj`).
-- **`θ₂₃`** (the lepton `s`/`c` parity breaking). No construction. `Theta23Wall`: a wall factor common
-  to both readouts cancels (`common_wall_cancels`), so a construction must supply a `μ`–`τ`
-  asymmetric generation factor; `μ` and `τ` reach the reference through different class vertices
-  (`s`, `c`). The octant is not settled by data (NuFIT 6.0 with and without the SK atmospheric data).
-- **Dressing outlets** (`PMConstants.FlavourDressing` consumes it). `DressingEvent.event_law_spatial`
-  works on axis labels only. Open: whether the CKM loss realizes that event law (zero rate on the time
-  label, equal shares on the three spatial labels) and the row-to-outlet identification. The same
-  three spatial outlets appear in `sin²θ₁₃ = (D − 1)/α⁻¹`; derive both from one outlet count.
-- **The transfer reading** (`TransferGenerator`: CKM as zero-energy scattering `S(K_cc)`). Demoted:
-  with the wire's couplings it gives `K₁₃ = K₂₃`. Decide in the element-by-element audit whether it
-  survives as the amplitude rule for node crossings or is retired; its equal-lead-width premise is
-  not derived.
+1. **`J` as the event operator** (`EventTransfer`, started). Done: `J κ` with the three changes at the
+   classes `GenerationCurrent` fixes, the weak carrier's own change in the cycle, the two node changes
+   out of it, one direction per event. Next: show that `J` is the label action of the actual weak
+   refresh (`PMConstants.CarrierActions.weak` on the reference's wall, through
+   `GenerationCurrent.shift_false_then_glue`), not only a matrix with the right support; and how `J`
+   becomes a normalized transfer (unitarity with the dressing, `CKMClosure`, `DressingChannels`).
+2. **The amplitude of each entry.**
+   - In-cycle: the share `π/N` rests on the aperture premises (`HalfTurnAperture`); derive them or
+     state them as the one premise of this entry.
+   - Other-wall node change: the series path is derived; derive the boundary `π`.
+   - Reference-wall node change: the library's rules give `1`, `≈ 1.98`, `≈ 23.7` times the other-wall
+     change; the readout needs about `10`. Derive what the reference's wall changes in the amplitude
+     (the refresh acts on that wall). `VcbEnvelope`'s `env 1 / env (Δ − D)` reaches the value but has no
+     schedule basis: exhibit the schedule or retire the form.
+3. **One readout rule on the axis (decision pending).** `ConductionRule`: with the node readout and no
+   further function, the on-axis in-cycle change gives probability `π/10`; e8p prints `1/(2φ)`. Switch
+   e8p to `π/10` (changes `PMNS.lean`, `PMNSIntervals`, `FlavourInvariants`, e8p pulls and catalog), or
+   derive the sine. Falsification: JUNO's full precision separates the two.
+4. **Label changes on the axis.** The reference-wall node change reads as `sin²θ₂₃ ≈ 0.5` (large); the
+   other-wall one as `3α` (small). `TransferGraph.inCycle_iff` is derived from displacements of
+   off-axis states; re-derive the in-cycle / node split for states on axis `0`. `Theta23Wall`: a wall
+   factor common to both readouts cancels, so this change needs an asymmetric factor.
+5. **Phases.** No source in the library (OVERVIEW, "Where a CP phase can sit"); a sourceless holonomy
+   is flat (`FlatPersistence`). `J` is one-directional per event (`EventTransfer.reverse_zero`); ask
+   whether the event's orientation (`GenerationWeak.relative_orientation`) gives a phase other than
+   `0` or `π`. State any premise narrowly; test it by the triangle angle and `J` it predicts.
+6. **The size of `U`.** Needs the other wall's detuning `δ_O` (PMAction REVIEW) and which protocol uses
+   which carriers (PMElementaryParticles). With `δ_O` dominant the rotation is small; bound it.
+7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
+   event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three
+   outlets (`ReactorConductance`) and the dressing's three (`DressingChannels`) should be one count.
+8. **`TransferGenerator`** (zero-energy scattering `S(K)`): keep as a candidate amplitude rule for `J`'s
+   node entries or retire; its equal-lead-width premise is not derived.
 
 ## Transfer selection
 
-- **Conditional on `e^{−iHt}`.** The transfer-cost chain (`ReferenceSelection`, `RelativeFrameCost`,
-  `TransferWorkLaw`, `TransferAmount`, `SpectralGapOrder`, `ChordBranch`) is built on
-  `PMAction.FlavourEvolution`. It becomes unconditional when PMAction shows the substrate update acts
-  on wall modes as `e^{−iHt}` (PMAction REVIEW, "Update as `e^{−iHt}` on wall modes").
+- **Conditional on `e^{−iHt}`.** `ReferenceSelection`, `RelativeFrameCost`, `TransferWorkLaw`,
+  `TransferAmount`, `SpectralGapOrder` and `ChordBranch` run on `PMAction.FlavourEvolution`; they become
+  unconditional when PMAction shows the substrate update acts on wall modes as `e^{−iHt}`.
 
 ## Cleanup
 
-- **`FlavourPulls`** now holds only `weak_mixing_shared` (and `FlavourPostulates` defines `φ`, `pi_b`,
-  `sqrt5_b` in its namespace); rename both to what they are when the transfer typing lands.
-- **Names.** Several transfer-selection modules carry `Flavour` names for transfer content
-  (`FlavourOrderComparison`, `FlavourResponseSelection`); rename when the transfer typing lands.
+- Rename `FlavourPulls` (now only `weak_mixing_shared`) and `FlavourPostulates` (defines `φ`, `pi_b`,
+  `sqrt5_b` in the `FlavourPulls` namespace), and the `Flavour…` transfer-selection modules. Replace
+  "generation" by "label state" in docstrings as they are touched. `TransferGraph.mode`: rename to the
+  in-cycle / reference-wall / other-wall changes, keeping conduction / promotion / jump as the candidate
+  reading.
 
 Working notes: there is no Lean toolchain in the device shell; ask Kate for `./build.sh fast
-PMFlavor`. Avoid `simp` on a transposed matrix literal or a product of three literals; name the
+PMFlavor.X`. Avoid `simp` on a transposed matrix literal or a product of three literals; name the
 intermediate literal and use `rfl` (`LinkKronComparison.Lcg_eq_transpose`). Numerical scans belong
-outside Lean and are labelled external. When editing these files by slicing between two anchors,
-check that nothing between them is lost.
+outside Lean and are labelled external. When editing these files by slicing between two anchors, check
+that nothing between them is lost.

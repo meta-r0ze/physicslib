@@ -1,10 +1,11 @@
 # PMElementaryParticles — Paper V decay library
 
 Lean 4 proofs for *Persistence Mechanics V: Decay as a Conditional Routing Model*.
-Paper V applies Paper II's shared dynamics and Paper IV's flavour input to an
-**elementary-particle decay** example: elementary-particle protocols on the E8
-substrate, and their conditional decay rates. It builds on Papers I–IV and
-**rejects imports from Paper VI**.
+Paper V applies Paper II's shared dynamics to an **elementary-particle decay**
+example: elementary-particle protocols on the E8 substrate, and their conditional
+decay rates. It builds on PMSubstrate, PMAction and PMConstants. PMFlavor comes after
+it: flavour is the label change of a charged-current event that changes protocol, so
+it needs the protocols first. Library order: PMSubstrate → PMAction → PMConstants → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`).
 
 ## Main results
 
@@ -33,7 +34,7 @@ substrate, and their conditional decay rates. It builds on Papers I–IV and
   weight from the direction integral (first step of the measure construction).
 - **Routing caveats.** `ProtocolCaveats` proves the paper's caveats: lower latency
   need not be reachable, and routing alone doesn't force stability.
-- **CP input** for the lepton sector comes from Paper IV (`Downstream`).
+- **Label changes and CP** (the CKM and PMNS readouts) are PMFlavor's, applied after this library.
 
 ## Where to look
 

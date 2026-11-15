@@ -9,7 +9,8 @@ The reference is the neutral lepton channel (`ReferenceAnchor.lepton 0`, charge 
 persist exactly (`SectorObligations.refresh_exact`, `HomogeneousRouting.forever_iff_open`).
 
 * `persistent_single_frequency`: a state evolving by diagonal phases stays on its ray for all
-  times only if all its nonzero components share one frequency (`OnShell.beats`). So **the
+  times only if all its nonzero components share one frequency
+  (`PMConstants.OnShell.persistent_single_frequency`). So **the
   reference's generation state lies in one neutrino energy eigenspace**: it cannot oscillate.
   Degenerate energies need not select a unique mass-basis vector; see `ReferenceSpectrum`.
 * `z2_invariant_iff`: under the residual `Z₂` left by the lepton axis (`GenerationBreaking`),
@@ -39,11 +40,8 @@ open Complex
 /-- **A persisting state has one frequency.** -/
 theorem persistent_single_frequency {n : Type*} (ω : n → ℝ) (v : n → ℂ)
     (h : ∀ t : ℝ, ∃ c : ℂ, ∀ i, v i * exp (-((ω i * t : ℝ) : ℂ) * I) = c * v i)
-    (i j : n) (hi : v i ≠ 0) (hj : v j ≠ 0) : ω i = ω j := by
-  by_contra hne
-  have := (PMConstants.OnShell.beats (v i) (v j) (ω i) (ω j) hne).mp
-    (fun t => let ⟨c, hc⟩ := h t; ⟨c, hc i, hc j⟩)
-  tauto
+    (i j : n) (hi : v i ≠ 0) (hj : v j ≠ 0) : ω i = ω j :=
+  PMConstants.OnShell.persistent_single_frequency ω v h i j hi hj
 
 /-- **`Z₂`-invariant generation states are `(x, y, y)`.** -/
 theorem z2_invariant_iff (v : Fin 3 → ℂ) :

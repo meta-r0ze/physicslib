@@ -1,4 +1,4 @@
-import PMFlavor.ExchangeAxis
+import PMConstants.CarrierRepresentation
 
 /-!
 # The doublet sign is not a geometric source of the up/down split
@@ -21,7 +21,7 @@ needs a charge that tells the doublet sign apart (the right-sector hypercharge `
 `CarrierRepresentation.charges_from_carriers`) or a breaking of the swap, that is, protocol content.
 -/
 
-namespace PMFlavor.DoubletReflection
+namespace PMElementaryParticles.DoubletReflection
 open PMAction.CarrierEvents PMConstants.CarrierRepresentation
 
 /-- Reflect axis `i`. -/
@@ -47,4 +47,4 @@ theorem flip_doublet : ∀ i : Fin 4, ∀ v v' : V, vector v' = flip i (vector v
     coord v i ≠ 0 → positive v' = !positive v := by
   decide +kernel
 
-end PMFlavor.DoubletReflection
+end PMElementaryParticles.DoubletReflection

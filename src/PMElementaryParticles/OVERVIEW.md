@@ -6,7 +6,7 @@ The single map of what Paper V proves and what later work can reuse. Open work i
 in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in
 [`README.md`](README.md). Sources are under `PMElementaryParticles/`, imported by `PMElementaryParticles.lean`.
 Theorem names are entry points, not exhaustive lists; the Lean source is ground
-truth. Paper V builds on Papers I–IV and imports nothing from Paper VI.
+truth. Library order: PMSubstrate → PMAction → PMConstants → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). This folder imports nothing from PMFlavor.
 
 ## Scope
 
@@ -73,7 +73,7 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `PolarMeasure` | the `ℝ³` momentum measure by spherical change of variables: `sphere_area_three`, `integral_radial_three`, `massless_lorentz_measure`, `two_body_phase_space`, `massShell_reduction`; `two_body_from_lebesgue` (`Φ₂ = 1/(8π)` as the energy-shell derivative of the cumulative pair integral over `ℝ³`) | — |
 | `MassiveDaughterSpectrum` | Massive charged daughter, massless neutrino pair: `threshold`, `kinematics`, `radial_measure`, `pair_density`, `massless`, `rate_positive`, `width_scaling` | Contact vertex, transported pair average |
 | `MassiveWidth` | Closed massive-daughter width `G²m⁵/(192π³)·[1−8r+8r³−r⁴−12r² log r]`; `closed_width`, `phase_zero/one/continuous`, `phase_positive`, `threshold_width` | Tree contact spectrum, normalizations |
-| `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing), `pmns_muon_width` (uses Paper IV PMNS), `kinematic_bounds` | Orthogonal final states, common kinematics |
+| `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing; applied to the on-axis matrix in `PMFlavor.InclusiveWidth`), `kinematic_bounds` | Orthogonal final states, common kinematics |
 
 ## Pair tensor and continuum angular integral
 
@@ -119,15 +119,15 @@ with spinor-class carriers through the reference node (`k/K = α/2`, `PMAction.N
 the other wall's detuning `δ_O`, which must be nonzero (`PMAction.UndetunedWall`). The wire is blind
 to the species it carries: one crossing price (`PMConstants.HandoffAdmittance.closure_one_price`),
 and the `D₄` geometry with the reference's axis cannot tell up from down
-(`PMFlavor.DoubletReflection`). So the wire fixes the form; species are protocols over it, and what
+(`PMElementaryParticles.DoubletReflection`). So the wire fixes the form; species are protocols over it, and what
 each protocol occupies is open (REVIEW). Earlier per-species scans fitted measured mass ratios and
 CKM magnitudes; they were removed as Standard-Model fitting, not substrate results (in git history:
 `tools/node_carrier_scan.py`, `tools/reference_wall_mixing_scan.py`, `tools/composite_mass_scan.py`).
 
 ## External states
 
-`ExternalStates.persistent_on_shell`: a persisting state (Paper IV
-`persistent_single_frequency`) has one energy and one mass on its support, i.e. is
+`ExternalStates.persistent_on_shell`: a persisting state
+(`PMConstants.OnShell.persistent_single_frequency`) has one energy and one mass on its support, i.e. is
 an on-shell mass eigenstate; `branches_do_not_persist` shows cross-branch
 superpositions beat. Identifying an external particle with a persisting substrate
 state remains a model input.

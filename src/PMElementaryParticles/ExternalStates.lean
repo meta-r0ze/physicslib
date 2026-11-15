@@ -1,4 +1,4 @@
-import PMFlavor.ReferenceFlavour
+import PMConstants.OnShell
 
 /-!
 # External states are on-shell mass eigenstates, from persistence
@@ -9,7 +9,7 @@ hypothesis. Part of it follows from persistence.
 Write a state in an energy eigenbasis of its Hamiltonian, with energies `E j` and
 `E j² = p² + m j²` (for the two-wall fermion, `PMAction.WallSpectrumLink.wall_energies`). It evolves by
 diagonal phases. A state that persists, staying on its ray for all times, has one frequency on its
-support (`ReferenceFlavour.persistent_single_frequency`, the beats argument). So:
+support (`PMConstants.OnShell.persistent_single_frequency`, the beats argument). So:
 
 * `persistent_on_shell`: every component of a persisting state has the same energy and the same
   mass. It is on shell with a definite mass: superpositions across mass branches beat, and
@@ -30,7 +30,7 @@ theorem persistent_on_shell {n : Type*} (E : n → ℝ) (msq : n → ℝ) (p : �
     (hshell : ∀ j, E j ^ 2 = p ^ 2 + msq j) (c : n → ℂ)
     (hpersist : ∀ t : ℝ, ∃ k : ℂ, ∀ j, c j * exp (-((E j * t : ℝ) : ℂ) * I) = k * c j)
     (i j : n) (hi : c i ≠ 0) (hj : c j ≠ 0) : E i = E j ∧ msq i = msq j := by
-  have hE := PMFlavor.ReferenceFlavour.persistent_single_frequency E c hpersist i j hi hj
+  have hE := PMConstants.OnShell.persistent_single_frequency E c hpersist i j hi hj
   refine ⟨hE, ?_⟩
   have := hshell i
   rw [hE, hshell j] at this

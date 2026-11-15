@@ -30,9 +30,9 @@ run_cmd do
       anyPrefix [`PMConstants, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`PMConstants).isPrefixOf mod then
       anyPrefix [`PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
-    else if (`PMFlavor).isPrefixOf mod then
-      anyPrefix [`PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`PMElementaryParticles).isPrefixOf mod then
+      anyPrefix [`PMFlavor, `PMHadrons, `PMAtoms, `PMCosmology] dep
+    else if (`PMFlavor).isPrefixOf mod then
       anyPrefix [`PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`PMHadrons).isPrefixOf mod then
       anyPrefix [`PMAtoms, `PMCosmology] dep

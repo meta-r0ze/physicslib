@@ -33,12 +33,13 @@ reference's wall starts inside the node's refresh (adjacent), while a hop on the
 enter and leave the node (non-adjacent). `refWall` is the reference's wall, `false`, the wall of the
 reference background in `PMAction.ReferenceDetuning` and `PMAction.ReferenceWallMass`.
 
-**Which element is which.** `mode_ends`: the conduction joins generations `1` and `2`, the promotion
-`0` and `1`, the jump `0` and `2`. Generation `0` is the label-`v` generation, the heavy, weakly mixed
-one (`PMAction.MassInsertion.label_is_reference_iff`), so the conduction is the light pair's mixing
-(`s₁₂`) and the two node crossings are the heavy generation's. Naming generation `1` the second and
-`2` the first (so the promotion is `|V_cb|` and the jump `|V_ub|`, as the draft has them) uses the
-wall-naming convention (`GenerationWalls.balanced_classification`).
+**Which generations each joins.** `mode_ends`: the conduction joins generations `1` and `2`, the
+promotion `0` and `1`, the jump `0` and `2`; generation `0` is the label-`v` generation, the one whose
+two transfers both cross the node (`PMAction.MassInsertion.label_v_mixings_cross`). The readout as
+matrix elements (e8p prints the conduction as `s₁₂`, the promotion as `|V_cb|`, the jump as `|V_ub|`)
+names generation `1` the second and `2` the first, the wall-naming convention
+(`GenerationWalls.balanced_classification`); which protocols read which transfers is
+PMElementaryParticles.
 -/
 
 namespace PMFlavor.TransferGraph

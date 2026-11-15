@@ -1,23 +1,71 @@
-# PMFlavor — Paper IV flavour library
+# PMFlavor — Paper IV: label changes in a charged-current event on E8
 
-Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum IV: Information
-Transfer* — CKM/PMNS matrices, wall spectra, propagation and persistence
-selection in the flavour sector.
+Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum IV: Information Transfer*.
 
-- What is checked: [OVERVIEW.md](OVERVIEW.md) — the module map, matrices,
-  wall spectrum, native carriers, selection tests and transfer/work results.
-- What remains: [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md) — open physical inputs
-  and structural questions.
+**What flavour is here** (ASD-STE100):
+- The wire carries information. The wire has three label states. A label state is the glue class
+  that the two walls do not use. The label is a property of the wire (PMAction).
+- Movement along the wire does not change the label.
+- A protocol is the type of information on the wire (up, down, electron, neutrino). Protocols are in
+  PMElementaryParticles.
+- A charged-current event changes the protocol. The event acts on one wall only. Thus the event can
+  also change the label.
+- "Flavour" is the label. "Flavour change" is a label change during an event.
+- The weak carrier itself changes label `2` into `1`. This change stays in the maintenance cycle.
+- A change to or from label `0` needs a spinor carrier. Only the reference node supplies it. Thus these
+  two changes are small.
+- `J` is the matrix of label-change amplitudes for one event. There are two: one for carriers off the
+  reference axis (read out as the CKM) and one for carriers on it (read out as the PMNS).
+- A state that persists has one frequency and one mass. If the persisting states are the label states,
+  the observed matrix is `J`. The wire turns them a small quantity away, so in general it is
+  `U_uᴴ J U_d`: `J` from PMFlavor, `U` from the wire (PMAction) and the protocols (PMElementaryParticles).
 
-Build: Lean 4.34.1, with sibling dependencies pinned through Lake. Paper IV uses
-Papers I–III and rejects imports from Papers V–VI.
+PMFlavor is not a model of Standard Model flavour. Every number comes from E8 structure or a narrowly
+stated premise; measured values enter only as the final test in e8p.
+
+## Terminology
+
+| Term | Meaning | Where |
+|---|---|---|
+| wire | the two-wall operator, its label states, its light-mass form | PMAction (`GenerationWalls`, `ReferenceWallMass`, `NativeFlavourWall`) |
+| label state | the glue class a two-wall state omits (`Fin 3`); class `0` is the reference's (vector) class | `PMAction.GenerationLabel`, `GenerationWalls` |
+| protocol | the type of information on the wire | `PMElementaryParticles.ProtocolInventory` |
+| event | a charged-current event: the weak refresh on the reference's wall | `PMConstants.CarrierActions.weak`, `PMAction.WallChiralCurrent` |
+| label change | what an event does to the label: one single-wall carrier plus one glue move | `PMAction.GenerationCurrent`, `EventTransfer` |
+| `J` | label-change matrix of one event | `EventTransfer.J` |
+| in-cycle / node change | the change uses the weak carrier's own class (stays in the cycle) / a spinor class (through the reference node) | `TransferGraph.inCycle_iff` |
+| on / off the reference axis | where a carrier sits relative to axis `0`; fixes the readout (one leg, probability / two legs, amplitude) | `CarrierRepresentation.lepton_axis_split`, `NodeElimination` |
+| `U` | persistence rotation of a protocol: persisting states versus label states | PMAction (`ReferenceWallMass`), PMElementaryParticles |
+
+The three label changes (`EventTransfer.entry_of_class`, `TransferGraph`):
+
+| Carrier class | Change | Kind | Read out off / on the axis |
+|---|---|---|---|
+| `0` (vector, the weak carrier) | `2 → 1` | in-cycle | `s₁₂` / `sin²θ₁₂` |
+| `2` (spinor) | `1 → 0` | node, class on the reference's wall in label `0` | `\|V_cb\|` / `sin²θ₂₃` |
+| `1` (spinor) | `0 → 2` | node, class on the other wall in label `0` | `\|V_ub\| = s₁₃` / `sin²θ₁₃` |
+
+Naming label `1` the second and `2` the first is the wall-naming convention. The names conduction,
+promotion and jump (`TransferGraph.mode`) are a candidate reading; they rest on one premise (the
+reference-wall crossing is one step). Older modules and parts of the OVERVIEW say "generation" for a
+label state.
+
+## Layout
+
+- What is checked: [OVERVIEW.md](OVERVIEW.md).
+- What remains: [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md).
+- Comparisons with measurement: `tools/e8p/E8PConstants/PMFlavor` (`CandidateTests`, `FlavourPulls`,
+  `ExperimentalPulls`); no derivation module imports them.
+
+## Build
+
+Lean 4.34.1, with sibling dependencies pinned through Lake. Library order: PMSubstrate → PMAction → PMConstants → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). PMFlavor comes after
+PMElementaryParticles because a flavour change is the label change of an event that changes protocol.
 
 ```sh
-./build.sh PMFlavor
+./build.sh fast PMFlavor        # this library
+./build.sh fast PMFlavor.X      # one module
 ```
 
-The root `./build.sh` builds the whole workspace; `./build.sh PMFlavor` builds
-only this library. The top-level `./build.sh audit` runs the whole-tree axiom and
-dependency audits. The physical generation/update law and the selection of mixing
-and mass formulas remain open; they are not supplied by silently adding hypotheses
-to a theorem.
+The top-level `./build.sh audit` runs the whole-tree axiom and dependency audits. Open premises are
+stated in module docstrings and in REVIEW; they are not supplied by silently adding hypotheses.

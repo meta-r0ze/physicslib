@@ -1,4 +1,3 @@
-import PMFlavor.PMNS
 import PMElementaryParticles.MuonRate
 
 /-! Inclusive widths for unresolved, orthogonal neutrino mass channels.
@@ -64,14 +63,5 @@ theorem kinematic_bounds (U : Matrix n n ℂ) (hU : U * Uᴴ = 1) (a b : n)
     intro j _
     exact mul_le_mul_of_nonneg_left (hf i j).2 (weight_nonnegative U a b i j)
   simpa only [equal_kinematics U hU] using And.intro hl hh
-
-/-- Apply Paper IV's complete proposed PMNS matrix to Paper V's width.
-The result uses unitarity only; the numerical angle formulas play no role. -/
-theorem pmns_muon_width (G m : ℝ) (electron muon : Fin 3) :
-    inclusive PMFlavor.PMNS.matrix electron muon
-      (fun _ _ => G ^ 2 * m ^ 5 / (192 * Real.pi ^ 3)) =
-      ∫ E in (0 : ℝ)..m/2, MuonRate.rate G m E := by
-  rw [MuonRate.muon_rate]
-  exact equal_kinematics _ PMFlavor.PMNS.rows _ _ _
 
 end PMElementaryParticles.InclusiveMixing

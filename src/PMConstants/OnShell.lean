@@ -43,6 +43,16 @@ theorem beats (a b : ℂ) (ω₁ ω₂ : ℝ) (hω : ω₁ ≠ ω₂) :
         b * exp (-((ω₂ * t : ℝ) : ℂ) * I) = c * b) ↔ a = 0 ∨ b = 0 :=
   PMAction.RayPersistence.beats a b ω₁ ω₂ hω
 
+/-- **A persisting state has one frequency.** A state evolving by diagonal phases stays on its
+ray for all times only if all its nonzero components share one frequency (`beats`). -/
+theorem persistent_single_frequency {n : Type*} (ω : n → ℝ) (v : n → ℂ)
+    (h : ∀ t : ℝ, ∃ c : ℂ, ∀ i, v i * exp (-((ω i * t : ℝ) : ℂ) * I) = c * v i)
+    (i j : n) (hi : v i ≠ 0) (hj : v j ≠ 0) : ω i = ω j := by
+  by_contra hne
+  have := (beats (v i) (v j) (ω i) (ω j) hne).mp
+    (fun t => let ⟨c, hc⟩ := h t; ⟨c, hc i, hc j⟩)
+  tauto
+
 /-- **A photon–Z mixture does not persist.** For a massive `Z` (`m > 0`), a neutral state with
 both a photon amplitude `a` and a `Z` amplitude `b` leaves its ray. -/
 theorem mixed_not_persistent (a b : ℂ) (k m : ℝ) (hm : 0 < m) (ha : a ≠ 0) (hb : b ≠ 0) :

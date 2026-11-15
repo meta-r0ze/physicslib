@@ -2,45 +2,78 @@
 
 *Persistence Mechanics of the Quantum Vacuum IV: Information Transfer.*
 
-This is the single overview of what Paper IV proves and how it hands off to
-Papers V–VI. The actionable open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md);
+This is the single overview of what Paper IV proves and how it hands off to the
+later libraries. Library order: PMSubstrate → PMAction → PMConstants → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). The actionable open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md);
 build/layout instructions are in [`README.md`](README.md). The Lean source is the
 ground truth; theorem names below are entry points, not an exhaustive list.
 
 ## Scope
 
 Paper IV builds on the Paper I substrate (E8, clock Δ = 43, invariants D = 4, ν = 16, σ = 5, χ = 2)
-and the Paper II wire (PMAction: the two-wall operator, its generation structure and light-mass
-form). It shows how information transfers between generations on E8, why a transfer persists
-(transfer selection and work), and how the transfers give the CKM and PMNS matrices whose values
-`e8p` outputs. Comparisons with measurement are in `tools/e8p/E8PConstants/PMFlavor`. No Paper V–VI
-imports are allowed.
+and the Paper II wire (PMAction: the two-wall operator, its label states and light-mass form). Flavour
+here is the label state; a flavour change is a label change during a charged-current event. PMFlavor
+finds `J`, the label-change amplitudes of one event, for carriers off and on the reference axis (read
+out as the CKM and PMNS), and why a transfer persists (transfer selection and work). The observed
+matrices are `U_uᴴ J U_d`, with `U` from the wire and the protocols. Comparisons with measurement are
+in `tools/e8p/E8PConstants/PMFlavor`. What flavour is here and the terms: [README](README.md). Older
+sections below say "generation" for a label state.
 
-## Current geometric status
+## The label changes of one event
 
-The flavour angles are now geometry-first, not operator-fit-first.
+**`J` (`EventTransfer`).** On the reference's wall an event changes label `g` to `g − 1` with a carrier
+of class `g + 1` (`PMAction.GenerationCurrent`). `J κ` has amplitude `1` for no change and `κ c` for the
+change through class `c`, from label `c − 1` to `c + 1` (`entry_of_class`); these are the three
+transfers of `TransferGraph` (`entry_is_transfer`). One event makes no reverse change (`reverse_zero`).
+The change through class `0` (`2 → 1`) uses the weak carrier itself and stays in the cycle
+(`weak_carrier_entry`); the changes through `1` and `2` need a spinor carrier from the node
+(`node_entries`).
 
-* CKM: `FlavourInvariants` restates the Paper IV formulae in derived invariants:
-  `s12 = π/(ν−χ)`, `s13 = 1/(χ α⁻¹+π)`, `|Vcb| = (π+χ)/(α⁻¹−Dπ)`,
-  `δCP = arctan(σ/χ)`.
-* PMNS: `PMNSGeometry` formalizes the bulk-strain angle
-  `sin²θ23 = (1/χ)(1+π/(ν+σ))`, the colour-remainder angle
-  `sin²θ13 = (σ−χ)/α⁻¹`, and the explicit upper-octant / `sin δ<0` branches.
-* Solar: `GoldenGeometry` derives `φ` from pentagon Ptolemy; `SixHundredCell`
-  gives an explicit 600-cell pentagon with edge `1/φ`, diagonal `1`, ratio `φ`;
-  hence `sin²θ12 = 1/(2φ)`.
-* `α⁻¹` is imported from `PMSubstrate.geometricIndex`; it is substrate, not flavour.
-* Retired and removed (git history): the path/cycle operators (`PathOperator`,
-  `HierarchicalPathOperator`, `PMNSMassOperator`, `CapacityImpedance`), the eigenvector-link picture
-  (`BreakingLink`, `BreakingPhase`, `MixingMatrix`, `LinkHierarchy`), and the whole-matrix transfer
-  typing of `TransferFlavor`, and the oscillation/propagation readout layer (`OscillationAlgebra`,
-  `OscillationStability`, `OscillationObservables`, `CPAsymmetry`, `CPObservables`,
-  `PropagationEnergy`, `PropagationStability`, `NativeFlavourObservables`, `SymmetricMass`):
-  standard interference algebra on supplied energies and mixing, with no users outside itself.
-* Moved to PMAction (the wire): the generation-on-walls chain, the light-mass form
-  (`CyclicSeesaw` … `UndetunedWall`, `MassInsertion`, `InterWallDiagonal`, `GenerationLabel`), and
-  the multi-flavour wall operator (`FlavourWallReduction`, `NativeFlavourWall`, `WallSpectrumLink`,
-  `WallLatticeSpectrum`, `RelativisticPhase`).
+**Three transfers, three types (`TransferGraph`).** Each pair of label states transfers through the
+one class both contain (`ends`, `every_pair`). Exactly the transfer through the reference's class
+stays inside the maintenance cycle (`inCycle_iff`, from `ExchangeAxis.vector_free`, `spinor_ne`); the
+other two cross the reference node by two legs each, and their classes sit on opposite walls of label
+state `0` (`node_walls_opposite`, `swap_flips_wall`). A current coupled to one wall separates all
+three (`three_types`); a wall-symmetric probe sees two (`two_types_blind`). So the three transfer
+types rest on the charged current's one-wall coupling. Mode assignment (candidate, `mode`):
+conduction for the in-cycle transfer (derived: the continuous mode is exactly the in-cycle transfer,
+`mode_continuous_iff`), promotion for the node crossing on the reference's wall, jump for the other.
+The names conduction, promotion and jump are a candidate reading. Placing the label states on a
+three-step ladder showed they rest on one premise: the crossing on the reference's wall is one step
+and the other-wall crossing two (checked over all maps of the three label states; that module was
+removed with the paper-draft tier reading).
+
+**Node-crossing amplitudes (`TransferAmplitude`).** The jump is the two-leg series path,
+`1/(2α⁻¹ + π) = s₁₃` (`jump_eq_s13`). The library's rules for the promotion give
+`promotion/jump = 1` (one series rule), `≈ 1.98` (one leg from the node), `≈ 23.7` (one leg as a
+probability) (`promoA_ratio`, `promoB_ratio`, `promoC_ratio_sq`). Negative result: all three are
+excluded by the measured `|V_cb|/|V_ub|` (`E8PConstants.CandidateTests.promo_rules_excluded`); the wall
+must change the amplitude by a factor near `10` that no derived rule produces.
+
+**In-cycle rule (`ConductionRule`).** The half-turn share `π/N` (`HalfTurnAperture`, candidate) over
+the type-preserving channels: `N = 14` off the reference axis, `10` on it. With the node crossings'
+readout (off axis two legs, amplitude; on axis one leg, probability) and no further function, the
+in-cycle transfer gives amplitude `π/14 = s₁₂` off the axis (`offAxis_rule`, `offAxis_is_s12`) and
+probability `π/10` on it (`onAxis_rule`). The supplied on-axis value `1/(2φ) = sin(π/10)` applies a
+sine the off-axis value does not (`sine_reading_differs`).
+
+**Formulas e8p prints.** `CKM.lean`: `s₁₂ = π/14`, `s₁₃ = 1/(χα⁻¹ + π)`, `|V_cb| = (π+χ)/(α⁻¹−Dπ)`,
+`δ = arctan(σ/χ)`; `PMNS.lean`: `sin²θ₁₂ = 1/(2φ)`, `sin²θ₂₃ = (1 + π/(ν+σ))/χ`, `sin²θ₁₃ = (σ−χ)/α⁻¹`,
+`δ_PMNS` from the sum rule (`ReferenceFlavour`). Which of these are derived from the transfers is the
+status table in REVIEW. `FlavourInvariants` restates them in derived invariants; `GoldenGeometry` and
+`SixHundredCell` give `φ` from a pentagon (no transfer mechanism). `α⁻¹` is `PMSubstrate.geometricIndex`.
+
+**Retired and moved (git history).** Removed: the path/cycle operators (`PathOperator`,
+`HierarchicalPathOperator`, `PMNSMassOperator`, `CapacityImpedance`), the eigenvector-link picture
+(`BreakingLink`, `BreakingPhase`, `MixingMatrix`, `LinkHierarchy`), the whole-matrix typing of
+`TransferFlavor`, the oscillation/propagation readout (`Oscillation*`, `CPAsymmetry`, `CPObservables`,
+`Propagation*`, `NativeFlavourObservables`, `SymmetricMass`), and the modules that picked integers by
+fit (`MixingTests`, `NodePassage`). Moved to PMAction (the wire): the label-state chain, the light-mass
+form (`CyclicSeesaw` … `UndetunedWall`, `MassInsertion`, `InterWallDiagonal`, `GenerationLabel`), the
+multi-flavour wall operator (`FlavourWallReduction`, `NativeFlavourWall`, `WallSpectrumLink`,
+`WallLatticeSpectrum`, `RelativisticPhase`) and `FlavourEvolution`. Library order changed to
+PMElementaryParticles → PMFlavor: `DoubletReflection` moved to PMElementaryParticles,
+`persistent_single_frequency` to `PMConstants.OnShell`, the PMNS instance of the inclusive width to
+`InclusiveWidth`, and `CarrierAmplitude` no longer carries `V_ud`.
 
 ## What is checked
 
@@ -65,7 +98,8 @@ native carrier and reproduce exact flavour evolution and probabilities.
 **Reference persistence.** `ReferenceSpectrum`: persistence iff a single-energy
 eigenspace. `SpectralVariance`, `FlavourStationarity`: residual coordinates and
 gap bounds. `persistent_single_frequency`: a persisting state is one energy/
-frequency, hence on-shell (used by Paper V).
+frequency, hence on-shell (now `PMConstants.OnShell.persistent_single_frequency`, shared with
+PMElementaryParticles).
 
 **Selection and restoration.** `AllRootRestoration`, `RootRepairSelection`,
 `RestorationBudget`: the six-reflection restoring alphabet, unique cheapest word,
@@ -201,7 +235,7 @@ swap, so `K₁₃ = K₂₃`.
 
 **Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the form of the
 light mass and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
-`DoubletReflection`). Species are protocols over it
+`PMElementaryParticles.DoubletReflection`). Species are protocols over it
 ([PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md), "Species masses over the wire").
 
 **What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
@@ -353,5 +387,5 @@ for VI) — not missing Paper IV proofs.
 ## Verification
 
 Run `./build.sh PMFlavor` for this library. The top-level `./build.sh audit` checks
-the whole tree, not just PMFlavor. No Paper V–VI imports; permitted axioms
+the whole tree, not just PMFlavor. PMFlavor may import PMElementaryParticles, not PMHadrons and later; permitted axioms
 `propext`, `Classical.choice`, `Quot.sound`.

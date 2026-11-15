@@ -33,6 +33,9 @@ the measure, not only of degree-≤2 moments.
   `LeptonMasses`); the ledgers still need a cost or selection rule for assigning invariants to tiers.
   Do not fit species parameters to measured masses; derive, then test. Upstream: PMAction, "Size of
   the other wall's detuning".
+- **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
+  where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
+  on the label states and do not use the ladder.
 - Connect the charged-current operator to the contact vertex in `AmplitudeTrace`. Identify the external carrier states, physical mode weights, and readout normalization.
 - Supply the physical tick calibration for `DecayLaw`. Identify the low-energy radiative contribution for elementary widths.
 - Determine the physical finite-channel replacement for the muon continuum phase space. For the tau total width, the electronic branching fraction remains an input; hadronic channels depend on [PMHadrons](../PMHadrons/REVIEW-AND-NEXT.md).

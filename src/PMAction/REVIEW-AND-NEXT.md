@@ -15,7 +15,8 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   relative to the carriers, the mixing. It must be nonzero: at `δ_O = 0` the mass is a cyclic shift
   with masses `(kK, k², kK)`, two heavy and one light (`PMAction.UndetunedWall`), the reverse of
   the observed ordering. Find what fixes its size on the substrate; the library has no source yet.
-  Once it is fixed the wire has no free number. Also open: whether it is a wire constant or set by
+  Once it is fixed the wire has no free number, and the persistence rotation `U` of each protocol
+  (how far persisting states turn from the label states; PMFlavor's `U_uᴴ J U_d`) can be bounded. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 

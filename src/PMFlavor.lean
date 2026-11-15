@@ -65,7 +65,10 @@ import PMFlavor.ReactorConductance
 import PMFlavor.ExchangeAxis
 import PMFlavor.ExchangeChirality
 import PMFlavor.TransferGraph
+import PMFlavor.EventTransfer
 import PMFlavor.TransferAmplitude
+import PMFlavor.ConductionRule
+import PMFlavor.InclusiveWidth
 import PMFlavor.NodeElimination
 import PMFlavor.DressingChannels
 import PMFlavor.DressingEvent
@@ -82,7 +85,6 @@ import PMFlavor.LinkKronComparison
 import PMFlavor.LinkFlux
 import PMFlavor.ThirdGenerationMixing
 import PMFlavor.TransferGenerator
-import PMFlavor.DoubletReflection
 import PMFlavor.TickPlacement
 import PMFlavor.WeakCurrentBridge
 import PMFlavor.FalsifiablePredictions

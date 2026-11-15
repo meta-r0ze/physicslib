@@ -1,6 +1,5 @@
 import PMElementaryParticles.CarrierSpecies
 import PMConstants.Values
-import PMFlavor.Values
 import PMAction.WeakVertex
 import PMAction.AmplitudeTrace
 import PMConstants.MatterRunning
@@ -12,7 +11,9 @@ import Mathlib.Tactic
 
 A base-species amplitude slot with electromagnetic, weak and strong E8 couplings.
 The assignment is a model input: electron/neutrino use the E8 electroweak
-couplings; up/down additionally use the E8 CKM `Vud` and strong coupling.
+couplings; up/down additionally use the strong coupling. A charged-current event can also change the
+label state; that factor (the entry of `PMFlavor.EventTransfer.J`) is applied after this folder, in
+PMFlavor and later libraries.
 -/
 
 noncomputable section
@@ -29,14 +30,13 @@ structure CarrierAmplitude where
 def alpha : ℝ := PMConstants.Values.alpha
 def weakCoupling : ℝ := PMConstants.Values.fermi 1
 def strongCoupling : ℝ := Real.sqrt PMConstants.Values.strong
-abbrev vud : ℝ := PMFlavor.Values.vud
 
 /-- E8 amplitude assignment for each base species. -/
 def amplitude : CarrierSpecies → CarrierAmplitude
   | .electron => ⟨Real.sqrt alpha, weakCoupling, 0⟩
   | .neutrino => ⟨0, weakCoupling, 0⟩
-  | .up => ⟨(2 / 3 : ℝ) * Real.sqrt alpha, weakCoupling * vud, strongCoupling⟩
-  | .down => ⟨(-1 / 3 : ℝ) * Real.sqrt alpha, weakCoupling * vud, strongCoupling⟩
+  | .up => ⟨(2 / 3 : ℝ) * Real.sqrt alpha, weakCoupling, strongCoupling⟩
+  | .down => ⟨(-1 / 3 : ℝ) * Real.sqrt alpha, weakCoupling, strongCoupling⟩
 
 theorem neutrino_em_zero : (amplitude .neutrino).em = 0 := rfl
 

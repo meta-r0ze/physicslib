@@ -24,9 +24,10 @@ fitted.
   amplitude `√α`. `promoC_sq`: `promoC² = α`; `promoC_ratio_sq`: `(promoC / jump)²` lies in
   `(560, 561)`.
 
-So the library's rules give `|promotion/jump| ∈ {1, ≈ 1.98, ≈ 23.7}`. The comparison with the
-measured `|V_cb|/|V_ub|` is in `E8PConstants.CandidateTests` (`promo_rules_excluded`): all three are
-excluded. The wall must change the amplitude by a factor the existing rules do not produce. The one
+So the library's rules give `|promotion/jump| ∈ {1, ≈ 1.98, ≈ 23.7}`. Read out as `|V_cb|/|V_ub|`
+(e8p's naming, `TransferGraph`), the comparison with measurement is in
+`E8PConstants.CandidateTests` (`promo_rules_excluded`): all three are excluded. The wall must change
+the amplitude by a factor the existing rules do not produce. The one
 form in the library that reaches it, `VcbEnvelope`'s refresh-tick envelope `env 1 / env (Δ − D)`, has
 no schedule basis (REVIEW).
 -/
