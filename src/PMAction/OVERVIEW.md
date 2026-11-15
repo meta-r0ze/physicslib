@@ -129,6 +129,10 @@ shows closed injective updates cannot finitely prepare a stationary state.
   each off-diagonal entry is `dᵢ (δ̄ (cyc κ)ᵢⱼ + δ conj (cyc κ)ⱼᵢ) d̄ⱼ` (`left_gram_entry`): first order
   in the carriers and scaled by `dᵢ d̄ⱼ`. The persistence rotation on the reference's wall is then about
   `|dᵢ/dⱼ| · |κ_O/δ_O|` (perturbative reading), suppressed by the label states' mass ratio.
+- `CertainTransferRate`: a two-state transfer `sin²(tτ)` is certain iff `cos(tτ) = 0` (`certain_iff`),
+  so a certain event of duration `τ` has `tτ ≥ π/2` (`certain_min`) and flip at least `rπ/(4τ)`
+  (`flip_lower`). Admittance (`NodeAmplitude`'s `K = 1`) fixes the carrier's rate only with the event's
+  duration.
 - `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
   Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each
   root weighted by `sinc(a r·q/2)`; the midpoint vertex alone misses it by `O(a²|k||q|³)`

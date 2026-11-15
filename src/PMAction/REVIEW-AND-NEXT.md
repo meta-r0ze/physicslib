@@ -62,8 +62,11 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   a rate. "Certain transmission" fixes the transfer over one event, not the rate: a hop of rate `t`
   transfers fully after time `π/(2t)`. So `K = 1` fixes `t_v` only with the tick that relates the
   update to `H` (`e^{−iτH}`), which is the open item below. Ratios of admittances (`k/K = α/2`) carry
-  over to rates only if both carriers act for the same time. Next: fix `t_v τ` from the update; this
-  is the same work as "Update as `e^{−iHt}` on wall modes". The light-pair split (protocol) stays open. Also open: whether it is a wire constant or set by
+  over to rates only if both carriers act for the same time. `CertainTransferRate`: a certain transfer
+  of duration `τ` needs `t τ ≥ π/2`, so the flip is at least `r π/(4τ)`; `K_f ≪ 1` then needs one
+  carrier event to last `τ ≫ π/4` hop times (many ticks of the split update). Next: derive the
+  duration of one carrier event in hop units; this is the clock part of "Update as `e^{−iHt}` on wall
+  modes". The light-pair split (protocol) stays open. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 
@@ -74,7 +77,8 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   wall Hamiltonian's exponential, and no physical clock is fixed. Show whether the update at the
   clock acts on the wall modes (`NativeFlavourWall`) as `e^{−iHt}` for some `t` set by `Δ`; until
   then the transfer-cost results are conditional on it. Falsification: an update whose action on
-  the light wall modes is not a function of `H` alone.
+  the light wall modes is not a function of `H` alone. The flavour wire needs one number from this item: the duration of one
+  carrier event in hop-time units (`CertainTransferRate`; the `δ_O` item above).
 
 ## Carrier update
 
