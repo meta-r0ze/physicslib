@@ -278,6 +278,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `CompactCouplings` | The coupling limits (`event_limit`, `lepton_weak_limit`, `colour_limit`) for transports of a compactly supported C² connection, with no separate cubic-consistency premise |
 | `ScalarNormalization` | Scalar normalization from the event-priced D₄ chain |
 | `RunningResponseLink` | Matter running coefficients from Paper II's spin and orbital response |
+| `LatticeOrbital` | The orbital `−1/3` from the substrate's lattice polarization: the subtracted lattice integrand (`PMAction.PolarizationShellIntegral`) on the shell `lo < |k| < hi`, divided by `|q|²`, is the continuum orbital term up to `(4K a² hi² + 8P(1)|q|/lo)·2π² ln(hi/lo)` (`lattice_coefficient`), and the `q²` coefficient along a unit direction tends to `−(1/3)(δ − uu)·2π² ln(hi/lo)` as `a, |q| → 0` jointly (`lattice_orbital_limit`). Scope: continuum shell, not the Brillouin-zone sum; the constants are crude and say nothing about the lattice correction at a given `a`. |
 | `RunningDerived` | Paper III's running tests on derived coefficients |
 | `WeakSpectrumLinks` | Paper II's W-exchange vertex and exact wall spectrum, applied to Paper III |
 | `VevEntry` | How the VEV enters the wall masses: the inter-wall link is excluded |

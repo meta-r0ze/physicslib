@@ -25,6 +25,12 @@ derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 
 ## Dynamics and limits
 
+- Lattice polarization, optional sharpening (OVERVIEW: `PolarizationShellIntegral`). (i) Replace the
+  continuum shell by the Brillouin-zone sum, where the routing difference of `bubble_sub_contact`
+  cancels by a shift. (ii) A sharper constant than `K = 271853128/3`, so that the bound gives the size
+  of the lattice correction at a fixed `a`. The numeric target is `C a² (hi² − lo²)` with `C ≈ 1.38`
+  (`tools/lattice_polarization_check.py`). Falsification: a proved constant below `1.38` would
+  contradict the numeric check.
 - Construct the map from background `Config` to the `RecordSupply` stream used by `ReferenceSelection`. Physical allocation of the banks is a [machine-layer dependency](Machine/REVIEW-AND-NEXT.md).
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.

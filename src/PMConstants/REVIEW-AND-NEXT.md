@@ -11,15 +11,6 @@
   plaquette, charge `−1`). What remains is bookkeeping: that the script assembles `wilsonH` from these
   links in its site order (a code-review statement, or a Lean `build` plus an entry check at a few
   sites).
-- **Running couplings.** The PMAction input is in place (OVERVIEW there:
-  `PolarizationShellIntegral.shell_integral`): on the shell `lo < |k| < hi`, `4|q| ≤ lo`,
-  `2 a hi ≤ 1`, the subtracted lattice polarization is the orbital term
-  `−(1/3)(|q|² δ − qq)·2π² ln(hi/lo)` up to `(4K a² hi² |q|² + 8P(1)|q|³/lo)·2π² ln(hi/lo)`.
-  Open: consume it in place of the continuum integrand of
-  `PMAction.PolarizationRemainder.polarization_window`, read off the `q²` coefficient per shell, and
-  chain shells into the running. The constants `K`, `P(1)` are crude, so the coefficient is resolved
-  only for `a·hi ≲ 10⁻⁵`; a sharper constant is optional work, not a blocker for the `a → 0` statement.
-  [Shell integral](../PMAction/PolarizationShellIntegral.lean) · [Polarization remainder](../PMAction/PolarizationRemainder.lean)
 - **Dressing outlets.** `PMFlavor.DressingEvent.event_law_spatial` works on `Fin 4` labels (no position
   or hop), so the outlet count needs no site move. Open: whether the actual CKM loss realizes that
   event law (zero rate on the time label, equal rate-weighted shares on the three spatial labels) and
