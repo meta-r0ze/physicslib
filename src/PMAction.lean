@@ -120,6 +120,7 @@ import PMAction.PolarizationContact
 import PMAction.PolarizationIngredients
 import PMAction.PolarizationTaylor
 import PMAction.PolarizationSplit
+import PMAction.PolarizationOrders
 import PMAction.TorusWilson
 import PMAction.TorusFlux
 import PMAction.ZeroModeCoupling
