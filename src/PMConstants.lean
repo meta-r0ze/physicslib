@@ -66,6 +66,7 @@ import PMConstants.ChainCouplings
 import PMConstants.CompactCouplings
 import PMConstants.ScalarNormalization
 import PMConstants.RunningResponseLink
+import PMConstants.LatticeOrbital
 import PMConstants.RunningDerived
 import PMConstants.WeakSpectrumLinks
 import PMConstants.VevEntry
