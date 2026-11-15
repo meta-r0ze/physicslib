@@ -118,6 +118,7 @@ import PMAction.InertiaCongruence
 import PMAction.WilsonCertificate
 import PMAction.PolarizationContact
 import PMAction.PolarizationIngredients
+import PMAction.PolarizationTaylor
 import PMAction.TorusWilson
 import PMAction.TorusFlux
 import PMAction.ZeroModeCoupling
