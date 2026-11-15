@@ -64,21 +64,22 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   update to `H` (`e^{−iτH}`), which is the open item below. Ratios of admittances (`k/K = α/2`) carry
   over to rates only if both carriers act for the same time. `CertainTransferRate`: a certain transfer
   of duration `τ` needs `t τ ≥ π/2`, so the flip is at least `r π/(4τ)`; `K_f ≪ 1` then needs one
-  carrier event to last `τ ≫ π/4` hop times (many ticks of the split update). **What the library
-  says about that duration (2026-11).** An event acts in one factor of one tick (`FactorRepair`,
-  `ClockLedger`); weak refreshes the clock row, whose `43` addresses are the node's own site at
-  successive ticks, each once per phase (`RequirementRows`, `RefreshSchedule`, `WeakLocality`): so
-  weak acts at every tick, and the refresh moves exactly the reference's vector carriers
-  (`PMFlavor.EventTransfer.refresh_moves_reference`). If the heavy label's carrier event is that
-  refresh, certain within one tick `τ₀`, then `K_f ≥ rπ/(4τ₀)`; with the crossing at most a full
-  transfer per tick (`|y| τ₀ ≤ π/2`), `K_f/|y| ≥ r/2`. So option (a) fails under these statements: the
-  ratio `1/2` is robust, not a normalization accident. Remaining: (b) a crossing stronger than one
-  transfer per tick; (c) accept `K_f/|y| ≈ 1/2` and compute the masses and `U` on the full two-wall
-  Hamiltonian (then the heavy label keeps `≈ 20%` on the gapped components, which needs a reading:
-  is that a failure of persistence or the heavy state's actual form?); (d) the mass carrier event is
-  not certain per tick (probability `p ≪ 1` per tick), which needs a source. Candidate for (d), not
-  derived: one carrier event per packet per clock period `Δ = 43`, giving
-  `K_f/|y| ≈ rπ/(4Δ τ₀ |y|)`. The light-pair split (protocol) stays open. Also open: whether it is a wire constant or set by
+  carrier event to last `τ ≫ π/4` hop times (many ticks of the split update). **Correction (2026-11).** An
+  earlier entry took the heavy label's carrier event to be the weak refresh (once per tick,
+  `RequirementRows`, `WeakLocality`) and concluded `K_f/|y| ≥ r/2`. The refresh is a sign exchange of
+  carrier labels (`CarrierActions.weak`), not a carrier hop; `CarrierFlip`'s `t` is a hop. So the
+  refresh schedule does not fix `t_v`, and that conclusion is withdrawn.
+  **What does constrain `t_v`.** `ChiralLightBand` identifies the charged current's wall on the light
+  band under the premise that light states lie far below the wall gap, wall mixing entering only
+  through the gapped modes. The full two-wall check above shows a vector flip `K_f = |y|/2` puts
+  `≈ 20%` of the heavy state on the gapped components at every `δ_O`, which breaks that premise. So
+  the library's own chirality identification needs `K_f ≪ |y|`, i.e. `t_v ≪ 2|y|/r`: the vector
+  carrier's rate is small against the crossing, and `NodeAmplitude`'s `K = 1` is an admittance, not a
+  rate (only `k/K = α/2` carries over, for carriers whose events last equally long). With that, the
+  window `K_f ≪ |δ_O| ≪ |y|` is consistent: the reduction holds, the heavy state stays on its walls,
+  and `U ≈ 1` holds when `ε = K_f/|δ_O| ≲ 0.04` (PMFlavor item 6). Open: the ratio `ε` itself; whether
+  `δ_O` is a wire constant or set by what a protocol occupies on that wall (persistence of the
+  protocol there); and the light-pair split. The light-pair split (protocol) stays open. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 

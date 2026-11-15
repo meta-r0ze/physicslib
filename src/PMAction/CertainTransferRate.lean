@@ -26,7 +26,9 @@ units ("Physical refinement/clock … remain open", OVERVIEW). So `t_v` is open,
 derive is the duration of one carrier event.
 
 Falsification: a derivation that a carrier event completes within one hop time (`τ ≲ 1`) gives
-`K_f ≳ 1`, which breaks the reduction and the heavy state's persistence on its walls.
+`K_f ≳ 1`, which breaks the reduction and the heavy state's persistence on its walls
+(`ChiralLightBand`'s premise that light states lie far below the wall gap). The weak refresh, which
+acts every tick, is a sign exchange of carrier labels, not a carrier hop, so it does not fix `τ`.
 -/
 
 namespace PMAction.CertainTransferRate

@@ -100,8 +100,9 @@ data, and do not frame work as fitting Standard Model sectors.
    symmetric light amplitudes the light block of `U` is a `45°` rotation until a protocol splits the
    light pair. So the item 1 and 5 tests are conditional on both. On the full two-wall Hamiltonian
    (PMAction REVIEW) `U ≈ 1` needs the other wall's detuning near the hop scale, which moves the heavy
-   label off its walls unless the vector carrier's rate is small; that rate waits on PMAction's
-   `e^{−iτH}` item. Then redo the item 1
+   label off its walls unless the vector carrier's rate is small. `ChiralLightBand`'s premise (light
+   states far below the wall gap) requires it small (PMAction REVIEW), leaving the window
+   `K_f ≪ |δ_O| ≪ |y|`; the tests need `ε = K_f/|δ_O| ≲ 0.04`, still to be derived. Then redo the item 1
    and item 5 tests with this `U`.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
    event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three
