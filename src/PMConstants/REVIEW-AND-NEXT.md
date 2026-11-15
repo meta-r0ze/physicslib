@@ -4,10 +4,11 @@
   `theta_zero_of_certificates` takes two inertia certificates, and
   `tools/unit_transfer_certificate.py` checks their hypotheses (strict row dominance, `162` and `163`
   negative diagonal entries, `L = 3`) in ball arithmetic; that numerical step is an explicit external
-  premise. Open: check that the script's two matrices are the library's backgrounds (the Wilson
-  kernel `γ₅(D_W − M)` at `M = r = 1` of `PMAction.DomainWall`, link transports of
-  `PMAction.Machine.MatterContinuum`, the constant-flux link phases), for instance by stating the
-  kernel in Lean and checking a few matrix entries against the script's builder.
+  premise. The spin structure is checked (`PMAction.TorusWilson`: the script's gammas are the
+  library's `i β αⱼ`, `β`, with `γ₅ = Γ`, and `wilsonH` is Hermitian for any links). Open: that the
+  script's site indexing and link-phase function (constant flux `n₁₂`, `n₃₄`) are `wilsonH` with those
+  link values; state the flux phases in Lean (`T_μ(x, x + μ̂) = e^{2πi f_μ(x)}` with the script's
+  `phases`) and check that the product of phases around each plaquette is the stated flux.
 - **Running couplings.** Consume a theorem on the subtracted lattice polarization from PMAction
   (PMAction item "Subtracted lattice polarization": vertex and contact done in `FiniteVertex`,
   `PolarizationContact`; open is a bound that resolves the `q²` coefficient), in place of

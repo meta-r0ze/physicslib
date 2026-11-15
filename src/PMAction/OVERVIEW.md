@@ -140,6 +140,12 @@ shows closed injective updates cannot finitely prepare a stationary state.
   row-dominant, then `H` is invertible and its negative count is the sign count of `B`'s diagonal;
   `row_gap_of_squared_error` certifies the rows from one Frobenius bound. No Gram estimate on `Q` is
   needed.
+- `TorusWilson`: the Wilson kernel on the `L⁴` torus for any site hops and link values,
+  `D = (4r − M)·1 + Σ_μ (T_μ ⊗ −½(r − γ_μ) + T_μᴴ ⊗ −½(r + γ_μ))`, `H = (1 ⊗ γ₅) D`, is Hermitian for
+  Hermitian `γ`, `γ₅` with `γ₅` anticommuting (`wilsonH_hermitian`, by Kronecker algebra). The
+  certificate script's gammas are the library's: `γⱼ = i β αⱼ`, `γ₃ = β`, `γ₀γ₁γ₂γ₃ = Γ`
+  (`script_gamma0_eq` … `script_gamma5_eq`), so its kernel is Hermitian for any links
+  (`script_kernel_hermitian`).
 - `ZeroModeCoupling`: the inter-sector hop `−β(r+Γ)/2` splits into `β(1+Γ)`, which annihilates the
   zero modes (`wilson_kills`), and `β(1−Γ)`, which joins them (`off_wilson_joins`); the direct
   zero-mode coupling is `(r − 1)·βx` (`zero_mode_element`), zero at the Wilson point. A direct
