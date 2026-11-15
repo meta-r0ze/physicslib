@@ -37,9 +37,18 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
      `|δ_O| ≪ |y|`. PMFlavor's `U = 1` tests need `ε ≲ 0.04`, so `|δ_O| ≳ 12` and `|y| ≫ 12`: the crossing
      link much stronger than one lattice hop. If the crossing amplitude is itself an admittance
      (`≤ 1`, the carriers' normalization), `ε > 1/2` and `U` must be computed, not set to `1`.
-  So the open numbers are `|δ_O|` and `|y|` in hop units (or their ratio and `t_v`), and the
-  light-pair split. Candidate sources to examine: what normalizes the equal-class crossing `y`
-  (`GenerationParity`), and whether the other wall's chiral zero mode bounds `|δ_O|`. Also open: whether it is a wire constant or set by
+  4. *The crossing's normalization.* `WallExchange`'s `H_Y` puts `Y` beside the domain-wall hop
+     (`hop ⊗ Y`), and the class-independent crossing is that hop (`GenerationParity`, `CyclicSeesaw`:
+     `DomainWall`'s one hop), so `|y| = 1` in hop units. Then `|δ_O| ≪ 1` and `ε > 1/2`, and the vector
+     flip `K_f = 1/2` is not small against the crossing: the zero-energy reduction behind
+     `M = D₂ Y⁻¹ D₁ᴴ` is not controlled for the heavy label (corrections of order `K_f²/|y|² = 1/4`).
+  **Tension (recorded).** "Carrier amplitude is admittance, `K = 1`" (`NodeAmplitude`), "a carrier of
+  hop amplitude `t` flips by `−r t/2`" (`CarrierFlip`) and `|y| = 1` cannot all hold with a controlled
+  light-mode reduction and `U ≈ 1`. Resolve one of: (a) the vector carrier's hop amplitude is not its
+  admittance (`t_v ≪ 1`; only ratios like `k/K = α/2` are admittance statements); (b) the crossing
+  is stronger than one hop; (c) keep all three and compute the masses and `U` from the full two-wall
+  Hamiltonian, not the reduction. Until then PMFlavor's `U = 1` tests are not tests. The light-pair
+  split (protocol) is open in every case. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 
