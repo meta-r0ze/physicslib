@@ -24,6 +24,11 @@ of the wall it acts on, `U` in PMFlavor's `U_uᴴ J U_d` is close to `1` whereve
 masses are hierarchical, whatever `δ_O` is (given `|κ_O| ≲ |δ_O|`). For two label states with
 comparable `|dᵢ|` there is no suppression.
 
+* `det_X`, `det_M`: `det X = δ³ + κ₀κ₁κ₂` and `det M = d₀d₁d₂ (δ³ + κ₀κ₁κ₂)`. The product of the three
+  masses carries the other wall's carrier cycle product, the same rephasing invariant as the event's
+  (`PMFlavor.EventTransfer.cycle_invariant`); with `δ` real, its phase relative to `δ³` is the only
+  complex number the wall factor's determinant can carry.
+
 **The charged current reads this side.** `CompositeMass.effective_mass_general`: the light Dirac
 mass `D₂ Y⁻¹ D₁ᴴ` is the block whose rows are the `D₂` sector; `ReferenceWallMass` identifies `D₂`
 with wall `false`, the reference's wall; `WallChiralCurrent`: the chiral projector `(1 − Γ)/2` selects
@@ -63,5 +68,17 @@ theorem left_gram_entry (d : Fin 3 → ℂ) (δ : ℂ) (κ : Fin 3 → ℂ) (i j
     ((diagonal d * X δ κ) * (diagonal d * X δ κ)ᴴ) i j =
       d i * (star δ * cyc κ i j + δ * star (cyc κ j i)) * star (d j) := by
   rw [left_gram, Matrix.mul_diagonal, Matrix.diagonal_mul, x_gram_offdiag δ κ i j h, Pi.star_apply]
+
+/-- **The other wall's factor has determinant `δ³ + κ₀κ₁κ₂`**: the detuning cubed plus the product
+of the three carriers round the cycle. -/
+theorem det_X (δ : ℂ) (κ : Fin 3 → ℂ) : (X δ κ).det = δ ^ 3 + κ 0 * κ 1 * κ 2 := by
+  simp [X, cyc, Matrix.det_fin_three, Matrix.add_apply, Matrix.smul_apply]
+  ring
+
+/-- **The product of the three masses** is `|d₀ d₁ d₂| · |δ³ + κ₀κ₁κ₂|`: the reference-wall carriers
+times the other wall's detuning cubed plus its carrier cycle product. -/
+theorem det_M (d : Fin 3 → ℂ) (δ : ℂ) (κ : Fin 3 → ℂ) :
+    (diagonal d * X δ κ).det = d 0 * d 1 * d 2 * (δ ^ 3 + κ 0 * κ 1 * κ 2) := by
+  rw [det_mul, det_diagonal, det_X, Fin.prod_univ_three]
 
 end PMAction.ReferenceWallRotation
