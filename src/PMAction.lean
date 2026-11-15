@@ -130,6 +130,7 @@ import PMAction.PolarizationShellQ
 import PMAction.PolarizationGapSizes
 import PMAction.PolarizationPointwise
 import PMAction.PolarizationShellPointwise
+import PMAction.PolarizationShellIntegral
 import PMAction.TorusWilson
 import PMAction.TorusFlux
 import PMAction.ZeroModeCoupling
