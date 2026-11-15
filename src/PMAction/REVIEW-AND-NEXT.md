@@ -19,7 +19,7 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   (how far persisting states turn from the label states; PMFlavor's `U_uᴴ J U_d`) can be bounded.
   Already without it (`ReferenceWallRotation`): on the reference's wall every off-diagonal entry of
   `M Mᴴ` is `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`, so the rotation there is about `|dᵢ/dⱼ| · |κ_O/δ_O|`, suppressed by the
-  label states' mass ratio; open whether the event reads that side. Also open: whether it is a wire constant or set by
+  label states' mass ratio; the charged current reads that side (rows of `D₂ Y⁻¹ D₁ᴴ` are the reference's wall, which `(1 − Γ)/2` selects; one step by name). Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and
   PMElementaryParticles' "Species masses over the wire".
 

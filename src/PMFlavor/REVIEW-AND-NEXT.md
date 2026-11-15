@@ -86,8 +86,9 @@ data, and do not frame work as fitting Standard Model sectors.
    which carriers (PMElementaryParticles). With `δ_O` dominant the rotation is small; bound it.
    `PMAction.ReferenceWallRotation`: on the reference's wall (the event's wall) the rotation between
    label states `i`, `j` is about `|dᵢ/dⱼ| · |κ_O/δ_O|`, the mass ratio times the other wall's
-   carrier-to-detuning ratio, whatever `δ_O` is; no suppression for comparable `|dᵢ|`. Open: that the
-   event reads the reference-wall side (premise), and the sizes per protocol (EP). Then redo the item 1
+   carrier-to-detuning ratio, whatever `δ_O` is; no suppression for comparable `|dᵢ|`. The event reads
+   that side (`ReferenceWallRotation`: rows of the light mass are the reference's wall, the wall
+   `(1 − Γ)/2` selects). Open: the sizes per protocol (EP). Then redo the item 1
    and item 5 tests with this `U`.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the
    event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three

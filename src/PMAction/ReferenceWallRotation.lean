@@ -22,8 +22,14 @@ persistence states on that wall are the eigenvectors of `M Mᴴ`.
 (`Mᴴ M = Xᴴ |D_R|² X`) has no such factor. So if the charged current's persisting states are those
 of the wall it acts on, `U` in PMFlavor's `U_uᴴ J U_d` is close to `1` wherever the label states'
 masses are hierarchical, whatever `δ_O` is (given `|κ_O| ≲ |δ_O|`). For two label states with
-comparable `|dᵢ|` there is no suppression. The premise that the event reads the reference-wall side
-is stated here, not derived.
+comparable `|dᵢ|` there is no suppression.
+
+**The charged current reads this side.** `CompositeMass.effective_mass_general`: the light Dirac
+mass `D₂ Y⁻¹ D₁ᴴ` is the block whose rows are the `D₂` sector; `ReferenceWallMass` identifies `D₂`
+with wall `false`, the reference's wall; `WallChiralCurrent`: the chiral projector `(1 − Γ)/2` selects
+the second, negative-`Γ` wall, the reference's. So the states the charged current couples to are the
+rows of `M`, and their persisting combinations are the eigenvectors of `M Mᴴ`. The one step taken by
+name is that `WallSeesaw`'s second sector and `ConcreteFermion`'s second wall are the same wall.
 -/
 
 noncomputable section
