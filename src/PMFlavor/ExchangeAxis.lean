@@ -1,5 +1,5 @@
 import PMConstants.CarrierRepresentation
-import PMFlavor.GenerationLabel
+import PMAction.GenerationLabel
 
 /-!
 # Which exchange classes avoid the reference axis
@@ -59,7 +59,7 @@ theorem moves_onto_axis (c : Fin 3) (hc : c ≠ 0) (d : Carrier c) (x : Fin 4 �
     (x + vector d) 0 ≠ 0 := by
   simpa [hx] using spinor_ne c hc d
 
-open GenerationLabel in
+open PMAction.GenerationLabel in
 theorem one_pair_through : ∀ v : Glue, v ≠ 0 →
     (Finset.univ.filter fun p : Glue × Glue =>
       p.1 ≠ 0 ∧ p.2 ≠ 0 ∧ p.1 ≠ p.2 ∧ p.1 + p.2 = v).card = 2 := by

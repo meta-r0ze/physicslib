@@ -12,8 +12,8 @@ glue-class labels, exhaustively.
 **State.** `E₈` is the gluing of `D₄ ⊕ D₄` by equal glue classes (`PMSubstrate.ChannelSymmetry`).
 A generation state puts a nontrivial class `b` on wall 1 and a nontrivial class `c ≠ b` on wall 2
 (`IsGen`), an off-diagonal coset of `D₄* ⊕ D₄*`; its label is `b + c`, the third class
-(`PMFlavor.GenerationLabel`). There are six ordered pairs (`gen_count`), two orientations per label.
-`PMConstants.GenerationWalls` instead encodes a generation's modes as single carriers on one wall;
+(`PMAction.GenerationLabel`). There are six ordered pairs (`gen_count`), two orientations per label.
+`PMAction.GenerationWalls` instead encodes a generation's modes as single carriers on one wall;
 relating the two state spaces is the next step (`REVIEW-AND-NEXT.md`).
 
 **E₈ moves (translations by `(a, a)`).**
@@ -22,10 +22,10 @@ relating the two state spaces is the next step (`REVIEW-AND-NEXT.md`).
   root move, classes unchanged) or `a = b + c`, the label.
 * `label_glue_swaps`: translation by the label swaps the two classes between the walls,
   `(b, c) ↦ (c, b)`. It keeps the label and reverses the orientation. Caution: the vacuum fixes
-  one orientation per label (`PMConstants.GenerationWalls.side`, one of two balanced conventions),
+  one orientation per label (`PMAction.GenerationWalls.side`, one of two balanced conventions),
   and the 48 modes leave no room for the other (`no_further_modes`), so this translation maps
   between the two conventions; it is not an operator within the physical mode space of one
-  convention (`PMConstants.GenerationOrientation`). Within one convention a generation-diagonal
+  convention (`PMAction.GenerationOrientation`). Within one convention a generation-diagonal
   chirality flip changes the class by the label, which the gluing (equal classes) does not allow
   as a single move.
 

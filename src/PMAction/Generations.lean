@@ -24,7 +24,7 @@ a model obligation. They overlap as native carrier sets: see `GenerationEncoding
 capacity and linear-amplitude bounds when their generation distinctions are retained.
 -/
 
-namespace PMConstants.Generations
+namespace PMAction.Generations
 open PMAction PMAction.CarrierEvents PMAction.CarrierCost
 
 theorem same_class_loses (a : Fin 3) :
@@ -40,4 +40,4 @@ theorem three_pairs :
 
 theorem packets_sixteen (a b : Fin 3) : Fintype.card (Packet a b) = 16 := packet_card a b
 
-end PMConstants.Generations
+end PMAction.Generations

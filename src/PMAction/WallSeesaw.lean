@@ -40,15 +40,15 @@ light modes is the identification the formula proposes.
 **What `Y` is in flavour terms.** `Y` is the inter-wall term, so it flips chirality: it is the mass
 (`WallTransfer`: the only term joining the walls). Whether its generation off-diagonal entries also
 carry the quark mixing is not settled here. Two results bear on it: the charged current's own
-generation move is a single-wall shift that keeps chirality (`PMFlavor.GenerationLabel`), and a
+generation move is a single-wall shift that keeps chirality (`PMAction.GenerationLabel`), and a
 conserving `Y` (a Laplacian of the generation–class incidence) carrying the CKM is excluded by the
 quark masses and mixing together (`PMFlavor.ThirdGenerationMixing`).
 A `Y` with independent diagonal entries is not excluded, but then this formula does not fix them;
 and if `Y` is the equal-class crossing the E₈ gluing allows (the flavour sector's `Y_gap`), its
 diagonal is zero. If it is also Hermitian (the exchange symmetry of `WallExchange`), it cannot carry
-a charged hierarchy through this formula (`PMFlavor.InterWallDiagonal`), and with flavour-dependent
+a charged hierarchy through this formula (`PMAction.InterWallDiagonal`), and with flavour-dependent
 on-site insertions the reduction `D Y⁻¹ D` leaves the two light generations degenerate at leading
-order (`PMFlavor.MassInsertion`); the flavour sector then needs a term joining the two zero modes
+order (`PMAction.MassInsertion`); the flavour sector then needs a term joining the two zero modes
 directly, which this Hamiltonian does not contain. The crossing itself is directional (a weighted
 cyclic shift); without the exchange symmetry these exclusions do not apply, and this formula gives one
 Dirac pair per class with mass `δ²/|y_c|`. These are statements about this Hamiltonian; the physical

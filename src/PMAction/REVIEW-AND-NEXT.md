@@ -3,17 +3,17 @@
 ## Generation sector
 
 The six-step plan is done, and the wire's mass form is derived (OVERVIEW: `GenerationSector`,
-`CarrierFlip`, `ReferenceDetuning`; `PMFlavor.ReferenceWallMass`: `M = D_R (δ_O + cyc κ_O)`). How
+`CarrierFlip`, `ReferenceDetuning`; `PMAction.ReferenceWallMass`: `M = D_R (δ_O + cyc κ_O)`). How
 each species uses the wire is protocol work in
 [PMElementaryParticles](../PMElementaryParticles/REVIEW-AND-NEXT.md). The node amplitude is
-derived (`PMFlavor.NodeAmplitude`: `k/K = α/2`). Open, wire only:
+derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 
 - **Size of the other wall's detuning.** `ReferenceDetuning` puts the reference's wall at the
   Wilson point (`δ_R = 0`), so the seesaw term `δ_F δ_T Y⁻¹` vanishes and the light mass is
   `D_R (δ_O + cyc κ_O)` with no competing direct term on the reference's wall. The other wall's
   detuning `δ_O` (in `ZeroModeCoupling`'s terms, its departure from `r = 1`) sets the mass scale and,
   relative to the carriers, the mixing. It must be nonzero: at `δ_O = 0` the mass is a cyclic shift
-  with masses `(kK, k², kK)`, two heavy and one light (`PMFlavor.UndetunedWall`), the reverse of
+  with masses `(kK, k², kK)`, two heavy and one light (`PMAction.UndetunedWall`), the reverse of
   the observed ordering. Find what fixes its size on the substrate; the library has no source yet.
   Once it is fixed the wire has no free number. Also open: whether it is a wire constant or set by
   what a protocol occupies on that wall. Upstream of PMFlavor's "The wire's own mixing" and

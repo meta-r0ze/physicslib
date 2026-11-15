@@ -1,4 +1,4 @@
-import PMFlavor.LightSplit
+import PMAction.LightSplit
 import PMAction.ReferenceDetuning
 
 /-!
@@ -23,8 +23,8 @@ off the reference's wall.
 -/
 
 noncomputable section
-namespace PMFlavor.ReferenceWallMass
-open Matrix PMFlavor.CyclicSeesaw PMFlavor.CompositeMass
+namespace PMAction.ReferenceWallMass
+open Matrix PMAction.CyclicSeesaw PMAction.CompositeMass
 
 /-- **With no detuning on the reference's wall the light mass factors as `D_R (δ_O + cyc κ_O)`.** -/
 theorem reference_wall_mass (y κ κ' : Fin 3 → ℂ) (δT : ℂ) (hy : ∀ j, y j ≠ 0) :
@@ -32,4 +32,4 @@ theorem reference_wall_mass (y κ κ' : Fin 3 → ℂ) (δT : ℂ) (hy : ∀ j, 
       diagonal ![κ 2 * (y 2)⁻¹, κ 0 * (y 0)⁻¹, κ 1 * (y 1)⁻¹] * (δT • 1 + cyc κ') := by
   rw [zero_smul, zero_add, inv_cyc y hy, cyc_mul_cycInv]
 
-end PMFlavor.ReferenceWallMass
+end PMAction.ReferenceWallMass

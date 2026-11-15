@@ -1,5 +1,5 @@
-import PMFlavor.GenerationLabel
-import PMFlavor.InterWallDiagonal
+import PMAction.GenerationLabel
+import PMAction.InterWallDiagonal
 
 /-!
 # A generation's diagonal mass needs an insertion of its own label class
@@ -63,7 +63,7 @@ generation is not weakly mixed (PMNS), so the lepton side needs its own reading 
 lepton-axis states mix by one leg).
 -/
 
-namespace PMFlavor.MassInsertion
+namespace PMAction.MassInsertion
 open GenerationLabel
 
 /-- **The class gap of a two-wall bilinear is the class sum**, zero exactly for equal classes. -/
@@ -95,4 +95,4 @@ theorem light_pair_degenerate (δs δc : ℝ) (x : ℂ) :
     ‖((δs * δc : ℝ) : ℂ) * (1 / (starRingEnd ℂ) x)‖ = ‖((δs * δc : ℝ) : ℂ) * (1 / x)‖ := by
   simp
 
-end PMFlavor.MassInsertion
+end PMAction.MassInsertion

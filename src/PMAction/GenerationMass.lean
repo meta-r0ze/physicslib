@@ -1,4 +1,4 @@
-import PMConstants.GenerationOrientation
+import PMAction.GenerationOrientation
 
 /-!
 # A generation-diagonal mass from allowed moves: a crossing and a label-class carrier
@@ -12,7 +12,7 @@ Step 3 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`). Within one orie
   chirality flip changes the class, by the label (`GenerationOrientation.type_label`). The gluing
   joins only equal classes, so this is not one move.
 * `crossing_changes_generation`: the equal-class crossing, the move the gluing does allow, lands in
-  another generation (as `PMFlavor.InterWallDiagonal`).
+  another generation (as `PMAction.InterWallDiagonal`).
 
 **Two allowed moves do.** An equal-class crossing and a single-wall carrier, in either order:
 * `composite_cross_then_shift`: cross generation `g`'s wall-`true` class `g + 1` to wall `false`
@@ -21,7 +21,7 @@ Step 3 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`). Within one orie
 * `composite_shift_then_cross`: shift wall `true` from `g + 1` to `g − 1` (landing in generation
   `g + 1`), then cross class `g − 1`; again generation `g` on wall `false`.
 * `composite_carrier_is_label`: in both orders the carrier's class change is
-  `e (g + 1) + e (g − 1) = e g`, the generation's own label, the insertion `PMFlavor.MassInsertion`
+  `e (g + 1) + e (g − 1) = e g`, the generation's own label, the insertion `PMAction.MassInsertion`
   requires (`bilinear_gap`). The intermediate is another generation, so the composite is second
   order.
 
@@ -32,14 +32,14 @@ displacements avoid the reference axis (in-cycle), every spinor-class displaceme
 node crossing). So `m_g ∝ y · κ_{label g}`, with `κ` unsuppressed for the label-`v` generation and
 node-suppressed for the two others: one heavy generation and two light ones, the heavy one being the
 generation whose two mixings both cross the node (`PMAction.GenerationSector`,
-`PMFlavor.MassInsertion`). That is the observed pattern (one heavy, weakly mixed generation). Not
+`PMAction.MassInsertion`). That is the observed pattern (one heavy, weakly mixed generation). Not
 fixed here: the size of the node factor (the leg rule gives `α⁻¹` or `α^{−1/2}` and does not match
 the measured heavy/middle ratios, `PMFlavor/REVIEW-AND-NEXT.md`), and the split of the two light
 generations, which are degenerate at this order (their insertions are the two spinor classes; the
 weak wall distinguishes them, `PMFlavor.ExchangeChirality`).
 -/
 
-namespace PMConstants.GenerationMass
+namespace PMAction.GenerationMass
 open PMAction.GenerationSector GenerationOrientation GenerationWalls
 
 /-- **A generation's two wall classes differ.** -/
@@ -64,4 +64,4 @@ theorem composite_carrier_is_label : ∀ e : Fin 3 → Glue, Good e → ∀ g : 
     e (g + 1) + e (g - 1) = e g := by
   decide +kernel
 
-end PMConstants.GenerationMass
+end PMAction.GenerationMass

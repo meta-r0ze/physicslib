@@ -1,5 +1,5 @@
 import PMFlavor.LinkKronComparison
-import PMConstants.GenerationWalls
+import PMAction.GenerationWalls
 
 /-!
 # Where a CP phase can sit on the incidence network: one flux per sector
@@ -11,12 +11,12 @@ puts phases on the legs and finds what survives the reduction.
 
 **Reduction with complex legs.** A class vertex with legs `t₁, t₂` (conductances `g₁ = |t₁|`,
 `g₂ = |t₂|`) is eliminated exactly as in `KronSeries`; the reduced coupling is
-`kronC t₁ t₂ = −t₁ t̄₂ / (g₁ + g₂)` (`kronC_real`: for real legs it is `KronSeries.kron_two`).
+`kronC t₁ t₂ = −t₁ t̄₂ / (g₁ + g₂)` (`kronC_real`: for real legs it is `PMAction.KronReduction.kron_two`).
 A phase on a class vertex cancels; a phase on a generation vertex is a basis rephasing. On the
 hexagon this leaves one invariant per sector, the **flux** `(−Y₀₁)(−Y₁₂)(−Y₂₀)` (the reduced
 triangle's product of couplings). The CKM phase can only come from fluxes.
 
-**A wall-side leg phase.** `PMConstants.GenerationWalls.side` puts each leg of a generation on one
+**A wall-side leg phase.** `PMAction.GenerationWalls.side` puts each leg of a generation on one
 of the two walls: around the hexagon the legs alternate walls. If a leg's phase depends only on
 its wall (`legA`: `u` on one wall, `ū` on the other, moduli free):
 * `flux_cyclic`: the flux is a positive real times `ū⁶`. Each reduced coupling joins a leg on one
@@ -48,14 +48,14 @@ uniform moduli in each sector `J = 0`.
 noncomputable section
 namespace PMFlavor.LinkFlux
 open Matrix ComplexConjugate LinkKronComparison
-open PMConstants.GenerationWalls (side)
+open PMAction.GenerationWalls (side)
 
 /-- The reduced coupling of two generations through a class vertex with legs `t₁, t₂` of
 conductances `g₁, g₂` (the vertex's own conductance is `g₁ + g₂`). -/
 def kronC (t₁ t₂ : ℂ) (g₁ g₂ : ℝ) : ℂ := -(t₁ * conj t₂) / ((g₁ : ℂ) + g₂)
 
 /-- For real positive legs this is minus the series admittance `g₁g₂/(g₁ + g₂)`, the value of
-`KronSeries.kron_two`. -/
+`PMAction.KronReduction.kron_two`. -/
 theorem kronC_real (g₁ g₂ : ℝ) :
     kronC g₁ g₂ g₁ g₂ = ((-(g₁ * g₂ / (g₁ + g₂)) : ℝ) : ℂ) := by
   simp only [kronC, Complex.conj_ofReal]

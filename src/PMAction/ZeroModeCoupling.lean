@@ -3,7 +3,7 @@ import PMAction.DomainWall
 /-!
 # The direct zero-mode coupling is the off-Wilson part of the inter-sector hop
 
-`PMFlavor.MassInsertion` closed the routes that get the charged masses by inverting a link
+`PMAction.MassInsertion` closed the routes that get the charged masses by inverting a link
 (`δ²Y⁻¹`, `D Y⁻¹ D`) and left a term joining the two chiral zero modes directly. This module finds
 where such a term sits in the two-slice wall of `DomainWall`.
 

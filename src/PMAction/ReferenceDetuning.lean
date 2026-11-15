@@ -17,8 +17,8 @@ the second wall, components `(0, 0, a, b)`. Allow a separate detuning on each wa
 **Reading.** If the reference persists as a stationary zero mode of the same update the flavour
 fermions see (Paper II's stationarity, the premise `ChiralityConvention` already uses), the on-site
 chirality flip vanishes on the reference's wall and lives only on the other one. That is the
-maximal asymmetry `δ_R = 0` that `PMFlavor.LightSplit.near_maximal` requires, from a structural
-source, not a perturbative one. Consequences in `PMFlavor.LightSplit` (`composite_expansion2` with
+maximal asymmetry `δ_R = 0` that `PMAction.LightSplit.near_maximal` requires, from a structural
+source, not a perturbative one. Consequences in `PMAction.LightSplit` (`composite_expansion2` with
 one `δ` zero): the seesaw term `δ_F δ_T Y⁻¹` vanishes, and every generation's composite mass uses
 its label-class carrier on the reference's wall.
 -/

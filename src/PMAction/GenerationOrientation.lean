@@ -1,11 +1,11 @@
-import PMConstants.GenerationWalls
+import PMAction.GenerationWalls
 import PMAction.GenerationSector
 
 /-!
 # The two generation encodings are one, up to a frozen orientation
 
 `PMAction.GenerationSector` describes a generation by its glue classes on the two walls, an ordered
-pair `(b, c)` with label `b + c` (as `PMFlavor.GenerationLabel`). `GenerationWalls` indexes a
+pair `(b, c)` with label `b + c` (as `PMAction.GenerationLabel`). `GenerationWalls` indexes a
 generation `g` by the classes it carries, `g + 1` on wall `true` and `g − 1` on wall `false`
 (`side`). This module relates them, for **every** identification `e` of `Fin 3` with the three
 nontrivial classes (`Good e`), so no identification is chosen.
@@ -29,7 +29,7 @@ nontrivial classes (`Good e`), so no identification is chosen.
   `PMAction/REVIEW-AND-NEXT.md`).
 -/
 
-namespace PMConstants.GenerationOrientation
+namespace PMAction.GenerationOrientation
 open PMAction.GenerationSector
 
 /-- An identification of `Fin 3` with the three nontrivial glue classes. -/
@@ -72,4 +72,4 @@ unequal. -/
 theorem single_crossing_unequal : ∀ e : Fin 3 → Glue, Good e → ∀ g : Fin 3,
     e g + e (g - 1) ≠ 0 ∧ e (g + 1) + e g ≠ 0 ∧ e g + e (g - 1) ≠ e (g + 1) + e g := by decide +kernel
 
-end PMConstants.GenerationOrientation
+end PMAction.GenerationOrientation

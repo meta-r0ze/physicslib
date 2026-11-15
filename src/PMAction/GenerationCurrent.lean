@@ -1,4 +1,4 @@
-import PMConstants.GenerationMass
+import PMAction.GenerationMass
 
 /-!
 # Generation changes within one convention: a carrier and a glue move, a directed cycle per wall
@@ -30,7 +30,7 @@ CKM pattern (`|V_us|` large, `|V_ub|`, `|V_cb|` small). The mass composite (`Gen
 generation change share the single-wall carrier, so masses and mixings share its amplitudes.
 -/
 
-namespace PMConstants.GenerationCurrent
+namespace PMAction.GenerationCurrent
 open PMAction.GenerationSector GenerationOrientation
 
 /-- **No single-wall shift reaches another generation within the convention.** -/
@@ -62,4 +62,4 @@ theorem edge_carrier : ∀ e : Fin 3 → Glue, Good e → ∀ g v : Fin 3,
     (e (g - 1) = e v ↔ g = v + 1) ∧ (g = v + 1 → g ≠ v ∧ g + 1 ≠ v) := by
   decide +kernel
 
-end PMConstants.GenerationCurrent
+end PMAction.GenerationCurrent

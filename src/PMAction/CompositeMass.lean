@@ -1,9 +1,9 @@
-import PMFlavor.CyclicSeesaw
+import PMAction.CyclicSeesaw
 
 /-!
 # Where the composite mass enters the two-wall Hamiltonian
 
-`PMConstants.GenerationMass`: within one convention a generation-diagonal mass is a composite, an
+`PMAction.GenerationMass`: within one convention a generation-diagonal mass is a composite, an
 equal-class crossing and a single-wall carrier of the generation's label class. `CyclicSeesaw`: the
 crossing alone gives three equal seesaw masses. This module places the carrier in `WallSeesaw`.
 
@@ -36,8 +36,8 @@ to equal, which the data exclude.
 -/
 
 noncomputable section
-namespace PMFlavor.CompositeMass
-open Matrix PMFlavor.CyclicSeesaw PMAction.WallSeesaw
+namespace PMAction.CompositeMass
+open Matrix PMAction.CyclicSeesaw PMAction.WallSeesaw
 
 section General
 variable {n : Type*} [Fintype n] [DecidableEq n]
@@ -93,4 +93,4 @@ theorem composite_expansion (y κ κ' : Fin 3 → ℂ) (δ : ℂ) (hy : ∀ j, y
   rw [smul_add, smul_smul]
   abel
 
-end PMFlavor.CompositeMass
+end PMAction.CompositeMass

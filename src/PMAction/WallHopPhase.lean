@@ -5,7 +5,7 @@ import PMAction.ConcreteFermion
 
 `PersistenceMechanics.InformationTransfer`: every transfer channel carries a phase and a cost,
 amplitude `e^{iφ − βc/2}`. For generation mixing the channel is a carrier hop on one wall
-(`PMFlavor.GenerationLabel`: a single-wall shift), and the charged current acts on one wall and one
+(`PMAction.GenerationLabel`: a single-wall shift), and the charged current acts on one wall and one
 chirality (`WallChiralCurrent`). This module computes the phase of such a hop.
 
 A lattice hop along direction `j` is the Wilson form `−(i αⱼ + r β)/2` (`DomainWall`). On one

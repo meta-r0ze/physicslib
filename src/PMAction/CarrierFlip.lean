@@ -3,7 +3,7 @@ import PMAction.ConcreteFermion
 /-!
 # The chirality-flip part of an in-wall hop is the on-site mass operator
 
-`PMFlavor.CompositeMass` places the composite mass in the on-site chirality-flip slot `δβ`, under
+`PMAction.CompositeMass` places the composite mass in the on-site chirality-flip slot `δβ`, under
 the premise that a single-wall carrier flips chirality. This module checks that premise against the
 hop's own Dirac structure.
 

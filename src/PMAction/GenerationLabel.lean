@@ -6,7 +6,7 @@ import Mathlib.Tactic
 # Root moves conserve the generation label; mixing needs a single-wall carrier move
 
 A generation puts nontrivial `D₄` glue classes `b` and `c` (`b ≠ c`) on the two walls
-(`PMConstants.Generations.three_pairs`); its label is the class it omits, which in the glue group
+(`PMAction.Generations.three_pairs`); its label is the class it omits, which in the glue group
 `G = Z₂ × Z₂` is `m = b + c` (the sum of two distinct nontrivial classes is the third).
 
 `E₈` is glued from `D₄ ⊕ D₄` by pairing equal glue classes (`PMSubstrate.ChannelSymmetry`; every
@@ -23,7 +23,7 @@ gluing into an even unimodular lattice reduces to this by a triality in one sect
 
 Two operators, kept distinct (audit): the **single-wall shift** here acts on the glue labels only,
 `(b, c) ↦ (b + a, c)`, and contains no chirality operator; the **inter-wall crossing** of
-`PMConstants.GenerationWalls` moves a fixed class to the other wall. `PMConstants.GenerationOrientation`
+`PMAction.GenerationWalls` moves a fixed class to the other wall. `PMAction.GenerationOrientation`
 relates them: `GenerationWalls`' index is this label with the orientation frozen, and its crossing
 changes the two walls' classes by unequal amounts, which is not a move of
 `PMAction.GenerationSector`; the single-wall shift is (`shift_keeps_iff`). Identifying either with the charged current needs a map
@@ -45,7 +45,7 @@ the reference-free generation is the weakly mixed one. The CKM forms follow that
 `s`/`c` split is the weak current's parity violation (`ExchangeChirality`).
 -/
 
-namespace PMFlavor.GenerationLabel
+namespace PMAction.GenerationLabel
 
 /-- The glue group `D₄*/D₄`. -/
 abbrev Glue := ZMod 2 × ZMod 2
@@ -77,4 +77,4 @@ theorem third_class : ∀ m m' : Glue, m ≠ 0 → m' ≠ 0 → m ≠ m' →
     m + m' ≠ 0 ∧ m + m' ≠ m ∧ m + m' ≠ m' := by
   decide
 
-end PMFlavor.GenerationLabel
+end PMAction.GenerationLabel

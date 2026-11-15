@@ -81,7 +81,6 @@ import PMConstants.VevPremises
 import PMConstants.DepthEvents
 import PMConstants.CarrierRepresentation
 import PMConstants.BaryonNumber
-import PMConstants.Generations
 import PMConstants.FloorNeutrino
 import PMConstants.BetaUniversality
 import PMConstants.GravityAccounting
@@ -190,14 +189,7 @@ import PMConstants.ReferenceMaintenance
 import PMConstants.ReferenceMaintenanceLedger
 
 import PMConstants.SectorCapabilities
-import PMConstants.GenerationEncoding
-import PMConstants.GenerationHistory
-import PMConstants.GenerationWalls
-import PMConstants.GenerationOrientation
-import PMConstants.GenerationMass
-import PMConstants.GenerationCurrent
 import PMConstants.GenerationWeak
-import PMConstants.GenerationParity
 import PMConstants.GenerationVacuumChoice
 import PMConstants.CarrierPhaseComparison
 import PMConstants.CarrierRegisterModel

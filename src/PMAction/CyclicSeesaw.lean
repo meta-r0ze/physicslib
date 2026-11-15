@@ -1,4 +1,4 @@
-import PMConstants.GenerationParity
+import PMAction.GenerationParity
 import PMAction.WallSeesaw
 
 /-!
@@ -7,7 +7,7 @@ import PMAction.WallSeesaw
 Step 6 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`): what steps 1 to 5 give the flavour
 sector. Within one orientation convention the equal-class crossing puts the inter-wall link `Y`
 (wall-`false` generation to wall-`true` generation) only at the positions `(h + 1, h)`
-(`PMConstants.GenerationParity.crossing_entry`). So `Y` is a weighted cyclic shift `cyc y`, one
+(`PMAction.GenerationParity.crossing_entry`). So `Y` is a weighted cyclic shift `cyc y`, one
 crossing amplitude `y h` per class.
 
 * `cyc_support`: `cyc y` vanishes off `(h + 1, h)`, the support `GenerationParity` allows.
@@ -17,7 +17,7 @@ crossing amplitude `y h` per class.
   (`PMConstants.GenerationWeak`), so it sees only one of the two labels.
 * `gram_equal`: a class-independent crossing (`DomainWall`'s one hop) gives `Yᴴ Y = |a|² · 1`, so
   the three seesaw masses are equal. The seesaw does not carry the hierarchy; the generation-diagonal
-  composite of `PMConstants.GenerationMass` must.
+  composite of `PMAction.GenerationMass` must.
 * `det_cyc`: `det Y = y 0 · y 1 · y 2`, with sign `+` (the 3-cycle is even).
   `det_cyc_real`, `light_det_real`: for real amplitudes `det Y` and `det M` are real, so
   `arg det M ∈ {0, π}`. This bears only on the older Hermitian-mass route to `θ̄ = 0`
@@ -31,7 +31,7 @@ this sector predicts three degenerate charged masses per sector, which the data 
 -/
 
 noncomputable section
-namespace PMFlavor.CyclicSeesaw
+namespace PMAction.CyclicSeesaw
 open Matrix PMAction.WallSeesaw
 
 /-- The weighted cyclic shift: crossing amplitude `y h` at `(h + 1, h)`. -/
@@ -78,4 +78,4 @@ theorem light_det_real (y : Fin 3 → ℝ) (δ : ℝ) :
   push_cast
   ring
 
-end PMFlavor.CyclicSeesaw
+end PMAction.CyclicSeesaw

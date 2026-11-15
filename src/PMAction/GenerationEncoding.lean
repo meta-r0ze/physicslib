@@ -1,4 +1,4 @@
-import PMConstants.Generations
+import PMAction.Generations
 import Mathlib.Logic.Equiv.Fin.Basic
 
 /-!
@@ -18,7 +18,7 @@ is a physical update law or a new admissible primitive event.
 -/
 
 noncomputable section
-namespace PMConstants.GenerationEncoding
+namespace PMAction.GenerationEncoding
 open PMAction.CarrierEvents PMAction.CarrierCost
 
 /-- All actual minimal carriers in the three nontrivial glue classes. -/
@@ -163,4 +163,4 @@ theorem equal_class_boundary (c : Fin 3) :
       Function.Injective (equalClassTagged c) :=
   ⟨Generations.same_class_loses c, (equalClassTagged c).injective⟩
 
-end PMConstants.GenerationEncoding
+end PMAction.GenerationEncoding

@@ -104,25 +104,25 @@ shows closed injective updates cannot finitely prepare a stationary state.
   (`glue_keeps_iff`); translation by the label swaps the walls' classes (`label_glue_swaps`), keeping the label and
   reversing the orientation (between the two conventions, not within one). Generation changes need a single-wall `D₄*`
   carrier equal to the other wall's class (`shift_keeps_iff`, `shift2_keeps_iff`).
-  Built on it (generation-sector plan, done): `PMConstants.GenerationOrientation` (the two encodings
+  Built on it (generation-sector plan, done): `PMAction.GenerationOrientation` (the two encodings
   agree; `GenerationWalls`' index is the label with the orientation frozen), `GenerationMass` (the
   diagonal mass is a composite: equal-class crossing plus a carrier of the label class),
   `GenerationCurrent` and `GenerationWeak` (generation changes are a carrier plus a glue move; the
   weak vector carrier makes only the light-pair change), `GenerationParity` (within one convention
-  the crossing link is one-directional, never Hermitian), and `PMFlavor.CyclicSeesaw` (the seesaw on
+  the crossing link is one-directional, never Hermitian), and `PMAction.CyclicSeesaw` (the seesaw on
   that link: masses `δ²/|y_h|`, equal for a class-independent crossing; `det Y` the product of the
   amplitudes).
 - `CarrierFlip`: an in-wall hop `−(i αⱼ + r β)/2` is a kinetic part `−(i/2) αⱼ`, which commutes
   with `Γ` (keeps chirality, no mass), plus a Wilson part `−(r/2) β`, which anticommutes with `Γ` and
   is the on-site mass operator (`hop_split`, `keep_commutes`, `flip_anticommutes`). So a carrier hop
-  of amplitude `t` puts `−r t/2` in the slot of `δβ`: the premise of `PMFlavor.CompositeMass`, for a
+  of amplitude `t` puts `−r t/2` in the slot of `δβ`: the premise of `PMAction.CompositeMass`, for a
   carrier of this Wilson form. At `r = 1` the composite mass ratios are the carrier amplitude ratios.
 - `ReferenceDetuning`: with a separate on-site detuning per wall, `Hw δ₁ δ₂` (`Hw_equal`: equal
   values give `hamiltonian 0 δ`), the second-wall reference background `(0, 0, a, b)` is sent to
   `δ₂ (a, b, 0, 0)` (`second_wall_action`), so it is a zero mode exactly when `δ₂ = 0`
   (`stationary_iff`); the other wall's detuning is free. If the reference persists as a stationary
   zero mode of the update the flavour fermions see, the on-site chirality flip lives only on the
-  wall without the reference: the maximal wall asymmetry `PMFlavor.LightSplit` needs, from a
+  wall without the reference: the maximal wall asymmetry `PMAction.LightSplit` needs, from a
   structural source.
 - `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
   Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each

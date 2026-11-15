@@ -1,11 +1,12 @@
-import PMConstants.GenerationWeak
+import PMAction.GenerationWalls
+import Mathlib.LinearAlgebra.Matrix.Hermitian
 
 /-!
 # Within one convention the wall crossing is one-directional, so it is not Hermitian
 
 Step 5 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`). `PMAction.WallExchange`: the
 inter-wall link `Y` is Hermitian exactly when the update is symmetric under the wall-parity
-exchange. `PMFlavor.InterWallDiagonal` and `MassInsertion` split on whether it is. This module
+exchange. `PMAction.InterWallDiagonal` and `MassInsertion` split on whether it is. This module
 settles it for the equal-class crossing within one orientation convention.
 
 `Y` is the wall-`false`-to-wall-`true` block (`hop ⊗ Y`). An equal-class crossing at class `c` takes
@@ -29,7 +30,7 @@ which this excludes. The current route, `ThetaBarSelection`, gives `θ̄ = 0` fo
 (`Zm_eq`: the vacuum sees only `θ − arg det M`), so the non-Hermitian link does not affect it.
 -/
 
-namespace PMConstants.GenerationParity
+namespace PMAction.GenerationParity
 open GenerationWalls Matrix
 
 /-- **A crossing at class `c` sits at (wall-`true` generation, wall-`false` generation)
@@ -53,4 +54,4 @@ theorem hermitian_only_if_zero {n : Type*} (S : n → n → Prop) (Y : Matrix n 
     rfl
   · rw [hsupp i j h]; rfl
 
-end PMConstants.GenerationParity
+end PMAction.GenerationParity

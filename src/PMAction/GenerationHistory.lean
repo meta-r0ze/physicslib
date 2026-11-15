@@ -1,4 +1,4 @@
-import PMConstants.GenerationEncoding
+import PMAction.GenerationEncoding
 import PMAction.Machine.SubstrateWeylRoots
 import PMAction.FiniteEncoding
 
@@ -17,7 +17,7 @@ a free record supply or the independent three-generation Hilbert space.
 -/
 
 noncomputable section
-namespace PMConstants.GenerationHistory
+namespace PMAction.GenerationHistory
 open GenerationEncoding PMAction.CarrierEvents
 open Classical Matrix
 
@@ -129,4 +129,4 @@ theorem root_word_block (word : List (Bool × Fin 4)) (h k : History)
       (congrArg (fun z => (read z).2.val) he)
   simp [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, hk]
 
-end PMConstants.GenerationHistory
+end PMAction.GenerationHistory

@@ -1,4 +1,4 @@
-import PMFlavor.CompositeMass
+import PMAction.CompositeMass
 import Mathlib.Tactic.Module
 
 /-!
@@ -12,7 +12,7 @@ incidence (`swap_with_exchange`), and only the weak current, on one wall, breaks
   carriers `κ` (wall `false`) and `κ'` (wall `true`) with the crossing's support,
   `M = δ_F δ_T Y⁻¹ + δ_F · diag(κ'/y) + δ_T · diag(κ/y) + (second order, cyclic)`. Generation `g`'s
   diagonal entry is `δ_T κ_F(e g) + δ_F κ_T(e g)` (over `y`): one term from each order of
-  `PMConstants.GenerationMass`, each with the label class `e g`.
+  `PMAction.GenerationMass`, each with the label class `e g`.
 * `light_split`: if the carrier amplitudes keep the swap × exchange symmetry
   (`κ_F(s) = κ_T(c)`, `κ_T(s) = κ_F(c)`), the difference of the two light diagonal entries is
   `(δ_T − δ_F) · (κ_F(s) − κ_T(s))`.
@@ -48,8 +48,8 @@ sector, a test.
 -/
 
 noncomputable section
-namespace PMFlavor.LightSplit
-open Matrix PMFlavor.CyclicSeesaw PMFlavor.CompositeMass
+namespace PMAction.LightSplit
+open Matrix PMAction.CyclicSeesaw PMAction.CompositeMass
 
 /-- **The light mass with wall-dependent on-site flips and carriers.** -/
 theorem composite_expansion2 (y κ κ' : Fin 3 → ℂ) (δF δT : ℂ) (hy : ∀ j, y j ≠ 0) :
@@ -88,4 +88,4 @@ theorem one_wall_flip (δT kFs kTs kFc kTc : ℂ) (h1 : kFs = kTc) (h2 : kTs = k
     δT * kFs + 0 * kTs = δT * kFs ∧ δT * kFc + 0 * kTc = δT * kTs := by
   subst h1 h2; constructor <;> ring
 
-end PMFlavor.LightSplit
+end PMAction.LightSplit

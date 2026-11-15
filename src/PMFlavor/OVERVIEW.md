@@ -142,12 +142,12 @@ of its singular values are within a factor `2` (`traceless_close_pair`), and und
 light masses are too (`seesaw_close_pair`); every charged sector has its closest pair more than `16`
 apart (`no_measured_lepton_traceless`). The crossing itself is directional (a weighted cyclic shift,
 whose singular values are the three class amplitudes), so without that symmetry the argument does
-not apply. Within one convention the symmetry is broken (`PMConstants.GenerationParity`). The
+not apply. Within one convention the symmetry is broken (`PMAction.GenerationParity`). The
 seesaw on that link (`CyclicSeesaw`): `Yᴴ Y` is diagonal (`gram_cyc`), so one Dirac pair per class
 with mass `δ²/|y_h|`, pairing generation `h` on one wall with `h + 1` on the other; the crossing is
 `DomainWall`'s one hop, the same for every class, so the three seesaw masses are equal
 (`gram_equal`). The hierarchy must come from the composite diagonal term
-(`PMConstants.GenerationMass`). `det Y = y₀y₁y₂` (`det_cyc`), real for real amplitudes
+(`PMAction.GenerationMass`). `det Y = y₀y₁y₂` (`det_cyc`), real for real amplitudes
 (`light_det_real`). That matters only to the older Hermitian-mass route to `θ̄ = 0`; the current
 route (`PMConstants.ThetaBarSelection`) holds for any invertible mass.
 
@@ -181,7 +181,7 @@ root, which acts on both sectors). With the swap × exchange symmetry the light 
 
 **The node amplitude.** `NodeAmplitude`: the vector carrier is an in-cycle event, which passes
 with certainty, so `K = 1` (`HandoffAdmittance.transmission_of_linear`); the spinor carrier crosses
-the node by two legs of admittance `α`, which Kron reduction puts in series (`KronSeries.kron_two`),
+the node by two legs of admittance `α`, which Kron reduction puts in series (`PMAction.KronReduction.kron_two`),
 so `k = α/2` (`node_series`, `node_kron`, `node_amplitude_value`: `1/(2Z)`). The mass carrier has no
 lead boundary; the CKM transfer adds the `1/π` boundary (`KronSeries.vub_from_kron`).
 

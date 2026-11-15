@@ -1,5 +1,5 @@
-import PMFlavor.KronSeries
-import PMFlavor.ReferenceWallMass
+import PMAction.KronReduction
+import PMAction.ReferenceWallMass
 
 /-!
 # The node amplitude: a spinor-class carrier is `α/2` of the vector edge
@@ -14,7 +14,7 @@ carriers are spinor class with one magnitude `k` on both walls (one leg weight o
   admittance `1` (`HandoffAdmittance.transmission_of_linear`), so `K = 1`.
 * The spinor carrier must cross the reference node (`ExchangeAxis.spinor_touch`): leg, node, leg,
   each leg of admittance `α` (`HandoffAdmittance.handoff_is_alpha`). The link conserves what it
-  carries, so eliminating the node is Kron reduction (`KronSeries.kron_two`): the two legs act in
+  carries, so eliminating the node is Kron reduction (`PMAction.KronReduction.kron_two`): the two legs act in
   series.
 * `node_series`, `node_kron`: so `k = 1/(1/α + 1/α) = α/2`, and `k/K = α/2`
   (`node_amplitude_value`: `1/(2Z)` with `Z = α⁻¹`).
@@ -29,19 +29,19 @@ transmits with certainty. How each species uses the wire is protocol work
 (`PMElementaryParticles`).
 -/
 
-namespace PMFlavor.NodeAmplitude
+namespace PMAction.NodeAmplitude
 
 /-- **Two node legs of admittance `α` in series give `α/2`.** -/
 theorem node_series (α : ℝ) (_hα : 0 < α) : 1 / (1 / α + 1 / α) = α / 2 := by
   have h : (1 : ℝ) / α + 1 / α = 2 / α := by ring
   rw [h, one_div_div]
 
-/-- **The same from Kron reduction of the node** (`KronSeries.kron_two`). -/
+/-- **The same from Kron reduction of the node** (`PMAction.KronReduction.kron_two`). -/
 theorem node_kron (α : ℝ) (hα : 0 < α) : (-α) * (-α) / (0 - (α + α)) = -(α / 2) := by
-  rw [KronSeries.kron_two α α hα hα, node_series α hα]
+  rw [PMAction.KronReduction.kron_two α α hα hα, node_series α hα]
 
 /-- **In units of the vector edge (`K = 1`), with `α = 1/Z`: `k = 1/(2Z)`.** -/
 theorem node_amplitude_value (Z : ℝ) (hZ : 0 < Z) : 1 / (1 / (1 / Z) + 1 / (1 / Z)) = 1 / (2 * Z) := by
   rw [node_series (1 / Z) (by positivity)]; ring
 
-end PMFlavor.NodeAmplitude
+end PMAction.NodeAmplitude

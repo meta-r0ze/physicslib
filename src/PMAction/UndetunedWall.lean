@@ -1,4 +1,4 @@
-import PMFlavor.NodeAmplitude
+import PMAction.NodeAmplitude
 
 /-!
 # The other wall must be detuned
@@ -21,8 +21,8 @@ optional. What fixes its size is open (`PMAction/REVIEW-AND-NEXT.md`).
 -/
 
 noncomputable section
-namespace PMFlavor.UndetunedWall
-open Matrix PMFlavor.CyclicSeesaw
+namespace PMAction.UndetunedWall
+open Matrix PMAction.CyclicSeesaw
 
 /-- **A diagonal times a cyclic shift is a cyclic shift.** -/
 theorem diag_cyc (a c : Fin 3 → ℂ) :
@@ -43,4 +43,4 @@ theorem undetuned_masses (K ks kc : ℂ) :
     diagonal ![K, ks, kc] * cyc ![K, kc, ks] = cyc ![ks * K, kc * kc, K * ks] := by
   rw [diag_cyc]; rfl
 
-end PMFlavor.UndetunedWall
+end PMAction.UndetunedWall

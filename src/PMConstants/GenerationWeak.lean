@@ -1,4 +1,4 @@
-import PMConstants.GenerationCurrent
+import PMAction.GenerationCurrent
 import PMConstants.CarrierRepresentation
 
 /-!
@@ -32,7 +32,7 @@ assignment.
 -/
 
 namespace PMConstants.GenerationWeak
-open PMAction.GenerationSector GenerationOrientation
+open PMAction.GenerationSector PMAction.GenerationOrientation
 
 theorem weak_carrier_is_vector : CarrierRepresentation.V = PMAction.CarrierEvents.Carrier 0 := rfl
 

@@ -1,4 +1,4 @@
-import PMConstants.GenerationWalls
+import PMAction.GenerationWalls
 import PMFlavor.ExchangeAxis
 
 /-!
@@ -6,7 +6,7 @@ import PMFlavor.ExchangeAxis
 
 `ExchangeAxis` derived which generation pair mixes inside the cycle (through the reference's
 class `v`) and left the other two pairs, through `s` and `c`, indistinguishable by the axis
-test. This module places them on the two walls of `PMConstants.GenerationWalls`, where generation
+test. This module places them on the two walls of `PMAction.GenerationWalls`, where generation
 `g` carries class `g + 1` on one wall and `g − 1` on the other (`side`), and the inter-wall hop
 `hop ⊗ Y` is the generation dynamics.
 
@@ -37,7 +37,7 @@ the node passage, are not derived here.
 -/
 
 namespace PMFlavor.ExchangeChirality
-open PMConstants.GenerationWalls
+open PMAction.GenerationWalls
 
 theorem hop_class : ∀ g g' : Fin 3, g ≠ g' →
     ∃! c : Fin 3, c ≠ g ∧ c ≠ g' := by

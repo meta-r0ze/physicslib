@@ -1,4 +1,4 @@
-import PMConstants.GenerationEncoding
+import PMAction.GenerationEncoding
 
 /-!
 # Three packets on the two-wall carrier labels
@@ -27,7 +27,7 @@ this encoding it changes through the inter-wall hop of the two-wall Hamiltonian,
 (`PMAction.WallExchange`): every mode is reachable when `Y_gap` is invertible, and for that
 Hamiltonian the zero-energy reduction gives `δ²Y_gap⁻¹` (`PMAction.WallSeesaw.seesaw`). This is a
 result for that Hamiltonian; that it is the physical generation dynamics is a reading, distinct from
-`PMFlavor.GenerationLabel`'s single-wall shift (below).
+`PMAction.GenerationLabel`'s single-wall shift (below).
 
 **How this index relates to the glue label (`GenerationOrientation`).** Generation `g` here is the
 glue pair `(class g + 1, class g − 1)` on the two walls, whose label is `g`; `side` fixes one of the
@@ -42,7 +42,7 @@ results here do not depend on it.
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
-namespace PMConstants.GenerationWalls
+namespace PMAction.GenerationWalls
 open GenerationEncoding
 
 abbrev WallNative := Bool × Native
@@ -134,4 +134,4 @@ theorem no_further_modes (E : Type*) [Fintype E] [Nonempty E] :
   have := Fintype.card_pos (α := E)
   omega
 
-end PMConstants.GenerationWalls
+end PMAction.GenerationWalls

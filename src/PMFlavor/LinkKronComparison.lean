@@ -112,7 +112,7 @@ theorem kronLink_row_sum (a b c : ℝ) (i : Fin 3) : ∑ j, kronLink a b c i j =
   fin_cases i <;> simp [kronLink, Fin.sum_univ_three] <;> ring
 
 /-- The coupling of the pair sharing class `0` is the series admittance of its two legs
-(`KronSeries.kron_two` with `g₁ = g₂ = a`). -/
+(`PMAction.KronReduction.kron_two` with `g₁ = g₂ = a`). -/
 theorem pair_is_two_leg_series (a b c : ℝ) (ha : 0 < a) :
     kronLink a b c 1 2 = (-a) * (-a) / (0 - (a + a)) := by
   rw [kron_12, eq_div_iff (by intro h; linarith)]

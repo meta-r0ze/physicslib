@@ -1,4 +1,4 @@
-import PMConstants.Generations
+import PMAction.Generations
 import PMSubstrate.ChannelSymmetry
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 

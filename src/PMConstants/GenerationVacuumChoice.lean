@@ -1,4 +1,4 @@
-import PMConstants.Generations
+import PMAction.Generations
 import PMAction.Machine.CarrierClassBundle
 
 /-!
@@ -28,7 +28,7 @@ theorem same_class_vacuum (c : Fin 3) (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
       (NativeSector.nativeHamiltonian c p k δ).IsHermitian ∧
       NativeObservation.Obs (CarrierVacuumSector.embedding c)
         (NativeSector.nativeHamiltonian c p k δ) (ConcreteFermion.hamiltonian k δ) :=
-  ⟨Generations.same_class_loses c, CarrierVacuumSector.isometry c,
+  ⟨PMAction.Generations.same_class_loses c, CarrierVacuumSector.isometry c,
     NativeSector.nativeHamiltonian_hermitian c p k δ, NativeSector.native_obs hp hp1 k δ⟩
 
 /-- A further reason the readout contract matters: erasing the wall label

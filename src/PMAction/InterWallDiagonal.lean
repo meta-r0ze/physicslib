@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import PMConstants.GenerationWalls
+import PMAction.GenerationWalls
 
 /-!
 # An equal-class wall crossing never keeps the generation, so it cannot carry the mass hierarchy
@@ -7,7 +7,7 @@ import PMConstants.GenerationWalls
 The E₈ gluing pairs equal glue classes across the two `D₄` walls (`PMSubstrate.ChannelSymmetry`,
 `GenerationLabel`). An operation joining the walls is then a crossing that keeps the class: a
 class-`c` carrier on one wall goes to a class-`c` carrier on the other. That is the inter-wall hop
-of `PMConstants.GenerationWalls` (the native label is kept), and the inter-wall term is the mass
+of `PMAction.GenerationWalls` (the native label is kept), and the inter-wall term is the mass
 (`PMAction.WallTransfer`, `WallSeesaw`).
 
 * `crossing_changes_generation`: the generation that has class `c` on one wall is never the
@@ -45,8 +45,8 @@ on-site term, and the off-diagonal (equal-class) part is what the gluing allows 
 -/
 
 noncomputable section
-namespace PMFlavor.InterWallDiagonal
-open PMConstants.GenerationWalls
+namespace PMAction.InterWallDiagonal
+open PMAction.GenerationWalls
 
 /-- Measured charged-lepton masses in MeV (PDG 2024). -/
 def IsMeasuredLepton (m : ℝ) : Prop := m = 0.51099895 ∨ m = 105.6583755 ∨ m = 1776.93
@@ -87,4 +87,4 @@ theorem no_measured_lepton_traceless (k a b : ℝ) (hk : 0 < k) (hb : 0 < |b|) (
   have hpos : 0 < k / |a| := div_pos hk ha
   linarith
 
-end PMFlavor.InterWallDiagonal
+end PMAction.InterWallDiagonal
