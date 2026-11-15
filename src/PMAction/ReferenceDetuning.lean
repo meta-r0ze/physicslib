@@ -13,6 +13,10 @@ the second wall, components `(0, 0, a, b)`. Allow a separate detuning on each wa
   reach it.
 * `stationary_iff`: a nonzero second-wall background is a zero mode exactly when `δ₂ = 0`. The
   first wall's detuning is unconstrained.
+* `first_wall_action`, `stationary_first_iff`: the same on the first wall: its `Γ = +1` state is
+  stationary exactly when `δ₁ = 0`. Both stationary would be the undetuned wire, whose mass ordering
+  is reversed (`UndetunedWall`); so with the reference stationary, the other wall's chiral state is
+  not, and `δ₁ ≠ 0` is a statement that nothing persists stationary there.
 
 **Reading.** If the reference persists as a stationary zero mode of the same update the flavour
 fermions see (Paper II's stationarity, the premise `ChiralityConvention` already uses), the on-site
@@ -55,6 +59,36 @@ theorem stationary_iff (δ₁ δ₂ : ℝ) (a b : ℂ) (hab : a ≠ 0 ∨ b ≠ 
   · intro h
     have h0 : (δ₂ : ℂ) * a = 0 := by simpa using congrFun h (Sum.inr 0)
     have h1 : (δ₂ : ℂ) * b = 0 := by simpa using congrFun h (Sum.inr 1)
+    rcases hab with ha | hb
+    · exact_mod_cast (mul_eq_zero.mp h0).resolve_right ha
+    · exact_mod_cast (mul_eq_zero.mp h1).resolve_right hb
+  · rintro rfl
+    ext x
+    rcases x with i | i <;> fin_cases i <;> simp
+
+/-- **Action on a first-wall `Γ = +1` state**: `δ₁` moves it to the same wall's other chirality; the
+hops do not see it. -/
+theorem first_wall_action (δ₁ δ₂ : ℝ) (a b : ℂ) :
+    Hw δ₁ δ₂ *ᵥ Sum.elim ![a, b, 0, 0] (fun _ => 0) =
+      Sum.elim ![0, 0, (δ₁ : ℂ) * a, (δ₁ : ℂ) * b] (fun _ => 0) := by
+  ext x
+  rcases x with i | i <;> fin_cases i <;>
+    simp [Hw, beta, gamma, DomainWallSpectrum.hop, DomainWallSpectrum.back,
+      DomainWallSpectrum.plus, DomainWallSpectrum.minus, fromBlocks, Matrix.mulVec, Matrix.vecMul,
+      dotProduct, Fin.sum_univ_four, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply,
+      Sum.elim]
+
+/-- **A first-wall chiral state is stationary exactly when the first wall has no detuning.** So if
+both walls' chiral states were stationary, `δ₁ = δ₂ = 0`: the undetuned wire, whose ordering is
+reversed (`PMAction.UndetunedWall`). With the reference's wall stationary (`stationary_iff`), the
+other wall's chiral state cannot be. -/
+theorem stationary_first_iff (δ₁ δ₂ : ℝ) (a b : ℂ) (hab : a ≠ 0 ∨ b ≠ 0) :
+    Hw δ₁ δ₂ *ᵥ Sum.elim ![a, b, 0, 0] (fun _ => 0) = 0 ↔ δ₁ = 0 := by
+  rw [first_wall_action]
+  constructor
+  · intro h
+    have h0 : (δ₁ : ℂ) * a = 0 := by simpa using congrFun h (Sum.inl 2)
+    have h1 : (δ₁ : ℂ) * b = 0 := by simpa using congrFun h (Sum.inl 3)
     rcases hab with ha | hb
     · exact_mod_cast (mul_eq_zero.mp h0).resolve_right ha
     · exact_mod_cast (mul_eq_zero.mp h1).resolve_right hb
