@@ -44,7 +44,7 @@ Hermitian `H`, unitary transport of a normalized `φ`, with two-branch response
 | Controlled propagation | `LocalUnitary`, `SplitUpdate`, `PropagationBounds`, `WilsonSplit`, `VacuumSplit`, `VacuumGenerator`, `VacuumUniform`, `GlobalTickInterval`, `VacuumIteration`, `VacuumErrorRate`, `RealSpaceFourier`, `SpatialContinuum`, `ProjectedEvolution`, `JointSpaceTime`, `SplitCovariance`, `ReferenceWalkParity` | Corrected local unitary split, global safe-tick existence, uniform time-refinement bound, torus Fourier/spectrum identification, branch dispersion and joint fixed-momentum vacuum-sector evolution. Physical refinement/clock and full field/interacting limits remain open. |
 | Chiral anomaly on the substrate | `FermionFlip`, `WallTransfer`, `InertiaStability` | Fermion statistics make the many-flavour flip amplitude `det M` (`flip_amplitude`); chirality changes only by transfer between the walls and a flavour-blind background transfers equally (`chirality_change`, `flavour_blind_transfer`), so a winding-`n` history carries `(det M)ⁿ`; the negative-mode count of an invertible Hermitian family is locally constant (`negCount_locallyConstant`, Sylvester's inertia), giving an integer charge without Lüscher. |
 | Gauge and scalar transport | `D4Gauge`, `GaugeContinuum`, `VaryingFields`, `LinkConsistency`, `GaugeTransport`, `ReferenceSampling`, `SummedReference`, `ReadoutAdditivity`, `ScalarTransport`, `CompactTransport` | Pointwise D₄ density limits, cubic-consistent link robustness, link extraction from a supplied linear hop, reference readout and scalar kinetic normalization. `CompactTransport.compact_transport_premises`: transports of a compactly supported C² connection are cubically consistent with it and it is `C^{1,1}`, so those two premises reduce to "the links are transports". |
-| Gauge fluctuations and running | `RunningCoefficients`, `RunningResponse`, `ContactRunning`, `ContactFierz`, `LoopMeasure`, `LeadingLog`, `PolarizationAverage`, `ShellMoments`, `PolarizationRemainder`, `FlatPersistence`, `GaugeFluctuation`, `FluctuationPremises`, `FluctuationClosure`, `ContinuumFields`, `LandauDegeneracy`, `LatticeToContinuum` | Spin/orbital kernel coefficients, gauge-fixed Hessian and Ward algebra, finite-dimensional ghost determinant power, concrete field identities, strip-centre density and pointwise lattice-to-continuum second variation. No quantum continuum measure or integrated lattice action limit. |
+| Gauge fluctuations and running | `RunningCoefficients`, `RunningResponse`, `ContactRunning`, `ContactFierz`, `LoopMeasure`, `LeadingLog`, `PolarizationAverage`, `ShellMoments`, `PolarizationRemainder`, `Polarization*` (subtracted lattice chain, ending in `PolarizationShellIntegral`), `FlatPersistence`, `GaugeFluctuation`, `FluctuationPremises`, `FluctuationClosure`, `ContinuumFields`, `LandauDegeneracy`, `LatticeToContinuum` | Spin/orbital kernel coefficients, gauge-fixed Hessian and Ward algebra, finite-dimensional ghost determinant power, concrete field identities, strip-centre density and pointwise lattice-to-continuum second variation. No quantum continuum measure or integrated lattice action limit. |
 | Currents and decay foundations | `ChargedCurrent`, `NeutralCurrent`, `ContactMatching`, `WallChiralCurrent`, `ChiralityConvention`, `ChiralLightBand`, `VATrace`, `MassiveVATrace`, `SpinorCompleteness`, `AmplitudeTrace`, `WeakVertex` | Charged/neutral normalization, su(2) doublet algebra (`T3`, `commutator_*`, `anticommutator_Tp_Tm`), V−A projector `P_L` (idempotent/Hermitian/rank two), wall-projector algebra, spin sums, bilinear-to-trace amplitude and factor 64, contact matching and kernel-basis existence. `ChiralityConvention.projector_eq_fromBlocks_PL` identifies the wall projector with block-diagonal `P_L`; `projector_unique_on_kernel` forces it on the zero kernel from the reference conditions; `ChiralLightBand` extends it to the light band through first order in `k` (the projected Hamiltonian commutes with the wall chirality). Physical interaction, mediator, external states and phase-space remain application inputs. |
 
 ## Shared state/controller and register layer
@@ -131,6 +131,27 @@ shows closed injective updates cannot finitely prepare a stationary state.
   (`link_second_variation`), with its own Ward identity (`contact_ward`: it is the difference of the
   two shifted legs). Contracting bubble minus contact leaves the difference of two momentum routings
   (`bubble_sub_contact`), which cancels by a shift on the full zone but not on a cut shell.
+- **Subtracted lattice polarization** (`PolarizationIngredients` … `PolarizationShellIntegral`). The
+  lattice integrand `latInt` (sinc-weighted legs over `S(k) S(k + q)` minus the contact over `S(k)`,
+  unit probes `e_μ`, `e_ν`) with its `q = 0` value subtracted, integrated over the continuum shell
+  `lo < |k| < hi`, against the continuum's orbital term. Chain: per-root expansions in
+  `x = a r·q/2` (`PolarizationTaylor`, `PolarizationSplit`), each order against the continuum
+  (`PolarizationOrders`), the exact assembly `L = L₀ + Lin + Q + R` with the odd part cancelling in
+  the second difference (`PolarizationAssembly`), magnitudes in the ℓ¹ size `n(w)`
+  (`PolarizationMagnitudes`), the cubic rest `≤ P(1) n(q)³/n(k)⁵` (`PolarizationCubic`,
+  `PolarizationShellCubic`), `|Q_lat − Q_cont| ≤ K a² n(q)²/n(k)²` (`PolarizationQDiff`,
+  `PolarizationShellQ`, `PolarizationGapSizes`), the pointwise bound (`PolarizationPointwise`), its
+  Euclidean form `≤ (4K a² hi² |q|² + 8P(1) |q|³/lo) |k|⁻⁴` (`shell_pointwise`), the reflection
+  `latInt a (−q) μ ν (−k) = latInt a q μ ν k` (`latInt_reflect`, `int_reflect`), and integrability.
+  Result (`shell_integral`): for `0 < lo ≤ hi`, `4|q| ≤ lo`, `2 a hi ≤ 1`,
+  `|∫_shell (L(q) − L(0)) − (−1/3)(|q|² δ_μν − q_μ q_ν)·2π² ln(hi/lo)|
+   ≤ (4K a² hi² |q|² + 8P(1) |q|³/lo)·2π² ln(hi/lo)`, with `K = 271853128/3`,
+  `P(1) = 47979504985/36` (generated by sympy, not optimized). The `q²` part of the error is
+  `O(a² hi²)` per unit `|q|²·2π² ln(hi/lo)`, so it vanishes as `a → 0` at a fixed shell: the
+  bound resolves the `q²` coefficient. The constant is crude: it resolves the coefficient only for
+  `a·hi ≲ 10⁻⁵`, against the numeric `C ≈ 1.38` of `tools/lattice_polarization_check.py`, and it
+  carries `hi² ln(hi/lo)` where the numeric check finds `hi² − lo²`. Scope: the momentum integral is
+  the continuum shell, not the Brillouin-zone sum; the bound is component-wise.
 - `InertiaCertificate`, `InertiaCongruence`, `WilsonCertificate`: the inertia certificate for the
   winding witness. A strictly row-dominant Hermitian `B` has as many negative modes as negative
   diagonal entries (`negCount_eq_sign_count`: deform the off-diagonal part to zero, Gershgorin keeps
