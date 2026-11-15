@@ -87,6 +87,21 @@ def H (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) :
     Matrix ((Fin 4 × f) ⊕ (Fin 4 × f)) ((Fin 4 × f) ⊕ (Fin 4 × f)) ℂ :=
   fromBlocks (diag k δ ⊗ₖ (1 : Matrix f f ℂ)) (hop ⊗ₖ Y) (back ⊗ₖ Yᴴ) (diag k δ ⊗ₖ (1 : Matrix f f ℂ))
 
+/-- **Two walls with separate on-site detunings** `δ₁` (first wall) and `δ₂` (second wall). The
+reference's stationarity puts `δ₂ = 0` (`PMAction.ReferenceDetuning`); `δ₁` is the other wall's `δ_O`. -/
+def H2 (k : Fin 3 → ℝ) (δ₁ δ₂ : ℝ) (Y : Matrix f f ℂ) :
+    Matrix ((Fin 4 × f) ⊕ (Fin 4 × f)) ((Fin 4 × f) ⊕ (Fin 4 × f)) ℂ :=
+  fromBlocks (diag k δ₁ ⊗ₖ (1 : Matrix f f ℂ)) (hop ⊗ₖ Y) (back ⊗ₖ Yᴴ) (diag k δ₂ ⊗ₖ (1 : Matrix f f ℂ))
+
+/-- **Equal detunings give `H`.** -/
+omit [Fintype f] in
+theorem H2_equal (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) : H2 k δ δ Y = H k δ Y := rfl
+
+/-- **At zero momentum the first wall's block is `δ₁ β`**: the on-site flip that
+`ReferenceDetuning.first_wall_action` reads. -/
+theorem diag_zero (δ : ℝ) : diag (fun _ => 0) δ = (δ : ℂ) • beta := by
+  simp [diag, K]
+
 /-- Wall exchange with spinor parity. -/
 def P : Matrix ((Fin 4 × f) ⊕ (Fin 4 × f)) ((Fin 4 × f) ⊕ (Fin 4 × f)) ℂ :=
   fromBlocks 0 (beta ⊗ₖ (1 : Matrix f f ℂ)) (beta ⊗ₖ (1 : Matrix f f ℂ)) 0

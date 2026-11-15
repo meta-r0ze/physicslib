@@ -11,6 +11,12 @@ readout is the full `WallExchange.H`, not a separately added flavour Hamiltonian
 The Boolean lift gives unitary configuration evolution and realizes every allowed
 light-branch energy. The flavour labels, link, records and coherent admission
 remain inputs. Neither three physical generations nor a breaking law is selected.
+
+`nativeHamiltonian2`, `native_observed2`: the same with a separate detuning on each wall, read out
+as `WallExchange.H2` (`nativeHamiltonian2_equal`: equal detunings give the one-detuning model). This
+is the comparison target for a native, reference-conditioned derivation of the other wall's `δ_O`:
+such a construction must reproduce the first-wall block `δ₁ β` at zero momentum
+(`WallExchange.diag_zero`, `ReferenceDetuning.first_wall_action`). Here `δ₁`, `δ₂` are still inputs.
 -/
 noncomputable section
 set_option synthInstance.maxSize 512
@@ -81,6 +87,52 @@ theorem native_observed (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
   have hhAdj : WallExchange.hopᴴ = WallExchange.back := by
     rw [← hhop, NativeSector.hop_adjoint, hback]
   simpa only [coordinate, nativeHamiltonian, WallExchange.H, hdEq,
+    conjTranspose_kronecker, hhAdj, hhop, hback] using hh
+
+/-! ## Separate detunings on the two walls -/
+
+/-- The native wall Hamiltonian with detuning `δ₁` on the first wall and `δ₂` on the second. -/
+def nativeHamiltonian2 (p : ℝ) (k : Fin 3 → ℝ) (δ₁ δ₂ : ℝ) (Y : Matrix f f ℂ) :
+    Matrix (Labels (f := f) c) (Labels (f := f) c) ℂ :=
+  let D₁ := NativeSector.diag c p k δ₁ ⊗ₖ (1 : Matrix f f ℂ)
+  let D₂ := NativeSector.diag c p k δ₂ ⊗ₖ (1 : Matrix f f ℂ)
+  let T := NativeSector.hopN c ⊗ₖ Y
+  fromBlocks D₁ T Tᴴ D₂
+
+omit [Fintype f] in
+theorem nativeHamiltonian2_equal (p : ℝ) (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) :
+    nativeHamiltonian2 c p k δ δ Y = nativeHamiltonian c p k δ Y := rfl
+
+/-- **The two-detuning native model reads out `WallExchange.H2`.** -/
+theorem native_observed2 (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
+    (k : Fin 3 → ℝ) (δ₁ δ₂ : ℝ) (Y : Matrix f f ℂ) :
+    Obs (coordinate c) (nativeHamiltonian2 c p k δ₁ δ₂ Y) (WallExchange.H2 (momentum k) δ₁ δ₂ Y) := by
+  have hI : Obs (1 : Matrix f f ℂ) 1 1 := NativeObservation.one
+  have hY : Obs (1 : Matrix f f ℂ) Y Y := ⟨by simp, by simp⟩
+  have hd₁ := NativeObservation.tensor (NativeSector.diag_obs (c := c) hp hp1 k δ₁) hI
+  have hd₂ := NativeObservation.tensor (NativeSector.diag_obs (c := c) hp hp1 k δ₂) hI
+  have ht := NativeObservation.tensor (NativeSector.hop_obs (c := c)) hY
+  have hh := NativeObservation.blocks hd₁ ht (NativeObservation.star ht) hd₂
+  have hdEq : ∀ δ : ℝ, DomainWallSpectrum.momentum ConcreteFermion.alpha k + δ • ConcreteFermion.beta =
+      WallExchange.diag (momentum k) δ := by
+    intro δ
+    simp only [WallExchange.diag, WallExchange.K, momentum, DomainWallSpectrum.momentum,
+      Complex.coe_smul]
+  have hhop : DomainWallSpectrum.hop ConcreteFermion.beta ConcreteFermion.gamma =
+      WallExchange.hop := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [DomainWallSpectrum.hop, DomainWallSpectrum.plus, WallExchange.hop,
+        ConcreteFermion.beta, ConcreteFermion.gamma, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_four]
+  have hback : DomainWallSpectrum.back ConcreteFermion.beta ConcreteFermion.gamma =
+      WallExchange.back := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [DomainWallSpectrum.back, DomainWallSpectrum.minus, WallExchange.back,
+        ConcreteFermion.beta, ConcreteFermion.gamma, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_four]
+  have hhAdj : WallExchange.hopᴴ = WallExchange.back := by
+    rw [← hhop, NativeSector.hop_adjoint, hback]
+  simpa only [coordinate, nativeHamiltonian2, WallExchange.H2, hdEq,
     conjTranspose_kronecker, hhAdj, hhop, hback] using hh
 
 def embedding : Matrix (Config (f := f) (r := r) c) (Modes (f := f) × r) ℂ :=

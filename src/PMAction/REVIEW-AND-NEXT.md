@@ -70,7 +70,7 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   | Lead | Cheap check | Result | Next |
   |---|---|---|---|
   | Leakage bound (`ChiralLightBand`) | full two-wall, heavy state's weight off the zero kernel | `≈ 1.1 (K_f/|y|)²`, quadratic, stable for `K_f ≤ 0.2` | done: `LightLeakage.leakage_bound` (exact): leakage `L` holds once the largest flip is `≤ √(L/(1−L)) (|y| − |E|)`; the allowed `L` is not fixed by the library |
-  | Two-detuning native wall | `NativeFlavourWall`, `NativeSector.diag`, `WallExchange.H` use one `δ` | mechanical generalization (`Hw`-style blocks) | second: groundwork for the native measurement |
+  | Two-detuning native wall | `NativeFlavourWall`, `NativeSector.diag`, `WallExchange.H` use one `δ` | done: `WallExchange.H2`, `NativeFlavourWall.nativeHamiltonian2`, `native_observed2` | target for the native measurement: reproduce `δ₁ β` on wall `1` at `k = 0` |
   | Native `δ_O` measurement | search for a reference-conditioned native update | none in the library | parked until the two-detuning wall exists |
   | Rate law (`RootTransferPhase`) | a vector attempt probability in the library | none (`RootPulseEvents`: one attempt is not the quarter pulse) | parked |
   | Golden point `δ_O = k` (`ℤ[φ]`) | icosian / `H₄` structure in the library | none; direct species reading fails (ratio `φ²`) | parked; candidate needs `H₄` folding in PMSubstrate and a protocol reading |
