@@ -34,7 +34,19 @@ It moves no spinor carrier; the entries through classes `1` and `2` need the nod
 come from the conjugate event. `A κ = N κ − (N κ)ᴴ`, with `N κ = J κ − 1` the off-diagonal part, is
 skew-Hermitian (`A_skew`), carries `κ c` forward and `−κ̄ c` in reverse (`forward_entry`,
 `reverse_entry`), and `1 + A κ` is unitary up to second order: `(1 + A)ᴴ(1 + A) = 1 + AᴴA`
-(`first_order_unitary`). Which exact completion (exponential or Cayley, `TransferGenerator`) is open.
+(`first_order_unitary`).
+
+**What unitarity fixes at second order.** For any second-order term `B`, unitarity needs
+`Bᴴ + B = A²` (`second_order_unitary`): the Hermitian part of `B` is `A²/2`, forced; the
+skew-Hermitian part is free. Every completion that is a power series in `A` alone (exponential,
+Cayley, polar) has `B = A²/2`; they first differ at third order (coefficient of `A³`: `1/6`, `1/4`,
+`1/2`). So "exponential or Cayley" does not matter at second order. What does matter is the free
+skew part, which is the order of the changes inside the event: `corner_split` shows that the
+two-step product `κ̄₀ κ̄₂` is carried exactly once by the class-`1` entry (`2 ← 0`) and the conjugate
+of its reverse (`0 ← 2`) together, with a split `w, 1 − w̄` that unitarity does not fix. The
+exponential of `A` (all three changes at once) gives `w = ½`; the ordered product with the class-`0`
+change (the refresh's own) before the class-`2` change gives `w = 0`; the reverse order gives
+`w = 1`.
 
 The amplitudes `κ c` depend on where the carriers sit relative to the reference axis (off the axis:
 two legs, amplitude; on the axis: one leg, probability; `NodeElimination`): `ConductionRule` gives the
@@ -125,5 +137,38 @@ theorem first_order_unitary (κ : Fin 3 → ℂ) :
     (1 + A κ)ᴴ * (1 + A κ) = 1 + (A κ)ᴴ * A κ := by
   rw [conjTranspose_add, conjTranspose_one, A_skew]
   noncomm_ring
+
+/-! ## What unitarity fixes at second order -/
+
+/-- **Unitarity order by order.** For any second-order term `B`, `(1 + A + B)ᴴ(1 + A + B)` is `1`,
+plus the second-order part `Bᴴ + B − A²`, plus the third-order part `BᴴA − AB`, plus `BᴴB`. So a
+unitary completion must have `Bᴴ + B = A²`: the Hermitian part of `B` is forced to `A²/2`; the
+skew-Hermitian part is free. -/
+theorem second_order_unitary (κ : Fin 3 → ℂ) (B : Matrix (Fin 3) (Fin 3) ℂ) :
+    (1 + A κ + B)ᴴ * (1 + A κ + B) =
+      1 + (Bᴴ + B - A κ * A κ) + (Bᴴ * A κ - A κ * B) + Bᴴ * B := by
+  rw [conjTranspose_add, conjTranspose_add, conjTranspose_one, A_skew]
+  noncomm_ring
+
+theorem A_diag (κ : Fin 3 → ℂ) (g : Fin 3) : A κ g g = 0 := by
+  simp only [A, N, Matrix.sub_apply, Matrix.conjTranspose_apply, diag_one, Matrix.one_apply_eq,
+    sub_self, star_zero]
+
+theorem A_21 (κ : Fin 3 → ℂ) : A κ 2 1 = -star (κ 0) := reverse_entry κ 0
+theorem A_10 (κ : Fin 3 → ℂ) : A κ 1 0 = -star (κ 2) := reverse_entry κ 2
+theorem A_20 (κ : Fin 3 → ℂ) : A κ 2 0 = κ 1 := forward_entry κ 1
+
+/-- **The two-step amplitude is shared between a node crossing and its reverse.** Any unitary
+completion `1 + A + B + …` has `B₂₀ + conj B₀₂ = κ̄₀ κ̄₂`: the two-step route `0 → 1 → 2` (both changes
+reversed) and its conjugate `2 → 1 → 0` together carry the product of the other two amplitudes
+exactly once. How it splits between the class-`1` entry (`2 ← 0`) and its reverse (`0 ← 2`) is the
+free skew-Hermitian part: the exponential of `A` splits it `½, ½`; an ordered product of the
+single-class changes puts all of it on one side. -/
+theorem corner_split (κ : Fin 3 → ℂ) (B : Matrix (Fin 3) (Fin 3) ℂ)
+    (hB : Bᴴ + B = A κ * A κ) : B 2 0 + star (B 0 2) = star (κ 0) * star (κ 2) := by
+  have h := congrFun (congrFun hB 2) 0
+  rw [Matrix.add_apply, Matrix.conjTranspose_apply, Matrix.mul_apply, Fin.sum_univ_three,
+    A_diag, A_diag, A_21, A_10] at h
+  linear_combination h
 
 end PMFlavor.EventTransfer

@@ -24,7 +24,9 @@ already uses.
   transform of `K/γ` up to a global sign (a rephasing). `cayley_unimodular`: it is a phase, so `S`
   is unitary.
 * So the generator is Cayley, not the exponential; the lead width `γ` is one overall scale, and
-  only ratios of couplings are data.
+  only ratios of couplings are data. Cayley and the exponential agree through second order
+  (`EventTransfer.second_order_unitary`) and differ first at third; both split the two-step product
+  of an event evenly (`EventTransfer.corner_split`, `w = ½`).
 
 **Observable.** The CKM entries are `S_ij`, not `K_ij`: `S₁₃ = −iK₁₃ − ½(K²)₁₃ + …` (with `K` in units
 of `γ/2`). A path admittance is a statement about `K`.

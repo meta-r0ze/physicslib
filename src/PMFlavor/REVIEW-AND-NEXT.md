@@ -26,9 +26,19 @@ data, and do not frame work as fitting Standard Model sectors.
    (`CarrierActions.weak`) moves only vector-class carriers of the reference's sector
    (`refresh_moves_reference`, `refresh_fixes_other`), so it supplies the in-cycle entry and the node
    entries need the node; the completion `A = N − Nᴴ` is skew-Hermitian, carries `κ` forward and `−κ̄`
-   in reverse, and `1 + A` is unitary to second order (`first_order_unitary`). Open: the exact unitary
-   completion (exponential or Cayley, `TransferGenerator`); they differ at second order, which matters
-   for the small entries. Derive which one a sequence of events produces.
+   in reverse, and `1 + A` is unitary to second order (`first_order_unitary`). Second order
+   (`second_order_unitary`, `corner_split`): unitarity forces the Hermitian part `A²/2`; exponential,
+   Cayley and polar all have it and first differ at third order (`A³` coefficient `1/6`, `1/4`, `1/2`;
+   about `κ₀³/12 ≈ 1·10⁻³` on the in-cycle entry, near the `|V_us|` error). Open: the free
+   skew part, which is the order of the changes inside one event. It splits the two-step product
+   `κ̄₀κ̄₂` between the class-`1` entry and its reverse as `w, 1 − w̄`: `w = ½` all at once (any power
+   series in `A`, including `TransferGenerator`), `w = 0` class `0` (the refresh) before class `2`,
+   `w = 1` the reverse. Derive the order from the substrate (the refresh acts on the reference's
+   wall; the class-`2` change also sits on that wall and needs the node), or state it as a premise.
+   **Test:** only `w = 0` makes the class-`1` entry equal `κ₁` with no phase freedom, so
+   `TransferAmplitude.jump = 1/(2α⁻¹ + π) = 0.003606` against `|V_ub| = 0.00382 ± 0.00020` (PDG, 1.1σ)
+   tests `w = 0` together with the jump. With `w ≠ 0` the entry depends on the phase (item 5); the
+   Cayley fit recorded in OVERVIEW (`K₁₃` 4.7σ off the jump) is the `w = ½` case.
 2. **The amplitude of each entry.**
    - In-cycle: the share `π/N` rests on the aperture premises (`HalfTurnAperture`); derive them or
      state them as the one premise of this entry.
@@ -55,7 +65,8 @@ data, and do not frame work as fitting Standard Model sectors.
    event's loss realizes that law and the row-to-outlet identification; the on-axis node change's three
    outlets (`ReactorConductance`) and the dressing's three (`DressingChannels`) should be one count.
 8. **`TransferGenerator`** (zero-energy scattering `S(K)`): keep as a candidate amplitude rule for `J`'s
-   node entries or retire; its equal-lead-width premise is not derived.
+   node entries or retire; its equal-lead-width premise is not derived. As a completion it is a power
+   series in one generator, so it is the `w = ½` case of item 1.
 
 ## Transfer selection
 

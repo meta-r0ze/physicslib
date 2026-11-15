@@ -30,7 +30,14 @@ The change through class `0` (`2 → 1`) uses the weak carrier itself and stays 
 carriers of the reference's sector (`refresh_moves_reference`, `refresh_fixes_other`): it supplies
 the in-cycle change and no spinor carrier. Completion: `A = N − Nᴴ` (`N` the off-diagonal part of `J`)
 is skew-Hermitian (`A_skew`), carries `κ c` forward and `−κ̄ c` in reverse (`forward_entry`,
-`reverse_entry`), and `1 + A` is unitary to second order (`first_order_unitary`).
+`reverse_entry`), and `1 + A` is unitary to second order (`first_order_unitary`). At second order
+unitarity forces the Hermitian part of the next term to `A²/2` (`second_order_unitary`), so the
+exponential, Cayley and polar completions agree through second order and first differ at third
+(`A³` coefficients `1/6`, `1/4`, `1/2`). The free part is the order of the changes inside the event:
+the two-step product `κ̄₀κ̄₂` is carried once by the class-`1` entry and the conjugate of its reverse
+together (`corner_split`), split `½, ½` by any power series in `A`, `0, 1` when the class-`0` change
+precedes the class-`2` change, `1, 0` for the reverse order. Only the split `0` makes the class-`1`
+entry equal `κ₁`, which is what the comparison of `TransferAmplitude.jump` with `|V_ub|` presupposes.
 
 **Three transfers, three types (`TransferGraph`).** Each pair of label states transfers through the
 one class both contain (`ends`, `every_pair`). Exactly the transfer through the reference's class
