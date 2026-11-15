@@ -65,6 +65,11 @@ data, and do not frame work as fitting Standard Model sectors.
    is flat (`FlatPersistence`). `J` is one-directional per event (`EventTransfer.reverse_zero`); ask
    whether the event's orientation (`GenerationWeak.relative_orientation`) gives a phase other than
    `0` or `π`. State any premise narrowly; test it by the triangle angle and `J` it predicts.
+   The only rephasing invariant of `J` is the cycle product `κ₀κ₁κ₂` (`EventTransfer.cycle_invariant`):
+   the phase to find is the holonomy `Φ` of the directed 3-cycle. Under FC and `U = 1`, `fc_corner` and
+   the PDG sizes (as in item 1) need `Φ = 70 ± 5°`; a flat holonomy gives `|V_td| = 0.0053` or `0.0130`
+   against `0.0086 ± 0.0002`, excluded (recorded). So with FC either the cycle carries a non-flat
+   holonomy or `U ≠ 1` supplies the phase (item 6).
 6. **The size of `U`.** Needs the other wall's detuning `δ_O` (PMAction REVIEW) and which protocol uses
    which carriers (PMElementaryParticles). With `δ_O` dominant the rotation is small; bound it.
 7. **Dressing outlets.** `DressingEvent.event_law_spatial` works on axis labels only. Open: whether the

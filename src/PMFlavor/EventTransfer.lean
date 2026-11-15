@@ -57,6 +57,12 @@ FC is a unitary completion (`forward_completion`). The two forward steps `2 → 
 reverse-reverse routes (`Nᴴ²/2` in `A²/2`), so it is not FC. FC is not derived: it reads
 `reverse_zero` as a statement about all routes inside one event.
 
+**The cycle phase.** Rephasing the label states leaves only the product of the three changes round
+the cycle, `κ₀κ₁κ₂` (`cycle_invariant`); its argument `Φ` is the holonomy of the directed 3-cycle,
+the only place a phase of `J` can sit. Under FC the class-`1` entry is `κ₁` and its reverse has size
+`|κ₁ − conj(κ₀κ₂)|`, with `|·|² = |κ₁|² + |κ₀κ₂|² − 2|κ₀κ₁κ₂| cos Φ` (`fc_corner`). So under FC a flat
+holonomy (`Φ = 0` or `π`) makes the three sizes collinear.
+
 The amplitudes `κ c` depend on where the carriers sit relative to the reference axis (off the axis:
 two legs, amplitude; on the axis: one leg, probability; `NodeElimination`): `ConductionRule` gives the
 in-cycle one, `TransferAmplitude` the other-wall node one; the reference-wall node one is open. So
@@ -229,5 +235,26 @@ theorem forward_corner (κ : Fin 3 → ℂ) (D : Matrix (Fin 3) (Fin 3) ℂ)
   simp only [Matrix.sub_apply, Matrix.mul_apply, Fin.sum_univ_three, N_diag, N_10, N_21, mul_zero,
     zero_mul, add_zero]
   linear_combination (-(1 : ℂ) / 2) * h
+
+/-! ## The cycle phase -/
+
+/-- **The cycle product is the one rephasing invariant.** Rephasing the label states by phases `u g`
+(`u g · ū g = 1`) changes the change through class `c` (label `c − 1` to `c + 1`) to
+`u (c + 1) κ c ū (c − 1)`. The product of the three changes round the cycle is unchanged. -/
+theorem cycle_invariant (κ u : Fin 3 → ℂ) (hu : ∀ g, u g * star (u g) = 1) :
+    (u 1 * κ 0 * star (u 2)) * (u 2 * κ 1 * star (u 0)) * (u 0 * κ 2 * star (u 1)) =
+      κ 0 * κ 1 * κ 2 := by
+  linear_combination (κ 0 * κ 1 * κ 2 * (u 1 * star (u 1)) * (u 2 * star (u 2))) * hu 0 +
+    (κ 0 * κ 1 * κ 2 * (u 2 * star (u 2))) * hu 1 + (κ 0 * κ 1 * κ 2) * hu 2
+
+/-- **Under FC the two corners and the cycle phase form a triangle.** Under FC the entry `0 ← 2` is
+`−κ̄₁ + κ₂κ₀` (`reverse_entry`, `forward_two_step`; the depletion has no `0 ← 2` entry), so its
+size is `|κ₁ − conj(κ₀κ₂)|`, and the law of cosines holds with the angle `arg(κ₀κ₁κ₂)`, the cycle
+phase. -/
+theorem fc_corner (κ : Fin 3 → ℂ) :
+    Complex.normSq (κ 1 - star (κ 0 * κ 2)) =
+      Complex.normSq (κ 1) + Complex.normSq (κ 0 * κ 2) - 2 * (κ 0 * κ 1 * κ 2).re := by
+  rw [Complex.star_def, Complex.normSq_sub, Complex.normSq_conj, Complex.conj_conj,
+    show κ 1 * (κ 0 * κ 2) = κ 0 * κ 1 * κ 2 by ring]
 
 end PMFlavor.EventTransfer

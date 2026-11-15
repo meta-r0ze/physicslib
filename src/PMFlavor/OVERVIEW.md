@@ -44,6 +44,10 @@ Premise FC (forward composition: the second-order term is two forward changes of
 the PDG values need `|κ₁| = 0.00382 ± 0.00020` for FC (jump `0.003606`, 1.1σ) and
 `0.00483 ± 0.00025` for any power series in `A` (4.9σ): the jump excludes the exponential and Cayley
 completions.
+The only rephasing invariant of `J` is the cycle product `κ₀κ₁κ₂` (`cycle_invariant`), so a phase of
+one event is the holonomy `Φ` of the directed 3-cycle. Under FC the corners obey the law of cosines in
+`Φ` (`fc_corner`); with `U = 1` the PDG sizes need `Φ = 70 ± 5°`, and a flat holonomy (`0` or `π`)
+is excluded (`|V_td|` would be `0.0053` or `0.0130`, against `0.0086 ± 0.0002`).
 
 **Three transfers, three types (`TransferGraph`).** Each pair of label states transfers through the
 one class both contain (`ends`, `every_pair`). Exactly the transfer through the reference's class
