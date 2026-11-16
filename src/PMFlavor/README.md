@@ -23,6 +23,24 @@ Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum IV: Information T
 PMFlavor is not a model of Standard Model flavour. Every number comes from E8 structure or a narrowly
 stated premise; measured values enter only as the final test in e8p.
 
+## The six pillars on the wire
+
+A protocol carried over the wire is a Persistence Mechanics system, and the flavour work is that
+system's six pillars (`PersistenceMechanics`, Paper I: Finiteness gives Capacity and Margin,
+Conservation gives Map and Protocol, Causality gives Toll and Governor):
+
+| Pillar | On the wire | Library |
+|---|---|---|
+| Capacity | the three label states; the node's conductance | `PMAction.GenerationSector`, `KronSeries` |
+| Margin | the other wall's detuning `δ_O` (a wall with no detuning is PM's "no margin, fragility": `PMAction.UndetunedWall`) | open: its size per protocol |
+| Map | label states → the protocol's persisting states: the rotation `U` | open: derived per protocol from Margin (`PMAction.LightPairTexture`) |
+| Protocol | up, down, `e`, `ν` as information over the wire | `PMConstants.CarrierRepresentation` |
+| Toll | node passage `α`; the three transfers are PM's three modes (`PersistenceMechanics.InformationTransfer`) | `NodeAmplitude`, `TransferAmplitude` |
+| Governor | the stationary reference (`δ_R = 0`) and the weak refresh | `PMAction.ReferenceDetuning`, `CarrierActions` |
+
+Most physics frameworks carry Capacity, Map, Protocol and Governor and leave Toll or Margin out; here
+Toll is derived and Margin is the open number. Fill in Margin, and Map follows.
+
 ## Terminology
 
 | Term | Meaning | Where |
