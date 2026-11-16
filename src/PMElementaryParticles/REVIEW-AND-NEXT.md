@@ -30,9 +30,12 @@ second order for quarks; a readout that uses `β` needs a colour treatment first
 
 ## Mathematical gap (Lean)
 
-**Three-body phase-space factorization.** Factor the three-body measure into (pair invariant mass) ×
-(pair angular measure) × (spectator energy), so that `MassiveDaughterSpectrum.pair_density` is a
-consequence rather than an input. Uses the two-body results (`PolarMeasure`, `MassiveVolume`).
+**Three-body phase-space factorization.** The pieces are derived from Lebesgue measure: the
+daughter's measure `P/(4π²)` (`ElectronMeasure.width_from_lebesgue`) and the pair's two-body volume
+`1/(8π)` (`PolarMeasure`). Open: that the three-body measure `d³p d³k d³k̄ δ⁴(p − p_e − k − k̄)`
+factors into daughter measure × pair average at `q = p − p_e`, including the boosted pair (the
+Lorentz invariance of `d³k/2|k|`), so `MassiveDaughterSpectrum.pair_density` follows rather than
+being assembled.
 
 ## Other open work
 

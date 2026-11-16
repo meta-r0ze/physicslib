@@ -10,9 +10,12 @@ Here the charged daughter's mass is retained in the rest-frame kinematics and
 the radial measure. The existing transported pair average gives the resulting
 energy density, rather than inserting a phase correction fitted to a lifetime.
 
-As in `PairTransport`, the two-body volume, parent flux and continuum measure
-normalization are supplied. This is a tree-level contact spectrum with massless
-neutrinos, not a construction of the physical measure or a radiative correction.
+The daughter's measure `P/(4π²)` is derived from the `ℝ³` Lebesgue integral in
+`ElectronMeasure` (`width_from_lebesgue`), and the two-body volume `Φ = 1/(8π)` in
+`PolarMeasure`. Still supplied: the factorization of the three-body measure into
+daughter measure × pair average, and the flux `1/(2m)` (the definition of a rate).
+This is a tree-level contact spectrum with massless neutrinos, not a radiative
+correction.
 -/
 noncomputable section
 namespace PMElementaryParticles.MassiveDaughterSpectrum
