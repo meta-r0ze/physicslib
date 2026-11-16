@@ -5,20 +5,20 @@ is PMAction's; label changes are PMFlavor's.
 
 ## The protocol readout (first)
 
-Wire inputs: the split `κ_R = (K, k, k)` is derived (`PMAction.ReferenceClassHop`: the reference's
-stationarity forbids direct exchange into its class), but the other wall is class-blind
-(`PMAction.CarrierAdmittance`), not `κ_O = (k, K, k)`-type as the numbers below assume, and `k/K`
-is open (PMAction REVIEW, "Node-restoring amplitude"). On the derived wire at the resonance
-`m₂/m₃ ≈ √(3/2) k/K`: `0.0045` for `α/2`, `0.0089` for `α`. Re-run the readout on it. The results so far are in OVERVIEW ("Protocol readout"): the wire's flip sits on the cycle resonance
-(`PMAction.OtherWallStationary`), where the wire gives `m₂/m₃ ≈ 0.023` for every protocol, and the
-data need one weight `w` on the heavy label per protocol, `w_e : w_d : w_u ≈ 1 : 3 : 16–18`. Until the
-readout is derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers (declared; their
+Wire inputs: `κ_R = (K, k, k)` (`PMAction.ReferenceClassHop`), other wall class-blind
+(`PMAction.CarrierAdmittance`), `k/K` open (PMAction REVIEW, "Node-restoring amplitude"). The readout
+on this wire is in OVERVIEW ("Protocol readout"): at the resonance `m₁ = 0` and `m₂/m₃ = √(3/2) k`
+for every protocol, and the data need a heavy-label weight `s_e : s_d : s_u ≈ 1 : 3 : 13` (`k = α/2`).
+Until the readout is derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers (declared; their
 e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
 
-- **Heavy-label weight.** Derive the heavy (vector-class) state's upkeep per protocol. The reading
-  that fits all three is a charge-dependent cost, `w ∝ e^{(c/2) Y_R}` with `c ≈ 1.7` (the library has no
-  such cost yet); the crossing-fraction reading read colour as carrier axes and is excluded
-  (`PMAction.ColourRegister`).
+- **Heavy-label weight.** Derive the heavy (label-`v`) state's upkeep per protocol,
+  `s_e : s_d : s_u ≈ 1 : 3 : 13`. A charge-dependent cost `e^{(c/2) Y_R}` was fitted on the withdrawn
+  wire (`c ≈ 1.7` for `w = s²` there); refit it on the derived wire before using it. The
+  crossing-fraction reading read colour as carrier axes and is excluded (`PMAction.ColourRegister`).
+- **Mixing.** On the derived wire (OVERVIEW, "Protocol readout") neither root assignment gives the
+  CKM: same root `|V_us| ≈ 0`, `|V_cb|, |V_ub| ≈ 0.009, 0.008`; different roots `|V_us| = √3/2`. So
+  the mixing has to come from the protocol readout, not the bare wire's rotation.
 - **Light masses.** At the resonance the light mass is zero; derive the light masses as corrections.
   As the lazy `β` event every protocol takes the real root (`PMAction.OtherWallFlipEvent`), so flavour
   mixing has to come from the readout, and the lazy event's offset changes the mass law to `s²/c'`

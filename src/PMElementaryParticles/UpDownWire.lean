@@ -5,7 +5,9 @@ import PMAction.WireMass
 
 **Status (2026-11).** The reading of up and down as colour carriers `±2eᵢ` on the wire is withdrawn
 (`DoubletSign`, `PMAction.ColourRegister`); `product_equal` stands as a statement about two wires
-with exchanged light carriers.
+with exchanged light carriers. On the derived wire the other wall is class-blind
+(`PMAction.CarrierAdmittance`) and only the reference wall separates classes
+(`PMAction.ReferenceClassHop`), so the `(K, k_c, k_s)` other-wall pattern below is not the wire's.
 
 `DoubletReflection`: reflecting a colour axis fixes the reference's axis, exchanges up and down
 (`flip_doublet`), and exchanges the two light classes `s ↔ c` (`flip_spinor`, `flip_cospinor`). The
