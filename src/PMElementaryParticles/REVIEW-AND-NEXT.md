@@ -32,13 +32,26 @@ library's crossing facts give `k_e : k_d = 1 : 1/3` (`PMAction.NativeDetuning.le
 `k_u/k_e = 1/18.5–1/15.8` (scan). Premises not yet derived: gain = reference-visit rate, weight =
 minimum margin on both walls' heavy entry.
 
-**Next.** Up's gain. On the pairing where up's heavy carrier reaches the reference axis it lands on
-the held reference itself (`BetaReference`), so that crossing is blocked (the hold admits nothing into
-`r`), and up must be corrected by a slower route (for example after the weak refresh to its down
-partner). Derive that route's rate per `β` event and compare with `1/16–1/18`. Then derive why `δ_O`
-sits at the resonance (a cost-free light mode) and the light ratios from the offset. Until then e8p's
-masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared assignment (their e8p caveats
-say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
+**Up's gain, tried.** The channel inventory (`ProtocolInventory`, `PacketGaugeActions.flipWeak`):
+left-handed channels are active (the weak refresh flips them every tick, up ↔ down, `ν ↔ e`),
+right-handed ones static; the sterile vacancy is the reference carrier `+2e₀`. Under `β` a right-handed
+up carrier on axis `2` lands on the vacancy (no protocol, held), a right-handed down carrier on `e_R`.
+Counting corrective crossings per side gives up `0` (right) and `1/3` (left, through the flip to down):
+averaged `k_u/k_e = 1/6`, product-type readings `0` or `∞`; none gives the data's `1/16–1/18`
+(`w_u/w_d ≈ 5.4`). So "blocked crossing" alone does not set up's gain.
+
+A second reading fits all three with one number: `ln w` is linear in the electric charge
+(`w ∝ e^{cQ}`, `c ≈ 1.7` per unit charge, the same within the quark-scale spread for `e → d` and
+`d → u`). That points at a charge-dependent maintenance cost of the heavy (vector-class) state, a
+signed cost, i.e. relative to a background; Paper I's survival weight `exp(−β c)` would make it
+exponential. Not derived.
+
+**Next.** Decide between the two readings by deriving the heavy state's maintenance cost per
+protocol: the crossing reading predicts `w_d/w_e = 3` exactly and needs a separate up mechanism; the
+charge reading predicts `w_d/w_e = e^{2c/3}` and `w_u/w_d = e^{c}` from one `c`. Then derive why
+`δ_O` sits at the resonance (a cost-free light mode) and the light ratios from the offset. Until then
+e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared assignment (their e8p
+caveats say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
 
 Constraints any readout must meet are in OVERVIEW (`DoubletReflection`, `ProtocolReadout`,
 `BetaReference`, `CoherentGate`): the partner asymmetry is first order for leptons and at least
