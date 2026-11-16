@@ -33,7 +33,8 @@ per protocol, far from both; PMElementaryParticles REVIEW.)
 Per protocol (`lepton_always_crosses`, `colour_crosses_iff`): every lepton-axis carrier crosses
 under `β`; a colour carrier crosses only on axis `2`. `β`'s pairing of axis `0` with axis `2` is the
 Dirac-basis choice; averaged over the three colour pairings a colour carrier crosses in `1/3` of
-them. So, if `δ_O` scales with the crossing fraction, `δ_O(lepton) = 3 δ_O(quark)`, and up and down
+them (this reads colour as carrier axes, which `ColourRegister` excludes if colour commutes with `β`).
+So, if `δ_O` scales with the crossing fraction, `δ_O(lepton) = 3 δ_O(quark)`, and up and down
 get the same value (no source for the up/down split here). Candidate; the mass-product readings fail
 directly (PMElementaryParticles REVIEW).
 Both are candidates; the leg count of an on-site flip is the premise to derive. `beta_crossings`:

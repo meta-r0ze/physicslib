@@ -13,8 +13,8 @@ e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the 
 
 - **Heavy-label weight.** Derive the heavy (vector-class) state's upkeep per protocol. Two readings fit
   and the quark-mass scale spread cannot separate them: the minimum margin `W/k` with `k` the
-  reference-visit rate under `β` (gives `w_d/w_e = 3` from the crossing facts; up's `1/16–1/18` has no
-  mechanism yet), or a charge-dependent cost `w ∝ e^{(c/2) Y_R}` (`c ≈ 1.7`; the library has no such
+  reference-visit rate under `β` (gives `w_d/w_e = 3` from the crossing facts, but those read colour as
+  carrier axes, which `PMAction.ColourRegister` excludes; up's `1/16–1/18` has no mechanism), or a charge-dependent cost `w ∝ e^{(c/2) Y_R}` (`c ≈ 1.7`; the library has no such
   cost).
 - **Light masses.** At the resonance the light mass is zero; derive the light masses as corrections.
   As the lazy `β` event every protocol takes the real root (`PMAction.OtherWallFlipEvent`), so flavour
