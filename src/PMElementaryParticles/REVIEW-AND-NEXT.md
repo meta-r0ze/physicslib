@@ -121,6 +121,17 @@ one-leg readout). Status: a pattern with one passing check, not a derivation. Ne
 lower/upper term from the doublet structure (the refresh acts on the sign, `CarrierActions.weak`), and
 settle how a neutral protocol reads the wire.
 
+**Step 1: the doublet term (2026-11).** Target: lower minus upper `≈ 2.36 ± 0.15` bits (from `R_d − R_u`
+and `R_e − R_u + log₂ 3`), equivalently a factor `≈ 5.4 ± 0.8` in `1 + u`. Facts: the reference sits
+on the upper, neutral member (`ν`, `PMConstants.ReferenceStabilizer`, `ReferenceMasses`); the doublet
+index is the carrier's sign (`CarrierRepresentation`), and the weak refresh negates every carrier of
+the reference's sector (`CarrierActions.weak`), which exchanges the doublet positions there. So the
+term separates protocols on the reference's doublet position (up, `ν`) from displaced ones (down, `e`).
+Quick counts: one sign bit (`1`), signs on both walls (`2`, `2.4σ` low), charge or hypercharge
+displacement squared (wrong ordering: up carries more charge than down yet needs less margin).
+None derived. Open: how the refresh's per-tick exchange of doublet positions costs a displaced
+protocol information, counted from `CarrierActions.weak` and the maintenance ledger.
+
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
 Results below that used the old assignment: the `WireLightSplit` relation test and its recorded
