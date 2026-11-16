@@ -55,6 +55,10 @@ for k, name in [(alpha / 2, "alpha/2"), (alpha, "alpha")]:
         we, wd, wu = weight(lep, k), weight(down, k), weight(up, k)
         print(f"  {label:20s} w_e={we:.4f} w_d={wd:.4f} w_u={wu:.4f}  s_d/s_e={np.sqrt(wd / we):.2f} s_u/s_e={np.sqrt(wu / we):.1f}  "
               f"w_d/w_e={wd / we:.2f} w_u/w_e={wu / we:.1f}")
+        # charge reading: s proportional to exp(a Y_R), Y_R = -2, -2/3, 4/3 for e, d, u
+        a_d = np.log(np.sqrt(wd / we)) / (4 / 3)
+        a_u = np.log(np.sqrt(wu / we)) / (10 / 3)
+        print(f"  {'':20s} charge reading s ~ exp(a Y_R): a from d = {a_d:.3f}, from u = {a_u:.3f}")
 
 # CKM on the derived wire: V = U_u^H U_d, U the left eigenvectors (ascending masses) of M M^H,
 # with each protocol's weight fitted above (k = alpha/2, PDG mixed scales).

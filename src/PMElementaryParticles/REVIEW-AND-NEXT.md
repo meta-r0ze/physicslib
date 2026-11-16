@@ -13,8 +13,11 @@ Until the readout is derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` 
 e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
 
 - **Heavy-label weight.** Derive the heavy (label-`v`) state's upkeep per protocol,
-  `s_e : s_d : s_u ≈ 1 : 3 : 13`. A charge-dependent cost `e^{(c/2) Y_R}` was fitted on the withdrawn
-  wire (`c ≈ 1.7` for `w = s²` there); refit it on the derived wire before using it. The
+  `s_e : s_d : s_u ≈ 1 : 3 : 13`. A charge-dependent upkeep `s ∝ e^{a Y_R}` (`Y_R = −2, −2/3, 4/3`)
+  fits both ratios with one `a` on the derived wire: for `k = α/2`, `a = 0.82` (down) and `0.77` (up)
+  at PDG mixed scales, `0.74` and `0.75` with `m_b`, `m_t` at their own scale (2–11% apart across
+  the quark-mass choices); for `k = α` they are 7–18% apart (`tools/protocol_readout_scan.py`). So the reading passes a one-parameter
+  test, better at `α/2`. Derive the upkeep and `a` (the library has no such cost yet). The
   crossing-fraction reading read colour as carrier axes and is excluded (`PMAction.ColourRegister`).
 - **Mixing.** On the derived wire (OVERVIEW, "Protocol readout") neither root assignment gives the
   CKM: same root `|V_us| ≈ 0`, `|V_cb|, |V_ub| ≈ 0.009, 0.008`; different roots `|V_us| = √3/2`. So
