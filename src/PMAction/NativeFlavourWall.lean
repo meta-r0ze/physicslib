@@ -99,6 +99,16 @@ def nativeHamiltonian2 (p : ℝ) (k : Fin 3 → ℝ) (δ₁ δ₂ : ℝ) (Y : Ma
   let T := NativeSector.hopN c ⊗ₖ Y
   fromBlocks D₁ T Tᴴ D₂
 
+/-- A symmetry on an independent payload acts trivially on the native carriers.
+Both detunings are free; the only compatibility hypotheses are on the link. -/
+theorem native_payload_symmetry (p : ℝ) (k : Fin 3 → ℝ) (δ₁ δ₂ : ℝ)
+    (C Y : Matrix f f ℂ) (hf : C * Y = Y * C) (hb : C * Yᴴ = Yᴴ * C) :
+    let B := (1 : Matrix (CarrierEvents.Carrier c) _ ℂ) ⊗ₖ C
+    let P := fromBlocks B 0 0 B
+    P * nativeHamiltonian2 c p k δ₁ δ₂ Y = nativeHamiltonian2 c p k δ₁ δ₂ Y * P := by
+  simp only [nativeHamiltonian2, fromBlocks_multiply, conjTranspose_kronecker,
+    zero_mul, mul_zero, add_zero, zero_add, ← mul_kronecker_mul, one_mul, mul_one, hf, hb]
+
 omit [Fintype f] in
 theorem nativeHamiltonian2_equal (p : ℝ) (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) :
     nativeHamiltonian2 c p k δ δ Y = nativeHamiltonian c p k δ Y := rfl

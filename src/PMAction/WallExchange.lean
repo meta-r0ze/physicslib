@@ -102,6 +102,30 @@ theorem H2_equal (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) : H2 k δ �
 theorem diag_zero (δ : ℝ) : diag (fun _ => 0) δ = (δ : ℂ) • beta := by
   simp [diag, K]
 
+/-- A common payload operation on the two walls, independent of spin. -/
+def payloadAction (C : Matrix f f ℂ) :=
+  fromBlocks ((1 : Spin) ⊗ₖ C) 0 0 ((1 : Spin) ⊗ₖ C)
+
+/-- With separate spin and payload indices, the complete wall Hamiltonian
+respects a payload operation exactly when both directed crossings respect it.
+The on-site detunings can be different and arbitrary. -/
+theorem payload_symmetry_iff (C Y : Matrix f f ℂ) (k : Fin 3 → ℝ) (δ₁ δ₂ : ℝ) :
+    payloadAction C * H2 k δ₁ δ₂ Y = H2 k δ₁ δ₂ Y * payloadAction C ↔
+      C * Y = Y * C ∧ C * Yᴴ = Yᴴ * C := by
+  simp only [payloadAction, H2, fromBlocks_multiply, zero_mul, mul_zero, add_zero,
+    zero_add, ← mul_kronecker_mul, one_mul, mul_one]
+  constructor
+  · intro h
+    constructor
+    · ext i j
+      have hij := congrFun (congrFun h (.inl (2, i))) (.inr (0, j))
+      simpa [hop, kronecker_apply] using hij
+    · ext i j
+      have hij := congrFun (congrFun h (.inr (0, i))) (.inl (2, j))
+      simpa [back, kronecker_apply] using hij
+  · rintro ⟨hf, hb⟩
+    rw [hf, hb]
+
 /-- Wall exchange with spinor parity. -/
 def P : Matrix ((Fin 4 × f) ⊕ (Fin 4 × f)) ((Fin 4 × f) ⊕ (Fin 4 × f)) ℂ :=
   fromBlocks 0 (beta ⊗ₖ (1 : Matrix f f ℂ)) (beta ⊗ₖ (1 : Matrix f f ℂ)) 0

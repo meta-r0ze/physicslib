@@ -28,8 +28,10 @@ reading of `k/K` are choices that do not fix the data. Open, wire only:
   (`LightLeakage.leakage_bound`, the allowed `L` not fixed).
 - **Colour and `β`.** Derive how the native update realizes chirality and colour together. On the
   four carrier axes with fixed `ConcreteFermion.gamma`, a colour-permutation-invariant chirality
-  flip vanishes (`NativeDetuning.colour_invariant_flip_zero`). A separate spinor index would
-  allow colour to act independently; its identification in the substrate remains open.
+  flip vanishes (`NativeDetuning.colour_invariant_flip_zero`). The independent-payload construction is checked
+  on the wall and native registers (`WallExchange.payload_symmetry_iff`,
+  `NativeFlavourWall.native_payload_symmetry`). Identify that payload with the physical colour
+  action and derive its compatibility with the crossing link.
   Averaging a protocol readout over colour requires its own measurement rule.
 - **Physical price of the even complement.** Establish whether invisible-mode squared displacement
   carries a positive toll and the identity completion is admitted by the microscopic gates.
