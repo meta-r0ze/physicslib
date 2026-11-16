@@ -57,6 +57,15 @@ minimal-action rule (detuning cost `∝ δ²`, disturbance hazard `∝ (load/δ)
 loads `33 : 2.8 : 1` (down : `e` : up); no protocol quantity tried has those ratios (`Q²`, `Y_R²`).
 Open: Paper I's selection with protective expenditure (`4_minimum_action`, cumulative hazard
 `H_i = ∫ β_i Z_net dt`) applied to the wire, with the protocol's own disturbance identified.
+**Margin as the minimum to persist (Kate, 2026-11).** `δ_O` is the smallest detuning at which the
+protocol's states still persist. On the corrected wire (numerical): at `δ_O = 0` the two heavier
+states are degenerate (`Kk`, `Kk`; `UndetunedWall.undetuned_masses_matching`); they split as
+`√(1 + u²) Kk` and `≈ Kk` (`u = δ_O/k_f`), the third stays `≈ k²`. So the threshold to find is the split
+at which two states count as distinct persisting states. Instant fails: a common absolute gap
+(`m_b − m_s`, `m_t − m_c`, `m_τ − m_μ` are `4.1`, `171`, `1.7` GeV). Candidates to state and test: the
+split reaching orthogonality within the maintenance cycle (Toll's Margolus–Levitin bound,
+`ΔE · T ≥ π/2`, with `T` the clock period); the split exceeding the protocol's own disturbance (its
+carrier coupling to the third state). Each needs the protocol's time or disturbance scale.
 
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
