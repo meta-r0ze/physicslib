@@ -37,8 +37,9 @@ average (the boost along `e₀` with `γ = E/M` maps the rest-frame pair to `Ψ`
 
 ## Other open work
 
-- **Charged current to contact vertex.** Connect the charged-current operator to the contact vertex in
-  `AmplitudeTrace` (external carrier states, mode weights, readout normalization).
+- **Final channels.** `PMAction.NativeExternal` makes `AmplitudeTrace`'s spinors the native wall
+  eigenmodes and its bilinears the native charged current. Identify which protocol channels are the
+  final states of each decay (and so the first row's external states).
 - **Radiative factor.** `MuonLifetimeCorrected` supplies the one-loop QED factor; derive it as the soft
   photon dressing of the charged daughter.
 - **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full

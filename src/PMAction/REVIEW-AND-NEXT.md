@@ -4,12 +4,11 @@ Checked results are in [OVERVIEW](OVERVIEW.md). Protocol-specific wire readouts 
 
 **Substrate premise** marks a supplied parameter or identification still to derive from the E8 update. **Certificate** marks an external calculation awaiting formal verification. **Route premise** marks a requirement of a particular derivation route. **Extension** marks a stronger result beyond the present theorem scope. Each current theorem states its hypotheses. Derive the substrate protocol first; comparisons with observed particles test the result rather than choose it.
 
-The immediate ElementaryParticles dependencies are the crossing-to-flip calibration, followed by the native-current/external-state bridge to `AmplitudeTrace`. When dependencies are equal, close admission and pricing premises before extending the wire analysis. The carrier level and radius are later certification work.
+The immediate ElementaryParticles dependency is the crossing-to-flip calibration. When dependencies are equal, close admission and pricing premises before extending the wire analysis. The carrier level and radius are later certification work.
 
 ## Immediate handoff
 
 - **Relative crossing and carrier rates (substrate premise).** Derive the wall-crossing rate `y` and in-wall flip/carrier rates from native event histories in the same clock units. Derive how a node admittance sets a Hamiltonian hop rate, including event duration or the generator/update relation. `WallGapCalibration` proves that the supplied native-wall realization, cyclic glue support and stationary reference alone admit every positive flip-to-crossing ratio; a further microscopic relation is needed. `WallMassRatio` supplies a conditional capacity-to-mass identification in an equal-detuning model, not that missing relation for the reference-conditioned wire. At the derived rates, certify the light-band approximation error using `LightLeakage`. A standalone isometric-map contract for the crossing would also require a microscopic event identification.
-- **Native current to external amplitude (substrate premise).** Construct the prepared native external modes, their charged-current matrix elements, final-channel selection and normalization, and connect them to `AmplitudeTrace`. Its trace algebra and `WeakVertex`'s contact-limit and kernel-basis results are already proved. `WallCurrentWeights` identifies the charged gapped component retained by the full projector: total gapped weight alone is not a protocol row deficit. Derive the appropriate state/channel identity before using a leakage fraction as a readout. Protocol-specific applications belong in ElementaryParticles.
 
 ## Other substrate and route premises
 

@@ -27,8 +27,9 @@ and its spin sum is derived, not assumed.
 
 Hypotheses: real `G`, `m`, `m̄`; every momentum has positive energy and is on shell; `k` and `pₑ`
 are massless; each spinor family is `√(2p₀)` times an orthonormal basis of the relevant kernel.
-Not claimed: that this vertex, coupling or these external states are the substrate's weak
-interaction, statistics, mediator or phase-space measure.
+The external spinors are the native wall's eigenmodes and the bilinears its charged current
+(`NativeExternal`). Not claimed here: the coupling's value, statistics, mediator or phase-space
+measure (see `WeakVertex`, PMElementaryParticles).
 -/
 
 noncomputable section
