@@ -21,6 +21,8 @@ private def usage : String :=
   "  --summary       one Markdown page: scoreboard, every comparison by agreeing digits, tensions\n" ++
   "  --masses        E8 nuclear ledger masses vs measured: residual and z in ledger-scatter units\n" ++
   "  --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)\n" ++
+  "  --derivation NAME [--depth N] [--flat]  the repository constants NAME is proved from, down to\n" ++
+  "                  the substrate (NAME: a key id, a Lean name or a unique suffix; Derivation.lean)\n" ++
   ""
 
 structure Opts where
@@ -154,7 +156,20 @@ private def printAudit (ks : List Key) (o : Opts) : IO Unit := do
   if !noRef.isEmpty then
     out.putStrLn s!"  {noRef.length} values have no experimental reference (proved intervals only)."
 
+/-- `--derivation` loads the library environment, which a compiled binary does not carry; it runs
+`tools/e8p/Derivation.lean` through `lake env lean --run` from the repository root. -/
+private def derivation (rest : List String) : IO UInt32 := do
+  let root := (← IO.appDir) / ".." / ".." / ".."
+  let child ← IO.Process.spawn {
+    cmd := "lake", cwd := root.toString
+    args := #["env", "lean", "--run", "tools/e8p/Derivation.lean"] ++ rest.toArray }
+  child.wait
+
 def main (args : List String) : IO UInt32 := do
+  if let some a := args.head? then
+    if a == "--derivation" then return ← derivation args.tail
+    if a.startsWith "--derivation=" then
+      return ← derivation ((a.drop 13).toString :: args.tail)
   if args == ["--help"] || args == ["-h"] then
     (← IO.getStdout).putStr usage
     return 0

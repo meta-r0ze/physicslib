@@ -24,6 +24,8 @@ e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--per
   --shells        E8 Nilsson single-particle ladder (PMAtoms.nilssonE8CostQ), gaps, closures vs magic numbers
   --masses        E8 nuclear ledger masses vs measured: residual, z in ledger-scatter units, summary
   --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)
+  --derivation NAME [--depth N] [--flat]
+                  how NAME is proved: the tree of repository constants it uses, down to the substrate
 ```
 
 Examples:
@@ -39,7 +41,19 @@ e8p --nuclear                # typed pp/pn/nn counts and tetrahedron closure
 e8p --masses                 # all nuclei: residuals, z in scatter units, |z| ≤ 1/2/3 counts
 e8p --masses=6,6             # C-12: E8 ledger mass, measured, E8 − measured, z
 e8p --json | jq .constants
+e8p --derivation muon_ratio            # proof tree of a reported value, by key id
+e8p --derivation muon_value --depth 3  # by unique name suffix, three levels
+e8p --derivation=PMAction.OtherWallStationary.economy_selects --flat   # grouped by library
 ```
+
+`--derivation` reads the kernel terms of the compiled libraries, so it needs the `src` libraries
+built; it runs `tools/e8p/Derivation.lean` with `lake env lean --run` (about a minute, mostly
+loading Mathlib). Without e8p it is `lake env lean --run tools/e8p/Derivation.lean NAME`. The tree
+lists only repository constants; each is expanded once and a repeat is marked `↑`. A `(leaf)` uses no
+other repository constant: a substrate definition, a supplied number or a self-contained lemma, so
+the leaves of a value are where its chain stops. The footer gives the axioms the kernel needs
+(`propext`, `Classical.choice`, `Quot.sound`; anything else is flagged) and the libraries crossed.
+Hypotheses of a conditional theorem appear in its printed statement.
 
 
 ## Layout
@@ -71,6 +85,7 @@ catalog do not depend on the folder.
   the named Lean definition (`catalog_sound`, `rounded_catalog_sound`). This is what
   makes the tool trustworthy; the runtime never evaluates a `Real`.
 - `ConstantsMain.lean` — the CLI.
+- `Derivation.lean` — the `--derivation` proof-tree walker (interpreted, loads the library environment).
 
 ## Scripts
 
