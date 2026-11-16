@@ -9,7 +9,7 @@ unobserved complement `P = 1 − E Eᴴ`. Any operator `W` placed on that comple
 `E U Eᴴ + P W P`, gives the same readout at every tick (`readout_same`), so readout alone does not
 select the completion.
 
-Persistence does. Price the completion's action on invisible modes at a positive rate per unit of
+Under a supplied positive displacement price, persistence selects a completion. Price the completion's action on invisible modes at a positive rate per unit of
 squared displacement, `toll · ‖P W P − P‖²` (the same positive change price that selects stationary
 backgrounds, `PersistentBackground`). Under Paper I's survival law:
 
@@ -17,9 +17,11 @@ backgrounds, `PersistentBackground`). Under Paper I's survival law:
 * `selected_is_identity`: every such completion equals `LocalIsometricDynamics`'s
   (`IsometricDynamics.extend`).
 
-So the even (invisible) modes evolve by the identity, as a persistence consequence, not a
-construction choice. Still inputs: the displacement price of invisible modes, `β > 0`, a positive
-toll. This does not identify the directional-exponential completion with this one.
+For a physical gate family, `most_persistent_in_family` also requires admission of the identity
+on the invisible complement. Under that premise and the supplied positive toll, `β > 0` and
+displacement price, the selected completion fixes the invisible modes. Gate admission and prices
+remain microscopic inputs. `EvenRootPhase.no_independent_i_completion` excludes the four-root phase family as an identity
+completion of `i · 1` even with independent pulse times and attempt parameters.
 -/
 
 noncomputable section

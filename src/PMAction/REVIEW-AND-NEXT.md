@@ -16,6 +16,6 @@ Checked results are in [OVERVIEW](OVERVIEW.md). Protocol-specific wire readouts 
 
 ## Dynamics and limits
 
-- **Even complement.** Determine whether coherent gate sequences implement the identity completion of the physical split update, including its directional factors at the actual tick. Derive whether the microscopic event ledger charges invisible-mode squared displacement at a positive rate. The permutation-gate classification and the five-site directional locality obstruction are in the overview.
+- **Even-complement realization and price.** Derive the invisible-sector action of the full physical split update, including compensation between coherent gate factors. Determine whether its admitted completions include the identity completion and whether microscopic event costs assign a positive price to invisible-mode squared displacement.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator limits. Sharpen the lattice remainder bound enough to compare it with `tools/lattice_polarization_check.py` at fixed spacing.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.

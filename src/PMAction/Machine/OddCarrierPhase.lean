@@ -8,7 +8,9 @@ Antipodal inversion is an explicit root word. First we identify its reconstructe
 phase on the odd sector. The preferred phaseI construction uses four individual
 orthogonal root transfers at three positive quarter-times instead; it needs no
 lazy kernel for the composite antipodal instruction. The common rate, admission
-and time cost remain inputs. No even-complement action is identified with i.
+and time cost remain inputs. `EvenRootPhase` identifies a nonzero even mode whose phase is the
+square of the common visible phase, and excludes identity completion of i by the four-root family
+even with independent pulse times and attempt parameters.
 -/
 noncomputable section
 namespace PMAction.OddCarrierPhase
