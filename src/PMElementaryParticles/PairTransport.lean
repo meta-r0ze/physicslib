@@ -22,9 +22,10 @@ between them.
    `64 G² (p·k̄)(p_e·k)` with the transported average reproduces `MuonRate.rest_frame`, and
    with the flux and electron measure gives `MuonRate.rate` exactly.
 
-Still supplied: the value `Φ = 1/(8π)` (`MuonRate.two_body` simplifies the solid-angle and
-delta-Jacobian factors; it is not a constructed delta measure), the electron measure, and
-the flux. The average is a finite exact quadrature, not a continuum integral over all
+`Φ = 1/(8π)` is derived at rest in `PolarMeasure`, the electron measure in `ElectronMeasure`,
+and the boost invariance of the massless legs' measure in `NullBoost`. Still supplied: the
+energy-momentum delta that places the pair at total momentum `q` (PMElementaryParticles REVIEW),
+and the flux. The average is a finite exact quadrature, not a continuum integral over all
 integrable test functions; for the quadratic pair tensor the two agree.
 -/
 

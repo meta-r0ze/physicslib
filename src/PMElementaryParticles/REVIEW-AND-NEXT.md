@@ -30,12 +30,15 @@ second order for quarks; a readout that uses `β` needs a colour treatment first
 
 ## Mathematical gap (Lean)
 
-**Three-body phase-space factorization.** The pieces are derived from Lebesgue measure: the
-daughter's measure `P/(4π²)` (`ElectronMeasure.width_from_lebesgue`) and the pair's two-body volume
-`1/(8π)` (`PolarMeasure`). Open: that the three-body measure `d³p d³k d³k̄ δ⁴(p − p_e − k − k̄)`
-factors into daughter measure × pair average at `q = p − p_e`, including the boosted pair (the
-Lorentz invariance of `d³k/2|k|`), so `MassiveDaughterSpectrum.pair_density` follows rather than
-being assembled.
+**Three-body phase-space factorization.** Derived from Lebesgue measure: the daughter's measure
+`P/(4π²)` (`ElectronMeasure.width_from_lebesgue`), the pair's two-body volume `1/(8π)` at rest
+(`PolarMeasure`), and the boost invariance of each massless leg's measure `d³k/|k|` and of the
+two-leg measure (`NullBoost.measure_invariant`, `pair_invariant`). Open: the energy-momentum delta.
+Show that for a test function `G` of the pair's total four-momentum
+`∫∫ G(k̂ + k̂̄) F d³k/(2|k|) d³k̄/(2|k̄|) = ∫ d⁴Q G(Q) Φ ⟨F⟩_Q` over future timelike `Q`, by the
+change of variables `(k, k̄) ↦ (Q, rest-frame direction)` (or, for fixed `Q⃗`, the energy cumulative
+`∫ 1{|k| + |Q⃗ − k| ≤ t} F d³k/(4|k||Q⃗ − k|)` has `t`-derivative `Φ⟨F⟩`). Then
+`MassiveDaughterSpectrum.pair_density` follows rather than being assembled.
 
 ## Other open work
 
