@@ -243,3 +243,25 @@ and the mean life is its inverse.
 | `BetaLattice` | `BetaLatticeChannel` (`modes`, `active`), `event`, `family`; `betaLatticeRate = β·c0·active/(modes+1)`, `betaLatticeLifetime`, positivity; `betaSpectralWeight = exp(−λ)`, `betaWeightedRate`, `betaSpectralRate`; `betaOpenModes`, `betaSpectralRateCutoff`, positivity, `betaWeightedRate_le`, `betaSpectralRateCutoff_le` (`rate ≤ β·c0`); general gap lemmas `dirichletEigenvalue_mono`, `dirichletEigenvalue_ge_next`, `betaOpenModes_eq_univ_of_twelve_le`, `betaOpenModes_eq_singleton_of_gap`, `betaSpectralRateCutoff_eq_one_of_openModes_eq_univ` | numerical spectral sum / neutron benchmark |
 | `LeptonLattice` | finite lepton channel reusing `BetaLattice`; `leptonLatticeRate`, `leptonLatticeLifetime`, positivity | lepton eigenvalue input |
 | `LeptonLifetime` | `muonSpectralFraction`, `muonFiniteWidth`, `muonFiniteLifetime`; minimal-cube lepton channel | mass/phase-space coefficient still continuum |
+
+## Results of the 2026-11-16 review
+
+- **The protocols cannot read the wire's spectrum directly** (`PMAction.WireLightBound`; numerical scans
+  over each protocol's `δ_O` and cycle phase): up and leptons fail with the linear readout, all three
+  with the squared one. The readout is the open item (REVIEW).
+- **`UpDownWire.product_equal`**, restated on `PMAction.WireMass.mass`: up and down over one wire with
+  shared `δ_O`, `K` have the same mass product; data `m_u m_c m_t/(m_d m_s m_b) ≈ 260`, so they do not share
+  both.
+- **Doublet structure** (Lean): weak partners are antipodes and native words commute with the
+  antipode (`DoubletSign`); partners differ only by the odd/even cross term (`ProtocolReadout`); the
+  native `β` meets the reference carrier only from the up protocol's carrier on the paired axis
+  (`BetaReference.onto_reference_iff`) and fixes no vector-class carrier (`beta_fixes_none`).
+- **Map and gate** (Lean): `RefreshMap` (clean active rows are the requirement; clock mask changes
+  close over a cycle, `clockRoute_closes`); `CoherentGate` (a full position bit per event for unequal
+  angles); the record system has zero margin (`untouched`, `restores_iff_visits`).
+- **Withdrawn** (git history has them): everything built on the 2026-11 "corrected" carrier placement:
+  the per-protocol margins `64.7 / 18.6 / 11.5`, the information-theory rates `R_p`, the gains and their
+  orderings, the second-ratio fits, the up heavy-entry candidate, the protocol-level `U` tests, and the
+  same-wire neutrino readout exclusion. Excluded independently of placement: equal gate angles from
+  the CC vertex, decay direction, `T₃` or charge squared; exclusion blocking (`2/3`); a wall-dependent
+  Wilson `r_O` (`PMAction.WilsonPointForced`); reflection-invariant gains.

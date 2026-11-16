@@ -423,3 +423,19 @@ the whole tree, not just PMFlavor. PMFlavor may import PMElementaryParticles, no
 closed forms `ρ̄ = c₁₂s₁₃(P cos δ + R)/(s₂₃D)`, `η̄ = c₁₂s₁₃P sin δ/(s₂₃D)` (`P = s₁₂c₂₃`, `R = c₁₂s₂₃s₁₃`,
 `D = P² + 2PR cos δ + R²`) satisfy that definition; `rhoBar_bounds` (`0.1411–0.1412`), `etaBar_bounds`
 (`0.3522–0.3523`), `wA_tight` (`0.8200–0.8207`). `Values.wolfRho`, `wolfEta` are now the barred pair.
+
+## Results of the 2026-11-16 review
+
+- **The weak refresh keeps the label** (`RefreshLabel`): it is the sign exchange of the reference's
+  sector (`refresh_is_sign`), keeps every carrier's class and axis (`refresh_keeps_class`,
+  `refresh_same_axis`) and the label (`refresh_keeps_label`, via `PMAction.SignFlip`). It is the doublet
+  exchange, the protocol change of an event, and does not make `J`'s in-cycle change.
+- **Generation names.** With the carriers placed by single-wall glue arithmetic (`PMAction.WireMass`),
+  the wire's masses give label `2` the lightest, `1` the middle, `0` the heavy: the names `TransferGraph`
+  and `Values` use. (A reverse naming read from the withdrawn `GenerationCurrent` placement was retired.)
+- **Completion and `U = 1` tests (recorded, conditional on `U`).** At `U = 1`, `κ₁ = jump`: Stewart's relation
+  keeps FC (`1.1σ`) and excludes `w = ½` (`4.9σ`) and `w = 1`; a flat holonomy gives `|V_td| = 0.0053` or
+  `0.0130` (excluded), so `Φ = 70 ± 5°` at `U = 1`. Audits that let `U` vary used a placement since
+  withdrawn; they are not carried forward.
+- **e8p reads `Values` only**, and the references were checked against PDG 2024 and NuFIT 6.0. The
+  barred `ρ̄`, `η̄` (`WolfensteinBar`) replace the unbarred pair in the comparison.

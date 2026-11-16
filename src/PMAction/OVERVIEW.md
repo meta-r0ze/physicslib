@@ -365,3 +365,30 @@ projector with `P_L`; the flavour generator and mediator remain Paper IV inputs.
 ## Verification
 
 Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+
+## Results of the 2026-11-16 review (the wire)
+
+- **Carrier placement.** The light mass's right factor acts on the other wall's single-wall modes; the
+  move between generations `h`, `h + 1` changes the class by `e h` (`WireMass.single_wall_class`). This
+  fixes the placement (`WireMass.shift`). A 2026-11 "correction" that used `GenerationCurrent`'s carrier
+  `e (h − 1)` (a two-wall label change with a glue move on both walls) mixed two state spaces and was
+  withdrawn, with what was built on it (`LightPairTexture` as the wire's block, the GST relation, the
+  margins and second-ratio fits). `LightPairTexture` keeps the algebra of that placement.
+- **The weak refresh keeps the label** (`SignFlip`; `PMFlavor.RefreshLabel`).
+- **The wire's inputs, tested by persistence.** (a) One `δ_O` per wall: forced in size (one `β` event
+  per wall; `β` is an involution on every class). Per class `β` fixes `0`, `4`, `0` of the `8` carriers
+  (classes `0`, `1`, `2`), so the eigenbasis differs by class, not the magnitude. (b) `|κ(s)| = |κ(c)|`:
+  forced by native intertwining (`CarrierWeyl.intertwining`; `ReferenceLegSymmetry.flag_conj` excludes a
+  reference-readout leg asymmetry). (c) The other wall's vector amplitude: a choice; no value fits down
+  and leptons together (numerical). (d) `k/K` as a rate (`0.0385`): worse than `α/2` (numerical).
+- **Light-ratio bound** (`WireLightBound.eigen_ratio_bound`): for `δ_O ≥ 0` the lightest-to-middle mass
+  ratio is at least `k/√2`. For `δ_O < 0` or a cycle phase, `det = k²(δ³ + κ₀κ₁κ₂)` can vanish.
+- **Why the wire is odd** (`FullCarrierIdentification`): carrier permutations fix the even uniform mode,
+  and anticommuting generators cannot share a fixed mode, so the Dirac structure lives on the odd
+  sector. The doublet sign (odd ± even of one carrier) is not a property of a wire mode; it belongs to
+  the protocol layer (`PMElementaryParticles.DoubletSign`, `ProtocolReadout`).
+- **Two-detuning wall:** `WallExchange.H2`, `NativeFlavourWall.nativeHamiltonian2`, `native_observed2`
+  carry separate on-site flips on the two walls.
+- **Excluded or withdrawn** (details in git history): the up protocol's undetuned heavy entry (built on
+  the withdrawn placement); an on-site term on the reference wall's heavy row (`13×`); economy-minimal
+  `δ_O` (a crossover, not a point); reference-readout leg prices as an `s/c` asymmetry.
