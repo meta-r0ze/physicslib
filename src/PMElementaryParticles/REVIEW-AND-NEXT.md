@@ -31,6 +31,21 @@ the measure, not only of degree-≤2 moments.
 
 ## Elementary interactions and protocols
 
+**The wire in six-pillar terms (2026-11).** A protocol over the wire is a PM system, and the open
+flavour numbers sit in the pillars the papers usually leave out:
+| Pillar | On the wire | Status |
+|---|---|---|
+| Capacity | three label states; node conductance | derived (`GenerationSector`, `KronSeries`) |
+| Map | label states → the protocol's persisting states (`U`, the mass basis) | open: the protocol-level `U` |
+| Protocol | up, down, `e`, `ν` as information over the wire | species content derived (`CarrierRepresentation`) |
+| Governor | the stationary reference (`δ_R = 0`), the weak refresh | derived (`ReferenceDetuning`, `CarrierActions`) |
+| Toll | node passage `α` (`k/K = α/2`), the jump `1/(2α⁻¹ + π)` | derived, reading of rates open (`CertainTransferRate`) |
+| Margin | the other wall's detuning `δ_O`, per protocol (down `64.6 k_f`, `e` `18.8 k_f`, up `11.2 k_f` from the lightest ratios) | open |
+PMFlavor's three label changes are PM's three transfer modes (`PersistenceMechanics.InformationTransfer`:
+boundary conduction, capacity promotion, coordinate jump = `TransferGraph.mode`). Lead: use what
+`PersistenceMechanics` says about Margin (`DecayChannel`, `MarginCorrection`) and about how a system's
+margin is selected, to fix `δ_O` per protocol instead of reading it off a mass ratio.
+
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
 Results below that used the old assignment: the `WireLightSplit` relation test and its recorded
