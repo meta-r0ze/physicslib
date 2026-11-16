@@ -34,6 +34,18 @@ fits when its heavy label has its own on-site entry (`K` instead of `Kδ`), whil
 electron protocols fit with one `δ` on all labels (PMElementaryParticles REVIEW). Why the
 entry is `K` there is open.
 
+**Premise to derive, and a colour test.** Candidate premise: when a label's `β` image is the
+reference carrier, its on-site transition is carried by the reference-class (vector) carrier, so
+its on-site entry is that carrier's amplitude `K`, not a `β` rate (`δ = u k`, node-suppressed). The
+fixed `β` reaches the reference from one of the three up-protocol carriers only
+(`one_colour_onto_reference`), and colour is unbroken, so each colour must get the same entry:
+* colour-covariant (each colour's carrier is paired with the reference axis by its own `β`): entry
+  `K` for every colour; predicted `m_c/m_t = 0.00366` (data `0.00372`, `0.98×`);
+* colour-averaged (one fixed `β`, averaged over colours): entry `K/3 + 2δ/3`; predicted `0.0101`
+  (`2.7×`).
+Which treatment of the Dirac pairing holds is to be derived, not chosen; the data favour the
+first. Numbers: corrected wire, `k = α/2`, masses at `M_Z`, `δ` fixed by `m_u/m_c`.
+
 **Excluded: protocol-wide exclusion blocking.** Carriers never share a slot
 (`CarrierStatistics.exclusion`), and the reference occupies its carrier. If `β` were blocked
 whenever its image is the reference's slot, averaged over the three colour carriers, then
@@ -70,5 +82,11 @@ theorem beta_conjugates_flip1 : ∀ v v' : V, vector v' = DoubletReflection.flip
 
 /-- `β` lands on the reference carrier `+2e₀` exactly from the up protocol's carrier `+2e₂`. -/
 theorem onto_reference_iff : ∀ v : V, coord (beta v) 0 = 2 ↔ coord v 2 = 2 := by decide +kernel
+
+/-- Of the three up-protocol carriers (positive, off the reference axis), the fixed `β` sends
+exactly one onto the reference carrier: the one on the colour axis `β` pairs with axis `0`. -/
+theorem one_colour_onto_reference :
+    (Finset.univ.filter (fun v : V => coord v 0 = 0 ∧ positive v = true ∧
+      coord (beta v) 0 = 2)).card = 1 := by decide +kernel
 
 end PMElementaryParticles.BetaReference

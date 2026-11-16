@@ -158,3 +158,20 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
 - Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
+
+## The up protocol's heavy on-site entry (2026-11, open)
+
+Data (PMElementaryParticles REVIEW): the down and electron protocols fit one `δ` on all three
+labels; the up protocol fits only if its heavy (vector-class) label has on-site entry `K` instead of
+`Kδ` (`m_c/m_t` `0.98×`; with `δ`, `23×`). `PMElementaryParticles.BetaReference.onto_reference_iff`:
+that label is the only (protocol, label) slot whose `β` image is the reference carrier.
+- Task: derive the on-site entry of a label whose `β` image is the reference carrier, from the
+  wall structure (`LightSplit.composite_expansion2`, `NativeDetuning`, `ReferenceWallMass`).
+  Candidate premise: the transition is carried by the reference-class carrier, entry `K`.
+- Colour test: the fixed `β` (`CarrierWeyl.realMatrix 0`, pairing axes `0 ↔ 2`) reaches the reference
+  from one colour only (`one_colour_onto_reference`). Colour-covariant pairing gives `K` (`0.98×`);
+  colour-averaged gives `K/3 + 2δ/3` (`2.7×`). Derive which.
+- Checked and excluded: an on-site term on the reference wall's heavy row (`δ_F` at label `v`, the
+  other natural placement) moves `m_c/m_t` only to `13×` at `δ_F = K` and disturbs the light pair.
+- Falsification: a derivation giving `δ` (or the averaged entry) for that slot retires the
+  candidate; the up protocol's miss then stays open.
