@@ -23,15 +23,22 @@ data need a weight `w` on the heavy label (both walls), `m₂/m₃ ≈ k^{2/3}/w
 `w_e : w_d : w_u ≈ 1 : 2.9–3.5 : 16–18.5` (the spread is the quark-mass scale choice;
 `w_e = 0.36`). Up and down differ, and the ordering follows the charge.
 
-**Next.** Derive the heavy-label weight per protocol from what maintains the heavy (vector-class)
-state each tick; this is the channel-layer coupling. Candidates already in the library, not yet
-derived as weights: the `β` crossing fraction of the vector class (lepton `1`, colour `1/3`,
-`PMAction.NativeDetuning`), which matches `w_d/w_e ≈ 3`; and `β` carrying the up protocol's carrier
-onto the held reference and the down's onto the electron's (`BetaReference`), the only up/down
-asymmetry found so far. Then derive why `δ_O` sits at the resonance, and the light ratios from the
-offset. Until then e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared
-assignment (their e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the
-paper's form.
+**Reading the weight as a margin.** Relative to the bare wire, down is unmodified (`w_d ≈ 1`). If the
+heavy-label weight is the minimum margin `W/k` (`PMSubstrate.MinimumMargin`, the substrate keeps no
+more margin than persistence needs) and the correction gain `k` is the rate at which `β` carries the
+heavy (vector-class) carrier to the reference axis, where it is compared with the reference, then the
+library's crossing facts give `k_e : k_d = 1 : 1/3` (`PMAction.NativeDetuning.lepton_always_crosses`,
+`colour_crosses_iff`, one colour pairing in three). The data need `k_d/k_e = 0.29–0.35` and
+`k_u/k_e = 1/18.5–1/15.8` (scan). Premises not yet derived: gain = reference-visit rate, weight =
+minimum margin on both walls' heavy entry.
+
+**Next.** Up's gain. On the pairing where up's heavy carrier reaches the reference axis it lands on
+the held reference itself (`BetaReference`), so that crossing is blocked (the hold admits nothing into
+`r`), and up must be corrected by a slower route (for example after the weak refresh to its down
+partner). Derive that route's rate per `β` event and compare with `1/16–1/18`. Then derive why `δ_O`
+sits at the resonance (a cost-free light mode) and the light ratios from the offset. Until then e8p's
+masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared assignment (their e8p caveats
+say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
 
 Constraints any readout must meet are in OVERVIEW (`DoubletReflection`, `ProtocolReadout`,
 `BetaReference`, `CoherentGate`): the partner asymmetry is first order for leptons and at least

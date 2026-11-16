@@ -8,7 +8,9 @@ Prints:
 1. the cycle resonance delta_c = -(k^2)^(1/3), where det M = 0 (WireResonance);
 2. m2/m3 on the resonance at s = 1 (the same for every protocol);
 3. for each charged protocol, the heavy-label weight w = s^2 that reproduces its m2/m3 on the
-   resonance, for a few common quark-mass ratio choices (quark ratios are scale dependent).
+   resonance, for a few common quark-mass ratio choices (quark ratios are scale dependent),
+   and the correction gains k = w_e/w they imply if the weight is the minimum margin W/k
+   (PMSubstrate.MinimumMargin) in lepton units.
 """
 import numpy as np
 from scipy.optimize import brentq
@@ -44,4 +46,5 @@ for label, (lep, down, up) in {
         "m_b, m_t own scale": (0.0595, 0.0223, 0.0042)}.items():
     we, wd, wu = weight(lep), weight(down), weight(up)
     print(f"{label:20s} w_e={we:.3f} w_d={wd:.3f} w_u={wu:.3f}  "
-          f"w_d/w_e={wd / we:.2f} w_u/w_e={wu / we:.1f}")
+          f"w_d/w_e={wd / we:.2f} w_u/w_e={wu / we:.1f}  "
+          f"gains k = w_e/w (lepton units): k_d={we / wd:.3f} k_u={we / wu:.4f} (1/{wu / we:.1f})")
