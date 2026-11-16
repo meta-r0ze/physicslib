@@ -16,9 +16,10 @@ e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the 
   reference-visit rate under `β` (gives `w_d/w_e = 3` from the crossing facts; up's `1/16–1/18` has no
   mechanism yet), or a charge-dependent cost `w ∝ e^{(c/2) Y_R}` (`c ≈ 1.7`; the library has no such
   cost).
-- **Light masses and roots.** At the resonance the light mass is zero; derive the light masses as
-  corrections, and which of the three roots each protocol takes (different roots for up and down give
-  `|V_us| ≈ 0.26`).
+- **Light masses.** At the resonance the light mass is zero; derive the light masses as corrections.
+  As the lazy `β` event every protocol takes the real root (`PMAction.OtherWallFlipEvent`), so flavour
+  mixing has to come from the readout, and the lazy event's offset changes the mass law to `s²/c'`
+  (PMAction REVIEW, "Lazy or coherent flip event").
 
 Constraints any readout must meet are in OVERVIEW (`DoubletReflection`, `ProtocolReadout`,
 `BetaReference`, `CoherentGate`).

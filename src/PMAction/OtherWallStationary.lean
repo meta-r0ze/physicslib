@@ -33,8 +33,7 @@ exactly the stationary light states, and their flip is a root of `δ³ = −κ_O
 charged protocol's light-ratio fit within a few percent of the real root
 (`tools/protocol_readout_scan.py`); the light masses are then corrections to an exactly massless wire
 mode. Inputs: the flip is free to take the value persistence selects (it is part of the option), and
-`κ_O` is fixed. Not derived here: the microscopic event that realizes the flip, and which of the
-three roots.
+`κ_O` is fixed. As the lazy `β` event it is the real root (`OtherWallFlipEvent`).
 -/
 
 noncomputable section

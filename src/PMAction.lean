@@ -160,6 +160,7 @@ import PMAction.WallCurrentWeights
 import PMAction.WallGapCalibration
 import PMAction.OtherWallStationary
 import PMAction.NativeExternal
+import PMAction.OtherWallFlipEvent
 import PMAction.NativeDetuning
 import PMAction.WilsonPointForced
 import PMAction.WallOffset
