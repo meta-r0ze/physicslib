@@ -22,7 +22,7 @@ So `tan θ₁₂ = √(m_lighter/m_heavier)` exactly at this order: the Gatto–
 the vector carrier sitting on the light pair, with no parameter beyond `δ`. Data: down
 `√(m_d/m_s) = 0.2239` (FLAG `m_s/m_d = 19.95`), up `√(m_u/m_c) ≈ 0.045`; with the two at a relative
 phase near `90°`, `|V_us| ≈ 0.223` against `0.2243`. Numerically on the full wire (outside Lean), fixing
-`δ_O` by `m_d/m_s` with `k/K = α/2` gives `tan θ₁₂ = 0.218` and `m_s/m_b = 0.0163` against
+`δ_O` by `m_d/m_s` with `k/K = α/2` gives `sin θ₁₂ = 0.218` (`tan θ₁₂ = 0.224`) and `m_s/m_b = 0.0163` against
 `0.0185` (FLAG `m_b/m_s ≈ 54`). Open: the same vector carrier also makes PMFlavor's in-cycle label
 change (`EventTransfer`, `κ₀ = π/14 = 0.2244`); counting it both in `J` and in `U_d` would double it.
 -/

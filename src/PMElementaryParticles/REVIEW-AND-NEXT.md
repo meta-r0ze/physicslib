@@ -270,3 +270,58 @@ roughly directly; up does not.
 - Supply the physical tick calibration for `DecayLaw`. Identify the low-energy radiative contribution for elementary widths.
 - Determine the physical finite-channel replacement for the muon continuum phase space. For the tau total width, the electronic branching fraction remains an input; hadronic channels depend on [PMHadrons](../PMHadrons/REVIEW-AND-NEXT.md).
 - A neutrino-decay prediction requires a physical channel and mass ordering. The corresponding cosmological propagation question is tracked in PMCosmology.
+
+## Six-pillar tests from decays and the neutral readout (2026-11, numerical unless named)
+
+Codex proposed eight tests of the six-pillar reading. Results, on the corrected wire
+`M = diag(1,k,k)(δ + cyc(k,1,k))`, `k = 1/(2·137.036)`, `δ = u k`:
+
+**Excluded.**
+- *Neutrinos read the same real wire directly.* With masses = singular values (scale cancels), the
+  gains proposed above give `Δm²₂₁/Δm²₃₁ = 0.0959` (`u_ν = 3.07`, additive bits) and `0.0841`
+  (`u_ν = 3.30`, reference reach) against `≈ 0.030`. Matching `0.030` needs `u_ν = 5.66`, but then
+  `tan θ₁₂ = 0.021`; matching `tan θ₁₂ = 0.66` needs `u_ν = 320`, giving `Δm²` ratio `2.5·10⁻⁵`. The
+  cycle phase does not move the ratio (scan over `[0, 2π]`, change `< 10⁻⁶`; it enters only via
+  `det X`). The reference-like reading `δ_ν → 0` gives undetuned masses `(k², k, k)`: an inverted
+  pattern with a degenerate pair, split as `u²` (`0.030` at `u_ν = 0.176`), but the pair states stay
+  on the label states (angles `≈ 0.02`). So no direct same-wire neutral readout gives large PMNS
+  angles. Large angles need a distinct neutral mass operator or readout.
+- *Universal pillar terms between quark and lepton doublets.* With `u_ν = 5.66` as the only
+  same-wire value consistent with the splitting ratio, the lower-minus-upper term is `2.43` bits
+  for quarks and `1.57` for leptons; the multiplicative position factor is `5.74` (quarks) and
+  `3.3` (leptons). Neither is universal. (This uses the excluded readout, so it closes the
+  additive-bits and reference-reach estimates of `u_ν`, not the quark-side patterns.)
+- *Top instability explains up's `12×`.* A width on an existing level leaves its real mass and the
+  predicted `m_c/m_t = 0.089` unchanged (`TopTransition.topRate` has no mass shift). Also, `0.0074`
+  mixes schemes (`m_c(m_c)` over the top pole mass); at a common scale (`m_c(M_Z)/m_t(M_Z)`) the ratio is
+  `≈ 0.0036`, so the miss is nearer `25×`. Redo all three second ratios at one scale.
+- *Reflection-invariant gain observables.* By `DoubletReflection.flip_doublet` and
+  `flip_keeps_reference_axis`, any correction observable invariant under the reflection gives
+  `k_u = k_d` exactly, against `5.74`. Adding the stationary reference does not help.
+
+**Corrected.**
+- The `0.218`, `0.068`, `0.041` in the PMFlavor table are `sin θ₁₂`, not `tan θ₁₂` (exact
+  `t = 0.2239` for down, the GST value). The full 3×3 with normalized left vectors and a quarter
+  turn on label 1 or 2 gives `|V_us| = 0.2219` (on label 0: `0.1785`), so Codex's normalized two-family
+  `0.2164` came from the mislabel. Data `0.2243 ± 0.0008`: `1.1 %` low, about `3σ`.
+
+**Survives, as candidates.**
+- *Gain as visit rate.* The library's maintenance is a full swap of discrepancy into a clean
+  record (`ReferenceMaintenance.event`, `CoherentRecordRestoration.prepared_repair`): one visit takes
+  the live deviation to zero, while the whole state is preserved (`norm_preserved`). A scalar gain
+  `k_p < 1` per tick is then either the fraction of ticks that visit protocol `p`, or a partial
+  exchange angle. Neither is derived. Test: a partial exchange `cos φ` predicts per-tick live
+  contraction `cos φ_p` = `0.911` (up), `0.947` (`e`), `0.9845` (down).
+- *The record system has zero margin.* `untouched` and `restores_iff_visits`: a job with a missed
+  visit stays unrestored. So in the finite model a required job tolerates no missed delivery.
+  This agrees with the reference being zero-margin and governed. It is already in Lean.
+- *Reflection-odd response.* The up/down gain split must come from a response odd under the
+  doublet reflection: for exchanged amplitudes `A ± B`, the squared difference is `4 Re⟨A,B⟩`. Test:
+  compute `A`, `B` for the complete CC operation (`ChargeProtocols`, `EventTransfer`,
+  `ReferenceSampling.ref_flag`). Orthogonal records or a purely imaginary cross term close it.
+- *First-row deficit as leakage.* The wire's 3×3 `U` is exactly unitary, so it predicts a zero
+  deficit; data give `0.0016 ± 0.0007`, positive as leakage requires. Needs the premise that
+  `LightLeakage`'s `z` is the discarded outgoing current amplitude.
+- *Lepton universality.* Gains live in the mass form, not the CC vertex, so universality
+  (`≈ 1.4·10⁻³` in coupling) passes and constrains nothing here. Inclusive widths
+  (`InclusiveWidth.pmns_muon_width`) are blind to the Map.

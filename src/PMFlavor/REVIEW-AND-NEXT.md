@@ -79,7 +79,8 @@ data, and do not frame work as fitting Standard Model sectors.
    against `0.0086 ± 0.0002`, excluded (recorded). So with FC either the cycle carries a non-flat
    holonomy or `U ≠ 1` supplies the phase (item 6; `U ≈ 1` needs `ε ≲ 0.04`).
    **Per-protocol cycle phase (2026-11, corrected wire, numerical).** A common label-cycle phase `Φ`
-   for up and down gives `|V_us| = θ_d − θ_u = 0.178`; a relative `Φ_d − Φ_u = ±90°` gives `0.2218`
+   for up and down gives `|V_us| = θ_d − θ_u = 0.178`; a relative `Φ_d − Φ_u = ±90°` gives `0.2218` (checked 2026-11 with normalized left singular
+   vectors of the full 3×3 wire: `0.2219`; the quarter turn may sit on label 1 or 2, not 0)
    (data `0.2243`). So the Cabibbo combination asks for a quarter turn between the two protocols'
    cycle phases (compare `CPQuarterTurn`). Candidate source: a phase proportional to the right-handed
    hypercharge on the other wall's carriers, `Φ_p = 3 Y_R θ₀`, gives `Φ_u − Φ_d = 6θ₀` (`Y_R`: `4/3`,
@@ -191,10 +192,10 @@ view of the same carrier (then `U` carries it and `J`'s in-cycle entry is not ad
 item 1, 2, 5 numerics with the corrected `U`.
 
 **Redone with the corrected bookkeeping (2026-11, numerical, `k/K = α/2`).**
-- Per protocol, fixing `δ_O` by the lightest ratio: down `u = δ_O/k_f = 64.6`, `tan θ₁₂ = 0.218`
-  (GST `0.224`), predicted `m_s/m_b = 0.0163` (data `0.0185`); charged leptons `u = 18.8`,
-  `tan θ₁₂ = 0.068` (`0.0695`), predicted `m_μ/m_τ = 0.053` (data `0.0595`); up `u = 11.2`,
-  `tan θ₁₂ = 0.041` (`0.045`), predicted `m_c/m_t = 0.089` (data `0.0074`, off by `12×`). Down and
+- Per protocol, fixing `δ_O` by the lightest ratio: down `u = δ_O/k_f = 64.6`, `sin θ₁₂ = 0.218`
+  (`tan θ₁₂ = t = 0.224`, the GST value; earlier drafts labelled the sine as the tangent), predicted `m_s/m_b = 0.0163` (data `0.0185`); charged leptons `u = 18.8`,
+  `sin θ₁₂ = 0.068` (`0.0695`), predicted `m_μ/m_τ = 0.053` (data `0.0595`); up `u = 11.2`,
+  `sin θ₁₂ = 0.041` (`0.045`), predicted `m_c/m_t = 0.089` (data `0.0074`, off by `12×`). Down and
   leptons land within about `10%` on their second ratio with no further number; up does not.
 - The heavy–light (2–3) rotations are `≲ 4·10⁻⁴`: `|V_cb|` cannot come from `U`, so it is `J`'s
   reference-wall node change after all, and the `×10.7` of item 2 returns (the `U = 1` audit's
