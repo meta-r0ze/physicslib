@@ -18,7 +18,7 @@ The Map's clean requirement is exact. Recovery after one visit needs only the pa
 
 `CoherentGate` is the coherent version on one weak pair. Gating the two partners at angles `a` and `b` gives output columns with overlap `sin (a − b)` (`cross`), so the gate is reversible exactly when the angles agree up to a half turn (`columns_orthogonal_iff`). With records written beside the outputs the overlap is `sin (a − b) · ⟨r₀, r₁⟩` (`recorded_orthogonal_iff`): any unequal angles, however close, need exactly orthogonal records, one full bit of doublet position per event (`unequal_needs_orthogonal`).
 
-**Protocols are not wire modes (2026-11).** The odd carrier modes of a class are the wire's Dirac components, four axes × two walls (`PMAction.CarrierVacuumSector`), and colour cannot act on them while commuting with `β` and the `αⱼ` (`PMAction.ColourRegister`). So protocol identity (lepton or quark, colour, weak partner) is a separate register; the 16-carrier packet is its count and gauge actions. Earlier readings that put the lepton pair on axis `0` and the up/down pair of colour `i` on axis `i` of the wire are withdrawn: `BetaReference` (`β` carrying up's carrier onto the reference), `DoubletSign`'s wire-mode count, `ProtocolReadout`'s carrier-state reading, `CycleReadout`'s weak-pair reading, and the reference-hold test (module removed). Their theorems remain as carrier and matrix facts; the partner difference has to come from the protocol register.
+**Protocols are not wire modes (2026-11).** The odd carrier modes of a class are the wire's Dirac components, four axes × two walls (`PMAction.CarrierVacuumSector`), and colour cannot act on them while commuting with `β` and the `αⱼ` (`PMAction.ColourRegister`). So protocol identity (lepton or quark, colour, weak partner) is a separate register; the 16-carrier packet is its count and gauge actions. Earlier readings that put the lepton pair on axis `0` and the up/down pair of colour `i` on axis `i` of the wire are withdrawn: `BetaReference` and `UpDownWire` (modules removed), `DoubletSign`'s wire-mode count, `ProtocolReadout`'s carrier-state reading, `CycleReadout`'s weak-pair reading, and the reference-hold test (module removed). Their theorems remain as carrier and matrix facts; the partner difference has to come from the protocol register.
 
 
 **Protocol readout (numerical, `tools/protocol_readout_scan.py`).** On the derived wire (`PMAction.ReferenceClassHop`: reference wall `κ_R = (K, k, k)`; `PMAction.CarrierAdmittance`: other wall class-blind, `κ_O = (K, K, K)`; `K = 1`) the cycle resonance is `δ³ = −1` (`PMAction.OtherWallStationary`). At every cube root the bare wire has `m₁ = 0` and `m₂/m₃ = √(3/2) k`: `0.0045` for `k = α/2`, `0.0089` for `k = α`, the same for every protocol. The data (`m_μ/m_τ = 0.0595`, `m_s/m_b ≈ 0.019–0.022`, `m_c/m_t ≈ 0.0036–0.0042`) then need a weight `s` on the heavy label (both walls) per protocol: `s_e : s_d : s_u ≈ 1 : 2.7–3.2 : 12–13.5` for `α/2` (`1 : 2.6–3.1 : 9.6–10.6` for `α`), ordered by charge; the heavy label's mass scales as `s²`. The lazy flip law squares the bare ratio (`2·10⁻⁵`), far below every protocol, so the data favour the coherent event. Earlier numbers on the withdrawn wire (`K = 1`, `k = α/2` on both walls by the axis rule): `m₂/m₃ ≈ k^{2/3} = 0.023`, weights `w_e : w_d : w_u ≈ 1 : 3 : 16–18`, `|V_us| ≈ 0.002` (same root) or `0.26`, `|V_cb| ≈ 0.17`, `|V_ub| ≈ 0.027` (different roots). CKM on the derived wire (weights as fitted): same root `|V_us| ≈ 0.0001`, `|V_cb| ≈ 0.009`, `|V_ub| ≈ 0.008`; different roots `|V_us| = √3/2 ≈ 0.866`, `|V_cb| ≈ 0.010`, `|V_ub| ≈ 0.011` (data `0.225`, `0.041`, `0.0037`): the bare wire's rotation is not the CKM.
@@ -257,9 +257,6 @@ and the mean life is its inverse.
 - **The protocols cannot read the wire's spectrum directly** (`PMAction.WireLightBound`; numerical scans
   over each protocol's `δ_O` and cycle phase): up and leptons fail with the linear readout, all three
   with the squared one. The readout is the open item (REVIEW).
-- **`UpDownWire.product_equal`**, restated on `PMAction.WireMass.mass`: up and down over one wire with
-  shared `δ_O`, `K` have the same mass product; data `m_u m_c m_t/(m_d m_s m_b) ≈ 260`, so they do not share
-  both.
 - **Doublet structure** (Lean): weak partners are antipodes and native words commute with the antipode (`DoubletSign`); on the wire the antipode is a global sign, so partners are not wire modes (see "Protocols are not wire modes").
 - **Map and gate** (Lean): `RefreshMap` (clean active rows are the requirement; clock mask changes
   close over a cycle, `clockRoute_closes`); `CoherentGate` (a full position bit per event for unequal
@@ -267,6 +264,8 @@ and the mean life is its inverse.
 - **Withdrawn** (git history has them): everything built on the 2026-11 "corrected" carrier placement:
   the per-protocol margins `64.7 / 18.6 / 11.5`, the information-theory rates `R_p`, the gains and their
   orderings, the second-ratio fits, the up heavy-entry candidate, the protocol-level `U` tests, and the
-  same-wire neutrino readout exclusion. Excluded independently of placement: equal gate angles from
+  same-wire neutrino readout exclusion; `BetaReference` (`β` carrying the up protocol's carrier onto the reference,
+  axis-placed protocols) and `UpDownWire` (equal mass product for up and down on the axis-placed wire
+  with `(K, k_c, k_s)` on the other wall), both modules removed. Excluded independently of placement: equal gate angles from
   the CC vertex, decay direction, `T₃` or charge squared; exclusion blocking (`2/3`); a wall-dependent
   Wilson `r_O` (`PMAction.WilsonPointForced`); reflection-invariant gains.

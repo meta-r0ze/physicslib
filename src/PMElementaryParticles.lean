@@ -29,7 +29,6 @@ import PMElementaryParticles.ChargeProtocols
 import PMElementaryParticles.ProtocolInventory
 import PMElementaryParticles.RefreshMap
 import PMElementaryParticles.CoherentGate
-import PMElementaryParticles.BetaReference
 import PMElementaryParticles.DoubletSign
 import PMElementaryParticles.ProtocolReadout
 import PMElementaryParticles.CycleReadout
@@ -63,7 +62,6 @@ import PMElementaryParticles.PhaseSpace
 import PMElementaryParticles.PolarMeasure
 import PMElementaryParticles.Values
 import PMElementaryParticles.DoubletReflection
-import PMElementaryParticles.UpDownWire
 import PMElementaryParticles.MassivePair
 import PMElementaryParticles.MassiveVolume
 import PMElementaryParticles.ElectronMeasure

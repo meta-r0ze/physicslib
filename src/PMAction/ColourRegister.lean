@@ -13,7 +13,7 @@ all `αⱼ` is a multiple of the identity. So no nontrivial colour action lives 
 structure acts trivially. This settles `NativeDetuning.colour_invariant_flip_zero` and
 `PMConstants.ColourWallCrossing.no_faithful_joint_encoding` from the other side: the axis
 identification of colour is excluded, not repaired. Readings that used colour as carrier axes under
-`β` (`NativeDetuning`'s crossing fraction `1/3`, PMElementaryParticles `BetaReference`) need to be
+`β` (`NativeDetuning`'s crossing fraction `1/3`, PMElementaryParticles `BetaReference`, since removed) need to be
 re-derived with colour as a separate factor.
 
 With colour a separate factor, the flavour and wall operators act as `A ⊗ 1` and colour as `1 ⊗ C`:
