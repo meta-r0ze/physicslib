@@ -12,8 +12,9 @@ energy density, rather than inserting a phase correction fitted to a lifetime.
 
 The daughter's measure `P/(4π²)` is derived from the `ℝ³` Lebesgue integral in
 `ElectronMeasure` (`width_from_lebesgue`), and the two-body volume `Φ = 1/(8π)` in
-`PolarMeasure`. Still supplied: the factorization of the three-body measure into
-daughter measure × pair average, and the flux `1/(2m)` (the definition of a rate).
+`PolarMeasure`. The factorization of the three-body measure into daughter measure × pair average is
+`PairShell.shell_integral` with `PairSphere.shell_tensor_normalized`. Still supplied: the flux
+`1/(2m)` (the definition of a rate).
 This is a tree-level contact spectrum with massless neutrinos, not a radiative
 correction.
 -/

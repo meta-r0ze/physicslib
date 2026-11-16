@@ -18,9 +18,9 @@ value `E/(4π²)`). Here it is derived for a massive daughter.
   the flux-weighted pair part `ρ(E) = 1/(2m) · 64 G² ⟨pair⟩` (`pairPart`, equal to `ρ` by
   `pair_density`) cut at the endpoint. The electron measure is no longer supplied.
 
-Still supplied in the width chain: the flux `1/(2m)` (the definition of a rate) and the
-factorization of the three-body measure into daughter measure × pair two-body average
-(PMElementaryParticles REVIEW).
+Still supplied in the width chain: the flux `1/(2m)` (the definition of a rate). The factorization
+of the three-body measure into daughter measure × pair two-body average is derived
+(`PairShell.shell_integral`, `PairSphere.shell_tensor_normalized`).
 -/
 
 noncomputable section

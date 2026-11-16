@@ -24,7 +24,8 @@ the legs' energies are `|k| = (E + b cos ν)/2`, `|k̄| = (E − b cos ν)/2` (`
 So the two-leg measure `d³k/(2|k|) d³k̄/(2|k̄|)` at fixed total momentum, written against the pair
 energy `E`, has density `(1/8) dE dΩ*` with `dΩ*` the rest-frame solid angle: the energy delta becomes
 the `E`-coordinate, and the pair average at fixed `E` is the isotropic rest-frame average of the
-boosted pair, which is what `PairTransport` and `MassiveDaughterSpectrum.pair_density` assume.
+boosted pair, which `PairSphere.shell_tensor` computes: the transported average that `PairTransport`
+and `MassiveDaughterSpectrum.pair_density` use.
 -/
 
 noncomputable section

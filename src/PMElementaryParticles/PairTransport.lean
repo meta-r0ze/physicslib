@@ -23,9 +23,9 @@ between them.
    with the flux and electron measure gives `MuonRate.rate` exactly.
 
 `Φ = 1/(8π)` is derived at rest in `PolarMeasure`, the electron measure in `ElectronMeasure`,
-and the boost invariance of the massless legs' measure in `NullBoost`. Still supplied: the
-energy-momentum delta that places the pair at total momentum `q` (PMElementaryParticles REVIEW),
-and the flux. The average is a finite exact quadrature, not a continuum integral over all
+and the boost invariance of the massless legs' measure in `NullBoost`. The energy-momentum delta that places the pair at total momentum `q` is
+`PairShell.shell_integral`, and the continuum version of this average over the actual shell is
+`PairSphere.shell_tensor`. Still supplied: the flux. The average is a finite exact quadrature, not a continuum integral over all
 integrable test functions; for the quadratic pair tensor the two agree.
 -/
 

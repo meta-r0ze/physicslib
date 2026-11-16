@@ -31,18 +31,6 @@ e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the 
   (up/down, `ν`/`e`) difference and the heavy-label weight both have to enter there (the charge
   reading above is one such coupling).
 
-## Mathematical gap (Lean)
-
-**Three-body phase-space factorization.** Derived from Lebesgue measure: the daughter's measure
-`P/(4π²)` (`ElectronMeasure.width_from_lebesgue`), the pair's two-body volume `1/(8π)` at rest
-(`PolarMeasure`), the boost invariance of each massless leg's measure (`NullBoost`), and the pair at
-fixed total momentum in shell coordinates (`PairShell.shell_integral`: for every `g`,
-`∫ g(k) d³k/(|k||P⃗ − k|) = ∫ (sin ν/2) g(Ψ(E, ν, φ)) dE dν dφ`, so the energy delta is the coordinate
-`E` and the density at fixed `E` is the rest-frame solid angle). Open: the last link, that the
-`(ν, φ)` average of the pair tensor `k^μ k̄^ν` at fixed `E` equals `PairTransport`'s transported
-average (the boost along `e₀` with `γ = E/M` maps the rest-frame pair to `Ψ`); then
-`MassiveDaughterSpectrum.pair_density` follows rather than being assembled.
-
 ## Other open work
 
 - **Final channels.** `PMAction.NativeExternal` makes `AmplitudeTrace`'s spinors the native wall

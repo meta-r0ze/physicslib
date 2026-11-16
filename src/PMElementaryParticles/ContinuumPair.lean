@@ -10,9 +10,10 @@ six-point quadrature. Its volume and all moments needed by the pair tensor
 are evaluated exactly. No linearity is asserted for arbitrary nonintegrable
 functions, and no delta-function integral is hidden in this definition.
 
-The reduced angular density 1/(32π²) is a stated measure convention. Deriving
-it from a substrate state count, and proving the radial energy-shell reduction
-and three-body factorization, remain separate obligations.
+The reduced angular density 1/(32π²) is grounded in `PolarMeasure`
+(`two_body_phase_space`); the energy-shell reduction and three-body factorization are
+`PairShell.shell_integral` and `PairSphere.shell_tensor_normalized`. Deriving the density from a
+substrate state count remains open.
 -/
 noncomputable section
 namespace PMElementaryParticles.ContinuumPair
