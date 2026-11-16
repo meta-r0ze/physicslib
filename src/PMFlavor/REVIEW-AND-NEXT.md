@@ -101,7 +101,13 @@ data, and do not frame work as fitting Standard Model sectors.
    splits the light pair when `δ_O` is a few spinor flips, but there `U ≠ 1` (heavy–light `O(0.1–1)`;
    PMAction REVIEW, corrected). So the item 1 and 5 tests are conditional on both. On the full two-wall Hamiltonian
    (PMAction REVIEW) `U ≈ 1` needs the other wall's detuning near the hop scale, which moves the heavy
-   label off its walls unless the vector carrier's rate is small. `ChiralLightBand`'s premise (light
+   label off its walls unless the vector carrier's rate is small. **Recorded (2026-11, numerical):** if
+   both protocols' persistence rotation is the wire's own reference-wall rotation (symmetric
+   bookkeeping, common `U_u = U_d`), then `U_uᴴ W U_d` (FC completion, `κ = (0.225, jump, 0.041)`) has
+   `|V_ub| = 0.12, 0.08, 0.04, 0.03, 0.026` at `δ_O/k_f = 1, 2, 5, 30, ≥ 100` against `0.0038`: excluded at
+   every `δ_O`. The light-pair rotation (`45°` at large `δ_O`) and the heavy–light rotation (`≈ k_f/δ_O`
+   at small) both leak `κ₂` into the corner. So the persistence rotation is protocol-level: a protocol
+   must split the light pair and keep `U` small. `ChiralLightBand`'s premise (light
    states far below the wall gap) requires it small (PMAction REVIEW), leaving the window
    `K_f ≪ |δ_O| ≪ |y|`; the tests need `ε = K_f/|δ_O| ≲ 0.04`, still to be derived. Then redo the item 1
    and item 5 tests with this `U`.

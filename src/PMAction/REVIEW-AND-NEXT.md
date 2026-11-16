@@ -78,6 +78,8 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   | Rate vs admittance ratio (`α/2` or `0.0385`) | `WireLightSplit` relation against species | both fail directly (recorded, EP) | kept as readings |
   | `δ_O` vs `r − 1` | same parameter? | different matrix elements (`first_wall_action`, `zero_mode_element`) | needs a derivation tying them, or keep apart |
   | Hygiene | unused hypotheses | removed (`node_series`, `one_wall_flip`) | done |
+  | Native `δ_O` as a `β`-event rate | `NativeDetuning` | `δ = −gap(p)/2`; `β` swaps axes `0 ↔ 2`, moving half the vector carriers across the node once | leg count open: golden (`δ_O = k_f`) or silver (`≈ 2k_f`) candidate |
+  | Wire's own `U` as the persistence rotation | `U_uᴴ W U_d` with the wire's reference-wall `U` common to both protocols | `|V_ub| = 0.026–0.12` at every `δ_O` (PMFlavor REVIEW item 6) | excluded: `U` is protocol-level |
 
 - **Update as `e^{−iHt}` on wall modes.** `PMAction.FlavourEvolution` takes the flavour evolution as
   `U e^{−iEt} Uᴴ` with supplied `U`, `E`, and the transfer-cost chain in PMFlavor
