@@ -34,6 +34,33 @@ fits when its heavy label has its own on-site entry (`K` instead of `Kδ`), whil
 electron protocols fit with one `δ` on all labels (PMElementaryParticles REVIEW). Why the
 entry is `K` there is open.
 
+**On the vector-class label `β` is never protocol-diagonal** (`beta_fixes_none`, `beta_involutive`).
+Every vector carrier changes axis: a colour carrier goes to another colour or to the lepton axis,
+a lepton-axis carrier to a colour axis. So on that label an on-site entry cannot be first order in
+`β`; it comes from the round trip `β` then `β` (amplitude² over the gap of the image state). For
+the up protocol's carrier on the paired axis the image is the reference carrier, a stationary
+zero mode, so the gap vanishes: the round trip is resonant, and degenerate mixing gives an entry
+of the order of the `β` amplitude itself, not its square over a gap.
+
+**But colour.** The same holds off the paired axis: `β` sends a colour-`1` carrier to the same
+protocol's colour-`3` carrier (axes `1 ↔ 3`), which is degenerate with it. So for both the up and
+down protocols, colours `1` and `3` mix at first order into `|1⟩ ± |3⟩`, and colour `2` goes to the
+lepton axis. A fixed `β` on the axis index therefore splits the colours of a quark protocol on the
+vector-class label, against unbroken colour (`ReferenceStabilizer.colour_unbroken`). Before any
+per-slot claim, the library must settle how the on-site `β` acts on colour: on a separate (Dirac)
+index that commutes with colour, or colour-averaged. In both cases the colour-`2`/reference
+resonance must be re-derived. For the spinor-class labels `β` never moves a carrier across the
+reference axis (`NativeDetuning.beta_crossings`).
+
+**And the wire's modes.** The wire's on-site `β` acts in the coordinate-odd sector
+(`CarrierVacuumSector.range_iff_odd`: the even modes are excluded). There the mode of axis `i` is
+the antipodal combination `|+2eᵢ⟩ − |−2eᵢ⟩`: the doublet sign is fixed by the projection, and `β`
+sends the axis-`2` mode to the axis-`0` mode with no reference to sign. So the sign sensitivity
+above is a statement about single carriers. It reaches the wire only if a protocol's state on the
+wire keeps its sign, which the odd sector as written does not. Open: how a protocol's doublet sign
+is carried on the wire (`CarrierRepresentation`'s premise that the sign is the doublet index,
+against the odd-sector restriction).
+
 **Premise to derive, and a colour test.** Candidate premise: when a label's `β` image is the
 reference carrier, its on-site transition is carried by the reference-class (vector) carrier, so
 its on-site entry is that carrier's amplitude `K`, not a `β` rate (`δ = u k`, node-suppressed). The
@@ -88,5 +115,11 @@ exactly one onto the reference carrier: the one on the colour axis `β` pairs wi
 theorem one_colour_onto_reference :
     (Finset.univ.filter (fun v : V => coord v 0 = 0 ∧ positive v = true ∧
       coord (beta v) 0 = 2)).card = 1 := by decide +kernel
+
+theorem beta_involutive : ∀ v : V, beta (beta v) = v := by decide +kernel
+
+/-- `β` fixes no vector-class carrier: every carrier changes axis, so on the vector-class label
+`β` never maps a protocol's carrier to itself. -/
+theorem beta_fixes_none : ∀ v : V, beta v ≠ v := by decide +kernel
 
 end PMElementaryParticles.BetaReference

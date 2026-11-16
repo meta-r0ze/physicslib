@@ -24,7 +24,9 @@ needs a charge that tells the doublet sign apart (the right-sector hypercharge `
 on-site flip `β` also uses the reference's sign: it sends the up protocol's carrier onto the
 reference carrier and the down protocol's onto the electron protocol's, and it conjugates the
 reflection of its paired colour axis into a reflection that reverses the reference
-(`BetaReference`). So the on-site detuning can tell the up and down protocols apart.
+(`BetaReference`). This holds for single carriers. The wire's `β` acts on the coordinate-odd
+modes `|+2eᵢ⟩ − |−2eᵢ⟩`, where the sign is fixed, so whether the on-site detuning can tell the up
+and down protocols apart is open (`BetaReference`, "the wire's modes").
 -/
 
 namespace PMElementaryParticles.DoubletReflection

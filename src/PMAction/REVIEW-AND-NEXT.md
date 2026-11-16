@@ -171,6 +171,30 @@ that label is the only (protocol, label) slot whose `β` image is the reference 
 - Colour test: the fixed `β` (`CarrierWeyl.realMatrix 0`, pairing axes `0 ↔ 2`) reaches the reference
   from one colour only (`one_colour_onto_reference`). Colour-covariant pairing gives `K` (`0.98×`);
   colour-averaged gives `K/3 + 2δ/3` (`2.7×`). Derive which.
+- Structure (`BetaReference.beta_fixes_none`): on the vector-class label `β` fixes no carrier, so an
+  on-site entry there is a `β` round trip (amplitude² / gap of the image). The up protocol's paired
+  carrier has the reference zero mode as image: zero gap, resonant, entry of order the `β` amplitude.
+  Candidate mechanism for the one large entry. **Problem found:** off the paired axis `β` maps a
+  colour-`1` carrier to the same protocol's colour-`3` carrier, also degenerate, so colours `1`, `3`
+  of both quark protocols mix at first order. A fixed `β` on the carrier axis index splits colour
+  within a protocol, against `ReferenceStabilizer.colour_unbroken`. `NativeDetuning`'s identification
+  (on-site `β` = `CarrierWeyl.lookup c 0` on the axis index) needs a colour treatment first: `β` on a
+  separate index commuting with colour, or colour-averaged. This blocks the per-slot derivation and
+  may be an error in `NativeDetuning`'s reading for coloured protocols.
+- **Second problem found:** the wire's `β` acts in the coordinate-odd sector
+  (`CarrierVacuumSector.range_iff_odd`), whose axis-`i` mode is `|+2eᵢ⟩ − |−2eᵢ⟩`. The doublet sign is
+  fixed there, and `β` maps axis mode `2` to axis mode `0` with no sign. So `BetaReference`'s
+  up-versus-down distinction holds for single carriers but does not reach the wire as written.
+  Needed first: how a protocol's doublet sign sits on the wire, given that only odd modes are
+  admitted. Until that is settled, the up heavy-entry candidate has no wire-level source.
+- **Where the sign lives (`PMElementaryParticles.DoubletSign`).** Weak partners are antipodes, and
+  every native word commutes with the antipode; the wire keeps only antipode-odd states, and the
+  even complement is inert by convention (`CarrierVacuumEvolution.even_inert`, an open obligation).
+  So the up/down difference between partners is the cross term `2 Re ⟨odd|H|even⟩`, zero in the
+  current model. The only antipode-odd input is the reference carrier (`+2e₀`, not its antipode).
+  Next test: give the even complement the action induced by the reference's maintenance and compute
+  the cross term per (protocol, label). Zero means the difference must come from how a protocol
+  reads the wire, not from the wire.
 - Checked and excluded: an on-site term on the reference wall's heavy row (`δ_F` at label `v`, the
   other natural placement) moves `m_c/m_t` only to `13×` at `δ_F = K` and disturbs the light pair.
 - Falsification: a derivation giving `δ` (or the averaged entry) for that slot retires the
