@@ -33,7 +33,9 @@ the same object as PMAction REVIEW "Other-wall detuning" (derive the wall-1 flip
 reference-conditioned native update). Derive its action on the doublet over one cycle; by
 `BetaReference.onto_reference_iff` it reaches the heavy label of the lepton axis directly and the up
 protocol's heavy label on the paired axis through `β`. Then test it on the three charged
-protocols' two mass ratios each, with no parameter beyond each protocol's `δ_O`.
+protocols' two mass ratios each, with no parameter beyond each protocol's `δ_O`. Until then e8p's
+masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared assignment (their e8p caveats
+say so).
 
 **Constraints any readout must meet (Lean).**
 - `DoubletReflection.flip_doublet`, `flip_keeps_reference_axis`: an observable invariant under the
@@ -68,34 +70,22 @@ The three-body measure is used but not factored. Target: factor it into
 input. This is the concrete mathematical content of former review item 2.
 Uses the two-body phase-space result.
 
-### A4. Massive neutrino pair (extend the daughter spectrum) — tensor done
-Done (`MassivePair`): the rest-frame tensor of a pair with masses `m₁`, `m₂` from the same angular
-symmetries (`massive_rest_tensor`), its covariant form `Q²⟨k₁k₂⟩ = Φ(P²/3) g Q² + Φ(E₁E₂ − P²/3) q q`
-(`massive_rest_covariant`), the massless limit (`massless_limit`), two-body kinematics and shells.
-Open: the massive two-body volume (`2P/Q` times the massless one) as a measure statement, and the
-daughter-energy integral of `MassiveDaughterSpectrum`/`MassiveWidth` with this tensor.
-`MassiveDaughterSpectrum`/`MassiveWidth` treat a massless neutrino pair. Target:
-extend `pair_density`/`closed_width` to a massive neutrino pair (at least equal
-masses or one massive leg), with positivity and endpoint limits, reusing the
-transported pair tensor with `q² ≠ 0`. Closed form or a controlled integral.
+### A4. Massive neutrino pair
+The massive pair tensor (`MassivePair`) and the massive two-body volume `2P/Q` (`MassiveVolume`) are
+done. Open: the daughter-energy integral of `MassiveDaughterSpectrum`/`MassiveWidth` with this tensor
+and volume, i.e. `pair_density`/`closed_width` for a massive neutrino pair (at least equal masses or
+one massive leg), with positivity and endpoint limits.
 
-### A5. Rotation invariance of the continuum angular average — partly done
-Done (`ContinuumPair.average_rotate_polar`, `average_reflect_polar`): invariance under rotations about
-the polar axis (any `f` periodic in `φ`) and under `z ↦ −z` (any `f`), no integrability needed. Open:
-rotations that move the polar axis (they mix `z` and `φ`; needs the sphere change of variables, or the
-identification of `average` with Mathlib's sphere measure and its isometry invariance).
-`ContinuumPair` proves moments and linearity on *continuous* test functions but not
-full rotation invariance for every integrable test function. Target: prove the
-uniform-sphere average is invariant under rotations on `L¹` (change of variables /
-Haar invariance of the sphere), so the pair tensor's covariance is a consequence of
-the measure, not only of degree-≤2 moments.
+### A5. Rotation invariance of the continuum angular average
+Rotations about the polar axis and `z ↦ −z` are done (`ContinuumPair`). Open: rotations that move the
+polar axis (they mix `z` and `φ`); identify `ContinuumPair.average` with Mathlib's sphere measure and
+use its isometry invariance, so the pair tensor's covariance follows from the measure for every
+integrable test function, not only from degree-≤2 moments.
 
 ## Other open work
 
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`): derive the
   placement of each protocol's three label states.
-- **`QuarkMasses`, `LeptonMasses`.** e8p's quark and lepton masses come from these modules' formulas,
-  not from the wire. Connect them to the wire through the readout above, or state them as supplied.
 - Connect the charged-current operator to the contact vertex in `AmplitudeTrace` (external carrier
   states, mode weights, readout normalization).
 - Physical tick calibration for `DecayLaw`.
