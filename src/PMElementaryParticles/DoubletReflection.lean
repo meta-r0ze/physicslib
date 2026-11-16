@@ -19,6 +19,12 @@ So any amplitude built from the `D₄` carrier geometry and the reference's axis
 under the `s ↔ c` swap, is the same for up and down. Any up/down difference is not geometric: it
 needs a charge that tells the doublet sign apart (the right-sector hypercharge `Y = B − L + 2T₃`,
 `CarrierRepresentation.charges_from_carriers`) or a breaking of the swap, that is, protocol content.
+
+**Scope (2026-11).** This covers amplitudes that use only the reference's axis. The native
+on-site flip `β` also uses the reference's sign: it sends the up protocol's carrier onto the
+reference carrier and the down protocol's onto the electron protocol's, and it conjugates the
+reflection of its paired colour axis into a reflection that reverses the reference
+(`BetaReference`). So the on-site detuning can tell the up and down protocols apart.
 -/
 
 namespace PMElementaryParticles.DoubletReflection
