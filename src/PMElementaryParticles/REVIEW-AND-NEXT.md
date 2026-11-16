@@ -22,10 +22,13 @@ e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the 
 - **Mixing.** On the derived wire (OVERVIEW, "Protocol readout") neither root assignment gives the
   CKM: same root `|V_us| ≈ 0`, `|V_cb|, |V_ub| ≈ 0.009, 0.008`; different roots `|V_us| = √3/2`. So
   the mixing has to come from the protocol readout, not the bare wire's rotation.
-- **Light masses.** At the resonance the light mass is zero; derive the light masses as corrections.
-  As the lazy `β` event every protocol takes the real root (`PMAction.OtherWallFlipEvent`), so flavour
-  mixing has to come from the readout, and the lazy event's offset changes the mass law to `s²/c'`
-  (PMAction REVIEW, "Lazy or coherent flip event").
+- **Light masses.** At the resonance the lightest state is exactly massless on the full wire, not
+  only at leading order (`PMAction.ExactZeroMode`), and no heavy-label weight changes that
+  (`PMAction.OtherWallStationary.massless_iff`). So `m_e`, `m_u`, `m_d` come from outside the wire:
+  the protocol register, or a reason the flip sits off the resonance. Numerically (derived wire,
+  `k = α/2`, fitted weights) a real offset `δ = −1 + ε` reproduces each `m₁/m₂` with
+  `ε ≈ 0.038 (e), 0.14 (d), 0.0024 (u)` and keeps `m₂/m₃` within 2–7%; no single law in the
+  weight or charge fits those three offsets.
 - **Protocol register.** Protocol identity is a separate register from the wire's spinor components
   (OVERVIEW, "Protocols are not wire modes"). Derive how a protocol couples to the wire; the partner
   (up/down, `ν`/`e`) difference and the heavy-label weight both have to enter there (the charge
