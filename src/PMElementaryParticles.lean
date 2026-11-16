@@ -22,6 +22,7 @@ import PMElementaryParticles.MassiveMuon
 import PMElementaryParticles.NeutrinoContext
 import PMElementaryParticles.TauLifetime
 import PMElementaryParticles.PhysicalUnits
+import PMElementaryParticles.MuonLifetimeCorrected
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.ChargeProtocols

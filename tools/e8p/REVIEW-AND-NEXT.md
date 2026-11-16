@@ -32,15 +32,11 @@ enter the catalog:
 Common measurements worth adding as extra references (the model values already
 exist unless noted):
 
-- **Multiple references per value**: `alpha_inv` from CODATA, Morel 2020,
-  Parker 2018 and Fan 2023 (constants.txt already records all four), and
-  `H0`/`S8` from Planck, SH0ES, DES and KiDS. This needs `ExpRef` to become a
-  list; the reporter already computes σ per reference.
 - **On-shell vs MS-bar**: `sin2_theta_W(MS-bar) = 0.23122`, replacing the
   current on-shell `weak_fraction = 0.222905`.
 - **CKM/PMNS**: `delta_CP` (NuFIT), the two neutrino mass splittings
-  `Δm²21`, `|Δm²31|`, and `|V_td|`, `|V_ts|`, `ε_K`, `sin2β` (`|V_ud|` is now
-  catalogued). The PMNS δ angle is currently only bounded as `(π, 2π)`.
+  `Δm²21`, `|Δm²31|`, and `|V_td|`, `|V_ts|`, `ε_K`, and `sin2β` as a catalog row
+  (it is compared in `FlavourPulls` only). The PMNS δ angle is currently only bounded as `(π, 2π)`.
 
 - **Precision/QCD**: `g-2` (muon anomaly), `Λ_QCD`, W/Z widths; none has a Lean enclosure yet.
 

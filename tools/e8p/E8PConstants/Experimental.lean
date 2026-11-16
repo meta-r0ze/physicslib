@@ -121,8 +121,8 @@ context, with `·` instead of a glyph:
   BBN sound horizon, so it is grouped with the early-universe references);
 * `neutron_lifetime_unified_s`: the `3³` spectral template, kept as a comparison; the scored E8
   neutron is `neutron_lifetime_predicted_s` (continuum route);
-* `muon_lifetime_s`, the tree-level width: the measurement includes the SM QED factor, and the E8
-  `G_F` it tests is already scored in `fermi_constant`. -/
+* `muon_lifetime_s`: E8 `G_F` with the derived phase factor and the one-loop QED factor; the
+  `G_F` it tests is already scored in `fermi_constant`, and higher-order QED is not included. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
   | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds

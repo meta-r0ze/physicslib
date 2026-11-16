@@ -156,7 +156,7 @@ def value : Key → ℝ
   | .tauLifetimeE8Natural => PMElementaryParticles.TauE8.tauLifetimeE8
   | .neutronSpectralFraction => PMHadrons.neutronSpectralFraction
   | .neutronLifetimeE8 => PMHadrons.neutronLifetimeE8
-  | .muonLifetimeSeconds => PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds
+  | .muonLifetimeSeconds => PMElementaryParticles.MuonLifetimeCorrected.muonLifetimeCorrected
   | .neutronLifetimeSeconds => PMHadrons.neutronLifetimeSeconds
   | .neutronLifetimePredicted => PMHadrons.Values.neutronLifetimeContinuumCoulombSeconds
   | .pionLifetimePredicted => PMHadrons.Values.pionLifetimeCorrectedSeconds
@@ -402,7 +402,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | muonLifetimeSeconds =>
-    have h := PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_tight
+    have h := PMElementaryParticles.MuonLifetimeCorrected.corrected_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronLifetimeSeconds =>

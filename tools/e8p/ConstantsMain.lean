@@ -104,7 +104,12 @@ private def keysFor (o : Opts) : List Key :=
   | none => ks
 
 private def sectionOrder : List String :=
-  ["Substrate", "Constants", "Flavor", "Elementary Particles", "Atoms", "Cosmology"]
+  ["Substrate", "Constants", "Flavor", "Elementary Particles", "Hadrons", "Atoms", "Cosmology"]
+
+/-- The keys of one section, protocol masses first. -/
+private def inSection (ks : List Key) (s : String) : List Key :=
+  let g := ks.filter (fun k => k.section = s)
+  g.filter (fun k => k.sectionRank = 0) ++ g.filter (fun k => k.sectionRank ≠ 0)
 
 private def sections (ks : List Key) : List String :=
   sectionOrder.filter (fun s => ks.any (fun k => k.section = s))
@@ -119,7 +124,7 @@ private def printText (ks : List Key) (o : Opts) : IO Unit := do
   out.putStrLn "Intervals are exact-rational roundings; 'supplied input' rows are not predictions.\n"
   for s in sections ks do
     out.putStrLn s
-    for k in ks.filter (fun k => k.section = s) do
+    for k in inSection ks s do
       for line in detailLines k o.digits do out.putStrLn line
     out.putStrLn ""
 
@@ -129,7 +134,7 @@ private def printAudit (ks : List Key) (o : Opts) : IO Unit := do
   out.putStrLn "glyph: ✓ |σ|≤1, ~ |σ|≤2, ! >2, · shown for context and not scored; intervals are proved enclosures of the model value, not its uncertainty.\n"
   let mut withRef : List Key := []
   for s in sections ks do
-    let group := ks.filter (fun k => k.section = s)
+    let group := inSection ks s
     let groupRefs := group.filter (fun k => !(expRefs k).isEmpty)
     if groupRefs.isEmpty then continue
     out.putStrLn s

@@ -249,7 +249,7 @@ def bounds : Key → Rat × Rat
   | .tauLifetimeE8Natural => (1.6e8, 3.4e8)
   | .neutronSpectralFraction => (0.45, 1)
   | .neutronLifetimeE8 => (2.9e23, 8.0e23)
-  | .muonLifetimeSeconds => (2.187343e-6, 2.187352e-6)
+  | .muonLifetimeSeconds => (2.196987e-6, 2.196998e-6)
   | .neutronLifetimeSeconds => (3.7e2, 1.04e3)
   | .neutronLifetimePredicted => (923.37, 923.39)
   | .pionLifetimePredicted => (2.60188e-8, 2.60192e-8)
@@ -390,7 +390,7 @@ def Key.theoremName : Key → String
   | .tauLifetimeE8Natural => "PMElementaryParticles.TauE8.tauLifetimeE8_bounds"
   | .neutronSpectralFraction => "PMHadrons.neutronSpectralFraction_bounds"
   | .neutronLifetimeE8 => "PMHadrons.neutronLifetimeE8_bounds"
-  | .muonLifetimeSeconds => "PMElementaryParticles.PhysicalUnits.muonLifetimeSeconds_tight"
+  | .muonLifetimeSeconds => "PMElementaryParticles.MuonLifetimeCorrected.corrected_bounds"
   | .neutronLifetimeSeconds => "PMHadrons.neutronLifetimeSeconds_bounds"
   | .neutronLifetimePredicted => "PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds"
   | .pionLifetimePredicted => "PMHadrons.pionLifetimeCorrectedSeconds_bounds"
@@ -491,13 +491,21 @@ def Key.paper : Key → Nat
 def Key.section (k : Key) : String :=
   match k with
   | .rydbergEV | .bohrRadius | .shell4 => "Atoms"
-  | _ => match k.paper with
+  | _ =>
+    if k.theoremName.startsWith "PMHadrons." then "Hadrons" else
+    match k.paper with
     | 0 | 1 => "Substrate"
     | 3 => "Constants"
     | 4 => "Flavor"
     | 5 => "Elementary Particles"
     | 6 => "Cosmology"
     | _ => s!"Paper {k.paper}"
+
+/-- Within a section, the protocol (elementary-particle) masses come first. -/
+def Key.sectionRank : Key → Nat
+  | .muonRatio | .tauRatio | .upMeV | .downMeV | .strangeMeV | .charmMeV | .bottomMeV
+  | .topMeV | .neutrinoFloor => 0
+  | _ => 1
 
 /-- A best-effort LaTeX formula for the value, for `--latex`. Empty if not recorded. -/
 def Key.formula : Key → String
@@ -581,7 +589,7 @@ def Key.formula : Key → String
   | .rydbergEV => "R_\\infty=\\alpha^2 m_e c^2/2"
   | .bohrRadius => "a_0=\\hbar c/(\\alpha m_e c^2)"
   | .shell4 => "\\sum_{\\ell=0}^{n-1}2(2\\ell+1)=2n^2"
-  | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5)"
+  | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5\\,f(m_e^2/m_\\mu^2)\\,(1-\\frac{\\alpha}{2\\pi}(\\pi^2-\\frac{25}{4})))"
   | .kaonPionRatio => "\\frac{\\Gamma_K}{\\Gamma_\\pi}=\\frac{\\pi^2}{196-\\pi^2}\\left(\\frac{70}{59}\\right)^2\\frac{m_K}{m_\\pi}\\frac{(1-m_\\mu^2/m_K^2)^2}{(1-m_\\mu^2/m_\\pi^2)^2}"
   | .pionLifetimePredicted => "\\frac{33}{32}\\,\\frac{8\\pi}{G_F^2 f_\\pi^2 m_\\pi m_\\mu^2(1-m_\\mu^2/m_\\pi^2)^2}"
   | .neutronLifetimePredicted => "\\frac{2\\pi^3}{G_F^2 |V_{ud}|^2 R\\,(1+3g_A^2)\\,(f_0+\\pi\\alpha P)},\\ g_A=5/4"
@@ -606,7 +614,7 @@ def Key.caveat : Key → String
   | .tauLifetimeE8Natural => "E8 muon input; broad natural-unit interval"
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
   | .neutronLifetimeE8 => "finite 3x3x3 channel; broad natural-unit interval"
-  | .muonLifetimeSeconds => "tree level, E8 G_F and m_mu; the measured value includes the QED factor 1-(alpha/2pi)(pi^2-25/4) and the m_e^2/m_mu^2 phase space (together 0.99562); reference not scored"
+  | .muonLifetimeSeconds => "E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); higher-order QED (~5 ppm) not included, so the value sits ~5 ppm above the measurement, as it does with the measured G_F; G_F itself is scored in fermi_constant, so this reference is not scored"
   | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); the rest is f_K/f_pi = 70/59 (FLAG 1.1934)"
   | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; pi->mu nu is 99.988% of the total width"
   | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"

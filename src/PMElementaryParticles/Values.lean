@@ -2,6 +2,7 @@ import PMElementaryParticles.SharedUnits
 import PMElementaryParticles.PhysicalUnits
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
+import PMElementaryParticles.MuonLifetimeCorrected
 
 /-!
 # PMElementaryParticles canonical values
@@ -16,8 +17,9 @@ Single import for the units, couplings, masses and lifetimes that later librarie
   `fermiME_tight` (`3.0456453–3.0456507 × 10⁻¹²`); `pi_b`.
 * Masses (`m_e` units): `muon`, `tau` with `muon_value`, `tau_value`; quarks `up … top` with
   `up_value … top_value` (in MeV).
-* Lifetimes: `muonLifetimeSeconds` with `muonLifetimeSeconds_tight`, `tauLifetimeSeconds` with
-  `tauLifetimeSeconds_bounds`.
+* Lifetimes: `muonLifetimeSeconds` (tree level) with `muonLifetimeSeconds_tight`,
+  `muonLifetimeCorrected` (derived phase factor, supplied one-loop QED) with `corrected_bounds`,
+  `tauLifetimeSeconds` with `tauLifetimeSeconds_bounds`.
 -/
 
 namespace PMElementaryParticles.Values
@@ -27,6 +29,7 @@ export PMElementaryParticles.SharedUnits
 export PMElementaryParticles.PhysicalUnits
   (electronTime electronTime_pos electronTime_tight muonLifetimeSeconds muonLifetimeSeconds_tight
     tauLifetimeSeconds tauLifetimeSeconds_bounds)
+export PMElementaryParticles.MuonLifetimeCorrected (muonLifetimeCorrected corrected_bounds)
 export PMElementaryParticles.LeptonMasses (muon tau muon_value tau_value)
 export PMElementaryParticles.QuarkMasses
   (up down strange charm bottom top up_value down_value strange_value charm_value bottom_value

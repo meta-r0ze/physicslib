@@ -91,7 +91,9 @@ the measure, not only of degree-≤2 moments.
   not from the wire. Connect them to the wire through the readout above, or state them as supplied.
 - Connect the charged-current operator to the contact vertex in `AmplitudeTrace` (external carrier
   states, mode weights, readout normalization).
-- Physical tick calibration for `DecayLaw`; the low-energy radiative contribution for widths.
+- Physical tick calibration for `DecayLaw`.
+- Radiative factor: `MuonLifetimeCorrected` supplies the one-loop QED factor; deriving it (the soft
+  photon dressing of the charged daughter) is open.
 - The finite-channel replacement for the muon continuum phase space; the tau's electronic branching
   fraction is still an input; hadronic channels are PMHadrons'.
 - A neutrino-decay prediction needs a physical channel and mass ordering (PMCosmology for
