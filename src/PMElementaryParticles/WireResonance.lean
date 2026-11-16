@@ -10,6 +10,12 @@ start in three steps; when they cancel, `M` is singular and the wire has an exac
 * `det_factor`: with `δ_c³ = −κ_O0 κ_O1 κ_O2`, `det M = κ_R0κ_R1κ_R2 (δ − δ_c)(δ² + δ δ_c + δ_c²)`, so
   near the resonance the light mass is linear in the offset `δ − δ_c`.
 * `resonance_singular`: at `δ = δ_c` some nonzero vector is annihilated by `M`.
+* `massless_iff`: with nonzero couplings, `M` has a massless mode exactly when `δ³ = −κ_O0κ_O1κ_O2`:
+  the three cube roots, the real `δ_c = −(κ_O0κ_O1κ_O2)^{1/3}` and its two rotations by `e^{±2πi/3}`.
+
+**Persistence reading (premise).** A massless mode costs nothing to keep, so if the substrate's flip
+rate `δ_O` is the one under which a protocol's state persists at least cost, it is a root of the
+resonance and the wire's light mass is zero; the observed light masses are then corrections to it.
 
 **Numerically (wire inputs `K = 1`, `k = α/2`, `tools/protocol_readout_scan.py`).** Every protocol's
 fit of its light ratio puts `δ_O` within a few percent of the real resonance `δ_c = −k^{2/3} ≈ −0.0237`:
@@ -33,5 +39,11 @@ theorem resonance_singular (δc : ℂ) (κR κO : Fin 3 → ℂ) (hc : δc ^ 3 =
   have hdet : (mass δc κR κO).det = 0 := by
     rw [det_factor δc δc κR κO hc]; ring
   exact Matrix.exists_mulVec_eq_zero_iff.mpr hdet
+
+theorem massless_iff (δ : ℂ) (κR κO : Fin 3 → ℂ) (hR : ∀ i, κR i ≠ 0) :
+    (∃ v : Fin 3 → ℂ, v ≠ 0 ∧ mass δ κR κO *ᵥ v = 0) ↔ δ ^ 3 = -(κO 0 * κO 1 * κO 2) := by
+  rw [Matrix.exists_mulVec_eq_zero_iff, det_mass]
+  have h : κR 0 * κR 1 * κR 2 ≠ 0 := mul_ne_zero (mul_ne_zero (hR 0) (hR 1)) (hR 2)
+  rw [mul_eq_zero, or_iff_right h, add_eq_zero_iff_eq_neg]
 
 end PMElementaryParticles.WireResonance

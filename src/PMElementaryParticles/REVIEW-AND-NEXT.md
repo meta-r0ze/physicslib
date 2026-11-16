@@ -46,10 +46,24 @@ A second reading fits all three with one number: `ln w` is linear in the electri
 signed cost, i.e. relative to a background; Paper I's survival weight `exp(−β c)` would make it
 exponential. Not derived.
 
-**Next.** Decide between the two readings by deriving the heavy state's maintenance cost per
-protocol: the crossing reading predicts `w_d/w_e = 3` exactly and needs a separate up mechanism; the
-charge reading predicts `w_d/w_e = e^{2c/3}` and `w_u/w_d = e^{c}` from one `c`. Then derive why
-`δ_O` sits at the resonance (a cost-free light mode) and the light ratios from the offset. Until then
+What the library has for the charge reading (`PMConstants.Hypercharge`): the charges follow from flux
+conservation and charge-balanced left/right couplings through a scalar of charge `h`, with
+`Y_u = Y_q + h`, `Y_d = Y_q − h`, `Y_e = Y_l − h`, `Y_ν = Y_l + h` (up and `ν` couple through the scalar,
+down and `e` through its conjugate). Since `Q = Y_R/2` for the right-handed channel, the charge reading
+is `ln w ∝ Y_R = Y_L ± h`: a quark/lepton part (`Y_q − Y_l = 4/3`, `e → d`) and a scalar-orientation
+part (`2h`, `d → u`). The library has no upkeep cost that depends on either; that cost is the missing
+input.
+
+**The resonance as a persistence choice** (`WireResonance.massless_iff`). `M` has a massless mode
+exactly when `δ³ = −κ_O0κ_O1κ_O2`: three roots, the real `δ_c` and its rotations by `e^{±2πi/3}` (the
+cycle phases of the earlier fits). All three give the same `m₂/m₃`. Premise to derive: the stationary
+flip rate is the one that keeps a cost-free light mode. Numerically, with each quark protocol on a root
+and weighted to its `m₂/m₃`: the same root for up and down gives `|V_us| ≈ 0.002`; different roots give
+`|V_us| ≈ 0.26`, `|V_cb| ≈ 0.17`, `|V_ub| ≈ 0.027` (data `0.224`, `0.041`, `0.0038`).
+
+**Next.** Derive the heavy state's upkeep cost per protocol (crossing reading: `w_d/w_e = 3`
+exactly, up needs its own mechanism; charge reading: `w ∝ e^{(c/2) Y_R}` from one `c`). Derive the
+resonance premise and which root each protocol takes, and the light masses as corrections. Until then
 e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared assignment (their e8p
 caveats say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
 
