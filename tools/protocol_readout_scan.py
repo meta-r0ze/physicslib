@@ -5,7 +5,7 @@ M = diag(s, k, k) . (delta + cyc(1, k, k)) . diag(s, 1, 1), K = 1, k = alpha/2.
 s = 1 is the bare wire; s scales the heavy label on both walls.
 
 Prints:
-1. the cycle resonance delta_c = -(k^2)^(1/3), where det M = 0 (WireResonance);
+1. the cycle resonance delta_c = -(k^2)^(1/3), where det M = 0 (PMAction.OtherWallStationary);
 2. m2/m3 on the resonance at s = 1 (the same for every protocol);
 3. for each charged protocol, the heavy-label weight w = s^2 that reproduces its m2/m3 on the
    resonance, for a few common quark-mass ratio choices (quark ratios are scale dependent),

@@ -158,6 +158,7 @@ import PMAction.CertainTransferRate
 import PMAction.LightLeakage
 import PMAction.WallCurrentWeights
 import PMAction.WallGapCalibration
+import PMAction.OtherWallStationary
 import PMAction.NativeDetuning
 import PMAction.WilsonPointForced
 import PMAction.WallOffset

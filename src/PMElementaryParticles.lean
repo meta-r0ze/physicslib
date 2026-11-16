@@ -71,4 +71,3 @@ import PMElementaryParticles.ElectronMeasure
 import PMElementaryParticles.NullBoost
 import PMElementaryParticles.PairShell
 import PMElementaryParticles.TauBranching
-import PMElementaryParticles.WireResonance
