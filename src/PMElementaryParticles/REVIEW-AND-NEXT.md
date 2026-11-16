@@ -145,6 +145,23 @@ the wire, with the spinor flip as the disturbance, `δ_O/k_f = 1/k`: the correct
 Quick checks: gain `∝ (Y_R/2)²` gives the ordering `e` > up > down (data: up > `e` > down); gain `∝ |Y_R|`
 gives `e/down = 3` (data `3.4`) but `up/down = 2` (data `5.8`). Neither fits.
 
+**The reference as a PM system, and the gain as the governor's reach (2026-11).** The reference sits at
+`δ_R = 0`: zero Margin, fragile by `Pillars.fragility`. It persists because the weak refresh repairs
+it every tick: Paper I's protective architecture (`4_minimum_action`, "Margin and Governor can
+increase expenditure while reducing failure exposure"), Governor standing in for Margin. If the same
+governor corrects the protocols, a protocol's gain is how strongly the reference's maintenance
+reaches it. Checks against the gains (up `0.089` > `e` `0.053` > down `0.0155`):
+- *Shared attributes with the reference* (`ν`: upper position, lepton axis): up shares the position,
+  `e` the axis, down neither. The ordering matches. Multiplicatively, position `×5.75`, axis `×3.4`;
+  `ν` (both) would have gain `≈ 0.30`, `u_ν ≈ 3.3` (the same content as the additive-bits estimate
+  `3.07`). But "same position as the reference" is not geometric for up versus down
+  (`DoubletReflection`: a colour reflection fixes the reference carrier and exchanges them), so it
+  needs a charge.
+- *Charges as distance from the reference*: `|Q − Q_ν|` (`2/3`, `1`, `1/3`), `|Y_R − Y_{ν R}|` (`4/3`, `2`,
+  `2/3`), right-handed `Z` couplings (`0.154`, `0.231`, `0.077`): all order `e` above up. Fail.
+So the ordering points at shared attributes with the reference, and the up/down part of it has no
+source yet that respects `DoubletReflection`.
+
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
 Results below that used the old assignment: the `WireLightSplit` relation test and its recorded
