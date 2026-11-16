@@ -99,6 +99,22 @@ the measure, not only of degree-≤2 moments.
   singular values is disfavoured. The up protocol must use the wire differently from down; the tier
   sets already differ (`TierLedger`: up `{0, 2, 3}`, down `{0, 1, 2}`), which is a lead, not a
   derivation.
+  **Lead: a right-handed hypercharge phase on the other wall's carriers (candidate, not derived).**
+  What tells up from down is only the right-sector hypercharge (`DoubletReflection`:
+  `Y_R = 4/3` up, `−2/3` down; left-handed both `1/3`). The other wall is the right-handed one, and an
+  abelian phase rides on every event (`PMAction.Machine.FactorRepair`: "an event may carry any
+  phase"). If each other-wall carrier event carries `e^{i Y_R θ₀}`, then:
+  - `U` changes per protocol: the reference-wall Gram entries are `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`
+    (`PMAction.ReferenceWallRotation.left_gram_entry`), so a rotation scales with
+    `|cos(Y_R θ₀)|`; at `θ₀ = 3π/4` the down rotation vanishes and the up one is maximal, the
+    pattern the CKM fit wants (`θ_d ≈ 0.004`, `θ_u ≈ −0.034`);
+  - the masses change per protocol through the same entries and through `det = d₀d₁d₂(δ³ + Π κ)`;
+  - the cycle product `Π κ` carries `e^{3 i Y_R θ₀}`: a non-flat phase, different for up and down,
+    the CP phase's candidate source (PMFlavor item 5).
+  One angle `θ₀` for the up/down split, the 2–3 rotations and the CP phase. Tests: fix `θ₀` from one
+  readout and predict the others; derive `θ₀` from the hypercharge refresh (`RequirementRows`:
+  hypercharge refreshes the spatial rows) or show the phase per event is not fixed (then the lead
+  is a parametrization, not a derivation).
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
