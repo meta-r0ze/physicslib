@@ -5,10 +5,11 @@ is PMAction's; label changes are PMFlavor's.
 
 ## The protocol readout (first)
 
-The wire inputs `K = 1`, `k = α/2` are withdrawn (`PMAction.CarrierAdmittance`: natively the
-three carrier classes have the same exchange, so the bare wire at the resonance gives one massless
-state and a degenerate pair; PMAction REVIEW, "Generation hierarchy source"). The numbers below use
-the withdrawn inputs. The results so far are in OVERVIEW ("Protocol readout"): the wire's flip sits on the cycle resonance
+Wire inputs: the split `κ_R = (K, k, k)` is derived (`PMAction.ReferenceClassHop`: the reference's
+stationarity forbids direct exchange into its class), but the other wall is class-blind
+(`PMAction.CarrierAdmittance`), not `κ_O = (k, K, k)`-type as the numbers below assume, and `k/K`
+is open (PMAction REVIEW, "Node-restoring amplitude"). On the derived wire at the resonance
+`m₂/m₃ ≈ √(3/2) k/K`: `0.0045` for `α/2`, `0.0089` for `α`. Re-run the readout on it. The results so far are in OVERVIEW ("Protocol readout"): the wire's flip sits on the cycle resonance
 (`PMAction.OtherWallStationary`), where the wire gives `m₂/m₃ ≈ 0.023` for every protocol, and the
 data need one weight `w` on the heavy label per protocol, `w_e : w_d : w_u ≈ 1 : 3 : 16–18`. Until the
 readout is derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers (declared; their

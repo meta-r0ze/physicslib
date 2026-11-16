@@ -3,10 +3,11 @@ import PMAction.ReferenceWallMass
 
 /-!
 **Status (2026-11).** The in-cycle/node split used below (`ExchangeAxis.vector_free`, `spinor_touch`)
-applies the protocols' lepton-axis rule to wire carriers. Redone on the wire (`CarrierAdmittance`),
-every conserving exchange is scalar on the reference and the native exchange is the same for all
-three classes, so no class crosses the node and `k/K = α/2` is not a wire result. The series
-arithmetic (`node_series`, `node_kron`) stands as arithmetic.
+applies the protocols' lepton-axis rule to wire carriers. Redone on the wire, the split comes
+from the reference's class, not its axis: its stationarity forbids direct exchange into or out of
+that class on its wall (`ReferenceClassHop`), so the label-`v` generation has the direct insertion
+and the other two need a reference-restoring process. Whether that process is the two-leg series
+below (`k/K = α/2`) is the open part (PMAction REVIEW).
 
 # The node amplitude: a spinor-class carrier is `α/2` of the vector edge
 

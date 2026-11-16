@@ -30,9 +30,9 @@ class), and the reference is the second-wall zero mode on axes `2, 3`
 * `single_hop_anisotropic`: one fixed displacement (`−2e₀` from the spinor to the conjugate class) is
   not scalar (`diag(−4, 4, 4, 4)`): it singles out an axis, so it is not a conserving wall term.
 
-So the reference-wall carriers `κ_R` are equal for the three classes unless an event weight breaks
-triality, and `k/K = α/2` is not a wire result. Consequence (`ReferenceWallMass`): the light mass
-`D_R (δ_O + cyc κ_O)` has `D_R ∝ 1`, so the reference wall's carriers give no hierarchy.
+So exchange amplitudes alone do not separate the classes, and the axis test does not give
+`k/K = α/2` on the wire. What separates them is the reference's own class: its stationarity forbids
+direct exchange into or out of that class on its wall (`ReferenceClassHop`).
 -/
 
 noncomputable section

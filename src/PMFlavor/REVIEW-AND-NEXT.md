@@ -14,8 +14,9 @@ cross the reference node was derived by applying the protocols' lepton-axis rule
 displacements (`ExchangeAxis`, `TransferGraph.inCycle_iff`). The wire's axes are spinor components and
 protocol identity is a separate register (PMElementaryParticles OVERVIEW, "Protocols are not wire
 modes"), so that routing is now a premise. The node entries below (`|V_cb|`, `s₁₃`, the one-leg reactor
-angle) rest on it. On the wire itself no class crosses the node
-(`PMAction.CarrierAdmittance`: conserving exchanges are scalar on the reference). Re-derive the routing
+angle) rest on it. On the wire the split is by the reference's
+class, not its axis (`PMAction.ReferenceClassHop`): direct exchange into or out of the reference's
+class on its wall is forbidden, so the transfer through the reference's class is the direct one. Re-derive the routing
 from how a generation change on the wire couples to the protocol register, or keep it as a named
 premise.
 

@@ -164,6 +164,7 @@ import PMAction.OtherWallFlipEvent
 import PMAction.ConfinedAxialCurrent
 import PMAction.ColourRegister
 import PMAction.CarrierAdmittance
+import PMAction.ReferenceClassHop
 import PMAction.NativeDetuning
 import PMAction.WilsonPointForced
 import PMAction.WallOffset
