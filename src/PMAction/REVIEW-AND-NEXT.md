@@ -21,8 +21,10 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   **Rotation on the event's wall** (`ReferenceWallRotation`): off-diagonal `M Mᴴ` entries are
   `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`; the charged current reads this side (rows of `D₂ Y⁻¹ D₁ᴴ`, the wall
   `(1 − Γ)/2` selects; one step by name). First-order rotation `≈ |dᵢ/dⱼ| · |κ_O/δ_O|`.
-  **Numerical facts (outside Lean, 2026-11).** Symmetric bookkeeping, vector flip `K_f`, spinor
-  flip `k_f`:
+  **Numerical facts (outside Lean, 2026-11; items 1–4 and the triage rows on the golden point and the
+  wire's own `U` used the superseded bookkeeping, vector carrier at `(1, 0)`; with the corrected one see
+  the bookkeeping item below and PMFlavor REVIEW "Redone").** Symmetric bookkeeping, vector flip
+  `K_f`, spinor flip `k_f`:
   1. *Ordering:* one heavy, two light once `|δ_O| ≳ k_f`.
   2. *Light pair (corrected).* The wire itself splits the light pair when `|δ_O|` is a few `k_f`: the
      light ratio runs from `≈ k/K`-level at `δ_O ≲ k_f` through `0.03–0.5` at `δ_O = 5 k_f` to near `1`

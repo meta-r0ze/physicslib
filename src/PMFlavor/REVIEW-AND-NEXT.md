@@ -117,7 +117,8 @@ data, and do not frame work as fitting Standard Model sectors.
    splits the light pair when `δ_O` is a few spinor flips, but there `U ≠ 1` (heavy–light `O(0.1–1)`;
    PMAction REVIEW, corrected). So the item 1 and 5 tests are conditional on both. On the full two-wall Hamiltonian
    (PMAction REVIEW) `U ≈ 1` needs the other wall's detuning near the hop scale, which moves the heavy
-   label off its walls unless the vector carrier's rate is small. **Recorded (2026-11, numerical):** if
+   label off its walls unless the vector carrier's rate is small. **Recorded (2026-11, numerical, superseded bookkeeping; with the corrected one a common `U` is no
+longer excluded at every `δ_O`, see "Redone" under the data section):** if
    both protocols' persistence rotation is the wire's own reference-wall rotation (symmetric
    bookkeeping, common `U_u = U_d`), then `U_uᴴ W U_d` (FC completion, `κ = (0.225, jump, 0.041)`) has
    `|V_ub| = 0.12, 0.08, 0.04, 0.03, 0.026` at `δ_O/k_f = 1, 2, 5, 30, ≥ 100` against `0.0038`: excluded at

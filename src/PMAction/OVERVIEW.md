@@ -137,7 +137,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
   masses of `D_R (δ_O + cyc κ_O)` are `K` times the eigenvalues of `[[δ_O, k], [k, 0]]`
   (`block_char`, `block_product`), with `√(m₀/m₁) − √(m₁/m₀) = δ_O/k` (`ratio_relation`); at
   `δ_O = k` the block is the Fibonacci matrix (`golden_point`). The third mass is `≈ k²`
-  (`ReferenceWallRotation.det_M`). So the wire itself splits the light pair in this regime.
+  (`ReferenceWallRotation.det_M`). (Uses the superseded carrier bookkeeping; see `LightPairTexture`.)
+- `LightPairTexture`: with the vector carrier on the light pair (`GenerationCurrent.edge_carrier`,
+  `UndetunedWall.undetuned_masses_matching`) the light block is `k [[δ, 0], [K, δ]]`; its Gram matrix
+  (`gram`) has light states `(t, 1)`, `(1, −t)` with masses `δ/t`, `δ t` when `δ(1 − t²) = t`
+  (`light_vectors`, `ratio`): `tan θ₁₂ = √(m₁/m₂)` at leading order.
 - `NativeDetuning`: the on-site detuning is the rate of a native `β` event (`generator_split`,
   `gap_zero_iff`); `β` swaps carrier axes `0 ↔ 2`, `1 ↔ 3` (`beta_swaps_axes`) and moves `4` of `8`
   vector carriers across the reference axis, no spinor carrier (`beta_crossings`).
