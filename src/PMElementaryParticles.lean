@@ -26,6 +26,7 @@ import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.ChargeProtocols
 import PMElementaryParticles.ProtocolInventory
+import PMElementaryParticles.RefreshMap
 import PMElementaryParticles.CarrierSpecies
 import PMElementaryParticles.FinalStateBridge
 import PMElementaryParticles.SubstrateFinalStates

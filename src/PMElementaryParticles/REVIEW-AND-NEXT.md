@@ -1,5 +1,12 @@
 # PMElementaryParticles — open work
 
+Identify which physical event, if any, enables the full active-bank antipodal word and when its output is read.
+
+**Margin from the Map (Kate's rule: the margin is the minimum that lets every protocol succeed).** In the Boolean Map the requirement is one clear live bit on each active payload row per visit (`visitRoute_active_clean_injective`, `visitRoute_collision`). This is the same for every protocol, one bit per active channel. Protocol differences must therefore enter through the gate: how often, or with what amplitude, the word fires for each protocol. An up/down difference in the gate requires a record of the doublet position on each event (`asymmetric_gate_records`), written onto a clean bit (occupied records collide). Next:
+- Gate statistics. On a closed record orbit of least period `N` a mark returns at visit `N+1` (`marked_payload_return`); an open orbit never returns it. Candidate: a protocol's gain is `1/N_p`, so its margin `u_p` is its record-orbit period. It requires a definition of each protocol's record orbit (routing mode and anchor: colour bulk, `D = 4` manifold, `χ = 2` boundary, none). Test: ordering `N_up < N_e < N_down` first, then values; do not match the numbers `12, 19, 65` by eye.
+- Coherent gate. Replace the gate bit by an amplitude; the per-tick live contraction is then `cos φ_p` (the partial-exchange candidate).
+- Quarter turn. With both records set `pairVisit` has period 4, so eigenphases `±1, ±i` occur, but the two partners' occupancies are offset by half a period (180°). Whether the quarter turn attaches to one protocol relative to another needs a readout. Open. Clock mask changes alone cancel over a complete cycle (`RefreshMap.clockRoute_closes`). A subcycle reading requires independently selected endpoints; an enduring protocol change requires a mechanism outside this common mask-change rule.
+
 ### A3. Three-body phase-space factorization
 The three-body measure is used but not factored. Target: factor it into
 (pair invariant mass) × (pair angular measure) × (spectator energy), and derive the
