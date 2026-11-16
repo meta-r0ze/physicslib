@@ -145,6 +145,37 @@ So until the protocol-level `U` is derived, PMFlavor's data tests constrain `(J,
 items above are restated accordingly. Deriving `U` (PMElementaryParticles) turns them back into
 tests with no free numbers.
 
+## What the data say about `U` (empirical relations among measured values, 2026-11)
+
+Used as targets for structure, not as fits. Quark ratios from FLAG (scale-free within QCD).
+
+1. **Mixing tracks mass ratios.** CKM angles are small and hierarchical where quark masses are
+   strongly hierarchical; PMNS angles are large where neutrino masses are mildly hierarchical
+   (`m₂/m₃ ≳ 0.17` from `Δm²₂₁/Δm²₃₁ ≈ 0.03`). This is the signature of mixing dominated by persistence
+   rotations whose size is set by mass ratios: supports the `U`-first reading above. The wire's own
+   near-degenerate pair rotating by `45°` is the same pattern at the degenerate end.
+2. **Cabibbo from the down masses.** `|V_us| = 0.2243 ± 0.0008` and `√(m_d/m_s) = 0.2239` (`m_s/m_d ≈ 19.95`):
+   equal within `0.5σ`; also `|V_td/V_ts| ≈ 0.21` against `0.224` (about `2σ`). The 1–2 mixing behaves like
+   a down-protocol rotation of size `√(m_d/m_s)`: a light block `[[0, √(m_d m_s)], [√(m_d m_s), m_s]]`
+   (a zero in the lightest diagonal entry). Rotations of size `√(mass ratio)` are what the squared
+   mass reading gives (`PMAction.WallOffset`: masses `∝ |d|²`, rotations `∝ |dᵢ/dⱼ|`). Open tension:
+   PMFlavor's in-cycle entry `κ₀ = π/N` also lands on `0.224`; both cannot add fully. Either they are
+   the same object seen twice (the in-cycle change is the down protocol's 1–2 rotation), or one is
+   small. Deciding this is a sharp test of the reading.
+3. **The 2–3 mixing is below the square-root rule.** `|V_cb| = 0.041` against `√(m_s/m_b) ≈ 0.15` and
+   `√(m_c/m_t) ≈ 0.087`; `|V_ub/V_cb| ≈ 0.093` against `√(m_u/m_c) ≈ 0.045`. So the 2–3 block is not a
+   texture zero of the same kind; the fit with Closure's node changes wants `≈ 0.034` mostly in the up
+   protocol, about `0.4 √(m_c/m_t)`.
+4. **CP.** Jarlskog `≈ 3.1·10⁻⁵`; triangle angle `α ≈ 90°` (`CPQuarterTurn`), `γ ≈ 66°`; the label-cycle
+   phase at the best fits is `70–80°`.
+5. **Leptons.** No charged-lepton square-root relation appears (`√(m_e/m_μ) = 0.07`,
+   `√(m_μ/m_τ) = 0.24` against PMNS sines `0.15, 0.55, 0.75`); the large angles point to the neutrino
+   protocol's near-degenerate states.
+
+Checked and dropped: a texture from letting `δ_O` act only on the vector-class label (spinor carriers
+never cross under `β`, `PMAction.NativeDetuning.beta_crossings`) decouples the light pair entirely
+(no 1–2 rotation), so it does not give relation 2.
+
 ## Transfer selection
 
 - **Conditional on `e^{−iHt}`.** `ReferenceSelection`, `RelativeFrameCost`, `TransferWorkLaw`,
