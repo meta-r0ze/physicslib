@@ -1,4 +1,5 @@
 import PMAction.Machine.RootTransferPhase
+import PMAction.Machine.CarrierWeyl
 
 /-!
 # The on-site detuning as a native event rate
@@ -18,10 +19,17 @@ the reference's wall. The other wall's `δ_O` is `−gap(p₁)/2` with `p₁` it
 which the library does not fix. If the carriers are lazy transfers too, ratios are ratios of gaps,
 `δ_O/k_f = gap(p₁)/gap(p_s) ≈ p₁/p_s` for small attempt probabilities.
 
-**Candidate (not derived).** If the other wall's chirality flip, like a spinor carrier, must pass the
-reference node (two legs; `NodeAmplitude`), then `p₁ = p_s`, `δ_O = k_f`, and the wire sits at
-`WireLightSplit.golden_point` (the Fibonacci block). Test: the wire's two larger masses in ratio `φ²`.
-Whether the on-site flip passes the node is the premise to check (`ExchangeAxis`, `NodeElimination`).
+**Does the `β` event pass the reference node?** `beta_swaps_axes`: the native `β` (root word
+`[1, 0, 2, 1]`, coordinate swaps only) exchanges carrier axes `0` and `2` (and `1` and `3`). It moves
+carriers between the reference (lepton) axis and a colour axis: a type-changing event, which no
+type-preserving gauge repair undoes (`PMFlavor.LeptonAxisRestriction`). So a wall's chirality flip
+does pass the reference node. How many legs it uses is open:
+* two legs, like a spinor carrier (`NodeAmplitude`, Kron series `α/2`): `p₁ = p_s`, `δ_O = k_f`, the
+  Fibonacci block (`WireLightSplit.golden_point`); the wire's two larger masses in ratio `φ² ≈ 2.618`;
+* one leg (a carrier moved onto or off the axis once, `PMFlavor.NodeElimination.one_leg`, weight `α`):
+  `p₁ = 2 p_s`, `δ_O ≈ 2 k_f`; then `√s − 1/√s = 2`, `s = (1 + √2)² ≈ 5.83`.
+Both are candidates; the leg count of an on-site flip is the premise to derive. Testing either needs
+a protocol that reads the wire's masses (PMElementaryParticles).
 -/
 
 namespace PMAction.NativeDetuning
@@ -54,5 +62,13 @@ theorem gap_zero_iff (p : ℝ) (hp : p < 1/2) : gap p = 0 ↔ p = 0 := by
     unfold RootTransferPhase.residual at h1; linarith
   · rintro rfl
     simp [RootTransferPhase.residual]
+
+/-- **The native `β` exchanges carrier axes `0` and `2`, and `1` and `3`.** -/
+theorem beta_swaps_axes : ∀ (c : Fin 3) (v : CarrierEvents.Carrier c),
+    CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 0 = CarrierEvents.vector v 2 ∧
+    CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 2 = CarrierEvents.vector v 0 ∧
+    CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 1 = CarrierEvents.vector v 3 ∧
+    CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 3 = CarrierEvents.vector v 1 := by
+  decide +kernel
 
 end PMAction.NativeDetuning
