@@ -17,6 +17,5 @@ Checked results are in [OVERVIEW](OVERVIEW.md). Protocol-specific wire readouts 
 ## Dynamics and limits
 
 - **Even complement.** Determine whether coherent gate sequences implement the identity completion of the physical split update, including its directional factors at the actual tick. Derive whether the microscopic event ledger charges invisible-mode squared displacement at a positive rate. The permutation-gate classification and the five-site directional locality obstruction are in the overview.
-- **Polarization normalization and continuum matching.** Fix the physical volume and momentum-measure normalization of the finite D₄ response tensor, and compare its transverse large-volume and regulator limits with the continuum shell. Sharpen the lattice remainder bound enough to compare it with `tools/lattice_polarization_check.py` at fixed spacing.
-- Establish shared group and trace normalization across spacings.
+- **Polarization domain and continuum matching.** Match the coordinate-period response grid to the physical D₄ periods and the derived primitive-grid Fourier measure (`D4MomentumMeasure`). Compare its transverse large-volume and regulator limits with the continuum shell. Sharpen the lattice remainder bound enough to compare it with `tools/lattice_polarization_check.py` at fixed spacing.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.

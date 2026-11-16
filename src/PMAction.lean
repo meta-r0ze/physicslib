@@ -119,6 +119,7 @@ import PMAction.WilsonCertificate
 import PMAction.PolarizationContact
 import PMAction.FinitePolarization
 import PMAction.FinitePolarizationTensor
+import PMAction.D4MomentumMeasure
 import PMAction.PolarizationIngredients
 import PMAction.PolarizationTaylor
 import PMAction.PolarizationSplit
