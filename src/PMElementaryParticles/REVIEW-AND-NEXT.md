@@ -78,6 +78,18 @@ no `J` partner. (ii) Margolus–Levitin within a protocol's maintenance period: 
 maintenance (weak, hypercharge, colour refreshes) yet their margins differ by `6×`. Excluded as
 stated. What is missing is PM's characteristic perturbation of a protocol on the wire; the library
 does not yet name it.
+**Information-theory reading (Paper I's mapping: channel capacity, codebook, framing, power, overhead,
+link margin), 2026-11.** It gives operational definitions to test:
+- *Margin = link margin.* `u = δ_O/k_f` is a signal-to-noise ratio: the other wall's flip (signal)
+  over the spinor carrier's flip (noise, what couples a label to its neighbours). "Minimum to
+  persist" becomes: the SNR at which the channel just carries the rate `R_p` the protocol must
+  sustain, `log₂(1 + u_p) = R_p`. From the data's margins `R_p = 6.04` (down), `4.31` (`e`), `3.61` (up)
+  bits. Test: derive `R_p` from the protocol's content and predict `u_p = 2^{R_p} − 1`. Not done; no
+  count is chosen to match.
+- *Map = codebook.* The persisting states are codewords on the three label states; `t` is cross-talk.
+  `LightPairTexture` says cross-talk squared equals the power (mass) ratio of the two codewords.
+- *The CKM is the transfer channel between two codebooks.* With PDG magnitudes and a uniform input,
+  it carries `I = 1.38` bits of the `log₂ 3 = 1.585` (loss `0.21` bits per transfer).
 
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
