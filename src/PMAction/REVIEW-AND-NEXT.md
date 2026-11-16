@@ -26,11 +26,11 @@ reading of `k/K` are choices that do not fix the data. Open, wire only:
   `CyclicSeesaw.crossing_isometry_iff` gives the exact equivalence); admittance versus rate for `k/K`
   (the equal-duration, first-transfer reading gives about `0.0385`); the vector rate `K_f ≪ |y|` as an allowed leakage
   (`LightLeakage.leakage_bound`, the allowed `L` not fixed).
-- **Colour and `β`.** A fixed `β` on the carrier-axis index (`NativeDetuning`, `CarrierWeyl.lookup c 0`)
-  pairs one colour axis with the reference and maps colour `1` to colour `3`, so it splits colour inside
-  a quark protocol, against `ReferenceStabilizer.colour_unbroken`. `β` needs a colour treatment (an
-  index commuting with colour, or the colour average) before any per-protocol on-site entry is read
-  from it.
+- **Colour and `β`.** Derive how the native update realizes chirality and colour together. On the
+  four carrier axes with fixed `ConcreteFermion.gamma`, a colour-permutation-invariant chirality
+  flip vanishes (`NativeDetuning.colour_invariant_flip_zero`). A separate spinor index would
+  allow colour to act independently; its identification in the substrate remains open.
+  Averaging a protocol readout over colour requires its own measurement rule.
 - **Physical price of the even complement.** Establish whether invisible-mode squared displacement
   carries a positive toll and the identity completion is admitted by the microscopic gates.
   Under those premises persistence selects identity (`CompletionSelection.most_persistent_in_family`).

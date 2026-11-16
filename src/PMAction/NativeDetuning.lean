@@ -104,4 +104,28 @@ theorem colour_crosses_iff : ∀ v : CarrierEvents.Carrier 0, CarrierEvents.vect
     (CarrierEvents.vector (CarrierWeyl.lookup 0 0 v) 0 ≠ 0 ↔ CarrierEvents.vector v 2 ≠ 0) := by
   decide +kernel
 
+/-- For fixed carrier-coordinate chirality, no nonzero chirality flip on
+these four coordinates is invariant under relabelling the three colour axes.
+In particular, averaging an axis flip cannot preserve both properties. -/
+theorem colour_invariant_flip_zero (B : ConcreteFermion.Spin)
+    (hflip : B * ConcreteFermion.gamma = -(ConcreteFermion.gamma * B))
+    (hcolour : ∀ a b : Fin 3, ∀ i j : Fin 4,
+      B (Equiv.swap a.succ b.succ i) (Equiv.swap a.succ b.succ j) = B i j) :
+    B = 0 := by
+  have zero_of_self_neg {z : ℂ} (h : z = -z) : z = 0 := by linear_combination h / 2
+  have same : ∀ i j : Fin 4, (i.val < 2 ↔ j.val < 2) → B i j = 0 := by
+    intro i j hij
+    have he := congrArg (fun M : ConcreteFermion.Spin => M i j) hflip
+    fin_cases i <;> fin_cases j
+    all_goals norm_num at hij
+    all_goals norm_num [ConcreteFermion.gamma, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_four] at he
+    all_goals first | exact zero_of_self_neg he | exact zero_of_self_neg he.symm
+  have cover : ∀ i j : Fin 4, ∃ a b : Fin 3,
+      ((Equiv.swap a.succ b.succ i).val < 2 ↔ (Equiv.swap a.succ b.succ j).val < 2) := by
+    decide +kernel
+  ext i j
+  obtain ⟨a, b, hab⟩ := cover i j
+  rw [← hcolour a b i j]
+  exact same _ _ hab
+
 end PMAction.NativeDetuning
