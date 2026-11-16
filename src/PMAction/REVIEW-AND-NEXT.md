@@ -195,6 +195,24 @@ that label is the only (protocol, label) slot whose `β` image is the reference 
   Next test: give the even complement the action induced by the reference's maintenance and compute
   the cross term per (protocol, label). Zero means the difference must come from how a protocol
   reads the wire, not from the wire.
+- **Cross-term test, analytic (2026-11).** Simplest antipode-odd term: a shift `ε |ref⟩⟨ref|` on the
+  reference carrier `+2e₀ = (odd₀ + even₀)/√2`. Its cross term `⟨odd|H|even⟩` is `ε/2` on axis `0` only:
+  first order for the lepton-axis partners (`ν` vs `e`). The colour axes get it only through a
+  transport to axis `0`: with the fixed `β` (`0 ↔ 2`, commuting with the antipode) at second order on
+  colour `2` only, colours `1`, `3` none. So with a fixed `β` the reference splits up from down on one
+  colour only, which unbroken colour forbids. A colour-symmetric transport (the average of the three
+  colour conjugates of `β`, each pairing one colour axis with `0`) gives all colours the same second-order
+  cross term, `1/3` of the fixed-`β` amplitude per colour. This is the "colour-averaged" reading
+  (`BetaReference`), which in the resonant-`K` model gives `m_c/m_t` at `2.7×`.
+- **Why the wire is odd (`FullCarrierIdentification`).** Carrier permutations fix the uniform mode,
+  which is even, and anticommuting generators cannot share a fixed mode
+  (`common_fixed_obstruction`, `no_full_permutation_clifford`). So the Dirac (Clifford) structure
+  lives only on the odd sector: the wire's fermion field is odd by structure, and the doublet sign,
+  carried by the odd/even combination of a single carrier, is not a property of a wire mode.
+  Reading: the up/down (and `ν`/`e`) difference belongs to the protocol layer, how a protocol's
+  carrier `(odd ± even)/√2` reads the shared wire, as PMFlavor already frames it (protocols over the
+  wire). Open: a protocol-layer readout whose result depends on the sign; it needs an even-sector
+  partner for the protocol's even half (the reference is the only antipode-odd candidate).
 - Checked and excluded: an on-site term on the reference wall's heavy row (`δ_F` at label `v`, the
   other natural placement) moves `m_c/m_t` only to `13×` at `δ_F = K` and disturbs the light pair.
 - Falsification: a derivation giving `δ` (or the averaged entry) for that slot retires the
