@@ -28,7 +28,11 @@ does pass the reference node. How many legs it uses is open:
   Fibonacci block (`WireLightSplit.golden_point`); the wire's two larger masses in ratio `φ² ≈ 2.618`;
 * one leg (a carrier moved onto or off the axis once, `PMFlavor.NodeElimination.one_leg`, weight `α`):
   `p₁ = 2 p_s`, `δ_O ≈ 2 k_f`; then `√s − 1/√s = 2`, `s = (1 + √2)² ≈ 5.83`.
-Both are candidates; the leg count of an on-site flip is the premise to derive. Testing either needs
+Both are candidates; the leg count of an on-site flip is the premise to derive. `beta_crossings`:
+a `β` event moves `4` of the `8` vector-class carriers across the axis (each once: one leg), and no
+spinor carrier (they touch the axis before and after). So for vector-class wall states the flip is a
+one-leg event on half the carriers, which favours the one-leg reading for those states; for
+spinor-class states the flip does not change axis contact at all. Testing either needs
 a protocol that reads the wire's masses (PMElementaryParticles).
 -/
 
@@ -69,6 +73,16 @@ theorem beta_swaps_axes : ∀ (c : Fin 3) (v : CarrierEvents.Carrier c),
     CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 2 = CarrierEvents.vector v 0 ∧
     CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 1 = CarrierEvents.vector v 3 ∧
     CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 3 = CarrierEvents.vector v 1 := by
+  decide +kernel
+
+/-- **Which carriers a `β` event moves across the reference axis.** For the vector class, `4` of the
+`8` carriers change between on-axis and off-axis (`±2e₀ ↔ ±2e₂`); for the two spinor classes none do
+(every spinor carrier has axis-`0` component `±1` before and after). -/
+theorem beta_crossings : ∀ c : Fin 3,
+    (Finset.univ.filter (fun v : CarrierEvents.Carrier c =>
+      decide (CarrierEvents.vector v 0 = 0) ≠
+        decide (CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 0 = 0))).card =
+      if c = 0 then 4 else 0 := by
   decide +kernel
 
 end PMAction.NativeDetuning
