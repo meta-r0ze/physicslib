@@ -46,7 +46,6 @@ change of variables `(k, k̄) ↦ (Q, rest-frame direction)` (or, for fixed `Q�
   `AmplitudeTrace` (external carrier states, mode weights, readout normalization).
 - **Radiative factor.** `MuonLifetimeCorrected` supplies the one-loop QED factor; derive it as the soft
   photon dressing of the charged daughter.
-- **Tau.** The electronic branching fraction is still an input (hadronic channels are PMHadrons').
 - **First-row deficit as leakage** (`0.0016 ± 0.0007`). Show on the substrate that the charged current
   reads only the light part of a state (`ChiralLightBand`), so the gapped part `z` of
   `PMAction.LightLeakage` is weight lost from the row; then evaluate it with the wall gap from

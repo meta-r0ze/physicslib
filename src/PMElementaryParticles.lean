@@ -69,3 +69,4 @@ import PMElementaryParticles.MassivePair
 import PMElementaryParticles.MassiveVolume
 import PMElementaryParticles.ElectronMeasure
 import PMElementaryParticles.NullBoost
+import PMElementaryParticles.TauBranching
