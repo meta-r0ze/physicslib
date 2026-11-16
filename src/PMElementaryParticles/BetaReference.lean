@@ -73,6 +73,15 @@ fixed `β` reaches the reference from one of the three up-protocol carriers only
 Which treatment of the Dirac pairing holds is to be derived, not chosen; the data favour the
 first. Numbers: corrected wire, `k = α/2`, masses at `M_Z`, `δ` fixed by `m_u/m_c`.
 
+**Per class through triality (`beta_frame_hada`, `beta_frame_hada_flip`).** Read in each class's
+protocol frame, `β` meets the reference carrier from: the up protocol in the vector class; the down
+protocol in the `hada ∘ flip` class; no protocol in the `hada` class (there it is
+`diag(1, −1, 1, −1)`, a weak-partner exchange on colours `1`, `3`). *Excluded:* the unified premise
+"a label whose `β` image is the reference gets entry `K`" also gives the down protocol's
+`hada ∘ flip` light label `K`; with `δ_d` fixed by `m_d/m_s` this predicts `m_s/m_b = 0.051` against
+`0.020` (`2.6×`; one `δ` on all labels gives `0.82×`). So the `K` entry, if real, is not "meets the
+reference" alone.
+
 **Excluded: protocol-wide exclusion blocking.** Carriers never share a slot
 (`CarrierStatistics.exclusion`), and the reference occupies its carrier. If `β` were blocked
 whenever its image is the reference's slot, averaged over the three colour carriers, then
@@ -121,5 +130,24 @@ theorem beta_involutive : ∀ v : V, beta (beta v) = v := by decide +kernel
 /-- `β` fixes no vector-class carrier: every carrier changes axis, so on the vector-class label
 `β` never maps a protocol's carrier to itself. -/
 theorem beta_fixes_none : ∀ v : V, beta v ≠ v := by decide +kernel
+
+/-- **`β` in the protocol frame of the other two classes.** A spinor-class label reads its protocol
+through triality (`PMSubstrate.ChannelSymmetry.class_to_vector`: `hada`, and `hada ∘ flip`).
+Conjugated by `hada` (`hadaMat/2`), `β` is `diag(1, −1, 1, −1)`: it keeps every axis, fixes the
+lepton axis and colour `2`, and exchanges the weak partners on colours `1` and `3`. -/
+theorem beta_frame_hada :
+    PMSubstrate.ChannelSymmetry.hadaMat * CarrierWeyl.realMatrix 0 *
+      PMSubstrate.ChannelSymmetry.hadaMat =
+      (4 : ℤ) • Matrix.diagonal ![1, -1, 1, -1] := by
+  ext i j; fin_cases i <;> fin_cases j <;> decide +kernel
+
+/-- Conjugated by `hada ∘ flip`, `β` pairs axes `0 ↔ 2` with a sign reversal and `1 ↔ 3` without:
+there the down protocol's colour-`2` carrier goes to the reference carrier `+2e₀`. -/
+theorem beta_frame_hada_flip :
+    PMSubstrate.ChannelSymmetry.hadaMat * Matrix.diagonal ![-1, 1, 1, 1] *
+      CarrierWeyl.realMatrix 0 * Matrix.diagonal ![-1, 1, 1, 1] *
+        PMSubstrate.ChannelSymmetry.hadaMat =
+      (4 : ℤ) • !![0, 0, -1, 0; 0, 0, 0, 1; -1, 0, 0, 0; 0, 1, 0, 0] := by
+  ext i j; fin_cases i <;> fin_cases j <;> decide +kernel
 
 end PMElementaryParticles.BetaReference
