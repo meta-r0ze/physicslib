@@ -345,4 +345,32 @@ theorem shell_integral (hb : 0 < b) (g : (Fin 3 → ℝ) → ℝ) :
   field_simp
   ring
 
+/-- A rest-frame leg of energy `M/2` in direction `(ν, φ)`. -/
+def restLeg (M ν φ : ℝ) : Fin 3 → ℝ :=
+  ![M / 2 * cos ν, M / 2 * sin ν * cos φ, M / 2 * sin ν * sin φ]
+
+/-- **The shell angles are the rest-frame angles**: `Ψ(E, ν, φ)` is the rest-frame leg of energy
+`M/2` in direction `(ν, φ)`, boosted along `e₀` with `γ = E/M`, `β = b/E` (`NullBoost.boost`). -/
+theorem Ψ_eq_boost (hb : 0 < b) {p : Fin 3 → ℝ} (hp : b < p 0) :
+    Ψ b p = boost (p 0 / Mb b (p 0)) (b / p 0) (restLeg (Mb b (p 0)) (p 1) (p 2)) := by
+  have hM := Mb_pos hb hp
+  have hE : 0 < p 0 := hb.trans hp
+  have hn : nrm (restLeg (Mb b (p 0)) (p 1) (p 2)) = Mb b (p 0) / 2 := by
+    have h1 := sin_sq_add_cos_sq (p 1); have h2 := sin_sq_add_cos_sq (p 2)
+    have hs : (Mb b (p 0) / 2 * cos (p 1)) ^ 2 + (Mb b (p 0) / 2 * sin (p 1) * cos (p 2)) ^ 2 +
+        (Mb b (p 0) / 2 * sin (p 1) * sin (p 2)) ^ 2 = (Mb b (p 0) / 2) ^ 2 := by
+      linear_combination (Mb b (p 0) / 2) ^ 2 * h1 + (Mb b (p 0) / 2) ^ 2 * sin (p 1) ^ 2 * h2
+    unfold nrm restLeg
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons,
+      Matrix.tail_cons]
+    rw [hs, Real.sqrt_sq (by positivity)]
+  funext i; fin_cases i
+  · simp only [Ψ, boost, Matrix.cons_val_zero, Fin.zero_eta, Fin.isValue]
+    rw [hn]
+    simp only [restLeg, Matrix.cons_val_zero]
+    field_simp
+    ring
+  · simp [Ψ, boost, restLeg]
+  · simp [Ψ, boost, restLeg]
+
 end PMElementaryParticles.PairShell

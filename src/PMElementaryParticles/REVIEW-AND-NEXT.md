@@ -89,7 +89,8 @@ average (the boost along `e₀` with `γ = E/M` maps the rest-frame pair to `Ψ`
   `AmplitudeTrace` (external carrier states, mode weights, readout normalization).
 - **Radiative factor.** `MuonLifetimeCorrected` supplies the one-loop QED factor; derive it as the soft
   photon dressing of the charged daughter.
-- **First-row deficit as leakage** (`0.0016 ± 0.0007`). Show on the substrate that the charged current
-  reads only the light part of a state (`ChiralLightBand`), so the gapped part `z` of
-  `PMAction.LightLeakage` is weight lost from the row; then evaluate it with the wall gap from
-  PMAction's wall evolution.
+- **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full
+  charged projector keeps a gapped component, so total gapped weight is not a row deficit; the row
+  needs the external-state and final-channel readout (PMAction REVIEW, native current to external
+  amplitude). `PMAction.WallGapCalibration`: the library admits every flip-to-gap ratio, so the size
+  waits on PMAction's crossing-to-flip calibration.
