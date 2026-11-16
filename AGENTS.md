@@ -86,6 +86,8 @@ Under the hood this is one Lake package with one `.lake` cache. The e8p binary i
   prediction ledger.
 - When adding or changing a theorem, update the relevant `OVERVIEW.md` and
   `REVIEW-AND-NEXT.md`.
+- The papers were early drafts, this lean is the source of truth and when a formal
+  proof find an error the papers will be updated to match the proofs derived here.
 - Run `./build.sh` on the appropriate change before finishing.
 
 ## Finding things
