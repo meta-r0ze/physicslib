@@ -28,6 +28,12 @@ does pass the reference node. How many legs it uses is open:
   Fibonacci block (`WireLightSplit.golden_point`); the wire's two larger masses in ratio `φ² ≈ 2.618`;
 * one leg (a carrier moved onto or off the axis once, `PMFlavor.NodeElimination.one_leg`, weight `α`):
   `p₁ = 2 p_s`, `δ_O ≈ 2 k_f`; then `√s − 1/√s = 2`, `s = (1 + √2)² ≈ 5.83`.
+Per protocol (`lepton_always_crosses`, `colour_crosses_iff`): every lepton-axis carrier crosses
+under `β`; a colour carrier crosses only on axis `2`. `β`'s pairing of axis `0` with axis `2` is the
+Dirac-basis choice; averaged over the three colour pairings a colour carrier crosses in `1/3` of
+them. So, if `δ_O` scales with the crossing fraction, `δ_O(lepton) = 3 δ_O(quark)`, and up and down
+get the same value (no source for the up/down split here). Candidate; the mass-product readings fail
+directly (PMElementaryParticles REVIEW).
 Both are candidates; the leg count of an on-site flip is the premise to derive. `beta_crossings`:
 a `β` event moves `4` of the `8` vector-class carriers across the axis (each once: one leg), and no
 spinor carrier (they touch the axis before and after). So for vector-class wall states the flip is a
@@ -83,6 +89,17 @@ theorem beta_crossings : ∀ c : Fin 3,
       decide (CarrierEvents.vector v 0 = 0) ≠
         decide (CarrierEvents.vector (CarrierWeyl.lookup c 0 v) 0 = 0))).card =
       if c = 0 then 4 else 0 := by
+  decide +kernel
+
+/-- **Per protocol (vector class).** A lepton-axis carrier (`±2e₀`, `ν`/`e`) always leaves the axis
+under `β`. -/
+theorem lepton_always_crosses : ∀ v : CarrierEvents.Carrier 0,
+    CarrierEvents.vector v 0 ≠ 0 → CarrierEvents.vector (CarrierWeyl.lookup 0 0 v) 0 = 0 := by
+  decide +kernel
+
+/-- **A colour carrier (`u`/`d`) reaches the axis under `β` exactly when it is on axis `2`.** -/
+theorem colour_crosses_iff : ∀ v : CarrierEvents.Carrier 0, CarrierEvents.vector v 0 = 0 →
+    (CarrierEvents.vector (CarrierWeyl.lookup 0 0 v) 0 ≠ 0 ↔ CarrierEvents.vector v 2 ≠ 0) := by
   decide +kernel
 
 end PMAction.NativeDetuning

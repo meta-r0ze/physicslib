@@ -81,6 +81,27 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   | Native `δ_O` as a `β`-event rate | `NativeDetuning` | `δ = −gap(p)/2`; `β` swaps axes `0 ↔ 2`, moving half the vector carriers across the node once | leg count open: golden (`δ_O = k_f`) or silver (`≈ 2k_f`) candidate |
   | Wire's own `U` as the persistence rotation | `U_uᴴ W U_d` with the wire's reference-wall `U` common to both protocols | `|V_ub| = 0.026–0.12` at every `δ_O` (PMFlavor REVIEW item 6) | excluded: `U` is protocol-level |
 
+- **Lazy or coherent `β` event (decides the mass formula).** `WallOffset`: the lazy reading of a
+  wall's `β` event (`NativeDetuning`, `RootTransferPhase`) leaves an energy `|δ_O|` on the other wall
+  only; the light masses become `≈ s²/|δ_O|` (squares of the wire's singular values), while a
+  coherent traceless rotation gives `s`. `U` is the same in both. Decide which the substrate's event
+  is: compress the full native generator onto the wire with the library's wall order, allowing one
+  global scalar, and see whether `c P_O` survives (no new premise). Recorded (direct readings, rough):
+  the squared reading's version of `WireLightSplit`'s relation, `√(m₂/m₁)(m₀/m₁)^{1/4}`, is `0.14`
+  (leptons), `0.58` (down), `0.14` (up), against `k/K = 0.0037` or `0.0385`: fails directly, like the
+  linear one.
+- **Leads from a review (2026-11), not yet run.** (B) `Machine.WalkReferenceCoupling.preparation_angle_forced`
+  forces a `β` pulse angle `π/4` for the pure-forward preparation of a wall-`1` seed; with
+  `RootTransferPhase.integer_tick_calibration` that gives `δ_O = −π/(4N)` per generator unit for an
+  event lasting `N` (lazy-transfer ticks count twice), `N` not fixed. (A) Native intertwining
+  (`CarrierWeyl.intertwining`, `OddCarrierPhase.phase_sector`) makes any mechanism using the same
+  word, preparation, time and readout give equal magnitudes for the two spinor classes; a wall
+  asymmetry must come from a different preparation, intermediate projector or timing on the two
+  walls (the stationary background is one). Compute a reference-conditioned leg response
+  (`Machine.ReferenceSampling.ref_flag`) on each wall before giving it a price.
+  (A/B) Repair-cost odds (`RootTransferAccounting.gibbsRate_formula`, `FactorRepair.repair_least`)
+  would relate attempt odds, not rates, if `β` and a carrier leg share the ensemble and cost unit.
+
 - **Update as `e^{−iHt}` on wall modes.** `PMAction.FlavourEvolution` takes the flavour evolution as
   `U e^{−iEt} Uᴴ` with supplied `U`, `E`, and the transfer-cost chain in PMFlavor
   (`ReferenceSelection` → `RelativeFrameCost` → `TransferWorkLaw`) is built on it.
