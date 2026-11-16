@@ -56,6 +56,7 @@ import PMSubstrate.MainTheorem
 import PMSubstrate.RequirementMap
 -- PM pillars and comparison with measurement
 import PMSubstrate.Pillars
+import PMSubstrate.MinimumMargin
 import PMSubstrate.Comparison
 import PMSubstrate.Address
 

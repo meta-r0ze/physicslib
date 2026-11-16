@@ -131,6 +131,19 @@ Quick counts: one sign bit (`1`), signs on both walls (`2`, `2.4σ` low), charge
 displacement squared (wrong ordering: up carries more charge than down yet needs less margin).
 None derived. Open: how the refresh's per-tick exchange of doublet positions costs a displaced
 protocol information, counted from `CarrierActions.weak` and the maintenance ledger.
+Run: against the reference, the refresh cannot tell the positions apart. It negates every carrier of
+its sector uniformly (`PMConstants.WeakUniform.refresh_uniform`), so every unit state has flag
+`‖φ − (−φ)‖²/4 = 1`, and every protocol state is orthogonal to the reference carrier. Excluded as the
+source of the doublet term.
+
+**The form of the minimum margin (2026-11).** The library's own pillar theorems fix it:
+`PMSubstrate.Pillars.map_maintains` (correction toward a retained reference with gain `k` keeps the
+deviation within `W/k` for disturbances `≤ W`) with `margin_iff` (Margin is distance to the non-viable
+set) give `PMSubstrate.MinimumMargin.persists_of_margin`: the minimum margin to persist is `W/k`. On
+the wire, with the spinor flip as the disturbance, `δ_O/k_f = 1/k`: the correction gains are `0.0155`
+(down), `0.053` (`e`), `0.089` (up). The question becomes what sets a protocol's correction gain.
+Quick checks: gain `∝ (Y_R/2)²` gives the ordering `e` > up > down (data: up > `e` > down); gain `∝ |Y_R|`
+gives `e/down = 3` (data `3.4`) but `up/down = 2` (data `5.8`). Neither fits.
 
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
