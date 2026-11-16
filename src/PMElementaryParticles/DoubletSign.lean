@@ -39,9 +39,11 @@ term, which is zero whenever `H` commutes with the antipode or the even sector i
 why every up/down source tried so far failed.
 
 **Where the sign can enter (both outside the current wire model).**
-1. *The reference.* It is one carrier, `+2e₀`, not its antipode (`CarrierParity.no_fixed_antipode`).
-   As a state it has an even component, and any operator involving it (its maintenance, a
-   projection onto it) need not commute with the antipode. This is the only antipode-odd object in
+1. *The reference, at the channel layer.* As a channel it is one carrier, `+2e₀`, not its antipode
+   (`CarrierParity.no_fixed_antipode`), with an even component; an operator involving that carrier
+   need not commute with the antipode. On the wire, though, the maintained reference is
+   `ChiralityConvention.physicalBackground`, which is odd and splits nothing
+   (`ProtocolReadout.odd_reference_no_split`). This is the only antipode-odd object in
    the setup. `BetaReference`: `β` carries axis `2` to the reference axis, so the reference's sign
    becomes up-versus-down on that axis.
 2. *The even complement.* If it carries action, the cross term `⟨odd|H|even⟩` is where the up/down

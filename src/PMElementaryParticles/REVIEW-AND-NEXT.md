@@ -28,17 +28,21 @@ with the antipode. So a readout that departs from the wire's spectrum needs a st
 odd/even block, and the only antipode-odd object is the reference carrier (`+2e₀`, vector class,
 lepton axis). The even complement's action matters only through such a step.
 
-**The reference hold** (`ReferenceHold`, OVERVIEW). Persistence of the reference compresses the
-cycle by `Q = 1 − |r⟩⟨r|`, the antipode-odd step. It scales the lepton protocols' heavy row by
-`1/√2` and leaves the colour axes alone. Lepton `m_μ/m_τ` moves from `0.028` to `0.038` (data
-`0.0595`); up is unchanged (`0.022` against `0.0037`). So the steps fixed today do not give the masses.
+**Which layer.** On the wire the maintained reference is `physicalBackground`, odd, and splits
+nothing (`ProtocolReadout.odd_reference_no_split`). The antipode-odd object is the channel-layer
+carrier `+2e₀`, kept by the payload ledger. `ReferenceHold` takes the channel-layer hold
+`Q = 1 − |r⟩⟨r|` and applies it to the wire's mass on the lepton heavy slot (heavy row `× 1/√2`):
+lepton `m_μ/m_τ` `0.028 → 0.038` (data `0.0595`), quarks unchanged. That application assumes the
+channel layer and the wire share the slot.
 
-**Next.** With the hold's odd/even block, the even complement's action enters the readout (the
-electron channel on the reference slot is `(o − e)/√2`). Derive that action (PMAction REVIEW, "Even
-complement"); the native words act on even modes as axis permutations, which mix protocols, so a
-protocol-diagonal even action needs another source. Then retest the six ratios with only `δ_O` per
-protocol. Until then e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared
-assignment (their e8p caveats say so).
+**Next.** Derive how the channel layer (payload ledger, one row per channel) couples to the wire's odd
+modes each tick; that coupling is the protocol readout. With it, the even complement's action enters
+through the electron channel `(o − e)/√2`. The native words act on even modes as axis permutations,
+which mix protocols, so a protocol-diagonal even action needs another source. Then retest the six
+ratios with only `δ_O` per protocol. Until then e8p's masses are the `QuarkMasses`/`LeptonMasses`
+tier ledgers, a declared assignment (their e8p caveats say so). The tier ladder (`TierLedger`,
+`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is the same open question in the paper's
+form: placing each protocol's three label states is reading its masses.
 
 **Constraints any readout must meet (Lean).**
 - `DoubletReflection.flip_doublet`, `flip_keeps_reference_axis`: an observable invariant under the
@@ -87,11 +91,8 @@ integrable test function, not only from degree-≤2 moments.
 
 ## Other open work
 
-- **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`): derive the
-  placement of each protocol's three label states.
 - Connect the charged-current operator to the contact vertex in `AmplitudeTrace` (external carrier
   states, mode weights, readout normalization).
-- Physical tick calibration for `DecayLaw`.
 - Radiative factor: `MuonLifetimeCorrected` supplies the one-loop QED factor; deriving it (the soft
   photon dressing of the charged daughter) is open.
 - The finite-channel replacement for the muon continuum phase space; the tau's electronic branching

@@ -18,8 +18,17 @@ channel's carrier state. (Unnormalized below: `o ± e`; divide by `2` for unit s
 * `reference_reading`: adding `ε |r⟩⟨r|` to an operator with no cross term makes the partners differ
   by `4ε ⟨o|r⟩⟨r|e⟩`.
 
-**Applied to the reference** (`r` = the reference carrier `+2e₀ = (o₀ + e₀)/√2`, the only
-antipode-odd object, `DoubletSign`):
+**Which reference (correction, 2026-11).** On the wire the maintained reference is
+`ChiralityConvention.physicalBackground`, a vector of the wire's sites: it lies in the odd sector
+and has no even component. So maintenance acting on the wire splits no partners
+(`odd_reference_no_split`). The analysis below needs maintenance at the *channel* layer, where the
+reference is one carrier `+2e₀` with an even half. The library's channel-layer maintenance is the
+payload ledger (`RefreshMap.payload_visit`: one row per channel, so it addresses weak partners
+separately; `GaugeLedgers`: hypercharge reads every channel's payload, colour the coloured ones,
+all at the same weight `η`). Premise for what follows: the reference's maintenance acts on its
+carrier at the channel layer.
+
+**Applied to the channel-layer reference** (`r` = the reference carrier `+2e₀ = (o₀ + e₀)/√2`):
 * lepton axis (`o = o₀`, `e = e₀`): `⟨o₀|r⟩ ⟨r|e₀⟩ ≠ 0`, so `ν` and `e` read differently at first order;
 * colour axis `i ≠ 0`: `o_i`, `e_i` are orthogonal to `r`, so up and down read the same at first
   order. Their difference needs an operator that carries axis `i` to axis `0` (the native `β`, at
@@ -66,5 +75,12 @@ theorem reference_reading (H₀ : Matrix n n ℝ) (ε : ℝ) (r o e : n → ℝ)
     smul_eq_mul, zero_add]
   rw [dotProduct_comm e r, dotProduct_comm r o]
   ring
+
+/-- A maintained state with no even component (`⟨r|e⟩ = 0`) does not split the partners. -/
+theorem odd_reference_no_split (H₀ : Matrix n n ℝ) (ε : ℝ) (r o e : n → ℝ)
+    (h₁ : o ⬝ᵥ (H₀ *ᵥ e) = 0) (h₂ : e ⬝ᵥ (H₀ *ᵥ o) = 0) (hr : r ⬝ᵥ e = 0) :
+    (o + e) ⬝ᵥ ((H₀ + ε • vecMulVec r r) *ᵥ (o + e)) -
+        (o - e) ⬝ᵥ ((H₀ + ε • vecMulVec r r) *ᵥ (o - e)) = 0 := by
+  rw [reference_reading H₀ ε r o e h₁ h₂, hr, mul_zero]
 
 end PMElementaryParticles.ProtocolReadout

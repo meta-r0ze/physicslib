@@ -1,5 +1,6 @@
 import PMElementaryParticles.Survival
 import PMSubstrate.NetCost
+import PMSubstrate.E8Values
 import PersistenceMechanics.DecayChannel
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 
@@ -73,7 +74,21 @@ Governor (`χ/Δ` per slot, `PMSubstrate.ImpedanceTerms.governor_baseline`) and 
 (`PMSubstrate.uniform_toll`). Its per-slot lifetime is `1/rate`; the physical lifetime is
 `tick · (1/rate)`. The only remaining input is the tick `Δ` — the E8 clock period `Δ = 43`
 (`PMAtoms.E8Tick.e8Tick_eq`) and its SI value (a unit anchor,
-`tools/e8p/E8PConstants/PMAtoms/E8TickUnit`). -/
+`tools/e8p/E8PConstants/PMAtoms/E8TickUnit`).
+
+**Calibration.** A width `Γ` in `m_e` units (the Fermi widths of `MuonLifetime`, `TauE8`) fixes the
+per-tick cost: on the E8 tick `Δ = 43` the open channel costs `β c = Γ Δ` per tick, and survival
+after `n` ticks is exactly `exp(−Γ · nΔ)` (`substrate_ticks`). The tick is the substrate's own period,
+not a separate input; seconds enter only through the unit anchor `ħ/(m_e c²)`. -/
+
+/-- **Survival on the E8 clock.** A channel of width `Γ` (in `m_e` units) costs `Γ Δ` per tick, and
+its survival after `n` ticks is the exponential law at time `n Δ`. -/
+theorem substrate_ticks (Γ : ℝ) (n : ℕ) :
+    ∏ _i : Fin n, Real.exp (-1 * (Γ * (PMSubstrate.E8Values.Delta : ℝ))) =
+      Survival.survive Γ (n * (PMSubstrate.E8Values.Delta : ℝ)) := by
+  rw [ticks_exact, Survival.survive]
+  congr 1
+  ring
 
 /-- The per-slot hazard is exactly the six-pillar channel rate. -/
 theorem rate_eq_pillars (β : ℝ) (c : PersistenceMechanics.Decay.DecayChannel) :

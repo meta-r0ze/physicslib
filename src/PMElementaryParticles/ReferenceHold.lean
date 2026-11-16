@@ -9,13 +9,17 @@ import Mathlib.LinearAlgebra.Matrix.Notation
 odd/even block, and the only antipode-odd object is the reference carrier `r = +2e₀` (vector
 class, lepton axis, reference wall). Here is the step persistence forces.
 
-**Premise (persistence of the reference).** The reference persists: it is held as a fixed record
-every tick. Amplitude moved into or out of `r` would change the reference, so the dynamics of
-everything else acts on the complement of `r`: the cycle is compressed by `Q = 1 − |r⟩⟨r|`.
+**Layer (correction, 2026-11).** Two objects are called "the reference". On the wire it is
+`ChiralityConvention.physicalBackground`, a spinor zero mode in the odd sector: holding it commutes
+with the antipode and splits nothing (`ProtocolReadout.odd_reference_no_split`). At the channel
+layer it is the carrier `r = +2e₀`, with an even half. The hold below is the channel-layer one: the
+payload ledger keeps `r` (`RefreshMap.payload_visit`), so channel dynamics act on its complement,
+`Q = 1 − |r⟩⟨r|`. Applying it to the wire's mass, as in the test below, assumes the channel-layer
+hold acts on the same slot as the wire's odd mode; how the channel layer and the wire couple is the
+open step (PMElementaryParticles REVIEW).
 
-On the reference's slot (lepton axis, heavy label, reference wall) the doublet space is
-`span {o, e}` (odd wire mode, even complement), `r = (o + e)/√2`, and the electron channel is
-`c = (o − e)/√2 = S r` (`S` the antipode).
+On the reference's slot (lepton axis, heavy label) the doublet space is `span {o, e}`,
+`r = (o + e)/√2`, and the electron channel is `c = (o − e)/√2 = S r` (`S` the antipode).
 
 * `hold_not_commute`: `Q` does not commute with the antipode `S = diag(−1, 1)`: it is the
   antipode-odd step `CycleReadout` requires.
@@ -25,7 +29,7 @@ On the reference's slot (lepton axis, heavy label, reference wall) the doublet s
   wire's mass is `diag(1/√2, 1, 1) · M` (rows are the reference wall). The neutral protocol's
   heavy-label channel on the reference wall is `r` itself and is not available to it.
 
-**Test (numerical, `δ_O` complex per protocol, `K = 1`, `k = α/2`).** Without the hold the lepton
+**Test, under that assumption (numerical, `δ_O` complex per protocol, `K = 1`, `k = α/2`).** Without the hold the lepton
 protocol's best `(m_e/m_μ, m_μ/m_τ)` is `(0.0059, 0.028)`; with the hold `(0.0053, 0.038)`, against
 `(0.00484, 0.0595)`. The hold moves the second ratio the right way but does not reach the data. The
 colour axes carry no reference, so the up and down protocols are unchanged (up `m_c/m_t`: `0.022`
