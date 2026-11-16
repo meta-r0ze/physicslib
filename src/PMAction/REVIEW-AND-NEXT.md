@@ -86,7 +86,13 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   only; the light masses become `≈ s²/|δ_O|` (squares of the wire's singular values), while a
   coherent traceless rotation gives `s`. `U` is the same in both. Decide which the substrate's event
   is: compress the full native generator onto the wire with the library's wall order, allowing one
-  global scalar, and see whether `c P_O` survives (no new premise). Recorded (direct readings, rough):
+  global scalar, and see whether `c P_O` survives (no new premise). Checked (2026-11): not decidable
+  in the library. The native wall model (`StateIdentification.NativeSector.diag`,
+  `NativeFlavourWall`) takes `δ β` as an input, the coherent form; `RootTransferPhase.quarter_pulse`
+  keeps the lazy transfer's scalar phase; the reference preparation pulse
+  (`Machine.WalkReferenceCoupling.preparation`) is a coherent `β` rotation. Whether a wall's `β`
+  event carries a wall-local scalar phase is a premise to state, with the squared versus linear
+  mass formula as its test. Recorded (direct readings, rough):
   the squared reading's version of `WireLightSplit`'s relation, `√(m₂/m₁)(m₀/m₁)^{1/4}`, is `0.14`
   (leptons), `0.58` (down), `0.14` (up), against `k/K = 0.0037` or `0.0385`: fails directly, like the
   linear one.
@@ -101,6 +107,9 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   (`Machine.ReferenceSampling.ref_flag`) on each wall before giving it a price.
   (A/B) Repair-cost odds (`RootTransferAccounting.gibbsRate_formula`, `FactorRepair.repair_least`)
   would relate attempt odds, not rates, if `β` and a carrier leg share the ensemble and cost unit.
+  Run (A): `ReferenceLegSymmetry.flag_conj`: a reference-fixing unitary leaves the leg flag
+  unchanged, and a colour reflection fixes the reference and exchanges `s`, `c`; so
+  reference-readout leg prices give no `s/c` magnitude asymmetry. Excluded.
 
 - **Update as `e^{−iHt}` on wall modes.** `PMAction.FlavourEvolution` takes the flavour evolution as
   `U e^{−iEt} Uᴴ` with supplied `U`, `E`, and the transfer-cost chain in PMFlavor
