@@ -111,10 +111,15 @@ the measure, not only of degree-≤2 moments.
   - the masses change per protocol through the same entries and through `det = d₀d₁d₂(δ³ + Π κ)`;
   - the cycle product `Π κ` carries `e^{3 i Y_R θ₀}`: a non-flat phase, different for up and down,
     the CP phase's candidate source (PMFlavor item 5).
-  One angle `θ₀` for the up/down split, the 2–3 rotations and the CP phase. Tests: fix `θ₀` from one
-  readout and predict the others; derive `θ₀` from the hypercharge refresh (`RequirementRows`:
-  hypercharge refreshes the spatial rows) or show the phase per event is not fixed (then the lead
-  is a parametrization, not a derivation).
+  **Checked the same day; the `U` and mass parts are withdrawn.** Per-carrier phases are removed by
+  rephasing the label states (rows and columns by the same phases keep `δ · 1`); only the cycle
+  phase `Φ = arg(κ₀κ₁κ₂) − 3 arg δ` is physical, here `Φ = 3 Y_R θ₀`. The `cos(Y_R θ₀)` scaling above
+  was not rephasing-invariant. Numerically, `Φ` moves `|U|` by under `1%` and the two larger masses
+  not at all (`δ_O/k = 1, 3, 10`); it moves only the lightest mass (through
+  `det = d₀d₁d₂(δ³ + Πκ)`, up to `40%` at `δ_O/k = 10`). So it cannot give the up-dominant 2–3 rotation.
+  It stays a candidate for the CP phase only, and needs a non-flat holonomy around the label cycle,
+  which persistence disfavours without a source (`PMAction.FlatPersistence`); the only charged
+  stationary object is the reference background (lepton doublet, `PMConstants.ReferenceCharge`).
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
