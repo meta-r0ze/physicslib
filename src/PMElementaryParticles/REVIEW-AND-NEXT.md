@@ -81,6 +81,9 @@ the measure, not only of degree-≤2 moments.
     `|V_cb|/|V_ub| = 10.7 ± 0.6` (FC, `U ≈ 1`) reads `r_O ≈ 0.093`, `δ_O ≈ 0.91` (hop units): one number
     from the CKM, to be tested against the light-pair split, the up/down split and the leakage bound
     (`δ_O` near the hop scale is where `PMAction.LightLeakage` starts to bite).
+    **Excluded** (`PMAction.WilsonPointForced`): the split update's neighbour coefficient
+    `(r/2)β + (i/2)αⱼ` squares to `(r² − 1)/4`, so exact local unitarity forces `|r| = 1` on every wall
+    it updates. A wall-dependent `r_O` needs the other wall to be updated by a different construction.
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
