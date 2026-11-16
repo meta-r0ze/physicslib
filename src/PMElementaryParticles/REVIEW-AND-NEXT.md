@@ -66,6 +66,11 @@ at which two states count as distinct persisting states. Instant fails: a common
 split reaching orthogonality within the maintenance cycle (Toll's Margolus–Levitin bound,
 `ΔE · T ≥ π/2`, with `T` the clock period); the split exceeding the protocol's own disturbance (its
 carrier coupling to the third state). Each needs the protocol's time or disturbance scale.
+Tried: "smallest `δ_O` keeping each persisting state mostly one label" (minimize the largest
+off-diagonal `|U|`): best at `δ_O ≈ k_f` (`0.004`), the same for every protocol, with heavy/middle
+`≈ 1.4`: no hierarchy and no protocol dependence. Excluded. The data's margins are large
+(`δ_O/k_f = 11`–`65`), where the heavy/middle ratio is `≈ δ_O/k_f`; so the threshold is set by a
+requirement that the heaviest state stand clear of the other two, scaled per protocol.
 
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
