@@ -8,7 +8,9 @@ import E8PConstants.Summary
 open E8PConstants
 
 private def usage : String :=
-  "Usage: e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--periodic-table]\n" ++
+  "Usage: e8p            every report below, in order (values, audit, summary, nuclear, shells, masses, periodic table)\n" ++
+  "       e8p --values   the value list only (the other filters below also select one report)\n" ++
+  "       e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--periodic-table]\n" ++
   "  --paper=N     only values derived in Paper N (0 = substrate invariants)\n" ++
   "  --only=IDS    comma-separated ids (e.g. --only=wolf_rho,omega_ratio)\n" ++
   "  --json        machine-readable report (schema pm.e8p.v1)\n" ++
@@ -33,6 +35,7 @@ structure Opts where
   nuclear : Bool := false
   shells : Bool := false
   summary : Bool := false
+  values : Bool := false
   certified : Bool := false
   certifiedNuc : Option (Nat × Nat) := none
   paper : Option Nat := none
@@ -55,6 +58,7 @@ private def parse : List String → Except String Opts
   | "--nuclear" :: rest => do let o ← parse rest; .ok { o with nuclear := true }
   | "--shells" :: rest => do let o ← parse rest; .ok { o with shells := true }
   | "--summary" :: rest => do let o ← parse rest; .ok { o with summary := true }
+  | "--values" :: rest => do let o ← parse rest; .ok { o with values := true }
   | "--certified" :: rest => do let o ← parse rest; .ok { o with certified := true }
   | "--masses" :: rest => do let o ← parse rest; .ok { o with certified := true }
   | "--periodic-table" :: n :: rest =>
@@ -165,6 +169,19 @@ private def derivation (rest : List String) : IO UInt32 := do
     args := #["env", "lean", "--run", "tools/e8p/Derivation.lean"] ++ rest.toArray }
   child.wait
 
+/-- Plain `e8p`: every report, each under a heading, so one checked-in file holds everything. -/
+private def printAll : IO Unit := do
+  let out ← IO.getStdout
+  let o : Opts := {}
+  let head (t : String) : IO Unit := out.putStrLn s!"\n==================== {t} ====================\n"
+  head "Values"; printText keys o
+  head "Audit (e8p --audit)"; printAudit keys o
+  head "Summary (e8p --summary)"; for l in Summary.summaryLines do out.putStrLn l
+  head "Nuclear graph (e8p --nuclear)"; for l in nuclearTable do out.putStrLn l
+  head "Shells (e8p --shells)"; for l in Shells.shellsTable do out.putStrLn l
+  head "Nuclear masses (e8p --masses)"; for l in certifiedTable 20 do out.putStrLn l
+  head "Periodic table (e8p --periodic-table 20)"; for l in periodicTable 20 do out.putStrLn l
+
 def main (args : List String) : IO UInt32 := do
   if let some a := args.head? then
     if a == "--derivation" then return ← derivation args.tail
@@ -172,6 +189,9 @@ def main (args : List String) : IO UInt32 := do
       return ← derivation ((a.drop 13).toString :: args.tail)
   if args == ["--help"] || args == ["-h"] then
     (← IO.getStdout).putStr usage
+    return 0
+  if args.isEmpty then
+    printAll
     return 0
   match parse args with
   | .error e =>

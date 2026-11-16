@@ -10,6 +10,9 @@ Binary: **`e8p`** (E8-Persistence). Directory: `e8p`.
 ## Usage
 
 ```
+e8p            (no options) every report in one output: values, audit, summary, nuclear,
+               shells, masses, periodic table; check this in to keep everything
+e8p --values   the value list alone
 e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--periodic-table [N]] [--nuclear] [--shells] [--summary] [--masses[=Z,N]]
 
   --paper=N     only values derived in Paper N (0 = substrate invariants)
@@ -30,7 +33,8 @@ e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--per
 
 Examples:
 ```
-e8p                          # grouped, friendly detail: formula, value, theorem, exp, diff, σ
+e8p                          # everything: values, audit, summary, nuclear, shells, masses, periodic table
+e8p --values                 # grouped, friendly detail: formula, value, theorem, exp, diff, σ
 e8p --paper=0                # the five substrate invariants Δ, ν, σ, χ, D
 e8p --paper=5                # elementary particles + atoms
 e8p --audit                  # per-value σ with ✓ / ~ / ! status, grouped by paper

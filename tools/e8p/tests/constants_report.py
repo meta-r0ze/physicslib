@@ -144,7 +144,9 @@ def main():
     assert by_id["hubble_late"]["inputs"] == ["h0_anchor"]
     assert by_id["clustering_late"]["inputs"] == ["s8_anchor"]
 
-    human = run(binary).stdout
+    human = run(binary, "--values").stdout
+    everything = run(binary).stdout
+    assert "comparisons over" in everything and "Periodic table" in everything and "Shells" in everything
     assert "Substrate" in human and "Constants" in human and "Atoms" in human
     assert "Paper 1" not in human
     for key in EXPECTED:
