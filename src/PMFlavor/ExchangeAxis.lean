@@ -2,6 +2,14 @@ import PMConstants.CarrierRepresentation
 import PMAction.GenerationLabel
 
 /-!
+**Status (2026-11).** The axis-`0` test here is `LeptonAxisRestriction`'s channel-type rule, which
+belongs to the protocol register (the 16-carrier packet). Applying it to generation-carrier
+displacements on the wire assumes the wire carriers' axis `0` is the protocols' lepton axis; the wire's
+axes are its spinor components and protocol identity is a separate register
+(PMElementaryParticles `DoubletSign`, `PMAction.ColourRegister`). So `vector_free`, `vector_touch`,
+`spinor_touch`, `cospinor_touch` and `one_pair_through` stand as carrier counts, but the in-cycle/node
+split of generation transfers is a premise, not derived (PMFlavor REVIEW).
+
 # Which exchange classes avoid the reference axis
 
 `GenerationLabel`: root moves conserve the generation label, so generations mix only by a

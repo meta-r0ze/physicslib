@@ -9,6 +9,14 @@ wire (PMAction) and the protocols (PMElementaryParticles). Every number comes fr
 narrowly stated premise; data are only the final test (e8p). Do not fit integers or parameters to
 data, and do not frame work as fitting Standard Model sectors.
 
+**Node routing (first, 2026-11).** Which generation transfers stay in the maintenance cycle and which
+cross the reference node was derived by applying the protocols' lepton-axis rule to wire-carrier
+displacements (`ExchangeAxis`, `TransferGraph.inCycle_iff`). The wire's axes are spinor components and
+protocol identity is a separate register (PMElementaryParticles OVERVIEW, "Protocols are not wire
+modes"), so that routing is now a premise. The node entries below (`|V_cb|`, `s₁₃`, the one-leg reactor
+angle) rest on it. Re-derive the routing from how a generation change on the wire couples to the
+protocol register, or keep it as a named premise.
+
 **Status of each entry of `J`** (e8p readout names in brackets).
 
 | Label change | Off the axis | On the axis |

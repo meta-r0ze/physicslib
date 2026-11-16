@@ -3,6 +3,10 @@ import PMAction.MassInsertion
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 
 /-!
+**Status (2026-11).** This module reads wire carriers' axis `0` as the reference (lepton) axis and as
+time; the lepton-axis reading on the wire is withdrawn (`ExchangeAxis` status). The counts stand as
+carrier facts.
+
 # Where in the tick an insertion sits does not change its light-mode element
 
 `MassInsertion` needs class-dependent diagonal masses; `PMAction.ZeroModeCoupling` locates a direct

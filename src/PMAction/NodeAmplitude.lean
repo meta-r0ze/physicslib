@@ -2,6 +2,12 @@ import PMAction.KronReduction
 import PMAction.ReferenceWallMass
 
 /-!
+**Status (2026-11).** The in-cycle/node split used below (`ExchangeAxis.vector_free`, `spinor_touch`)
+applies the protocols' lepton-axis rule to wire carriers. The wire's axes are its spinor components
+and protocol identity is a separate register (`ColourRegister`; PMFlavor `ExchangeAxis` status), so
+the split, and with it `k/K = α/2`, is a premise until re-derived for the wire (PMAction REVIEW). The
+series arithmetic (`node_series`, `node_kron`) stands.
+
 # The node amplitude: a spinor-class carrier is `α/2` of the vector edge
 
 `ReferenceWallMass`: every charged sector's light mass is `D_R (δ_O + cyc κ_O)`, and the light

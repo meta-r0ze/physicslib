@@ -58,8 +58,8 @@ tests hold for `ε ≲ 0.04`.
 
 **Three transfers, three types (`TransferGraph`).** Each pair of label states transfers through the
 one class both contain (`ends`, `every_pair`). Exactly the transfer through the reference's class
-stays inside the maintenance cycle (`inCycle_iff`, from `ExchangeAxis.vector_free`, `spinor_ne`); the
-other two cross the reference node by two legs each, and their classes sit on opposite walls of label
+stays inside the maintenance cycle (`inCycle_iff`, from `ExchangeAxis.vector_free`, `spinor_ne`; since
+2026-11 a premise, see REVIEW "Node routing"); the other two cross the reference node by two legs each, and their classes sit on opposite walls of label
 state `0` (`node_walls_opposite`, `swap_flips_wall`). A current coupled to one wall separates all
 three (`three_types`); a wall-symmetric probe sees two (`two_types_blind`). So the three transfer
 types rest on the charged current's one-wall coupling. Mode assignment (candidate, `mode`):
@@ -340,7 +340,7 @@ to `sign(sin δ)`, so the CP branch is a separate substrate-orientation input.
 **Where the mixing comes from.** `GenerationLabel`: `E₈` roots conserve the generation label, so a
 generation change needs a single-wall carrier move of the class two generations share (a glue-label
 operation; identifying it with the charged current is open). `ExchangeAxis`: only the pair
-mixing through the reference's class mixes inside the cycle; the other two cross the reference
+mixing through the reference's class mixes inside the cycle (a premise since 2026-11, REVIEW "Node routing"); the other two cross the reference
 node. `ExchangeChirality`: their `s`/`c` split is the charged current's parity violation.
 `NodeElimination`: the quark node-crossing mixings are amplitudes `∝ α` (two legs), a
 lepton-axis state's mixing a probability `∝ α` (one leg; the reactor angle). The data-based

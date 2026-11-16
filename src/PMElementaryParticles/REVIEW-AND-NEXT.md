@@ -5,7 +5,8 @@ is PMAction's; label changes are PMFlavor's.
 
 ## The protocol readout (first)
 
-The results so far are in OVERVIEW ("Protocol readout"): the wire's flip sits on the cycle resonance
+The wire inputs `K = 1`, `k = α/2` are a premise since the 2026-11 correction (PMAction REVIEW,
+"Carrier admittances"); the numbers below use them. The results so far are in OVERVIEW ("Protocol readout"): the wire's flip sits on the cycle resonance
 (`PMAction.OtherWallStationary`), where the wire gives `m₂/m₃ ≈ 0.023` for every protocol, and the
 data need one weight `w` on the heavy label per protocol, `w_e : w_d : w_u ≈ 1 : 3 : 16–18`. Until the
 readout is derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers (declared; their
