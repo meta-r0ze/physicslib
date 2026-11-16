@@ -78,6 +78,14 @@ data, and do not frame work as fitting Standard Model sectors.
    the PDG sizes (as in item 1) need `Φ = 70 ± 5°`; a flat holonomy gives `|V_td| = 0.0053` or `0.0130`
    against `0.0086 ± 0.0002`, excluded (recorded). So with FC either the cycle carries a non-flat
    holonomy or `U ≠ 1` supplies the phase (item 6; `U ≈ 1` needs `ε ≲ 0.04`).
+   **Per-protocol cycle phase (2026-11, corrected wire, numerical).** A common label-cycle phase `Φ`
+   for up and down gives `|V_us| = θ_d − θ_u = 0.178`; a relative `Φ_d − Φ_u = ±90°` gives `0.2218`
+   (data `0.2243`). So the Cabibbo combination asks for a quarter turn between the two protocols'
+   cycle phases (compare `CPQuarterTurn`). Candidate source: a phase proportional to the right-handed
+   hypercharge on the other wall's carriers, `Φ_p = 3 Y_R θ₀`, gives `Φ_u − Φ_d = 6θ₀` (`Y_R`: `4/3`,
+   `−2/3`); `θ₀ = 15°` for the quarter turn. Prediction with no further number: leptons have the same
+   `Y_R` difference (`ν` `0`, `e` `−2`), so `Φ_ν − Φ_e` is also `90°`. Open: a source for `θ₀` (the
+   hypercharge holonomy needs one, `PMAction.FlatPersistence`), and the neutrino-side `U` to test it.
    E8 candidates for a phase, and their status (all from structure already in the library):
    - `0` or `π`: glue arithmetic (the three classes are a neutral triple,
      `PMSubstrate.E8Invariants.neutral_distinct_classes`, so the cycle carries no net glue) and the

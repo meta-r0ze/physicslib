@@ -94,6 +94,11 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
     PMElementaryParticles) must be redone with the matching one before they are relied on.
   Next: restate `UndetunedWall`'s bookkeeping with the class at `(h + 1, h)` derived from
   `GenerationCurrent`, then redo `WireLightSplit` and the dependent numerics.
+- **Lazy or coherent `β` event: the data favour coherent (2026-11).** With the corrected bookkeeping,
+  the squared (lazy, wall-offset) reading breaks the GST relation (`tan θ₁₂ = 0.43` for down against
+  `√(m_d/m_s) = 0.224`) and misses the second ratios by `100×` or more; the linear (coherent) reading
+  keeps GST and lands down and leptons within `10%`. So a wall's `β` event acts as a coherent
+  rotation (no wall-local scalar phase); `NativeDetuning`'s lazy identification is disfavoured.
 - **Lazy or coherent `β` event (decides the mass formula).** `WallOffset`: the lazy reading of a
   wall's `β` event (`NativeDetuning`, `RootTransferPhase`) leaves an energy `|δ_O|` on the other wall
   only; the light masses become `≈ s²/|δ_O|` (squares of the wire's singular values), while a
