@@ -325,3 +325,38 @@ Codex proposed eight tests of the six-pillar reading. Results, on the corrected 
 - *Lepton universality.* Gains live in the mass form, not the CC vertex, so universality
   (`≈ 1.4·10⁻³` in coupling) passes and constrains nothing here. Inclusive widths
   (`InclusiveWidth.pmns_muon_width`) are blind to the Map.
+
+### Second ratios at one scale, and the up heavy label (2026-11, numerical)
+
+Inputs: quark `MS-bar` masses run to `M_Z` (PDG → `M_Z`: `m_u 1.29`, `m_d 2.80`, `m_s 55.7` MeV;
+`m_c 0.629`, `m_b 2.794`, `m_t 169` GeV); leptons run to `M_Z` with `η_e 1.046`, `η_μ 1.027`,
+`η_τ 1.0167`. Fix `u` by the first ratio, predict the second (`k = α/2`, `α = 1/137.036`):
+
+| Protocol | `m₁/m₂` | `u` | predicted `m₂/m₃` | data `m₂/m₃` | pred/data |
+|---|---|---|---|---|---|
+| down | 0.0503 | 64.7 | 0.0163 | 0.0199 | 0.82 |
+| e (`M_Z`) | 0.00475 | 18.6 | 0.0540 | 0.0589 | 0.92 |
+| up | 0.00205 | 11.5 | 0.0871 | 0.00372 | 23.4 |
+
+At leading order this is parameter-free: the light pair has masses `kδ/t`, `kδt` (`LightPairTexture`)
+and the heavy label `δ` (`K = 1`), so `m₁m₂/m₃² = k²` (exact form: `m₁m₂m₃ = k²|δ³ + k²|`,
+`ReferenceWallRotation.det_M`). Data `√(m₁m₂)/m₃ / k`: down `1.22`, `e` `1.11`, up `0.046`. The up
+miss is `23×` at one scale, not `12×`; the earlier `0.0074` mixed `m_c(m_c)` with the top pole mass.
+No single `u` fixes it: `m₂/m₃ = 0.0037` needs `u ≈ 6900`, where `m₁/m₂ → 0.96`.
+
+**Candidate (new premise): the up protocol's heavy label sits at the undetuned scale `K`.** Keep the
+light-pair detuning `δ` and set the heavy on-site entry to `K` instead of `Kδ`
+(`X = diag(1, δ, δ) + cyc(k, 1, k)`). Then `m₂/m₃ = k/(1 − t²)`, with `t = √(m₁/m₂)`:
+- `m_c/m_t` predicted `0.00366` against `0.00372 ± 2 %` (`0.98×`). This needs no `u`: it is `α/2` at
+  leading order. With `α(M_Z)` instead, `0.0039` (`1.05×`); which `α` is a separate question.
+- With the down wire unchanged and a quarter turn on label 1 or 2, `|V_us| = 0.2228` (data `0.2243`,
+  `0.7 %` low; was `0.2219`). `|V_cb|` stays `6·10⁻⁵`, so 2c (the `×10.7`) still sits in `J`.
+- The same premise for down or `e` fails: `m₂/m₃ → k = 0.0037` against `0.020`, `0.059`.
+Status: a candidate, chosen after the `δ` reading failed for up (two readings tried, so a
+look-elsewhere factor of about 2). It needs a wire reason why up's heavy label carries no detuning
+while down's and `e`'s do. Leads: up is the protocol that shares the reference's doublet position
+(the reference is the undetuned wall, `δ_R = 0`); the top Yukawa coupling is close to 1. Test: derive
+the heavy on-site entry per protocol from the wall structure. A derivation that gives `δ` for all
+three protocols retires the candidate.
+
+Remaining down/`e` residuals: the heavy mass would have to be `0.82 δ` (down) and `0.92 δ` (`e`).

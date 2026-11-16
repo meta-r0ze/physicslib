@@ -195,7 +195,8 @@ item 1, 2, 5 numerics with the corrected `U`.
 - Per protocol, fixing `δ_O` by the lightest ratio: down `u = δ_O/k_f = 64.6`, `sin θ₁₂ = 0.218`
   (`tan θ₁₂ = t = 0.224`, the GST value; earlier drafts labelled the sine as the tangent), predicted `m_s/m_b = 0.0163` (data `0.0185`); charged leptons `u = 18.8`,
   `sin θ₁₂ = 0.068` (`0.0695`), predicted `m_μ/m_τ = 0.053` (data `0.0595`); up `u = 11.2`,
-  `sin θ₁₂ = 0.041` (`0.045`), predicted `m_c/m_t = 0.089` (data `0.0074`, off by `12×`). Down and
+  `sin θ₁₂ = 0.041` (`0.045`), predicted `m_c/m_t = 0.089` (data `0.0074`, off by `12×`; at one scale `0.0037`, off by `23×`; see the
+  EP REVIEW for the candidate that up's heavy label is undetuned, giving `0.98×`). Down and
   leptons land within about `10%` on their second ratio with no further number; up does not.
 - The heavy–light (2–3) rotations are `≲ 4·10⁻⁴`: `|V_cb|` cannot come from `U`, so it is `J`'s
   reference-wall node change after all, and the `×10.7` of item 2 returns (the `U = 1` audit's
