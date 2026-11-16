@@ -95,6 +95,23 @@ theorem selected_is_identity (E : Matrix a b ℂ) (U : Matrix b b ℂ) (W : Matr
     (h : P E * W * P E = P E) : extendW E U W = IsometricDynamics.extend E U := by
   rw [extendW, h, IsometricDynamics.extend]
 
+/-- For any ambient update with the prescribed action on the encoded states,
+agreement with the on-site identity extension is equivalent to fixing every
+complementary input. This criterion also applies to directional updates. -/
+theorem agreement_iff (E : Matrix a b ℂ) (hE : Eᴴ * E = 1) (U : Matrix b b ℂ)
+    (A : Matrix a a ℂ) (hA : A * E = E * U) :
+    A = IsometricDynamics.extend E U ↔ A * P E = P E := by
+  constructor
+  · rintro rfl
+    rw [IsometricDynamics.extend, Matrix.add_mul, Matrix.mul_assoc,
+      IsometricDynamics.complement_right E hE, Matrix.mul_zero, zero_add, P_idem E hE]
+  · intro h
+    rw [P_eq, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc, hA] at h
+    unfold IsometricDynamics.extend
+    change A = E * U * Eᴴ + (1 - E * Eᴴ)
+    rw [← h]
+    abel
+
 /-- Completion selection restricted to admitted options. The identity on the
 invisible complement must itself be admitted; its accessibility is not derived
 by comparing its price with that of other matrices. A shared baseline is retained. -/

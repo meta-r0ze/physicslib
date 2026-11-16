@@ -59,6 +59,23 @@ theorem seesaw_cyc (y : Fin 3 → ℂ) (δ : ℝ) :
 theorem gram_equal (a : ℂ) : (cyc fun _ => a)ᴴ * cyc (fun _ => a) = (star a * a) • 1 := by
   rw [gram_cyc, smul_one_eq_diagonal]
 
+/-- A class-independent crossing is an isometry precisely at unit norm. -/
+theorem crossing_isometry_iff (a : ℂ) :
+    (cyc fun _ => a)ᴴ * cyc (fun _ => a) = 1 ↔ ‖a‖ = 1 := by
+  rw [gram_equal]
+  constructor
+  · intro h
+    have h0 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) h
+    have hs : star a * a = 1 := by simpa using h0
+    have hn := congrArg norm hs
+    simp at hn
+    nlinarith [norm_nonneg a]
+  · intro h
+    have hs : star a * a = 1 := by
+      rw [Complex.star_def, Complex.conj_mul', h]
+      norm_num
+    rw [hs, one_smul]
+
 /-- **`det Y = y 0 · y 1 · y 2`** (the 3-cycle is even). -/
 theorem det_cyc (y : Fin 3 → ℂ) : (cyc y).det = y 0 * y 1 * y 2 := by
   rw [Matrix.det_fin_three]

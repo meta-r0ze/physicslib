@@ -27,8 +27,9 @@ module collects the chain that settles the reference by selection and maintenanc
 * `needs_unbounded`: exact maintenance forever needs an infinite substrate
   (`HomogeneousRouting.forever_needs_infinite`): the record supply is the unbounded background.
 
-The identification used: the uniform background's record cells are the record stream of
-`RecordSupply` (`hrec : ∀ x, (s x).2 = r` in `reference_forever`). The actual initial state of the
+
+`readPair_run` extracts each native port pair and intertwines its ticks with the stream.
+`native_reference_forever` uses a uniform incoming record bank on the unbounded lattice. The actual initial state of the
 universe, if asked for, is a cosmological question (Paper VI), not a PMAction one.
 -/
 
@@ -47,6 +48,18 @@ theorem selected_reference {X : Type*} [Fintype X] [DecidableEq X] {A : Type*} [
         s (x, ActualRootRepair.label (.inl i)) = r i ∧
         s (x, ActualRootRepair.label (.inr i)) = r i :=
   PersistentBackground.persistent_background o e hc toll β ht hβ a s
+
+/-- Reading either native port pair after any number of ticks agrees with
+running the extracted stream, including on nonstationary configurations. -/
+theorem readPair_run {X A : Type*} [DecidableEq X] (o : X) (e : Equiv.Perm X)
+    (s : NativeCarrierState.Config X A) (i : Fin 2) (n : ℕ) :
+    NativeReferenceBackground.readPair ((NativeCarrierState.tick o e)^[n] s) i =
+      run o e n (NativeReferenceBackground.readPair s i) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', NativeReferenceBackground.readPair_step, ih]
+    rfl
 
 /-- **The per-tick ledger.** At the coupling site, one tick consumes the record arriving from
 `e o` and exports the departing live value into the record leaving toward `e⁻¹ o`. -/
@@ -76,6 +89,16 @@ theorem reference_forever {d : ℕ} (e : Equiv.Perm (Fin d → ℤ))
     (s : (Fin d → ℤ) → A × A) (r : A) (hrec : ∀ x, (s x).2 = r) (t : ℕ) (ht : 1 ≤ t) :
     (run o e t s o).1 = r :=
   HomogeneousRouting.homogeneous_forever e hcomm o hmove s r hrec t ht
+
+/-- A uniform record bank on the lattice gives the clean supply directly from
+native labels; the live labels can contain disturbances. -/
+theorem native_reference_forever {d : ℕ} (e : Equiv.Perm (Fin d → ℤ))
+    (hcomm : ∀ w x, e (x + w) = e x + w) (o : Fin d → ℤ) (hmove : e o ≠ o) {A : Type*}
+    (s : NativeCarrierState.Config (Fin d → ℤ) A) (i : Fin 2) (r : A)
+    (hrec : ∀ x, s (x, ActualRootRepair.label (.inr i)) = r) (t : ℕ) (ht : 1 ≤ t) :
+    (NativeReferenceBackground.readPair ((NativeCarrierState.tick o e)^[t] s) i o).1 = r := by
+  rw [readPair_run]
+  exact reference_forever e hcomm o hmove _ r hrec t ht
 
 /-- **The supply is unbounded.** -/
 theorem needs_unbounded {X A : Type*} [DecidableEq X] (o : X) (e : Equiv.Perm X) (r d : A)

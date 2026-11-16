@@ -78,4 +78,31 @@ theorem bubble_sub_contact {a : ℝ} (ha : a ≠ 0) (k q v : Momentum)
   field_simp
   ring
 
+/-- Moving the backward leg forward by the probe momentum gives the
+forward leg at the original loop momentum. -/
+theorem leg_reroute (a : ℝ) (k q v : Momentum) :
+    leg a (k + q) q v (-1) = leg a k q v 1 := by
+  unfold leg
+  congr 1
+  apply Finset.sum_congr rfl
+  intro r _
+  rw [rk_add]
+  ring_nf
+
+/-- On a finite momentum grid, a permutation implementing the momentum shift
+cancels the longitudinal bubble-minus-contact sum. The two wrap identities
+and nonsingular propagators are explicit grid hypotheses. -/
+theorem finite_routing_cancel {ι : Type*} [Fintype ι] (shift : Equiv.Perm ι)
+    (k : ι → Momentum) {a : ℝ} (ha : a ≠ 0) (q v : Momentum)
+    (hs : ∀ i, symbol a (k i + q) = symbol a (k (shift i)))
+    (hl : ∀ i, leg a (k i + q) q v (-1) = leg a (k (shift i)) q v (-1))
+    (hn : ∀ i, symbol a (k i) ≠ 0) :
+    (∑ i, (leg a (k i) q q 1 * leg a (k i) q v 1 /
+      (symbol a (k i) * symbol a (k i + q)) - contact a (k i) q q v / symbol a (k i))) = 0 := by
+  have h (i : ι) := bubble_sub_contact ha (k i) q v (hn i) (by rw [hs]; exact hn _)
+  simp_rw [h]
+  rw [Finset.sum_sub_distrib]
+  simp_rw [← leg_reroute a _ q v, hl, hs]
+  exact sub_eq_zero.mpr (Equiv.sum_comp shift (fun i => leg a (k i) q v (-1) / symbol a (k i))).symm
+
 end PMAction.PolarizationContact

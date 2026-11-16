@@ -16,23 +16,24 @@ reading of `k/K` are choices that do not fix the data. Open, wire only:
   (`first_wall_action` extracts it; `NativeFlavourWall.encoded_eigenstate` is the target); (ii)
   `Machine.RootTransferPhase` as an event clock (`δ = −gap(p)/2` for an attempt probability `p`,
   `NativeDetuning.generator_split`); (iii) `WalkReferenceCoupling.preparation_angle_forced` fixes a `β`
-  pulse angle `π/4`, so `δ_O = −π/(4N)` for an event of `N` ticks, `N` not fixed. `δ_O` and
+  pulse angle `π/4`, so `δ_O = −π/(4N)` for an event of duration `N` in generator time units, if that event performs this preparation.
+  One generator unit corresponds to two lazy-transfer ticks; the event duration is open. `δ_O` and
   `ZeroModeCoupling`'s `r − 1` are different matrix elements; tying them needs a derivation.
 - **Lazy or coherent `β` event.** Whether a wall's `β` event carries a wall-local scalar phase
   (`WallOffset`: lazy gives squared masses, coherent gives linear) is not decidable in the library;
   state it as a premise. (The data comparison that favoured coherent used the withdrawn placement.)
-- **Open premises, stated.** `|y| = 1` (`CyclicSeesaw.gram_equal` holds for any common crossing; unit
-  modulus needs the bare hop to be a unitary relabelling); admittance versus rate for `k/K`
-  (`CertainTransferRate`: rate reading `0.0385`); the vector rate `K_f ≪ |y|` as an allowed leakage
+- **Open premises, stated.** `|y| = 1` (derive whether the bare crossing preserves norm;
+  `CyclicSeesaw.crossing_isometry_iff` gives the exact equivalence); admittance versus rate for `k/K`
+  (the equal-duration, first-transfer reading gives about `0.0385`); the vector rate `K_f ≪ |y|` as an allowed leakage
   (`LightLeakage.leakage_bound`, the allowed `L` not fixed).
 - **Colour and `β`.** A fixed `β` on the carrier-axis index (`NativeDetuning`, `CarrierWeyl.lookup c 0`)
   pairs one colour axis with the reference and maps colour `1` to colour `3`, so it splits colour inside
   a quark protocol, against `ReferenceStabilizer.colour_unbroken`. `β` needs a colour treatment (an
   index commuting with colour, or the colour average) before any per-protocol on-site entry is read
   from it.
-- **The even complement.** The wire keeps only antipode-odd modes (`FullCarrierIdentification`); the even
-  complement is inert by convention (`CarrierVacuumEvolution.even_inert`, an open obligation). The
-  protocol readout (PMElementaryParticles) needs its action.
+- **Physical price of the even complement.** Establish whether invisible-mode squared displacement
+  carries a positive toll and the identity completion is admitted by the microscopic gates.
+  Under those premises persistence selects identity (`CompletionSelection.most_persistent_in_family`).
 - **Update as `e^{−iHt}` on wall modes.** `PMAction.FlavourEvolution` takes the flavour evolution as
   `U e^{−iEt} Uᴴ` with supplied `U`, `E`, and the transfer-cost chain in PMFlavor
   (`ReferenceSelection` → `RelativeFrameCost` → `TransferWorkLaw`) is built on it.
@@ -51,13 +52,15 @@ reading of `k/K` are choices that do not fix the data. Open, wire only:
 ## Dynamics and limits
 
 - Lattice polarization, optional sharpening (OVERVIEW: `PolarizationShellIntegral`). (i) Replace the
-  continuum shell by the Brillouin-zone sum, where the routing difference of `bubble_sub_contact`
-  cancels by a shift. (ii) A sharper constant than `K = 271853128/3`, so that the bound gives the size
+  continuum shell by a concrete Brillouin-zone sum. Instantiate the wrap identities in
+  `PolarizationContact.finite_routing_cancel` and handle singular zero modes in a shift-compatible way. (ii) A sharper constant than `K = 271853128/3`, so that the bound gives the size
   of the lattice correction at a fixed `a`. The numeric target is `C a² (hi² − lo²)` with `C ≈ 1.38`
   (`tools/lattice_polarization_check.py`). Falsification: a proved constant below `1.38` would
   contradict the numeric check.
-- Construct the map from background `Config` to the `RecordSupply` stream used by `ReferenceSelection`. Physical allocation of the banks is a [machine-layer dependency](Machine/REVIEW-AND-NEXT.md).
 - Establish shared group and trace normalization across spacings. Multi-pass root words are tracked in the machine review.
-- Identify the directional-exponential completion with the on-site completion, or specify the conditions for their agreement.
+- Determine where the directional update fixes the invisible complement. For a shared encoded action,
+  this is the exact condition for agreement with the on-site extension (`CompletionSelection.agreement_iff`).
+  The five-site directional factor already has a distance-two entry at arbitrarily small ticks
+  (`NativeLocalityBoundary.arbitrarily_small_second_hop`); unconditional factor equality fails there.
 - Establish mode and domain control for the real-space PDE limit, the integrated Hessian, the full real-space fermion field and interacting-field estimates.
 

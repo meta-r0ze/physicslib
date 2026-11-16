@@ -8,6 +8,11 @@ points, not exhaustive lists. Lean source is the ground truth.
 
 ## Scope
 
+- `ReferenceSelection.readPair_run` projects each native port pair onto the live/record stream at every tick. `native_reference_forever` gives exact maintenance on a moving homogeneous lattice routing when the indicated record bank is uniform. Physical bank allocation is tracked in the [machine review](Machine/REVIEW-AND-NEXT.md).
+- `PolarizationContact.finite_routing_cancel` gives exact longitudinal cancellation on a finite grid when the probe shift permutes grid points, the vertex and propagator respect wrapping, and denominators are nonzero.
+- `CyclicSeesaw.crossing_isometry_iff` characterizes a common crossing weight of unit norm by the isometry of its cyclic link.
+- `CompletionSelection.agreement_iff` characterizes full-operator agreement for an ambient update with the prescribed encoded action: it must fix the invisible complement pointwise.
+
 Paper II builds on the Paper I substrate (E8, clock Δ = 43) and supplies generic
 finite dynamics, register/current/schedule constructions, gauge and scalar
 transport limits, current algebra, and their audit boundaries. It imports nothing
