@@ -22,6 +22,16 @@ out as nonpersistent" (`CarrierVacuumEvolution.even_inert`; "selecting the physi
 still an obligation"). A single protocol carrier `|±2eᵢ⟩ = (|oddᵢ⟩ ± |evenᵢ⟩)/√2` reads the same odd
 mode with opposite sign, which no mass (`|·|`) sees.
 
+**How many wires.** The 16 channels are the vector-class carriers in the two sectors
+(`CarrierActions.Packet = V ⊕ V`, the same as `CarrierVacuumSector.Labels 0`). The wire's admitted
+modes are the antipodally odd combinations: `4` axes × `2` sectors = `8` modes per class
+(`CarrierVacuumEvolution.odd_finrank`). So there are not 16 wires: each wire mode is one axis in
+one sector, shared by an antipodal pair, which is a weak pair. Axis `0` carries the lepton pair
+(`ν`/`e` in the left sector; the sterile vacancy and `e` in the right), axis `i = 1, 2, 3` carries
+the up and down pair of colour `i`. A protocol is the sign with which a channel reads its axis
+mode. With the three classes (generation labels) this is `24` modes, the observed single-carrier
+count (`CarrierClassBundle.observed_card`).
+
 **Consequence.** As written, nothing on the wire tells the up protocol from the down protocol: the
 native operators commute with the antipode, and the wire keeps only antipode-odd states. For any
 Hamiltonian `H`, the two partners' expectations differ by `2 Re ⟨odd|H|even⟩`, the odd/even cross
