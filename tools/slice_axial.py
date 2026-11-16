@@ -21,8 +21,9 @@ Confined carrier (spin-up ground doublet, exact diagonalization):
   7   0.677     0.427
   8   0.668     0.449
 Sigma_z tends to about 0.65 (the MIT-bag value); the conserved current rises but extrapolates to
-about 0.5. With only two slices the wall leakage of the slice-sign rotation is O(1), so this
-current neither confirms the on-site operator nor gives a usable g_A ((5/3) 0.22 = 0.37 on 3^3).
+about 0.5. With only two slices the wall leakage of the slice-sign rotation is O(1). The weak
+vertex reads J^mu Gamma, whose spatial part is the on-site spin (alpha_j Gamma = Sigma_j,
+PMAction.ConfinedAxialCurrent), so the weak axial charge is <Sigma_z>, not the slice current.
 
 Usage: python3 tools/slice_axial.py 3 4 5   (cube sizes; dense, n <= 8)
 """

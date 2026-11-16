@@ -30,7 +30,7 @@ points, not exhaustive lists. Lean source is the ground truth.
 - `SplitClockBoundary.update_pi` shows that the supplied vacuum-preserving split is momentum-independent at tick `π`. At momentum `(π/2,0,0)` it fails to commute with the Wilson wall Hamiltonian (`noncommuting`), so it equals no exponential `exp(z H)` for any complex scalar `z` (`no_hamiltonian_time`). Universal identification of the split with an exponential of that Hamiltonian is excluded. The diagnostic tick is in generator units. Physical clock calibration and restriction to light modes remain open.
 - `CarrierGateCompletion.lookup_admission_iff` and `lookup_table` classify identity completion for all six supplied Weyl words. The admissible word indices are `{1,3,5}` in class 0, `{0,5}` in class 1 and `{2,5}` in class 2. The coordinate embedding distinguishes all carriers, so another permutation word cannot repair a failed case. A single involution pulse fixes the even modes at a phase return or when it preserves every antipodal pair. For a non-returning β pulse this holds exactly in class 1 (`beta_pulse`). These tests leave general coherent circuits and their event prices open.
 - `EvenRootPhase` supplies a nonzero antipode-even carrier mode in every class and proves its coordinate readout vanishes (`mode_invisible`). The actual four-orthogonal-root circuit gives this mode the square of its visible-sector phase (`circuit_mode`); the library's `phaseI` gate therefore changes its sign (`phaseI_mode`). `no_independent_i_completion` rules out identity completion of `i · 1` by this four-root family even with independent pulse times and attempt parameters; the visible action forces all four root phases to `i` (`equal_phases_forced`). `no_i_completion` specializes this to a common clock. This is a full-label completion obstruction. Completion of the whole split update, compensation between gate factors and microscopic prices remain open.
-- The numerical two-slice comparison in `tools/slice_axial.py` gives a confined slice-current readout of 0.22–0.45 over cube sizes 3–8, compared with 0.83–0.67 for the on-site spin operator. The two prescriptions give different confined observables despite free normalization.
+- `ConfinedAxialCurrent`: the weak vertex reads the axial current `J^μ Γ` (`vertex_split`), and its spatial part is the on-site spin, `αⱼ Γ = Σⱼ` (`alpha_gamma`, `axial_is_spin`), with `Γ` on both walls. The slice sign `diag(1, −1)` is not the charged chirality (`slice_not_chirality`), so its conserved link current is not the weak axial current. Numerically (`tools/slice_axial.py`) the confined spin-up carrier has weak axial charge `⟨Σ_z⟩ = 0.826, 0.759, 0.717, 0.692` on `n = 3…6` cubes (toward about `0.65`), while the slice current reads `0.22–0.45`. The pion source is the same operator through its divergence.
 
 Paper II builds on the Paper I substrate (E8, clock Δ = 43) and supplies generic
 finite dynamics, register/current/schedule constructions, gauge and scalar
@@ -331,8 +331,8 @@ controls/admission premises and the selection of group, representation and β.
   the identity completion; small tick forced by isotropy, `VacuumTangent`). The ground mode's rms
   radius `ρ = 1.3535970…` sites is certified with exact and interval arithmetic
   (`tools/carrier_rms_certificate.py`; Lean proof deferred, REVIEW A.1). The on-site `Σ_z` has unit
-  spin normalization for free axial motion (`tools/axial_ward.py`); the confined Ward identity is
-  open (REVIEW A.2).
+  spin normalization for free axial motion (`tools/axial_ward.py`), and it is the weak axial current
+  (`ConfinedAxialCurrent`).
 - **Flat links:** `FlatPersistence.flat_iff` (zero loop cost iff every holonomy is `1`).
 - **Running:** `RunningResponse` (spin `(2s)²` and orbital `−1/3` from the substrate response);
   `ContactRunning` + `ContactFierz` (the weak contact's coefficient `(3/2)(1 + 2Q̄)` from the Ward
