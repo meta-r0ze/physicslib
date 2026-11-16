@@ -69,5 +69,6 @@ import PMElementaryParticles.MassivePair
 import PMElementaryParticles.MassiveVolume
 import PMElementaryParticles.ElectronMeasure
 import PMElementaryParticles.NullBoost
+import PMElementaryParticles.PairShell
 import PMElementaryParticles.TauBranching
 import PMElementaryParticles.WireResonance

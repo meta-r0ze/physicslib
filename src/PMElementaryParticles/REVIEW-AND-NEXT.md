@@ -75,12 +75,12 @@ second order for quarks; a readout that uses `β` needs a colour treatment first
 
 **Three-body phase-space factorization.** Derived from Lebesgue measure: the daughter's measure
 `P/(4π²)` (`ElectronMeasure.width_from_lebesgue`), the pair's two-body volume `1/(8π)` at rest
-(`PolarMeasure`), and the boost invariance of each massless leg's measure `d³k/|k|` and of the
-two-leg measure (`NullBoost.measure_invariant`, `pair_invariant`). Open: the energy-momentum delta.
-Show that for a test function `G` of the pair's total four-momentum
-`∫∫ G(k̂ + k̂̄) F d³k/(2|k|) d³k̄/(2|k̄|) = ∫ d⁴Q G(Q) Φ ⟨F⟩_Q` over future timelike `Q`, by the
-change of variables `(k, k̄) ↦ (Q, rest-frame direction)` (or, for fixed `Q⃗`, the energy cumulative
-`∫ 1{|k| + |Q⃗ − k| ≤ t} F d³k/(4|k||Q⃗ − k|)` has `t`-derivative `Φ⟨F⟩`). Then
+(`PolarMeasure`), the boost invariance of each massless leg's measure (`NullBoost`), and the pair at
+fixed total momentum in shell coordinates (`PairShell.shell_integral`: for every `g`,
+`∫ g(k) d³k/(|k||P⃗ − k|) = ∫ (sin ν/2) g(Ψ(E, ν, φ)) dE dν dφ`, so the energy delta is the coordinate
+`E` and the density at fixed `E` is the rest-frame solid angle). Open: the last link, that the
+`(ν, φ)` average of the pair tensor `k^μ k̄^ν` at fixed `E` equals `PairTransport`'s transported
+average (the boost along `e₀` with `γ = E/M` maps the rest-frame pair to `Ψ`); then
 `MassiveDaughterSpectrum.pair_density` follows rather than being assembled.
 
 ## Other open work
