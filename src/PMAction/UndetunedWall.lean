@@ -19,7 +19,7 @@ Wilson point (`δ_O = 0`, no departure from `r = 1`, `PMAction.ZeroModeCoupling`
   `κ_R(s) K`, `κ_R(c)²`, `K κ_R(s)`: masses `(kK, k², kK)`.
 
 (`undetuned_masses_matching`, with the shift `(κ_R(s), K, κ_R(c))`, belonged to a 2026-11 placement
-that mixed two state spaces; withdrawn, PMAction REVIEW.)
+that mixed two state spaces; withdrawn, PMAction OVERVIEW.)
 
 So with `δ_O = 0` there are two equal heavy masses and one light: the reverse of the observed
 pattern (one heavy) in every charged sector. The other wall's detuning is therefore required, not

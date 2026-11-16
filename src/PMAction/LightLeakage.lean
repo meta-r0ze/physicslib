@@ -19,7 +19,7 @@ joining the two (`D₁` on wall `1`, `D₂` on wall `2`) and `G` the gapped bloc
 
 **For the wire.** With `‖Vᴴ x‖ ≤ ‖D‖ ‖x‖`, a light eigenstate of energy `E` has
 `‖z‖/‖x‖ ≤ ‖D‖/(|y| − |E|)`. So an allowed leakage `L` (weight off the kernel) holds once
-`‖D‖ ≤ √(L/(1 − L)) (|y| − |E|)`. The full two-wall check (PMAction REVIEW) gives leakage
+`‖D‖ ≤ √(L/(1 − L)) (|y| − |E|)`. The full two-wall check (event-clock item, PMAction REVIEW) gives leakage
 `≈ 1.1 (K_f/|y|)²` for the heavy state, within this bound. So "`K_f ≪ |y|`" becomes: the largest flip
 on either wall is at most `√(L/(1−L))` times the gap, for the leakage `L` one accepts.
 -/

@@ -16,7 +16,7 @@ and `GenerationMass.composite_shift_then_cross`.
 `GenerationCurrent.edge_carrier`'s class `e (h − 1)` is the carrier of a two-wall label change, which
 also needs a glue move `e (h + 1)` on both walls. A one-wall factor cannot contain that move, so it
 does not place the mass's carriers. (A 2026-11 "bookkeeping correction" used it; it mixed the two
-state spaces of `GenerationSector` and is withdrawn, PMAction REVIEW.)
+state spaces of `GenerationSector` and is withdrawn, PMAction OVERVIEW.)
 
 * `shift κ_O`: the other wall's carrier entries, `shift κ_O h = κ_O h`, class `h` at `(h + 1, h)`.
 * `shift_entry`, `single_wall_class`.
