@@ -31,6 +31,18 @@ the measure, not only of degree-≤2 moments.
 
 ## Elementary interactions and protocols
 
+**Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
+light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
+Results below that used the old assignment: the `WireLightSplit` relation test and its recorded
+species numbers (withdrawn; that block no longer describes the wire), and the "protocol-level `U`,
+first test" (moot: with the corrected assignment the 2–3 rotations are `≲ 4·10⁻⁴` and `|V_cb|` comes
+from `J`). Still valid: `UpDownWire.product_equal` (the determinant is symmetric) and its spectra
+statement (re-checked: equal iff `|k_s| = |k_c|`). New, with the corrected wire (PMFlavor REVIEW,
+"Redone"): fixing each protocol's `δ_O` by its lightest ratio, down and charged leptons predict their
+second ratio within about `10%` (`m_s/m_b = 0.0163` vs `0.0185`, `m_μ/m_τ = 0.053` vs `0.0595`), up
+misses by `12×` (`m_c/m_t = 0.089` vs `0.0074`). So down and leptons read the wire's singular values
+roughly directly; up does not.
+
 - **Species masses over the wire.** The wire gives one light-mass form,
   `M = D_R (δ_O + cyc κ_O)`, and treats species alike (OVERVIEW, "Species masses over the wire").
   Derive from E8 which protocols exist and how each uses the wire: what it occupies, channel count

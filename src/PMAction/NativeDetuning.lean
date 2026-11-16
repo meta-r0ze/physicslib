@@ -24,6 +24,8 @@ which the library does not fix. If the carriers are lazy transfers too, ratios a
 carriers between the reference (lepton) axis and a colour axis: a type-changing event, which no
 type-preserving gauge repair undoes (`PMFlavor.LeptonAxisRestriction`). So a wall's chirality flip
 does pass the reference node. How many legs it uses is open:
+(Both readings below use `WireLightSplit`'s superseded bookkeeping; with the corrected one the
+light structure is `LightPairTexture`'s and these mass ratios do not apply.)
 * two legs, like a spinor carrier (`NodeAmplitude`, Kron series `α/2`): `p₁ = p_s`, `δ_O = k_f`, the
   Fibonacci block (`WireLightSplit.golden_point`); the wire's two larger masses in ratio `φ² ≈ 2.618`;
 * one leg (a carrier moved onto or off the axis once, `PMFlavor.NodeElimination.one_leg`, weight `α`):
