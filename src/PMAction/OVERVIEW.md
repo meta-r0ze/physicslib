@@ -10,9 +10,13 @@ points, not exhaustive lists. Lean source is the ground truth.
 
 - `ReferenceSelection.readPair_run` projects each native port pair onto the live/record stream at every tick. `native_reference_forever` gives exact maintenance on a moving homogeneous lattice routing when the indicated record bank is uniform. Physical bank allocation is tracked in the [machine review](Machine/REVIEW-AND-NEXT.md).
 - `PolarizationContact.finite_routing_cancel` gives exact longitudinal cancellation on a finite grid when the probe shift permutes grid points, the vertex and propagator respect wrapping, and denominators are nonzero.
+- `FinitePolarization` constructs the full coordinate momentum torus `Fin 4 → ZMod N` for every nonzero `N`, using the D₄ symbol, line-averaged current and contact vertex. Integer winding identities prove the propagator and vertex wrap laws (`symbol_wrap`, `leg_wrap`). Adding a positive momentum-independent regulator to both inverse propagators preserves the Ward cancellation with every grid point retained (`finite_cancel`). Removing that regulator after the full longitudinal sum gives zero (`zero_regulator_limit`). The construction uses the periodic coordinate torus. Physical volume normalization and the transverse-continuum comparison remain open.
 - `NativeDetuning.colour_invariant_flip_zero` excludes a nonzero four-axis matrix that anticommutes with the fixed chirality and is invariant under simultaneous colour-axis permutations of its rows and columns. This applies to an averaged operator as well. For an independent payload index, `WallExchange.payload_symmetry_iff` shows exactly when the full two-detuning Hamiltonian preserves a payload operation: both directed links commute with it. `NativeFlavourWall.native_payload_symmetry` verifies sufficiency on the native carrier registers. Downstream, `PMConstants.ColourWallCrossing` checks the packet colour blocks on a generation-only link and gives a native vector-carrier witness excluding faithful simultaneous realization of the original β and colour swap as commuting operations.
 - `CyclicSeesaw.crossing_isometry_iff` characterizes a common crossing weight of unit norm by the isometry of its cyclic link.
+- `CrossingScale` separates the crossing's map norm from its Hamiltonian rate. The actual gapped block `WallSeesaw.G Y` is Hermitian and has unitary coherent evolution for every link `Y`, including a cyclic link of weight 2 that fails `YᴴY = 1`. Evolution unitarity therefore supplies no unit-norm constraint on the Hamiltonian coupling. A common nonzero real rate can be absorbed into the isolated crossing's time parameter (`rate_time`, `normalize_rate`). A standalone isometric crossing contract, ratios to the other Hamiltonian terms, and a clock calibration require their own premises.
+- `NativeWallOffset.generator_split` embeds the existing lazy-event generator on one wall and retains the exact scalar offset `gap(p)/2` on that wall. On nonempty walls a nonzero offset is unequal to every global scalar shift (`global_shift_iff`). It commutes with an arbitrary Hermitian coupled block exactly when the offset coefficient or crossing link vanishes (`offset_commutes_iff`). With `p < 1/2` and `p ≠ 0`, adding the lazy generator differs from adding only its flip part by every possible global energy shift (`coupled_generators_differ`). These are generator statements; a wall-dependent time-dependent frame would also transform the crossing. The remaining physical event identification is tracked under other-wall detuning.
 - `CompletionSelection.agreement_iff` characterizes full-operator agreement for an ambient update with the prescribed encoded action: it must fix the invisible complement pointwise.
+- `SplitClockBoundary.update_pi` shows that the supplied vacuum-preserving split is momentum-independent at tick `π`. At momentum `(π/2,0,0)` it fails to commute with the Wilson wall Hamiltonian (`noncommuting`), so it equals no exponential `exp(z H)` for any complex scalar `z` (`no_hamiltonian_time`). Universal identification of the split with an exponential of that Hamiltonian is excluded. The diagnostic tick is in generator units. Physical clock calibration and restriction to light modes remain open.
 - `CarrierGateCompletion.lookup_admission_iff` and `lookup_table` classify identity completion for all six supplied Weyl words. The admissible word indices are `{1,3,5}` in class 0, `{0,5}` in class 1 and `{2,5}` in class 2. The coordinate embedding distinguishes all carriers, so another permutation word cannot repair a failed case. A single involution pulse fixes the even modes at a phase return or when it preserves every antipodal pair. For a non-returning β pulse this holds exactly in class 1 (`beta_pulse`). These tests leave general coherent circuits and their event prices open.
 - The numerical two-slice comparison in `tools/slice_axial.py` gives a confined slice-current readout of 0.22–0.45 over cube sizes 3–8, compared with 0.83–0.67 for the on-site spin operator. The two prescriptions give different confined observables despite free normalization.
 
@@ -400,3 +404,24 @@ Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; per
 - **Excluded or withdrawn** (details in git history): the up protocol's undetuned heavy entry (built on
   the withdrawn placement); an on-site term on the reference wall's heavy row (`13×`); economy-minimal
   `δ_O` (a crossover, not a point); reference-readout leg prices as an `s/c` asymmetry.
+
+## Reference-maintenance checks in the protocol layer
+
+The following checks constrain the reference-maintenance route.
+- On the wire the maintained reference is `ChiralityConvention.physicalBackground`, a vector of the
+  wire's sites, so it is antipode-odd. Any maintenance acting on the wire is therefore blind to the
+  doublet sign: `PMElementaryParticles.ProtocolReadout.odd_reference_no_split`. Correction: the
+  earlier "reference splits the lepton pair at first order" used the reference *carrier*
+  `+2e₀`, which is the channel-layer object, not the wire background.
+- The only maintenance that addresses weak partners separately is at the channel layer: the payload
+  ledger (`RefreshMap.payload_visit`, `same_payload_readout_iff`: one row per channel). Its weights are
+  uniform (`GaugeLedgers`: `η` per payload). The per-channel quantities that differ between partners
+  are the carried charge values (`Y_R`, `Q`).
+- Test of "maintenance strength is a monotone function of one carried charge" against the light
+  detunings (up `0.042` < electron `0.068` < down `0.236`, from `m₁/m₂` alone): `|Y_R|` orders
+  (electron `2`, up `4/3`, down `2/3`), `|Q|` (electron `1`, up `2/3`, down `1/3`), signed `Y_R` and signed
+  `Q` order the three as electron, down, up. None puts the protocols in data order, so a monotone
+  function of a single charge is excluded. Colour plus a charge (two factors) is not excluded but has
+  one lepton point, so it is not testable yet.
+
+The unresolved channel-layer maintenance strength is a dependency of the wire detuning item in REVIEW-AND-NEXT.
