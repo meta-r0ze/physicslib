@@ -126,7 +126,7 @@ theorem finite_cancel (N : ℕ) [NeZero N] {a m : ℝ} (ha : a ≠ 0) (hm : 0 < 
     (fun k => leg a (momentum N a k) (momentum N a q) v (-1) /
       denominator m a (momentum N a k))).symm
 
-/-- Remove the regulator after forming the full longitudinal sum. This
+/-- Remove the regulator after forming the full longitudinal sum.
 Individual massless summands can remain singular in this prescription. -/
 theorem zero_regulator_limit (N : ℕ) [NeZero N] {a : ℝ} (ha : a ≠ 0)
     (q : Grid N) (v : Momentum) :
