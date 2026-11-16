@@ -377,3 +377,25 @@ the heavy on-site entry per protocol from the wall structure. A derivation that 
 three protocols retires the candidate.
 
 Remaining down/`e` residuals: the heavy mass would have to be `0.82 δ` (down) and `0.92 δ` (`e`).
+
+### Protocol readout: what the data require of the partner asymmetry (2026-11)
+
+`ProtocolReadout` (premise: a protocol reads an operator as its expectation in its carrier state):
+weak partners differ only through the odd/even cross term; the reference projector gives it at first
+order on the lepton axis only. Constraint from data, independent of mechanism:
+- The light-pair detuning is fixed by the light ratio alone (`LightPairTexture`: `t² = m₁/m₂`,
+  `δ(1 − t²) = t`), whatever the heavy entry is. Data: up `m_u/m_c = 0.0021` (`δ = 0.042`), down
+  `m_d/m_s = 0.050` (`δ = 0.236`). So the up and down protocols differ on the **light labels**, by
+  `5.6×`, not only on the heavy label.
+- Through `β` the reference reaches only vector-class carriers (`NativeDetuning.beta_crossings`), and
+  the light labels are the spinor classes. So "reference cross term transported by `β`" can give at
+  most a heavy-label difference (the up heavy-entry candidate) and predicts equal light detunings for
+  the up and down protocols. **Excluded** as the whole up/down source.
+- Open: the protocol content of a spinor-class label is defined through triality
+  (`CarrierRepresentation`: "both domain-wall sectors use a class carried to the vector class by
+  triality"). If the reference is present in each class as its triality image, each label has its
+  own first-order lepton term, and its own transport for quarks; `β` is not triality-covariant
+  (`beta_crossings`: crossings only in the vector class), so the transport differs per class. Test:
+  compute the cross term per class with the reference's triality images, and check whether the
+  light labels' up/down difference comes out (target `5.6×` in `δ`) while the electron/down light
+  values (`δ_e = 0.069`, `δ_d = 0.236`) stay ordered.
