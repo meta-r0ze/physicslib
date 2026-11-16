@@ -71,6 +71,13 @@ off-diagonal `|U|`): best at `δ_O ≈ k_f` (`0.004`), the same for every protoc
 `≈ 1.4`: no hierarchy and no protocol dependence. Excluded. The data's margins are large
 (`δ_O/k_f = 11`–`65`), where the heavy/middle ratio is `≈ δ_O/k_f`; so the threshold is set by a
 requirement that the heaviest state stand clear of the other two, scaled per protocol.
+Further tries (2026-11): (i) "margin = the amplitude of the charged-current change the protocol must
+survive": down's margin `0.236 ≈ κ₀`, up's `0.041 ≈ |V_cb|`; but these are the GST relation and the
+known `√(m_u/m_c) ≈ |V_cb|` coincidence restated, not a derivation, and the lepton margin `0.069` has
+no `J` partner. (ii) Margolus–Levitin within a protocol's maintenance period: up and down share their
+maintenance (weak, hypercharge, colour refreshes) yet their margins differ by `6×`. Excluded as
+stated. What is missing is PM's characteristic perturbation of a protocol on the wire; the library
+does not yet name it.
 
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
