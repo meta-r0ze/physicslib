@@ -316,6 +316,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `CurrentConstants` | Public snapshot of the current manuscript formulas. The old dressed Yukawa |
 | `LinkSpectralResponse` | Discharge spectral data from the actual W/Z link response. The spectral |
 | `LinkEvolution` | Paper III compatibility names and the W/Z specialization. |
+| `ColourWallCrossing` | Bare wall exchange preserves the physical axis permutations on the vector class and their extensions to all three classes. Weighted exchange requires orbit-constant coefficients. The packet colour blocks commute with a generation-only crossing on independent registers. A faithful encoding of the original on-site β and axis swap cannot make them commute. |
 | `PacketGaugeActions` | Common unitary weak and colour actions on the actual packet, with the |
 | `PacketTraceForm` | Exact quadratic trace form of the common packet representation. These |
 | `MeanTraceResponse` | Controlled quadratic response of uniform comparison on a finite Hermitian |

@@ -26,13 +26,13 @@ reading of `k/K` are choices that do not fix the data. Open, wire only:
   `CyclicSeesaw.crossing_isometry_iff` gives the exact equivalence); admittance versus rate for `k/K`
   (the equal-duration, first-transfer reading gives about `0.0385`); the vector rate `K_f ≪ |y|` as an allowed leakage
   (`LightLeakage.leakage_bound`, the allowed `L` not fixed).
-- **Colour and `β`.** Derive how the native update realizes chirality and colour together. On the
-  four carrier axes with fixed `ConcreteFermion.gamma`, a colour-permutation-invariant chirality
-  flip vanishes (`NativeDetuning.colour_invariant_flip_zero`). The independent-payload construction is checked
-  on the wall and native registers (`WallExchange.payload_symmetry_iff`,
-  `NativeFlavourWall.native_payload_symmetry`). Identify that payload with the physical colour
-  action and derive its compatibility with the crossing link.
-  Averaging a protocol readout over colour requires its own measurement rule.
+- **Microscopic colour and chirality.** Specify which operation the physical update realizes.
+  The actual vector-carrier β and the packet colour swap fail to commute. A faithful encoding
+  preserving both actions inherits that obstruction (`PMConstants.ColourWallCrossing.no_faithful_joint_encoding`).
+  A generation-only crossing on a separate packet colour block does preserve colour for arbitrary
+  detunings. To select it microscopically, derive the independent register and the crossing weights'
+  constancy on colour orbits. Exchange destinations and unit modulus alone admit a counterexample.
+  Any colour-averaged readout also needs a measurement rule.
 - **Physical price of the even complement.** Establish whether invisible-mode squared displacement
   carries a positive toll and the identity completion is admitted by the microscopic gates.
   Under those premises persistence selects identity (`CompletionSelection.most_persistent_in_family`).
