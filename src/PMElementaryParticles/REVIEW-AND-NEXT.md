@@ -15,18 +15,25 @@ wire's inputs"). Reading a protocol's masses directly off the wire's spectrum fa
   (`m_μ/m_τ`: `0.028` against `0.059`); masses = squared singular values fails all three.
 
 So the readout is not "a protocol's masses are the wire's singular values". It has to be derived,
-not chosen. **What persistence fixes, to derive it from:** a protocol's persisting states are
-stationary under everything that acts on it every tick:
-1. the wire, on the odd sector (`PMAction.FullCarrierIdentification`; `DoubletSign`);
-2. the weak refresh, the doublet exchange, which keeps the label (`PMFlavor.RefreshLabel`);
-3. colour and hypercharge maintenance (`PMConstants.CarrierActions`).
-The refresh swaps partners every tick, so one protocol's state is not stationary under it alone; what
-persists is the doublet over one refresh cycle, read through `ProtocolReadout`'s odd/even cross term.
+not chosen. A protocol's persisting states are stationary under everything that acts on it every
+tick: the wire (odd sector), the weak refresh (the antipode on the pair, `PMFlavor.RefreshLabel`,
+`DoubletSign`), and colour and hypercharge maintenance (`PMConstants.CarrierActions`).
 
-**Next.** Write the one-cycle evolution (wire, then refresh) for a doublet, find its stationary states
-and their phase advance per cycle, and state the readout that follows. Then test it on the three
-charged protocols' two mass ratios each, with no parameter beyond each protocol's `δ_O`. Needs the
-action of the even complement (PMAction REVIEW, "The even complement").
+**One refresh cycle with antipode-commuting steps** (`CycleReadout`, OVERVIEW). If every step
+commutes with the antipode, the cycle (wire, then refresh) is `(−W_odd) ⊕ E` for any even action
+`E` (`cycle_block`, `cycle_pow`), and its characteristic polynomial factors
+(`cycle_charpoly`). So the odd sector's stationary states and phases are the wire's own: the
+one-cycle readout is the direct readout, which fails. Every native word and the refresh commute
+with the antipode. So a readout that departs from the wire's spectrum needs a step with an
+odd/even block, and the only antipode-odd object is the reference carrier (`+2e₀`, vector class,
+lepton axis). The even complement's action matters only through such a step.
+
+**Next.** The step is the reference's maintenance: a reference-conditioned native update. This is
+the same object as PMAction REVIEW "Other-wall detuning" (derive the wall-1 flip from a
+reference-conditioned native update). Derive its action on the doublet over one cycle; by
+`BetaReference.onto_reference_iff` it reaches the heavy label of the lepton axis directly and the up
+protocol's heavy label on the paired axis through `β`. Then test it on the three charged
+protocols' two mass ratios each, with no parameter beyond each protocol's `δ_O`.
 
 **Constraints any readout must meet (Lean).**
 - `DoubletReflection.flip_doublet`, `flip_keeps_reference_axis`: an observable invariant under the
