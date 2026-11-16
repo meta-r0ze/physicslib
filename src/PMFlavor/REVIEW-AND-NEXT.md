@@ -49,10 +49,18 @@ data, and do not frame work as fitting Standard Model sectors.
    - In-cycle: the share `π/N` rests on the aperture premises (`HalfTurnAperture`); derive them or
      state them as the one premise of this entry.
    - Other-wall node change: the series path is derived; derive the boundary `π`.
-   - Reference-wall node change: the library's rules give `1`, `≈ 1.98`, `≈ 23.7` times the other-wall
-     change; the readout needs about `10`. Derive what the reference's wall changes in the amplitude
-     (the refresh acts on that wall). `VcbEnvelope`'s `env 1 / env (Δ − D)` reaches the value but has no
-     schedule basis: exhibit the schedule or retire the form.
+   - Reference-wall node change. **Restated (2026-11).** The earlier reading "the readout needs
+     about `10` times the other-wall change" assumed `U = 1`: then `|V_cb|` is the node change itself.
+     `U` is protocol-level and generically nonzero (item 6), and a 2–3 persistence rotation enters
+     `|V_cb|` at first order. Check (numerical, outside Lean): with Closure's equal node prices
+     (`TransferAmplitude.promoA`: both node changes `= jump`), FC, one cycle phase and real 2–3
+     rotations `θ_u`, `θ_d`, the four magnitudes `|V_us|, |V_cb|, |V_ub|, |V_td|` are reproduced
+     (`χ² = 1.4`, one degree of freedom) at `Φ ≈ 80°`, `θ_u ≈ −0.034`, `θ_d ≈ 0.004`. So the `×10` is not
+     forced on the node: Closure's ratio `1` survives once `U` is kept, and `|V_cb|` is then mostly a
+     persistence rotation, the same protocol-level `U` that must split the light pair. The earlier
+     exclusion of `promoA` (and `CandidateTests.promo_rules_excluded`) holds only at `U = 1`. Open: derive
+     the 2–3 rotations from the protocols (PMElementaryParticles) and the cycle phase (item 5); with
+     those, this becomes a test with no free numbers. `VcbEnvelope` stays unbased.
 3. **One readout rule on the axis (decision pending).** `ConductionRule`: with the node readout and no
    further function, the on-axis in-cycle change gives probability `π/10`; e8p prints `1/(2φ)`. Switch
    e8p to `π/10` (changes `PMNS.lean`, `PMNSIntervals`, `FlavourInvariants`, e8p pulls and catalog), or
@@ -117,6 +125,25 @@ data, and do not frame work as fitting Standard Model sectors.
 8. **`TransferGenerator`** (zero-energy scattering `S(K)`): keep as a candidate amplitude rule for `J`'s
    node entries or retire; its equal-lead-width premise is not derived. As a completion it is a power
    series in one generator, so it is the `w = ½` case of item 1.
+
+## Audit: which conclusions assumed `U = 1` (2026-11)
+
+The persistence rotation `U` is protocol-level and generically nonzero (item 6). Re-checked
+numerically with free real 2–3 rotations `θ_u`, `θ_d` and one cycle phase, against
+`|V_us|, |V_cb|, |V_ub|, |V_td|`:
+
+| Item | Conclusion at `U = 1` | With `U` kept |
+|---|---|---|
+| 1, completion | FC survives (1.1σ); exponential/Cayley excluded with the jump (4.9σ) | both fit (`χ² = 1.7` FC, `1.8` exponential, `κ₁ = κ₂ = jump`): **the data no longer select FC**; FC versus power series is open again |
+| 2, reference-wall node | needs `×10.7` | Closure's ratio `1` fits (item 2); not forced |
+| 5, phase | `Φ = 70 ± 5°`, flat excluded | flat still excluded with real `U` (`χ² = 55`); `Φ ≈ 80°` at the best fit; the value moves with `U` |
+| 2, in-cycle `π/N` as `s₁₂` | read as `|V_us|` directly | `|V_us|` gets `θ₁₂^d − θ₁₂^u`; holds only if the 1–2 rotations are small |
+| 3, PMNS readout (`π/10` vs `1/(2φ)`) | `sin²θ₁₂` read directly | same caveat for the lepton `U`'s |
+| 4, `θ₂₃` large on the axis | sought as a large node change | a persistence rotation can be large; the wire's own near-degenerate pair rotates by `45°` (PMAction REVIEW): candidate source of a maximal angle, label mapping for leptons to check |
+
+So until the protocol-level `U` is derived, PMFlavor's data tests constrain `(J, U)` jointly; the
+items above are restated accordingly. Deriving `U` (PMElementaryParticles) turns them back into
+tests with no free numbers.
 
 ## Transfer selection
 

@@ -84,6 +84,11 @@ the measure, not only of degree-≤2 moments.
     **Excluded** (`PMAction.WilsonPointForced`): the split update's neighbour coefficient
     `(r/2)β + (i/2)αⱼ` squares to `(r² − 1)/4`, so exact local unitarity forces `|r| = 1` on every wall
     it updates. A wall-dependent `r_O` needs the other wall to be updated by a different construction.
+  **Reframed (2026-11).** The wall magnitude asymmetry was sought for PMFlavor's `×10.7`. With
+  `U ≠ 1` kept, Closure's equal node changes fit the four CKM magnitudes with a 2–3 persistence
+  rotation `≈ 0.03` and a cycle phase (PMFlavor REVIEW item 2). So the asymmetry is not required by
+  the CKM; the up/down and light-pair splits still need a source, and the protocol-level `U` is now
+  the common target for all three.
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
