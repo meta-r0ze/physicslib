@@ -81,6 +81,19 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   | Native `δ_O` as a `β`-event rate | `NativeDetuning` | `δ = −gap(p)/2`; `β` swaps axes `0 ↔ 2`, moving half the vector carriers across the node once | leg count open: golden (`δ_O = k_f`) or silver (`≈ 2k_f`) candidate |
   | Wire's own `U` as the persistence rotation | `U_uᴴ W U_d` with the wire's reference-wall `U` common to both protocols | `|V_ub| = 0.026–0.12` at every `δ_O` (PMFlavor REVIEW item 6) | excluded: `U` is protocol-level |
 
+- **Bookkeeping of the other wall's carriers (found 2026-11, affects `UndetunedWall`,
+  `WireLightSplit`, `UpDownWire`).** `GenerationCurrent` (wall `true`: `g → g + 1` uses class `g − 1`) and
+  `GenerationWeak.weak_edge_true/false` (the vector carrier joins generations `1` and `2`) put the
+  vector-class carrier on the light pair, entry `(2, 1)` of `cyc κ_O`; `UndetunedWall` put it at `(1, 0)`
+  (class `h` at `(h + 1, h)`). With the matching assignment (shift `(k, K, k)`, rows `(K, k, k)`):
+  - `UndetunedWall`'s undetuned masses are unchanged as a set (`k², kK, kK`);
+  - `LightPairTexture`: the light block is `k [[δ, 0], [K, δ]]`, giving `tan θ₁₂ = √(m₁/m₂)` exactly at
+    that order (Gatto–Sartori–Tonin), and the heavy–light rotations become tiny (`≈ 10⁻⁴`);
+  - `WireLightSplit`'s Fibonacci block and the numerical studies built on the old assignment
+    (light-pair `45°`, `U` exclusions in PMFlavor item 6, the protocol-`U` test in
+    PMElementaryParticles) must be redone with the matching one before they are relied on.
+  Next: restate `UndetunedWall`'s bookkeeping with the class at `(h + 1, h)` derived from
+  `GenerationCurrent`, then redo `WireLightSplit` and the dependent numerics.
 - **Lazy or coherent `β` event (decides the mass formula).** `WallOffset`: the lazy reading of a
   wall's `β` event (`NativeDetuning`, `RootTransferPhase`) leaves an energy `|δ_O|` on the other wall
   only; the light masses become `≈ s²/|δ_O|` (squares of the wire's singular values), while a

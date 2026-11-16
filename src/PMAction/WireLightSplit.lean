@@ -3,6 +3,12 @@ import PMAction.ReferenceWallRotation
 /-!
 # The wire splits the light pair: a Fibonacci block
 
+**Superseded bookkeeping (2026-11).** This module uses `UndetunedWall`'s original assignment (vector
+carrier at `(1, 0)`, joining the heavy label to a light one). `GenerationCurrent.edge_carrier` puts it
+at `(2, 1)`, on the light pair (`UndetunedWall.undetuned_masses_matching`). The algebra below stays
+true; its physical reading (the Fibonacci block as the two larger masses, the golden point) does not
+apply to the wire with the corrected assignment, whose light block is `PMAction.LightPairTexture`'s.
+
 `ReferenceWallMass`: `M = D_R (δ_O + cyc κ_O)`. With `UndetunedWall`'s bookkeeping (rows carry
 `(K, k, k)`, the shift carries `κ_O = (K, k, k)`: vector flip `K`, spinor flip `k`) the rows are
 

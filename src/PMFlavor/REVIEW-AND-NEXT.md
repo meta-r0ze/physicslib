@@ -172,6 +172,34 @@ Used as targets for structure, not as fits. Quark ratios from FLAG (scale-free w
    `√(m_μ/m_τ) = 0.24` against PMNS sines `0.15, 0.55, 0.75`); the large angles point to the neutrino
    protocol's near-degenerate states.
 
+**Found (2026-11):** with the other wall's vector carrier on the light pair, as `GenerationCurrent`
+and `GenerationWeak` require (PMAction REVIEW, bookkeeping item), relation 2 follows exactly at
+leading order: `PMAction.LightPairTexture` gives `tan θ₁₂ = √(m₁/m₂)` per protocol. Numerically,
+fixing `δ_O` by `m_d/m_s` (with `k/K = α/2`) gives `m_s/m_b = 0.0163` against `0.0185`. The tension
+with `κ₀` stands: the same vector carrier makes the in-cycle label change in `J` and the 1–2 rotation
+in `U_d`; counting both doubles `|V_us|`. Next: decide whether `J`'s in-cycle entry is the event-level
+view of the same carrier (then `U` carries it and `J`'s in-cycle entry is not added), and redo the
+item 1, 2, 5 numerics with the corrected `U`.
+
+**Redone with the corrected bookkeeping (2026-11, numerical, `k/K = α/2`).**
+- Per protocol, fixing `δ_O` by the lightest ratio: down `u = δ_O/k_f = 64.6`, `tan θ₁₂ = 0.218`
+  (GST `0.224`), predicted `m_s/m_b = 0.0163` (data `0.0185`); charged leptons `u = 18.8`,
+  `tan θ₁₂ = 0.068` (`0.0695`), predicted `m_μ/m_τ = 0.053` (data `0.0595`); up `u = 11.2`,
+  `tan θ₁₂ = 0.041` (`0.045`), predicted `m_c/m_t = 0.089` (data `0.0074`, off by `12×`). Down and
+  leptons land within about `10%` on their second ratio with no further number; up does not.
+- The heavy–light (2–3) rotations are `≲ 4·10⁻⁴`: `|V_cb|` cannot come from `U`, so it is `J`'s
+  reference-wall node change after all, and the `×10.7` of item 2 returns (the `U = 1` audit's
+  reprieve for Closure's ratio `1` rested on the old bookkeeping).
+- A common `U` (same for up and down) leaves `|V_us| = κ₀` exactly and gives `|V_ub|` contamination
+  `0.0008` (`u = 30`) to `0.009` (`u = 100`): no longer excluded at every `δ_O`.
+- Double count, checked with the per-protocol `U_u` (`u = 11.2`), `U_d` (`u = 64.6`), real: without
+  `κ₀`, `|V_us| = θ_d − θ_u = 0.178` (`χ² ≈ 3300`); with `κ₀ = π/14` and a free phase, best `0.240`
+  (`χ² ≈ 370`). GST's `|V_us| ≈ √(θ_d² + θ_u²) = 0.222` needs a relative phase near `90°` between the
+  two protocols' 1–2 rotations, i.e. complex `U`: the label-cycle phase `Φ` per protocol
+  (`PMAction.ReferenceWallRotation.det_M`; it leaves `|U|` unchanged but sets these phases). So: no
+  separate `κ₀` in `J` (the in-cycle change is `U`'s), and a per-protocol cycle phase, is the reading
+  the data point to; it is a candidate until `Φ` per protocol is derived.
+
 Checked and dropped: a texture from letting `δ_O` act only on the vector-class label (spinor carriers
 never cross under `β`, `PMAction.NativeDetuning.beta_crossings`) decouples the light pair entirely
 (no 1–2 rotation), so it does not give relation 2.

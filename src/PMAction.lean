@@ -156,6 +156,7 @@ import PMAction.NativeDetuning
 import PMAction.WilsonPointForced
 import PMAction.WallOffset
 import PMAction.ReferenceLegSymmetry
+import PMAction.LightPairTexture
 import PMAction.NodeAmplitude
 import PMAction.UndetunedWall
 import PMAction.GenerationLabel
