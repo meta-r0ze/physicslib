@@ -39,6 +39,16 @@ the measure, not only of degree-≤2 moments.
   rough): charged leptons `0.0012`, down-type `0.0075`, up-type `0.00015`; none equals either value,
   so no charged sector reads the wire's singular values directly in that regime. Upstream: PMAction, "Size of
   the other wall's detuning".
+  **Up/down over one wire (`UpDownWire`, 2026-11).** The doublet reflection exchanges up ↔ down and
+  `s ↔ c` and fixes the reference axis, so with a shared `δ_O`, `K` the down wire is the up wire with
+  the light amplitudes exchanged. `product_equal`: same mass product. Numerically the spectra are equal
+  for `|k_s| = |k_c|` (any repair sign) and differ for `|k_s| ≠ |k_c|`. So: (i) an up/down split needs a
+  light-class magnitude asymmetry, which Closure's node price does not supply; the same asymmetry
+  would give PMFlavor's `×10` between the node changes (item 2) and the light-pair split: one target,
+  three readouts. (ii) Recorded test: `m_u m_c m_t/(m_d m_s m_b) ≈ 260` (rough), not `1`; so up and down
+  do not share `δ_O` and `K` with masses read as singular values. Next: derive where a light-class
+  magnitude asymmetry can come from (the leg, not the node: the weak current's chirality,
+  `PMFlavor.ExchangeChirality`; the repair acts on one sector) and whether `δ_O` is protocol-set.
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
