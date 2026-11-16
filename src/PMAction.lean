@@ -330,6 +330,7 @@ import PMAction.SpecialUnitaryHaar
 import PMAction.ParallelTransport
 import PMAction.CompactTransport
 import PMAction.LatticeSiteAction
+import PMAction.IntegratedSecondVariation
 
 import PMAction.RunningResponse
 
