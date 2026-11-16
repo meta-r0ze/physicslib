@@ -58,6 +58,24 @@ the measure, not only of degree-≤2 moments.
   do not share `δ_O` and `K` with masses read as singular values. Next: derive where a light-class
   magnitude asymmetry can come from (the leg, not the node: the weak current's chirality,
   `PMFlavor.ExchangeChirality`; the repair acts on one sector) and whether `δ_O` is protocol-set.
+  **Round of quick tests on the two open numbers (2026-11).**
+  - *Node energy*: not free. `PMFlavor.KronSeries`: in a conserving (Laplacian) link the node's
+    diagonal is the sum of its leg conductances, so `e − E = −(g₁ + g₂)`. Only `δ_O` is open.
+  - *`δ_O` as a shunt at the other wall's node* (Kron with an extra diagonal term): reference-wall over
+    other-wall change `= (α/2)/jump = 1.011`, not `10.7`. Excluded.
+  - *Protocol occupancy counts* (which carriers a protocol's state can use per class): symmetric in
+    `s ↔ c` by the colour-axis reflection (`DoubletReflection`, `ExchangeAxis`); cannot give a
+    magnitude asymmetry. The asymmetry has to come from the wall, not the protocol's axis.
+  - *Repair sign*: sign only; `PMAction.WireLightSplit.sign_blind`, `UpDownWire`: no magnitude effect.
+  - *Golden/silver `δ_O`* (`PMAction.NativeDetuning`): weak hierarchy (`φ²`, `5.8`) in direct readings,
+    and a large `U` there; only usable inside a protocol that adds hierarchy and keeps `U` small.
+  - *Protocol-set `δ_O` by `β` crossing fraction* (leptons `1`, colour-averaged quarks `1/3`,
+    `NativeDetuning.beta_crossings`): fails the mass-product readings directly; kept as a candidate.
+  - *Wall-dependent Wilson parameter*: a carrier flips by `−r t/2` (`PMAction.CarrierFlip`); if the
+    other wall's in-wall Wilson `r_O` differs from the reference wall's `1`, then `|κ_O/κ_R| = r_O`: a
+    magnitude asymmetry between the walls, the one kind still allowed. Open: what fixes `r_O`, and
+    whether it is tied to `δ_O` (`ZeroModeCoupling`: different matrix elements; a single Wilson
+    action ties on-site mass and in-wall `r` at `k = 0` only through the Wilson point condition).
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
