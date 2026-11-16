@@ -89,6 +89,16 @@ the measure, not only of degree-≤2 moments.
   rotation `≈ 0.03` and a cycle phase (PMFlavor REVIEW item 2). So the asymmetry is not required by
   the CKM; the up/down and light-pair splits still need a source, and the protocol-level `U` is now
   the common target for all three.
+  **Protocol-level `U`, first test (2026-11, numerical).** The CKM fit with Closure's equal node
+  changes wants the 2–3 persistence rotation mostly in the up protocol (`θ_u ≈ −0.034`, `θ_d ≈ 0.004`,
+  `χ² = 1.7`; up and down equal and opposite: `χ² = 12`). The wire's reference-wall rotation
+  (`PMAction.ReferenceWallRotation`, `≈ |dᵢ/dⱼ| · K/δ_O`) with masses read as the wire's singular values
+  predicts the opposite: `θ_u/θ_d ≈ (m_c/m_t)/(m_s/m_b) ≈ 0.33` (linear) or `0.57` (squared reading) at
+  equal `δ_O`, smaller still with the `δ_O` ratio the mass products suggest; constrained that way the
+  fit gives `χ² ≥ 35`. Recorded: a protocol whose `U` is the wire's own rotation with its masses as
+  singular values is disfavoured. The up protocol must use the wire differently from down; the tier
+  sets already differ (`TierLedger`: up `{0, 2, 3}`, down `{0, 1, 2}`), which is a lead, not a
+  derivation.
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
