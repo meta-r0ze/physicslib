@@ -46,6 +46,18 @@ boundary conduction, capacity promotion, coordinate jump = `TransferGraph.mode`)
 `PersistenceMechanics` says about Margin (`DecayChannel`, `MarginCorrection`) and about how a system's
 margin is selected, to fix `δ_O` per protocol instead of reading it off a mass ratio.
 
+**Margin, first pass (2026-11).** From Paper I: Margin is Finiteness's defense, "reserves and
+operating tolerances that absorb disturbances without leaving the viable range"; with no Margin a
+system sits at criticality and fails to any perturbation. On the wire: the reference's wall sits at
+`δ_R = 0` (Governor, stationary), and a wire with no detuning on the other wall has the reversed
+ordering (`PMAction.UndetunedWall`): PM's no-margin failure, so `δ_O ≠ 0` is Margin's existence.
+Size: in units of the vector flip, `LightPairTexture`'s `δ(1 − t²) = t` makes the Margin and the Map
+overlap one number, `δ_O ≈ tan θ₁₂ = √(m₁/m₂)`: down `0.236`, `e` `0.069`, up `0.041`. Quick test of a
+minimal-action rule (detuning cost `∝ δ²`, disturbance hazard `∝ (load/δ)²`, so `δ ∝ √load`): needs
+loads `33 : 2.8 : 1` (down : `e` : up); no protocol quantity tried has those ratios (`Q²`, `Y_R²`).
+Open: Paper I's selection with protective expenditure (`4_minimum_action`, cumulative hazard
+`H_i = ∫ β_i Z_net dt`) applied to the wire, with the protocol's own disturbance identified.
+
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
 Results below that used the old assignment: the `WireLightSplit` relation test and its recorded
