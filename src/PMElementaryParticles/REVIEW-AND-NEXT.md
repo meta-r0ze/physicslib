@@ -76,6 +76,11 @@ the measure, not only of degree-≤2 moments.
     magnitude asymmetry between the walls, the one kind still allowed. Open: what fixes `r_O`, and
     whether it is tied to `δ_O` (`ZeroModeCoupling`: different matrix elements; a single Wilson
     action ties on-site mass and in-wall `r` at `k = 0` only through the Wilson point condition).
+    Candidate chain (one premise): the other wall is detuned through its Wilson `r_O` with the on-site
+    `M = 1` kept, so `δ_O = 1 − r_O` and `|κ_O/κ_R| = r_O`. Then PMFlavor's node ratio
+    `|V_cb|/|V_ub| = 10.7 ± 0.6` (FC, `U ≈ 1`) reads `r_O ≈ 0.093`, `δ_O ≈ 0.91` (hop units): one number
+    from the CKM, to be tested against the light-pair split, the up/down split and the leakage bound
+    (`δ_O` near the hop scale is where `PMAction.LightLeakage` starts to bite).
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.
