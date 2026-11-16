@@ -15,14 +15,23 @@ antipode-odd step. On the wire there is none (`ProtocolReadout.odd_reference_no_
 channel layer the reference carrier `+2e₀` is one (`ReferenceHold`, whose wire test assumes the two
 layers share the lepton heavy slot: `m_μ/m_τ` `0.028 → 0.038`).
 
-**Next.** Derive how the channel layer (payload ledger, one row per channel) couples to the wire's odd
-modes each tick; that coupling is the readout. Candidate antipode-odd source already in the library:
-the gauge ledgers' maintenance, if it gives partner channels different phases (different charge),
-acts the same on all three labels of a protocol and does not commute with the antipode. With a
-channel-layer step of phase difference `2Δφ`, each wire phase `θ` becomes `θ/2 ± √(Δφ² + θ²/4)`;
-this needs `Δφ` per tick in the wire's units. Retest the six ratios with only `δ_O` per protocol.
-The tier ladder (`TierLedger`) is the same question in the paper's form. Until then e8p's masses are
-the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared assignment (their e8p caveats say so).
+**The resonance and the heavy-label weight** (`WireResonance`, `tools/protocol_readout_scan.py`).
+`det M ∝ δ³ + κ_O0 κ_O1 κ_O2`: at `δ_c = −k^{2/3} ≈ −0.0237` the wire has an exactly massless mode, and
+every protocol's light-ratio fit sits within a few percent of it, so the light ratios are offsets
+from the resonance. On the resonance `m₂/m₃ ≈ 0.023` for every protocol (down's `0.020` is close). The
+data need a weight `w` on the heavy label (both walls), `m₂/m₃ ≈ k^{2/3}/w`:
+`w_e : w_d : w_u ≈ 1 : 2.9–3.5 : 16–18.5` (the spread is the quark-mass scale choice;
+`w_e = 0.36`). Up and down differ, and the ordering follows the charge.
+
+**Next.** Derive the heavy-label weight per protocol from what maintains the heavy (vector-class)
+state each tick; this is the channel-layer coupling. Candidates already in the library, not yet
+derived as weights: the `β` crossing fraction of the vector class (lepton `1`, colour `1/3`,
+`PMAction.NativeDetuning`), which matches `w_d/w_e ≈ 3`; and `β` carrying the up protocol's carrier
+onto the held reference and the down's onto the electron's (`BetaReference`), the only up/down
+asymmetry found so far. Then derive why `δ_O` sits at the resonance, and the light ratios from the
+offset. Until then e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared
+assignment (their e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the
+paper's form.
 
 Constraints any readout must meet are in OVERVIEW (`DoubletReflection`, `ProtocolReadout`,
 `BetaReference`, `CoherentGate`): the partner asymmetry is first order for leptons and at least
