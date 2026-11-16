@@ -178,9 +178,9 @@ def bounds : Key → Rat × Rat
   | .s8Sigma => (2236/186375, 2236/186375)
   | .omegaRatio => (5.3775, 5.3776)
   | .wolfLambda => (0.22439, 0.22440)
-  | .wolfA => (0.80, 0.85)
-  | .wolfRho => (0.137, 0.150)
-  | .wolfEta => (0.343, 0.374)
+  | .wolfA => (0.8200, 0.8207)
+  | .wolfRho => (0.1411, 0.1412)
+  | .wolfEta => (0.3522, 0.3523)
   | .sin2Theta12 => (0.30901, 0.30902)
   | .sin2Theta23 => (0.57479, 0.57481)
   | .sin2Theta13 => (0.0218920, 0.0218921)
@@ -329,30 +329,30 @@ def Key.theoremName : Key → String
   | .hubbleSigma => "PMCosmology.Tensions.hubbleInputSigma_exact"
   | .s8Sigma => "PMCosmology.Tensions.s8InputSigma_exact"
   | .omegaRatio => "PMCosmology.Tensions.omegaRatio_bounds"
-  | .wolfLambda => "PMFlavor.Wolfenstein.wLam_bounds"
-  | .wolfA => "PMFlavor.Wolfenstein.wA_bounds"
-  | .wolfRho => "PMFlavor.Wolfenstein.wRho_bounds"
-  | .wolfEta => "PMFlavor.Wolfenstein.wEta_bounds"
-  | .sin2Theta12 | .sin2Theta23 | .sin2Theta13 => "PMFlavor.PMNSIntervals.input_bounds"
-  | .pmnsJ => "PMFlavor.PMNSIntervals.jarlskog_bounds"
+  | .wolfLambda => "PMFlavor.Values.wolfLambda_bounds"
+  | .wolfA => "PMFlavor.Values.wolfA_bounds"
+  | .wolfRho => "PMFlavor.Values.wolfRho_bounds"
+  | .wolfEta => "PMFlavor.Values.wolfEta_bounds"
+  | .sin2Theta12 | .sin2Theta23 | .sin2Theta13 => "PMFlavor.Values.pmnsSin2_bounds"
+  | .pmnsJ => "PMFlavor.Values.pmnsJarlskog_bounds"
   | .delta | .nu | .sigma | .chi | .dimD => "PMSubstrate.Derived.parameters_forced"
   | .cap => "PMSubstrate.capacityTerm" | .mapT => "PMSubstrate.mapTerm"
   | .protocol => "PMSubstrate.protocolTerm" | .governor => "PMSubstrate.governorTerm"
   | .toll => "PMSubstrate.tollTerm" | .margin => "PMSubstrate.marginTerm"
   | .lIntrinsic | .lEmbed | .lSubstrate | .nSites | .rm => "PMSubstrate.Derived.parameters_forced"
-  | .pm3J => "PMFlavor.Values.jarlskogGeo_bounds" | .cabibbo => "PMFlavor.Values.s12_bounds"
+  | .pm3J => "PMFlavor.Values.jarlskogGeo_bounds" | .cabibbo => "PMFlavor.Values.cabibbo_bounds"
   | .nc | .weinbergGut | .boundaryStorage => "PMSubstrate.Derived.parameters_forced"
   | .alphaG => "PMConstants.GravityAccounting.channels_as_frame"
   | .beta0 => "PMConstants.beta_positive_iff"
-  | .pmnsE11 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE12 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE13 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE21 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE22 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE23 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE31 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE32 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
-  | .pmnsE33 => "PMFlavor.PMNSIntervals.squared_entry_bounds"
+  | .pmnsE11 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE12 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE13 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE21 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE22 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE23 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE31 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE32 => "PMFlavor.Values.pmnsEntry_bounds"
+  | .pmnsE33 => "PMFlavor.Values.pmnsEntry_bounds"
   | .tauRatio => "PMElementaryParticles.LeptonMasses.tau_value"
   | .protonRadius => "PMHadrons.CompositeMasses.protonRadius_value"
   | .pion0MeV => "PMHadrons.CompositeMasses.pion0_mev_value"
@@ -374,8 +374,8 @@ def Key.theoremName : Key → String
   | .planckChargeAtt => "PMSubstrate.planckChargeAttenuation_bounds"
   | .planckChargeRatio => "PMSubstrate.planckChargeRatio_bounds"
   | .planckMass => "PMConstants.PlanckReadout.planckMass_bounds"
-  | .ckmS13 => "PMFlavor.Values.s13_bounds"
-  | .ckmS23 => "PMFlavor.Values.s23_bounds"
+  | .ckmS13 => "PMFlavor.Values.ckmS13_bounds"
+  | .ckmS23 => "PMFlavor.Values.ckmS23_bounds"
   | .ckmVcb => "PMFlavor.Values.vcb_bounds"
   | .wMassUnc => "PMConstants.ElectroweakBounds.w_mass_bounds"
   | .zMassUnc => "PMConstants.ElectroweakBounds.z_mass_bounds"

@@ -9,6 +9,11 @@ carries a measured central value, an uncertainty, and a citation. Stored as exac
 These are *comparison inputs*, not model values and not error bars of the Lean
 catalog. `none` means the value has no experimental counterpart here (or is pure
 geometric arithmetic).
+Flavour references (checked 2026-11-16 against PDG 2024 "CKM quark-mixing matrix" and NuFIT 6.0,
+JHEP 12 (2024) 216): `|V_ud|`, `|V_us|`, `|V_cb|`, `|V_ub|` are the review's averages; `λ`, `A`, `ρ̄`, `η̄`
+the global fit; `J` the fit value. Asymmetric errors use the side toward the model value. PMNS: normal
+ordering, both NuFIT 6.0 analyses (IC19 without SK-atm; IC24 with SK-atm), since `θ₂₃`'s octant
+differs between them.
 -/
 namespace E8PConstants
 
@@ -31,7 +36,7 @@ def expRefs : Key → List ExpRef
   | .fermi => [⟨0.000011663788, 0.000000000006, "navas_review_2024"⟩]
   | .vev => [⟨246.21965, 0.00006, "navas_review_2024"⟩]
   | .electronYukawa => [⟨0.000002935, 0.000000001, "navas_review_2024"⟩]
-  | .jarlskog => [⟨0.0000308, 0.0000015, "navas_review_2024"⟩]
+  | .jarlskog => [⟨0.0000312, 0.0000012, "navas_review_2024"⟩]
   | .hubbleLate => [
       ⟨73.0, 1.0, "riess_sh0es_2022"⟩,
       ⟨67.4, 0.5, "planck_2018"⟩,
@@ -53,7 +58,7 @@ def expRefs : Key → List ExpRef
   | .rydbergEV => [⟨13.605693122990, 0.0000000043, "codata_2022"⟩]
   -- CODATA 2022 `a₀ = 0.529177210544(82)` Å; σ combines it with the `m_e` input (`1.6×10⁻¹⁰` Å).
   | .bohrRadius => [⟨0.529177210544, 0.00000000018, "codata_2022"⟩]
-  | .vud | .vudDressed => [⟨0.97373, 0.00031, "pdg_2024"⟩]
+  | .vud | .vudDressed => [⟨0.97367, 0.00032, "pdg_2024"⟩]
   | .tauLifetimeFs => [⟨290.3, 0.82, "pdg_2024"⟩]
   | .neutronLifetimePredicted => [⟨878.4, 0.5, "pdg_2024"⟩]
   | .pionLifetimePredicted => [⟨2.6033e-8, 0.0005e-8, "pdg_2024"⟩]
@@ -64,17 +69,23 @@ def expRefs : Key → List ExpRef
   | .neutralPionFiniteLifetimeSeconds => [⟨8.43e-17, 0.13e-17, "pdg_2024"⟩]
   | .zEq => [⟨3387, 21, "planck_2018"⟩]
   | .ckmS13 => [⟨0.00382, 0.00020, "pdg_2024"⟩]
-  | .ckmS23 => [⟨0.0415, 0.0008, "pdg_2024"⟩]
-  | .ckmVcb => [⟨0.0415, 0.0008, "pdg_2024"⟩]
+  | .ckmS23 => [⟨0.0411, 0.0012, "pdg_2024"⟩]
+  | .ckmVcb => [⟨0.0411, 0.0012, "pdg_2024"⟩]
   | .wolfLambda => [⟨0.22431, 0.00085, "navas_review_2024"⟩]
   | .wolfA => [⟨0.826, 0.015, "navas_review_2024"⟩]
   | .wolfRho => [⟨0.1591, 0.0095, "navas_review_2024"⟩]
-  | .wolfEta => [⟨0.348, 0.010, "navas_review_2024"⟩]
-  | .sin2Theta12 => [⟨0.304, 0.012, "esteban_nufit-60_2024"⟩]
-  | .sin2Theta23 => [⟨0.574, 0.016, "esteban_nufit-60_2024"⟩]
-  | .sin2Theta13 => [⟨0.02225, 0.00056, "esteban_nufit-60_2024"⟩]
-  | .pm3J => [⟨0.0000308, 0.0000015, "navas_review_2024"⟩]
-  | .cabibbo => [⟨0.225, 0.00067, "navas_review_2024"⟩]
+  | .wolfEta => [⟨0.3523, 0.0071, "navas_review_2024"⟩]
+  | .sin2Theta12 => [
+      ⟨0.307, 0.012, "esteban_nufit-60_2024_no_ic19"⟩,
+      ⟨0.308, 0.012, "esteban_nufit-60_2024_no_ic24_sk"⟩]
+  | .sin2Theta23 => [
+      ⟨0.561, 0.012, "esteban_nufit-60_2024_no_ic19"⟩,
+      ⟨0.470, 0.017, "esteban_nufit-60_2024_no_ic24_sk"⟩]
+  | .sin2Theta13 => [
+      ⟨0.02195, 0.00058, "esteban_nufit-60_2024_no_ic19"⟩,
+      ⟨0.02215, 0.00058, "esteban_nufit-60_2024_no_ic24_sk"⟩]
+  | .pm3J => [⟨0.0000312, 0.0000012, "navas_review_2024"⟩]
+  | .cabibbo => [⟨0.22501, 0.00068, "navas_review_2024"⟩]
   | .pionPlusMeV => [⟨139.57039, 0.00018, "pdg_2024"⟩]
   | .fPiMeV => [⟨130.2, 0.8, "flag_2024"⟩]
   | .fKMeV => [⟨155.7, 0.3, "flag_2024"⟩]

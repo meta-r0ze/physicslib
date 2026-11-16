@@ -1,6 +1,61 @@
 # PMElementaryParticles — open work
 
-Identify which physical event, if any, enables the full active-bank antipodal word and when its output is read.
+**Status (review 2026-11-16).** What stands, in one place:
+1. Wire: rows `(K, k, k)`; the other wall's carriers are placed by glue arithmetic on single-wall
+   modes (`PMAction.WireMass.single_wall_class`): shift `(K, k, k)`, the vector carrier joining the heavy
+   label to label `1`. The `β` event is coherent (PMAction REVIEW).
+2. **Withdrawn (2026-11-16):** the "corrected" shift `(k, K, k)` (vector carrier on the light pair,
+   `LightPairTexture`, GST) and everything fixed from it: the margins `64.7 / 18.6 / 11.5`, the second-ratio
+   predictions (`0.82×`, `0.92×`, up `23×`) and the up heavy-entry candidate. It mixed the two-wall label
+   change of `GenerationCurrent` into the one-wall mass factor. With the derived placement: down
+   `m_s/m_b = 0.0217` (data `0.0199`), 1–2 rotation `0.157`, heavy–light `0.14`; leptons `0.59` (data
+   `0.059`); up has no `δ` for `m_u/m_c`. Open: which of the wire's stated inputs is not forced
+   (PMAction REVIEW).
+3. The data relation `|V_us| ≈ √(m_d/m_s)` (GST) is no longer derived.
+4. Up and down differ on the light labels too (`δ` `0.042` vs `0.236`), so "the reference via `β`" is
+   excluded as the whole up/down source (`ProtocolReadout`); `DoubletSign`: the difference is a
+   protocol-layer readout (odd/even cross term), first order for leptons only.
+5. The weak refresh is the doublet exchange and keeps the label (`PMFlavor.RefreshLabel`): it is the
+   protocol change of a charged-current event, so per-protocol data enter through how each protocol
+   reads the wire, and the 1–2 mixing is `U`'s (PMFlavor REVIEW, item 0).
+6. Excluded: same-wire direct neutral readout; universal pillar terms across doublets;
+   reflection-invariant gains; Wilson `r_O` (`WilsonPointForced`). (The exclusions that used the
+   withdrawn placement, protocol-level 2–3 `U`, are open again.)
+7. Generation names from the wire's masses (derived placement): label `2` lightest, `1` middle, `0`
+   heavy, matching PMFlavor's naming (PMFlavor REVIEW item 0).
+8. The wire's inputs, tested by persistence (PMAction REVIEW, run 2026-11-16): one `δ_O` and the
+   equal spinor magnitudes are forced; the other wall's vector amplitude and the rate reading of
+   `k/K` are choices that do not fix the data. On the derived wire `m₁/m₂ ≥ k/K = α/2` for every setting,
+   and up's `m_u/m_c = 0.0021` is below it: the up protocol cannot read the wire's singular values
+   directly.
+9. **Lean (2026-11-16):** `PMAction.WireLightBound.eigen_ratio_bound`: for `δ_O ≥ 0` and `0 < k ≤ 1/10`
+   the squared singular values `a ≤ b` of the derived wire satisfy `k² b ≤ 2a` (lightest-to-middle mass
+   ratio `≥ k/√2`), proved from Mathlib's Hermitian eigenvalues via Vieta. Up's `m_u/m_c = 0.0021` is below
+   `k/√2 = 0.0026`. For `δ_O < 0` or a cycle phase, `det = k²(δ³ + κ₀κ₁κ₂)` can vanish and the bound
+   does not hold (`WireMass.det_mass`).
+Open, in order: the protocol readout (how a protocol reads the wire), stated from the six pillars;
+then the per-protocol numbers.
+
+### Protocol readout (2026-11-16, numerical, derived wire)
+
+Readouts tried, each protocol with its own `δ_O` and cycle phase `Φ` (two parameters, two mass ratios):
+- *Masses = singular values (linear).* Down fits (`Φ ≈ 56°`, no test: two numbers, two parameters). Up:
+  best `m_c/m_t = 0.022` against `0.0037` (`Φ = 180°`, near `det = 0`). Leptons: best `m_μ/m_τ = 0.028`
+  against `0.059`. Excluded for up and leptons at every `δ_O` and `Φ`.
+- *Masses = squared singular values (a two-application readout over one maintenance cycle).* Fails all
+  three by large factors.
+So a protocol does not read this wire's spectrum by either rule. What PM constrains, to derive the
+readout from (not choose it): a protocol's persisting states must be stationary under everything
+that acts on it every tick: the wire (odd sector, `DoubletSign`), the refresh (the doublet exchange,
+which keeps the label, `PMFlavor.RefreshLabel`), colour and hypercharge maintenance. The refresh swaps
+partners every tick, so a single protocol's state is not stationary under it alone; the persisting
+object is the doublet over the refresh cycle, read through `ProtocolReadout`'s odd/even cross term.
+Next: write the one-cycle evolution (wire, then refresh) for a doublet and find its stationary states
+and their phase advance; that is the readout persistence fixes. Sections below that use the withdrawn placement are history.
+
+## Margin and Map
+
+Open: which physical event, if any, enables the full active-bank antipodal word and when its output is read.
 
 **Margin from the Map (idea, not a rule: the margin is the minimum that lets every protocol succeed).** In the Boolean Map the requirement is one clear live bit on each active payload row per visit (`visitRoute_active_clean_injective`, `visitRoute_collision`). This is the same for every protocol, one bit per active channel. Protocol differences must therefore enter through the gate: how often, or with what amplitude, the word fires for each protocol. An up/down difference in the gate requires a record of the doublet position on each event (`asymmetric_gate_records`), written onto a clean bit (occupied records collide). Next:
 - Gate statistics. On a closed record orbit of least period `N` a mark returns at visit `N+1` (`marked_payload_return`); an open orbit never returns it. Candidate: a protocol's gain is `1/N_p`, so its margin `u_p` is its record-orbit period. It requires a definition of each protocol's record orbit (routing mode and anchor: colour bulk, `D = 4` manifold, `χ = 2` boundary, none). Test: ordering `N_up < N_e < N_down` first, then values; do not match the numbers `12, 19, 65` by eye.
@@ -16,6 +71,8 @@ Identify which physical event, if any, enables the full active-bank antipodal wo
   - *Per label (lead).* `β` crosses the reference axis only for vector-class carriers (`NativeDetuning.beta_crossings`), and the vector class is the wire's heavy label. So `β` lands on the reference carrier only for the up protocol's heavy label (`BetaReference.onto_reference_iff`). This is the same slot the data single out (up's heavy on-site entry `K` instead of `Kδ`, see above). Open: derive the heavy on-site entry of a label whose `β` image is the maintained reference; the candidate needs `K`.
   So the Map now states the requirement exactly: a protocol-wide, reflection-odd gate angle, plus one full position bit per event. No library quantity supplies the angle yet. The remaining lead is the reference itself as the position record: it is a stationary state in one doublet position, so it could supply the orthogonal record without cost. Against it: `DoubletReflection` keeps the reference and swaps up and down, so the reference alone does not single out a position; something must break that reflection on the record.
 - Quarter turn. With both records set `pairVisit` has period 4, so eigenphases `±1, ±i` occur, but the two partners' occupancies are offset by half a period (180°). Whether the quarter turn attaches to one protocol relative to another needs a readout. Open. Clock mask changes alone cancel over a complete cycle (`RefreshMap.clockRoute_closes`). A subcycle reading requires independently selected endpoints; an enduring protocol change requires a mechanism outside this common mask-change rule.
+
+## Mathematical gaps (Lean)
 
 ### A3. Three-body phase-space factorization
 The three-body measure is used but not factored. Target: factor it into
@@ -57,7 +114,7 @@ flavour numbers sit in the pillars the papers usually leave out:
 | Protocol | up, down, `e`, `ν` as information over the wire | species content derived (`CarrierRepresentation`) |
 | Governor | the stationary reference (`δ_R = 0`), the weak refresh | derived (`ReferenceDetuning`, `CarrierActions`) |
 | Toll | node passage `α` (`k/K = α/2`), the jump `1/(2α⁻¹ + π)` | derived, reading of rates open (`CertainTransferRate`) |
-| Margin | the other wall's detuning `δ_O`, per protocol (down `64.6 k_f`, `e` `18.8 k_f`, up `11.2 k_f` from the lightest ratios) | open |
+| Margin | the other wall's detuning `δ_O`, per protocol (down `64.7 k_f`, `e` `18.6 k_f`, up `11.5 k_f` from the lightest ratios at `M_Z`) | open |
 PMFlavor's three label changes are PM's three transfer modes (`PersistenceMechanics.InformationTransfer`:
 boundary conduction, capacity promotion, coordinate jump = `TransferGraph.mode`). Lead: use what
 `PersistenceMechanics` says about Margin (`DecayChannel`, `MarginCorrection`) and about how a system's
@@ -113,45 +170,17 @@ link margin), 2026-11.** It gives operational definitions to test:
    (`PMAction.GenerationCurrent`, `UndetunedWall.undetuned_masses_matching`).
 2. Map and Margin are one number per protocol: `δ(1 − t²) = t`, `tan θ₁₂ = √(m₁/m₂)` (`LightPairTexture`).
 3. The `β` event is coherent (data, PMAction REVIEW).
-4. Margins from the lightest ratios: `u = δ_O/k_f` = `64.6` (down), `18.8` (`e`), `11.2` (up); with them
-   down and `e` predict their second ratio within `10%`, up misses by `12×`.
+4. Margins from the lightest ratios (one scale): `u = δ_O/k_f` = `64.7` (down), `18.6` (`e`), `11.5` (up);
+   down and `e` predict their second ratio within `20%`, up misses by `23×`.
 5. Up and down share colour and maintenance; only hypercharge (and the doublet sign) tells them apart.
 6. Cabibbo wants a quarter turn between the up and down cycle phases.
 7. Information-theory reading: `R_p = log₂(1 + u_p)` = `6.04`, `4.31`, `3.61` bits (down, `e`, up).
 
-**Brainstorm: what is the rate `R_p` a protocol must sustain? (quick checks against the ordering
-down > `e` > up, nothing tuned).**
-| Candidate | Values (down, `e`, up) | Ordering |
-|---|---|---|
-| `log₂` multiplet size (right sector: 3, 1, 3) | 1.58, 0, 1.58 | up = down: fails |
-| repair events (`RootRepairRule`) | equal for up, down | fails |
-| `|Y_R|` (2/3, 2, 4/3) | | `e` > up > down: fails |
-| `|Q|` (1/3, 1, 2/3) or `1/|Q|` | | fails |
-| hypercharge response `(Y_R/2)²` | | fails |
-| doublet sign (lower: down, `e`; upper: up) plus colour | | down, `e` high, up low: matches |
-Additive bits (independent channels add): with colour adding `log₂ 3 = 1.585` bits, `R_d − R_e = 1.73`
-(within the `±0.15` from the margins' `10%`). The lower-minus-upper term is then `≈ 2.3–2.4` bits (from
-`R_e − R_ν` and `R_d − R_u`), not yet derived. Prediction, conditional: `R_ν = R_u − log₂ 3 = 2.02`,
-`u_ν ≈ 3.07`, which on this wire gives a strongly hierarchical, weakly mixed neutrino protocol: in
-tension with the large PMNS angles unless neutrinos read the wire differently (Majorana, on-axis
-one-leg readout). Status: a pattern with one passing check, not a derivation. Next: derive the
-lower/upper term from the doublet structure (the refresh acts on the sign, `CarrierActions.weak`), and
-settle how a neutral protocol reads the wire.
-
-**Step 1: the doublet term (2026-11).** Target: lower minus upper `≈ 2.36 ± 0.15` bits (from `R_d − R_u`
-and `R_e − R_u + log₂ 3`), equivalently a factor `≈ 5.4 ± 0.8` in `1 + u`. Facts: the reference sits
-on the upper, neutral member (`ν`, `PMConstants.ReferenceStabilizer`, `ReferenceMasses`); the doublet
-index is the carrier's sign (`CarrierRepresentation`), and the weak refresh negates every carrier of
-the reference's sector (`CarrierActions.weak`), which exchanges the doublet positions there. So the
-term separates protocols on the reference's doublet position (up, `ν`) from displaced ones (down, `e`).
-Quick counts: one sign bit (`1`), signs on both walls (`2`, `2.4σ` low), charge or hypercharge
-displacement squared (wrong ordering: up carries more charge than down yet needs less margin).
-None derived. Open: how the refresh's per-tick exchange of doublet positions costs a displaced
-protocol information, counted from `CarrierActions.weak` and the maintenance ledger.
-Run: against the reference, the refresh cannot tell the positions apart. It negates every carrier of
-its sector uniformly (`PMConstants.WeakUniform.refresh_uniform`), so every unit state has flag
-`‖φ − (−φ)‖²/4 = 1`, and every protocol state is orthogonal to the reference carrier. Excluded as the
-source of the doublet term.
+**Rate `R_p` and the doublet term (2026-11, closed).** Tried as additive bits: colour `log₂ 3` fits
+`R_d − R_e`, leaving a lower-minus-upper term `≈ 2.36` bits; quick counts (one sign bit, signs on both
+walls, charge displacement) do not give it, and the refresh is uniform on its sector
+(`PMConstants.WeakUniform.refresh_uniform`), so it cannot tell doublet positions apart. Its neutrino
+prediction (`u_ν ≈ 3.07`) is excluded with the same-wire neutral readout (six-pillar tests below).
 
 **The form of the minimum margin (2026-11).** The library's own pillar theorems fix it:
 `PMSubstrate.Pillars.map_maintains` (correction toward a retained reference with gain `k` keeps the
@@ -200,21 +229,14 @@ roughly directly; up does not.
   all. Derive the routing histories and rates, their costs, and the tiers each protocol occupies
   (`TierLedger.tiersFor`: up `{0, 2, 3}`, down and lepton `{0, 1, 2}`; `QuarkMasses`,
   `LeptonMasses`); the ledgers still need a cost or selection rule for assigning invariants to tiers.
-  Do not fit species parameters to measured masses; derive, then test. A wire result to test against:
-  `PMAction.WireLightSplit` (regime `δ_O` a few spinor flips): a protocol whose masses are the wire's
-  singular values directly satisfies `(m₂/m₁)√(m₀/m₁) ≈ k/K` (`α/2` as an admittance ratio, `0.0385`
-  as a rate ratio). A protocol that does not satisfy it uses the wire differently; that is data
-  about the protocol, not a fit. Recorded (2026-11, PDG masses, quarks `MS̄` at mixed scales, so
-  rough): charged leptons `0.0012`, down-type `0.0075`, up-type `0.00015`; none equals either value,
-  so no charged sector reads the wire's singular values directly in that regime. Upstream: PMAction, "Size of
-  the other wall's detuning".
+  Do not fit species parameters to measured masses; derive, then test.
   **Up/down over one wire (`UpDownWire`, 2026-11).** The doublet reflection exchanges up ↔ down and
   `s ↔ c` and fixes the reference axis, so with a shared `δ_O`, `K` the down wire is the up wire with
   the light amplitudes exchanged. `product_equal`: same mass product. Numerically the spectra are equal
-  for `|k_s| = |k_c|` (any repair sign) and differ for `|k_s| ≠ |k_c|`. So: (i) an up/down split needs a
-  light-class magnitude asymmetry, which Closure's node price does not supply; the same asymmetry
-  would give PMFlavor's `×10` between the node changes (item 2) and the light-pair split: one target,
-  three readouts. (ii) Recorded test: `m_u m_c m_t/(m_d m_s m_b) ≈ 260` (rough), not `1`; so up and down
+  for `|k_s| = |k_c|` (any repair sign) and differ for `|k_s| ≠ |k_c|`. So: (i) with a shared `δ_O`, `K` an up/down
+  split needs a light-class magnitude asymmetry, which Closure's node price does not supply (the
+  "one asymmetry, three readouts" reading used the old bookkeeping; the data now say `δ_O` is
+  protocol-set, item 3 of the status). (ii) Recorded test: `m_u m_c m_t/(m_d m_s m_b) ≈ 260` (rough), not `1`; so up and down
   do not share `δ_O` and `K` with masses read as singular values. Next: derive where a light-class
   magnitude asymmetry can come from (the leg, not the node: the weak current's chirality,
   `PMFlavor.ExchangeChirality`; the repair acts on one sector) and whether `δ_O` is protocol-set.
@@ -226,7 +248,7 @@ roughly directly; up does not.
   - *Protocol occupancy counts* (which carriers a protocol's state can use per class): symmetric in
     `s ↔ c` by the colour-axis reflection (`DoubletReflection`, `ExchangeAxis`); cannot give a
     magnitude asymmetry. The asymmetry has to come from the wall, not the protocol's axis.
-  - *Repair sign*: sign only; `PMAction.WireLightSplit.sign_blind`, `UpDownWire`: no magnitude effect.
+  - *Repair sign*: sign only; `UpDownWire`: no magnitude effect.
   - *Golden/silver `δ_O`* (`PMAction.NativeDetuning`): weak hierarchy (`φ²`, `5.8`) in direct readings,
     and a large `U` there; only usable inside a protocol that adds hierarchy and keeps `U` small.
   - *Protocol-set `δ_O` by `β` crossing fraction* (leptons `1`, colour-averaged quarks `1/3`,
@@ -244,42 +266,12 @@ roughly directly; up does not.
     **Excluded** (`PMAction.WilsonPointForced`): the split update's neighbour coefficient
     `(r/2)β + (i/2)αⱼ` squares to `(r² − 1)/4`, so exact local unitarity forces `|r| = 1` on every wall
     it updates. A wall-dependent `r_O` needs the other wall to be updated by a different construction.
-  **Reframed (2026-11).** The wall magnitude asymmetry was sought for PMFlavor's `×10.7`. With
-  `U ≠ 1` kept, Closure's equal node changes fit the four CKM magnitudes with a 2–3 persistence
-  rotation `≈ 0.03` and a cycle phase (PMFlavor REVIEW item 2). So the asymmetry is not required by
-  the CKM; the up/down and light-pair splits still need a source, and the protocol-level `U` is now
-  the common target for all three.
-  **Protocol-level `U`, first test (2026-11, numerical).** The CKM fit with Closure's equal node
-  changes wants the 2–3 persistence rotation mostly in the up protocol (`θ_u ≈ −0.034`, `θ_d ≈ 0.004`,
-  `χ² = 1.7`; up and down equal and opposite: `χ² = 12`). The wire's reference-wall rotation
-  (`PMAction.ReferenceWallRotation`, `≈ |dᵢ/dⱼ| · K/δ_O`) with masses read as the wire's singular values
-  predicts the opposite: `θ_u/θ_d ≈ (m_c/m_t)/(m_s/m_b) ≈ 0.33` (linear) or `0.57` (squared reading) at
-  equal `δ_O`, smaller still with the `δ_O` ratio the mass products suggest; constrained that way the
-  fit gives `χ² ≥ 35`. Recorded: a protocol whose `U` is the wire's own rotation with its masses as
-  singular values is disfavoured. The up protocol must use the wire differently from down; the tier
-  sets already differ (`TierLedger`: up `{0, 2, 3}`, down `{0, 1, 2}`), which is a lead, not a
-  derivation.
-  **Lead: a right-handed hypercharge phase on the other wall's carriers (candidate, not derived).**
-  What tells up from down is only the right-sector hypercharge (`DoubletReflection`:
-  `Y_R = 4/3` up, `−2/3` down; left-handed both `1/3`). The other wall is the right-handed one, and an
-  abelian phase rides on every event (`PMAction.Machine.FactorRepair`: "an event may carry any
-  phase"). If each other-wall carrier event carries `e^{i Y_R θ₀}`, then:
-  - `U` changes per protocol: the reference-wall Gram entries are `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`
-    (`PMAction.ReferenceWallRotation.left_gram_entry`), so a rotation scales with
-    `|cos(Y_R θ₀)|`; at `θ₀ = 3π/4` the down rotation vanishes and the up one is maximal, the
-    pattern the CKM fit wants (`θ_d ≈ 0.004`, `θ_u ≈ −0.034`);
-  - the masses change per protocol through the same entries and through `det = d₀d₁d₂(δ³ + Π κ)`;
-  - the cycle product `Π κ` carries `e^{3 i Y_R θ₀}`: a non-flat phase, different for up and down,
-    the CP phase's candidate source (PMFlavor item 5).
-  **Checked the same day; the `U` and mass parts are withdrawn.** Per-carrier phases are removed by
-  rephasing the label states (rows and columns by the same phases keep `δ · 1`); only the cycle
-  phase `Φ = arg(κ₀κ₁κ₂) − 3 arg δ` is physical, here `Φ = 3 Y_R θ₀`. The `cos(Y_R θ₀)` scaling above
-  was not rephasing-invariant. Numerically, `Φ` moves `|U|` by under `1%` and the two larger masses
-  not at all (`δ_O/k = 1, 3, 10`); it moves only the lightest mass (through
-  `det = d₀d₁d₂(δ³ + Πκ)`, up to `40%` at `δ_O/k = 10`). So it cannot give the up-dominant 2–3 rotation.
-  It stays a candidate for the CP phase only, and needs a non-flat holonomy around the label cycle,
-  which persistence disfavours without a source (`PMAction.FlatPersistence`); the only charged
-  stationary object is the reference background (lepton doublet, `PMConstants.ReferenceCharge`).
+  **Withdrawn (old bookkeeping):** the "reframed" CKM fit with a 2–3 persistence rotation `≈ 0.03`
+  and the "protocol-level `U`, first test". On the corrected wire the 2–3 rotations are `≲ 4·10⁻⁴`.
+  **Right-handed hypercharge phase on the other wall (checked, 2026-11).** Per-carrier phases
+  rephase away; only the cycle phase `Φ = arg(κ₀κ₁κ₂) − 3 arg δ` is physical (`Φ = 3 Y_R θ₀` here). It
+  moves `|U|` by `< 1%` and only the lightest mass. Kept as a CP-phase candidate (PMFlavor item 5);
+  needs a non-flat holonomy source (`PMAction.FlatPersistence`).
 - **Tier ladder.** `TierLedger` (`Δ⁰…Δ³`, up `{0, 2, 3}`, down and lepton `{0, 1, 2}`) is this folder's:
   where each protocol's three label states land. Derive that placement; PMFlavor's label changes act
   on the label states and do not use the ladder.

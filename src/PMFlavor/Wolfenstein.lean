@@ -4,6 +4,10 @@ import Mathlib.Tactic
 /-!
 # Wolfenstein parameters of the geometric CKM matrix
 
+**Note (2026-11-16).** `wRho`, `wEta` here are the paper's *unbarred* `ρ`, `η`
+(`conj(V_ub)/(Aλ³)`), though the text below writes `ρ̄`, `η̄`. The PDG's barred pair
+(`−V_ud V_ub*/(V_cd V_cb*)`) is `WolfensteinBar.rhoBar`, `etaBar`; compare those with the PDG fit.
+
 Paper IV translates its exact matrix into "the standard phenomenological
 observables" and states
 

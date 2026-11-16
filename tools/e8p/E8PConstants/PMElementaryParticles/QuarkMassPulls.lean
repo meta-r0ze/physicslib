@@ -27,6 +27,6 @@ theorem pulls :
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
     PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
     PMSubstrate.E8Values.overhead_eq]
-  norm_num
+  norm_num [PMSubstrate.SIUnits.electronMassMeV]
 
 end E8PConstants.QuarkMassPulls

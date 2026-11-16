@@ -27,8 +27,12 @@ transfers of `TransferGraph` (`entry_is_transfer`). One event makes no reverse c
 The change through class `0` (`2 → 1`) uses the weak carrier itself and stays in the cycle
 (`weak_carrier_entry`); the changes through `1` and `2` need a spinor carrier from the node
 (`node_entries`). The actual weak refresh (`CarrierActions.weak`) moves only vector-class
-carriers of the reference's sector (`refresh_moves_reference`, `refresh_fixes_other`): it supplies
-the in-cycle change and no spinor carrier. Completion: `A = N − Nᴴ` (`N` the off-diagonal part of `J`)
+carriers of the reference's sector (`refresh_moves_reference`, `refresh_fixes_other`), and only by
+their sign: no spinor carrier, and no label change either (`RefreshLabel`: the sign flip keeps every
+carrier's class and axis, `refresh_keeps_class`, `refresh_same_axis`, and keeps the label,
+`refresh_keeps_label`; it is the doublet exchange). So the in-cycle entry `κ 0` has no source in the
+refresh (REVIEW item 0). **Names.** With the carriers placed by glue arithmetic (`PMAction.WireMass`) the wire's
+masses give label `2` the lightest, `1` the middle, `0` the heavy: the naming used here. Completion: `A = N − Nᴴ` (`N` the off-diagonal part of `J`)
 is skew-Hermitian (`A_skew`), carries `κ c` forward and `−κ̄ c` in reverse (`forward_entry`,
 `reverse_entry`), and `1 + A` is unitary to second order (`first_order_unitary`). At second order
 unitarity forces the Hermitian part of the next term to `A²/2` (`second_order_unitary`), so the
@@ -251,7 +255,7 @@ lead boundary; the CKM transfer adds the `1/π` boundary (`KronSeries.vub_from_k
 
 **The other wall must be detuned.** `UndetunedWall`: at `δ_O = 0` the light mass `D_R cyc κ_O` is a
 cyclic shift with entries `a_{h+1} c_h` (`diag_cyc`, `undetuned_gram`), which with the symmetry are
-`(kK, k², kK)` (`undetuned_masses`): two heavy, one light, the reverse of every charged sector.
+`(kK, k², kK)` (`undetuned_masses`, `PMAction.WireMass.undetuned`): two heavy, one light, the reverse of every charged sector.
 
 **The wire's charged-current couplings.** The two `K_cc` edges at the label-`v` generation are both
 spinor-class through the node (`PMConstants.GenerationWeak`), with one leg weight and the `s ↔ c`
@@ -413,3 +417,9 @@ for VI) — not missing Paper IV proofs.
 Run `./build.sh PMFlavor` for this library. The top-level `./build.sh audit` checks
 the whole tree, not just PMFlavor. PMFlavor may import PMElementaryParticles, not PMHadrons and later; permitted axioms
 `propext`, `Classical.choice`, `Quot.sound`.
+
+**Barred Wolfenstein pair (`WolfensteinBar`).** `Wolfenstein.wRho`, `wEta` are the paper's unbarred
+`ρ + iη = conj(V_ub)/(Aλ³)`. The PDG fit quotes `ρ̄ + iη̄ = −V_ud V_ub*/(V_cd V_cb*)`. `zbar_eq` proves the
+closed forms `ρ̄ = c₁₂s₁₃(P cos δ + R)/(s₂₃D)`, `η̄ = c₁₂s₁₃P sin δ/(s₂₃D)` (`P = s₁₂c₂₃`, `R = c₁₂s₂₃s₁₃`,
+`D = P² + 2PR cos δ + R²`) satisfy that definition; `rhoBar_bounds` (`0.1411–0.1412`), `etaBar_bounds`
+(`0.3522–0.3523`), `wA_tight` (`0.8200–0.8207`). `Values.wolfRho`, `wolfEta` are now the barred pair.

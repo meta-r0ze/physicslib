@@ -52,8 +52,8 @@ names), `Experimental` (measured references), `Format` (text/JSON/LaTeX).
 |---|---|---|
 | `PMSubstrate/` | `ExperimentalComparison` (α⁻¹ against CODATA/Parker/Morel/Fan) | `src/PMSubstrate` |
 | `PMConstants/` | `WeakMassPulls`, `ReadoutPulls`, `ScalarAccounting`, `HyperScope` | `src/PMConstants` |
-| `PMFlavor/` | `FlavourPulls`, `ExperimentalPulls` | `src/PMFlavor` |
 | `PMElementaryParticles/` | `LeptonMassPulls`, `QuarkMassPulls`, `TauLifetimePulls` | `src/PMElementaryParticles` |
+| `PMFlavor/` | `FlavourPulls`, `ExperimentalPulls` (values only from `PMFlavor.Values`); `CandidateTests` (candidate formulas against data, not reported values) | `src/PMFlavor` |
 | `PMHadrons/` | `CompositeMassPulls` | `src/PMHadrons` |
 | `PMAtoms/` | `Certified` (`--masses`), `Periodic` (`--periodic-table`), `Shells` (`--shells`), `Nuclear` (`--nuclear`), `E8TickUnit`, `AlphaClockComparison` | `src/PMAtoms` |
 

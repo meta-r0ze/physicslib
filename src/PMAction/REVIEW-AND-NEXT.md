@@ -8,6 +8,14 @@ each species uses the wire is protocol work in
 [PMElementaryParticles](../PMElementaryParticles/REVIEW-AND-NEXT.md). The node amplitude is
 derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
 
+- **The weak refresh keeps the label (review, 2026-11-16).** `CarrierActions.weak` is
+  `signExchange` on the reference's sector, and the sign is the doublet index
+  (`CarrierActions.same_axis_iff`). Negating a carrier moves it by `2x`, a shift in the trivial
+  glue class (`Glue = ZMod 2 × ZMod 2`, `−g = g`), while a label change is a shift by a nonzero class
+  (`GenerationCurrent`). So the refresh changes the protocol (doublet position) and never the label.
+  `PMFlavor.EventTransfer`'s docstring ("the refresh supplies the in-cycle entry of `J`") disagrees.
+  Done in Lean: `PMAction.SignFlip`, `PMFlavor.RefreshLabel.refresh_keeps_label`. Open: the in-cycle
+  entry (PMFlavor REVIEW, item 0).
 - **Size of the other wall's detuning `δ_O`.** `ReferenceDetuning`: the reference's wall is
   stationary exactly when `δ_R = 0` (`stationary_iff`), and the other wall's chiral state exactly when
   `δ_O = 0` (`stationary_first_iff`); so `δ_R = 0` and the light mass is `M = D_R (δ_O + cyc κ_O)`
@@ -21,26 +29,18 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   **Rotation on the event's wall** (`ReferenceWallRotation`): off-diagonal `M Mᴴ` entries are
   `dᵢ(δ̄ κ + δ κ̄)d̄ⱼ`; the charged current reads this side (rows of `D₂ Y⁻¹ D₁ᴴ`, the wall
   `(1 − Γ)/2` selects; one step by name). First-order rotation `≈ |dᵢ/dⱼ| · |κ_O/δ_O|`.
-  **Numerical facts (outside Lean, 2026-11; items 1–4 and the triage rows on the golden point and the
-  wire's own `U` used the superseded bookkeeping, vector carrier at `(1, 0)`; with the corrected one see
-  the bookkeeping item below and PMFlavor REVIEW "Redone").** Symmetric bookkeeping, vector flip
-  `K_f`, spinor flip `k_f`:
+  **Numerical facts (outside Lean, 2026-11, corrected bookkeeping: vector carrier on the light
+  pair, rows `(K, k, k)`, other-wall shift `(k, K, k)`).**
   1. *Ordering:* one heavy, two light once `|δ_O| ≳ k_f`.
-  2. *Light pair (corrected).* The wire itself splits the light pair when `|δ_O|` is a few `k_f`: the
-     light ratio runs from `≈ k/K`-level at `δ_O ≲ k_f` through `0.03–0.5` at `δ_O = 5 k_f` to near `1`
-     at `δ_O ≳ 30 k_f` (sign of the repair matters). An earlier entry said "degenerate for every
-     `δ_O`"; it scanned only `δ_O ≥ 0.1 K_f` and is withdrawn. At large `δ_O` the residual split is
-     `2|b|` with label-equal mixtures. So in the regime `δ_O ∼ k_f` the wire gives all three masses
-     from one ratio `δ_O/k_f`: a one-parameter curve relating the two mass ratios of a sector. That
-     curve is a wire prediction; comparing it with species is PMElementaryParticles work.
-     `WireLightSplit`: the two larger masses are `K` times the eigenvalues of `[[δ_O, k], [k, 0]]`
-     (`√(m₀/m₁) − √(m₁/m₀) = δ_O/k`; at `δ_O = k` the Fibonacci matrix, masses `K k φ`, `K k/φ`), the
-     third `≈ k²`; so `(m₂/m₁)√(m₀/m₁) ≈ k/K`, parameter-free in the ratios.
-  3. *Heavy–light rotation* `≈ k_f/|δ_O|` (exact two-wall: falls faster above `δ_O ≈ 0.3 |y|`). In the
-     regime of item 2 it is `O(0.1–1)`, so `U ≠ 1` there.
+  2. *Light pair:* `LightPairTexture`: `tan θ₁₂ = √(m₁/m₂)` (GST) with `δ(1 − t²) = t`; the light ratio fixes
+     `δ_O` per protocol (EP REVIEW, "Second ratios at one scale").
+  3. *Heavy–light rotations:* `≲ 4·10⁻⁴`, so the 2–3 and 1–3 parts of `U` are negligible.
   4. *Full two-wall check* (blocks `a, b, c, d` of `WallSeesaw`): the reduction `D₂ Y⁻¹ D₁ᴴ` misses the
      heavy mass by `25%` at `δ_O = 0.3|y|` with `K_f = |y|/2`; then about `20%` of the heavy state lies
      on the gapped components.
+  The earlier numbers (Fibonacci block, golden point, `45°` light pair at every `δ_O`, heavy–light
+  `O(0.1–1)`) used the superseded assignment and are withdrawn (`WireLightSplit` retired; in git
+  history).
   **Open premises, stated (from a review, 2026-11).**
   - `|y| = 1`: `CyclicSeesaw.gram_equal` holds for any common crossing `a`; `|a| = 1` needs the added
     premise that flavour transport across the bare hop is a unitary relabelling.
@@ -75,14 +75,55 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   | Two-detuning native wall | `NativeFlavourWall`, `NativeSector.diag`, `WallExchange.H` use one `δ` | done: `WallExchange.H2`, `NativeFlavourWall.nativeHamiltonian2`, `native_observed2` | target for the native measurement: reproduce `δ₁ β` on wall `1` at `k = 0` |
   | Native `δ_O` measurement | search for a reference-conditioned native update | none in the library | parked until the two-detuning wall exists |
   | Rate law (`RootTransferPhase`) | a vector attempt probability in the library | none (`RootPulseEvents`: one attempt is not the quarter pulse) | parked |
-  | Golden point `δ_O = k` (`ℤ[φ]`) | icosian / `H₄` structure in the library | none; direct species reading fails (ratio `φ²`) | parked; candidate needs `H₄` folding in PMSubstrate and a protocol reading |
   | Economy-minimal `δ_O` | sharp value? | crossover, not a point | dropped as a value source |
-  | Rate vs admittance ratio (`α/2` or `0.0385`) | `WireLightSplit` relation against species | both fail directly (recorded, EP) | kept as readings |
   | `δ_O` vs `r − 1` | same parameter? | different matrix elements (`first_wall_action`, `zero_mode_element`) | needs a derivation tying them, or keep apart |
   | Hygiene | unused hypotheses | removed (`node_series`, `one_wall_flip`) | done |
-  | Native `δ_O` as a `β`-event rate | `NativeDetuning` | `δ = −gap(p)/2`; `β` swaps axes `0 ↔ 2`, moving half the vector carriers across the node once | leg count open: golden (`δ_O = k_f`) or silver (`≈ 2k_f`) candidate |
-  | Wire's own `U` as the persistence rotation | `U_uᴴ W U_d` with the wire's reference-wall `U` common to both protocols | `|V_ub| = 0.026–0.12` at every `δ_O` (PMFlavor REVIEW item 6) | excluded: `U` is protocol-level |
+  | Native `δ_O` as a `β`-event rate | `NativeDetuning` | `δ = −gap(p)/2`; `β` swaps axes `0 ↔ 2`, moving half the vector carriers across the node once | leg count open; the golden/silver readings used the superseded bookkeeping |
 
+- **Review of the bookkeeping correction (2026-11-16): an error, reverted.** `WireMass.shift` is now
+  `κ_O h` (class `h` at `(h + 1, h)`), `UndetunedWall.undetuned_masses` restored, `GenerationNames`
+  retired, `LightPairTexture` marked as not the wire's placement. Reasoning: The light mass's right
+  factor acts on the other wall's single-wall modes. On those modes the move joining generations `h`,
+  `h + 1` changes the class by `e (h + 1) + e (h + 2) = e h` (`WireMass.single_wall_class`, glue
+  arithmetic), the original assignment, and the one `LightSplit.composite_expansion2` and
+  `GenerationMass.composite_shift_then_cross` use. `GenerationCurrent`'s class `e (h − 1)` is the carrier
+  of a two-wall label change that also needs a glue move `e (h + 1)` on both walls; the one-wall factor
+  cannot contain that move. So the correction mixed the two state spaces (`GenerationSector`).
+  With the derived (original) assignment (numerical, outside Lean, `k/K = α/2`, `δ` fixed by the light
+  ratio): down `m_s/m_b = 0.0217` (data `0.0199`, `1.09×`), 1–2 rotation `0.157` (GST `0.224`), heavy–light
+  `0.14`; leptons `m_μ/m_τ = 0.59` (data `0.059`); up: no `δ` gives `m_u/m_c`. Names: lightest label `2`,
+  middle `1`, heavy `0`, the convention's (`PMFlavor.TransferGraph`), so the jump stays `|V_ub|`-type.
+  So the derived wire keeps the names and loses GST and the lepton/up second ratios; the good fits of
+  the correction rested on the mixed state spaces.
+  **Next: the wire's stated inputs, tested by persistence (the substrate keeps a value only when no
+  other persists or the constraints leave no choice).** (a) One `δ_O` on all three labels of the
+  other wall; (b) `|κ(s)| = |κ(c)|` (Closure's one node price); (c) `κ_O = κ_R` (swap × exchange);
+  (d) `K = 1` (admittance as amplitude). For each: is it forced, or a choice? A choice is where the
+  mismatch can come from.
+  **Run (2026-11-16, reading plus numerics outside Lean, derived placement).**
+  - (a) *Forced in magnitude.* `δ_O` is the rate of the other wall's `β` event (`NativeDetuning`), one
+    event per wall, and `β` is an involution on every class (eigenvalues `±1`), so every label gets
+    `±δ_O` at first order. What differs per class is the eigenbasis: `β` fixes `0`, `4`, `0` of the `8`
+    carriers of classes `0`, `1`, `2` (checked by evaluation), so only in class `1` are some single
+    carriers `β` eigenstates; in classes `0` and `2` `β` mixes carriers (the colour/protocol mixing
+    already recorded under "The up protocol's heavy on-site entry"). Not a source of a magnitude change.
+  - (b) *Forced.* Native intertwining gives the two spinor classes equal magnitudes for any mechanism
+    with the same word, preparation, time and readout (lead A above, run and excluded as a source).
+  - (c) *A choice, does not rescue the fit.* Let the other wall's vector amplitude `K_O` be free: down
+    and leptons move in opposite directions (`K_O = 1`: `1.09×`, `10×`; `K_O = 10`: `0.79×`, `1.2×`;
+    `K_O = 30`: `0.62×`, `0.49×`); no single `K_O` fits both.
+  - (d) *A choice, the other reading is worse.* `k/K = 0.0385` (rate) gives down `29.7×` at `K_O = 1` and
+    no solution for leptons.
+  - *Bound (Lean: `WireLightBound.eigen_ratio_bound`).* For `δ_O ≥ 0` (same sign as the carrier cycle
+    product) the lightest-to-middle ratio is at least `k/√2` (numerically `k`, reached at `δ_O → 0`). Up's
+    `m_u/m_c = 0.0021` is below it. **Correction:** an earlier line said "any `δ_O`"; for `δ_O < 0` or a cycle
+    phase `det = k²(δ³ + κ₀κ₁κ₂)` can vanish and the lightest mass with it. Scanning `δ_O` and the cycle
+    phase still leaves up (`m_c/m_t = 0.022` vs `0.0037`) and leptons (`0.028` vs `0.059`) unfit
+    (PMElementaryParticles REVIEW, "Protocol readout").
+  **Reading.** The wire's inputs are forced (a, b) or are choices that do not fix the data (c, d). The
+  remaining place for the mismatch is the protocol layer: how a protocol reads the wire (singular
+  values directly, or another readout), which the up and lepton fits require. Next: derive the
+  protocol readout from persistence (PMElementaryParticles REVIEW, "Protocol readout").
 - **Bookkeeping of the other wall's carriers (found 2026-11, affects `UndetunedWall`,
   `WireLightSplit`, `UpDownWire`).** `GenerationCurrent` (wall `true`: `g → g + 1` uses class `g − 1`) and
   `GenerationWeak.weak_edge_true/false` (the vector carrier joins generations `1` and `2`) put the
@@ -94,14 +135,15 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   - `WireLightSplit`'s Fibonacci block and the numerical studies built on the old assignment
     (light-pair `45°`, `U` exclusions in PMFlavor item 6, the protocol-`U` test in
     PMElementaryParticles) must be redone with the matching one before they are relied on.
-  Next: restate `UndetunedWall`'s bookkeeping with the class at `(h + 1, h)` derived from
-  `GenerationCurrent`, then redo `WireLightSplit` and the dependent numerics.
-- **Lazy or coherent `β` event: the data favour coherent (2026-11).** With the corrected bookkeeping,
-  the squared (lazy, wall-offset) reading breaks the GST relation (`tan θ₁₂ = 0.43` for down against
-  `√(m_d/m_s) = 0.224`) and misses the second ratios by `100×` or more; the linear (coherent) reading
-  keeps GST and lands down and leptons within `10%`. So a wall's `β` event acts as a coherent
-  rotation (no wall-local scalar phase); `NativeDetuning`'s lazy identification is disfavoured.
-- **Lazy or coherent `β` event (decides the mass formula).** `WallOffset`: the lazy reading of a
+  Done: `undetuned_masses_matching`, `LightPairTexture`, the dependent numerics (above; PMFlavor
+  REVIEW "Redone"). Done in Lean (2026-11-16): `PMAction.WireMass` (the assignment as a definition,
+  `shift_class` from `edge_carrier`, `undetuned`, `light_block`, `det_mass`); `UpDownWire` restated on it;
+  `WireLightSplit` and `UndetunedWall.undetuned_masses` retired.
+- **Lazy or coherent `β` event (decides the mass formula). Data favour coherent (2026-11):** with
+  the corrected bookkeeping the squared (lazy, `WallOffset`) reading breaks GST (`tan θ₁₂ = 0.43` for
+  down against `√(m_d/m_s) = 0.224`) and misses the second ratios by `100×` or more; the linear
+  (coherent) reading keeps GST and lands down and leptons within `10%`. `NativeDetuning`'s lazy
+  identification is disfavoured. Background: `WallOffset`: the lazy reading of a
   wall's `β` event (`NativeDetuning`, `RootTransferPhase`) leaves an energy `|δ_O|` on the other wall
   only; the light masses become `≈ s²/|δ_O|` (squares of the wire's singular values), while a
   coherent traceless rotation gives `s`. `U` is the same in both. Decide which the substrate's event
@@ -113,7 +155,7 @@ derived (`PMAction.NodeAmplitude`: `k/K = α/2`). Open, wire only:
   (`Machine.WalkReferenceCoupling.preparation`) is a coherent `β` rotation. Whether a wall's `β`
   event carries a wall-local scalar phase is a premise to state, with the squared versus linear
   mass formula as its test. Recorded (direct readings, rough):
-  the squared reading's version of `WireLightSplit`'s relation, `√(m₂/m₁)(m₀/m₁)^{1/4}`, is `0.14`
+  the squared reading's version of the retired `WireLightSplit` relation, `√(m₂/m₁)(m₀/m₁)^{1/4}`, is `0.14`
   (leptons), `0.58` (down), `0.14` (up), against `k/K = 0.0037` or `0.0385`: fails directly, like the
   linear one.
 - **Leads from a review (2026-11), not yet run.** (B) `Machine.WalkReferenceCoupling.preparation_angle_forced`

@@ -133,13 +133,21 @@ shows closed injective updates cannot finitely prepare a stationary state.
   so a certain event of duration `τ` has `tτ ≥ π/2` (`certain_min`) and flip at least `rπ/(4τ)`
   (`flip_lower`). Admittance (`NodeAmplitude`'s `K = 1`) fixes the carrier's rate only with the event's
   duration.
-- `WireLightSplit`: with `UndetunedWall`'s bookkeeping and `δ_O` a few spinor flips, the two larger
-  masses of `D_R (δ_O + cyc κ_O)` are `K` times the eigenvalues of `[[δ_O, k], [k, 0]]`
-  (`block_char`, `block_product`), with `√(m₀/m₁) − √(m₁/m₀) = δ_O/k` (`ratio_relation`); at
-  `δ_O = k` the block is the Fibonacci matrix (`golden_point`). The third mass is `≈ k²`
-  (`ReferenceWallRotation.det_M`). (Uses the superseded carrier bookkeeping; see `LightPairTexture`.)
-- `LightPairTexture`: with the vector carrier on the light pair (`GenerationCurrent.edge_carrier`,
-  `UndetunedWall.undetuned_masses_matching`) the light block is `k [[δ, 0], [K, δ]]`; its Gram matrix
+- `WireMass`: the wire's light mass as one definition, `mass δ κ_R κ_O = diag κ_R (δ + cyc (shift κ_O))`,
+  with the other wall's carriers placed by glue arithmetic on single-wall modes (`single_wall_class`:
+  the move between generations `h`, `h + 1` has class `e h`; `shift κ_O h = κ_O h`, `shift_entry`; the
+  vector carrier joins the heavy label to label `1`, `vector_on_heavy_edge`). `undetuned`: at `δ = 0` it
+  is `UndetunedWall.undetuned_masses`; `det_mass`: `κ_R 0 κ_R 1 κ_R 2 (δ³ + κ_O 0 κ_O 1 κ_O 2)`.
+- `WireLightBound`: for the derived wire with `K = 1`, carriers `(1, k, k)`, real `δ ≥ 0` and
+  `0 < k ≤ 1/10`, the eigenvalues `a ≤ b` of `M Mᵀ` (Mathlib's Hermitian eigenvalues; `vieta`,
+  `eig_nonneg`) satisfy `k² b ≤ 2a` (`eigen_ratio_bound`): lightest-to-middle mass ratio `≥ k/√2`. Steps:
+  `vieta_ratio` (`3e₂² a ≥ e₁e₃ b` for ordered positive roots), `gram`, `e1_eq`, `e2_eq`, `e3_eq`, `poly_bound`
+  (an explicit sum-of-nonnegative-terms certificate); `M_eq` ties `M` to `WireMass.mass`.
+- `SignFlip`: a sign flip `x ↦ −x` on a wall is a trivial-class glue move (`neg_class`,
+  `flip_move_trivial`), keeps every generation state and its label (`flip_keeps_state`), and is no
+  label change (`flip_not_label_change`).
+- `LightPairTexture` (not the wire's placement; kept as the algebra of a vector carrier on the light
+  pair): the light block is `k [[δ, 0], [K, δ]]`; its Gram matrix
   (`gram`) has light states `(t, 1)`, `(1, −t)` with masses `δ/t`, `δ t` when `δ(1 − t²) = t`
   (`light_vectors`, `ratio`): `tan θ₁₂ = √(m₁/m₂)` at leading order.
 - `NativeDetuning`: the on-site detuning is the rate of a native `β` event (`generator_split`,

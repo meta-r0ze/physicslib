@@ -11,7 +11,8 @@ Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum IV: Information T
 - A charged-current event changes the protocol. The event acts on one wall only. Thus the event can
   also change the label.
 - "Flavour" is the label. "Flavour change" is a label change during an event.
-- The weak carrier itself changes label `2` into `1`. This change stays in the maintenance cycle.
+- The weak carrier itself changes label `2` into `1`. This change stays in the maintenance cycle. (In question: the
+  weak refresh is a sign exchange and keeps the label; see REVIEW item 0.)
 - A change to or from label `0` needs a spinor carrier. Only the reference node supplies it. Thus these
   two changes are small.
 - `J` is the matrix of label-change amplitudes for one event. There are two: one for carriers off the
@@ -33,7 +34,7 @@ Conservation gives Map and Protocol, Causality gives Toll and Governor):
 |---|---|---|
 | Capacity | the three label states; the node's conductance | `PMAction.GenerationSector`, `KronSeries` |
 | Margin | the other wall's detuning `δ_O` (a wall with no detuning is PM's "no margin, fragility": `PMAction.UndetunedWall`) | open: its size per protocol |
-| Map | label states → the protocol's persisting states: the rotation `U` | open: derived per protocol from Margin (`PMAction.LightPairTexture`) |
+| Map | label states → the protocol's persisting states: the rotation `U` | open: derived per protocol from Margin (`PMAction.WireMass`) |
 | Protocol | up, down, `e`, `ν` as information over the wire | `PMConstants.CarrierRepresentation` |
 | Toll | node passage `α`; the three transfers are PM's three modes (`PersistenceMechanics.InformationTransfer`) | `NodeAmplitude`, `TransferAmplitude` |
 | Governor | the stationary reference (`δ_R = 0`) and the weak refresh | `PMAction.ReferenceDetuning`, `CarrierActions` |
@@ -63,7 +64,8 @@ The three label changes (`EventTransfer.entry_of_class`, `TransferGraph`):
 | `2` (spinor) | `1 → 0` | node, class on the reference's wall in label `0` | `\|V_cb\|` / `sin²θ₂₃` |
 | `1` (spinor) | `0 → 2` | node, class on the other wall in label `0` | `\|V_ub\| = s₁₃` / `sin²θ₁₃` |
 
-Naming label `1` the second and `2` the first is the wall-naming convention. The names conduction,
+Naming label `1` the second and `2` the first is the wall-naming convention; the wire's masses, with
+the carriers placed by glue arithmetic (`PMAction.WireMass`), give the same names. The names conduction,
 promotion and jump (`TransferGraph.mode`) are a candidate reading; they rest on one premise (the
 reference-wall crossing is one step). Older modules and parts of the OVERVIEW say "generation" for a
 label state.

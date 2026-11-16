@@ -26,9 +26,12 @@ amplitude `1` for no change and `κ c` for the change that uses a carrier of cla
 
 **The actual weak refresh.** `PMConstants.CarrierActions.weak` acts on packets `V ⊕ V`, both copies
 vector-class carriers (`V = Carrier 0`): it reverses the sign of every carrier in the reference's
-sector (`refresh_moves_reference`) and fixes the other sector (`refresh_fixes_other`). So the refresh
-itself supplies only class-`0` single-wall moves on the reference's wall: the in-cycle entry of `J`.
-It moves no spinor carrier; the entries through classes `1` and `2` need the node.
+sector (`refresh_moves_reference`) and fixes the other sector (`refresh_fixes_other`). It moves no
+spinor carrier, so the entries through classes `1` and `2` need the node. It does not supply the
+in-cycle entry either: a sign flip is a trivial-class glue move and keeps the label
+(`PMFlavor.RefreshLabel.refresh_keeps_label`); it exchanges doublet partners, the protocol change.
+Whether an event makes the class-`0` change at all is PMFlavor REVIEW item 0. `J κ` keeps `κ 0` as a
+free entry.
 
 **Completion to a unitary transfer.** One event makes only the forward changes; the reverse entries
 come from the conjugate event. `A κ = N κ − (N κ)ᴴ`, with `N κ = J κ − 1` the off-diagonal part, is

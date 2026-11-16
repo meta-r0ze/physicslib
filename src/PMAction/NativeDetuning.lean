@@ -24,12 +24,12 @@ which the library does not fix. If the carriers are lazy transfers too, ratios a
 carriers between the reference (lepton) axis and a colour axis: a type-changing event, which no
 type-preserving gauge repair undoes (`PMFlavor.LeptonAxisRestriction`). So a wall's chirality flip
 does pass the reference node. How many legs it uses is open:
-(Both readings below use `WireLightSplit`'s superseded bookkeeping; with the corrected one the
-light structure is `LightPairTexture`'s and these mass ratios do not apply.)
-* two legs, like a spinor carrier (`NodeAmplitude`, Kron series `α/2`): `p₁ = p_s`, `δ_O = k_f`, the
-  Fibonacci block (`WireLightSplit.golden_point`); the wire's two larger masses in ratio `φ² ≈ 2.618`;
+* two legs, like a spinor carrier (`NodeAmplitude`, Kron series `α/2`): `p₁ = p_s`, `δ_O = k_f`;
 * one leg (a carrier moved onto or off the axis once, `PMFlavor.NodeElimination.one_leg`, weight `α`):
-  `p₁ = 2 p_s`, `δ_O ≈ 2 k_f`; then `√s − 1/√s = 2`, `s = (1 + √2)² ≈ 5.83`.
+  `p₁ = 2 p_s`, `δ_O ≈ 2 k_f`.
+(The mass ratios once read off these values, golden `φ²` and silver `5.83`, used the retired
+`WireLightSplit` assignment. On the wire of `PMAction.WireMass` the data put `δ_O/k_f` at `11`–`65`
+per protocol, far from both; PMElementaryParticles REVIEW.)
 Per protocol (`lepton_always_crosses`, `colour_crosses_iff`): every lepton-axis carrier crosses
 under `β`; a colour carrier crosses only on axis `2`. `β`'s pairing of axis `0` with axis `2` is the
 Dirac-basis choice; averaged over the three colour pairings a colour carrier crosses in `1/3` of

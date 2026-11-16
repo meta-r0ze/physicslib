@@ -3,10 +3,7 @@ import PMHadrons.Values
 import PMSubstrate.Impedance
 import PMConstants.GravityAccounting
 import PMConstants.Depth
-import PMFlavor.PMNSIntervals
-import PMFlavor.CKM
 import PMFlavor.Values
-import PMFlavor.CabibboDressing
 import PMCosmology.Scaling
 import PMCosmology.SubstrateLoad
 import PMCosmology.Tensions
@@ -44,8 +41,6 @@ import PMConstants.ElectroweakE8
 import PMConstants.JointConstants
 import PMConstants.FloorNeutrino
 import PMAtoms
-import PMFlavor.Wolfenstein
-import PMFlavor.PMNSIntervals
 import E8PConstants
 
 /-! Build-time certificates for the executable's exact shared catalog.
@@ -80,14 +75,14 @@ def value : Key → ℝ
   | .hubbleSigma => (1 / 2 : ℝ) * PMCosmology.loadFactor
   | .s8Sigma => ((13 : ℝ) / 1000) / PMCosmology.loadFactor
   | .omegaRatio => PMCosmology.Tensions.omegaRatio
-  | .wolfLambda => PMFlavor.Wolfenstein.wLam
-  | .wolfA => PMFlavor.Wolfenstein.wA
-  | .wolfRho => PMFlavor.Wolfenstein.wRho
-  | .wolfEta => PMFlavor.Wolfenstein.wEta
-  | .sin2Theta12 => PMFlavor.PMNS.sineSquared 0
-  | .sin2Theta23 => PMFlavor.PMNS.sineSquared 1
-  | .sin2Theta13 => PMFlavor.PMNS.sineSquared 2
-  | .pmnsJ => PMFlavor.CKM.jarlskog PMFlavor.PMNS.matrix
+  | .wolfLambda => PMFlavor.Values.wolfLambda
+  | .wolfA => PMFlavor.Values.wolfA
+  | .wolfRho => PMFlavor.Values.wolfRho
+  | .wolfEta => PMFlavor.Values.wolfEta
+  | .sin2Theta12 => PMFlavor.Values.pmnsSin2 0
+  | .sin2Theta23 => PMFlavor.Values.pmnsSin2 1
+  | .sin2Theta13 => PMFlavor.Values.pmnsSin2 2
+  | .pmnsJ => PMFlavor.Values.pmnsJarlskog
   | .delta => (PMSubstrate.baseline.period : ℝ)
   | .nu => (PMSubstrate.baseline.sectorChannels : ℝ)
   | .sigma => (PMSubstrate.baseline.embeddingDimension : ℝ)
@@ -105,21 +100,21 @@ def value : Key → ℝ
   | .nSites => (PMSubstrate.baseline.nodeCapacity : ℝ)
   | .rm => (PMSubstrate.baseline.resolution : ℝ)
   | .pm3J => PMFlavor.Values.jarlskogGeo
-  | .cabibbo => PMFlavor.CKM.s12
+  | .cabibbo => PMFlavor.Values.cabibbo
   | .nc => ((PMSubstrate.baseline.embeddingDimension - PMSubstrate.baseline.eulerCharacteristic : ℕ) : ℝ)
   | .weinbergGut => ((PMSubstrate.baseline.embeddingDimension - PMSubstrate.baseline.eulerCharacteristic : ℕ) : ℝ) / (2 * (PMSubstrate.baseline.dimension : ℝ))
   | .alphaG => PMConstants.Depth.gravity PMConstants.CertifiedConstants.α
   | .boundaryStorage => (PMSubstrate.baseline.eulerCharacteristic : ℝ) / ((PMSubstrate.baseline.embeddingDimension : ℝ) - PMSubstrate.baseline.eulerCharacteristic)
   | .beta0 => PMConstants.beta0 3
-  | .pmnsE11 => Complex.normSq (PMFlavor.PMNS.matrix 0 0)
-  | .pmnsE12 => Complex.normSq (PMFlavor.PMNS.matrix 0 1)
-  | .pmnsE13 => Complex.normSq (PMFlavor.PMNS.matrix 0 2)
-  | .pmnsE21 => Complex.normSq (PMFlavor.PMNS.matrix 1 0)
-  | .pmnsE22 => Complex.normSq (PMFlavor.PMNS.matrix 1 1)
-  | .pmnsE23 => Complex.normSq (PMFlavor.PMNS.matrix 1 2)
-  | .pmnsE31 => Complex.normSq (PMFlavor.PMNS.matrix 2 0)
-  | .pmnsE32 => Complex.normSq (PMFlavor.PMNS.matrix 2 1)
-  | .pmnsE33 => Complex.normSq (PMFlavor.PMNS.matrix 2 2)
+  | .pmnsE11 => PMFlavor.Values.pmnsEntry 0 0
+  | .pmnsE12 => PMFlavor.Values.pmnsEntry 0 1
+  | .pmnsE13 => PMFlavor.Values.pmnsEntry 0 2
+  | .pmnsE21 => PMFlavor.Values.pmnsEntry 1 0
+  | .pmnsE22 => PMFlavor.Values.pmnsEntry 1 1
+  | .pmnsE23 => PMFlavor.Values.pmnsEntry 1 2
+  | .pmnsE31 => PMFlavor.Values.pmnsEntry 2 0
+  | .pmnsE32 => PMFlavor.Values.pmnsEntry 2 1
+  | .pmnsE33 => PMFlavor.Values.pmnsEntry 2 2
   | .tauRatio => PMElementaryParticles.LeptonMasses.tau
   | .protonRadius => 4 * PMHadrons.CompositeMasses.hbarc / (PMHadrons.Values.proton * PMHadrons.CompositeMasses.me)
   | .pion0MeV => PMHadrons.Values.pion0 * PMHadrons.CompositeMasses.me
@@ -146,8 +141,8 @@ def value : Key → ℝ
   | .planckChargeAtt => PMSubstrate.planckChargeAttenuation
   | .planckChargeRatio => PMSubstrate.planckChargeRatio
   | .planckMass => PMConstants.PlanckReadout.planckMass
-  | .ckmS13 => PMFlavor.CKM.s13
-  | .ckmS23 => PMFlavor.CKM.s23
+  | .ckmS13 => PMFlavor.Values.ckmS13
+  | .ckmS23 => PMFlavor.Values.ckmS23
   | .ckmVcb => PMFlavor.Values.vcb
   | .wMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.wMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
   | .zMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.zMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
@@ -238,41 +233,41 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | wolfLambda =>
-    have h := PMFlavor.Wolfenstein.wLam_bounds
+    have h := PMFlavor.Values.wolfLambda_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | wolfA =>
-    have h := PMFlavor.Wolfenstein.wA_bounds
+    have h := PMFlavor.Values.wolfA_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | wolfRho =>
-    have h := PMFlavor.Wolfenstein.wRho_bounds
+    have h := PMFlavor.Values.wolfRho_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | wolfEta =>
-    have h := PMFlavor.Wolfenstein.wEta_bounds
+    have h := PMFlavor.Values.wolfEta_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | sin2Theta12 =>
-    have h := PMFlavor.PMNSIntervals.input_bounds (0 : Fin 3)
-    have h1 : (0.30901 : ℝ) < PMFlavor.PMNS.sineSquared (0 : Fin 3) := by simpa using h.1
-    have h2 : PMFlavor.PMNS.sineSquared (0 : Fin 3) < (0.30902 : ℝ) := by simpa using h.2
+    have h := PMFlavor.Values.pmnsSin2_bounds (0 : Fin 3)
+    have h1 : (0.30901 : ℝ) < PMFlavor.Values.pmnsSin2 (0 : Fin 3) := by simpa using h.1
+    have h2 : PMFlavor.Values.pmnsSin2 (0 : Fin 3) < (0.30902 : ℝ) := by simpa using h.2
     norm_num [bounds, value]
     exact ⟨by linarith, by linarith⟩
   | sin2Theta23 =>
-    have h := PMFlavor.PMNSIntervals.input_bounds (1 : Fin 3)
-    have h1 : (0.57479 : ℝ) < PMFlavor.PMNS.sineSquared (1 : Fin 3) := by simpa using h.1
-    have h2 : PMFlavor.PMNS.sineSquared (1 : Fin 3) < (0.57481 : ℝ) := by simpa using h.2
+    have h := PMFlavor.Values.pmnsSin2_bounds (1 : Fin 3)
+    have h1 : (0.57479 : ℝ) < PMFlavor.Values.pmnsSin2 (1 : Fin 3) := by simpa using h.1
+    have h2 : PMFlavor.Values.pmnsSin2 (1 : Fin 3) < (0.57481 : ℝ) := by simpa using h.2
     norm_num [bounds, value]
     exact ⟨by linarith, by linarith⟩
   | sin2Theta13 =>
-    have h := PMFlavor.PMNSIntervals.input_bounds (2 : Fin 3)
-    have h1 : (0.0218920 : ℝ) < PMFlavor.PMNS.sineSquared (2 : Fin 3) := by simpa using h.1
-    have h2 : PMFlavor.PMNS.sineSquared (2 : Fin 3) < (0.0218921 : ℝ) := by simpa using h.2
+    have h := PMFlavor.Values.pmnsSin2_bounds (2 : Fin 3)
+    have h1 : (0.0218920 : ℝ) < PMFlavor.Values.pmnsSin2 (2 : Fin 3) := by simpa using h.1
+    have h2 : PMFlavor.Values.pmnsSin2 (2 : Fin 3) < (0.0218921 : ℝ) := by simpa using h.2
     norm_num [bounds, value]
     exact ⟨by linarith, by linarith⟩
   | pmnsJ =>
-    have h := PMFlavor.PMNSIntervals.jarlskog_bounds
+    have h := PMFlavor.Values.pmnsJarlskog_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | delta => norm_num [bounds, value, PMSubstrate.baseline]
@@ -306,66 +301,66 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | cabibbo =>
-    have h := PMFlavor.Values.s12_bounds
+    have h := PMFlavor.Values.cabibbo_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | beta0 => norm_num [bounds, value, PMConstants.beta0]
   | pmnsE11 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 0 0
+    have h := PMFlavor.Values.pmnsEntry_bounds 0 0
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pmnsE12 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 0 1
+    have h := PMFlavor.Values.pmnsEntry_bounds 0 1
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pmnsE13 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 0 2
+    have h := PMFlavor.Values.pmnsEntry_bounds 0 2
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pmnsE21 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 1 0
+    have h := PMFlavor.Values.pmnsEntry_bounds 1 0
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pmnsE22 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 1 1
+    have h := PMFlavor.Values.pmnsEntry_bounds 1 1
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pmnsE23 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 1 2
+    have h := PMFlavor.Values.pmnsEntry_bounds 1 2
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pmnsE31 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 2 0
+    have h := PMFlavor.Values.pmnsEntry_bounds 2 0
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | pmnsE32 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 2 1
+    have h := PMFlavor.Values.pmnsEntry_bounds 2 1
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | upMeV =>
     have h := PMElementaryParticles.QuarkMasses.up_value
     norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me] at h ⊢
+      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
   | downMeV =>
     have h := PMElementaryParticles.QuarkMasses.down_value
     norm_num [bounds, value, PMElementaryParticles.QuarkMasses.down, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me] at h ⊢
+      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
   | strangeMeV =>
     have h := PMElementaryParticles.QuarkMasses.strange_value
     norm_num [bounds, value, PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me] at h ⊢
+      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
   | charmMeV =>
     have h := PMElementaryParticles.QuarkMasses.charm_value
     norm_num [bounds, value, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me] at h ⊢
+      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
   | bottomMeV =>
     have h := PMElementaryParticles.QuarkMasses.bottom_value
     norm_num [bounds, value, PMElementaryParticles.QuarkMasses.bottom, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me] at h ⊢
+      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
   | topMeV =>
     have h := PMElementaryParticles.QuarkMasses.top_value
     norm_num [bounds, value, PMElementaryParticles.QuarkMasses.top,
-      PMHadrons.CompositeMasses.me] at h ⊢
+      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
   | rydbergEV =>
     have h := PMAtoms.rydbergEV_bounds
     norm_num [bounds, value] at h ⊢
@@ -512,11 +507,11 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmS13 =>
-    have h := PMFlavor.Values.s13_bounds
+    have h := PMFlavor.Values.ckmS13_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmS23 =>
-    have h := PMFlavor.Values.s23_bounds
+    have h := PMFlavor.Values.ckmS23_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmVcb =>
@@ -544,7 +539,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
       PMHadrons.MesonMasses.pionSymmetry,
       PMHadrons.MesonMasses.pionAnchor,
       PMHadrons.MesonMasses.pionChargeLoad,
-      PMHadrons.CompositeMasses.me] at h ⊢
+      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | fPiMeV =>
     have h := PMHadrons.Values.pionDecayConstantMeV_bounds
@@ -587,7 +582,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.2.2.1.le, h.2.2.2.le⟩
   | pmnsE33 =>
-    have h := PMFlavor.PMNSIntervals.squared_entry_bounds 2 2
+    have h := PMFlavor.Values.pmnsEntry_bounds 2 2
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | alphaG =>

@@ -3,6 +3,12 @@ import Mathlib.Tactic
 /-!
 # The vector carrier on the light pair gives `tan θ₁₂ = √(m₁/m₂)` exactly
 
+**Not the wire's placement (review, 2026-11-16).** Glue arithmetic on single-wall modes puts the vector
+carrier between the heavy label and label `1` (`PMAction.WireMass.vector_on_heavy_edge`), not on the
+light pair. The algebra below stays true; the placement it assumes (class `h − 1` at `(h + 1, h)`) mixed
+the two-wall label change of `GenerationCurrent` into a one-wall factor and is withdrawn. Kept as the
+exact statement of what a vector carrier on the light pair would give (GST).
+
 **Bookkeeping.** `PMAction.GenerationCurrent`: on wall `true` the change `g → g + 1` uses a carrier of
 class `g − 1`; `PMConstants.GenerationWeak.weak_edge_true`, `weak_edge_false`: the vector-class carrier
 joins generations `1` and `2`, the two light ones, on either wall. So in the other wall's carrier

@@ -15,7 +15,7 @@ an energy on the other wall only, which the crossing `Y` does not let one rephas
    smaller has `|λ₋| ≤ s²/c` (`seesaw_bound`). Since `s ≈ |d| |δ_O|` with `|d| ≪ 1`, the left-handed
    light masses are `≈ s²/|δ_O|`: the squares of the wire's singular values over `|δ_O|`.
 2. **Coherent rotation (traceless generator `θ β`).** No offset; the masses are the singular values
-   `s` (the reading used so far, `ReferenceWallMass`, `WireLightSplit`).
+   `s` (the reading used so far, `ReferenceWallMass`, `WireMass`).
 
 Checked numerically on the full two-wall Hamiltonian: with the offset the six light energies split
 into three near `c` and three far below the `c = 0` values. So the reading changes every mass ratio

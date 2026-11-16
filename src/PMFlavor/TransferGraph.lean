@@ -38,7 +38,8 @@ promotion `0` and `1`, the jump `0` and `2`; generation `0` is the label-`v` gen
 two transfers both cross the node (`PMAction.MassInsertion.label_v_mixings_cross`). The readout as
 matrix elements (e8p prints the conduction as `s₁₂`, the promotion as `|V_cb|`, the jump as `|V_ub|`)
 names generation `1` the second and `2` the first, the wall-naming convention
-(`GenerationWalls.balanced_classification`); which protocols read which transfers is
+(`GenerationWalls.balanced_classification`; the wire's masses with the derived carrier placement,
+`PMAction.WireMass`, give the same names, REVIEW item 0); which protocols read which transfers is
 PMElementaryParticles.
 -/
 
