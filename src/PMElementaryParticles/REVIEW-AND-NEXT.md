@@ -91,6 +91,36 @@ link margin), 2026-11.** It gives operational definitions to test:
 - *The CKM is the transfer channel between two codebooks.* With PDG magnitudes and a uniform input,
   it carries `I = 1.38` bits of the `log₂ 3 = 1.585` (loss `0.21` bits per transfer).
 
+**What we know (2026-11), in one place.**
+1. Wire: rows `(K, k, k)`, other-wall shift `(k, K, k)`: the vector carrier sits on the light pair
+   (`PMAction.GenerationCurrent`, `UndetunedWall.undetuned_masses_matching`).
+2. Map and Margin are one number per protocol: `δ(1 − t²) = t`, `tan θ₁₂ = √(m₁/m₂)` (`LightPairTexture`).
+3. The `β` event is coherent (data, PMAction REVIEW).
+4. Margins from the lightest ratios: `u = δ_O/k_f` = `64.6` (down), `18.8` (`e`), `11.2` (up); with them
+   down and `e` predict their second ratio within `10%`, up misses by `12×`.
+5. Up and down share colour and maintenance; only hypercharge (and the doublet sign) tells them apart.
+6. Cabibbo wants a quarter turn between the up and down cycle phases.
+7. Information-theory reading: `R_p = log₂(1 + u_p)` = `6.04`, `4.31`, `3.61` bits (down, `e`, up).
+
+**Brainstorm: what is the rate `R_p` a protocol must sustain? (quick checks against the ordering
+down > `e` > up, nothing tuned).**
+| Candidate | Values (down, `e`, up) | Ordering |
+|---|---|---|
+| `log₂` multiplet size (right sector: 3, 1, 3) | 1.58, 0, 1.58 | up = down: fails |
+| repair events (`RootRepairRule`) | equal for up, down | fails |
+| `|Y_R|` (2/3, 2, 4/3) | | `e` > up > down: fails |
+| `|Q|` (1/3, 1, 2/3) or `1/|Q|` | | fails |
+| hypercharge response `(Y_R/2)²` | | fails |
+| doublet sign (lower: down, `e`; upper: up) plus colour | | down, `e` high, up low: matches |
+Additive bits (independent channels add): with colour adding `log₂ 3 = 1.585` bits, `R_d − R_e = 1.73`
+(within the `±0.15` from the margins' `10%`). The lower-minus-upper term is then `≈ 2.3–2.4` bits (from
+`R_e − R_ν` and `R_d − R_u`), not yet derived. Prediction, conditional: `R_ν = R_u − log₂ 3 = 2.02`,
+`u_ν ≈ 3.07`, which on this wire gives a strongly hierarchical, weakly mixed neutrino protocol: in
+tension with the large PMNS angles unless neutrinos read the wire differently (Majorana, on-axis
+one-leg readout). Status: a pattern with one passing check, not a derivation. Next: derive the
+lower/upper term from the doublet structure (the refresh acts on the sign, `CarrierActions.weak`), and
+settle how a neutral protocol reads the wire.
+
 **Bookkeeping correction (2026-11, PMAction REVIEW).** The other wall's vector carrier sits on the
 light pair (`PMAction.GenerationCurrent.edge_carrier`), not between the heavy label and a light one.
 Results below that used the old assignment: the `WireLightSplit` relation test and its recorded
