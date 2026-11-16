@@ -410,31 +410,22 @@ Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; per
   ratio is at least `k/√2`. For `δ_O < 0` or a cycle phase, `det = k²(δ³ + κ₀κ₁κ₂)` can vanish.
 - **Why the wire is odd** (`FullCarrierIdentification`): carrier permutations fix the even uniform mode,
   and anticommuting generators cannot share a fixed mode, so the Dirac structure lives on the odd
-  sector. The doublet sign (odd ± even of one carrier) is not a property of a wire mode; it belongs to
-  the protocol layer (`PMElementaryParticles.DoubletSign`, `ProtocolReadout`).
+  sector. The odd modes are the wire's spinor components, so protocol identity (and the doublet sign) is a
+  separate register (`ColourRegister`; PMElementaryParticles OVERVIEW, "Protocols are not wire modes").
 - **Two-detuning wall:** `WallExchange.H2`, `NativeFlavourWall.nativeHamiltonian2`, `native_observed2`
   carry separate on-site flips on the two walls.
 - **Excluded or withdrawn** (details in git history): the up protocol's undetuned heavy entry (built on
   the withdrawn placement); an on-site term on the reference wall's heavy row (`13×`); economy-minimal
   `δ_O` (a crossover, not a point); reference-readout leg prices as an `s/c` asymmetry.
 
-## Reference-maintenance checks in the protocol layer
+## Protocol register checks
 
-The following checks constrain the reference-maintenance route.
 - On the wire the maintained reference is `ChiralityConvention.physicalBackground`, a vector of the
-  wire's sites, so it is antipode-odd. Any maintenance acting on the wire is therefore blind to the
-  doublet sign: `PMElementaryParticles.ProtocolReadout.odd_reference_no_split`. Correction: the
-  earlier "reference splits the lepton pair at first order" used the reference *carrier*
-  `+2e₀`, which is the channel-layer object, not the wire background.
-- The only maintenance that addresses weak partners separately is at the channel layer: the payload
-  ledger (`RefreshMap.payload_visit`, `same_payload_readout_iff`: one row per channel). Its weights are
-  uniform (`GaugeLedgers`: `η` per payload). The per-channel quantities that differ between partners
-  are the carried charge values (`Y_R`, `Q`).
-- Test of "maintenance strength is a monotone function of one carried charge" against the light
-  detunings (up `0.042` < electron `0.068` < down `0.236`, from `m₁/m₂` alone): `|Y_R|` orders
-  (electron `2`, up `4/3`, down `2/3`), `|Q|` (electron `1`, up `2/3`, down `1/3`), signed `Y_R` and signed
-  `Q` order the three as electron, down, up. None puts the protocols in data order, so a monotone
-  function of a single charge is excluded. Colour plus a charge (two factors) is not excluded but has
-  one lepton point, so it is not testable yet.
-
-The unresolved channel-layer maintenance strength is a dependency of the wire detuning item in REVIEW-AND-NEXT.
+  wire's sites, so it is antipode-odd, and maintenance acting on the wire is blind to the doublet sign
+  (`PMElementaryParticles.ProtocolReadout.odd_reference_no_split`).
+- Protocol identity is a separate register (`ColourRegister`). The only maintenance that addresses
+  weak partners separately is the payload ledger (`RefreshMap.payload_visit`, one row per channel), with
+  uniform weights (`GaugeLedgers`: `η` per payload); the per-channel quantities that differ between
+  partners are the carried charges (`Y_R`, `Q`). With the flip on the common resonance
+  (`OtherWallStationary`), the protocols differ through a heavy-label weight, which signed `Y_R` orders
+  as the data do (electron, down, up; PMElementaryParticles REVIEW).

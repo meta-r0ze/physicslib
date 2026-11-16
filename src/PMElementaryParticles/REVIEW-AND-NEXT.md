@@ -11,18 +11,18 @@ data need one weight `w` on the heavy label per protocol, `w_e : w_d : w_u ≈ 1
 readout is derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers (declared; their
 e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
 
-- **Heavy-label weight.** Derive the heavy (vector-class) state's upkeep per protocol. Two readings fit
-  and the quark-mass scale spread cannot separate them: the minimum margin `W/k` with `k` the
-  reference-visit rate under `β` (gives `w_d/w_e = 3` from the crossing facts, but those read colour as
-  carrier axes, which `PMAction.ColourRegister` excludes; up's `1/16–1/18` has no mechanism), or a charge-dependent cost `w ∝ e^{(c/2) Y_R}` (`c ≈ 1.7`; the library has no such
-  cost).
+- **Heavy-label weight.** Derive the heavy (vector-class) state's upkeep per protocol. The reading
+  that fits all three is a charge-dependent cost, `w ∝ e^{(c/2) Y_R}` with `c ≈ 1.7` (the library has no
+  such cost yet); the crossing-fraction reading read colour as carrier axes and is excluded
+  (`PMAction.ColourRegister`).
 - **Light masses.** At the resonance the light mass is zero; derive the light masses as corrections.
   As the lazy `β` event every protocol takes the real root (`PMAction.OtherWallFlipEvent`), so flavour
   mixing has to come from the readout, and the lazy event's offset changes the mass law to `s²/c'`
   (PMAction REVIEW, "Lazy or coherent flip event").
-
-Constraints any readout must meet are in OVERVIEW (`DoubletReflection`, `ProtocolReadout`,
-`BetaReference`, `CoherentGate`).
+- **Protocol register.** Protocol identity is a separate register from the wire's spinor components
+  (OVERVIEW, "Protocols are not wire modes"). Derive how a protocol couples to the wire; the partner
+  (up/down, `ν`/`e`) difference and the heavy-label weight both have to enter there (the charge
+  reading above is one such coupling).
 
 ## Mathematical gap (Lean)
 

@@ -3,6 +3,10 @@ import PMAction.WireMass
 /-!
 # Up and down over one wire: what the doublet reflection fixes
 
+**Status (2026-11).** The reading of up and down as colour carriers `±2eᵢ` on the wire is withdrawn
+(`DoubletSign`, `PMAction.ColourRegister`); `product_equal` stands as a statement about two wires
+with exchanged light carriers.
+
 `DoubletReflection`: reflecting a colour axis fixes the reference's axis, exchanges up and down
 (`flip_doublet`), and exchanges the two light classes `s ↔ c` (`flip_spinor`, `flip_cospinor`). The
 weak refresh `v ↦ −v` commutes with it. So, if the two protocols use the wire with the same detuning

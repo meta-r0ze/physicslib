@@ -20,7 +20,12 @@ under the `s ↔ c` swap, is the same for up and down. Any up/down difference is
 needs a charge that tells the doublet sign apart (the right-sector hypercharge `Y = B − L + 2T₃`,
 `CarrierRepresentation.charges_from_carriers`) or a breaking of the swap, that is, protocol content.
 
-**Scope (2026-11).** This covers amplitudes that use only the reference's axis. The native
+**Status (2026-11).** The reflection facts hold for carriers. Reading the colour carriers `±2eᵢ` as
+the up and down protocols on the wire is withdrawn (`DoubletSign`, `PMAction.ColourRegister`); the
+conclusion that the carrier geometry cannot tell up from down stands, now because protocols are a
+separate register.
+
+**Scope (earlier).** This covers amplitudes that use only the reference's axis. The native
 on-site flip `β` also uses the reference's sign: it sends the up protocol's carrier onto the
 reference carrier and the down protocol's onto the electron protocol's, and it conjugates the
 reflection of its paired colour axis into a reflection that reverses the reference

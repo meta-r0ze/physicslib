@@ -19,9 +19,10 @@ word that only swaps coordinates, axes `0 ↔ 2` and `1 ↔ 3`) uses more than t
 * `beta_conjugates_flip1`: on the other colour pair (`1 ↔ 3`) the reflection stays a reflection
   of a colour axis and keeps the reference.
 
-**Status.** This module reads the colour axes as carrier axes acted on by `β`. `PMAction.ColourRegister`
-excludes that if colour commutes with the wall's `β` and `αⱼ`; the up/down statements below then
-need re-deriving with colour as a separate factor.
+**Status (2026-11).** The theorems are facts about vector-class carriers. Their reading as protocols
+(up on `+2e₂`, down on `−2e₂`, the reference on `+2e₀`, acted on by the wire's `β`) is withdrawn: the
+carrier axes are the wire's spinor components (`DoubletSign`), and colour cannot act on them
+(`PMAction.ColourRegister`).
 
 **Correction to `DoubletReflection`'s reading.** "Any up/down difference is not geometric" holds
 for amplitudes that do not use `β`. The on-site detuning `δ_O` is the rate of the `β` event

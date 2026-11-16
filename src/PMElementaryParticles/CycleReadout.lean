@@ -3,6 +3,10 @@ import Mathlib.Basic.Complex.Basic
 import PMElementaryParticles.DoubletSign
 
 /-!
+**Status (2026-11).** The block lemmas hold for any `S = −1 ⊕ 1`. Their reading as "a weak pair
+sharing one wire mode" is withdrawn (`DoubletSign`): on the wire the antipode is a global sign, and
+the partner difference has to come from the protocol register.
+
 # One refresh cycle on a doublet: the readout needs an antipode-odd coupling
 
 A weak pair shares one wire mode per axis and label: its states live in `odd ⊕ even`, the

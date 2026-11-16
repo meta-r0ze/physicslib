@@ -33,7 +33,6 @@ import PMElementaryParticles.BetaReference
 import PMElementaryParticles.DoubletSign
 import PMElementaryParticles.ProtocolReadout
 import PMElementaryParticles.CycleReadout
-import PMElementaryParticles.ReferenceHold
 import PMElementaryParticles.CarrierSpecies
 import PMElementaryParticles.FinalStateBridge
 import PMElementaryParticles.SubstrateFinalStates

@@ -22,41 +22,27 @@ out as nonpersistent" (`CarrierVacuumEvolution.even_inert`; "selecting the physi
 still an obligation"). A single protocol carrier `|±2eᵢ⟩ = (|oddᵢ⟩ ± |evenᵢ⟩)/√2` reads the same odd
 mode with opposite sign, which no mass (`|·|`) sees.
 
-**How many wires.** The 16 channels are the vector-class carriers in the two sectors
-(`CarrierActions.Packet = V ⊕ V`, the same as `CarrierVacuumSector.Labels 0`). The wire's admitted
-modes are the antipodally odd combinations: `4` axes × `2` sectors = `8` modes per class
-(`CarrierVacuumEvolution.odd_finrank`). So there are not 16 wires: each wire mode is one axis in
-one sector, shared by an antipodal pair, which is a weak pair. Axis `0` carries the lepton pair
-(`ν`/`e` in the left sector; the sterile vacancy and `e` in the right), axis `i = 1, 2, 3` carries
-the up and down pair of colour `i`. A protocol is the sign with which a channel reads its axis
-mode. With the three classes (generation labels) this is `24` modes, the observed single-carrier
-count (`CarrierClassBundle.observed_card`).
+**What a wire mode is (correction, 2026-11).** The odd modes of one class are the wire's eight
+Dirac components: `4` axes × `2` sectors are the four spinor components on each of the two walls
+(`CarrierVacuumSector.embedding`, `beta_intertwining`: the wall's `β`, `Γ`, `αⱼ` act on these axis
+modes). So a wire mode is a spinor component, not a protocol. An earlier reading here put the lepton
+pair on axis `0` and the up/down pair of colour `i` on axis `i`; that assigns protocols to spinor
+components and is withdrawn. With it, colour would act on the spinor index, which no colour action that
+commutes with `β` and the `αⱼ` can do (`PMAction.ColourRegister.commutant_scalar`). On the wire the
+antipode is `−1` on every component (a global sign), so the weak exchange carries no protocol
+information there. Protocol identity (lepton or quark, colour, weak partner) is a separate register
+from the wire's spinor components; the 16-carrier packet (`CarrierActions.Packet`) is that register's
+count and its gauge actions, not the wire's spinor space.
 
-**Consequence.** As written, nothing on the wire tells the up protocol from the down protocol: the
-native operators commute with the antipode, and the wire keeps only antipode-odd states. For any
+**Consequence.** Nothing on the wire tells the up protocol from the down protocol, and with the
+correction above this is structural: the partners are not wire modes at all. For any
 Hamiltonian `H`, the two partners' expectations differ by `2 Re ⟨odd|H|even⟩`, the odd/even cross
 term, which is zero whenever `H` commutes with the antipode or the even sector is inert. This is
 why every up/down source tried so far failed.
 
-**Where the sign can enter (both outside the current wire model).**
-1. *The reference, at the channel layer.* As a channel it is one carrier, `+2e₀`, not its antipode
-   (`CarrierParity.no_fixed_antipode`), with an even component; an operator involving that carrier
-   need not commute with the antipode. On the wire, though, the maintained reference is
-   `ChiralityConvention.physicalBackground`, which is odd and splits nothing
-   (`ProtocolReadout.odd_reference_no_split`). This is the only antipode-odd object in
-   the setup. `BetaReference`: `β` carries axis `2` to the reference axis, so the reference's sign
-   becomes up-versus-down on that axis.
-2. *The even complement.* If it carries action, the cross term `⟨odd|H|even⟩` is where the up/down
-   difference lives. Its dynamics is a convention today.
-Hypercharge (`Y = B − L + 2T₃` on the right) also distinguishes the partners, but as a charge
-value; the native words do not carry it.
-
-**Test.** Give the even complement the action induced by the reference's maintenance (the only
-antipode-odd input), compute the cross term per (protocol, label), and check whether it is nonzero
-only where `BetaReference` puts it (the up protocol's vector-class label on the paired axis) and
-with which size. If the cross term is zero, the wire as built cannot carry the observed up/down
-difference, and the up/down difference must come from the protocol layer (how a protocol reads the
-wire), not from the wire.
+The partner (up/down, `ν`/`e`) difference must come from the protocol register: a coupling that
+depends on its charges (the right-handed hypercharge, PMElementaryParticles REVIEW) or on how a
+protocol reads the wire.
 -/
 
 namespace PMElementaryParticles.DoubletSign

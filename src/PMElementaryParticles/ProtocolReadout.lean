@@ -3,6 +3,11 @@ import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.BigOperators.Ring.Finset
 
 /-!
+**Status (2026-11).** The algebra below (`partner_difference`, `projector_cross`,
+`reference_reading`, `odd_reference_no_split`) is general. Its application to "a protocol's carrier
+state `(o ± e)/√2` on the wire's axis mode" is withdrawn: wire modes are spinor components, not
+protocols (`DoubletSign`, `PMAction.ColourRegister`).
+
 # The protocol readout: how a weak pair reads its shared wire mode
 
 `DoubletSign`: a weak pair shares one wire mode (an axis in one sector). Its two channels are
