@@ -28,14 +28,17 @@ with the antipode. So a readout that departs from the wire's spectrum needs a st
 odd/even block, and the only antipode-odd object is the reference carrier (`+2e₀`, vector class,
 lepton axis). The even complement's action matters only through such a step.
 
-**Next.** The step is the reference's maintenance: a reference-conditioned native update. This is
-the same object as PMAction REVIEW "Other-wall detuning" (derive the wall-1 flip from a
-reference-conditioned native update). Derive its action on the doublet over one cycle; by
-`BetaReference.onto_reference_iff` it reaches the heavy label of the lepton axis directly and the up
-protocol's heavy label on the paired axis through `β`. Then test it on the three charged
-protocols' two mass ratios each, with no parameter beyond each protocol's `δ_O`. Until then e8p's
-masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared assignment (their e8p caveats
-say so).
+**The reference hold** (`ReferenceHold`, OVERVIEW). Persistence of the reference compresses the
+cycle by `Q = 1 − |r⟩⟨r|`, the antipode-odd step. It scales the lepton protocols' heavy row by
+`1/√2` and leaves the colour axes alone. Lepton `m_μ/m_τ` moves from `0.028` to `0.038` (data
+`0.0595`); up is unchanged (`0.022` against `0.0037`). So the steps fixed today do not give the masses.
+
+**Next.** With the hold's odd/even block, the even complement's action enters the readout (the
+electron channel on the reference slot is `(o − e)/√2`). Derive that action (PMAction REVIEW, "Even
+complement"); the native words act on even modes as axis permutations, which mix protocols, so a
+protocol-diagonal even action needs another source. Then retest the six ratios with only `δ_O` per
+protocol. Until then e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers, a declared
+assignment (their e8p caveats say so).
 
 **Constraints any readout must meet (Lean).**
 - `DoubletReflection.flip_doublet`, `flip_keeps_reference_axis`: an observable invariant under the
