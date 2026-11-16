@@ -7,7 +7,8 @@ import PMAction.ReferenceWallMass
 `ReferenceWallMass`: every charged sector's light mass is `D_R (δ_O + cyc κ_O)`, and the light
 carriers are spinor class with one magnitude `k` on both walls (one leg weight on both walls,
 `PMConstants.HandoffAdmittance.closure_one_price`; the repair adds only a sign). This module fixes
-`k` relative to the vector-class carrier `K` from the wire.
+their node admittance ratio. Reading that ratio as Hamiltonian rates requires an event-duration
+and update law in the same clock units (`CertainTransferRate`, `WallGapCalibration`).
 
 * The vector carrier is an in-cycle exchange (`ExchangeAxis.vector_free`): a gauge-repairable cycle
   event, which passes with certainty. Transmission is admittance normalized so a certain channel has
@@ -23,10 +24,10 @@ The mass carrier stays on its wall, so no lead boundary enters. The CKM transfer
 generations does add one (`KronSeries.vub_from_kron`: the unit boundary `1/π` in series), so the
 same node amplitude sets `|V_ub|` only with that boundary added.
 
-Premises, all from the library: carrier amplitude is transmission is admittance
-(`HandoffAdmittance`), the link is a Laplacian (Conservation, `KronSeries`), and an in-cycle event
-transmits with certainty. How each species uses the wire is protocol work
-(`PMElementaryParticles`).
+The equations here concern event transmission and admittance (`HandoffAdmittance`).
+The series calculation uses a Laplacian link (conservation, `KronSeries`) and the
+in-cycle normalization uses certain transmission. How each protocol uses the wire
+is work in `PMElementaryParticles`.
 -/
 
 namespace PMAction.NodeAmplitude

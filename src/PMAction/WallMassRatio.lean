@@ -52,7 +52,10 @@ theorem wall_coupling_ratio_of_mass_ratio (δ y : ℝ) (hδ : δ ≠ 0)
 /-! ## The two ratios are substrate expressions
 
 The mass ratio `256/441 = (16/21)²` is the capacity-basin ratio `(ν/(ν+σ))²`, and
-the coupling ratio `25/336 = σ²/(ν(ν+σ))`. Neither is an independent choice. -/
+the coupling ratio `25/336 = σ²/(ν(ν+σ))`. The identification of the wall mass ratio with
+the capacity ratio is the explicit hypothesis of `wall_coupling_ratio_substrate`.
+This candidate uses the equal-detuning model of `WallDispersion`; applying it to the
+reference-conditioned wire requires an additional substrate derivation. -/
 
 theorem capacity_ratio_sq :
     (256 / 441 : ℝ) =

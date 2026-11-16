@@ -156,6 +156,8 @@ import PMAction.ReferenceWallMass
 import PMAction.ReferenceWallRotation
 import PMAction.CertainTransferRate
 import PMAction.LightLeakage
+import PMAction.WallCurrentWeights
+import PMAction.WallGapCalibration
 import PMAction.NativeDetuning
 import PMAction.WilsonPointForced
 import PMAction.WallOffset

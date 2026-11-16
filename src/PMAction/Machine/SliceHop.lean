@@ -24,8 +24,8 @@ clock axis and coordinate `0` as the hop axis (the other spatial axes are the sa
 So the directional hop is the equal-weight sum of the four in-slice two-root words; no word is
 chosen. Under the full stabilizer of the axis, which also moves the clock axis, all six words would
 be one orbit; the split update fixes a clock, so only the slice symmetries apply. This settles the
-word. It does not fix the hop's overall normalization (shared group/trace normalization across
-spacings, PMAction REVIEW B.2).
+word. The hop's overall Hamiltonian rate still requires calibration against the inter-wall
+crossing and substrate clock (`PMAction/REVIEW-AND-NEXT.md`, relative crossing and carrier rates).
 -/
 
 namespace PMAction.SliceHop

@@ -20,10 +20,11 @@ in `k`, by the Hamiltonian projected onto the zero-mode space (degenerate pertur
   second wall's light block: it selects the second wall's light branch at every `k` in the
   effective theory.
 
-So the identification of the charged current's wall extends from the kernel to the light band at
-first order in `k`; wall mixing enters only through the gapped modes, at `O(k²/gap)`. No constant
-in the library uses the projector beyond this order (weak observables are evaluated far below the
-wall gap), so that correction is not carried as open work.
+The charged-current wall identification extends from the kernel to the projected light theory
+at first order in `k`. The full projector also retains a gapped state
+(`WallChiralCurrent.projector_not_vacuum_projector`). `WallCurrentWeights` records the exact
+light/gapped current weights. A protocol-row readout needs its external-state and final-channel
+construction to identify which weight is lost.
 -/
 
 noncomputable section

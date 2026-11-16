@@ -18,9 +18,9 @@ An in-wall hop along direction `j` is the Wilson form `−(i αⱼ + r β)/2` (`
 So the premise holds for the Wilson part: a carrier hop of amplitude `t` puts `−r t/2` in the
 chirality-flip slot, and its kinetic part keeps chirality and gives no mass. At the Wilson point
 `r = 1` that is `κ = −t/2` for every class, so the ratios of the composite masses
-(`CompositeMass.composite_expansion`) are the ratios of the carrier hop amplitudes. The node amplitude
-(`REVIEW-AND-NEXT.md`, generation sector) is the one open number for both the masses and the
-`|V_ub|`, `|V_cb|` suppression.
+(`CompositeMass.composite_expansion`) are the ratios of the carrier hop amplitudes. `NodeAmplitude` supplies the class admittance ratio. Identifying it with a Hamiltonian-rate
+ratio requires the native event duration and update law, and the crossing-to-flip rate remains open
+(`WallGapCalibration`).
 
 Premise kept: the class carrier is an in-wall hop of this Wilson form. A carrier with another Dirac
 structure would need its own split.
