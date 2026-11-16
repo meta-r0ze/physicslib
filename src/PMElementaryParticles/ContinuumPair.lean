@@ -1,4 +1,5 @@
 import PMElementaryParticles.MassiveDaughterSpectrum
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 
 /-!
 # Continuum angular integration for a massless pair
@@ -365,5 +366,32 @@ theorem massive_density (G m μ E : ℝ) (hμ : 0 ≤ μ) (hm : μ < m)
     have hcoef : (1 : ℝ) / (48 * Real.pi) = 2 / (96 * Real.pi) := by ring
     rw [hcoef, hc]
     exact MassiveDaughterSpectrum.density G m μ E hm0.ne'
+
+/-! ## Rotation invariance about the polar axis and the polar reflection (review item A5, part)
+
+These hold for every `f` (no integrability needed): interval integrals are invariant under a shift
+(`integral_comp_add_right`) and a reflection (`integral_comp_neg`) of the variable. Together they give
+the rotations about the polar axis and the reflection `z ↦ −z`. Rotations that move the polar axis are
+not covered: they mix `z` and `φ`, and need the change of variables on the sphere. -/
+
+/-- **Rotation about the polar axis** leaves the average unchanged, for any `f` periodic in `φ`. -/
+theorem average_rotate_polar (f : ℝ → ℝ → ℝ) (hf : ∀ z, Function.Periodic (f z) (2 * Real.pi))
+    (a : ℝ) : average (fun z φ => f z (φ + a)) = average f := by
+  unfold average solidAngle
+  congr 1
+  apply intervalIntegral.integral_congr
+  intro z _
+  simp only
+  rw [intervalIntegral.integral_comp_add_right (f z) a, zero_add,
+    show 2 * Real.pi + a = a + 2 * Real.pi by ring, (hf z).intervalIntegral_add_eq a 0, zero_add]
+
+/-- **The reflection `z ↦ −z`** leaves the average unchanged, for any `f`. -/
+theorem average_reflect_polar (f : ℝ → ℝ → ℝ) :
+    average (fun z φ => f (-z) φ) = average f := by
+  unfold average solidAngle
+  congr 1
+  have h := intervalIntegral.integral_comp_neg (a := (-1 : ℝ)) (b := 1)
+    (fun z => ∫ φ in (0 : ℝ)..(2 * Real.pi), f z φ)
+  simpa using h
 
 end PMElementaryParticles.ContinuumPair

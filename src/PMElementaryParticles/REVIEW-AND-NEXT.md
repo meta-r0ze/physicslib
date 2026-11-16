@@ -7,13 +7,22 @@ The three-body measure is used but not factored. Target: factor it into
 input. This is the concrete mathematical content of former review item 2.
 Uses the two-body phase-space result.
 
-### A4. Massive neutrino pair (extend the daughter spectrum) — optional/blocked
+### A4. Massive neutrino pair (extend the daughter spectrum) — tensor done
+Done (`MassivePair`): the rest-frame tensor of a pair with masses `m₁`, `m₂` from the same angular
+symmetries (`massive_rest_tensor`), its covariant form `Q²⟨k₁k₂⟩ = Φ(P²/3) g Q² + Φ(E₁E₂ − P²/3) q q`
+(`massive_rest_covariant`), the massless limit (`massless_limit`), two-body kinematics and shells.
+Open: the massive two-body volume (`2P/Q` times the massless one) as a measure statement, and the
+daughter-energy integral of `MassiveDaughterSpectrum`/`MassiveWidth` with this tensor.
 `MassiveDaughterSpectrum`/`MassiveWidth` treat a massless neutrino pair. Target:
 extend `pair_density`/`closed_width` to a massive neutrino pair (at least equal
 masses or one massive leg), with positivity and endpoint limits, reusing the
 transported pair tensor with `q² ≠ 0`. Closed form or a controlled integral.
 
-### A5. Rotation invariance of the continuum angular average — optional/blocked
+### A5. Rotation invariance of the continuum angular average — partly done
+Done (`ContinuumPair.average_rotate_polar`, `average_reflect_polar`): invariance under rotations about
+the polar axis (any `f` periodic in `φ`) and under `z ↦ −z` (any `f`), no integrability needed. Open:
+rotations that move the polar axis (they mix `z` and `φ`; needs the sphere change of variables, or the
+identification of `average` with Mathlib's sphere measure and its isometry invariance).
 `ContinuumPair` proves moments and linearity on *continuous* test functions but not
 full rotation invariance for every integrable test function. Target: prove the
 uniform-sphere average is invariant under rotations on `L¹` (change of variables /
