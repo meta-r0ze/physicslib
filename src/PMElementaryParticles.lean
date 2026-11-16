@@ -27,6 +27,7 @@ import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.ChargeProtocols
 import PMElementaryParticles.ProtocolInventory
 import PMElementaryParticles.RefreshMap
+import PMElementaryParticles.CoherentGate
 import PMElementaryParticles.CarrierSpecies
 import PMElementaryParticles.FinalStateBridge
 import PMElementaryParticles.SubstrateFinalStates
