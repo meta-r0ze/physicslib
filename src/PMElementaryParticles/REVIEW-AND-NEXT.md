@@ -33,45 +33,38 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   from disjoint banks (`PMAction.IndependentRegisters`). Excluded: the reference class's even sector as
   the label. It satisfies Map but not Protocol: the completed wall action vanishes on the even sector at
   every momentum (`PMAction.CarrierVacuumEvolution.even_inert`, `PMAction.EvenComplement`), so an even
-  label does not move and is left behind by its particle. Remaining candidates: the occupation register
-  of `PMConstants.CarrierRepresentation` (needs a transport that moves the occupied carrier with the
-  Dirac amplitude), or a label carried by the transported unit itself (the two-wall carrier pair,
-  `PMFlavor.OrientationDoublet`'s orientation as the doublet). The heavy-label weight, the partner
-  difference and the lightest masses enter here.
+  label does not move and is left behind by its particle.
 
-  Second brainstorm (`tools/register_transport_check.py`; tests: count, `1 + 3`, doublet sign, Map,
-  Protocol (moves with the particle), separate from the Dirac generators). Killed: the other wall's
-  even modes (count `16`, does not move); the other wall's full carriers (its odd half is the wall); a
-  displacement of the local reference record (not stationary); the hop's auxiliary root axis as the
-  label (`2e_j = (e_j+e_k)+(e_j−e_k)` needs `k ≠ j`, so no fixed label serves every direction, and the
-  in-slice hops never use the reference axis); the orientation doublet with no colour source (count).
-  Survive: (i) the vector carriers (axis `×` sign, `8 × 4 = 32`) as an occupation register moved by the
-  same shift as the particle, its E8 bank open; (ii) the E8 glued roots read as generation `×` protocol
-  `×` wire: `240 = 48` pure `+ 192` glued, and each glue class's `64` glued roots are `8` carriers of one
-  `D₄` (the protocol, changed only by that `D₄`'s roots: gauge) `⊗ 8` of the other (the wire, moved by
-  its own roots). Three glue classes give three generations, and reading each class's protocol carriers
-  in the vector frame by triality is `CarrierRepresentation`'s premise. (ii) supplies (i)'s bank, but it
-  uses the two `D₄` factors as protocol and wire, while the library uses them as the two walls
-  (`PMAction.CarrierVacuumSector`); with one `D₄` for the wire, a class gives `8 × 2 = 16` light
-  components. The decisive question for (ii): where the two walls live if both `D₄` factors are taken. Tried: the
-  walls as the two chiral halves of the wire's odd sector (killed: `4` components, no gapped partners,
-  so the two-wall mass mechanism is lost); the walls as the generation's two glue classes, the particle a
-  superposition of glued roots of class `b` (one wall) and `c` (the other) (count `8 × 2 × 2 = 32`,
-  three unordered class pairs give three generations as in `PMAction.GenerationWalls`, and both walls'
-  protocol carriers read in the vector frame by triality is `CarrierRepresentation`'s "both domain-wall
-  sectors" premise; open: a single-wall shift changes a wall's class, so the walls need a label besides
-  their class). Third try (`tools/register_transport_check.py`, E8 built explicitly): keep the library's walls as
-  the two `D₄` factors inside one glue class, and read a glued root `(a, b)` as wall amplitude in one
-  factor and label in the other: wall T is `odd(a) ⊗ even(b)`, wall F is `even(a) ⊗ odd(b)`. Checked
-  for every class: the sectors are `16 + 16 = 32` (the capacity), orthogonal; each factor's Weyl words
-  commute with the antipode, so wall terms in one factor keep the other factor's label fixed (Map); the
-  label is a tensor factor of the moving root, so it moves with the particle (Protocol; this is what
-  the excluded even-sector label lacked, being a direct summand); a single-wall step stays in the class
-  (the second try's problem is gone); and the factor swap is an E8 automorphism that maps wall T onto
-  wall F, so the wall exchange is native. Open: the label is the even half of the other factor's
-  carriers, `4` axis values (lepton or colour) with no sign, so the doublet has no place in it. Taking
-  the full label (`8`, axis `×` sign, sign = label parity) houses the doublet but makes the walls
-  overlap on `odd ⊗ odd`. The doublet is the deciding test for this reading.
+  Candidate (`tools/register_transport_check.py`, E8 built explicitly as `D₄ ⊕ D₄` with diagonal
+  glue): the glued roots of a glue class are `8 ⊗ 8`, a carrier of each `D₄` factor. Each wall is a
+  glue class read through one factor: on wall T the amplitude is in the first factor and the protocol
+  label is the second factor's carrier; on wall F the roles are exchanged. Generation `g` is wall T in
+  class `g + 1` and wall F in class `g − 1`, as in `PMAction.GenerationWalls`, so the wire is unchanged
+  (each protocol sees the same wire, tensored with its label). The walls are told apart by which factor
+  carries the amplitude, not by class. Checked for all three generations:
+  - Capacity: `4` odd modes `× 8` labels per wall, `32 + 32 = 64` per generation, half light (`32`);
+    `8` labels `× 2` walls `= 16` channels.
+  - Map: wall terms act in the amplitude factor and leave the label fixed; a wall step keeps the class
+    and the label.
+  - Protocol: the label is a tensor factor of the moving root, so it moves with the particle.
+  - Doublet: the label's antipode is a sign on the label only, not a global sign on the wall's modes, so
+    it separates weak partners (what the wire alone could not, OVERVIEW "Protocols are not wire modes").
+  - Crossing: the factor swap and the diagonal triality are E8 automorphisms, and swap followed by
+    triality maps wall T (class `g + 1`) onto wall F (class `g − 1`), carrying the label with it. So the
+    inter-wall crossing is native and the two walls' labels are identified by triality: this is
+    `CarrierRepresentation`'s "both domain-wall sectors" premise.
+  - Governor: the label factor's Weyl words act on the label only; the colour stabiliser of the lepton
+    axis, with the sign fixed, has four orbits on the `8` labels, `(lepton or colour) × sign`: the four
+    base protocols.
+
+  Open: (1) Lean statement of the checks; (2) the Toll: the wire and the crossing are label-blind, so
+  the heavy-label weight has to be a cost on the four orbits, and the data ask for the order
+  `ν < e < d < u` with steps `≈ 3, 3, 4.4`, which no product of a lepton/colour factor and a sign factor
+  gives (it forces `s_u/s_d = s_ν/s_e`); (3) the lightest masses. Killed on the way (git history has the
+  details): the reference class's even sector, the other wall's even modes or full carriers, a
+  displaced reference record, the hop's auxiliary axis, the orientation doublet alone, the walls as the
+  wire's chiral halves, the walls labelled by class alone, and the even half of the other factor as the
+  label (no doublet).
 
 ## Other open work
 

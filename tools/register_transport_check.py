@@ -55,3 +55,56 @@ for k,X in cls.items():
           "dim T,F",round(np.trace(T)),round(np.trace(F)),"T.F=0",np.allclose(T@F,0),
           "swap T->F",np.allclose(sw@T@sw.T,F),
           "D4_1 words keep T",all(np.allclose(np.kron(w,np.eye(8))@T,T@np.kron(w,np.eye(8))) for w in W))
+
+print("Candidate: each wall is a glue class read through one D4 factor (amplitude) with the other factor as label")
+import itertools, numpy as np
+h=0.5
+V=[tuple(float(s*(i==j)) for j in range(4)) for i in range(4) for s in (1,-1)]
+S=[p for p in itertools.product((h,-h),repeat=4) if sum(x<0 for x in p)%2==0]
+C=[p for p in itertools.product((h,-h),repeat=4) if sum(x<0 for x in p)%2==1]
+cls=[V,S,C]   # class index 0,1,2
+D4=[r for r in {tuple(np.array(a)+np.array(b)) for a in V for b in V} if sum(x*x for x in r)==2]
+def key(w): return tuple(round(x,6)+0.0 for x in w)
+cof={key(w):k for k in range(3) for w in cls[k]}
+roots={key(r+(0.,)*4) for r in D4}|{key((0.,)*4+r) for r in D4}|{key(a+b) for k in range(3) for a in cls[k] for b in cls[k]}
+print("E8 roots", len(roots))
+# find an order-3 orthogonal map cycling the classes v->s->c->v
+H=np.ones((4,4))/2; H[1,2:]*=-1; H[2,1::2]*=-1; H[3,1:3]*=-1
+F=np.diag([1,1,1,-1.])
+cands=[H@F, F@H]
+tau=None
+for T in cands:
+    img=[{cof.get(key(T@np.array(w))) for w in cls[k]} for k in range(3)]
+    if all(len(s)==1 for s in img):
+        perm=[s.pop() for s in img]
+        if perm==[1,2,0]: tau=T
+print("triality found:", tau is not None, " D4 roots kept:", {key(tau@np.array(r)) for r in D4}=={key(r) for r in D4})
+def act(M1,M2,r): r=np.array(r); return key(np.concatenate([M1@r[:4],M2@r[4:]]))
+print("diagonal triality is an E8 automorphism:", {act(tau,tau,r) for r in roots}==roots)
+I=np.eye(4)
+print("factor swap is an E8 automorphism:", {key(r[4:]+r[:4]) for r in roots}==roots)
+# sectors: glue class x has basis (a,b), a,b in cls[x]
+def basis(x): return [key(a+b) for a in cls[x] for b in cls[x]]
+anti=lambda w: key(-np.array(w))
+def proj(x, odd_first):
+    # projector onto odd(a) (x) all(b)  [wall T]  or all(a) (x) odd(b)  [wall F], in class x
+    B=basis(x); idx={b:i for i,b in enumerate(B)}; P=np.zeros((64,64))
+    for b in B:
+        a_,b_=b[:4],b[4:]
+        img=idx[key(anti(a_)+b_)] if odd_first else idx[key(a_+anti(b_))]
+        P[idx[b],idx[b]]+=0.5; P[img,idx[b]]-=0.5
+    return P,idx
+for g in range(3):
+    x,y=(g+1)%3,(g-1)%3
+    PT,iT=proj(x,True); PF,iF=proj(y,False)
+    # crossing C = swap then diagonal triality: maps class x -> class y?
+    Cm=np.zeros((64,64)); ok=True
+    for b,i in iT.items():
+        img=act(tau,tau,b[4:]+b[:4])
+        if img not in iF: ok=False; break
+        Cm[iF[img],i]=1
+    print(f"gen {g}: wall T class {x} dim {round(np.trace(PT))}, wall F class {y} dim {round(np.trace(PF))};",
+          "crossing lands in class y:",ok, "maps wall T onto wall F:", ok and np.allclose(Cm@PT@Cm.T,PF))
+    # a single-wall step on wall T (D4_1 reflection) keeps class x and the label b
+    keep=all(key(np.concatenate([np.array(b[:4])-(np.array(b[:4])@np.array(r))*np.array(r),b[4:]])) in iT for r in D4 for b in iT)
+    print("   wall-T step keeps class and label:",keep)
