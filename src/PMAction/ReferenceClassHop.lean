@@ -13,10 +13,14 @@ Dirac components (`Sites`). Each class carries the wall Hamiltonian `hamiltonian
 (the second wall, `ChiralityConvention.physicalBackground`) a single-wall exchange moves class `a`
 to class `b` with a Dirac block `X a b`, conserving (it commutes with `Γ` and `Σⱼ`,
 `CarrierAdmittance.commutant_chiral`); the on-site part is the wall Hamiltonian, so `X a a = 0`.
-The reference occupies one class, `0` (the vector class: `PMConstants.CarrierRepresentation`,
-`GenerationLabel`'s `v`); this module uses that premise and nothing about the other wall. (The only
-other stationary option with native exchanges kept or suppressed is an antisymmetric two-class
-reference; `tools/reference_class_check.py` and PMAction REVIEW record why the data exclude it.)
+The reference is class-definite, indexed here by `0` (the vector class:
+`PMConstants.CarrierRepresentation`, `GenerationLabel`'s `v`); this module uses that premise and
+nothing about the other wall. `ReferenceClassRecord` proves a sufficient maintenance contract:
+faithful class recording that preserves the nonzero pure reference's class density forces one
+class, and the exchange exclusion holds for whichever class is selected. `ReferenceRootRecord`
+constructs a conditional root-word record; its native joint-control admission, bank allocation
+and attachment to maintenance remain open. Occupation one alone does not establish coherent
+class definiteness; the stationary antisymmetric alternative is exhibited in that module.
 
 * `act_reference`: on the reference the wall part vanishes (`physicalBackground_kernel`) and each
   exchange out of class `0` gives `X 0 b 2 2` times the reference in class `b`

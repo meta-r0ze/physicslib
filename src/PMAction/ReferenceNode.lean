@@ -20,7 +20,11 @@ reference's class, which `ReferenceClassHop` allows).
 * `two_leg_case`: with legs only to the two classes of one crossing, the series value `α/2`
   (`NodeAmplitude.node_series`).
 
-So `k/K = α/3` if the node joins all three classes, `α/2` if it joins only the crossing's two.
+These are off-diagonal entries with the joined class ports retained as terminals.
+A three-port coefficient `α/3` is not yet the two-terminal response with the unused
+class left floating. `ReferenceNodeBoundary` proves that eliminating free spectator
+ports recovers `α/2` even when those legs exist; an anchored spectator contributes
+a host load. The physical port boundary condition remains to derive.
 
 **Which legs.** A leg is an exchange between the node and a carrier mode that is there. On the
 reference's wall a generation state occupies one class, and the reference occupies its own class `r`;

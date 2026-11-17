@@ -143,6 +143,8 @@ import PMAction.Generations
 import PMAction.GenerationEncoding
 import PMAction.GenerationWalls
 import PMAction.GenerationOrientation
+import PMAction.GenerationMapObligations
+import PMAction.GenerationPairProtocol
 import PMAction.GenerationMass
 import PMAction.GenerationCurrent
 import PMAction.GenerationParity
@@ -165,9 +167,16 @@ import PMAction.ConfinedAxialCurrent
 import PMAction.ColourRegister
 import PMAction.CarrierAdmittance
 import PMAction.ReferenceClassHop
+import PMAction.ReferenceClassRecord
+import PMAction.ReferenceRootRecord
 import PMAction.ExactZeroMode
 import PMAction.EvenComplement
 import PMAction.ReferenceNode
+import PMAction.ReferenceNodeBoundary
+import PMAction.ReferenceHostInterface
+import PMAction.ReferenceMarkerExport
+import PMAction.ReferenceMarkerSupply
+import PMAction.ReferenceReadySource
 import PMAction.NativeDetuning
 import PMAction.WilsonPointForced
 import PMAction.WallOffset

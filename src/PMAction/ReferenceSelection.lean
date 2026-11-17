@@ -2,18 +2,20 @@ import PMAction.PersistentBackground
 import PMAction.HomogeneousRouting
 
 /-!
-# The reference is selected, not prepared
+# Selection and supply contracts for the reference
 
-The open item "prepared initial reference" asked for dynamics that prepares the reference
-background. The boundary results show closed internal controls cannot do it
-(`ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`). Persistence Mechanics does
-not ask for preparation. Its survival law selects: what is observed is what persisted, and the
-most persistent configuration is the one of least excess price (`PersistenceSelection`). This
-module collects the chain that settles the reference by selection and maintenance.
+This module collects selection and maintenance results for the supplied native
+reference protocol. Survival selection identifies its excess-price minimizers;
+it does not dynamically prepare them, choose a reference value, or prove that
+an appropriate background belongs to the accessible conserved family.
+`PersistentBackground.persistent_in_family` retains the accessible stationary
+witness explicitly. The source boundaries (`ReferenceSourceBoundary`,
+`PrimitiveRecordBoundary`) still apply to closed preparation attempts.
 
 * `selected_reference`: the most persistent reference configuration is exactly a uniform
   background, every live and record cell holding the same reference value
-  (`PersistentBackground.persistent_background`). This is the reference's origin: selection.
+  (`PersistentBackground.persistent_background`). This is minimization for the
+  stated price and unrestricted configuration family, not a preparation theorem.
 * `one_record_per_tick`: the per-tick ledger at the coupling site. Each tick the live value is
   replaced by the record arriving from upstream, and the departing live value (any disturbance) is
   written into the record leaving downstream: one clean record consumed and one record exported
@@ -29,15 +31,17 @@ module collects the chain that settles the reference by selection and maintenanc
 
 
 `readPair_run` extracts each native port pair and intertwines its ticks with the stream.
-`native_reference_forever` uses a uniform incoming record bank on the unbounded lattice. The actual initial state of the
-universe, if asked for, is a cosmological question (Paper VI), not a PMAction one.
+`native_reference_forever` uses a uniform incoming record bank on the unbounded lattice. The actual initial state of the universe is a cosmological question (Paper VI).
+The local source task, readiness, accessibility and resource accounting remain
+PMAction obligations. In particular spatial uniformity of a stream does not
+select its carrier profile; `ReferenceReadySource` treats that task separately.
 -/
 
 noncomputable section
 namespace PMAction.ReferenceSelection
 open RecordSupply
 
-/-- **The reference's origin is selection.** -/
+/-- Uniform excess-price minimizers for the supplied protocol; their values and accessibility remain inputs. -/
 theorem selected_reference {X : Type*} [Fintype X] [DecidableEq X] {A : Type*} [DecidableEq A]
     (o : X) (e : Equiv.Perm X) (hc : NativeReferenceBackground.Connected o e) (toll β : ℝ)
     (ht : 0 < toll) (hβ : 0 < β) (a : A) (s : NativeCarrierState.Config X A) :
@@ -83,7 +87,7 @@ theorem consumed_records_distinct {X : Type*} (o : X) (e : Equiv.Perm X)
     apply (e ^ n).injective
     rw [← Equiv.Perm.mul_apply, ← pow_add, show n + (m - n) = m by omega, h]
 
-/-- **Maintained forever from the selected background.** -/
+/-- Exact maintenance from the uniform incoming-record contract and the stated routing. -/
 theorem reference_forever {d : ℕ} (e : Equiv.Perm (Fin d → ℤ))
     (hcomm : ∀ w x, e (x + w) = e x + w) (o : Fin d → ℤ) (hmove : e o ≠ o) {A : Type*}
     (s : (Fin d → ℤ) → A × A) (r : A) (hrec : ∀ x, (s x).2 = r) (t : ℕ) (ht : 1 ≤ t) :
