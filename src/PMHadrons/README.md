@@ -46,16 +46,18 @@ comparison, not a derivation.
   `HadronicMatrixElement` / `BoundStateOverlap` (the missing emission overlap made explicit),
   and the widths `NeutronRate`, `PionWidth`, `KaonWidth`, `NeutralPionWidth`,
   `KaonSemileptonic`.
-- **The neutron lifetime from a minimal E8 cube.** `NeutronPrediction` uses the minimal
-  persistent cube `3×3×3` (`MinimalCube`) with the `41/43` margin — an E8 volume statement,
-  not a spatial box.
+- **Weak decays.** Pion, kaon and neutron share one charged-current template
+  (`DecayInstantiation`); the neutron's scored route is the continuum one (`NeutronContinuum`,
+  `923 s` against `878 s`, the gap being the electron's radiative correction and `g_A`'s
+  electromagnetic matching). The `3³` minimal-cube route (`NeutronPrediction`) is kept as a
+  comparison; its `41/43` correction is retired.
 
 ## Where to look
 
 - **[OVERVIEW.md](OVERVIEW.md)**: what is proved, module by module, the six-pillar occupancy
   account, and the E8 decay checks.
-- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)**: open work — the composite's persistent
-  configuration (occupancy) and its emission overlap.
+- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)**: open work, weak-width normalization first.
+- **[PILLARS.md](PILLARS.md)**: the six pillars at the hadron level, values and calculation log.
 
 ## Build and audit
 

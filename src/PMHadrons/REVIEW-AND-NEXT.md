@@ -1,11 +1,11 @@
 # PMHadrons — open work
 
-## Nucleon and pion dressing
+Done results are in [OVERVIEW](OVERVIEW.md); the pillar calculations and their log are in
+[PILLARS.md](PILLARS.md).
 
-- Recompute the cloud and intrinsic magnetic moments with the finely resolved, centre-of-mass-projected carrier as the source. Include recoil. The axial and pion source is the on-site spin `Σⱼ` on both walls (`PMAction.ConfinedAxialCurrent`); its value needs the carrier's size (PMAction's carrier level and radius certificate).
-- Determine the Toll rule for a virtual pion pair that leaves and returns, and the Governor constraint on the nonperturbative colour coupling at cube scale. Compare the resulting pillar values with `CompositeMasses` and `MesonMasses`. Calculation history and competing premises are in [PILLARS.md](PILLARS.md).
+## Weak widths and meson emission (first)
 
-## Weak widths and meson emission
+In order: the normalization decision comes first because every rate below uses it.
 
 - **One charged-current normalization.** Assemble a consistent physical partial-rate convention
   across pion, kaon and neutron channels. Reuse `ShortDistanceRunning.runningFactor_bounds`
@@ -18,24 +18,6 @@
   dressing (`q² = 515/516`) enters physical rates: the catalog compares dressed `V_ud`, but these
   formulas use raw CKM magnitudes. Do not count that dressing, `32/33`, contact running or finite
   radiative terms twice. This normalization decision precedes the e8p export update.
-- **Neutron low-energy matching.** Derive the axial radiative shift, including the nucleon
-  low-energy constants and counterterm. Specify whether the assigned `g_A = 5/4` is a core or a
-  fully strong-dressed QCD coupling before adding strong pion-cloud and electromagnetic effects;
-  those are distinct corrections. Formalize the full Fermi-factor and outer-radiative integrals
-  already evaluated in `tools/neutron_rc_certificate.py`. Its diagnostics move the leading-Coulomb
-  result from about 923 s to about 909 s with outer radiation; better Coulomb integration alone
-  cannot close the remaining gap. The published 1.4–2.6% axial-shift estimate sets an unknown
-  counterterm contribution to zero; its 871–889 s diagnostic band is not a parameter-free E8
-  lifetime prediction. Do not insert measured `g_A` as the derivation.
-  Benchmark: [Cirigliano et al.](https://arxiv.org/pdf/2202.10439).
-- **Meson emission and finite radiation.** Derive one emission-space rule for both mesons,
-  reusing `EmissionSpace`'s pion cone-plus-survivors construction. Explain from line-carrier
-  dynamics why kaon routing uses all nu channels and occupies the pion's surviving exits.
-  `f_K/f_pi = 70/59` remains low; the usual electromagnetic difference in the kaon/pion width
-  ratio is negative (about −0.69%), so adding it alone worsens the current rate-ratio deficit.
-  Compute the charged/isospin and photon-inclusive matching in the same convention as the
-  emission overlaps. Do not choose a nearby replacement for the count 1593 by matching data.
-  Benchmark conventions: [PDG meson review](https://pdg.lbl.gov/2024/reviews/rpp2024-rev-pseudoscalar-meson-decay-cons.pdf).
 - **Partial, inclusive and total rates.** Define photon-inclusive channels and sum actual partial
   widths before predicting a total lifetime. `PionWidth` and `KaonWidth` supply muon-channel
   partial widths; `NeutralPionWidth` supplies the two-photon partial width. Against the frozen
@@ -59,9 +41,47 @@
   radiative/isospin corrections and bound-state amplitudes needed by semileptonic and
   nonleptonic kaon channels. Do not attribute the entire leading-order residual to form factors
   before fixing these kinematics.
+- **Neutron low-energy matching.** Derive the axial radiative shift, including the nucleon
+  low-energy constants and counterterm. Specify whether the assigned `g_A = 5/4` is a core or a
+  fully strong-dressed QCD coupling before adding strong pion-cloud and electromagnetic effects;
+  those are distinct corrections. Formalize the full Fermi-factor and outer-radiative integrals
+  already evaluated in `tools/neutron_rc_certificate.py`. Its diagnostics move the leading-Coulomb
+  result from about 923 s to about 909 s with outer radiation; better Coulomb integration alone
+  cannot close the remaining gap. The published 1.4–2.6% axial-shift estimate sets an unknown
+  counterterm contribution to zero; its 871–889 s diagnostic band is not a parameter-free E8
+  lifetime prediction. Do not insert measured `g_A` as the derivation.
+  Benchmark: [Cirigliano et al.](https://arxiv.org/pdf/2202.10439).
+- **Meson emission and finite radiation.** Derive one emission-space rule for both mesons,
+  reusing `EmissionSpace`'s pion cone-plus-survivors construction. Explain from line-carrier
+  dynamics why kaon routing uses all nu channels and occupies the pion's surviving exits.
+  `f_K/f_pi = 70/59` remains low; the usual electromagnetic difference in the kaon/pion width
+  ratio is negative (about −0.69%), so adding it alone worsens the current rate-ratio deficit.
+  Compute the charged/isospin and photon-inclusive matching in the same convention as the
+  emission overlaps. Do not choose a nearby replacement for the count 1593 by matching data.
+  Benchmark conventions: [PDG meson review](https://pdg.lbl.gov/2024/reviews/rpp2024-rev-pseudoscalar-meson-decay-cons.pdf).
 - **Tau inclusive hadronic factor.** `PMElementaryParticles.TauBranching` derives the leptonic
   channels and colour count (`B_e = 1/(1 + f(r) + 3h)`); the supplied `B_e = 0.1782` requires
   `h` about 1.213 (`supplied_needs`). Derive the inclusive quark-current spectral weight, including
   strong dressing, strange-channel masses, CKM/dressing and short-distance electroweak matching,
   so the tau total lifetime has no supplied branching fraction. The target inferred from `B_e`
   is a falsification test, not a fitted value of `h`.
+
+## Lean organization (from the 2026-11-17 review)
+
+- **Neutron routes.** Four modules compute the neutron: `NeutronContinuum` (the scored route),
+  `NeutronRate` (continuum comparison), `NeutronPrediction` (the `3³` finite cube; its `41/43`
+  correction is retired), and `DecayInstantiation`'s unified channel; `BetaCalibration` and
+  `WeakTransition` supply the finite-hazard form. After the normalization decision above, keep one
+  route and mark or remove the comparison stages, so e8p's three neutron rows reduce to one scored
+  row and clearly labelled intermediates.
+- **Unused interfaces.** `CompositeBinding` (mass as "carriers minus binding", which the occupancy
+  account replaces), `MultiBodyPhaseSpace` and `ChannelFinalStateLink` are imported by nothing else.
+  Keep them only if the channel-inventory work above uses them.
+
+## Nucleon and pion dressing (after the weak widths)
+
+- Recompute the cloud and intrinsic magnetic moments with the finely resolved, centre-of-mass-projected carrier as the source. Include recoil. The axial and pion source is the on-site spin `Σⱼ` on both walls (`PMAction.ConfinedAxialCurrent`); its value needs the carrier's size (PMAction's carrier level and radius certificate).
+- Determine the Toll rule for a virtual pion pair that leaves and returns, and the Governor constraint on the nonperturbative colour coupling at cube scale. Compare the resulting pillar values with `CompositeMasses` and `MesonMasses`. Calculation history and competing premises are in [PILLARS.md](PILLARS.md).
+- The pion-dressing numbers, threshold argument and the open capacity question formerly in
+  `PION-WIP.md` are in [PILLARS.md](PILLARS.md) ("Pion dressing status").
+
