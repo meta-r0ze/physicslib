@@ -14,7 +14,9 @@ Dirac components (`Sites`). Each class carries the wall Hamiltonian `hamiltonian
 to class `b` with a Dirac block `X a b`, conserving (it commutes with `Γ` and `Σⱼ`,
 `CarrierAdmittance.commutant_chiral`); the on-site part is the wall Hamiltonian, so `X a a = 0`.
 The reference occupies one class, `0` (the vector class: `PMConstants.CarrierRepresentation`,
-`GenerationLabel`'s `v`); this module uses that premise and nothing about the other wall.
+`GenerationLabel`'s `v`); this module uses that premise and nothing about the other wall. (The only
+other stationary option with native exchanges kept or suppressed is an antisymmetric two-class
+reference; `tools/reference_class_check.py` and PMAction REVIEW record why the data exclude it.)
 
 * `act_reference`: on the reference the wall part vanishes (`physicalBackground_kernel`) and each
   exchange out of class `0` gives `X 0 b 2 2` times the reference in class `b`
