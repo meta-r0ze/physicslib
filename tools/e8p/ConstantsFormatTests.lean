@@ -15,3 +15,9 @@ example : fixedDecimal (lowerScaled (-9999/1000) 2) 2 = "-10.00" := by decide +k
 example : fixedDecimal (upperScaled (-9999/1000) 2) 2 = "-9.99" := by decide +kernel
 example : fixedDecimal (lowerScaled (-1/3) 0) 0 = "-1" := by decide +kernel
 example : fixedDecimal (upperScaled (-1/3) 0) 0 = "0" := by decide +kernel
+
+-- χ² uses unrounded signed pulls, counts references, and has no reduced value for N = 0.
+example : AuditStats.ofSigmas [-2, 1/2] = ⟨2, 17/4⟩ := by decide +kernel
+example : (AuditStats.ofSigmas [-2, 1/2]).reduced = some (17/8) := by decide +kernel
+example : (auditStats []).reduced = none := by decide +kernel
+example : auditStats [.wMassUnc] = ⟨0, 0⟩ := by decide +kernel

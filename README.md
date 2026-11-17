@@ -22,14 +22,40 @@ https://metamagic.substack.com/p/persistence-mechanics-and-the-quantum-vacuum
 
 The Lean proofs are conversions and the goal is to only assume that some things persist without inserting anything from the Standard Model, known physics equations or constants.
 
-# E8p - Experimental comparisons
 
-* [e8p](tools/e8p) is a command line tool to output the lean values against experimental physics values.
+# Results
 
-After building with `./build e8p` you can run `./.lake/build/bin/e8p --help` to output values. 
+tools/e8p can output all or any specific lean values and the matching experimental value
+
+Example:
+- **1836.152673444–1836.152673445** The Lean proton/electron mass ratio
+- **1836.152673426 ± 0.000000032** The experimental reference 
+
+Every value has a Lean proof chain that can be outputed:
+
+```sh
+./build.sh e8p
+./.lake/build/bin/e8p --only=proton_ratio
+./.lake/build/bin/e8p --derivation proton_ratio --depth 2
+```
+
+## Audit
+e8p can also generate audits for some or all of the results
+
+| Selection | Scored comparisons | χ² | Reduced χ² |
+|---|---:|---:|---:|
+| Constants (`--paper=3`) | 7 | 2.031 | 0.290 |
+
+## Atoms
+
+The lean proofs go from quantum mechanics to classical mechanics and so you can output information about atoms (no mass gap btw).
+
+- `e8p --shells` prints the nuclear shell closures
+- `e8p --masses=6,6` outputs the carbon-12 mass ledger
+- `e8p --periodic-table` outputs the persistent atomic configurations.
+
 
 # Explore using your AI
-
 
 You can point your AI at this repo without compiling the Lean and ask questions like:
 

@@ -8,8 +8,9 @@ Run as `lake env lean --run tools/e8p/Derivation.lean NAME [--depth N] [--flat]`
 (`e8p --derivation NAME` delegates here). `NAME` is an e8p key id (`--only` ids, e.g. `muon_ratio`),
 a full Lean name (`PMElementaryParticles.LeptonMasses.muon_value`), or a unique name suffix.
 
-The script loads the compiled library environment and walks the kernel terms: each constant's type
-and proof or body name the constants it uses. Only constants of this repository are shown; Mathlib
+For a key or full name, the script first tries its most specific compiled module,
+falling back to all libraries when needed; suffix lookup loads all libraries. It walks
+the kernel terms: each constant's type and proof or body name the constants it uses. Only constants of this repository are shown; Mathlib
 and Lean core are counted, not listed. Compiler auxiliaries (`_proof_`, `match_`, equation lemmas)
 are looked through. Each constant is expanded once; a repeat is marked `↑`. The leaves are the
 definitions and statements nothing else in the repository supports. The footer lists the axioms the
@@ -70,14 +71,6 @@ partial def repoDeps (env : Environment) (n : Name) : StateM St (Array Name) := 
   modify fun s => { s with cache := s.cache.insert n out }
   return out
 
-/-- Every axiom reachable from `n` (whole environment, as `#print axioms`). -/
-partial def axioms (env : Environment) (n : Name) : StateM (NameSet × NameSet) Unit := do
-  if (← get).1.contains n then return
-  modify fun (v, a) => (v.insert n, a)
-  let some ci := env.find? n | return
-  if let .axiomInfo _ := ci then modify fun (v, a) => (v, a.insert n)
-  for c in used ci do axioms env c
-
 def resolve (env : Environment) (arg : String) : Except String Name := do
   if let some k := E8PConstants.keys.find? (·.id == arg) then
     let t := (k.theoremName.splitOn " ").head!
@@ -93,6 +86,16 @@ def resolve (env : Environment) (arg : String) : Except String Name := do
   | [h] => return h
   | [] => throw s!"no e8p key or repository constant matches '{arg}'"
   | hs => throw (s!"'{arg}' is ambiguous:\n" ++ "\n".intercalate (hs.map (fun h => s!"  {h}")))
+
+/-- Prefer the most specific compiled module named by a key/full declaration.
+A namespace need not be a module, so callers check resolution and retain the
+whole-library fallback. Suffix lookup always searches the whole environment. -/
+partial def moduleHint (n : Name) : IO (Option Name) := do
+  if n == .anonymous then return none
+  try
+    let _ ← findOLean n
+    return some n
+  catch _ => moduleHint n.getPrefix
 
 structure Opts where
   name : Option String := none
@@ -124,7 +127,20 @@ unsafe def main (args : List String) : IO UInt32 := do
   initSearchPath (← findSysroot)
   let mods := (roots.filter (fun r => ![`E8PConstantsProof, `CN1, `ELEM, `E8PConstants].contains r) ++ [`E8PConstants.Catalog]).map (fun r => ({ module := r } : Import))
   enableInitializersExecution
-  let env ← importModules mods.toArray {} (loadExts := true)
+  let target := match E8PConstants.keys.find? (·.id == arg) with
+    | some k => ((k.theoremName.splitOn " ").head!).toName
+    | none => arg.toName
+  let hint ← moduleHint target.getPrefix
+  -- The imported environment lives until process exit. Marking it persistent
+  -- avoids reference-count traffic and a costly final traversal of its objects.
+  let load (ms : Array Import) := importModules ms {} (leakEnv := true) (loadExts := true)
+  let env ← match hint with
+    | none => load mods.toArray
+    | some m => do
+        let candidate ← load #[{ module := m }]
+        match resolve candidate arg with
+        | .ok _ => pure candidate
+        | .error _ => load mods.toArray
   let root ← match resolve env arg with
     | .ok n => pure n
     | .error e => IO.eprintln e; return 1
@@ -192,7 +208,9 @@ unsafe def main (args : List String) : IO UInt32 := do
     out.putStrLn (label root)
     let _ ← (walk (reach.size + 1) root "" 0).run (({} : NameSet).insert root)
   -- footer
-  let (_, (_, axs)) := (axioms env root).run ({}, {})
+  -- Lean stores axiom dependencies in imported oleans; use its cached collector
+  -- instead of recursively revisiting the entire Mathlib proof graph.
+  let (axs, _) ← (Lean.collectAxioms root : CoreM (Array Name)).toIO ctx { env }
   let leaves := reach.toList.filter (fun n => (deps n).isEmpty)
   out.putStrLn ""
   out.putStrLn s!"{reach.size} repository constants; {leaves.length} leaves; {st.external.size} Mathlib/core constants used directly."
@@ -203,4 +221,5 @@ unsafe def main (args : List String) : IO UInt32 := do
   out.putStrLn s!"axioms: {", ".intercalate (axs.toList.map toString)}"
   let extra := axs.toList.filter (fun a => ![``propext, ``Classical.choice, ``Quot.sound].contains a)
   if !extra.isEmpty then out.putStrLn s!"NON-STANDARD AXIOMS: {extra}"
+  out.flush
   return 0

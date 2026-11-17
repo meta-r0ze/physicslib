@@ -19,7 +19,7 @@ e8p [--paper=N] [--only=ID,...] [--json] [--latex] [--audit] [--digits N] [--per
   --only=IDS    comma-separated ids (cheap debugging), e.g. --only=wolf_rho,omega_ratio
   --json      machine-readable report (schema pm.e8p.v1)
   --latex     %<*tag>...%</tag> blocks for the manuscript
-  --audit     compare each value with its experimental reference (σ) + a summary
+  --audit     compare each value with its experimental reference (σ), per-paper χ² and total
   --digits N  0..50 (default 18); more digits do not narrow the intervals
   --periodic-table [N]  configuration, Hund 2S+1, E8 nuclear mass vs measured (default 20 rows)
   --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)
@@ -51,13 +51,27 @@ e8p --derivation=PMAction.OtherWallStationary.economy_selects --flat   # grouped
 ```
 
 `--derivation` reads the kernel terms of the compiled libraries, so it needs the `src` libraries
-built; it runs `tools/e8p/Derivation.lean` with `lake env lean --run` (about a minute, mostly
-loading Mathlib). Without e8p it is `lake env lean --run tools/e8p/Derivation.lean NAME`. The tree
+built; it runs `tools/e8p/Derivation.lean` with `lake env lean --run`. Key ids and full names
+first load their most specific compiled module, with a full-library fallback; unique suffixes
+search all libraries. Lean still loads the module's transitive imports. Axiom collection uses
+Lean's cached imported-module data. `--depth` limits the displayed tree; the footer still covers
+the full dependency closure. Without e8p it is
+`lake env lean --run tools/e8p/Derivation.lean NAME`. The tree
 lists only repository constants; each is expanded once and a repeat is marked `↑`. A `(leaf)` uses no
 other repository constant: a substrate definition, a supplied number or a self-contained lemma, so
 the leaves of a value are where its chain stops. The footer gives the axioms the kernel needs
 (`propext`, `Classical.choice`, `Quot.sound`; anything else is flagged) and the libraries crossed.
 Hypotheses of a conditional theorem appear in its printed statement.
+
+
+`--audit` ends with χ² and reduced χ² for each selected deriving paper and for all
+selected rows. It sums **unrounded** midpoint pulls squared over scored references with
+positive uncertainties; `--paper` and `--only` apply before aggregation. The nominal
+degrees of freedom are `N` scored references, with no fitted parameters subtracted, so
+reduced χ² is χ²/N (`n/a` at N = 0). Context-only references contribute nothing.
+Correlated quantities, repeated readouts and alternative measurements are counted
+separately: this is a diagonal diagnostic, not an independent global goodness-of-fit test.
+The JSON comparison field `scored` records the same inclusion rule.
 
 
 ## Layout

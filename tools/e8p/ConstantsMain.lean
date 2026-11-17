@@ -15,7 +15,7 @@ private def usage : String :=
   "  --only=IDS    comma-separated ids (e.g. --only=wolf_rho,omega_ratio)\n" ++
   "  --json        machine-readable report (schema pm.e8p.v1)\n" ++
   "  --latex       %<*tag>...%</tag> blocks for the manuscript\n" ++
-  "  --audit       compare each value with its experimental reference (σ), with status glyphs\n" ++
+  "  --audit       compare each value with its experimental reference (σ), with status glyphs and per-paper χ²\n" ++
   "  --digits N    0..50 (default 18); more digits do not narrow the intervals\n" ++
   "  --periodic-table [N]  configuration, Hund multiplicity, E8 nuclear mass vs measured (default 20)\n" ++
   "  --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)\n" ++
@@ -148,8 +148,7 @@ private def printAudit (ks : List Key) (o : Opts) : IO Unit := do
       for line in auditBlocks k o.digits do out.putStrLn line
       withRef := k :: withRef
     out.putStrLn ""
-  let sigs := withRef.flatMap (fun k =>
-    ((expRefs k).filter (fun r => scoredRef k r)).map (fun r => sigmaRat k r))
+  let sigs := scoredSigmas withRef
   let context := withRef.foldl (fun acc k => acc + ((expRefs k).filter (fun r => !scoredRef k r)).length) 0
   let n := sigs.length
   let within (t : Rat) := (sigs.filter (fun s => absRat s ≤ t)).length
@@ -159,6 +158,10 @@ private def printAudit (ks : List Key) (o : Opts) : IO Unit := do
   let noRef := ks.filter (fun k => (expRefs k).isEmpty)
   if !noRef.isEmpty then
     out.putStrLn s!"  {noRef.length} values have no experimental reference (proved intervals only)."
+  out.putStrLn "\nχ² diagnostic by deriving paper (scored references only):"
+  out.putStrLn "  χ² = Σ(pull²); reduced χ² = χ²/N; nominal dof = N, with no fitted parameters subtracted."
+  out.putStrLn "  Correlated quantities and alternative measurements are counted separately; this is not an independent goodness-of-fit test."
+  for line in auditScoreLines ks do out.putStrLn s!"  {line}"
 
 /-- `--derivation` loads the library environment, which a compiled binary does not carry; it runs
 `tools/e8p/Derivation.lean` through `lake env lean --run` from the repository root. -/

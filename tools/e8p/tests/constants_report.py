@@ -4,6 +4,7 @@ Physics formulas are certified by PMConstantsProof. These checks cover CLI,
 serialization, outward formatting, paper/only filtering, audit, and LaTeX blocks.
 """
 import json
+import re
 from fractions import Fraction
 from pathlib import Path
 import subprocess
@@ -159,6 +160,40 @@ def main():
     assert "uses measured muon lifetime and B_e" in audit
     audit_only = run(binary, "--audit", "--only=wolf_rho").stdout
     assert "wolf_rho" in audit_only and "omega_ratio" not in audit_only
+
+    # Independently sum unrounded pulls from the exact JSON enclosure midpoints.
+    # This also tests deriving-paper groups (Substrate combines papers 0 and 1),
+    # alternative references, context exclusions, filtering and the N=0 case.
+    def check_chi(args, selected):
+        text = run(binary, "--audit", *args).stdout
+        parsed = dict((label, (int(n), Fraction(chi), red)) for label, n, chi, red in
+                      re.findall(r"(Paper [0-9]+|All selected): N = ([0-9]+); χ² = ([0-9.]+); reduced χ² = ([0-9.]+|n/a)", text))
+        def expected(rs):
+            pulls = []
+            for row in rs:
+                mid = (Fraction(row["rational_lower"]) + Fraction(row["rational_upper"])) / 2
+                for ref in row["comparisons"]:
+                    if ref["scored"]:
+                        pulls.append((mid - Fraction(ref["value"])) / Fraction(ref["uncertainty"]))
+            return len(pulls), sum((p*p for p in pulls), Fraction(0))
+        groups = {f"Paper {p}": [r for r in selected if r["paper"] == p]
+                  for p in {r["paper"] for r in selected}}
+        groups["All selected"] = selected
+        assert set(parsed) == set(groups), (args, text)
+        for label, rs in groups.items():
+            n, chi = expected(rs)
+            pn, pc, pr = parsed[label]
+            assert pn == n and 0 <= chi - pc < Fraction(1, 1000), (label, parsed[label], chi)
+            if n:
+                assert pr != "n/a" and 0 <= chi/n - Fraction(pr) < Fraction(1, 1000)
+            else:
+                assert pc == 0 and pr == "n/a"
+    check_chi([], rows)
+    check_chi(["--digits", "0"], rows)
+    check_chi(["--paper=1"], [r for r in rows if r["paper"] == "1"])
+    for key in ("wolf_rho", "alpha_inv", "w_mass_uncorrected", "delta"):
+        check_chi([f"--only={key}"], [by_id[key]])
+    check_chi(["--only=not_a_key"], [])
 
     latex = run(binary, "--latex").stdout
     assert "%<*alpha_invVal>" in latex and "%<*alpha_invEq>" in latex

@@ -38,6 +38,39 @@ def sigmaText (k : Key) (r : ExpRef) : String :=
     let body := fixedDecimal ((s * 100).floor) 2
     if s ≥ 0 then "+" ++ body else body
 
+/-- Scored pulls only; a reference without a positive uncertainty cannot contribute. -/
+def scoredSigmas (ks : List Key) : List Rat :=
+  ks.flatMap fun k =>
+    ((expRefs k).filter (fun r => scoredRef k r && r.uncertainty > 0)).map (sigmaRat k)
+
+/-- A diagonal pull diagnostic, with no fitted parameters subtracted.
+Alternative measurements and correlated observables remain separate comparisons. -/
+structure AuditStats where
+  comparisons : Nat := 0
+  chiSquared : Rat := 0
+  deriving Repr, BEq, DecidableEq
+
+def AuditStats.ofSigmas (ss : List Rat) : AuditStats :=
+  { comparisons := ss.length, chiSquared := ss.foldl (fun acc s => acc + s * s) 0 }
+
+def AuditStats.reduced (s : AuditStats) : Option Rat :=
+  if s.comparisons = 0 then none else some (s.chiSquared / s.comparisons)
+
+def auditStats (ks : List Key) : AuditStats := AuditStats.ofSigmas (scoredSigmas ks)
+
+def auditScoreText (label : String) (ks : List Key) : String :=
+  let s := auditStats ks
+  let reduced := match s.reduced with
+    | some r => ratDecimal r 3
+    | none => "n/a"
+  s!"{label}: N = {s.comparisons}; χ² = {ratDecimal s.chiSquared 3}; reduced χ² = {reduced}"
+
+/-- Group by the catalog's deriving-paper number, even when display sections combine papers. -/
+def auditScoreLines (ks : List Key) : List String :=
+  let papers := (ks.map Key.paper).eraseDups.mergeSort (· ≤ ·)
+  papers.map (fun p => auditScoreText s!"Paper {p}" (ks.filter (fun k => k.paper = p))) ++
+    [auditScoreText "All selected" ks]
+
 def diffText (k : Key) (r : ExpRef) : String :=
   ratDecimal (diffRat k r) 12
 
@@ -61,7 +94,8 @@ def comparisonJson (k : Key) (r : ExpRef) : Lean.Json :=
   Lean.Json.mkObj [
     ("value", .str (fraction r.value)), ("uncertainty", .str (fraction r.uncertainty)),
     ("citation", .str r.citation), ("diff", .str (diffText k r)),
-    ("sigma", .str (sigmaText k r))]
+    ("sigma", .str (sigmaText k r)),
+    ("scored", Lean.toJson (scoredRef k r && r.uncertainty > 0))]
 
 def rowJson (k : Key) (digits : Nat) : Lean.Json :=
   let (lo, hi) := bounds k
