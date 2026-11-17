@@ -40,12 +40,13 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   whole wall sector, and at least `6` for a class-blind crossing like the flip program (a map taking
   every class `x` on one factor to `x + 1` on the other has `rank(1 − w) ≥ 6`; swap plus diagonal
   triality attains it). Under the library's own principles (certain events, two quarter-times per
-  reflection, class-blind programs) `r = K_f/|y| = 12/24 = 1/2`, which breaks the reduction's premise
-  `K_f ≪ |y|` (heaviest light mode leaks `~50%`). Every option lies in `1/8 ≤ r ≤ 1/2`: the event
-  ledger cannot make the flip small against the crossing by more than a factor of eight. So either the
-  flip's duration is not its shortest program (a flip spread over more ticks, for a reason still to be
-  derived), or the crossing is not a Weyl program, or the light-band reduction carries `O(r²)`
-  corrections of several percent. Open. The absolute clock is `p` (`Machine/RootTransferPhase`:
+  reflection, class-blind programs) `r = K_f/|y| = 12/24 = 1/2`. Every option lies in `1/8 ≤ r ≤ 1/2`.
+  Exact diagonalization (`tools/event_clock_check.py` 8) shows the reduction survives this: at
+  `r = 1/2` the light masses stay `18×` below the gap, `m₂/m₃` moves by `+7%` (`+2.5%` at `1/4`), and the
+  heaviest light mode has `26%` of its weight on the gapped components. So `K_f ≪ |y|` is not needed for
+  the light-mass form; `r` sets few-percent corrections and the leakage. A flip that fires once per
+  `Δ = 43` cycle instead of once per program would give `r ≲ 1/43`. Open: which of these the substrate
+  selects; EP's first-row deficit favours `r ≈ 1/6` (EP REVIEW). The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator

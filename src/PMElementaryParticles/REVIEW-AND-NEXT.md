@@ -128,6 +128,11 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   `3.3·10⁻³` (`2.5σ` high, heaviest leakage `12%`), or `8.4·10⁻⁴` if a reflection costs one
   quarter-time. Across the crossing options (one carrier `3`, one sector `4`, class-blind `6`
   reflections; certain or quarter cost) the estimate runs `8·10⁻⁴` to `1.3·10⁻²`: leakage is the right
-  order for the deficit, but the value waits on PMAction's open clock question (PMAction REVIEW, where
-  the principled reading gives `r = 1/2` and breaks `K_f ≪ |y|`). Other assumptions: events run serially, and the deficit is
+  order for the deficit, but the value waits on PMAction's open clock question. Exact two-wall
+  numbers (`tools/event_clock_check.py` 8): deficit `8·10⁻⁴` at `r = 1/8`, `1.4·10⁻³` at `1/6`, `3.0·10⁻³` at
+  `1/4`, `8.7·10⁻³` at `1/2`. So the data ask for `r = 0.13–0.2`, and they exclude PMAction's principled
+  `r = 1/2` (certain, class-blind events) if the deficit is this leakage, and a once-per-cycle flip
+  (`r ≲ 1/43`, deficit `≲ 3·10⁻⁵`). Before using this to select `r`, check the row readout itself: the
+  estimate takes `|V_us|²` times the middle down mode's leakage, while `PMAction.WallCurrentWeights`
+  notes the charged projector keeps a gapped component. Other assumptions: events run serially, and the deficit is
   `|V_us|²` times the middle mode's leakage (measured `|V_us|`; the mixing is PMFlavor's).
