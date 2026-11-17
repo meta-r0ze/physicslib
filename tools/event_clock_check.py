@@ -72,3 +72,19 @@ print("5. fewest E8 reflections taking a wall-1 carrier to a wall-2 carrier:",
 for T, nm in ((6, "3 reflections, certain (2 quarter-times each)"), (3, "3 reflections, one quarter-time each")):
     r = T/32
     print(f"   {nm}: r = {r:.4f}, deficit ~ {coef_d*r*r:.1e} (s_d = 0.26), heaviest leakage {cheavy*r*r:.1e}")
+
+# 6. with the shorter flip program (tools/flip_program_search.py: 24 quarter-times)
+for T, nm in ((6, "3 reflections, certain"), (3, "3 reflections, one quarter-time each")):
+    r = T/24
+    print(f"6. flip 24 q, {nm}: r = {r:.4f}, deficit ~ {coef_d*r*r:.1e}, heaviest leakage {cheavy*r*r:.1e}")
+
+# 7. what the crossing must map, and its reflection length (E8 search, tools run separately: minutes)
+#    one carrier, generation's two classes: 3; the whole wall sector of one generation: 4;
+#    class-blind (all three generations at once, like the flip program): w(a, b) = (sigma b, tau a)
+#    with both sigma and tau shifting classes by one, so rank(1 - w) = 8 - dim fix(sigma tau) >= 6,
+#    and swap + diagonal triality attains 6.
+print("7. crossing options (reflections x cost per reflection) against the 24 q flip:")
+for nm, n in (("one carrier", 3), ("one generation's sector", 4), ("class-blind", 6)):
+    for cost, cn in ((2, "certain"), (1, "quarter")):
+        r = n*cost/24
+        print(f"   {nm:24s} {cn:8s} r = {r:.3f}  deficit ~ {coef_d*r*r:.1e}  heaviest leakage ~ {cheavy*r*r:.2f}")

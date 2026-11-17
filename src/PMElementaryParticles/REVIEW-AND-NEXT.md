@@ -126,6 +126,8 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   `1.6 ± 0.7·10⁻³`); heaviest-mode leakage `7%`. But the library's flip program is not minimal: a
   `24`-quarter-time program does the same (`tools/flip_program_search.py`), and then `r = 1/4` gives
   `3.3·10⁻³` (`2.5σ` high, heaviest leakage `12%`), or `8.4·10⁻⁴` if a reflection costs one
-  quarter-time. So the candidate is not confirmed; it brackets the measurement within the open factor
-  of two in what a reflection costs. Other assumptions: events run serially, and the deficit is
+  quarter-time. Across the crossing options (one carrier `3`, one sector `4`, class-blind `6`
+  reflections; certain or quarter cost) the estimate runs `8·10⁻⁴` to `1.3·10⁻²`: leakage is the right
+  order for the deficit, but the value waits on PMAction's open clock question (PMAction REVIEW, where
+  the principled reading gives `r = 1/2` and breaks `K_f ≪ |y|`). Other assumptions: events run serially, and the deficit is
   `|V_us|²` times the middle mode's leakage (measured `|V_us|`; the mixing is PMFlavor's).
