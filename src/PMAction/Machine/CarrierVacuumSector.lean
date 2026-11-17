@@ -9,7 +9,8 @@ are specified first by root words and four orthogonal-root reconstructed phases.
 Their restriction, rather than an arbitrary fitted unitary, gives the model.
 Physical selection of this sector, coherent phase admission, the momentum
 ansatz and coefficients remain inputs. Zero action on the even complement
-is an extension convention, not a persistence theorem.
+is the identity completion: the native operators are not conservative on the even complement, and
+the stationary completion is the unique zero-price one (`PMAction.EvenComplement`).
 -/
 noncomputable section
 namespace PMAction.CarrierVacuumSector

@@ -67,8 +67,9 @@ theorem odd_finrank (c : Fin 3) : Module.finrank ℂ (oddSpace c)=8 := by
   rw [(coordinatesEquiv c).finrank_eq]
   simp [ConcreteFermion.Sites]
 
-/-- The even complement is inert by our extension convention, not ruled out
-as nonpersistent. Selecting the physical odd sector is still an obligation. -/
+/-- The even complement is inert: the identity completion, which `PMAction.EvenComplement`
+selects (the native gates are not conservative there; the stationary completion is the unique
+zero-price one). -/
 theorem even_inert (c : Fin 3) (p : ℝ) (k : Fin 3 → ℝ) (δ : ℝ)
     (ψ : Labels c → ℂ) (h : parity c *ᵥ ψ=ψ) : hamiltonian c p k δ *ᵥ ψ=0 := by
   have he : oddProjector c *ᵥ ψ=0 := by

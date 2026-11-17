@@ -17,9 +17,8 @@ words. This is the general form of `DoubletReflection`.
 
 **The wire.** The wire's vacuum sector is the antipodally odd sector
 (`CarrierVacuumSector.range_iff_odd`): an admitted state has `ψ(−v) = −ψ(v)`, equal weight on both
-weak partners. The even complement is given zero action "by our extension convention, not ruled
-out as nonpersistent" (`CarrierVacuumEvolution.even_inert`; "selecting the physical odd sector is
-still an obligation"). A single protocol carrier `|±2eᵢ⟩ = (|oddᵢ⟩ ± |evenᵢ⟩)/√2` reads the same odd
+weak partners. The even complement has zero action, now derived (`PMAction.EvenComplement`: the
+native gates are not conservative there, and the stationary completion is the unique zero-price one). A single protocol carrier `|±2eᵢ⟩ = (|oddᵢ⟩ ± |evenᵢ⟩)/√2` reads the same odd
 mode with opposite sign, which no mass (`|·|`) sees.
 
 **What a wire mode is (correction, 2026-11).** The odd modes of one class are the wire's eight
