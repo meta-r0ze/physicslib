@@ -33,6 +33,28 @@ their bounds, and `G_F` in `m_e⁻²`).
 
 The odd carrier modes of a class are the wire's Dirac components, four axes × two walls (`PMAction.CarrierVacuumSector`), and colour cannot act on them while commuting with `β` and the `αⱼ` (`PMAction.ColourRegister`). So protocol identity (lepton or quark, colour, weak partner) is a separate register; the 16-carrier packet is its count and gauge actions. Earlier readings that put the lepton pair on axis `0` and the up/down pair of colour `i` on axis `i` of the wire are withdrawn: `BetaReference` and `UpDownWire` (modules removed), `DoubletSign`'s wire-mode count, `ProtocolReadout`'s carrier-state reading, `CycleReadout`'s weak-pair reading, and the reference-hold test (module removed). Their theorems remain as carrier and matrix facts; the partner difference has to come from the protocol register.
 
+## Protocol register (candidate reading)
+
+`E₈ = D₄ ⊕ D₄` with diagonal glue: the glued roots of a class are `8 ⊗ 8`, a carrier of each factor.
+Each wall of generation `g` is a glue class read through one factor: wall T is class `g + 1` with the
+amplitude in the first factor and the protocol label in the second; wall F is class `g − 1` with the
+roles exchanged. This is `PMAction.GenerationWalls`' placement, so the wire is unchanged and every
+protocol sees the same wire, tensored with its label. Walls are told apart by which factor carries
+the amplitude, not by class. `GluedRegister` (doubled integer coordinates, all by `decide`):
+`wallStep_class` (a wall step keeps the class, so it keeps the label: Map), `neg_class` and `neg_ne`
+(the label's antipode is a fixed-point-free sign on the label, `4 + 4`, not a global sign on the wall,
+so it separates weak partners), `triality_class`, `triality_root`, `triality_neg` (an order-three
+triality keeping the `D₄` roots and cycling the classes, so diagonal triality and the factor swap are
+`E₈` automorphisms), and `crossing_walls` (swap then diagonal triality maps every glued root of class
+`g + 1` to one of class `g − 1`, amplitude and label exchanged between the factors: wall T onto wall F
+with the label carried across, which is `PMConstants.CarrierRepresentation`'s "both domain-wall
+sectors" premise). The label is a tensor factor of the moving root, so it moves with the particle
+(Protocol). Counts: `4` odd modes `× 8` labels per wall, `64` per generation, `32` light; `8` labels
+`× 2` walls `= 16` channels. In the vector frame the colour stabiliser of the lepton axis, sign fixed,
+has four orbits on the labels, `(lepton or colour) × sign`: the four base protocols.
+`tools/register_transport_check.py` repeats the checks on the explicit `240` roots. Open (Toll,
+lightest masses): REVIEW.
+
 ## Protocol readout
 
 Numerical, `tools/protocol_readout_scan.py`. On the derived wire (`PMAction.ReferenceClassHop`: reference wall `κ_R = (K, k, k)`; `PMAction.CarrierAdmittance`: other wall class-blind, `κ_O = (K, K, K)`; `K = 1`) the cycle resonance is `δ³ = −1` (`PMAction.OtherWallStationary`). At every cube root the bare wire has `m₁ = 0` and `m₂/m₃ = √(3/2) k`: `0.0045` for `k = α/2`, `0.0089` for `k = α`, the same for every protocol. The data (`m_μ/m_τ = 0.0595`, `m_s/m_b ≈ 0.019–0.022`, `m_c/m_t ≈ 0.0036–0.0042`) then need a weight `s` on the heavy label (both walls) per protocol: `s_e : s_d : s_u ≈ 1 : 2.7–3.2 : 12–13.5` for `α/2` (`1 : 2.6–3.1 : 9.6–10.6` for `α`), ordered by charge; the heavy label's mass scales as `s²`. The lazy flip law squares the bare ratio (`2·10⁻⁵`), far below every protocol, so the data favour the coherent event. CKM on the derived wire (weights as fitted): same root `|V_us| ≈ 0.0001`, `|V_cb| ≈ 0.009`, `|V_ub| ≈ 0.008`; different roots `|V_us| = √3/2 ≈ 0.866`, `|V_cb| ≈ 0.010`, `|V_ub| ≈ 0.011` (data `0.225`, `0.041`, `0.0037`): the bare wire's rotation is not the CKM. Mixing tests on the derived wire (`tools/mixing_candidates_check.py`, masses held at data): `|V_us| = 0.225` is reached by a relative flip phase, a light-class asymmetry, or an other-wall cycle phase or asymmetry, so it does not discriminate; `|V_cb|` stays at `0.002–0.010` under every deformation tried (those, the weight on one or both walls, a joint fit, `k/K` from `α/4` to `10α`), with `|V_cb| ≈ |V_ub|`. So the wire's mass matrices cannot give `|V_cb|`; PMFlavor's transfer readout does (`PMFlavor.ReferenceRouting`). Charge-weight test: one `a` in `s ∝ e^{a Y_R}` gives down and up `0.82` and `0.77` (PDG mixed scales), `0.74` and `0.75` (`m_b`, `m_t` at their own scale), 2–11% apart across quark-mass choices (`k = α/2`; `7–18%` at `k = α`). Lightest masses: a real offset `δ = −1 + ε` off the resonance reproduces each `m₁/m₂` with `ε ≈ 0.038 (e), 0.14 (d), 0.0024 (u)`, keeping `m₂/m₃` within 2–7%; with those offsets the same-root CKM is `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065`.
