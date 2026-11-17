@@ -384,6 +384,7 @@ import PMAction.CompletionSelection
 import PMAction.CarrierGateCompletion
 import PMAction.EvenRootPhase
 import PMAction.PairedRootFlip
+import PMAction.ClassBlindFlip
 
 import PMAction.Machine.ReadoutAdditivity
 

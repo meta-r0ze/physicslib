@@ -151,9 +151,14 @@ construction for a completed coherent beta rotation. Mirrored root phases
 cancel their scalar terms; the spinor class uses an additional phase
 conjugation and its inverse. The net operation has the required coordinate
 rotation and restores every even mode, so every observable supported on that
-even record sector is unchanged at the end. It needs no extra bank. The result is a class-indexed circuit family; coherent
-class-controlled scheduling or a single class-blind compilation still needs
-a native realization. This preserves a direct-sum sector; it does not establish independent tensor registers.
+even record sector is unchanged at the end. It needs no extra bank. The original
+result is a class-indexed circuit family.
+[ClassBlindFlip.lean](ClassBlindFlip.lean) now supplies a single class-blind
+compilation from the same primitive phases: a fixed signed root block, the
+common odd i-phase, a second signed block and the inverse phase. The i-phase
+reverses the unwanted even generator and is then undone. The generators commute,
+so cancellation is exact at finite times. No class query is needed. This preserves
+a direct-sum sector; it does not establish independent tensor registers.
 
 For this subprotocol, Capacity is the existing eight carrier labels, Map is
 the retained odd/even state, Protocol is the certified root-phase sequence,
@@ -169,3 +174,11 @@ native event, calibrate its rate, preserve every even mode during intermediate
 pulses, or complete the other factors of the full walk. It also does not remove
 the offset of a single lazy wall event by a gauge convention: it is a different,
 explicit composite operation.
+
+The common program also has a literal sixteen-pulse forward realization. For
+`0 ≤ t ≤ 8*quarterTime p`, its nonnegative phase parameters sum to
+`32*quarterTime p`. This counts the chosen serial schedule and its forward
+returns; it supplies neither an optimal schedule nor calibration to hop time.
+The common root rate and coherent-control admission remain premises. Intermediate
+even-mode displacement still belongs in Toll and Margin, even though the final
+Map is restored exactly.

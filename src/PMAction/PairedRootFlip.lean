@@ -10,9 +10,9 @@ even-sector action. The paired-root construction uses actual D4 reflections,
 not a phase assigned to a composite permutation. In the spinor class an extra
 root-phase conjugation changes the relative sign of the two coordinate pairs.
 
-All three carrier classes are treated by a class-indexed circuit family;
-a common class-blind schedule or physical class-controlled application is not
-selected here. The result concerns the complete scheduled pulse: intermediate
+All three carrier classes are treated here by a class-indexed circuit family.
+`ClassBlindFlip` supplies a common class-blind echo from these same root phases;
+neither construction selects the physical event law. The result concerns the complete scheduled pulse: intermediate
 operations may move even modes. Coherent root phases, a common rate and a
 schedule are inputs. Inverse parameters can be wrapped into a forward phase
 period on the stated interval. Primitive prices, physical clock calibration
@@ -151,7 +151,7 @@ def blockPulse (c : Fin 3) (p t : ℝ) : Matrix (Carrier c) (Carrier c) ℂ :=
     RootTransferPhase.phase (rootEvent c 1 2) p ((sign c 2 : ℝ)*t) *
     RootTransferPhase.phase (rootEvent c 1 3) p ((sign c 3 : ℝ)*t)
 
-private theorem exp_four {n : Type*} [Fintype n] [DecidableEq n]
+theorem exp_four {n : Type*} [Fintype n] [DecidableEq n]
     (X : Fin 4 → Matrix n n ℂ) (h : ∀ i j, Commute (X i) (X j)) :
     NormedSpace.exp (X 0 + X 1 + X 2 + X 3) =
       NormedSpace.exp (X 0) * NormedSpace.exp (X 1) *
