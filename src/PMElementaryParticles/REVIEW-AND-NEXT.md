@@ -75,7 +75,13 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   one cycle leg lifts the lightest mass (`m₁/m₃ ≈ 2·10⁻³`) but not to the data (`e` `2.9·10⁻⁴`, `u`
   `1.3·10⁻⁵`). The ladder is in the data: `m₂/m₃` for `ν, e, d, u` step by `2.9, 3.0, 5.3`, and the
   readout passes it through. So the Toll question is placement-independent: why those `m₂/m₃`.
-  (2) the lightest masses. Killed on the way (git history has the details):
+  (2) the lightest masses; (3) consistency with PMAction's class-blind control: a wall's label is a
+  carrier of the other wall's factor, so a class-blind flip program on that factor reaches it. At a
+  certain flip every label is disturbed equally (it stays with `1/4` in classes `v`, `c`, `1/2` in `s`),
+  and in classes `v` and `c` lepton labels move onto colour labels, which breaks colour
+  (`tools/label_flip_check.py`). So the flip must be restricted to the wall's own sector (not
+  class-blind across the factor), or the reading fails; and this disturbance, being uniform, is not
+  the Toll. Killed on the way (git history has the details):
   the reference class's even sector, the other wall's even modes or full carriers, a displaced
   reference record, the hop's auxiliary axis, the orientation doublet alone, the walls as the wire's
   chiral halves, the walls labelled by class alone, and the even half of the other factor as the label
