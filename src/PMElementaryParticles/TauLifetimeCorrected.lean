@@ -1,5 +1,5 @@
 import PMElementaryParticles.TauLifetime
-import PMElementaryParticles.MuonLifetimeHigherOrder
+import PMElementaryParticles.MuonQEDLoops
 import PMConstants.ElectroweakBounds
 
 /-!
@@ -15,7 +15,7 @@ import PMConstants.ElectroweakBounds
 * `r_W(m) = 1 + 3m²/(5M_W²)`, the `W` propagator, with the E8 `M_W` (`PMConstants.ElectroweakBounds`;
   its offset from the measured `M_W` moves the lifetime by `10⁻⁵`);
 * `δ_γ(m) = 1 − (α(m)/π)(π²/2 − 25/8)`, the one-loop QED factor at each lepton's scale:
-  `α(m_μ)` from E8 `α` (`MuonLifetimeHigherOrder.alphaR`), `α(m_τ)⁻¹ = 133.3` supplied (it includes
+  `α(m_μ)` from E8 `α` (`MuonQEDLoops.alphaR`), `α(m_τ)⁻¹ = 133.3` supplied (it includes
   hadronic vacuum polarization).
 
 `tauLifeCorrected = tauLife · [f(x_μ)/f(x_τ)] · [r_W(m_μ)/r_W(m_τ)] · [δ_γ(m_μ)/δ_γ(m_τ)]`.
@@ -41,7 +41,7 @@ def eG : ℝ := PMConstants.ElectroweakBounds.electronGeV
 
 def wRatio : ℝ := (1 + 3 * (muon * eG) ^ 2 / (5 * wSq)) / (1 + 3 * (tau * eG) ^ 2 / (5 * wSq))
 
-def qedMu : ℝ := 1 - MuonLifetimeHigherOrder.alphaR / Real.pi * (Real.pi ^ 2 / 2 - 25 / 8)
+def qedMu : ℝ := 1 - MuonQEDLoops.alphaR / Real.pi * (Real.pi ^ 2 / 2 - 25 / 8)
 
 def qedTau : ℝ := 1 - (1 / 133.3) / Real.pi * (Real.pi ^ 2 / 2 - 25 / 8)
 
@@ -106,9 +106,9 @@ theorem wRatio_bounds : (0.9996973 : ℝ) < wRatio ∧ wRatio < 0.9996975 := by
   constructor <;> nlinarith [mul_lt_mul_of_pos_right hm2a hu, mul_lt_mul_of_pos_right hm2b hu]
 
 theorem qedRatio_bounds : (1.0000831 : ℝ) < qedMu / qedTau ∧ qedMu / qedTau < 1.0000833 := by
-  obtain ⟨a1, a2⟩ := MuonLifetimeHigherOrder.alphaR_div_pi_bounds
-  have hp1 := MuonLifetimeHigherOrder.pi_lo
-  have hp2 := MuonLifetimeHigherOrder.pi_hi
+  obtain ⟨a1, a2⟩ := MuonQEDLoops.alphaR_div_pi_bounds
+  have hp1 := MuonQEDLoops.pi_lo
+  have hp2 := MuonQEDLoops.pi_hi
   have hc1 : (1.80980220054 : ℝ) < Real.pi ^ 2 / 2 - 25 / 8 := by nlinarith
   have hc2 : Real.pi ^ 2 / 2 - 25 / 8 < (1.80980220055 : ℝ) := by nlinarith
   have hb1 : (1 / 133.3 / 3.1415926535898 : ℝ) < 1 / 133.3 / Real.pi :=
@@ -116,7 +116,7 @@ theorem qedRatio_bounds : (1.0000831 : ℝ) < qedMu / qedTau ∧ qedMu / qedTau 
   have hb2 : 1 / 133.3 / Real.pi < (1 / 133.3 / 3.14159265358979 : ℝ) :=
     div_lt_div_of_pos_left (by norm_num) (by norm_num) hp1
   set c := Real.pi ^ 2 / 2 - 25 / 8
-  set A := MuonLifetimeHigherOrder.alphaR / Real.pi
+  set A := MuonQEDLoops.alphaR / Real.pi
   set B := 1 / 133.3 / Real.pi
   have hmu1 : (1 - 0.0023421573 * 1.80980220055 : ℝ) < qedMu := by
     unfold qedMu; change _ < 1 - A * c; nlinarith

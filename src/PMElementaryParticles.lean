@@ -74,3 +74,4 @@ import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog
 import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
+import PMElementaryParticles.MuonQEDLoops
