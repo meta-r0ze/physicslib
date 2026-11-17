@@ -128,11 +128,15 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   `3.3·10⁻³` (`2.5σ` high, heaviest leakage `12%`), or `8.4·10⁻⁴` if a reflection costs one
   quarter-time. Across the crossing options (one carrier `3`, one sector `4`, class-blind `6`
   reflections; certain or quarter cost) the estimate runs `8·10⁻⁴` to `1.3·10⁻²`: leakage is the right
-  order for the deficit, but the value waits on PMAction's open clock question. Exact two-wall
-  numbers (`tools/event_clock_check.py` 8): deficit `8·10⁻⁴` at `r = 1/8`, `1.4·10⁻³` at `1/6`, `3.0·10⁻³` at
-  `1/4`, `8.7·10⁻³` at `1/2`. So the data ask for `r = 0.13–0.2`, and they exclude PMAction's principled
-  `r = 1/2` (certain, class-blind events) if the deficit is this leakage, and a once-per-cycle flip
-  (`r ≲ 1/43`, deficit `≲ 3·10⁻⁵`). Before using this to select `r`, check the row readout itself: the
-  estimate takes `|V_us|²` times the middle down mode's leakage, while `PMAction.WallCurrentWeights`
-  notes the charged projector keeps a gapped component. Other assumptions: events run serially, and the deficit is
+  order for the deficit, but the value waits on PMAction's open clock question. Readout
+  (`tools/first_row_readout.py`): each protocol on its own wire (fitted weight and offset), the charged
+  current as `P_L` (the `Γ = −1` components) times the measured CKM, and the row against `G_F` from
+  muon decay: deficit `= 1 − F_u/F_μ`, `F` the fraction of the current's image on the daughter's light
+  subspace. This gives `≈ 0.25 r²` (the earlier `|V_us|²`-times-leakage estimate was `5×` too small: the
+  `u` and `d` wires differ, so even with no mixing the image leaves the light subspace), and leptons,
+  with small weights, barely leak. The measured deficit then asks for `r = 0.06–0.10`, below every
+  program option (`r ≥ 1/8`, deficit `≥ 3.9·10⁻³`, `3σ` high). The flip would have to be `10–16×` slower
+  than the crossing; the shortest programs allow at most `8×`. The estimate depends on the fitted
+  weights by a factor of about three (equal weights give `1.3·10⁻³` at `r = 1/8`), so it waits on the
+  Toll as well as the clock. Other assumptions: events run serially, and the deficit is
   `|V_us|²` times the middle mode's leakage (measured `|V_us|`; the mixing is PMFlavor's).

@@ -46,7 +46,8 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   heaviest light mode has `26%` of its weight on the gapped components. So `K_f ≪ |y|` is not needed for
   the light-mass form; `r` sets few-percent corrections and the leakage. A flip that fires once per
   `Δ = 43` cycle instead of once per program would give `r ≲ 1/43`. Open: which of these the substrate
-  selects; EP's first-row deficit favours `r ≈ 1/6` (EP REVIEW). The absolute clock is `p` (`Machine/RootTransferPhase`:
+  selects; EP's first-row deficit, with its readout built, asks for `r = 0.06–0.10`, below every
+  program option, and depends on EP's unexplained protocol weights (EP REVIEW). The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
