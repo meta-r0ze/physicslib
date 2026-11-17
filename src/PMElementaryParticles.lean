@@ -71,3 +71,4 @@ import PMElementaryParticles.PairSphere
 import PMElementaryParticles.TauBranching
 import PMElementaryParticles.GluedRegister
 import PMElementaryParticles.FinalChannels
+import PMElementaryParticles.MuonRadiativeLog

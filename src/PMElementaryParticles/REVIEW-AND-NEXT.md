@@ -83,8 +83,15 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
 
 ## Other open work
 
-- **Radiative factor.** `MuonLifetimeCorrected` supplies the one-loop QED factor; derive it as the soft
-  photon dressing of the charged daughter.
+- **Radiative factor.** `MuonLifetimeCorrected` supplies `q = 1 − (α/2π)(π² − 25/4)`. It has no log
+  (`MuonRadiativeLog`: in the charge-retention order the `e–μ` current is conserved), so it is the
+  finite one-loop dressing of that current, not only the soft part. Plan, in the order the library can
+  take it: (1) the decay as `μ → e + (pair of invariant mass q²)` with the pair tensor of `PairSphere`
+  and `MassivePair`; (2) the virtual vertex and self-energies of the `e–μ` current with a photon-mass
+  regulator, on the loop measure of `PMAction.LoopMeasure`; (3) real emission over the same phase
+  space; (4) the regulator cancels between (2) and (3), and the `q²` integral gives `25/4 − π²`.
+  Mathlib has no dilogarithm, and (2)–(4) need `Li₂` values, so the first module is `Li₂(1) = π²/6`
+  and the few integrals that reduce to it.
 - **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full
   charged projector keeps a gapped component, so total gapped weight is not a row deficit. The final
   labels are now fixed (`FinalChannels`); what the row still needs is which wire mode of the daughter
