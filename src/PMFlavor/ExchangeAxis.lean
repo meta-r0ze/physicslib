@@ -8,7 +8,8 @@ displacements on the wire assumes the wire carriers' axis `0` is the protocols' 
 axes are its spinor components and protocol identity is a separate register
 (PMElementaryParticles `DoubletSign`, `PMAction.ColourRegister`). So `vector_free`, `vector_touch`,
 `spinor_touch`, `cospinor_touch` and `one_pair_through` stand as carrier counts, but the in-cycle/node
-split of generation transfers is a premise, not derived (PMFlavor REVIEW).
+split of generation transfers is not derived here. It is derived from the reference's class instead
+(`ReferenceRouting.direct_iff`, from `PMAction.ReferenceClassHop`), with the same outcome.
 
 # Which exchange classes avoid the reference axis
 

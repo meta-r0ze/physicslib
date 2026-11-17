@@ -4,7 +4,8 @@ import PersistenceMechanics.InformationTransfer
 /-!
 **Status (2026-11).** `inCycle_iff` is a carrier fact. Reading "the other two transfers change the
 channel type and cross the reference node" from it uses the lepton-axis rule on wire carriers, which the
-2026-11 correction withdraws (`ExchangeAxis` status); the node routing is a premise (PMFlavor REVIEW).
+2026-11 correction withdraws (`ExchangeAxis` status). The same routing (only the transfer through the
+reference's class is direct) is derived from the reference's stationarity in `ReferenceRouting`.
 
 # The generation transfers on E8 and their types
 

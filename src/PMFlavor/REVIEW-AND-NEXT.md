@@ -9,16 +9,13 @@ wire (PMAction) and the protocols (PMElementaryParticles). Every number comes fr
 narrowly stated premise; data are only the final test (e8p). Do not fit integers or parameters to
 data, and do not frame work as fitting Standard Model sectors.
 
-**Node routing (first, 2026-11).** Which generation transfers stay in the maintenance cycle and which
-cross the reference node was derived by applying the protocols' lepton-axis rule to wire-carrier
-displacements (`ExchangeAxis`, `TransferGraph.inCycle_iff`). The wire's axes are spinor components and
-protocol identity is a separate register (PMElementaryParticles OVERVIEW, "Protocols are not wire
-modes"), so that routing is now a premise. The node entries below (`|V_cb|`, `s₁₃`, the one-leg reactor
-angle) rest on it. On the wire the split is by the reference's
-class, not its axis (`PMAction.ReferenceClassHop`): direct exchange into or out of the reference's
-class on its wall is forbidden, so the transfer through the reference's class is the direct one. Re-derive the routing
-from how a generation change on the wire couples to the protocol register, or keep it as a named
-premise.
+**Node routing (derived, 2026-11-16).** `ReferenceRouting.direct_iff`: on the reference's wall a
+generation transfer by class `a` avoids the reference's class exactly when `a` is that class, so with
+`PMAction.ReferenceClassHop` (direct exchange touching the reference's class is forbidden there) and
+the charged current on the reference's wall, exactly the transfer through the reference's class is
+direct and the other two cross the node: the routing `TransferGraph` used. Inputs left: the reference
+occupies one class (the vector class), and the node crossings' leg count and boundary (`NodeAmplitude`,
+`VubSeriesPath`), which the entries below still need.
 
 **Status of each entry of `J`** (e8p readout names in brackets).
 

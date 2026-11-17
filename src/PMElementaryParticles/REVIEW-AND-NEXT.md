@@ -30,7 +30,9 @@ e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the 
   (those, the weight's placement on one or both walls, a joint phase × asymmetry fit, and `k/K` from
   `α/4` to `10α`), with `|V_cb| ≈ |V_ub|` against the data's ratio `11`. So the wire's heavy–light
   rotation is capped near `m₂/m₃`-size and treats the two light generations alike; `|V_cb|` (about
-  `2 m_s/m_b`) needs a source outside the wire's mass matrices: the protocol readout.
+  `2 m_s/m_b`) needs a source outside the wire's mass matrices. PMFlavor's transfer readout is that
+  source (its `|V_cb|`, `s₁₃` come from node passage, not from diagonalizing masses), and its routing is
+  now derived from the reference's class (`PMFlavor.ReferenceRouting`).
 - **Light masses.** At the resonance the lightest state is exactly massless on the full wire, not
   only at leading order (`PMAction.ExactZeroMode`), and no heavy-label weight changes that
   (`PMAction.OtherWallStationary.massless_iff`). So `m_e`, `m_u`, `m_d` come from outside the wire:
