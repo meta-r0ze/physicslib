@@ -151,7 +151,7 @@ def value : Key → ℝ
   | .electronClosure => PMConstants.JointConstants.electronClosureRatio
   | .vud => PMFlavor.Values.vud
   | .vudDressed => PMFlavor.Values.vudDressed
-  | .tauLifetimeFs => PMElementaryParticles.TauLifetime.tauLife
+  | .tauLifetimeFs => PMElementaryParticles.Values.tauLifetimeCorrectedFs
   | .muonLifetimeFinite => PMElementaryParticles.muonFiniteLifetime
   | .tauLifetimeE8Natural => PMElementaryParticles.TauE8.tauLifetimeE8
   | .neutronSpectralFraction => PMHadrons.neutronSpectralFraction
@@ -382,7 +382,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | tauLifetimeFs =>
-    have h := PMElementaryParticles.TauLifetime.tau_lifetime_tree
+    have h := PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | muonLifetimeFinite =>

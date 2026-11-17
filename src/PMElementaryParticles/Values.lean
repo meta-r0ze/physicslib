@@ -4,6 +4,7 @@ import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.MuonLifetimeCorrected
 import PMElementaryParticles.MuonLifetimeHigherOrder
+import PMElementaryParticles.TauLifetimeCorrected
 
 /-!
 # PMElementaryParticles canonical values
@@ -22,7 +23,9 @@ Single import for the units, couplings, masses and lifetimes that later librarie
   `muonLifetimeCorrected` (derived phase factor, supplied one-loop QED) with `corrected_bounds`,
   `muonLifetimeFull` (the full Fermi-theory QED series of van Ritbergen–Stuart, supplied, at E8
   inputs) with `muonLifetimeFull_bounds` (`2.196974–2.196984 µs`),
-  `tauLifetimeSeconds` with `tauLifetimeSeconds_bounds`.
+  `tauLifetimeSeconds` with `tauLifetimeSeconds_bounds`; `tauLifetimeCorrectedFs` (the measured-`τ_μ`,
+  supplied-`B_e` tau lifetime with the corrected partial-width ratio) with
+  `tauLifetimeCorrectedFs_bounds` (`291.03–291.06` fs).
 -/
 
 namespace PMElementaryParticles.Values
@@ -40,6 +43,13 @@ noncomputable abbrev muonLifetimeFull : ℝ := PMElementaryParticles.MuonLifetim
 theorem muonLifetimeFull_bounds :
     (2.196974e-6 : ℝ) < muonLifetimeFull ∧ muonLifetimeFull < (2.196984e-6 : ℝ) :=
   PMElementaryParticles.MuonLifetimeHigherOrder.lifetime_bounds
+
+/-- The conditional tau lifetime (fs) with the corrected partial-width ratio. -/
+noncomputable abbrev tauLifetimeCorrectedFs : ℝ := PMElementaryParticles.TauLifetimeCorrected.tauLifeCorrected
+
+theorem tauLifetimeCorrectedFs_bounds :
+    (291.03 : ℝ) < tauLifetimeCorrectedFs ∧ tauLifetimeCorrectedFs < 291.06 :=
+  PMElementaryParticles.TauLifetimeCorrected.tau_lifetime_corrected
 export PMElementaryParticles.LeptonMasses (muon tau muon_value tau_value)
 export PMElementaryParticles.QuarkMasses
   (up down strange charm bottom top up_value down_value strange_value charm_value bottom_value

@@ -100,23 +100,11 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   space; (4) the regulator cancels between (2) and (3), and the `q²` integral gives `25/4 − π²`.
   Mathlib has no dilogarithm, and (2)–(4) need `Li₂` values, so the first module is `Li₂(1) = π²/6`
   and the few integrals that reduce to it.
-- **Finite-mass and precision muon radiation.** Extend `MuonLifetimeCorrected.qedFactor`, which
-  currently uses the massless-daughter one-loop coefficient, to the finite-electron-mass inclusive
-  correction. `MassiveWidth.phase` supplies massive tree phase space, not that radiative mass
-  dependence. The leading missing mass-dependent one-loop terms give about +4.4 ppm in the rate
-  at the current mass ratio (diagnostic evaluation, not a Lean enclosure), accounting for much of
-  the roughly +5 ppm lifetime residual. Then include higher orders with one consistent definition
-  of alpha and matching to `G_F`; do not append an isolated roughly 36 ppm two-loop term to the
-  alpha(0) formula without its scheme conversion. Separate the supplied benchmark kernel from
-  its substrate derivation in the radiative-factor task above. Reconcile the source docstring's
-  two-loop-size estimate with the e8p caveat. Benchmark: [PDG 2024, Eqs. 10.9–10.10](https://pdg.lbl.gov/2024/reviews/rpp2024-rev-standard-model.pdf).
-- **Tau leptonic partial widths and inputs.** Replace the tree-level scaling in `TauLifetime` /
-  `TauE8` by the massive phase-space and consistently radiative-corrected partial-width ratio.
-  `tau_lifetime_fs` currently uses measured muon lifetime and supplied `B_e = 0.1782`; it is a
-  conditional check, not an independent total-lifetime prediction. Propagate those comparison-input
-  uncertainties. Use `TauBranching`'s derived muon/electron channel ratio instead of separately
-  freezing both fractions in the downstream inventory. A prediction without supplied `B_e` also
-  needs the inclusive hadronic factor, owned by [PMHadrons](../PMHadrons/REVIEW-AND-NEXT.md).
+- **Tau inputs.** `TauLifetimeCorrected` has the corrected partial-width ratio; the row still uses the
+  measured `τ_μ` and supplied `B_e = 0.1782`, so it is a conditional check. Use `TauBranching`'s
+  derived muon/electron channel ratio instead of separately freezing both fractions in the downstream
+  inventory. A prediction without supplied `B_e` needs the inclusive hadronic factor, owned by
+  [PMHadrons](../PMHadrons/REVIEW-AND-NEXT.md).
 - **Wall leakage on top of the first-row dressing.** The first-row deficit is PMFlavor's: the `1/516`
   dressing of colour-carrier transitions, which muon decay does not carry (`PMFlavor.DressingInheritance`,
   `CKMDressing.first_row_sum`; `1.94·10⁻³` against `1.6 ± 0.7·10⁻³`). Wall leakage is a separate

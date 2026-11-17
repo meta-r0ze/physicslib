@@ -73,3 +73,4 @@ import PMElementaryParticles.GluedRegister
 import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog
 import PMElementaryParticles.MuonLifetimeHigherOrder
+import PMElementaryParticles.TauLifetimeCorrected

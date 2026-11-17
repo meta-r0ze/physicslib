@@ -20,9 +20,9 @@ import Mathlib.Analysis.Complex.ExponentialBounds
 * `qed_bounds`: `0.99579615 < Q < 0.99579616`.
 * `corrected_bounds`: `2.196987 µs < τ < 2.196998 µs`.
 
-Higher-order QED (the two-loop term, relative size `≈ 3.6·10⁻⁵`) is not included; the measured
-lifetime's `1 ppm` error is below that, so this row tests the one-loop picture and the E8 `G_F` at the
-`10⁻⁵` level. The `fermi` row compares `G_F` itself.
+This is the one-loop stage at `α(0)`. The full series that defines the measured `G_F` (electron-mass
+terms, two loops, `α(m_μ)`) is `MuonLifetimeHigherOrder`, which e8p reports; the `fermi` row compares
+`G_F` itself.
 -/
 
 noncomputable section
