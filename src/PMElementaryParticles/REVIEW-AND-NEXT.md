@@ -40,7 +40,17 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   capacity, Map, Protocol, doublet and a native crossing, and its gauge orbits are the four base
   protocols. Open on it: (1) the Toll: the wire and the crossing are label-blind, so the heavy-label
   weight has to be a cost on the four orbits; the data ask for `ν < e < d < u` with steps `≈ 3, 3, 4.4`,
-  which no product of a lepton/colour factor and a sign factor gives (it forces `s_d/s_u = s_e/s_ν`);
+  which no product of a lepton/colour factor and a sign factor gives (it forces `s_d/s_u = s_e/s_ν`).
+  Narrowed (`tools/toll_forms_check.py`): colour leaves two linear invariants on the label (`x₀` and
+  `x₁ + x₂ + x₃`, in the vector or a spinor frame), and no monotone function of any combination of them
+  gives the order (`0` of `3600` directions), because weak partners are antipodes and the order needs
+  the sign to favour `ν` over `e` but `d` over `u`. Sign-blind (even) invariants tie the partners. So
+  the Toll needs an odd part whose sign reverses between lepton and colour labels, plus an even
+  lepton/colour part: an odd `×` even coupling, which a single label reading does not supply (a fit
+  with `x₀`, `S`, `S²` takes four numbers for four). The crossing adds no label holonomy (triality
+  cubes to the identity). Hint, not a result: in effective node coupling, `k_eff/(α/2) = (m₂/m₃)/(√(3/2)
+  α/2)` is `0.81–0.94` for up, `4.3–4.9` for down, `13` for the electron and `38` for the neutrino:
+  the up protocol sits at the bare wire, and the others need more amplitude through the node.
   (2) the lightest masses. Killed on the way (git history has the details):
   the reference class's even sector, the other wall's even modes or full carriers, a displaced
   reference record, the hop's auxiliary axis, the orientation doublet alone, the walls as the wire's
