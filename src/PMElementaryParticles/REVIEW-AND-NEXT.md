@@ -68,7 +68,13 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   allowed `d` reaches `u` through another colour and `e` reaches `u` in one forward event, so the chain
   collapses (`tools/toll_forms_check.py` 7); the cycle needs one root per colour, which nothing
   selects. Sector-response counts (`PMConstants.ReferenceEconomy.servedCount`) tie `u` and `d`, as any
-  even quantity must.
+  even quantity must. Readout check (`tools/readout_placement_check.py`): the ladder is not an artifact of putting
+  the weight on both walls. On the reference wall only the weights are `0.026, 0.075, 0.22, 1.2`, the
+  same shape; the weight on the other wall only, or a scaled detuning, reaches `u` alone and is
+  excluded; scaling the node amplitude is excluded above; breaking the other wall's class-blindness in
+  one cycle leg lifts the lightest mass (`m₁/m₃ ≈ 2·10⁻³`) but not to the data (`e` `2.9·10⁻⁴`, `u`
+  `1.3·10⁻⁵`). The ladder is in the data: `m₂/m₃` for `ν, e, d, u` step by `2.9, 3.0, 5.3`, and the
+  readout passes it through. So the Toll question is placement-independent: why those `m₂/m₃`.
   (2) the lightest masses. Killed on the way (git history has the details):
   the reference class's even sector, the other wall's even modes or full carriers, a displaced
   reference record, the hop's auxiliary axis, the orientation doublet alone, the walls as the wire's
