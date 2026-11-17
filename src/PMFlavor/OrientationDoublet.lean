@@ -20,6 +20,13 @@ same-generation one is a root move (direct); the generation-changing ones are si
 direct through the reference's class and through the node otherwise (`ReferenceRouting`). These are
 the charged-current transitions with the CKM's pattern (diagonal, Cabibbo, node-suppressed), and a
 flavour change that keeps the doublet member (a neutral one) needs two moves.
+
+* `flip_reverses`, `flip_node_edges`: the `s ↔ c` exchange, a symmetry of the wire and of the
+  reference node (it fixes the reference's class), reverses every orientation and maps the node edge
+  `1 → 0` (up member holding the reference's class) onto the reverse of the edge `0 → 2` (down member
+  holding it). So any readout that is the same for up and down members gives the two node entries
+  the same size: `|V_cb| ≠ |V_ub|` needs a charged-current readout that distinguishes the doublet
+  member holding the reference's class.
 -/
 
 namespace PMFlavor.OrientationDoublet
@@ -47,5 +54,23 @@ theorem no_neutral_change : ∀ t f t' f' : Fin 3, t ≠ f → t' ≠ f' →
     gen t f ≠ gen t' f' → orient t' f' ≠ orient t f := by
   intro t f t' f'
   fin_cases t <;> fin_cases f <;> fin_cases t' <;> fin_cases f' <;> simp [gen, orient]
+
+/-- The colour-axis reflection's action on classes: it fixes the reference's class `0` and exchanges
+`s = 1` and `c = 2` (PMElementaryParticles `DoubletReflection.flip_spinor`, `flip_cospinor`). -/
+def flip : Fin 3 → Fin 3 := ![0, 2, 1]
+
+/-- **The `s ↔ c` exchange reverses the orientation** of every two-wall pair, and relabels the
+generation by the same exchange. -/
+theorem flip_reverses : ∀ t f : Fin 3, t ≠ f →
+    orient (flip t) (flip f) = !orient t f ∧ gen (flip t) (flip f) = flip (gen t f) := by
+  decide
+
+/-- **It maps one node edge onto the other with up and down exchanged**: the up state of generation
+`1` holding the reference's class on wall `F`, `(2, 0)`, goes to the down state of generation `2`
+holding it, `(1, 0)`; the edge `1 → 0` becomes the reverse of the edge `0 → 2`. -/
+theorem flip_node_edges :
+    (orient 2 0 = true ∧ gen 2 0 = 1) ∧ (orient (flip 2) (flip 0) = false ∧ gen (flip 2) (flip 0) = 2) ∧
+    (orient 2 1 = false ∧ gen 2 1 = 0) ∧ (orient (flip 2) (flip 1) = true ∧ gen (flip 2) (flip 1) = 0) := by
+  decide
 
 end PMFlavor.OrientationDoublet

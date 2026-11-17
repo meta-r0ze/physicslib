@@ -53,6 +53,19 @@ node edges, so the edge asymmetry needs the `s ↔ c` breaking of the charged cu
 occupied modes every restoring crossing has two (`ReferenceNode.restoring_two_classes`), so the node
 value is `α/2` on both edges, the scale of the printed `|V_ub| = 1/(2α⁻¹+π)`.
 
+**What breaks the two node edges apart** (`OrientationDoublet.flip_reverses`, `flip_node_edges`). The
+`s ↔ c` exchange fixes the reference's class, so it is a symmetry of the wire and of the node; it
+reverses every orientation and maps the edge `c → b` (generation `1 → 0`, the up member holds the
+reference's class on wall `F`) onto the reverse of the edge `t → d` (`0 → 2`, the down member holds it).
+The first-order edges are `u–s` (direct), `c–b` and `t–d` (node), plus the diagonal root moves; as a
+Hermitian generator they set `|V_us| ≈ |V_cd|`, `|V_cb| ≈ |V_ts|`, and the third angle `s₁₃`. So a
+readout that treats up and down members alike gives `s₂₃ = s₁₃`; the data's ratio `≈ 11` needs the
+charged-current readout to depend on which doublet member holds the reference's class. The up/down
+difference the library has is the charge (the EP heavy-label weight, `s_u/s_d ≈ 4.4`); no simple power
+of it, nor of the charges, gives `11` (`(s_u/s_d)^p` needs `p ≈ 1.6`). The printed forms put the
+factor `2(π+χ)` between the two edges; deriving it as the up/down difference at the reference's class
+is the open step.
+
 **Status of each entry of `J`** (e8p readout names in brackets).
 
 | Label change | Off the axis | On the axis |
