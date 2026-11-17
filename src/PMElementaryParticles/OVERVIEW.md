@@ -178,6 +178,19 @@ each protocol occupies is open (REVIEW). Earlier per-species scans fitted measur
 CKM magnitudes; they were removed as Standard-Model fitting, not substrate results (in git history:
 `tools/node_carrier_scan.py`, `tools/reference_wall_mixing_scan.py`, `tools/composite_mass_scan.py`).
 
+## Final channels of a charged-current event
+
+`FinalChannels`: on the register's label (vector frame: axis `0` lepton, `1..3` colour; sign the
+doublet) the weak event is the antipode, same axis and opposite sign (`GluedRegister.neg_class`), and
+on the wire mode it is the native charged current (`PMAction.NativeExternal.native_current`). The flip
+changes the charge by exactly one unit on every label (`flip_charge`). A charged-current event takes
+the parent `x` to `flip x` and emits `y` with the antilabel of `flip y`; charge is conserved exactly when
+`y` has the parent's sign (`pair_conserves_iff`). So there are four emitted pairs, one leptonic and
+three coloured (`pairs_card`, `colour_pairs_card`, `lepton_pair`); for a down lepton parent they are
+`e ν̄` and `d ū` per colour (`down_lepton_pairs`). This is the channel count of
+`TauBranching.branching` (`1` per open lepton pair, `N_c = 3`), now from the label. Which pairs are
+open is kinematic (PMHadrons for quark pairs); generation changes at the vertex are PMFlavor's.
+
 ## External states
 
 `ExternalStates.persistent_on_shell`: a persisting state

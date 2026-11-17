@@ -83,13 +83,12 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
 
 ## Other open work
 
-- **Final channels.** `PMAction.NativeExternal` makes `AmplitudeTrace`'s spinors the native wall
-  eigenmodes and its bilinears the native charged current. Identify which protocol channels are the
-  final states of each decay (and so the first row's external states).
 - **Radiative factor.** `MuonLifetimeCorrected` supplies the one-loop QED factor; derive it as the soft
   photon dressing of the charged daughter.
 - **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full
-  charged projector keeps a gapped component, so total gapped weight is not a row deficit; the row
-  needs the external-state and final-channel readout (Final channels above).
+  charged projector keeps a gapped component, so total gapped weight is not a row deficit. The final
+  labels are now fixed (`FinalChannels`); what the row still needs is which wire mode of the daughter
+  label is external: the charged current's image on the light eigenmodes against its image on the
+  gapped ones (`ExternalStates.persistent_on_shell` makes only persisting eigenmodes external).
   `PMAction.WallGapCalibration`: the library admits every flip-to-gap ratio, so the size waits on the
   absolute event clock (PMAction REVIEW, extensions).

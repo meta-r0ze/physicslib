@@ -70,3 +70,4 @@ import PMElementaryParticles.PairShell
 import PMElementaryParticles.PairSphere
 import PMElementaryParticles.TauBranching
 import PMElementaryParticles.GluedRegister
+import PMElementaryParticles.FinalChannels
