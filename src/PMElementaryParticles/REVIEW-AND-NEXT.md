@@ -58,6 +58,14 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   them). The ladder index `0, 1, 2, 3` for `u, d, e, ν` is the reflected-binary reading of the two
   label bits (lepton, down): an odd `×` even form, as the exclusions above require. Wanted: a mechanism
   that charges one equal step per rung (a chain `u –weak– d –axis– e –weak– ν` with no `u–ν` edge).
+  Candidate (vector frame, colour `i`): the weak flip is the antipode, and a shift by the root
+  `r = eᵢ − e₀` maps `d → e` and `ν → u` and nothing else to a label. The four labels then form one
+  directed cycle `u → d → e → ν → u` (weak, `+r`, weak, `+r`), and the ladder index is the number of
+  events from `u` along it. Choices this leaves open, each to be derived or the candidate dropped: why
+  the shift runs `+r` only (an orientation), why `u` is the base (it sits at the bare wire), and the
+  cost per event (`3.2–3.4`). A root shift of the label is a hop in the label's factor, which is the
+  other wall's transport factor (`PMAction.Machine.AxisHop`), so the orientation may be the other
+  wall's hop direction.
   (2) the lightest masses. Killed on the way (git history has the details):
   the reference class's even sector, the other wall's even modes or full carriers, a displaced
   reference record, the hop's auxiliary axis, the orientation doublet alone, the walls as the wire's
