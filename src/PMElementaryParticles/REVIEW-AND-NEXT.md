@@ -94,8 +94,13 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   and the few integrals that reduce to it.
 - **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full
   charged projector keeps a gapped component, so total gapped weight is not a row deficit. The final
-  labels are now fixed (`FinalChannels`); what the row still needs is which wire mode of the daughter
-  label is external: the charged current's image on the light eigenmodes against its image on the
-  gapped ones (`ExternalStates.persistent_on_shell` makes only persisting eigenmodes external).
-  `PMAction.WallGapCalibration`: the library admits every flip-to-gap ratio, so the size waits on the
-  absolute event clock (PMAction REVIEW, extensions).
+  labels are fixed (`FinalChannels`). Two-wall wire (`tools/event_clock_check.py`): light modes leak
+  `1.50 r²` (middle) and `1.99 r²` (heaviest), `r = K_f/|y|`; the lightest mode is the exact zero mode
+  and leaks `≲ 10⁻⁶` even with the offsets that give it a mass. So a leakage deficit of the first row
+  comes through the heavier down modes, `≈ |V_us|²·1.50 r²`, and needs `r = 0.11–0.17`. The ratio does
+  not wait on the absolute clock: for certain events `r = T_crossing/T_flip`
+  (`PMAction.CertainTransferRate`), the attempt rate cancels, and the flip program is `32` root
+  quarter-times (`PMAction.ClassBlindFlip.forwardTimes_total`). What is missing is the crossing's root
+  program (PMAction REVIEW). For scale only: a two-root crossing word at a half turn per root gives
+  `r = 1/8` and a deficit `≈ 1.2·10⁻³`; one root event gives `2.9·10⁻⁴`. The deficit estimate borrows
+  the measured `|V_us|` (the mixing is PMFlavor's).

@@ -25,7 +25,12 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   scales, for converting node admittances into Hamiltonian rates (`CertainTransferRate`), for the
   light-band error at derived rates (`LightLeakage`; `WallGapCalibration` leaves the flip-to-crossing
   ratio free), and for the finite-tick walk (`SplitClockBoundary` excludes a single Hamiltonian
-  exponential).
+  exponential). The ratios need less than the absolute clock: for certain events a rate ratio is a
+  duration ratio (`CertainTransferRate`), so the root attempt rate `p` cancels, and the flip program is
+  `32` root quarter-times (`ClassBlindFlip.forwardTimes_total`). The flip-to-crossing ratio, which the
+  light-band leakage and EP's first-row deficit need, then waits only on the crossing's root program,
+  which the library does not yet construct. The absolute clock is `p` (`Machine/RootTransferPhase`:
+  quarter-time `π/(2 gap p)` ticks).
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
   limits. Sharpen the lattice remainder bound enough to compare it with
