@@ -21,10 +21,16 @@ e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the 
   crossing-fraction reading read colour as carrier axes and is excluded (`PMAction.ColourRegister`).
 - **Mixing.** On the derived wire (OVERVIEW, "Protocol readout") neither root assignment gives the
   CKM: same root `|V_us| ≈ 0`, `|V_cb|, |V_ub| ≈ 0.009, 0.008`; different roots `|V_us| = √3/2`. With
-  each protocol's flip moved off the resonance to fit its `m₁/m₂` (Light masses below), the same-root
-  values become `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065` (data `0.225`, `0.041`, `0.0037`;
-  `tools/register_candidates_check.py`). So the mixing has to come from the protocol readout, not the
-  bare wire's rotation.
+  each protocol's flip moved off the resonance to fit its `m₁/m₂` (Light masses below), same-root
+  `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065` (data `0.225`, `0.041`, `0.0037`). Cheap tests
+  (`tools/mixing_candidates_check.py`, masses held at data): `|V_us| = 0.225` is reached by each of a
+  relative flip phase between up and down (`0.49`), a light-class asymmetry `k_s/k_c ≈ 1.2` exchanged
+  between up and down (the doublet reflection's `s ↔ c`), or an other-wall cycle phase or asymmetry,
+  so `|V_us|` does not discriminate. `|V_cb|` stays at `0.002–0.010` under every deformation tried
+  (those, the weight's placement on one or both walls, a joint phase × asymmetry fit, and `k/K` from
+  `α/4` to `10α`), with `|V_cb| ≈ |V_ub|` against the data's ratio `11`. So the wire's heavy–light
+  rotation is capped near `m₂/m₃`-size and treats the two light generations alike; `|V_cb|` (about
+  `2 m_s/m_b`) needs a source outside the wire's mass matrices: the protocol readout.
 - **Light masses.** At the resonance the lightest state is exactly massless on the full wire, not
   only at leading order (`PMAction.ExactZeroMode`), and no heavy-label weight changes that
   (`PMAction.OtherWallStationary.massless_iff`). So `m_e`, `m_u`, `m_d` come from outside the wire:
