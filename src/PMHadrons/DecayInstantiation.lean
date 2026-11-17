@@ -27,11 +27,10 @@ What the template shows:
 * **Pion and kaon are filled differently.** The kaon's map carries `|V_us|²`; the pion's map has
   no `|V_ud|²` and its margin is `32/33`. Same channel type, so the slots should match
   (`KaonPionRatio`: with `|V_ud|²` in the pion's map the ratio's residual is the `f_K` tension).
-* **The neutron's correction needs a Governor above one.** `neutronLifetimeCorrected` equals the
-  lifetime of the channel with `governor = 43/41` (`neutronLifetimeCorrected_eq_channel`,
-  `neutronCorrected_governor_gt_one`). A Governor restricts transitions
-  (`PersistencePremises.restriction_lowers`), so its factor is at most one; with `41/43` the
-  lifetime is `neutronLifetimeExactCutoff / (41/43)` (`neutronChannel_lifetime`), `≈ 964.8 s`.
+* **The neutron's Governor is at most one.** A Governor restricts transitions
+  (`PersistencePremises.restriction_lowers`); with the surviving-phase fraction `41/43` in that slot
+  the lifetime is `neutronLifetimeExactCutoff / (41/43)` (`neutronChannel_lifetime`), `≈ 964.8 s`.
+  (An earlier `41/43`-times-lifetime correction amounted to a Governor of `43/41` and was removed.)
 
 **Where the neutron's `+9.8%` comes from** (floating-point comparison, outside Lean). With the
 Governor at `41/43`, the E8 rate is low by `964.8/878.4 = 1.0984`. Against the SM's
@@ -113,22 +112,6 @@ theorem neutronChannel_lifetime :
   dsimp only
   simp only [neg_zero, Real.exp_zero]
   ring
-
-/-- **The present correction is the channel with Governor `43/41`.** -/
-theorem neutronLifetimeCorrected_eq_channel :
-    neutronLifetimeCorrected =
-      lifetime 1 (neutronChannel (1 / PMSubstrate.E8Margin.phaseMargin)) := by
-  rw [neutronLifetimeCorrected_eq]
-  unfold neutronMarginFactor lifetime rate neutronChannel neutronLifetimeExactCutoff
-    betaLifetimeFromFraction
-  dsimp only
-  simp only [neg_zero, Real.exp_zero, one_div, mul_inv, inv_inv, mul_one, one_mul]
-  ring
-
-/-- That Governor is above one, which a restriction cannot be. -/
-theorem neutronCorrected_governor_gt_one : 1 < 1 / PMSubstrate.E8Margin.phaseMargin := by
-  rw [PMSubstrate.E8Margin.phaseMargin_eq]
-  norm_num
 
 /-! ## One template for the three semileptonic decays
 

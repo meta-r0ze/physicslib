@@ -76,17 +76,6 @@ theorem neutronMarginFactor_eq : neutronMarginFactor = 41 / 43 :=
 theorem neutronMarginFactor_pos : 0 < neutronMarginFactor := by
   rw [neutronMarginFactor_eq]; norm_num
 
-/-- **Retired (Nov 2026).** The `41/43`-margin endpoint value. It applies `41/43` as a Governor
-above one (`DecayInstantiation.neutronCorrected_governor_gt_one`), which a restriction cannot be,
-and it disagrees with `E8Margin.phaseCorrected` (which lowers the rate). Kept for that record; the
-E8 neutron is `NeutronContinuum.neutronLifetimeContinuumCoulombSeconds`. -/
-def neutronLifetimeCorrected : ℝ :=
-  neutronMarginFactor * neutronLifetimeExactCutoff
-
-theorem neutronLifetimeCorrected_eq :
-    neutronLifetimeCorrected =
-      neutronMarginFactor * neutronLifetimeExactCutoff := rfl
-
 theorem neutronMarginFactor_eq_substrate :
     neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin := rfl
 
@@ -507,12 +496,11 @@ theorem neutronLifetimeSeconds_bounds :
   constructor <;> nlinarith [hprodlo, hprodhi]
 
 
-/-! ## The margin-corrected prediction in seconds
+/-! ## Exact-cutoff enclosures
 
-The headline `τ_n ≈ 877.2 s` is `neutronMarginFactor · neutronLifetimeExactCutoff`, in seconds.
-The pieces: the exact cutoff `m_n − m_p` opens only the lowest mode (as `2.53` does), so the
-fraction is `1/P(r)`, `P(r) = Σ c_s r^s = (1 + r + r²)³`, `r = e^{−√2}`; the hazard is `G_F² m_e⁴/3`.
-`neutronLifetimeCorrectedSeconds_bounds` encloses the result in `(877.1, 877.2)` s. -/
+The exact cutoff `m_n − m_p` opens only the lowest mode (as `2.53` does), so the fraction is
+`1/P(r)`, `P(r) = Σ c_s r^s = (1 + r + r²)³`, `r = e^{−√2}`; the hazard is `G_F² m_e⁴/3`. These
+enclosures serve `DecayInstantiation`'s unified neutron row. -/
 
 lemma neutron_cutoffExact_bounds :
     (2.53098 : ℝ) < neutronCutoffExact ∧ neutronCutoffExact < 2.53100 := by
@@ -661,41 +649,5 @@ lemma betaHazardE8_tight :
   rw [betaHazardE8_eq]
   have hf := PMElementaryParticles.Values.fermiME_tight
   constructor <;> nlinarith [hf.1, hf.2]
-
-/-- **Retired (Nov 2026)**: see `neutronLifetimeCorrected`. -/
-def neutronLifetimeCorrectedSeconds : ℝ :=
-  neutronLifetimeCorrected * PMElementaryParticles.PhysicalUnits.electronTime
-
-/-- **The E8 neutron lifetime is between `877.1` and `877.2` s** (measured `≈ 878` s). -/
-theorem neutronLifetimeCorrectedSeconds_bounds :
-    (877.1 : ℝ) < neutronLifetimeCorrectedSeconds ∧ neutronLifetimeCorrectedSeconds < 877.2 := by
-  obtain ⟨hP1, hP2⟩ := neutron_poly_bounds
-  obtain ⟨hh1, hh2⟩ := betaHazardE8_tight
-  have he := PMElementaryParticles.Values.electronTime_tight
-  set P := ∑ s : Fin 7, (neutronWeightCount s.val : ℝ) * Real.exp (-Real.sqrt 2) ^ s.val with hPdef
-  have hPpos : 0 < P := lt_of_lt_of_le (by norm_num) hP1
-  have hhpos : 0 < betaHazardE8 := lt_trans (by norm_num) hh1
-  have hτ : neutronLifetimeCorrectedSeconds =
-      (41 / 43) * (P / betaHazardE8) * PMElementaryParticles.PhysicalUnits.electronTime := by
-    unfold neutronLifetimeCorrectedSeconds
-    rw [neutronLifetimeCorrected_eq, neutronMarginFactor_eq]
-    unfold neutronLifetimeExactCutoff betaLifetimeFromFraction
-    rw [neutronSpectralFractionExact_eq, neutronSpectralFraction_eq_inv_poly, ← hPdef]
-    have hPne : P ≠ 0 := hPpos.ne'
-    have hhne : betaHazardE8 ≠ 0 := hhpos.ne'
-    field_simp
-  have hXlo : (2.20828699 : ℝ) / 3.0919962e-24 < P / betaHazardE8 := by
-    rw [div_lt_div_iff₀ (by norm_num) hhpos]
-    nlinarith
-  have hXhi : P / betaHazardE8 < (2.20828851 : ℝ) / 3.0919850e-24 := by
-    rw [div_lt_div_iff₀ hhpos (by norm_num)]
-    nlinarith
-  have hXpos : 0 < P / betaHazardE8 := div_pos hPpos hhpos
-  rw [hτ, mul_assoc]
-  constructor
-  · have := mul_lt_mul'' hXlo he.1 (by norm_num) (by norm_num)
-    nlinarith
-  · have := mul_lt_mul'' hXhi he.2 hXpos.le (lt_trans (by norm_num) he.1).le
-    nlinarith
 
 end PMHadrons

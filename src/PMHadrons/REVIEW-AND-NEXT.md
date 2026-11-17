@@ -68,24 +68,15 @@ In order: the normalization decision comes first because every rate below uses i
 
 ## Lean organization (from the 2026-11-17 review)
 
-- **Neutron routes.** Four modules compute the neutron: `NeutronContinuum` (the scored route),
-  `NeutronRate` (continuum comparison), `NeutronPrediction` (the `3³` finite cube; its `41/43`
-  correction is retired), and `DecayInstantiation`'s unified channel; `BetaCalibration` and
-  `WeakTransition` supply the finite-hazard form. After the normalization decision above, keep one
-  route and mark or remove the comparison stages, so e8p's three neutron rows reduce to one scored
-  row and clearly labelled intermediates.
+- **Neutron routes.** One scored route (`NeutronContinuum`, formulas in `NeutronRate`) and the
+  finite-cube comparison (`NeutronPrediction`, `BetaCalibration`), which PMAtoms uses. After the
+  normalization decision, decide whether e8p keeps the finite-cube rows as labelled intermediates.
 - **Meson-width conventions.** Three overlapping normalizations: the pion's `32/33`
   (`MesonFiniteChannels.pionLifetimeCorrectedSeconds`, the scored row), the shared factor
   (`DecayInstantiation`) and the derived running (`ShortDistanceRunning`). The normalization item
   above decides which survives; then keep one module for it. `MesonFiniteChannels` and
   `NeutronPrediction` also serve PMAtoms (`SpectralDecoherenceInstances`, `PersistenceComplex`,
   `SpectralMeasure`) as finite-cube instances, so their finite channels stay.
-- **Small leftovers.** `WeakTransition` (the `3` weak channels behind `G_F²/3`) is imported by
-  nothing and belongs with `BetaCalibration`; `NeutronCorrection` holds four supplied comparison
-  factors and is imported by nothing.
-- **Unused interfaces.** `CompositeBinding` (mass as "carriers minus binding", which the occupancy
-  account replaces), `MultiBodyPhaseSpace` and `ChannelFinalStateLink` are imported by nothing else.
-  Keep them only if the channel-inventory work above uses them.
 
 ## Nucleon and pion dressing (after the weak widths)
 

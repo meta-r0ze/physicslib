@@ -64,7 +64,8 @@ is elementary-particle work.
 
 Grouped by topic. `MinimalCube` moved to `PMAction.MinimalCube` (Nov 2026). Several decay modules are
 labelled candidate or comparison in their headers; the neutron has one scored route
-(`NeutronContinuum`), the others are kept as comparisons or retired stages (noted per row).
+(`NeutronContinuum`); `NeutronRate` holds its formulas and `NeutronPrediction` the finite-cube
+comparison.
 
 ### Composites and their masses
 
@@ -95,7 +96,7 @@ labelled candidate or comparison in their headers; the neutron has one scored ro
 | Module | Checked result | Model inputs (E8 choices not yet derived) |
 | --- | --- | --- |
 | `ShortDistanceRunning` | the one-loop photon running of the weak contact from the E8 W scale to the E8 proton, `R = 1 + (3α/4π)(1+2Q̄) ln(m_Z²/m_p²)`: `runningFactor_bounds` `1.021178–1.021180`; it matches `sharedFactor = (32/33)/|V_ud|²` to `< 7·10⁻⁵` (`runningFactor_sub_shared`), not exactly | matching and finite parts |
-| `DecayInstantiation` | pion, kaon and neutron in `PersistenceMechanics.DecayChannel`'s slots (toll, capacity, map, protocol, governor, margin); one shared margin `R = (32/33)/|V_ud|²` for all three (`pionChannelCKM_rate`, `kaonChannelCKM_rate`, `neutronChannelCKM_lifetime`); the earlier `41/43` neutron correction is a Governor above one and is retired (`neutronCorrected_governor_gt_one`) | `R` not derived (see `ShortDistanceRunning`) |
+| `DecayInstantiation` | pion, kaon and neutron in `PersistenceMechanics.DecayChannel`'s slots (toll, capacity, map, protocol, governor, margin); one shared margin `R = (32/33)/|V_ud|²` for all three (`pionChannelCKM_rate`, `kaonChannelCKM_rate`, `neutronChannelCKM_lifetime`); an earlier `41/43` neutron correction amounted to a Governor above one and was removed | `R` not derived (see `ShortDistanceRunning`) |
 | `KaonPionRatio` | `Γ_K/Γ_π` with `|V_us|²` and `|V_ud|²` on the two widths, common factors cancelling: `1.318922…` (`kaonPionWidthRatio_bounds`), `fK/fπ = 1890/1593 = 70/59` | `fK` count |
 | `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthTo`, `pionWidthE8`, `pionElectronWidthE8`, `pionLifetimeE8` | `fπ` placeholder `v/(Δ²+Δ−χ)` until the carrier-emission overlap is computed |
 | `KaonWidth` | `kaonWidthCKM`, `kaonDecayConstantE8=v/(Δ²−ν²)`, `vusE8=s₁₂c₁₃` (the `(u,s)` entry of `PMFlavor.CKM.ckm`: `vusE8_eq_ckm`), `kaonWidthE8`, `kaonLifetimeE8` | `fK` placeholder `v/(Δ²−ν²)` until the carrier-emission overlap is computed |
@@ -109,10 +110,8 @@ labelled candidate or comparison in their headers; the neutron has one scored ro
 | --- | --- | --- |
 | `NeutronContinuum` | the neutron on the continuum route (the emitted electron is not confined, so its modes are the lattice's continuum limit): `phase_integral` (closed-form `f`, proved as the integral), `coulomb_linear_integral`, `neutronContinuum_rate` (`Γ = G_F²|V_ud|²R(1+3g_A²)f/(2π³)`), lifetime bounds without and with the Fermi factor's leading term | the E8 neutron lifetime; see `src/PMElementaryParticles/CONTINUOUS.md` |
 | `NeutronRate` | Massive-electron phase space `phaseSpace = ∫ E√(E²−1)(m_n−m_p−E)²`; `g_A = σ/D = 5/4`, `axialFactor = 91/16`; `neutronWidth`, `neutronLifetime`, `beamLifetime`; recoil endpoint `recoilEndpoint`, `phaseSpaceRecoil`, `neutronWidthRecoil`, `neutronLifetimeRecoil` with supplied radiative factor `R` | full Dalitz angular density and derived radiative correction |
-| `NeutronCorrection` | the four neutron-only factors as supplied comparison inputs (not E8 values; not exported by `Values`): Coulomb `1.0322`, measured-vs-E8 `g_A` `1.0338`, low-energy radiative `1.018`, spectral-vs-continuum `0.9941`; `neutronOnlyCorrection` (product), `neutronCorrectedRate`, `neutronCorrectedLifetimeSeconds`, certified bounds. Direction: the factors multiply the rate and divide the lifetime. | all four are comparison inputs; their E8 counterparts are the open constructions in `REVIEW-AND-NEXT` §0 |
-| `NeutronPrediction` | `neutronCube = 3` (minimal volume-persistent cube), `neutronCutoff`, `neutronCutoffExact`, `neutronSpectralFractionExact`, `neutronLifetimeExactCutoff`, `neutronMarginFactor = PMSubstrate.E8Margin.phaseMargin = 41/43` (`neutronMarginFactor_eq_substrate`), `neutronLifetimeCorrected`; `neutronCube_minimal` | numerical fraction is external comparison |
-| `BetaCalibration` | `weakAmplitudeSquared = G_F²`, `weakChannelCost = 1/(σ−χ) = 1/3`, `betaHazardE8 = weakAmplitudeSquared · weakChannelCost`, positivity; `betaLifetimeFromFraction`, `betaNeutronLifetimeE8` | independent derivation/validation of the hazard |
-| `WeakTransition` | `WeakChannel = Fin (σ−χ)`, `weakChannel_card = 3`, `weakChannelAmplitude`, `weakTransitionHazard`; `weakCurrent`, `weakCurrentWeight`, `weakHazardFromCurrent`; `weakCurrentEntries`, `weakCurrentEntries_norm`, `weakHazardFromEntries_eq`; `weakCarrierEntry`, `weakCarrierEntry_eq_one`, `weakCarrierEntryReal`, `weakCarrierEntries_eq`; `weakCarrierOperator`, `weakCarrierOperator_eq_one`, `weakCarrierOperator_apply`, `weakCarrierOperator_offdiag_zero`, `weakOperatorEntry`, `weakOperatorEntry_eq_entries`; `weakTransitionHazard_eq = G²/3`, `weakHazardFromAmplitude_eq` | equal channel distribution from the weak current |
+| `NeutronPrediction` | the finite `3×3×3` neutron channel (comparison; PMAtoms' finite-cube instances use it): `neutronCube = 3`, `neutronCutoff`, `neutronCutoffExact`, `neutronSpectralFractionExact`, `neutronLifetimeExactCutoff`, `neutron_openModes`, `neutronMarginFactor = E8Margin.phaseMargin = 41/43` (used by PMAtoms), exact-cutoff enclosures for `DecayInstantiation`; the earlier `41/43` corrected lifetime is removed | numerical fraction is external comparison |
+| `BetaCalibration` | `weakAmplitudeSquared = G_F²`, `weakChannelCost = 1/(σ−χ) = 1/3`, `betaHazardE8 = weakAmplitudeSquared · weakChannelCost`, positivity; the three weak channels behind `/3` (`WeakChannel = Fin (σ−χ)`, `weakTransitionHazard_eq = G²/3`, the equal-weight carrier operator; formerly `WeakTransition`); `betaLifetimeFromFraction`, `betaNeutronLifetimeE8` | independent derivation/validation of the hazard |
 
 ### Channel inventory and interfaces
 
@@ -120,13 +119,10 @@ labelled candidate or comparison in their headers; the neutron has one scored ro
 | --- | --- | --- |
 | `Particle` | `Species` with certified masses and `Q/B/L`; `ParticleDecay` = conserved numbers + lighter products; **`proton_stable`** (baryon number forbids a lighter channel), `neutrino_stable`/`antineutrino_stable` (massless ledger; no lighter channel); allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` | certified PM-5 mass enclosures; tree-level channels |
 | `ParticleChannels` | `ParticleChannel`, `RateStatus`, `totalRate`, `branching`, `totalLifetime`; concrete μ/τ/π/K inventories with provenance labels; `K_ℓ3` at E8 leading order (`e8LeadingOrder`); nonleptonic kaon modes blocked on the bound-state matrix element | hadronic matrix elements |
-| `ChannelFinalStateLink` | name-level bridge from `ParticleChannels` (muon, tau, pion, kaon prefixes) to `ParticleFinalStates`; `muon_names`, `tau_first_name`, `pion_names`, `kaon_prefix`, `finalStates_charge_conserved`. |  |
 | `CompositeTransition` | `compositeAmplitude`, `CompositeDecay`, `compositeOperator`; `K⁺ → π⁺ π⁰` charge/operator instance. |  |
 | `CompositePhaseSpace` | `twoBodyPhaseSpace`, `compositePartialWidth`, `kaonPionT`, `kaonPionPhase`, `kaonPionRate`; K⁺→π⁺π⁰ structural rate with positivity. |  |
-| `MultiBodyPhaseSpace` | massless three-body `Φ₃=M²/(128π³)`, `threeBodyRate`, nonnegativity. |  |
 | `HadronicMatrixElement` | `BoundStateMatrixElement` with supplied `value`; `kaonPion`, `kaonPionRate`, `kaonPionRate_eq`, `kaonPionRate_nonneg`; explicit nonperturbative-input interface. |  |
 | `BoundStateOverlap` | finite constituent `Wavefunction`, `overlap`, `toMatrixElement`, `rate_eq`; overlap as inner product. |  |
-| `CompositeBinding` | `BindingLedger`, `compositeMassSq`, positivity/mass-lowering, `compositePhase`; binding energy supplied. |  |
 
 ## E8 decay checks at this level
 
