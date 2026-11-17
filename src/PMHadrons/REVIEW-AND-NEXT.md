@@ -7,17 +7,22 @@ Done results are in [OVERVIEW](OVERVIEW.md); the pillar calculations and their l
 
 In order: the normalization decision comes first because every rate below uses it.
 
-- **One charged-current normalization.** Assemble a consistent physical partial-rate convention
-  across pion, kaon and neutron channels. Reuse `ShortDistanceRunning.runningFactor_bounds`
-  (`1.021178–1.021180`): the leading-log coefficient and its numerical enclosure already exist.
-  `DecayInstantiation.sharedFactor` instead enforces `|V_ud|² R = 32/33`; the library proves the
-  two factors differ by `4–7 × 10⁻⁵`, not that they are equal. Derive the matching and finite
-  corrections needed to relate them, rather than identifying nearby values. The kaon already has
-  the shared-factor construction (`kaonChannelCKM_rate`), while `KaonWidth.kaonWidthE8` and the
-  exported finite lifetime still use the earlier formula. Establish how PMFlavor's charged-current
-  dressing (`q² = 515/516`) enters physical rates: the catalog compares dressed `V_ud`, but these
-  formulas use raw CKM magnitudes. Do not count that dressing, `32/33`, contact running or finite
-  radiative terms twice. This normalization decision precedes the e8p export update.
+- **One charged-current normalization.** Test done (`tools/charged_current_normalization.py`). Counting
+  each factor once, `Γ(P → μν(γ)) = G_F² |q V|² f_P² m_P m_μ² (1 − m_μ²/m_P²)²/(8π) · (1 + δ_P)`: `G_F`
+  from muon decay; PMFlavor's dressing `q² = 515/516` on colour-carrier transitions
+  (`PMFlavor.DressingInheritance`); `δ_P` the full radiative correction, `δ_π = 0.0176(21)`,
+  `δ_K = 0.0107(21)` (arXiv:1509.02220, supplied). In this convention the measured widths give
+  `|V_ud| f_π = 127.13(13)` and `|V_us| f_K = 35.09(6)` MeV. E8: `q|V_ud| f_π = 126.83` (`−0.24%`,
+  `−2.3σ`; the measurement implies `f_π = 130.58(13)` against E8 `130.275`), `q|V_us| f_K = 34.64`
+  (`−1.3%`, `−7σ`; implies `f_K = 156.6`). The pion's `32/33` stands in for `|V_ud|²(1 + δ_π)` and fits
+  the pion by construction; its `6·10⁻⁵` agreement with `|V_ud|² R` leaves out both the dressing and
+  the long-distance part, so it does not survive the count-once rule. The derived running is the
+  short-distance part of `δ`: `R − 1 = 0.0212` (`μ = m_p`, E8 `M_Z`) against the standard `0.0218`.
+  Next: (1) one Lean module with this rate (supplied `δ_P`, `R` as its short-distance part) for pion
+  and kaon, e8p rows re-pointed, `32/33`, `sharedFactor` and `MesonFiniteChannels`' corrected lifetime
+  retired; (2) the neutron in the same convention (its `δ` is the outer plus inner correction); (3) the
+  residuals are then the emission counts: `f_π` mildly (`1890`), `f_K` clearly (`1593`, the meson
+  emission item below). Do not count the dressing, `R` and `δ` twice.
 - **Partial, inclusive and total rates.** Define photon-inclusive channels and sum actual partial
   widths before predicting a total lifetime. `PionWidth` and `KaonWidth` supply muon-channel
   partial widths; `NeutralPionWidth` supplies the two-photon partial width. Against the frozen
