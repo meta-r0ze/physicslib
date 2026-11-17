@@ -25,7 +25,9 @@ The Lean proofs are conversions and the goal is to only assume that some things 
 
 # Results
 
-tools/e8p can output all or any specific lean values and the matching experimental value
+tools/e8p can output all or any specific lean values and the matching experimental value.
+
+The full list can be seen here: [e8p.txt](tools/e8p/e8p_output.txt)
 
 Example:
 - **1836.152673444–1836.152673445** The Lean proton/electron mass ratio
@@ -40,11 +42,11 @@ Every value has a Lean proof chain that can be outputed:
 ```
 
 ## Audit
-e8p can also generate audits for some or all of the results
+e8p can also generate audits for some or all of the results with --audit
 
 | Selection | Scored comparisons | χ² | Reduced χ² |
 |---|---:|---:|---:|
-| Constants (`--paper=3`) | 7 | 2.031 | 0.290 |
+| Constants | 7 | 2.031 | 0.290 |
 
 ## Atoms
 

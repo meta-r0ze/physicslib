@@ -8,14 +8,7 @@ external calculation awaiting formal verification. Each current theorem states i
 
 ## Substrate premises
 
-None open. The wire's earlier premises are closed in the library:
-* the restoring node's boundary and `k/K = α/2`: `PersistenceSelections` (1), `ReferenceNode`,
-  `ReferenceNodeBoundary`;
-* the native flip event (coherent, no wall offset): `PersistenceSelections` (2), `PairedRootFlip`,
-  `ClassBlindFlip`;
-* the reference's single class: `PersistenceSelections` (3), `ReferenceClassHop`;
-* the even complement's action (identity completion): `EvenComplement`;
-* the carrier admittances and routing: `CarrierAdmittance`, `ReferenceClassHop`.
+None open.
 
 The protocol register (which E8 structure carries protocol identity) is Paper III's application, not
 a PMAction premise: PMAction supplies the constraints (`ColourRegister`: colour is a separate factor,

@@ -1,0 +1,1083 @@
+
+==================== Values ====================
+
+e8p: proved enclosures of conditional model values, with experimental comparisons.
+Intervals are exact-rational roundings; 'supplied input' rows are not predictions.
+
+Substrate
+  alpha_inv  —  \pi\Delta+\chi-\frac{1}{D\Delta-\sigma}-\frac{\chi}{\Delta}+T+PM
+    value   = [137.035999212381397211, 137.035999212381397213] dimensionless
+    theorem = PMSubstrate.geometricIndex_bounds
+    exp[1]  = 137.035999177000 ± 0.000000021000  (mohr_codata_2025)
+    diff[1] = 0.000000035381
+    σ[1]    = +1.68
+    exp[2]  = 137.035999206000 ± 0.000000011000  (morel_determination_2020)
+    diff[2] = 0.000000006381
+    σ[2]    = +0.58
+    exp[3]  = 137.035999046000 ± 0.000000027000  (parker_measurement_2018)
+    diff[3] = 0.000000166381
+    σ[3]    = +6.16
+    exp[4]  = 137.035999166000 ± 0.000000015000  (fan_measurement_2023)
+    diff[4] = 0.000000046381
+    σ[4]    = +3.09
+  alpha  —  1/\alpha^{-1}
+    value   = [0.007297352562000000, 0.007297352563000000] dimensionless
+    theorem = PMConstants.CertifiedConstants.alpha_bounds
+    exp  = 0.007297352564 ± 0.000000000001  (mohr_codata_2025)
+    diff = -0.000000000002
+    σ    = -1.64
+  delta  —  \Delta
+    value   = [43.000000000000000000, 43.000000000000000000] dimensionless  (exact 43)
+    theorem = PMSubstrate.Derived.parameters_forced
+  nu  —  \nu
+    value   = [16.000000000000000000, 16.000000000000000000] dimensionless  (exact 16)
+    theorem = PMSubstrate.Derived.parameters_forced
+  sigma  —  \sigma
+    value   = [5.000000000000000000, 5.000000000000000000] dimensionless  (exact 5)
+    theorem = PMSubstrate.Derived.parameters_forced
+  chi  —  \chi
+    value   = [2.000000000000000000, 2.000000000000000000] dimensionless  (exact 2)
+    theorem = PMSubstrate.Derived.parameters_forced
+  D  —  D
+    value   = [4.000000000000000000, 4.000000000000000000] dimensionless  (exact 4)
+    theorem = PMSubstrate.Derived.parameters_forced
+  cap  —  \pi\Delta
+    value   = [135.088400000000000000, 135.088500000000000000] dimensionless
+    theorem = PMSubstrate.capacityTerm
+  map  —  \chi
+    value   = [2.000000000000000000, 2.000000000000000000] dimensionless  (exact 2)
+    theorem = PMSubstrate.mapTerm
+  protocol  —  -\frac{1}{D\Delta-\sigma}
+    value   = [-0.005988023952095809, -0.005988023952095808] dimensionless  (exact -1/167)
+    theorem = PMSubstrate.protocolTerm
+  governor  —  -\frac{\chi}{\Delta}
+    value   = [-0.046511627906976745, -0.046511627906976744] dimensionless  (exact -2/43)
+    theorem = PMSubstrate.governorTerm
+  toll  —  \frac{\chi(D\Delta-\sigma)}{(2\nu)^3\sigma D\Delta}
+    value   = [0.000011852175690406, 0.000011852175690407] dimensionless  (exact 167/14090240)
+    theorem = PMSubstrate.tollTerm
+  margin  —  \frac{1}{(2D+\sigma+2\chi)(\sigma+1)\Delta^2}
+    value   = [0.000002907703670103, 0.000002907703670104] dimensionless  (exact 1/343914)
+    theorem = PMSubstrate.marginTerm
+  l_intrinsic  —  \chi+\nu+\sigma
+    value   = [23.000000000000000000, 23.000000000000000000] dimensionless  (exact 23)
+    theorem = PMSubstrate.Derived.parameters_forced
+  l_embed  —  2D+\chi+\nu+\sigma
+    value   = [31.000000000000000000, 31.000000000000000000] dimensionless  (exact 31)
+    theorem = PMSubstrate.Derived.parameters_forced
+  l_substrate  —  D\Delta+\nu
+    value   = [188.000000000000000000, 188.000000000000000000] dimensionless  (exact 188)
+    theorem = PMSubstrate.Derived.parameters_forced
+  n  —  2\nu
+    value   = [32.000000000000000000, 32.000000000000000000] dimensionless  (exact 32)
+    theorem = PMSubstrate.Derived.parameters_forced
+  rm  —  D\Delta
+    value   = [172.000000000000000000, 172.000000000000000000] dimensionless  (exact 172)
+    theorem = PMSubstrate.Derived.parameters_forced
+  nc  —  \sigma-\chi
+    value   = [3.000000000000000000, 3.000000000000000000] dimensionless  (exact 3)
+    theorem = PMSubstrate.Derived.parameters_forced
+  weinberg_gut  —  \frac{N_c}{2D}
+    value   = [0.375000000000000000, 0.375000000000000000] dimensionless  (exact 3/8)
+    theorem = PMSubstrate.Derived.parameters_forced
+  boundary_storage  —  \chi/(\sigma-\chi)
+    value   = [0.666666666666666666, 0.666666666666666667] dimensionless  (exact 2/3)
+    theorem = PMSubstrate.Derived.parameters_forced
+  c_light  —  c
+    value   = [29.979245800000000000, 29.979245800000000000] 10^7 m/s  (exact 149896229/5000000)
+    theorem = PMSubstrate.speedOfLight_value
+  von_klitzing  —  2\pi c/\alpha
+    value   = [25812.807469413700000000, 25812.807469413800000000] Ω
+    theorem = PMSubstrate.vonKlitzing_bounds
+    exp  = 25812.807450000000 ± 0.000010000000  (mohr_codata_2025)
+    diff = 0.000019413750
+    σ    = +1.94
+  planck_charge_attenuation  —  \sqrt{\alpha^{-1}}
+    value   = [11.706237619849570000, 11.706237619849580000] dimensionless
+    theorem = PMSubstrate.planckChargeAttenuation_bounds
+  planck_charge_ratio  —  1/\sqrt{\alpha^{-1}}
+    value   = [0.085424543091800000, 0.085424543091900000] dimensionless
+    theorem = PMSubstrate.planckChargeRatio_bounds
+  planck_mass  —  m_e/\sqrt{\alpha_G}
+    value   = [12208935400000000000.000000000000000000, 12208935800000000000.000000000000000000] GeV
+    theorem = PMConstants.PlanckReadout.planckMass_bounds
+    exp  = 12209100000000000000.000000000000 ± 100000000000000.000000000000  (mohr_codata_2025)
+    diff = -164400000000000.000000000000
+    σ    = -1.65
+
+Constants
+  eta  —  \frac{D\Delta-1}{D\Delta}
+    value   = [0.994186046511627906, 0.994186046511627907] dimensionless  (exact 171/172)
+    theorem = PMConstants.exact_partition_values
+  footprint  —  
+    value   = [192.906976744186046511, 192.906976744186046512] dimensionless  (exact 8295/43)
+    theorem = PMConstants.exact_partition_values
+  weak_fraction  —  \frac{\Delta}{D\Delta+\nu+\sigma}
+    value   = [0.222905364677516576, 0.222905364677516577] dimensionless  (exact 1849/8295)
+    theorem = PMConstants.exact_partition_values
+  lambda  —  
+    value   = [0.129423660262891809, 0.129423660262891810] dimensionless  (exact 128/989)
+    theorem = PMConstants.exact_partition_values
+  scalar_toll  —  
+    value   = [0.258847320525783619, 0.258847320525783620] dimensionless  (exact 256/989)
+    theorem = PMConstants.exact_partition_values
+  electron_yukawa  —  PM_{geo}\left(1+\frac{\sigma}{D}\alpha\right)
+    value   = [0.000002935028450000, 0.000002935028470000] dimensionless
+    theorem = PMConstants.CurrentConstants.electron_bounds
+    exp  = 0.000002935000 ± 0.000000001000  (navas_review_2024)
+    diff = 0.000000000028
+    σ    = +0.02
+  alpha_s  —  \frac{\nu\cdot\eta+1/D}{\alpha^{-1}}
+    value   = [0.117995203700000000, 0.117995203730000000] dimensionless
+    theorem = PMConstants.CurrentConstants.strong_bounds
+    exp  = 0.117900000000 ± 0.000900000000  (navas_review_2024)
+    diff = 0.000095203715
+    σ    = +0.10
+  vev_over_me  —  
+    value   = [481839.811650000000000000, 481839.811660000000000000] dimensionless
+    theorem = PMConstants.JointConstants.vev_ratio_bounds
+  electron_mass_input  —  
+    value   = [0.000510998950690000, 0.000510998950690000] GeV  (exact 51099895069/100000000000000)
+    theorem = PMConstants.ElectroweakBounds.electronGeV (supplied benchmark)
+  vev  —  v_{geo}\left(1+\frac{\alpha}{D+\chi/4\pi}\right)
+    value   = [246.219638100000000000, 246.219638200000000000] GeV
+    theorem = PMConstants.ElectroweakBounds.vev_bounds
+    exp  = 246.219650000000 ± 0.000060000000  (navas_review_2024)
+    diff = -0.000011850000
+    σ    = -0.20
+  higgs_mass  —  \sqrt{2\lambda}\,v
+    value   = [125.269263800000000000, 125.269264000000000000] GeV
+    theorem = PMConstants.ElectroweakBounds.higgs_bounds
+    exp  = 125.200000000000 ± 0.110000000000  (navas_review_2024)
+    diff = 0.069263900000
+    σ    = +0.62
+  fermi_constant  —  
+    value   = [0.000011663780000000, 0.000011663800000000] GeV^-2
+    theorem = PMConstants.ElectroweakBounds.fermi_bounds
+    exp  = 0.000011663788 ± 0.000000000006  (navas_review_2024)
+    diff = 0.000000000002
+    σ    = +0.33
+  alpha_G  —  B_{res}\,\alpha^{\Delta/2}
+    value   = [0.000000000000000000, 0.000000000000000001] dimensionless
+    theorem = PMConstants.GravityAccounting.channels_as_frame
+    exp  = 0.000000000000 ± 0.000000000000  (mohr_codata_2025)
+    diff = -0.000000000001
+    σ    = -0.21
+  beta_0  —  11-\frac{2}{3}n_f
+    value   = [9.000000000000000000, 9.000000000000000000] dimensionless  (exact 9)
+    theorem = PMConstants.beta_positive_iff
+  w_ratio  —  \sqrt{1-\Delta/N_{sys}}
+    value   = [0.881529700000000000, 0.881529800000000000] dimensionless
+    theorem = PMConstants.WMassTest.ratio_bounds
+    exp  = 0.881355000000 ± 0.000146000000  (pdg_2024)
+    diff = 0.000174750000
+    σ    = +1.19
+  gauge_hyper  —  129+5+16\eta
+    value   = [149.906976744186046511, 149.906976744186046512] dimensionless  (exact 6446/43)
+    theorem = PMConstants.GaugeLedgers.hyper_value
+  gauge_colour  —  12\eta
+    value   = [11.930232558139534883, 11.930232558139534884] dimensionless  (exact 513/43)
+    theorem = PMConstants.ColourChannels.colour_ledger
+  w_mass_uncorrected  —  \sqrt{g^2}\,v/2\;(\mathrm{uncorrected})
+    value   = [78.960000000000000000, 78.970000000000000000] GeV
+    theorem = PMConstants.ElectroweakBounds.w_mass_bounds
+    exp[1]  = 80.369200000000 ± 0.013300000000  (pdg_2024_world)
+    diff[1] = -1.404200000000
+    σ[1]    = -105.58
+    exp[2]  = 80.433500000000 ± 0.009400000000  (cdf_2022)
+    diff[2] = -1.468500000000
+    σ[2]    = -156.23
+  z_mass_uncorrected  —  \sqrt{g^2+g'^2}\,v/2\;(\mathrm{uncorrected})
+    value   = [89.570000000000000000, 89.580000000000000000] GeV
+    theorem = PMConstants.ElectroweakBounds.z_mass_bounds
+    exp  = 91.187600000000 ± 0.002100000000  (pdg_2024)
+    diff = -1.612600000000
+    σ    = -767.91
+  g_weak  —  g
+    value   = [0.641300000000000000, 0.641500000000000000] dimensionless
+    theorem = PMConstants.ElectroweakBounds.coupling_bounds
+  g_prime  —  g'
+    value   = [0.343500000000000000, 0.343600000000000000] dimensionless
+    theorem = PMConstants.ElectroweakBounds.coupling_bounds
+  electron_closure  —  y_e v/(\sqrt2\,m_e)
+    value   = [0.999726870000000000, 0.999726890000000000] dimensionless
+    theorem = PMConstants.JointConstants.electron_closure_bounds
+  b_res  —  B_{res}=\nu-\chi/(\sigma-\chi)-\alpha
+    value   = [15.326035980700000000, 15.326035980800000000] dimensionless
+    theorem = PMConstants.GravityAccounting.residual_tight_bounds
+
+Flavor
+  jarlskog  —  \phi^2\cdot T_{geo}
+    value   = [0.000030200000000000, 0.000030300000000000] dimensionless
+    theorem = PMFlavor.Values.jarlskog_bounds
+    exp  = 0.000031200000 ± 0.000001200000  (navas_review_2024)
+    diff = -0.000000950000
+    σ    = -0.80
+  wolf_lambda  —  |V_{us}|
+    value   = [0.224390000000000000, 0.224400000000000000] dimensionless
+    theorem = PMFlavor.Values.wolfLambda_bounds
+    exp  = 0.224310000000 ± 0.000850000000  (navas_review_2024)
+    diff = 0.000085000000
+    σ    = +0.10
+  wolf_A  —  |V_{cb}|/\lambda^2
+    value   = [0.820000000000000000, 0.820700000000000000] dimensionless
+    theorem = PMFlavor.Values.wolfA_bounds
+    exp  = 0.826000000000 ± 0.015000000000  (navas_review_2024)
+    diff = -0.005650000000
+    σ    = -0.38
+  wolf_rho  —  \bar\rho
+    value   = [0.141100000000000000, 0.141200000000000000] dimensionless
+    theorem = PMFlavor.Values.wolfRho_bounds
+    exp  = 0.159100000000 ± 0.009500000000  (navas_review_2024)
+    diff = -0.017950000000
+    σ    = -1.89
+  wolf_eta  —  \bar\eta
+    value   = [0.352200000000000000, 0.352300000000000000] dimensionless
+    theorem = PMFlavor.Values.wolfEta_bounds
+    exp  = 0.352300000000 ± 0.007100000000  (navas_review_2024)
+    diff = -0.000050000000
+    σ    = -0.01
+  sin2_theta12  —  \sin^2\theta_{12}
+    value   = [0.309010000000000000, 0.309020000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsSin2_bounds
+    exp[1]  = 0.307000000000 ± 0.012000000000  (esteban_nufit-60_2024_no_ic19)
+    diff[1] = 0.002015000000
+    σ[1]    = +0.16
+    exp[2]  = 0.308000000000 ± 0.012000000000  (esteban_nufit-60_2024_no_ic24_sk)
+    diff[2] = 0.001015000000
+    σ[2]    = +0.08
+  sin2_theta23  —  \sin^2\theta_{23}
+    value   = [0.574790000000000000, 0.574810000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsSin2_bounds
+    exp[1]  = 0.561000000000 ± 0.012000000000  (esteban_nufit-60_2024_no_ic19)
+    diff[1] = 0.013800000000
+    σ[1]    = +1.15
+    exp[2]  = 0.470000000000 ± 0.017000000000  (esteban_nufit-60_2024_no_ic24_sk)
+    diff[2] = 0.104800000000
+    σ[2]    = +6.16
+  sin2_theta13  —  \sin^2\theta_{13}
+    value   = [0.021892000000000000, 0.021892100000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsSin2_bounds
+    exp[1]  = 0.021950000000 ± 0.000580000000  (esteban_nufit-60_2024_no_ic19)
+    diff[1] = -0.000057950000
+    σ[1]    = -0.10
+    exp[2]  = 0.022150000000 ± 0.000580000000  (esteban_nufit-60_2024_no_ic24_sk)
+    diff[2] = -0.000257950000
+    σ[2]    = -0.45
+  pmns_jarlskog  —  J_{PMNS}
+    value   = [-0.021700000000000000, -0.021500000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsJarlskog_bounds
+  jarlskog_geo  —  \phi^2 T_{geo}
+    value   = [0.000030848000000000, 0.000030850000000000] dimensionless
+    theorem = PMFlavor.Values.jarlskogGeo_bounds
+    exp  = 0.000031200000 ± 0.000001200000  (navas_review_2024)
+    diff = -0.000000351000
+    σ    = -0.30
+  cabibbo  —  \pi/(\nu-\chi)
+    value   = [0.224399400000000000, 0.224399500000000000] dimensionless
+    theorem = PMFlavor.Values.cabibbo_bounds
+    exp  = 0.225010000000 ± 0.000680000000  (navas_review_2024)
+    diff = -0.000610550000
+    σ    = -0.90
+  pmns_e11  —  |U_{ee}|^2
+    value   = [0.675800000000000000, 0.675900000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e12  —  |U_{emu}|^2
+    value   = [0.302200000000000000, 0.302300000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e13  —  |U_{etau}|^2
+    value   = [0.021800000000000000, 0.021900000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e21  —  |U_{mue}|^2
+    value   = [0.088800000000000000, 0.089000000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e22  —  |U_{mumu}|^2
+    value   = [0.348800000000000000, 0.349000000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e23  —  |U_{mutau}|^2
+    value   = [0.562200000000000000, 0.562300000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e31  —  |U_{taue}|^2
+    value   = [0.235200000000000000, 0.235300000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e32  —  |U_{taumu}|^2
+    value   = [0.348800000000000000, 0.349000000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  pmns_e33  —  |U_{tautau}|^2
+    value   = [0.415800000000000000, 0.416000000000000000] dimensionless
+    theorem = PMFlavor.Values.pmnsEntry_bounds
+  ckm_s13  —  s_{13}
+    value   = [0.003607300000000000, 0.003607400000000000] dimensionless
+    theorem = PMFlavor.Values.ckmS13_bounds
+    exp  = 0.003820000000 ± 0.000200000000  (pdg_2024)
+    diff = -0.000212650000
+    σ    = -1.07
+  ckm_s23  —  s_{23}
+    value   = [0.041308000000000000, 0.041308400000000000] dimensionless
+    theorem = PMFlavor.Values.ckmS23_bounds
+    exp  = 0.041100000000 ± 0.001200000000  (pdg_2024)
+    diff = 0.000208200000
+    σ    = +0.17
+  ckm_vcb  —  |V_{cb}|
+    value   = [0.041308000000000000, 0.041308100000000000] dimensionless
+    theorem = PMFlavor.Values.vcb_bounds
+    exp  = 0.041100000000 ± 0.001200000000  (pdg_2024)
+    diff = 0.000208050000
+    σ    = +0.17
+  vud  —  |V_{ud}|=c_{12}c_{13}
+    value   = [0.974490000000000000, 0.974499000000000000] dimensionless
+    theorem = PMFlavor.Values.vud_bounds
+    exp  = 0.973670000000 ± 0.000320000000  (pdg_2024)
+    diff = 0.000824500000
+    σ    = +2.57
+  vud_dressed  —  
+    value   = [0.973540000000000000, 0.973570000000000000] dimensionless
+    theorem = PMFlavor.Values.vudDressed_bounds
+    exp  = 0.973670000000 ± 0.000320000000  (pdg_2024)
+    diff = -0.000115000000
+    σ    = -0.36
+
+Elementary Particles
+  muon_ratio  —  \Delta\sigma-\chi-2\pi+\frac{\alpha(\chi+\sigma)}{1-\alpha}
+    value   = [206.768271600000000000, 206.768271800000000000] dimensionless
+    theorem = PMElementaryParticles.LeptonMasses.muon_value
+    exp  = 206.768282700000 ± 0.000004600000  (mohr_codata_2025)
+    diff = -0.000011000000
+    σ    = -2.40
+  tau_ratio  —  \Delta^2\chi-\Delta\sigma-\chi-D
+    value   = [3477.000000000000000000, 3477.000000000000000000] dimensionless  (exact 3477)
+    theorem = PMElementaryParticles.LeptonMasses.tau_value
+    exp  = 3477.360000000000 ± 0.180000000000  (pdg_2024)
+    diff = -0.360000000000
+    σ    = -2.00
+  up_mev  —  m_{u}
+    value   = [2.055000000000000000, 2.062000000000000000] MeV
+    theorem = PMElementaryParticles.QuarkMasses.up_value
+    exp  = 2.160000000000 ± 0.070000000000  (pdg_2024)
+    diff = -0.101500000000
+    σ    = -1.45
+  down_mev  —  m_{d}
+    value   = [4.623000000000000000, 4.630000000000000000] MeV
+    theorem = PMElementaryParticles.QuarkMasses.down_value
+    exp  = 4.700000000000 ± 0.070000000000  (pdg_2024)
+    diff = -0.073500000000
+    σ    = -1.05
+  strange_mev  —  m_{s}
+    value   = [93.500000000000000000, 93.580000000000000000] MeV
+    theorem = PMElementaryParticles.QuarkMasses.strange_value
+    exp  = 93.500000000000 ± 0.800000000000  (pdg_2024)
+    diff = 0.040000000000
+    σ    = +0.05
+  charm_mev  —  m_{c}
+    value   = [1267.020000000000000000, 1267.480000000000000000] MeV
+    theorem = PMElementaryParticles.QuarkMasses.charm_value
+    exp  = 1273.000000000000 ± 4.600000000000  (pdg_2024)
+    diff = -5.750000000000
+    σ    = -1.25
+  bottom_mev  —  m_{b}
+    value   = [4180.900000000000000000, 4182.300000000000000000] MeV
+    theorem = PMElementaryParticles.QuarkMasses.bottom_value
+    exp  = 4183.000000000000 ± 7.000000000000  (pdg_2024)
+    diff = -1.400000000000
+    σ    = -0.20
+  top_mev  —  m_{t}
+    value   = [172657.000000000000000000, 172686.000000000000000000] MeV
+    theorem = PMElementaryParticles.QuarkMasses.top_value
+    exp  = 172570.000000000000 ± 290.000000000000  (pdg_2024)
+    diff = 101.500000000000
+    σ    = +0.35
+  neutrino_floor_mass  —  m_\nu^{floor}
+    value   = [0.009208000000000000, 0.009210000000000000] eV
+    theorem = PMConstants.FloorNeutrino.floor_bounds
+  tau_lifetime_fs  —  
+    value   = [291.150000000000000000, 291.170000000000000000] fs
+    theorem = PMElementaryParticles.TauLifetime.tau_lifetime_tree
+    exp  = 290.300000000000 ± 0.820000000000  (pdg_2024)
+    diff = 0.860000000000
+    σ    = +1.04
+  muon_lifetime_finite  —  
+    value   = [1250000000000000.000000000000000000, 2500000000000000.000000000000000000] m_e^-1
+    theorem = PMElementaryParticles.muonFiniteLifetime_bounds
+  tau_lifetime_e8_natural  —  
+    value   = [160000000.000000000000000000, 340000000.000000000000000000] m_e^-1
+    theorem = PMElementaryParticles.TauE8.tauLifetimeE8_bounds
+  muon_lifetime_s  —  \tau_\mu=192\pi^3/(G_F^2 m_\mu^5\,f(m_e^2/m_\mu^2)\,(1-\frac{\alpha}{2\pi}(\pi^2-\frac{25}{4})))
+    value   = [0.000002196987000000, 0.000002196998000000] s
+    theorem = PMElementaryParticles.MuonLifetimeCorrected.corrected_bounds
+    exp  = 0.000002196981 ± 0.000000000002  (pdg_2024)
+    diff = 0.000000000011
+    σ    = +5.18
+
+Hadrons
+  proton_ratio  —  \Delta^2-\pi D-\frac{1}{D}+5Z_{TOL}-\frac{Z_{MAR}}{\chi}-\alpha(D+\frac1D)
+    value   = [1836.152673444000000000, 1836.152673445000000000] dimensionless
+    theorem = PMHadrons.CompositeMasses.proton_value
+    exp  = 1836.152673426000 ± 0.000000032000  (mohr_codata_2025)
+    diff = 0.000000018500
+    σ    = +0.57
+  neutron_ratio  —  \Delta^2-\pi D-\frac1D+\frac{\sigma}{2}+3Z_{TOL}-Z_{MAR}
+    value   = [1838.683662000000000000, 1838.683662100000000000] dimensionless
+    theorem = PMHadrons.CompositeMasses.neutron_value
+    exp  = 1838.683662000000 ± 0.000000740000  (mohr_codata_2025)
+    diff = 0.000000050000
+    σ    = +0.06
+  proton_radius  —  4\hbar/(m_p c)
+    value   = [0.841235600000000000, 0.841235700000000000] fm
+    theorem = PMHadrons.CompositeMasses.protonRadius_value
+    exp  = 0.840750000000 ± 0.000640000000  (codata_2022)
+    diff = 0.000485650000
+    σ    = +0.75
+  pion0_mev  —  2\alpha^{-1}-\sigma\chi+1/(\nu-\chi)
+    value   = [134.977014000000000000, 134.977015000000000000] MeV
+    theorem = PMHadrons.CompositeMasses.pion0_mev_value
+    exp  = 134.976800000000 ± 0.000500000000  (pdg_2024)
+    diff = 0.000214500000
+    σ    = +0.42
+  kaon0_mev  —  (\sigma+\chi)\alpha^{-1}-\sigma+D\sigma-2\pi/(\nu-\chi)
+    value   = [497.612411000000000000, 497.612412000000000000] MeV
+    theorem = PMHadrons.CompositeMasses.kaon0_mev_value
+    exp  = 497.611000000000 ± 0.013000000000  (pdg_2024)
+    diff = 0.001411500000
+    σ    = +0.10
+  kaon_plus_mev  —  (\sigma+\chi)\alpha^{-1}-\sigma+D\pi-1/\sqrt2-\alpha(\sigma-\chi)/\chi
+    value   = [493.676245000000000000, 493.676246000000000000] MeV
+    theorem = PMHadrons.CompositeMasses.kaonPlus_mev_value
+    exp  = 493.677000000000 ± 0.016000000000  (pdg_2024)
+    diff = -0.000754500000
+    σ    = -0.05
+  pion_plus_mev  —  2\alpha^{-1}-\sigma\chi+1/(\nu-\chi)+\sigma+D-\alpha(\sigma-\chi)/\chi
+    value   = [139.570411000000000000, 139.570412000000000000] MeV
+    theorem = PMHadrons.MesonMasses.pionPlus_mev_value
+    exp  = 139.570390000000 ± 0.000180000000  (pdg_2024)
+    diff = 0.000021500000
+    σ    = +0.11
+  f_pi_mev  —  f_\pi=v/(\Delta^2+\Delta-\chi)
+    value   = [130.270000000000000000, 130.280000000000000000] MeV
+    theorem = PMHadrons.PionWidth.pionDecayConstantMeV_bounds
+    exp  = 130.200000000000 ± 0.800000000000  (flag_2024)
+    diff = 0.075000000000
+    σ    = +0.09
+  f_k_mev  —  f_K=v/(\Delta^2-\nu^2)
+    value   = [154.560000000000000000, 154.570000000000000000] MeV
+    theorem = PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds
+    exp  = 155.700000000000 ± 0.300000000000  (flag_2024)
+    diff = -1.135000000000
+    σ    = -3.79
+  neutron_spectral_fraction  —  
+    value   = [0.450000000000000000, 1.000000000000000000] 1
+    theorem = PMHadrons.neutronSpectralFraction_bounds
+  neutron_lifetime_e8  —  
+    value   = [290000000000000000000000.000000000000000000, 800000000000000000000000.000000000000000000] m_e^-1
+    theorem = PMHadrons.neutronLifetimeE8_bounds
+  neutron_lifetime_s  —  
+    value   = [370.000000000000000000, 1040.000000000000000000] s
+    theorem = PMHadrons.neutronLifetimeSeconds_bounds
+  neutron_lifetime_predicted_s  —  \frac{2\pi^3}{G_F^2 |V_{ud}|^2 R\,(1+3g_A^2)\,(f_0+\pi\alpha P)},\ g_A=5/4
+    value   = [923.370000000000000000, 923.390000000000000000] s
+    theorem = PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds
+    exp  = 878.400000000000 ± 0.500000000000  (pdg_2024)
+    diff = 44.980000000000
+    σ    = +89.96
+  pion_lifetime_predicted_s  —  \frac{33}{32}\,\frac{8\pi}{G_F^2 f_\pi^2 m_\pi m_\mu^2(1-m_\mu^2/m_\pi^2)^2}
+    value   = [0.000000026018800000, 0.000000026019200000] s
+    theorem = PMHadrons.pionLifetimeCorrectedSeconds_bounds
+    exp  = 0.000000026033 ± 0.000000000005  (pdg_2024)
+    diff = -0.000000000014
+    σ    = -2.80
+  kaon_pion_width_ratio  —  \frac{\Gamma_K}{\Gamma_\pi}=\frac{\pi^2}{196-\pi^2}\left(\frac{70}{59}\right)^2\frac{m_K}{m_\pi}\frac{(1-m_\mu^2/m_K^2)^2}{(1-m_\mu^2/m_\pi^2)^2}
+    value   = [1.318922000000000000, 1.318923000000000000] dimensionless
+    theorem = PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds
+    exp  = 1.336557000000 ± 0.003176000000  (pdg_2024)
+    diff = -0.017634500000
+    σ    = -5.56
+  neutron_lifetime_unified_s  —  
+    value   = [948.690000000000000000, 948.700000000000000000] s
+    theorem = PMHadrons.DecayInstantiation.neutronLifetimeUnifiedSeconds_bounds
+    exp  = 878.400000000000 ± 0.500000000000  (pdg_2024)
+    diff = 70.295000000000
+    σ    = +140.59
+  pion_finite_width  —  
+    value   = [0.000000000000049000, 0.000000000000051600] m_e
+    theorem = PMHadrons.pionFiniteWidth_bounds
+  pion_finite_lifetime  —  
+    value   = [19000000000000.000000000000000000, 20500000000000.000000000000000000] m_e^-1
+    theorem = PMHadrons.pionFiniteLifetime_bounds
+  kaon_finite_width  —  
+    value   = [0.000000000000061000, 0.000000000000064700] m_e
+    theorem = PMHadrons.kaonFiniteWidth_bounds
+  kaon_finite_lifetime  —  
+    value   = [15400000000000.000000000000000000, 16400000000000.000000000000000000] m_e^-1
+    theorem = PMHadrons.kaonFiniteLifetime_bounds
+  neutral_pion_finite_width  —  
+    value   = [0.000015200000000000, 0.000015230000000000] m_e
+    theorem = PMHadrons.neutralPionFiniteWidth_bounds
+  neutral_pion_finite_lifetime  —  
+    value   = [65600.000000000000000000, 65800.000000000000000000] m_e^-1
+    theorem = PMHadrons.neutralPionFiniteLifetime_bounds
+  pion_finite_lifetime_s  —  
+    value   = [0.000000024400000000, 0.000000026500000000] s
+    theorem = PMHadrons.pionFiniteLifetimeSeconds_bounds
+  kaon_finite_lifetime_s  —  
+    value   = [0.000000019800000000, 0.000000021200000000] s
+    theorem = PMHadrons.kaonFiniteLifetimeSeconds_bounds
+  neutral_pion_finite_lifetime_s  —  
+    value   = [0.000000000000000084, 0.000000000000000085] s
+    theorem = PMHadrons.neutralPionFiniteLifetimeSeconds_bounds
+    exp  = 0.000000000000 ± 0.000000000000  (pdg_2024)
+    diff = 0.000000000000
+    σ    = +0.23
+
+Atoms
+  rydberg_ev  —  R_\infty=\alpha^2 m_e c^2/2
+    value   = [13.605693115800000000, 13.605693115900000000] eV
+    theorem = PMAtoms.rydbergEV_bounds
+    exp  = 13.605693122990 ± 0.000000004300  (codata_2022)
+    diff = -0.000000007140
+    σ    = -1.67
+  bohr_radius  —  a_0=\hbar c/(\alpha m_e c^2)
+    value   = [0.529177210682900000, 0.529177210683000000] Å
+    theorem = PMAtoms.bohrRadius_bounds
+    exp  = 0.529177210544 ± 0.000000000180  (codata_2022)
+    diff = 0.000000000138
+    σ    = +0.77
+  shell_capacity_n4  —  \sum_{\ell=0}^{n-1}2(2\ell+1)=2n^2
+    value   = [32.000000000000000000, 32.000000000000000000] states  (exact 32)
+    theorem = PMAtoms.shell_capacities
+
+Cosmology
+  load  —  1+\frac{1}{2\nu}+\frac{\chi}{\Delta}+\frac{1}{D\Delta}
+    value   = [1.083575581395348837, 1.083575581395348838] dimensionless  (exact 1491/1376)
+    theorem = PMCosmology.Scaling.exact_ratios
+  hubble_late  —  
+    value   = [73.032994186046511627, 73.032994186046511628] km/s/Mpc  (exact 502467/6880)
+    theorem = PMCosmology.SubstrateLoad.revised_numerical_outputs
+    exp[1]  = 73.000000000000 ± 1.000000000000  (riess_sh0es_2022)
+    diff[1] = 0.032994186046
+    σ[1]    = +0.03
+    exp[2]  = 67.400000000000 ± 0.500000000000  (planck_2018)
+    diff[2] = 5.632994186046
+    σ[2]    = +11.26
+    exp[3]  = 67.400000000000 ± 1.200000000000  (abbott_des_y1_2018)
+    diff[3] = 5.632994186046
+    σ[3]    = +4.69
+  clustering_late  —  
+    value   = [0.767828303152246814, 0.767828303152246815] dimensionless  (exact 143104/186375)
+    theorem = PMCosmology.SubstrateLoad.revised_numerical_outputs
+    exp[1]  = 0.776000000000 ± 0.017000000000  (abbott_des_2022)
+    diff[1] = -0.008171696848
+    σ[1]    = -0.49
+    exp[2]  = 0.832000000000 ± 0.013000000000  (planck_2018)
+    diff[2] = -0.064171696848
+    σ[2]    = -4.94
+    exp[3]  = 0.759000000000 ± 0.024000000000  (kids_1000_2021)
+    diff[3] = 0.008828303152
+    σ[3]    = +0.36
+  hubble_sigma  —  
+    value   = [0.541787790697674418, 0.541787790697674419] dimensionless  (exact 1491/2752)
+    theorem = PMCosmology.Tensions.hubbleInputSigma_exact
+  s8_sigma  —  
+    value   = [0.011997317236753856, 0.011997317236753857] dimensionless  (exact 2236/186375)
+    theorem = PMCosmology.Tensions.s8InputSigma_exact
+  omega_ratio  —  \frac{248}{3\nu(1-\chi/\Delta+\alpha)}
+    value   = [5.377500000000000000, 5.377600000000000000] dimensionless
+    theorem = PMCosmology.Tensions.omegaRatio_bounds
+    exp  = 5.360000000000 ± 0.050000000000  (planck2018)
+    diff = 0.017550000000
+    σ    = +0.35
+  baryon_pmJ  —  B(\mathrm{pm}J)
+    value   = [0.000000000594000000, 0.000000000597000000] dimensionless
+    theorem = PMCosmology.Primordial.baryon_windows
+    exp  = 0.000000000612 ± 0.000000000004  (planck_2018)
+    diff = -0.000000000017
+    σ    = -4.13
+  baryon_pm3J  —  B(\mathrm{pm3}J)
+    value   = [0.000000000607000000, 0.000000000608000000] dimensionless
+    theorem = PMCosmology.Primordial.baryon_windows
+    exp  = 0.000000000612 ± 0.000000000004  (planck_2018)
+    diff = -0.000000000005
+    σ    = -1.13
+  z_eq  —  1075\pi
+    value   = [3377.212100000000000000, 3377.212200000000000000] dimensionless
+    theorem = PMCosmology.Background.z_eq_bounds
+    exp  = 3387.000000000000 ± 21.000000000000  (planck_2018)
+    diff = -9.787850000000
+    σ    = -0.47
+  dark_raw  —  31/6
+    value   = [5.166666666666666666, 5.166666666666666667] dimensionless  (exact 31/6)
+    theorem = PMCosmology.Scaling.exact_ratios
+    exp  = 5.360000000000 ± 0.050000000000  (planck2018)
+    diff = -0.193333333334
+    σ    = -3.87
+
+
+==================== Audit (e8p --audit) ====================
+
+e8p audit — model value (proved enclosure) vs experimental reference (display σ is exact rational).
+glyph: ✓ |σ|≤1, ~ |σ|≤2, ! >2, · shown for context and not scored; intervals are proved enclosures of the model value, not its uncertainty.
+
+Substrate
+  ~ alpha_inv: model [137.035999212381397211, 137.035999212381397213] dimensionless
+      exp 137.035999177000 ± 0.000000021000 (mohr_codata_2025); diff 0.000000035381; σ +1.68
+  ✓ alpha_inv: model [137.035999212381397211, 137.035999212381397213] dimensionless
+      exp 137.035999206000 ± 0.000000011000 (morel_determination_2020); diff 0.000000006381; σ +0.58
+  ! alpha_inv: model [137.035999212381397211, 137.035999212381397213] dimensionless
+      exp 137.035999046000 ± 0.000000027000 (parker_measurement_2018); diff 0.000000166381; σ +6.16
+  ! alpha_inv: model [137.035999212381397211, 137.035999212381397213] dimensionless
+      exp 137.035999166000 ± 0.000000015000 (fan_measurement_2023); diff 0.000000046381; σ +3.09
+  ~ alpha: model [0.007297352562000000, 0.007297352563000000] dimensionless
+      exp 0.007297352564 ± 0.000000000001 (mohr_codata_2025); diff -0.000000000002; σ -1.64
+  ~ von_klitzing: model [25812.807469413700000000, 25812.807469413800000000] Ω
+      exp 25812.807450000000 ± 0.000010000000 (mohr_codata_2025); diff 0.000019413750; σ +1.94
+  ~ planck_mass: model [12208935400000000000.000000000000000000, 12208935800000000000.000000000000000000] GeV
+      exp 12209100000000000000.000000000000 ± 100000000000000.000000000000 (mohr_codata_2025); diff -164400000000000.000000000000; σ -1.65
+
+Constants
+  ✓ electron_yukawa: model [0.000002935028450000, 0.000002935028470000] dimensionless
+      exp 0.000002935000 ± 0.000000001000 (navas_review_2024); diff 0.000000000028; σ +0.02
+  ✓ alpha_s: model [0.117995203700000000, 0.117995203730000000] dimensionless
+      exp 0.117900000000 ± 0.000900000000 (navas_review_2024); diff 0.000095203715; σ +0.10
+  ✓ vev: model [246.219638100000000000, 246.219638200000000000] GeV
+      exp 246.219650000000 ± 0.000060000000 (navas_review_2024); diff -0.000011850000; σ -0.20
+  ✓ higgs_mass: model [125.269263800000000000, 125.269264000000000000] GeV
+      exp 125.200000000000 ± 0.110000000000 (navas_review_2024); diff 0.069263900000; σ +0.62
+  ✓ fermi_constant: model [0.000011663780000000, 0.000011663800000000] GeV^-2
+      exp 0.000011663788 ± 0.000000000006 (navas_review_2024); diff 0.000000000002; σ +0.33
+  ✓ alpha_G: model [0.000000000000000000, 0.000000000000000001] dimensionless
+      exp 0.000000000000 ± 0.000000000000 (mohr_codata_2025); diff -0.000000000001; σ -0.21
+  ~ w_ratio: model [0.881529700000000000, 0.881529800000000000] dimensionless
+      exp 0.881355000000 ± 0.000146000000 (pdg_2024); diff 0.000174750000; σ +1.19
+  · w_mass_uncorrected: model [78.960000000000000000, 78.970000000000000000] GeV
+      exp 80.369200000000 ± 0.013300000000 (pdg_2024_world); diff -1.404200000000; σ -105.58
+      note: uncorrected (tree-level); not scored, compare w_ratio
+  · w_mass_uncorrected: model [78.960000000000000000, 78.970000000000000000] GeV
+      exp 80.433500000000 ± 0.009400000000 (cdf_2022); diff -1.468500000000; σ -156.23
+      note: uncorrected (tree-level); not scored, compare w_ratio
+  · z_mass_uncorrected: model [89.570000000000000000, 89.580000000000000000] GeV
+      exp 91.187600000000 ± 0.002100000000 (pdg_2024); diff -1.612600000000; σ -767.91
+      note: uncorrected (tree-level); not scored, compare w_ratio
+
+Flavor
+  ✓ jarlskog: model [0.000030200000000000, 0.000030300000000000] dimensionless
+      exp 0.000031200000 ± 0.000001200000 (navas_review_2024); diff -0.000000950000; σ -0.80
+  ✓ wolf_lambda: model [0.224390000000000000, 0.224400000000000000] dimensionless
+      exp 0.224310000000 ± 0.000850000000 (navas_review_2024); diff 0.000085000000; σ +0.10
+  ✓ wolf_A: model [0.820000000000000000, 0.820700000000000000] dimensionless
+      exp 0.826000000000 ± 0.015000000000 (navas_review_2024); diff -0.005650000000; σ -0.38
+  ~ wolf_rho: model [0.141100000000000000, 0.141200000000000000] dimensionless
+      exp 0.159100000000 ± 0.009500000000 (navas_review_2024); diff -0.017950000000; σ -1.89
+  ✓ wolf_eta: model [0.352200000000000000, 0.352300000000000000] dimensionless
+      exp 0.352300000000 ± 0.007100000000 (navas_review_2024); diff -0.000050000000; σ -0.01
+  ✓ sin2_theta12: model [0.309010000000000000, 0.309020000000000000] dimensionless
+      exp 0.307000000000 ± 0.012000000000 (esteban_nufit-60_2024_no_ic19); diff 0.002015000000; σ +0.16
+  ✓ sin2_theta12: model [0.309010000000000000, 0.309020000000000000] dimensionless
+      exp 0.308000000000 ± 0.012000000000 (esteban_nufit-60_2024_no_ic24_sk); diff 0.001015000000; σ +0.08
+  ~ sin2_theta23: model [0.574790000000000000, 0.574810000000000000] dimensionless
+      exp 0.561000000000 ± 0.012000000000 (esteban_nufit-60_2024_no_ic19); diff 0.013800000000; σ +1.15
+  ! sin2_theta23: model [0.574790000000000000, 0.574810000000000000] dimensionless
+      exp 0.470000000000 ± 0.017000000000 (esteban_nufit-60_2024_no_ic24_sk); diff 0.104800000000; σ +6.16
+  ✓ sin2_theta13: model [0.021892000000000000, 0.021892100000000000] dimensionless
+      exp 0.021950000000 ± 0.000580000000 (esteban_nufit-60_2024_no_ic19); diff -0.000057950000; σ -0.10
+  ✓ sin2_theta13: model [0.021892000000000000, 0.021892100000000000] dimensionless
+      exp 0.022150000000 ± 0.000580000000 (esteban_nufit-60_2024_no_ic24_sk); diff -0.000257950000; σ -0.45
+  ✓ jarlskog_geo: model [0.000030848000000000, 0.000030850000000000] dimensionless
+      exp 0.000031200000 ± 0.000001200000 (navas_review_2024); diff -0.000000351000; σ -0.30
+  ✓ cabibbo: model [0.224399400000000000, 0.224399500000000000] dimensionless
+      exp 0.225010000000 ± 0.000680000000 (navas_review_2024); diff -0.000610550000; σ -0.90
+  ~ ckm_s13: model [0.003607300000000000, 0.003607400000000000] dimensionless
+      exp 0.003820000000 ± 0.000200000000 (pdg_2024); diff -0.000212650000; σ -1.07
+  ✓ ckm_s23: model [0.041308000000000000, 0.041308400000000000] dimensionless
+      exp 0.041100000000 ± 0.001200000000 (pdg_2024); diff 0.000208200000; σ +0.17
+  ✓ ckm_vcb: model [0.041308000000000000, 0.041308100000000000] dimensionless
+      exp 0.041100000000 ± 0.001200000000 (pdg_2024); diff 0.000208050000; σ +0.17
+  ! vud: model [0.974490000000000000, 0.974499000000000000] dimensionless
+      exp 0.973670000000 ± 0.000320000000 (pdg_2024); diff 0.000824500000; σ +2.57
+      note: undressed; compare vud_dressed
+  ✓ vud_dressed: model [0.973540000000000000, 0.973570000000000000] dimensionless
+      exp 0.973670000000 ± 0.000320000000 (pdg_2024); diff -0.000115000000; σ -0.36
+
+Elementary Particles
+  ! muon_ratio: model [206.768271600000000000, 206.768271800000000000] dimensionless
+      exp 206.768282700000 ± 0.000004600000 (mohr_codata_2025); diff -0.000011000000; σ -2.40
+      note: tier ledger (paper assignment, declared input; not yet read from the wire); documented ~2.4σ model tension
+  ~ tau_ratio: model [3477.000000000000000000, 3477.000000000000000000] dimensionless
+      exp 3477.360000000000 ± 0.180000000000 (pdg_2024); diff -0.360000000000; σ -2.00
+      note: tier ledger (paper assignment, declared input; not yet read from the wire); documented ~2.1σ model tension
+  ~ up_mev: model [2.055000000000000000, 2.062000000000000000] MeV
+      exp 2.160000000000 ± 0.070000000000 (pdg_2024); diff -0.101500000000; σ -1.45
+      note: tier ledger (paper assignment, declared input; not yet read from the wire); documented model tension
+  ~ down_mev: model [4.623000000000000000, 4.630000000000000000] MeV
+      exp 4.700000000000 ± 0.070000000000 (pdg_2024); diff -0.073500000000; σ -1.05
+      note: tier ledger (paper assignment, declared input; not yet read from the wire); documented model tension
+  ✓ strange_mev: model [93.500000000000000000, 93.580000000000000000] MeV
+      exp 93.500000000000 ± 0.800000000000 (pdg_2024); diff 0.040000000000; σ +0.05
+      note: tier ledger (paper assignment, declared input; not yet read from the wire)
+  ~ charm_mev: model [1267.020000000000000000, 1267.480000000000000000] MeV
+      exp 1273.000000000000 ± 4.600000000000 (pdg_2024); diff -5.750000000000; σ -1.25
+      note: tier ledger (paper assignment, declared input; not yet read from the wire); documented model tension
+  ✓ bottom_mev: model [4180.900000000000000000, 4182.300000000000000000] MeV
+      exp 4183.000000000000 ± 7.000000000000 (pdg_2024); diff -1.400000000000; σ -0.20
+      note: tier ledger (paper assignment, declared input; not yet read from the wire)
+  ✓ top_mev: model [172657.000000000000000000, 172686.000000000000000000] MeV
+      exp 172570.000000000000 ± 290.000000000000 (pdg_2024); diff 101.500000000000; σ +0.35
+      note: tier ledger (paper assignment, declared input; not yet read from the wire)
+  ~ tau_lifetime_fs: model [291.150000000000000000, 291.170000000000000000] fs
+      exp 290.300000000000 ± 0.820000000000 (pdg_2024); diff 0.860000000000; σ +1.04
+      note: uses measured muon lifetime and B_e
+  · muon_lifetime_s: model [0.000002196987000000, 0.000002196998000000] s
+      exp 0.000002196981 ± 0.000000000002 (pdg_2024); diff 0.000000000011; σ +5.18
+      note: E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); higher-order QED (~5 ppm) not included, so the value sits ~5 ppm above the measurement, as it does with the measured G_F; G_F itself is scored in fermi_constant, so this reference is not scored
+
+Hadrons
+  ✓ proton_ratio: model [1836.152673444000000000, 1836.152673445000000000] dimensionless
+      exp 1836.152673426000 ± 0.000000032000 (mohr_codata_2025); diff 0.000000018500; σ +0.57
+  ✓ neutron_ratio: model [1838.683662000000000000, 1838.683662100000000000] dimensionless
+      exp 1838.683662000000 ± 0.000000740000 (mohr_codata_2025); diff 0.000000050000; σ +0.06
+  ✓ proton_radius: model [0.841235600000000000, 0.841235700000000000] fm
+      exp 0.840750000000 ± 0.000640000000 (codata_2022); diff 0.000485650000; σ +0.75
+  ✓ pion0_mev: model [134.977014000000000000, 134.977015000000000000] MeV
+      exp 134.976800000000 ± 0.000500000000 (pdg_2024); diff 0.000214500000; σ +0.42
+  ✓ kaon0_mev: model [497.612411000000000000, 497.612412000000000000] MeV
+      exp 497.611000000000 ± 0.013000000000 (pdg_2024); diff 0.001411500000; σ +0.10
+  ✓ kaon_plus_mev: model [493.676245000000000000, 493.676246000000000000] MeV
+      exp 493.677000000000 ± 0.016000000000 (pdg_2024); diff -0.000754500000; σ -0.05
+  ✓ pion_plus_mev: model [139.570411000000000000, 139.570412000000000000] MeV
+      exp 139.570390000000 ± 0.000180000000 (pdg_2024); diff 0.000021500000; σ +0.11
+  ✓ f_pi_mev: model [130.270000000000000000, 130.280000000000000000] MeV
+      exp 130.200000000000 ± 0.800000000000 (flag_2024); diff 0.075000000000; σ +0.09
+      note: FLAG 2024 lattice agrees
+  ! f_k_mev: model [154.560000000000000000, 154.570000000000000000] MeV
+      exp 155.700000000000 ± 0.300000000000 (flag_2024); diff -1.135000000000; σ -3.79
+      note: FLAG 2024 lattice ~3.8σ low; assigned fK formula
+  ! neutron_lifetime_predicted_s: model [923.370000000000000000, 923.390000000000000000] s
+      exp 878.400000000000 ± 0.500000000000 (pdg_2024); diff 44.980000000000; σ +89.96
+      note: continuum route: the emitted electron is not confined, so its modes are the continuum limit of the lattice; phase space as for the muon, Fermi factor to first order (full factor 922.9 s); remaining gap: g_A (5/4 vs 1.2754) and the low-energy radiative correction
+  ! pion_lifetime_predicted_s: model [0.000000026018800000, 0.000000026019200000] s
+      exp 0.000000026033 ± 0.000000000005 (pdg_2024); diff -0.000000000014; σ -2.80
+      note: E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; pi->mu nu is 99.988% of the total width
+  ! kaon_pion_width_ratio: model [1.318922000000000000, 1.318923000000000000] dimensionless
+      exp 1.336557000000 ± 0.003176000000 (pdg_2024); diff -0.017634500000; σ -5.56
+      note: G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); the rest is f_K/f_pi = 70/59 (FLAG 1.1934)
+  · neutron_lifetime_unified_s: model [948.690000000000000000, 948.700000000000000000] s
+      exp 878.400000000000 ± 0.500000000000 (pdg_2024); diff 70.295000000000; σ +140.59
+      note: 3x3x3 spectral template (comparison): the continuum route without Coulomb to 0.6%; see neutron_lifetime_predicted_s
+  ✓ neutral_pion_finite_lifetime_s: model [0.000000000000000084, 0.000000000000000085] s
+      exp 0.000000000000 ± 0.000000000000 (pdg_2024); diff 0.000000000000; σ +0.23
+
+Atoms
+  ~ rydberg_ev: model [13.605693115800000000, 13.605693115900000000] eV
+      exp 13.605693122990 ± 0.000000004300 (codata_2022); diff -0.000000007140; σ -1.67
+      note: atoms comparison; unit-sensitive
+  ✓ bohr_radius: model [0.529177210682900000, 0.529177210683000000] Å
+      exp 0.529177210544 ± 0.000000000180 (codata_2022); diff 0.000000000138; σ +0.77
+      note: atoms comparison; unit-sensitive
+
+Cosmology
+  ✓ hubble_late: model [73.032994186046511627, 73.032994186046511628] km/s/Mpc
+      exp 73.000000000000 ± 1.000000000000 (riess_sh0es_2022); diff 0.032994186046; σ +0.03
+      note: late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored
+  · hubble_late: model [73.032994186046511627, 73.032994186046511628] km/s/Mpc
+      exp 67.400000000000 ± 0.500000000000 (planck_2018); diff 5.632994186046; σ +11.26
+      note: late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored
+  · hubble_late: model [73.032994186046511627, 73.032994186046511628] km/s/Mpc
+      exp 67.400000000000 ± 1.200000000000 (abbott_des_y1_2018); diff 5.632994186046; σ +4.69
+      note: late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored
+  ✓ clustering_late: model [0.767828303152246814, 0.767828303152246815] dimensionless
+      exp 0.776000000000 ± 0.017000000000 (abbott_des_2022); diff -0.008171696848; σ -0.49
+      note: late-universe value; the CMB reference shows the S8 tension and is not scored
+  · clustering_late: model [0.767828303152246814, 0.767828303152246815] dimensionless
+      exp 0.832000000000 ± 0.013000000000 (planck_2018); diff -0.064171696848; σ -4.94
+      note: late-universe value; the CMB reference shows the S8 tension and is not scored
+  ✓ clustering_late: model [0.767828303152246814, 0.767828303152246815] dimensionless
+      exp 0.759000000000 ± 0.024000000000 (kids_1000_2021); diff 0.008828303152; σ +0.36
+      note: late-universe value; the CMB reference shows the S8 tension and is not scored
+  ✓ omega_ratio: model [5.377500000000000000, 5.377600000000000000] dimensionless
+      exp 5.360000000000 ± 0.050000000000 (planck2018); diff 0.017550000000; σ +0.35
+  · baryon_pmJ: model [0.000000000594000000, 0.000000000597000000] dimensionless
+      exp 0.000000000612 ± 0.000000000004 (planck_2018); diff -0.000000000017; σ -4.13
+      note: Paper IV J; disagrees with Paper III (papers_disagree); not scored, compare baryon_pm3J
+  ~ baryon_pm3J: model [0.000000000607000000, 0.000000000608000000] dimensionless
+      exp 0.000000000612 ± 0.000000000004 (planck_2018); diff -0.000000000005; σ -1.13
+  ✓ z_eq: model [3377.212100000000000000, 3377.212200000000000000] dimensionless
+      exp 3387.000000000000 ± 21.000000000000 (planck_2018); diff -9.787850000000; σ -0.47
+  · dark_raw: model [5.166666666666666666, 5.166666666666666667] dimensionless
+      exp 5.360000000000 ± 0.050000000000 (planck2018); diff -0.193333333334; σ -3.87
+      note: raw ratio before correction; not scored, compare omega_ratio
+
+62 comparisons over 61 values:
+  |σ| ≤ 1: 38   |σ| ≤ 2: 53   |σ| ≤ 3: 56
+  10 context references not scored (·): uncorrected intermediates, the superseded Jarlskog proposal, CMB references for late-universe values.
+  64 values have no experimental reference (proved intervals only).
+
+χ² diagnostic by deriving paper (scored references only):
+  χ² = Σ(pull²); reduced χ² = χ²/N; nominal dof = N, with no fitted parameters subtracted.
+  Correlated quantities and alternative measurements are counted separately; this is not an independent goodness-of-fit test.
+  Paper 0: N = 0; χ² = 0.000; reduced χ² = n/a
+  Paper 1: N = 7; χ² = 59.859; reduced χ² = 8.551
+  Paper 3: N = 7; χ² = 2.031; reduced χ² = 0.290
+  Paper 4: N = 18; χ² = 52.768; reduced χ² = 2.931
+  Paper 5: N = 24; χ² = 8166.077; reduced χ² = 340.253
+  Paper 6: N = 6; χ² = 1.973; reduced χ² = 0.328
+  All selected: N = 62; χ² = 8282.709; reduced χ² = 133.592
+
+==================== Summary (e8p --summary) ====================
+
+# E8 substrate vs measurement
+
+Generated by `e8p --summary` from the Lean tree. Every E8 number is the midpoint of a
+Lean-proved enclosure (theorem named per row); the enclosures are much narrower than the
+measurement errors unless noted. No parameter is fitted.
+
+**Inputs.** The E8 substrate integers `Δ = 43`, `ν = 16`, `σ = 5`, `χ = 2`, `D = 4`.
+**Unit inputs.** `m_e`, `ħc` and `c` (CODATA 2022), used only to express values in MeV, fm or s.
+**Measured anchors.** A few rows also take a measured number (the cosmology rescalings take the
+frozen `H₀`/`S₈` inputs; `tau_lifetime_fs` takes the measured muon lifetime); each such row
+names it in the `measured inputs` column.
+
+## Scoreboard
+
+- 125 values with proved enclosures; 61 have a measured reference.
+- 62 scored comparisons: |σ| ≤ 1: **38**, |σ| ≤ 2: **53**, |σ| ≤ 3: **56**.
+- Of these, 58 use no measured input beyond the units: |σ| ≤ 1: **35**, ≤ 2: **49**, ≤ 3: **52**. The rest name their measured anchor in the `measured inputs` column.
+- 10 references shown for context and not scored (see below).
+- Nuclear masses (`--masses`): 31 nuclei, |z| ≤ 1: 6, ≤ 2: 17, ≤ 3: 29 in units of the ledger's stable-line scatter (4.8 m_e).
+- Nuclear shell closures (`--shells`): [2, 8, 20, 28, 50, 82, 126]; measured magic numbers [2, 8, 20, 28, 50, 82, 126].
+- Atomic ground-state multiplicity, Hund's first rule (`--periodic-table`): 50 of 54 match.
+
+`digits` = ⌊−log₁₀(|E8 − measured| / |measured|)⌋. σ uses the measurement uncertainty only.
+
+## All scored comparisons, most digits first
+
+| quantity | E8 (proved, midpoint) | measured | unit | digits | σ | measured inputs | reference | Lean theorem |
+|---|---:|---:|---|---:|---:|---|---|---|
+| `neutron_ratio` | 1838.683662050 | 1838.683662000 ± 7.4e-7 | dimensionless | 10 | +0.06 | — | mohr_codata_2025 | `PMHadrons.CompositeMasses.neutron_value` |
+| `proton_ratio` | 1836.152673444 | 1836.152673426 ± 3.2e-8 | dimensionless | 10 | +0.57 | — | mohr_codata_2025 | `PMHadrons.CompositeMasses.proton_value` |
+| `alpha_inv` | 137.0359992123 | 137.0359992060 ± 1.1e-8 | dimensionless | 10 | +0.58 | — | morel_determination_2020 | `PMSubstrate.geometricIndex_bounds` |
+| `bohr_radius` | 0.529177210682 | 0.529177210544 ± 1.8e-10 | Å | 9 | +0.77 | — | codata_2022 | `PMAtoms.bohrRadius_bounds` |
+| `alpha` | 0.00729735256250 | 0.00729735256430 ± 1.1e-12 | dimensionless | 9 | -1.64 | — | mohr_codata_2025 | `PMConstants.CertifiedConstants.alpha_bounds` |
+| `rydberg_ev` | 13.6056931158 | 13.6056931229 ± 4.3e-9 | eV | 9 | -1.67 | — | codata_2022 | `PMAtoms.rydbergEV_bounds` |
+| `alpha_inv` | 137.035999212 | 137.035999177 ± 2.1e-8 | dimensionless | 9 | +1.68 | — | mohr_codata_2025 | `PMSubstrate.geometricIndex_bounds` |
+| `von_klitzing` | 25812.8074694 | 25812.8074500 ± 1.0e-5 | Ω | 9 | +1.94 | — | mohr_codata_2025 | `PMSubstrate.vonKlitzing_bounds` |
+| `alpha_inv` | 137.035999212 | 137.035999166 ± 1.5e-8 | dimensionless | 9 | +3.09 | — | fan_measurement_2023 | `PMSubstrate.geometricIndex_bounds` |
+| `alpha_inv` | 137.03599921 | 137.03599904 ± 2.7e-8 | dimensionless | 8 | +6.16 | — | parker_measurement_2018 | `PMSubstrate.geometricIndex_bounds` |
+| `vev` | 246.2196381 | 246.2196500 ± 6.0e-5 | GeV | 7 | -0.20 | — | navas_review_2024 | `PMConstants.ElectroweakBounds.vev_bounds` |
+| `muon_ratio` | 206.7682717 | 206.7682827 ± 4.6e-6 | dimensionless | 7 | -2.40 | — | mohr_codata_2025 | `PMElementaryParticles.LeptonMasses.muon_value` |
+| `pion_plus_mev` | 139.570411 | 139.570390 ± 1.8e-4 | MeV | 6 | +0.11 | — | pdg_2024 | `PMHadrons.MesonMasses.pionPlus_mev_value` |
+| `fermi_constant` | 1.16637900e-5 | 1.16637880e-5 ± 6.0e-12 | GeV^-2 | 6 | +0.33 | — | navas_review_2024 | `PMConstants.ElectroweakBounds.fermi_bounds` |
+| `electron_yukawa` | 2.9350284e-6 | 2.9350000e-6 ± 1.0e-9 | dimensionless | 5 | +0.02 | — | navas_review_2024 | `PMConstants.CurrentConstants.electron_bounds` |
+| `kaon_plus_mev` | 493.67624 | 493.67700 ± 0.016 | MeV | 5 | -0.05 | — | pdg_2024 | `PMHadrons.CompositeMasses.kaonPlus_mev_value` |
+| `kaon0_mev` | 497.61241 | 497.61100 ± 0.013 | MeV | 5 | +0.10 | — | pdg_2024 | `PMHadrons.CompositeMasses.kaon0_mev_value` |
+| `pion0_mev` | 134.97701 | 134.97680 ± 5.0e-4 | MeV | 5 | +0.42 | — | pdg_2024 | `PMHadrons.CompositeMasses.pion0_mev_value` |
+| `planck_mass` | 1.220893e19 | 1.220910e19 ± 1.0e14 | GeV | 4 | -1.65 | — | mohr_codata_2025 | `PMConstants.PlanckReadout.planckMass_bounds` |
+| `wolf_eta` | 0.352250 | 0.352300 ± 0.0071 | dimensionless | 3 | -0.01 | — | navas_review_2024 | `PMFlavor.Values.wolfEta_bounds` |
+| `hubble_late` | 73.0329 | 73.0000 ± 1.0 | km/s/Mpc | 3 | +0.03 | h0_anchor | riess_sh0es_2022 | `PMCosmology.SubstrateLoad.revised_numerical_outputs` |
+| `strange_mev` | 93.5400 | 93.5000 ± 0.80 | MeV | 3 | +0.05 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.strange_value` |
+| `f_pi_mev` | 130.275 | 130.200 ± 0.80 | MeV | 3 | +0.09 | — | flag_2024 | `PMHadrons.PionWidth.pionDecayConstantMeV_bounds` |
+| `wolf_lambda` | 0.224395 | 0.224310 ± 8.5e-4 | dimensionless | 3 | +0.10 | — | navas_review_2024 | `PMFlavor.Values.wolfLambda_bounds` |
+| `alpha_s` | 0.117995 | 0.117900 ± 9.0e-4 | dimensionless | 3 | +0.10 | — | navas_review_2024 | `PMConstants.CurrentConstants.strong_bounds` |
+| `bottom_mev` | 4181.60 | 4183.00 ± 7.0 | MeV | 3 | -0.20 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.bottom_value` |
+| `alpha_G` | 1.75179e-45 | 1.75200e-45 ± 1.0e-48 | dimensionless | 3 | -0.21 | — | mohr_codata_2025 | `PMConstants.GravityAccounting.channels_as_frame` |
+| `top_mev` | 172671 | 172570 ± 290 | MeV | 3 | +0.35 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.top_value` |
+| `vud_dressed` | 0.973555 | 0.973670 ± 3.2e-4 | dimensionless | 3 | -0.36 | — | pdg_2024 | `PMFlavor.Values.vudDressed_bounds` |
+| `higgs_mass` | 125.269 | 125.200 ± 0.11 | GeV | 3 | +0.62 | — | navas_review_2024 | `PMConstants.ElectroweakBounds.higgs_bounds` |
+| `proton_radius` | 0.841235 | 0.840750 ± 6.4e-4 | fm | 3 | +0.75 | — | codata_2022 | `PMHadrons.CompositeMasses.protonRadius_value` |
+| `w_ratio` | 0.881529 | 0.881355 ± 1.4e-4 | dimensionless | 3 | +1.19 | — | pdg_2024 | `PMConstants.WMassTest.ratio_bounds` |
+| `tau_ratio` | 3477.00 | 3477.36 ± 0.18 | dimensionless | 3 | -2.00 | — | pdg_2024 | `PMElementaryParticles.LeptonMasses.tau_value` |
+| `vud` | 0.974494 | 0.973670 ± 3.2e-4 | dimensionless | 3 | +2.57 | — | pdg_2024 | `PMFlavor.Values.vud_bounds` |
+| `pion_lifetime_predicted_s` | 2.60190e-8 | 2.60330e-8 ± 5.0e-12 | s | 3 | -2.80 | — | pdg_2024 | `PMHadrons.pionLifetimeCorrectedSeconds_bounds` |
+| `sin2_theta12` | 0.30901 | 0.30800 ± 0.012 | dimensionless | 2 | +0.08 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
+| `sin2_theta13` | 0.021892 | 0.021950 ± 5.8e-4 | dimensionless | 2 | -0.10 | — | esteban_nufit-60_2024_no_ic19 | `PMFlavor.Values.pmnsSin2_bounds` |
+| `sin2_theta12` | 0.30901 | 0.30700 ± 0.012 | dimensionless | 2 | +0.16 | — | esteban_nufit-60_2024_no_ic19 | `PMFlavor.Values.pmnsSin2_bounds` |
+| `ckm_vcb` | 0.041308 | 0.041100 ± 0.0012 | dimensionless | 2 | +0.17 | — | pdg_2024 | `PMFlavor.Values.vcb_bounds` |
+| `ckm_s23` | 0.041308 | 0.041100 ± 0.0012 | dimensionless | 2 | +0.17 | — | pdg_2024 | `PMFlavor.Values.ckmS23_bounds` |
+| `neutral_pion_finite_lifetime_s` | 8.4600e-17 | 8.4300e-17 ± 1.3e-18 | s | 2 | +0.23 | — | pdg_2024 | `PMHadrons.neutralPionFiniteLifetimeSeconds_bounds` |
+| `omega_ratio` | 5.3775 | 5.3600 ± 0.050 | dimensionless | 2 | +0.35 | — | planck2018 | `PMCosmology.Tensions.omegaRatio_bounds` |
+| `wolf_A` | 0.82035 | 0.82600 ± 0.015 | dimensionless | 2 | -0.38 | — | navas_review_2024 | `PMFlavor.Values.wolfA_bounds` |
+| `z_eq` | 3377.2 | 3387.0 ± 21 | dimensionless | 2 | -0.47 | — | planck_2018 | `PMCosmology.Background.z_eq_bounds` |
+| `cabibbo` | 0.22439 | 0.22501 ± 6.8e-4 | dimensionless | 2 | -0.90 | — | navas_review_2024 | `PMFlavor.Values.cabibbo_bounds` |
+| `tau_lifetime_fs` | 291.16 | 290.30 ± 0.82 | fs | 2 | +1.04 | measured_muon_lifetime, B_e | pdg_2024 | `PMElementaryParticles.TauLifetime.tau_lifetime_tree` |
+| `baryon_pm3J` | 6.0750e-10 | 6.1200e-10 ± 4.0e-12 | dimensionless | 2 | -1.13 | — | planck_2018 | `PMCosmology.Primordial.baryon_windows` |
+| `charm_mev` | 1267.2 | 1273.0 ± 4.6 | MeV | 2 | -1.25 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.charm_value` |
+| `f_k_mev` | 154.56 | 155.70 ± 0.30 | MeV | 2 | -3.79 | — | flag_2024 | `PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds` |
+| `jarlskog_geo` | 3.084e-5 | 3.120e-5 ± 1.2e-6 | dimensionless | 1 | -0.30 | — | navas_review_2024 | `PMFlavor.Values.jarlskogGeo_bounds` |
+| `clustering_late` | 0.7678 | 0.7590 ± 0.024 | dimensionless | 1 | +0.36 | s8_anchor | kids_1000_2021 | `PMCosmology.SubstrateLoad.revised_numerical_outputs` |
+| `sin2_theta13` | 0.02189 | 0.02215 ± 5.8e-4 | dimensionless | 1 | -0.45 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
+| `clustering_late` | 0.7678 | 0.7760 ± 0.017 | dimensionless | 1 | -0.49 | s8_anchor | abbott_des_2022 | `PMCosmology.SubstrateLoad.revised_numerical_outputs` |
+| `jarlskog` | 3.025e-5 | 3.120e-5 ± 1.2e-6 | dimensionless | 1 | -0.80 | — | navas_review_2024 | `PMFlavor.Values.jarlskog_bounds` |
+| `down_mev` | 4.626 | 4.700 ± 0.070 | MeV | 1 | -1.05 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.down_value` |
+| `ckm_s13` | 0.003607 | 0.003820 ± 2.0e-4 | dimensionless | 1 | -1.07 | — | pdg_2024 | `PMFlavor.Values.ckmS13_bounds` |
+| `sin2_theta23` | 0.5748 | 0.5610 ± 0.012 | dimensionless | 1 | +1.15 | — | esteban_nufit-60_2024_no_ic19 | `PMFlavor.Values.pmnsSin2_bounds` |
+| `up_mev` | 2.058 | 2.160 ± 0.070 | MeV | 1 | -1.45 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.up_value` |
+| `kaon_pion_width_ratio` | 1.318 | 1.336 ± 0.0031 | dimensionless | 1 | -5.56 | — | pdg_2024 | `PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds` |
+| `neutron_lifetime_predicted_s` | 923.3 | 878.4 ± 0.50 | s | 1 | +89.96 | — | pdg_2024 | `PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds` |
+| `wolf_rho` | 0.141 | 0.159 ± 0.0095 | dimensionless | 0 | -1.89 | — | navas_review_2024 | `PMFlavor.Values.wolfRho_bounds` |
+| `sin2_theta23` | 0.574 | 0.470 ± 0.017 | dimensionless | 0 | +6.16 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
+
+## Tensions (|σ| > 2)
+
+| quantity | E8 (proved, midpoint) | measured | unit | digits | σ | measured inputs | reference | Lean theorem |
+|---|---:|---:|---|---:|---:|---|---|---|
+| `neutron_lifetime_predicted_s` | 923.3 | 878.4 ± 0.50 | s | 1 | +89.96 | — | pdg_2024 | `PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds` |
+| `sin2_theta23` | 0.574 | 0.470 ± 0.017 | dimensionless | 0 | +6.16 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
+| `alpha_inv` | 137.03599921 | 137.03599904 ± 2.7e-8 | dimensionless | 8 | +6.16 | — | parker_measurement_2018 | `PMSubstrate.geometricIndex_bounds` |
+| `kaon_pion_width_ratio` | 1.318 | 1.336 ± 0.0031 | dimensionless | 1 | -5.56 | — | pdg_2024 | `PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds` |
+| `f_k_mev` | 154.56 | 155.70 ± 0.30 | MeV | 2 | -3.79 | — | flag_2024 | `PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds` |
+| `alpha_inv` | 137.035999212 | 137.035999166 ± 1.5e-8 | dimensionless | 9 | +3.09 | — | fan_measurement_2023 | `PMSubstrate.geometricIndex_bounds` |
+| `pion_lifetime_predicted_s` | 2.60190e-8 | 2.60330e-8 ± 5.0e-12 | s | 3 | -2.80 | — | pdg_2024 | `PMHadrons.pionLifetimeCorrectedSeconds_bounds` |
+| `vud` | 0.974494 | 0.973670 ± 3.2e-4 | dimensionless | 3 | +2.57 | — | pdg_2024 | `PMFlavor.Values.vud_bounds` |
+| `muon_ratio` | 206.7682717 | 206.7682827 ± 4.6e-6 | dimensionless | 7 | -2.40 | — | mohr_codata_2025 | `PMElementaryParticles.LeptonMasses.muon_value` |
+
+## Shown, not scored
+
+| quantity | E8 (proved, midpoint) | reference | why not scored |
+|---|---:|---|---|
+| `hubble_late` | 73.032994 | 67.400000 ± 0.50 (planck_2018) | late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored |
+| `hubble_late` | 73.032994 | 67.400000 ± 1.2 (abbott_des_y1_2018) | late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored |
+| `clustering_late` | 0.76782830 | 0.83200000 ± 0.013 (planck_2018) | late-universe value; the CMB reference shows the S8 tension and is not scored |
+| `baryon_pmJ` | 5.9550000e-10 | 6.1200000e-10 ± 4.0e-12 (planck_2018) | Paper IV J; disagrees with Paper III (papers_disagree); not scored, compare baryon_pm3J |
+| `dark_raw` | 5.1666666 | 5.3600000 ± 0.050 (planck2018) | raw ratio before correction; not scored, compare omega_ratio |
+| `w_mass_uncorrected` | 78.965000 | 80.369200 ± 0.013 (pdg_2024_world) | uncorrected (tree-level); not scored, compare w_ratio |
+| `w_mass_uncorrected` | 78.965000 | 80.433500 ± 0.0094 (cdf_2022) | uncorrected (tree-level); not scored, compare w_ratio |
+| `z_mass_uncorrected` | 89.575000 | 91.187600 ± 0.0021 (pdg_2024) | uncorrected (tree-level); not scored, compare w_ratio |
+| `muon_lifetime_s` | 2.1969925e-6 | 2.1969811e-6 ± 2.2e-12 (pdg_2024) | E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); higher-order QED (~5 ppm) not included, so the value sits ~5 ppm above the measurement, as it does with the measured G_F; G_F itself is scored in fermi_constant, so this reference is not scored |
+| `neutron_lifetime_unified_s` | 948.69500 | 878.40000 ± 0.50 (pdg_2024) | 3x3x3 spectral template (comparison): the continuum route without Coulomb to 0.6%; see neutron_lifetime_predicted_s |
+
+64 further values have proved enclosures and no measured reference (`e8p` lists them).
+
+==================== Nuclear graph (e8p --nuclear) ====================
+
+nuclear graph diagnostic
+counts are proved in PMAtoms.NuclearGraph; closure gap is the frozen mass comparison
+H-3   Z=1 N=2 A=3  pp=0 pn=2 nn=1  tetrahedron=no
+He-3  Z=2 N=1 A=3  pp=1 pn=2 nn=0  tetrahedron=no
+He-4  Z=2 N=2 A=4  pp=1 pn=4 nn=1  tetrahedron=yes  closure gap=0.012985 u
+
+line/ring + alpha-diagonal counts (PMAtoms.NuclearLine):
+C-12  pp=3 pn=12 nn=3
+O-16  pp=4 pn=16 nn=4
+
+static charge energy (Paper II Green's function, Paper III Q):
+H-3  3/4 = 0.75   (chargeEnergy3_H3)
+He-3 11/4 = 2.75  (chargeEnergy3_He3)
+He-4 16/5 = 3.20  (chargeEnergy4_He4)
+mirror difference He-3 - H-3 = 2 kernel units
+
+The H-3/He-3 mirror fixes w_nn - w_pp = 0.000820 u; He-4 needs the 4-body closure.
+
+==================== Shells (e8p --shells) ====================
+
+E8 Nilsson single-particle ladder (PMAtoms.nilssonE8CostQ: κ = 1/ν = 1/16, μ = χ/σ = 2/5)
+cost = N + 3/2 − κ(2 l·s + μ(l(l+1) − N(N+3)/2)) in units of ħω(A) = χ·m_p/(Δ·A^{1/3})
+
+orbital    N  2j+1  fill   cost (ħω)   gap to next  
+1s1/2      0     2     2      1.500015/16 = 0.9375  ◀ closure
+1p3/2      1     4     6      2.4375 3/16 = 0.1875
+1p1/2      1     2     8      2.625029/40 = 0.7250  ◀ closure
+1d5/2      2     6    14      3.350011/40 = 0.2750
+2s1/2      2     2    16      3.6250 3/80 = 0.0375
+1d3/2      2     4    20      3.662523/40 = 0.5750  ◀ closure
+1f7/2      3     8    28      4.2375  3/8 = 0.3750  ◀ closure
+2p3/2      3     4    32      4.6125 1/16 = 0.0625
+1f5/2      3     6    38      4.6750  1/8 = 0.1250
+2p1/2      3     2    40      4.8000 3/10 = 0.3000
+1g9/2      4    10    50      5.100019/40 = 0.4750  ◀ closure
+2d5/2      4     6    56      5.5750 7/80 = 0.0875
+1g7/2      4     8    64      5.6625 3/16 = 0.1875
+3s1/2      4     2    66      5.8500 3/80 = 0.0375
+2d3/2      4     4    70      5.8875 1/20 = 0.0500
+1h11/2     5    12    82      5.937523/40 = 0.5750  ◀ closure
+2f7/2      5     8    90      6.5125 9/80 = 0.1125
+1h9/2      5    10   100      6.6250  1/8 = 0.1250
+1i13/2     6    14   114      6.750011/80 = 0.1375
+3p3/2      5     4   118      6.8875 1/16 = 0.0625
+2f5/2      5     6   124      6.9500  1/8 = 0.1250
+3p1/2      5     2   126      7.0750 7/20 = 0.3500  ◀ closure
+2g9/2      6    10   136      7.4250 9/80 = 0.1125
+1j15/2     7    16   152      7.5375 1/40 = 0.0250
+1i11/2     6    12   164      7.562527/80 = 0.3375
+3d5/2      6     6   170      7.9000 7/80 = 0.0875
+2g7/2      6     8   178      7.9875 3/16 = 0.1875
+4s1/2      6     2   180      8.1750 3/80 = 0.0375
+3d3/2      6     4   184      8.2125             —
+
+closures (fills before the 7 largest gaps): [2, 8, 20, 28, 50, 82, 126]
+measured magic numbers:                       [2, 8, 20, 28, 50, 82, 126]
+  same set
+gap sizes after 20, 28, 40, 50, 82, 126 are proved in PMAtoms.nilssonE8_gaps; the adjacency is
+this sort. Ladder cut at the first N = 8 orbital.
+
+==================== Nuclear masses (e8p --masses) ====================
+
+Z  Sym  A   N   E8 ledger (m_e)          E8 ledger (u)         measured(u)  E8−meas(u)  E8−meas(m_e)  z(scatter)  regime
+1  H  1  0  —  —  1.007825  —  —  —  light
+2  He  4  2  —  —  4.002603  —  —  —  light
+3  Li  7  4  12775.2694..12775.2695  7.008256..7.008257  7.016003  -0.007748  -14.13  -2.95 !  light
+4  Be  9  5  16416.8747..16416.8749  9.005967..9.005968  9.012183  -0.006216  -11.33  -2.37 !  light
+5  B  11  6  20057.7966..20057.7967  11.003304..11.003305  11.009305  -0.006002  -10.94  -2.28 !  light
+6  C  12  6  21876.0492..21876.0494  12.000761..12.000762  12.000000  +0.000761  +1.38  +0.28 ✓  light
+7  N  14  7  25516.4676..25516.4677  13.997821..13.997822  14.003074  -0.005253  -9.58  -2.00 ~  light
+8  O  16  8  29156.6187..29156.6188  15.994735..15.994736  15.994914  -0.000180  -0.33  -0.07 ✓  light
+9  F  19  10  34618.2018..34618.2019  18.990850..18.990851  18.998403  -0.007554  -13.77  -2.87 !  light
+10  Ne  20  10  36436.4387..36436.4388  19.988298..19.988299  19.992440  -0.004142  -7.56  -1.58 ~  light
+11  Na  23  12  41897.6215..41897.6217  22.984193..22.984194  22.989769  -0.005576  -10.17  -2.12 !  light
+12  Mg  24  12  43715.9582..43715.9584  23.981696..23.981697  23.985041  -0.003346  -6.10  -1.28 ~  light
+13  Al  27  14  49176.9757..49176.9758  26.977500..26.977501  26.981538  -0.004038  -7.37  -1.54 ~  light
+14  Si  28  14  50995.4397..50995.4398  27.975073..27.975074  27.976926  -0.001853  -3.38  -0.71 ✓  light
+15  P  31  16  56456.4438..56456.4439  30.970870..30.970871  30.973761  -0.002892  -5.28  -1.10 ~  light
+16  S  32  16  58275.0496..58275.0498  31.968521..31.968522  31.972071  -0.003550  -6.48  -1.35 ~  light
+17  Cl  35  18  63736.1451..63736.1452  34.964368..34.964369  34.968852  -0.004484  -8.18  -1.71 ~  light
+18  Ar  40  22  72839.5691..72839.5692  39.958324..39.958325  39.962383  -0.004059  -7.40  -1.55 ~  mid
+19  K  39  20  71016.1622..71016.1623  38.958039..38.958040  38.963706  -0.005667  -10.33  -2.16 !  light
+20  Ca  40  20  72835.0694..72835.0695  39.955855..39.955856  39.962590  -0.006736  -12.28  -2.56 !  light
+20  Ca  48  28  87404.3584..87404.3585  47.948274..47.948276  47.952522  -0.004248  -7.75  -1.62 ~  mid
+26  Fe  56  30  101963.7006..101963.7007  55.935237..55.935238  55.934936  +0.000301  +0.54  +0.11 ✓  mid
+28  Ni  58  30  105602.9480..105602.9481  57.931655..57.931656  57.935342  -0.003687  -6.73  -1.41 ~  mid
+28  Ni  62  34  112888.9946..112888.9947  61.928634..61.928635  61.928345  +0.000289  +0.52  +0.10 ✓  mid
+50  Sn  120  70  218557.3011..218557.3013  119.896144..119.896145  119.902201  -0.006058  -11.05  -2.31 !  mid
+54  Xe  132  78  240435.2340..240435.2342  131.897938..131.897939  131.904155  -0.006217  -11.34  -2.37 !  mid
+56  Ba  138  82  251376.1826..251376.1828  137.899923..137.899924  137.905247  -0.005324  -9.71  -2.03 !  mid
+60  Nd  142  82  258669.6578..258669.6581  141.900977..141.900978  141.907729  -0.006752  -12.31  -2.57 !  mid
+74  W  184  110  335302.0020..335302.0022  183.939941..183.939942  183.950931  -0.010990  -20.04  -4.18 !  mid
+79  Au  197  118  359034.9790..359034.9793  196.959376..196.959377  196.966568  -0.007193  -13.12  -2.74 !  mid
+82  Pb  208  126  379111.6284..379111.6287  207.973022..207.973023  207.976652  -0.003630  -6.62  -1.38 ~  mid
+92  U  238  146  433944.5199..433944.5202  238.053245..238.053246  238.050788  +0.002457  +4.47  +0.93 ✓  deformed
+96  Cm  244  148  444943.0312..444943.0315  244.086807..244.086808  244.062752  +0.024055  +43.84  +9.13 !  deformed
+98  Cf  252  154  —  —  252.081626  —  —  —  beyond
+
+31 nuclei compared:  |z| ≤ 1: 6   |z| ≤ 2: 17   |z| ≤ 3: 29
+
+E8 ledger = PMAtoms.certifiedMass (stable-line nuclear ledger), printed as its proved rational
+  enclosure: the formula's exact value to these digits, not its accuracy.
+z(scatter) = (E8 − measured) / 4.8 m_e, the ledger's rms scatter on the stable line
+  (≈ 0.0026 u, ≈ 2.5 MeV). A model z-score, not an experimental σ. ✓ |z|≤1, ~ |z|≤2, ! >2.
+measured = frozen isotope mass (comparison only). E8−meas uses the enclosure midpoint.
+regime = PMAtoms.regimeOf; — = outside the printed domain (A ≤ 4 or past the Z=96, N=152 frontier).
+
+==================== Periodic table (e8p --periodic-table 20) ====================
+
+Z   Sym  configuration                  K  L  M  N  2S+1  A   E8 ledger(u)  measured(u)  E8−meas(m_e)  z(scatter)  cloud(eV)  regime
+1  H  1s1  |  1  0  0  0  2  1  —  1.007825  —  —  -13.61  light
+2  He  1s2  |  2  0  0  0  1  4  —  4.002603  —  —  -27.22  light
+3  Li  1s2 2s1  |  2  1  0  0  2  7  7.008256  7.016003  -14.13  -2.95 !  -30.62  light
+4  Be  1s2 2s2  |  2  2  0  0  1  9  9.005967  9.012183  -11.33  -2.37 !  -34.02  light
+5  B  1s2 2s2 2p1  |  2  3  0  0  2  11  11.003304  11.009305  -10.94  -2.28 !  -37.42  light
+6  C  1s2 2s2 2p2  |  2  4  0  0  3  12  12.000761  12.000000  +1.38  +0.28 ✓  -40.82  light
+7  N  1s2 2s2 2p3  |  2  5  0  0  4  14  13.997821  14.003074  -9.58  -2.00 ~  -44.22  light
+8  O  1s2 2s2 2p4  |  2  6  0  0  3  16  15.994735  15.994914  -0.33  -0.07 ✓  -47.62  light
+9  F  1s2 2s2 2p5  |  2  7  0  0  2  19  18.990850  18.998403  -13.77  -2.87 !  -51.03  light
+10  Ne  1s2 2s2 2p6  |  2  8  0  0  1  20  19.988298  19.992440  -7.56  -1.58 ~  -54.43  light
+11  Na  1s2 2s2 2p6 3s1  |  2  8  1  0  2  23  22.984193  22.989769  -10.17  -2.12 !  -55.94  light
+12  Mg  1s2 2s2 2p6 3s2  |  2  8  2  0  1  24  23.981696  23.985041  -6.10  -1.28 ~  -57.45  light
+13  Al  1s2 2s2 2p6 3s2 3p1  |  2  8  3  0  2  27  26.977500  26.981538  -7.37  -1.54 ~  -58.96  light
+14  Si  1s2 2s2 2p6 3s2 3p2  |  2  8  4  0  3  28  27.975073  27.976926  -3.38  -0.71 ✓  -60.47  light
+15  P  1s2 2s2 2p6 3s2 3p3  |  2  8  5  0  4  31  30.970870  30.973761  -5.28  -1.10 ~  -61.99  light
+16  S  1s2 2s2 2p6 3s2 3p4  |  2  8  6  0  3  32  31.968521  31.972071  -6.48  -1.35 ~  -63.50  light
+17  Cl  1s2 2s2 2p6 3s2 3p5  |  2  8  7  0  2  35  34.964368  34.968852  -8.18  -1.71 ~  -65.01  light
+18  Ar  1s2 2s2 2p6 3s2 3p6  |  2  8  8  0  1  40  39.958324  39.962383  -7.40  -1.55 ~  -66.52  mid
+19  K  1s2 2s2 2p6 3s2 3p6 4s1  |  2  8  8  1  2  39  38.958039  38.963706  -10.33  -2.16 !  -68.03  light
+20  Ca  1s2 2s2 2p6 3s2 3p6 4s2  |  2  8  8  2  1  40  39.955855  39.962590  -12.28  -2.56 !  -69.55  light
+
+configuration = PMAtoms.Aufbau.configuration: capacities 2(2ℓ+1) proved (PMAtoms.Shells); the fill order is a supplied input.
+2S+1 = PMAtoms.Hund.groundMultiplicity: Hund's first rule derived by counting same-spin pairs (PMAtoms.HundRule); g≠o marks an observed term o that differs; 20 of 20 match (misses are Aufbau configuration exceptions).
+E8 ledger = midpoint of the PMAtoms.certifiedMass enclosure (— for A ≤ 4); z = residual / 4.8 m_e (the ledger's stable-line scatter).
+cloud = hydrogenic electron binding Σ −R∞/n² (PMAtoms.ElectronCloud, certified R∞), no screening.
+measured = frozen isotope mass (comparison only).
