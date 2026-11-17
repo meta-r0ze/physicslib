@@ -53,7 +53,14 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   in the vector frame by triality is `CarrierRepresentation`'s premise. (ii) supplies (i)'s bank, but it
   uses the two `D₄` factors as protocol and wire, while the library uses them as the two walls
   (`PMAction.CarrierVacuumSector`); with one `D₄` for the wire, a class gives `8 × 2 = 16` light
-  components. The decisive question for (ii): where the two walls live if both `D₄` factors are taken.
+  components. The decisive question for (ii): where the two walls live if both `D₄` factors are taken. Tried: the
+  walls as the two chiral halves of the wire's odd sector (killed: `4` components, no gapped partners,
+  so the two-wall mass mechanism is lost); the walls as the generation's two glue classes, the particle a
+  superposition of glued roots of class `b` (one wall) and `c` (the other) (count `8 × 2 × 2 = 32`,
+  three unordered class pairs give three generations as in `PMAction.GenerationWalls`, and both walls'
+  protocol carriers read in the vector frame by triality is `CarrierRepresentation`'s "both domain-wall
+  sectors" premise; open: a single-wall shift changes a wall's class, so the walls need a label besides
+  their class).
 
 ## Other open work
 
