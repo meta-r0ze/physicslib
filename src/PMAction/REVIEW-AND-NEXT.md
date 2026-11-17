@@ -30,8 +30,13 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   `32` root quarter-times (`ClassBlindFlip.forwardTimes_total`). The flip-to-crossing ratio, which the
   light-band leakage and EP's first-row deficit need, then waits only on the crossing's root program,
   which the library does not yet construct. As E8 reflections, moving a carrier between the
-  generation's two wall classes takes three (`tools/event_clock_check.py`; one for equal classes);
-  whether the flip program is minimal is open. The absolute clock is `p` (`Machine/RootTransferPhase`:
+  generation's two wall classes takes three (`tools/event_clock_check.py`; one for equal classes).
+  The flip program: `ClassBlindFlip`'s takes `32` quarter-times; splitting its generator into two
+  commuting halves around the same echo takes `24` (`tools/flip_program_search.py`, checked in the
+  carrier model). Searches find no program of up to four pulses, no Weyl-group echo, and no echo of up
+  to three pulses that even spans the generator, so the phase echo (`16` quarter-times round trip) is
+  needed and `24` is the shortest found. Open: a proof of minimality, and what one reflection costs as
+  an event (a certain transfer is two quarter-times; the factor of two moves the ratio by two). The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator

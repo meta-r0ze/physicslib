@@ -92,6 +92,23 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   space; (4) the regulator cancels between (2) and (3), and the `q²` integral gives `25/4 − π²`.
   Mathlib has no dilogarithm, and (2)–(4) need `Li₂` values, so the first module is `Li₂(1) = π²/6`
   and the few integrals that reduce to it.
+- **Finite-mass and precision muon radiation.** Extend `MuonLifetimeCorrected.qedFactor`, which
+  currently uses the massless-daughter one-loop coefficient, to the finite-electron-mass inclusive
+  correction. `MassiveWidth.phase` supplies massive tree phase space, not that radiative mass
+  dependence. The leading missing mass-dependent one-loop terms give about +4.4 ppm in the rate
+  at the current mass ratio (diagnostic evaluation, not a Lean enclosure), accounting for much of
+  the roughly +5 ppm lifetime residual. Then include higher orders with one consistent definition
+  of alpha and matching to `G_F`; do not append an isolated roughly 36 ppm two-loop term to the
+  alpha(0) formula without its scheme conversion. Separate the supplied benchmark kernel from
+  its substrate derivation in the radiative-factor task above. Reconcile the source docstring's
+  two-loop-size estimate with the e8p caveat. Benchmark: [PDG 2024, Eqs. 10.9–10.10](https://pdg.lbl.gov/2024/reviews/rpp2024-rev-standard-model.pdf).
+- **Tau leptonic partial widths and inputs.** Replace the tree-level scaling in `TauLifetime` /
+  `TauE8` by the massive phase-space and consistently radiative-corrected partial-width ratio.
+  `tau_lifetime_fs` currently uses measured muon lifetime and supplied `B_e = 0.1782`; it is a
+  conditional check, not an independent total-lifetime prediction. Propagate those comparison-input
+  uncertainties. Use `TauBranching`'s derived muon/electron channel ratio instead of separately
+  freezing both fractions in the downstream inventory. A prediction without supplied `B_e` also
+  needs the inclusive hadronic factor, owned by [PMHadrons](../PMHadrons/REVIEW-AND-NEXT.md).
 - **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full
   charged projector keeps a gapped component, so total gapped weight is not a row deficit. The final
   labels are fixed (`FinalChannels`). Two-wall wire (`tools/event_clock_check.py`): light modes leak
@@ -106,7 +123,9 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   (`PMAction.GenerationWalls`; fewest, by search). With each reflection a certain root event (two
   quarter-times) and the flip the library's program, `r = 6/32 = 3/16`, and with the down weight
   `s_d = 0.26` the middle down mode leaks `1.06 r²`, so the deficit is `≈ 1.9·10⁻³` (measured
-  `1.6 ± 0.7·10⁻³`); heaviest-mode leakage `7%`. Assumptions to derive or drop: the flip program is the
-  minimal one (the library's is literal, not optimal), events run serially, a reflection is one certain
-  root event, and the deficit is `|V_us|²` times the middle mode's leakage (measured `|V_us|`; the
-  mixing is PMFlavor's).
+  `1.6 ± 0.7·10⁻³`); heaviest-mode leakage `7%`. But the library's flip program is not minimal: a
+  `24`-quarter-time program does the same (`tools/flip_program_search.py`), and then `r = 1/4` gives
+  `3.3·10⁻³` (`2.5σ` high, heaviest leakage `12%`), or `8.4·10⁻⁴` if a reflection costs one
+  quarter-time. So the candidate is not confirmed; it brackets the measurement within the open factor
+  of two in what a reflection costs. Other assumptions: events run serially, and the deficit is
+  `|V_us|²` times the middle mode's leakage (measured `|V_us|`; the mixing is PMFlavor's).
