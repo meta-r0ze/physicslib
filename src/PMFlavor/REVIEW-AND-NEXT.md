@@ -23,6 +23,13 @@ changes the generation and reverses the orientation, and the root move by the la
 a generation, so every elementary move is an up ↔ down transition and no single move is a neutral
 flavour change. This places `J`'s three entries as off-diagonal charged-current transitions and the
 diagonal as the root move. Open: derive the orientation as the doublet (the register's E8 placement).
+With the charged current on the reference's wall only (wall-`T` shifts are all direct and would be
+same-chirality transitions the current does not make), its elementary transitions from up-type
+(positive orientation) states are: the root move (diagonal, direct); generation `2 → 1` through the
+reference's class (direct); `0 → 2` and `1 → 0` through the node. The two node edges differ in which
+member holds the reference's class on its wall: the down member on edge `(0, 2)`, the up member on edge
+`(1, 0)` (`tools/register_candidates_check.py` lists the moves). That asymmetry is a candidate source
+of `|V_cb| ≠ |V_ub|` (data ratio `11`) and the question to settle with the leg count.
 
 **Status of each entry of `J`** (e8p readout names in brackets).
 

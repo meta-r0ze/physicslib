@@ -72,3 +72,26 @@ for eu, ed, tag in [(0, 0, "on resonance"), (0.00236, 0.1396, "offsets fitted to
         V = np.abs(left(M(roots[du] * (1 - eu), s_u, 1)).conj().T @
                    left(M(roots[dd] * (1 - ed), s_d, 2)))
         print(f"  {tag:24s} roots ({du},{dd}): |V_us| {V[0, 1]:.4f} |V_cb| {V[1, 2]:.4f} |V_ub| {V[0, 2]:.4f}")
+
+# Charged-current moves on the reference wall F (class 0 = reference), with orientation as doublet.
+print("Elementary moves (single-wall shifts and root moves) with generation and orientation:")
+states = [(t, f) for t in range(3) for f in range(3) if t != f]
+label = lambda s: 3 - s[0] - s[1]
+orient = lambda s: 1 if s[1] == (s[0] + 1) % 3 else 2
+
+
+def third(x, a):
+    return None if a == x else 3 - x - a
+
+
+for s in states:
+    for a in range(3):
+        nf = third(s[1], a)
+        if nf is None or nf == s[0]:
+            continue
+        n = (s[0], nf)
+        node = s[1] == 0 or n[1] == 0
+        if orient(s) == 1:
+            held = "up" if s[1] == 0 else ("down" if n[1] == 0 else "-")
+            print(f"  F shift: up gen {label(s)} -> down gen {label(n)}  {'node' if node else 'direct'}"
+                  f"  reference class held by: {held}")
