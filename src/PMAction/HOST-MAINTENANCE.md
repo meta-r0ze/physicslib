@@ -197,3 +197,32 @@ Capacity and retained Map are unchanged; Toll and transient Margin must include
 the longer conjugating words and their inverses. These are internal controls.
 Native site-conditioned transport, the inter-wall crossing, physical timing
 and selection of the complete update remain separate obligations.
+
+## Completed phase and the spatial interface
+
+[CompletedCarrierPhase.lean](CompletedCarrierPhase.lean) now supplies the common
+odd i phase while fixing every even mode. It uses three completed diagonal
+rotations, one obtained by root conjugation, and is outside the obstructed
+four-root phase family. Together with the completed quarter-turn rotations it
+also supplies the completed Hermitian internal generators, without another bank.
+
+[SelectiveCarrierRouting.lean](SelectiveCarrierRouting.lean) makes the spatial
+interface explicit. Its selector is the completed i alpha_j beta circuit; the
+positive spectral projector chooses which modes follow the supplied neighbour
+permutation. A selective route, on-site beta echo and reverse route give the
+exact spatial direction with the old finite stencil and full even restoration.
+Admitting that joint spatial/internal route is still a physical premise. Any
+word of unconditioned shuffles and on-site controls retains one spatial source
+per output site, while the required split generically has two in the same row. The site-local
+readout preserves that obstruction even if all unused carrier modes take part.
+
+For this extension, Capacity is still the eight carriers per supplied site, Map
+is the retained odd/even readout, Protocol is the stated route/echo/return, and
+Governor is exact endpoint restoration. The route translates even modes before
+the inverse restores them (`route_even`). Toll and transient Margin must include
+that motion, the route's inverse and the full root word; a zero endpoint
+displacement alone prices none of those primitives. The spatial permutation,
+routing admission, physical duration, tariffs and wall crossing are not selected.
+The existing `WalkRecordTransport` starts from the spatial neighbour pulse, and
+`RootCarrierWalk` extends the supplied reference walk through an isometry; neither
+provides an independent native admission proof for this selective route.

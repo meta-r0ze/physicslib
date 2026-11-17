@@ -388,6 +388,8 @@ import PMAction.EvenRootPhase
 import PMAction.PairedRootFlip
 import PMAction.ClassBlindFlip
 import PMAction.RootCliffordCompletion
+import PMAction.CompletedCarrierPhase
+import PMAction.SelectiveCarrierRouting
 
 import PMAction.Machine.ReadoutAdditivity
 
