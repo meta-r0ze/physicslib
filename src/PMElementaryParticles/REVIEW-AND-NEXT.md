@@ -39,6 +39,22 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   `PMFlavor.OrientationDoublet`'s orientation as the doublet). The heavy-label weight, the partner
   difference and the lightest masses enter here.
 
+  Second brainstorm (`tools/register_transport_check.py`; tests: count, `1 + 3`, doublet sign, Map,
+  Protocol (moves with the particle), separate from the Dirac generators). Killed: the other wall's
+  even modes (count `16`, does not move); the other wall's full carriers (its odd half is the wall); a
+  displacement of the local reference record (not stationary); the hop's auxiliary root axis as the
+  label (`2e_j = (e_j+e_k)+(e_j−e_k)` needs `k ≠ j`, so no fixed label serves every direction, and the
+  in-slice hops never use the reference axis); the orientation doublet with no colour source (count).
+  Survive: (i) the vector carriers (axis `×` sign, `8 × 4 = 32`) as an occupation register moved by the
+  same shift as the particle, its E8 bank open; (ii) the E8 glued roots read as generation `×` protocol
+  `×` wire: `240 = 48` pure `+ 192` glued, and each glue class's `64` glued roots are `8` carriers of one
+  `D₄` (the protocol, changed only by that `D₄`'s roots: gauge) `⊗ 8` of the other (the wire, moved by
+  its own roots). Three glue classes give three generations, and reading each class's protocol carriers
+  in the vector frame by triality is `CarrierRepresentation`'s premise. (ii) supplies (i)'s bank, but it
+  uses the two `D₄` factors as protocol and wire, while the library uses them as the two walls
+  (`PMAction.CarrierVacuumSector`); with one `D₄` for the wire, a class gives `8 × 2 = 16` light
+  components. The decisive question for (ii): where the two walls live if both `D₄` factors are taken.
+
 ## Other open work
 
 - **Final channels.** `PMAction.NativeExternal` makes `AmplitudeTrace`'s spinors the native wall
