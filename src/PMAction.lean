@@ -97,6 +97,8 @@ import PMAction.Machine.SliceHop
 import PMAction.Machine.ConstantControls
 import PMAction.Machine.ProfileControls
 import PMAction.Machine.RootWordControls
+import PMAction.Machine.FiniteRootWordControls
+import PMAction.Machine.FiniteConfigurationControls
 import PMAction.Machine.EdgeLocality
 import PMAction.Machine.ConfigurationControls
 import PMAction.Machine.D4EdgeSeparation
