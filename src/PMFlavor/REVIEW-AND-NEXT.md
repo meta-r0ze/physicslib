@@ -9,70 +9,21 @@ wire (PMAction) and the protocols (PMElementaryParticles). Every number comes fr
 narrowly stated premise; data are only the final test (e8p). Do not fit integers or parameters to
 data, and do not frame work as fitting Standard Model sectors.
 
-**Node routing (derived, 2026-11-16).** `ReferenceRouting.direct_iff`: on the reference's wall a
-generation transfer by class `a` avoids the reference's class exactly when `a` is that class, so with
-`PMAction.ReferenceClassHop` (direct exchange touching the reference's class is forbidden there) and
-the charged current on the reference's wall, exactly the transfer through the reference's class is
-direct and the other two cross the node: the routing `TransferGraph` used. Inputs left: the reference
-occupies one class (the vector class), and the node crossings' leg count and boundary (`NodeAmplitude`,
-`VubSeriesPath`), which the entries below still need.
-
-**The transfers are charged-current transitions, if the doublet is the wall orientation**
-(`OrientationDoublet`, candidate (a) of PMAction REVIEW "Colour register"). Every single-wall shift
-changes the generation and reverses the orientation, and the root move by the label reverses it within
-a generation, so every elementary move is an up ↔ down transition and no single move is a neutral
-flavour change. This places `J`'s three entries as off-diagonal charged-current transitions and the
-diagonal as the root move. Open: derive the orientation as the doublet (the register's E8 placement).
-With the charged current on the reference's wall only (wall-`T` shifts are all direct and would be
-same-chirality transitions the current does not make), its elementary transitions from up-type
-(positive orientation) states are: the root move (diagonal, direct); generation `2 → 1` through the
-reference's class (direct); `0 → 2` and `1 → 0` through the node. The two node edges differ in which
-member holds the reference's class on its wall: the down member on edge `(0, 2)`, the up member on edge
-`(1, 0)` (`tools/register_candidates_check.py` lists the moves). That asymmetry is a candidate source
-of `|V_cb| ≠ |V_ub|` (data ratio `11`) and the question to settle with the leg count.
-
-**Leg count, cheap test (`tools/leg_count_check.py`).** Equal crossings on the two node edges give
-ratio `1` and are excluded. Leaving the reference's class by one leg (amplitude `√α`,
-`NodeElimination.one_leg`) and entering it by two (`α`) gives `α^{−1/2} = 11.7` against `10.7 ± 0.7`;
-with a common factor `1/2`, not derived, `|V_cb| = √α/2 = 0.0427` (data `0.0408 ± 0.0014`) and
-`|V_ub| = α/2 = 0.00365` (`0.00382 ± 0.0002`). The printed forms `(π+χ)/(α⁻¹−Dπ) = 0.0413` and
-`1/(2α⁻¹+π) = 0.00361` fit better and keep both edges at order `α` with different boundary factors;
-their promotion/jump distinction was tied to which wall the class sits on, while in the derived routing
-both node edges are on the reference's wall and differ by entering versus leaving. Neither assignment is
-derived; the discriminator is the `α`-scaling (`√α` versus `α`), which the data at fixed `α` cannot
-test. Applying the same leave/enter asymmetry to the wire's two light mass insertions (one enters, one
-leaves the reference's class) worsens the charge-weight test (one `a` for down and up: `6%` apart with
-equal `k = α/2`, `14%` or `74%` with the asymmetry), so if it holds for the transfers it does not carry
-over unchanged to the mass insertions. Further tests (same script): making the enter/leave assignment
-depend on the doublet member (it flips with the orientation) or averaging the two at random ("either
-leg, at random", coherent or not) gives `14–17%` on the charge test, and a random choice per edge makes
-the two edges equal again (ratio `1`); a random choice can only supply the common factor `1/2` (one of
-two routes). The node as a conserving star (`PMAction.ReferenceNode`) is class-symmetric: equal `k`
-(`α/3` with three legs; charge test `2–7%` against `2–10%` for `α/2`, so not discriminating) and equal
-node edges, so the edge asymmetry needs the `s ↔ c` breaking of the charged current's wall. With legs only to
-occupied modes every restoring crossing has two (`ReferenceNode.restoring_two_classes`), so the node
-value is `α/2` on both edges, the scale of the printed `|V_ub| = 1/(2α⁻¹+π)`.
-
-**What breaks the two node edges apart** (`OrientationDoublet.flip_reverses`, `flip_node_edges`). The
-`s ↔ c` exchange fixes the reference's class, so it is a symmetry of the wire and of the node; it
-reverses every orientation and maps the edge `c → b` (generation `1 → 0`, the up member holds the
-reference's class on wall `F`) onto the reverse of the edge `t → d` (`0 → 2`, the down member holds it).
-The first-order edges are `u–s` (direct), `c–b` and `t–d` (node), plus the diagonal root moves; as a
-Hermitian generator they set `|V_us| ≈ |V_cd|`, `|V_cb| ≈ |V_ts|`, and the third angle `s₁₃`. So a
-readout that treats up and down members alike gives `s₂₃ = s₁₃`; the data's ratio `≈ 11` needs the
-charged-current readout to depend on which doublet member holds the reference's class. The up/down
-difference the library has is the charge (the EP heavy-label weight, `s_u/s_d ≈ 4.4`); no simple power
-of it, nor of the charges, gives `11` (`(s_u/s_d)^p` needs `p ≈ 1.6`). The printed forms put the
-factor `2(π+χ)` between the two edges; deriving it as the up/down difference at the reference's class
-is the open step.
+**Where the entries now stand (2026-11-16).** The routing is derived (`ReferenceRouting`); with the
+weak doublet as the wall orientation (`OrientationDoublet`, a PMAction register candidate) every
+elementary move is an up ↔ down transition: diagonal by the root move, `u–s` direct, `c–b` and `t–d`
+through the node, whose value is `α/2` on both (`PMAction.ReferenceNode`). The `s ↔ c` exchange maps
+one node edge onto the other with up and down exchanged (`flip_node_edges`), so their ratio (`≈ 11` in
+the data) needs a readout that depends on which doublet member holds the reference's class (item 2).
+Leg-count and randomness tests are in OVERVIEW ("Results of the 2026-11-16 review").
 
 **Status of each entry of `J`** (e8p readout names in brackets).
 
 | Label change | Off the axis | On the axis |
 |---|---|---|
 | class `0`, `2 → 1`, in-cycle | `π/14` [`s₁₂`]: share candidate (`HalfTurnAperture`), readout rule derived (`ConductionRule`); **no source:** the refresh keeps the label (item 2) | the same rule gives `π/10`; e8p prints `1/(2φ) = sin(π/10)` [`sin²θ₁₂`] (decision pending) |
-| class `2`, `1 → 0`, node, reference wall | no derived amplitude; the library's rules are excluded (`TransferAmplitude`) [`\|V_cb\|`, printed `(π+χ)/(α⁻¹−Dπ)`] | no construction [`sin²θ₂₃`, printed `(1+π/(ν+σ))/χ`] |
-| class `1`, `0 → 2`, node, other wall | `1/(2α⁻¹+π)`: two-leg series path derived; boundary `π` a premise [`s₁₃`] | `3/α⁻¹`: one leg into three outlets, candidate (`ReactorConductance`) [`sin²θ₁₃`] |
+| class `2`, `1 → 0`, node, up member holds the reference's class | no derived amplitude; the library's rules are excluded (`TransferAmplitude`) [`\|V_cb\|`, printed `(π+χ)/(α⁻¹−Dπ)`] | no construction [`sin²θ₂₃`, printed `(1+π/(ν+σ))/χ`] |
+| class `1`, `0 → 2`, node, down member holds it | `1/(2α⁻¹+π)`: two-leg series path derived; boundary `π` a premise [`s₁₃`] | `3/α⁻¹`: one leg into three outlets, candidate (`ReactorConductance`) [`sin²θ₁₃`] |
 | phase | none in the library [`δ = arctan(σ/χ)` printed] | derived from the angles (`ReferenceFlavour`) [`δ_PMNS`] |
 | loss | `q² = 515/516`, derived under one premise (`DressingEvent`) | — |
 
@@ -95,26 +46,24 @@ derived invariants, `FlavourInvariants`):
 | `sin²θ₁₃` | `3/α⁻¹` | candidate: one leg into three outlets | `ReactorConductance` |
 
 So the close CKM numbers rest on two derived paths (`s₁₃`, the consequences) and on supplied forms
-(`|V_cb|`, `δ`) and candidates (`s₁₂`, PMNS). The wire (PMAction) does not yet produce them: with the
-derived carrier placement its singular values fail the up and lepton mass ratios for every `δ_O` and
-cycle phase (PMElementaryParticles REVIEW, "Protocol readout"). Presenting the numbers needs this table
-next to them.
+(`|V_cb|`, `δ`) and candidates (`s₁₂`, PMNS). The wire's mass matrices cannot supply them (their
+rotations keep `|V_cb| ≤ 0.010`, PMElementaryParticles OVERVIEW); `J` is the source. Presenting the
+numbers needs this table next to them.
 
 ## Open work
 
-1. **`U` from the protocol readout (blocks the data tests below).** The observed matrix is
-   `U_uᴴ J U_d`. On the derived wire (`PMAction.WireMass`) the heavy–light rotations are not small
-   (`≈ 0.14` for down at its light ratio, numerical), and neither the linear nor the squared readout of
-   the wire's spectrum fits the up and lepton protocols (PMElementaryParticles REVIEW, "Protocol
-   readout"). Until the readout is derived, every comparison that assumes `U = 1` (items 2, 3, 5) is
-   conditional, and the four CKM magnitudes constrain `(J, U)` jointly.
+1. **`U` from the protocol readout.** The observed matrix is `U_uᴴ J U_d`. On the derived wire the
+   mass-matrix rotations are small for the heavy–light part (`|V_cb|`-size `≤ 0.010`) and depend on the
+   lightest-mass offsets for the light pair (PMElementaryParticles REVIEW, "Lightest masses"); until
+   those are derived, comparisons at `U = 1` (items 2, 3, 5) are conditional.
 2. **The amplitude of each entry of `J`.**
-   - In-cycle (`κ₀`): no event source (`RefreshLabel`). The share `π/14` rests on the aperture premises
-     (`HalfTurnAperture`); with no source in the event it is a candidate for `U`'s 1–2 part or nothing.
-   - Other-wall node change (the jump): series path derived; derive the boundary `π`.
-   - Reference-wall node change: no derived amplitude; at `U = 1` it must be `≈ 10.7×` the jump
-     (`CandidateTests.promo_rules_excluded`: the three library rules fail). `VcbEnvelope` has no
-     schedule basis.
+   - In-cycle (`u–s`): no event source (`RefreshLabel`). The share `π/14` rests on the aperture premises
+     (`HalfTurnAperture`).
+   - The two node edges: node value `α/2` (`PMAction.ReferenceNode`, premise: occupied legs). Derive the
+     up/down-dependent factor between them (`≈ 10.7` at `U = 1`; the printed forms put `2(π+χ)` there)
+     as the readout of the doublet member that holds the reference's class; the charge weight alone does
+     not give it (`(s_u/s_d)^p` needs `p ≈ 1.6`). Derive the boundary `π` of `|V_ub|`.
+   - The orientation as the doublet: PMAction REVIEW, "Protocol register".
 3. **Completion order inside one event.** `corner_split`: the two-step term splits as `w, 1 − w̄`; `w = ½`
    for any power series in `A`, `w = 0` for forward composition (FC). At `U = 1` with `κ₁ = jump`,
    Stewart's relation gives `w = 0` at `1.1σ`, `w = ½` at `4.9σ`, `w = 1` at `25σ`. Derive FC from the

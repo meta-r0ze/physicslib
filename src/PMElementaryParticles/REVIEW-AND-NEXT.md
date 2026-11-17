@@ -5,45 +5,23 @@ is PMAction's; label changes are PMFlavor's.
 
 ## The protocol readout (first)
 
-Wire inputs: `κ_R = (K, k, k)` (`PMAction.ReferenceClassHop`), other wall class-blind
-(`PMAction.CarrierAdmittance`), `k/K` open (PMAction REVIEW, "Node-restoring amplitude"). The readout
-on this wire is in OVERVIEW ("Protocol readout"): at the resonance `m₁ = 0` and `m₂/m₃ = √(3/2) k`
-for every protocol, and the data need a heavy-label weight `s_e : s_d : s_u ≈ 1 : 3 : 13` (`k = α/2`).
-Until the readout is derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers (declared; their
-e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the paper's form.
+The derived wire and its readout are in OVERVIEW ("Protocol readout"): at the resonance `m₁ = 0` and
+`m₂/m₃ = √(3/2) k` for every protocol (`k/K = α/2`, `PMAction.ReferenceNode`). Until the readout is
+derived, e8p's masses are the `QuarkMasses`/`LeptonMasses` tier ledgers (declared; their e8p caveats
+say so). The tier ladder (`TierLedger`) is the same question in the paper's form. Mixing is not a wire
+effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
 
 - **Heavy-label weight.** Derive the heavy (label-`v`) state's upkeep per protocol,
   `s_e : s_d : s_u ≈ 1 : 3 : 13`. A charge-dependent upkeep `s ∝ e^{a Y_R}` (`Y_R = −2, −2/3, 4/3`)
-  fits both ratios with one `a` on the derived wire: for `k = α/2`, `a = 0.82` (down) and `0.77` (up)
-  at PDG mixed scales, `0.74` and `0.75` with `m_b`, `m_t` at their own scale (2–11% apart across
-  the quark-mass choices); for `k = α` they are 7–18% apart (`tools/protocol_readout_scan.py`). So the reading passes a one-parameter
-  test, better at `α/2`. Derive the upkeep and `a` (the library has no such cost yet). The
-  crossing-fraction reading read colour as carrier axes and is excluded (`PMAction.ColourRegister`).
-- **Mixing.** On the derived wire (OVERVIEW, "Protocol readout") neither root assignment gives the
-  CKM: same root `|V_us| ≈ 0`, `|V_cb|, |V_ub| ≈ 0.009, 0.008`; different roots `|V_us| = √3/2`. With
-  each protocol's flip moved off the resonance to fit its `m₁/m₂` (Light masses below), same-root
-  `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065` (data `0.225`, `0.041`, `0.0037`). Cheap tests
-  (`tools/mixing_candidates_check.py`, masses held at data): `|V_us| = 0.225` is reached by each of a
-  relative flip phase between up and down (`0.49`), a light-class asymmetry `k_s/k_c ≈ 1.2` exchanged
-  between up and down (the doublet reflection's `s ↔ c`), or an other-wall cycle phase or asymmetry,
-  so `|V_us|` does not discriminate. `|V_cb|` stays at `0.002–0.010` under every deformation tried
-  (those, the weight's placement on one or both walls, a joint phase × asymmetry fit, and `k/K` from
-  `α/4` to `10α`), with `|V_cb| ≈ |V_ub|` against the data's ratio `11`. So the wire's heavy–light
-  rotation is capped near `m₂/m₃`-size and treats the two light generations alike; `|V_cb|` (about
-  `2 m_s/m_b`) needs a source outside the wire's mass matrices. PMFlavor's transfer readout is that
-  source (its `|V_cb|`, `s₁₃` come from node passage, not from diagonalizing masses), and its routing is
-  now derived from the reference's class (`PMFlavor.ReferenceRouting`).
-- **Light masses.** At the resonance the lightest state is exactly massless on the full wire, not
-  only at leading order (`PMAction.ExactZeroMode`), and no heavy-label weight changes that
-  (`PMAction.OtherWallStationary.massless_iff`). So `m_e`, `m_u`, `m_d` come from outside the wire:
-  the protocol register, or a reason the flip sits off the resonance. Numerically (derived wire,
-  `k = α/2`, fitted weights) a real offset `δ = −1 + ε` reproduces each `m₁/m₂` with
-  `ε ≈ 0.038 (e), 0.14 (d), 0.0024 (u)` and keeps `m₂/m₃` within 2–7%; no single law in the
-  weight or charge fits those three offsets.
-- **Protocol register.** Protocol identity is a separate register from the wire's spinor components
-  (OVERVIEW, "Protocols are not wire modes"). Derive how a protocol couples to the wire; the partner
-  (up/down, `ν`/`e`) difference and the heavy-label weight both have to enter there (the charge
-  reading above is one such coupling).
+  fits down and up with one `a ≈ 0.74–0.82` (OVERVIEW); derive the upkeep and `a` (the library has no
+  such cost yet).
+- **Lightest masses.** The lightest state is exactly massless on the full wire at the resonance
+  (`PMAction.ExactZeroMode`) for every weight, so `m_e`, `m_u`, `m_d` need a source outside the wire
+  (the protocol register) or a reason the flip sits off the resonance. The offsets the data would need
+  (OVERVIEW) follow no single law in the weight or charge.
+- **Protocol coupling.** How a protocol couples to the wire, on the register of PMAction REVIEW
+  ("Protocol register"); the heavy-label weight, the partner difference and the lightest masses all
+  enter there.
 
 ## Other open work
 

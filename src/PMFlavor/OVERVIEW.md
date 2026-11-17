@@ -439,3 +439,19 @@ closed forms `ρ̄ = c₁₂s₁₃(P cos δ + R)/(s₂₃D)`, `η̄ = c₁₂s�
   withdrawn; they are not carried forward.
 - **e8p reads `Values` only**, and the references were checked against PDG 2024 and NuFIT 6.0. The
   barred `ρ̄`, `η̄` (`WolfensteinBar`) replace the unbarred pair in the comparison.
+
+### Node edges and leg count (2026-11-16, numerical, `tools/leg_count_check.py`)
+
+- `ReferenceRouting.direct_iff`: on the reference's wall a transfer by class `a` avoids the reference's
+  class exactly when `a` is that class; with `PMAction.ReferenceClassHop` and the charged current on the
+  reference's wall, only the transfer through the reference's class is direct.
+- `OrientationDoublet`: every single-wall shift and the label's root move reverse the wall orientation
+  (`no_neutral_change`); the `s ↔ c` exchange maps the two node edges onto each other with up and down
+  exchanged (`flip_reverses`, `flip_node_edges`).
+- Leg count: equal crossings on the two node edges give ratio `1` (excluded). Leaving the reference's
+  class by one leg (`√α`) and entering by two (`α`) gives `α^{−1/2} = 11.7` against `10.7 ± 0.7`, and
+  `√α/2 = 0.0427`, `α/2 = 0.00365` with a common `1/2` not derived; the printed forms (`0.0413`,
+  `0.00361`) fit better. Carrying that asymmetry to the wire's light insertions, or choosing legs at
+  random (per insertion or per edge, coherent or not), worsens the charge-weight test (`14–17%` against
+  `2–10%`) or makes the edges equal. A conserving star node is class-symmetric (`α/3` with three legs);
+  with legs only to occupied modes every restoring crossing has two (`α/2`).
