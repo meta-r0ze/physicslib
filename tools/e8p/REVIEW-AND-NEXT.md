@@ -53,8 +53,7 @@ The physical kernels and channel normalization are owned by
   reference. Tighten the source enclosure before promoting the corrected row. Do not multiply
   shared running and an already inclusive radiative factor twice; retain the raw/dressed CKM
   convention and account for `q² = 515/516` exactly once.
-- **Follow improved source calculations (upstream dependency).** Add certified finite-mass and
-  higher-order muon kernels, the corrected tau partial-width ratio, full-Fermi/outer-radiative
+- **Follow improved source calculations (upstream dependency).** Add the corrected tau partial-width ratio, full-Fermi/outer-radiative
   neutron rows, and kaon semileptonic rows as their source proofs become available. The kaon
   pion-charge and lepton-mass kinematics must be fixed upstream first. Update correction-order
   metadata and keep older stages as marked intermediates; do not turn approximate review

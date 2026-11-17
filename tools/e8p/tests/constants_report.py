@@ -129,20 +129,20 @@ def main():
     assert not by_id["muon_lifetime_s"]["experimental"]["scored"]
     assert Fraction(by_id["tau_lifetime_fs"]["experimental"]["uncertainty"]) == Fraction("0.82")
     assert "already combines" in by_id["tau_lifetime_fs"]["caveat"]
-    assert "finite-electron-mass one-loop" in by_id["muon_lifetime_s"]["caveat"]
+    assert "van Ritbergen-Stuart" in by_id["muon_lifetime_s"]["caveat"]
     assert by_id["alpha_inv"]["decay"] is None
     # Reporting changes must not change the physical formulas' certified intervals.
     for key, interval in {
         "pion_lifetime_predicted_s": ("2.60188e-8", "2.60192e-8"),
         "kaon_finite_lifetime_s": ("1.98e-8", "2.12e-8"),
         "neutral_pion_finite_lifetime_s": ("8.44e-17", "8.48e-17"),
-        "muon_lifetime_s": ("2.196987e-6", "2.196998e-6"),
+        "muon_lifetime_s": ("2.196974e-6", "2.196984e-6"),
     }.items():
         assert tuple(Fraction(by_id[key][field]) for field in ("rational_lower", "rational_upper")) == tuple(map(Fraction, interval))
     decay_text = run(binary, "--values", "--only=neutral_pion_finite_lifetime_s").stdout
     assert "two-photon partial" in decay_text and "quadrature" in decay_text
     assert re.search(r"exp.*[1-9][0-9.]*e-17", decay_text), decay_text
-    assert "finite-electron-mass" in run(binary, "--values", "--only=muon_lifetime_s").stdout
+    assert "van Ritbergen-Stuart" in run(binary, "--values", "--only=muon_lifetime_s").stdout
     decay_audit = run(binary, "--audit", "--only=kaon_finite_lifetime_s").stdout
     assert "· kaon_finite_lifetime_s" in decay_audit and "not total K lifetime" in decay_audit
     decay_latex = run(binary, "--latex", "--only=neutral_pion_finite_lifetime_s").stdout

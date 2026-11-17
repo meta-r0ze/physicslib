@@ -249,7 +249,7 @@ def bounds : Key → Rat × Rat
   | .tauLifetimeE8Natural => (1.6e8, 3.4e8)
   | .neutronSpectralFraction => (0.45, 1)
   | .neutronLifetimeE8 => (2.9e23, 8.0e23)
-  | .muonLifetimeSeconds => (2.196987e-6, 2.196998e-6)
+  | .muonLifetimeSeconds => (2.196974e-6, 2.196984e-6)
   | .neutronLifetimeSeconds => (3.7e2, 1.04e3)
   | .neutronLifetimePredicted => (923.37, 923.39)
   | .pionLifetimePredicted => (2.60188e-8, 2.60192e-8)
@@ -390,7 +390,7 @@ def Key.theoremName : Key → String
   | .tauLifetimeE8Natural => "PMElementaryParticles.TauE8.tauLifetimeE8_bounds"
   | .neutronSpectralFraction => "PMHadrons.neutronSpectralFraction_bounds"
   | .neutronLifetimeE8 => "PMHadrons.neutronLifetimeE8_bounds"
-  | .muonLifetimeSeconds => "PMElementaryParticles.MuonLifetimeCorrected.corrected_bounds"
+  | .muonLifetimeSeconds => "PMElementaryParticles.Values.muonLifetimeFull_bounds"
   | .neutronLifetimeSeconds => "PMHadrons.neutronLifetimeSeconds_bounds"
   | .neutronLifetimePredicted => "PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds"
   | .pionLifetimePredicted => "PMHadrons.pionLifetimeCorrectedSeconds_bounds"
@@ -589,7 +589,7 @@ def Key.formula : Key → String
   | .rydbergEV => "R_\\infty=\\alpha^2 m_e c^2/2"
   | .bohrRadius => "a_0=\\hbar c/(\\alpha m_e c^2)"
   | .shell4 => "\\sum_{\\ell=0}^{n-1}2(2\\ell+1)=2n^2"
-  | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5\\,f(m_e^2/m_\\mu^2)\\,(1-\\frac{\\alpha}{2\\pi}(\\pi^2-\\frac{25}{4})))"
+  | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5\\,(1+\\Delta q^{(0)}+\\Delta q^{(1)}+\\Delta q^{(2)}))"
   | .kaonPionRatio => "\\frac{\\Gamma_K}{\\Gamma_\\pi}=\\frac{\\pi^2}{196-\\pi^2}\\left(\\frac{70}{59}\\right)^2\\frac{m_K}{m_\\pi}\\frac{(1-m_\\mu^2/m_K^2)^2}{(1-m_\\mu^2/m_\\pi^2)^2}"
   | .pionLifetimePredicted => "\\frac{33}{32}\\,\\frac{8\\pi}{G_F^2 f_\\pi^2 m_\\pi m_\\mu^2(1-m_\\mu^2/m_\\pi^2)^2}"
   | .neutronLifetimePredicted => "\\frac{2\\pi^3}{G_F^2 |V_{ud}|^2 R\\,(1+3g_A^2)\\,(f_0+\\pi\\alpha P)},\\ g_A=5/4"
@@ -607,8 +607,8 @@ def Key.decayInfo : Key → Option DecayInfo
   | .muonLifetimeFinite => some ⟨"total lifetime at tree level", "mu -> e nu nubar",
       "massless tree; finite-channel template", "E8 G_F; no radiative factor"⟩
   | .muonLifetimeSeconds => some ⟨"inclusive total lifetime", "mu -> e nu nubar [gamma]",
-      "massive tree phase space times massless one-loop QED; finite-mass QED and higher orders omitted",
-      "E8 G_F and alpha(0); supplied one-loop kernel"⟩
+      "massive tree phase space plus the Fermi-theory QED series through two loops with electron-mass terms (van Ritbergen-Stuart)",
+      "E8 G_F, alpha and m_mu/m_e; alpha(m_mu) from E8 alpha; supplied series coefficients"⟩
   | .tauLifetimeFs => some ⟨"conditional total lifetime", "tau, inferred from its electronic branch",
       "tree-level m^5 scaling; phase-space and radiative ratio omitted",
       "measured muon lifetime and B_e; not an independent total-width prediction"⟩
@@ -661,7 +661,7 @@ def Key.caveat : Key → String
   | .tauLifetimeE8Natural => "E8 muon input; broad natural-unit interval"
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
   | .neutronLifetimeE8 => "finite 3x3x3 channel; broad natural-unit interval"
-  | .muonLifetimeSeconds => "E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); finite-electron-mass one-loop radiation (about +4.4 ppm in rate) and higher-order QED omitted; the roughly +5 ppm lifetime residual is not solely a two-loop effect; G_F itself is scored in fermi_constant, so this reference is not scored"
+  | .muonLifetimeSeconds => "E8 G_F, m_mu/m_e and alpha; phase space f(r) derived (MassiveWidth.phase); the QED series 1 + dq0 + dq1 + dq2 of van Ritbergen-Stuart supplied (one-loop with electron-mass terms, two-loop 6.700, alpha(m_mu)^-1 = alpha^-1 - (2/3pi) ln(m_mu/m_e)); higher orders are below 1 ppm; G_F itself is scored in fermi_constant, so this reference is not scored"
   | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); adding that negative correction alone lowers the model ratio further; f_K/f_pi = 70/59 (FLAG 1.1934); compare like partial widths"
   | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; comparison uses tau_pi/BR(mu nu [gamma]), not the total pion lifetime"
   | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"

@@ -148,8 +148,8 @@ context, with `·` instead of a glyph:
 * `neutron_lifetime_unified_s`: the `3³` spectral template, kept as a comparison; the scored E8
   neutron is `neutron_lifetime_predicted_s` (continuum route);
 * `kaon_finite_lifetime_s`: raw muonic partial channel, awaiting shared-factor normalization;
-* `muon_lifetime_s`: E8 `G_F` with the derived phase factor and the one-loop QED factor; the
-  `G_F` it tests is already scored in `fermi_constant`, and higher-order QED is not included. -/
+* `muon_lifetime_s`: E8 `G_F` with the derived phase factor and the supplied Fermi-theory QED series
+  through two loops; the `G_F` it tests is already scored in `fermi_constant`. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
   | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds
