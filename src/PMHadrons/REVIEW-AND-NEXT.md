@@ -74,6 +74,15 @@ In order: the normalization decision comes first because every rate below uses i
   `WeakTransition` supply the finite-hazard form. After the normalization decision above, keep one
   route and mark or remove the comparison stages, so e8p's three neutron rows reduce to one scored
   row and clearly labelled intermediates.
+- **Meson-width conventions.** Three overlapping normalizations: the pion's `32/33`
+  (`MesonFiniteChannels.pionLifetimeCorrectedSeconds`, the scored row), the shared factor
+  (`DecayInstantiation`) and the derived running (`ShortDistanceRunning`). The normalization item
+  above decides which survives; then keep one module for it. `MesonFiniteChannels` and
+  `NeutronPrediction` also serve PMAtoms (`SpectralDecoherenceInstances`, `PersistenceComplex`,
+  `SpectralMeasure`) as finite-cube instances, so their finite channels stay.
+- **Small leftovers.** `WeakTransition` (the `3` weak channels behind `G_F²/3`) is imported by
+  nothing and belongs with `BetaCalibration`; `NeutronCorrection` holds four supplied comparison
+  factors and is imported by nothing.
 - **Unused interfaces.** `CompositeBinding` (mass as "carriers minus binding", which the occupancy
   account replaces), `MultiBodyPhaseSpace` and `ChannelFinalStateLink` are imported by nothing else.
   Keep them only if the channel-inventory work above uses them.
