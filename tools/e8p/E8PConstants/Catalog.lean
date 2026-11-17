@@ -252,8 +252,8 @@ def bounds : Key → Rat × Rat
   | .muonLifetimeSeconds => (2.196974e-6, 2.196984e-6)
   | .neutronLifetimeSeconds => (3.7e2, 1.04e3)
   | .neutronLifetimePredicted => (923.37, 923.39)
-  | .pionLifetimePredicted => (2.60188e-8, 2.60192e-8)
-  | .kaonPionRatio => (1.318922, 1.318923)
+  | .pionLifetimePredicted => (2.61592e-8, 2.61602e-8)
+  | .kaonPionRatio => (1.309978, 1.309980)
   | .neutronLifetimeUnified => (948.69, 948.70)
   | .pionFiniteWidth => (4.9e-14, 5.16e-14)
   | .pionFiniteLifetime => (1.9e13, 2.05e13)
@@ -393,8 +393,8 @@ def Key.theoremName : Key → String
   | .muonLifetimeSeconds => "PMElementaryParticles.Values.muonLifetimeFull_bounds"
   | .neutronLifetimeSeconds => "PMHadrons.neutronLifetimeSeconds_bounds"
   | .neutronLifetimePredicted => "PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds"
-  | .pionLifetimePredicted => "PMHadrons.pionLifetimeCorrectedSeconds_bounds"
-  | .kaonPionRatio => "PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds"
+  | .pionLifetimePredicted => "PMHadrons.ChargedCurrentRate.pionMuLifetimeSeconds_bounds"
+  | .kaonPionRatio => "PMHadrons.ChargedCurrentRate.kaonPionRatioRadiative_bounds"
   | .neutronLifetimeUnified => "PMHadrons.DecayInstantiation.neutronLifetimeUnifiedSeconds_bounds"
   | .pionFiniteWidth => "PMHadrons.pionFiniteWidth_bounds"
   | .pionFiniteLifetime => "PMHadrons.pionFiniteLifetime_bounds"
@@ -590,8 +590,8 @@ def Key.formula : Key → String
   | .bohrRadius => "a_0=\\hbar c/(\\alpha m_e c^2)"
   | .shell4 => "\\sum_{\\ell=0}^{n-1}2(2\\ell+1)=2n^2"
   | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5\\,(1+\\Delta q^{(0)}+\\Delta q^{(1)}+\\Delta q^{(2)}))"
-  | .kaonPionRatio => "\\frac{\\Gamma_K}{\\Gamma_\\pi}=\\frac{\\pi^2}{196-\\pi^2}\\left(\\frac{70}{59}\\right)^2\\frac{m_K}{m_\\pi}\\frac{(1-m_\\mu^2/m_K^2)^2}{(1-m_\\mu^2/m_\\pi^2)^2}"
-  | .pionLifetimePredicted => "\\frac{33}{32}\\,\\frac{8\\pi}{G_F^2 f_\\pi^2 m_\\pi m_\\mu^2(1-m_\\mu^2/m_\\pi^2)^2}"
+  | .kaonPionRatio => "\\frac{\\Gamma_K}{\\Gamma_\\pi}=\\frac{\\pi^2}{196-\\pi^2}\\left(\\frac{70}{59}\\right)^2\\frac{m_K}{m_\\pi}\\frac{(1-m_\\mu^2/m_K^2)^2}{(1-m_\\mu^2/m_\\pi^2)^2}\\frac{1+\\delta_K}{1+\\delta_\\pi}"
+  | .pionLifetimePredicted => "\\frac{8\\pi}{G_F^2\\,q^2|V_{ud}|^2 f_\\pi^2 m_\\pi m_\\mu^2(1-m_\\mu^2/m_\\pi^2)^2(1+\\delta_\\pi)}"
   | .neutronLifetimePredicted => "\\frac{2\\pi^3}{G_F^2 |V_{ud}|^2 R\\,(1+3g_A^2)\\,(f_0+\\pi\\alpha P)},\\ g_A=5/4"
   | _ => ""
 
@@ -626,15 +626,15 @@ def Key.decayInfo : Key → Option DecayInfo
   | .pionFiniteLifetime | .pionFiniteLifetimeSeconds => some ⟨"inverse muonic partial width", "pi+ -> mu+ nu",
       "two-body tree; all finite modes open", "no V_ud factor or 32/33 correction; intermediate"⟩
   | .pionLifetimePredicted => some ⟨"inverse muonic partial width", "pi+ -> mu+ nu [gamma] comparison",
-      "two-body tree with effective channel factor; finite radiative matching unresolved",
-      "32/33 effective rate factor; CKM/running/dressing must not be counted again"⟩
+      "two-body tree times the full radiative correction (supplied delta_pi = 0.0176)",
+      "E8 G_F; dressed CKM q^2|V_ud|^2 (q^2 = 515/516); each factor counted once"⟩
   | .kaonFiniteWidth => some ⟨"muonic partial width", "K+ -> mu+ nu",
       "two-body tree; all finite modes open", "raw V_us squared; shared R and finite radiation omitted; intermediate"⟩
   | .kaonFiniteLifetime | .kaonFiniteLifetimeSeconds => some ⟨"inverse muonic partial width", "K+ -> mu+ nu",
       "two-body tree; all finite modes open", "raw V_us squared; shared R and finite radiation omitted; intermediate"⟩
   | .kaonPionRatio => some ⟨"ratio of muonic partial widths", "K_mu2 / pi_mu2 [gamma] comparison",
-      "two-body tree ratio; channel-dependent electromagnetic difference omitted",
-      "raw V_us/V_ud; common factors cancel; f_K/f_pi = 70/59"⟩
+      "two-body tree ratio times (1 + delta_K)/(1 + delta_pi) (supplied)",
+      "E8 V_us/V_ud; G_F and the dressing cancel; f_K/f_pi = 70/59"⟩
   | .neutralPionFiniteWidth => some ⟨"two-photon partial width", "pi0 -> gamma gamma",
       "leading anomaly formula; supplied triangle-loop normalization", "no Dalitz or other channels in this width"⟩
   | .neutralPionFiniteLifetime | .neutralPionFiniteLifetimeSeconds => some ⟨"inverse two-photon partial width", "pi0 -> gamma gamma",
@@ -662,15 +662,15 @@ def Key.caveat : Key → String
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
   | .neutronLifetimeE8 => "finite 3x3x3 channel; broad natural-unit interval"
   | .muonLifetimeSeconds => "E8 G_F, m_mu/m_e and alpha; phase space f(r) derived (MassiveWidth.phase); the QED series 1 + dq0 + dq1 + dq2 of van Ritbergen-Stuart supplied (one-loop with electron-mass terms, two-loop 6.700, alpha(m_mu)^-1 = alpha^-1 - (2/3pi) ln(m_mu/m_e)); higher orders are below 1 ppm; G_F itself is scored in fermi_constant, so this reference is not scored"
-  | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); adding that negative correction alone lowers the model ratio further; f_K/f_pi = 70/59 (FLAG 1.1934); compare like partial widths"
-  | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; comparison uses tau_pi/BR(mu nu [gamma]), not the total pion lifetime"
+  | .kaonPionRatio => "G_F, m_mu^2 and the dressing cancel; |V_us|^2/|V_ud|^2 and the supplied radiative difference (1 + delta_K)/(1 + delta_pi) = 0.9932 (arXiv:1509.02220); the residual is f_K/f_pi = 70/59 against FLAG 1.1934; compare like partial widths"
+  | .pionLifetimePredicted => "one charged-current normalization (PMHadrons.ChargedCurrentRate): E8 G_F, f_pi = v/1890, dressed |V_ud| and the supplied full radiative correction delta_pi = 0.0176 (arXiv:1509.02220); replaces the fitted 32/33 factor; the residual is f_pi (the measurement implies 130.58(13) MeV against E8 130.275); comparison uses tau_pi/BR(mu nu [gamma])"
   | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"
   | .neutronLifetimePredicted => "continuum route: the emitted electron is not confined, so its modes are the continuum limit of the lattice; phase space as for the muon, Fermi factor to first order (full factor 922.9 s); remaining gap: g_A (5/4 vs 1.2754) and the low-energy radiative correction"
   | .neutronLifetimeUnified => "3x3x3 spectral template (comparison): the continuum route without Coulomb to 0.6%; see neutron_lifetime_predicted_s"
   | .pionFiniteWidth | .pionFiniteLifetime | .pionFiniteLifetimeSeconds =>
       "raw muonic partial channel; no V_ud or 32/33 factor; finite modes all open; broad intermediate enclosure"
   | .kaonFiniteWidth | .kaonFiniteLifetime | .kaonFiniteLifetimeSeconds =>
-      "raw muonic partial channel, not total K lifetime; shared-factor correction exists in DecayInstantiation but is not applied here; normalization/matching and tighter bounds remain upstream"
+      "raw muonic partial channel, not total K lifetime; the normalized kaon (dressed |V_us|, supplied delta_K) is PMHadrons.ChargedCurrentRate.kaonMuLifetimeSeconds, 1.99692-1.99700e-8 s, not yet a catalog row"
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime | .neutralPionFiniteLifetimeSeconds =>
       "gamma-gamma partial channel, not total pi0 lifetime; no Dalitz width; reference is the total-lifetime average divided by BR(gamma gamma)"
   | .rydbergEV | .bohrRadius => "atoms comparison; unit-sensitive"

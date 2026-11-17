@@ -18,9 +18,10 @@ In order: the normalization decision comes first because every rate below uses i
   the pion by construction; its `6·10⁻⁵` agreement with `|V_ud|² R` leaves out both the dressing and
   the long-distance part, so it does not survive the count-once rule. The derived running is the
   short-distance part of `δ`: `R − 1 = 0.0212` (`μ = m_p`, E8 `M_Z`) against the standard `0.0218`.
-  Next: (1) one Lean module with this rate (supplied `δ_P`, `R` as its short-distance part) for pion
-  and kaon, e8p rows re-pointed, `32/33`, `sharedFactor` and `MesonFiniteChannels`' corrected lifetime
-  retired; (2) the neutron in the same convention (its `δ` is the outer plus inner correction); (3) the
+  Done for pion and kaon: `ChargedCurrentRate` (e8p's pion row and the K/π ratio read it). Left: (1)
+  remove `32/33` (`MesonFiniteChannels.pionLifetimeCorrectedSeconds`, `E8Margin.pionMargin` as a rate
+  factor) and `DecayInstantiation.sharedFactor` once nothing reads them, and give the normalized kaon
+  its own e8p row; (2) the neutron in the same convention (its `δ` is the outer plus inner correction); (3) the
   residuals are then the emission counts: `f_π` mildly (`1890`), `f_K` clearly (`1593`, the meson
   emission item below). Do not count the dressing, `R` and `δ` twice.
 - **Partial, inclusive and total rates.** Define photon-inclusive channels and sum actual partial

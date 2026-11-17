@@ -38,3 +38,4 @@ The hadron level of the system tower: quark composites (the nucleons and the lig
 Their mass ledger (`CompositeMasses`), their composite states and transitions, their widths,
 and the particle channel inventory. Built on `PMElementaryParticles`; `PMAtoms` builds on it.
 -/
+import PMHadrons.ChargedCurrentRate

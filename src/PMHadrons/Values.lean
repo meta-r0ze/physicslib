@@ -8,6 +8,7 @@ import PMHadrons.NeutronPrediction
 import PMHadrons.TollGovernor
 import PMHadrons.DecayInstantiation
 import PMHadrons.NeutronContinuum
+import PMHadrons.ChargedCurrentRate
 
 /-!
 # PMHadrons canonical values
@@ -25,8 +26,9 @@ Single import for the hadron-level values that `PMAtoms` and `e8p` use, mirrorin
 * Lifetimes: `neutronLifetimeContinuumCoulombSeconds` (the E8 neutron: continuum route with the
   Fermi factor's leading term, `923.37–923.39 s`), `neutronLifetimeContinuumSeconds` (no Coulomb),
   `neutronLifetimeUnifiedSeconds` (the `3³` spectral template, comparison),
-  `pionLifetimeCorrectedSeconds`,
-  `neutralPionFiniteLifetimeSeconds` with bounds; `kaonPionWidthRatio` with bounds.
+  `pionMuLifetimeSeconds`, `kaonMuLifetimeSeconds` and `kaonPionRatioRadiative` (one charged-current
+  normalization, `ChargedCurrentRate`), `neutralPionFiniteLifetimeSeconds`, with bounds;
+  `pionLifetimeCorrectedSeconds` (the earlier `32/33` stage) and `kaonPionWidthRatio` (tree ratio).
 * Margins and emission: `neutronMarginFactor` (`= E8Margin.phaseMargin = 41/43`),
   `emissionWeight` (Toll), `governorPerSlot`.
 -/
@@ -52,6 +54,9 @@ export PMHadrons.NeutronContinuum
     neutronLifetimeContinuumCoulombSeconds neutronLifetimeContinuumCoulombSeconds_bounds)
 export PMHadrons.DecayInstantiation
   (neutronLifetimeUnifiedSeconds neutronLifetimeUnifiedSeconds_bounds)
+export PMHadrons.ChargedCurrentRate
+  (pionMuLifetimeSeconds pionMuLifetimeSeconds_bounds kaonMuLifetimeSeconds
+    kaonMuLifetimeSeconds_bounds kaonPionRatioRadiative kaonPionRatioRadiative_bounds)
 export PMHadrons.TollGovernor (emissionWeight emissionWeight_pos governorPerSlot)
 
 end PMHadrons.Values
