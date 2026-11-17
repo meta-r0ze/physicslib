@@ -31,6 +31,20 @@ member holds the reference's class on its wall: the down member on edge `(0, 2)`
 `(1, 0)` (`tools/register_candidates_check.py` lists the moves). That asymmetry is a candidate source
 of `|V_cb| ≠ |V_ub|` (data ratio `11`) and the question to settle with the leg count.
 
+**Leg count, cheap test (`tools/leg_count_check.py`).** Equal crossings on the two node edges give
+ratio `1` and are excluded. Leaving the reference's class by one leg (amplitude `√α`,
+`NodeElimination.one_leg`) and entering it by two (`α`) gives `α^{−1/2} = 11.7` against `10.7 ± 0.7`;
+with a common factor `1/2`, not derived, `|V_cb| = √α/2 = 0.0427` (data `0.0408 ± 0.0014`) and
+`|V_ub| = α/2 = 0.00365` (`0.00382 ± 0.0002`). The printed forms `(π+χ)/(α⁻¹−Dπ) = 0.0413` and
+`1/(2α⁻¹+π) = 0.00361` fit better and keep both edges at order `α` with different boundary factors;
+their promotion/jump distinction was tied to which wall the class sits on, while in the derived routing
+both node edges are on the reference's wall and differ by entering versus leaving. Neither assignment is
+derived; the discriminator is the `α`-scaling (`√α` versus `α`), which the data at fixed `α` cannot
+test. Applying the same leave/enter asymmetry to the wire's two light mass insertions (one enters, one
+leaves the reference's class) worsens the charge-weight test (one `a` for down and up: `6%` apart with
+equal `k = α/2`, `14%` or `74%` with the asymmetry), so if it holds for the transfers it does not carry
+over unchanged to the mass insertions.
+
 **Status of each entry of `J`** (e8p readout names in brackets).
 
 | Label change | Off the axis | On the axis |
