@@ -29,7 +29,9 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   duration ratio (`CertainTransferRate`), so the root attempt rate `p` cancels, and the flip program is
   `32` root quarter-times (`ClassBlindFlip.forwardTimes_total`). The flip-to-crossing ratio, which the
   light-band leakage and EP's first-row deficit need, then waits only on the crossing's root program,
-  which the library does not yet construct. The absolute clock is `p` (`Machine/RootTransferPhase`:
+  which the library does not yet construct. As E8 reflections, moving a carrier between the
+  generation's two wall classes takes three (`tools/event_clock_check.py`; one for equal classes);
+  whether the flip program is minimal is open. The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator

@@ -101,6 +101,12 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   not wait on the absolute clock: for certain events `r = T_crossing/T_flip`
   (`PMAction.CertainTransferRate`), the attempt rate cancels, and the flip program is `32` root
   quarter-times (`PMAction.ClassBlindFlip.forwardTimes_total`). What is missing is the crossing's root
-  program (PMAction REVIEW). For scale only: a two-root crossing word at a half turn per root gives
-  `r = 1/8` and a deficit `≈ 1.2·10⁻³`; one root event gives `2.9·10⁻⁴`. The deficit estimate borrows
-  the measured `|V_us|` (the mixing is PMFlavor's).
+  program (PMAction REVIEW). Candidate: the crossing moves a carrier from wall 1 to wall 2; as E8
+  reflections that takes `1` for equal classes and `3` for the generation's two classes
+  (`PMAction.GenerationWalls`; fewest, by search). With each reflection a certain root event (two
+  quarter-times) and the flip the library's program, `r = 6/32 = 3/16`, and with the down weight
+  `s_d = 0.26` the middle down mode leaks `1.06 r²`, so the deficit is `≈ 1.9·10⁻³` (measured
+  `1.6 ± 0.7·10⁻³`); heaviest-mode leakage `7%`. Assumptions to derive or drop: the flip program is the
+  minimal one (the library's is literal, not optimal), events run serially, a reflection is one certain
+  root event, and the deficit is `|V_us|²` times the middle mode's leakage (measured `|V_us|`; the
+  mixing is PMFlavor's).
