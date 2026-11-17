@@ -17,6 +17,13 @@ direct and the other two cross the node: the routing `TransferGraph` used. Input
 occupies one class (the vector class), and the node crossings' leg count and boundary (`NodeAmplitude`,
 `VubSeriesPath`), which the entries below still need.
 
+**The transfers are charged-current transitions, if the doublet is the wall orientation**
+(`OrientationDoublet`, candidate (a) of PMAction REVIEW "Colour register"). Every single-wall shift
+changes the generation and reverses the orientation, and the root move by the label reverses it within
+a generation, so every elementary move is an up ↔ down transition and no single move is a neutral
+flavour change. This places `J`'s three entries as off-diagonal charged-current transitions and the
+diagonal as the root move. Open: derive the orientation as the doublet (the register's E8 placement).
+
 **Status of each entry of `J`** (e8p readout names in brackets).
 
 | Label change | Off the axis | On the axis |

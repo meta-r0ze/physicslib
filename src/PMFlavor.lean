@@ -67,6 +67,7 @@ import PMFlavor.ExchangeAxis
 import PMFlavor.ExchangeChirality
 import PMFlavor.TransferGraph
 import PMFlavor.ReferenceRouting
+import PMFlavor.OrientationDoublet
 import PMFlavor.EventTransfer
 import PMFlavor.RefreshLabel
 import PMFlavor.TransferAmplitude
