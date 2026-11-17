@@ -52,3 +52,30 @@ for de in (2.7, 3.2):
         res = y - (ic + sl*n)
         print(f"  s_d/s_e={de}, s_u/s_e={ue}: step ratio {np.exp(-sl):.2f}, rms log residual {np.sqrt(np.mean(res**2)):.3f}")
 print("  (alpha^-1/4 = 3.42 and 3 both fit the step; the data do not separate them)")
+
+# 7. orientation from the clock: lepton (reference) axis = clock axis 0. Forward root events raise the
+#    clock coordinate (PMAction.SliceHop: a -1 clock event runs the clock backwards). Label moves are
+#    root shifts landing on a vector carrier (all colours), optionally forward-only.
+import heapq
+E = np.eye(4, dtype=int)
+car = [s_*E[j] for j in range(4) for s_ in (1, -1)]
+key = lambda w: tuple(int(x) for x in w)
+roots = [s_*E[a] + t*E[b] for a in range(4) for b in range(a+1, 4) for s_ in (1, -1) for t in (1, -1)]
+name = {key(E[0]): "nu", key(-E[0]): "e"}
+for j in (1, 2, 3): name[key(E[j])] = "u"; name[key(-E[j])] = "d"
+U = {key(E[j]) for j in (1, 2, 3)}
+for lbl, allow in [("all roots", lambda r: True), ("forward only", lambda r: r[0] >= 0)]:
+    G = {key(w): [key(w + r) for r in roots if allow(r) and key(w + r) in {key(c) for c in car}] for w in car}
+    D = {}
+    for st in G:
+        pq, seen = [(0, st)], set()
+        while pq:
+            dd, x = heapq.heappop(pq)
+            if x in seen: continue
+            seen.add(x)
+            if x in U: D[st] = dd; break
+            for y in G[x]: heapq.heappush(pq, (dd + 1, y))
+    out = {}
+    for k_, v in D.items(): out.setdefault(name[k_], set()).add(v)
+    print(f"  root shifts to reach u ({lbl}):", out, "unreachable:", {name[k_] for k_ in G if k_ not in D})
+print("  -> no ladder: d reaches u through another colour, e in one forward event")
