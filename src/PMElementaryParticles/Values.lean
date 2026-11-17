@@ -3,6 +3,7 @@ import PMElementaryParticles.PhysicalUnits
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.MuonLifetimeCorrected
+import PMElementaryParticles.MuonLifetimeHigherOrder
 
 /-!
 # PMElementaryParticles canonical values
@@ -19,6 +20,8 @@ Single import for the units, couplings, masses and lifetimes that later librarie
   `up_value … top_value` (in MeV).
 * Lifetimes: `muonLifetimeSeconds` (tree level) with `muonLifetimeSeconds_tight`,
   `muonLifetimeCorrected` (derived phase factor, supplied one-loop QED) with `corrected_bounds`,
+  `muonLifetimeFull` (the full Fermi-theory QED series of van Ritbergen–Stuart, supplied, at E8
+  inputs) with `muonLifetimeFull_bounds` (`2.196974–2.196984 µs`),
   `tauLifetimeSeconds` with `tauLifetimeSeconds_bounds`.
 -/
 
@@ -30,6 +33,13 @@ export PMElementaryParticles.PhysicalUnits
   (electronTime electronTime_pos electronTime_tight muonLifetimeSeconds muonLifetimeSeconds_tight
     tauLifetimeSeconds tauLifetimeSeconds_bounds)
 export PMElementaryParticles.MuonLifetimeCorrected (muonLifetimeCorrected corrected_bounds)
+
+/-- The muon lifetime with the full Fermi-theory QED series. -/
+noncomputable abbrev muonLifetimeFull : ℝ := PMElementaryParticles.MuonLifetimeHigherOrder.lifetime
+
+theorem muonLifetimeFull_bounds :
+    (2.196974e-6 : ℝ) < muonLifetimeFull ∧ muonLifetimeFull < (2.196984e-6 : ℝ) :=
+  PMElementaryParticles.MuonLifetimeHigherOrder.lifetime_bounds
 export PMElementaryParticles.LeptonMasses (muon tau muon_value tau_value)
 export PMElementaryParticles.QuarkMasses
   (up down strange charm bottom top up_value down_value strange_value charm_value bottom_value

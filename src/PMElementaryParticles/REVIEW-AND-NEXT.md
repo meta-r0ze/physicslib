@@ -89,7 +89,9 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
 
 ## Other open work
 
-- **Radiative factor.** `MuonLifetimeCorrected` supplies `q = 1 − (α/2π)(π² − 25/4)`. It has no log
+- **Radiative factor.** `MuonLifetimeCorrected` supplies `q = 1 − (α/2π)(π² − 25/4)`, and
+  `MuonLifetimeHigherOrder` supplies the full series (mass terms, two loops, `α(m_μ)`); deriving it is
+  open. It has no log
   (`MuonRadiativeLog`: in the charge-retention order the `e–μ` current is conserved), so it is the
   finite one-loop dressing of that current, not only the soft part. Plan, in the order the library can
   take it: (1) the decay as `μ → e + (pair of invariant mass q²)` with the pair tensor of `PairSphere`
