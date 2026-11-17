@@ -1,30 +1,48 @@
 # PMAction — open work
 
-Checked results are in [OVERVIEW](OVERVIEW.md). The [six-pillar protocol map](PAIR-PROTOCOL.md) separates the checked finite class-pair construction from its remaining native implementation obligations. The [host map](HOST-MAINTENANCE.md) traces disturbance export and the record/current interface. The finite construction does **not** discharge all substrate premises.
+Checked results are in [OVERVIEW](OVERVIEW.md). Machine-layer organization is in
+[Machine/REVIEW-AND-NEXT.md](Machine/REVIEW-AND-NEXT.md).
 
-**Substrate premise** marks a supplied parameter or identification still to derive from the E8 update. **Route premise** marks a requirement of a particular derivation route, which an alternative route may replace. **Certificate** marks an external calculation awaiting formal verification. **Extension** marks a stronger result beyond the present theorem scope. These are derivation obligations, not Lean proof errors; each current theorem states its hypotheses.
+**Extension** marks a stronger result beyond the present theorem scope. **Certificate** marks an
+external calculation awaiting formal verification. Each current theorem states its hypotheses.
 
 ## Substrate premises
 
-The first two items feed the two-leg `k/K` construction. Register placement and event dynamics are further prerequisites for the downstream mass and charged-current readings.
+None open. The wire's earlier premises are closed in the library:
+* the restoring node's boundary and `k/K = α/2`: `PersistenceSelections` (1), `ReferenceNode`,
+  `ReferenceNodeBoundary`;
+* the native flip event (coherent, no wall offset): `PersistenceSelections` (2), `PairedRootFlip`,
+  `ClassBlindFlip`;
+* the reference's single class: `PersistenceSelections` (3), `ReferenceClassHop`;
+* the even complement's action (identity completion): `EvenComplement`;
+* the carrier admittances and routing: `CarrierAdmittance`, `ReferenceClassHop`.
 
-- **Restoring-node boundary supplied by the host.** Derive whether unused class ports are free internal modes, externally maintained terminals, or channels coupled to other host resources. `ReferenceNodeBoundary` removes the need to delete free spectator legs: their elimination gives the two-leg response. `closed_host_response` extends this to a finite symmetric host attached only at that node, with steady local balance and no other injections. Derive whether actual maintenance satisfies that boundary; open record flow or transient storage is outside this theorem. In its passive scalar network a spectator-to-host load changes that response, and `host_series_iff` identifies the precise zero-load condition. Occupancy alone does not establish this boundary; conservation of the whole host does not imply a closed inner two-port. A derivation of occupied-only coupling would also suffice. Identify the native node-current observable and encoding, then test every host interaction: `ReferenceHostInterface` gives no-feedback for independent record transport, while the class writer filters cross-class observables and the shared-bank maintenance root changes the live-port projector. Record-only no-feedback alone does not establish zero static load. Apply the selected response boundary and Closure's equal-leg pricing before concluding `k/K = α/2`. Dependents include `NodeAmplitude`, `GenerationMass`, `MassInsertion`, `LightSplit`, `GenerationCurrent` and `WallHopPhase`.
-- **Reference class and actual maintenance law.** Derive why the persistent reference has support in one glue class, or replace the downstream use of that condition. Particle occupation one and stationarity do not imply class support one: `ReferenceClassRecord.two_class_stationary` supplies a stationary two-class counterexample. Determine which identity maintenance must preserve and which moves it admits. `GenerationPairProtocol.wall_invariants_constant` shows that accepting every pair-valid wall move protects no nonconstant diagonal pair label; it does not exclude quantum invariant subspaces. MAP retention can be coherent, and retained-fault correction need not measure the reference class. The class-record route below is sufficient under its contract, not selected by the six pillars. Its preservation of one stationary reference must be distinguished from the all-input observable preservation tested by `ReferenceHostInterface`.
-- **Protocol register.** Derive the native independent register factor required by `ColourRegister`, which excludes colour on the carrier axes when it commutes with the Dirac generators. For the even-sector candidate, establish its placement inside each generation and the native current on retained orientation. `VectorEvenFrame` supplies modes, and `GenerationMapObligations` supplies coherent label/orientation coding for the full six-state domain; neither establishes that physical factorization or selects a weak doublet. Derive the admitted domain and future queries. Alternatively, derive the E8 origin of the occupation register used by `IndependentRegisters`. Re-derive `NativeDetuning`'s per-protocol crossing reading with colour separate from axes.
-- **Event clock and native implementation.** Select the native microscopic schedules and derive their durations in hop-time units and relation to the substrate tick, including the crossing rate `y` and the in-wall carrier and flip rates. `ClassBlindFlip` supplies one common class-blind coherent beta program from root phases, including a forward-only realization. Admit the actual coherent controls and common root rate, and price the full circuit. Its sixteen serial phase parameters total `32*quarterTime p` on the stated nonnegative interval; derive their relation to physical hop time rather than identifying the output-angle parameter with elapsed time. `RootCliffordCompletion` completes chirality and all three internal alpha rotations, and their finite internal words. `CompletedCarrierPhase` also constructs a common odd i phase fixing every even mode and the completed Hermitian internal generators. `SelectiveCarrierRouting.step_completed` factors a one-wall spatial direction into a selective route, an on-site beta echo and the reverse route, with full readout, even restoration and the original support. Derive native admission, timing and price of that spectral selective route. `no_single_source_realization` excludes replacing the joint control by unconditioned spatial shuffles and on-site controls alone, even using the unobserved carrier modes. Inter-wall crossing and composition as the selected finite-tick walk remain open. `GenerationPairProtocol` supplies reversible quotient schedules, not native gates, primitive tariffs or tick calibration; its supplied cost ledger does not price hidden carrier/root work. A certain event of duration `τ` has rate `≥ π/(2τ)` (`CertainTransferRate`); converting node admittance to a Hamiltonian rate still needs that duration. `WallGapCalibration.arbitrary_cyclic_ratio` leaves every positive flip-to-crossing ratio possible under the tested native realization, stationary reference and glue support. `SplitClockBoundary` excludes the universal single-exponential identification: compare the finite-tick update with wall evolution on the light subspace instead. At derived rates, certify the light-band error with `LightLeakage`. Machine-level controls and bank-supply obligations are tracked in [Machine/REVIEW-AND-NEXT.md](Machine/REVIEW-AND-NEXT.md).
-- **Native flip-event law.** Derive which complete event implements the other wall's flip and how it joins the crossing dynamics. A single lazy `β` event has the retained wall-local offset (`NativeWallOffset`, `WallOffset`). The paired-root coherent sequences (`PairedRootFlip`, and the common class-blind `ClassBlindFlip` echo) instead have an exact net beta rotation with no residual scalar phase and fix the even sector in every carrier class. They use the same reconstructed primitive root phases: the distinction is also one of event grouping and control schedule, not necessarily two different primitive laws. Select that grouping from the actual maintenance/transfer task, include its physical duration and prices, and justify its use in the coupled wall evolution. `OtherWallStationary`'s stationary cubic alone does not choose the event; observed mass agreement cannot supply the choice.
-
-## Route premises
-
-- **Class-record task and readout.** If using `ReferenceClassRecord` / `ReferenceRootRecord`, derive why maintenance faithfully records the class while preserving the pure reference's class density. Identify the actual node observable and its factor: `ReferenceHostInterface.native_writer_preserves_iff` permits full observable preservation only for class-block-diagonal operators, and `series_write_changes` tests a positive two-port response on that recorded factor. Account for write-time disturbance/restoration or derive a weaker task-specific preservation contract. Independent export does not remove this obligation; an alternative maintenance route may replace the class-record contract.
-- **Native class-record realization and reservoir.** Admit the class-controlled joint interaction, the separate even record bank, and access to the root-write/export schedule (`ReferenceMarkerExport`, `ReferenceMarkerSupply`); independent bank relabelings cannot supply joint control. Derive the reservoir's readiness task, an accessible background stationary under unwritten transport, its population budget, and non-return routing or a finite repair horizon. `ReferenceReadySource` derives the blank profile and donor-orbit constancy under those contracts, so a separately specified globally uniform field is unnecessary. Stationarity alone does not establish readiness. Include distinct-donor bounds, incoming population, primitive prices and durations in the host's resource accounting.
-- **Retained event-tag repair.** If using `GenerationPairProtocol.coherent_fault_echo`, derive the fault dynamics, acquisition and continuing supply of the retained event tag, and physical repair timing. The echo supplies none of these and does not select this maintenance route.
+The protocol register (which E8 structure carries protocol identity) is Paper III's application, not
+a PMAction premise: PMAction supplies the constraints (`ColourRegister`: colour is a separate factor,
+not the carrier axes), the factor construction (`IndependentRegisters`) and the stationary even sector
+(`EvenComplement`). It is tracked in PMElementaryParticles REVIEW.
 
 ## Extensions
 
-- **Polarization continuum matching.** Compare the normalized primitive-period response tensor (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator limits. Sharpen the lattice remainder bound enough to compare it with `tools/lattice_polarization_check.py` at fixed spacing.
-- **Further field limits.** Establish joint-limit and operator-domain control for the integrated gauge Hessian, mode and domain control for the real-space PDE limit, the full real-space fermion field and interacting-field estimates.
+- **Absolute event clock.** Durations of the native events in hop-time units and their relation to
+  the substrate tick: the crossing rate `y`, the in-wall carrier and flip rates, and the timing and
+  price of the native control circuits (`ClassBlindFlip`, `RootCliffordCompletion`,
+  `CompletedCarrierPhase`, `SelectiveCarrierRouting`). Downstream ratios do not use it: the light-mass
+  ratios and the routing are set by `k/K`, the resonance and the reference. It is needed for absolute
+  scales, for converting node admittances into Hamiltonian rates (`CertainTransferRate`), for the
+  light-band error at derived rates (`LightLeakage`; `WallGapCalibration` leaves the flip-to-crossing
+  ratio free), and for the finite-tick walk (`SplitClockBoundary` excludes a single Hamiltonian
+  exponential).
+- **Polarization continuum matching.** Compare the normalized primitive-period response tensor
+  (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
+  limits. Sharpen the lattice remainder bound enough to compare it with
+  `tools/lattice_polarization_check.py` at fixed spacing.
+- **Further field limits.** Establish joint-limit and operator-domain control for the integrated gauge
+  Hessian, mode and domain control for the real-space PDE limit, the full real-space fermion field and
+  interacting-field estimates.
 
 ## Certificates
 
-- **Carrier spectrum and radius.** Certify the lowest positive level of the full 216-dimensional operator and the spin-up rms radius in Lean. The existing exact subspace and radius calculations are in `tools/carrier_mode_exact.py` and `tools/carrier_rms_certificate.py`.
+- **Carrier spectrum and radius.** Certify the lowest positive level of the full 216-dimensional
+  operator and the spin-up rms radius in Lean. The existing exact subspace and radius calculations are
+  in `tools/carrier_mode_exact.py` and `tools/carrier_rms_certificate.py`.

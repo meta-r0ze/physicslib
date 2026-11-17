@@ -37,8 +37,8 @@ carrier at the channel layer.
 * lepton axis (`o = o₀`, `e = e₀`): `⟨o₀|r⟩ ⟨r|e₀⟩ ≠ 0`, so `ν` and `e` read differently at first order;
 * colour axis `i ≠ 0`: `o_i`, `e_i` are orthogonal to `r`, so up and down read the same at first
   order. Their difference needs an operator that carries axis `i` to axis `0` (the native `β`, at
-  second order; colour-symmetric only when averaged over the three colour pairings,
-  PMAction REVIEW).
+  second order; colour-symmetric only when averaged over the three colour pairings; this reads
+  colour as carrier axes, which `PMAction.ColourRegister` excludes).
 
 **Prediction (qualitative, a test).** The partner asymmetry is first order for the lepton pair and
 at least second order for the quark pairs, so it must be much larger for leptons. Data: the

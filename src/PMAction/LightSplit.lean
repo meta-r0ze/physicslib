@@ -39,7 +39,7 @@ background, and what the repair difference does to the node cost, are not derive
 *Update:* `ReferenceDetuning` places the flip on the other wall, not on `R` (`δ_R = 0` from the
 reference's stationarity), and `light_split` concerns the diagonal entries only: the full light mass
 `D_R (δ_O + cyc κ_O)` splits the light pair's singular values through the off-diagonal carrier terms
-when `δ_O` is a few spinor flips (numerical; event-clock item, PMAction REVIEW).
+when `δ_O` is a few spinor flips (numerical; absolute event clock, PMAction REVIEW extensions).
 
 `WallSeesaw` and `CompositeMass` take one `δ` for both walls; with that the light pair stays
 degenerate at this order whatever the carriers do. So the light-pair split needs a source for

@@ -19,9 +19,9 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
   exactly when `M` is singular, now on the reference wall's side (`(0, y)` with `Mᴴ y = 0`), so the
   Economy selection is unchanged.
 
-Open (PMAction REVIEW): the lazy reading changes the light mass law (`WallOffset`: masses near
-`s²/c'` instead of the singular values `s`), and the EP readout so far uses singular values; which
-reading the native event takes decides the mass law. With every protocol on the same real root,
+The lazy reading changes the light mass law (`WallOffset`: masses near `s²/c'` instead of the
+singular values `s`); `PersistenceSelections` (2) selects the coherent event (the offset has positive
+price), so the masses are the singular values. With every protocol on the same real root,
 up and down share the root (PMElementaryParticles OVERVIEW: `|V_us| ≈ 0.002` in that case for the bare
 wire), so the flavour mixing must come from the readout, not from the roots.
 -/

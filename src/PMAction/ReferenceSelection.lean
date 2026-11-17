@@ -34,7 +34,7 @@ witness explicitly. The source boundaries (`ReferenceSourceBoundary`,
 `native_reference_forever` uses a uniform incoming record bank on the unbounded lattice. The actual initial state of the universe is a cosmological question (Paper VI).
 The local source task, readiness, accessibility and resource accounting remain
 PMAction obligations. In particular spatial uniformity of a stream does not
-select its carrier profile; `ReferenceReadySource` treats that task separately.
+select its carrier profile.
 -/
 
 noncomputable section

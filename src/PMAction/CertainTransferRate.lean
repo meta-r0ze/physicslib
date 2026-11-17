@@ -17,7 +17,7 @@ Under an update `e^{−iτH}` (the open PMAction item "Update as `e^{−iHt}` on
   `π/(2τ)`.
 * `flip_lower`: so the carrier's flip is at least `r π/(4τ)`.
 
-**Consequence for the wire (PMAction REVIEW, event-clock item).** The light-mode reduction and a heavy
+**Consequence for the wire (PMAction REVIEW, extension "Absolute event clock").** The light-mode reduction and a heavy
 state that persists on its walls need the vector flip small against the crossing, `K_f ≪ |y| = 1`.
 With a certain vector event this needs `τ ≫ π/4` in hop-time units: one carrier event lasts many
 hop times. With the update's tick `τ₀` small (the split update needs it, `GlobalTickInterval`), a

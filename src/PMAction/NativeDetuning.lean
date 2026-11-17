@@ -19,30 +19,15 @@ the reference's wall. The other wall's `δ_O` is `−gap(p₁)/2` with `p₁` it
 which the library does not fix. If the carriers are lazy transfers too, ratios are ratios of gaps,
 `δ_O/k_f = gap(p₁)/gap(p_s) ≈ p₁/p_s` for small attempt probabilities.
 
-**Does the `β` event pass the reference node?** `beta_swaps_axes`: the native `β` (root word
-`[1, 0, 2, 1]`, coordinate swaps only) exchanges carrier axes `0` and `2` (and `1` and `3`). It moves
-carriers between the reference (lepton) axis and a colour axis: a type-changing event, which no
-type-preserving gauge repair undoes (`PMFlavor.LeptonAxisRestriction`). So a wall's chirality flip
-does pass the reference node. How many legs it uses is open:
-* two legs, like a spinor carrier (`NodeAmplitude`, Kron series `α/2`): `p₁ = p_s`, `δ_O = k_f`;
-* one leg (a carrier moved onto or off the axis once, `PMFlavor.NodeElimination.one_leg`, weight `α`):
-  `p₁ = 2 p_s`, `δ_O ≈ 2 k_f`.
-(The mass ratios once read off these values, golden `φ²` and silver `5.83`, used the retired
-`WireLightSplit` assignment. On the wire of `PMAction.WireMass` the data put `δ_O/k_f` at `11`–`65`
-per protocol, far from both; PMElementaryParticles REVIEW.)
-Per protocol (`lepton_always_crosses`, `colour_crosses_iff`): every lepton-axis carrier crosses
-under `β`; a colour carrier crosses only on axis `2`. `β`'s pairing of axis `0` with axis `2` is the
-Dirac-basis choice; averaged over the three colour pairings a colour carrier crosses in `1/3` of
-them (this reads colour as carrier axes, which `ColourRegister` excludes if colour commutes with `β`).
-So, if `δ_O` scales with the crossing fraction, `δ_O(lepton) = 3 δ_O(quark)`, and up and down
-get the same value (no source for the up/down split here). Candidate; the mass-product readings fail
-directly (PMElementaryParticles REVIEW).
-Both are candidates; the leg count of an on-site flip is the premise to derive. `beta_crossings`:
-a `β` event moves `4` of the `8` vector-class carriers across the axis (each once: one leg), and no
-spinor carrier (they touch the axis before and after). So for vector-class wall states the flip is a
-one-leg event on half the carriers, which favours the one-leg reading for those states; for
-spinor-class states the flip does not change axis contact at all. Testing either needs
-a protocol that reads the wire's masses (PMElementaryParticles).
+**The `β` event and the reference node.** `beta_swaps_axes`: the native `β` (root word
+`[1, 0, 2, 1]`, coordinate swaps only) exchanges carrier axes `0` and `2` (and `1` and `3`). On the
+wire the axes are the Dirac components (`CarrierVacuumSector`), and protocol identity is a separate
+register (`ColourRegister`), so this swap does not change a protocol's type and is not a node
+passage: the flip is a wall term, realized by the coherent event (`PersistenceSelections` (2)), and
+its size is fixed by the resonance (`OtherWallStationary`), not by a leg count. `beta_crossings`,
+`lepton_always_crosses` and `colour_crosses_iff` remain as statements about which vector-class
+carriers the coordinate swap moves on or off axis `0`; the earlier readings of them as per-protocol
+crossing fractions put protocols on the axes and are withdrawn.
 -/
 
 namespace PMAction.NativeDetuning

@@ -59,11 +59,11 @@ numbers needs this table next to them.
 2. **The amplitude of each entry of `J`.**
    - In-cycle (`u–s`): no event source (`RefreshLabel`). The share `π/14` rests on the aperture premises
      (`HalfTurnAperture`).
-   - The two node edges: node value `α/2` (`PMAction.ReferenceNode`, premise: occupied legs). Derive the
+   - The two node edges: node value `α/2` (`PMAction.ReferenceNode`, `PMAction.PersistenceSelections` (1)). Derive the
      up/down-dependent factor between them (`≈ 10.7` at `U = 1`; the printed forms put `2(π+χ)` there)
      as the readout of the doublet member that holds the reference's class; the charge weight alone does
      not give it (`(s_u/s_d)^p` needs `p ≈ 1.6`). Derive the boundary `π` of `|V_ub|`.
-   - The orientation as the doublet: PMAction REVIEW, "Protocol register".
+   - The orientation as the doublet: PMElementaryParticles REVIEW, "Protocol register and coupling".
 3. **Completion order inside one event.** `corner_split`: the two-step term splits as `w, 1 − w̄`; `w = ½`
    for any power series in `A`, `w = 0` for forward composition (FC). At `U = 1` with `κ₁ = jump`,
    Stewart's relation gives `w = 0` at `1.1σ`, `w = ½` at `4.9σ`, `w = 1` at `25σ`. Derive FC from the

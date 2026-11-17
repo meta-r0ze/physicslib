@@ -19,9 +19,14 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   (`PMAction.ExactZeroMode`) for every weight, so `m_e`, `m_u`, `m_d` need a source outside the wire
   (the protocol register) or a reason the flip sits off the resonance. The offsets the data would need
   (OVERVIEW) follow no single law in the weight or charge.
-- **Protocol coupling.** How a protocol couples to the wire, on the register of PMAction REVIEW
-  ("Protocol register"); the heavy-label weight, the partner difference and the lightest masses all
-  enter there.
+- **Protocol register and coupling.** Which E8 structure carries protocol identity, and how a protocol
+  couples to the wire. PMAction's constraints: colour is a separate factor, not the carrier axes
+  (`PMAction.ColourRegister`); a factor can be built from disjoint banks (`PMAction.IndependentRegisters`);
+  the even sector is stationary (`PMAction.EvenComplement`). Candidates (PMAction OVERVIEW, "Protocol
+  register candidates"): the reference class's even sector as the label with the doublet as the wall
+  orientation (`PMFlavor.OrientationDoublet`), or the reference class's eight carriers as an occupation
+  register (`PMConstants.CarrierRepresentation`'s identification). The heavy-label weight, the partner
+  difference and the lightest masses enter here.
 
 ## Other open work
 
@@ -32,6 +37,6 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   photon dressing of the charged daughter.
 - **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full
   charged projector keeps a gapped component, so total gapped weight is not a row deficit; the row
-  needs the external-state and final-channel readout (PMAction REVIEW, native current to external
-  amplitude). `PMAction.WallGapCalibration`: the library admits every flip-to-gap ratio, so the size
-  waits on PMAction's crossing-to-flip calibration.
+  needs the external-state and final-channel readout (Final channels above).
+  `PMAction.WallGapCalibration`: the library admits every flip-to-gap ratio, so the size waits on the
+  absolute event clock (PMAction REVIEW, extensions).

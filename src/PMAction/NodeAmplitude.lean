@@ -8,7 +8,7 @@ from the reference's class, not its axis: its stationarity forbids direct exchan
 that class on its wall (`ReferenceClassHop`), so the label-`v` generation has the direct insertion
 and the other two need a reference-restoring process. `ReferenceNode` counts its legs from the
 occupied carrier modes: every restoring move involves exactly two classes, so it is the two-leg series
-below, `k/K = α/2` (premise: legs only to occupied modes, PMAction REVIEW).
+below, `k/K = α/2`; the spectator ports are free by Toll/Economy (`PersistenceSelections` (1)).
 
 # The node amplitude: a spinor-class carrier is `α/2` of the vector edge
 

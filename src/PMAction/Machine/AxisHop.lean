@@ -3,7 +3,7 @@ import Mathlib.Tactic
 /-!
 # The microscopic hop: an axis step is a word of two D₄ roots
 
-PMAction REVIEW B.2 asks which E8 root words realize the split update's directional hop
+The question here is which E8 root words realize the split update's directional hop
 (`SplitUpdate.direction`, a hop along the site permutation `e` in spatial direction `j`). The
 internal generators already have root words (`CarrierWeyl`); this module does the site hop.
 

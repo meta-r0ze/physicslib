@@ -3,7 +3,7 @@ import Mathlib.Tactic
 /-!
 # If the weak doublet is the wall orientation, every move flips it
 
-Candidate (PMAction REVIEW, "Colour register", survivor (a)): a generation is a pair of distinct
+Candidate (PMElementaryParticles REVIEW, "Protocol register and coupling"; PMAction OVERVIEW, "Protocol register candidates"): a generation is a pair of distinct
 nontrivial classes, one per wall, and its two orientations, which class sits on which wall, are the
 weak partners. Label the three classes by `Fin 3` and call a pair `(t, f)` (wall `T`, wall `F`)
 positively oriented when `f = t + 1`; `PMAction.GenerationWalls.side` fixes one such convention.

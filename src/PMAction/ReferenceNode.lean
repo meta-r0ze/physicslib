@@ -24,7 +24,8 @@ These are off-diagonal entries with the joined class ports retained as terminals
 A three-port coefficient `α/3` is not yet the two-terminal response with the unused
 class left floating. `ReferenceNodeBoundary` proves that eliminating free spectator
 ports recovers `α/2` even when those legs exist; an anchored spectator contributes
-a host load. The physical port boundary condition remains to derive.
+a host load. `PersistenceSelections` (1) selects the free boundary (holding a port is priced
+maintenance), so spectator legs do not change the two-leg value.
 
 **Which legs.** A leg is an exchange between the node and a carrier mode that is there. On the
 reference's wall a generation state occupies one class, and the reference occupies its own class `r`;
@@ -36,8 +37,9 @@ classes `{f, f + a, r}`:
 With legs only to occupied modes, every restoring crossing has two legs, and `restoring_series`:
 `k/K = α/2`, for both light insertions (one enters `r`, one leaves it) and both node transfer edges.
 This is `NodeAmplitude`'s value, now with its two legs counted from the occupied modes; it matches
-the charge-weight test and the `α/2` scale of `|V_ub|` (`PMFlavor.CKM`: `1/(2α⁻¹ + π)`). Premise:
-the node has legs only to occupied carrier modes, with one price (Closure).
+the charge-weight test and the `α/2` scale of `|V_ub|` (`PMFlavor.CKM`: `1/(2α⁻¹ + π)`). Legs to
+unoccupied classes, if present, are free spectators and give the same value
+(`ReferenceNodeBoundary.floating_current`, `PersistenceSelections.free_boundary_equal`).
 
 The star model is symmetric in the classes, so it gives both light insertions the same `k` (which the
 charge-weight test prefers, PMFlavor REVIEW "Leg count") and both node transfer edges the same size:
