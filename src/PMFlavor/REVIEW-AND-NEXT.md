@@ -49,7 +49,9 @@ leg, at random", coherent or not) gives `14–17%` on the charge test, and a ran
 the two edges equal again (ratio `1`); a random choice can only supply the common factor `1/2` (one of
 two routes). The node as a conserving star (`PMAction.ReferenceNode`) is class-symmetric: equal `k`
 (`α/3` with three legs; charge test `2–7%` against `2–10%` for `α/2`, so not discriminating) and equal
-node edges, so the edge asymmetry needs the `s ↔ c` breaking of the charged current's wall.
+node edges, so the edge asymmetry needs the `s ↔ c` breaking of the charged current's wall. With legs only to
+occupied modes every restoring crossing has two (`ReferenceNode.restoring_two_classes`), so the node
+value is `α/2` on both edges, the scale of the printed `|V_ub| = 1/(2α⁻¹+π)`.
 
 **Status of each entry of `J`** (e8p readout names in brackets).
 

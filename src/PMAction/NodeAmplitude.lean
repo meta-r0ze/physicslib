@@ -6,8 +6,9 @@ import PMAction.ReferenceWallMass
 applies the protocols' lepton-axis rule to wire carriers. Redone on the wire, the split comes
 from the reference's class, not its axis: its stationarity forbids direct exchange into or out of
 that class on its wall (`ReferenceClassHop`), so the label-`v` generation has the direct insertion
-and the other two need a reference-restoring process. Whether that process is the two-leg series
-below (`k/K = α/2`) is the open part (PMAction REVIEW).
+and the other two need a reference-restoring process. `ReferenceNode` counts its legs from the
+occupied carrier modes: every restoring move involves exactly two classes, so it is the two-leg series
+below, `k/K = α/2` (premise: legs only to occupied modes, PMAction REVIEW).
 
 # The node amplitude: a spinor-class carrier is `α/2` of the vector edge
 

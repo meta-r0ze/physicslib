@@ -1,4 +1,5 @@
 import PMAction.KronReduction
+import PMAction.GenerationLabel
 
 /-!
 # The reference-restoring node as a star: `k/K = α/n`
@@ -19,8 +20,22 @@ reference's class, which `ReferenceClassHop` allows).
 * `two_leg_case`: with legs only to the two classes of one crossing, the series value `α/2`
   (`NodeAmplitude.node_series`).
 
-So `k/K = α/3` if the node joins all three classes, `α/2` if it joins only the crossing's two. The
-star model is symmetric in the classes, so it gives both light insertions the same `k` (which the
+So `k/K = α/3` if the node joins all three classes, `α/2` if it joins only the crossing's two.
+
+**Which legs.** A leg is an exchange between the node and a carrier mode that is there. On the
+reference's wall a generation state occupies one class, and the reference occupies its own class `r`;
+a single-wall move takes the occupied class `f` to `f + a`. So during a move the node can reach the
+classes `{f, f + a, r}`:
+* `restoring_two_classes`: when the move touches `r` (the moves `ReferenceClassHop` sends through the
+  node), that set has exactly two classes;
+* `direct_three_classes`: the direct move (`a = r`) involves all three, and needs no node.
+With legs only to occupied modes, every restoring crossing has two legs, and `restoring_series`:
+`k/K = α/2`, for both light insertions (one enters `r`, one leaves it) and both node transfer edges.
+This is `NodeAmplitude`'s value, now with its two legs counted from the occupied modes; it matches
+the charge-weight test and the `α/2` scale of `|V_ub|` (`PMFlavor.CKM`: `1/(2α⁻¹ + π)`). Premise:
+the node has legs only to occupied carrier modes, with one price (Closure).
+
+The star model is symmetric in the classes, so it gives both light insertions the same `k` (which the
 charge-weight test prefers, PMFlavor REVIEW "Leg count") and both node transfer edges the same size:
 a `|V_cb| ≠ |V_ub|` asymmetry has to come from what breaks `s ↔ c` (the charged current's wall,
 `ExchangeChirality`), not from the node. Which legs the node has is the remaining premise.
@@ -45,5 +60,22 @@ theorem star_three (K α : ℝ) (hα : 0 < α) :
 theorem two_leg_case (α : ℝ) (hα : 0 < α) : 0 - (-α) * (-α) / (2 * α) = -(α / 2) := by
   have h := star_pair α 2 hα (by norm_num)
   simpa using h
+
+open PMAction.GenerationLabel in
+/-- **A move that touches the reference's class involves exactly two classes.** -/
+theorem restoring_two_classes : ∀ r f a : Glue, r ≠ 0 → f ≠ 0 → f + a ≠ 0 → a ≠ 0 →
+    (f = r ∨ f + a = r) → ({f, f + a, r} : Finset Glue).card = 2 := by
+  decide
+
+open PMAction.GenerationLabel in
+/-- **The direct move involves all three classes.** -/
+theorem direct_three_classes : ∀ r f : Glue, r ≠ 0 → f ≠ 0 → f + r ≠ 0 →
+    ({f, f + r, r} : Finset Glue).card = 3 := by
+  decide
+
+/-- **So a restoring crossing is the two-leg series, `k/K = α/2`.** -/
+theorem restoring_series (α : ℝ) (hα : 0 < α) :
+    0 - (-α) * (-α) / (((2 : ℕ) : ℝ) * α) = -(α / 2) := by
+  simpa using star_pair α 2 hα (by norm_num)
 
 end PMAction.ReferenceNode
