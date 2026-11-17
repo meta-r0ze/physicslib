@@ -60,7 +60,18 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   three unordered class pairs give three generations as in `PMAction.GenerationWalls`, and both walls'
   protocol carriers read in the vector frame by triality is `CarrierRepresentation`'s "both domain-wall
   sectors" premise; open: a single-wall shift changes a wall's class, so the walls need a label besides
-  their class).
+  their class). Third try (`tools/register_transport_check.py`, E8 built explicitly): keep the library's walls as
+  the two `D₄` factors inside one glue class, and read a glued root `(a, b)` as wall amplitude in one
+  factor and label in the other: wall T is `odd(a) ⊗ even(b)`, wall F is `even(a) ⊗ odd(b)`. Checked
+  for every class: the sectors are `16 + 16 = 32` (the capacity), orthogonal; each factor's Weyl words
+  commute with the antipode, so wall terms in one factor keep the other factor's label fixed (Map); the
+  label is a tensor factor of the moving root, so it moves with the particle (Protocol; this is what
+  the excluded even-sector label lacked, being a direct summand); a single-wall step stays in the class
+  (the second try's problem is gone); and the factor swap is an E8 automorphism that maps wall T onto
+  wall F, so the wall exchange is native. Open: the label is the even half of the other factor's
+  carriers, `4` axis values (lepton or colour) with no sign, so the doublet has no place in it. Taking
+  the full label (`8`, axis `×` sign, sign = label parity) houses the doublet but makes the walls
+  overlap on `odd ⊗ odd`. The doublet is the deciding test for this reading.
 
 ## Other open work
 
