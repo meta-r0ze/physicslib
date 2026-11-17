@@ -143,3 +143,29 @@ closed, conserving steady host attached only at the node, while an independently
 anchored port contributes a load. Open record transport can coexist with an
 unchanged node readout under the independent-factor contract above; that contract
 still needs native allocation and joint-interaction checks.
+
+## A coherent flip that restores the even record sector
+
+[PairedRootFlip.lean](PairedRootFlip.lean) supplies an all-class native-root
+construction for a completed coherent beta rotation. Mirrored root phases
+cancel their scalar terms; the spinor class uses an additional phase
+conjugation and its inverse. The net operation has the required coordinate
+rotation and restores every even mode, so every observable supported on that
+even record sector is unchanged at the end. It needs no extra bank. The result is a class-indexed circuit family; coherent
+class-controlled scheduling or a single class-blind compilation still needs
+a native realization. This preserves a direct-sum sector; it does not establish independent tensor registers.
+
+For this subprotocol, Capacity is the existing eight carrier labels, Map is
+the retained odd/even state, Protocol is the certified root-phase sequence,
+and Governor is the exact final even-sector identity. Toll must count the
+whole scheduled word, and Margin must allow its intermediate even-mode motion
+and time before restoration. An inverse phase parameter can be replaced by
+the remainder of a forward phase period; the added time is part of that ledger.
+The angle parameter is not a physical event duration.
+
+This closes availability of a completed coherent beta circuit under the
+existing phase-control contract. It does not select that circuit as the
+native event, calibrate its rate, preserve every even mode during intermediate
+pulses, or complete the other factors of the full walk. It also does not remove
+the offset of a single lazy wall event by a gauge convention: it is a different,
+explicit composite operation.
