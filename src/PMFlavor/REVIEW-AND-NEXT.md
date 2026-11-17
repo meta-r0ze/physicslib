@@ -43,7 +43,13 @@ derived; the discriminator is the `α`-scaling (`√α` versus `α`), which the 
 test. Applying the same leave/enter asymmetry to the wire's two light mass insertions (one enters, one
 leaves the reference's class) worsens the charge-weight test (one `a` for down and up: `6%` apart with
 equal `k = α/2`, `14%` or `74%` with the asymmetry), so if it holds for the transfers it does not carry
-over unchanged to the mass insertions.
+over unchanged to the mass insertions. Further tests (same script): making the enter/leave assignment
+depend on the doublet member (it flips with the orientation) or averaging the two at random ("either
+leg, at random", coherent or not) gives `14–17%` on the charge test, and a random choice per edge makes
+the two edges equal again (ratio `1`); a random choice can only supply the common factor `1/2` (one of
+two routes). The node as a conserving star (`PMAction.ReferenceNode`) is class-symmetric: equal `k`
+(`α/3` with three legs; charge test `2–7%` against `2–10%` for `α/2`, so not discriminating) and equal
+node edges, so the edge asymmetry needs the `s ↔ c` breaking of the charged current's wall.
 
 **Status of each entry of `J`** (e8p readout names in brackets).
 
