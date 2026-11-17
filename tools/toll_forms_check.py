@@ -42,3 +42,13 @@ alpha = 1/137.036
 for name, r in dict(nu=0.17, e=0.0595, d=(0.019, 0.022), u=(0.0036, 0.0042)).items():
     r = np.atleast_1d(r)
     print(f"  {name}: k_eff / (alpha/2) =", np.round(r/np.sqrt(1.5)/(alpha/2), 2))
+
+# 6. shape of the targets: a geometric ladder in the order u, d, e, nu
+n = np.arange(4)
+for de in (2.7, 3.2):
+    for ue in (12, 13.5):
+        y = np.log([0.087*ue, 0.087*de, 0.087, 0.030])
+        sl, ic = np.polyfit(n, y, 1)
+        res = y - (ic + sl*n)
+        print(f"  s_d/s_e={de}, s_u/s_e={ue}: step ratio {np.exp(-sl):.2f}, rms log residual {np.sqrt(np.mean(res**2)):.3f}")
+print("  (alpha^-1/4 = 3.42 and 3 both fit the step; the data do not separate them)")

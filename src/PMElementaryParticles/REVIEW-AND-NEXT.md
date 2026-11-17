@@ -50,7 +50,14 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   with `x₀`, `S`, `S²` takes four numbers for four). The crossing adds no label holonomy (triality
   cubes to the identity). Hint, not a result: in effective node coupling, `k_eff/(α/2) = (m₂/m₃)/(√(3/2)
   α/2)` is `0.81–0.94` for up, `4.3–4.9` for down, `13` for the electron and `38` for the neutrino:
-  the up protocol sits at the bare wire, and the others need more amplitude through the node.
+  the up protocol sits at the bare wire, and the others need more amplitude through the node. Node
+  admittances cannot supply that (`PMAction.ReferenceNodeBoundary`: a load only lowers the coupling
+  below `α/2`), so the per-protocol factor is a weight on the heavy label, not a node effect. Shape of
+  the targets: `s_u : s_d : s_e : s_ν` is a geometric ladder, step ratio `3.2–3.4` across the quark-mass
+  ranges, `rms` log residual `0.07–0.16` (`α^{−1/4} = 3.42` and `3` both fit; the data do not separate
+  them). The ladder index `0, 1, 2, 3` for `u, d, e, ν` is the reflected-binary reading of the two
+  label bits (lepton, down): an odd `×` even form, as the exclusions above require. Wanted: a mechanism
+  that charges one equal step per rung (a chain `u –weak– d –axis– e –weak– ν` with no `u–ν` edge).
   (2) the lightest masses. Killed on the way (git history has the details):
   the reference class's even sector, the other wall's even modes or full carriers, a displaced
   reference record, the hop's auxiliary axis, the orientation doublet alone, the walls as the wire's
