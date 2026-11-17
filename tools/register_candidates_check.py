@@ -40,3 +40,35 @@ for m in (1,2,3):
     b,c=[x for x in (1,2,3) if x!=m]
     ok=[a for a in (1,2,3) if add(b,a)!=0 and add(c,a)!=0]
     print("  label",m,"classes",(b,c),"admissible a:",ok,"->",[(add(b,a),add(c,a)) for a in ok])
+
+# Survivor (a): the doublet as the two wall orientations. Orientation 2 runs the cycle the other way
+# (P -> P^T). Derived wire (kappa_R = (1,k,k), other wall class-blind), k = alpha/2, weights fitted
+# in protocol_readout_scan.py (PDG mixed scales).
+alpha = 1 / 137.035999
+k = alpha / 2
+roots = [-1, -np.exp(2j * np.pi / 3), -np.exp(-2j * np.pi / 3)]
+P = np.zeros((3, 3)); P[1, 0] = P[2, 1] = P[0, 2] = 1
+
+
+def M(d, s, orient):
+    X = d * np.eye(3, dtype=complex) + (P if orient == 1 else P.T)
+    return np.diag([s, k, k]) @ X @ np.diag([s, 1, 1])
+
+
+def sv(m):
+    return np.sort(np.linalg.svd(m, compute_uv=False))
+
+
+def left(m):
+    return np.linalg.eigh(m @ m.conj().T)[1]
+
+
+s_u, s_d = np.sqrt(1.3066), np.sqrt(0.0670)
+print("Orientation test: same singular values in both orientations?",
+      all(np.allclose(sv(M(d, s, 1)), sv(M(d, s, 2))) for d in roots for s in (s_u, s_d)))
+print("CKM with up = orientation 1, down = orientation 2 (data 0.225, 0.041, 0.0037):")
+for eu, ed, tag in [(0, 0, "on resonance"), (0.00236, 0.1396, "offsets fitted to m1/m2")]:
+    for du, dd in [(0, 0), (0, 1)]:
+        V = np.abs(left(M(roots[du] * (1 - eu), s_u, 1)).conj().T @
+                   left(M(roots[dd] * (1 - ed), s_d, 2)))
+        print(f"  {tag:24s} roots ({du},{dd}): |V_us| {V[0, 1]:.4f} |V_cb| {V[1, 2]:.4f} |V_ub| {V[0, 2]:.4f}")

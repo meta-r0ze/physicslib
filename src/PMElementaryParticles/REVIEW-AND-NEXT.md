@@ -20,8 +20,11 @@ e8p caveats say so). The tier ladder (`TierLedger`) is the same question in the 
   test, better at `α/2`. Derive the upkeep and `a` (the library has no such cost yet). The
   crossing-fraction reading read colour as carrier axes and is excluded (`PMAction.ColourRegister`).
 - **Mixing.** On the derived wire (OVERVIEW, "Protocol readout") neither root assignment gives the
-  CKM: same root `|V_us| ≈ 0`, `|V_cb|, |V_ub| ≈ 0.009, 0.008`; different roots `|V_us| = √3/2`. So
-  the mixing has to come from the protocol readout, not the bare wire's rotation.
+  CKM: same root `|V_us| ≈ 0`, `|V_cb|, |V_ub| ≈ 0.009, 0.008`; different roots `|V_us| = √3/2`. With
+  each protocol's flip moved off the resonance to fit its `m₁/m₂` (Light masses below), the same-root
+  values become `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065` (data `0.225`, `0.041`, `0.0037`;
+  `tools/register_candidates_check.py`). So the mixing has to come from the protocol readout, not the
+  bare wire's rotation.
 - **Light masses.** At the resonance the lightest state is exactly massless on the full wire, not
   only at leading order (`PMAction.ExactZeroMode`), and no heavy-label weight changes that
   (`PMAction.OtherWallStationary.massless_iff`). So `m_e`, `m_u`, `m_d` come from outside the wire:
