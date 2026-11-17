@@ -22,5 +22,5 @@ remains for the machine layer. Run `./build.sh PMAction` for current counts.
 
 ## Physical inputs
 
-- Determine which microscopic controls implement the admitted split-update factors, including the overall primitive price scale. Extend the single-pass construction in `RootWordControls` to edges carrying several passes.
+- Select and price the microscopic controls implementing the admitted split update. `ClassBlindFlip` and `RootCliffordCompletion` supply common root-phase circuits for all five internal generator rotations and their finite words; site-conditioned spatial transport and inter-wall crossing still need native realization and composition. Extend the single-pass construction in `RootWordControls` to edges carrying several passes.
 - Specify the physical allocation of the reference and record banks, clock calibration and charge values. Amplitude preparation: the quarter-gate preparation `(1 + iH)/√2` for a Hermitian involution exists (`CoherentPreparation`); still missing is which physical input states it is applied to and how they are prepared.

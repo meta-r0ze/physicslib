@@ -182,3 +182,18 @@ returns; it supplies neither an optimal schedule nor calibration to hop time.
 The common root rate and coherent-control admission remain premises. Intermediate
 even-mode displacement still belongs in Toll and Margin, even though the final
 Map is restored exactly.
+
+## The other internal rotations
+
+[RootCliffordCompletion.lean](RootCliffordCompletion.lean) constructs the chiral
+and three alpha rotations by conjugating the common beta echo with primitive
+root phases. The imaginary alpha direction comes from two-axis phases; no
+odd-only common i gate is assumed. Each complete rotation restores every even
+mode, and any finite word of these internal instructions has the same property.
+The programs remain independent of the glue class and allocate no extra bank.
+
+This extends Protocol and the endpoint Governor for the same carrier system.
+Capacity and retained Map are unchanged; Toll and transient Margin must include
+the longer conjugating words and their inverses. These are internal controls.
+Native site-conditioned transport, the inter-wall crossing, physical timing
+and selection of the complete update remain separate obligations.
