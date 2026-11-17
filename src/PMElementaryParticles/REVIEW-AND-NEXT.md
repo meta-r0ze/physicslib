@@ -109,34 +109,14 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   uncertainties. Use `TauBranching`'s derived muon/electron channel ratio instead of separately
   freezing both fractions in the downstream inventory. A prediction without supplied `B_e` also
   needs the inclusive hadronic factor, owned by [PMHadrons](../PMHadrons/REVIEW-AND-NEXT.md).
-- **First-row deficit as leakage** (`0.0016 ± 0.0007`). `PMAction.WallCurrentWeights`: the full
-  charged projector keeps a gapped component, so total gapped weight is not a row deficit. The final
-  labels are fixed (`FinalChannels`). Two-wall wire (`tools/event_clock_check.py`): light modes leak
-  `1.50 r²` (middle) and `1.99 r²` (heaviest), `r = K_f/|y|`; the lightest mode is the exact zero mode
-  and leaks `≲ 10⁻⁶` even with the offsets that give it a mass. So a leakage deficit of the first row
-  comes through the heavier down modes, `≈ |V_us|²·1.50 r²`, and needs `r = 0.11–0.17`. The ratio does
-  not wait on the absolute clock: for certain events `r = T_crossing/T_flip`
-  (`PMAction.CertainTransferRate`), the attempt rate cancels, and the flip program is `32` root
-  quarter-times (`PMAction.ClassBlindFlip.forwardTimes_total`). What is missing is the crossing's root
-  program (PMAction REVIEW). Candidate: the crossing moves a carrier from wall 1 to wall 2; as E8
-  reflections that takes `1` for equal classes and `3` for the generation's two classes
-  (`PMAction.GenerationWalls`; fewest, by search). With each reflection a certain root event (two
-  quarter-times) and the flip the library's program, `r = 6/32 = 3/16`, and with the down weight
-  `s_d = 0.26` the middle down mode leaks `1.06 r²`, so the deficit is `≈ 1.9·10⁻³` (measured
-  `1.6 ± 0.7·10⁻³`); heaviest-mode leakage `7%`. But the library's flip program is not minimal: a
-  `24`-quarter-time program does the same (`tools/flip_program_search.py`), and then `r = 1/4` gives
-  `3.3·10⁻³` (`2.5σ` high, heaviest leakage `12%`), or `8.4·10⁻⁴` if a reflection costs one
-  quarter-time. Across the crossing options (one carrier `3`, one sector `4`, class-blind `6`
-  reflections; certain or quarter cost) the estimate runs `8·10⁻⁴` to `1.3·10⁻²`: leakage is the right
-  order for the deficit, but the value waits on PMAction's open clock question. Readout
-  (`tools/first_row_readout.py`): each protocol on its own wire (fitted weight and offset), the charged
-  current as `P_L` (the `Γ = −1` components) times the measured CKM, and the row against `G_F` from
-  muon decay: deficit `= 1 − F_u/F_μ`, `F` the fraction of the current's image on the daughter's light
-  subspace. This gives `≈ 0.25 r²` (the earlier `|V_us|²`-times-leakage estimate was `5×` too small: the
-  `u` and `d` wires differ, so even with no mixing the image leaves the light subspace), and leptons,
-  with small weights, barely leak. The measured deficit then asks for `r = 0.06–0.10`, below every
-  program option (`r ≥ 1/8`, deficit `≥ 3.9·10⁻³`, `3σ` high). The flip would have to be `10–16×` slower
-  than the crossing; the shortest programs allow at most `8×`. The estimate depends on the fitted
-  weights by a factor of about three (equal weights give `1.3·10⁻³` at `r = 1/8`), so it waits on the
-  Toll as well as the clock. Other assumptions: events run serially, and the deficit is
-  `|V_us|²` times the middle mode's leakage (measured `|V_us|`; the mixing is PMFlavor's).
+- **Wall leakage on top of the first-row dressing.** The first-row deficit is PMFlavor's: the `1/516`
+  dressing of colour-carrier transitions, which muon decay does not carry (`PMFlavor.DressingInheritance`,
+  `CKMDressing.first_row_sum`; `1.94·10⁻³` against `1.6 ± 0.7·10⁻³`). Wall leakage is a separate
+  contribution and adds to it; counting it as the deficit itself (as this item did until 2026-11-17)
+  double counts. Readout (`tools/first_row_readout.py`): each protocol on its own wire, the charged
+  current as `P_L` times the measured CKM, the row against `G_F` from muon decay; leakage adds
+  `≈ 0.25 r²` (fitted weights; `≈ 0.08 r²` with equal weights), `r = K_f/|y|`. With the dressing, the data
+  bound it: `r ≲ 0.07` (fitted weights) or `≲ 0.12` (equal weights) at `2σ`. Every program option in
+  PMAction's clock ledger has `r ≥ 1/8`, so the data favour a flip much slower than its shortest
+  program, such as a flip that fires once per `Δ = 43` cycle (`r ≲ 1/43`, leakage `≲ 3·10⁻⁵`). Open:
+  derive the flip's firing rate (PMAction REVIEW, absolute event clock).

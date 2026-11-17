@@ -5,7 +5,8 @@ offset eps from EP OVERVIEW's fits). The charged current is P_L = keep the Gamma
 times a generation rotation V (measured CKM, PMFlavor's). F = fraction of P_L V psi (parent light mode)
 on the daughter's light subspace. The row is measured against G_F from muon decay, so the deficit is
 1 - F_u / F_mu (u row against mu -> nu). Results: the deficit is ~0.25 r^2 with the fitted weights, so
-the measured 1.6 +/- 0.7 e-3 asks for r = 0.06-0.10; it depends on the fitted weights by a factor ~3
+this leakage adds to PMFlavor's 1/516 dressing (the deficit's source,
+PMFlavor.DressingInheritance), so with the measured 1.6 +/- 0.7 e-3 it bounds r <~ 0.07 (2 sigma); it depends on the fitted weights by a factor ~3
 (equal weights: 1.3e-3 at r = 1/8 against 3.9e-3).
 """
 import numpy as np
