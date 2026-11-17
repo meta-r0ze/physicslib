@@ -27,7 +27,8 @@ Results:
 
 The corrected prediction is within about `0.1%` of the measured lifetime.
 
-**Proved enclosure.** `PMHadrons.neutronLifetimeCorrectedSeconds_bounds`:
+**Proved enclosure (theorem removed 2026-11-17 with the retired correction; git history has it).**
+`PMHadrons.neutronLifetimeCorrectedSeconds_bounds` gave
 `877.1 s < τ_n < 877.2 s` (the margin-corrected lifetime, exact cutoff `m_n − m_p`, `r = e^{−√2}` to
 `10⁻⁷`, `G_F` and the unit inputs `m_e`, `ħc`). Against the PDG 2024 average `878.4 ± 0.5` s it is
 `−2.5σ` (`e8p` row `neutron_lifetime_predicted_s`).

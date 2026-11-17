@@ -1,5 +1,8 @@
 # PMAtoms checkpoint
 
+> **Out of date (2026-11-17).** The decay values here predate the current routes (the `877 s` neutron is retired; the muon and tau rows now carry their corrections). Current values: `tools/e8p/e8p_output.txt`, `src/PMHadrons/OVERVIEW.md`, `src/PMElementaryParticles/OVERVIEW.md`. To be refreshed in the PMAtoms cleanup.
+
+
 ## Certified core
 
 - `NuclearLedger.certifiedMass` on `certifiedDomain = deformedFrontier`
