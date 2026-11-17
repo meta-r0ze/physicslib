@@ -21,3 +21,9 @@ example : AuditStats.ofSigmas [-2, 1/2] = ⟨2, 17/4⟩ := by decide +kernel
 example : (AuditStats.ofSigmas [-2, 1/2]).reduced = some (17/8) := by decide +kernel
 example : (auditStats []).reduced = none := by decide +kernel
 example : auditStats [.wMassUnc] = ⟨0, 0⟩ := by decide +kernel
+
+-- Reference display preserves nonzero tiny lifetimes, errors and signed residuals.
+example : comparisonNumber (8.43e-17) = "8.430000e-17" := by decide +kernel
+example : comparisonNumber (-2.2e-12) = "-2.200000e-12" := by decide +kernel
+example : comparisonNumber 0 = "0" := by decide +kernel
+example : scoredRef .kaonFiniteLifetimeSeconds ⟨1, 1, "test"⟩ = false := by decide +kernel

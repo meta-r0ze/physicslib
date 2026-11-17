@@ -595,6 +595,52 @@ def Key.formula : Key → String
   | .neutronLifetimePredicted => "\\frac{2\\pi^3}{G_F^2 |V_{ud}|^2 R\\,(1+3g_A^2)\\,(f_0+\\pi\\alpha P)},\\ g_A=5/4"
   | _ => ""
 
+/-- Decay observable identity and approximation, separate from certified arithmetic bounds. -/
+structure DecayInfo where
+  observable : String
+  channel : String
+  correctionOrder : String
+  normalization : String
+
+/-- These describe the existing source formulas; they do not apply new corrections. -/
+def Key.decayInfo : Key → Option DecayInfo
+  | .muonLifetimeFinite => some ⟨"total lifetime at tree level", "mu -> e nu nubar",
+      "massless tree; finite-channel template", "E8 G_F; no radiative factor"⟩
+  | .muonLifetimeSeconds => some ⟨"inclusive total lifetime", "mu -> e nu nubar [gamma]",
+      "massive tree phase space times massless one-loop QED; finite-mass QED and higher orders omitted",
+      "E8 G_F and alpha(0); supplied one-loop kernel"⟩
+  | .tauLifetimeFs => some ⟨"conditional total lifetime", "tau, inferred from its electronic branch",
+      "tree-level m^5 scaling; phase-space and radiative ratio omitted",
+      "measured muon lifetime and B_e; not an independent total-width prediction"⟩
+  | .tauLifetimeE8Natural => some ⟨"conditional total lifetime", "tau, inferred from its electronic branch",
+      "tree-level m^5 scaling; broad natural-unit enclosure", "E8 tree muon lifetime; supplied B_e"⟩
+  | .neutronLifetimeE8 | .neutronLifetimeSeconds => some ⟨"total beta-channel lifetime", "n -> p e nubar",
+      "finite-cube spectral template; no Coulomb or radiative dressing", "unmargined finite channel; comparison stage"⟩
+  | .neutronLifetimeUnified => some ⟨"total beta-channel lifetime", "n -> p e nubar",
+      "finite-cube spectral template; no Coulomb or outer radiation", "raw V_ud squared times shared R = 32/33; comparison stage"⟩
+  | .neutronLifetimePredicted => some ⟨"inclusive beta-channel lifetime approximation", "n -> p e nubar [gamma]",
+      "continuum; leading Coulomb; outer radiation, axial EM matching and recoil omitted",
+      "raw V_ud squared times shared R = 32/33; g_A = 5/4"⟩
+  | .pionFiniteWidth => some ⟨"muonic partial width", "pi+ -> mu+ nu",
+      "two-body tree; all finite modes open", "no V_ud factor or 32/33 correction; intermediate"⟩
+  | .pionFiniteLifetime | .pionFiniteLifetimeSeconds => some ⟨"inverse muonic partial width", "pi+ -> mu+ nu",
+      "two-body tree; all finite modes open", "no V_ud factor or 32/33 correction; intermediate"⟩
+  | .pionLifetimePredicted => some ⟨"inverse muonic partial width", "pi+ -> mu+ nu [gamma] comparison",
+      "two-body tree with effective channel factor; finite radiative matching unresolved",
+      "32/33 effective rate factor; CKM/running/dressing must not be counted again"⟩
+  | .kaonFiniteWidth => some ⟨"muonic partial width", "K+ -> mu+ nu",
+      "two-body tree; all finite modes open", "raw V_us squared; shared R and finite radiation omitted; intermediate"⟩
+  | .kaonFiniteLifetime | .kaonFiniteLifetimeSeconds => some ⟨"inverse muonic partial width", "K+ -> mu+ nu",
+      "two-body tree; all finite modes open", "raw V_us squared; shared R and finite radiation omitted; intermediate"⟩
+  | .kaonPionRatio => some ⟨"ratio of muonic partial widths", "K_mu2 / pi_mu2 [gamma] comparison",
+      "two-body tree ratio; channel-dependent electromagnetic difference omitted",
+      "raw V_us/V_ud; common factors cancel; f_K/f_pi = 70/59"⟩
+  | .neutralPionFiniteWidth => some ⟨"two-photon partial width", "pi0 -> gamma gamma",
+      "leading anomaly formula; supplied triangle-loop normalization", "no Dalitz or other channels in this width"⟩
+  | .neutralPionFiniteLifetime | .neutralPionFiniteLifetimeSeconds => some ⟨"inverse two-photon partial width", "pi0 -> gamma gamma",
+      "leading anomaly formula; supplied triangle-loop normalization", "no Dalitz or other channels in this width"⟩
+  | _ => none
+
 /-- Known interpretation caveats shown alongside an audit row. -/
 def Key.caveat : Key → String
   | .wMassUnc => "uncorrected (tree-level); not scored, compare w_ratio"
@@ -610,21 +656,23 @@ def Key.caveat : Key → String
   | .strangeMeV | .bottomMeV | .topMeV => "tier ledger (paper assignment, declared input; not yet read from the wire)"
   | .fKMeV => "FLAG 2024 lattice ~3.8σ low; assigned fK formula"
   | .fPiMeV => "FLAG 2024 lattice agrees"
-  | .tauLifetimeFs => "uses measured muon lifetime and B_e"
+  | .tauLifetimeFs => "uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; phase-space/radiative ratio omitted"
   | .muonLifetimeFinite => "finite 3x3x3 channel; all modes open; broad natural-unit interval"
   | .tauLifetimeE8Natural => "E8 muon input; broad natural-unit interval"
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"
   | .neutronLifetimeE8 => "finite 3x3x3 channel; broad natural-unit interval"
-  | .muonLifetimeSeconds => "E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); higher-order QED (~5 ppm) not included, so the value sits ~5 ppm above the measurement, as it does with the measured G_F; G_F itself is scored in fermi_constant, so this reference is not scored"
-  | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); the rest is f_K/f_pi = 70/59 (FLAG 1.1934)"
-  | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; pi->mu nu is 99.988% of the total width"
+  | .muonLifetimeSeconds => "E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); finite-electron-mass one-loop radiation (about +4.4 ppm in rate) and higher-order QED omitted; the roughly +5 ppm lifetime residual is not solely a two-loop effect; G_F itself is scored in fermi_constant, so this reference is not scored"
+  | .kaonPionRatio => "G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); adding that negative correction alone lowers the model ratio further; f_K/f_pi = 70/59 (FLAG 1.1934); compare like partial widths"
+  | .pionLifetimePredicted => "E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; comparison uses tau_pi/BR(mu nu [gamma]), not the total pion lifetime"
   | .neutronLifetimeSeconds => "unmargined finite channel; unit conversion using measured m_e and hbar c; broad interval (see neutron_lifetime_predicted_s)"
   | .neutronLifetimePredicted => "continuum route: the emitted electron is not confined, so its modes are the continuum limit of the lattice; phase space as for the muon, Fermi factor to first order (full factor 922.9 s); remaining gap: g_A (5/4 vs 1.2754) and the low-energy radiative correction"
   | .neutronLifetimeUnified => "3x3x3 spectral template (comparison): the continuum route without Coulomb to 0.6%; see neutron_lifetime_predicted_s"
-  | .pionFiniteWidth | .pionFiniteLifetime
-  | .kaonFiniteWidth | .kaonFiniteLifetime
-  | .neutralPionFiniteWidth | .neutralPionFiniteLifetime =>
-      "finite 3x3x3 channel; all modes open; broad interval"
+  | .pionFiniteWidth | .pionFiniteLifetime | .pionFiniteLifetimeSeconds =>
+      "raw muonic partial channel; no V_ud or 32/33 factor; finite modes all open; broad intermediate enclosure"
+  | .kaonFiniteWidth | .kaonFiniteLifetime | .kaonFiniteLifetimeSeconds =>
+      "raw muonic partial channel, not total K lifetime; shared-factor correction exists in DecayInstantiation but is not applied here; normalization/matching and tighter bounds remain upstream"
+  | .neutralPionFiniteWidth | .neutralPionFiniteLifetime | .neutralPionFiniteLifetimeSeconds =>
+      "gamma-gamma partial channel, not total pi0 lifetime; no Dalitz width; reference is the total-lifetime average divided by BR(gamma gamma)"
   | .rydbergEV | .bohrRadius => "atoms comparison; unit-sensitive"
   | _ => ""
 

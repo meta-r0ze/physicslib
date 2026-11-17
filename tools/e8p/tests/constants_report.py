@@ -95,6 +95,59 @@ def main():
         for c in by_id["alpha_inv"]["comparisons"]:
             assert {"value", "uncertainty", "citation", "diff", "sigma"} <= set(c)
 
+    # Match inverse partial widths to partial-lifetime references, never total lifetimes.
+    pion_tau, pion_b = Fraction("26.033e-9"), Fraction("0.9998770")
+    kaon_tau, kaon_b = Fraction("12.380e-9"), Fraction("0.6356")
+    neutral_tau, neutral_b = Fraction("8.43e-17"), Fraction("0.98823")
+    partials = {
+        "pion_lifetime_predicted_s": pion_tau / pion_b,
+        "kaon_finite_lifetime_s": kaon_tau / kaon_b,
+        "neutral_pion_finite_lifetime_s": neutral_tau / neutral_b,
+        "kaon_pion_width_ratio": (pion_tau / pion_b) / (kaon_tau / kaon_b),
+    }
+    for key, expected in partials.items():
+        row = by_id[key]
+        assert Fraction(row["experimental"]["value"]) == expected
+        assert "partial" in row["decay"]["observable"]
+        assert row["experimental"]["uncertainty_note"]
+    # Each stored error bounds first-order independent-input quadrature, with only rounding slack.
+    for key, tau, branch, dtau, dbranch in (
+        ("pion_lifetime_predicted_s", pion_tau, pion_b, Fraction("5e-12"), Fraction("0.0000004")),
+        ("kaon_finite_lifetime_s", kaon_tau, kaon_b, Fraction("0.020e-9"), Fraction("0.0011")),
+        ("neutral_pion_finite_lifetime_s", neutral_tau, neutral_b, Fraction("0.13e-17"), Fraction("0.00034")),
+    ):
+        variance = (dtau / branch)**2 + (tau*dbranch / branch**2)**2
+        error = Fraction(by_id[key]["experimental"]["uncertainty"])
+        assert variance <= error**2 <= variance * Fraction("1.002"), (key, error)
+    ratio = partials["kaon_pion_width_ratio"]
+    variance = ratio**2 * ((Fraction("5e-12")/pion_tau)**2 +
+        (Fraction("0.0000004")/pion_b)**2 + (Fraction("0.020e-9")/kaon_tau)**2 +
+        (Fraction("0.0011")/kaon_b)**2)
+    error = Fraction(by_id["kaon_pion_width_ratio"]["experimental"]["uncertainty"])
+    assert variance <= error**2 <= variance * Fraction("1.002")
+    assert not by_id["kaon_finite_lifetime_s"]["experimental"]["scored"]
+    assert not by_id["muon_lifetime_s"]["experimental"]["scored"]
+    assert Fraction(by_id["tau_lifetime_fs"]["experimental"]["uncertainty"]) == Fraction("0.82")
+    assert "already combines" in by_id["tau_lifetime_fs"]["caveat"]
+    assert "finite-electron-mass one-loop" in by_id["muon_lifetime_s"]["caveat"]
+    assert by_id["alpha_inv"]["decay"] is None
+    # Reporting changes must not change the physical formulas' certified intervals.
+    for key, interval in {
+        "pion_lifetime_predicted_s": ("2.60188e-8", "2.60192e-8"),
+        "kaon_finite_lifetime_s": ("1.98e-8", "2.12e-8"),
+        "neutral_pion_finite_lifetime_s": ("8.44e-17", "8.48e-17"),
+        "muon_lifetime_s": ("2.196987e-6", "2.196998e-6"),
+    }.items():
+        assert tuple(Fraction(by_id[key][field]) for field in ("rational_lower", "rational_upper")) == tuple(map(Fraction, interval))
+    decay_text = run(binary, "--values", "--only=neutral_pion_finite_lifetime_s").stdout
+    assert "two-photon partial" in decay_text and "quadrature" in decay_text
+    assert re.search(r"exp.*[1-9][0-9.]*e-17", decay_text), decay_text
+    assert "finite-electron-mass" in run(binary, "--values", "--only=muon_lifetime_s").stdout
+    decay_audit = run(binary, "--audit", "--only=kaon_finite_lifetime_s").stdout
+    assert "· kaon_finite_lifetime_s" in decay_audit and "not total K lifetime" in decay_audit
+    decay_latex = run(binary, "--latex", "--only=neutral_pion_finite_lifetime_s").stdout
+    assert "Observable>inverse two-photon partial" in decay_latex and "ComparisonNote>partial reference" in decay_latex
+
     # paper filtering
     def ids(paper):
         return {r["id"] for r in json.loads(run(binary, "--json", f"--paper={paper}").stdout)["constants"]}
@@ -231,6 +284,7 @@ def main():
     assert "2S+1" in table.stdout
     summ = run(binary, "--summary")
     assert summ.returncode == 0
+    assert "## Decay conventions and comparison errors" in summ.stdout
     assert "## Scoreboard" in summ.stdout and "## Tensions" in summ.stdout and "proton_ratio" in summ.stdout
     shells = run(binary, "--shells")
     assert shells.returncode == 0

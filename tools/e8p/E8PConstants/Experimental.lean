@@ -23,6 +23,22 @@ structure ExpRef where
   citation : String
   deriving Repr
 
+/- Frozen PDG 2024 lifetime/branching inputs used only to construct matching references.
+The uncertainties below are rounded-up first-order quadrature estimates, assuming independent
+inputs; unavailable input correlations are not model uncertainties. No model bound is changed. -/
+namespace DecayReferences
+ def pionLifetime : Rat := 26.033e-9
+ def pionMuonBranch : Rat := 0.9998770
+ def kaonLifetime : Rat := 12.380e-9
+ def kaonMuonBranch : Rat := 0.6356
+ def neutralPionLifetime : Rat := 8.43e-17
+ def neutralPionPhotonBranch : Rat := 0.98823
+ def pionMuonPartialLifetime : Rat := pionLifetime / pionMuonBranch
+ def kaonMuonPartialLifetime : Rat := kaonLifetime / kaonMuonBranch
+ def neutralPionPhotonPartialLifetime : Rat := neutralPionLifetime / neutralPionPhotonBranch
+ def muonicWidthRatio : Rat := pionMuonPartialLifetime / kaonMuonPartialLifetime
+end DecayReferences
+
 /-- All experimental references recorded for a key (frozen comparison data). -/
 def expRefs : Key → List ExpRef
   | .inverseAlpha => [
@@ -61,12 +77,12 @@ def expRefs : Key → List ExpRef
   | .vud | .vudDressed => [⟨0.97367, 0.00032, "pdg_2024"⟩]
   | .tauLifetimeFs => [⟨290.3, 0.82, "pdg_2024"⟩]
   | .neutronLifetimePredicted => [⟨878.4, 0.5, "pdg_2024"⟩]
-  | .pionLifetimePredicted => [⟨2.6033e-8, 0.0005e-8, "pdg_2024"⟩]
-  -- τ_π / (τ_K / BR(K→μν)) = 2.6033 / (1.2380 / 0.6356); errors 0.02%, 0.16%, 0.17% in quadrature
-  | .kaonPionRatio => [⟨1.336557, 0.003176, "pdg_2024"⟩]
+  | .pionLifetimePredicted => [⟨DecayReferences.pionMuonPartialLifetime, 5.001e-12, "pdg_2024_pi_mu2_inclusive_partial"⟩]
+  | .kaonPionRatio => [⟨DecayReferences.muonicWidthRatio, 0.003176, "pdg_2024_inclusive_muonic_partial_ratio"⟩]
+  | .kaonFiniteLifetimeSeconds => [⟨DecayReferences.kaonMuonPartialLifetime, 4.612e-11, "pdg_2024_k_mu2_inclusive_partial"⟩]
   | .neutronLifetimeUnified => [⟨878.4, 0.5, "pdg_2024"⟩]
   | .muonLifetimeSeconds => [⟨2.1969811e-6, 0.0000022e-6, "pdg_2024"⟩]
-  | .neutralPionFiniteLifetimeSeconds => [⟨8.43e-17, 0.13e-17, "pdg_2024"⟩]
+  | .neutralPionFiniteLifetimeSeconds => [⟨DecayReferences.neutralPionPhotonPartialLifetime, 1.316e-18, "pdg_2024_pi0_gamma_gamma_partial"⟩]
   | .zEq => [⟨3387, 21, "planck_2018"⟩]
   | .ckmS13 => [⟨0.00382, 0.00020, "pdg_2024"⟩]
   | .ckmS23 => [⟨0.0411, 0.0012, "pdg_2024"⟩]
@@ -110,6 +126,16 @@ def expRefs : Key → List ExpRef
   | .zMassUnc => [⟨91.1876, 0.0021, "pdg_2024"⟩]
   | _ => []
 
+/-- Comparison-error provenance; tau already includes its supplied branching-input error. -/
+def comparisonNote (k : Key) : String :=
+  match k with
+  | .tauLifetimeFs => "combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error"
+  | .pionLifetimePredicted => "partial reference = 26.033 ns / 0.9998770; uncertainty from 0.005 ns and BR error 0.0000004 in quadrature, rounded up; input correlations unavailable"
+  | .kaonFiniteLifetimeSeconds => "partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; raw model is context only"
+  | .kaonPionRatio => "ratio uses both muonic branching fractions; uncertainty propagated from frozen lifetimes/branches in quadrature, rounded up; input correlations unavailable"
+  | .neutralPionFiniteLifetimeSeconds => "partial reference = 8.43e-17 s / 0.98823; uncertainty from 0.13e-17 s and BR error 0.00034 in quadrature, rounded up; input correlations unavailable"
+  | _ => ""
+
 /-- Whether a reference is **scored** in the audit summary. Unscored references are shown for
 context, with `·` instead of a glyph:
 * intermediate (tree-level / uncorrected) values, whose corrected counterparts are scored:
@@ -121,12 +147,13 @@ context, with `·` instead of a glyph:
   BBN sound horizon, so it is grouped with the early-universe references);
 * `neutron_lifetime_unified_s`: the `3³` spectral template, kept as a comparison; the scored E8
   neutron is `neutron_lifetime_predicted_s` (continuum route);
+* `kaon_finite_lifetime_s`: raw muonic partial channel, awaiting shared-factor normalization;
 * `muon_lifetime_s`: E8 `G_F` with the derived phase factor and the one-loop QED factor; the
   `G_F` it tests is already scored in `fermi_constant`, and higher-order QED is not included. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
   | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds
-  | .neutronLifetimeUnified => false
+  | .neutronLifetimeUnified | .kaonFiniteLifetimeSeconds => false
   | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "abbott_des_y1_2018"
   | _ => true
 

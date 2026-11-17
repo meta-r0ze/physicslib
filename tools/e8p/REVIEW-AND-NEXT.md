@@ -40,6 +40,27 @@ exist unless noted):
 
 - **Precision/QCD**: `g-2` (muon anomaly), `Λ_QCD`, W/Z widths; none has a Lean enclosure yet.
 
+## Decay comparison and export follow-ups
+
+The physical kernels and channel normalization are owned by
+[PMElementaryParticles](../../src/PMElementaryParticles/REVIEW-AND-NEXT.md) and
+[PMHadrons](../../src/PMHadrons/REVIEW-AND-NEXT.md); do not patch catalog numbers to match data.
+
+- **Common corrected export path (upstream dependency).** Once PMHadrons settles source
+  normalization, export kaon widths from the same shared-factor convention as the pion/neutron.
+  `DecayInstantiation.kaonChannelCKM` already exists; the current `kaon_finite_lifetime_s` still
+  represents the raw formula and is labelled/context-only against a matching muonic partial
+  reference. Tighten the source enclosure before promoting the corrected row. Do not multiply
+  shared running and an already inclusive radiative factor twice; retain the raw/dressed CKM
+  convention and account for `q² = 515/516` exactly once.
+- **Follow improved source calculations (upstream dependency).** Add certified finite-mass and
+  higher-order muon kernels, the corrected tau partial-width ratio, full-Fermi/outer-radiative
+  neutron rows, and kaon semileptonic rows as their source proofs become available. The kaon
+  pion-charge and lepton-mass kinematics must be fixed upstream first. Update correction-order
+  metadata and keep older stages as marked intermediates; do not turn approximate review
+  diagnostics into certified catalog intervals. Reference covariances may replace the current
+  explicitly stated independent-input propagation when available.
+
 ## Scripts to retire, once fully covered
 
 - `PM-1-Arch/calculations/constants.py`, `particles.py`
@@ -61,11 +82,6 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
 - The hydrogenic cloud column (`cloudSum`) is a rational mirror of
   `PMAtoms.ElectronCloud.bindingEV`; move a `ℚ` form into `src/` to drop the mirror.
 - Add `--particle <spec>`: accept `6 7` aka carbon 13 v.s. the more stable carbon 12, print `Z/N/A`, configuration, shell counts, `2S+1`, E8 nuclear mass (`certifiedMass`), tabulated isotopic mass and half-life/decay. This is a lookup/display feature over frozen isotope data, not a new model value.
-- **Kaon lifetime.** `kaon_finite_lifetime_s` (1.98–2.12 ×10⁻⁸ s) is still the broad enclosure and
-  carries no reference. The E8 value is `≈ 2.015×10⁻⁸` s against the K_μ2 partial lifetime
-  `τ_K/BR(μν) = 1.948×10⁻⁸` s (+3.5%): `f_K` (−0.7%) accounts for +1.5%; the pion's `32/33`
-  margin is not applied to the kaon, and the SM radiative correction is about −2%. Tighten it
-  (needs tight `kaonPlus` and `|V_us|` bounds) before adding the reference.
 - **Electron-mass inputs.** `ElectroweakBounds.electronGeV`, `FloorNeutrino.meEV` and
   `StrongRunning.mZ` use `0.51099895` (CODATA truncated by `1.35×10⁻⁹`); `SharedUnits.me` and
   `Hydrogen.electronMassEV` use the full `0.51099895069`. Negligible at those rows' precision;

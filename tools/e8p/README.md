@@ -74,6 +74,40 @@ separately: this is a diagonal diagnostic, not an independent global goodness-of
 The JSON comparison field `scored` records the same inclusion rule.
 
 
+## Decay comparisons
+
+Decay rows identify their observable, channel, correction order and normalization.
+Text/audit output and the summary show those conventions; JSON adds a nullable `decay`
+object (`observable`, `channel`, `correction_order`, `normalization`) and each comparison
+has an `uncertainty_note`. LaTeX includes optional `Observable`, `CorrectionOrder` and
+`ComparisonNote` tags. These are additive fields in `pm.e8p.v1`; certified model bounds
+and their source formulas are unchanged.
+
+An inverse partial width is compared with `tau_total / branching_fraction`, not with
+`tau_total`. The frozen PDG 2024 references use:
+
+| Row | Matching reference |
+|---|---|
+| charged-pion muonic inverse width | `26.033 ns / 0.9998770` |
+| charged-kaon muonic inverse width | `12.380 ns / 0.6356` |
+| neutral-pion two-photon inverse width | `8.43e-17 s / 0.98823` |
+| kaon/pion muonic width ratio | pion inverse partial lifetime / kaon inverse partial lifetime |
+
+Reference errors use first-order quadrature from the frozen lifetime and branching
+errors, rounded up, assuming independent inputs where covariance is unavailable.
+Sources: [charged-meson review](https://pdg.lbl.gov/2024/reviews/rpp2024-rev-pseudoscalar-meson-decay-cons.pdf)
+and [neutral-pion listing](https://pdg.lbl.gov/2024/listings/rpp2024-list-pi-zero.pdf).
+The tau's existing `0.82 fs` comparison error already combines `0.5 fs` lifetime
+measurement error and approximately `0.65 fs` propagated from its supplied `B_e`.
+It is not an additional experimental lifetime uncertainty and is not added twice.
+
+Small references, errors and residuals use scientific notation rather than printing
+as zero. Arithmetic enclosures certify the stated approximation, not theoretical
+uncertainty from omitted radiation or channels. The raw kaon lifetime now has a
+matching partial reference but remains context-only pending the source normalization
+and tighter bounds. The muon remains context-only because `G_F` is already scored;
+its caveat identifies missing finite-mass one-loop radiation as well as higher orders.
+
 ## Layout
 
 `E8PConstants/` mirrors `src/`: a file that compares or displays the values of `src/PMX/…` lives

@@ -30,6 +30,30 @@ def sigmaRat (k : Key) (r : ExpRef) : Rat := diffRat k r / r.uncertainty
 def ratDecimal (q : Rat) (digits : Nat) : String :=
   fixedDecimal (lowerScaled q digits) digits
 
+/-- Keep tiny decay references and residuals visible instead of rounding them to zero.
+Exact reference rationals remain available in JSON; this is display formatting only. -/
+def comparisonNumber (q : Rat) : String :=
+  let a := if q < 0 then -q else q
+  if a = 0 then "0" else if a < 0.000001 then
+    let e : Int := (List.range 81).foldl (fun acc i =>
+      let e := Int.ofNat i - 80
+      if (1 / (10 ^ (-e).toNat : Nat) : Rat) ≤ a then e else acc) (-80)
+    let sign := if q < 0 then "-" else ""
+    sign ++ ratDecimal (a * (10 ^ (-e).toNat : Nat)) 6 ++ "e" ++ toString e
+  else ratDecimal q 12
+
+def decayText (k : Key) : String :=
+  match k.decayInfo with
+  | none => ""
+  | some d => s!"{d.observable}; {d.channel}; {d.correctionOrder}; {d.normalization}"
+
+def decayJson (k : Key) : Lean.Json :=
+  match k.decayInfo with
+  | none => Lean.Json.null
+  | some d => Lean.Json.mkObj [
+      ("observable", .str d.observable), ("channel", .str d.channel),
+      ("correction_order", .str d.correctionOrder), ("normalization", .str d.normalization)]
+
 /-- Signed σ with two decimals. -/
 def sigmaText (k : Key) (r : ExpRef) : String :=
   if r.uncertainty = 0 then "n/a"
@@ -72,7 +96,7 @@ def auditScoreLines (ks : List Key) : List String :=
     [auditScoreText "All selected" ks]
 
 def diffText (k : Key) (r : ExpRef) : String :=
-  ratDecimal (diffRat k r) 12
+  comparisonNumber (diffRat k r)
 
 /-- Indexed list helper (Lean core has no `List.enum`). -/
 def indexed (xs : List α) : List (Nat × α) :=
@@ -87,13 +111,14 @@ def statusGlyph (k : Key) (r : ExpRef) : String :=
   let a := let s := sigmaRat k r; if s ≥ 0 then s else -s
   if a ≤ 1 then "✓" else if a ≤ 2 then "~" else "!"
 
-def expValueText (r : ExpRef) : String := ratDecimal r.value 12
-def expUncText (r : ExpRef) : String := ratDecimal r.uncertainty 12
+def expValueText (r : ExpRef) : String := comparisonNumber r.value
+def expUncText (r : ExpRef) : String := comparisonNumber r.uncertainty
 
 def comparisonJson (k : Key) (r : ExpRef) : Lean.Json :=
   Lean.Json.mkObj [
     ("value", .str (fraction r.value)), ("uncertainty", .str (fraction r.uncertainty)),
-    ("citation", .str r.citation), ("diff", .str (diffText k r)),
+    ("citation", .str r.citation), ("uncertainty_note", .str (comparisonNote k)),
+    ("diff", .str (diffText k r)),
     ("sigma", .str (sigmaText k r)),
     ("scored", Lean.toJson (scoredRef k r && r.uncertainty > 0))]
 
@@ -105,7 +130,7 @@ def rowJson (k : Key) (digits : Nat) : Lean.Json :=
   Lean.Json.mkObj [
     ("id", .str k.id), ("paper", .str (toString k.paper)), ("section", .str k.section),
     ("role", .str k.role), ("unit", .str k.unit),
-    ("caveat", .str k.caveat),
+    ("caveat", .str k.caveat), ("decay", decayJson k),
     ("inputs", .arr (k.inputs.map Lean.Json.str).toArray),
     ("theorem", .str k.theoremName), ("formula", .str k.formula),
     ("rational_lower", .str (fraction lo)), ("rational_upper", .str (fraction hi)),
@@ -133,7 +158,9 @@ def rowText (k : Key) (digits : Nat) : String :=
     | some r => s!"  | exp {expValueText r} ± {expUncText r} ({r.citation}): diff {diffText k r}, σ {sigmaText k r}"
     | none => ""
   let caveat := if k.caveat.isEmpty then "" else s!"  [caveat: {k.caveat}]"
-  text ++ exact ++ input ++ exp ++ caveat
+  let decay := if (decayText k).isEmpty then "" else s!"  [decay: {decayText k}]"
+  let note := if (comparisonNote k).isEmpty then "" else s!"  [comparison: {comparisonNote k}]"
+  text ++ exact ++ input ++ exp ++ caveat ++ decay ++ note
 
 /-- One audit line (keys with an experimental reference only). -/
 def auditText (k : Key) (digits : Nat) : Option String :=
@@ -148,7 +175,13 @@ def latexRows (k : Key) (digits : Nat) : List String :=
   let lo := (bounds k).1
   let tag := k.id
   let val := fixedDecimal (lowerScaled lo digits) digits
-  let base := [s!"%<*{tag}Val>{val}%</{tag}Val>", s!"%<*{tag}Eq>{Key.formula k}%</{tag}Eq>"]
+  let base := [s!"%<*{tag}Val>{val}%</{tag}Val>", s!"%<*{tag}Eq>{Key.formula k}%</{tag}Eq>"] ++
+    (match k.decayInfo with
+     | none => []
+     | some d => [s!"%<*{tag}Observable>{d.observable}%</{tag}Observable>",
+                  s!"%<*{tag}CorrectionOrder>{d.correctionOrder}%</{tag}CorrectionOrder>"]) ++
+    (if (comparisonNote k).isEmpty then [] else
+      [s!"%<*{tag}ComparisonNote>{comparisonNote k}%</{tag}ComparisonNote>"])
   let refs := expRefs k
   match refs with
   | [] => base
@@ -171,14 +204,18 @@ def detailLines (k : Key) (digits : Nat) : List String :=
       ++ (if lo = hi then s!"  (exact {fraction lo})" else "")
   let thm := s!"    theorem = {k.theoremName}"
   let refs := expRefs k
-  if refs.isEmpty then [head, val, thm]
+  let base := [head, val, thm] ++
+    (if (decayText k).isEmpty then [] else [s!"    decay   = {decayText k}"]) ++
+    (if k.caveat.isEmpty then [] else [s!"    note    = {k.caveat}"]) ++
+    (if (comparisonNote k).isEmpty then [] else [s!"    comparison = {comparisonNote k}"])
+  if refs.isEmpty then base
   else
     let blocks := (indexed refs).map (fun (i, r) =>
       let label := if refs.length = 1 then "" else s!"[{i+1}]"
       [s!"    exp{label}  = {expValueText r} ± {expUncText r}  ({r.citation})",
        s!"    diff{label} = {diffText k r}",
        s!"    σ{label}    = {sigmaText k r}"])
-    [head, val, thm] ++ (blocks.foldr (· ++ ·) [])
+    base ++ (blocks.foldr (· ++ ·) [])
 
 /-- One audit block per reference. -/
 def auditBlocks (k : Key) (digits : Nat) : List String :=
@@ -186,6 +223,8 @@ def auditBlocks (k : Key) (digits : Nat) : List String :=
   (expRefs k).map (fun r =>
     s!"  {statusGlyph k r} {k.id}: model [{fixedDecimal (lowerScaled lo digits) digits}, {fixedDecimal (upperScaled hi digits) digits}] {k.unit}\n" ++
     s!"      exp {expValueText r} ± {expUncText r} ({r.citation}); diff {diffText k r}; σ {sigmaText k r}" ++
-    (if k.caveat.isEmpty then "" else s!"\n      note: {k.caveat}"))
+    (if (decayText k).isEmpty then "" else s!"\n      decay: {decayText k}") ++
+    (if k.caveat.isEmpty then "" else s!"\n      note: {k.caveat}") ++
+    (if (comparisonNote k).isEmpty then "" else s!"\n      comparison: {comparisonNote k}"))
 
 end E8PConstants

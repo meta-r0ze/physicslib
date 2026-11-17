@@ -104,7 +104,7 @@ def summaryLines : List String :=
     "**Unit inputs.** `m_e`, `ħc` and `c` (CODATA 2022), used only to express values in MeV, fm or s.",
     "**Measured anchors.** A few rows also take a measured number (the cosmology rescalings take the",
     "frozen `H₀`/`S₈` inputs; `tau_lifetime_fs` takes the measured muon lifetime); each such row",
-    "names it in the `measured inputs` column.",
+    "names it in the `measured inputs` column. The tau pull already combines its lifetime and B_e input errors.",
     "",
     "## Scoreboard",
     "",
@@ -116,7 +116,9 @@ def summaryLines : List String :=
     s!"- Nuclear shell closures (`--shells`): {closures}; measured magic numbers {Shells.measuredMagic}.",
     s!"- Atomic ground-state multiplicity, Hund's first rule (`--periodic-table`): {hund.1} of {hund.2} match.",
     "",
-    "`digits` = ⌊−log₁₀(|E8 − measured| / |measured|)⌋. σ uses the measurement uncertainty only.",
+    "`digits` = ⌊−log₁₀(|E8 − measured| / |measured|)⌋. σ uses the recorded comparison uncertainty:",
+    "measurement uncertainty, with supplied-input propagation where explicitly noted below. Certified",
+    "arithmetic intervals do not include theory uncertainty from omitted channels or correction orders.",
     "",
     "## All scored comparisons, most digits first",
     "",
@@ -125,6 +127,17 @@ def summaryLines : List String :=
     "## Tensions (|σ| > 2)",
     "",
     header, rule ] ++ tensions.map cmpRow ++
+  [ "",
+    "## Decay conventions and comparison errors",
+    "",
+    "Model formulas retain their certified bounds. Partial-lifetime references are total lifetime divided",
+    "by the matching branching fraction; their rounded-up quadrature errors assume independent inputs.",
+    "Unknown correlations and omitted physical corrections are not supplied as fitted theory errors.",
+    "",
+    "| quantity | observable / channel | correction order / normalization | comparison uncertainty |",
+    "|---|---|---|---|" ] ++
+  keys.filterMap (fun k => k.decayInfo.map fun d =>
+    s!"| `{k.id}` | {esc d.observable}; {esc d.channel} | {esc d.correctionOrder}; {esc d.normalization} | {esc (comparisonNote k)} |") ++
   [ "",
     "## Shown, not scored",
     "",
