@@ -41,8 +41,7 @@ effect (OVERVIEW); its source is PMFlavor's charged-current transfer readout.
   protocols. Open on it: (1) the Toll: the wire and the crossing are label-blind, so the heavy-label
   weight has to be a cost on the four orbits; the data ask for `ν < e < d < u` with steps `≈ 3, 3, 4.4`,
   which no product of a lepton/colour factor and a sign factor gives (it forces `s_d/s_u = s_e/s_ν`);
-  (2) the lightest masses; (3) whether the label class (`g − 1` on wall T, `g + 1` on wall F, read in
-  the vector frame) carries the per-protocol cost. Killed on the way (git history has the details):
+  (2) the lightest masses. Killed on the way (git history has the details):
   the reference class's even sector, the other wall's even modes or full carriers, a displaced
   reference record, the hop's auxiliary axis, the orientation doublet alone, the walls as the wire's
   chiral halves, the walls labelled by class alone, and the even half of the other factor as the label
