@@ -59,14 +59,12 @@ def phaseStep : ℝ := 6 * Real.pi / 5
 private theorem transport_diagonal (j : ℕ) :
     hypercharge ((j : ℝ) * phaseStep) =
       diagonal (fun c => fifthPhase (chargeIndex c) ^ j) := by
-  unfold hypercharge
-  rw [PMAction.LinkEvolution.transport_eq_exp, VacancyProjection.charge_diagonal,
-    ← diagonal_smul, Matrix.exp_diagonal]
+  rw [VacancyProjection.hypercharge_eq_diagonal]
   congr 1
   funext c
-  rw [Pi.coe_exp, fifthPhase, ← Complex.exp_nat_mul, ← Complex.exp_eq_exp_ℂ]
+  rw [fifthPhase, ← Complex.exp_nat_mul]
   congr 1
-  simp [phaseStep, smul_eq_mul, chargeIndex]
+  simp [phaseStep, chargeIndex]
   ring
 
 private theorem fifth_product (z : ℂ) (hz : z ^ 5 = 1) (hne : z ≠ 1) :

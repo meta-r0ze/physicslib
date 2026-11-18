@@ -38,15 +38,11 @@ private theorem phaseIndex_inj (c : Channels) (s : Option BaseProtocol)
 private theorem transport_diagonal :
     hypercharge (3 * Real.pi / 4) = diagonal
       (fun c => Complex.exp (((Real.pi : ℂ) * ((tag c).2.2 : ℂ) / 4) * Complex.I)) := by
-  unfold hypercharge
-  rw [PMAction.LinkEvolution.transport_eq_exp, VacancyProjection.charge_diagonal,
-    ← diagonal_smul, Matrix.exp_diagonal]
+  rw [VacancyProjection.hypercharge_eq_diagonal]
   congr 1
   funext c
-  rw [Pi.coe_exp, ← Complex.exp_eq_exp_ℂ]
   congr 1
   push_cast
-  simp [smul_eq_mul]
   ring
 
 private theorem static_phase (c : Channels) (hc : active c = false) :

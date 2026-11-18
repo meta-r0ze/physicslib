@@ -1,6 +1,7 @@
 import PMConstants.ChannelOccupancy
 import PMConstants.ReferenceLink
 import PMElementaryParticles.GappedGluedCrossing
+import PMAction.DiagonalReadout
 
 /-!
 # The occupied light projection from the packet gauge action
@@ -43,6 +44,29 @@ theorem charge_diagonal :
       rw [PMConstants.PacketTraceForm.hyperGen, Matrix.smul_apply, smul_eq_mul,
         PMConstants.ChannelOccupancy.charge_entries]
       ring
+
+/-- The packet hypercharge as real channel charges `tag/3`. -/
+theorem charge_real :
+    charge = diagonal (fun c => ((((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3 : ℝ) : ℂ)) := by
+  rw [charge_diagonal]
+  congr 1
+  funext c
+  push_cast
+  rfl
+
+/-- The packet hypercharge transport is diagonal in the channel basis
+(`PMAction.DiagonalReadout.transport_eq_diagonal`). -/
+theorem hypercharge_eq_diagonal (t : ℝ) :
+    hypercharge t = diagonal (fun c => Complex.exp
+      (((t * (((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3) : ℝ) : ℂ) * Complex.I)) :=
+  PMAction.DiagonalReadout.transport_eq_diagonal charge_hermitian _ charge_real t
+
+/-- The flag of the packet hypercharge transport on one channel
+(`PMAction.DiagonalReadout.transport_flag`). -/
+theorem hypercharge_flag (t : ℝ) (c : Channels) :
+    PMAction.InterferenceReadout.flagProbability (hypercharge t) c =
+      PMAction.DiagonalReadout.flag (t * (((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3)) :=
+  PMAction.DiagonalReadout.transport_flag charge_hermitian _ charge_real t c
 
 /-- The hypercharge entry vanishes exactly on the inventory vacancy. -/
 theorem hyper_entry_zero_iff (c : Channels) :

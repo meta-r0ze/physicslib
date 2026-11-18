@@ -161,23 +161,10 @@ theorem no_separable_toll (lepton coloured positive negative : ℝ)
 def hyperchargeFlag (t : ℝ) (c : Channels) : ℝ :=
   PMAction.InterferenceReadout.flagProbability (hypercharge t) c
 
-open scoped Matrix.Norms.Operator in
 theorem hyperchargeFlag_eq_cos (t : ℝ) (c : Channels) :
     hyperchargeFlag t c =
       (1 - Real.cos (t * ((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3)) / 2 := by
-  classical
-  rw [hyperchargeFlag, PMAction.InterferenceReadout.flag_formula _ (hypercharge_unitary t),
-    hypercharge, PMAction.LinkEvolution.transport_eq_exp, VacancyProjection.charge_diagonal,
-    ← Matrix.diagonal_smul, Matrix.exp_diagonal, Matrix.diagonal_apply_eq, Pi.coe_exp,
-    ← Complex.exp_eq_exp_ℂ]
-  have h :
-      (((t : ℂ) * Complex.I) •
-        (fun c : Channels => ((PMConstants.ChannelOccupancy.tag c).2.2 : ℂ) / 3)) c =
-      ((t * ((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3 : ℝ) : ℂ) * Complex.I := by
-    simp only [Pi.smul_apply, smul_eq_mul]
-    push_cast
-    ring
-  rw [h, Complex.exp_ofReal_mul_I_re]
+  rw [hyperchargeFlag, VacancyProjection.hypercharge_flag, PMAction.DiagonalReadout.flag, mul_div_assoc]
 
 /-- The vacancy's static hypercharge makes it invisible to this flag. -/
 @[simp]
