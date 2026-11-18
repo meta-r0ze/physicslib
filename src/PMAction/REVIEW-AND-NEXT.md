@@ -76,13 +76,13 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   schedule first, then compare.
   The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
-- **Label-sensitive comparison schedule.** Derive admission of the joint
-  branch/payload kick and supply a clean coordinate seed for the
-  [root decoder](../PMElementaryParticles/OVERVIEW.md#electric-decoder-on-the-odd-coordinate-bank).
-  Derive the preparation and joint update of the retained companion.
-  Select the physical comparator and registration tariff. The
-  [short word’s primitive flags](../PMElementaryParticles/OVERVIEW.md#primitive-flags-of-the-short-electric-decoder)
-  fix the forward ledger under unit flag pricing. Derive the
+- **Label-sensitive comparison schedule.** Admit the
+  [chiral-current interaction](../PMElementaryParticles/OVERVIEW.md#electric-kicks-from-the-chiral-register-current)
+  between the payload and a separately allocated record carrier with a
+  clean coordinate seed. Derive the preparation and joint update of the
+  retained companion. Select the physical comparator and registration
+  tariff. The chiral-current and [short decoder](../PMElementaryParticles/OVERVIEW.md#primitive-flags-of-the-short-electric-decoder)
+  ledgers give the forward cost under unit flag pricing. Derive the
   firing and placement of the conditioned pulse on the two wall insertions.
   The [short decoder’s frame bound](../PMElementaryParticles/OVERVIEW.md#short-root-decoder-and-serial-frame-bound)
   constrains serial schedules with fresh bank preparation.

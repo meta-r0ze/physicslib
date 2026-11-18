@@ -104,7 +104,8 @@ private theorem mark_obs (c : Fin 3) (p : ℝ) (hp : 0 < p) (hp' : p < 1 / 2) :
     (NativeObservation.mul (mixer_obs c p false hp hp') (pulse_obs c p 0 2 hp hp'))
     (NativeObservation.star (mixer_obs c p false hp hp'))
 
-private theorem swap_coordinate : R 2 2 = swapBits := by
+/-- The canonicalizing bit swap is an actual coordinate root. -/
+theorem swap_coordinate : R 2 2 = swapBits := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [R, RZ, OrthogonalRootPhase.realMatrix, axisPerm, Equiv.swap_apply_def, swapBits]

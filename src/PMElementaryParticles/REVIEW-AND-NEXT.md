@@ -22,17 +22,18 @@ the recorded mass ratios to check it.
 
 - **Heavy-label weight. [Premise]** Derive a label-dependent heavy-to-node
   coupling ratio from E8.
-  - Implement the joint electric kicks and supply a clean coordinate
-    seed for the [root decoder](OVERVIEW.md#electric-decoder-on-the-odd-coordinate-bank).
-    Prepare the other-wall companion and admit its joint update
+  - Allocate a separate record carrier with a clean coordinate seed and
+    admit the [chiral-current kicks](OVERVIEW.md#electric-kicks-from-the-chiral-register-current)
+    on it. Prepare the other-wall companion and admit its joint update
     with the live root.
   - Select the physical comparator. Derive its registration tariff,
     including which labels participate in each visit and what record
     export or reuse costs. The
     [primitive phase ledger](OVERVIEW.md#primitive-flags-of-the-short-electric-decoder)
-    prices preparation and the forward word from an occupied seed
-    under unit flag pricing and gives the charged order at bit-reversed
-    ports. If the cost enters through the reference node,
+    prices preparation from an occupied seed under unit flag pricing.
+    The [chiral-current ledger](OVERVIEW.md#electric-kicks-from-the-chiral-register-current)
+    includes the intervening root swap and preserves the charged ladder
+    at bit-reversed ports. If the cost enters through the reference node,
     derive the price for a crossing that carries a protocol label
     (`HandoffAdmittance.closure_one_price` assumes indistinguishable
     signals).

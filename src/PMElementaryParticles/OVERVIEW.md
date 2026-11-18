@@ -526,10 +526,10 @@ coordinate seed (`prepare_balanced`).
 The state-flag exclusion above prices the logical factors. The
 primitive root word exposes additional intermediate states. Each root
 step’s state flag can be computed on the four coordinates
-(`encoded_flag`). The primitive registration tariff, availability of
-the clean coordinate seed, and joint electric evolution on the payload
-and bank remain open. The construction leaves the placement and physical firing
-cadence of the two heavy-wall insertions open.
+(`encoded_flag`). The chiral register current below gives the joint
+electric evolution in the occupied two-register model. The physical
+registration tariff, supply of the clean seed, and placement and cadence
+of the two heavy-wall insertions remain open.
 
 ### Short root decoder and serial frame bound
 
@@ -571,6 +571,41 @@ physical tariff, export or reuse and per-wall firing remain open.
 Comparison only. The charged gap ratio is `1` versus about
 `1.1–1.5` in `tools/heavy_toll_targets.py`. The two calculated
 gaps of `½` are also smaller than the data-implied gaps.
+
+### Electric kicks from the chiral register current
+
+`ElectricChiralKick` uses `PMAction.RegisterInteraction.current` on a
+record carrier and a separate payload. Its chiral projector selects
+coordinates 2 and 3 on either carrier summand. With the packet's unbroken
+electric generator, its evolution gives the high-bit kick. Conjugation
+by the root reflection that swaps coordinates 1 and 2 gives the low-bit
+kick (`high_observed`, `low_observed`, `kick_on_summand`). The current
+is unitary and preserves occupation (`high_unitary`,
+`high_preserves_occupation`).
+
+The incoming swap fixes a balanced bank. Execute the current at phase
+time `3π/2`, the root swap, then the current at phase time `3π` to
+recover the same input to the short decoder
+(`two_kicks_from_one_current`). The intervening swap adds half the
+first electric flag (`swapped_exposure_toll`). With one registration
+per executed state flag, the forward Tolls at the bit-reversed ports
+are `(13/4, 11/4, 5/2, 1)` in order `(e,d,u,ν)`. These give
+`s_e < s_d < s_u`, with charged gaps `1/2` and `1/4`
+(`total_tolls`, `total_ladder`). The two payload wall slots have the
+same phase history and Toll (`total_toll_wall_pair`), so their
+equal-superposition flag ledger has the same price. The inverse
+preparation from an occupied clean seed still adds one common flag
+under that tariff.
+Comparison only. The gap ratio is `1/2` versus about `1.1–1.5` in
+`tools/heavy_toll_targets.py`.
+
+A first-wall coordinate seed is at rest. A balanced four-port bank
+uses a gapped coordinate on either wall (`clean_first_seed_at_rest`,
+`balanced_bank_leaves_rest`). The live rest wire alone cannot carry
+this bank. The separate carrier's allocation and physical admission,
+the registration tariff and export or reuse, and scheduling at the
+two heavy-wall insertions remain open. The 52-quarter-time fresh
+serial bound still applies before the kicks and intervening swap.
 
 ### Primitive crossing activity and clock limits
 
