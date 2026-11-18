@@ -77,7 +77,9 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
 - **Label-sensitive comparison schedule.** Derive admission of the joint
-  branch/payload kick, clean bank preparation and the generation control.
+  branch/payload kick and clean bank preparation. Derive the preparation
+  and joint update of the retained carrier used by the
+  [generation control](../PMElementaryParticles/OVERVIEW.md#finite-control-of-the-direct-heavy-flip).
   Select the physical phase reference and registration tariff. Derive the
   firing and placement of the conditioned pulse on the two wall insertions.
   The [electric comparator and its prices](../PMElementaryParticles/OVERVIEW.md#an-electric-charge-record-on-both-walls)

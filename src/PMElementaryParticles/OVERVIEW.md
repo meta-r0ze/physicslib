@@ -361,6 +361,17 @@ acts as identity on fixed points. This uses
 the available encoded endpoints and supplied joint controls. Native bank
 preparation, firing and timing remain open.
 
+`CompanionHeavyFlip.ready_pack` supplies the generation address from the
+other occupied glue class on a retained companion carrier. The ordered
+live/companion classes select the incoming heavy wall for every companion
+index. The guarded endpoint word also updates the companion: its class
+becomes the vacated live class, with its carrier index retained
+(`run_pack`). Both directions agree with the finite control, and light
+inputs are fixed. Running the word twice restores the packed state
+(`run_twice_pack`). This identifies the required initial class and the
+return rule. A native source for the companion and admission of the joint
+update remain open.
+
 With the label retained as a control, the species blocks are already
 orthogonal. If a gate instead sends distinct inputs to overlapping
 wire outputs, reversibility of the product with an exported record forces

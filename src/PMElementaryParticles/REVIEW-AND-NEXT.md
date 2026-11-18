@@ -22,10 +22,13 @@ the recorded mass ratios to check it.
 
 - **Heavy-label weight. [Premise]** Derive a label-dependent heavy-to-node
   coupling ratio from E8.
-  - Implement the joint electric kick on the branch and payload, allocate and
-    prepare clean record banks, and obtain a native generation address. The
-    [electric record circuit](OVERVIEW.md#an-electric-charge-record-on-both-walls)
-    gives the exact comparisons and branch pulses once those resources are available.
+  - Implement the joint electric kick and prepare the clean record banks.
+    The [electric record circuit](OVERVIEW.md#an-electric-charge-record-on-both-walls)
+    gives the exact comparisons and branch pulses. For the generation
+    address, prepare a companion in the other wall’s class and admit
+    its joint update with the live root. The
+    [companion endpoint word](OVERVIEW.md#finite-control-of-the-direct-heavy-flip)
+    specifies the address and return action on the prepared states.
   - Derive which labels participate in each visit, its physical phase
     reference, and the tariff for registrations, preparation, and record
     export or reuse. If the cost enters through the reference node,
