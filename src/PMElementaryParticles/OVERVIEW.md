@@ -62,8 +62,11 @@ channel pairing. The inventory still calls the static slot a vacancy for
 the light-state projection. For every forward pair the static-minus-active
 hypercharge is `+1` on even signed indices and `−1` on odd indices
 (`opposite_hypercharge_step`, in the packet's integer `3Y` tags).
-Thus a neutral Dirac interpretation needs one unit of hypercharge from
-the substrate, even though the crossing preserves electric charge.
+The magnitude and sign agree with the existing scalar link and its
+conjugate from `PMConstants.SectorLinks` (`opposite_scalar_link`).
+For the neutral Dirac bilinear the conjugate insertion balances the
+static-minus-active difference of `+1`. This fixes the charge budget for
+using the reference link on the glued pair.
 `no_protocol_preserving_wall_exchange` concerns the separate inventory
 names. `no_root_only_wall_readout` shows that a root can occur on opposite
 walls in different generations, so the class control uses the generation.
@@ -103,6 +106,17 @@ label-wise Schur mass at zero energy. Its neutral block is
 are the static and active neutral flips. In the vacancy-truncated model
 `A₀` is set to zero. Admitting and deriving the neutral flips and their
 generation dependence is separate from identifying the crossing partner.
+
+For diagonal on-site flips `A₀ = diag(a)`, `B₀ = diag(b)`, the neutral
+block is a reverse cycle. Its only entry in row `g` is at column `g + 1`
+with weight `b_g · y_g⁻¹ · conj(a_{g+1})`. The Gram matrix is diagonal
+with the squared moduli of these weights
+(`diagonal_neutral_mass_entry`, `diagonal_neutral_gram`).
+With common magnitudes on each of the two flip families and on the
+crossing, the Gram matrix is scalar for every assignment of phases
+(`diagonal_neutral_gram_uniform`). The diagonal-flip Schur mechanism
+therefore needs unequal effective weight magnitudes to split the
+neutral masses.
 
 ### Static vacancy and neutral light modes
 

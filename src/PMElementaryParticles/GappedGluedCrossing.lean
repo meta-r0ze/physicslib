@@ -170,6 +170,48 @@ theorem neutral_paired_mass_entry (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
   rw [paired_light_mass y hy]
   simp [blockDiagonal]
 
+/-- For diagonal on-site flips, the neutral block's reverse-cycle entry
+from generation `g + 1` to `g`. -/
+def neutralCycleWeight (y a b : Fin 3 → ℂ) (g : Fin 3) : ℂ :=
+  b g * (y g)⁻¹ * star (a (g + 1))
+
+/-- Diagonal neutral flips leave one Schur entry per generation and column. -/
+theorem diagonal_neutral_mass_entry (y a b : Fin 3 → ℂ) (g h : Fin 3) :
+    (diagonal b * CompositeMass.cycInv y * (diagonal a)ᴴ) g h =
+      if h = g + 1 then neutralCycleWeight y a b g else 0 := by
+  rw [diagonal_conjTranspose, mul_diagonal, diagonal_mul]
+  fin_cases g <;> fin_cases h <;>
+    simp [neutralCycleWeight, CompositeMass.cycInv, Pi.star_apply]
+
+/-- The squared Schur singular values are the squared moduli of the three
+cycle weights, with the active basis already diagonalizing the Gram matrix. -/
+theorem diagonal_neutral_gram (y a b : Fin 3 → ℂ) :
+    let M := diagonal b * CompositeMass.cycInv y * (diagonal a)ᴴ
+    M * Mᴴ = diagonal (fun g =>
+      neutralCycleWeight y a b g * star (neutralCycleWeight y a b g)) := by
+  intro M
+  ext g h
+  rw [Matrix.mul_apply]
+  simp only [conjTranspose_apply, M, diagonal_neutral_mass_entry]
+  fin_cases g <;> fin_cases h <;>
+    simp [diagonal]
+
+/-- Equal flip and crossing magnitudes leave a degenerate neutral Schur
+spectrum regardless of the phases or the chosen common magnitudes. -/
+theorem diagonal_neutral_gram_uniform (y a b : Fin 3 → ℂ)
+    (ρY ρA ρB : ℝ) (hy : ∀ g, ‖y g‖ = ρY)
+    (ha : ∀ g, ‖a g‖ = ρA) (hb : ∀ g, ‖b g‖ = ρB) :
+    let M := diagonal b * CompositeMass.cycInv y * (diagonal a)ᴴ
+    M * Mᴴ = ((ρB * ρY⁻¹ * ρA) ^ 2 : ℝ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  dsimp only
+  rw [diagonal_neutral_gram, ← diagonal_one, ← diagonal_smul]
+  congr 1
+  funext g
+  rw [Pi.smul_apply, mul_comm (neutralCycleWeight y a b g), Complex.star_def,
+    ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq]
+  simp [neutralCycleWeight, norm_inv, hy, ha, hb,
+    Complex.real_smul]
+
 /-- After excluding the static vacancy, the mass preserves the signed label.
 The neutral output has no static light partner. Each occupied label has its
 own two generation-space flip matrices. -/

@@ -1,6 +1,7 @@
 import PMElementaryParticles.GluedRegister
 import PMElementaryParticles.ProtocolInventory
 import PMConstants.ChannelOccupancy
+import PMConstants.SectorLinks
 
 /-!
 # The glued register with wall-controlled weak refresh
@@ -72,6 +73,31 @@ theorem opposite_hypercharge_step : ∀ c : Channels, active c = false →
       (PMConstants.ChannelOccupancy.tag (opposite c)).2.2 =
         if (labelIndex c).val % 2 = 0 then (3 : ℤ) else -3 := by
   decide +kernel
+
+/-- The glued endpoint charge difference matches the existing Paper III
+scalar link or its conjugate, including the neutral pair. -/
+theorem opposite_scalar_link (c : Channels) (hc : active c = false)
+    (h : ℚ) (hlink : PMConstants.SectorLinks.OneLink PMConstants.Hypercharge.standard h) :
+    ((PMConstants.ChannelOccupancy.tag c).2.2 : ℚ) / 3 -
+      ((PMConstants.ChannelOccupancy.tag (opposite c)).2.2 : ℚ) / 3 =
+        if (labelIndex c).val % 2 = 0 then h else -h := by
+  have hh : h = 1 := by
+    have hstd := PMConstants.SectorLinks.standard_links
+    unfold PMConstants.SectorLinks.OneLink at hlink
+    exact (congrArg Prod.fst (hstd.symm.trans hlink)).symm
+  subst h
+  have hd := opposite_hypercharge_step c hc
+  by_cases he : (labelIndex c).val % 2 = 0
+  · rw [ite_eq_left he] at hd ⊢
+    have hr : ((PMConstants.ChannelOccupancy.tag c).2.2 : ℚ) -
+        ((PMConstants.ChannelOccupancy.tag (opposite c)).2.2 : ℚ) = 3 := by
+      exact_mod_cast hd
+    linarith
+  · rw [ite_eq_right he] at hd ⊢
+    have hr : ((PMConstants.ChannelOccupancy.tag c).2.2 : ℚ) -
+        ((PMConstants.ChannelOccupancy.tag (opposite c)).2.2 : ℚ) = -3 := by
+      exact_mod_cast hd
+    linarith
 
 /-- Transport from the reference vector class through the triality cycle. -/
 def transport : Fin 3 → Wt → Wt

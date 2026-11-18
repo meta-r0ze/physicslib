@@ -40,11 +40,11 @@ the recorded mass ratios to check it.
   occupied branch onto the static light wall. Use the
   [vacancy preparation](OVERVIEW.md#static-vacancy-and-neutral-light-modes)
   as the candidate circuit for the vacancy-truncated model. For a Dirac
-  mass, derive the native update that populates the static neutral crossing
-  partner and supplies the unit hypercharge transfer. Derive the neutral
-  flips and their generation dependence in the
-  [paired Schur block](OVERVIEW.md#equal-class-gapped-crossing) to obtain
-  mass splittings for oscillations.
+  mass, derive the native update that uses the reference scalar link to
+  populate the static neutral partner. Derive neutral flips and crossings
+  that split the masses. For diagonal flips, the
+  [paired Schur block](OVERVIEW.md#equal-class-gapped-crossing) requires
+  unequal magnitudes of the three reverse-cycle weights.
   Tip: screen any candidate first against the off-resonance offsets the
   data need (`e 0.038`, `d 0.14`, `u 0.0024`; OVERVIEW, protocol readout).
   They follow no single law in charge, so a shared mechanism must produce
