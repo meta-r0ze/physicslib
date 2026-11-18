@@ -173,6 +173,19 @@ Conversely, distinct single-leg offsets at a shared detuning and cycle
 product cannot both stay resonant. The physical calculation must derive
 both the register insertion and the constraint on the common detuning.
 
+The uniform-offset diagnostic above uses `δ + t` on all three legs.
+`det_shifted_eq_uniform_iff` matches its determinant with one insertion
+`ε = ((δ + t)³ − δ³)/δ²`, independent of the chosen leg or cycle.
+At `δ = −1` the formula is `3t − 3t² + t³`. For the recorded offsets
+the matching insertions are about `0.110` (e), `0.364` (d), and
+`0.00718` (u). In the unweighted wall, with `z = 1 − t`, the local
+insertion raises the sum of squared singular values by
+`(z² − 1)²(z² + 2)` (`det_matched_trace_gap`).
+The [weighted scan](../../tools/protocol_readout_scan.py) also changes
+the ratios on the static vector leg. For example, the down diagnostic
+changes `m₁/m₂` from `0.05034` to `0.04393` at equal determinant.
+These are comparisons using the earlier wire inputs.
+
 ### Charged insertion on the static wall
 
 At the packet hypercharge step `3π/4`, the static vacancy and the electron,

@@ -35,6 +35,9 @@ the recorded mass ratios to check it.
   vector-class leg. Derive the physical placement and use the selected
   generator to determine the light-pair mass-basis rotations in
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
+  Compare the candidate's singular values directly with the recorded mass
+  ratios. The [uniform-to-local check](OVERVIEW.md#lifting-the-resonant-zero)
+  gives the determinant conversion and its spectral limits.
   For neutrinos, derive native admission of the phase gates and coherent
   branch mixer in `PMAction.BranchGateBoundary`, and route the retained
   occupied branch onto the static light wall. Use the
@@ -45,11 +48,6 @@ the recorded mass ratios to check it.
   that split the masses. For diagonal flips, the
   [paired Schur block](OVERVIEW.md#equal-class-gapped-crossing) requires
   unequal magnitudes of the three reverse-cycle weights.
-  Tip: screen any candidate first against the off-resonance offsets the
-  data need (`e 0.038`, `d 0.14`, `u 0.0024`; OVERVIEW, protocol readout).
-  They follow no single law in charge, so a shared mechanism must produce
-  that pattern; `ResonanceLift` already shows a free common detuning would
-  restore the zero, so what holds it fixed is part of the derivation.
 
 ## Other open work
 

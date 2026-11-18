@@ -51,6 +51,38 @@ theorem det_shifted_at_resonance (δ : ℂ) (κ : Fin 3 → ℂ) (j : Fin 3) (ε
     (shifted δ κ j ε).det = δ ^ 2 * ε := by
   rw [det_shifted, hδ, neg_add_cancel, zero_add]
 
+/-- The one-leg insertion with the same determinant as shifting all
+three legs by `t`. The cycle product cancels in the comparison. -/
+def determinantMatchedOffset (δ t : ℂ) : ℂ :=
+  ((δ + t) ^ 3 - δ ^ 3) / δ ^ 2
+
+theorem det_shifted_eq_uniform_iff (δ t ε : ℂ) (κ : Fin 3 → ℂ) (j : Fin 3)
+    (hδ : δ ≠ 0) :
+    (shifted δ κ j ε).det = (X (δ + t) κ).det ↔
+      ε = determinantMatchedOffset δ t := by
+  rw [det_shifted, det_X, determinantMatchedOffset, eq_div_iff (pow_ne_zero 2 hδ)]
+  constructor <;> intro h <;> linear_combination h
+
+/-- At the normalized real detuning, the determinant-matched insertion
+is cubic in the uniform offset. -/
+theorem determinantMatchedOffset_neg_one (t : ℂ) :
+    determinantMatchedOffset (-1) t = 3 * t - 3 * t ^ 2 + t ^ 3 := by
+  unfold determinantMatchedOffset
+  ring
+
+/-- Matching the determinant leaves a difference in the sum of squared
+singular values of the unweighted wall. With uniform detuning `-z`, the
+determinant-matched single leg has detuning `-z³` and the other two stay
+at `-1`. The trace gap vanishes only for `z² = 1`. -/
+theorem det_matched_trace_gap (κ : Fin 3 → ℂ) (j : Fin 3) (z : ℝ) :
+    let A := shifted (-1) κ j (1 - (z : ℂ) ^ 3)
+    let U := X (-(z : ℂ)) κ
+    (A * Aᴴ).trace.re - (U * Uᴴ).trace.re = (z ^ 2 - 1) ^ 2 * (z ^ 2 + 2) := by
+  fin_cases j <;>
+    simp [shifted, wall, X, trace, diag, Matrix.mul_apply, Matrix.add_apply,
+      conjTranspose_apply, cyc, Fin.sum_univ_three, diagonal, one_apply, vecHead,
+      vecTail, Complex.add_re, Complex.mul_re, pow_succ] <;> ring
+
 /-- Multiplicative dressing preserves the zero determinant at resonance. -/
 theorem dressed_det_zero (A B : Matrix (Fin 3) (Fin 3) ℂ) (δ : ℂ) (κ : Fin 3 → ℂ)
     (hδ : δ ^ 3 = -(κ 0 * κ 1 * κ 2)) :

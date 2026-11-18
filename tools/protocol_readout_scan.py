@@ -13,7 +13,9 @@ Prints:
    the bare-wire m2/m3 (coherent law: singular values) and the lazy law ((m2/m3)^2,
    PMAction.WallOffset);
 2. for each charged protocol, the heavy-label weight w = s^2 that reproduces its m2/m3 on the
-   resonance (coherent law), for a few quark-mass ratio choices, and the weight ratios.
+   resonance (coherent law), for a few quark-mass ratio choices, and the weight ratios;
+3. the spectrum change on the static vector leg when a local shift matches the determinant
+   of the uniform-offset diagnostic.
 """
 import numpy as np
 from scipy.optimize import brentq
@@ -75,3 +77,21 @@ print("CKM (k = alpha/2; data |V_us| 0.225, |V_cb| 0.041, |V_ub| 0.0037):")
 for same, (iu, id_) in [("same root", (0, 0)), ("different roots", (0, 1))]:
     V = np.abs(left(roots[iu], s_u).conj().T @ left(roots[id_], s_d))
     print(f"  {same:16s} |V_us| = {V[0, 1]:.4f}  |V_cb| = {V[1, 2]:.4f}  |V_ub| = {V[0, 2]:.4f}")
+
+
+print("Static vector leg (g = 2), matching the uniform-offset determinant:")
+for label, s, offset in (("e", 0.087, 0.038), ("d", 0.26, 0.14), ("u", 1.14, 0.0024)):
+    # Use the frozen inputs shared with first_row_readout.py.
+    epsilon = offset * (3 - 3 * offset + offset**2)
+    uniform = M(-1 + offset, s, k)
+    local = M(-1, s, k)
+    # Left dressing contributes k on this leg, and right dressing is 1.
+    local[2, 2] += k * epsilon
+    np.testing.assert_allclose(np.linalg.det(local), np.linalg.det(uniform), rtol=1e-12)
+    m3, m2, m1 = np.linalg.svd(uniform, compute_uv=False)
+    n3, n2, n1 = np.linalg.svd(local, compute_uv=False)
+    print(
+        f"  {label}: local offset {epsilon:.9f}, "
+        f"m1/m2 {m1/m2:.7g} -> {n1/n2:.7g}, "
+        f"m2/m3 {m2/m3:.7g} -> {n2/n3:.7g}"
+    )
