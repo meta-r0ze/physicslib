@@ -4,6 +4,11 @@
 physical identification or update rule still to be derived from the E8
 substrate. **[Calculation]** marks work within a specified model.
 
+None of these items blocks the downstream libraries: PMHadrons and later use the tier-ledger masses
+(`QuarkMasses`, `LeptonMasses`), the E8 `G_F` and `α`, and the supplied lepton QED
+(`MuonQEDLoops`). The tau's `B_e` without a supplied value is PMHadrons' "tau inclusive hadronic
+factor" item.
+
 ## The protocol readout (first)
 
 The species masses reported by e8p currently use the tier assignments in
@@ -17,6 +22,15 @@ the recorded mass ratios to check it.
   [toll constraints](OVERVIEW.md#protocol-toll-constraints) to screen
   candidates. [PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions) owns
   pulse selection and timing.
+  Tip: `ProtocolToll` shows a fixed relabeling schedule priced by changed
+  labels gives weak partners equal Tolls, so the cost must depend on the
+  label's state, not an event count. The heavy generation's two walls read
+  the label in two class frames (classes `g + 1` and `g − 1`, related by
+  triality): in the vector frame the sign is the doublet and the axis is
+  lepton or colour; in a spinor frame sign and axis mix. A cost built from
+  the label's overlap with the reference in both frames together (for
+  example their product) has the odd `×` even form the constraints require.
+  Test it against the `≈ ×3` ladder `u, d, e, ν` before building more.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
@@ -33,6 +47,11 @@ the recorded mass ratios to check it.
   [vacancy preparation](OVERVIEW.md#static-vacancy-and-neutral-light-modes)
   as the candidate circuit. Derive a neutral mass operator that gives the
   prepared sector a spectrum with mass splittings for oscillations.
+  Tip: screen any candidate first against the off-resonance offsets the
+  data need (`e 0.038`, `d 0.14`, `u 0.0024`; OVERVIEW, protocol readout).
+  They follow no single law in charge, so a shared mechanism must produce
+  that pattern; `ResonanceLift` already shows a free common detuning would
+  restore the zero, so what holds it fixed is part of the derivation.
 
 ## Protocol register and coupling
 
@@ -44,6 +63,17 @@ the recorded mass ratios to check it.
   actions agree on physical states, or the current needs a different
   register attachment.
   [PMFlavor current work](../PMFlavor/REVIEW-AND-NEXT.md#open-work)
+  Note: the obstruction `ControlledGluedRegister.no_protocol_preserving_wall_exchange`
+  comes only from the two positive lepton channels, which the inventory
+  names "neutrino" (active wall) and "sterile vacancy" (static wall). A
+  wall exchange pairs a left-handed channel with its right-handed partner,
+  as a Dirac mass does, so this is `ν_L ↔ ν_R`. The crossing preserves the
+  label and charge (`opposite_label`, `opposite_charge`); requiring the same
+  base-protocol name on both walls is too strong. Restate the requirement as
+  label and charge preservation, with the static positive lepton read as
+  `ν_R` when the crossing acts; this also feeds the neutrino part of
+  "Lightest masses". The `OrientationDoublet` part applies only if Flavor
+  uses that candidate.
 
 ## Other open work
 
@@ -56,8 +86,18 @@ the recorded mass ratios to check it.
   Compare its massless-electron coefficient with `25/4 − π²`. The corrected muon lifetime and its use in the
   [PMHadrons channel inventory](../PMHadrons/OVERVIEW.md#channel-inventory-and-interfaces)
   currently use supplied QED inputs, including the higher-order terms.
+  Tip: before formalizing the virtual and real parts in Lean, write a
+  numerical certificate of the whole chain in the charge-retention form
+  (`tools/`) and confirm `25/4 − π²`; it catches convention errors cheaply.
+  `RadiativeIntegrals` (`Li₂`) and `PairInvariantSpectrum` (the `q²`
+  spectrum) are the first steps. Keep the **[Premise]** (native matching)
+  separate so the **[Calculation]** can finish on its own.
 
-- **Physical daughter channels for wall leakage. [Premise]** Identify the
+- **Physical daughter channels for wall leakage. [Premise]** Low priority:
+  the first-row deficit is PMFlavor's `1/516` dressing
+  (`PMFlavor.DressingInheritance`), so leakage only adds to it and its
+  output here is a bound (`r = K_f/|y| ≲ 0.07–0.12` with the current
+  estimate, `tools/first_row_readout.py`). Identify the
   interacting positive-energy modes for the `FinalChannels` labels in the
   quark row and muon calibration. Derive the physical parent preparation at
   exact resonance. [PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions)
