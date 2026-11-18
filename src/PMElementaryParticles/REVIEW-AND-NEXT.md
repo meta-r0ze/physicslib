@@ -59,8 +59,15 @@ the recorded mass ratios to check it.
   `T_e − T_d = ¾n_L` and `T_d − T_u = n_Q − ½n_L`, so the ladder holds
   exactly when `n_L > 0` and `n_Q > ½n_L`. Still to derive: the counts
   per heavy-wire flip, and why these readouts are charged to the heavy
-  label. (Comparison only: equal counts give `(T_d − T_u)/(T_e − T_d) =
-  2/3`, below every diagnostic value in `tools/heavy_toll_targets.py`.)
+  label. First cadence tested: each sector reads its own doublet bit
+  once per its static hypercharge period, at the half period. Leptons
+  return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
+  and `5π/2` (both `d = ¼`) and `3π/2` (`d = 1`), and the quark readout is
+  `3π/2`. If coinciding readouts merge (Economy), `n_L = 2`, `n_Q = 1`
+  and `T_d = T_u`: no ladder. If they stay separate, `n_L = n_Q = 2` and
+  the ratio `(T_d − T_u)/(T_e − T_d)` is `2/3`. (Comparison only: `2/3`
+  is below every diagnostic value in `tools/heavy_toll_targets.py`, so
+  this cadence is disfavoured either way.)
   The open
   substrate question is the schedule: which comparisons the wire's repair
   applies to each label, derived from that repair. Compare its weights
