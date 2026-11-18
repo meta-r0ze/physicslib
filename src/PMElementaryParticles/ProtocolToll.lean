@@ -328,6 +328,205 @@ theorem doubling_iff (w₁ w₂ : ℝ) (a : Fin 3) :
       wireAmplitude (survivalToll w₁ w₂ (upStatic a)) ↔ 2 * log 2 ≤ w₂ - w₁ / 2 := by
   rw [ratio_ge_iff (by norm_num : (0 : ℝ) < 2), (survivalToll_differences w₁ w₂ a).2]
 
+/-! ### One comparison step
+
+Every static hypercharge step is fixed by its down flag `d`: the up flag is `4d(1 − d)`
+(`hyperchargeFlag_quark_pair`) and the electron flag `d(3 − 4d)²`. So each step adds
+`8d(1 − d)(1 − 2d)` to `T_e − T_d` and `d(4d − 3)` to `T_d − T_u` (`step_differences`).
+The first is positive only for `d < ½`, the second only for `d > ¾` (`step_orders_lepton`,
+`step_orders_quark`). So no single step, however often repeated, orders the three charged labels
+(`single_step_no_order`); a schedule needs one step with `d < ½` and another with `d > ¾`.
+
+The two hypercharge steps already selected in the library: the charged selector's `3π/4`
+(`ChargedInsertion`) has `d = ½` and orders neither pair (`selector_step`); the vacancy
+preparation's `6π/5` (`VacancyPreparation`) has `d = (5 + √5)/8 > ¾` and orders down above up
+but electron below down (`vacancy_step`). A step with `d < ½` is still to be found natively.
+-/
+
+/-- The down flag lies in `[0, 1]`. -/
+theorem down_flag_bounds (t : ℝ) (a : Fin 3) :
+    0 ≤ hyperchargeFlag t (downStatic a) ∧ hyperchargeFlag t (downStatic a) ≤ 1 := by
+  rw [hyperchargeFlag_eq_cos]
+  constructor <;> linarith [Real.cos_le_one (t * ((PMConstants.ChannelOccupancy.tag
+    (downStatic a)).2.2 : ℝ) / 3), Real.neg_one_le_cos (t * ((PMConstants.ChannelOccupancy.tag
+    (downStatic a)).2.2 : ℝ) / 3)]
+
+/-- **Each step's Toll differences depend only on its down flag.** -/
+theorem step_differences (t : ℝ) (a : Fin 3) :
+    let d := hyperchargeFlag t (downStatic a)
+    hyperchargeFlag t (opposite electron) - d = 8 * d * (1 - d) * (1 - 2 * d) ∧
+    d - hyperchargeFlag t (upStatic a) = d * (4 * d - 3) := by
+  have hq := hyperchargeFlag_quark_pair t a
+  have hg := hyperchargeFlag_static_gap t a
+  dsimp only at hq hg ⊢
+  constructor
+  · have : hyperchargeFlag t (opposite electron) =
+        4 * hyperchargeFlag t (downStatic a) * (1 - 2 * hyperchargeFlag t (downStatic a)) ^ 2
+          - 3 * hyperchargeFlag t (downStatic a) + 2 * hyperchargeFlag t (upStatic a) := by
+      simp only [downStatic, upStatic] at *; linarith
+    rw [this, show hyperchargeFlag t (upStatic a) = _ from hq]; ring
+  · rw [show hyperchargeFlag t (upStatic a) = _ from hq]; ring
+
+/-- A step adds to `T_e − T_d` exactly when its down flag is in `(0, ½)`. -/
+theorem step_orders_lepton (t : ℝ) (a : Fin 3) :
+    hyperchargeFlag t (downStatic a) < hyperchargeFlag t (opposite electron) ↔
+      0 < hyperchargeFlag t (downStatic a) ∧ hyperchargeFlag t (downStatic a) < 1 / 2 := by
+  obtain ⟨he, -⟩ := step_differences t a
+  obtain ⟨h0, h1⟩ := down_flag_bounds t a
+  set d := hyperchargeFlag t (downStatic a)
+  rw [← sub_pos, he]
+  constructor
+  · intro h
+    rcases eq_or_lt_of_le h1 with h1 | h1
+    · rw [h1] at h; norm_num at h
+    rcases eq_or_lt_of_le h0 with h0 | h0
+    · rw [← h0] at h; norm_num at h
+    refine ⟨h0, ?_⟩
+    by_contra hc
+    push Not at hc
+    nlinarith [mul_pos h0 (sub_pos.mpr h1)]
+  · rintro ⟨h0, h2⟩
+    have : 0 < 1 - d := by linarith
+    have : 0 < 1 - 2 * d := by linarith
+    positivity
+
+/-- A step adds to `T_d − T_u` exactly when its down flag exceeds `¾`. -/
+theorem step_orders_quark (t : ℝ) (a : Fin 3) :
+    hyperchargeFlag t (upStatic a) < hyperchargeFlag t (downStatic a) ↔
+      3 / 4 < hyperchargeFlag t (downStatic a) := by
+  obtain ⟨-, hq⟩ := step_differences t a
+  obtain ⟨h0, -⟩ := down_flag_bounds t a
+  set d := hyperchargeFlag t (downStatic a)
+  rw [← sub_pos, hq]
+  constructor
+  · intro h
+    by_contra hc
+    push Not at hc
+    nlinarith
+  · intro h
+    have : 0 < d := by linarith
+    nlinarith
+
+/-- **No single step orders the charged labels.** -/
+theorem single_step_no_order (t : ℝ) (a : Fin 3) :
+    ¬ (hyperchargeFlag t (downStatic a) < hyperchargeFlag t (opposite electron) ∧
+      hyperchargeFlag t (upStatic a) < hyperchargeFlag t (downStatic a)) := by
+  rintro ⟨h1, h2⟩
+  have := ((step_orders_lepton t a).mp h1).2
+  have := (step_orders_quark t a).mp h2
+  linarith
+
+/-- The charged selector's step `3π/4` has down flag `½`. -/
+theorem selector_step (a : Fin 3) : hyperchargeFlag (3 * π / 4) (downStatic a) = 1 / 2 := by
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, downStatic]
+  push_cast
+  rw [show 3 * π / 4 * -2 / 3 = -(π / 2) by ring, Real.cos_neg, Real.cos_pi_div_two]
+  norm_num
+
+/-- The vacancy preparation's step `6π/5` has down flag `(5 + √5)/8 > ¾`. -/
+theorem vacancy_step (a : Fin 3) :
+    hyperchargeFlag (6 * π / 5) (downStatic a) = (5 + √5) / 8 ∧
+      3 / 4 < hyperchargeFlag (6 * π / 5) (downStatic a) := by
+  have h : hyperchargeFlag (6 * π / 5) (downStatic a) = (5 + √5) / 8 := by
+    simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, downStatic]
+    push_cast
+    rw [show 6 * π / 5 * -2 / 3 = -(π - π / 5) by ring, Real.cos_neg, Real.cos_pi_sub,
+      Real.cos_pi_div_five]
+    ring
+  refine ⟨h, ?_⟩
+  rw [h]
+  have : (1 : ℝ) < √5 := by
+    rw [show (1 : ℝ) = √1 by simp]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  linarith
+
+/-! ### The fifth-root window
+
+Per step, `T_e − T_u` grows by `16d(d − d₋)(d − d₊)` with `d∓ = (5 ∓ √5)/8`
+(`step_charged_span`). It is not positive for `d₋ ≤ d ≤ d₊` (`window_no_span`). So a schedule
+whose every step has its down flag in that window gives `T_e ≤ T_u`: the electron is never
+lighter than up (`window_no_ladder`). The window's ends are exactly the flags of the vacancy
+preparation's steps `k · 6π/5`, `k = 1, …, 4` (`fifth_root_steps`), and the charged selector's
+`½` lies inside it. So no counts on the steps the library has selected so far order the charged
+labels. A ladder needs at least one step with `d < (5 − √5)/8` or `d > (5 + √5)/8`.
+-/
+
+/-- The lower end of the window, `(5 − √5)/8 = sin²(π/5)`. -/
+def dLow : ℝ := (5 - √5) / 8
+
+/-- The upper end of the window, `(5 + √5)/8 = sin²(2π/5)`. -/
+def dHigh : ℝ := (5 + √5) / 8
+
+/-- **The charged span of one step.** -/
+theorem step_charged_span (t : ℝ) (a : Fin 3) :
+    let d := hyperchargeFlag t (downStatic a)
+    hyperchargeFlag t (opposite electron) - hyperchargeFlag t (upStatic a) =
+      16 * d * (d - dLow) * (d - dHigh) := by
+  obtain ⟨he, hq⟩ := step_differences t a
+  dsimp only at he hq ⊢
+  set D := hyperchargeFlag t (downStatic a)
+  have h5 : √5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  have : hyperchargeFlag t (opposite electron) - hyperchargeFlag t (upStatic a) =
+      (hyperchargeFlag t (opposite electron) - D) + (D - hyperchargeFlag t (upStatic a)) := by ring
+  rw [this, he, hq, dLow, dHigh]
+  linear_combination (D / 4) * h5
+
+/-- Inside the window a step does not raise the electron's Toll above up's. -/
+theorem window_no_span (t : ℝ) (a : Fin 3)
+    (hlo : dLow ≤ hyperchargeFlag t (downStatic a))
+    (hhi : hyperchargeFlag t (downStatic a) ≤ dHigh) :
+    hyperchargeFlag t (opposite electron) ≤ hyperchargeFlag t (upStatic a) := by
+  have h := step_charged_span t a
+  obtain ⟨h0, -⟩ := down_flag_bounds t a
+  dsimp only at h
+  have : 16 * hyperchargeFlag t (downStatic a) * (hyperchargeFlag t (downStatic a) - dLow) *
+      (hyperchargeFlag t (downStatic a) - dHigh) ≤ 0 := by
+    have h1 : 0 ≤ 16 * hyperchargeFlag t (downStatic a) *
+        (hyperchargeFlag t (downStatic a) - dLow) := by
+      have := sub_nonneg.mpr hlo; positivity
+    exact mul_nonpos_of_nonneg_of_nonpos h1 (by linarith)
+  linarith
+
+/-- **A schedule inside the window cannot make the electron lighter than up.** -/
+theorem window_no_ladder {ι : Type*} [Fintype ι] (t w : ι → ℝ) (hw : ∀ i, 0 ≤ w i) (a : Fin 3)
+    (hwin : ∀ i, dLow ≤ hyperchargeFlag (t i) (downStatic a) ∧
+      hyperchargeFlag (t i) (downStatic a) ≤ dHigh) :
+    ∑ i, w i * hyperchargeFlag (t i) (opposite electron) ≤
+      ∑ i, w i * hyperchargeFlag (t i) (upStatic a) := by
+  apply Finset.sum_le_sum
+  intro i _
+  exact mul_le_mul_of_nonneg_left (window_no_span (t i) a (hwin i).1 (hwin i).2) (hw i)
+
+private lemma cos_two_pi_div_five : Real.cos (2 * π / 5) = (√5 - 1) / 4 := by
+  have h5 : √5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  rw [show 2 * π / 5 = 2 * (π / 5) by ring, Real.cos_two_mul, Real.cos_pi_div_five]
+  nlinarith [h5]
+
+/-- **The vacancy preparation's steps sit on the window's ends.** At `k · 6π/5` the down flag
+is `d₊` for `k = 1, 4` and `d₋` for `k = 2, 3`. -/
+theorem fifth_root_steps (a : Fin 3) :
+    hyperchargeFlag (6 * π / 5) (downStatic a) = dHigh ∧
+    hyperchargeFlag (2 * (6 * π / 5)) (downStatic a) = dLow ∧
+    hyperchargeFlag (3 * (6 * π / 5)) (downStatic a) = dLow ∧
+    hyperchargeFlag (4 * (6 * π / 5)) (downStatic a) = dHigh := by
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, downStatic, dLow, dHigh]
+  push_cast
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [show 6 * π / 5 * -2 / 3 = -(π - π / 5) by ring, Real.cos_neg, Real.cos_pi_sub,
+      Real.cos_pi_div_five]; ring
+  · rw [show 2 * (6 * π / 5) * -2 / 3 = 2 * π / 5 - 2 * π by ring, Real.cos_sub_two_pi,
+      cos_two_pi_div_five]; ring
+  · rw [show 3 * (6 * π / 5) * -2 / 3 = -(2 * π / 5 + 2 * π) by ring, Real.cos_neg,
+      Real.cos_add_two_pi, cos_two_pi_div_five]; ring
+  · rw [show 4 * (6 * π / 5) * -2 / 3 = (π - π / 5) - 2 * π - 2 * π by ring,
+      Real.cos_sub_two_pi, Real.cos_sub_two_pi, Real.cos_pi_sub, Real.cos_pi_div_five]; ring
+
+/-- The charged selector's flag `½` lies inside the window. -/
+theorem selector_in_window : dLow ≤ 1 / 2 ∧ (1 : ℝ) / 2 ≤ dHigh := by
+  have h1 : (1 : ℝ) ≤ √5 := by
+    rw [show (1 : ℝ) = √1 by simp]; exact Real.sqrt_le_sqrt (by norm_num)
+  constructor <;> simp only [dLow, dHigh] <;> linarith
+
 end Survival
 
 end PMElementaryParticles.ProtocolToll

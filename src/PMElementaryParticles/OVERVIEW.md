@@ -286,6 +286,19 @@ the strict order `s_e < s_d < s_u` for `w₁ > 0`, `w₂ > ½w₁`
 (`survival_ladder`), and `2s_d ≤ s_u` exactly when `w₂ − ½w₁ ≥ 2 log 2`
 (`doubling_iff`). The steps are a witness, not a derived schedule.
 
+One step at a time: a static step is fixed by its down flag `d`. The up
+flag is `4d(1 − d)` and the electron flag `d(3 − 4d)²`, so the step adds
+`8d(1 − d)(1 − 2d)` to `T_e − T_d` (positive only for `d < ½`) and
+`d(4d − 3)` to `T_d − T_u` (positive only for `d > ¾`)
+(`step_differences`, `step_orders_lepton`, `step_orders_quark`). No
+single step orders the charged labels (`single_step_no_order`). Their
+sum `16d(d − d₋)(d − d₊)`, `d∓ = (5 ∓ √5)/8`, is not positive inside
+`[d₋, d₊]` (`step_charged_span`, `window_no_span`), so a schedule inside
+that window gives `T_e ≤ T_u` (`window_no_ladder`). The vacancy
+preparation's steps `k · 6π/5` sit exactly on the window's ends
+(`fifth_root_steps`), and the charged selector's step `3π/4` has `d = ½`
+(`selector_step`, `selector_in_window`).
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

@@ -40,7 +40,16 @@ the recorded mass ratios to check it.
   The static bound excludes an affine conversion only, and the derived
   conversion is not affine. On the static flags it admits the charged
   order and any ratio (`ProtocolToll.survival_ladder`, `doubling_iff`;
-  steps `π/2` and `3π/2` as a witness, not a schedule). The open
+  steps `π/2` and `3π/2` as a witness, not a schedule). Each static
+  step is fixed by its down flag `d`, and adds `16d(d − d₋)(d − d₊)` to
+  `T_e − T_u`, `d∓ = (5 ∓ √5)/8` (`step_charged_span`). No single step
+  orders the three charged labels (`single_step_no_order`), and a
+  schedule with every `d` in `[d₋, d₊]` gives `T_e ≤ T_u`
+  (`window_no_ladder`). The window's ends are the vacancy preparation's
+  steps (`fifth_root_steps`) and the charged selector's `½` is inside, so
+  the steps selected so far cannot order the labels in any counts. A
+  native step with `d < d₋` or `d > d₊` (a fraction of the static period
+  `3π` below `1/5`, or between `2/5` and `3/5`) is needed. The open
   substrate question is the schedule: which comparisons the wire's repair
   applies to each label, derived from that repair. Compare its weights
   with the recorded ladder only afterwards, in e8p. One structural

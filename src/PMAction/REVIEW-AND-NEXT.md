@@ -81,7 +81,11 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   remains is the schedule: which comparisons act on which labels, at which steps and how often.
   Derive it from the repair the wire needs, not from the mass ladder. On static hypercharge
   flags the conversion admits the charged order and any ratio
-  (`PMElementaryParticles.ProtocolToll.survival_ladder`, `doubling_iff`). This is the common
+  (`PMElementaryParticles.ProtocolToll.survival_ladder`, `doubling_iff`).
+  A static-flag schedule needs a hypercharge step outside the
+  fifth-root window, `d < (5 − √5)/8` or `d > (5 + √5)/8`
+  (`ProtocolToll.window_no_ladder`); the steps selected so far
+  (`3π/4`, `k · 6π/5`) are inside it. This is the common
   blocker of the PMElementaryParticles readout items and PMFlavor item 2.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
