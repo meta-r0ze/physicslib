@@ -26,13 +26,13 @@ the recorded mass ratios to check it.
     seed for the [root decoder](OVERVIEW.md#electric-decoder-on-the-odd-coordinate-bank).
     Prepare the other-wall companion and admit its joint update
     with the live root.
-  - Determine which labels participate in each visit, choose the
-    physical comparator, and derive the tariff for preparation,
-    registrations and record export or reuse. The
-    [fixed-kick candidate](OVERVIEW.md#four-port-electric-record-with-fixed-kicks)
-    gives the wrong electron/down order under forward logical-factor
-    pricing, with either output order. A microscopic tariff for an
-    admitted circuit remains open. If the cost enters through the reference node,
+  - Select the physical comparator. Derive its registration tariff,
+    including which labels participate in each visit and what record
+    export or reuse costs. The
+    [primitive phase ledger](OVERVIEW.md#primitive-flags-of-the-short-electric-decoder)
+    prices preparation and the forward word from an occupied seed
+    under unit flag pricing and gives the charged order at bit-reversed
+    ports. If the cost enters through the reference node,
     derive the price for a crossing that carries a protocol label
     (`HandoffAdmittance.closure_one_price` assumes indistinguishable
     signals).

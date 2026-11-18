@@ -550,6 +550,28 @@ ticks when a root quarter-time occupies at least one tick, before
 the electric kicks or export. That schedule exceeds the 43-tick
 period (`fresh_bank_serial_exceeds_clock`).
 
+### Primitive flags of the short electric decoder
+
+`ElectricPrimitiveToll` follows the thirteen executed phases on
+the kicked bank. The Gaussian-integer certificate gives decoder
+flags `(9/4, 7/4, 3/2, 1)` in order `(e,d,u,ν)`. Isometric
+observation preserves this ledger on the occupied carrier at each
+step (`primitive_decoder_flags`, `ledger_observed`). Counting one
+registration per state flag and including the two electric exposures
+gives forward Tolls `(3, 5/2, 2, 1)` (`forward_tolls`). These give
+`s_e < s_d < s_u` (`charged_ladder`). Both charged Toll gaps are
+`½`. Requiring a physical canonicalizing swap adds `½` to electron
+and up and leaves down fixed, tying down with up (`canonical_tie`).
+The bit-reversed receiver supplies the exact same record bits.
+
+Preparation by the inverse word costs one additional flag from
+the occupied clean seed (`preparation_flags`). Adding it once per
+payload gives `(4,7/2,3,2)` under the same tariff. Seed supply,
+physical tariff, export or reuse and per-wall firing remain open.
+Comparison only. The charged gap ratio is `1` versus about
+`1.1–1.5` in `tools/heavy_toll_targets.py`. The two calculated
+gaps of `½` are also smaller than the data-implied gaps.
+
 ### Primitive crossing activity and clock limits
 
 `HeavyCrossingCost` checks the six-reflection word and its reverse on
