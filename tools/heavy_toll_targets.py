@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Heavy-label Toll targets under the derived conversion s = exp(-T/2) (PMAction.TollAmplitude).
+"""Comparison diagnostic only, not a derivation input (SM-inspired; data enter at e8p).
+
+Heavy-label Toll differences implied by recorded mass ratios under s = exp(-T/2) (PMAction.TollAmplitude).
 
 External, numerical. For each mass-ratio convention, find the heavy weight s on the derived wire
 (k = alpha/2, resonance delta = -1; as tools/protocol_readout_scan.py) and print the Toll
 differences T_e - T_d = 2 ln(s_d/s_e), T_d - T_u = 2 ln(s_u/s_d).
 Any Toll linear in the static hypercharge tag (e -6, d -2, u 4) predicts the ratio
 (T_d - T_u)/(T_e - T_d) = 6/4 = 3/2 with no free parameter.
-The targets depend on the quark-mass scale convention; fix the convention before testing.
+The implied values depend on the quark-mass scale convention. A derived schedule is compared
+with them afterwards; they do not select it.
 """
 import numpy as np
 from scipy.optimize import brentq

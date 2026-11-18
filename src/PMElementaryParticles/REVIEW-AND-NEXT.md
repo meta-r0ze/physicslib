@@ -38,19 +38,15 @@ the recorded mass ratios to check it.
   from Toll to wire amplitude. Test the resulting protocol weights
   against the recorded ladder.
   The static bound excludes an affine conversion only, and the derived
-  conversion is not affine. On the static flags it gives the charged
+  conversion is not affine. On the static flags it admits the charged
   order and any ratio (`ProtocolToll.survival_ladder`, `doubling_iff`;
-  steps `π/2` and `3π/2` as a witness). The targets depend on the
-  quark-mass scale convention (`tools/heavy_toll_targets.py`):
-  `T_e − T_d ≈ 1.96–2.31` in every convention, but `T_d − T_u` is `2.13`
-  with the tier-ledger masses (`m_c(m_c)/m_t`), `2.89` at `M_Z` and
-  `3.02` with the scan's own-scale inputs. Fix one convention before any
-  test. A Toll linear in the static hypercharge predicts
-  `(T_d − T_u)/(T_e − T_d) = 3/2` with no free parameter. The inputs give
-  `1.09` (ledger), `1.25` (`M_Z`), `1.36` (PDG mixed), `1.54` (own
-  scale), so this class passes only one convention. Derive the schedule
-  in PMAction and then compare. Do not choose steps or counts from the
-  targets.
+  steps `π/2` and `3π/2` as a witness, not a schedule). The open
+  substrate question is the schedule: which comparisons the wire's repair
+  applies to each label, derived from that repair. Compare its weights
+  with the recorded ladder only afterwards, in e8p. One structural
+  consequence to keep in view: any Toll linear in the static hypercharge
+  gives `(T_d − T_u)/(T_e − T_d) = 3/2` with no free parameter
+  (comparison diagnostic: `tools/heavy_toll_targets.py`).
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
@@ -59,11 +55,12 @@ the recorded mass ratios to check it.
   [Charged insertion](OVERVIEW.md#charged-insertion-on-the-static-wall)
   gives selectors and the exact lift for the candidate on the static
   vector-class leg. A protocol-blind pulse area with the selector's unit
-  amplitude inserts the same `ε` for each charged protocol. The matching
-  insertions are `0.110` (e), `0.364` (d) and `0.0072` (u). So the area
-  or the amplitude must depend on the protocol. Under the derived
-  conversion that is a protocol-dependent Toll, `ε ∝ exp(−T/2)`, from the
-  same schedule as the heavy-label weight. Derive the physical placement and use the selected
+  amplitude inserts the same `ε` for each charged protocol, so on the
+  substrate the protocols differ only if the area or amplitude depends on
+  the protocol. Under the derived conversion that is a protocol-dependent
+  Toll, `ε ∝ exp(−T/2)`, from the same schedule as the heavy-label
+  weight. (Comparison only: the offsets matched to recorded ratios differ
+  by about `50×` across protocols.) Derive the physical placement and use the selected
   generator to determine the light-pair mass-basis rotations in
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
   Compare the candidate's singular values directly with the recorded mass
@@ -82,8 +79,9 @@ the recorded mass ratios to check it.
 
 ## Other open work
 
-- **Radiative factor. [Calculation]** The matching to the native update is
-  done. The current is the gauged wall hop with an exact Ward–Takahashi
+- **Radiative factor. [Calculation]** Compute the substrate's own
+  electromagnetic correction to the muon width. The matching to the native
+  update is done. The current is the gauged wall hop with an exact Ward–Takahashi
   identity at finite `q` (`PMAction.SpinorVertex.ward`, `propagator_ward`,
   `contact_ward`), so `Z₁ = Z₂` holds on the substrate at every loop
   momentum. Its vertex is the native velocity `αⱼ = γ⁰γʲ` up to
@@ -92,7 +90,9 @@ the recorded mass ratios to check it.
   log is zero (`MuonRadiativeLog.retention_no_log`). The finite lattice
   remainder from loop momenta near the cutoff is the library-wide
   lattice-to-continuum limit (CONTINUOUS.md, "What is proved"); it is
-  `O((a m_μ)²)`. What remains is the calculation: use the soft angular
+  `O((a m_μ)²)`. What remains is the calculation from this vertex and
+  these measures; the published continuum kernel is a cross-check of the
+  arithmetic, not the target. Use the soft angular
   factor in `RadiativeIntegrals`, derive the regulated virtual vertex and
   external self-energies and the real-emission kernel at the same
   neutrino-pair invariant, and combine them before removing the

@@ -498,17 +498,22 @@ requires rechecking against the new spectrum.
 **Daughter channels (closed item).** The parent is the wire's light mass
 eigenstate: a persisting state is on shell
 (`ExternalStates.persistent_on_shell`). The daughters are the light modes.
-The gapped modes are closed channels: on the two-wall wire with the
-recorded weights, their mass is at least `3.6–743` times the protocol's
-heaviest light mass for `1/8 ≤ r ≤ 1/2`, so at least `75 GeV`
-(`tools/wall_gap_check.py`). That is far above the first-row and muon
-energies, so current weight on gapped modes is lost and the contact
-weights above apply to the light modes alone. The leakage is then
-`≈ 0.25 r²` with the fitted weights (`tools/first_row_readout.py`). With
-the dressing's `1/516` the measured first-row deficit requires
+The gapped modes are closed channels by the spectrum's order alone. A
+light parent at rest releases less energy than its own mass, which is at
+most the light band's top. Every gapped mode lies above the gap, which is
+above that top (the light band is defined by the gap;
+`PMAction.LightLeakage.leakage_bound`). So no gapped daughter is
+kinematically open in any decay of a light parent, and current weight on
+gapped modes is lost. On the bare derived wire (`s = 1`, `k = α/2`) the
+gap is `4–47` times the light band's top for `1/2 ≥ r ≥ 1/8`
+(`tools/wall_gap_check.py`). The contact weights above apply to the light
+modes alone. Comparison (not a derivation input): with weights fitted to
+recorded masses, `tools/first_row_readout.py` gives leakage `≈ 0.25 r²`;
+with the `1/516` dressing, the measured first-row deficit then prefers
 `r ≲ 0.07–0.12`, while PMAction's explored schedules give
-`1/8 ≤ r ≤ 1/2`. That conflict is now PMAction's clock item; the native
-current on these states is PMFlavor's.
+`1/8 ≤ r ≤ 1/2`. That is a recorded tension, to revisit once the
+schedule and readout are derived. The native current on these states is
+PMFlavor's.
 
 ## Protocols and the 16-channel inventory
 
