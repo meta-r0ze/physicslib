@@ -120,15 +120,18 @@ the recorded mass ratios to check it.
   and down with nonzero record overlap on either fixed wall. The paired
   flag budget has the charged ladder, with exact gap ratio
   `2/(3+√3) ≈ 0.423`, but fails as an exact record writer.
-  The signed-axis predicates can write both bits exactly if their
-  diagonal phase controls are supplied. With the reference-axis and
-  negative-position flags and one required visit per bit the Tolls are
-  `2, 1, 0, 1` for `e, d, u, ν`. The charged weights are ordered.
-  Comparison only: the gap ratio is 1 versus about 1.1–1.5.
-  Open: derive the native record couplings and preparation, the physical
-  registration polarity and pricing, and the per-flip firing law. The
-  direct address comes from the reference wall, so the coupling of any
-  resulting Toll to the other wall also requires a derivation.
+  `ElectricHeavyRecord` gives an exact charge-only comparator using the
+  packet’s unbroken generator: parity of `3Q` at `3π`, then a
+  same-position sector comparison at `3π/2`. An actual moving root
+  pair gives the branch preparation and return from a clean seed,
+  with a supplied controlled electric kick. Colour versus lepton
+  phase reference produces different flag prices even at the same
+  resolution and duration. The colour-referenced bit Tolls
+  `(2,1,0,1)` and factor-flag Tolls `(2,3/2,1,3/2)` give the
+  charged order with gap ratio 1 (comparison only: about 1.1–1.5).
+  Open: implement the joint branch/payload coupling and clean seed
+  banks, select a physical reference and tariff, and derive the event
+  that fires the comparator on each physical wall insertion.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`

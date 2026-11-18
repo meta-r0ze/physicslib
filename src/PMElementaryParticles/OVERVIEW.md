@@ -423,6 +423,45 @@ Comparison only. The exact-bit candidate has gap ratio 1 and the paired
 hypercharge budget has ratio about 0.423. The mass-scale diagnostics in
 `tools/heavy_toll_targets.py` require about 1.1–1.5.
 
+### An electric-charge record on both walls
+
+`ElectricHeavyRecord.electric_generator` identifies the packet’s unbroken
+`Q = T₃ + Y/2` as the diagonal generator for both comparisons. Its charge in
+the transported frame is `(2/3)·[colour] − [negative position]`
+(`charge_from_bits`). A comparison against the neutral phase at `3π`
+reads the parity of `3Q`, hence the position. The second comparison uses
+the recorded position to select a same-position reference. The
+lepton–quark contrast has magnitude `2/3`, so `3π/2` resolves the
+sector exactly. These are the least nonnegative times in the two
+specified comparisons (`position_time_minimal`, `sector_time_minimal`).
+Both charges are preserved across the glued wall pairing
+(`same_wall_pair`). The two comparisons give the required complex
+kick signs (`packet_kick_phases`).
+
+The moved orbit of an actual root supplies the two branch states. A
+quarter pulse from its clean basis seed prepares balanced populations.
+After the conditional electric kick on the second branch, three
+forward quarter-times of the same root complete the inverse.
+`root_writer` gives the resulting basis record, including the `−i`
+phase on a marked record. The branch construction works on each
+carrier class. The joint branch/payload coupling, the bank allocation
+and its clean seeds still need a substrate implementation.
+
+A colour phase reference gives the bit Tolls `(2,1,0,1)` in order
+`e,d,u,ν`. A lepton phase reference with complemented sector decoding
+reads the same information with Tolls `(1,2,1,0)`
+(`colour_reference_toll`, `lepton_reference_toll`).
+The required phase resolution alone leaves this choice open.
+There is also a distinct factor-flag ledger for the exhibited circuit
+(`embedded_step_flag`, `pulse_flags`). Each branch preparation and
+recombination contributes `¼`. The central signed kick contributes
+half of its final record flag. With one registration per factor flag,
+the two writers have Toll `1 + T_bits/2` (`two_bit_factor_toll`),
+or `(2, 3/2, 1, 3/2)` for the colour reference. This counts the
+three factor flags of each forward writer. Export, reset,
+synchronization and a microscopic tariff remain separate obligations.
+
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

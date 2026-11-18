@@ -80,6 +80,7 @@ import PMElementaryParticles.ProtocolToll
 import PMElementaryParticles.EventRequirements
 import PMElementaryParticles.HeavyFlipControl
 import PMElementaryParticles.HeavyFlipRecords
+import PMElementaryParticles.ElectricHeavyRecord
 import PMElementaryParticles.ResonanceLift
 import PMElementaryParticles.ChargedInsertion
 import PMElementaryParticles.FinalChannels

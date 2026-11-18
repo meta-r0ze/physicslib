@@ -155,7 +155,9 @@ The downstream heavy-flip application supplies a generation address and
 a two-bit record. `BranchPulseContract` gives the coherent comparison
 word under rotation closure and admission of the controlled operation.
 Its scheduled pulse price is separate from a comparison's expected flag
-count. The application and its hypercharge record exclusion are in
+count. The downstream electric comparator uses a moved root pair as
+its branch and the packet’s electric charge for the controlled kick.
+The application and its hypercharge record exclusion are in
 [PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md#record-comparisons-and-heavy-flip-toll).
 
 `PersistenceSelection`, `PersistentBackground`, `CompletionSelection` give

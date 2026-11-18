@@ -92,10 +92,10 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   alone write an exact quark-position record from the persisting
   massive packet (`PMElementaryParticles.HeavyFlipRecords`). A
   generation-addressed endpoint control and exact signed-axis
-  comparison contract are available with supplied controls
-  (`HeavyFlipControl`, `orbit_bit_price`). Derive native admission,
-  preparation, placement and firing of the record couplings, and
-  account for their primitive work. This is the common blocker of the
+  comparison have explicit charge phases and a root-orbit branch
+  (`ElectricHeavyRecord`). Derive admission of the joint kick,
+  bank allocation and clean seeds, and select the physical reference,
+  tariff, placement and firing schedule. This is the common blocker of the
   PMElementaryParticles readout items and PMFlavor item 2.
 - **Requirement table for events.** `RefreshSchedule` and `CoherentRefresh`
   prove that Economy serves each required item exactly once; the table is
