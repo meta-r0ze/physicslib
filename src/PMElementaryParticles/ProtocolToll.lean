@@ -260,6 +260,12 @@ abbrev downStatic (a : Fin 3) : Channels := .inr (.inl (a, 1))
 /-- The static up slot of colour `a`. -/
 abbrev upStatic (a : Fin 3) : Channels := .inr (.inl (a, 0))
 
+/-- The static electron slot. -/
+abbrev electronStatic : Channels := opposite electron
+
+/-- The static vacancy slot. -/
+abbrev neutrinoStatic : Channels := opposite neutrino
+
 /-- Static electron, down and up flags at the step `π/2`. -/
 theorem flags_quarter (a : Fin 3) :
     hyperchargeFlag (π / 2) (opposite electron) = 1 ∧

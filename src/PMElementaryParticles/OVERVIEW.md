@@ -310,6 +310,16 @@ readout at `π/2`, below the window (`quarter_below_window`), adding `¾`
 to `T_e − T_d` and `−½` to `T_d − T_u`. These are exactly the witness
 steps of `survival_ladder`.
 
+What one charged-current event requires (`EventRequirements`). The
+emitted labels depend on the parent's sign alone (`pairs_of_sign`,
+`pairs_disjoint`), and no axis-only rule can choose them
+(`axis_cannot_choose`): the event requires exactly the parent's doublet
+bit. The quark bit is read only by the full readout (`quark_bit_iff`).
+If each label pays only its own event's readout, electron and down pay
+`1` and up and the vacancy `0` (`own_event_tolls`): own-event accounting
+ties `e` with `d` and `u` with `ν`. An ordering needs flags a label
+receives in other labels' events.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

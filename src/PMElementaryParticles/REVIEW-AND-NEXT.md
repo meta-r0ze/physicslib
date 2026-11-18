@@ -59,7 +59,11 @@ the recorded mass ratios to check it.
   `T_e − T_d = ¾n_L` and `T_d − T_u = n_Q − ½n_L`, so the ladder holds
   exactly when `n_L > 0` and `n_Q > ½n_L`. Still to derive: the counts
   per heavy-wire flip, and why these readouts are charged to the heavy
-  label. First cadence tested: each sector reads its own doublet bit
+  label. The event table is derived for one charged-current event
+  (`EventRequirements`): one doublet bit, and own-event accounting ties
+  `e` with `d` (`own_event_tolls`); the counts need the shared-register
+  accounting ([PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions)).
+  First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
   and `5π/2` (both `d = ¼`) and `3π/2` (`d = 1`), and the quark readout is

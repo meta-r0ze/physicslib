@@ -91,17 +91,20 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   each the wire's repair performs per heavy-wire flip. This is the common
   blocker of the PMElementaryParticles readout items and PMFlavor item 2.
 - **Requirement table for events.** `RefreshSchedule` and `CoherentRefresh`
-  prove that Economy serves each required resource exactly once, and both name
-  the requirement table as the remaining premise. PMConstants derives that table
-  for gauge refresh per channel (`RequirementTable`: colour, active,
-  hypercharge), which on the static labels gives counts `ν 0, e 1, d 2, u 2`
-  (up and down tie). Derive the table for events: which records a weak event and
-  a wire flip must export and read (the doublet position:
-  `PMElementaryParticles.RefreshMap.asymmetric_gate_records`,
-  `CoherentGate.unequal_needs_orthogonal`), on which wall and in which sector.
-  With "each required item once" this fixes the comparison counts: the
-  heavy-label readouts `n_L`, `n_Q`, the lightest masses' firing law, and
-  PMFlavor's in-cycle wall record.
+  prove that Economy serves each required item exactly once; the table is
+  the input. For one charged-current event it is now derived
+  (`PMElementaryParticles.EventRequirements`): the emission depends on the
+  parent's doublet position and nothing else, so the event requires one
+  bit. The quark bit is read only by the full readout (`3π/2`), the lepton
+  bit by the full or the lepton-only readout (`π/2`). If each label pays
+  only its own event's readout, `T_e = T_d` and `T_u = T_ν`
+  (`own_event_tolls`): the table read label by label cannot order the
+  charged labels. Open: the shared-register accounting. Which labels are
+  present when a readout acts (the parent, the emitted pair on all four
+  axes, the persisting packet), and how the flags they receive accumulate
+  into a persisting label's Toll. With that, the counts `n_L`, `n_Q`
+  follow, and the same accounting serves the lightest masses' firing law
+  and PMFlavor's in-cycle wall record.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
   limits. Sharpen the lattice remainder bound enough to compare it with
