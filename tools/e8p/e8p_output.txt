@@ -401,14 +401,14 @@ Elementary Particles
     value   = [0.009208000000000000, 0.009210000000000000] eV
     theorem = PMConstants.FloorNeutrino.floor_bounds
   tau_lifetime_fs  —  
-    value   = [291.150000000000000000, 291.170000000000000000] fs
-    theorem = PMElementaryParticles.TauLifetime.tau_lifetime_tree
-    decay   = conditional total lifetime; tau, inferred from its electronic branch; tree-level m^5 scaling; phase-space and radiative ratio omitted; measured muon lifetime and B_e; not an independent total-width prediction
-    note    = uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; phase-space/radiative ratio omitted
+    value   = [291.030000000000000000, 291.060000000000000000] fs
+    theorem = PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds
+    decay   = conditional total lifetime; tau, inferred from its electronic branch; m^5 scaling with the phase-space, W-propagator and one-loop QED partial-width ratio; measured muon lifetime and B_e; not an independent total-width prediction
+    note    = uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (alpha(m_tau)^-1 = 133.3 supplied)
     comparison = combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error
     exp  = 290.300000000000 ± 0.820000000000  (pdg_2024)
-    diff = 0.860000000000
-    σ    = +1.04
+    diff = 0.745000000000
+    σ    = +0.90
   muon_lifetime_finite  —  
     value   = [1250000000000000.000000000000000000, 2500000000000000.000000000000000000] m_e^-1
     theorem = PMElementaryParticles.muonFiniteLifetime_bounds
@@ -419,14 +419,14 @@ Elementary Particles
     theorem = PMElementaryParticles.TauE8.tauLifetimeE8_bounds
     decay   = conditional total lifetime; tau, inferred from its electronic branch; tree-level m^5 scaling; broad natural-unit enclosure; E8 tree muon lifetime; supplied B_e
     note    = E8 muon input; broad natural-unit interval
-  muon_lifetime_s  —  \tau_\mu=192\pi^3/(G_F^2 m_\mu^5\,f(m_e^2/m_\mu^2)\,(1-\frac{\alpha}{2\pi}(\pi^2-\frac{25}{4})))
-    value   = [0.000002196987000000, 0.000002196998000000] s
-    theorem = PMElementaryParticles.MuonLifetimeCorrected.corrected_bounds
-    decay   = inclusive total lifetime; mu -> e nu nubar [gamma]; massive tree phase space times massless one-loop QED; finite-mass QED and higher orders omitted; E8 G_F and alpha(0); supplied one-loop kernel
-    note    = E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); finite-electron-mass one-loop radiation (about +4.4 ppm in rate) and higher-order QED omitted; the roughly +5 ppm lifetime residual is not solely a two-loop effect; G_F itself is scored in fermi_constant, so this reference is not scored
+  muon_lifetime_s  —  \tau_\mu=192\pi^3/(G_F^2 m_\mu^5\,(1+\Delta q^{(0)}+\Delta q^{(1)}+\Delta q^{(2)}))
+    value   = [0.000002196974000000, 0.000002196984000000] s
+    theorem = PMElementaryParticles.Values.muonLifetimeFull_bounds
+    decay   = inclusive total lifetime; mu -> e nu nubar [gamma]; massive tree phase space plus the Fermi-theory QED series through two loops with electron-mass terms (van Ritbergen-Stuart); E8 G_F, alpha and m_mu/m_e; alpha(m_mu) from E8 alpha; supplied series coefficients
+    note    = E8 G_F, m_mu/m_e and alpha; phase space f(r) derived (MassiveWidth.phase); the QED series 1 + dq0 + dq1 + dq2 of van Ritbergen-Stuart supplied (one-loop with electron-mass terms, two-loop 6.700, alpha(m_mu)^-1 = alpha^-1 - (2/3pi) ln(m_mu/m_e)); higher orders are below 1 ppm; G_F itself is scored in fermi_constant, so this reference is not scored
     exp  = 0.000002196981 ± 2.200000e-12  (pdg_2024)
-    diff = 1.140000e-11
-    σ    = +5.18
+    diff = -2.100000e-12
+    σ    = -0.96
 
 Hadrons
   proton_ratio  —  \Delta^2-\pi D-\frac{1}{D}+5Z_{TOL}-\frac{Z_{MAR}}{\chi}-\alpha(D+\frac1D)
@@ -507,24 +507,33 @@ Hadrons
     exp  = 878.400000000000 ± 0.500000000000  (pdg_2024)
     diff = 44.980000000000
     σ    = +89.96
-  pion_lifetime_predicted_s  —  \frac{33}{32}\,\frac{8\pi}{G_F^2 f_\pi^2 m_\pi m_\mu^2(1-m_\mu^2/m_\pi^2)^2}
-    value   = [0.000000026018800000, 0.000000026019200000] s
-    theorem = PMHadrons.pionLifetimeCorrectedSeconds_bounds
-    decay   = inverse muonic partial width; pi+ -> mu+ nu [gamma] comparison; two-body tree with effective channel factor; finite radiative matching unresolved; 32/33 effective rate factor; CKM/running/dressing must not be counted again
-    note    = E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; comparison uses tau_pi/BR(mu nu [gamma]), not the total pion lifetime
+  pion_lifetime_predicted_s  —  \frac{8\pi}{G_F^2\,q^2|V_{ud}|^2 f_\pi^2 m_\pi m_\mu^2(1-m_\mu^2/m_\pi^2)^2(1+\delta_\pi)}
+    value   = [0.000000026159200000, 0.000000026160200000] s
+    theorem = PMHadrons.ChargedCurrentRate.pionMuLifetimeSeconds_bounds
+    decay   = inverse muonic partial width; pi+ -> mu+ nu [gamma] comparison; two-body tree times the full radiative correction (supplied delta_pi = 0.0176); E8 G_F; dressed CKM q^2|V_ud|^2 (q^2 = 515/516); each factor counted once
+    note    = one charged-current normalization (PMHadrons.ChargedCurrentRate): E8 G_F, f_pi = v/1890, dressed |V_ud| and the supplied full radiative correction delta_pi = 0.0176 (arXiv:1509.02220); replaces the fitted 32/33 factor; the residual is f_pi (the measurement implies 130.58(13) MeV against E8 130.275); comparison uses tau_pi/BR(mu nu [gamma])
     comparison = partial reference = 26.033 ns / 0.9998770; uncertainty from 0.005 ns and BR error 0.0000004 in quadrature, rounded up; input correlations unavailable
     exp  = 2.603620e-8 ± 5.001000e-12  (pdg_2024_pi_mu2_inclusive_partial)
-    diff = -1.720245e-11
-    σ    = -3.44
-  kaon_pion_width_ratio  —  \frac{\Gamma_K}{\Gamma_\pi}=\frac{\pi^2}{196-\pi^2}\left(\frac{70}{59}\right)^2\frac{m_K}{m_\pi}\frac{(1-m_\mu^2/m_K^2)^2}{(1-m_\mu^2/m_\pi^2)^2}
-    value   = [1.318922000000000000, 1.318923000000000000] dimensionless
-    theorem = PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds
-    decay   = ratio of muonic partial widths; K_mu2 / pi_mu2 [gamma] comparison; two-body tree ratio; channel-dependent electromagnetic difference omitted; raw V_us/V_ud; common factors cancel; f_K/f_pi = 70/59
-    note    = G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); adding that negative correction alone lowers the model ratio further; f_K/f_pi = 70/59 (FLAG 1.1934); compare like partial widths
+    diff = 1.234975e-10
+    σ    = +24.69
+  kaon_muonic_partial_lifetime_s  —  \frac{8\pi}{G_F^2\,q^2|V_{us}|^2 f_K^2 m_K m_\mu^2(1-m_\mu^2/m_K^2)^2(1+\delta_K)}
+    value   = [0.000000019969200000, 0.000000019970000000] s
+    theorem = PMHadrons.ChargedCurrentRate.kaonMuLifetimeSeconds_bounds
+    decay   = inverse muonic partial width; K+ -> mu+ nu [gamma]; two-body tree times the full radiative correction (supplied delta_K = 0.0107); E8 G_F; dressed CKM q^2|V_us|^2 (q^2 = 515/516); each factor counted once
+    note    = E8 G_F, f_K = v/1593 and dressed |V_us|; supplied full radiative correction delta_K = 0.0107 (arXiv:1509.02220); shares comparison inputs with the scored kaon/pion width ratio
+    comparison = partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; shares comparison inputs with the scored kaon/pion width ratio
+    exp  = 1.947765e-8 ± 4.612000e-11  (pdg_2024_k_mu2_inclusive_partial)
+    diff = 4.919410e-10
+    σ    = +10.66
+  kaon_pion_width_ratio  —  \frac{\Gamma_K}{\Gamma_\pi}=\frac{\pi^2}{196-\pi^2}\left(\frac{70}{59}\right)^2\frac{m_K}{m_\pi}\frac{(1-m_\mu^2/m_K^2)^2}{(1-m_\mu^2/m_\pi^2)^2}\frac{1+\delta_K}{1+\delta_\pi}
+    value   = [1.309978000000000000, 1.309980000000000000] dimensionless
+    theorem = PMHadrons.ChargedCurrentRate.kaonPionRatioRadiative_bounds
+    decay   = ratio of muonic partial widths; K_mu2 / pi_mu2 [gamma] comparison; two-body tree ratio times (1 + delta_K)/(1 + delta_pi) (supplied); E8 V_us/V_ud; G_F and the dressing cancel; f_K/f_pi = 70/59
+    note    = G_F, m_mu^2 and the dressing cancel; |V_us|^2/|V_ud|^2 and the supplied radiative difference (1 + delta_K)/(1 + delta_pi) = 0.9932 (arXiv:1509.02220); the residual is f_K/f_pi = 70/59 against FLAG 1.1934; compare like partial widths
     comparison = ratio uses both muonic branching fractions; uncertainty propagated from frozen lifetimes/branches in quadrature, rounded up; input correlations unavailable
     exp  = 1.336721347258 ± 0.003176000000  (pdg_2024_inclusive_muonic_partial_ratio)
-    diff = -0.017798847259
-    σ    = -5.61
+    diff = -0.026742347259
+    σ    = -8.43
   neutron_lifetime_unified_s  —  
     value   = [948.690000000000000000, 948.700000000000000000] s
     theorem = PMHadrons.DecayInstantiation.neutronLifetimeUnifiedSeconds_bounds
@@ -547,12 +556,12 @@ Hadrons
     value   = [0.000000000000061000, 0.000000000000064700] m_e
     theorem = PMHadrons.kaonFiniteWidth_bounds
     decay   = muonic partial width; K+ -> mu+ nu; two-body tree; all finite modes open; raw V_us squared; shared R and finite radiation omitted; intermediate
-    note    = raw muonic partial channel, not total K lifetime; shared-factor correction exists in DecayInstantiation but is not applied here; normalization/matching and tighter bounds remain upstream
+    note    = raw muonic partial channel, not total K lifetime; tree-level intermediate for kaon_muonic_partial_lifetime_s
   kaon_finite_lifetime  —  
     value   = [15400000000000.000000000000000000, 16400000000000.000000000000000000] m_e^-1
     theorem = PMHadrons.kaonFiniteLifetime_bounds
     decay   = inverse muonic partial width; K+ -> mu+ nu; two-body tree; all finite modes open; raw V_us squared; shared R and finite radiation omitted; intermediate
-    note    = raw muonic partial channel, not total K lifetime; shared-factor correction exists in DecayInstantiation but is not applied here; normalization/matching and tighter bounds remain upstream
+    note    = raw muonic partial channel, not total K lifetime; tree-level intermediate for kaon_muonic_partial_lifetime_s
   neutral_pion_finite_width  —  
     value   = [0.000015200000000000, 0.000015230000000000] m_e
     theorem = PMHadrons.neutralPionFiniteWidth_bounds
@@ -572,7 +581,7 @@ Hadrons
     value   = [0.000000019800000000, 0.000000021200000000] s
     theorem = PMHadrons.kaonFiniteLifetimeSeconds_bounds
     decay   = inverse muonic partial width; K+ -> mu+ nu; two-body tree; all finite modes open; raw V_us squared; shared R and finite radiation omitted; intermediate
-    note    = raw muonic partial channel, not total K lifetime; shared-factor correction exists in DecayInstantiation but is not applied here; normalization/matching and tighter bounds remain upstream
+    note    = raw muonic partial channel, not total K lifetime; tree-level intermediate for kaon_muonic_partial_lifetime_s
     comparison = partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; raw model is context only
     exp  = 1.947765e-8 ± 4.612000e-11  (pdg_2024_k_mu2_inclusive_partial)
     diff = 1.022341e-9
@@ -786,15 +795,15 @@ Elementary Particles
   ✓ top_mev: model [172657.000000000000000000, 172686.000000000000000000] MeV
       exp 172570.000000000000 ± 290.000000000000 (pdg_2024); diff 101.500000000000; σ +0.35
       note: tier ledger (paper assignment, declared input; not yet read from the wire)
-  ~ tau_lifetime_fs: model [291.150000000000000000, 291.170000000000000000] fs
-      exp 290.300000000000 ± 0.820000000000 (pdg_2024); diff 0.860000000000; σ +1.04
-      decay: conditional total lifetime; tau, inferred from its electronic branch; tree-level m^5 scaling; phase-space and radiative ratio omitted; measured muon lifetime and B_e; not an independent total-width prediction
-      note: uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; phase-space/radiative ratio omitted
+  ✓ tau_lifetime_fs: model [291.030000000000000000, 291.060000000000000000] fs
+      exp 290.300000000000 ± 0.820000000000 (pdg_2024); diff 0.745000000000; σ +0.90
+      decay: conditional total lifetime; tau, inferred from its electronic branch; m^5 scaling with the phase-space, W-propagator and one-loop QED partial-width ratio; measured muon lifetime and B_e; not an independent total-width prediction
+      note: uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (alpha(m_tau)^-1 = 133.3 supplied)
       comparison: combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error
-  · muon_lifetime_s: model [0.000002196987000000, 0.000002196998000000] s
-      exp 0.000002196981 ± 2.200000e-12 (pdg_2024); diff 1.140000e-11; σ +5.18
-      decay: inclusive total lifetime; mu -> e nu nubar [gamma]; massive tree phase space times massless one-loop QED; finite-mass QED and higher orders omitted; E8 G_F and alpha(0); supplied one-loop kernel
-      note: E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); finite-electron-mass one-loop radiation (about +4.4 ppm in rate) and higher-order QED omitted; the roughly +5 ppm lifetime residual is not solely a two-loop effect; G_F itself is scored in fermi_constant, so this reference is not scored
+  · muon_lifetime_s: model [0.000002196974000000, 0.000002196984000000] s
+      exp 0.000002196981 ± 2.200000e-12 (pdg_2024); diff -2.100000e-12; σ -0.96
+      decay: inclusive total lifetime; mu -> e nu nubar [gamma]; massive tree phase space plus the Fermi-theory QED series through two loops with electron-mass terms (van Ritbergen-Stuart); E8 G_F, alpha and m_mu/m_e; alpha(m_mu) from E8 alpha; supplied series coefficients
+      note: E8 G_F, m_mu/m_e and alpha; phase space f(r) derived (MassiveWidth.phase); the QED series 1 + dq0 + dq1 + dq2 of van Ritbergen-Stuart supplied (one-loop with electron-mass terms, two-loop 6.700, alpha(m_mu)^-1 = alpha^-1 - (2/3pi) ln(m_mu/m_e)); higher orders are below 1 ppm; G_F itself is scored in fermi_constant, so this reference is not scored
 
 Hadrons
   ✓ proton_ratio: model [1836.152673444000000000, 1836.152673445000000000] dimensionless
@@ -821,15 +830,20 @@ Hadrons
       exp 878.400000000000 ± 0.500000000000 (pdg_2024); diff 44.980000000000; σ +89.96
       decay: inclusive beta-channel lifetime approximation; n -> p e nubar [gamma]; continuum; leading Coulomb; outer radiation, axial EM matching and recoil omitted; raw V_ud squared times shared R = 32/33; g_A = 5/4
       note: continuum route: the emitted electron is not confined, so its modes are the continuum limit of the lattice; phase space as for the muon, Fermi factor to first order (full factor 922.9 s); remaining gap: g_A (5/4 vs 1.2754) and the low-energy radiative correction
-  ! pion_lifetime_predicted_s: model [0.000000026018800000, 0.000000026019200000] s
-      exp 2.603620e-8 ± 5.001000e-12 (pdg_2024_pi_mu2_inclusive_partial); diff -1.720245e-11; σ -3.44
-      decay: inverse muonic partial width; pi+ -> mu+ nu [gamma] comparison; two-body tree with effective channel factor; finite radiative matching unresolved; 32/33 effective rate factor; CKM/running/dressing must not be counted again
-      note: E8 two-body width with the 32/33 pion-channel margin (SM: |V_ud|^2(1+delta_rad) = 0.970); m_e and hbar c are unit inputs; comparison uses tau_pi/BR(mu nu [gamma]), not the total pion lifetime
+  ! pion_lifetime_predicted_s: model [0.000000026159200000, 0.000000026160200000] s
+      exp 2.603620e-8 ± 5.001000e-12 (pdg_2024_pi_mu2_inclusive_partial); diff 1.234975e-10; σ +24.69
+      decay: inverse muonic partial width; pi+ -> mu+ nu [gamma] comparison; two-body tree times the full radiative correction (supplied delta_pi = 0.0176); E8 G_F; dressed CKM q^2|V_ud|^2 (q^2 = 515/516); each factor counted once
+      note: one charged-current normalization (PMHadrons.ChargedCurrentRate): E8 G_F, f_pi = v/1890, dressed |V_ud| and the supplied full radiative correction delta_pi = 0.0176 (arXiv:1509.02220); replaces the fitted 32/33 factor; the residual is f_pi (the measurement implies 130.58(13) MeV against E8 130.275); comparison uses tau_pi/BR(mu nu [gamma])
       comparison: partial reference = 26.033 ns / 0.9998770; uncertainty from 0.005 ns and BR error 0.0000004 in quadrature, rounded up; input correlations unavailable
-  ! kaon_pion_width_ratio: model [1.318922000000000000, 1.318923000000000000] dimensionless
-      exp 1.336721347258 ± 0.003176000000 (pdg_2024_inclusive_muonic_partial_ratio); diff -0.017798847259; σ -5.61
-      decay: ratio of muonic partial widths; K_mu2 / pi_mu2 [gamma] comparison; two-body tree ratio; channel-dependent electromagnetic difference omitted; raw V_us/V_ud; common factors cancel; f_K/f_pi = 70/59
-      note: G_F, m_mu^2 and any common correction cancel; |V_ud|^2 on the pion as |V_us|^2 on the kaon (without it: -6.3%); the measured ratio includes the SM electromagnetic difference (about -0.7%); adding that negative correction alone lowers the model ratio further; f_K/f_pi = 70/59 (FLAG 1.1934); compare like partial widths
+  · kaon_muonic_partial_lifetime_s: model [0.000000019969200000, 0.000000019970000000] s
+      exp 1.947765e-8 ± 4.612000e-11 (pdg_2024_k_mu2_inclusive_partial); diff 4.919410e-10; σ +10.66
+      decay: inverse muonic partial width; K+ -> mu+ nu [gamma]; two-body tree times the full radiative correction (supplied delta_K = 0.0107); E8 G_F; dressed CKM q^2|V_us|^2 (q^2 = 515/516); each factor counted once
+      note: E8 G_F, f_K = v/1593 and dressed |V_us|; supplied full radiative correction delta_K = 0.0107 (arXiv:1509.02220); shares comparison inputs with the scored kaon/pion width ratio
+      comparison: partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; shares comparison inputs with the scored kaon/pion width ratio
+  ! kaon_pion_width_ratio: model [1.309978000000000000, 1.309980000000000000] dimensionless
+      exp 1.336721347258 ± 0.003176000000 (pdg_2024_inclusive_muonic_partial_ratio); diff -0.026742347259; σ -8.43
+      decay: ratio of muonic partial widths; K_mu2 / pi_mu2 [gamma] comparison; two-body tree ratio times (1 + delta_K)/(1 + delta_pi) (supplied); E8 V_us/V_ud; G_F and the dressing cancel; f_K/f_pi = 70/59
+      note: G_F, m_mu^2 and the dressing cancel; |V_us|^2/|V_ud|^2 and the supplied radiative difference (1 + delta_K)/(1 + delta_pi) = 0.9932 (arXiv:1509.02220); the residual is f_K/f_pi = 70/59 against FLAG 1.1934; compare like partial widths
       comparison: ratio uses both muonic branching fractions; uncertainty propagated from frozen lifetimes/branches in quadrature, rounded up; input correlations unavailable
   · neutron_lifetime_unified_s: model [948.690000000000000000, 948.700000000000000000] s
       exp 878.400000000000 ± 0.500000000000 (pdg_2024); diff 70.295000000000; σ +140.59
@@ -838,7 +852,7 @@ Hadrons
   · kaon_finite_lifetime_s: model [0.000000019800000000, 0.000000021200000000] s
       exp 1.947765e-8 ± 4.612000e-11 (pdg_2024_k_mu2_inclusive_partial); diff 1.022341e-9; σ +22.16
       decay: inverse muonic partial width; K+ -> mu+ nu; two-body tree; all finite modes open; raw V_us squared; shared R and finite radiation omitted; intermediate
-      note: raw muonic partial channel, not total K lifetime; shared-factor correction exists in DecayInstantiation but is not applied here; normalization/matching and tighter bounds remain upstream
+      note: raw muonic partial channel, not total K lifetime; tree-level intermediate for kaon_muonic_partial_lifetime_s
       comparison: partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; raw model is context only
   ✓ neutral_pion_finite_lifetime_s: model [0.000000000000000084, 0.000000000000000085] s
       exp 8.530402e-17 ± 1.316000e-18 (pdg_2024_pi0_gamma_gamma_partial); diff -7.040284e-19; σ -0.54
@@ -886,9 +900,9 @@ Cosmology
       exp 5.360000000000 ± 0.050000000000 (planck2018); diff -0.193333333334; σ -3.87
       note: raw ratio before correction; not scored, compare omega_ratio
 
-62 comparisons over 62 values:
-  |σ| ≤ 1: 38   |σ| ≤ 2: 53   |σ| ≤ 3: 55
-  11 context references not scored (·): uncorrected intermediates, the superseded Jarlskog proposal, CMB references for late-universe values.
+62 comparisons over 63 values:
+  |σ| ≤ 1: 39   |σ| ≤ 2: 53   |σ| ≤ 3: 55
+  12 context references not scored (·): uncorrected intermediates, the superseded Jarlskog proposal, CMB references for late-universe values.
   63 values have no experimental reference (proved intervals only).
 
 χ² diagnostic by deriving paper (scored references only):
@@ -898,9 +912,9 @@ Cosmology
   Paper 1: N = 7; χ² = 59.859; reduced χ² = 8.551
   Paper 3: N = 7; χ² = 2.031; reduced χ² = 0.290
   Paper 4: N = 18; χ² = 52.768; reduced χ² = 2.931
-  Paper 5: N = 24; χ² = 8170.879; reduced χ² = 340.453
+  Paper 5: N = 24; χ² = 8808.086; reduced χ² = 367.003
   Paper 6: N = 6; χ² = 1.973; reduced χ² = 0.328
-  All selected: N = 62; χ² = 8287.512; reduced χ² = 133.669
+  All selected: N = 62; χ² = 8924.719; reduced χ² = 143.947
 
 ==================== Summary (e8p --summary) ====================
 
@@ -918,10 +932,10 @@ names it in the `measured inputs` column. The tau pull already combines its life
 
 ## Scoreboard
 
-- 125 values with proved enclosures; 62 have a measured reference.
-- 62 scored comparisons: |σ| ≤ 1: **38**, |σ| ≤ 2: **53**, |σ| ≤ 3: **55**.
+- 126 values with proved enclosures; 63 have a measured reference.
+- 62 scored comparisons: |σ| ≤ 1: **39**, |σ| ≤ 2: **53**, |σ| ≤ 3: **55**.
 - Of these, 58 use no measured input beyond the units: |σ| ≤ 1: **35**, ≤ 2: **49**, ≤ 3: **51**. The rest name their measured anchor in the `measured inputs` column.
-- 11 references shown for context and not scored (see below).
+- 12 references shown for context and not scored (see below).
 - Nuclear masses (`--masses`): 31 nuclei, |z| ≤ 1: 6, ≤ 2: 17, ≤ 3: 29 in units of the ledger's stable-line scatter (4.8 m_e).
 - Nuclear shell closures (`--shells`): [2, 8, 20, 28, 50, 82, 126]; measured magic numbers [2, 8, 20, 28, 50, 82, 126].
 - Atomic ground-state multiplicity, Hund's first rule (`--periodic-table`): 50 of 54 match.
@@ -968,7 +982,6 @@ arithmetic intervals do not include theory uncertainty from omitted channels or 
 | `w_ratio` | 0.881529 | 0.881355 ± 1.4e-4 | dimensionless | 3 | +1.19 | — | pdg_2024 | `PMConstants.WMassTest.ratio_bounds` |
 | `tau_ratio` | 3477.00 | 3477.36 ± 0.18 | dimensionless | 3 | -2.00 | — | pdg_2024 | `PMElementaryParticles.LeptonMasses.tau_value` |
 | `vud` | 0.974494 | 0.973670 ± 3.2e-4 | dimensionless | 3 | +2.57 | — | pdg_2024 | `PMFlavor.Values.vud_bounds` |
-| `pion_lifetime_predicted_s` | 2.60190e-8 | 2.60362e-8 ± 5.0e-12 | s | 3 | -3.44 | — | pdg_2024_pi_mu2_inclusive_partial | `PMHadrons.pionLifetimeCorrectedSeconds_bounds` |
 | `sin2_theta12` | 0.30901 | 0.30800 ± 0.012 | dimensionless | 2 | +0.08 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
 | `sin2_theta13` | 0.021892 | 0.021950 ± 5.8e-4 | dimensionless | 2 | -0.10 | — | esteban_nufit-60_2024_no_ic19 | `PMFlavor.Values.pmnsSin2_bounds` |
 | `sin2_theta12` | 0.30901 | 0.30700 ± 0.012 | dimensionless | 2 | +0.16 | — | esteban_nufit-60_2024_no_ic19 | `PMFlavor.Values.pmnsSin2_bounds` |
@@ -979,10 +992,11 @@ arithmetic intervals do not include theory uncertainty from omitted channels or 
 | `z_eq` | 3377.2 | 3387.0 ± 21 | dimensionless | 2 | -0.47 | — | planck_2018 | `PMCosmology.Background.z_eq_bounds` |
 | `neutral_pion_finite_lifetime_s` | 8.4600e-17 | 8.5304e-17 ± 1.3e-18 | s | 2 | -0.54 | — | pdg_2024_pi0_gamma_gamma_partial | `PMHadrons.neutralPionFiniteLifetimeSeconds_bounds` |
 | `cabibbo` | 0.22439 | 0.22501 ± 6.8e-4 | dimensionless | 2 | -0.90 | — | navas_review_2024 | `PMFlavor.Values.cabibbo_bounds` |
-| `tau_lifetime_fs` | 291.16 | 290.30 ± 0.82 | fs | 2 | +1.04 | measured_muon_lifetime, B_e | pdg_2024 | `PMElementaryParticles.TauLifetime.tau_lifetime_tree` |
+| `tau_lifetime_fs` | 291.04 | 290.30 ± 0.82 | fs | 2 | +0.90 | measured_muon_lifetime, B_e | pdg_2024 | `PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds` |
 | `baryon_pm3J` | 6.0750e-10 | 6.1200e-10 ± 4.0e-12 | dimensionless | 2 | -1.13 | — | planck_2018 | `PMCosmology.Primordial.baryon_windows` |
 | `charm_mev` | 1267.2 | 1273.0 ± 4.6 | MeV | 2 | -1.25 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.charm_value` |
 | `f_k_mev` | 154.56 | 155.70 ± 0.30 | MeV | 2 | -3.79 | — | flag_2024 | `PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds` |
+| `pion_lifetime_predicted_s` | 2.6159e-8 | 2.6036e-8 ± 5.0e-12 | s | 2 | +24.69 | — | pdg_2024_pi_mu2_inclusive_partial | `PMHadrons.ChargedCurrentRate.pionMuLifetimeSeconds_bounds` |
 | `jarlskog_geo` | 3.084e-5 | 3.120e-5 ± 1.2e-6 | dimensionless | 1 | -0.30 | — | navas_review_2024 | `PMFlavor.Values.jarlskogGeo_bounds` |
 | `clustering_late` | 0.7678 | 0.7590 ± 0.024 | dimensionless | 1 | +0.36 | s8_anchor | kids_1000_2021 | `PMCosmology.SubstrateLoad.revised_numerical_outputs` |
 | `sin2_theta13` | 0.02189 | 0.02215 ± 5.8e-4 | dimensionless | 1 | -0.45 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
@@ -992,7 +1006,7 @@ arithmetic intervals do not include theory uncertainty from omitted channels or 
 | `ckm_s13` | 0.003607 | 0.003820 ± 2.0e-4 | dimensionless | 1 | -1.07 | — | pdg_2024 | `PMFlavor.Values.ckmS13_bounds` |
 | `sin2_theta23` | 0.5748 | 0.5610 ± 0.012 | dimensionless | 1 | +1.15 | — | esteban_nufit-60_2024_no_ic19 | `PMFlavor.Values.pmnsSin2_bounds` |
 | `up_mev` | 2.058 | 2.160 ± 0.070 | MeV | 1 | -1.45 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.up_value` |
-| `kaon_pion_width_ratio` | 1.318 | 1.336 ± 0.0031 | dimensionless | 1 | -5.61 | — | pdg_2024_inclusive_muonic_partial_ratio | `PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds` |
+| `kaon_pion_width_ratio` | 1.309 | 1.336 ± 0.0031 | dimensionless | 1 | -8.43 | — | pdg_2024_inclusive_muonic_partial_ratio | `PMHadrons.ChargedCurrentRate.kaonPionRatioRadiative_bounds` |
 | `neutron_lifetime_predicted_s` | 923.3 | 878.4 ± 0.50 | s | 1 | +89.96 | — | pdg_2024 | `PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds` |
 | `wolf_rho` | 0.141 | 0.159 ± 0.0095 | dimensionless | 0 | -1.89 | — | navas_review_2024 | `PMFlavor.Values.wolfRho_bounds` |
 | `sin2_theta23` | 0.574 | 0.470 ± 0.017 | dimensionless | 0 | +6.16 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
@@ -1002,11 +1016,11 @@ arithmetic intervals do not include theory uncertainty from omitted channels or 
 | quantity | E8 (proved, midpoint) | measured | unit | digits | σ | measured inputs | reference | Lean theorem |
 |---|---:|---:|---|---:|---:|---|---|---|
 | `neutron_lifetime_predicted_s` | 923.3 | 878.4 ± 0.50 | s | 1 | +89.96 | — | pdg_2024 | `PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds` |
+| `pion_lifetime_predicted_s` | 2.6159e-8 | 2.6036e-8 ± 5.0e-12 | s | 2 | +24.69 | — | pdg_2024_pi_mu2_inclusive_partial | `PMHadrons.ChargedCurrentRate.pionMuLifetimeSeconds_bounds` |
+| `kaon_pion_width_ratio` | 1.309 | 1.336 ± 0.0031 | dimensionless | 1 | -8.43 | — | pdg_2024_inclusive_muonic_partial_ratio | `PMHadrons.ChargedCurrentRate.kaonPionRatioRadiative_bounds` |
 | `sin2_theta23` | 0.574 | 0.470 ± 0.017 | dimensionless | 0 | +6.16 | — | esteban_nufit-60_2024_no_ic24_sk | `PMFlavor.Values.pmnsSin2_bounds` |
 | `alpha_inv` | 137.03599921 | 137.03599904 ± 2.7e-8 | dimensionless | 8 | +6.16 | — | parker_measurement_2018 | `PMSubstrate.geometricIndex_bounds` |
-| `kaon_pion_width_ratio` | 1.318 | 1.336 ± 0.0031 | dimensionless | 1 | -5.61 | — | pdg_2024_inclusive_muonic_partial_ratio | `PMHadrons.KaonPionRatio.kaonPionWidthRatio_bounds` |
 | `f_k_mev` | 154.56 | 155.70 ± 0.30 | MeV | 2 | -3.79 | — | flag_2024 | `PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds` |
-| `pion_lifetime_predicted_s` | 2.60190e-8 | 2.60362e-8 ± 5.0e-12 | s | 3 | -3.44 | — | pdg_2024_pi_mu2_inclusive_partial | `PMHadrons.pionLifetimeCorrectedSeconds_bounds` |
 | `alpha_inv` | 137.035999212 | 137.035999166 ± 1.5e-8 | dimensionless | 9 | +3.09 | — | fan_measurement_2023 | `PMSubstrate.geometricIndex_bounds` |
 | `vud` | 0.974494 | 0.973670 ± 3.2e-4 | dimensionless | 3 | +2.57 | — | pdg_2024 | `PMFlavor.Values.vud_bounds` |
 | `muon_ratio` | 206.7682717 | 206.7682827 ± 4.6e-6 | dimensionless | 7 | -2.40 | — | mohr_codata_2025 | `PMElementaryParticles.LeptonMasses.muon_value` |
@@ -1019,15 +1033,16 @@ Unknown correlations and omitted physical corrections are not supplied as fitted
 
 | quantity | observable / channel | correction order / normalization | comparison uncertainty |
 |---|---|---|---|
-| `tau_lifetime_fs` | conditional total lifetime; tau, inferred from its electronic branch | tree-level m^5 scaling; phase-space and radiative ratio omitted; measured muon lifetime and B_e; not an independent total-width prediction | combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error |
+| `tau_lifetime_fs` | conditional total lifetime; tau, inferred from its electronic branch | m^5 scaling with the phase-space, W-propagator and one-loop QED partial-width ratio; measured muon lifetime and B_e; not an independent total-width prediction | combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error |
 | `muon_lifetime_finite` | total lifetime at tree level; mu -> e nu nubar | massless tree; finite-channel template; E8 G_F; no radiative factor |  |
 | `tau_lifetime_e8_natural` | conditional total lifetime; tau, inferred from its electronic branch | tree-level m^5 scaling; broad natural-unit enclosure; E8 tree muon lifetime; supplied B_e |  |
 | `neutron_lifetime_e8` | total beta-channel lifetime; n -> p e nubar | finite-cube spectral template; no Coulomb or radiative dressing; unmargined finite channel; comparison stage |  |
-| `muon_lifetime_s` | inclusive total lifetime; mu -> e nu nubar [gamma] | massive tree phase space times massless one-loop QED; finite-mass QED and higher orders omitted; E8 G_F and alpha(0); supplied one-loop kernel |  |
+| `muon_lifetime_s` | inclusive total lifetime; mu -> e nu nubar [gamma] | massive tree phase space plus the Fermi-theory QED series through two loops with electron-mass terms (van Ritbergen-Stuart); E8 G_F, alpha and m_mu/m_e; alpha(m_mu) from E8 alpha; supplied series coefficients |  |
 | `neutron_lifetime_s` | total beta-channel lifetime; n -> p e nubar | finite-cube spectral template; no Coulomb or radiative dressing; unmargined finite channel; comparison stage |  |
 | `neutron_lifetime_predicted_s` | inclusive beta-channel lifetime approximation; n -> p e nubar [gamma] | continuum; leading Coulomb; outer radiation, axial EM matching and recoil omitted; raw V_ud squared times shared R = 32/33; g_A = 5/4 |  |
-| `pion_lifetime_predicted_s` | inverse muonic partial width; pi+ -> mu+ nu [gamma] comparison | two-body tree with effective channel factor; finite radiative matching unresolved; 32/33 effective rate factor; CKM/running/dressing must not be counted again | partial reference = 26.033 ns / 0.9998770; uncertainty from 0.005 ns and BR error 0.0000004 in quadrature, rounded up; input correlations unavailable |
-| `kaon_pion_width_ratio` | ratio of muonic partial widths; K_mu2 / pi_mu2 [gamma] comparison | two-body tree ratio; channel-dependent electromagnetic difference omitted; raw V_us/V_ud; common factors cancel; f_K/f_pi = 70/59 | ratio uses both muonic branching fractions; uncertainty propagated from frozen lifetimes/branches in quadrature, rounded up; input correlations unavailable |
+| `pion_lifetime_predicted_s` | inverse muonic partial width; pi+ -> mu+ nu [gamma] comparison | two-body tree times the full radiative correction (supplied delta_pi = 0.0176); E8 G_F; dressed CKM q^2\|V_ud\|^2 (q^2 = 515/516); each factor counted once | partial reference = 26.033 ns / 0.9998770; uncertainty from 0.005 ns and BR error 0.0000004 in quadrature, rounded up; input correlations unavailable |
+| `kaon_muonic_partial_lifetime_s` | inverse muonic partial width; K+ -> mu+ nu [gamma] | two-body tree times the full radiative correction (supplied delta_K = 0.0107); E8 G_F; dressed CKM q^2\|V_us\|^2 (q^2 = 515/516); each factor counted once | partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; shares comparison inputs with the scored kaon/pion width ratio |
+| `kaon_pion_width_ratio` | ratio of muonic partial widths; K_mu2 / pi_mu2 [gamma] comparison | two-body tree ratio times (1 + delta_K)/(1 + delta_pi) (supplied); E8 V_us/V_ud; G_F and the dressing cancel; f_K/f_pi = 70/59 | ratio uses both muonic branching fractions; uncertainty propagated from frozen lifetimes/branches in quadrature, rounded up; input correlations unavailable |
 | `neutron_lifetime_unified_s` | total beta-channel lifetime; n -> p e nubar | finite-cube spectral template; no Coulomb or outer radiation; raw V_ud squared times shared R = 32/33; comparison stage |  |
 | `pion_finite_width` | muonic partial width; pi+ -> mu+ nu | two-body tree; all finite modes open; no V_ud factor or 32/33 correction; intermediate |  |
 | `pion_finite_lifetime` | inverse muonic partial width; pi+ -> mu+ nu | two-body tree; all finite modes open; no V_ud factor or 32/33 correction; intermediate |  |
@@ -1051,9 +1066,10 @@ Unknown correlations and omitted physical corrections are not supplied as fitted
 | `w_mass_uncorrected` | 78.965000 | 80.369200 ± 0.013 (pdg_2024_world) | uncorrected (tree-level); not scored, compare w_ratio |
 | `w_mass_uncorrected` | 78.965000 | 80.433500 ± 0.0094 (cdf_2022) | uncorrected (tree-level); not scored, compare w_ratio |
 | `z_mass_uncorrected` | 89.575000 | 91.187600 ± 0.0021 (pdg_2024) | uncorrected (tree-level); not scored, compare w_ratio |
-| `muon_lifetime_s` | 2.1969925e-6 | 2.1969811e-6 ± 2.2e-12 (pdg_2024) | E8 G_F, m_mu, m_e and alpha; phase-space factor f(r) derived (MassiveWidth.phase), one-loop QED factor supplied (Kinoshita-Sirlin); finite-electron-mass one-loop radiation (about +4.4 ppm in rate) and higher-order QED omitted; the roughly +5 ppm lifetime residual is not solely a two-loop effect; G_F itself is scored in fermi_constant, so this reference is not scored |
+| `muon_lifetime_s` | 2.1969790e-6 | 2.1969811e-6 ± 2.2e-12 (pdg_2024) | E8 G_F, m_mu/m_e and alpha; phase space f(r) derived (MassiveWidth.phase); the QED series 1 + dq0 + dq1 + dq2 of van Ritbergen-Stuart supplied (one-loop with electron-mass terms, two-loop 6.700, alpha(m_mu)^-1 = alpha^-1 - (2/3pi) ln(m_mu/m_e)); higher orders are below 1 ppm; G_F itself is scored in fermi_constant, so this reference is not scored |
+| `kaon_muonic_partial_lifetime_s` | 1.9969600e-8 | 1.9477658e-8 ± 4.6e-11 (pdg_2024_k_mu2_inclusive_partial) | E8 G_F, f_K = v/1593 and dressed \|V_us\|; supplied full radiative correction delta_K = 0.0107 (arXiv:1509.02220); shares comparison inputs with the scored kaon/pion width ratio |
 | `neutron_lifetime_unified_s` | 948.69500 | 878.40000 ± 0.50 (pdg_2024) | 3x3x3 spectral template (comparison): the continuum route without Coulomb to 0.6%; see neutron_lifetime_predicted_s |
-| `kaon_finite_lifetime_s` | 2.0500000e-8 | 1.9477658e-8 ± 4.6e-11 (pdg_2024_k_mu2_inclusive_partial) | raw muonic partial channel, not total K lifetime; shared-factor correction exists in DecayInstantiation but is not applied here; normalization/matching and tighter bounds remain upstream |
+| `kaon_finite_lifetime_s` | 2.0500000e-8 | 1.9477658e-8 ± 4.6e-11 (pdg_2024_k_mu2_inclusive_partial) | raw muonic partial channel, not total K lifetime; tree-level intermediate for kaon_muonic_partial_lifetime_s |
 
 63 further values have proved enclosures and no measured reference (`e8p` lists them).
 
