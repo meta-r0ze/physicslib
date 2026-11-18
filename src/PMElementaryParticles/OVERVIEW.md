@@ -251,6 +251,31 @@ lowers the bare coupling (`PMAction.ReferenceNodeBoundary`), while the
 charged-lepton and down comparisons need a larger effective coupling.
 These are targets for a future substrate calculation of the flip coefficients.
 
+The static hypercharge comparison gives another exact test. Take the
+unchanged reference branch in `PMAction.CommonResponse` and use the
+packet hypercharge transport for the other branch. The vacancy has zero
+flag probability. The absolute hypercharges of down, up and electron
+are in the ratio `1:2:3`. Their flag probabilities obey
+`P_e + 3P_d − 2P_u = 4P_d(1 − 2P_d)² ≥ 0` at every phase
+(`ProtocolToll.hyperchargeFlag_static_gap`). Every finite nonnegative
+weighted sum of those flags with a common baseline therefore satisfies
+`2(T_u − T_ν) ≤ (T_e − T_ν) + 3(T_d − T_ν)`
+(`hyperchargeFlag_schedule_bound`).
+
+For a common positive affine map from that Toll to the wire amplitude,
+the same bound holds for the amplitudes. With a nonnegative baseline
+and `s_e < s_d` it requires `s_u < 2s_d`. The nominal charged
+comparison has `s_u/s_d ≈ 4.38`. An affine map to squared amplitude
+likewise requires `s_u² < 2s_d²`. These tests use the charged order and
+do not require a neutrino mass prediction.
+
+The generic comparison, repair cost, and conversion from a scheduled
+pulse to its wire coupling belong to PMAction. The evaluation on the
+E8 protocol packet, and the test against the heavy-weight readout,
+belong here. This bound covers common per-flag pricing against an
+unchanged reference. A label-conditioned repair length or a joint
+reference response requires its own derivation.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

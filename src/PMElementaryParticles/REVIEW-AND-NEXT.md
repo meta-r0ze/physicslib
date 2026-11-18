@@ -22,9 +22,12 @@ the recorded mass ratios to check it.
   [toll constraints](OVERVIEW.md#protocol-toll-constraints) to screen
   candidates. [PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions) owns
   pulse selection and timing.
-  Seek a reference-conditioned history or a joint response with an
-  additional readout that distinguishes the four colour orbits. Use the
-  recorded `≈ ×3` ladder as a comparison once the rule is derived.
+  Derive a reference-conditioned repair history or joint response on
+  the four colour orbits. The Toll constraints give the affine bound
+  for sums of static hypercharge comparisons against a fixed reference.
+  PMAction supplies the selected repair schedule and the conversion
+  from Toll to wire amplitude. Test the resulting protocol weights
+  against the recorded ladder.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.

@@ -1,5 +1,7 @@
 import PMElementaryParticles.ControlledGluedRegister
 import PMElementaryParticles.RefreshMap
+import PMElementaryParticles.VacancyProjection
+import PMAction.CommonResponse
 
 /-!
 # Constraints on a Toll from the glued protocol label
@@ -149,5 +151,90 @@ theorem no_separable_toll (lepton coloured positive negative : ℝ)
     ¬ (lepton * positive < lepton * negative ∧ coloured * negative < coloured * positive) := by
   rintro ⟨hl', hc'⟩
   exact (lt_of_mul_lt_mul_left hl' hl.le).not_gt (lt_of_mul_lt_mul_left hc' hc.le)
+
+/-- Use Action's coherent flag on the packet hypercharge transport. -/
+def hyperchargeFlag (t : ℝ) (c : Channels) : ℝ :=
+  PMAction.InterferenceReadout.flagProbability (hypercharge t) c
+
+open scoped Matrix.Norms.Operator in
+theorem hyperchargeFlag_eq_cos (t : ℝ) (c : Channels) :
+    hyperchargeFlag t c =
+      (1 - Real.cos (t * ((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3)) / 2 := by
+  classical
+  rw [hyperchargeFlag, PMAction.InterferenceReadout.flag_formula _ (hypercharge_unitary t),
+    hypercharge, PMAction.LinkEvolution.transport_eq_exp, VacancyProjection.charge_diagonal,
+    ← Matrix.diagonal_smul, Matrix.exp_diagonal, Matrix.diagonal_apply_eq, Pi.coe_exp,
+    ← Complex.exp_eq_exp_ℂ]
+  have h :
+      (((t : ℂ) * Complex.I) •
+        (fun c : Channels => ((PMConstants.ChannelOccupancy.tag c).2.2 : ℂ) / 3)) c =
+      ((t * ((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3 : ℝ) : ℂ) * Complex.I := by
+    simp only [Pi.smul_apply, smul_eq_mul]
+    push_cast
+    ring
+  rw [h, Complex.exp_ofReal_mul_I_re]
+
+/-- The vacancy's static hypercharge makes it invisible to this flag. -/
+@[simp]
+theorem hyperchargeFlag_static_neutral (t : ℝ) :
+    hyperchargeFlag t (opposite neutrino) = 0 := by
+  norm_num [hyperchargeFlag_eq_cos, neutrino, opposite, PMConstants.ChannelOccupancy.tag]
+
+/-- Up and down static hypercharges have absolute ratio two, so their
+flag responses obey the same identity at every phase and every colour. -/
+theorem hyperchargeFlag_quark_pair (t : ℝ) (a : Fin 3) :
+    let d := hyperchargeFlag t (.inr (.inl (a, 1)))
+    hyperchargeFlag t (.inr (.inl (a, 0))) = 4 * d * (1 - d) := by
+  dsimp only
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag]
+  push_cast
+  norm_num
+  rw [show -(t * 2) / 3 = -(t * 2 / 3) by ring, Real.cos_neg,
+    show t * 4 / 3 = 2 * (t * 2 / 3) by ring, Real.cos_two_mul]
+  ring
+
+/-- The static electron has three times the absolute hypercharge of down.
+The three flag probabilities obey this identity at every common phase. -/
+theorem hyperchargeFlag_static_gap (t : ℝ) (a : Fin 3) :
+    let d := hyperchargeFlag t (.inr (.inl (a, 1)))
+    hyperchargeFlag t (opposite electron) + 3 * d -
+      2 * hyperchargeFlag t (.inr (.inl (a, 0))) = 4 * d * (1 - 2 * d) ^ 2 := by
+  dsimp only
+  rw [hyperchargeFlag_quark_pair]
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag,
+    electron, neutrino, flipWeak, opposite]
+  push_cast
+  norm_num
+  rw [show -(t * 2) / 3 = -(t * 2 / 3) by ring, Real.cos_neg]
+  rw [show -(t * 6) / 3 = -(3 * (t * 2 / 3)) by ring, Real.cos_neg, Real.cos_three_mul]
+  ring
+
+/-- A common floor and any finite schedule of static hypercharge flag
+costs with nonnegative weights obey a joint electron/up/down bound.
+The weights can include Action's per-flag repair price and multiplicity. -/
+theorem hyperchargeFlag_schedule_bound {ι : Type*} [Fintype ι]
+    (t w : ι → ℝ) (hw : ∀ i, 0 ≤ w i) (floor : ℝ) (a : Fin 3) :
+    let score := fun c => floor + ∑ i, w i * hyperchargeFlag (t i) c
+    2 * (score (.inr (.inl (a, 0))) - score (opposite neutrino)) ≤
+      (score (opposite electron) - score (opposite neutrino)) +
+        3 * (score (.inr (.inl (a, 1))) - score (opposite neutrino)) := by
+  have hwm (k : ℝ) (f : ι → ℝ) : (∑ i, w i * (k * f i)) = k * ∑ i, w i * f i := by
+    rw [Finset.mul_sum]
+    exact Finset.sum_congr rfl fun i _ => by ring
+  have hsum : 0 ≤ ∑ i, w i * (hyperchargeFlag (t i) (opposite electron) +
+      3 * hyperchargeFlag (t i) (.inr (.inl (a, 1))) -
+        2 * hyperchargeFlag (t i) (.inr (.inl (a, 0)))) := by
+    apply Finset.sum_nonneg
+    intro i _
+    rw [hyperchargeFlag_static_gap]
+    have hd : 0 ≤ hyperchargeFlag (t i) (.inr (.inl (a, 1))) := by
+      rw [hyperchargeFlag_eq_cos]
+      exact div_nonneg (sub_nonneg.mpr (Real.cos_le_one _)) (by norm_num)
+    exact mul_nonneg (hw i) (mul_nonneg (mul_nonneg (by norm_num) hd) (sq_nonneg _))
+  simp only [mul_sub, mul_add, Finset.sum_sub_distrib, Finset.sum_add_distrib, hwm] at hsum
+  dsimp only
+  simp only [hyperchargeFlag_static_neutral, mul_zero, Finset.sum_const_zero, add_zero,
+    add_sub_cancel_left]
+  exact sub_nonneg.mp hsum
 
 end PMElementaryParticles.ProtocolToll
