@@ -50,7 +50,8 @@ label means neutrino on F and vacancy on T. Each channel and amplitude index
 encodes into a distinct glued root. The weak relabeling applies the antipode
 only on F, and colour permutations use the vector-frame action transported
 by triality. A glue-class-controlled pure root reflection moves the amplitude
-while preserving the channel and fixing the other wall in that generation.
+while preserving the channel and fixing the other wall in that generation. In particular,
+`weak_active` shows that the weak toggle preserves the active bank.
 
 The swap-plus-triality word preserves the signed axis, colour permutations and
 electric charge. It changes the glue class to stay in the same generation.
@@ -79,11 +80,41 @@ its signed index in the gapped block. Each of the three active-neutrino
 light vectors lifts to an exact zero mode of the full zero-momentum
 Hamiltonian (`neutral_exact_zero`). Each occupied label has its own two
 generation-space flip matrices, with the same inverse link between them.
-These statements use the supplied link coefficient and the inventory's
-vacancy projection. The coherent control and the flip coefficients are
-tracked in REVIEW. The class-blind
+The coherent control and the flip coefficients are tracked in REVIEW.
+The class-blind
 flip disturbs the other wall's labels uniformly and mixes lepton and colour
 labels in classes `v` and `c` (`tools/label_flip_check.py`).
+
+### Static vacancy and neutral light modes
+
+`VacancyProjection.invisible_line` identifies the kernel of the absolute
+packet hypercharge generator on arbitrary coherent superpositions. It is
+one line, the inventory's static sterile slot. Its orthogonal complement is
+the generator's range (`occupied_fixed_iff`), and the weak and colour
+updates preserve that sector (`gauge_updates_preserve`). This uses the
+existing packet representation. Relative phase to the reference is a
+different readout (`PMConstants.SectorCapabilities.sterile_has_relative_phase`).
+
+`staticLight_agrees` transports the occupied projection to the
+static wall in each generation. Applying it to the output of the
+label-preserving static flip gives precisely `staticFlip`
+(`projected_static_flip`). The pure static-vacancy light vectors are
+stationary and the rest generator has no source into them. The projection
+retains the signed label in the gapped block, and the three active
+neutrino light vectors still lift to exact zero modes when the crossing
+is invertible (`neutral_zero_after_projection`).
+
+`VacancyPreparation` constructs a finite preparation using the existing
+absolute packet hypercharge transport and two-port coherent comparison.
+At the supplied phase step `6π/5`, the sterile slot is fixed and every
+occupied slot has a nontrivial fifth-root phase. Retaining the minus branch
+at the first four positive multiples of that step gives exactly
+`(5/16) · occupied` (`filter_eq_projector`). Each comparison has a
+unitary dilation. The retained branch has the occupied sector as its
+range and carries `25/256` of the squared norm of the occupied input.
+The native firing of these phase gates and routing of the retained
+branch to the static light wall still require an update law. The
+construction projects the existing neutral-degenerate Hamiltonian.
 
 ## Protocol readout
 
@@ -108,6 +139,30 @@ can always be chosen strictly negative (`negative_retuning_exists`).
 Conversely, distinct single-leg offsets at a shared detuning and cycle
 product cannot both stay resonant. The physical calculation must derive
 both the register insertion and the constraint on the common detuning.
+
+### Charged insertion on the static wall
+
+At the packet hypercharge step `3π/4`, the static vacancy and the electron,
+up and down channels have eigenphases `1, i, −1, −i`, respectively.
+`ChargedInsertion.select_static` gives the exact projection onto each
+static sector as two phase-matched plus-port comparisons, first with the
+target-corrected transport and then with its square. The matching channel
+has amplitude one. The projection is constant across the three colours.
+`joint_selector` combines this comparison with the glue-class test.
+The vector class occurs on the static wall at generation index `2`, so a
+conditional coherent flip there adds one diagonal leg to the selected
+protocol's generation matrix. The index is a coordinate of the glued
+encoding.
+
+With nonzero extra amplitude and a common bare resonant detuning,
+`full_zero_iff_unselected` removes the selected sector's exact zero mode
+in the full two-wall Hamiltonian, with invertible crossing and reference
+flip. If an unmodified calibration channel stays stationary under the
+same real detuning, `calibrated_detuning` pins it to the negative cube
+root of the positive cycle product. The channel selectors specify
+where a conditional pulse acts. The native law that admits and fires it,
+its pulse area, and the existence of a shared stationary calibration
+remain open.
 
 ### Protocol Toll constraints
 
@@ -202,10 +257,10 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `MassiveDaughterSpectrum` | Massive charged daughter, massless neutrino pair: `threshold`, `kinematics`, `radial_measure`, `pair_density`, `massless`, `rate_positive`, `width_scaling` | Contact vertex, transported pair average |
 | `MassiveWidth` | Closed massive-daughter width `G²m⁵/(192π³)·[1−8r+8r³−r⁴−12r² log r]`; `closed_width`, `phase_zero/one/continuous`, `phase_positive`, `threshold_width` | Tree contact spectrum, normalizations |
 | `MuonLifetimeCorrected` | `τ_μ = τ_tree/(f(r)·q)`: `r = (m_e/m_μ)²` (`r_bounds`), derived phase factor `f(r) = MassiveWidth.phase r` (`phase_bounds`, `0.99981295`), `α = 1/geometricIndex`, `corrected_bounds` `2.196987–2.196998 µs` (measured `2.1969811(22)`); e8p `muon_lifetime_s` | one-loop QED factor `q = 1 − (α/2π)(π² − 25/4)` (Kinoshita–Sirlin), supplied; higher orders (≈5 ppm) not included |
-| `MuonQEDLoops` | The QED loop terms of muon decay at E8 inputs, in one place: the coupling at the muon scale `α_r⁻¹ = α⁻¹ − (2/3π) ln(m_μ/m_e) ≈ 135.90` (`log_muon_bounds`, `alphaR_div_pi_bounds`); one loop with its electron-mass terms (`dq1_bounds`); two loops `6.700 (α_r/π)²` (`dq2_bounds`); phase space `dq0` (derived) | the loop coefficients (van Ritbergen–Stuart) |
+| `MuonQEDLoops` | The QED loop terms of muon decay at E8 inputs, in one place: the coupling at the muon scale `α_r⁻¹ = α⁻¹ − (2/3π) ln(m_μ/m_e) ≈ 135.90` (`log_muon_bounds`, `alphaR_div_pi_bounds`); one loop with its electron-mass terms (`dq1_bounds`); two loops `6.700 (α_r/π)²` (`dq2_bounds`); phase space `dq0` (derived) | the loop coefficients and running-coupling prescription (van Ritbergen–Stuart) |
 | `MuonLifetimeHigherOrder` | `τ_μ = τ_tree/(1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)`: `lifetime_bounds` `2.196974–2.196984 µs` (measured `2.1969811(22)`; the one-loop row was `+5σ`) | via `MuonQEDLoops` |
 | `TauLifetimeCorrected` | Tau lifetime from the measured `τ_μ` and supplied `B_e` with the electronic partial-width ratio corrected: phase space `f(x_μ)/f(x_τ)` (derived), `W` propagator (E8 `M_W`), one-loop QED at each lepton scale (`α(m_τ)⁻¹ = 133.3` supplied); `tau_lifetime_corrected` `291.03–291.06` fs (measured `290.3 ± 0.5`; tree `291.15–291.17`) | measured `τ_μ`, `B_e`, `α(m_τ)` |
-| `MuonRadiativeLog` | Muon decay has no one-loop radiative log: `c = 0` for charges `(0, −1, −1, 0)` (`leptonic_no_log`) and in the charge-retention order, a conserved `e–μ` current (`retention_no_log`); so the radiative factor is one pure number (`rate_factor_one`) | — |
+| `MuonRadiativeLog` | The leading one-loop contact log in muon decay vanishes: `c = 0` for charges `(0, −1, −1, 0)` (`leptonic_no_log`) and in the charge-retention order, a conserved `e–μ` current (`retention_no_log`); the leading-log rate factor is one (`rate_factor_one`) | — |
 | `PairInvariantSpectrum` | Uses the massive-daughter tree spectrum to derive the density in `q² = (p − p_e)²`, its physical interval `[0,(m − μ)²]`, and its weighted change of variable with Jacobian `1/(2m)`. The unweighted integral recovers `MassiveWidth.closed_width`. At `μ = 0`, the normalized invariant `z=q²/m²` gives the weight `2(1−z)²(1+2z)` | Tree contact spectrum with massless neutrinos |
 | `RadiativeIntegrals` | Real dilogarithm series equals the integral of `−log(1 − x)/x` on `[0,1]` (`dilog_eq_integral`); `Li₂(1) = π²/6` from the Basel sum. The kernel is integrable at the endpoint and its reflected form `−log x/(1 − x)` has the same integral | — |
 | `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing; applied to the on-axis matrix in `PMFlavor.InclusiveWidth`), `kinematic_bounds` | Orthogonal final states, common kinematics |
@@ -325,6 +380,10 @@ integrated width. The native amplitude and physical state assignment
 are still needed to apply these contact weights. At exact resonance,
 `PMAction.WallGapCalibration.stationary_charged_fraction` realizes every
 normalized charged fraction in the one-leg stationary family.
+`PMAction.NativeWallOffset.rest_offset_breaks_chirality` shows that a retained
+one-wall lazy offset breaks the chiral anticommutation even after a common
+energy shift. In that case the off-diagonal model's paired-window factor
+requires rechecking against the new spectrum.
 
 ## Protocols and the 16-channel inventory
 

@@ -74,8 +74,11 @@ import PMElementaryParticles.TauBranching
 import PMElementaryParticles.GluedRegister
 import PMElementaryParticles.ControlledGluedRegister
 import PMElementaryParticles.GappedGluedCrossing
+import PMElementaryParticles.VacancyProjection
+import PMElementaryParticles.VacancyPreparation
 import PMElementaryParticles.ProtocolToll
 import PMElementaryParticles.ResonanceLift
+import PMElementaryParticles.ChargedInsertion
 import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog
 import PMElementaryParticles.RadiativeIntegrals
