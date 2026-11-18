@@ -66,4 +66,96 @@ theorem own_event_tolls (tL tQ : ℝ) (a : Fin 3)
   refine ⟨by rw [hL, hQ], ?_⟩
   rw [(full_readout tQ a hQ).2.1, neutrinoStatic, hyperchargeFlag_static_neutral]
 
+/-! ### A persisting massive label is on both walls
+
+A massive mode has half its weight on each chirality
+(`PMAction.WallRestChirality.charged_weight_half`), and the register's active and static banks
+are the two walls (`ControlledGluedRegister`). So a persisting massive label is the equal
+superposition of its active slot (quark doublet `Q`, tag `1`; lepton doublet `L`, tag `−3`) and
+its static slot. Its flag is the mean of the two slot flags (`PMAction.DiagonalReadout.state_flag`,
+`massive_flag`). The active slot cannot read the doublet bit: both partners share it.
+
+At the full readout `3π/2` the active slots flag `½` each, so the massive Tolls are `¾` for the
+electron and down and `¼` for up and the vacancy (`full_massive`). The full readout reads the
+lepton and the quark bit at once (`full_reads_both`), so one full readout per cycle serves every
+event's requirement; under Economy a lepton-only readout adds only cost. Then
+`T_e = T_d`: the doublet readouts, with Economy and both walls, still tie the electron with down.
+The electron–down split of the heavy-label weight has to come from something that tells the
+lepton sector from the colour sector, outside the hypercharge doublet readouts.
+-/
+
+open PMConstants.PacketGaugeActions in
+/-- An active quark-doublet slot of colour `a`. -/
+abbrev quarkActive (a : Fin 3) (i : Fin 2) : PMConstants.PacketGaugeActions.Channels := .inl (a, i)
+
+open PMConstants.PacketGaugeActions in
+/-- An active lepton-doublet slot. -/
+abbrev leptonActive (i : Fin 2) : PMConstants.PacketGaugeActions.Channels := .inr (.inr (.inl i))
+
+/-- The flag of a massive label: the mean of its active and static slots. -/
+noncomputable def massiveFlag (t : ℝ) (cA cS : PMConstants.PacketGaugeActions.Channels) : ℝ :=
+  (hyperchargeFlag t cA + hyperchargeFlag t cS) / 2
+
+/-- **The equal superposition's flag is the slot mean.** -/
+theorem massive_flag (t : ℝ) (cA cS : PMConstants.PacketGaugeActions.Channels) (h : cA ≠ cS) :
+    PMAction.CommonResponse.stateFlag (PMConstants.PacketGaugeActions.hypercharge t)
+      (fun c => if c = cA ∨ c = cS then ((Real.sqrt 2)⁻¹ : ℂ) else 0) = massiveFlag t cA cS := by
+  rw [PMConstants.PacketGaugeActions.hypercharge, PMAction.DiagonalReadout.state_flag
+    PMConstants.PacketGaugeActions.charge_hermitian _ VacancyProjection.charge_real,
+    massiveFlag, hyperchargeFlag, hyperchargeFlag, VacancyProjection.hypercharge_flag,
+    VacancyProjection.hypercharge_flag]
+  have hs : Complex.normSq ((Real.sqrt 2)⁻¹ : ℂ) = 1 / 2 := by
+    rw [← Complex.ofReal_inv, Complex.normSq_ofReal, ← sq, inv_pow,
+      Real.sq_sqrt (by norm_num)]; norm_num
+  set F := fun c : PMConstants.PacketGaugeActions.Channels =>
+    PMAction.DiagonalReadout.flag (t * (((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3))
+  have hpt : ∀ c, Complex.normSq (if c = cA ∨ c = cS then ((Real.sqrt 2)⁻¹ : ℂ) else 0) * F c =
+      (if cA = c then F c / 2 else 0) + (if cS = c then F c / 2 else 0) := by
+    intro c
+    by_cases h1 : c = cA
+    · subst h1; simp [hs, h, Ne.symm h]; ring
+    · by_cases h2 : c = cS
+      · subst h2; simp [hs, h1, Ne.symm h1]; ring
+      · simp [h1, h2, Ne.symm h1, Ne.symm h2]
+  change ∑ c, Complex.normSq (if c = cA ∨ c = cS then ((Real.sqrt 2)⁻¹ : ℂ) else 0) * F c =
+    (F cA + F cS) / 2
+  simp only [hpt, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  ring
+
+/-- The active slots flag `½` at the full readout. -/
+theorem active_full (a : Fin 3) (i j : Fin 2) :
+    hyperchargeFlag (3 * Real.pi / 2) (quarkActive a i) = 1 / 2 ∧
+      hyperchargeFlag (3 * Real.pi / 2) (leptonActive j) = 1 / 2 := by
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, quarkActive, leptonActive]
+  push_cast
+  constructor
+  · rw [show 3 * Real.pi / 2 * 1 / 3 = Real.pi / 2 by ring, Real.cos_pi_div_two]; norm_num
+  · rw [show 3 * Real.pi / 2 * -3 / 3 = -(Real.pi + Real.pi / 2) by ring, Real.cos_neg,
+      Real.cos_add, Real.cos_pi, Real.sin_pi, Real.cos_pi_div_two]; norm_num
+
+/-- The full readout reads both doublet bits. -/
+theorem full_reads_both (a : Fin 3) :
+    hyperchargeFlag (3 * Real.pi / 2) electronStatic = 1 ∧
+      hyperchargeFlag (3 * Real.pi / 2) neutrinoStatic = 0 ∧
+      hyperchargeFlag (3 * Real.pi / 2) (downStatic a) = 1 ∧
+      hyperchargeFlag (3 * Real.pi / 2) (upStatic a) = 0 := by
+  obtain ⟨he, hd, hu⟩ := flags_three_quarter a
+  exact ⟨he, hyperchargeFlag_static_neutral _, hd, hu⟩
+
+/-- **Both walls, full readout: the electron ties with down, up with the vacancy.** -/
+theorem full_massive (a : Fin 3) (i j k l : Fin 2) :
+    massiveFlag (3 * Real.pi / 2) (leptonActive i) electronStatic = 3 / 4 ∧
+      massiveFlag (3 * Real.pi / 2) (quarkActive a j) (downStatic a) = 3 / 4 ∧
+      massiveFlag (3 * Real.pi / 2) (quarkActive a k) (upStatic a) = 1 / 4 ∧
+      massiveFlag (3 * Real.pi / 2) (leptonActive l) neutrinoStatic = 1 / 4 := by
+  obtain ⟨he, hn, hd, hu⟩ := full_reads_both a
+  obtain ⟨-, hLi⟩ := active_full a 0 i
+  obtain ⟨-, hLl⟩ := active_full a 0 l
+  obtain ⟨hQj, -⟩ := active_full a j 0
+  obtain ⟨hQk, -⟩ := active_full a k 0
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> simp only [massiveFlag] <;>
+    first
+    | (rw [hLi, he]; norm_num) | (rw [hQj, hd]; norm_num)
+    | (rw [hQk, hu]; norm_num) | (rw [hLl, hn]; norm_num)
+
 end PMElementaryParticles.EventRequirements

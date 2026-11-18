@@ -61,8 +61,20 @@ the recorded mass ratios to check it.
   per heavy-wire flip, and why these readouts are charged to the heavy
   label. The event table is derived for one charged-current event
   (`EventRequirements`): one doublet bit, and own-event accounting ties
-  `e` with `d` (`own_event_tolls`); the counts need the shared-register
-  accounting ([PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions)).
+  `e` with `d` (`own_event_tolls`). A persisting massive label sits on
+  both walls with equal weight, and its flag is the mean of its two slot
+  flags (`massive_flag`, from `PMAction.DiagonalReadout.state_flag`). The
+  full readout reads both bits at once (`full_reads_both`), so under
+  Economy one full readout per cycle serves every event; it gives
+  `T_e = T_d = ¾` and `T_u = T_ν = ¼` per readout (`full_massive`). So the
+  doublet readouts split up from down (`T_d − T_u = ½` per readout) but
+  never the electron from down. That split needs a mechanism that tells
+  the lepton sector from the colour sector, and with `s = exp(−T/2)` it
+  must lower the coloured labels' Toll relative to the leptons'. A
+  positive colour Toll goes the wrong way. Candidate to examine: colour
+  coordination as a Protocol-pillar saving (`PMSubstrate.NetCost.removal_subtracts`),
+  `−c` on every coloured label, which gives `T_e − T_d = c` and leaves
+  `T_d − T_u = ½ n_Q`.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`

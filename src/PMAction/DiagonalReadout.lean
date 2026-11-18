@@ -1,6 +1,7 @@
 import PMAction.Machine.InterferenceReadout
 import PMAction.LinkEvolution
 import PMAction.TollAmplitude
+import PMAction.CommonResponse
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Basic
 
 /-!
@@ -16,6 +17,7 @@ calculation once.
   `diag(exp(i t q_c))`.
 * `transport_flag`: for Hermitian `H = diag(q)`, the flag of the transport `exp(i t H)` on
   channel `c` is `flag (t q_c)`. Only the channel's own charge enters.
+* `state_flag`: on a superposition the flag is the `|φ_c|²`-weighted mean of the channel flags.
 * `flag_mul`: the flag at `n x` is the Chebyshev polynomial `(1 − T_n(1 − 2f))/2` of the flag
   `f` at `x`, for every integer `n`. So on charges that are integer multiples of one unit, one
   flag fixes every other. `flag_two`: `4f(1 − f)`; `flag_three`: `f(3 − 4f)²`.
@@ -68,6 +70,31 @@ theorem transport_flag {H : Matrix ι ι ℂ} (hH : H.IsHermitian) (q : ι → �
     InterferenceReadout.flagProbability (HermitianTransport.transport hH t) c = flag (t * q c) := by
   rw [InterferenceReadout.flag_formula _ (HermitianTransport.transport_unitary hH t),
     transport_eq_diagonal hH q hd, Matrix.diagonal_apply_eq, Complex.exp_ofReal_mul_I_re, flag]
+
+/-- `|1 − e^{iθ}|² = 4 flag θ`. -/
+theorem normSq_one_sub_exp (θ : ℝ) :
+    Complex.normSq (1 - Complex.exp ((θ : ℂ) * Complex.I)) = 4 * flag θ := by
+  rw [Complex.exp_mul_I, ← Complex.ofReal_cos, ← Complex.ofReal_sin, Complex.normSq_apply]
+  simp only [Complex.sub_re, Complex.one_re, Complex.add_re, Complex.ofReal_re,
+    Complex.mul_re, Complex.I_re, Complex.ofReal_im, Complex.I_im, Complex.sub_im,
+    Complex.one_im, Complex.add_im, Complex.mul_im]
+  unfold flag
+  nlinarith [sin_sq_add_cos_sq θ]
+
+/-- **The flag of a superposition.** For a diagonal generator, a state's flag is the
+`|φ_c|²`-weighted mean of its channels' flags: channels do not interfere in the readout. -/
+theorem state_flag {H : Matrix ι ι ℂ} (hH : H.IsHermitian) (q : ι → ℝ)
+    (hd : H = diagonal fun i => (q i : ℂ)) (t : ℝ) (φ : ι → ℂ) :
+    CommonResponse.stateFlag (HermitianTransport.transport hH t) φ =
+      ∑ c, Complex.normSq (φ c) * flag (t * q c) := by
+  rw [CommonResponse.stateFlag, transport_eq_diagonal hH q hd, LinkExpansion.nsq_eq,
+    Finset.sum_div]
+  refine Finset.sum_congr rfl fun c _ => ?_
+  rw [Pi.sub_apply, mulVec_diagonal]
+  have : φ c - Complex.exp (((t * q c : ℝ) : ℂ) * Complex.I) * φ c =
+      (1 - Complex.exp (((t * q c : ℝ) : ℂ) * Complex.I)) * φ c := by ring
+  rw [this, Complex.normSq_mul, normSq_one_sub_exp]
+  ring
 
 /-- The flag at an integer multiple, as a Chebyshev polynomial of the flag. -/
 def chebFlag (n : ℤ) (f : ℝ) : ℝ := (1 - (Polynomial.Chebyshev.T ℝ n).eval (1 - 2 * f)) / 2

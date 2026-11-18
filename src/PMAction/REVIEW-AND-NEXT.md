@@ -99,7 +99,11 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   bit by the full or the lepton-only readout (`π/2`). If each label pays
   only its own event's readout, `T_e = T_d` and `T_u = T_ν`
   (`own_event_tolls`): the table read label by label cannot order the
-  charged labels. Open: the shared-register accounting. Which labels are
+  charged labels. Shared accounting, first step: a persisting massive
+  label is on both walls and its flag is the slot mean
+  (`DiagonalReadout.state_flag`, `PMElementaryParticles.EventRequirements.massive_flag`);
+  one full readout serves both bits, and it still ties the electron with
+  down (`full_massive`). Open: the rest of the shared-register accounting. Which labels are
   present when a readout acts (the parent, the emitted pair on all four
   axes, the persisting packet), and how the flags they receive accumulate
   into a persisting label's Toll. With that, the counts `n_L`, `n_Q`

@@ -320,6 +320,16 @@ If each label pays only its own event's readout, electron and down pay
 ties `e` with `d` and `u` with `ν`. An ordering needs flags a label
 receives in other labels' events.
 
+A persisting massive label is on both walls with equal weight
+(`PMAction.WallRestChirality.charged_weight_half`), so its flag is the
+mean of its active and static slots (`massive_flag`; the readout does not
+interfere channels, `PMAction.DiagonalReadout.state_flag`). The active
+doublet slot cannot read the doublet bit. The full readout `3π/2` reads
+both the lepton and the quark bit (`full_reads_both`) and gives massive
+flags `¾` (electron, down) and `¼` (up, vacancy) (`full_massive`). So
+the doublet readouts, with Economy and both walls, separate up from down
+and never the electron from down.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.
