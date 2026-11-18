@@ -1,5 +1,5 @@
 import PMConstants.CarrierRegisterModel
-import PMAction.Machine.RegisterVacuum
+import PMTransport.Machine.RegisterVacuum
 
 /-!
 # Full native vacuum on the independent-register configuration model

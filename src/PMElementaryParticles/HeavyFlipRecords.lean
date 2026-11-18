@@ -1,6 +1,6 @@
 import PMElementaryParticles.EventRequirements
 import PMElementaryParticles.HeavyFlipControl
-import PMAction.CoherentRefresh
+import PMTransport.Machine.CoherentRefresh
 
 /-!
 # Both-wall hypercharge records on the heavy flip

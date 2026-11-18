@@ -1,10 +1,10 @@
 import PMElementaryParticles.ProtocolInventory
 import PMConstants.GaugeLedgers
 import PMConstants.ReferenceMaintenance
-import PMAction.Machine.RecordSupply
-import PMAction.Machine.CarrierWeyl
-import PMAction.Machine.ClockControlledRoot
-import PMAction.Machine.InBandRootReadout
+import PMTransport.Machine.RecordSupply
+import PMTransport.Machine.CarrierWeyl
+import PMTransport.Machine.ClockControlledRoot
+import PMTransport.Machine.InBandRootReadout
 
 /-! The least refinement of the protocol inventory that predicts the native weak
 refresh. Two successive protocol observations recover the active/static distinction.

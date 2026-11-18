@@ -1,5 +1,5 @@
 import PMConstants.RepairBudget
-import PMAction.Machine.CoherentRecordRestoration
+import PMTransport.Machine.CoherentRecordRestoration
 
 /-!
 # The scalar budget with Codex's coherent restorer as the repair

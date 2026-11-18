@@ -1,7 +1,7 @@
 import PMAction.IsometricDynamics
 import PMAction.PropagationBounds
 import PMAction.VacuumSplit
-import PMAction.Machine.CarrierVacuumSector
+import PMTransport.Machine.CarrierVacuumSector
 
 /-!
 # Finite-support full-label completion through an on-site isometry

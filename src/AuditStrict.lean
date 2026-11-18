@@ -2,6 +2,7 @@ import PersistenceMechanics
 import PMSubstrate
 import PMAction
 import PMConstants
+import PMTransport
 import PMFlavor
 import PMElementaryParticles
 import PMHadrons
@@ -17,7 +18,7 @@ open Lean Elab Command in
 run_cmd do
   let env ← getEnv
   let prefixes : List Name :=
-    [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants,
+    [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMTransport,
      `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology,
      `Classification, `CN1, `ELEM]
   let isProject (n : Name) : Bool := prefixes.any (fun p => p.isPrefixOf n)

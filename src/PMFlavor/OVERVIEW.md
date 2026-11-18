@@ -3,7 +3,7 @@
 *Persistence Mechanics of the Quantum Vacuum IV: Information Transfer.*
 
 This is the single overview of what Paper IV proves and how it hands off to the
-later libraries. Library order: PMSubstrate → PMAction → PMConstants → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). The actionable open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md);
+later libraries. Library order: PMSubstrate → PMAction → PMConstants → PMTransport → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). The actionable open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md);
 build/layout instructions are in [`README.md`](README.md). The Lean source is the
 ground truth; theorem names below are entry points, not an exhaustive list.
 
@@ -313,7 +313,7 @@ half ticks, but an insertion's light-mode element is the same wherever in the ti
 (`placement_invisible`), and the weak refresh has no special tick. So the class dependence of the
 diagonal masses is the node passage already in the library (spinor insertions touch the reference
 axis), not a class-dependent Wilson parameter. The node's own odd-sector phase
-(`PMAction.Machine.OddCarrierPhase`, continuous in time) gives no CP flux: it is the same in both
+(`PMTransport.Machine.OddCarrierPhase`, continuous in time) gives no CP flux: it is the same in both
 directions and enters the zero-energy reduction as a real denominator (`node_denominator_real`).
 The remaining sources for the CKM flux are leg phases that differ at a class vertex, or a holonomy
 around the generation–class loop. `PMAction.FlatPersistence` prices a holonomy `e^{iΦ}` by

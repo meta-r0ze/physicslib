@@ -7,7 +7,7 @@ import Mathlib.Data.Fintype.Perm
 `CarrierActions.weak_chiral` takes the minimal refresh among the sector-uniform sign actions. This
 module derives the uniformity from the root structure.
 
-A refresh event is a root reflection (`PMAction.Machine.RootMaintenance`). On the vector-class
+A refresh event is a root reflection (`PMTransport.Machine.RootMaintenance`). On the vector-class
 carriers `±2eᵢ`, a word of D₄ root reflections acts as a signed permutation of the four axes with
 an **even** number of sign changes: that is the Weyl group of D₄ (the reflection in `eᵢ − eⱼ` swaps
 two axes, the one in `eᵢ + eⱼ` swaps them and flips both signs). Weak is a different factor from

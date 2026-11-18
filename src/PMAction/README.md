@@ -31,6 +31,9 @@ the actual update stencil and adjacency, not postulated.
 
 ## Where to look
 
+- [PMTransport.Machine](../PMTransport/Machine/README.md) contains the native
+  operations that build with PMAction.
+
 - **[OVERVIEW.md](OVERVIEW.md)** — what is proved and reusable: the module map,
   the spectrum/split/locality results, the interpretation boundaries, and what each
   later paper may rely on. **Start here to find a theorem you can use.**

@@ -18,7 +18,7 @@ the reference (lepton) axis, as a shared axis label (`DressingInheritance`). The
 carrier vectors as spacetime displacements, which the library does not hold: a carrier label is not a
 site (`PMConstants.WeakLocality`). They are kept as the strongest case; `placement_invisible` and
 `node_denominator_real` do not depend on them, and with the library's weaker premise there is no
-placement in time to vary at all. In the doubled coordinates of `PMAction.Machine.CarrierEvents` a `D₄`
+placement in time to vary at all. In the doubled coordinates of `PMTransport.Machine.CarrierEvents` a `D₄`
 root one tick forward is `(2, ±2, 0, 0)` up to spatial permutation, an axis move of the walk, so one
 tick is `2` units on axis `0`. Then (`ExchangeAxis`):
 * vector-class carriers: `6` are equal-time axis displacements (`vector_free`), `2` are pure ticks
@@ -42,7 +42,7 @@ in-cycle. A class-dependent Wilson departure `r_m − 1` (`ZeroModeCoupling`) is
 direct light-mode term needs `r ≠ 1` (or another off-Wilson source) only as a common factor.
 
 **The node's own phase gives no CP flux.** A spinor carrier crossing the node evolves for some time
-on the odd sector, phase `e^{−i·gap(p)·t}` (`PMAction.Machine.OddCarrierPhase.phase_sector`), the same
+on the odd sector, phase `e^{−i·gap(p)·t}` (`PMAction.OddCarrierPhase.phase_sector`), the same
 in both directions since time runs forward. In the zero-energy reduction that evolution becomes a
 real energy denominator: `node_denominator_real`, the coupling `t₁ t̄₂ / d` with real `d` is the
 conjugate of the reverse coupling, so the reduced link stays Hermitian and the loop flux is the

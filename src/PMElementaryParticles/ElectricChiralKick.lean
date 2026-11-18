@@ -1,5 +1,5 @@
 import PMElementaryParticles.ElectricPrimitiveToll
-import PMAction.Machine.RegisterInteraction
+import PMTransport.Machine.RegisterInteraction
 
 /-!
 # Both electric kicks from one chiral register current

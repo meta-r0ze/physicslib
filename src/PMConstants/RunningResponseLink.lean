@@ -31,7 +31,7 @@ Clifford relations (`zeeman`, `concrete_spin`). For spin `0`, `a = 0`.
 **Premises** (from Paper II's modules):
 
 - the Landau spectrum `(2n+1)|b|` and the degeneracy of a continuum charged field (the
-  substrate's matter hops are the continuum covariant operators: `PMAction.Machine.MatterContinuum`;
+  substrate's matter hops are the continuum covariant operators: `PMTransport.Machine.MatterContinuum`;
   in momentum space the orbital `−1/3` is the D₄ moment average
   `PMAction.PolarizationAverage.orbital_third` over the shell `PMAction.LeadingLog.leading_log`;
   the substrate's own lattice integrand gives the same `−1/3` in the continuum limit,

@@ -1,6 +1,6 @@
-import PMAction.Machine.RootTransferPhase
+import PMTransport.Machine.RootTransferPhase
 import PMAction.CompletionSelection
-import PMAction.Machine.CarrierWeyl
+import PMTransport.Machine.CarrierWeyl
 
 /-! Identity completion within the carrier permutation gates. The coordinate
 embedding separates labels, so changing the root word while retaining its

@@ -2,7 +2,7 @@ name = "physicslib"
 version = "0.1.0"
 defaultTargets = [
   "PersistenceMechanics", "PMSubstrate", "PMAction", "PMConstants",
-  "PMFlavor", "PMElementaryParticles", "PMHadrons", "PMAtoms", "PMCosmology",
+  "PMTransport", "PMElementaryParticles", "PMFlavor", "PMHadrons", "PMAtoms", "PMCosmology",
   "CN1", "ELEM", "Classification"
 ]
 
@@ -24,12 +24,19 @@ globs = ["PMSubstrate", "PMSubstrate.Research.+"]
 [[lean_lib]]
 name = "PMAction"
 srcDir = "src"
-globs = ["PMAction", "PMAction.+"]
+# The native machine shares lower-level proofs with PMAction.
+globs = ["PMAction", "PMAction.+", "PMTransport.Machine", "PMTransport.Machine.+"]
 
 [[lean_lib]]
 name = "PMConstants"
 srcDir = "src"
 globs = ["PMConstants", "PMConstants.+"]
+
+[[lean_lib]]
+name = "PMTransport"
+srcDir = "src"
+# The machine is built with PMAction. This target adds the packet-level handoff.
+globs = ["PMTransport", "PMTransport.HandoffAdmittance"]
 
 [[lean_lib]]
 name = "PMFlavor"

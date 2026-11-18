@@ -20,34 +20,11 @@ The species masses reported by e8p currently use the tier assignments in
 `QuarkMasses` and `LeptonMasses`. Derive the wire-to-species readout and use
 the recorded mass ratios to check it.
 
-- **Heavy-label weight. [Premise]** Derive a label-dependent heavy-to-node
-  coupling ratio from E8.
-  - Supply an occupied odd coordinate seed in the predecessor glue class.
-    Admit and place the [triality setup](OVERVIEW.md#triality-preparation-on-the-companion)
-    and the [chiral-current kicks](OVERVIEW.md#electric-kicks-from-the-chiral-register-current)
-    between the companion and the live payload. Admit the joint guarded
-    crossing and companion update.
-  - Select the physical comparator. Derive its registration tariff,
-    including which labels participate in each visit and what record
-    export or reuse costs. The companion's class transport alone cannot
-    renew the charged records. The
-    [primitive phase ledger](OVERVIEW.md#primitive-flags-of-the-short-electric-decoder)
-    prices inverse-root preparation from an occupied seed. The
-    [companion setup](OVERVIEW.md#triality-preparation-on-the-companion)
-    has its own per-visit ledger under one registration per state flag.
-    The [chiral-current ledger](OVERVIEW.md#electric-kicks-from-the-chiral-register-current)
-    includes the intervening root swap and preserves the charged ladder
-    at bit-reversed ports. If the cost enters through the reference node,
-    derive the price for a crossing that carries a protocol label
-    (`HandoffAdmittance.closure_one_price` assumes indistinguishable
-    signals).
-  - Derive the placement, rates and firing cadence on the two physical
-    wall insertions. The [short decoder’s frame bound](OVERVIEW.md#short-root-decoder-and-serial-frame-bound)
-    constrains fresh serial preparation by the inverse root word. Derive
-    the duration of the one- and two-root triality setups and the
-    remaining serial visits for the companion route. The [crossing and clock exclusions](OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
-    delimit what the bare glued roots and period can supply. Then test the
-    derived charged ladder and Toll gaps against `tools/heavy_toll_targets.py`.
+- **Heavy-label weight. [Premise]** Use the derived
+  [label-sensitive transport schedule](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff)
+  to obtain the heavy-to-node coupling ratio. Apply the Toll-to-amplitude
+  conversion, test the charged ladder, and compare the derived gaps with
+  `tools/heavy_toll_targets.py`.
 
   See the [hypercharge constraints](OVERVIEW.md#protocol-toll-constraints),
   [record exclusion](OVERVIEW.md#record-comparisons-and-heavy-flip-toll), and

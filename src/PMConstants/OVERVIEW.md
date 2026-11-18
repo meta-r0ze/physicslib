@@ -183,15 +183,15 @@ The physical controller behind the weak fraction, the VEV and the shared repair 
 
 - **Repair counts.** A root event acts in one gauge factor and the abelian phase rides on its
   amplitude, so Conservation and Economy give one event per displaced factor
-  (`PMAction.Machine.FactorRepair`), and the repair must cover every displacement the factors can
+  (`PMTransport.Machine.FactorRepair`), and the repair must cover every displacement the factors can
   produce (`covering_least`). Hence the typed repairs `(2,1,1,1,1)` (`RootRepairRule.repairs_least`,
   `repairs_cover`), one event for the gauge links and the scalar (`SectorRepair.sector_least`), and
   one for the electron, a colour and weak singlet (`RootRepairRule.electron_one_event`, the VEV's
   repair factor). With them the event-priced chain gives equal weak and hypercharge indices and
   `clockRatio` (`rule_chain_mixing`).
 - **Primitive events.** The comparison gate's coherent step is one root reflection at quarter
-  period (`PMAction.Machine.CarrierRootGate`); refresh events are root reflections on two-carrier
-  cells (`PMAction.Machine.RootMaintenance`); the comparison circuit's admission, preparation,
+  period (`PMTransport.Machine.CarrierRootGate`); refresh events are root reflections on two-carrier
+  cells (`PMTransport.Machine.RootMaintenance`); the comparison circuit's admission, preparation,
   clean record cell, gates and prices are each discharged (`PMAction.SpatialComparison`).
 - **Weak confined to the clock.** Weak's events are internal and do not move, so they reach the
   time row only; wires are displaced along a root; the uniform weak action is restored with the
@@ -409,8 +409,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `CarrierRegisterVacuum` | Full native vacuum generator on those configuration banks |
 | `CarrierRegisterChirality` | Full-state matching obstructions and zero-kernel agreement |
 
-The gravitational handoff has a finite route interpretation: one exclusive open/closed mixture gives the calibrated coupling if its open-route weight equals the node admittance and the crossing labels share the stated symmetry. Requiring two independent successes preserves both endpoint calibrations and changes the interior probability (`HandoffAdmittance.two_pass_alternative`).
-
-For the actual glue-class reflection, a uniform incoming carrier gives outgoing-event probabilities in multiples of 1/8, excluding α. The coherent branch-exchange pulse instead gives a label-independent transfer probability sin²(t). `HandoffAdmittance.pulse_calibration_transfers` transfers a reference calibration when both preparations and detectors use this same pulse.
-
-In the open reference flow, exchanging the two arriving registers puts the incoming bit in the receiver's live register, which the next tick carries back toward its source (`PMAction.OpenReferenceFlow.exchange_reflects`); bypass leaves it on the through-stream, past the node (`bypass_transmits`). A crossing is the bit ending on the through-stream: the pulse's through weight `cos² t`, Landauer's transmission. At speed one only the all-pass history crosses `n` layers in `n` ticks (`HandoffAdmittance.direct_crossing`), and the node current `w (nR − nL)` makes the through weight the node's conductance in open-channel units, so it is the admittance `α` (`node_current`, `handoff_from_conductance`): the handoff is settled, with `cos² t = α`. One local maintenance swap converts the exchanged state to the bypass state. Either register pair retains the bit. With fixed branch costs and both endpoints available, the one-tick expected cost has an endpoint minimizer (`HandoffAdmittance.one_tick_cost_endpoint`).
+The node handoff uses these constants in
+[PMTransport.HandoffAdmittance](../PMTransport/HandoffAdmittance.lean).
+The [transport overview](../PMTransport/OVERVIEW.md#node-handoff-and-admittance)
+gives the reversible receiver model and the relation to conductance.

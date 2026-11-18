@@ -1,5 +1,5 @@
 import PMElementaryParticles.HeavyFlipControl
-import PMAction.Machine.InBandRootReadout
+import PMTransport.Machine.InBandRootReadout
 
 /-!
 # Native parity, address and clock obstructions for the heavy flip

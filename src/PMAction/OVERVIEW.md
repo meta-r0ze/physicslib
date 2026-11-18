@@ -8,7 +8,7 @@ points, not exhaustive lists. Lean source is the ground truth.
 
 ## Scope
 
-- `ReferenceSelection.readPair_run` projects each native port pair onto the live/record stream at every tick. `native_reference_forever` gives exact maintenance on a moving homogeneous lattice routing when the indicated record bank is uniform. Physical bank allocation is tracked in the [machine review](Machine/REVIEW-AND-NEXT.md).
+- `ReferenceSelection.readPair_run` projects each native port pair onto the live/record stream at every tick. `native_reference_forever` gives exact maintenance on a moving homogeneous lattice routing when the indicated record bank is uniform. Physical bank allocation is tracked in the [transport review](../PMTransport/REVIEW-AND-NEXT.md).
 - `PolarizationContact.finite_routing_cancel` gives exact longitudinal cancellation on a finite grid when the probe shift permutes grid points, the vertex and propagator respect wrapping, and denominators are nonzero.
 - `FinitePolarization` constructs the full coordinate momentum torus `Fin 4 → ZMod N` for every nonzero `N`, using the D₄ symbol, line-averaged current and contact vertex. Integer winding identities prove the propagator and vertex wrap laws (`symbol_wrap`, `leg_wrap`). Adding a positive momentum-independent regulator to both inverse propagators preserves the Ward cancellation with every grid point retained (`finite_cancel`). Removing that regulator after the full longitudinal sum gives zero (`zero_regulator_limit`). The construction uses the periodic coordinate torus. Physical volume normalization and the transverse-continuum comparison remain open.
 - `FinitePolarizationTensor` constructs the full real response matrix of the supplied scalar-link bubble-minus-contact kernel. `response_tensor` reconstructs its response to every pair of probe directions as `uᵀ Π v`. `tensor_symmetric` proves symmetry, and `left_transverse` and `right_transverse` prove both Ward contractions vanish on every nonzero finite periodic grid at positive regulator. The overall physical normalization and transverse continuum coefficient remain open.
@@ -132,6 +132,11 @@ Hermitian `H`, unitary transport of a normalized `φ`, with two-branch response
 | Currents and decay foundations | `ChargedCurrent`, `NeutralCurrent`, `ContactMatching`, `WallChiralCurrent`, `ChiralityConvention`, `ChiralLightBand`, `VATrace`, `MassiveVATrace`, `SpinorCompleteness`, `AmplitudeTrace`, `WeakVertex` | Charged/neutral normalization, su(2) doublet algebra (`T3`, `commutator_*`, `anticommutator_Tp_Tm`), V−A projector `P_L` (idempotent/Hermitian/rank two), wall-projector algebra, spin sums, bilinear-to-trace amplitude and factor 64, contact matching and kernel-basis existence. `ChiralityConvention.projector_eq_fromBlocks_PL` identifies the wall projector with block-diagonal `P_L`; `projector_unique_on_kernel` forces it on the zero kernel from the reference conditions; `ChiralLightBand` extends it to the light band through first order in `k` (the projected Hamiltonian commutes with the wall chirality). Physical interaction, mediator, external states and phase-space remain application inputs. |
 
 ## Shared state/controller and register layer
+
+The native machine files are in [PMTransport/Machine](../PMTransport/Machine/OVERVIEW.md).
+They share the PMAction build layer. The downstream
+[transport library](../PMTransport/OVERVIEW.md) owns the node handoff and its
+record lifecycle.
 
 `FiniteEncoding` owns sparse label encodings, coherent isometry, pairing, recovery
 and permutation/readout intertwining (Paper III reuses it). `SectorObservation`

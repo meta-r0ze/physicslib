@@ -4,7 +4,7 @@
 
 The history operator is the Hermitian Wilson kernel H_W = g5 (D_W - M) at the Wilson point
 M = r = 1 of `PMAction.DomainWall`, on an L^4 torus, with the gauge field entering through the link
-transports on the hop (`PMAction.Machine.MatterContinuum`: the spinor hop with links is the
+transports on the hop (`PMAction.MatterContinuum`: the spinor hop with links is the
 covariant Dirac term). The background is a constant U(1) field inside the colour group with n12
 flux quanta through the (0,1) planes and n34 through the (2,3) planes, topological charge
 n12 * n34.

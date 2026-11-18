@@ -20,7 +20,7 @@ and nothing else. `WeakLocality` shows what weak's own events can do for each re
 * `weak_fraction`: so the weak fraction is `1849/8295`, with the strong coupling and the sterile
   payload in hypercharge (`TableConsequences.end_to_end`).
 
-The hypothesis `hcap` is the repair model of `PMAction.Machine.FactorRepair`, not an extra
+The hypothesis `hcap` is the repair model of `PMTransport.Machine.FactorRepair`, not an extra
 reading: a refresh is a repair, a word of the sector's own root events (the abelian phase riding on
 events that occur), so weak can be given a resource only where such a word does something for it.
 The same model gives the repair counts and the electron's one event (the settled controller in

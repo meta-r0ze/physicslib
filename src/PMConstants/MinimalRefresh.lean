@@ -1,4 +1,4 @@
-import PMAction.RefreshSchedule
+import PMTransport.Machine.RefreshSchedule
 import PMConstants.GaugeLedgers
 
 /-! Compatibility names; generic schedule proofs now live in Paper II. -/

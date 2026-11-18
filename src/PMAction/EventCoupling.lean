@@ -1,6 +1,6 @@
 import PMAction.CommonResponse
-import PMAction.Machine.CarrierResponse
-import PMAction.Machine.SummedReference
+import PMTransport.Machine.CarrierResponse
+import PMTransport.Machine.SummedReference
 
 /-!
 # From event prices to gauge couplings (moved from PMConstants, Nov 2026)

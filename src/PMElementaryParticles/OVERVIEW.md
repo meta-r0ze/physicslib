@@ -6,7 +6,7 @@ The single map of what Paper V proves and what later work can reuse. Open work i
 in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in
 [`README.md`](README.md). Sources are under `PMElementaryParticles/`, imported by `PMElementaryParticles.lean`.
 Theorem names are entry points, not exhaustive lists; the Lean source is ground
-truth. Library order: PMSubstrate → PMAction → PMConstants → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). This folder imports nothing from PMFlavor.
+truth. Library order: PMSubstrate → PMAction → PMConstants → PMTransport → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). This folder imports nothing from PMFlavor.
 
 ## Scope
 

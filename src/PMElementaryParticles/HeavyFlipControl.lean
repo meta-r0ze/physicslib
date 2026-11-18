@@ -1,6 +1,6 @@
 import PMElementaryParticles.ControlledGluedRegister
-import PMAction.ReferenceClassHop
-import PMAction.Machine.RegisterControl
+import PMTransport.Machine.ReferenceClassHop
+import PMTransport.Machine.RegisterControl
 
 /-!
 # Finite control of the direct heavy flip
