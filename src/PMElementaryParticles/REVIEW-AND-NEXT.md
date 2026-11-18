@@ -81,9 +81,18 @@ the recorded mass ratios to check it.
   raises the effective heavy weight by `exp(T/2)` (`node_toll_raises_heavy`),
   the opposite sign to a Toll on the heavy flip. On the node path a
   colour cost gives the right electron–down order and the doublet
-  readouts the wrong up–down order. Next: derive which comparisons the
-  node passage performs (it restores the reference, the lepton-doublet
-  cell), and evaluate them with `DiagonalReadout`.
+  readouts the wrong up–down order. Both paths are label-blind as the
+  library stands: the direct insertion is a certain in-cycle event, and
+  the node legs have one price because Closure gives every crossing one
+  price (`PMConstants.HandoffAdmittance.closure_one_price`). That theorem
+  assumes no internal label distinguishes the carried signal. A glued
+  root carries the protocol label through the node, so for protocol
+  labels the hypothesis is not given: the open step is the node-leg
+  price of a label-carrying crossing. One candidate checked: comparing the
+  crossing label's hypercharge with the lepton-doublet reference
+  (both walls, `DiagonalReadout`) gives `T_e < T_d < T_u` on the node
+  path, with `(T_u − T_d)/(T_d − T_e) = 6` for small steps (about `5.5` at
+  `t = 1`). Comparison only: the diagnostics need about `1.1–1.5`.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
