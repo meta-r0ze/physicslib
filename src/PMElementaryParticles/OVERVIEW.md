@@ -336,6 +336,37 @@ reference node and the heavy one does not (`PMAction.ReferenceClassHop`);
 a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
 (`node_toll_raises_heavy`).
 
+### Finite control of the direct heavy flip
+
+`HeavyFlipControl` uses the generation address and the glued carrier frame.
+The direct insertion on the reference wall avoids class zero at both ends
+exactly for generation zero (`direct_iff`, from
+`ReferenceClassHop.touches_reference_class`). A bare glued root cannot
+supply this address (`no_root_only_direct_address`). In the addressed
+direct-flip model, the forward endpoint exchange is the existing
+swap/triality word (`flip_encoded`). The reverse direction uses its
+inverse on the paired endpoints. The added control leaves the light node
+paths unchanged (`flip_light`).
+
+The transported label supplies a sector bit (reference axis versus colour)
+and a sign bit (doublet position). The record is colour-invariant and
+survives the wall exchange (`record_colour`, `record_opposite`). A clean
+two-bit bank receives the code by conditional exchanges (`write_clean`).
+`IndependentRegisters` and `RegisterControl` execute the write and the
+selected endpoint exchange as a reversible word on the occupied banks
+(`registered_word`). A supplied phase on a record block is unitary on
+the full configuration space (`registered_phase_unitary`). This uses
+the available encoded endpoints and supplied joint controls. Native bank
+preparation, firing and timing remain open.
+
+With the label retained as a control, the species blocks are already
+orthogonal. If a gate instead sends distinct inputs to overlapping
+wire outputs, reversibility of the product with an exported record forces
+orthogonal records (`CoherentGate.tensor_dot`). The weak-pair version
+applies when the two output columns have nonzero overlap
+(`unequal_needs_orthogonal`). The two-bit code suffices for all four
+species when the output no longer carries the distinction.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

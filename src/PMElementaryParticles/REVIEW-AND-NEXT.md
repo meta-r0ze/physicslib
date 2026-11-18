@@ -110,8 +110,10 @@ the recorded mass ratios to check it.
   protocol-dependent heavy weight needs a gate that reads the label, and
   by `CoherentGate.unequal_needs_orthogonal` (stated for weak partners;
   the same argument applies to any two labels) a gate with unequal
-  amplitudes on two labels must write orthogonal records. Open: derive
-  the record such a gate writes and its Toll per label. One candidate
+  inputs with overlapping wire outputs must write orthogonal records.
+  `HeavyFlipControl` gives a finite generation-addressed gate with
+  a supplied two-bit record bank. The native comparator and its
+  admission, per-flip firing, and Toll remain open. One candidate
   (comparison only): one doublet readout and one lepton-only readout per
   gated heavy flip, both walls, gives `T = 1.5, 0.91, 0.66, 0.5` for
   `e, d, u, ν`: the right order, but `(T_d − T_u)/(T_e − T_d) = 0.42`
