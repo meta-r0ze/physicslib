@@ -90,6 +90,27 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   (`ProtocolToll.full_readout`, `lepton_readout_iff`). Derive how many of
   each the wire's repair performs per heavy-wire flip. This is the common
   blocker of the PMElementaryParticles readout items and PMFlavor item 2.
+- **Readout toolkit for charge-diagonal transports.** Many modules compute the
+  flag of a phase transport by hand (39 files use `stateFlag`/`flagProbability`;
+  `ChargedInsertion`, `ProtocolToll` and `VacancyPreparation` each redo the
+  `Matrix.exp_diagonal` step). Write one module: the flag of `exp(i t Q)` on a
+  channel of charge `q` is `sin²(tq/2)`; the flag at charge `n q` is a Chebyshev
+  polynomial in the flag at `q` (the up/down/electron relations in `ProtocolToll`
+  are its `n = 2, 3` cases); a schedule's Toll is counts times flags, and its
+  amplitude is `TollAmplitude.wireAmplitude`. Then move the three EP modules
+  onto it.
+- **Requirement table for events.** `RefreshSchedule` and `CoherentRefresh`
+  prove that Economy serves each required resource exactly once, and both name
+  the requirement table as the remaining premise. PMConstants derives that table
+  for gauge refresh per channel (`RequirementTable`: colour, active,
+  hypercharge), which on the static labels gives counts `ν 0, e 1, d 2, u 2`
+  (up and down tie). Derive the table for events: which records a weak event and
+  a wire flip must export and read (the doublet position:
+  `PMElementaryParticles.RefreshMap.asymmetric_gate_records`,
+  `CoherentGate.unequal_needs_orthogonal`), on which wall and in which sector.
+  With "each required item once" this fixes the comparison counts: the
+  heavy-label readouts `n_L`, `n_Q`, the lightest masses' firing law, and
+  PMFlavor's in-cycle wall record.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
   limits. Sharpen the lattice remainder bound enough to compare it with
