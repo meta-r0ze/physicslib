@@ -9,6 +9,18 @@ None of these items blocks the downstream libraries: PMHadrons and later use the
 (`MuonQEDLoops`). The tau's `B_e` without a supplied value is PMHadrons' "tau inclusive hadronic
 factor" item.
 
+**Common blocker (2026-11-18).** Three items (heavy-label weight, lightest
+masses, wall leakage) and PMFlavor item 2 wait on one object from PMAction:
+the native law that fires a conditioned coherent pulse. That law has three
+parts: the admission condition, the pulse area, and the conversion from a
+comparison outcome (a Toll or a retained branch) to a wire amplitude. The
+library has the selectors (`ChargedInsertion`, `VacancyPreparation`), the
+event principle (`PMConstants.VevEvent`, `CommonResponse.stateFlag`) and the
+minimum certain-transfer area (`PMAction.CertainTransferRate`). It does not
+have the conversion law. Derive that first
+([PMAction extensions](../PMAction/REVIEW-AND-NEXT.md#extensions)). The
+radiative factor does not depend on it.
+
 ## The protocol readout (first)
 
 The species masses reported by e8p currently use the tier assignments in
@@ -28,6 +40,21 @@ the recorded mass ratios to check it.
   PMAction supplies the selected repair schedule and the conversion
   from Toll to wire amplitude. Test the resulting protocol weights
   against the recorded ladder.
+  The static bound excludes an affine conversion only. The static flags
+  themselves are not the obstruction (`tools/toll_conversion_check.py`):
+  no single step gives `T_e > T_d > T_u`, but nonnegative schedules do.
+  The steps `π/2` and `3π/2` give flags `(f_e, f_d, f_u) = (1, ¼, ¾)` and
+  `(1, 1, 0)`. Weights `w₁, w₂` give `T_e − T_d = ¾w₁` and
+  `T_d − T_u = w₂ − ½w₁`. With a survival conversion `s = exp(−λT/2)`
+  (as `DecayLaw`), the recorded ladder needs `λ(T_e − T_d) ≈ 2.0–2.3`
+  and `λ(T_d − T_u) ≈ 2.9–3.0`. With a retained-port conversion (as
+  `VacancyPreparation`), the minus port removes the vacancy and gives
+  `s_u/s_d = 2|cos(t/3)|` per step. This is `< √2` on every step with
+  `s_d > s_e`, so `s_u/s_d ≈ 4.4` needs at least five such steps. The
+  plus port gives `s_u/s_d < 1` on those steps. The affine bound and the
+  per-step bound have one source: the up static tag is `−2` times the
+  down tag. So derive the conversion law and its scale `λ` (or step
+  count) in PMAction. Do not choose them from the ladder.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
@@ -35,7 +62,11 @@ the recorded mass ratios to check it.
   a stationary calibration channel shared across charged protocols.
   [Charged insertion](OVERVIEW.md#charged-insertion-on-the-static-wall)
   gives selectors and the exact lift for the candidate on the static
-  vector-class leg. Derive the physical placement and use the selected
+  vector-class leg. A protocol-blind pulse area with the selector's unit
+  amplitude inserts the same `ε` for each charged protocol. The matching
+  insertions are `0.110` (e), `0.364` (d) and `0.0072` (u). So the area
+  or the amplitude must depend on the protocol, through the same
+  conversion law as the heavy-label weight. Derive the physical placement and use the selected
   generator to determine the light-pair mass-basis rotations in
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
   Compare the candidate's singular values directly with the recorded mass
@@ -60,6 +91,19 @@ the recorded mass ratios to check it.
   `RadiativeIntegrals`. Derive the regulated virtual vertex and external
   self-energies, and the real-emission kernel at the same neutrino-pair
   invariant. Combine them before removing the photon-mass regulator.
+  Most of the matching is in PMAction. The native current is the
+  conserved D₄ vertex with an exact Ward identity (`FiniteVertex.ward`,
+  `leg_ward`, `PolarizationContact.contact_ward`): the midpoint vertex
+  with `sinc(a r·q/2)` root weights, which goes to the continuum vertex
+  as `a → 0`. The emitted photon uses
+  continuum modes (CONTINUOUS.md, Rule 2; `PolarMeasure`, `NullBoost`).
+  The leading log is zero (`MuonRadiativeLog.retention_no_log`), so the
+  total is UV finite. The open steps are: (1) the spinor form of the
+  conserved vertex; (2) a cutoff bound for the vertex plus self-energy
+  integrand, as `LeadingLog.leading_log` gives for the log. The exact
+  Ward identity should cancel the `1/k⁴` terms at every `k`; prove that,
+  and then the region near `1/a` gives only `O((a m_μ)²)`; (3) the
+  calculation below.
   Check the resulting density against the
   [inclusive benchmark](OVERVIEW.md#inclusive-one-loop-muon-benchmark),
   then formalize the derivation with `PMAction.LoopMeasure`,
