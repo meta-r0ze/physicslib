@@ -462,6 +462,44 @@ three factor flags of each forward writer. Export, reset,
 synchronization and a microscopic tariff remain separate obligations.
 
 
+### Primitive crossing activity and clock limits
+
+`HeavyCrossingCost` checks the six-reflection word and its reverse on
+the two heavy-wall endpoints. For every signed label and either incoming
+wall, the eight amplitude inputs give 48 steps. There are 27 fixed
+steps, 20 unit-root steps and one twice-root jump
+(`activity_histogram`). A separate tariff for either displacement length,
+under uniform amplitudes, therefore gives the common price
+`(20 c₁ + c₂)/8` (`uniform_cost`). Pricing the twice-root jump as
+one elementary displacement requires an additional premise.
+The complete step profiles pair under simultaneous reversal of both
+carrier signs. Thus any profile tariff with antipodally paired amplitude
+weights ties the two doublet positions on either wall (`sign_tie`).
+
+`HeavyFlipNativeBoundary` shows that a fixed matched lattice probe is
+orientation-blind at modulo-two resolution, and the actual in-band
+read/undo tariff is invariant when its input is negated. Both heavy
+walls also alias light-wall inputs in the untagged glued root encoding.
+Consequently no untagged map can exchange the heavy pair on either
+incoming wall and leave all light legs alone. A shared clean ancillary
+seed leaves that collision intact. Preparing a clean record from
+every wire and record input by a reversible closed update is excluded
+(`no_closed_cleaning`).
+
+For a supplied generation address and ready record, the closed
+single-control clock family has the same 43-tick period for every
+mask. A boundary toggles the addressed endpoint from either wall.
+The idle mask yields zero endpoint moves and the excursion mask yields
+two (`tick_event_iff`, `idle_and_excursion_counts`). The full turn
+always restores the endpoint (`cycle_closes`). The excursion gives
+one toggle in each direction per turn. The clock's closure permits
+both schedules. In the physical wire, the equal-class gapped crossing
+changes generation (`GappedGluedCrossing.equalClass_iff`), and the
+on-site insertions in the two Schur mass factors are separate
+operations. Endpoint exchange and the read/undo clock therefore leave
+the placement and firing of the two physical insertions open.
+
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

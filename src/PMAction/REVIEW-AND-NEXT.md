@@ -95,7 +95,10 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   comparison have explicit charge phases and a root-orbit branch
   (`ElectricHeavyRecord`). Derive admission of the joint kick,
   bank allocation and clean seeds, and select the physical reference,
-  tariff, placement and firing schedule. This is the common blocker of the
+  tariff, placement and firing schedule. The downstream six-root
+  activity ledger is label-blind under uniform amplitude weights,
+  and the clock admits idle and excursion masks with the same closure
+  (`HeavyCrossingCost`, `HeavyFlipNativeBoundary`). This is the common blocker of the
   PMElementaryParticles readout items and PMFlavor item 2.
 - **Requirement table for events.** `RefreshSchedule` and `CoherentRefresh`
   prove that Economy serves each required item exactly once; the table is

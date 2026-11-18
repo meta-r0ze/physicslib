@@ -129,9 +129,17 @@ the recorded mass ratios to check it.
   resolution and duration. The colour-referenced bit Tolls
   `(2,1,0,1)` and factor-flag Tolls `(2,3/2,1,3/2)` give the
   charged order with gap ratio 1 (comparison only: about 1.1–1.5).
-  Open: implement the joint branch/payload coupling and clean seed
-  banks, select a physical reference and tariff, and derive the event
-  that fires the comparator on each physical wall insertion.
+  `HeavyCrossingCost` computes the same primitive activity histogram
+  for every signed label on either incoming wall. With paired amplitude
+  weights its whole profile ledger ties weak partners. The in-band
+  modulo-two probes also tie opposite input orientations
+  (`HeavyFlipNativeBoundary`). The bare glued roots alias heavy and
+  light on each wall. A supplied addressed gate can idle or make a
+  two-toggle excursion on the same 43-phase clock. Both return after
+  a full turn. Open: implement the joint branch/payload coupling,
+  clean seed banks and generation address; select a physical reference
+  and tariff; derive the placement and firing on the two physical
+  wall insertions. The equal-class gapped crossing is a distinct event.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`

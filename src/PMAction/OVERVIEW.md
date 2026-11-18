@@ -157,6 +157,8 @@ word under rotation closure and admission of the controlled operation.
 Its scheduled pulse price is separate from a comparison's expected flag
 count. The downstream electric comparator uses a moved root pair as
 its branch and the packet’s electric charge for the controlled kick.
+The forward/reverse six-root activity ledger and the closed clock’s
+idle and excursion witnesses are checked there too.
 The application and its hypercharge record exclusion are in
 [PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md#record-comparisons-and-heavy-flip-toll).
 
