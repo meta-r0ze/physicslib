@@ -509,7 +509,15 @@ of the virtual and real terms as its input.
 factor from the two external charged legs. In the muon rest frame the
 angular average at electron speed `0 < β < 1` is
 `log((1 + β)/(1 − β))/β − 2`. It multiplies the soft radial integral.
-The regulated virtual and hard-emission terms remain to be derived.
+The regulated virtual and hard-emission terms are derived numerically
+in `tools/muon_radiative_derivation.py` from the substrate's conserved
+wall vertex (`PMAction.SpinorVertex`) with explicit regulators (a
+Pauli–Villars photon, a photon mass and an electron mass). The total is
+independent of each regulator and tends to the kernel above as
+`m_e → 0`: at `m_e = 3·10⁻⁴` the derived `ΔΓ/Γ₀` in units of `α/4π` is
+`−7.76176, −7.37098, −6.88717, −5.69915, −1.54393` at
+`z = 0.1, 0.3, 0.5, 0.7, 0.9`, against `−7.76131, −7.37086, −6.88718,
+−5.69929, −1.54503`. Formal verification is open (REVIEW).
 
 
 ## Pair tensor and continuum angular integral

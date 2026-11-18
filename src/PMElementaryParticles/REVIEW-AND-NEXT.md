@@ -177,28 +177,18 @@ the recorded mass ratios to check it.
 
 ## Other open work
 
-- **Radiative factor. [Calculation]** Compute the substrate's own
-  electromagnetic correction to the muon width. The matching to the native
-  update is done. The current is the gauged wall hop with an exact Ward–Takahashi
-  identity at finite `q` (`PMAction.SpinorVertex.ward`, `propagator_ward`,
-  `contact_ward`), so `Z₁ = Z₂` holds on the substrate at every loop
-  momentum. Its vertex is the native velocity `αⱼ = γ⁰γʲ` up to
-  `O(a²)` (`ward_gap`). The photon is emitted into continuum modes
-  (CONTINUOUS.md, Rule 2; `PolarMeasure`, `NullBoost`), and the leading
-  log is zero (`MuonRadiativeLog.retention_no_log`). The finite lattice
-  remainder from loop momenta near the cutoff is the library-wide
-  lattice-to-continuum limit (CONTINUOUS.md, "What is proved"); it is
-  `O((a m_μ)²)`. What remains is the calculation from this vertex and
-  these measures; the published continuum kernel is a cross-check of the
-  arithmetic, not the target. Use the soft angular
-  factor in `RadiativeIntegrals`, derive the regulated virtual vertex and
-  external self-energies and the real-emission kernel at the same
-  neutrino-pair invariant, and combine them before removing the
-  photon-mass regulator.
-  Check the resulting density against the
-  [inclusive benchmark](OVERVIEW.md#inclusive-one-loop-muon-benchmark),
-  then formalize the derivation with `PMAction.LoopMeasure`,
-  `PairInvariantSpectrum` and `RadiativeIntegrals`. The corrected muon
-  lifetime and its use in the
-  [PMHadrons channel inventory](../PMHadrons/OVERVIEW.md#channel-inventory-and-interfaces)
-  currently use supplied QED inputs, including the higher-order terms.
+- **Radiative factor. [Certificate]** The substrate's own order-`α`
+  correction is derived numerically from the diagrams
+  (`tools/muon_radiative_derivation.py`): the conserved wall vertex
+  (`PMAction.SpinorVertex`, `Z₁ = Z₂` on the substrate), continuum photon
+  modes, the virtual vertex and both self-energies, and real emission at
+  fixed neutrino-pair invariant, with explicit ultraviolet, infrared and
+  collinear regulators. The total is independent of each regulator and
+  reproduces the inclusive kernel pointwise (`z = 0.1 … 0.9`, to `10⁻⁴`
+  relative at `m_e = 3·10⁻⁴`), so its integral is `π² − 25/4`
+  (`tools/muon_radiative_certificate.py`). Remaining: formal verification
+  in Lean. State the assembled kernel and the cancellation of the
+  regulator logs (stage 2), then the Feynman-parameter integrals
+  (stage 3). Until then `MuonLifetimeCorrected` keeps the factor as a
+  certified input, and the higher-order terms (`MuonQEDLoops`) stay
+  supplied.
