@@ -158,4 +158,51 @@ theorem full_massive (a : Fin 3) (i j k l : Fin 2) :
     | (rw [hLi, he]; norm_num) | (rw [hQj, hd]; norm_num)
     | (rw [hQk, hu]; norm_num) | (rw [hLl, hn]; norm_num)
 
+/-- **A colour cost goes the wrong way.** With `n` full readouts per cycle (`full_massive`) and
+any nonnegative colour cost `c` charged to the coloured labels (for example the colour ledger's
+refresh weight per coloured channel, `PMConstants.ColourReference.colour_ledger_minimal`), down
+is never heavier than the electron: `s_d ≤ s_e`. The recorded order needs the opposite, so a
+colour contribution to the heavy label must lower the coloured labels' Toll. -/
+theorem colour_cost_wrong_way (n c : ℝ) (hc : 0 ≤ c) :
+    PMAction.TollAmplitude.wireAmplitude (n * (3 / 4) + c) ≤
+      PMAction.TollAmplitude.wireAmplitude (n * (3 / 4)) := by
+  rcases eq_or_lt_of_le hc with h | h
+  · rw [← h, add_zero]
+  · exact le_of_lt (PMAction.TollAmplitude.wireAmplitude_lt_iff.mpr (by linarith))
+
+/-! ### Which flips a Toll reaches
+
+The wire's light mass is `M = diag(s, k, k) · X · diag(s, 1, 1)`
+(`tools/protocol_readout_scan.py`; `PMAction.ReferenceWallMass`). A Toll paid equally by all
+three generations' flips scales both diagonal factors by one number, so `M` changes by an
+overall factor and every mass ratio is unchanged (`uniform_weight_cancels`). Protocol upkeep
+that does not depend on the generation (the colour refresh, the doublet readouts as computed
+above) therefore cannot produce the heavy-label weight in either direction. Only a Toll that
+reaches some generations' flips and not others can.
+
+The library has one native generation difference. On the reference's wall the heavy generation's
+carrier never touches the reference class, while the two light ones must pass through the
+reference node (`PMAction.ReferenceClassHop`). A Toll `T` on the node legs only multiplies them by
+`μ = exp(−T/2)`, which is the same as raising the heavy weight to `s/μ = s · exp(T/2)` at fixed
+`k` (`node_toll_raises_heavy`). So a node-path Toll enters with the opposite sign to a Toll on the
+heavy flip itself.
+-/
+
+/-- **Generation-blind Tolls cancel.** -/
+theorem uniform_weight_cancels (l s k : ℂ) (X : Matrix (Fin 3) (Fin 3) ℂ) :
+    Matrix.diagonal ![l * s, l * k, l * k] * X * Matrix.diagonal ![l * s, l, l] =
+      (l ^ 2) • (Matrix.diagonal ![s, k, k] * X * Matrix.diagonal ![s, 1, 1]) := by
+  have h1 : Matrix.diagonal ![l * s, l * k, l * k] = l • Matrix.diagonal ![s, k, k] := by
+    rw [← Matrix.diagonal_smul]; congr 1; ext i; fin_cases i <;> simp
+  have h2 : Matrix.diagonal ![l * s, l, l] = l • Matrix.diagonal ![s, 1, 1] := by
+    rw [← Matrix.diagonal_smul]; congr 1; ext i; fin_cases i <;> simp
+  rw [h1, h2, Matrix.smul_mul, Matrix.mul_smul, Matrix.smul_mul, smul_smul, sq]
+
+/-- **A node-path Toll raises the heavy weight.** Damping the two node legs by `μ ≠ 0` is the
+heavy weight `s/μ` with undamped node legs, up to an overall factor. -/
+theorem node_toll_raises_heavy (μ s k : ℂ) (hμ : μ ≠ 0) :
+    Matrix.diagonal ![s, k * μ, k * μ] = μ • Matrix.diagonal ![s / μ, k, k] := by
+  rw [← Matrix.diagonal_smul]; congr 1; ext i
+  fin_cases i <;> simp [mul_comm, mul_div_cancel₀ _ hμ]
+
 end PMElementaryParticles.EventRequirements

@@ -70,16 +70,20 @@ the recorded mass ratios to check it.
   doublet readouts split up from down (`T_d − T_u = ½` per readout) but
   never the electron from down. That split needs a mechanism that tells
   the lepton sector from the colour sector, and with `s = exp(−T/2)` it
-  must lower the coloured labels' Toll relative to the leptons'. A
-  positive colour Toll goes the wrong way (`colour_cost_wrong_way`), and
-  the library's derived colour cost is positive: the Economy-minimal
-  refresh charges each of the twelve coloured channels its payload weight
-  `η` (`PMConstants.ColourReference.colour_ledger_minimal`). So either that
-  refresh is not charged to the heavy wire, or colour also supplies a
-  saving larger than it. Candidate to examine: colour
-  coordination as a Protocol-pillar saving (`PMSubstrate.NetCost.removal_subtracts`),
-  `−c` on every coloured label, which gives `T_e − T_d = c` and leaves
-  `T_d − T_u = ½ n_Q`.
+  must reach some generations' flips and not others. A Toll paid equally
+  by all three generations scales the wire's mass by one factor and
+  cancels from every ratio (`uniform_weight_cancels`), so generation-blind
+  upkeep (the colour refresh, the doublet readouts as computed) cannot
+  give the heavy-label weight in either direction. The native generation
+  difference: on the reference wall the heavy generation's carrier never
+  touches the reference class, and the two light ones pass through the
+  reference node (`PMAction.ReferenceClassHop`). A Toll on the node legs
+  raises the effective heavy weight by `exp(T/2)` (`node_toll_raises_heavy`),
+  the opposite sign to a Toll on the heavy flip. On the node path a
+  colour cost gives the right electron–down order and the doublet
+  readouts the wrong up–down order. Next: derive which comparisons the
+  node passage performs (it restores the reference, the lepton-doublet
+  cell), and evaluate them with `DiagonalReadout`.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
