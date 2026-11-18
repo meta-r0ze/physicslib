@@ -109,15 +109,26 @@ the recorded mass ratios to check it.
   native wire operations give every protocol the same wire. A
   protocol-dependent heavy weight needs a gate that reads the label, and
   by `CoherentGate.unequal_needs_orthogonal` (stated for weak partners;
-  the same argument applies to any two labels) a gate with unequal
-  inputs with overlapping wire outputs must write orthogonal records.
+  the same overlap argument applies to other labels), overlapping wire
+  outputs require orthogonal exported records.
   `HeavyFlipControl` gives a finite generation-addressed gate with
-  a supplied two-bit record bank. The native comparator and its
-  admission, per-flip firing, and Toll remain open. One candidate
-  (comparison only): one doublet readout and one lepton-only readout per
-  gated heavy flip, both walls, gives `T = 1.5, 0.91, 0.66, 0.5` for
-  `e, d, u, ν`: the right order, but `(T_d − T_u)/(T_e − T_d) = 0.42`
-  against the diagnostics' `1.1–1.5`.
+  a supplied sector and position record. `HeavyFlipRecords` excludes
+  shared auxiliary-only hypercharge comparison schedules on a massive
+  label as exact quark-position writers. The active slots have equal
+  charge, so their common contribution bounds the auxiliary outcome gap
+  by `½`. The full and lepton-only comparisons also leave electron
+  and down with nonzero record overlap on either fixed wall. The paired
+  flag budget has the charged ladder, with exact gap ratio
+  `2/(3+√3) ≈ 0.423`, but fails as an exact record writer.
+  The signed-axis predicates can write both bits exactly if their
+  diagonal phase controls are supplied. With the reference-axis and
+  negative-position flags and one required visit per bit the Tolls are
+  `2, 1, 0, 1` for `e, d, u, ν`. The charged weights are ordered.
+  Comparison only: the gap ratio is 1 versus about 1.1–1.5.
+  Open: derive the native record couplings and preparation, the physical
+  registration polarity and pricing, and the per-flip firing law. The
+  direct address comes from the reference wall, so the coupling of any
+  resulting Toll to the other wall also requires a derivation.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`

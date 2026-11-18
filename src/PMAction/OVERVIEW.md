@@ -151,6 +151,12 @@ exchanged reference, the four-phase clock, and joint configuration controls.
 `RegisterReference` counts `16·|X| + |payload|·|record|` Boolean registers; the clock
 is separate. These are compatible finite constructions with **supplied** banks,
 amplitudes, charge and admission; they do not select or prepare them.
+The downstream heavy-flip application supplies a generation address and
+a two-bit record. `BranchPulseContract` gives the coherent comparison
+word under rotation closure and admission of the controlled operation.
+Its scheduled pulse price is separate from a comparison's expected flag
+count. The application and its hypercharge record exclusion are in
+[PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md#record-comparisons-and-heavy-flip-toll).
 
 `PersistenceSelection`, `PersistentBackground`, `CompletionSelection` give
 family-restricted selection with the real admissible family; `ReversibleStationarity`

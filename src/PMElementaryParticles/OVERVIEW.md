@@ -355,7 +355,9 @@ two-bit bank receives the code by conditional exchanges (`write_clean`).
 `IndependentRegisters` and `RegisterControl` execute the write and the
 selected endpoint exchange as a reversible word on the occupied banks
 (`registered_word`). A supplied phase on a record block is unitary on
-the full configuration space (`registered_phase_unitary`). This uses
+the full configuration space (`registered_phase_unitary`). For flip `F`,
+the phase has exchange coefficient `(1−z)/2` on its two endpoints and
+acts as identity on fixed points. This uses
 the available encoded endpoints and supplied joint controls. Native bank
 preparation, firing and timing remain open.
 
@@ -367,6 +369,60 @@ applies when the two output columns have nonzero overlap
 (`unequal_needs_orthogonal`). The two-bit code suffices for all four
 species when the output no longer carries the distinction.
 
+### Record comparisons and heavy-flip Toll
+
+`HeavyFlipRecords.quark_auxiliary_gap` excludes a shared auxiliary-only
+readout driven solely by diagonal packet hypercharge on the massive state.
+For any comparison schedule and auxiliary decoder in this class, the
+probability of an auxiliary outcome is the mean of its two slot
+probabilities. The active up and down slots have equal charge, so every
+outcome-probability gap is at most `½`. Orthogonal auxiliary records
+would allow an outcome with probabilities 1 and 0. This exclusion allows
+arbitrary comparison steps, repetitions and auxiliary postprocessing
+with the same preparation, provided the system slots are left in place
+and no other label information enters the control. A separate check
+(`electron_down_overlap`) gives squared branch overlaps `1` at `3π/2`
+and `¼` at `π/2` for electron and down on either fixed wall. Independent
+copies of these two comparisons therefore cannot write the sector
+distinction for those labels even on a single wall.
+
+The comparison flags still give exact additive prices if these visits
+are supplied. The full comparison fills the shared **static** doublet
+requirement in one visit. Economy gives the following both-wall mean
+flags (`full_only_minimum`, `quarter_massive`, `paired_minimum`,
+`paired_tolls`).
+
+| Required comparisons | Electron | Down | Up | Neutral pair |
+| --- | ---: | ---: | ---: | ---: |
+| Full `3π/2` | `¾` | `¾` | `¼` | `¼` |
+| Lepton-only `π/2` | `¾` | `(3−√3)/8` | `(5−√3)/8` | `¼` |
+| One of each, if both are independently required | `3/2` | `(9−√3)/8` | `(7−√3)/8` | `½` |
+
+The full visit ties electron with down. The paired flag budget gives
+`s_e < s_d < s_u` through `exp(−T/2)` (`paired_ladder`), but the
+comparisons fail the record test above. Its gap ratio is
+`2/(3+√3) ≈ 0.423` (`paired_gap_ratio`).
+
+An exact conditional writer uses two diagonal phase comparisons in the
+transported carrier frame. The phase is `π` on the marked carriers and
+zero elsewhere for each predicate: reference axis and negative position.
+With a clean auxiliary branch, `(1 ± exp(iφ))/2` routes it to the
+corresponding record bit. The code is the same on the two walls
+(`orbit_bit_price`). With these phase controls admitted and the two bits
+required separately, one visit per bit attains the Economy Toll
+(`orbit_record_minimum`). The flag Tolls for the stated polarity are
+`(2,1,0,1)`, and the charged weights are
+`(exp(−1), exp(−½), 1)` (`orbit_record_tolls`, `orbit_record_ladder`).
+These are expected registration counts for the comparison visits. They
+exclude the scheduled primitive pulse and preparation prices, which need
+their own accounting. The finite gate does not select the phase coupling,
+the bank preparation, the polarity as a physical charge convention, or
+the event that fires it.
+
+Comparison only. The exact-bit candidate has gap ratio 1 and the paired
+hypercharge budget has ratio about 0.423. The mass-scale diagnostics in
+`tools/heavy_toll_targets.py` require about 1.1–1.5.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.
@@ -375,7 +431,7 @@ For the candidate that consults a fixed bit array at the incoming address and ap
 
 The Map's clean requirement is exact. Recovery after one visit needs only the partner row's live bit clear (`recover_partner_clean`), so the visit with routing is reversible on every input whose eight active payload rows are clear, with static rows unrestricted (`visitRoute_active_clean_injective`); one occupied active row already gives a collision (`visitRoute_collision`). A gate that reads different bits on two weak partners collides them on the channel, so any reversible extension must export a record separating the partners, that is, the doublet position (`asymmetric_gate_records`). The weak flip moves exactly the active channels (`moves_iff_active`).
 
-`CoherentGate` is the coherent version on one weak pair. Gating the two partners at angles `a` and `b` gives output columns with overlap `sin (a − b)` (`cross`), so the gate is reversible exactly when the angles agree up to a half turn (`columns_orthogonal_iff`). With records written beside the outputs the overlap is `sin (a − b) · ⟨r₀, r₁⟩` (`recorded_orthogonal_iff`): any unequal angles, however close, need exactly orthogonal records, one full bit of doublet position per event (`unequal_needs_orthogonal`).
+`CoherentGate` is the coherent version on one weak pair. Gating the two partners at angles `a` and `b` gives output columns with overlap `sin (a − b)` (`cross`), so the gate is reversible exactly when the angles agree up to a half turn (`columns_orthogonal_iff`). With records written beside the outputs the overlap is `sin (a − b) · ⟨r₀, r₁⟩` (`recorded_orthogonal_iff`): a nonzero wire overlap requires orthogonal records, supplying one full bit of doublet position per event (`unequal_needs_orthogonal`).
 
 `streamRoute` tests a different coupling: the common ledger stream advances independently and its new live bit controls the channel after each tick. Clean payload readouts preserve every channel (`streamRoute_clean`). With the single-address preparation on an orbit of least period N, the complete route at tick N+1 equals the single-address gate (`streamRoute_first_return`). An active mark therefore merges two routes with identical outgoing streams.
 
@@ -505,8 +561,9 @@ The wire is `PMFlavor`/`PMAction`'s generation sector: with no detuning on the r
 (`PMAction.ReferenceWallMass`): one generation with a vector-class carrier (in-cycle, `K = 1`), two
 with spinor-class carriers through the reference node (`k/K = α/2`, `PMAction.NodeAmplitude`), and
 the other wall's detuning `δ_O`, which must be nonzero (`PMAction.UndetunedWall`). The wire is blind
-to the species it carries: one crossing price (`PMConstants.HandoffAdmittance.closure_one_price`),
-and the `D₄` geometry with the reference's axis cannot tell up from down
+to the species it carries in the bare model. Closure gives one crossing price in the absence of
+an internal signal distinction (`PMConstants.HandoffAdmittance.closure_one_price`), and the
+`D₄` geometry with the reference's axis cannot tell up from down
 (`PMElementaryParticles.DoubletReflection`). So the wire fixes the form; species are protocols over it, and what
 each protocol occupies is open (REVIEW). Earlier per-species scans fitted measured mass ratios and
 CKM magnitudes; they were removed as Standard-Model fitting, not substrate results (in git history:
@@ -698,8 +755,8 @@ and the mean life is its inverse.
   with the squared one. The readout is the open item (REVIEW).
 - **Doublet structure** (Lean): weak partners are antipodes and native words commute with the antipode (`DoubletSign`); on the wire the antipode is a global sign, so partners are not wire modes (see "Protocols are not wire modes").
 - **Map and gate** (Lean): `RefreshMap` (clean active rows are the requirement; clock mask changes
-  close over a cycle, `clockRoute_closes`); `CoherentGate` (a full position bit per event for unequal
-  angles); the record system has zero margin (`untouched`, `restores_iff_visits`).
+  close over a cycle, `clockRoute_closes`); `CoherentGate` (a full position bit per event for overlapping
+  weak-pair output columns); the record system has zero margin (`untouched`, `restores_iff_visits`).
 - **Withdrawn** (git history has them): everything built on the 2026-11 "corrected" carrier placement:
   the per-protocol margins `64.7 / 18.6 / 11.5`, the information-theory rates `R_p`, the gains and their
   orderings, the second-ratio fits, the up heavy-entry candidate, the protocol-level `U` tests, and the

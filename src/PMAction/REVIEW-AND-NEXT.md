@@ -87,9 +87,16 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   (`ProtocolToll.window_no_ladder`); the steps selected so far
   (`3π/4`, `k · 6π/5`) are inside it. The doublet-position readouts are outside it:
   the full readout `3π/2` and the lepton-only readout `π/2`
-  (`ProtocolToll.full_readout`, `lepton_readout_iff`). Derive how many of
-  each the wire's repair performs per heavy-wire flip. This is the common
-  blocker of the PMElementaryParticles readout items and PMFlavor item 2.
+  (`ProtocolToll.full_readout`, `lepton_readout_iff`). Neither repeated
+  visits nor auxiliary decoding can make shared diagonal hypercharge
+  alone write an exact quark-position record from the persisting
+  massive packet (`PMElementaryParticles.HeavyFlipRecords`). A
+  generation-addressed endpoint control and exact signed-axis
+  comparison contract are available with supplied controls
+  (`HeavyFlipControl`, `orbit_bit_price`). Derive native admission,
+  preparation, placement and firing of the record couplings, and
+  account for their primitive work. This is the common blocker of the
+  PMElementaryParticles readout items and PMFlavor item 2.
 - **Requirement table for events.** `RefreshSchedule` and `CoherentRefresh`
   prove that Economy serves each required item exactly once; the table is
   the input. For one charged-current event it is now derived
@@ -105,10 +112,10 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   one full readout serves both bits, and it still ties the electron with
   down (`full_massive`). Open: the rest of the shared-register accounting. Which labels are
   present when a readout acts (the parent, the emitted pair on all four
-  axes, the persisting packet), and how the flags they receive accumulate
-  into a persisting label's Toll. With that, the counts `n_L`, `n_Q`
-  follow, and the same accounting serves the lightest masses' firing law
-  and PMFlavor's in-cycle wall record.
+  axes, the persisting packet), what writes the exact records, and how
+  the flags accumulate into a persisting label's Toll. The same
+  accounting serves the lightest masses' firing law and PMFlavor's
+  in-cycle wall record.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
   limits. Sharpen the lattice remainder bound enough to compare it with
