@@ -70,6 +70,7 @@ import PMFlavor.ReferenceRouting
 import PMFlavor.OrientationDoublet
 import PMFlavor.EventTransfer
 import PMFlavor.RefreshLabel
+import PMFlavor.InCycleEvent
 import PMFlavor.TransferAmplitude
 import PMFlavor.ConductionRule
 import PMFlavor.InclusiveWidth

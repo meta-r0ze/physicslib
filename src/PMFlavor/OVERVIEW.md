@@ -24,14 +24,23 @@ sections below say "generation" for a label state.
 of class `g + 1` (`PMAction.GenerationCurrent`). `J κ` has amplitude `1` for no change and `κ c` for the
 change through class `c`, from label `c − 1` to `c + 1` (`entry_of_class`); these are the three
 transfers of `TransferGraph` (`entry_is_transfer`). One event makes no reverse change (`reverse_zero`).
-The change through class `0` (`2 → 1`) uses the weak carrier itself and stays in the cycle
-(`weak_carrier_entry`); the changes through `1` and `2` need a spinor carrier from the node
-(`node_entries`). The actual weak refresh (`CarrierActions.weak`) moves only vector-class
-carriers of the reference's sector (`refresh_moves_reference`, `refresh_fixes_other`), and only by
-their sign: no spinor carrier, and no label change either (`RefreshLabel`: the sign flip keeps every
-carrier's class and axis, `refresh_keeps_class`, `refresh_same_axis`, and keeps the label,
-`refresh_keeps_label`; it is the doublet exchange). So the in-cycle entry `κ 0` has no source in the
-refresh (REVIEW item 0). **Names.** With the carriers placed by glue arithmetic (`PMAction.WireMass`) the wire's
+The in-cycle change through class `0` (`2 → 1`) has vector-carrier support
+(`weak_carrier_entry`). The proposed changes through `1` and `2` use spinor
+carriers from the node (`node_entries`). The actual weak refresh exchanges
+doublet signs and preserves the generation label (`RefreshLabel`).
+`InCycleEvent.generation_shift_encode` gives a four-reflection diagonal
+inverse triality in the glued E8 register that sends `g` to `g - 1`
+without swapping walls or changing either transported signed index. Four
+further pure roots implement the weak sign on the active label factor
+(`forward_active`). The unselected word moves all generations. An active
+generation-2 root also encodes a static generation-0 state, so even an
+arbitrary function of the untagged root cannot selectively implement this
+event while fixing static states (`no_untagged_event)). With a supplied
+wall record, `selected_encode` isolates the light pair and `selected_twice`
+verifies reversal on the encoded states. `companion_decodes` recovers
+both the wall bit and generation from the live and other-wall classes in
+the existing oriented encoding. Native preparation and use of this record, the directed firing law, and the transition amplitude remain
+open (REVIEW item 2). **Names.** With the carriers placed by glue arithmetic (`PMAction.WireMass`) the wire's
 masses give label `2` the lightest, `1` the middle, `0` the heavy: the naming used here. Completion: `A = N − Nᴴ` (`N` the off-diagonal part of `J`)
 is skew-Hermitian (`A_skew`), carries `κ c` forward and `−κ̄ c` in reverse (`forward_entry`,
 `reverse_entry`), and `1 + A` is unitary to second order (`first_order_unitary`). At second order
@@ -336,6 +345,18 @@ excluded by `R_ℓ` (`z_pole_undressed`). `Wolfenstein` defines
 reactor octants, and that the solar octant is exactly `1 < φ < 2`.
 `ReferenceFlavour.column2_difference_conj` shows the persistence balance is blind
 to `sign(sin δ)`, so the CP branch is a separate substrate-orientation input.
+
+**First-row wall leakage.** If the spatial outlet dressing acts as a
+uniform rate factor on the quark transition and the muon calibration is
+undressed, `DressingInheritance.calibrated_wall_deficit` gives the exact
+combined deficit `1/516 + (515/516)·(1 − S_q/S_μ)` for the undressed
+strengths `S_q` and `S_μ`. `calibrated_contact_deficit` proves that the
+factor survives channel-dependent contact weights whenever the outlet acts as
+a common scalar amplitude. `EventTransfer.raw_isometry_iff` proves that
+the raw directed `J` is isometric exactly when all its forward amplitudes
+vanish. A nontrivial isometric readout needs a derived completion. The
+microscopic current and uniform outlet action on the interacting channels
+remain to be derived.
 
 **Where the mixing comes from.** `GenerationLabel`: `E₈` roots conserve the generation label, so a
 generation change needs a single-wall carrier move of the class two generations share (a glue-label

@@ -260,4 +260,22 @@ theorem fc_corner (κ : Fin 3 → ℂ) :
   rw [Complex.star_def, Complex.normSq_sub, Complex.normSq_conj, Complex.conj_conj,
     show κ 1 * (κ 0 * κ 2) = κ 0 * κ 1 * κ 2 by ring]
 
+/-- The raw directed event with diagonal amplitude one is an isometry
+only if all three forward amplitudes vanish. A nontrivial label current
+therefore needs its completion before using an isometric wall lift. -/
+theorem raw_isometry_iff (κ : Fin 3 → ℂ) :
+    (J κ)ᴴ * J κ = 1 ↔ ∀ c, κ c = 0 := by
+  constructor
+  · intro h c
+    have hc := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ =>
+      (M (c - 1) (c - 1)).re) h
+    fin_cases c <;>
+      simpa [J, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_three,
+        Matrix.one_apply, ← Complex.normSq_eq_conj_mul_self] using hc
+  · intro h
+    have hj : J κ = 1 := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [J, h]
+    simp [hj]
+
 end PMFlavor.EventTransfer

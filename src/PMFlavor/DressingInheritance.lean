@@ -1,3 +1,4 @@
+import PMElementaryParticles.ChargedRowReadout
 import PMConstants.CarrierActions
 import PMFlavor.CKMClosure
 import PMFlavor.DressingEvent
@@ -66,6 +67,15 @@ theorem global_cancels (q2 Γq Γμ : ℝ) (hq : q2 ≠ 0) (hμ : Γμ ≠ 0) :
 theorem deficit : 1 - CKMDressing.q2 = 1 / 516 := by
   unfold CKMDressing.q2; norm_num
 
+/-- If the quark density strength alone gets the outlet dressing, the
+calibrated deficit has an exact dressing term and a dressed wall term.
+The inputs are strengths in a common normalization, with nonzero muon strength. -/
+theorem calibrated_wall_deficit (quark muon : ℝ) :
+    1 - CKMDressing.q2 * quark / muon =
+      1 / 516 + CKMDressing.q2 * (1 - quark / muon) := by
+  rw [mul_div_assoc, ← deficit]
+  ring
+
 /-- **Every row and column, against the CKM 2023 workshop sums.** First row `0.9984(7)`, first
 column `0.9971(20)`, second row `1.001(12)`, second column `1.003(12)`: the uniform `1 − 1/516` lies
 within `1σ` of all four. -/
@@ -91,5 +101,17 @@ theorem z_pole_undressed :
 theorem w_hadronic_dressed :
     |(515/516 * (0.6754 / 0.3246 : ℝ)) / (515/516 * (0.6754 / 0.3246) + 1) - 0.6741| / 0.0027 < 1 := by
   rw [abs_of_pos (by norm_num)]; norm_num
+
+/-- When the outlet acts by the same amplitude scalar in each physical
+quark channel, arbitrary contact phase-space weights preserve the exact
+calibrated dressing formula. The muon strength is undressed. -/
+theorem calibrated_contact_deficit {ι : Type*} [Fintype ι] (G m muon : ℝ) (μ : ι → ℝ)
+    (a : ι → ℂ) (q : ℂ) (hq : Complex.normSq q = CKMDressing.q2) :
+    let quark := PMElementaryParticles.ChargedRowReadout.contactStrength G m μ a
+    1 - PMElementaryParticles.ChargedRowReadout.contactStrength G m μ (fun i => q * a i) / muon =
+      1 / 516 + CKMDressing.q2 * (1 - quark / muon) := by
+  dsimp only
+  rw [PMElementaryParticles.ChargedRowReadout.contactStrength_scale, hq]
+  exact calibrated_wall_deficit _ _
 
 end PMFlavor.DressingInheritance

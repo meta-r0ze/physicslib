@@ -21,7 +21,7 @@ Leg-count and randomness tests are in OVERVIEW ("Results of the 2026-11-16 revie
 
 | Label change | Off the axis | On the axis |
 |---|---|---|
-| class `0`, `2 → 1`, in-cycle | `π/14` [`s₁₂`]: share candidate (`HalfTurnAperture`), readout rule derived (`ConductionRule`); **no source:** the refresh keeps the label (item 2) | the same rule gives `π/10`; e8p prints `1/(2φ) = sin(π/10)` [`sin²θ₁₂`] (decision pending) |
+| class `0`, `2 → 1`, in-cycle | `π/14` [`s₁₂`]: share candidate (`HalfTurnAperture`), readout rule derived (`ConductionRule`); an E8 root word gives the geometric edge with a wall record; native firing stays open (item 2) | the same rule gives `π/10`; e8p prints `1/(2φ) = sin(π/10)` [`sin²θ₁₂`] (decision pending) |
 | class `2`, `1 → 0`, node, up member holds the reference's class | no derived amplitude; the library's rules are excluded (`TransferAmplitude`) [`\|V_cb\|`, printed `(π+χ)/(α⁻¹−Dπ)`] | no construction [`sin²θ₂₃`, printed `(1+π/(ν+σ))/χ`] |
 | class `1`, `0 → 2`, node, down member holds it | `1/(2α⁻¹+π)`: two-leg series path derived; boundary `π` a premise [`s₁₃`] | `3/α⁻¹`: one leg into three outlets, candidate (`ReactorConductance`) [`sin²θ₁₃`] |
 | phase | none in the library [`δ = arctan(σ/χ)` printed] | derived from the angles (`ReferenceFlavour`) [`δ_PMNS`] |
@@ -35,7 +35,7 @@ derived invariants, `FlavourInvariants`):
 
 | Value | Formula | Status | Where |
 |---|---|---|---|
-| `s₁₂` (`cabibbo`, `vus`) | `π/(ν−χ) = π/14` | share candidate; aperture premises; readout rule derived. No event source for the in-cycle change (`RefreshLabel`) | `HalfTurnAperture`, `ConductionRule` |
+| `s₁₂` (`cabibbo`, `vus`) | `π/(ν−χ) = π/14` | share candidate; aperture premises; readout rule derived. The E8 root word needs a wall record and a firing law (`InCycleEvent`) | `HalfTurnAperture`, `ConductionRule` |
 | `s₁₃` (`vub`) | `1/(χα⁻¹+π)` | two-leg series path derived; boundary `π` a premise; names consistent with the wire (`PMAction.WireMass`) | `VubSeriesPath`, `TransferAmplitude.jump` |
 | `\|V_cb\|` | `(π+χ)/(α⁻¹−Dπ)` | supplied; no derived amplitude (library rules excluded) | `CKM`, `VcbEnvelope` (unbased) |
 | `δ` | `arctan(σ/χ)` | supplied; no phase source in the library (item 5) | `CKM`, `CPPhases` |
@@ -57,7 +57,14 @@ numbers needs this table next to them.
    lightest-mass offsets for the light pair (PMElementaryParticles REVIEW, "Lightest masses"); until
    those are derived, comparisons at `U = 1` (items 2, 3, 5) are conditional.
 2. **The amplitude of each entry of `J`.**
-   - In-cycle (`u–s`): no event source (`RefreshLabel`). The share `π/14` rests on the aperture premises
+   - In-cycle (`u–s`): `InCycleEvent` supplies the root word for `2 → 1`
+     and a reversible light-pair completion on states with a wall record.
+     Derive how the native update reads the wall record and fires the
+     forward transition with its amplitude. `companion_decodes` recovers
+     the wall bit from a companion in the other wall's class, using the
+     retained-carrier representation in `PMAction.GenerationHistory`.
+     Derive the preparation and update of that companion.
+     The share `π/14` still rests on the aperture premises
      (`HalfTurnAperture`).
    - The two node edges: node value `α/2` (`PMAction.ReferenceNode`, `PMAction.PersistenceSelections` (1)). Derive the
      up/down-dependent factor between them (`≈ 10.7` at `U = 1`; the printed forms put `2(π+χ)` there)
@@ -88,6 +95,45 @@ numbers needs this table next to them.
 7. **Transfer selection.** `ReferenceSelection`, `RelativeFrameCost`, `TransferWorkLaw`, `TransferAmount`,
    `SpectralGapOrder`, `ChordBranch` run on `PMAction.FlavourEvolution` and are conditional until PMAction
    shows the substrate update acts on wall modes as `e^{−iHt}`.
+
+## First-row wall leakage
+
+Close the row in dependency order. The PMAction and PMFlavor operator work
+can proceed independently. The physical channel sum uses the resulting
+external modes and current.
+
+1. **PMAction.** Derive the native clock ratio `r = K_f/|y|` from the selected
+   crossing and flip schedule in common time units. Check whether the actual
+   generator has the off-diagonal rest form used for chiral pairing. The
+   native one-wall lazy offset breaks that grading symmetry about any common energy.
+   Glued support and stationarity still admit every positive ratio
+   (`WallGapCalibration.arbitrary_cyclic_ratio`).
+   [Clock work](../PMAction/REVIEW-AND-NEXT.md#extensions)
+2. **PMElementaryParticles.** Select the external preparation at any exact
+   resonance, and map the permitted protocol daughters to interacting
+   positive-energy modes. The paired-window conversion and the exact
+   contact integral with all final masses retained are proved. Identify the
+   physical masses and amplitudes that enter the channel sum.
+   [Channel work](../PMElementaryParticles/REVIEW-AND-NEXT.md#other-open-work)
+3. **PMFlavor.** Build the native label-change event `J` on these states.
+   `InCycleEvent` gives the geometric light-pair word and its wall-record
+   requirement. `WeakCurrentBridge.modelCurrent_eq_PL` and
+   `NativeFlavourCurrent.compressed` already give the chiral lift for a
+   supplied label operator. Identify the selected event with that operator
+   on the interacting modes. `RefreshLabel` preserves the label and the raw
+   `EventTransfer.J` is isometric only at zero forward amplitudes. Derive the transition source and completion from the native
+   event, or use a direct rate from its actual amplitudes. The outstanding
+   amplitude and phase work is in items 2, 3 and 5. Derive the uniform
+   outlet scalar on the same physical quark channels. Once derived, it
+   factors through unequal contact weights by
+   `DressingInheritance.calibrated_contact_deficit`.
+
+**Comparison.** The outlet dressing alone gives `1/516 ≈ 1.94·10⁻³`.
+`tools/first_row_readout.py` reports the wall-only deficit at about
+`0.25 r²` for fitted wire weights and `0.08 r²` for equal weights, using
+measured CKM entries and an unweighted light spectral window. The diagnostic
+bounds `r ≲ 0.07–0.12` use the frozen comparison `(1.6 ± 0.7)·10⁻³`.
+These numbers do not select the native schedule or external states.
 
 ## Data relations to explain (targets, not fits)
 

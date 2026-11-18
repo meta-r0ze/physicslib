@@ -11,8 +11,9 @@ Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum IV: Information T
 - A charged-current event changes the protocol. The event acts on one wall only. Thus the event can
   also change the label.
 - "Flavour" is the label. "Flavour change" is a label change during an event.
-- The weak carrier itself changes label `2` into `1`. This change stays in the maintenance cycle. (In question: the
-  weak refresh is a sign exchange and keeps the label; see REVIEW item 0.)
+- The in-cycle label change is `2 → 1`. The weak refresh keeps the label.
+  `InCycleEvent` gives an E8 root word for the change with a supplied wall
+  record. Its firing law and amplitude are open.
 - A change to or from label `0` needs a spinor carrier. Only the reference node supplies it. Thus these
   two changes are small.
 - `J` is the matrix of label-change amplitudes for one event. There are two: one for carriers off the
