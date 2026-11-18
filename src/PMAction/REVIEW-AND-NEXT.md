@@ -78,14 +78,15 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   quarter-time `π/(2 gap p)` ticks).
 - **Label-sensitive comparison schedule.** Admit the
   [chiral-current interaction](../PMElementaryParticles/OVERVIEW.md#electric-kicks-from-the-chiral-register-current)
-  between the payload and a separately allocated record carrier with a
-  clean coordinate seed. Derive the preparation and joint update of the
-  retained companion. Select the physical comparator and registration
+  between the payload and the retained companion. Supply an occupied odd
+  seed and admit [triality setup and the joint companion update](../PMElementaryParticles/OVERVIEW.md#triality-preparation-on-the-companion).
+  Select the physical comparator and registration
   tariff. The chiral-current and [short decoder](../PMElementaryParticles/OVERVIEW.md#primitive-flags-of-the-short-electric-decoder)
   ledgers give the forward cost under unit flag pricing. Derive the
   firing and placement of the conditioned pulse on the two wall insertions.
   The [short decoder’s frame bound](../PMElementaryParticles/OVERVIEW.md#short-root-decoder-and-serial-frame-bound)
-  constrains serial schedules with fresh bank preparation.
+  constrains fresh serial setup by the inverse root word. Derive the
+  local duration of the six-root setup for the companion route.
   The [electric comparator and its prices](../PMElementaryParticles/OVERVIEW.md#an-electric-charge-record-on-both-walls)
   and the [crossing and clock exclusions](../PMElementaryParticles/OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
   constrain this schedule.

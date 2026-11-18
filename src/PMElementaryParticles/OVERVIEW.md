@@ -369,8 +369,9 @@ becomes the vacated live class, with its carrier index retained
 (`run_pack`). Both directions agree with the finite control, and light
 inputs are fixed. Running the word twice restores the packed state
 (`run_twice_pack`). This identifies the required initial class and the
-return rule. A native source for the companion and admission of the joint
-update remain open.
+return rule. The [companion-bank preparation](#triality-preparation-on-the-companion)
+below uses this carrier's odd amplitudes for the electric bank. The occupied
+seed source and admission of the joint update remain open.
 
 With the label retained as a control, the species blocks are already
 orthogonal. If a gate instead sends distinct inputs to overlapping
@@ -606,6 +607,42 @@ this bank. The separate carrier's allocation and physical admission,
 the registration tariff and export or reuse, and scheduling at the
 two heavy-wall insertions remain open. The 52-quarter-time fresh
 serial bound still applies before the kicks and intervening swap.
+
+### Triality preparation on the companion
+
+`ElectricCompanionBank` verifies triality as a bijection on the actual
+minimal carriers between successive glue classes. Its action in the odd
+coordinate frame is the matrix `M/2` of the glued register
+(`triality_observed`). The first column is the balanced bank. From a
+supplied occupied odd coordinate-zero seed, one forward triality step
+prepares the companion bank on either incoming heavy wall
+(`prepares_companion_bank`). For the static payload the source and
+destination classes are 1 and 2. For the active payload they are 0 and 1.
+Using a single diagonal glued root label `(v,v)` for each carrier
+label implements this forward permutation by the existing six-root
+crossing (`glued_triality_step`).
+
+The heavy guard only reads the class, so the same companion can carry
+the bank amplitudes while providing the heavy address. The matching
+guarded crossing sends the companion from class 2 to 1 by two triality
+steps for a static payload, and from 1 to 2 by one step for an active
+payload. Its action on the bank is exactly `(M/2)²` or `M/2`
+(`guarded_companion_transport`, `companion_transport_observed`). On
+the diagonal carrier code the companion update uses the opposite
+six-root crossing word from the live update (`companion_transport_roots`).
+It restores the balanced bank from a written port only for the active
+payload at port 0, the neutral record (`written_port_ready_iff`).
+The charged records therefore require another operation before reuse.
+
+A setup comparison retaining the original class as the reference compares
+orthogonal states and raises a flag with probability `1/2` on either wall
+(`setup_class_flag`). One registration per such flag adds the same setup
+Toll for every label, preserving both charged gaps. This is an
+endpoint comparison from the supplied occupied seed. Pricing individual
+root visits requires their own flags. The six-root setup replaces the
+27-quarter-time inverse-root preparation in this route. The source of
+the seed, the local gate schedule and duration, and admission of the
+coupled current and joint crossing remain open.
 
 ### Primitive crossing activity and clock limits
 
