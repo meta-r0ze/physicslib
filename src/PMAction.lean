@@ -372,6 +372,7 @@ import PMAction.Machine.RecordSupply
 import PMAction.HomogeneousRouting
 import PMAction.PersistenceSelection
 import PMAction.TollAmplitude
+import PMAction.SpinorVertex
 import PMAction.PersistentBackground
 import PMAction.ReferenceSelection
 import PMAction.ClockLedger

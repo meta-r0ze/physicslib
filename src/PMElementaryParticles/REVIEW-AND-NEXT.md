@@ -9,8 +9,8 @@ None of these items blocks the downstream libraries: PMHadrons and later use the
 (`MuonQEDLoops`). The tau's `B_e` without a supplied value is PMHadrons' "tau inclusive hadronic
 factor" item.
 
-**Common blocker.** Three items (heavy-label weight, lightest masses, wall
-leakage) and PMFlavor item 2 wait on one object from PMAction: the native law
+**Common blocker.** Two items (heavy-label weight, lightest masses) and
+PMFlavor item 2 wait on one object from PMAction: the native law
 that fires a conditioned coherent pulse. The conversion from a Toll to a wire
 amplitude is now derived (`PMAction.TollAmplitude`: `exp(−T/2)` with `T` in
 expected registrations). What is still open is the schedule: which
@@ -82,25 +82,21 @@ the recorded mass ratios to check it.
 
 ## Other open work
 
-- **Radiative factor. [Premise]** Match the regulated continuum
-  electromagnetic current and emission measure to the native E8 update.
-  **[Calculation]** Use the checked soft angular factor in
-  `RadiativeIntegrals`. Derive the regulated virtual vertex and external
-  self-energies, and the real-emission kernel at the same neutrino-pair
-  invariant. Combine them before removing the photon-mass regulator.
-  Most of the matching is in PMAction. The native current is the
-  conserved D₄ vertex with an exact Ward identity (`FiniteVertex.ward`,
-  `leg_ward`, `PolarizationContact.contact_ward`): the midpoint vertex
-  with `sinc(a r·q/2)` root weights, which goes to the continuum vertex
-  as `a → 0`. The emitted photon uses
-  continuum modes (CONTINUOUS.md, Rule 2; `PolarMeasure`, `NullBoost`).
-  The leading log is zero (`MuonRadiativeLog.retention_no_log`), so the
-  total is UV finite. The open steps are: (1) the spinor form of the
-  conserved vertex; (2) a cutoff bound for the vertex plus self-energy
-  integrand, as `LeadingLog.leading_log` gives for the log. The exact
-  Ward identity should cancel the `1/k⁴` terms at every `k`; prove that,
-  and then the region near `1/a` gives only `O((a m_μ)²)`; (3) the
-  calculation below.
+- **Radiative factor. [Calculation]** The matching to the native update is
+  done. The current is the gauged wall hop with an exact Ward–Takahashi
+  identity at finite `q` (`PMAction.SpinorVertex.ward`, `propagator_ward`,
+  `contact_ward`), so `Z₁ = Z₂` holds on the substrate at every loop
+  momentum. Its vertex is the native velocity `αⱼ = γ⁰γʲ` up to
+  `O(a²)` (`ward_gap`). The photon is emitted into continuum modes
+  (CONTINUOUS.md, Rule 2; `PolarMeasure`, `NullBoost`), and the leading
+  log is zero (`MuonRadiativeLog.retention_no_log`). The finite lattice
+  remainder from loop momenta near the cutoff is the library-wide
+  lattice-to-continuum limit (CONTINUOUS.md, "What is proved"); it is
+  `O((a m_μ)²)`. What remains is the calculation: use the soft angular
+  factor in `RadiativeIntegrals`, derive the regulated virtual vertex and
+  external self-energies and the real-emission kernel at the same
+  neutrino-pair invariant, and combine them before removing the
+  photon-mass regulator.
   Check the resulting density against the
   [inclusive benchmark](OVERVIEW.md#inclusive-one-loop-muon-benchmark),
   then formalize the derivation with `PMAction.LoopMeasure`,
@@ -108,28 +104,3 @@ the recorded mass ratios to check it.
   lifetime and its use in the
   [PMHadrons channel inventory](../PMHadrons/OVERVIEW.md#channel-inventory-and-interfaces)
   currently use supplied QED inputs, including the higher-order terms.
-
-- **Physical daughter channels for wall leakage. [Premise]** Low priority:
-  the first-row deficit is PMFlavor's `1/516` dressing
-  (`PMFlavor.DressingInheritance`), so leakage only adds to it and its
-  output here is a bound (`r = K_f/|y| ≲ 0.07–0.12` with the current
-  estimate, `tools/first_row_readout.py`). Tension: PMAction's explored
-  schedules give `1/8 ≤ r ≤ 1/2`, where this model's leakage is
-  `3.9·10⁻³` to `4.9·10⁻²` with the fitted weights (`1.3·10⁻³` at
-  `r = 1/8` with equal weights). With the dressing's `1.94·10⁻³`, all
-  exceed the measured `(1.6 ± 0.7)·10⁻³`. So either the native crossing
-  is faster than those schedules, or some gapped weight reaches open
-  physical channels and is not lost. Identifying the daughter modes
-  decides this. Identify the
-  interacting positive-energy modes for the `FinalChannels` labels in the
-  quark row and muon calibration. Derive the physical parent preparation at
-  exact resonance. [PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions)
-  supplies the native rest generator and pulse rates once derived.
-  [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#first-row-wall-leakage) owns
-  the native current, including how the companion record is prepared and
-  updated and how the in-cycle edge fires with its amplitude. Match that
-  current to the physical modes.
-  **[Calculation]** Sum the resulting channel strengths with the
-  [contact weights](OVERVIEW.md#charged-density-and-wall-leakage) and
-  compare the quark row and muon calibration. Use the spectrum of the
-  generator selected by PMAction, including any retained one-wall offset.

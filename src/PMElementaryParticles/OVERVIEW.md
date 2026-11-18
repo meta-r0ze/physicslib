@@ -495,6 +495,21 @@ one-wall lazy offset breaks the chiral anticommutation even after a common
 energy shift. In that case the off-diagonal model's paired-window factor
 requires rechecking against the new spectrum.
 
+**Daughter channels (closed item).** The parent is the wire's light mass
+eigenstate: a persisting state is on shell
+(`ExternalStates.persistent_on_shell`). The daughters are the light modes.
+The gapped modes are closed channels: on the two-wall wire with the
+recorded weights, their mass is at least `3.6–743` times the protocol's
+heaviest light mass for `1/8 ≤ r ≤ 1/2`, so at least `75 GeV`
+(`tools/wall_gap_check.py`). That is far above the first-row and muon
+energies, so current weight on gapped modes is lost and the contact
+weights above apply to the light modes alone. The leakage is then
+`≈ 0.25 r²` with the fitted weights (`tools/first_row_readout.py`). With
+the dressing's `1/516` the measured first-row deficit requires
+`r ≲ 0.07–0.12`, while PMAction's explored schedules give
+`1/8 ≤ r ≤ 1/2`. That conflict is now PMAction's clock item; the native
+current on these states is PMFlavor's.
+
 ## Protocols and the 16-channel inventory
 
 Paper V's §4 reads the 16-channel substrate as four base routing protocols, two

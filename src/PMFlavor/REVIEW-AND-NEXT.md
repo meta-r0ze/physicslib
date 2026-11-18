@@ -107,12 +107,10 @@ external modes and current.
    Glued support and stationarity still admit every positive ratio
    (`WallGapCalibration.arbitrary_cyclic_ratio`).
    [Clock work](../PMAction/REVIEW-AND-NEXT.md#extensions)
-2. **PMElementaryParticles.** Select the external preparation at any exact
-   resonance, and map the permitted protocol daughters to interacting
-   positive-energy modes. The paired-window conversion and the exact
-   contact integral with all final masses retained are proved. Identify the
-   physical masses and amplitudes that enter the channel sum.
-   [Channel work](../PMElementaryParticles/REVIEW-AND-NEXT.md#other-open-work)
+2. **PMElementaryParticles (done).** The parent is the light mass
+   eigenstate, the daughters are the light modes, and the gapped modes are
+   closed channels (at least `75 GeV`).
+   [Daughter channels](../PMElementaryParticles/OVERVIEW.md#charged-density-and-wall-leakage)
 3. **PMFlavor.** Build the native label-change event `J` on these states.
    `InCycleEvent` gives the geometric light-pair word and its wall-record
    requirement. `WeakCurrentBridge.modelCurrent_eq_PL` and

@@ -69,6 +69,12 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   elapsed time alone leave the pulse winding free.
   The first-row comparison is downstream in
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#first-row-wall-leakage).
+  It conflicts with the explored schedules. The wire's gapped modes are
+  closed channels (PMElementaryParticles OVERVIEW, daughter channels), so
+  leakage `≈ 0.25 r²` is lost, and the measured deficit with the `1/516`
+  dressing needs `r ≲ 0.07–0.12` (fitted weights; about `1/8` with equal
+  weights). The explored options give `1/8 ≤ r ≤ 1/2`. So the native
+  crossing must be faster relative to the flip than those options.
   The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
 - **Label-sensitive comparison schedule.** `TollAmplitude` fixes the conversion: a label with
