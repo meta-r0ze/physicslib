@@ -491,8 +491,16 @@ Counting each electric kick's state flag while half of the bank
 receives the phase gives `(¾,¾,½,0)` in order `(e,d,u,ν)`
 (`exposure_eq_flags`, `exposure_tolls`). These two exposures tie
 electron with down even though the decoded records distinguish them.
-The native preparation, decoder realization and registration tariff
-for the full event remain open.
+The forward word's ledger from a balanced bank also includes the two
+normalized binary mixers, the controlled quarter phase and the
+optional swap (`forward_tolls`). Its state-flag Tolls are
+`(5/2, 2+√2/2, 2, 1−√2/2)` in canonical output order. A receiver that
+uses the [bit-reversed record spelling](ElectricFourPortRecord.lean)
+can omit the swap, giving `(2, 2+√2/2, 3/2, 1−√2/2)`. Both ledgers
+give `s_d < s_e` (`forward_no_ladder`). This excludes counting one
+registration for each logical factor flag of this forward word.
+Native preparation, primitive repair prices, record export or reuse
+and event placement remain open.
 
 ### Primitive crossing activity and clock limits
 

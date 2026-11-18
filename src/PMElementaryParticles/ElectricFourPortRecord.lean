@@ -124,13 +124,13 @@ theorem exposure_tolls (a : Fin 3) :
 
 /-! The decoder factorization keeps the joint operation inside the record bank. -/
 
-private def mixHigh : Matrix (Fin 4) (Fin 4) ℂ :=
+def mixHigh : Matrix (Fin 4) (Fin 4) ℂ :=
   !![1, 0, 1, 0; 0, 1, 0, 1; 1, 0, -1, 0; 0, 1, 0, -1]
 
-private def mixLow : Matrix (Fin 4) (Fin 4) ℂ :=
+def mixLow : Matrix (Fin 4) (Fin 4) ℂ :=
   !![1, 1, 0, 0; 1, -1, 0, 0; 0, 0, 1, 1; 0, 0, 1, -1]
 
-private def swapBits : Matrix (Fin 4) (Fin 4) ℂ :=
+def swapBits : Matrix (Fin 4) (Fin 4) ℂ :=
   !![1, 0, 0, 0; 0, 0, 1, 0; 0, 1, 0, 0; 0, 0, 0, 1]
 
 set_option maxHeartbeats 2000000 in
@@ -177,5 +177,140 @@ theorem exposure_eq_flags (c : Channels) :
   rw [hl, hh, exposureToll, phase, phase,
     DiagonalReadout.normSq_one_sub_exp, DiagonalReadout.normSq_one_sub_exp]
   ring
+
+/-! ### Factor flags of the executed decoder -/
+
+private def halfMix : ℝ := √2 / 2
+
+private theorem halfMix_sq : halfMix ^ 2 = 1 / 2 := by
+  unfold halfMix
+  nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+
+private def highMixer : Matrix (Fin 4) (Fin 4) ℂ := (halfMix : ℂ) • mixHigh
+private def lowMixer : Matrix (Fin 4) (Fin 4) ℂ := (halfMix : ℂ) • mixLow
+private def quarterGate : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![1, 1, 1, -Complex.I]
+
+theorem decoder_normalized_word :
+    encoderᴴ = swapBits * lowMixer * (quarterGate * highMixer) := by
+  rw [decoder_word, highMixer, lowMixer, quarterGate]
+  simp only [Matrix.mul_smul, Matrix.smul_mul, smul_smul, ← pow_two,
+    ← Complex.ofReal_pow, halfMix_sq]
+  norm_num
+
+private def highOutput : Fin 4 → Fin 4 → ℂ :=
+  let h := (halfMix : ℂ)
+  ![![h, h, 0, 0], ![0, 0, h, h * Complex.I],
+    ![h, -h, 0, 0], ![0, 0, h, -(h * Complex.I)]]
+
+private def quarterOutput : Fin 4 → Fin 4 → ℂ :=
+  let h := (halfMix : ℂ)
+  ![![h, h, 0, 0], ![0, 0, h, h], ![h, -h, 0, 0], ![0, 0, h, -h]]
+
+private def reversedAddress : Equiv.Perm (Fin 4) := Equiv.swap 1 2
+
+private theorem high_step (j : Fin 4) :
+    highMixer *ᵥ bank (roots j) (roots j ^ 2) = highOutput j := by
+  ext i
+  fin_cases i <;> fin_cases j <;>
+    norm_num [highMixer, mixHigh, highOutput, roots, bank, Matrix.mulVec, dotProduct,
+      Fin.sum_univ_four, Complex.I_sq] <;> ring
+
+private theorem quarter_step (j : Fin 4) :
+    quarterGate *ᵥ highOutput j = quarterOutput j := by
+  ext i
+  rw [quarterGate, Matrix.mulVec_diagonal]
+  fin_cases i <;> fin_cases j <;>
+    norm_num [highOutput, quarterOutput, Complex.I_sq] <;>
+    ring_nf <;> simp [Complex.I_sq]
+
+private theorem low_step (j : Fin 4) :
+    lowMixer *ᵥ quarterOutput j = Pi.single (reversedAddress j) 1 := by
+  have h : ((halfMix : ℂ) ^ 2) = 1 / 2 := by
+    rw [← Complex.ofReal_pow, halfMix_sq]; norm_num
+  ext i
+  fin_cases i <;> fin_cases j <;>
+    norm_num [lowMixer, mixLow, quarterOutput, reversedAddress, Equiv.swap_apply_def,
+      Pi.single_apply, Matrix.mulVec, dotProduct, Fin.sum_univ_four] <;>
+    ring_nf <;> norm_num [h]
+
+private theorem swap_step (j : Fin 4) :
+    swapBits *ᵥ Pi.single (reversedAddress j) 1 = Pi.single j 1 := by
+  rw [Matrix.mulVec_single_one]
+  ext i
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Matrix.col_apply, swapBits, reversedAddress, Equiv.swap_apply_def, Pi.single_apply]
+
+/-- Execution can end at the bit-reversed address. That encoding exports
+the same information and needs no separate physical swap. -/
+theorem read_reversed (c : Channels) :
+    lowMixer *ᵥ (quarterGate *ᵥ (highMixer *ᵥ
+      (kick true (phase (3 * π) c) *ᵥ (kick false (phase (3 * π / 2) c) *ᵥ bank 1 1)))) =
+      Pi.single (reversedAddress (address (labelRecord c))) 1 := by
+  have hdouble : phase (3 * π) c = phase (3 * π / 2) c ^ 2 :=
+    (congrArg (fun t => phase t c) (show 3 * π = 2 * (3 * π / 2) by ring)).trans
+      (phase_double _ c)
+  rw [kick_bank, hdouble, phase_codes, high_step, quarter_step, low_step]
+
+/-- State-flag cost of the three decoding steps before the optional swap. -/
+def decodeToll (j : Fin 4) : ℝ :=
+  CommonResponse.stateFlag highMixer (bank (roots j) (roots j ^ 2)) +
+    CommonResponse.stateFlag quarterGate (highOutput j) +
+    CommonResponse.stateFlag lowMixer (quarterOutput j)
+
+private theorem decode_tolls (j : Fin 4) :
+    decodeToll j = ![1 - halfMix, 5 / 4, 1, 5 / 4 + halfMix] j := by
+  unfold decodeToll CommonResponse.stateFlag
+  rw [high_step, quarter_step, low_step]
+  fin_cases j <;>
+    norm_num [LinkExpansion.nsq_eq, Fin.sum_univ_four, bank, roots,
+      highOutput, quarterOutput, reversedAddress, Equiv.swap_apply_def,
+      Pi.sub_apply, Pi.single_apply, Matrix.vecHead, Matrix.vecTail, Function.comp_apply,
+      Complex.normSq_apply, Complex.sub_re,
+      Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.I_sq,
+      Complex.div_re, Complex.div_im] <;>
+    nlinarith [halfMix_sq]
+
+private theorem swap_tolls (j : Fin 4) :
+    CommonResponse.stateFlag swapBits (Pi.single (reversedAddress j) 1) =
+      ![0, 1 / 2, 1 / 2, 0] j := by
+  rw [CommonResponse.stateFlag, swap_step]
+  fin_cases j <;> norm_num [LinkExpansion.nsq_eq, Fin.sum_univ_four,
+    reversedAddress, Equiv.swap_apply_def, Pi.sub_apply, Pi.single_apply]
+
+/-- Flag ledger of the forward reader from a balanced bank. `canonical`
+charges the final bit swap when a canonical output order is required. -/
+def forwardToll (canonical : Bool) (c : Channels) : ℝ :=
+  let j := address (labelRecord c)
+  exposureToll c + decodeToll j +
+    if canonical then CommonResponse.stateFlag swapBits (Pi.single (reversedAddress j) 1) else 0
+
+open ProtocolToll in
+theorem forward_tolls (a : Fin 3) (b : Bool) :
+    forwardToll b electronStatic = (if b then 5 / 2 else 2) ∧
+      forwardToll b (downStatic a) = 2 + halfMix ∧
+      forwardToll b (upStatic a) = (if b then 2 else 3 / 2) ∧
+      forwardToll b neutrinoStatic = 1 - halfMix := by
+  obtain ⟨he, hd, hu, hn⟩ := static_record_codes a
+  obtain ⟨te, td, tu, tn⟩ := exposure_tolls a
+  change labelRecord electronStatic = (true, true) at he
+  change labelRecord neutrinoStatic = (true, false) at hn
+  cases b <;>
+    norm_num [forwardToll, decode_tolls, swap_tolls, address, he, hd, hu, hn, te, td, tu, tn] <;>
+    ring
+
+/-- Charging the actual decoder factors reverses the required electron/down
+order. Adopting bit-reversed output addresses leaves that exclusion intact. -/
+theorem forward_no_ladder (a : Fin 3) (b : Bool) :
+    TollAmplitude.wireAmplitude (forwardToll b (ProtocolToll.downStatic a)) <
+      TollAmplitude.wireAmplitude (forwardToll b ProtocolToll.electronStatic) := by
+  obtain ⟨he, hd, -, -⟩ := forward_tolls a b
+  rw [TollAmplitude.wireAmplitude_lt_iff, he, hd]
+  have h : 1 < √2 := by
+    have hs := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+    nlinarith [Real.sqrt_nonneg 2]
+  unfold halfMix
+  cases b
+  · simp
+  · simp; linarith
 
 end PMElementaryParticles.ElectricFourPortRecord

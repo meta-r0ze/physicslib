@@ -29,8 +29,9 @@ the recorded mass ratios to check it.
     physical comparator, and derive the tariff for preparation,
     registrations and record export or reuse. The
     [fixed-kick candidate](OVERVIEW.md#four-port-electric-record-with-fixed-kicks)
-    needs a native bank decoder and its two exposures alone tie
-    electron with down. If the cost enters through the reference node,
+    gives the wrong electron/down order under forward logical-factor
+    pricing, with either output order. A microscopic tariff for an
+    admitted circuit remains open. If the cost enters through the reference node,
     derive the price for a crossing that carries a protocol label
     (`HandoffAdmittance.closure_one_price` assumes indistinguishable
     signals).
