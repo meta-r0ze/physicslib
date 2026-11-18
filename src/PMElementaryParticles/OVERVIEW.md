@@ -299,6 +299,17 @@ preparation's steps `k · 6π/5` sit exactly on the window's ends
 (`fifth_root_steps`), and the charged selector's step `3π/4` has `d = ½`
 (`selector_step`, `selector_in_window`).
 
+Doublet-position readouts. A weak gate that treats the partners
+differently must export the doublet position
+(`RefreshMap.asymmetric_gate_records`). A static step with down flag `1`
+flags down and the electron fully and up and the vacancy not at all: it
+reads that bit on every static label (`full_readout`; step `3π/2`). It
+adds only to `T_d − T_u`. The electron flag is `1` exactly when the down
+flag is `1` or `¼` (`lepton_readout_iff`); the second is the lepton-only
+readout at `π/2`, below the window (`quarter_below_window`), adding `¾`
+to `T_e − T_d` and `−½` to `T_d − T_u`. These are exactly the witness
+steps of `survival_ladder`.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

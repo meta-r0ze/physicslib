@@ -85,7 +85,10 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   A static-flag schedule needs a hypercharge step outside the
   fifth-root window, `d < (5 − √5)/8` or `d > (5 + √5)/8`
   (`ProtocolToll.window_no_ladder`); the steps selected so far
-  (`3π/4`, `k · 6π/5`) are inside it. This is the common
+  (`3π/4`, `k · 6π/5`) are inside it. The doublet-position readouts are outside it:
+  the full readout `3π/2` and the lepton-only readout `π/2`
+  (`ProtocolToll.full_readout`, `lepton_readout_iff`). Derive how many of
+  each the wire's repair performs per heavy-wire flip. This is the common
   blocker of the PMElementaryParticles readout items and PMFlavor item 2.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator

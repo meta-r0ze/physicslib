@@ -527,6 +527,53 @@ theorem selector_in_window : dLow ≤ 1 / 2 ∧ (1 : ℝ) / 2 ≤ dHigh := by
     rw [show (1 : ℝ) = √1 by simp]; exact Real.sqrt_le_sqrt (by norm_num)
   constructor <;> simp only [dLow, dHigh] <;> linarith
 
+/-! ### Doublet-position readouts
+
+A reversible weak gate that treats the partners differently must export the doublet position
+(`RefreshMap.asymmetric_gate_records`, `CoherentGate.unequal_needs_orthogonal`). On the static
+wall a hypercharge comparison reads that bit exactly when its flag is `0` on up and the vacancy
+and `1` on down and the electron. That happens exactly when the down flag is `1`
+(`full_readout`; the vacancy flag is always `0`). Such a step adds `1` to `T_d − T_u` and
+nothing to `T_e − T_d`. A step that reads the lepton bit alone (electron flag `1`) has down flag
+`1` or `¼` (`lepton_readout_iff`). The second, `π/2` (`flags_quarter`), lies below the
+fifth-root window (`quarter_below_window`) and adds `¾` to `T_e − T_d` and `−½` to
+`T_d − T_u`. So the two doublet readouts are exactly the steps of the witness schedule:
+`n_L` lepton readouts and `n_Q` full readouts give `T_e − T_d = ¾ n_L` and
+`T_d − T_u = n_Q − ½ n_L` (`survivalToll_differences`). The counts are not derived.
+-/
+
+/-- **The full doublet readout.** A step with down flag `1` flags down and the electron fully
+and leaves up and the vacancy unflagged. -/
+theorem full_readout (t : ℝ) (a : Fin 3) (h : hyperchargeFlag t (downStatic a) = 1) :
+    hyperchargeFlag t (opposite electron) = 1 ∧ hyperchargeFlag t (upStatic a) = 0 ∧
+      hyperchargeFlag t (opposite neutrino) = 0 := by
+  obtain ⟨he, hq⟩ := step_differences t a
+  rw [h] at he hq
+  refine ⟨by linarith, by linarith, hyperchargeFlag_static_neutral t⟩
+
+/-- **Lepton readouts.** The electron flag is `1` exactly when the down flag is `1` or `¼`. -/
+theorem lepton_readout_iff (t : ℝ) (a : Fin 3) :
+    hyperchargeFlag t (opposite electron) = 1 ↔
+      hyperchargeFlag t (downStatic a) = 1 ∨ hyperchargeFlag t (downStatic a) = 1 / 4 := by
+  obtain ⟨he, -⟩ := step_differences t a
+  set D := hyperchargeFlag t (downStatic a)
+  have hfe : hyperchargeFlag t (opposite electron) = D * (3 - 4 * D) ^ 2 := by linarith
+  rw [hfe]
+  constructor
+  · intro h
+    have : (D - 1) * (4 * D - 1) ^ 2 = 0 := by linarith
+    rcases mul_eq_zero.mp this with h1 | h1
+    · left; linarith
+    · right; have := pow_eq_zero_iff (n := 2) (by norm_num) |>.mp h1; linarith
+  · rintro (h | h) <;> rw [h] <;> norm_num
+
+/-- The lepton-only readout lies below the window. -/
+theorem quarter_below_window : (1 : ℝ) / 4 < dLow := by
+  have : √5 < 3 := by
+    rw [show (3 : ℝ) = √9 by rw [show (9 : ℝ) = 3 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  simp only [dLow]; linarith
+
 end Survival
 
 end PMElementaryParticles.ProtocolToll

@@ -49,7 +49,19 @@ the recorded mass ratios to check it.
   steps (`fifth_root_steps`) and the charged selector's `½` is inside, so
   the steps selected so far cannot order the labels in any counts. A
   native step with `d < d₋` or `d > d₊` (a fraction of the static period
-  `3π` below `1/5`, or between `2/5` and `3/5`) is needed. The open
+  `3π` below `1/5`, or between `2/5` and `3/5`) is needed. The doublet
+  position supplies both: a weak gate that treats the partners
+  differently must export it (`RefreshMap.asymmetric_gate_records`), and
+  the static comparisons that read it exactly are the full readout
+  (`d = 1`, step `3π/2`; `full_readout`) and the lepton-only readout
+  (`d = ¼`, step `π/2`, below the window; `lepton_readout_iff`,
+  `quarter_below_window`). `n_L` lepton and `n_Q` full readouts give
+  `T_e − T_d = ¾n_L` and `T_d − T_u = n_Q − ½n_L`, so the ladder holds
+  exactly when `n_L > 0` and `n_Q > ½n_L`. Still to derive: the counts
+  per heavy-wire flip, and why these readouts are charged to the heavy
+  label. (Comparison only: equal counts give `(T_d − T_u)/(T_e − T_d) =
+  2/3`, below every diagnostic value in `tools/heavy_toll_targets.py`.)
+  The open
   substrate question is the schedule: which comparisons the wire's repair
   applies to each label, derived from that repair. Compare its weights
   with the recorded ladder only afterwards, in e8p. One structural
