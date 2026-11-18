@@ -91,8 +91,9 @@ the recorded mass ratios to check it.
   price of a label-carrying crossing. One candidate checked: comparing the
   crossing label's hypercharge with the lepton-doublet reference
   (both walls, `DiagonalReadout`) gives `T_e < T_d < T_u` on the node
-  path, with `(T_u − T_d)/(T_d − T_e) = 6` for small steps (about `5.5` at
-  `t = 1`). Comparison only: the diagnostics need about `1.1–1.5`.
+  path, with `(T_u − T_d)/(T_d − T_e) = 6` for small steps, falling to
+  `4.5` at `t = 1` and `2.7` at `π/2`. Comparison only: the diagnostics
+  need about `1.1–1.5`.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
