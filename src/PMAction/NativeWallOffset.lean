@@ -1,4 +1,5 @@
 import PMAction.NativeDetuning
+import PMAction.WallExchange
 
 /-!
 # The retained scalar term of a wall-local lazy event
@@ -84,5 +85,43 @@ theorem coupled_generators_differ [Nonempty n] (e : Equiv.Perm n) (p : ℝ)
   have hr : RootTransferPhase.gap p / 2 = 0 := by exact_mod_cast hz.1
   have hg : RootTransferPhase.gap p = 0 := by linarith
   exact hne ((NativeDetuning.gap_zero_iff p hp).mp hg)
+
+/-- For a Hamiltonian with zero diagonal in the chirality basis, a nonzero
+one-wall offset obstructs chiral anticommutation around every common energy.
+Here the grading is diagonal and has no zero entries. -/
+theorem offset_breaks_centered_chirality [Nonempty n]
+    (H : Matrix (n ⊕ n) (n ⊕ n) ℂ) (hH : ∀ i, H i i = 0)
+    (γ : n ⊕ n → ℂ) (hγ : ∀ i, γ i ≠ 0) (c z : ℂ) (hc : c ≠ 0) :
+    let A := H + c • (projector : Matrix (n ⊕ n) _ ℂ) - z • 1
+    diagonal γ * A ≠ -(A * diagonal γ) := by
+  dsimp only
+  intro h
+  let i : n := Classical.arbitrary n
+  have hleft := congrFun (congrFun h (.inl i)) (.inl i)
+  have hright := congrFun (congrFun h (.inr i)) (.inr i)
+  simp [diagonal_mul, projector, hH] at hleft hright
+  have hz : z = 0 := by
+    have hp : γ (.inr i) * z = 0 := by linear_combination -hright / 2
+    exact (mul_eq_zero.mp hp).resolve_left (hγ _)
+  subst z
+  have hp : γ (.inl i) * c = 0 := by linear_combination hleft / 2
+  exact hc ((mul_eq_zero.mp hp).resolve_left (hγ _))
+
+open scoped Kronecker in
+/-- The obstruction applies to the concrete rest wall with a lazy offset. -/
+theorem rest_offset_breaks_chirality [Nonempty n] (δ₁ δ₂ : ℝ)
+    (Y : Matrix n n ℂ) (p : ℝ) (hp : p < 1 / 2) (hp0 : p ≠ 0) (z : ℂ) :
+    let γ : (Fin 4 × n) ⊕ (Fin 4 × n) → ℂ :=
+      Sum.elim (fun i => ConcreteFermion.gamma i.1 i.1) (fun i => ConcreteFermion.gamma i.1 i.1)
+    let A := WallExchange.H2 0 δ₁ δ₂ Y +
+      ((RootTransferPhase.gap p / 2 : ℝ) : ℂ) • (projector : Matrix _ _ ℂ) - z • 1
+    diagonal γ * A ≠ -(A * diagonal γ) := by
+  dsimp only
+  apply offset_breaks_centered_chirality
+  · rintro (⟨i, j⟩ | ⟨i, j⟩) <;> fin_cases i <;>
+      simp [WallExchange.H2, WallExchange.diag, WallExchange.K, ConcreteFermion.beta]
+  · rintro (⟨i, j⟩ | ⟨i, j⟩) <;> fin_cases i <;> norm_num [ConcreteFermion.gamma]
+  · exact_mod_cast (div_ne_zero (fun h => hp0 ((NativeDetuning.gap_zero_iff p hp).mp h))
+      (by norm_num : (2 : ℝ) ≠ 0))
 
 end PMAction.NativeWallOffset

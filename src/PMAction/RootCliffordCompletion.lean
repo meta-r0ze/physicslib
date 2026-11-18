@@ -40,15 +40,8 @@ lemma pair_unitary (c : Fin 3) (p : ℝ) (a : Fin 3) (j k : Fin 4) :
 lemma half_phase (c : Fin 3) (p : ℝ) (a : Fin 3) (j : Fin 4)
     (hp : 0 < p) (hp1 : p < 1/2) :
     RootTransferPhase.phase (rootEvent c a j) p (2*RootTransferPhase.quarterTime p) =
-      (rootEvent c a j).permMatrix ℂ := by
-  have ht : RootTransferPhase.gap p * (2*RootTransferPhase.quarterTime p) = Real.pi := by
-    linarith [quarter_angle p hp hp1]
-  rw [RootTransferPhase.phase_formula _ (root_twice c a j), ht]
-  have he : Complex.exp (-(Real.pi : ℂ)*Complex.I) = -1 := by
-    simp
-  rw [he]
-  simp only [InvolutionSpectral.plus, InvolutionSpectral.minus, neg_one_smul]
-  module
+      (rootEvent c a j).permMatrix ℂ :=
+  RootTransferPhase.half_pulse _ (root_twice c a j) p hp hp1
 
 def swapPulse (c : Fin 3) (p : ℝ) (a : Fin 3) (j : Fin 4) :=
   RootTransferPhase.phase (rootEvent c a j) p (2*RootTransferPhase.quarterTime p)

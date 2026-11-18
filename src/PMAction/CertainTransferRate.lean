@@ -70,4 +70,15 @@ theorem flip_lower (r t τ : ℝ) (hr : 0 ≤ r) (hτ : 0 < τ) (hθ : 0 < t * �
   calc r * Real.pi / (4 * τ) = r * (Real.pi / (2 * τ)) / 2 := by field_simp; ring
     _ ≤ r * t / 2 := by linarith
 
+/-- A common tick cancels in the rate ratio. The pulse areas and conversion
+    factors into Hamiltonian coefficients are part of the event description. -/
+theorem common_tick_rate_ratio (tick flipTicks crossTicks flipArea crossArea
+    flipFactor crossFactor : ℝ)
+    (ht : 0 < tick) (hf : 0 < flipTicks) (hc : 0 < crossTicks)
+    (hA : crossArea ≠ 0) (hC : crossFactor ≠ 0) :
+    (flipFactor * (flipArea / (flipTicks * tick))) /
+        (crossFactor * (crossArea / (crossTicks * tick))) =
+      (flipFactor / crossFactor) * (flipArea / crossArea) * (crossTicks / flipTicks) := by
+  field_simp [ht.ne', hf.ne', hc.ne', hA, hC]
+
 end PMAction.CertainTransferRate

@@ -1,4 +1,4 @@
-import PMElementaryParticles.PairIsotropy
+import PMElementaryParticles.PairTransport
 
 /-!
 # A massive pair in its rest frame (review item A4, the tensor part)
@@ -17,13 +17,14 @@ have masses `m₁`, `m₂`: energies `E₁`, `E₂` and a common momentum `P` al
   `P² = E₁² − m₁²`, the members are on their shells (`E₂² − P² = m₂²`) and `E₁ + E₂ = Q`.
 * `shells`: the two momenta have invariant masses `E₁² − P²` and `E₂² − P²`.
 
-Open (A4, remaining): the two-body volume with masses (`2P/Q` times the massless one is the standard
-reduction; it is a measure statement, as `A.volume` is here) and the daughter-energy integral of
-`MassiveDaughterSpectrum`/`MassiveWidth` with this tensor.
+`MassiveVolume.shell_density_at_energy` supplies the two-body shell factor
+`2P/Q` times the massless volume. `transported_tensor` and `pair_contraction`
+give the tensor in the parent frame and its V–A contraction.
 -/
 
 noncomputable section
 namespace PMElementaryParticles.MassivePair
+open Matrix
 open PMElementaryParticles.PairIsotropy PMElementaryParticles.PairIsotropy.AngularAverage
 
 variable {Ω : Type*} (A : AngularAverage Ω)
@@ -107,5 +108,54 @@ theorem shells (E₁ E₂ P : ℝ) (ω : Ω) :
         E₂ ^ 2 - P ^ 2 * (A.direction 0 ω ^ 2 + A.direction 1 ω ^ 2 + A.direction 2 ω ^ 2) := by
       simp [MuonRate.mdot, right]; ring
     rw [h, hn]; ring
+
+/-- The massive pair tensor transported to the frame with pair momentum
+`Λ q_rest`. The rest-radius and the total pair energy are independent inputs
+here; the shell equation is supplied by the rate calculation. -/
+theorem transported_tensor {Λ : Matrix (Fin 4) (Fin 4) ℝ}
+    (hΛ : PairTransport.IsLorentz Λ) (E₁ E₂ P : ℝ) (hQ : E₁ + E₂ ≠ 0)
+    (μ ν : Fin 4) :
+    let q := Λ *ᵥ restMomentum (E₁ + E₂)
+    A.average (fun ω => (Λ *ᵥ left A E₁ P ω) μ * (Λ *ᵥ right A E₂ (-P) ω) ν) =
+      A.volume * (P ^ 2 / 3) * metric μ ν +
+        A.volume * ((E₁ * E₂ - P ^ 2 / 3) / (E₁ + E₂) ^ 2) * q μ * q ν := by
+  have hrest (i j : Fin 4) :
+      A.average (fun ω => left A E₁ P ω i * right A E₂ (-P) ω j) =
+        A.volume * (P ^ 2 / 3) * metric i j +
+          A.volume * ((E₁ * E₂ - P ^ 2 / 3) / (E₁ + E₂) ^ 2) *
+            restMomentum (E₁ + E₂) i * restMomentum (E₁ + E₂) j := by
+    have h := massive_rest_covariant A E₁ E₂ P i j
+    apply (mul_left_cancel₀ (pow_ne_zero 2 hQ))
+    rw [h]
+    field_simp
+  have hexp : (fun ω => (Λ *ᵥ left A E₁ P ω) μ * (Λ *ᵥ right A E₂ (-P) ω) ν) =
+      ∑ i, ∑ j, (Λ μ i * Λ ν j) •
+        (fun ω => left A E₁ P ω i * right A E₂ (-P) ω j) := by
+    funext ω
+    simp only [Matrix.mulVec, dotProduct, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+      Finset.sum_mul_sum]
+    exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
+  dsimp only
+  rw [hexp, map_sum]
+  simp_rw [map_sum, map_smul, smul_eq_mul, hrest]
+  have hg := congrFun (congrFun (PairTransport.lorentz_transpose hΛ) μ) ν
+  rw [← hg]
+  simp [Matrix.mul_apply, Fin.sum_univ_four, metric, restMomentum, Matrix.mulVec, dotProduct]
+  ring
+
+/-- Contract the massive pair tensor with the V−A momentum products. -/
+theorem pair_contraction {Λ : Matrix (Fin 4) (Fin 4) ℝ} (hΛ : PairTransport.IsLorentz Λ)
+    (E₁ E₂ P : ℝ) (hQ : E₁ + E₂ ≠ 0) (p pe : Fin 4 → ℝ) :
+    let q := Λ *ᵥ restMomentum (E₁ + E₂)
+    A.average (fun ω => MuonRate.mdot pe (Λ *ᵥ left A E₁ P ω) *
+      MuonRate.mdot p (Λ *ᵥ right A E₂ (-P) ω)) =
+      A.volume * (P ^ 2 / 3) * MuonRate.mdot pe p +
+        A.volume * ((E₁ * E₂ - P ^ 2 / 3) / (E₁ + E₂) ^ 2) *
+          MuonRate.mdot pe q * MuonRate.mdot p q := by
+  dsimp only
+  rw [PairTransport.average_bilinear A]
+  simp_rw [transported_tensor A hΛ E₁ E₂ P hQ]
+  simp [Fin.sum_univ_four, metric, MuonRate.mdot]
+  ring
 
 end PMElementaryParticles.MassivePair

@@ -33,31 +33,113 @@ their bounds, and `G_F` in `m_e⁻²`).
 
 The odd carrier modes of a class are the wire's Dirac components, four axes × two walls (`PMAction.CarrierVacuumSector`), and colour cannot act on them while commuting with `β` and the `αⱼ` (`PMAction.ColourRegister`). So protocol identity (lepton or quark, colour, weak partner) is a separate register; the 16-carrier packet is its count and gauge actions. Earlier readings that put the lepton pair on axis `0` and the up/down pair of colour `i` on axis `i` of the wire are withdrawn: `BetaReference` and `UpDownWire` (modules removed), `DoubletSign`'s wire-mode count, `ProtocolReadout`'s carrier-state reading, `CycleReadout`'s weak-pair reading, and the reference-hold test (module removed). Their theorems remain as carrier and matrix facts; the partner difference has to come from the protocol register.
 
-## Protocol register (candidate reading)
+## Glued protocol register
 
-`E₈ = D₄ ⊕ D₄` with diagonal glue: the glued roots of a class are `8 ⊗ 8`, a carrier of each factor.
-Each wall of generation `g` is a glue class read through one factor: wall T is class `g + 1` with the
-amplitude in the first factor and the protocol label in the second; wall F is class `g − 1` with the
-roles exchanged. This is `PMAction.GenerationWalls`' placement, so the wire is unchanged and every
-protocol sees the same wire, tensored with its label. Walls are told apart by which factor carries
-the amplitude, not by class. `GluedRegister` (doubled integer coordinates, all by `decide`):
-`wallStep_class` (a wall step keeps the class, so it keeps the label: Map), `neg_class` and `neg_ne`
-(the label's antipode is a fixed-point-free sign on the label, `4 + 4`, not a global sign on the wall,
-so it separates weak partners), `triality_class`, `triality_root`, `triality_neg` (an order-three
-triality keeping the `D₄` roots and cycling the classes, so diagonal triality and the factor swap are
-`E₈` automorphisms), and `crossing_walls` (swap then diagonal triality maps every glued root of class
-`g + 1` to one of class `g − 1`, amplitude and label exchanged between the factors: wall T onto wall F
-with the label carried across, which is `PMConstants.CarrierRepresentation`'s "both domain-wall
-sectors" premise). The label is a tensor factor of the moving root, so it moves with the particle
-(Protocol). Counts: `4` odd modes `× 8` labels per wall, `64` per generation, `32` light; `8` labels
-`× 2` walls `= 16` channels. In the vector frame the colour stabiliser of the lepton axis, sign fixed,
-has four orbits on the labels, `(lepton or colour) × sign`: the four base protocols.
-`tools/register_transport_check.py` repeats the checks on the explicit `240` roots. Open (Toll,
-lightest masses): REVIEW.
+The diagonal glue in `E₈ = D₄ ⊕ D₄` supplies two carriers of the same class per
+glued root. Following `GenerationWalls`, wall T of generation `g` uses class
+`g + 1` and carries the amplitude in the first factor. Wall F uses class
+`g − 1` and exchanges the roles of the factors. `GluedRegister` verifies that
+triality followed by factor swap takes T to F, and certifies the six-reflection
+word on all 240 roots (`crossing_word_glued`, `crossing_word_pure`).
+
+`ControlledGluedRegister` checks this placement against the EP inventory. Fix a
+generation and use F as the active wall, consistent with the second-wall
+convention of `WallChiralCurrent.kernel_projector`. Activity and the
+signed-axis index identify all 16 channels bijectively. The positive lepton
+label means neutrino on F and vacancy on T. Each channel and amplitude index
+encodes into a distinct glued root. The weak relabeling applies the antipode
+only on F, and colour permutations use the vector-frame action transported
+by triality. A glue-class-controlled pure root reflection moves the amplitude
+while preserving the channel and fixing the other wall in that generation.
+
+The swap-plus-triality word preserves the signed axis, colour permutations and
+electric charge. It changes the glue class to stay in the same generation.
+As a light-channel exchange it would carry the static vacancy to the active
+neutrino. `no_protocol_preserving_wall_exchange` rules out any full wall
+exchange of the light inventory preserving all base protocols, since the
+neutrino has no static counterpart. `no_root_only_wall_readout` shows that a
+root can occur on opposite walls in different generations, so the class
+control uses the generation.
+
+### Equal-class gapped crossing
+
+`GappedGluedCrossing` identifies the word with the support of the existing
+gapped hop. The forward leg keeps the glue class, takes T at generation `g`
+to F at `g + 2`, and preserves the signed label. Four glued roots swap
+factors, and two pure roots in the destination amplitude factor implement
+the spin-axis exchange `i → i + 2`. A bare factor swap has zero
+gapped-to-gapped restriction in the common frame. With parity the restriction
+is `WallExchange.back`; the upper-right adjoint link is
+`CyclicSeesaw.cyc y ⊗ I₈`. The direct light-to-light crossing is zero.
+
+For nonzero `y`, the zero-energy Schur mass factors into one generation-space
+matrix per signed label (`occupied_light_mass`). Excluding the static vacancy
+from the light input leaves every active-neutrino row zero while retaining
+its signed index in the gapped block. Each of the three active-neutrino
+light vectors lifts to an exact zero mode of the full zero-momentum
+Hamiltonian (`neutral_exact_zero`). Each occupied label has its own two
+generation-space flip matrices, with the same inverse link between them.
+These statements use the supplied link coefficient and the inventory's
+vacancy projection. The coherent control and the flip coefficients are
+tracked in REVIEW. The class-blind
+flip disturbs the other wall's labels uniformly and mixes lepton and colour
+labels in classes `v` and `c` (`tools/label_flip_check.py`).
 
 ## Protocol readout
 
 Numerical, `tools/protocol_readout_scan.py`. On the derived wire (`PMAction.ReferenceClassHop`: reference wall `κ_R = (K, k, k)`; `PMAction.CarrierAdmittance`: other wall class-blind, `κ_O = (K, K, K)`; `K = 1`) the cycle resonance is `δ³ = −1` (`PMAction.OtherWallStationary`). At every cube root the bare wire has `m₁ = 0` and `m₂/m₃ = √(3/2) k`: `0.0045` for `k = α/2`, `0.0089` for `k = α`, the same for every protocol. The data (`m_μ/m_τ = 0.0595`, `m_s/m_b ≈ 0.019–0.022`, `m_c/m_t ≈ 0.0036–0.0042`) then need a weight `s` on the heavy label (both walls) per protocol: `s_e : s_d : s_u ≈ 1 : 2.7–3.2 : 12–13.5` for `α/2` (`1 : 2.6–3.1 : 9.6–10.6` for `α`), ordered by charge; the heavy label's mass scales as `s²`. The lazy flip law squares the bare ratio (`2·10⁻⁵`), far below every protocol, so the data favour the coherent event. CKM on the derived wire (weights as fitted): same root `|V_us| ≈ 0.0001`, `|V_cb| ≈ 0.009`, `|V_ub| ≈ 0.008`; different roots `|V_us| = √3/2 ≈ 0.866`, `|V_cb| ≈ 0.010`, `|V_ub| ≈ 0.011` (data `0.225`, `0.041`, `0.0037`): the bare wire's rotation is not the CKM. Mixing tests on the derived wire (`tools/mixing_candidates_check.py`, masses held at data): `|V_us| = 0.225` is reached by a relative flip phase, a light-class asymmetry, or an other-wall cycle phase or asymmetry, so it does not discriminate; `|V_cb|` stays at `0.002–0.010` under every deformation tried (those, the weight on one or both walls, a joint fit, `k/K` from `α/4` to `10α`), with `|V_cb| ≈ |V_ub|`. So the wire's mass matrices cannot give `|V_cb|`; PMFlavor's transfer readout does (`PMFlavor.ReferenceRouting`). Charge-weight test: one `a` in `s ∝ e^{a Y_R}` gives down and up `0.82` and `0.77` (PDG mixed scales), `0.74` and `0.75` (`m_b`, `m_t` at their own scale), 2–11% apart across quark-mass choices (`k = α/2`; `7–18%` at `k = α`). Lightest masses: a real offset `δ = −1 + ε` off the resonance reproduces each `m₁/m₂` with `ε ≈ 0.038 (e), 0.14 (d), 0.0024 (u)`, keeping `m₂/m₃` within 2–7%; with those offsets the same-root CKM is `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065`.
+
+### Lifting the resonant zero
+
+`ResonanceLift` gives the other-wall determinant for three independent
+on-site detunings: `d₀d₁d₂ + κ₀κ₁κ₂`. Multiplying the bare resonant wire
+by dressing matrices preserves the zero determinant. At a fixed nonzero
+resonance, adding an offset `ε` to any single diagonal flip leg changes
+the other-wall determinant to `δ² ε`. In the two-wall Hamiltonian with
+invertible crossing and reference flip, the full zero mode survives
+exactly when `ε = 0` (`shifted_full_zero_iff`). The charged Schur mass
+determinant also includes the reference-to-crossing factor
+`det(R)/det(Y)` (`shifted_schur_det`).
+
+If a protocol can independently vary the common detuning, a fixed
+additive perturbation can be retuned to zero (`retuning_exists`). For a
+real single-leg offset and a positive cycle product, the retuned value
+can always be chosen strictly negative (`negative_retuning_exists`).
+Conversely, distinct single-leg offsets at a shared detuning and cycle
+product cannot both stay resonant. The physical calculation must derive
+both the register insertion and the constraint on the common detuning.
+
+### Protocol Toll constraints
+
+`ProtocolToll` derives four colour orbits on the active packet from its finite
+relabelings. Any reversible colour-equivariant map on the labels preserves
+the coloured and colourless sectors. A fixed word of weak and colour
+relabelings charges weak partners equally when each operation charges its own
+price on a changed label (`eventToll_weak_partners`). The proof uses the
+commutation of the relabelings with the weak involution. An even reading also
+ties the partners. For the comparison order `ν < e < d < u`, Lean excludes
+every monotone function of a single odd scalar reading and every positive
+sector factor times a sign factor.
+
+The proposed label-only chain uses a coloured-to-colourless transition, so a
+reversible colour-equivariant update on the labels cannot realize it. The
+unrestricted forward root-displacement graph in the vector frame also has
+shortcuts (`forward_shortcuts`): every active down or electron label can
+reach an up label in one displacement, and every up label can reach the
+active neutrino in one. Here forward means nonnegative component on the
+reference axis. These exclusions use the substrate operations and the
+comparison order, with no mass values in the proof.
+
+Comparison diagnostics are in `tools/toll_forms_check.py` and
+`tools/readout_placement_check.py`. In the wire fit with `k = α/2`, the
+four inferred weights are about `0.030, 0.087, 0.26, 1.14` for `ν, e, d, u`.
+The neutrino target assumes a neutral mass mechanism. The fitted ladder
+has a typical step factor `3.2–3.4` and also appears when only the
+reference wall is weighted. Weighting only the other wall or scaling the
+detuning reaches the up comparison alone in the scans. A passive node load
+lowers the bare coupling (`PMAction.ReferenceNodeBoundary`), while the
+charged-lepton and down comparisons need a larger effective coupling.
+These are targets for a future substrate calculation of the flip coefficients.
 
 ## Refresh map and weak gate
 
@@ -124,6 +206,8 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `MuonLifetimeHigherOrder` | `τ_μ = τ_tree/(1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)`: `lifetime_bounds` `2.196974–2.196984 µs` (measured `2.1969811(22)`; the one-loop row was `+5σ`) | via `MuonQEDLoops` |
 | `TauLifetimeCorrected` | Tau lifetime from the measured `τ_μ` and supplied `B_e` with the electronic partial-width ratio corrected: phase space `f(x_μ)/f(x_τ)` (derived), `W` propagator (E8 `M_W`), one-loop QED at each lepton scale (`α(m_τ)⁻¹ = 133.3` supplied); `tau_lifetime_corrected` `291.03–291.06` fs (measured `290.3 ± 0.5`; tree `291.15–291.17`) | measured `τ_μ`, `B_e`, `α(m_τ)` |
 | `MuonRadiativeLog` | Muon decay has no one-loop radiative log: `c = 0` for charges `(0, −1, −1, 0)` (`leptonic_no_log`) and in the charge-retention order, a conserved `e–μ` current (`retention_no_log`); so the radiative factor is one pure number (`rate_factor_one`) | — |
+| `PairInvariantSpectrum` | Uses the massive-daughter tree spectrum to derive the density in `q² = (p − p_e)²`, its physical interval `[0,(m − μ)²]`, and its weighted change of variable with Jacobian `1/(2m)`. The unweighted integral recovers `MassiveWidth.closed_width`. At `μ = 0`, the normalized invariant `z=q²/m²` gives the weight `2(1−z)²(1+2z)` | Tree contact spectrum with massless neutrinos |
+| `RadiativeIntegrals` | Real dilogarithm series equals the integral of `−log(1 − x)/x` on `[0,1]` (`dilog_eq_integral`); `Li₂(1) = π²/6` from the Basel sum. The kernel is integrable at the endpoint and its reflected form `−log x/(1 − x)` has the same integral | — |
 | `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing; applied to the on-axis matrix in `PMFlavor.InclusiveWidth`), `kinematic_bounds` | Orthogonal final states, common kinematics |
 
 ## Pair tensor and continuum angular integral
@@ -136,10 +220,10 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `MassivePair` | Rest-frame tensor of a pair with masses `m₁`, `m₂` from the angular symmetries (`massive_rest_tensor`), covariant form `Q²⟨k₁k₂⟩ = Φ(P²/3) g Q² + Φ(E₁E₂ − P²/3) q q` (`massive_rest_covariant`), `massless_limit`, `two_body_kinematics`, `shells` | — |
 | `ElectronMeasure` | Massive daughter measure from `∫_{ℝ³}`: `∫ g(E) d³p/((2π)³2E) = (1/4π²)∫_μ^B √(E²−μ²) g(E) dE` (`massive_lorentz_measure`); the massive width is the Lebesgue integral of the flux-weighted pair part over the daughter momentum (`width_from_lebesgue`) | three-body factorization into daughter × pair, flux `1/(2m)` |
 | `NullBoost` | Boost along an axis acting on a massless leg: `|k'| = γ(|k| + βk₀)` (`nrm_boost`), inverse (`boost_inv`), Jacobian `|k'|/|k|` (`det_J`, `boost_hasFDerivAt`); `d³k/|k|` is boost invariant (`measure_invariant`) and so is the two-leg measure as an iterated integral (`pair_invariant`) | — |
-| `TauBranching` | `B(τ→eνν̄) = 1/(1 + f(r) + N_c h)`: leptonic ratio from the derived phase factor at the E8 masses (`phase_bounds`, `0.9724–0.9727`), `N_c = D − 1 = 3` (`colours_eq`); parton level `h = 1` gives `0.2010–0.2012` (`parton_level`); the supplied `0.1782` needs `h = 1.2129–1.2132` (`supplied_needs`) | hadronic factor `h` (PMHadrons) |
+| `TauBranching` | `B(τ→eνν̄) = 1/(1 + f(r) + N_c h)`: leptonic ratio from the derived phase factor at the E8 masses (`phase_bounds`, `0.9724–0.9727`), `N_c = D − 1 = 3` (`colours_eq`); parton level `h = 1` gives `0.2010–0.2012` (`parton_level`); the supplied `0.1782` needs `h = 1.2129–1.2132` (`supplied_needs`). The [tau inventory](../PMHadrons/OVERVIEW.md#channel-inventory-and-interfaces) uses the derived ratio | inclusive hadronic factor `h` ([PMHadrons REVIEW](../PMHadrons/REVIEW-AND-NEXT.md)) |
 | `PairShell` | Shell coordinates `(E, ν, φ)` for a massless pair at total momentum `b e₀`: `|k| = (E + b cos ν)/2`, `|k̄| = (E − b cos ν)/2` (`nrm_Ψ`, `nrm_Ψ_bar`), Jacobian `(sin ν/8)(E² − b² cos²ν)` (`det_J`, `Ψ_hasFDerivAt`), injective (`Ψ_injOn`), onto off a null half-plane (`Ψ_onto`, `image_ae_univ`); `∫ g d³k/(|k||P⃗−k|) = ∫_S (sin ν/2) g∘Ψ` for every `g` (`shell_integral`) | — |
 | `PairSphere` | The pair tensor over the shell, computed: solid-angle moments `4π`, `0`, `(4π/3)δᵢⱼ` (`separable`, `mono_avg`); rest tensor `4π/12 g Q² + 4π/6 q q` (`rest_covariant`) and its boost by any Lorentz `Λ` (`transported`); the shell legs are the rest pair boosted to `q = (E, b, 0, 0)` (`leg_spatial`, `shellBoost_legs`, `shellBoost_rest`); `∫ k^μ k̄^ν dΩ*/(32π²) = Φ/12 g q² + Φ/6 q q`, `Φ = 1/(8π)` (`shell_tensor`, `shell_tensor_normalized`). With `shell_integral` this is the three-body factorization `pair_density` uses | — |
-| `MassiveVolume` | Massive two-body volume: cumulative `(1/4π)∫₀^P r²/(E₁E₂)` (`cumulative_deriv`), `dQ/dP = PQ/(E₁E₂)` (`energy_deriv`), shell density `(1/8π)(2P/Q)` (`shell_density`), `massless_case` (`2P/Q = 1`) | differentiability of the cumulative in `Q` is a hypothesis |
+| `MassiveVolume` | Massive two-body volume: cumulative `(1/4π)∫₀^P r²/(E₁E₂)`, `dQ/dP = PQ/(E₁E₂)`, and an explicit inverse `momentumAt`. For any nonnegative pair masses, `shell_density_at_energy` proves the derivative of the energy cumulative above threshold, giving `(1/8π)(2P/Q)`. `massless_case` gives `2P/Q = 1` for two massless legs | — |
 
 ## Decay law, survival and routing
 
@@ -202,6 +286,45 @@ open is kinematic (PMHadrons for quark pairs); generation changes at the vertex 
 an on-shell mass eigenstate; `branches_do_not_persist` shows cross-branch
 superpositions beat. Identifying an external particle with a persisting substrate
 state remains a model input.
+
+### Charged density and wall leakage
+
+`PMAction.WallRestChirality.chargedPart_is_native_density` identifies the retained `(d, b)`
+coordinates of the two-wall model with the native chiral density projector.
+At rest, `ExactZeroMode.H` couples only opposite chiralities. Its two chiral
+eigenvalue equations force equal squared norms in the two sectors for every
+nonzero real eigenvalue. Thus a unit-normalized mode supplies exactly half its
+squared norm to the charged density (`PMAction.WallRestChirality.charged_weight_half`).
+
+For orthonormal daughter columns in the full wall space, `daughter_sum_eq_projection`
+gives the sum of squared density amplitudes as the squared norm projected onto
+their span. With an isometric generation rotation on the charged sector,
+`density_strength_eq_half_fraction` gives one half of the projected fraction.
+The common half cancels in a ratio of two such unweighted strengths (with
+nonzero calibration strength). These identities use no measured mixing entries
+or fitted wall weights. `paired_window_strength` proves that a window of
+complete nonzero-energy chiral pairs gives twice the unweighted density
+strength of its positive-energy subset. The factor cancels against the muon
+strength if both windows meet the same conditions. For the factorized contact
+model with two massless spectators, `contactWeight_open` supplies the exact
+integrated weight for a massive daughter. `contact_channel_pos_iff` gives a
+strictly positive contribution exactly for an open channel with nonzero
+amplitude (and nonzero contact coupling). For two spectator masses
+`m₁, m₂`, `PairInvariantSpectrum.massive_pair_window` proves the open
+pair-invariant interval `(m₁ + m₂)² < s < (m − μ)²`. Its interior exists
+exactly when `μ + m₁ + m₂ < m` (`massive_channel_open_iff`). The positive
+rest momentum of the pair exists at every energy above its threshold.
+`MassiveVolume.shell_density_at_energy` supplies the pair shell factor for
+all nonnegative spectator masses. `MassivePair.pair_contraction` transports
+and contracts the massive tensor. `PairInvariantSpectrum.massive_contact_density`
+then multiplies the angularly averaged V–A rate by the recoil measure and
+parent flux. Its integrated weight `massiveContactWidth` is a one-dimensional
+integral over the physical daughter-energy interval and vanishes for a closed
+channel. The two-massless-spectator limit agrees exactly with the earlier
+integrated width. The native amplitude and physical state assignment
+are still needed to apply these contact weights. At exact resonance,
+`PMAction.WallGapCalibration.stationary_charged_fraction` realizes every
+normalized charged fraction in the one-leg stationary family.
 
 ## Protocols and the 16-channel inventory
 

@@ -7,8 +7,10 @@ import PMAction.InvolutionSpectral
 The supplied attempt rate determines the gap -2 log(1-2p). The positive
 two-tick transfer is exactly the Euclidean exponential of this Hermitian
 generator. Its coherent phase evolution reaches the root quarter-pulse at
-a proved positive real time, with its phase retained. Neither the attempt
-rate nor integer clock matching is selected by this construction.
+a proved positive real time, with its phase retained. At twice that time
+the phase is exactly the root permutation; a serial word of such pulses
+has the ordered permutation product. Integer clock matching still
+requires selecting the attempt rate.
 -/
 noncomputable section
 namespace PMAction.RootTransferPhase
@@ -134,6 +136,41 @@ theorem quarter_pulse (e : Equiv.Perm n) (he : Function.Involutive e) (p : ℝ)
   have h := phase_rotation (e.permMatrix ℂ) (Real.pi/4)
   rw [show 2*(Real.pi/4 : ℝ)=Real.pi/2 by ring] at h
   exact h
+
+/-- A half-period pulse implements the root permutation with its exact phase. -/
+theorem half_pulse (e : Equiv.Perm n) (he : Function.Involutive e) (p : ℝ)
+    (hp : 0 < p) (hp1 : p < 1/2) :
+    phase e p (2 * quarterTime p) = e.permMatrix ℂ := by
+  have ht : gap p * (2 * quarterTime p) = Real.pi := by
+    rw [quarterTime]
+    field_simp [(gap_positive p hp hp1).ne']
+  rw [phase_formula e he p, ht]
+  have hexp : Complex.exp (-(Real.pi : ℂ) * Complex.I) = -1 := by simp
+  rw [hexp]
+  simp only [InvolutionSpectral.plus, InvolutionSpectral.minus, neg_one_smul]
+  module
+
+/-- An ordered word of involutive root permutations is realized by a serial
+half-pulse word. The time sum counts serial execution on the common clock. -/
+theorem half_pulse_word (word : List (Equiv.Perm n))
+    (hword : ∀ e ∈ word, Function.Involutive e) (p : ℝ)
+    (hp : 0 < p) (hp1 : p < 1/2) :
+    (word.map (fun e => phase e p (2 * quarterTime p))).prod =
+      (word.map (fun e => e.permMatrix ℂ)).prod ∧
+    (word.map (fun _ => 2 * quarterTime p)).sum =
+      (word.length : ℝ) * (2 * quarterTime p) := by
+  constructor
+  · congr 1
+    apply List.map_congr_left
+    intro e he
+    exact half_pulse e (hword e he) p hp hp1
+  · induction word with
+    | nil => simp
+    | cons e es ih =>
+        have htail := ih (fun f hf => hword f (List.mem_cons_of_mem e hf))
+        simp only [List.map_cons, List.sum_cons, htail, List.length_cons, Nat.cast_add,
+          Nat.cast_one]
+        ring
 
 /-- With unit-duration integer ticks, principal-quarter matching imposes an
 additional exact rate/clock calibration. It is not a consequence of stationarity. -/

@@ -100,6 +100,31 @@ theorem crossing_walls : ∀ (g : Fin 3) (a b : Fin 8), ∃ a' b' : Fin 8,
     crossing (carrier (g + 1) a, carrier (g + 1) b) = (carrier (g - 1) b', carrier (g - 1) a') := by
   decide
 
+/-- Reflection in an E8 root in doubled coordinates. -/
+def reflectPair (r w : Wt × Wt) : Wt × Wt :=
+  let c := (dot w.1 r.1 + dot w.2 r.2) / 4
+  (fun i => w.1 i - c * r.1 i, fun i => w.2 i - c * r.2 i)
+
+/-- Six glued roots, in reflection application order, given by class and carrier indices. -/
+def crossingWord : List (Fin 3 × Fin 8 × Fin 8) :=
+  [(0, 6, 7), (0, 6, 6), (2, 6, 6), (2, 2, 5), (2, 4, 3), (2, 0, 7)]
+
+def runCrossing (p : Wt × Wt) : Wt × Wt :=
+  crossingWord.foldl (fun w (x, a, b) => reflectPair (carrier x a, carrier x b) w) p
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 3000000 in
+theorem crossing_word_glued : ∀ (x : Fin 3) (a b : Fin 8),
+    runCrossing (carrier x a, carrier x b) = crossing (carrier x a, carrier x b) := by
+  decide +kernel
+
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 3000000 in
+theorem crossing_word_pure : ∀ (i j : Fin 4) (a b : Bool), i ≠ j →
+    runCrossing (root i j a b, 0) = crossing (root i j a b, 0) ∧
+    runCrossing (0, root i j a b) = crossing (0, root i j a b) := by
+  decide +kernel
+
 /-- Per generation: `8` amplitude carriers `× 8` labels on each wall. -/
 theorem wall_card : Fintype.card (Fin 8 × Fin 8) = 64 := by decide
 

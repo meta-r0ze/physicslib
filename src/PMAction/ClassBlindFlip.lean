@@ -1,6 +1,7 @@
 import PMAction.PairedRootFlip
 import PMAction.SpinorEvenFrame
 import PMAction.EvenRootPhase
+import PMSubstrate.E8Values
 
 /-!
 # A common root echo for all carrier classes
@@ -377,5 +378,123 @@ theorem forwardTimes_total (p t : ℝ) :
     (∑ j, forwardTimes p t j) = 32*RootTransferPhase.quarterTime p := by
   norm_num [forwardTimes, Fin.sum_univ_succ]
   ring
+
+/-- Each of the sixteen forward pulse durations is a whole substrate tick count. -/
+def TickAligned (p t : ℝ) : Prop :=
+  ∀ j, ∃ k : ℕ, forwardTimes p t j = (k : ℝ)
+
+/-- A certain beta flip makes the quarter-time an even number of substrate
+ticks. A quarter-time and the half-angle parameter both occur as actual pulse
+durations in this particular forward program. -/
+theorem certain_quarter_even {p t : ℝ} (hp : 0 < p) (hp1 : p < 1/2)
+    (ha : TickAligned p t) (hfull : Real.cos (RootTransferPhase.gap p * t) = 0) :
+    ∃ m : ℕ, 0 < m ∧ RootTransferPhase.quarterTime p = (2 * m : ℕ) := by
+  obtain ⟨q, hq⟩ := ha 12
+  obtain ⟨n, hn⟩ := ha 0
+  norm_num [forwardTimes, Matrix.cons_val] at hq hn
+  obtain ⟨k, hk⟩ := Real.cos_eq_zero_iff.mp hfull
+  have ht : t = (2 * (k : ℝ) + 1) * RootTransferPhase.quarterTime p := by
+    apply mul_left_cancel₀ (RootTransferPhase.gap_positive p hp hp1).ne'
+    rw [hk, mul_left_comm, quarter_angle p hp hp1]
+    ring
+  have hreal : (2 : ℝ) * n = (2 * (k : ℝ) + 1) * q := by
+    rw [← hq, ← hn, ht]
+    ring
+  have hint : (2 : ℤ) * n = (2 * k + 1) * q := by exact_mod_cast hreal
+  have hparity : (2 : ℤ) * n = 2 * (k * q) + q := hint.trans (by ring)
+  have hqpos : 0 < q := by
+    exact_mod_cast hq ▸ RootTransferPhase.quarterTime_positive p hp hp1
+  refine ⟨q / 2, by omega, ?_⟩
+  have he : q = 2 * (q / 2) := by omega
+  exact hq.trans (by exact_mod_cast he)
+
+/-- A full tick-aligned execution of the checked echo takes at least 64
+ticks, so it cannot occur once in a 43-tick serial frame. -/
+theorem certain_tick_duration_lower {p t : ℝ} (hp : 0 < p) (hp1 : p < 1/2)
+    (ha : TickAligned p t) (hfull : Real.cos (RootTransferPhase.gap p * t) = 0) :
+    64 ≤ ∑ j, forwardTimes p t j := by
+  obtain ⟨m, hm, hq⟩ := certain_quarter_even hp hp1 ha hfull
+  rw [forwardTimes_total, hq]
+  have hm' : (1 : ℝ) ≤ m := by exact_mod_cast hm
+  push_cast
+  linarith
+
+/-- A complete tick-aligned flip using this program cannot fit the substrate
+period. This conclusion already holds before allocating any crossing pulses. -/
+theorem certain_does_not_fit_e8_frame {p t : ℝ} (hp : 0 < p) (hp1 : p < 1/2)
+    (ha : TickAligned p t) (hfull : Real.cos (RootTransferPhase.gap p * t) = 0) :
+    (PMSubstrate.E8Values.Delta : ℝ) < ∑ j, forwardTimes p t j := by
+  exact lt_of_lt_of_le (by norm_num [show PMSubstrate.E8Values.Delta = 43 from rfl])
+    (certain_tick_duration_lower hp hp1 ha hfull)
+
+/-- Six serial half-pulse reflections on that same clock use at least 24 ticks
+in addition to the certain flip's 64. This is the time budget when a crossing is
+implemented as a serial six-reflection word. -/
+theorem certain_with_six_reflections_lower {p t : ℝ} (hp : 0 < p) (hp1 : p < 1/2)
+    (ha : TickAligned p t) (hfull : Real.cos (RootTransferPhase.gap p * t) = 0) :
+    88 ≤ (∑ j, forwardTimes p t j) + 6 * (2 * RootTransferPhase.quarterTime p) := by
+  obtain ⟨m, hm, hq⟩ := certain_quarter_even hp hp1 ha hfull
+  have hm' : (1 : ℝ) ≤ m := by exact_mod_cast hm
+  rw [forwardTimes_total, hq]
+  push_cast
+  linarith
+
+/-- The 64-tick lower bound is attained by the same native program, with
+principal beta angle pi/2 and one whole tick in each short pulse. -/
+theorem certain_tick_duration_attained :
+    ∃ p : ℝ, 0 < p ∧ p < 1/2 ∧ RootTransferPhase.quarterTime p = 2 ∧
+      TickAligned p 2 ∧
+      RootTransferPhase.gap p * 2 = Real.pi / 2 ∧
+      (∑ j, forwardTimes p 2 j) = 64 ∧
+      ∀ c, forwardPulse c p 2 = IsometricDynamics.extend (embedding c)
+        (Complex.I • ConcreteFermion.beta) := by
+  let p := (1 - Real.exp (-Real.pi / 8)) / 2
+  have hp : 0 < p := by
+    have he := Real.exp_lt_one_iff.mpr (show -Real.pi / 8 < 0 by
+      linarith [Real.pi_pos])
+    dsimp [p]
+    linarith
+  have hp1 : p < 1 / 2 := by
+    dsimp [p]
+    linarith [Real.exp_pos (-Real.pi / 8)]
+  have hr : RootTransferPhase.residual p = Real.exp (-Real.pi / 8) := by
+    dsimp [RootTransferPhase.residual,p]
+    ring
+  have hg : RootTransferPhase.gap p = Real.pi / 4 := by
+    rw [RootTransferPhase.gap, hr, Real.log_exp]
+    ring
+  have hq : RootTransferPhase.quarterTime p = 2 := by
+    rw [RootTransferPhase.quarterTime, hg]
+    field_simp [Real.pi_ne_zero]
+    norm_num
+  have hangle : RootTransferPhase.gap p * 2 = Real.pi / 2 := by rw [hg]; ring
+  refine ⟨p, hp, hp1, hq, ?_, hangle, by rw [forwardTimes_total, hq]; norm_num, ?_⟩
+  · intro j
+    refine ⟨(![1,7,1,7,6,6,6,6,1,7,1,7,2,2,2,2] : Fin 16 → ℕ) j, ?_⟩
+    fin_cases j <;> norm_num [forwardTimes, hq, Matrix.cons_val]
+  · intro c
+    rw [forwardPulse_eq c p 2 hp hp1, pulse_completed c p 2 hp hp1, hangle]
+    simp [LocalUnitary.rotation]
+
+/-- On the same calibrated clock, a further full rotation can be hidden
+inside the very same serial duration and completed coherent action. Selecting
+the principal rotation needs information beyond the endpoint and total time. -/
+theorem full_turn_same_time_and_readout {p : ℝ} (hp : 0 < p) (hp1 : p < 1/2)
+    (hq : RootTransferPhase.quarterTime p = 2) :
+    TickAligned p 10 ∧
+      RootTransferPhase.gap p * 10 = 5 * (Real.pi / 2) ∧
+      (∑ j, forwardTimes p 10 j) = (∑ j, forwardTimes p 2 j) ∧
+      ∀ c, forwardPulse c p 10 = forwardPulse c p 2 := by
+  have h2 : RootTransferPhase.gap p * 2 = Real.pi / 2 := by
+    simpa only [hq] using quarter_angle p hp hp1
+  have h10 : RootTransferPhase.gap p * 10 = Real.pi / 2 + 2 * Real.pi := by linarith
+  refine ⟨?_, by linarith, by rw [forwardTimes_total, forwardTimes_total], ?_⟩
+  · intro j
+    refine ⟨(![5,3,5,3,6,6,6,6,5,3,5,3,2,2,2,2] : Fin 16 → ℕ) j, ?_⟩
+    fin_cases j <;> norm_num [forwardTimes, hq, Matrix.cons_val]
+  · intro c
+    rw [forwardPulse_eq c p 10 hp hp1, forwardPulse_eq c p 2 hp hp1,
+      pulse_completed c p 10 hp hp1, pulse_completed c p 2 hp hp1, h10, h2]
+    simp [LocalUnitary.rotation]
 
 end PMAction.ClassBlindFlip

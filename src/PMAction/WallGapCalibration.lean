@@ -102,6 +102,33 @@ theorem diagnostic_loss (u y : ℝ) (hy : y ≠ 0) :
   have hr : 1 + (u/y)^2 ≠ 0 := ne_of_gt (by positivity)
   field_simp [hy, hs, hr]
 
+/-- Stationarity at exact resonance leaves the normalized charged fraction
+free over the entire unit interval in the one-leg spin-up family. -/
+theorem stationary_charged_fraction (u y f : ℝ) (hy : y ≠ 0)
+    (hf : 0 ≤ f) (hf1 : f ≤ 1) :
+    ∃ a d : ℂ, H u 0 y *ᵥ signal u y a d = 0 ∧
+      WallCurrentWeights.lightWeight (signal u y a d) +
+        WallCurrentWeights.gapWeight (signal u y a d) = 1 ∧
+      WallCurrentWeights.chargedLightWeight (signal u y a d) = f ∧
+      WallCurrentWeights.chargedGapWeight (signal u y a d) = 0 := by
+  let z : ℝ := 1 + (u / y) ^ 2
+  have hz : 0 < z := by dsimp [z]; positivity
+  let a : ℂ := (Real.sqrt ((1 - f) / z) : ℝ)
+  let d : ℂ := (Real.sqrt f : ℝ)
+  have ha : Complex.normSq a = (1 - f) / z := by
+    dsimp only [a]
+    rw [Complex.normSq_ofReal, Real.mul_self_sqrt (div_nonneg (sub_nonneg.mpr hf1) hz.le)]
+  have hd : Complex.normSq d = f := by
+    dsimp only [d]
+    rw [Complex.normSq_ofReal, Real.mul_self_sqrt hf]
+  obtain ⟨hl, hg, hcl, hcg⟩ := signal_weights u y a d
+  refine ⟨a, d, signal_stationary u y hy a d, ?_, hcl.trans hd, hcg⟩
+  rw [hl, hg, ha, hd]
+  calc
+    (1 - f) / z + f + (u / y) ^ 2 * ((1 - f) / z) =
+        z * ((1 - f) / z) + f := by dsimp [z]; ring
+    _ = 1 := by field_simp [hz.ne']; ring
+
 /-- The same free crossing scale respects the three-label glue support. -/
 def cyclicLink (y : ℝ) := CyclicSeesaw.cyc (fun _ => (y : ℂ))
 

@@ -49,6 +49,7 @@ import PMElementaryParticles.SubstrateLedger
 
 import PMElementaryParticles.SpinorRateBridge
 import PMElementaryParticles.InclusiveMixing
+import PMElementaryParticles.ChargedRowReadout
 import PMElementaryParticles.PairIsotropy
 import PMElementaryParticles.PairTransport
 import PMElementaryParticles.WExchangeRate
@@ -57,6 +58,7 @@ import PMElementaryParticles.ExternalStates
 import PMElementaryParticles.MassiveExternalAmplitude
 import PMElementaryParticles.MassiveDaughterSpectrum
 import PMElementaryParticles.MassiveWidth
+import PMElementaryParticles.PairInvariantSpectrum
 import PMElementaryParticles.ContinuumPair
 import PMElementaryParticles.PhaseSpace
 import PMElementaryParticles.PolarMeasure
@@ -70,8 +72,13 @@ import PMElementaryParticles.PairShell
 import PMElementaryParticles.PairSphere
 import PMElementaryParticles.TauBranching
 import PMElementaryParticles.GluedRegister
+import PMElementaryParticles.ControlledGluedRegister
+import PMElementaryParticles.GappedGluedCrossing
+import PMElementaryParticles.ProtocolToll
+import PMElementaryParticles.ResonanceLift
 import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog
+import PMElementaryParticles.RadiativeIntegrals
 import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.MuonQEDLoops
