@@ -40,11 +40,17 @@ the recorded mass ratios to check it.
   The static bound excludes an affine conversion only, and the derived
   conversion is not affine. On the static flags it gives the charged
   order and any ratio (`ProtocolToll.survival_ladder`, `doubling_iff`;
-  steps `π/2` and `3π/2` as a witness). The recorded ladder then needs
-  Toll differences `T_e − T_d ≈ 2.0–2.3` and `T_d − T_u ≈ 2.9–3.0`
-  expected registrations (`tools/protocol_readout_scan.py` weights at
-  `k = α/2`). Derive the schedule in PMAction and then compare it with
-  these differences. Do not choose steps or counts from them.
+  steps `π/2` and `3π/2` as a witness). The targets depend on the
+  quark-mass scale convention (`tools/heavy_toll_targets.py`):
+  `T_e − T_d ≈ 1.96–2.31` in every convention, but `T_d − T_u` is `2.13`
+  with the tier-ledger masses (`m_c(m_c)/m_t`), `2.89` at `M_Z` and
+  `3.02` with the scan's own-scale inputs. Fix one convention before any
+  test. A Toll linear in the static hypercharge predicts
+  `(T_d − T_u)/(T_e − T_d) = 3/2` with no free parameter. The inputs give
+  `1.09` (ledger), `1.25` (`M_Z`), `1.36` (PDG mixed), `1.54` (own
+  scale), so this class passes only one convention. Derive the schedule
+  in PMAction and then compare. Do not choose steps or counts from the
+  targets.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
@@ -107,7 +113,14 @@ the recorded mass ratios to check it.
   the first-row deficit is PMFlavor's `1/516` dressing
   (`PMFlavor.DressingInheritance`), so leakage only adds to it and its
   output here is a bound (`r = K_f/|y| ≲ 0.07–0.12` with the current
-  estimate, `tools/first_row_readout.py`). Identify the
+  estimate, `tools/first_row_readout.py`). Tension: PMAction's explored
+  schedules give `1/8 ≤ r ≤ 1/2`, where this model's leakage is
+  `3.9·10⁻³` to `4.9·10⁻²` with the fitted weights (`1.3·10⁻³` at
+  `r = 1/8` with equal weights). With the dressing's `1.94·10⁻³`, all
+  exceed the measured `(1.6 ± 0.7)·10⁻³`. So either the native crossing
+  is faster than those schedules, or some gapped weight reaches open
+  physical channels and is not lost. Identifying the daughter modes
+  decides this. Identify the
   interacting positive-energy modes for the `FinalChannels` labels in the
   quark row and muon calibration. Derive the physical parent preparation at
   exact resonance. [PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions)
