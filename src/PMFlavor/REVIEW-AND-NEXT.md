@@ -9,15 +9,13 @@ wire (PMAction) and the protocols (PMElementaryParticles). Every number comes fr
 narrowly stated premise; data are only the final test (e8p). Do not fit integers or parameters to
 data, and do not frame work as fitting Standard Model sectors.
 
-**Where the entries now stand (2026-11-16).** The routing is derived (`ReferenceRouting`); with the
-weak doublet as the wall orientation (`OrientationDoublet`, a PMAction register candidate) every
-elementary move is an up ↔ down transition: diagonal by the root move, `u–s` direct, `c–b` and `t–d`
-through the node, whose value is `α/2` on both (`PMAction.ReferenceNode`). The `s ↔ c` exchange maps
-one node edge onto the other with up and down exchanged (`flip_node_edges`), so their ratio (`≈ 11` in
-the data) needs a readout that depends on which doublet member holds the reference's class (item 2).
-Leg-count and randomness tests are in OVERVIEW ("Results of the 2026-11-16 review").
-
-**Status of each entry of `J`** (e8p readout names in brackets).
+**Where the entries now stand.** `ReferenceRouting` gives a direct
+in-cycle route and two node routes, whose common reference value is
+`α/2` (`PMAction.ReferenceNode`). The glued register uses the signed
+label for the weak partner, and the tagged in-cycle word acts on that
+label. Derive how the node distinguishes the two weak partners and
+gives unequal amplitudes (item 2).
+[Wall orientation and weak refresh](OVERVIEW.md#wall-orientation-and-weak-refresh)
 
 | Label change | Off the axis | On the axis |
 |---|---|---|
@@ -68,9 +66,9 @@ numbers needs this table next to them.
      (`HalfTurnAperture`).
    - The two node edges: node value `α/2` (`PMAction.ReferenceNode`, `PMAction.PersistenceSelections` (1)). Derive the
      up/down-dependent factor between them (`≈ 10.7` at `U = 1`; the printed forms put `2(π+χ)` there)
-     as the readout of the doublet member that holds the reference's class; the charge weight alone does
-     not give it (`(s_u/s_d)^p` needs `p ≈ 1.6`). Derive the boundary `π` of `|V_ub|`.
-   - The orientation as the doublet: PMElementaryParticles REVIEW, "Protocol register and coupling".
+     from a reference-node readout sensitive to the signed protocol label.
+     The charge-weight comparison `(s_u/s_d)^p` requires `p ≈ 1.6`.
+     Derive the boundary `π` of `|V_ub|`.
 3. **Completion order inside one event.** `corner_split`: the two-step term splits as `w, 1 − w̄`; `w = ½`
    for any power series in `A`, `w = 0` for forward composition (FC). At `U = 1` with `κ₁ = jump`,
    Stewart's relation gives `w = 0` at `1.1σ`, `w = ½` at `4.9σ`, `w = 1` at `25σ`. Derive FC from the

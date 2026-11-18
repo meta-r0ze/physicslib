@@ -22,15 +22,9 @@ the recorded mass ratios to check it.
   [toll constraints](OVERVIEW.md#protocol-toll-constraints) to screen
   candidates. [PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions) owns
   pulse selection and timing.
-  Tip: `ProtocolToll` shows a fixed relabeling schedule priced by changed
-  labels gives weak partners equal Tolls, so the cost must depend on the
-  label's state, not an event count. The heavy generation's two walls read
-  the label in two class frames (classes `g + 1` and `g − 1`, related by
-  triality): in the vector frame the sign is the doublet and the axis is
-  lepton or colour; in a spinor frame sign and axis mix. A cost built from
-  the label's overlap with the reference in both frames together (for
-  example their product) has the odd `×` even form the constraints require.
-  Test it against the `≈ ×3` ladder `u, d, e, ν` before building more.
+  Seek a reference-conditioned history or a joint response with an
+  additional readout that distinguishes the four colour orbits. Use the
+  recorded `≈ ×3` ladder as a comparison once the rule is derived.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
@@ -45,35 +39,17 @@ the recorded mass ratios to check it.
   branch mixer in `PMAction.BranchGateBoundary`, and route the retained
   occupied branch onto the static light wall. Use the
   [vacancy preparation](OVERVIEW.md#static-vacancy-and-neutral-light-modes)
-  as the candidate circuit. Derive a neutral mass operator that gives the
-  prepared sector a spectrum with mass splittings for oscillations.
+  as the candidate circuit for the vacancy-truncated model. For a Dirac
+  mass, derive the native update that populates the static neutral crossing
+  partner and supplies the unit hypercharge transfer. Derive the neutral
+  flips and their generation dependence in the
+  [paired Schur block](OVERVIEW.md#equal-class-gapped-crossing) to obtain
+  mass splittings for oscillations.
   Tip: screen any candidate first against the off-resonance offsets the
   data need (`e 0.038`, `d 0.14`, `u 0.0024`; OVERVIEW, protocol readout).
   They follow no single law in charge, so a shared mechanism must produce
   that pattern; `ResonanceLift` already shows a free common detuning would
   restore the zero, so what holds it fixed is part of the derivation.
-
-## Protocol register and coupling
-
-- **Weak doublet and wall orientation. [Premise]** If Flavor's
-  `OrientationDoublet` candidate is used for charged-current routing, exhibit
-  a native encoding and update that identify reversal of the ordered wall
-  classes with the weak-partner flip. The latter preserves the active bank
-  in `ControlledGluedRegister`. The correspondence must specify how these
-  actions agree on physical states, or the current needs a different
-  register attachment.
-  [PMFlavor current work](../PMFlavor/REVIEW-AND-NEXT.md#open-work)
-  Note: the obstruction `ControlledGluedRegister.no_protocol_preserving_wall_exchange`
-  comes only from the two positive lepton channels, which the inventory
-  names "neutrino" (active wall) and "sterile vacancy" (static wall). A
-  wall exchange pairs a left-handed channel with its right-handed partner,
-  as a Dirac mass does, so this is `ν_L ↔ ν_R`. The crossing preserves the
-  label and charge (`opposite_label`, `opposite_charge`); requiring the same
-  base-protocol name on both walls is too strong. Restate the requirement as
-  label and charge preservation, with the static positive lepton read as
-  `ν_R` when the crossing acts; this also feeds the neutrino part of
-  "Lightest masses". The `OrientationDoublet` part applies only if Flavor
-  uses that candidate.
 
 ## Other open work
 

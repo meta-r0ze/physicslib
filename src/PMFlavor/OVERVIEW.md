@@ -112,6 +112,18 @@ PMElementaryParticles → PMFlavor: `DoubletReflection` moved to PMElementaryPar
 `persistent_single_frequency` to `PMConstants.OnShell`, the PMNS instance of the inclusive width to
 `InclusiveWidth`, and `CarrierAmplitude` no longer carries `V_ud`.
 
+### Wall orientation and weak refresh
+
+`OrientationDoublet.swapped_classOrder_iff` proves that reversing the
+ordered live and companion classes at fixed generation exchanges the banks
+of the glued register. Its orientation therefore records the bank
+(`classOrder_orientation`). The weak toggle preserves the ordered classes
+(`weak_classOrder`). The selected in-cycle word takes the active label
+from generation 2 to 1 and flips its weak partner while preserving this
+orientation (`selected_inCycle_preserves_orientation`). The earlier
+class-shift identities still describe the abstract orientation candidate.
+The current glued register uses the signed label for the weak partner.
+
 ## What is checked
 
 **Canonical values.** `PMFlavor.Values` is the single import for downstream libraries

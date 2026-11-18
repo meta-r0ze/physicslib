@@ -152,6 +152,24 @@ private theorem repeat_link (A : Matrix (Fin 3) (Fin 3) ℂ) :
 def staticFlip (A : Fin 8 → Matrix (Fin 3) (Fin 3) ℂ) (a : Fin 8) :
     Matrix (Fin 3) (Fin 3) ℂ := if a = 0 then 0 else A a
 
+/-- With both light banks included, the zero-energy Schur mass is
+independent in each signed label, including the neutral pair. -/
+theorem paired_light_mass (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
+    (A B : Fin 8 → Matrix (Fin 3) (Fin 3) ℂ) :
+    blockDiagonal B * (gapLink y)⁻¹ * (blockDiagonal A)ᴴ =
+      blockDiagonal (fun a => B a * CompositeMass.cycInv y * (A a)ᴴ) := by
+  rw [gapLink_inv y hy, repeat_link, blockDiagonal_conjTranspose, ← blockDiagonal_mul,
+    ← blockDiagonal_mul]
+
+/-- If the static neutral slot participates in the light block, this is
+the exact zero-energy Schur pairing to the active neutrino. -/
+theorem neutral_paired_mass_entry (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
+    (A B : Fin 8 → Matrix (Fin 3) (Fin 3) ℂ) (g h : Fin 3) :
+    (blockDiagonal B * (gapLink y)⁻¹ * (blockDiagonal A)ᴴ) (g, 0) (h, 0) =
+      (B 0 * CompositeMass.cycInv y * (A 0)ᴴ) g h := by
+  rw [paired_light_mass y hy]
+  simp [blockDiagonal]
+
 /-- After excluding the static vacancy, the mass preserves the signed label.
 The neutral output has no static light partner. Each occupied label has its
 own two generation-space flip matrices. -/
@@ -159,8 +177,7 @@ theorem occupied_light_mass (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
     (A B : Fin 8 → Matrix (Fin 3) (Fin 3) ℂ) :
     blockDiagonal B * (gapLink y)⁻¹ * (blockDiagonal (staticFlip A))ᴴ =
       blockDiagonal (fun a => if a = 0 then 0 else B a * CompositeMass.cycInv y * (A a)ᴴ) := by
-  rw [gapLink_inv y hy, repeat_link, blockDiagonal_conjTranspose, ← blockDiagonal_mul,
-    ← blockDiagonal_mul]
+  rw [paired_light_mass y hy]
   congr 1
   funext a
   by_cases ha : a = 0 <;> simp [staticFlip, ha]

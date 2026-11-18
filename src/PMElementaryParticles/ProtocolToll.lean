@@ -92,6 +92,29 @@ private def electron : Channels := flipWeak neutrino
 private def up : Channels := .inl (0, 0)
 private def down : Channels := flipWeak up
 
+/-- The weak toggle negates both transported labels. A product of two
+linear overlaps with fixed references is therefore weak-even. -/
+theorem overlap_product_weak_partners (g : Fin 3) (refT refF : Wt) (c : Channels)
+    (hc : active c = true) :
+    dot refT (frame (wallClass g false) (labelIndex (flipWeak c))) *
+      dot refF (frame (wallClass g true) (labelIndex (flipWeak c))) =
+    dot refT (frame (wallClass g false) (labelIndex c)) *
+      dot refF (frame (wallClass g true) (labelIndex c)) := by
+  simp only [weak_label, hc, ite_true, dot, Pi.neg_apply, mul_neg,
+    Finset.sum_neg_distrib, neg_mul, neg_neg]
+
+/-- The two heavy-wall overlaps with the same fixed vector reference. -/
+def heavyReferenceOverlaps (c : Channels) : ℤ × ℤ :=
+  (dot (carrier 0 0) (frame (wallClass 0 false) (labelIndex c)),
+   dot (carrier 0 0) (frame (wallClass 0 true) (labelIndex c)))
+
+/-- Even retaining both signed overlaps cannot rank these channels:
+the fixed-reference readout already collides before a cost is assigned. -/
+theorem heavy_reference_overlap_collisions :
+    heavyReferenceOverlaps neutrino = heavyReferenceOverlaps up ∧
+      heavyReferenceOverlaps electron = heavyReferenceOverlaps down := by
+  decide +kernel
+
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 2000000 in
 /-- The unrestricted forward displacement graph bypasses the proposed ladder

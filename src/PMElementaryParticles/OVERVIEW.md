@@ -55,12 +55,24 @@ while preserving the channel and fixing the other wall in that generation. In pa
 
 The swap-plus-triality word preserves the signed axis, colour permutations and
 electric charge. It changes the glue class to stay in the same generation.
-As a light-channel exchange it would carry the static vacancy to the active
-neutrino. `no_protocol_preserving_wall_exchange` rules out any full wall
-exchange of the light inventory preserving all base protocols, since the
-neutrino has no static counterpart. `no_root_only_wall_readout` shows that a
-root can occur on opposite walls in different generations, so the class
-control uses the generation.
+`eq_opposite_iff` identifies the unique opposite-bank partner from the
+signed label. `runCrossing_neutral` sends the static neutral slot to the
+active neutrino with the same amplitude index, giving the `ν_R → ν_L`
+channel pairing. The inventory still calls the static slot a vacancy for
+the light-state projection. For every forward pair the static-minus-active
+hypercharge is `+1` on even signed indices and `−1` on odd indices
+(`opposite_hypercharge_step`, in the packet's integer `3Y` tags).
+Thus a neutral Dirac interpretation needs one unit of hypercharge from
+the substrate, even though the crossing preserves electric charge.
+`no_protocol_preserving_wall_exchange` concerns the separate inventory
+names. `no_root_only_wall_readout` shows that a root can occur on opposite
+walls in different generations, so the class control uses the generation.
+
+At fixed generation, reversing the ordered live and companion classes
+exchanges the banks. The weak refresh instead changes the signed label on
+the active bank. Flavor proves the distinction for its tagged in-cycle word
+in `OrientationDoublet.selected_inCycle_preserves_orientation`.
+[Flavor overview](../PMFlavor/OVERVIEW.md#wall-orientation-and-weak-refresh)
 
 ### Equal-class gapped crossing
 
@@ -84,6 +96,13 @@ The coherent control and the flip coefficients are tracked in REVIEW.
 The class-blind
 flip disturbs the other wall's labels uniformly and mixes lepton and colour
 labels in classes `v` and `c` (`tools/label_flip_check.py`).
+
+With both light banks included, `paired_light_mass` gives the full
+label-wise Schur mass at zero energy. Its neutral block is
+`B₀ · cycInv(y) · A₀ᴴ` (`neutral_paired_mass_entry`), where `A₀` and `B₀`
+are the static and active neutral flips. In the vacancy-truncated model
+`A₀` is set to zero. Admitting and deriving the neutral flips and their
+generation dependence is separate from identifying the crossing partner.
 
 ### Static vacancy and neutral light modes
 
@@ -175,6 +194,15 @@ commutation of the relabelings with the weak involution. An even reading also
 ties the partners. For the comparison order `ν < e < d < u`, Lean excludes
 every monotone function of a single odd scalar reading and every positive
 sector factor times a sign factor.
+
+The product of two linear overlaps with fixed references is even under the
+weak toggle. Both transported labels change sign
+(`overlap_product_weak_partners`). Keeping the full signed pair of overlaps
+with the fixed vector `+2e₀` still gives a collision between the neutrino
+and one up colour and between the electron and the corresponding down
+colour on the heavy generation's two walls
+(`heavy_reference_overlap_collisions`). Those inputs cannot give a strict
+four-species ladder under any scalar postprocessing.
 
 The proposed label-only chain uses a coloured-to-colourless transition, so a
 reversible colour-equivariant update on the labels cannot realize it. The

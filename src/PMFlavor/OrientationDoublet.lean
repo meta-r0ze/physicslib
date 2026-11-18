@@ -1,9 +1,11 @@
+import PMFlavor.InCycleEvent
+import PMElementaryParticles.RefreshMap
 import Mathlib.Tactic
 
 /-!
 # If the weak doublet is the wall orientation, every move flips it
 
-Candidate (PMElementaryParticles REVIEW, "Protocol register and coupling"; PMAction OVERVIEW, "Protocol register candidates"): a generation is a pair of distinct
+Candidate (PMAction OVERVIEW, "Protocol register candidates"): a generation is a pair of distinct
 nontrivial classes, one per wall, and its two orientations, which class sits on which wall, are the
 weak partners. Label the three classes by `Fin 3` and call a pair `(t, f)` (wall `T`, wall `F`)
 positively oriented when `f = t + 1`; `PMAction.GenerationWalls.side` fixes one such convention.
@@ -27,6 +29,11 @@ flavour change that keeps the doublet member (a neutral one) needs two moves.
   holding it). So any readout that is the same for up and down members gives the two node entries
   the same size: `|V_cb| ≠ |V_ub|` needs a charged-current readout that distinguishes the doublet
   member holding the reference's class.
+
+In the glued register used by the current in-cycle candidate, the ordered
+live/companion classes encode the bank. Weak refresh changes the signed
+label within that bank. The selected in-cycle edge also preserves the
+live/companion orientation while flipping the weak partner.
 -/
 
 namespace PMFlavor.OrientationDoublet
@@ -72,5 +79,51 @@ theorem flip_node_edges :
     (orient 2 0 = true ∧ gen 2 0 = 1) ∧ (orient (flip 2) (flip 0) = false ∧ gen (flip 2) (flip 0) = 2) ∧
     (orient 2 1 = false ∧ gen 2 1 = 0) ∧ (orient (flip 2) (flip 1) = true ∧ gen (flip 2) (flip 1) = 0) := by
   decide
+
+open PMElementaryParticles.GluedRegister PMElementaryParticles.ControlledGluedRegister
+open PMElementaryParticles.ProtocolInventory PMConstants.PacketGaugeActions
+
+/-- Read the two classes in live/companion order, as in the tagged in-cycle event. -/
+def classOrder (g : Fin 3) (c : Channels) : Fin 3 × Fin 3 :=
+  (wallClass g (active c), wallClass g (!active c))
+
+/-- In this register the class orientation records the bank. -/
+theorem classOrder_orientation (g : Fin 3) (c : Channels) :
+    orient (classOrder g c).1 (classOrder g c).2 = !active c := by
+  have h : ∀ (g : Fin 3) (b : Bool), orient (wallClass g b) (wallClass g (!b)) = !b := by
+    decide +kernel
+  exact h g (active c)
+
+/-- At fixed generation the weak refresh preserves both ordered classes. -/
+theorem weak_classOrder (g : Fin 3) (c : Channels) :
+    classOrder g (flipWeak c) = classOrder g c := by
+  simp [classOrder, weak_active]
+
+/-- At fixed generation a class-order reversal changes banks. -/
+theorem swapped_classOrder_iff (g : Fin 3) (c d : Channels) :
+    classOrder g d = (classOrder g c).swap ↔ active d = !active c := by
+  constructor
+  · intro h
+    exact wallClass_injective g (congrArg Prod.fst h)
+  · intro h
+    simp [classOrder, h]
+
+/-- The weak refresh cannot realize the class-order reversal on this register. -/
+theorem weak_classOrder_ne_swap (g : Fin 3) (c : Channels) :
+    classOrder g (flipWeak c) ≠ (classOrder g c).swap := by
+  rw [ne_eq, swapped_classOrder_iff, weak_active]
+  cases active c <;> decide
+
+/-- The selected active in-cycle word changes the weak partner and generation
+while preserving the live/companion orientation. -/
+theorem selected_inCycle_preserves_orientation (c : Channels) (amp : Fin 8)
+    (hc : active c = true) :
+    InCycleEvent.runSelected true (encode 2 c amp) = encode 1 (flipWeak c) amp ∧
+    flipWeak c ≠ c ∧
+    orient (classOrder 1 (flipWeak c)).1 (classOrder 1 (flipWeak c)).2 =
+      orient (classOrder 2 c).1 (classOrder 2 c).2 := by
+  refine ⟨?_, (PMElementaryParticles.RefreshMap.moves_iff_active c).mpr hc, ?_⟩
+  · simpa [hc] using InCycleEvent.selected_encode 2 c amp
+  · simp only [classOrder_orientation, weak_active]
 
 end PMFlavor.OrientationDoublet
