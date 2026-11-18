@@ -89,7 +89,7 @@ An inverse partial width is compared with `tau_total / branching_fraction`, not 
 | Row | Matching reference |
 |---|---|
 | charged-pion muonic inverse width | `26.033 ns / 0.9998770` |
-| charged-kaon muonic inverse width | `12.380 ns / 0.6356` |
+| charged-kaon muonic inverse width (`kaon_muonic_partial_lifetime_s`) | `12.380 ns / 0.6356` |
 | neutral-pion two-photon inverse width | `8.43e-17 s / 0.98823` |
 | kaon/pion muonic width ratio | pion inverse partial lifetime / kaon inverse partial lifetime |
 
@@ -103,9 +103,10 @@ It is not an additional experimental lifetime uncertainty and is not added twice
 
 Small references, errors and residuals use scientific notation rather than printing
 as zero. Arithmetic enclosures certify the stated approximation, not theoretical
-uncertainty from omitted radiation or channels. The raw kaon lifetime now has a
-matching partial reference but remains context-only pending the source normalization
-and tighter bounds. The muon remains context-only because `G_F` is already scored;
+uncertainty from omitted radiation or channels. The normalized kaon row reads
+`PMHadrons.ChargedCurrentRate.kaonMuLifetimeSeconds`. Its partial reference
+shares the same kaon inputs as the scored kaon/pion width ratio, so it is
+shown for context. The raw finite-kaon row is a tree-level intermediate. The muon remains context-only because `G_F` is already scored;
 its caveat identifies missing finite-mass one-loop radiation as well as higher orders.
 
 ## Layout

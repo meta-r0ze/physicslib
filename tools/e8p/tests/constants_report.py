@@ -49,7 +49,7 @@ EXPECTED = {
     "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
     "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_muonic_partial_lifetime_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
@@ -101,6 +101,7 @@ def main():
     neutral_tau, neutral_b = Fraction("8.43e-17"), Fraction("0.98823")
     partials = {
         "pion_lifetime_predicted_s": pion_tau / pion_b,
+        "kaon_muonic_partial_lifetime_s": kaon_tau / kaon_b,
         "kaon_finite_lifetime_s": kaon_tau / kaon_b,
         "neutral_pion_finite_lifetime_s": neutral_tau / neutral_b,
         "kaon_pion_width_ratio": (pion_tau / pion_b) / (kaon_tau / kaon_b),
@@ -113,6 +114,7 @@ def main():
     # Each stored error bounds first-order independent-input quadrature, with only rounding slack.
     for key, tau, branch, dtau, dbranch in (
         ("pion_lifetime_predicted_s", pion_tau, pion_b, Fraction("5e-12"), Fraction("0.0000004")),
+        ("kaon_muonic_partial_lifetime_s", kaon_tau, kaon_b, Fraction("0.020e-9"), Fraction("0.0011")),
         ("kaon_finite_lifetime_s", kaon_tau, kaon_b, Fraction("0.020e-9"), Fraction("0.0011")),
         ("neutral_pion_finite_lifetime_s", neutral_tau, neutral_b, Fraction("0.13e-17"), Fraction("0.00034")),
     ):
@@ -125,6 +127,12 @@ def main():
         (Fraction("0.0011")/kaon_b)**2)
     error = Fraction(by_id["kaon_pion_width_ratio"]["experimental"]["uncertainty"])
     assert variance <= error**2 <= variance * Fraction("1.002")
+    kaon_partial = by_id["kaon_muonic_partial_lifetime_s"]
+    assert kaon_partial["inputs"] == ["electron_mass_input", "delta_K"]
+    assert "515/516" in kaon_partial["decay"]["normalization"]
+    assert "supplied delta_K" in kaon_partial["decay"]["correction_order"]
+    assert not kaon_partial["experimental"]["scored"]
+    assert by_id["kaon_pion_width_ratio"]["experimental"]["scored"]
     assert not by_id["kaon_finite_lifetime_s"]["experimental"]["scored"]
     assert not by_id["muon_lifetime_s"]["experimental"]["scored"]
     assert Fraction(by_id["tau_lifetime_fs"]["experimental"]["uncertainty"]) == Fraction("0.82")
@@ -134,6 +142,7 @@ def main():
     # Reporting changes must not change the physical formulas' certified intervals.
     for key, interval in {
         "pion_lifetime_predicted_s": ("2.61592e-8", "2.61602e-8"),
+        "kaon_muonic_partial_lifetime_s": ("1.99692e-8", "1.99700e-8"),
         "kaon_finite_lifetime_s": ("1.98e-8", "2.12e-8"),
         "neutral_pion_finite_lifetime_s": ("8.44e-17", "8.48e-17"),
         "muon_lifetime_s": ("2.196974e-6", "2.196984e-6"),
@@ -168,14 +177,14 @@ def main():
                       "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
                       "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
                       "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_muonic_partial_lifetime_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",
     "pion_finite_lifetime_s", "kaon_finite_lifetime_s",
     "neutral_pion_finite_lifetime_s",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
-    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
+    "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_muonic_partial_lifetime_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
     "pion_finite_width", "pion_finite_lifetime",
     "kaon_finite_width", "kaon_finite_lifetime",
     "neutral_pion_finite_width", "neutral_pion_finite_lifetime",

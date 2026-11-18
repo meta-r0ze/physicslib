@@ -18,35 +18,26 @@ In order: the normalization decision comes first because every rate below uses i
   the pion by construction; its `6·10⁻⁵` agreement with `|V_ud|² R` leaves out both the dressing and
   the long-distance part, so it does not survive the count-once rule. The derived running is the
   short-distance part of `δ`: `R − 1 = 0.0212` (`μ = m_p`, E8 `M_Z`) against the standard `0.0218`.
-  Done for pion and kaon: `ChargedCurrentRate` (e8p's pion row and the K/π ratio read it). Left: (1)
+  Done for pion and kaon: `ChargedCurrentRate` (e8p exports both normalized partial lifetimes and the K/π ratio). Left: (1)
   remove `32/33` (`MesonFiniteChannels.pionLifetimeCorrectedSeconds`, `E8Margin.pionMargin` as a rate
-  factor) and `DecayInstantiation.sharedFactor` once nothing reads them, and give the normalized kaon
-  its own e8p row; (2) the neutron in the same convention (its `δ` is the outer plus inner correction); (3) the
+  factor) and `DecayInstantiation.sharedFactor` once nothing reads them; (2) the neutron in the same convention (its `δ` is the outer plus inner correction); (3) the
   residuals are then the emission counts: `f_π` mildly (`1890`), `f_K` clearly (`1593`, the meson
   emission item below). Do not count the dressing, `R` and `δ` twice.
-- **Partial, inclusive and total rates.** Define photon-inclusive channels and sum actual partial
-  widths before predicting a total lifetime. `PionWidth` and `KaonWidth` supply muon-channel
-  partial widths; `NeutralPionWidth` supplies the two-photon partial width. Against the frozen
+- **Partial, inclusive and total rates.** Complete the physical channel sums before predicting
+  total lifetimes. The [inventory](OVERVIEW.md#channel-inventory-and-interfaces) now uses
+  the corrected inclusive muon rate and the corrected pion and kaon muonic partial rates.
+  The pion electronic rate still needs inclusive radiative matching.
+  `NeutralPionWidth` supplies the two-photon partial width. Against the frozen
   PDG inputs, the charged-pion muon-channel partial lifetime is about 26.0362 ns (total 26.033 ns),
   and the kaon muon-channel partial lifetime is about 19.478 ns (total 12.380 ns). For pi-zero,
   include Dalitz and other open channels: using the measured two-photon fraction 0.98823 only as a
   diagnostic converts a model partial lifetime of about `8.46 × 10⁻¹⁷ s` to a total of about
   `8.36 × 10⁻¹⁷ s`. Derive the branch rates rather than using that fraction as an E8 input.
   Keep the triangle-loop normalization in `NeutralPionWidth` identified as supplied until derived.
-- **Channel inventory wiring.** After choosing the common convention above, make `ParticleChannels`
-  consume the same corrected partial rates as the exported observables: its muon/pion entries
-  still use tree-level widths and the kaon entry lacks the shared factor. Keep calibrated tau
-  fractions explicit and distinguish an incomplete sum from a predicted total; zero-valued
-  `.blocked` entries are unknown rates, not physically absent channels. The elementary radiative
-  kernels and tau leptonic ratio belong in [PMElementaryParticles](../PMElementaryParticles/REVIEW-AND-NEXT.md).
-- **Kaon multibody kinematics and amplitudes.** In `KaonSemileptonic.l3Z`, use the neutral-pion
-  mass for the stated `K+ -> pi-zero l+ nu` final state; the current definition uses `pionPlus`.
-  At fixed other inputs this raises the massless phase factor by about 3.7% (diagnostic, not a
-  Lean bound). Give electron and muon modes their distinct massive phase spaces instead of the
-  same massless rate in `ParticleChannels`. Then derive the form-factor normalization/slope,
-  radiative/isospin corrections and bound-state amplitudes needed by semileptonic and
-  nonleptonic kaon channels. Do not attribute the entire leading-order residual to form factors
-  before fixing these kinematics.
+- **Kaon multibody kinematics and amplitudes.** Give the electron and muon modes
+  distinct massive phase spaces in `ParticleChannels`. Derive the form-factor
+  normalization and slope, radiative and isospin corrections, and bound-state
+  amplitudes for the semileptonic and nonleptonic channels.
 - **Neutron low-energy matching.** Derive the axial radiative shift, including the nucleon
   low-energy constants and counterterm. Specify whether the assigned `g_A = 5/4` is a core or a
   fully strong-dressed QCD coupling before adding strong pion-cloud and electromagnetic effects;

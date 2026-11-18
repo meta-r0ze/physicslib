@@ -16,15 +16,13 @@ flavour-symmetric value `f₊(0) = 1` (the corrections start at second order in 
 Γ(K⁺ → π⁰ ℓ⁺ ν) = G_F² |V_us|² m_K⁵ · ½ · (phase(z)/4) / (192π³),
 ```
 
-where `z = (m_π/m_K)²` and `phase` is the muon-decay phase-space function
+where `z = (m_π⁰/m_K⁺)²` uses the neutral-pion and charged-kaon substrate
+masses. Here `phase` is the muon-decay phase-space function
 (`PMElementaryParticles.MassiveWidth.phase`): the `λ^{3/2}` Dalitz integral equals
 `phase(z)/4` exactly.
 
-**Status: "E8 leading order, ~10%".** The leading-order number is about 10% under
-the measured `K_e3` rate. The gap is the known corrections `f₊(0) ≈ 0.97`, the
-`t`-slope (`+7%`) and short-distance electroweak/isospin corrections (`+5%`); the
-first two are nonperturbative, the same physics as the nonleptonic `K → ππ` modes.
-So this channel is far weaker than the `0.1σ` masses and is labelled as such.
+The inventory records this as a leading-order rate. Finite charged-lepton
+phase space, form factors, and radiative and isospin corrections are open.
 -/
 
 noncomputable section
@@ -32,19 +30,27 @@ namespace PMHadrons.KaonSemileptonic
 open PMHadrons.CompositeMasses PMHadrons.KaonWidth PMHadrons.MesonMasses
 open PMElementaryParticles
 
-/-- The pion/kaon mass-squared ratio `z = (m_π/m_K)²`. -/
-noncomputable def l3Z : ℝ := (pionPlus / kaonPlus) ^ 2
+/-- The mass-squared ratio for the neutral pion in this channel. -/
+noncomputable def l3Z : ℝ := (pion0 / kaonPlus) ^ 2
 
 theorem l3Z_nonneg : 0 ≤ l3Z := by
   unfold l3Z; positivity
 
 theorem l3Z_lt_one : l3Z < 1 := by
-  have hp := pionPlus_value; have hk := kaonPlus_value
-  have hp0 : 0 < pionPlus := lt_trans (by norm_num) hp.1
+  have hp := pion0_value; have hk := kaonPlus_value
+  have hp0 : 0 < pion0 := lt_trans (by norm_num) hp.1
   have hk0 : 0 < kaonPlus := lt_trans (by norm_num) hk.1
-  have hlt : pionPlus < kaonPlus := by nlinarith [hp.2, hk.1]
+  have hlt : pion0 < kaonPlus := by nlinarith [hp.2, hk.1]
   unfold l3Z
   exact pow_lt_one₀ (div_nonneg hp0.le hk0.le) ((div_lt_one hk0).mpr hlt) (n := 2) (by norm_num)
+
+theorem l3Z_lt_charged_ratio : l3Z < (pionPlus / kaonPlus) ^ 2 := by
+  have hp : 0 < pion0 := by linarith [pion0_value.1]
+  have hk : 0 < kaonPlus := by linarith [kaonPlus_value.1]
+  have hlt : pion0 < pionPlus := by linarith [pion0_value.2, pionPlus_value.1]
+  unfold l3Z
+  exact pow_lt_pow_left₀ (div_lt_div_of_pos_right hlt hk)
+    (div_nonneg hp.le hk.le) two_ne_zero
 
 /-- The `K_ℓ3` phase-space factor `phase(z)/4` (the `λ^{3/2}` Dalitz integral). -/
 noncomputable def l3PhaseSpace : ℝ := MassiveWidth.phase l3Z / 4

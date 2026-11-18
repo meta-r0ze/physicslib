@@ -46,13 +46,6 @@ The physical kernels and channel normalization are owned by
 [PMElementaryParticles](../../src/PMElementaryParticles/REVIEW-AND-NEXT.md) and
 [PMHadrons](../../src/PMHadrons/REVIEW-AND-NEXT.md); do not patch catalog numbers to match data.
 
-- **Common corrected export path (upstream dependency).** Once PMHadrons settles source
-  normalization, export kaon widths from the same shared-factor convention as the pion/neutron.
-  `DecayInstantiation.kaonChannelCKM` already exists; the current `kaon_finite_lifetime_s` still
-  represents the raw formula and is labelled/context-only against a matching muonic partial
-  reference. Tighten the source enclosure before promoting the corrected row. Do not multiply
-  shared running and an already inclusive radiative factor twice; retain the raw/dressed CKM
-  convention and account for `q² = 515/516` exactly once.
 - **Follow improved source calculations (upstream dependency).** Add the corrected tau partial-width ratio, full-Fermi/outer-radiative
   neutron rows, and kaon semileptonic rows as their source proofs become available. The kaon
   pion-charge and lepton-mass kinematics must be fixed upstream first. Update correction-order

@@ -79,7 +79,7 @@ def expRefs : Key → List ExpRef
   | .neutronLifetimePredicted => [⟨878.4, 0.5, "pdg_2024"⟩]
   | .pionLifetimePredicted => [⟨DecayReferences.pionMuonPartialLifetime, 5.001e-12, "pdg_2024_pi_mu2_inclusive_partial"⟩]
   | .kaonPionRatio => [⟨DecayReferences.muonicWidthRatio, 0.003176, "pdg_2024_inclusive_muonic_partial_ratio"⟩]
-  | .kaonFiniteLifetimeSeconds => [⟨DecayReferences.kaonMuonPartialLifetime, 4.612e-11, "pdg_2024_k_mu2_inclusive_partial"⟩]
+  | .kaonMuLifetimeSeconds | .kaonFiniteLifetimeSeconds => [⟨DecayReferences.kaonMuonPartialLifetime, 4.612e-11, "pdg_2024_k_mu2_inclusive_partial"⟩]
   | .neutronLifetimeUnified => [⟨878.4, 0.5, "pdg_2024"⟩]
   | .muonLifetimeSeconds => [⟨2.1969811e-6, 0.0000022e-6, "pdg_2024"⟩]
   | .neutralPionFiniteLifetimeSeconds => [⟨DecayReferences.neutralPionPhotonPartialLifetime, 1.316e-18, "pdg_2024_pi0_gamma_gamma_partial"⟩]
@@ -131,6 +131,7 @@ def comparisonNote (k : Key) : String :=
   match k with
   | .tauLifetimeFs => "combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error"
   | .pionLifetimePredicted => "partial reference = 26.033 ns / 0.9998770; uncertainty from 0.005 ns and BR error 0.0000004 in quadrature, rounded up; input correlations unavailable"
+  | .kaonMuLifetimeSeconds => "partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; shares comparison inputs with the scored kaon/pion width ratio"
   | .kaonFiniteLifetimeSeconds => "partial reference = 12.380 ns / 0.6356; uncertainty from 0.020 ns and BR error 0.0011 in quadrature, rounded up; raw model is context only"
   | .kaonPionRatio => "ratio uses both muonic branching fractions; uncertainty propagated from frozen lifetimes/branches in quadrature, rounded up; input correlations unavailable"
   | .neutralPionFiniteLifetimeSeconds => "partial reference = 8.43e-17 s / 0.98823; uncertainty from 0.13e-17 s and BR error 0.00034 in quadrature, rounded up; input correlations unavailable"
@@ -147,14 +148,15 @@ context, with `·` instead of a glyph:
   BBN sound horizon, so it is grouped with the early-universe references);
 * `neutron_lifetime_unified_s`: the `3³` spectral template, kept as a comparison; the scored E8
   neutron is `neutron_lifetime_predicted_s` (continuum route);
-* `kaon_finite_lifetime_s`: raw muonic partial channel; the normalized kaon is
-  `PMHadrons.ChargedCurrentRate.kaonMuLifetimeSeconds` (not yet a catalog row);
+* `kaon_finite_lifetime_s`: raw muonic partial channel;
+* `kaon_muonic_partial_lifetime_s`: normalized partial channel, sharing
+  comparison inputs with the scored kaon/pion width ratio;
 * `muon_lifetime_s`: E8 `G_F` with the derived phase factor and the supplied Fermi-theory QED series
   through two loops; the `G_F` it tests is already scored in `fermi_constant`. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
   | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds
-  | .neutronLifetimeUnified | .kaonFiniteLifetimeSeconds => false
+  | .neutronLifetimeUnified | .kaonMuLifetimeSeconds | .kaonFiniteLifetimeSeconds => false
   | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "abbott_des_y1_2018"
   | _ => true
 

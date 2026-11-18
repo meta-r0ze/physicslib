@@ -102,7 +102,7 @@ comparison.
 | `PionWidth` | two-body `pionWidth(fπ)`, `pionLifetime(fπ)`; `pionDecayConstantE8 = v/(Δ²+Δ−χ)`, `pionWidthTo`, `pionWidthE8`, `pionElectronWidthE8`, `pionLifetimeE8` | `fπ` placeholder `v/(Δ²+Δ−χ)` until the carrier-emission overlap is computed |
 | `KaonWidth` | `kaonWidthCKM`, `kaonDecayConstantE8=v/(Δ²−ν²)`, `vusE8=s₁₂c₁₃` (the `(u,s)` entry of `PMFlavor.CKM.ckm`: `vusE8_eq_ckm`), `kaonWidthE8`, `kaonLifetimeE8` | `fK` placeholder `v/(Δ²−ν²)` until the carrier-emission overlap is computed |
 | `NeutralPionWidth` | `neutralPionWidthE8 = α²mπ⁰³/(32π³fπ²)`, `neutralPionLifetimeE8`; anomaly coefficient `A = N_c(Q_u²−Q_d²) = 1` from the three colour axes and the protocol charges (`anomalyCoefficient_eq_one`, `neutralPionWidthE8_anomaly`) | triangle-loop normalization `1/(32π³)` |
-| `KaonSemileptonic` | leading-order `K_ℓ3` width `G_F²|V_us|² m_K⁵·½·(phase(z)/4)/(192π³)`, `z=(m_π/m_K)²`, `f₊(0)=1`, `m_ℓ→0`; positivity (`kaonL3Width_pos`) | form factor `f₊(t)`, lepton masses, EW/isospin corrections |
+| `KaonSemileptonic` | leading-order `K_ℓ3` width `G_F²|V_us|² m_K⁵·½·(phase(z)/4)/(192π³)`, `z=(m_π⁰/m_K⁺)²` from the E8 mass ledgers, `f₊(0)=1`, `m_ℓ→0`; positivity (`kaonL3Width_pos`), with `l3Z_lt_charged_ratio` verifying the kinematic change | form factor `f₊(t)`, lepton masses, EW/isospin corrections |
 | `MesonFiniteChannels` | minimal-cube finite channels for π⁺, K⁺, π⁰; `pion/kaon/neutralPion_openModes`, `*SpectralFraction_eq_one`, `*FiniteWidth`, `*FiniteLifetime`, `*FiniteLifetimeSeconds`, certified bounds; `pionLifetimeCorrectedSeconds` (`32/33` margin, tight bounds) | all modes open; finite equals continuum |
 
 ### Weak decays: the neutron
@@ -119,11 +119,29 @@ comparison.
 | Module | Checked result | Model inputs (E8 choices not yet derived) |
 | --- | --- | --- |
 | `Particle` | `Species` with certified masses and `Q/B/L`; `ParticleDecay` = conserved numbers + lighter products; **`proton_stable`** (baryon number forbids a lighter channel), `neutrino_stable`/`antineutrino_stable` (massless ledger; no lighter channel); allowed `neutron_beta`, `muon_decay`, `pionPlus_decay`, `tau_decay` | certified PM-5 mass enclosures; tree-level channels |
-| `ParticleChannels` | `ParticleChannel`, `RateStatus`, `totalRate`, `branching`, `totalLifetime`; concrete μ/τ/π/K inventories with provenance labels; `K_ℓ3` at E8 leading order (`e8LeadingOrder`); nonleptonic kaon modes blocked on the bound-state matrix element | hadronic matrix elements |
+| `ParticleChannels` | `ParticleChannel`, `RateStatus`, `totalRate`, `branching`, `totalLifetime`, `modeledLifetime`; concrete μ/τ/π/K inventories with provenance labels; `K_ℓ3` at E8 leading order (`e8LeadingOrder`); nonleptonic kaon modes blocked on the bound-state matrix element | hadronic matrix elements |
 | `CompositeTransition` | `compositeAmplitude`, `CompositeDecay`, `compositeOperator`; `K⁺ → π⁺ π⁰` charge/operator instance. |  |
 | `CompositePhaseSpace` | `twoBodyPhaseSpace`, `compositePartialWidth`, `kaonPionT`, `kaonPionPhase`, `kaonPionRate`; K⁺→π⁺π⁰ structural rate with positivity. |  |
 | `HadronicMatrixElement` | `BoundStateMatrixElement` with supplied `value`; `kaonPion`, `kaonPionRate`, `kaonPionRate_eq`, `kaonPionRate_nonneg`; explicit nonperturbative-input interface. |  |
 | `BoundStateOverlap` | finite constituent `Wavefunction`, `overlap`, `toMatrixElement`, `rate_eq`; overlap as inner product. |  |
+
+The muon inventory uses the inclusive rate from `MuonLifetimeHigherOrder`.
+The pion and kaon muonic entries use the photon-inclusive partial rates from
+`ChargedCurrentRate`. The three entries carry `.modelInput` because their
+radiative terms are supplied. Their natural-unit rates use
+`PhysicalUnits.electronTime / τ_seconds`, and the round-trip theorems recover
+the same lifetimes that e8p reports.
+
+`modeledLifetime` returns a value for a positive sum when every listed
+channel has an assigned rate. It returns `none` for the current kaon list
+because the nonleptonic entries are blocked. `totalRate` and `totalLifetime`
+retain the arithmetic of the listed rates for partial-sum calculations.
+
+The conditional tau inventory uses the supplied electronic fraction `B_e`,
+sets `B_μ = B_e · MassiveWidth.phase TauBranching.r`, and assigns the residual
+`1 − B_e − B_μ` to hadrons. `tau_leptonic_ratio` verifies the width ratio
+and `tau_channel_sum` verifies the total. The inclusive quark-current width
+needed to predict `B_e` is tracked in REVIEW.
 
 ## E8 decay checks at this level
 
@@ -133,7 +151,7 @@ Values as e8p reports them (`tools/e8p/e8p_output.txt`); a `σ` is a comparison,
 |---|---:|---:|---|
 | n → p e ν̄ | 923.37–923.39 s (`NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds`: continuum route, E8 `G_F`, `|V_ud|²R = 32/33`, `g_A = 5/4`, `α`, `m_n − m_p`, leading Coulomb) | 878.4 ± 0.5 s (PDG 2024; +5.1%) | the electron's outer radiative correction (numerical, `tools/neutron_rc_certificate.py`) gives about 909 s; the rest is `g_A`'s electromagnetic matching (REVIEW) |
 | π⁺ → μ⁺ν | 2.61592–2.61602×10⁻⁸ s (`ChargedCurrentRate.pionMuLifetimeSeconds_bounds`: dressed `|V_ud|`, supplied `δ_π`) | 2.60362×10⁻⁸ s, the inclusive muonic partial (τ/BR); +0.47% | the residual is `f_π`: the measurement implies `130.58(13)` MeV against E8 `v/1890 = 130.275` (−0.24%) |
-| K⁺ → μ⁺ν | 1.99692–1.99700×10⁻⁸ s (`ChargedCurrentRate.kaonMuLifetimeSeconds_bounds`) | 1.9478×10⁻⁸ s (muonic partial); +2.5% | the residual is `f_K`: implied `156.6` MeV against E8 `v/1593 = 154.56` (−1.3%) |
+| K⁺ → μ⁺ν(γ) | 1.99692–1.99700×10⁻⁸ s (`ChargedCurrentRate.kaonMuLifetimeSeconds_bounds`, e8p `kaon_muonic_partial_lifetime_s`) | 1.9478×10⁻⁸ s from τ/BR (+2.5%) | the residual is `f_K`: implied `156.6` MeV against E8 `v/1593 = 154.56` (−1.3%). e8p shows the lifetime for context alongside the scored K/π ratio, which shares its comparison inputs |
 | `Γ_K/Γ_π` | 1.309978–1.309980 (`kaonPionRatioRadiative_bounds`, with `(1+δ_K)/(1+δ_π)`) | 1.3367 ± 0.0032 (−2.0%) | `fK/fπ = 70/59` against FLAG `1.1934` |
 | π⁰ → γγ | 8.44–8.48×10⁻¹⁷ s (two-photon partial) | 8.530×10⁻¹⁷ s (τ/BR(γγ); −0.5σ) | E8 `fπ`; anomaly `A = 1` derived; triangle normalization supplied |
-| K⁺ → π⁰ ℓ⁺ν | leading order (`kaonL3Width`) | measured rate | about 10% low; uses `m_π⁺` where the state needs `m_π⁰` (REVIEW) |
+| K⁺ → π⁰ ℓ⁺ν | leading order (`kaonL3Width`) with E8 `m_π⁰` | — | numerical check: the neutral-pion assignment raises the massless phase factor by about 3.7% relative to the previous charged-pion assignment |

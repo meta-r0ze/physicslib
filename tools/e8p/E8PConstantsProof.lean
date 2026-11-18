@@ -160,6 +160,7 @@ def value : Key → ℝ
   | .neutronLifetimeSeconds => PMHadrons.neutronLifetimeSeconds
   | .neutronLifetimePredicted => PMHadrons.Values.neutronLifetimeContinuumCoulombSeconds
   | .pionLifetimePredicted => PMHadrons.Values.pionMuLifetimeSeconds
+  | .kaonMuLifetimeSeconds => PMHadrons.Values.kaonMuLifetimeSeconds
   | .kaonPionRatio => PMHadrons.Values.kaonPionRatioRadiative
   | .neutronLifetimeUnified => PMHadrons.Values.neutronLifetimeUnifiedSeconds
   | .pionFiniteWidth => PMHadrons.pionFiniteWidth
@@ -415,6 +416,10 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     exact ⟨h.1.le, h.2.le⟩
   | pionLifetimePredicted =>
     have h := PMHadrons.Values.pionMuLifetimeSeconds_bounds
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
+  | kaonMuLifetimeSeconds =>
+    have h := PMHadrons.Values.kaonMuLifetimeSeconds_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | kaonPionRatio =>
