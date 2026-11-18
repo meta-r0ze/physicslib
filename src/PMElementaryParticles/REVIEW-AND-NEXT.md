@@ -9,14 +9,10 @@ None of these items blocks the downstream libraries: PMHadrons and later use the
 (`MuonQEDLoops`). The tau's `B_e` without a supplied value is PMHadrons' "tau inclusive hadronic
 factor" item.
 
-**Common blocker.** Two items (heavy-label weight, lightest masses) and
-PMFlavor item 2 wait on one object from PMAction: the native law
-that fires a conditioned coherent pulse. The conversion from a Toll to a wire
-amplitude is now derived (`PMAction.TollAmplitude`: `exp(−T/2)` with `T` in
-expected registrations). What is still open is the schedule: which
-comparisons act on which labels, at which steps and how often
-([PMAction extensions](../PMAction/REVIEW-AND-NEXT.md#extensions)). The
-radiative factor does not depend on it.
+**Common blocker.** The heavy-label weight, lightest masses and PMFlavor
+item 2 need a native law that admits and fires a conditioned coherent pulse.
+[PMAction tracks the schedule](../PMAction/REVIEW-AND-NEXT.md#extensions).
+The Toll-to-amplitude conversion is established in `PMAction.TollAmplitude`.
 
 ## The protocol readout (first)
 
@@ -24,138 +20,26 @@ The species masses reported by e8p currently use the tier assignments in
 `QuarkMasses` and `LeptonMasses`. Derive the wire-to-species readout and use
 the recorded mass ratios to check it.
 
-- **Heavy-label weight. [Premise]** Derive a native, label-sensitive upkeep
-  rule and derive which heavy-wire flip amplitudes it changes and by how much.
-  The rule must distinguish the two weak partners differently in the lepton
-  and colour sectors. Use the
-  [toll constraints](OVERVIEW.md#protocol-toll-constraints) to screen
-  candidates. [PMAction](../PMAction/REVIEW-AND-NEXT.md#extensions) owns
-  pulse selection and timing.
-  Derive a reference-conditioned repair history or joint response on
-  the four colour orbits. The Toll constraints give the affine bound
-  for sums of static hypercharge comparisons against a fixed reference.
-  PMAction supplies the selected repair schedule and the conversion
-  from Toll to wire amplitude. Test the resulting protocol weights
-  against the recorded ladder.
-  The static bound excludes an affine conversion only, and the derived
-  conversion is not affine. On the static flags it admits the charged
-  order and any ratio (`ProtocolToll.survival_ladder`, `doubling_iff`;
-  steps `π/2` and `3π/2` as a witness, not a schedule). Each static
-  step is fixed by its down flag `d`, and adds `16d(d − d₋)(d − d₊)` to
-  `T_e − T_u`, `d∓ = (5 ∓ √5)/8` (`step_charged_span`). No single step
-  orders the three charged labels (`single_step_no_order`), and a
-  schedule with every `d` in `[d₋, d₊]` gives `T_e ≤ T_u`
-  (`window_no_ladder`). The window's ends are the vacancy preparation's
-  steps (`fifth_root_steps`) and the charged selector's `½` is inside, so
-  the steps selected so far cannot order the labels in any counts. A
-  native step with `d < d₋` or `d > d₊` (a fraction of the static period
-  `3π` below `1/5`, or between `2/5` and `3/5`) is needed. The doublet
-  position supplies both: a weak gate that treats the partners
-  differently must export it (`RefreshMap.asymmetric_gate_records`), and
-  the static comparisons that read it exactly are the full readout
-  (`d = 1`, step `3π/2`; `full_readout`) and the lepton-only readout
-  (`d = ¼`, step `π/2`, below the window; `lepton_readout_iff`,
-  `quarter_below_window`). `n_L` lepton and `n_Q` full readouts give
-  `T_e − T_d = ¾n_L` and `T_d − T_u = n_Q − ½n_L`, so the ladder holds
-  exactly when `n_L > 0` and `n_Q > ½n_L`. Still to derive: the counts
-  per heavy-wire flip, and why these readouts are charged to the heavy
-  label. The event table is derived for one charged-current event
-  (`EventRequirements`): one doublet bit, and own-event accounting ties
-  `e` with `d` (`own_event_tolls`). A persisting massive label sits on
-  both walls with equal weight, and its flag is the mean of its two slot
-  flags (`massive_flag`, from `PMAction.DiagonalReadout.state_flag`). The
-  full readout reads both bits at once (`full_reads_both`), so under
-  Economy one full readout per cycle serves every event; it gives
-  `T_e = T_d = ¾` and `T_u = T_ν = ¼` per readout (`full_massive`). So the
-  doublet readouts split up from down (`T_d − T_u = ½` per readout) but
-  never the electron from down. That split needs a mechanism that tells
-  the lepton sector from the colour sector, and with `s = exp(−T/2)` it
-  must reach some generations' flips and not others. A Toll paid equally
-  by all three generations scales the wire's mass by one factor and
-  cancels from every ratio (`uniform_weight_cancels`), so generation-blind
-  upkeep (the colour refresh, the doublet readouts as computed) cannot
-  give the heavy-label weight in either direction. The native generation
-  difference: on the reference wall the heavy generation's carrier never
-  touches the reference class, and the two light ones pass through the
-  reference node (`PMAction.ReferenceClassHop`). A Toll on the node legs
-  raises the effective heavy weight by `exp(T/2)` (`node_toll_raises_heavy`),
-  the opposite sign to a Toll on the heavy flip. On the node path a
-  colour cost gives the right electron–down order and the doublet
-  readouts the wrong up–down order. Both paths are label-blind as the
-  library stands: the direct insertion is a certain in-cycle event, and
-  the node legs have one price because Closure gives every crossing one
-  price (`PMConstants.HandoffAdmittance.closure_one_price`). That theorem
-  assumes no internal label distinguishes the carried signal. A glued
-  root carries the protocol label through the node, so for protocol
-  labels the hypothesis is not given: the open step is the node-leg
-  price of a label-carrying crossing. One candidate checked: comparing the
-  crossing label's hypercharge with the lepton-doublet reference
-  (both walls, `DiagonalReadout`) gives `T_e < T_d < T_u` on the node
-  path, with `(T_u − T_d)/(T_d − T_e) = 6` for small steps, falling to
-  `4.5` at `t = 1` and `2.7` at `π/2`. Comparison only: the diagnostics
-  need about `1.1–1.5`.
-  Framing check: a protocol-dependent detuning cannot replace the weight.
-  On the bare derived wire (`s = 1`, `k = α/2`), `m₂/m₃ ≤ √(3/2) k = 0.00447`
-  for every complex detuning, with the maximum at the cube roots
-  (`tools/detuning_bound_check.py`, numerical). So the protocols must
-  differ in the ratio of heavy to node coupling, as this item assumes.
-  (Comparison only: at resonance up needs `s ≈ 0.7–1.2`, close to the bare
-  wire, while electron and down need the heavy flip suppressed, `s ≈ 0.09`
-  and `0.26`: a Toll on the heavy flip, largest for the electron.)
-  The flip itself cannot supply it. In the glued register a wall step
-  keeps the class and leaves the label untouched
-  (`GluedRegister.wallStep_class`), and the crossing is one automorphism
-  for every label (`crossing_walls`, `crossing_word_glued`). So the
-  native wire operations give every protocol the same wire. A
-  protocol-dependent heavy weight needs a gate that reads the label, and
-  by `CoherentGate.unequal_needs_orthogonal` (stated for weak partners;
-  the same overlap argument applies to other labels), overlapping wire
-  outputs require orthogonal exported records.
-  `HeavyFlipControl` gives a finite generation-addressed gate with
-  a supplied sector and position record. `HeavyFlipRecords` excludes
-  shared auxiliary-only hypercharge comparison schedules on a massive
-  label as exact quark-position writers. The active slots have equal
-  charge, so their common contribution bounds the auxiliary outcome gap
-  by `½`. The full and lepton-only comparisons also leave electron
-  and down with nonzero record overlap on either fixed wall. The paired
-  flag budget has the charged ladder, with exact gap ratio
-  `2/(3+√3) ≈ 0.423`, but fails as an exact record writer.
-  `ElectricHeavyRecord` gives an exact charge-only comparator using the
-  packet’s unbroken generator: parity of `3Q` at `3π`, then a
-  same-position sector comparison at `3π/2`. An actual moving root
-  pair gives the branch preparation and return from a clean seed,
-  with a supplied controlled electric kick. Colour versus lepton
-  phase reference produces different flag prices even at the same
-  resolution and duration. The colour-referenced bit Tolls
-  `(2,1,0,1)` and factor-flag Tolls `(2,3/2,1,3/2)` give the
-  charged order with gap ratio 1 (comparison only: about 1.1–1.5).
-  `HeavyCrossingCost` computes the same primitive activity histogram
-  for every signed label on either incoming wall. With paired amplitude
-  weights its whole profile ledger ties weak partners. The in-band
-  modulo-two probes also tie opposite input orientations
-  (`HeavyFlipNativeBoundary`). The bare glued roots alias heavy and
-  light on each wall. A supplied addressed gate can idle or make a
-  two-toggle excursion on the same 43-phase clock. Both return after
-  a full turn. Open: implement the joint branch/payload coupling,
-  clean seed banks and generation address; select a physical reference
-  and tariff; derive the placement and firing on the two physical
-  wall insertions. The equal-class gapped crossing is a distinct event.
-  First cadence tested: each sector reads its own doublet bit
-  once per its static hypercharge period, at the half period. Leptons
-  return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
-  and `5π/2` (both `d = ¼`) and `3π/2` (`d = 1`), and the quark readout is
-  `3π/2`. If coinciding readouts merge (Economy), `n_L = 2`, `n_Q = 1`
-  and `T_d = T_u`: no ladder. If they stay separate, `n_L = n_Q = 2` and
-  the ratio `(T_d − T_u)/(T_e − T_d)` is `2/3`. (Comparison only: `2/3`
-  is below every diagnostic value in `tools/heavy_toll_targets.py`, so
-  this cadence is disfavoured either way.)
-  The open
-  substrate question is the schedule: which comparisons the wire's repair
-  applies to each label, derived from that repair. Compare its weights
-  with the recorded ladder only afterwards, in e8p. One structural
-  consequence to keep in view: any Toll linear in the static hypercharge
-  gives `(T_d − T_u)/(T_e − T_d) = 3/2` with no free parameter
-  (comparison diagnostic: `tools/heavy_toll_targets.py`).
+- **Heavy-label weight. [Premise]** Derive a label-dependent heavy-to-node
+  coupling ratio from E8.
+  - Implement the joint electric kick on the branch and payload, allocate and
+    prepare clean record banks, and obtain a native generation address. The
+    [electric record circuit](OVERVIEW.md#an-electric-charge-record-on-both-walls)
+    gives the exact comparisons and branch pulses once those resources are available.
+  - Derive which labels participate in each visit, its physical phase
+    reference, and the tariff for registrations, preparation, and record
+    export or reuse. If the cost enters through the reference node,
+    derive the price for a crossing that carries a protocol label
+    (`HandoffAdmittance.closure_one_price` assumes indistinguishable
+    signals).
+  - Derive the placement, rates and firing cadence on the two physical
+    wall insertions. The [crossing and clock exclusions](OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
+    delimit what the bare glued roots and period can supply. Then test the
+    derived charged ladder and Toll gaps against `tools/heavy_toll_targets.py`.
+
+  See the [hypercharge constraints](OVERVIEW.md#protocol-toll-constraints),
+  [record exclusion](OVERVIEW.md#record-comparisons-and-heavy-flip-toll), and
+  [comparison diagnostics](OVERVIEW.md#other-heavy-weight-diagnostics).
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.

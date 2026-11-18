@@ -500,6 +500,28 @@ operations. Endpoint exchange and the read/undo clock therefore leave
 the placement and firing of the two physical insertions open.
 
 
+### Other heavy-weight diagnostics
+
+- **Half-period cadence.** Over the common static period `3π`, the
+  lepton readout visits at `π/2`, `3π/2`, and `5π/2`. The quark
+  visit is at `3π/2`. Merging the shared visit ties down with up.
+  Counting coincident visits separately gives a Toll-gap ratio of
+  `2/3`. A Toll proportional to the signed static hypercharge has
+  gap ratio `3/2`.
+- **Node leg.** Comparing the crossing label's hypercharge against the
+  lepton-doublet reference on both walls gives `T_e < T_d < T_u`.
+  Node-path damping raises the effective heavy weight
+  (`node_toll_raises_heavy`). The gap ratio
+  `(T_u − T_d)/(T_d − T_e)` is about 6 at small steps, 4.5 at
+  `t = 1`, and 2.7 at `π/2`.
+- **Bare-wire detuning.** The numerical check
+  `tools/detuning_bound_check.py` gives `m₂/m₃ ≤ √(3/2) k` over
+  complex detunings, with equality at the cube roots of the resonance
+  condition. For `k = α/2` the maximum is about `0.00447`.
+  At resonance, the inferred heavy weights are roughly `0.09` for
+  electron, `0.26` for down, and `0.7–1.2` for up across the
+  compared quark-mass conventions. These are comparison targets.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.

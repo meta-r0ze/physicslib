@@ -76,49 +76,19 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   schedule first, then compare.
   The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
-- **Label-sensitive comparison schedule.** `TollAmplitude` fixes the conversion: a label with
-  Toll `T`, counted in expected registrations, keeps amplitude `exp(−T/2)` (`β c₀ = 1`). What
-  remains is the schedule: which comparisons act on which labels, at which steps and how often.
-  Derive it from the repair the wire needs, not from the mass ladder. On static hypercharge
-  flags the conversion admits the charged order and any ratio
-  (`PMElementaryParticles.ProtocolToll.survival_ladder`, `doubling_iff`).
-  A static-flag schedule needs a hypercharge step outside the
-  fifth-root window, `d < (5 − √5)/8` or `d > (5 + √5)/8`
-  (`ProtocolToll.window_no_ladder`); the steps selected so far
-  (`3π/4`, `k · 6π/5`) are inside it. The doublet-position readouts are outside it:
-  the full readout `3π/2` and the lepton-only readout `π/2`
-  (`ProtocolToll.full_readout`, `lepton_readout_iff`). Neither repeated
-  visits nor auxiliary decoding can make shared diagonal hypercharge
-  alone write an exact quark-position record from the persisting
-  massive packet (`PMElementaryParticles.HeavyFlipRecords`). A
-  generation-addressed endpoint control and exact signed-axis
-  comparison have explicit charge phases and a root-orbit branch
-  (`ElectricHeavyRecord`). Derive admission of the joint kick,
-  bank allocation and clean seeds, and select the physical reference,
-  tariff, placement and firing schedule. The downstream six-root
-  activity ledger is label-blind under uniform amplitude weights,
-  and the clock admits idle and excursion masks with the same closure
-  (`HeavyCrossingCost`, `HeavyFlipNativeBoundary`). This is the common blocker of the
-  PMElementaryParticles readout items and PMFlavor item 2.
-- **Requirement table for events.** `RefreshSchedule` and `CoherentRefresh`
-  prove that Economy serves each required item exactly once; the table is
-  the input. For one charged-current event it is now derived
-  (`PMElementaryParticles.EventRequirements`): the emission depends on the
-  parent's doublet position and nothing else, so the event requires one
-  bit. The quark bit is read only by the full readout (`3π/2`), the lepton
-  bit by the full or the lepton-only readout (`π/2`). If each label pays
-  only its own event's readout, `T_e = T_d` and `T_u = T_ν`
-  (`own_event_tolls`): the table read label by label cannot order the
-  charged labels. Shared accounting, first step: a persisting massive
-  label is on both walls and its flag is the slot mean
-  (`DiagonalReadout.state_flag`, `PMElementaryParticles.EventRequirements.massive_flag`);
-  one full readout serves both bits, and it still ties the electron with
-  down (`full_massive`). Open: the rest of the shared-register accounting. Which labels are
-  present when a readout acts (the parent, the emitted pair on all four
-  axes, the persisting packet), what writes the exact records, and how
-  the flags accumulate into a persisting label's Toll. The same
-  accounting serves the lightest masses' firing law and PMFlavor's
-  in-cycle wall record.
+- **Label-sensitive comparison schedule.** Derive admission of the joint
+  branch/payload kick, clean bank preparation and the generation control.
+  Select the physical phase reference and registration tariff. Derive the
+  firing and placement of the conditioned pulse on the two wall insertions.
+  The [electric comparator and its prices](../PMElementaryParticles/OVERVIEW.md#an-electric-charge-record-on-both-walls)
+  and the [crossing and clock exclusions](../PMElementaryParticles/OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
+  constrain this schedule.
+- **Requirement table for events.** Extend the
+  [single-event requirement](../PMElementaryParticles/OVERVIEW.md#protocol-toll-constraints)
+  to shared-register accounting. Determine which labels are present at
+  each comparison, which records must be written or reused, and how the
+  executed visits contribute to each persisting label's Toll. This also
+  serves the lightest masses' firing law and PMFlavor's in-cycle wall record.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
   limits. Sharpen the lattice remainder bound enough to compare it with
