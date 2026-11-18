@@ -6,8 +6,9 @@ import PMElementaryParticles.ElectricHeavyRecord
 A balanced two-bit bank receives controlled electric phases at angles
 `3π/2` and `3π` in charge-generator units. A fixed four-port transform
 decodes their joint record. Neither kick has a position-dependent phase
-reference. Bank preparation, joint kicks and the decoder's primitive
-realization remain requirements.
+reference. `ElectricCoordinateDecoder` gives an odd-coordinate root word.
+The occupied seed, joint kicks and primitive registration tariff remain
+requirements.
 -/
 
 noncomputable section

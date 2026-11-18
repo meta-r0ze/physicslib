@@ -22,9 +22,10 @@ the recorded mass ratios to check it.
 
 - **Heavy-label weight. [Premise]** Derive a label-dependent heavy-to-node
   coupling ratio from E8.
-  - Implement the joint electric kicks, prepare the clean record banks
-    and the other-wall companion, and admit its joint update with the
-    live root.
+  - Implement the joint electric kicks and supply a clean coordinate
+    seed for the [root decoder](OVERVIEW.md#electric-decoder-on-the-odd-coordinate-bank).
+    Prepare the other-wall companion and admit its joint update
+    with the live root.
   - Determine which labels participate in each visit, choose the
     physical comparator, and derive the tariff for preparation,
     registrations and record export or reuse. The

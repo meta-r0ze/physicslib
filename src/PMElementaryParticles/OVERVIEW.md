@@ -502,6 +502,35 @@ registration for each logical factor flag of this forward word.
 Native preparation, primitive repair prices, record export or reuse
 and event placement remain open.
 
+### Electric decoder on the odd coordinate bank
+
+The literal four-port bank has a uniform-line obstruction. Every
+permutation spectral phase preserves that line, including in words
+with common scalar phases. The controlled quarter phase and the
+decoder move it (`ElectricDecoderBoundary.phase_word_not_quarter`,
+`phase_word_not_decoder`).
+
+The odd coordinate embedding gives a native decoder under the
+existing coherent root-phase and common-rate contract. A pair of
+orthogonal root quarter phases puts `−i` on one coordinate pair.
+Two exchange quarter phases between those half-bank phases give
+each binary mixer up to a common scalar. Conjugating a root quarter
+phase by the low mixer gives the single marked port. The existing
+completed odd `i` program restores the common phase of the two mixers.
+The final swap is a root reflection. `ElectricCoordinateDecoder`
+checks the full-carrier unitarity and exact observed decoder
+(`decoder_unitary`, `decoder_observed`, `decoder_reads`).
+The inverse word prepares the balanced bank from an occupied neutral
+coordinate seed (`prepare_balanced`).
+
+The state-flag exclusion above prices the logical factors. The
+primitive root word exposes additional intermediate states. Each root
+step’s state flag can be computed on the four coordinates
+(`encoded_flag`). The primitive registration tariff, availability of
+the clean coordinate seed, and joint electric evolution on the payload
+and bank remain open. The construction leaves the placement and physical firing
+cadence of the two heavy-wall insertions open.
+
 ### Primitive crossing activity and clock limits
 
 `HeavyCrossingCost` checks the six-reflection word and its reverse on

@@ -77,11 +77,11 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
 - **Label-sensitive comparison schedule.** Derive admission of the joint
-  branch/payload kick and clean bank preparation. Derive the preparation
-  and joint update of the retained companion. Select the physical
-  comparator and registration tariff. The
-  [fixed-kick alternative](../PMElementaryParticles/OVERVIEW.md#four-port-electric-record-with-fixed-kicks)
-  needs a native decoder on the two-bit bank. Derive the
+  branch/payload kick and supply a clean coordinate seed for the
+  [root decoder](../PMElementaryParticles/OVERVIEW.md#electric-decoder-on-the-odd-coordinate-bank).
+  Derive the preparation and joint update of the retained companion.
+  Select the physical comparator and price the primitive registration
+  word. Derive the
   firing and placement of the conditioned pulse on the two wall insertions.
   The [electric comparator and its prices](../PMElementaryParticles/OVERVIEW.md#an-electric-charge-record-on-both-walls)
   and the [crossing and clock exclusions](../PMElementaryParticles/OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
