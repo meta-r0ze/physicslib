@@ -71,7 +71,12 @@ the recorded mass ratios to check it.
   never the electron from down. That split needs a mechanism that tells
   the lepton sector from the colour sector, and with `s = exp(−T/2)` it
   must lower the coloured labels' Toll relative to the leptons'. A
-  positive colour Toll goes the wrong way. Candidate to examine: colour
+  positive colour Toll goes the wrong way (`colour_cost_wrong_way`), and
+  the library's derived colour cost is positive: the Economy-minimal
+  refresh charges each of the twelve coloured channels its payload weight
+  `η` (`PMConstants.ColourReference.colour_ledger_minimal`). So either that
+  refresh is not charged to the heavy wire, or colour also supplies a
+  saving larger than it. Candidate to examine: colour
   coordination as a Protocol-pillar saving (`PMSubstrate.NetCost.removal_subtracts`),
   `−c` on every coloured label, which gives `T_e − T_d = c` and leaves
   `T_d − T_u = ½ n_Q`.
