@@ -94,6 +94,14 @@ the recorded mass ratios to check it.
   path, with `(T_u − T_d)/(T_d − T_e) = 6` for small steps, falling to
   `4.5` at `t = 1` and `2.7` at `π/2`. Comparison only: the diagnostics
   need about `1.1–1.5`.
+  Framing check: a protocol-dependent detuning cannot replace the weight.
+  On the bare derived wire (`s = 1`, `k = α/2`), `m₂/m₃ ≤ √(3/2) k = 0.00447`
+  for every complex detuning, with the maximum at the cube roots
+  (`tools/detuning_bound_check.py`, numerical). So the protocols must
+  differ in the ratio of heavy to node coupling, as this item assumes.
+  (Comparison only: at resonance up needs `s ≈ 0.7–1.2`, close to the bare
+  wire, while electron and down need the heavy flip suppressed, `s ≈ 0.09`
+  and `0.26`: a Toll on the heavy flip, largest for the electron.)
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
