@@ -328,7 +328,13 @@ doublet slot cannot read the doublet bit. The full readout `3π/2` reads
 both the lepton and the quark bit (`full_reads_both`) and gives massive
 flags `¾` (electron, down) and `¼` (up, vacancy) (`full_massive`). So
 the doublet readouts, with Economy and both walls, separate up from down
-and never the electron from down.
+and never the electron from down. These Tolls are generation-blind, and a
+generation-blind Toll scales the wire mass by one factor and cancels from
+every ratio (`uniform_weight_cancels`); only a Toll that reaches some
+generations' flips matters. The light generations pass through the
+reference node and the heavy one does not (`PMAction.ReferenceClassHop`);
+a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
+(`node_toll_raises_heavy`).
 
 ## Refresh map and weak gate
 
