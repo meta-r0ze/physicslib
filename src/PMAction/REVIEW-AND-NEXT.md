@@ -86,7 +86,7 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   firing and placement of the conditioned pulse on the two wall insertions.
   The [short decoder’s frame bound](../PMElementaryParticles/OVERVIEW.md#short-root-decoder-and-serial-frame-bound)
   constrains fresh serial setup by the inverse root word. Derive the
-  local duration of the six-root setup for the companion route.
+  local duration of the one- and two-root companion setups.
   The [electric comparator and its prices](../PMElementaryParticles/OVERVIEW.md#an-electric-charge-record-on-both-walls)
   and the [crossing and clock exclusions](../PMElementaryParticles/OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
   constrain this schedule.

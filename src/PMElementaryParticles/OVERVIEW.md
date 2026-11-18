@@ -638,11 +638,23 @@ A setup comparison retaining the original class as the reference compares
 orthogonal states and raises a flag with probability `1/2` on either wall
 (`setup_class_flag`). One registration per such flag adds the same setup
 Toll for every label, preserving both charged gaps. This is an
-endpoint comparison from the supplied occupied seed. Pricing individual
-root visits requires their own flags. The six-root setup replaces the
-27-quarter-time inverse-root preparation in this route. The source of
-the seed, the local gate schedule and duration, and admission of the
-coupled current and joint crossing remain open.
+endpoint comparison from the supplied occupied seed.
+
+`ElectricCompanionSetupToll` follows the seed amplitudes through the
+individual root visits. The active-wall seed has just one nonidle visit,
+the third root, with flag `1/2`. The static-wall seed uses the second
+and third roots, with flags `1/2` and `1/4`. Omitting the other roots
+leaves the same endpoint on every occupied seed label
+(`short_setup_on_seed_support`, `primitive_setup_flags`). The same
+two-root word serves both walls, with its first visit idle on the
+active seed (`common_setup_on_seed_support`). Under one
+registration per primitive state flag, these two setups cost `1/2`
+and `3/4`, respectively. Their equal-slot mean is `5/8`, common to
+every label when both slots use the corresponding setup
+(`equal_slot_setup_sum`). The one- and two-root setups provide an
+alternative to the 27-quarter-time inverse-root preparation. The seed
+source, local rates and firing schedule, physical tariff, and admission
+of the coupled current and joint crossing remain open.
 
 ### Primitive crossing activity and clock limits
 
