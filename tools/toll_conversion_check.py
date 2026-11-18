@@ -18,7 +18,9 @@ Prints:
 2. retained minus port: s_u/s_d = 2|cos x| per step, and < sqrt(2) on every step with s_d > s_e,
    so s_u/s_d ~ 4.4 needs at least five such steps; retained plus port with s_d > s_e gives
    s_u/s_d < 1.
-No value here is derived; the scale lam and the schedule are PMAction's conversion to derive.
+PMAction.TollAmplitude now derives the survival form with lam = 1 (Paper I's linear cost and the
+rare-registration limit); the retained-port product is its single-step lower bound. The schedule
+is still open. No value here is derived.
 """
 import numpy as np
 from scipy.optimize import linprog

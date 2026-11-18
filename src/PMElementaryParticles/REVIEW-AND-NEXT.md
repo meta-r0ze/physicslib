@@ -9,15 +9,12 @@ None of these items blocks the downstream libraries: PMHadrons and later use the
 (`MuonQEDLoops`). The tau's `B_e` without a supplied value is PMHadrons' "tau inclusive hadronic
 factor" item.
 
-**Common blocker (2026-11-18).** Three items (heavy-label weight, lightest
-masses, wall leakage) and PMFlavor item 2 wait on one object from PMAction:
-the native law that fires a conditioned coherent pulse. That law has three
-parts: the admission condition, the pulse area, and the conversion from a
-comparison outcome (a Toll or a retained branch) to a wire amplitude. The
-library has the selectors (`ChargedInsertion`, `VacancyPreparation`), the
-event principle (`PMConstants.VevEvent`, `CommonResponse.stateFlag`) and the
-minimum certain-transfer area (`PMAction.CertainTransferRate`). It does not
-have the conversion law. Derive that first
+**Common blocker.** Three items (heavy-label weight, lightest masses, wall
+leakage) and PMFlavor item 2 wait on one object from PMAction: the native law
+that fires a conditioned coherent pulse. The conversion from a Toll to a wire
+amplitude is now derived (`PMAction.TollAmplitude`: `exp(−T/2)` with `T` in
+expected registrations). What is still open is the schedule: which
+comparisons act on which labels, at which steps and how often
 ([PMAction extensions](../PMAction/REVIEW-AND-NEXT.md#extensions)). The
 radiative factor does not depend on it.
 
@@ -40,21 +37,14 @@ the recorded mass ratios to check it.
   PMAction supplies the selected repair schedule and the conversion
   from Toll to wire amplitude. Test the resulting protocol weights
   against the recorded ladder.
-  The static bound excludes an affine conversion only. The static flags
-  themselves are not the obstruction (`tools/toll_conversion_check.py`):
-  no single step gives `T_e > T_d > T_u`, but nonnegative schedules do.
-  The steps `π/2` and `3π/2` give flags `(f_e, f_d, f_u) = (1, ¼, ¾)` and
-  `(1, 1, 0)`. Weights `w₁, w₂` give `T_e − T_d = ¾w₁` and
-  `T_d − T_u = w₂ − ½w₁`. With a survival conversion `s = exp(−λT/2)`
-  (as `DecayLaw`), the recorded ladder needs `λ(T_e − T_d) ≈ 2.0–2.3`
-  and `λ(T_d − T_u) ≈ 2.9–3.0`. With a retained-port conversion (as
-  `VacancyPreparation`), the minus port removes the vacancy and gives
-  `s_u/s_d = 2|cos(t/3)|` per step. This is `< √2` on every step with
-  `s_d > s_e`, so `s_u/s_d ≈ 4.4` needs at least five such steps. The
-  plus port gives `s_u/s_d < 1` on those steps. The affine bound and the
-  per-step bound have one source: the up static tag is `−2` times the
-  down tag. So derive the conversion law and its scale `λ` (or step
-  count) in PMAction. Do not choose them from the ladder.
+  The static bound excludes an affine conversion only, and the derived
+  conversion is not affine. On the static flags it gives the charged
+  order and any ratio (`ProtocolToll.survival_ladder`, `doubling_iff`;
+  steps `π/2` and `3π/2` as a witness). The recorded ladder then needs
+  Toll differences `T_e − T_d ≈ 2.0–2.3` and `T_d − T_u ≈ 2.9–3.0`
+  expected registrations (`tools/protocol_readout_scan.py` weights at
+  `k = α/2`). Derive the schedule in PMAction and then compare it with
+  these differences. Do not choose steps or counts from them.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
@@ -65,8 +55,9 @@ the recorded mass ratios to check it.
   vector-class leg. A protocol-blind pulse area with the selector's unit
   amplitude inserts the same `ε` for each charged protocol. The matching
   insertions are `0.110` (e), `0.364` (d) and `0.0072` (u). So the area
-  or the amplitude must depend on the protocol, through the same
-  conversion law as the heavy-label weight. Derive the physical placement and use the selected
+  or the amplitude must depend on the protocol. Under the derived
+  conversion that is a protocol-dependent Toll, `ε ∝ exp(−T/2)`, from the
+  same schedule as the heavy-label weight. Derive the physical placement and use the selected
   generator to determine the light-pair mass-basis rotations in
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
   Compare the candidate's singular values directly with the recorded mass

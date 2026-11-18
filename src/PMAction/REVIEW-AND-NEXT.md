@@ -71,14 +71,13 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#first-row-wall-leakage).
   The absolute clock is `p` (`Machine/RootTransferPhase`:
   quarter-time `π/(2 gap p)` ticks).
-- **Toll-to-amplitude conversion.** Derive how a comparison outcome sets a
-  wire amplitude: affine in the Toll, survival `exp(−λT/2)` (as
-  `PMElementaryParticles.DecayLaw`), or a retained-port product (as
-  `PMElementaryParticles.VacancyPreparation`), and its scale. This is the
-  common blocker of the PMElementaryParticles readout items and PMFlavor
-  item 2. The affine form is already excluded for static hypercharge
-  Tolls (`ProtocolToll.hyperchargeFlag_schedule_bound`); the other two
-  are not (`tools/toll_conversion_check.py`).
+- **Label-sensitive comparison schedule.** `TollAmplitude` fixes the conversion: a label with
+  Toll `T`, counted in expected registrations, keeps amplitude `exp(−T/2)` (`β c₀ = 1`). What
+  remains is the schedule: which comparisons act on which labels, at which steps and how often.
+  Derive it from the repair the wire needs, not from the mass ladder. On static hypercharge
+  flags the conversion admits the charged order and any ratio
+  (`PMElementaryParticles.ProtocolToll.survival_ladder`, `doubling_iff`). This is the common
+  blocker of the PMElementaryParticles readout items and PMFlavor item 2.
 - **Polarization continuum matching.** Compare the normalized primitive-period response tensor
   (`PrimitivePolarization`) with the continuum shell through its transverse large-volume and regulator
   limits. Sharpen the lattice remainder bound enough to compare it with

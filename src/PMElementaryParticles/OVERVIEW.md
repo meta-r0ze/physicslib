@@ -276,6 +276,16 @@ belong here. This bound covers common per-flag pricing against an
 unchanged reference. A label-conditioned repair length or a joint
 reference response requires its own derivation.
 
+The conversion itself is derived in `PMAction.TollAmplitude`: a label with
+Toll `T` keeps amplitude `exp(−T/2)`, which is not affine. Under it the
+static flags are not bounded this way. At the steps `π/2` and `3π/2` the
+electron, down and up flags are `(1, ¼, ¾)` and `(1, 1, 0)`
+(`flags_quarter`, `flags_three_quarter`). Counts `w₁, w₂` give
+`T_e − T_d = ¾w₁` and `T_d − T_u = w₂ − ½w₁` (`survivalToll_differences`),
+the strict order `s_e < s_d < s_u` for `w₁ > 0`, `w₂ > ½w₁`
+(`survival_ladder`), and `2s_d ≤ s_u` exactly when `w₂ − ½w₁ ≥ 2 log 2`
+(`doubling_iff`). The steps are a witness, not a derived schedule.
+
 ## Refresh map and weak gate
 
 `RefreshMap.minimal` and `occupied_count` show that retaining the base protocol and active flag gives the coarsest deterministic description of weak refresh that preserves the inventory readout. Eight classes occur, including the vacancy. Colour permutations preserve each class and two refreshes restore each channel. At a canonical hypercharge maintenance visit, the addressed payload row exchanges its live discrepancy with its incoming record (`payload_visit`). Equality of next live bits for every incoming record array is equivalent to equality of channel addresses (`same_payload_readout_iff`). Even two active bulk channels of the same protocol can be distinguished this way (`routing_misses_payload`). With ledger arrays transported together, initially clean records and one designated channel marked in the incoming live array, `marked_payload_return` gives clean outputs through visit N on an orbit of least period N. At visit N+1 only the marked address reads true. On a nonreturning orbit `marked_payload_open` gives clean outputs at every positive visit.
