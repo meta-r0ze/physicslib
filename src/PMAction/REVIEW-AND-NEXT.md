@@ -83,6 +83,8 @@ not the carrier axes), the factor construction (`IndependentRegisters`) and the 
   Select the physical comparator and price the primitive registration
   word. Derive the
   firing and placement of the conditioned pulse on the two wall insertions.
+  The [short decoder’s frame bound](../PMElementaryParticles/OVERVIEW.md#short-root-decoder-and-serial-frame-bound)
+  constrains serial schedules with fresh bank preparation.
   The [electric comparator and its prices](../PMElementaryParticles/OVERVIEW.md#an-electric-charge-record-on-both-walls)
   and the [crossing and clock exclusions](../PMElementaryParticles/OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
   constrain this schedule.

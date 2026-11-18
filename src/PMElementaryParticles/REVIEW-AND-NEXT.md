@@ -37,7 +37,8 @@ the recorded mass ratios to check it.
     (`HandoffAdmittance.closure_one_price` assumes indistinguishable
     signals).
   - Derive the placement, rates and firing cadence on the two physical
-    wall insertions. The [crossing and clock exclusions](OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
+    wall insertions. The [short decoder’s frame bound](OVERVIEW.md#short-root-decoder-and-serial-frame-bound)
+    constrains fresh serial preparation. The [crossing and clock exclusions](OVERVIEW.md#primitive-crossing-activity-and-clock-limits)
     delimit what the bare glued roots and period can supply. Then test the
     derived charged ladder and Toll gaps against `tools/heavy_toll_targets.py`.
 

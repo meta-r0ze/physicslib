@@ -531,6 +531,25 @@ the clean coordinate seed, and joint electric evolution on the payload
 and bank remain open. The construction leaves the placement and physical firing
 cadence of the two heavy-wall insertions open.
 
+### Short root decoder and serial frame bound
+
+The repeated low mixer in the full decoder squares to `−i·1` on the
+occupied coordinate sector. Cancelling the two mixers against the
+common `i` phase gives a shorter product: high mixer, inverse low
+mixer, single root quarter phase. This writes the four exact records
+at bit-reversed ports (`short_observed`, `short_reads`). The port
+already determines the two record bits (`record_at_short_port`).
+The full carrier operator remains unitary (`short_unitary`).
+
+The written pulse lists take 25 root quarter-times to decode and 27
+for the inverse preparation from a clean coordinate seed
+(`short_word_exact`, `short_duration`, `undo_word_exact`,
+`short_prepares`, `undo_duration`). A serial frame with one fresh
+preparation followed by one decoding therefore takes at least 52
+ticks when a root quarter-time occupies at least one tick, before
+the electric kicks or export. That schedule exceeds the 43-tick
+period (`fresh_bank_serial_exceeds_clock`).
+
 ### Primitive crossing activity and clock limits
 
 `HeavyCrossingCost` checks the six-reflection word and its reverse on
