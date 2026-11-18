@@ -320,6 +320,26 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `RadiativeIntegrals` | Real dilogarithm series equals the integral of `−log(1 − x)/x` on `[0,1]` (`dilog_eq_integral`); `Li₂(1) = π²/6` from the Basel sum. The kernel is integrable at the endpoint and its reflected form `−log x/(1 − x)` has the same integral | — |
 | `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing; applied to the on-axis matrix in `PMFlavor.InclusiveWidth`), `kinematic_bounds` | Orthogonal final states, common kinematics |
 
+### Inclusive one-loop muon benchmark
+
+The [continuum certificate](../../tools/muon_radiative_certificate.py)
+takes the massless inclusive `F₁(z)` kernel with `z = q²/m_μ²`, where
+`q` is the sum of the two neutrino momenta even when a photon is emitted.
+The Abelian version of the heavy-to-light result has normalized density
+`F₀ − α/(2π) F₁`. The script integrates the polynomial-log and dilogarithm
+terms as exact moments and checks the result by quadrature. The integral
+of `F₁` is `π² − 25/4`, or `3.619604401089358`. It uses the published sum
+of the virtual and real terms as its input.
+[Kühn and Mirkes, Eq. (52)](https://arxiv.org/pdf/hep-ph/9301204#page=12) ·
+[Czarnecki and Melnikov, Abelian mapping](https://arxiv.org/abs/hep-ph/0112264)
+
+`RadiativeIntegrals.softAngular_average` evaluates the continuum soft
+factor from the two external charged legs. In the muon rest frame the
+angular average at electron speed `0 < β < 1` is
+`log((1 + β)/(1 − β))/β − 2`. It multiplies the soft radial integral.
+The regulated virtual and hard-emission terms remain to be derived.
+
+
 ## Pair tensor and continuum angular integral
 
 | Modules | Checked result | Retained inputs |

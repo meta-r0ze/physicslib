@@ -53,19 +53,17 @@ the recorded mass ratios to check it.
 
 - **Radiative factor. [Premise]** Match the regulated continuum
   electromagnetic current and emission measure to the native E8 update.
-  **[Calculation]** Use `PMAction.LoopMeasure` to obtain the virtual vertex
-  and external self-energies with a photon-mass regulator. Derive real
-  emission in the same convention, cancel the regulator in the inclusive
-  rate, and integrate the finite one-loop kernel over the pair invariant.
-  Compare its massless-electron coefficient with `25/4 − π²`. The corrected muon lifetime and its use in the
+  **[Calculation]** Use the checked soft angular factor in
+  `RadiativeIntegrals`. Derive the regulated virtual vertex and external
+  self-energies, and the real-emission kernel at the same neutrino-pair
+  invariant. Combine them before removing the photon-mass regulator.
+  Check the resulting density against the
+  [inclusive benchmark](OVERVIEW.md#inclusive-one-loop-muon-benchmark),
+  then formalize the derivation with `PMAction.LoopMeasure`,
+  `PairInvariantSpectrum` and `RadiativeIntegrals`. The corrected muon
+  lifetime and its use in the
   [PMHadrons channel inventory](../PMHadrons/OVERVIEW.md#channel-inventory-and-interfaces)
   currently use supplied QED inputs, including the higher-order terms.
-  Tip: before formalizing the virtual and real parts in Lean, write a
-  numerical certificate of the whole chain in the charge-retention form
-  (`tools/`) and confirm `25/4 − π²`; it catches convention errors cheaply.
-  `RadiativeIntegrals` (`Li₂`) and `PairInvariantSpectrum` (the `q²`
-  spectrum) are the first steps. Keep the **[Premise]** (native matching)
-  separate so the **[Calculation]** can finish on its own.
 
 - **Physical daughter channels for wall leakage. [Premise]** Low priority:
   the first-row deficit is PMFlavor's `1/516` dressing

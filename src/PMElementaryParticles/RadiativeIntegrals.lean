@@ -93,4 +93,48 @@ theorem integral_neg_log_div_one_sub :
     (fun x => -Real.log (1 - x) / x) 1
   simpa only [sub_sub_cancel, sub_self, sub_zero, integral_neg_log_one_sub_div] using h
 
+/-- Angular factor of the two external soft-photon legs in the parent
+rest frame, with daughter speed `β` and photon angle cosine `x`. -/
+def softAngularKernel (β x : ℝ) : ℝ :=
+  2 / (1 - β * x) - 1 - (1 - β ^ 2) / (1 - β * x) ^ 2
+
+/-- The soft angular average at nonzero daughter mass. This fixes the
+angular factor multiplying the soft radial integral. -/
+theorem softAngular_average {β : ℝ} (hβ : 0 < β) (hβ₁ : β < 1) :
+    (1 / 2 : ℝ) * (∫ x in (-1 : ℝ)..1, softAngularKernel β x) =
+      Real.log ((1 + β) / (1 - β)) / β - 2 := by
+  let F := fun x : ℝ => -(2 / β) * Real.log (1 - β * x) - x -
+    ((1 - β ^ 2) / β) / (1 - β * x)
+  have hn (x : ℝ) (hx : x ∈ uIcc (-1 : ℝ) 1) : 1 - β * x ≠ 0 := by
+    rw [uIcc_of_le (by norm_num : (-1 : ℝ) ≤ 1)] at hx
+    exact (show 0 < 1 - β * x by nlinarith [mul_nonneg hβ.le (sub_nonneg.mpr hx.2)]).ne'
+  have hderiv (x : ℝ) (hx : x ∈ uIcc (-1 : ℝ) 1) :
+      HasDerivAt F (softAngularKernel β x) x := by
+    have hd : HasDerivAt (fun t : ℝ => 1 - β * t) (-β) x := by
+      convert (hasDerivAt_const x (1 : ℝ)).sub ((hasDerivAt_id x).const_mul β) using 1 <;>
+        first | rfl | simp
+    have hl := (Real.hasDerivAt_log (hn x hx)).comp x hd
+    have hq := (hasDerivAt_const x ((1 - β ^ 2) / β)).div hd (hn x hx)
+    convert ((hl.const_mul (-(2 / β))).sub (hasDerivAt_id x)).sub hq using 1
+    · rfl
+    · unfold softAngularKernel
+      field_simp [hβ.ne', hn x hx]
+      ring
+  have hd : ContinuousOn (fun x : ℝ => 1 - β * x) (uIcc (-1) 1) := by fun_prop
+  have hi : IntervalIntegrable (softAngularKernel β) volume (-1) 1 := by
+    apply ContinuousOn.intervalIntegrable
+    exact ((continuousOn_const.div hd hn).sub continuousOn_const).sub
+      (continuousOn_const.div (hd.pow 2) (fun x hx => pow_ne_zero 2 (hn x hx)))
+  rw [intervalIntegral.integral_eq_sub_of_hasDerivAt hderiv hi]
+  have hp : (1 + β) ≠ 0 := by linarith
+  have hm : (1 - β) ≠ 0 := by linarith
+  have hrat : ((1 - β ^ 2) / β) / (1 + β) -
+      ((1 - β ^ 2) / β) / (1 - β) = -2 := by
+    field_simp [hβ.ne', hp, hm]
+    ring
+  rw [Real.log_div hp hm]
+  dsimp only [F]
+  simp only [mul_one, mul_neg_one, sub_neg_eq_add]
+  linear_combination hrat / 2
+
 end PMElementaryParticles.RadiativeIntegrals
