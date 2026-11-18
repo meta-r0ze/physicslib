@@ -102,6 +102,20 @@ the recorded mass ratios to check it.
   (Comparison only: at resonance up needs `s ≈ 0.7–1.2`, close to the bare
   wire, while electron and down need the heavy flip suppressed, `s ≈ 0.09`
   and `0.26`: a Toll on the heavy flip, largest for the electron.)
+  The flip itself cannot supply it. In the glued register a wall step
+  keeps the class and leaves the label untouched
+  (`GluedRegister.wallStep_class`), and the crossing is one automorphism
+  for every label (`crossing_walls`, `crossing_word_glued`). So the
+  native wire operations give every protocol the same wire. A
+  protocol-dependent heavy weight needs a gate that reads the label, and
+  by `CoherentGate.unequal_needs_orthogonal` (stated for weak partners;
+  the same argument applies to any two labels) a gate with unequal
+  amplitudes on two labels must write orthogonal records. Open: derive
+  the record such a gate writes and its Toll per label. One candidate
+  (comparison only): one doublet readout and one lepton-only readout per
+  gated heavy flip, both walls, gives `T = 1.5, 0.91, 0.66, 0.5` for
+  `e, d, u, ν`: the right order, but `(T_d − T_u)/(T_e − T_d) = 0.42`
+  against the diagnostics' `1.1–1.5`.
   First cadence tested: each sector reads its own doublet bit
   once per its static hypercharge period, at the half period. Leptons
   return at `π`, quarks at `3π`; over `3π` the lepton readouts are `π/2`
