@@ -473,6 +473,27 @@ three factor flags of each forward writer. Export, reset,
 synchronization and a microscopic tariff remain separate obligations.
 
 
+### Four-port electric record with fixed kicks
+
+`ElectricFourPortRecord` uses the same unbroken electric generator as
+the position-conditioned comparison. At `3π/2` its phases on
+`(ν,e,u,d)` are `(1,i,−1,−i)` (`phase_codes`). Two record bits
+control fixed durations `3π/2` and `3π`. The four paths accumulate
+`(1,z,z²,z³)/2` from a balanced bank. A single decoder takes these four
+orthogonal states to distinct basis records (`read_exact`). The wall
+exchange preserves the charge, so it gives the same record on both
+walls. This circuit needs no position-conditioned phase reference on
+the payload. Its decoder first mixes one record bit, uses a fixed
+controlled `−i` within the bank, mixes the other bit, and swaps the
+readout bits (`decoder_word`).
+
+Counting each electric kick's state flag while half of the bank
+receives the phase gives `(¾,¾,½,0)` in order `(e,d,u,ν)`
+(`exposure_eq_flags`, `exposure_tolls`). These two exposures tie
+electron with down even though the decoded records distinguish them.
+The native preparation, decoder realization and registration tariff
+for the full event remain open.
+
 ### Primitive crossing activity and clock limits
 
 `HeavyCrossingCost` checks the six-reflection word and its reverse on

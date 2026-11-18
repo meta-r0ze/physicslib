@@ -81,6 +81,7 @@ import PMElementaryParticles.EventRequirements
 import PMElementaryParticles.HeavyFlipControl
 import PMElementaryParticles.HeavyFlipRecords
 import PMElementaryParticles.ElectricHeavyRecord
+import PMElementaryParticles.ElectricFourPortRecord
 import PMElementaryParticles.HeavyCrossingCost
 import PMElementaryParticles.CompanionHeavyFlip
 import PMElementaryParticles.HeavyFlipNativeBoundary
