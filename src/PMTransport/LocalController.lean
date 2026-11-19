@@ -261,6 +261,40 @@ theorem mixed_requests_different_destinations (s : State) (x : ℤ)
   exact ⟨rfl, rfl⟩
 
 
+/-! ## Complementing the requests -/
+
+def complementRequests (c : Requests) : Requests := (!c.1, !c.2)
+
+theorem complemented_guard (phase : Phase) (c : Requests) (p : Ports) :
+    exchangeOnEither phase (complementRequests c) p = !exchangeOnBoth phase c p := by
+  rcases c with ⟨a, b⟩
+  cases a <;> cases b <;> rfl
+
+/-- De Morgan's law compares two decisions on the same arrivals.
+    It appends a swap to the AND output. -/
+theorem complemented_output (phase : Phase) (c : Requests) (p : Ports) :
+    applyGuard (exchangeOnEither phase (complementRequests c)) p =
+      (applyGuard (exchangeOnBoth phase c) p).swap := by
+  rcases c with ⟨a, b⟩
+  cases a <;> cases b <;> rfl
+
+/-- The proposed state relabeling complements local requests and swaps
+    the live and record values. The clock and probe side are kept. -/
+def receiverDual (s : State) : State :=
+  (s.1, (fun x => (complementRequests (s.2.1 x).1, (s.2.1 x).2),
+    fun x => (s.2.2 x).swap))
+
+/-- The output swap identity does not intertwine the ticks. A field with
+    two different constant streams already distinguishes the port outputs. -/
+theorem receiver_dual_not_conjugate :
+    ¬ ∀ s : State,
+      receiverDual (rawTick exchangeOnBoth s) = rawTick exchangeOnEither (receiverDual s) := by
+  intro h
+  let s : State := (0, (fun _ => ((false, false), false), fun _ => (false, true)))
+  have hport := congrArg (fun t : State => (t.2.2 0).1) (h s)
+  change true = false at hport
+  cases hport
+
 open scoped BigOperators
 
 /-- The output comparison account for one supplied exchange decision. -/
