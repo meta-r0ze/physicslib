@@ -190,4 +190,48 @@ theorem packet_record_difference (full probeVacancy : Bool) :
   rw [packet_record_cost, packet_record_cost]
   cases full <;> cases probeVacancy <;> norm_num
 
+
+/-- For the two principal root writers, each half-unit baseline is the
+two quarter flags from `ElectricHeavyRecord.pulse_flags`. Each signed kick
+contributes half of its marked output bit, for either polarity. -/
+def factorFlagToll (colourReference : Bool) (c : Channels) : ℝ :=
+  (1 / 2 + (if (labelRecord c).2 = true then 1 / 2 else 0)) +
+    (1 / 2 + (if (labelRecord c).1 = colourReference then 1 / 2 else 0))
+
+theorem factorFlagToll_eq (pol : Bool) (c : Channels) :
+    factorFlagToll pol c = 1 + WireSchedule.bitToll pol c / 2 := by
+  cases pol <;>
+    cases hp : (labelRecord c).2 <;> cases hs : (labelRecord c).1 <;>
+    norm_num [factorFlagToll, WireSchedule.bitToll, ElectricHeavyRecord.phase_position,
+      ElectricHeavyRecord.phase_sector, ElectricHeavyRecord.phase_sector_lepton_reference, hp, hs]
+
+theorem factor_flag_difference (c : Channels) :
+    factorFlagToll true c - factorFlagToll false c =
+      (WireSchedule.bitToll true c - WireSchedule.bitToll false c) / 2 := by
+  rw [factorFlagToll_eq, factorFlagToll_eq]
+  ring
+
+/-- If the refresh family and the writer are served by the same catalog
+of maintenance jobs, an already serviced job is paid only once. The job
+identity must include any distinct time, restoration or output obligation. -/
+theorem added_maintenance_eq {J : Type*} [DecidableEq J]
+    (price : J → ℝ) (baseline writer : Finset J) :
+    (∑ j ∈ baseline ∪ writer, price j) - (∑ j ∈ baseline, price j) =
+      ∑ j ∈ writer \ baseline, price j := by
+  have he : baseline ∪ writer = baseline ∪ (writer \ baseline) := by
+    ext j
+    simp only [mem_union, mem_sdiff]
+    tauto
+  have hd : Disjoint baseline (writer \ baseline) := by
+    rw [Finset.disjoint_left]
+    intro j hj hw
+    exact (mem_sdiff.mp hw).2 hj
+  rw [he, sum_union hd]
+  ring
+
+theorem shared_maintenance_free {J : Type*} [DecidableEq J] (price : J → ℝ)
+    (baseline writer : Finset J) (h : writer ⊆ baseline) :
+    (∑ j ∈ baseline ∪ writer, price j) - (∑ j ∈ baseline, price j) = 0 := by
+  rw [added_maintenance_eq, sdiff_eq_empty_iff_subset.mpr h, sum_empty]
+
 end PMElementaryParticles.WireReferenceCost

@@ -177,6 +177,45 @@ under the stated assumptions. Neither opposed attenuation pattern
 has been selected for the physical wire. The selector supplies no
 order of `ε` in `1/Δ`.
 
+## Marginal cost of the two references
+
+`SharedReference.shared` puts the weak and hypercharge reads on
+one reserved type in its stated layout. Its response test alone
+allows Q or L. `ReferenceEconomy.economy_selects_lepton` selects L
+within the colour-preserving types and its allocation cost model.
+`ReferenceEconomy.reads_reserved` treats the reserved cell as already
+paid by the frame overhead. `SectorObligations.weak_is_owner` identifies
+weak as the repair owner in the stated frame model. These results
+establish sharing for the baseline refreshes.
+
+`ColourReference.colour_reference_in_payload` puts the colour
+refresh's reference outside that reserved cell when L is reserved.
+`colour_ledger_minimal` gives the existing colour refresh's twelve
+payload obligations. The new electric writer uses a same-position
+charge difference (`ElectricHeavyRecord.sectorDifference`). The
+definition supplies no cell address, ready reference state, clock
+window or restoration rule linking either of its references to a
+baseline maintenance job.
+
+| Remainder term | Certified contribution and open cost |
+| --- | --- |
+| Cell and reference upkeep | `ReferenceEconomy.reads_reserved` prices baseline allocation. Under the additive job ledger, `added_maintenance_eq` charges only writer jobs outside the baseline. `shared_maintenance_free` proves zero marginal upkeep if the writer needs only jobs already done. A reference in the same cell can need a new operation, a different state or an additional visit. Neither reference's writer job set has been identified with its baseline refresh job set. |
+| Position and sector pulses | The position flag is identical on equal input populations. The sector output flag is already included in the bit cost. For the exhibited root writer, `pulse_flags` gives quarter flags for each preparation and return and half the indicated bit flag for the kick. `factorFlagToll_eq` extends `two_bit_factor_toll` to both polarities. The two-write factor ledger is `1 + T_bits/2` per visited input. With the same visit population, the difference is half the output-bit gap. This ledger replaces the two output-flag charges when it is used. Physical conditional-pulse, polarity-control, phase calibration and synchronization charges remain open. |
+| Bank and seed preparation | `ElectricCompanionSetupToll.primitive_setup_flags` and `equal_slot_setup_sum` give the 5/8 equal-wall budget on the supplied companion seed. It cancels if both references use that setup with the same visitation and tariff. `ElectricPrimitiveToll.preparation_flags` gives one flag for the inverse-decoder preparation under its own seed and tariff. Selection of the bank, supply and occupation remain unpriced. |
+| Current and crossing | `ElectricChiralKick.swapped_exposure_toll`, `total_tolls` and `total_toll_wall_pair` price a different forward writer under its state-flag tariff. They give no colour-versus-lepton price for the exact two-bit comparison. `HeavyCrossingCost.uniform_cost` gives a common mean for the same unguarded crossing and displacement prices. The extra guarded operations and their physical firing remain unpriced. |
+| Export, reset and reuse | `ElectricCompanionBank.written_port_ready_iff` gives a restricted ready return. `HeavyFlipNativeBoundary.no_closed_cleaning` excludes universal closed cleaning. The two polarities leave different records. No native export or reset trace and tariff has been derived for both. |
+
+If the lepton writer uses the already maintained reference at its
+required state and time with no extra maintenance job, it adds zero
+upkeep. The same argument applies to a supplied colour payload
+reference. Cell placement alone proves neither reuse condition.
+The `12η` refresh ledger and the payload cell allocation rate are
+baseline costs under their own units and cadence. There is no theorem
+that transfers them into a bound on the incremental registrations
+of the writer. The proved factor and setup flags do not bound the
+unpriced difference `ΔR`. It remains open whether that difference
+reaches the relevant selection threshold.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.
