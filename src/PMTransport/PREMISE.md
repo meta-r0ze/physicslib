@@ -16,10 +16,16 @@ PMTransport studies a reversible machine on E8 nodes.
 | Controller | the substrate clock (period `Δ = 43`) | `ClockPeriod`, `ClockedRootTrials` |
 | Payload | a label on a generation's two walls: 2 × 8 = 16 slots | `ControlledGluedRegister` (16 channels) |
 
-Persistence requires the machine to be reversible. It cannot erase. Every
-decision that treats two inputs differently leaves a record
-(`CoherentGate.unequal_needs_orthogonal`). The record must be kept, exported
-or reused.
+Inside a system, the update is reversible: Conservation keeps the
+identity-defining information (PM-1-Arch, leg update "by Conservation it is
+reversible"). Every decision that treats two inputs differently leaves a
+record (`CoherentGate.unequal_needs_orthogonal`). The record must be kept,
+exported or reused. Once a record is exported, PM does not require that it
+is kept. It can be erased, and the erasure is paid as Toll (Landauer: one
+erased bit costs at least `k_B T ln 2`). Toll is the count of these
+irreversible registrations, so a machine that could not erase would have no
+Toll. Reversibility is a constraint on the system's own registers, not on
+the boundary.
 
 ## The postulate
 
