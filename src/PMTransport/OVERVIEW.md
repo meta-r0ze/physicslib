@@ -16,7 +16,7 @@ state. The clock and the comparison ledger govern and account for those visits.
 | Route between sites | `NativeCarrierProtocol`, `NativePacketRouting`, `NativePacketUpdate` | Reversible port routing, exact carrier readout, and locality under the stated routing realization. |
 | Change glue class | `GluedRegister`, `CarrierTriality` | The six-root crossing realizes swap and diagonal triality on glued roots. Triality on a diagonal glued carrier relabels the odd amplitudes by the matrix `M/2`. |
 | Exchange or pass through a node | `TwoSiteHandoff`, `OpenReferenceFlow`, `HandoffAdmittance`, `ReferenceClassHop` | Exact exchange and bypass destinations. Stationarity of a class-definite reference constrains direct class exchange on its wall. |
-| Hold, export, and renew a record | `OpenHandoff`, `IndependentRegisters`, `RegisterControl`, `ReferenceMaintenance`, `RecordSupply`, `HomogeneousRouting` | Reversible register banks, exact restoration, and export of the previous state. An open backward orbit allows sustained renewal under the supplied reference conditions. |
+| Hold, export, and renew a record | `OpenHandoff`, `OddReferenceSource`, `IndependentRegisters`, `RegisterControl`, `ReferenceMaintenance`, `RecordSupply`, `HomogeneousRouting` | Reversible register banks, exact restoration, and export of the previous state. An open backward orbit allows sustained renewal under the supplied reference conditions. |
 | Compare and count | `BranchPulseContract`, `RefreshSchedule`, `CoherentRefresh`, `CoherentGate` | Coherent comparison under the pulse contract, orthogonal records for overlapping outputs, and minimum additive cost for required visits at supplied prices. |
 | Schedule native operations | `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot`, `RootTransferPhase` | The substrate period, reversible clocked words, and root pulse areas. Physical phase admission and absolute timing remain open. |
 
@@ -91,6 +91,39 @@ root preparation, exact restoration requires its known occupied seed at
 each loading site (`basis_loading_iff`). Physical selection of the seed
 source, admission and timing of the translation and receiver, and the
 registration tariff remain open.
+
+### Odd rest modes as occupied reference candidates
+
+A single carrier basis label has a component outside the antipodal-odd
+sector. This includes the old basis seed and record of
+`RootReferencePreparation`. A parity-preserving control leaves an odd input
+in the odd sector. The existing orthogonal-root phase words therefore cannot
+supply either basis label from an odd input at any phase times
+(`basis_label_not_odd`, `root_phase_word_no_basis`). This exclusion is
+independent of the uniform-source tests in
+[ReferenceSourceBoundary](Machine/ReferenceSourceBoundary.lean).
+
+`OddReferenceSource` supplies an alternative using an already occupied odd
+rest mode. On the first wall, axes 0 and 1 are rest coordinates and the
+root in `e₀−e₁` swaps them. On the second wall the corresponding axes
+are 2 and 3, with root `e₂−e₃`. Both input and output have unit population
+and zero native rest action in all three glue classes. The selected wall
+loader is unitary and acts as identity on the other wall
+(`rest_stationary`, `rest_population`, `wall_loader_unitary`,
+`load_rest_mode`). Each wall has two distinct stationary states of this
+form, so stationarity leaves the choice of input axis open
+(`rest_modes_distinct`). The reconstructed loading pulse remains in the
+rest kernel for its entire evolution (`loading_pulse_stays_at_rest`).
+
+On the vector-class first wall, these two rest axes are the existing
+live and record ports with the normalized odd profile proportional to
+`(1,−1)`. The open route restores that profile at every visit whose
+upstream loader receives the occupied odd seed. It still draws one unit
+of input population per visit
+(`first_wall_ports`, `odd_seed_train_restores`). The result supplies
+a local preparation from an occupied rest state and an exact renewal
+contract. Selection and allocation of the occupied input and admission
+and timing of the wall loader and the spatial shift remain open.
 
 ## Node handoff and admittance
 

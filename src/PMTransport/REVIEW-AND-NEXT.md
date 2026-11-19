@@ -17,10 +17,14 @@ For repeat operation, the
 nearest-neighbour D₄ line, the record destinations, and the exact incoming
 reference population required for any finite horizon. The basis-reference
 route uses a different prepared upstream slot per visit and specifies the
-occupied seed required by root loading. Derive the physical admission
-of the translation and the supply of those seeds, or give an explicit
-reversible renewal step. Use the acceptance criterion to derive the
-viability margin against stated disturbances.
+occupied seed required by root loading. The
+[odd rest-mode loader](OVERVIEW.md#odd-rest-modes-as-occupied-reference-candidates)
+gives a reference compatible with the odd carrier sector, while
+parity-preserving root phases exclude the old single-label reference from an
+odd source. Derive the occupied input population and axis selection from
+the accessible vacuum family, or give an explicit reversible renewal step.
+Admit the wall loader and the spatial translation. Use the acceptance
+criterion to derive the viability margin against stated disturbances.
 
 Derive the handoff law for labeled traffic and for successive nodes. The current
 conductance theorem identifies the through weight for the stated two-stream
@@ -93,7 +97,8 @@ multiplying through weights.
 ## Label-sensitive handoff
 
 - **Seed and admission.** Supply an occupied odd coordinate seed in the
-  predecessor glue class. Admit and place the
+  predecessor glue class. The coordinate-zero first-wall candidate is
+  a unit-population rest mode when supplied. Admit and place the
   [triality preparation](../PMElementaryParticles/OVERVIEW.md#triality-preparation-on-the-companion),
   the [chiral-current kicks](../PMElementaryParticles/OVERVIEW.md#electric-kicks-from-the-chiral-register-current),
   and the joint guarded crossing and companion update. Derive the rate and
