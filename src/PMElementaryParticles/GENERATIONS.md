@@ -6,6 +6,12 @@
 | Wire route | `ReferenceClassHop.stationary_iff` and `touches_reference_class`, `HeavyFlipControl.direct_iff`, `ReferenceNode.restoring_series` | One address has a direct insertion and two need the reference node. The direct address is `g = 0`, which supplies the unsuppressed row in the normalized bare mass matrix. The two restoring addresses have equal link weight. The middle and lightest masses are modes of the coupled matrix. | The route test uses the wall classes for every label. The bare mass matrix is shared. |
 | Tier ledger | `TierLedger.tiersFor` and the four length lemmas, `QuarkMasses`, `LeptonMasses` | Each protocol lists three tiers in ascending order. The highest occupied tier is 3 for up and 2 for down, electron and neutrino. Neutrino masses remain open. | Up uses `{0, 2, 3}`. Down, electron and neutrino use `{0, 1, 2}`. The assignments are model inputs. Their formulas use the substrate's `Δ = 43`. |
 
+The physical route, heavy writer and lightest-offset branch depend on
+Transport's [Admission](../PMTransport/PREMISES.md#admission).
+[Absolute timing](../PMTransport/PREMISES.md#absolute-timing) and the
+[Registration tariff](../PMTransport/PREMISES.md#registration-tariff)
+supply the elapsed and paid costs of that trace.
+
 ## From glue address to route
 
 In the glued register T is static and F is active. In

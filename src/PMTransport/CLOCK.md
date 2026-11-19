@@ -18,6 +18,28 @@ its theorem.
 | Certified | If a statistical pair occupies two coherent substrate ticks, the generator per tick is `G/2`. In that convention the elapsed quarter-time is `π/gap(p)` substrate ticks. | `ClockedRootTrials.heat_after_two_ticks`, `phase_in_ticks`, `exchange_in_ticks_iff`, `principal_weight_in_ticks`. The correspondence of the physical operations is a separate premise. |
 | Certified | A common tick cancels from the flip-to-crossing rate ratio. | `CertainTransferRate.common_tick_rate_ratio`. The formula still uses both pulse areas, coefficient conversions and durations. |
 
+## Root calibration
+
+A moving label reads the full complex phase of the reconstructed pulse.
+Gaps π and 3π give the same coherent history at integer ticks, including
+a reflection on the first tick. See `phase_alias_iff`,
+`integer_samples_agree` and `ambiguous_exchange_clock`.
+
+A two-trial test can instead read the probability on the two record-port
+labels of the prepared vector-class odd live seed
+(`RootClockCalibration.odd_seed_trial_weight`). In statistical-pair time,
+a reflection at elapsed time `N` requires `−N log(1−2w) = π + 2πk`. The
+principal calibration gives `w = (1 − exp(−π/N))/2` and can also use a
+coherent flag on the principal range (`exchange_tick_iff`,
+`principal_trial_weight`, `principal_flag_inj`).
+
+The reference excursion retains the request bits and advances to phase
+2. A moved input changes exactly when the bits differ
+(`ClockedRootTrials.pair_endpoint`, `shared_fire`). With the same
+statistical pair occupying two substrate ticks, the coherent reflection
+test becomes `−N log(1−2w)/2 = π + 2πk`. Its principal weight is
+`(1 − exp(−2π/N))/2` (`exchange_in_ticks_iff`, `principal_weight_in_ticks`).
+
 ## Assumed and open clock inputs
 
 | Status | Input | Consequence |
@@ -25,9 +47,14 @@ its theorem.
 | Assumed | One substrate tick per root quarter-time. | Gives the short-word elapsed budget. It is incompatible with the whole-tick certain 16-pulse word. |
 | Assumed | Each reflection in the crossing is a principal half-pulse on the same root clock, and the word runs serially. | Gives two quarter-times per reflection. Discrete crossing support alone supplies no time assignment. |
 | Assumed | Each elapsed pulse tick consumes its own active slot in the 32-slot service ledger. | The 36-tick budget then exceeds one frame's service capacity. `PMSubstrate.Clock.schedule_selects_43_of_clock` uses a 32-slot encoding to select the period. It does not route pulses into that encoding. |
-| Assumed | The four retained request histories have equal prior counts and both changes have the same local action. | Then actions `0,c,c,2c` give the product Gibbs law. The working tree's `ClockedRootTrials.history_action_additive`, `history_mass_factorizes` and `expected_history_action` check this conditional calculation. |
+| Assumed | The four retained request histories have equal prior counts and both changes have the same local action. | Then actions `0,c,c,2c` give the product Gibbs law. The conditional calculation requires Admission and the Registration tariff. |
 | Open | Admit and price the comparisons, controlled rotations, crossings and reference renewal on a common clock. | Neither the admissible pulse overlap nor the calibration from statistical-pair time to the physical root tick has been selected. |
 | Open | Select pulse areas and their normalizations in the wall Hamiltonian. | The checked endpoint transformations and clock period alone do not identify `K_f` or `y`. |
+
+`ClassBlindFlip`, `RootCliffordCompletion`, `CompletedCarrierPhase`
+and `SelectiveCarrierRouting` give candidate controls and endpoints for
+the calibrated word. A physical common clock would feed
+`LightLeakage`, `WallGapCalibration` and `SplitClockBoundary`.
 
 ## Slot requirements for a wire cycle
 
@@ -182,6 +209,10 @@ A permanent record can change the timing without changing its truth
 table. The missing result is a joint clocked trace that supplies the
 occupied reference and record, admits the pulse, and identifies which
 histories are counted and which drive each wall's insertion.
+
+The nominal serial minimum counts are also available in
+`PMTransport.Values`. The restoring counts are subtotals before node
+and record work.
 
 ## Flip-to-crossing rate
 

@@ -276,7 +276,12 @@ premise the output-bit ledger has `ΔR = G/2 + U`.
 
 Without that reset premise the output-bit thresholds for the full
 `ΔR` remain 1/2, 9/16 and 3/5, respectively
-(`packet_record_difference`). The factor-pulse ledger by itself
+(`packet_record_difference`). `PMTransport.Values` gives both sets of
+thresholds. The packet identities are `packet_record_difference_eq_values`
+and `balanced_reset_gap_eq_values`. See Transport's
+[Admission](../PMTransport/PREMISES.md#admission) and
+[Registration tariff](../PMTransport/PREMISES.md#registration-tariff).
+The factor-pulse ledger by itself
 has gap `G/2` (`factor_flag_difference`). If the two reset
 comparisons are additionally paid and distinct from the writer
 factors, factor plus reset gives gap `G`. None of these conditionals

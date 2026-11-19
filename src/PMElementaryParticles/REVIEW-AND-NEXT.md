@@ -32,7 +32,9 @@ the recorded mass ratios to check it.
   common jobs. Derive the fresh record supply and encoding, which
   pulse and reset flags register, and which export, renewal and
   maintenance jobs are already paid. Use the
-  [label-sensitive schedule](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff).
+  Transport entries for [Admission](../PMTransport/PREMISES.md#admission),
+  [Registration tariff](../PMTransport/PREMISES.md#registration-tariff)
+  and [Sustained reference supply](../PMTransport/PREMISES.md#sustained-reference-supply).
 
   The two-bit colour record gives the down geometric mean at any
   common bit price (`down_geometric_mean`). Its physical selection,
@@ -44,6 +46,8 @@ the recorded mass ratios to check it.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
+  See Transport's [Admission](../PMTransport/PREMISES.md#admission)
+  and [Absolute timing](../PMTransport/PREMISES.md#absolute-timing).
   The [generation comparison](GENERATIONS.md#the-charged-lift) excludes
   the shared route counts as the source of the protocol dependence. The
   candidate uses the same static vector leg and two comparisons for each
