@@ -93,6 +93,7 @@ import PMElementaryParticles.CompanionHeavyFlip
 import PMElementaryParticles.HeavyFlipNativeBoundary
 import PMElementaryParticles.ResonanceLift
 import PMElementaryParticles.ChargedInsertion
+import PMElementaryParticles.WireSchedule
 import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog
 import PMElementaryParticles.RadiativeIntegrals
