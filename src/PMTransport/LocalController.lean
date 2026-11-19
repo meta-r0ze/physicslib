@@ -295,6 +295,148 @@ theorem receiver_dual_not_conjugate :
   change true = false at hport
   cases hport
 
+/-- The proposed relabeling is a reversible, on-site operation. -/
+theorem receiver_dual_involutive : Function.Involutive receiverDual := by
+  intro s
+  apply Prod.ext
+  · rfl
+  · apply Prod.ext
+    · funext x
+      change (complementRequests (complementRequests (s.2.1 x).1), (s.2.1 x).2) =
+        s.2.1 x
+      rcases s.2.1 x with ⟨⟨a, b⟩, side⟩
+      cases a <;> cases b <;> rfl
+    · funext x
+      exact Prod.swap_swap _
+
+theorem receiver_dual_local (s t : State) (x : ℤ)
+    (hc : s.2.1 x = t.2.1 x) (hp : s.2.2 x = t.2.2 x) :
+    (receiverDual s).2.1 x = (receiverDual t).2.1 x ∧
+      (receiverDual s).2.2 x = (receiverDual t).2.2 x :=
+  ⟨congrArg (fun p : Requests × Bool => (complementRequests p.1, p.2)) hc,
+    congrArg Prod.swap hp⟩
+
+/-- Commutation with the bare clock is weaker than commutation with a tick. -/
+theorem receiver_dual_bare_clock (s : State) :
+    receiverDual (finRotate Delta s.1, s.2) =
+      (finRotate Delta (receiverDual s).1, (receiverDual s).2) := rfl
+
+theorem receiver_dual_population (s : State) (x : ℤ) (pop : Bool → ℝ) :
+    pop ((receiverDual s).2.2 x).1 + pop ((receiverDual s).2.2 x).2 =
+      pop (s.2.2 x).1 + pop (s.2.2 x).2 := add_comm _ _
+
+/-- At phase zero complementing the idle requests starts a real probe
+    reflection, even if the two port values are equal. -/
+theorem receiver_dual_probe_counterexample :
+    ∃ s : State,
+      ((receiverDual (rawTick exchangeOnBoth s)).2.1 0).2 = false ∧
+        ((rawTick exchangeOnEither (receiverDual s)).2.1 0).2 = true := by
+  exact ⟨(0, (fun _ => ((false, false), false), fun _ => (false, false))), rfl, rfl⟩
+
+private theorem retained_request (rule : Rule) (s : State) (n : ℕ) (x : ℤ) :
+    ((((rawTick rule)^[n]) s).2.1 x).1 = (s.2.1 x).1 := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply']
+    exact ih
+
+private theorem or_double_swap_ports (s : State)
+    (h : ∀ x, (s.2.1 x).1 = (true, true)) :
+    (rawTick exchangeOnEither (rawTick exchangeOnEither s)).2.2 = s.2.2 := by
+  have step (u : State) (hu : ∀ x, (u.2.1 x).1 = (true, true)) (x : ℤ) :
+      (rawTick exchangeOnEither u).2.2 x =
+        ((u.2.2 (x + 1)).2, (u.2.2 (x - 1)).1) := by
+    change applyGuard (exchangeOnEither u.1 (u.2.1 x).1)
+      ((u.2.2 (x - 1)).1, (u.2.2 (x + 1)).2) = _
+    rw [hu x]
+    rfl
+  funext x
+  rw [step (rawTick exchangeOnEither s) (fun y => h y) x,
+    step s h (x + 1), step s h (x - 1)]
+  simp
+
+private def probeClock (u : Phase × (Requests × Bool)) : Phase × (Requests × Bool) :=
+  (finRotate Delta u.1, advanceProbe u.1 u.2)
+
+private theorem probe_return :
+    ∀ c : Requests, ∀ b : Bool, (probeClock^[2 * Delta]) (0, (c, b)) = (0, (c, b)) := by
+  decide +kernel
+
+private theorem probeClock_trace (rule : Rule) (s : State) (x : ℤ) (n : ℕ) :
+    ((((rawTick rule)^[n]) s).1, (((rawTick rule)^[n]) s).2.1 x) =
+      (probeClock^[n]) (s.1, s.2.1 x) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ← ih]
+    rfl
+
+private theorem state_eq_of_observations {u s : State} (ports : u.2.2 = s.2.2)
+    (probe : ∀ x, (u.1, u.2.1 x) = (s.1, s.2.1 x)) : u = s := by
+  have hp : u.1 = s.1 := congrArg (fun p : Phase × (Requests × Bool) => p.1) (probe 0)
+  have hr : u.2.1 = s.2.1 := funext fun x =>
+    congrArg (fun p : Phase × (Requests × Bool) => p.2) (probe x)
+  exact Prod.ext hp (Prod.ext hr ports)
+
+private theorem or_returns_after_two_periods (s : State) (hp : s.1 = 0)
+    (h : ∀ x, (s.2.1 x).1 = (true, true)) :
+    (rawTick exchangeOnEither)^[2 * Delta] s = s := by
+  have ports (n : ℕ) : (((rawTick exchangeOnEither)^[2 * n]) s).2.2 = s.2.2 := by
+    induction n with
+    | zero => rfl
+    | succ n ih =>
+      rw [Nat.mul_succ, Nat.add_comm (2 * n) 2, Function.iterate_add_apply]
+      exact (or_double_swap_ports _ (fun x =>
+        (retained_request _ _ _ _).trans (h x))).trans ih
+  let u := (rawTick exchangeOnEither)^[2 * Delta] s
+  have probe (x : ℤ) : (u.1, u.2.1 x) = (s.1, s.2.1 x) := by
+    calc
+      _ = (probeClock^[2 * Delta]) (s.1, s.2.1 x) :=
+        probeClock_trace exchangeOnEither s x (2 * Delta)
+      _ = _ := by
+        rw [hp]
+        exact probe_return (s.2.1 x).1 (s.2.1 x).2
+  exact state_eq_of_observations (u := u) (s := s) (ports Delta) probe
+
+private theorem and_idle_live (s : State)
+    (h : ∀ x, (s.2.1 x).1 = (false, false)) (n : ℕ) (x : ℤ) :
+    ((((rawTick exchangeOnBoth)^[n]) s).2.2 x).1 =
+      (s.2.2 (x - (n : ℤ))).1 := by
+  induction n generalizing x with
+  | zero => simp
+  | succ n ih =>
+    let u := (rawTick exchangeOnBoth)^[n] s
+    rw [Function.iterate_succ_apply']
+    change (applyGuard (exchangeOnBoth u.1 (u.2.1 x).1)
+      ((u.2.2 (x - 1)).1, (u.2.2 (x + 1)).2)).1 = _
+    rw [(retained_request exchangeOnBoth s n x).trans (h x)]
+    change (u.2.2 (x - 1)).1 = _
+    rw [ih (x - 1), show (x - 1) - (n : ℤ) = x - ((n + 1 : ℕ) : ℤ) by omega]
+
+/-- No injective clock-preserving relabeling that complements the requests
+    everywhere can intertwine these updates. On the complemented pair
+    the OR transport returns after two periods, while an AND input can
+    carry its live value off the original site. -/
+theorem no_request_complement_conjugacy (d : State → State) (hinj : Function.Injective d)
+    (hp : ∀ s, (d s).1 = s.1)
+    (hc : ∀ s x, ((d s).2.1 x).1 = complementRequests ((s.2.1 x).1)) :
+    ¬ ∀ s, d (rawTick exchangeOnBoth s) = rawTick exchangeOnEither (d s) := by
+  intro h
+  let s : State := (0, (fun _ => ((false, false), false), fun x => (decide (x = 0), false)))
+  have he (n : ℕ) : d ((rawTick exchangeOnBoth)^[n] s) =
+      (rawTick exchangeOnEither)^[n] (d s) := by
+    induction n with
+    | zero => rfl
+    | succ n ih =>
+      rw [Function.iterate_succ_apply', Function.iterate_succ_apply', h, ih]
+  have hr := hinj ((he (2 * Delta)).trans
+    (or_returns_after_two_periods (d s) (hp s) (fun x => hc s x)))
+  have hx := and_idle_live s (fun _ => rfl) (2 * Delta) 0
+  rw [hr] at hx
+  change true = false at hx
+  cases hx
+
 open scoped BigOperators
 
 /-- The output comparison account for one supplied exchange decision. -/
@@ -310,6 +452,29 @@ theorem exchange_flag_realisation (guard : Guard) (p : Ports)
         (TwoSiteHandoff.field (TwoSiteHandoff.step false edge)) else 0 := by
   rw [TwoSiteHandoff.exchange_flag, h]
   rfl
+
+/-- On the same arrivals the complemented guard moves the mismatch flag
+    from one conditional exchange account to the other. -/
+theorem complemented_exchange_flags (phase : Phase) (c : Requests)
+    (p : Ports) (value : Bool → Fin 2 → ℂ) :
+    exchangeFlag (exchangeOnBoth phase c) p value +
+      exchangeFlag (exchangeOnEither phase (complementRequests c)) p value =
+        CommonResponse.nsq (value p.1 - value p.2) / 2 := by
+  unfold exchangeFlag
+  rw [complemented_guard]
+  cases exchangeOnBoth phase c p <;> simp
+
+/-- A supplied pair of orthogonal basis values gives a unit flag on
+    exchange and zero receiver flag on bypass. Even swapping the input
+    pair with the requests does not preserve this registration. -/
+theorem receiver_dual_flag_counterexample :
+    let value : Bool → Fin 2 → ℂ :=
+      fun b => Pi.single (if b then 1 else 0) 1
+    exchangeFlag (exchangeOnBoth 0 (false, false)) (false, true) value = 0 ∧
+      exchangeFlag (exchangeOnEither 0 (complementRequests (false, false)))
+        ((false, true) : Ports).swap value = 1 := by
+  norm_num [exchangeFlag, exchangeOnBoth, exchangeOnEither, complementRequests,
+    LinkExpansion.nsq_eq, Fin.sum_univ_two, Pi.single_apply, Complex.normSq_apply]
 
 /-- For a supplied weighted set of visits, sum the certified exchange
     output flags along a trace. The caller supplies the paid visits and
