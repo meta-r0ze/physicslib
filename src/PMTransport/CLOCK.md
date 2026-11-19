@@ -70,3 +70,64 @@ a fixed-class crossing. They do not implement a timed scheduler. To
 allow simultaneous intervals, supply the independently usable registers,
 controls and joint evolution. Clock closure permits both idle and
 nonidle masks, so it does not pick an absolute phase for any wire pulse.
+
+## Periods per route
+
+Count elapsed serial ticks, with carry across periods allowed. For a
+block total of `B` whole ticks, a frame-aligned start and exclusive
+use of the elapsed clock require at least `⌈B/43⌉` periods. A start at
+phase `h` with `0 ≤ h < 43` touches at least `⌈(h+B)/43⌉` periods
+when `B>0`. Gaps and guards can increase either bound.
+
+The table uses one gapped crossing and serial whole-tick beta words.
+The direct route uses one word on each wall. For the two restoring
+routes the node performs the F insertion. `L₁,L₂` stand for the
+whole-tick budgets of their entry, dwell and exit, if admitted. All
+records, setup, optional fixed-clock reservations and reference renewal
+are additional. Each entry is a base budget at the respective minimum
+permitted quarter-time.
+
+| Route | With the short word at `q=1` | With the 16-pulse word at `q=2` | Can the full route fit in one 43-tick period? |
+| --- | --- | --- | --- |
+| Direct `g=0` | `24+12+24 = 60`, at least 2 periods | `64+24+64 = 152`, at least 4 periods | Excluded for this serial two-word implementation, for electron, up and down. |
+| Enter the reference class, `g=1` | `36+L₁`. At least 2 periods if `L₁>7`, or if the added work uses that much of the budget. | `88+L₁`, at least 3 periods | The short word leaves at most 7 elapsed ticks for the node and all additional work. The long word excludes one period. |
+| Leave the reference class, `g=2` | `36+L₂`, with the same 7-tick available budget | `88+L₂`, at least 3 periods | The same exclusions apply. Admittance symmetry establishes no equality of `L₁` and `L₂`. |
+
+If the cycle also executes a separate class-changing crossing, add
+`12q`. The direct totals then become 72 and 176, requiring at least
+2 and 5 elapsed periods. The restoring subtotals then become 48 and 112
+before either node duration, so the short-word one-period option is also
+excluded. If an implementation adds a separate beta word at F on a
+restoring route, it pays that word's duration as well.
+
+| Logical work if the event is required in the period | Electron | Up | Down |
+| --- | --- | --- | --- |
+| Charged-current doublet bit | One full or lepton-only visit | One full visit | One full visit |
+| Heavy fresh record on the direct address | Two bit visits | Two bit visits | Two bit visits |
+| Charged-offset projector at the static vector address | Two matched tests | Two matched tests | Two matched tests |
+
+Timing for those visits and for their reset is still open. The logical
+counts come from the slot table. A zero flag on a label does not remove
+the corresponding visit from an execution that applies the comparison.
+If a fresh inverse-decoder/forward-decoder record is required serially on
+the direct route, it adds `52q`. Even with one crossing the base totals
+become 112 ticks at `q=1` and 256 at `q=2`, before kicks and reuse.
+This gives lower bounds of 3 and 6 periods for that particular record
+choice, equally for all three charged protocols.
+
+Under the additional active-slot rule, every serial base budget in the
+route table exceeds 32, even the 36-tick short restoring subtotal.
+With 11 idle phases and no adjacent idles, the cyclic active mask has
+11 nonempty runs. The longest contains at most `32−10 = 22` ticks.
+Thus an uninterrupted 24-tick flip cannot stay in active slots on
+such a mask, even across the period boundary. A scheduler could allow
+idle gaps between primitive pulses if it proves the state is held.
+Counts alone would leave the alignment of those pulses open.
+
+If the wall flips can run concurrently, two short 24-tick flips followed
+or preceded by one 12-tick crossing have a 36-tick elapsed budget.
+That arithmetic does not admit a parallel update. Requiring the
+gapped crossing between successive operations on one amplitude instead
+precludes overlapping those operations. The library leaves the
+physical choice between these executions open. It derives neither a
+minimum full-route period count nor a protocol-dependent one.
