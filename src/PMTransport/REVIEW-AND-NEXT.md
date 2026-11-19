@@ -34,16 +34,14 @@ multiplying through weights.
 
 ## Absolute event clock
 
-Use the [clock ledger](CLOCK.md) for the certified results and timing
-premises. Derive durations and prices in hop-time units for the crossing,
-in-wall carrier and flip, and the coherent controls (`ClassBlindFlip`,
+The [clock ledger](CLOCK.md) gives the checked budgets and branch choices.
+Derive the common hop-time calibration, generation and chirality controls,
+pulse areas and registration tariff (`ClassBlindFlip`,
 `RootCliffordCompletion`, `CompletedCarrierPhase`, `SelectiveCarrierRouting`).
-Derive the generation and chirality controls, physical pulse areas,
-wall-rate normalization and firing cadence. Use them to calculate the
-light-band error and the finite-tick split update (`LightLeakage`,
-`WallGapCalibration`, `SplitClockBoundary`). If the native schedule retains
-a one-wall lazy offset, use the spectrum with that offset for the daughter
-calculation (`NativeWallOffset.rest_offset_breaks_chirality`).
+Use the calibrated rates in `LightLeakage`, `WallGapCalibration` and the
+split update (`SplitClockBoundary`). If a one-wall lazy offset survives,
+use its spectrum for the daughter calculation
+(`NativeWallOffset.rest_offset_breaks_chirality`).
 
 The [whole-tick alias result](OVERVIEW.md#calibrating-the-root-clock) applies
   even to the full integer-tick coherent history. The reference excursion

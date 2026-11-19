@@ -350,399 +350,47 @@ reference node and the heavy one does not (`PMAction.ReferenceClassHop`);
 a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
 (`node_toll_raises_heavy`).
 
-### Finite control of the direct heavy flip
+### Heavy flip and record certificates
 
-`HeavyFlipControl` uses the generation address and the glued carrier frame.
-The direct insertion on the reference wall avoids class zero at both ends
-exactly for generation zero (`direct_iff`, from
-`ReferenceClassHop.touches_reference_class`). A bare glued root cannot
-supply this address (`no_root_only_direct_address`). In the addressed
-direct-flip model, the forward endpoint exchange is the existing
-swap/triality word (`flip_encoded`). The reverse direction uses its
-inverse on the paired endpoints. The added control leaves the light node
-paths unchanged (`flip_light`).
+<a id="finite-control-of-the-direct-heavy-flip"></a>
+<a id="record-comparisons-and-heavy-flip-toll"></a>
+<a id="an-electric-charge-record-on-both-walls"></a>
+<a id="four-port-electric-record-with-fixed-kicks"></a>
+<a id="electric-decoder-on-the-odd-coordinate-bank"></a>
+<a id="short-root-decoder-and-serial-frame-bound"></a>
+<a id="primitive-flags-of-the-short-electric-decoder"></a>
+<a id="electric-kicks-from-the-chiral-register-current"></a>
+<a id="triality-preparation-on-the-companion"></a>
+<a id="primitive-crossing-activity-and-clock-limits"></a>
+<a id="other-heavy-weight-diagnostics"></a>
 
-The transported label supplies a sector bit (reference axis versus colour)
-and a sign bit (doublet position). The record is colour-invariant and
-survives the wall exchange (`record_colour`, `record_opposite`). A clean
-two-bit bank receives the code by conditional exchanges (`write_clean`).
-`IndependentRegisters` and `RegisterControl` execute the write and the
-selected endpoint exchange as a reversible word on the occupied banks
-(`registered_word`). A supplied phase on a record block is unitary on
-the full configuration space (`registered_phase_unitary`). For flip `F`,
-the phase has exchange coefficient `(1−z)/2` on its two endpoints and
-acts as identity on fixed points. This uses
-the available encoded endpoints and supplied joint controls. Native bank
-preparation, firing and timing remain open.
+| Theorem or module | What it proves | Conditions |
+| --- | --- | --- |
+| `HeavyFlipControl.direct_iff`, `ReferenceClassHop.touches_reference_class`, `no_root_only_direct_address`, `flip_encoded`, `flip_light` | The direct address is zero. Untagged roots alias other addresses. The addressed crossing fixes light inputs. | Chosen reference class and supplied generation address. The reverse uses the inverse word. |
+| `record_colour`, `record_opposite`, `write_clean`, `registered_word`, `registered_phase_unitary` (`IndependentRegisters`, `RegisterControl`) | Two bits are preserved across walls and colours. The clean write and guarded exchange are reversible. The phase has coefficient `(1−z)/2` on exchanged endpoints. | Occupied banks, clean record and supplied joint control. |
+| `CompanionHeavyFlip.ready_pack`, `run_pack`, `run_twice_pack`; `CoherentGate.tensor_dot`, `unequal_needs_orthogonal` | Ordered companion classes recover the heavy address. The update transfers the companion class and returns after two runs. Overlapping weak outputs need orthogonal records. | Packed companion and retained record. |
+| `HeavyFlipRecords.quark_auxiliary_gap`, `no_exact_quark_record`, `electron_down_overlap` | Auxiliary outcome gaps for up and down are at most ½. Electron/down squared overlaps at `3π/2` and `π/2` are 1 and ¼. | Shared auxiliary-only hypercharge control with the massive slots left in place. |
+| `full_only_minimum`, `quarter_massive`, `paired_minimum`, `paired_tolls`, `paired_ladder`, `paired_gap_ratio` | Full and lepton-only flag ledgers in order e,d,u,ν are `(¾,¾,¼,¼)` and `(¾,(3−√3)/8,(5−√3)/8,¼)`. Their sum gives the charged ladder and gap ratio `2/(3+√3)`. | The relevant visits are independently required and each state flag is charged. These comparisons do not supply the exact record. |
+| `orbit_bit_price`, `orbit_record_minimum`, `orbit_record_tolls`, `orbit_record_ladder`, `down_geometric_mean`, `PMAction.TollAmplitude` | The two exact bit visits cost `(2,1,0,1)` in the stated polarity. Down's amplitude is the geometric mean for any common price per bit registration. | Admitted signed-axis phases, clean branch and a separate requirement for each bit. |
+| `ElectricHeavyRecord.electric_generator`, `charge_from_bits`, `position_time_minimal`, `sector_time_minimal`, `same_wall_pair`, `packet_kick_phases`, `root_writer` | The electric charge gives the same record on either wall. The principal phase parameters are `3π` and `3π/2`. A quarter preparation, signed kick and three-quarter inverse write the basis record. | Matching-position reference, moving root orbit and supplied joint coupling. |
+| `colour_reference_toll`, `lepton_reference_toll`, `embedded_step_flag`, `pulse_flags`, `two_bit_factor_toll` | The two polarities give `(2,1,0,1)` and `(1,2,1,0)`. The exhibited writer's three factor flags give `1 + T_bits/2` for two writes. | Choose either comparison-output flags or the exhibited factor flags as paid registrations. These are distinct ledgers. |
+| `ElectricFourPortRecord.phase_codes`, `read_exact`, `decoder_word`, `exposure_eq_flags`, `exposure_tolls`, `forward_tolls`, `forward_no_ladder` | Fixed kicks and a decoder write four orthogonal records. Exposures tie electron and down. The forward logical-factor ledgers put down below electron in amplitude. | Prepared balanced bank and one registration per indicated flag. |
+| `ElectricDecoderBoundary.phase_word_not_quarter`, `phase_word_not_decoder`; `ElectricCoordinateDecoder.decoder_unitary`, `decoder_observed`, `decoder_reads`, `prepare_balanced`, `encoded_flag` | Uniform-line permutation phases cannot supply the literal decoder. Odd coordinates realize it and expose the primitive state flags. | Coherent root-phase contract, common rate and supplied seed. |
+| `short_observed`, `short_reads`, `record_at_short_port`, `short_unitary`, `short_word_exact`, `short_duration`, `undo_word_exact`, `short_prepares`, `undo_duration`, `fresh_bank_serial_exceeds_clock` | The short decoder writes bit-reversed records. Decode and fresh preparation take 25 and 27 quarter-times. | In serial, a fresh bank exceeds one frame when a quarter-time takes at least one tick. |
+| `ElectricPrimitiveToll.primitive_decoder_flags`, `ledger_observed`, `forward_tolls`, `charged_ladder`, `canonical_tie`, `preparation_flags` | Short decoder plus exposures give `(3,5/2,2,1)`. The canonicalizing swap ties down and up. Inverse preparation adds one flag. | One registration per executed state flag and an occupied clean seed. |
+| `ElectricChiralKick.high_observed`, `low_observed`, `kick_on_summand`, `high_unitary`, `high_preserves_occupation`, `two_kicks_from_one_current`, `swapped_exposure_toll`, `total_tolls`, `total_ladder`, `total_toll_wall_pair`, `clean_first_seed_at_rest`, `balanced_bank_leaves_rest` | `PMAction.RegisterInteraction.current` and the swap give the two kicks. Forward Tolls are `(13/4,11/4,5/2,1)`. A balanced bank needs a gapped coordinate and separate carrier. | Supplied current and one registration per executed state flag. |
+| `ElectricCompanionBank.triality_observed`, `prepares_companion_bank`, `glued_triality_step`, `guarded_companion_transport`, `companion_transport_observed`, `companion_transport_roots`, `written_port_ready_iff`, `setup_class_flag` | Triality prepares the bank from the predecessor seed. The guard transports it. Only the active neutral written port returns ready. The setup endpoint flags ½. | Occupied odd coordinate-zero seed in the proper class. |
+| `ElectricCompanionSetupToll.short_setup_on_seed_support`, `primitive_setup_flags`, `common_setup_on_seed_support`, `equal_slot_setup_sum` | One root suffices on the active seed and two on the static seed. The mean setup flag budget is 5/8. | The certified seed support and equal wall populations. |
+| `HeavyCrossingCost.activity_histogram`, `uniform_cost`, `sign_tie` | Six reflects per carrier give 27 idle, 20 unit and one double displacement across eight amplitudes. The mean charge is `(20 c₁ + c₂)/8`. | Uniform amplitudes for the mean, antipodal weights for the sign tie and supplied prices per displacement. |
+| `HeavyFlipNativeBoundary.no_closed_cleaning`, `tick_event_iff`, `idle_and_excursion_counts`, `cycle_closes`; `GappedGluedCrossing.equalClass_iff` | The untagged probe aliases addresses and closed universal cleaning is impossible. Both idle and two-toggle masks close. The gapped crossing shifts generation. | Address and ready record needed for the clocked endpoint. Separate Schur insertions still need their own firing law. |
 
-`CompanionHeavyFlip.ready_pack` supplies the generation address from the
-other occupied glue class on a retained companion carrier. The ordered
-live/companion classes select the incoming heavy wall for every companion
-index. The guarded endpoint word also updates the companion: its class
-becomes the vacated live class, with its carrier index retained
-(`run_pack`). Both directions agree with the finite control, and light
-inputs are fixed. Running the word twice restores the packed state
-(`run_twice_pack`). This identifies the required initial class and the
-return rule. The [companion-bank preparation](#triality-preparation-on-the-companion)
-below uses this carrier's odd amplitudes for the electric bank. The occupied
-seed source and admission of the joint update remain open.
+Open premises.
 
-With the label retained as a control, the species blocks are already
-orthogonal. If a gate instead sends distinct inputs to overlapping
-wire outputs, reversibility of the product with an exported record forces
-orthogonal records (`CoherentGate.tensor_dot`). The weak-pair version
-applies when the two output columns have nonzero overlap
-(`unequal_needs_orthogonal`). The two-bit code suffices for all four
-species when the output no longer carries the distinction.
+- Supply and renew the occupied seed, admit the joint current, controlled phases and crossing, and schedule the two wall insertions. Retain reset or export in the record trace. See the [clock ledger](../PMTransport/CLOCK.md).
+- Derive the event and tariff. Choose which visits register, which polarity persists, and how the displacement and preparation prices enter. For a price on the node rather than the direct flip, use `node_toll_raises_heavy`.
+- The half-period and node-phase diagnostics suggest competing scores. Their selected cadence and paid visits remain open.
 
-### Record comparisons and heavy-flip Toll
-
-`HeavyFlipRecords.quark_auxiliary_gap` excludes a shared auxiliary-only
-readout driven solely by diagonal packet hypercharge on the massive state.
-For any comparison schedule and auxiliary decoder in this class, the
-probability of an auxiliary outcome is the mean of its two slot
-probabilities. The active up and down slots have equal charge, so every
-outcome-probability gap is at most `½`. Orthogonal auxiliary records
-would allow an outcome with probabilities 1 and 0. This exclusion allows
-arbitrary comparison steps, repetitions and auxiliary postprocessing
-with the same preparation, provided the system slots are left in place
-and no other label information enters the control. A separate check
-(`electron_down_overlap`) gives squared branch overlaps `1` at `3π/2`
-and `¼` at `π/2` for electron and down on either fixed wall. Independent
-copies of these two comparisons therefore cannot write the sector
-distinction for those labels even on a single wall.
-
-The comparison flags still give exact additive prices if these visits
-are supplied. The full comparison fills the shared **static** doublet
-requirement in one visit. Economy gives the following both-wall mean
-flags (`full_only_minimum`, `quarter_massive`, `paired_minimum`,
-`paired_tolls`).
-
-| Required comparisons | Electron | Down | Up | Neutral pair |
-| --- | ---: | ---: | ---: | ---: |
-| Full `3π/2` | `¾` | `¾` | `¼` | `¼` |
-| Lepton-only `π/2` | `¾` | `(3−√3)/8` | `(5−√3)/8` | `¼` |
-| One of each, if both are independently required | `3/2` | `(9−√3)/8` | `(7−√3)/8` | `½` |
-
-The full visit ties electron with down. The paired flag budget gives
-`s_e < s_d < s_u` through `exp(−T/2)` (`paired_ladder`), but the
-comparisons fail the record test above. Its gap ratio is
-`2/(3+√3) ≈ 0.423` (`paired_gap_ratio`).
-
-An exact conditional writer uses two diagonal phase comparisons in the
-transported carrier frame. The phase is `π` on the marked carriers and
-zero elsewhere for each predicate: reference axis and negative position.
-With a clean auxiliary branch, `(1 ± exp(iφ))/2` routes it to the
-corresponding record bit. The code is the same on the two walls
-(`orbit_bit_price`). With these phase controls admitted and the two bits
-required separately, one visit per bit attains the Economy Toll
-(`orbit_record_minimum`). The flag Tolls for the stated polarity are
-`(2,1,0,1)`, and the charged weights are
-`(exp(−1), exp(−½), 1)` (`orbit_record_tolls`, `orbit_record_ladder`).
-These are expected registration counts for the comparison visits. They
-exclude the scheduled primitive pulse and preparation prices, which need
-their own accounting. The finite gate does not select the phase coupling,
-the bank preparation, the polarity as a physical charge convention, or
-the event that fires it.
-
-**Down is the geometric mean.** A registration is one expected flagged
-outcome of a comparison visit; a label's Toll counts them
-(`PMAction.TollAmplitude`). With any price `λ` per registration, the
-exact two-bit Tolls `(2, 1, 0)` for `e, d, u` give `s_d² = s_e · s_u`
-(`down_geometric_mean`): down shares the position bit with the electron
-and the colour bit with up, so it is the parameter-free test of whether
-the two bits add independently.
-
-Comparison only (`tools/down_mean_check.py`). In the tier ledger's own
-mass convention (`m_s(2 GeV)/m_b(m_b)`, `m_c(m_c)/m_t`) the inferred
-weights give `s_d/√(s_e s_u) = 0.96`, and the price read from the
-electron and from down agrees, `λ ≈ 2.04` and `2.13` registrations per
-bit. Up then sits at `s_u ≈ 0.67`, not at the bare wire's `1`. In the
-scan's other conventions the law misses by `14–23%` and the two `λ`
-differ by `15–20%`. The exact-bit candidate has gap ratio 1 and the
-paired hypercharge budget has ratio about 0.423; the mass-scale
-diagnostics in `tools/heavy_toll_targets.py` require about 1.1–1.5.
-
-### An electric-charge record on both walls
-
-`ElectricHeavyRecord.electric_generator` identifies the packet’s unbroken
-`Q = T₃ + Y/2` as the diagonal generator for both comparisons. Its charge in
-the transported frame is `(2/3)·[colour] − [negative position]`
-(`charge_from_bits`). A comparison against the neutral phase at `3π`
-reads the parity of `3Q`, hence the position. The second comparison uses
-the recorded position to select a same-position reference. The
-lepton–quark contrast has magnitude `2/3`, so `3π/2` resolves the
-sector exactly. These are the least nonnegative times in the two
-specified comparisons (`position_time_minimal`, `sector_time_minimal`).
-Both charges are preserved across the glued wall pairing
-(`same_wall_pair`). The two comparisons give the required complex
-kick signs (`packet_kick_phases`).
-
-The moved orbit of an actual root supplies the two branch states. A
-quarter pulse from its clean basis seed prepares balanced populations.
-After the conditional electric kick on the second branch, three
-forward quarter-times of the same root complete the inverse.
-`root_writer` gives the resulting basis record, including the `−i`
-phase on a marked record. The branch construction works on each
-carrier class. The joint branch/payload coupling, the bank allocation
-and its clean seeds still need a substrate implementation.
-
-A colour phase reference gives the bit Tolls `(2,1,0,1)` in order
-`e,d,u,ν`. A lepton phase reference with complemented sector decoding
-reads the same information with Tolls `(1,2,1,0)`
-(`colour_reference_toll`, `lepton_reference_toll`).
-The required phase resolution alone leaves this choice open.
-There is also a distinct factor-flag ledger for the exhibited circuit
-(`embedded_step_flag`, `pulse_flags`). Each branch preparation and
-recombination contributes `¼`. The central signed kick contributes
-half of its final record flag. With one registration per factor flag,
-the two writers have Toll `1 + T_bits/2` (`two_bit_factor_toll`),
-or `(2, 3/2, 1, 3/2)` for the colour reference. This counts the
-three factor flags of each forward writer. Export, reset,
-synchronization and a microscopic tariff remain separate obligations.
-
-
-### Four-port electric record with fixed kicks
-
-`ElectricFourPortRecord` uses the same unbroken electric generator as
-the position-conditioned comparison. At `3π/2` its phases on
-`(ν,e,u,d)` are `(1,i,−1,−i)` (`phase_codes`). Two record bits
-control fixed durations `3π/2` and `3π`. The four paths accumulate
-`(1,z,z²,z³)/2` from a balanced bank. A single decoder takes these four
-orthogonal states to distinct basis records (`read_exact`). The wall
-exchange preserves the charge, so it gives the same record on both
-walls. This circuit needs no position-conditioned phase reference on
-the payload. Its decoder first mixes one record bit, uses a fixed
-controlled `−i` within the bank, mixes the other bit, and swaps the
-readout bits (`decoder_word`).
-
-Counting each electric kick's state flag while half of the bank
-receives the phase gives `(¾,¾,½,0)` in order `(e,d,u,ν)`
-(`exposure_eq_flags`, `exposure_tolls`). These two exposures tie
-electron with down even though the decoded records distinguish them.
-The forward word's ledger from a balanced bank also includes the two
-normalized binary mixers, the controlled quarter phase and the
-optional swap (`forward_tolls`). Its state-flag Tolls are
-`(5/2, 2+√2/2, 2, 1−√2/2)` in canonical output order. A receiver that
-uses the [bit-reversed record spelling](ElectricFourPortRecord.lean)
-can omit the swap, giving `(2, 2+√2/2, 3/2, 1−√2/2)`. Both ledgers
-give `s_d < s_e` (`forward_no_ladder`). This excludes counting one
-registration for each logical factor flag of this forward word.
-Native preparation, primitive repair prices, record export or reuse
-and event placement remain open.
-
-### Electric decoder on the odd coordinate bank
-
-The literal four-port bank has a uniform-line obstruction. Every
-permutation spectral phase preserves that line, including in words
-with common scalar phases. The controlled quarter phase and the
-decoder move it (`ElectricDecoderBoundary.phase_word_not_quarter`,
-`phase_word_not_decoder`).
-
-The odd coordinate embedding gives a native decoder under the
-existing coherent root-phase and common-rate contract. A pair of
-orthogonal root quarter phases puts `−i` on one coordinate pair.
-Two exchange quarter phases between those half-bank phases give
-each binary mixer up to a common scalar. Conjugating a root quarter
-phase by the low mixer gives the single marked port. The existing
-completed odd `i` program restores the common phase of the two mixers.
-The final swap is a root reflection. `ElectricCoordinateDecoder`
-checks the full-carrier unitarity and exact observed decoder
-(`decoder_unitary`, `decoder_observed`, `decoder_reads`).
-The inverse word prepares the balanced bank from an occupied neutral
-coordinate seed (`prepare_balanced`).
-
-The state-flag exclusion above prices the logical factors. The
-primitive root word exposes additional intermediate states. Each root
-step’s state flag can be computed on the four coordinates
-(`encoded_flag`). The chiral register current below gives the joint
-electric evolution in the occupied two-register model. The physical
-registration tariff, supply of the clean seed, and placement and cadence
-of the two heavy-wall insertions remain open.
-
-### Short root decoder and serial frame bound
-
-The repeated low mixer in the full decoder squares to `−i·1` on the
-occupied coordinate sector. Cancelling the two mixers against the
-common `i` phase gives a shorter product: high mixer, inverse low
-mixer, single root quarter phase. This writes the four exact records
-at bit-reversed ports (`short_observed`, `short_reads`). The port
-already determines the two record bits (`record_at_short_port`).
-The full carrier operator remains unitary (`short_unitary`).
-
-The written pulse lists take 25 root quarter-times to decode and 27
-for the inverse preparation from a clean coordinate seed
-(`short_word_exact`, `short_duration`, `undo_word_exact`,
-`short_prepares`, `undo_duration`). A serial frame with one fresh
-preparation followed by one decoding therefore takes at least 52
-ticks when a root quarter-time occupies at least one tick, before
-the electric kicks or export. That schedule exceeds the 43-tick
-period (`fresh_bank_serial_exceeds_clock`).
-
-### Primitive flags of the short electric decoder
-
-`ElectricPrimitiveToll` follows the thirteen executed phases on
-the kicked bank. The Gaussian-integer certificate gives decoder
-flags `(9/4, 7/4, 3/2, 1)` in order `(e,d,u,ν)`. Isometric
-observation preserves this ledger on the occupied carrier at each
-step (`primitive_decoder_flags`, `ledger_observed`). Counting one
-registration per state flag and including the two electric exposures
-gives forward Tolls `(3, 5/2, 2, 1)` (`forward_tolls`). These give
-`s_e < s_d < s_u` (`charged_ladder`). Both charged Toll gaps are
-`½`. Requiring a physical canonicalizing swap adds `½` to electron
-and up and leaves down fixed, tying down with up (`canonical_tie`).
-The bit-reversed receiver supplies the exact same record bits.
-
-Preparation by the inverse word costs one additional flag from
-the occupied clean seed (`preparation_flags`). Adding it once per
-payload gives `(4,7/2,3,2)` under the same tariff. Seed supply,
-physical tariff, export or reuse and per-wall firing remain open.
-Comparison only. The charged gap ratio is `1` versus about
-`1.1–1.5` in `tools/heavy_toll_targets.py`. The two calculated
-gaps of `½` are also smaller than the data-implied gaps.
-
-### Electric kicks from the chiral register current
-
-`ElectricChiralKick` uses `PMAction.RegisterInteraction.current` on a
-record carrier and a separate payload. Its chiral projector selects
-coordinates 2 and 3 on either carrier summand. With the packet's unbroken
-electric generator, its evolution gives the high-bit kick. Conjugation
-by the root reflection that swaps coordinates 1 and 2 gives the low-bit
-kick (`high_observed`, `low_observed`, `kick_on_summand`). The current
-is unitary and preserves occupation (`high_unitary`,
-`high_preserves_occupation`).
-
-The incoming swap fixes a balanced bank. Execute the current at phase
-time `3π/2`, the root swap, then the current at phase time `3π` to
-recover the same input to the short decoder
-(`two_kicks_from_one_current`). The intervening swap adds half the
-first electric flag (`swapped_exposure_toll`). With one registration
-per executed state flag, the forward Tolls at the bit-reversed ports
-are `(13/4, 11/4, 5/2, 1)` in order `(e,d,u,ν)`. These give
-`s_e < s_d < s_u`, with charged gaps `1/2` and `1/4`
-(`total_tolls`, `total_ladder`). The two payload wall slots have the
-same phase history and Toll (`total_toll_wall_pair`), so their
-equal-superposition flag ledger has the same price. The inverse
-preparation from an occupied clean seed still adds one common flag
-under that tariff.
-Comparison only. The gap ratio is `1/2` versus about `1.1–1.5` in
-`tools/heavy_toll_targets.py`.
-
-A first-wall coordinate seed is at rest. A balanced four-port bank
-uses a gapped coordinate on either wall (`clean_first_seed_at_rest`,
-`balanced_bank_leaves_rest`). The live rest wire alone cannot carry
-this bank. The separate carrier's allocation and physical admission,
-the registration tariff and export or reuse, and scheduling at the
-two heavy-wall insertions remain open. The 52-quarter-time fresh
-serial bound still applies before the kicks and intervening swap.
-
-### Triality preparation on the companion
-
-`ElectricCompanionBank` verifies triality as a bijection on the actual
-minimal carriers between successive glue classes. Its action in the odd
-coordinate frame is the matrix `M/2` of the glued register
-(`triality_observed`). The first column is the balanced bank. From a
-supplied occupied odd coordinate-zero seed, one forward triality step
-prepares the companion bank on either incoming heavy wall
-(`prepares_companion_bank`). For the static payload the source and
-destination classes are 1 and 2. For the active payload they are 0 and 1.
-Using a single diagonal glued root label `(v,v)` for each carrier
-label implements this forward permutation by the existing six-root
-crossing (`glued_triality_step`).
-
-The heavy guard only reads the class, so the same companion can carry
-the bank amplitudes while providing the heavy address. The matching
-guarded crossing sends the companion from class 2 to 1 by two triality
-steps for a static payload, and from 1 to 2 by one step for an active
-payload. Its action on the bank is exactly `(M/2)²` or `M/2`
-(`guarded_companion_transport`, `companion_transport_observed`). On
-the diagonal carrier code the companion update uses the opposite
-six-root crossing word from the live update (`companion_transport_roots`).
-It restores the balanced bank from a written port only for the active
-payload at port 0, the neutral record (`written_port_ready_iff`).
-The charged records therefore require another operation before reuse.
-
-A setup comparison retaining the original class as the reference compares
-orthogonal states and raises a flag with probability `1/2` on either wall
-(`setup_class_flag`). One registration per such flag adds the same setup
-Toll for every label, preserving both charged gaps. This is an
-endpoint comparison from the supplied occupied seed.
-
-`ElectricCompanionSetupToll` follows the seed amplitudes through the
-individual root visits. The active-wall seed has just one nonidle visit,
-the third root, with flag `1/2`. The static-wall seed uses the second
-and third roots, with flags `1/2` and `1/4`. Omitting the other roots
-leaves the same endpoint on every occupied seed label
-(`short_setup_on_seed_support`, `primitive_setup_flags`). The same
-two-root word serves both walls, with its first visit idle on the
-active seed (`common_setup_on_seed_support`). Under one
-registration per primitive state flag, these two setups cost `1/2`
-and `3/4`, respectively. Their equal-slot mean is `5/8`, common to
-every label when both slots use the corresponding setup
-(`equal_slot_setup_sum`). The one- and two-root setups provide an
-alternative to the 27-quarter-time inverse-root preparation. The seed
-source, local rates and firing schedule, physical tariff, and admission
-of the coupled current and joint crossing remain open.
-
-### Primitive crossing activity and clock limits
-
-`HeavyCrossingCost` checks the six-reflection word and its reverse on
-the two heavy-wall endpoints. For every signed label and either incoming
-wall, the eight amplitude inputs give 48 steps. There are 27 fixed
-steps, 20 unit-root steps and one twice-root jump
-(`activity_histogram`). A separate tariff for either displacement length,
-under uniform amplitudes, therefore gives the common price
-`(20 c₁ + c₂)/8` (`uniform_cost`). Pricing the twice-root jump as
-one elementary displacement requires an additional premise.
-The complete step profiles pair under simultaneous reversal of both
-carrier signs. Thus any profile tariff with antipodally paired amplitude
-weights ties the two doublet positions on either wall (`sign_tie`).
-
-`HeavyFlipNativeBoundary` shows that a fixed matched lattice probe is
-orientation-blind at modulo-two resolution, and the actual in-band
-read/undo tariff is invariant when its input is negated. Both heavy
-walls also alias light-wall inputs in the untagged glued root encoding.
-Consequently no untagged map can exchange the heavy pair on either
-incoming wall and leave all light legs alone. A shared clean ancillary
-seed leaves that collision intact. Preparing a clean record from
-every wire and record input by a reversible closed update is excluded
-(`no_closed_cleaning`).
-
-For a supplied generation address and ready record, the closed
-single-control clock family has the same 43-tick period for every
-mask. A boundary toggles the addressed endpoint from either wall.
-The idle mask yields zero endpoint moves and the excursion mask yields
-two (`tick_event_iff`, `idle_and_excursion_counts`). The full turn
-always restores the endpoint (`cycle_closes`). The excursion gives
-one toggle in each direction per turn. The clock's closure permits
-both schedules. In the physical wire, the equal-class gapped crossing
-changes generation (`GappedGluedCrossing.equalClass_iff`), and the
-on-site insertions in the two Schur mass factors are separate
-operations. Endpoint exchange and the read/undo clock therefore leave
-the placement and firing of the two physical insertions open.
-
-
-### Other heavy-weight diagnostics
-
-- **Half-period cadence.** Over the common static period `3π`, the
-  lepton readout visits at `π/2`, `3π/2`, and `5π/2`. The quark
-  visit is at `3π/2`. Merging the shared visit ties down with up.
-  Counting coincident visits separately gives a Toll-gap ratio of
-  `2/3`. A Toll proportional to the signed static hypercharge has
-  gap ratio `3/2`.
-- **Node leg.** Comparing the crossing label's hypercharge against the
-  lepton-doublet reference on both walls gives `T_e < T_d < T_u`.
-  Node-path damping raises the effective heavy weight
-  (`node_toll_raises_heavy`). The gap ratio
-  `(T_u − T_d)/(T_d − T_e)` is about 6 at small steps, 4.5 at
-  `t = 1`, and 2.7 at `π/2`.
-- **Bare-wire detuning.** The numerical check
-  `tools/detuning_bound_check.py` gives `m₂/m₃ ≤ √(3/2) k` over
-  complex detunings, with equality at the cube roots of the resonance
-  condition. For `k = α/2` the maximum is about `0.00447`.
-  At resonance, the inferred heavy weights are roughly `0.09` for
-  electron, `0.26` for down, and `0.7–1.2` for up across the
-  compared quark-mass conventions. These are comparison targets.
+Comparison only. The [down mean diagnostic](../../tools/down_mean_check.py) gives `s_d/√(s_e s_u) ≈ 0.96` and inferred prices `2.04` and `2.13` in the ledger convention. The [heavy Toll diagnostic](../../tools/heavy_toll_targets.py) compares the charged gap ratios, including 1 for the short decoder and ½ for the chiral-current candidate. The [bare detuning scan](../../tools/detuning_bound_check.py) tests the `√(3/2) k` bound. These comparisons supply no scheduling inputs.
 
 ## Refresh map and weak gate
 
