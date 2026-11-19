@@ -11,13 +11,54 @@ count. Particle applications specify which payload and record participate.
 | --- | --- | --- |
 | Route between sites | `NativeCarrierProtocol`, `NativePacketRouting`, `NativePacketUpdate` | Reversible port routing, exact carrier readout, and locality under the stated routing realization. |
 | Change glue class | `GluedRegister`, `CarrierTriality` | The six-root crossing realizes swap and diagonal triality on glued roots. Triality on a diagonal glued carrier relabels the odd amplitudes by the matrix `M/2`. |
-| Exchange or pass through a node | `OpenReferenceFlow`, `HandoffAdmittance`, `ReferenceClassHop` | Exact exchange and bypass destinations. Stationarity of a class-definite reference constrains direct class exchange on its wall. |
+| Exchange or pass through a node | `TwoSiteHandoff`, `OpenReferenceFlow`, `HandoffAdmittance`, `ReferenceClassHop` | Exact exchange and bypass destinations. Stationarity of a class-definite reference constrains direct class exchange on its wall. |
 | Hold, export, and renew a record | `IndependentRegisters`, `RegisterControl`, `ReferenceMaintenance`, `RecordSupply`, `HomogeneousRouting` | Reversible register banks, exact restoration, and export of the previous state. An open backward orbit allows sustained renewal under the supplied reference conditions. |
 | Compare and count | `BranchPulseContract`, `RefreshSchedule`, `CoherentRefresh`, `CoherentGate` | Coherent comparison under the pulse contract, orthogonal records for overlapping outputs, and minimum additive cost for required visits at supplied prices. |
 | Schedule native operations | `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot`, `RootTransferPhase` | The substrate period, reversible clocked words, and root pulse areas. Physical phase admission and absolute timing remain open. |
 
 The [machine overview](Machine/OVERVIEW.md) lists the supporting carrier,
 register, reference, and clock constructions.
+
+## Two-site handoff and the six pillars
+
+`TwoSiteHandoff` checks one reversible information-transfer protocol within a
+host system. The wire already has a
+[six-pillar interpretation](../PMElementaryParticles/README.md#the-six-pillars-on-the-wire).
+Here the roles apply to a single handoff and its repeat operation. The
+[substrate pillar results](../PMSubstrate/Pillars.lean) give the mechanisms
+used to identify those roles.
+
+| Pillar | Role in this handoff |
+| --- | --- |
+| Capacity | The code has two live and two record carrier modes at each site (`port_count`). A running reference supply still needs a host resource. |
+| Map | The receiver exchange restores the live register when the incoming record holds the reference. It retains the other arriving state in the record port (`first_reference_iff`, `step_trace`). |
+| Protocol | The edge moves both streams. Bypass keeps their order and exchange uses the actual receiver root. The native matrices realize both branches (`exchange_lookup`, `native_step_observed`). The spatial routing is supplied. |
+| Governor | The branch choice and allowed firing phases control which local update executes. An admitted reconstructed root phase realizes the exchange at two root quarter-times (`receiver_half_pulse`). The trigger, physical rate and timing of the hop remain open. |
+| Toll | The hop and exchange have exact comparison flags (`hop_flag`, `exchange_flag`). Converting these flags to charged registrations requires a selected comparator and tariff. |
+| Margin | A viability margin needs a specified disturbance and ready-reference supply. In the closed pair, four exact restorations require all four initial slots to hold the reference (`four_restorations_iff`). |
+
+### One visit and repeat operation
+
+Write the sender pair as `(live, record)`. One shift delivers that pair to
+the receiver and sends the old receiver pair to the sender. Bypass leaves the
+arriving pair as it is. The receiver root exchanges it to `(record, live)`.
+The following shift carries the receiver's outgoing record to the sender
+(`arrivals_observed`, `step_trace`, `export_trace`). This models a closed
+pair. The same receiver result holds on the open line when the two values
+are supplied by the line's independent arrivals (`receiver_agrees_with_line`).
+
+The second exchange receives its reference from the original receiver's
+record slot. Four unconditional exchanges return the entire initial state
+(`second_reference_iff`, `exchange_four_returns`). Sustained restoration
+against arbitrary disturbances needs a renewal mechanism beyond this closed
+edge. The [open reference flow](Machine/OpenReferenceFlow.lean) supplies the
+corresponding result under its incoming-reference condition.
+
+For live and record amplitudes `Lₓ` and `Rₓ`, the hop flag is
+`(‖L₀−L₁‖² + ‖R₀−R₁‖²)/2`. With exchange, the receiver adds
+`‖L₁−R₁‖²/2`. These formulas apply to the specified before-and-after
+state comparisons. Read them as probabilities for normalized input.
+[TwoSiteHandoff](TwoSiteHandoff.lean)
 
 ## Node handoff and admittance
 

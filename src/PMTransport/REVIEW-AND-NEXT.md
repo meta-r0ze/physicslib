@@ -4,12 +4,17 @@ The [overview](OVERVIEW.md) records the checked results and their hypotheses.
 
 ## Node handoff
 
-Specify one local handoff between adjacent lattice sites. Start with
-`NativeCarrierProtocol` and `OpenReferenceFlow`. Prove the locations of the
-incoming payload, the received state, and the outgoing record after each
-primitive visit. State the occupancy and reference conditions. Derive when the
-native comparison and crossing are admitted. Keep the per-visit clock time,
-expected flags, and charged registrations in the same execution record.
+Use the [checked two-site handoff](OVERVIEW.md#two-site-handoff-and-the-six-pillars)
+as the local execution trace. It fixes both destinations, the closed-pair
+return, and the comparison flags for the two visits. Derive the physical
+admission of the spatial hop and receiver exchange, the source of the
+incoming occupied reference, and the branch trigger. Calibrate the elapsed
+time against the substrate clock. Select the physical registration tests
+and add paid registrations to the same trace as the derived state flags.
+
+For repeat operation, identify an admitted open route or an explicit
+reversible renewal step. Derive the incoming resource bound and the
+viability margin against stated disturbances.
 
 Derive the handoff law for labeled traffic and for successive nodes. The current
 conductance theorem identifies the through weight for the stated two-stream

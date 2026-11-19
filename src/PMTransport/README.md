@@ -11,7 +11,8 @@ A handoff is the transfer of a state through a node.
 3. Send the outgoing state to its next register and keep the required record.
 
 The native machine supplies carrier moves, reversible register operations, and a clock model.
-The handoff model gives the outputs of a pass or an exchange.
+The two-site model gives the outputs of a pass or an exchange.
+The overview identifies the role of each of the six pillars.
 The results give the conditions for each operation.
 The physical clock and registration cost need more work.
 
