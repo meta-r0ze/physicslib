@@ -12,15 +12,16 @@ background. An admitted trace includes its occupied ports, request and
 firing guard at each tick, and the output and retained record. See the
 [reachability results](ADMISSION.md).
 
-**Admission chain paused.** The [closed-ring test](RING.md#pricing-and-selection)
-gives a zero-cost orbit for both AND and OR on three and four sites.
-The equal-orbit Gibbs mean at the stated hazard is lower for AND.
-The two comparisons do not select a common winner.
+**Admission chain paused.** The [closed-ring robustness test](RING.md#robustness-across-all-positive-hazards)
+ties the best receiver costs on three, four and five sites. Changing
+only the prior reverses both a conditional mean comparison and
+a pooled survival comparison. Paper I requires the prior as input.
 
-The foundational question for a Persistence Mechanics postulate is
-**whether a single retained request triggers exchange**. This
-question remains open. The downstream writer population, heavy and
-light guards, and record-reference selection remain paused with it.
+**Postulate question.** When comparing candidate rules, does the
+accessible family give one prior count to each orbit or one to each
+state? The joint prior also fixes the initial mass of each rule.
+The writer population, heavy and light guards, and record-reference
+selection remain paused at this question.
 
 Two named parts of Admission remain open.
 
@@ -144,7 +145,7 @@ It remains parked.
 | Derived | Reversible autonomous guards in the finite two-stream encoding | `LocalController.reversible_iff_rows` requires one common decision for the unequal ordered arrivals. `reversible_rows_count` and `enumerated_rule_count` give eight rows per phase and request pair. |
 | Excluded | Uniqueness from locality, homogeneity, reversibility and the stated move certificates in that encoding | `LocalController.two_open_compatible_rules` gives different rules with the same tagged open trace (`tagged_open_iterate`). `mixed_requests_different_destinations` distinguishes them on an input with one set request and unequal arrivals. |
 | Excluded | Removing the AND/OR tie by complementing requests and applying the maintenance swap | `LocalController.complemented_output` gives the one-visit output swap. `receiver_dual_not_conjugate` and `receiver_dual_probe_counterexample` distinguish the clocked traces. `no_request_complement_conjugacy` excludes an injective phase-preserving request complement on the encoded line. `receiver_dual_flag_counterexample` gives exchange flag 1 and bypass flag 0 for the stated basis input. |
-| Derived | Closed-ring stationary traffic and tied receiver minima | `RingReceiver.ring_return_three`, `ring_return_four` and `orbit_enumeration_covers` certify the bounded state families. `minimum_orbit_toll` gives zero for either rule and `both_rules_attain_best_survival` compares their best orbits. The [equal-orbit Gibbs comparison](RING.md#pricing-and-selection) uses a supplied prior count and does not resolve the tie. |
+| Derived | Closed-ring stationary traffic and tied receiver minima | `RingReceiver.ring_return_three`, `ring_return_four`, `ring_return_five` and `orbit_enumeration_covers` certify the bounded state families. `minimum_orbit_toll` gives zero for either rule and `both_rules_attain_best_survival` compares their best orbits. `survivor_mass_of_subset` gives rule share for a supplied joint ensemble. The [sign checks](RING.md#robustness-across-all-positive-hazards) show that the prior can reverse that share ordering. |
 | Derived | Tie on uniform fields in the certified flag account | `LocalController.uniform_trace_exchange_toll` gives zero receiver flag Toll. `uniform_flag_persistence_tie` applies persistence with a common baseline. `uniform_remaining_cost_iff` leaves a strict preference exactly when remaining paid work differs. |
 | Derived | Stationary background constraints | `NativeReferenceBackground.stationary_iff` fixes a common value per active mode for the supplied connected update. `OddReferenceSource.rest_modes_distinct` gives distinct occupied witnesses even on the same wall. Neither certificate supplies the physical family. |
 | Excluded | Determining even two open visits from the centre and its two neighbours alone | `OpenHandoff.neighbours_do_not_determine_second_visit` keeps the initial three sites and all ready references fixed while varying the second displaced value. |
@@ -160,8 +161,13 @@ It remains parked.
 
 ## Stopping point
 
-The closed-ring result triggers the stopping rule. The unresolved
-question is whether a single retained request triggers exchange.
-Admission work stays paused at this foundational question.
-The controller, accessible background and tariffs in this ledger
-record the dependencies of later work.
+The open comparison input is the joint prior on accessible histories,
+including how their mass is assigned to each rule. With every orbit
+retained on three sites, equal pooled orbit counts favour OR at
+`β = 12 log(50/49)`. Equal pooled state counts favour AND at that
+same hazard. On five sites the conditional mean also reverses with
+the prior at `β = 120 log(3/2)`. See the
+[exact sign checks](RING.md#robustness-across-all-positive-hazards).
+
+Paper I gives the survivor law for a supplied ensemble and action.
+Admission stays paused at the choice of ensemble and prior.

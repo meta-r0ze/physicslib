@@ -142,8 +142,11 @@ rules tie on uniform ports in the certified receiver flag account.
 The [request complement and maintenance swap](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
 change the clocked trace and can change its flags. The
 [closed-ring stationary test](../PMTransport/RING.md#pricing-and-selection)
-ties the best receiver costs, and the
-[admission chain is paused](../PMTransport/PREMISES.md#stopping-point).
+ties the best receiver costs. The
+[robustness check](../PMTransport/RING.md#robustness-across-all-positive-hazards)
+gives a prior-dependent survival ordering. The
+[admission chain is paused](../PMTransport/PREMISES.md#stopping-point)
+at the prior on accessible histories.
 The wire comparison still depends on the writer input, retained
 pulse guard and differing paid work.
 

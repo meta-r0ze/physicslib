@@ -1,15 +1,16 @@
 # PMTransport — open work
 
 The [admission chain is paused](PREMISES.md#stopping-point) at the
-foundational receiver question. The items below record its open dependencies.
+prior on accessible histories. The items below record its open dependencies.
 
 ## Node handoff
 
 - Identify the accessible occupied neighbourhood, open boundary supply and the controller for the spatial move, wall loader and receiver branch. See [Admission](PREMISES.md#admission). The
   [autonomous guard test](ADMISSION.md#no-external-controller) leaves
   the mixed-request decision and its occupied paid visits open.
-  The [closed-ring stationary test](RING.md) leaves both rules tied
-  for best survival in the receiver account.
+  The [closed-ring test](RING.md#robustness-across-all-positive-hazards)
+  ties the best receiver costs. The prior can reverse the pooled
+  survival comparison.
 - Supply the occupied seed and a renewal route for sustained operation. See [Sustained reference supply](PREMISES.md#sustained-reference-supply).
 - Specify the receiver tolerance and incoming disturbance. See [Disturbance and acceptance](PREMISES.md#disturbance-and-acceptance).
 

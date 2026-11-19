@@ -278,28 +278,24 @@ complemented OR exchange accounts for one, even with the port values
 swapped (`receiver_dual_flag_counterexample`). Equal arrivals hide
 this difference.
 
-The [closed-ring test](RING.md) computes self-consistent stationary
-traffic with internal arrivals on three and four sites. Both rules
-give minimum receiver Toll zero. The equal-orbit Gibbs mean at the
-stated hazard is lower for AND. By the stopping rule the
-[admission chain is paused](PREMISES.md#stopping-point). The
-foundational question is whether a single retained request triggers
-exchange.
+The [closed-ring test](RING.md) computes stationary traffic on
+three, four and five sites. Both rules attain the same minimum
+receiver Toll. The [robustness check](RING.md#robustness-across-all-positive-hazards)
+shows that changing only the prior can reverse the pooled survival
+ordering. The [admission chain stays paused](PREMISES.md#stopping-point)
+at the prior on accessible histories.
 The electric reference choice still requires its writer trace
 and prices. Choosing colour or lepton complements the electric
 sector bit and keeps the position bit
 (`ElectricHeavyRecord.reference_flags_from_orbit_bits`).
 The receiver result gives no identification with this sector bit.
 
-### Candidate postulate
+### Prior over accessible histories
 
-The occupied state at a receiver determines which retained signal
-triggers each operation. The signal stays available to reverse the
-operation or leaves in a specified record. State how the incoming
-ports supply the signal and which values fire exchange, bypass,
-writing and the later pulses.
-
-For example, one possible receiver law would exchange exactly when
-both local request bits are set, retaining the bits for reversal.
-The rule that exchanges when either bit is set is another possibility.
-They agree on the tagged receiver. The library adopts neither law.
+Paper I weights each history by its initial mass and its survival
+probability. If a rule labels a class of histories, its surviving
+share is the sum of those weighted probabilities. The prior choice
+is whether to count each orbit once or each accessible state once.
+An initial rule prior, if supplied separately, must also be specified
+before weighting the histories. The two counting conventions give
+different results even on the same closed ring at the same hazard.
