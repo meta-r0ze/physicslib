@@ -234,4 +234,18 @@ theorem shared_maintenance_free {J : Type*} [DecidableEq J] (price : J → ℝ)
     (∑ j ∈ baseline ∪ writer, price j) - (∑ j ∈ baseline, price j) = 0 := by
   rw [added_maintenance_eq, sdiff_eq_empty_iff_subset.mpr h, sum_empty]
 
+
+/-- The remainder is in registrations per sampled input. These comparisons
+apply to the two admitted schedules that pay the electric output flags. -/
+theorem reference_threshold (full probeVacancy : Bool) (R : Bool → ℝ) :
+    let C pol := expectedCost 1 (recordEvents full probeVacancy pol) + R pol
+    let threshold : ℝ := if full then (if probeVacancy then 1 / 2 else 9 / 16) else 3 / 5
+    (C true < C false ↔ R true - R false < threshold) ∧
+    (C true = C false ↔ R true - R false = threshold) ∧
+    (C false < C true ↔ threshold < R true - R false) := by
+  dsimp only
+  have h := packet_record_difference full probeVacancy
+  refine ⟨?_, ?_, ?_⟩ <;> cases full <;> cases probeVacancy <;>
+    norm_num at h ⊢ <;> constructor <;> intro hh <;> linarith
+
 end PMElementaryParticles.WireReferenceCost

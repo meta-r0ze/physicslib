@@ -23,21 +23,21 @@ The species masses reported by e8p currently use the tier assignments in
 `QuarkMasses` and `LeptonMasses`. Derive the wire-to-species readout and use
 the recorded mass ratios to check it.
 
-- **Heavy-label weight. [Premise]** Use the derived
-  [label-sensitive transport schedule](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff)
-  to obtain the heavy-to-node coupling ratio. Apply the Toll-to-amplitude
-  conversion, test the charged ladder, and compare the derived gaps with
-  `tools/heavy_toll_targets.py`.
+- **Heavy-label weight. [Premise]** Derive the writer's admitted
+  input population or required read set and its marginal job ledger.
+  The [packet thresholds](SCHEDULE.md#record-reference-remains-undetermined)
+  give a colour advantage for uniform bit counts. Select the population
+  and show whether the additional costs reverse that advantage.
+  The weak and hypercharge refreshes share the reserved reference in
+  the baseline frame model. Show which timed maintenance jobs, if any,
+  that reference or the colour payload reference can share with the
+  heavy writer. Derive the seed supply, conditional pulse, export and
+  reset costs on the [label-sensitive schedule](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff).
 
-  The exact two-bit record makes down the geometric mean of electron
-  and up for any price per registration (`down_geometric_mean`). Two
-  things decide whether it is the readout: the price `λ` per bit, which
-  needs the registration and record lifecycle (write, export, reset) in
-  [PMTransport](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff)
-  (the ledger-convention comparison reads `λ ≈ 2`), and a common factor
-  on the heavy flip, since up compares at `s_u ≈ 0.67` rather than the
-  bare wire's `1`.
-
+  The two-bit colour record gives the down geometric mean at any
+  common bit price (`down_geometric_mean`). Its physical selection,
+  price per bit and common heavy-flip factor remain open. Compare
+  the derived gaps only after those quantities follow.
   See the [hypercharge constraints](OVERVIEW.md#protocol-toll-constraints),
   [record exclusion](OVERVIEW.md#record-comparisons-and-heavy-flip-toll), and
   [comparison diagnostics](OVERVIEW.md#other-heavy-weight-diagnostics).

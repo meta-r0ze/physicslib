@@ -216,6 +216,37 @@ of the writer. The proved factor and setup flags do not bound the
 unpriced difference `ΔR`. It remains open whether that difference
 reaches the relevant selection threshold.
 
+## Record reference remains undetermined
+
+`reference_threshold` gives the exact decision within the two admitted
+output-flag schedules. In registrations per sampled input, colour
+wins if `ΔR` is below the applicable threshold, the two tie at
+equality, and lepton wins above it.
+
+| Conditional cost basis | Threshold |
+| --- | --- |
+| Uniform full packet, vacancy probed | 1/2 |
+| Uniform full packet, vacancy idle | 9/16 |
+| Uniform occupied inputs | 3/5 |
+
+For an additive full-read ledger the thresholds are 8 or 9
+registrations summed over the packet, with its remainder in the
+same units. For the two principal root writers' factor ledger
+the thresholds are half those in the corresponding output-flag
+ledger, with equal visitation (`factor_flag_difference`). For a
+general normalized population probed on its support, the
+output-flag threshold is `1 − 2 p_colourless`.
+
+What decides the native choice is the writer's incoming population
+or required read set, plus which part of its timed maintenance,
+preparation, pulse, export and reset jobs is already paid. Those
+facts must establish the sign of the complete cost difference
+and admission of the compared schedules. The colour record gives
+the charged ordering and down geometric mean for its bit subtotal.
+They remain properties of that candidate with a common price per
+bit. The lepton subtotal gives `s_d < s_e = s_u`. Neither is a
+selected heavy-flip law.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.

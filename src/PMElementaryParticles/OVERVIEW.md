@@ -385,8 +385,13 @@ a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
 | `HeavyFlipNativeBoundary.no_closed_cleaning`, `tick_event_iff`, `idle_and_excursion_counts`, `cycle_closes`; `GappedGluedCrossing.equalClass_iff` | The untagged probe aliases addresses and closed universal cleaning is impossible. Both idle and two-toggle masks close. The gapped crossing shifts generation. | Address and ready record needed for the clocked endpoint. Separate Schur insertions still need their own firing law. |
 
 [Persistence selection](SCHEDULE.md) enumerates a bounded serial family.
-Its exact polarity threshold leaves label weights, admission and
-unpriced physical work open.
+[Packet reference cost](SCHEDULE.md#which-population-is-charged)
+derives uniform weights under the full-packet sampling premise and
+checks the vacancy contribution. The full-packet bit gap is `−1/2`
+per sampled input when the vacancy is probed. The smaller support
+and the idle-vacancy rule have separate thresholds. Reference reuse
+requires the same timed maintenance jobs. The physical polarity
+remains open.
 
 Open premises.
 
