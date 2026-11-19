@@ -159,4 +159,90 @@ theorem policy_cycle_empty (policy : Policy)
     (input : Fin Delta → LocalController.Requests × LocalController.Ports) :
     policyCycle policy input (fun _ => none) = 0 := no_export_cycle _
 
+
+/-! ## Closed ring and exported open train -/
+
+def ringBoundaryStep {n : ℕ} (either : Bool) (s : RingReceiver.State n) (d : Disposition) :
+    RingReceiver.State n × Option Delivery :=
+  step (RingReceiver.tick n either) s none d
+
+theorem ring_boundary_step {n : ℕ} (either : Bool) (s : RingReceiver.State n)
+    (d : Disposition) :
+    ringBoundaryStep either s d = (RingReceiver.tick n either s, none) := rfl
+
+/-- The certified ring has no exported bit at any tick. Its original
+    receiver flag account is a different observable. -/
+theorem ring_cycle_erasure (d : Fin Delta → Disposition) :
+    cycleErased d (fun _ => none) = 0 ∧ tollRate (cycleErased d (fun _ => none)) = 0 :=
+  ⟨no_export_cycle d, by rw [no_export_cycle]; simp [tollRate]⟩
+
+/-- A circulating record cannot simply be declared disposable. Holding
+    the clock, controllers and every live slot fixed, a different
+    upstream record can change the next live output of either rule. -/
+theorem ring_live_depends_on_record {n : ℕ} (either : Bool) (x : Fin n) :
+    ∃ s t : RingReceiver.State n, s.1 = t.1 ∧ s.2.1 = t.2.1 ∧
+      s.2.2.1 = t.2.2.1 ∧
+      (∀ i, (s.2.2.2 i).1 = (t.2.2.2 i).1) ∧
+      ((RingReceiver.tick n either s).2.2.2 x).1 ≠
+        ((RingReceiver.tick n either t).2.2.2 x).1 := by
+  let s : RingReceiver.State n :=
+    (0, (fun _ => (true, true), (fun _ => false, fun _ => (false, false))))
+  let t : RingReceiver.State n := (0, (s.2.1, (s.2.2.1,
+    fun i => (false, decide (i = finRotate n x)))))
+  refine ⟨s, t, rfl, rfl, rfl, fun _ => rfl, ?_⟩
+  rw [RingReceiver.tick_ports, RingReceiver.tick_ports]
+  cases either <;> simp [s, t, RingReceiver.arrivals, OpenReferenceFlow.streamShift,
+    LocalController.applyGuard, RingReceiver.exchange]
+
+/-- Account for the exported record train after a full block of 43 open
+    receiver visits, when these addresses have passed outside the core. -/
+def openExports (s : OpenHandoff.State Bool) (d : Fin Delta) : Option Bool :=
+  some ((OpenHandoff.run s Delta (-(d.val : ℤ))).2)
+
+theorem open_export_source (s : OpenHandoff.State Bool) (d : Fin Delta) :
+    openExports s d = some ((s ((d.val : ℤ) - (Delta : ℤ))).1) :=
+  congrArg some (OpenHandoff.export_trace s d.isLt)
+
+def receiverRule (either : Bool) : LocalController.Rule :=
+  if either then LocalController.exchangeOnEither else LocalController.exchangeOnBoth
+
+theorem tagged_rule_exports (either : Bool) (s : LocalController.State)
+    (h : LocalController.CentreTagged s) (d : Fin Delta) :
+    some ((((LocalController.rawTick (receiverRule either))^[Delta]) s).2.2
+      (-(d.val : ℤ))).2 = openExports s.2.2 d := by
+  have hcompatible : LocalController.OpenCompatible (receiverRule either) := by
+    cases either <;> exact fun _ _ => ⟨rfl, rfl⟩
+  rw [LocalController.tagged_open_iterate (receiverRule either) hcompatible s h]
+  rfl
+
+theorem open_cycle_erase_all (s : OpenHandoff.State Bool) :
+    cycleErased (fun _ => .erase) (openExports s) = Delta ∧
+      tollRate (cycleErased (fun _ => .erase) (openExports s)) = 1 := by
+  have h : cycleErased (fun _ => .erase) (openExports s) = Delta :=
+    erase_full_cycle (fun d => (OpenHandoff.run s Delta (-(d.val : ℤ))).2)
+  exact ⟨h, by rw [h]; exact full_cycle_rate⟩
+
+/-- Conditional ledger when every exchange sends exactly one disposable
+    record to the eraser and bypass sends none. The native guard alone
+    does not supply this boundary operation. -/
+def exchangeErased (either : Bool) (requests : Fin Delta → LocalController.Requests)
+    (record : Fin Delta → Bool) : ℕ :=
+  cycleErased (fun _ => .erase)
+    (fun d => if RingReceiver.exchange either (requests d) then some (record d) else none)
+
+theorem exchange_erasure_gap (requests : Fin Delta → LocalController.Requests)
+    (record : Fin Delta → Bool) :
+    exchangeErased true requests record =
+      exchangeErased false requests record +
+        (Finset.univ.filter fun d => (requests d).1 ≠ (requests d).2).card := by
+  have hcount : (Finset.univ.filter fun d => (requests d).1 ≠ (requests d).2).card =
+      ∑ d : Fin Delta, if (requests d).1 ≠ (requests d).2 then (1 : ℕ) else 0 :=
+    Finset.natCast_card_filter (R := ℕ) (fun d => (requests d).1 ≠ (requests d).2) Finset.univ
+  unfold exchangeErased cycleErased
+  rw [hcount, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro d _
+  rcases h : requests d with ⟨a, b⟩
+  cases a <;> cases b <;> simp [RingReceiver.exchange, h]
+
 end PMTransport.BoundaryErasure
