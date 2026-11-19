@@ -144,6 +144,86 @@ three ledger entries therefore describe different features of the model.
 The current results give no identification of a generation with a
 protocol's number of `Δ` steps.
 
+### Phase, handoff and Toll
+
+At `t = 3π/4`, the static hypercharge tags give angles `0, −3π/2, π,
+−π/2` for vacancy, electron, up and down. Their eigenphases are
+`1, i, −1, −i`. The shortest angular distances from phase one are
+`0, 1, 2, 1` quarter-turns. For the electron, this distance already
+discards a full turn of the signed difference between `−3π/2` and
+`π/2`.
+
+The transport at this parameter is diagonal
+(`VacancyProjection.hypercharge_eq_diagonal`). It multiplies each label
+by its phase in one application of the packet operator and keeps the
+label's position. The relative
+phase labels a channel and specifies the correction applied to the
+transported branch of the comparison. The packet has no handoff edge
+for each quarter-turn. In the existing pulse implementation the same
+branch rotations appear for any controlled transport
+(`BranchPulseContract.program_correct`). Continuous branch rotation,
+the controlled transport and the conditioned flip still require native
+admission and pricing.
+
+There are two different comparisons at the same transport parameter.
+
+| Static label | Shortest angular distance in quarter-turns | Vacancy-relative flag probability at `t` | At `2t` | Flags when this label is the matched target |
+| --- | --- | --- | --- | --- |
+| Vacancy | 0 | 0 | 0 | 0, 0 |
+| Electron | 1 | ½ | 1 | 0, 0 |
+| Up | 2 | 1 | 0 | 0, 0 |
+| Down | 1 | ½ | 1 | 0, 0 |
+
+The vacancy-relative columns follow from
+`ProtocolToll.selector_step_flags`, `flags_three_quarter` and the
+vacancy flag lemma. The first column of flags happens to be half the
+angular distance. These are expectations from one test. They provide
+no count of successful handoffs. An equal-price schedule that charges
+both uncorrected flags separately would give scores `3/2, 1, 3/2` for
+electron, up and down. The actual selector uses the two *matched*
+comparisons. `ChargedInsertion.matched_flags_zero` proves their
+selected flags vanish, and `select_static` gives unit retained
+amplitude. This leaves the cost of carrying out the comparison and
+maintaining its controller open.
+
+In the spatial handoff model, `HandoffAdmittance.handoff_from_conductance`
+identifies `α` as the through probability. The unique all-pass history
+of `q` timed layers has probability `α^q` under independent through
+weights (`direct_crossing`, `direct_crossing_prob`). Its coherent
+amplitude magnitude, if that history carries the insertion, is
+`α^(q/2)`. Even taking the angular count as a layer count would then
+give orders `Δ⁻¹` for up and `Δ⁻¹ᐟ²` for electron and down. The
+`α/2` of a two-leg conserving node is a different calculation. It is
+an effective series admittance (`NodeAmplitude.node_series`).
+
+For a scheduled unflagged wire, the survival model gives amplitude
+`exp(−T/2)` for a Toll `T` measured in expected registrations
+(`TollAmplitude.wireAmplitude`). Suppose a schedule charges the single
+uncorrected comparison with weight `w` and has a common baseline. Its
+relative amplitudes are then `exp(−w/4)` for electron and down and
+`exp(−w/2)` for up. This gives a square relation. A fixed weight gives
+constant relative factors as `Δ` varies. An `α, α²` pair would require
+`w = 4 log(1/α)` for exact equality, by
+`ProtocolToll.selector_half_flag_weight_iff`. For leading powers the
+weight would need that logarithmic growth up to a bounded term, and
+the common insertion scale would also have to be accounted for. The
+flag calculation supplies neither the schedule nor its weight.
+
+Amplitudes multiply along a specified coherent history. A probability
+product and a survival amplitude can describe the same attenuation
+if the effective negative log of that probability is used. Identifying
+that log with the expected-registration Toll needs a physical derivation.
+The insertion channel and its offset's inverse-period order remain open.
+
+A common source for the heavy weight and the light lift would need a
+native record-and-fire schedule with both placements. The conditional
+two-bit heavy record has flag budgets `2, 0, 1` for electron, up and down
+(`HeavyFlipRecords.orbit_record_tolls`). With a positive price per flag
+it makes up the least attenuated, whereas the single vacancy-relative
+flag makes up the most attenuated. The shared auxiliary hypercharge
+readout on the two walls cannot write the heavy record's quark bit
+exactly (`HeavyFlipRecords.no_exact_quark_record`).
+
 ### Comparison only — declared ledger ratios
 
 With the substrate value of `α`, the bare wire gives `m₂/m₃ ≈ 0.192/Δ`.

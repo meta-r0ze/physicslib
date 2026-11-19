@@ -46,15 +46,19 @@ the recorded mass ratios to check it.
   candidate uses the same static vector leg and two comparisons for each
   charged protocol. `ChargedInsertion.det_flip_at_resonance` proves the
   same linear determinant response to the supplied offset. Derive an
-  admitted schedule, its pulse area and its order in `1/Δ`. Determine
-  whether an unmodified calibration channel maintains the same real
-  detuning for the three protocols. If the difference comes from the pulse
-  amplitude, apply the Toll conversion `ε ∝ exp(−T/2)` to its
-  label-sensitive schedule. Derive the physical placement of the pulse
-  and use the selected generator to determine the light-pair mass-basis
+  admitted record write, export and reuse schedule and its coupling to
+  both the heavy and light pulses. The
+  [phase and handoff calculation](GENERATIONS.md#phase-handoff-and-toll)
+  gives zero flags on the matched input in both comparisons. The single
+  vacancy-relative visit gives a one-to-two flag ratio. If that visit's
+  survival weight sets the light pulse, its price must grow
+  logarithmically in the period to give inverse-period powers.
+  Derive the offset's order and determine whether an unmodified
+  calibration channel maintains the same real detuning for all three
+  protocols. Use the selected generator to derive the light-pair
   rotations in [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
-  Compare the resulting singular values with the recorded mass ratios
-  only after the derivation. The [uniform-to-local check](OVERVIEW.md#lifting-the-resonant-zero)
+  Compare singular values with recorded ratios after the derivation.
+  The [uniform-to-local check](OVERVIEW.md#lifting-the-resonant-zero)
   gives the determinant conversion and its spectral limits.
   For neutrinos, derive native admission of the phase gates and coherent
   branch mixer in `PMAction.BranchGateBoundary`, and route the retained

@@ -216,6 +216,14 @@ same selector and crossing support for every charged label.
 offset in each selected sector. Its order in `1/Δ` depends on the firing
 law for that offset.
 
+The [phase and handoff calculation](GENERATIONS.md#phase-handoff-and-toll)
+separates the selector's phase distance from a spatial layer count.
+The uncompensated comparison gives flags `½, 1, ½` for electron, up and
+down. The selected label gives zero flags in both matched comparisons
+(`matched_flags_zero`). A through admittance is a transmission
+probability. A registration Toll supplies a survival amplitude.
+The pulse needs a native schedule before either law can assign its size.
+
 ### Protocol Toll constraints
 
 `ProtocolToll` derives four colour orbits on the active packet from its finite

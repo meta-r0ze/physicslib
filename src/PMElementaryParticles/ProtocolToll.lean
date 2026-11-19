@@ -331,8 +331,8 @@ The first is positive only for `d < ½`, the second only for `d > ¾` (`step_ord
 (`single_step_no_order`); a schedule needs one step with `d < ½` and another with `d > ¾`.
 
 The two hypercharge steps already selected in the library: the charged selector's `3π/4`
-(`ChargedInsertion`) has `d = ½` and orders neither pair (`selector_step`); the vacancy
-preparation's `6π/5` (`VacancyPreparation`) has `d = (5 + √5)/8 > ¾` and orders down above up
+(`ChargedInsertion`) has `d = ½`. Electron and down tie, and up flags more (`selector_step_flags`).
+The vacancy preparation's `6π/5` (`VacancyPreparation`) has `d = (5 + √5)/8 > ¾` and orders down above up
 but electron below down (`vacancy_step`). A step with `d < ½` is still to be found natively.
 -/
 
@@ -415,6 +415,29 @@ theorem selector_step (a : Fin 3) : hyperchargeFlag (3 * π / 4) (downStatic a) 
   push_cast
   rw [show 3 * π / 4 * -2 / 3 = -(π / 2) by ring, Real.cos_neg, Real.cos_pi_div_two]
   norm_num
+
+/-- Vacancy-relative flags of the uncorrected selector transport. These are
+probabilities of a flag in one comparison, independent of the colour. -/
+theorem selector_step_flags (a : Fin 3) :
+    hyperchargeFlag (3 * π / 4) electronStatic = 1 / 2 ∧
+      hyperchargeFlag (3 * π / 4) (downStatic a) = 1 / 2 ∧
+      hyperchargeFlag (3 * π / 4) (upStatic a) = 1 := by
+  have hd := selector_step a
+  obtain ⟨he, hu⟩ := step_differences (3 * π / 4) a
+  rw [hd] at he hu
+  norm_num at he hu
+  exact ⟨by linarith, hd, by linarith⟩
+
+/-- With a supplied price for the single uncompensated comparison, the
+relative amplitude for a half flag is `α` exactly at this price. -/
+theorem selector_half_flag_weight_iff (α w : ℝ) (hα : 0 < α) :
+    wireAmplitude (w / 2) = α ↔ w = 4 * log (1 / α) := by
+  calc
+    wireAmplitude (w / 2) = α ↔ exp (-(w / 2) / 2) = exp (log α) := by
+      rw [exp_log hα, wireAmplitude]
+    _ ↔ w = 4 * log (1 / α) := by
+      rw [exp_eq_exp, log_div one_ne_zero hα.ne', log_one]
+      constructor <;> intro h <;> linarith
 
 /-- The vacancy preparation's step `6π/5` has down flag `(5 + √5)/8 > ¾`. -/
 theorem vacancy_step (a : Fin 3) :

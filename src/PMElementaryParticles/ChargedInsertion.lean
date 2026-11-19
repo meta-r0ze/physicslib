@@ -66,10 +66,43 @@ private theorem static_phase (c : Channels) (hc : active c = false) :
         (Real.pi : ℂ) / 2 * Complex.I - (2 * Real.pi : ℂ) * Complex.I by ring,
         Complex.exp_sub, hi, Complex.exp_two_pi_mul_I, div_one]
 
-/-- The two plus ports compare with the target quarter-turn phase and its square. -/
+/-- Packet transport with the target phase removed on the transported branch. -/
+def matchedTransport (s : Option BaseProtocol) : M :=
+  star (Complex.I ^ (phaseIndex s).val) • hypercharge (3 * Real.pi / 4)
+
+/-- The two plus ports compare with the matched transport and its square. -/
 def select (s : Option BaseProtocol) : M :=
-  let U := star (Complex.I ^ (phaseIndex s).val) • hypercharge (3 * Real.pi / 4)
+  let U := matchedTransport s
   plus (U * U) * plus U
+
+/-- A selected static channel never flags in either matched comparison.
+This counts outcomes of the two comparisons and leaves their implementation cost open. -/
+theorem matched_flags_zero (s : Option BaseProtocol) (c : Channels)
+    (hc : active c = false) (hs : baseProtocol c = s) :
+    let U := matchedTransport s
+    PMAction.InterferenceReadout.flagProbability U c = 0 ∧
+      PMAction.InterferenceReadout.flagProbability (U * U) c = 0 := by
+  let U := matchedTransport s
+  have hunit : star (Complex.I ^ (phaseIndex s).val) * Complex.I ^ (phaseIndex s).val = 1 := by
+    rw [star_pow, ← mul_pow]
+    simp [Complex.conj_I]
+  have hcol (b : Channels) : U b c = (1 : M) b c := by
+    change matchedTransport s b c = _
+    rw [matchedTransport, transport_diagonal, Matrix.smul_apply, smul_eq_mul]
+    by_cases h : b = c
+    · subst b
+      rw [diagonal_apply_eq, static_phase c hc, hs, hunit, Matrix.one_apply_eq]
+    · simp [h]
+  have noFlag (A : M) (h : ∀ b, A b c = (1 : M) b c) :
+      PMAction.InterferenceReadout.flagProbability A c = 0 := by
+    simp [PMAction.InterferenceReadout.flagProbability,
+      PMAction.InterferenceReadout.flagAmplitude, h]
+  change PMAction.InterferenceReadout.flagProbability U c = 0 ∧
+    PMAction.InterferenceReadout.flagProbability (U * U) c = 0
+  refine ⟨noFlag U hcol, noFlag (U * U) (fun b => ?_)⟩
+  calc
+    (U * U) b c = (U * 1) b c := by simp only [Matrix.mul_apply, hcol]
+    _ = (1 : M) b c := by rw [mul_one, hcol]
 
 /-- Keep the static bank so the selector is never applied to the active hypercharge table. -/
 def staticBank : M := diagonal (fun c => if active c = false then 1 else 0)
@@ -91,7 +124,7 @@ give zero on every other static channel, also for coherent superpositions. -/
 theorem select_static (s : Option BaseProtocol) (hs : s ≠ some .neutrino) :
     select s * staticBank =
       diagonal (fun c => if active c = false ∧ baseProtocol c = s then 1 else 0) := by
-  unfold select staticBank
+  unfold select matchedTransport staticBank
   simp only [transport_diagonal, ← diagonal_smul, diagonal_mul_diagonal, plus_diagonal]
   congr 1
   funext c
