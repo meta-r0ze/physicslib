@@ -21,7 +21,9 @@ Two named parts of Admission remain open.
 - **Joint clocked controller.** What reversible phase-dependent update
   connects the arriving ports and retained controls to the route, writer
   polarity and pulse guards? The isolated trial tick preserves its initial
-  requests. It cannot supply this connection.
+  requests. The [autonomous guard test](ADMISSION.md#no-external-controller)
+  leaves different reversible rules even when they agree on the
+  entire tagged receiver trace.
 
 | Open part of Admission | What it decides | Smallest question |
 | --- | --- | --- |
@@ -129,6 +131,9 @@ It remains parked.
 | Derived | Period, word length and common-tick formula | `E8Values.Delta_eq`, `CarrierReferenceCycle.excursion_boundaries`, `ClassBlindFlip.forwardTimes_total`, `SplitClassBlindFlip.duration_eq`, `RootTransferPhase.half_pulse_word`, `CertainTransferRate.common_tick_rate_ratio`. The rate ratio still uses the two areas and coefficient conversions. |
 | Excluded | Single-frame execution of the stated long serial word | `ClassBlindFlip.certain_does_not_fit_e8_frame` and `certain_with_six_reflections_lower` exclude it at whole-tick certain transfer. `SplitClassBlindFlip.one_tick_budget` gives a different conditional elapsed budget for a short word and one crossing. |
 | Excluded | Selecting the coherent gap from whole-tick samples alone | `RootClockCalibration.phase_alias_iff`, `integer_samples_agree` and `ambiguous_exchange_clock`. A principal-range witness or an admitted statistical probe is needed. |
+| Derived | Reversible autonomous guards in the finite two-stream encoding | `LocalController.reversible_iff_rows` requires one common decision for the unequal ordered arrivals. `reversible_rows_count` and `enumerated_rule_count` give eight rows per phase and request pair. |
+| Excluded | Uniqueness from locality, homogeneity, reversibility and the stated move certificates in that encoding | `LocalController.two_open_compatible_rules` gives different rules with the same tagged open trace (`tagged_open_iterate`). `mixed_requests_different_destinations` distinguishes them on an input with one set request and unequal arrivals. |
+| Derived | Tie on uniform fields in the certified flag account | `LocalController.uniform_trace_exchange_toll` gives zero receiver flag Toll. `uniform_flag_persistence_tie` applies persistence with a common baseline. `uniform_remaining_cost_iff` leaves a strict preference exactly when remaining paid work differs. |
 | Derived | Stationary background constraints | `NativeReferenceBackground.stationary_iff` fixes a common value per active mode for the supplied connected update. `OddReferenceSource.rest_modes_distinct` gives distinct occupied witnesses even on the same wall. Neither certificate supplies the physical family. |
 | Excluded | Determining even two open visits from the centre and its two neighbours alone | `OpenHandoff.neighbours_do_not_determine_second_visit` keeps the initial three sites and all ready references fixed while varying the second displaced value. |
 | Derived | Isolated trial reachability and conditional counts | `ClockedRootTrials.iterate_controls`, `quiet_trial_tick`, `trial_period_endpoint` give the phase, retained requests and carrier trace through one period. `history_count_pos_iff`, `all_pairs_history_count`, `shared_request_history_count` reduce reachability to the initial request fibres and enumerate both supplied encodings. The trial update alone cannot establish equal physical priors. |
@@ -144,9 +149,12 @@ It remains parked.
 ## Next derivation
 
 Find the accessible occupied neighbourhood and boundary states
-with their controller fields. Give the native phase-dependent
-coupling that turns these inputs into requests, branch guards, record
-writes and repeat visits. It must identify the writer's actual input
+with their controller fields. Derive the local law that binds these
+fields to a retained trigger for each operation. In the finite
+receiver witness the smallest unresolved decision is whether one
+set request is enough to exchange. Physical selection also needs
+the occupied visits where rules differ and their paid work.
+See the [candidate postulate](ADMISSION.md#candidate-postulate). It must identify the writer's actual input
 port and the path by which the heavy and light guards consume records.
 
 `ClockedRootTrials.history_count_pos_iff` then tests the initial

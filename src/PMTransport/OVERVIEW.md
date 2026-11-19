@@ -5,7 +5,9 @@ Import `PMTransport.Interface` for the theorem families below and
 hypotheses. Physical inputs are in the [premise ledger](PREMISES.md).
 The [machine overview](Machine/OVERVIEW.md) maps the upstream modules.
 The [admission check](ADMISSION.md) gives the reachable trial histories
-and the boundary required for repeated open visits.
+and the boundary required for repeated open visits. Its
+[autonomous guard test](ADMISSION.md#no-external-controller) checks
+the effect of retaining all controls in the state.
 
 <a id="node-handoff-and-admittance"></a>
 <a id="two-site-handoff-and-the-six-pillars"></a>
@@ -14,6 +16,7 @@ and the boundary required for repeated open visits.
 
 | Result | Certificates and scope |
 | --- | --- |
+| Reversible local guards | `LocalController.radius_one`, `receiver_realisation`, `reversible_iff_rows` and `enumerated_rule_count` classify the guarded two-stream encoding. `tagged_open_iterate` and `two_open_compatible_rules` give distinct rules realizing the same tagged open trace. |
 | Carrier and port routing | `NativeCarrierProtocol`, `NativePacketRouting`, `NativePacketUpdate` give native readout and locality for the supplied routing. `TwoSiteHandoff.port_count` gives two live and two record modes per site. See the [substrate pillars](../PMSubstrate/Pillars.lean) and [wire application](../PMElementaryParticles/README.md#the-six-pillars-on-the-wire). |
 | Exchange and bypass | `TwoSiteHandoff.arrivals_observed`, `step_trace`, `export_trace`, `exchange_lookup`, `native_step_observed`, `receiver_agrees_with_line` give the destinations. `receiver_half_pulse` realizes exchange on an admitted root phase. `OpenReferenceFlow.exchange_reflects`, `bypass_transmits` identify the reflected and through streams. |
 | Closed pair | `TwoSiteHandoff.first_reference_iff` and `second_reference_iff` identify the source of each restoring reference. `exchange_four_returns` returns the full state. `four_restorations_iff` requires all four initial slots to hold the reference. |
@@ -36,6 +39,7 @@ and the boundary required for repeated open visits.
 
 | Result | Certificates and scope |
 | --- | --- |
+| Guard selection on uniform ports | `LocalController.exchange_flag_realisation` and `uniform_trace_exchange_toll` give the exchange account. `uniform_flag_persistence_tie` and `uniform_remaining_cost_iff` distinguish the certified tie and its missing tariff. |
 | Flags and registrations | `TwoSiteHandoff.hop_flag`, `exchange_flag` and `OpenHandoff.receiver_flag` give comparison flags. `DiagonalReadout.state_flag` gives the diagonal mixed-population formula. `NetCost.expected_count_linear` sums expected flags under the supplied sampling law. |
 | Pulse and reset accounts | `BranchPulseContract.comparison_mem` and `program_correct` certify the comparisons under the supplied control. `OpenHandoff.balanced_basis_repair_flag` prices a paid exact comparison of a balanced bit with fresh zero. |
 | Survival and selection | `TollAmplitude.wireAmplitude_eq` gives `exp(−T/2)`. `PersistenceSelection.within_family_iff_cheapest` compares the supplied family and costs. `RefreshSchedule.minimal_is_ledger` and `CoherentRefresh.minimum_once` characterize minimum refresh at supplied prices. |

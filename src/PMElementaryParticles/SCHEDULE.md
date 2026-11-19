@@ -136,6 +136,12 @@ identify the input port, guard and record polarity. The trial update
 preserves its initial request pair, so its conditional history counts
 give no packet population.
 
+The [autonomous guard test](../PMTransport/ADMISSION.md#no-external-controller)
+leaves different receiver rules with the same tagged open trace. Those
+rules tie on uniform ports in the certified receiver flag account.
+A wire comparison still requires the admitted writer input, retained
+pulse guard and all differing paid work.
+
 ## Selection and the unresolved minimum
 
 `minima` gives the exact finite minimizer set for a supplied scalar cost.

@@ -152,6 +152,8 @@ bypass decision per phase, request pair and arriving port pair.
 check the local operations against their certified forms. The same
 table applies at every site. The three-site stencil is a finite
 encoding of one update, and the global rule acts on the open line.
+One stream shift per encoded tick is part of this model. The physical
+shift duration on the substrate clock remains open.
 
 This encoding restricts the guard to the arrivals and the local
 retained requests. In particular it keeps the probe and transport
@@ -167,7 +169,7 @@ At each phase and for each retained request pair, there are 16
 Boolean tables. The unequal arrivals `01` and `10` must have the
 same guard decision. Different decisions send both inputs to the
 same output. On `00` and `11`, either decision gives the same port
-values and the operations remain separately booked.
+values and the table still records which operation ran.
 
 `LocalController.reversible_iff_rows` lifts this test to a global
 bijection on the open line with the shared clock. It uses the inverse
@@ -176,7 +178,9 @@ advance. `reversible_rows_count` checks all 16 rows in the kernel.
 `enumerated_rule_iff` enumerates precisely the reversible tables
 by independent choices of these rows. There are eight choices at
 each of four requests and 43 phases, hence `8^(4 × 43)` tables
-(`enumerated_rule_count`). This counts literal guard tables and
+(`enumerated_rule_count`). Requiring the tagged receiver trace below
+fixes the two diagonal request rows in each phase. Each of the
+two mixed request rows still has eight choices. This counts literal guard tables and
 requires no quotient or symmetry assumption.
 
 ### Reachability per rule
@@ -228,10 +232,22 @@ signed difference in control and other remaining paid work on the
 same traces. Reversibility and the listed primitive operations do
 not give those inputs.
 
-This is a tie in a specified account on a specified family, not a
-proof that the full physical prices tie. The rule family for the
-full wire remains unspecified. The record reference remains
+The tie applies to the stated account and family. The full wire
+still needs its occupied state family, controller and paid work. The record reference remains
 undetermined. The reset-inclusive bounds `3/4`, `27/32` and `9/10`
 from the [writer schedule](../PMElementaryParticles/SCHEDULE.md#record-reference-remains-undetermined)
 still require the actual booked population, admitted writer polarities,
 separate balanced resets and the signed remaining price.
+
+### Candidate postulate
+
+The occupied state at a receiver determines which retained signal
+triggers each operation. The signal stays available to reverse the
+operation or leaves in a specified record. State how the incoming
+ports supply the signal and which values fire exchange, bypass,
+writing and the later pulses.
+
+For example, one possible receiver law would exchange exactly when
+both local request bits are set, retaining the bits for reversal.
+The rule that exchanges when either bit is set is another possibility.
+They agree on the tagged receiver. The library adopts neither law.
