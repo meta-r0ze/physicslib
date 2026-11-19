@@ -119,12 +119,13 @@ theorem bitToll_difference (c : Channels) :
     ElectricHeavyRecord.phase_sector_lepton_reference, sector_bit]
   cases colourBulk c <;> simp
 
-/-- Without selecting a measure, the expected gap depends only on the
-total mass assigned to the colourless sector of the sampled packet. -/
-theorem population_difference (p : Channels → ℝ) (hnorm : ∑ c, p c = 1) :
+/-- A common booked population can omit idle slots. The gap depends only
+on the two sector masses among the inputs that actually run the writer. -/
+theorem booked_population_difference (p : Channels → ℝ) :
     (∑ c, p c * WireSchedule.bitToll true c) -
         (∑ c, p c * WireSchedule.bitToll false c) =
-      2 * (∑ c ∈ univ.filter (fun c : Channels => colourBulk c = false), p c) - 1 := by
+      2 * (∑ c ∈ univ.filter (fun c : Channels => colourBulk c = false), p c) -
+        (∑ c, p c) := by
   rw [← sum_sub_distrib]
   calc
     _ = ∑ c, (2 * (if colourBulk c = false then p c else 0) - p c) := by
@@ -132,7 +133,14 @@ theorem population_difference (p : Channels → ℝ) (hnorm : ∑ c, p c = 1) :
       intro c _
       rw [← mul_sub, bitToll_difference]
       cases colourBulk c <;> simp [two_mul]
-    _ = _ := by rw [sum_sub_distrib, ← mul_sum, hnorm, sum_filter]
+    _ = _ := by rw [sum_sub_distrib, ← mul_sum, sum_filter]
+
+/-- For normalized inputs that all run the writer, its total booked mass is one. -/
+theorem population_difference (p : Channels → ℝ) (hnorm : ∑ c, p c = 1) :
+    (∑ c, p c * WireSchedule.bitToll true c) -
+        (∑ c, p c * WireSchedule.bitToll false c) =
+      2 * (∑ c ∈ univ.filter (fun c : Channels => colourBulk c = false), p c) - 1 := by
+  rw [booked_population_difference, hnorm]
 
 /-- `full` chooses the sample space. `probeVacancy` below instead decides
 whether a sampled vacant slot runs either comparison. -/

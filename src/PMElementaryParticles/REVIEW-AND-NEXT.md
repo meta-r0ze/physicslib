@@ -23,16 +23,16 @@ The species masses reported by e8p currently use the tier assignments in
 `QuarkMasses` and `LeptonMasses`. Derive the wire-to-species readout and use
 the recorded mass ratios to check it.
 
-- **Heavy-label weight. [Premise]** Derive the writer's admitted
-  input population or required read set and its marginal job ledger.
-  The [packet thresholds](SCHEDULE.md#record-reference-remains-undetermined)
-  give a colour advantage for uniform bit counts. Select the population
-  and show whether the additional costs reverse that advantage.
-  The weak and hypercharge refreshes share the reserved reference in
-  the baseline frame model. Show which timed maintenance jobs, if any,
-  that reference or the colour payload reference can share with the
-  heavy writer. Derive the seed supply, conditional pulse, export and
-  reset costs on the [label-sensitive schedule](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff).
+- **Heavy-label weight. [Premise]** Derive the admitted writer traces
+  for both references. The open handoff can restore an identical
+  reference for any supplied live sequence. The missing traffic
+  input is the writer's booked population, including the treatment
+  of the vacancy. The [lifecycle comparison](SCHEDULE.md#record-reference-remains-undetermined)
+  then needs the signed difference of paid work after matching
+  common jobs. Derive the fresh record supply and encoding, which
+  pulse and reset flags register, and which export, renewal and
+  maintenance jobs are already paid. Use the
+  [label-sensitive schedule](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff).
 
   The two-bit colour record gives the down geometric mean at any
   common bit price (`down_geometric_mean`). Its physical selection,

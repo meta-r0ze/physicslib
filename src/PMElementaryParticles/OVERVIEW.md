@@ -389,9 +389,11 @@ a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
 derives uniform weights under the full-packet sampling premise and
 checks the vacancy contribution. The full-packet bit gap is `−1/2`
 per sampled input when the vacancy is probed. The smaller support
-and the idle-vacancy rule have separate thresholds. Reference reuse
-requires the same timed maintenance jobs. The physical polarity
-remains open.
+and the idle-vacancy rule have separate thresholds. The
+[lifecycle comparison](SCHEDULE.md#record-reference-remains-undetermined)
+adds a conditional half flag for a written-bit reset with a fresh
+zero. Actual writer traffic and the difference in remaining paid
+work still decide the polarity.
 
 Open premises.
 

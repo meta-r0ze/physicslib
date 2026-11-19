@@ -247,34 +247,57 @@ the same work and tariff for both references.
 
 ## Record reference remains undetermined
 
-`reference_threshold` gives the exact decision within the two admitted
-output-flag schedules. In registrations per sampled input, colour
-wins if `ΔR` is below the applicable threshold, the two tie at
-equality, and lepton wins above it.
+Let `G` be the colour-minus-lepton difference in the output-bit
+account. `reference_threshold` selects colour when `G + ΔR < 0`,
+ties at zero and selects lepton when it is positive. Both traces
+must be admitted and both costs must use the same units.
 
-| Conditional cost basis | Threshold |
-| --- | --- |
-| Uniform full packet, vacancy probed | 1/2 |
-| Uniform full packet, vacancy idle | 9/16 |
-| Uniform occupied inputs | 3/5 |
+The proved supply and transport identities give no unconditional
+registration term in `ΔR`. A common companion bank and export train
+could cancel, provided the physical visits and tariff agree. The
+balanced two-port circuit also gives a conditional refinement.
+If both writers use two independently encoded bits and the
+separate fresh-zero receiver comparison is paid for each, the
+reset difference is `G/2`. This charges the restoring exchange
+once, including its displacement of the old record. Further travel,
+supply and maintenance enter the remainder `U`. Under that extra
+premise the output-bit ledger has `ΔR = G/2 + U`.
 
-For an additive full-read ledger the thresholds are 8 or 9
-registrations summed over the packet, with its remainder in the
-same units. For the two principal root writers' factor ledger
-the thresholds are half those in the corresponding output-flag
-ledger, with equal visitation (`factor_flag_difference`). For a
-general normalized population probed on its support, the
-output-flag threshold is `1 − 2 p_colourless`.
+| Common sampling policy | Output-bit gap `G` | Conditional reset contribution to `ΔR` | Colour wins with output flags and those resets if |
+| --- | ---: | ---: | ---: |
+| Uniform full packet, vacancy probed | −1/2 | −1/4 | `U < 3/4` |
+| Uniform full packet, vacancy idle | −9/16 | −9/32 | `U < 27/32` |
+| Uniform occupied inputs | −3/5 | −3/10 | `U < 9/10` |
 
-What decides the native choice is the writer's incoming population
-or required read set, plus which part of its timed maintenance,
-preparation, pulse, export and reset jobs is already paid. Those
-facts must establish the sign of the complete cost difference
-and admission of the compared schedules. The colour record gives
-the charged ordering and down geometric mean for its bit subtotal.
-They remain properties of that candidate with a common price per
-bit. The lepton subtotal gives `s_d < s_e = s_u`. Neither is a
-selected heavy-flip law.
+Without that reset premise the output-bit thresholds for the full
+`ΔR` remain 1/2, 9/16 and 3/5, respectively
+(`packet_record_difference`). The factor-pulse ledger by itself
+has gap `G/2` (`factor_flag_difference`). If the two reset
+comparisons are additionally paid and distinct from the writer
+factors, factor plus reset gives gap `G`. None of these conditionals
+admits a native reset, rules out a different encoding, or prices
+the rest of the record route.
+
+For the comparison, the smallest missing input is an admitted
+writer trace for each reference supplying two quantities.
+
+- The **bit or factor gap** for the actual visits. For a common
+  visit law, the output-bit gap only needs the difference between
+  the booked colourless and coloured input masses
+  (`booked_population_difference`). An idle vacancy contributes
+  neither mass. If the two writers admit different traffic, their
+  two expected charges replace this common-population formula.
+- The **signed difference in remaining paid work** after common
+  jobs cancel, including which resets or uncomputations actually
+  run. This needs the timed supply, polarity control,
+  export, renewal and maintenance jobs and their tariffs only
+  where they differ. It is enough to bound this difference on one
+  side of the selection threshold.
+
+The clock, route and comparison results leave both quantities open.
+The colour ordering and the down geometric mean remain properties
+of the colour record at a common bit price. The lepton candidate
+still gives `s_d < s_e = s_u`.
 
 ## Periods at a minimum
 
