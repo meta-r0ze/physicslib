@@ -20,6 +20,7 @@ The physical clock and registration cost need more work.
 
 - Import `PMTransport` to use the handoff results and the native machine.
 - Import a module in `PMTransport.Machine` to use one native operation.
+- Read [CLOCK.md](CLOCK.md) for clock certificates and firing constraints.
 - Read [OVERVIEW.md](OVERVIEW.md) to find the results.
 - Read [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md) to find the open work.
 

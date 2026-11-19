@@ -5,6 +5,8 @@ node. A transport can combine a spatial hop, an internal glue-class crossing,
 and a comparison with a reference. Each has its own input, output, and event
 count. Particle applications specify which payload and record participate.
 
+See [CLOCK.md](CLOCK.md) for the clock certificates and firing constraints.
+
 ## Module map
 
 The current results give three groups of work. Carrier routing and glue-class
