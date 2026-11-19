@@ -134,3 +134,23 @@ logical record counts agree for electron, up and down in this template.
 The record Tolls differ, and give no elapsed ticks without a control
 clock. Neither equality nor inequality of the full period counts across
 protocols follows at a physical minimum.
+
+## Comparison only
+
+- [Down as geometric mean](../../tools/down_mean_check.py). The
+  colour-reference two-bit subtotal gives the identity exactly for a
+  common price. In the ledger convention the diagnostic gives
+  `s_d/√(s_e s_u) = 0.957` and inferred prices 2.043 from electron
+  and 2.131 from down. Other conventions give ratios 0.767 to 0.864.
+  These inferred prices do not identify a native registration tariff.
+- [Tier ratios](../../tools/tier_route_check.py). The declared ledger
+  gives `m₁/m₂ = 3/Δ²` for up and about `2.126/Δ` for down.
+  The electron value is about `0.208/Δ = 8.94/Δ²` at the fixed
+  period. The matched flags provide no power of `1/Δ` for the offset.
+- [First-row leakage](../../tools/first_row_readout.py). Under its
+  stated readout assumptions the comparison prefers roughly
+  `r ≲ 0.07–0.12`. The explored serial-duration options span
+  `1/8 ≤ r ≤ 1/2`. The conditional six-reflection ratios `3/8`
+  and `1/2` from the [clock ledger](../PMTransport/CLOCK.md#flip-to-crossing-rate)
+  exceed that range under equal pulse-area and coupling normalization.
+  There is no selected physical `r` to compare.
