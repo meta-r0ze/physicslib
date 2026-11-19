@@ -139,8 +139,11 @@ give no packet population.
 The [autonomous guard test](../PMTransport/ADMISSION.md#no-external-controller)
 leaves different receiver rules with the same tagged open trace. Those
 rules tie on uniform ports in the certified receiver flag account.
-A wire comparison still requires the admitted writer input, retained
-pulse guard and all differing paid work.
+The [request complement and maintenance swap](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
+change the clocked trace and can change its flags. The next receiver
+test is stationary traffic and paid work for each rule. A wire
+comparison still requires the admitted writer input, retained pulse
+guard and all differing paid work.
 
 ## Selection and the unresolved minimum
 
@@ -270,6 +273,10 @@ Let `G` be the colour-minus-lepton difference in the output-bit
 account. `reference_threshold` selects colour when `G + ΔR < 0`,
 ties at zero and selects lepton when it is positive. Both traces
 must be admitted and both costs must use the same units.
+`ElectricHeavyRecord.reference_flags_from_orbit_bits` shows that
+the two references share the position flag and complement only
+the electric sector flag. The receiver duality test supplies
+no common choice of polarity for these two mechanisms.
 
 The proved supply and transport identities give no unconditional
 registration term in `ΔR`. A common companion bank and export train

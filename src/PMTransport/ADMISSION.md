@@ -239,6 +239,57 @@ from the [writer schedule](../PMElementaryParticles/SCHEDULE.md#record-reference
 still require the actual booked population, admitted writer polarities,
 separate balanced resets and the signed remaining price.
 
+### AND and OR are different dynamics
+
+`LocalController.complemented_guard` proves De Morgan duality.
+On the same incoming pair, OR with both requests complemented gives
+the AND output with its ports swapped (`complemented_output`).
+`HandoffAdmittance.repair_receiver_after_exchange` realizes a swap at
+the receiver as an extra maintenance operation. It links two
+one-visit outputs.
+
+Complementing requests and swapping each port pair defines a local
+involution. It commutes with the bare phase advance and preserves
+the sum of the two port populations at each site
+(`receiver_dual_involutive`, `receiver_dual_local`,
+`receiver_dual_bare_clock`, `receiver_dual_population`).
+It fails to carry an AND tick to an OR tick
+(`receiver_dual_not_conjugate`). The live and record streams go to
+opposite neighbours. The maintenance swap changes which stream
+carries the incoming value. See `OpenReferenceFlow.exchange_reflects`
+and `bypass_transmits`.
+
+The certified root probe also distinguishes the updates. At phase
+zero the idle pair leaves the probe unchanged. Its complemented
+pair fires the reflection even with equal receiver ports
+(`receiver_dual_probe_counterexample`). More generally, no injective
+relabeling that keeps the clock phase and complements both request
+bits everywhere can carry one update to the other
+(`no_request_complement_conjugacy`). From phase zero, every OR state
+with both requests set everywhere returns after two periods. Under
+AND with both requests clear, a localized live value shifts out of
+its original site.
+
+The mismatch flag registers on the exchange visit. On the same
+arrivals `complemented_exchange_flags` puts the mismatch contribution
+on exactly one of the two accounts. For an orthogonal pair of unit
+basis values, the AND bypass accounts for zero receiver flags and the
+complemented OR exchange accounts for one, even with the port values
+swapped (`receiver_dual_flag_counterexample`). Equal arrivals hide
+this difference.
+
+The tie on uniform inputs is a physical selection gap in the stated
+account. The next test is to derive a self-consistent stationary
+traffic law for each candidate with its own retained requests,
+occupations and boundary supply. Test invariance at the same clock
+phase after a period, or use a justified longer return horizon.
+Then compare paid flags and remaining work under those laws.
+The electric reference choice still requires its writer trace
+and prices. Choosing colour or lepton complements the electric
+sector bit and keeps the position bit
+(`ElectricHeavyRecord.reference_flags_from_orbit_bits`).
+The receiver result gives no identification with this sector bit.
+
 ### Candidate postulate
 
 The occupied state at a receiver determines which retained signal

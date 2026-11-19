@@ -133,6 +133,7 @@ It remains parked.
 | Excluded | Selecting the coherent gap from whole-tick samples alone | `RootClockCalibration.phase_alias_iff`, `integer_samples_agree` and `ambiguous_exchange_clock`. A principal-range witness or an admitted statistical probe is needed. |
 | Derived | Reversible autonomous guards in the finite two-stream encoding | `LocalController.reversible_iff_rows` requires one common decision for the unequal ordered arrivals. `reversible_rows_count` and `enumerated_rule_count` give eight rows per phase and request pair. |
 | Excluded | Uniqueness from locality, homogeneity, reversibility and the stated move certificates in that encoding | `LocalController.two_open_compatible_rules` gives different rules with the same tagged open trace (`tagged_open_iterate`). `mixed_requests_different_destinations` distinguishes them on an input with one set request and unequal arrivals. |
+| Excluded | Removing the AND/OR tie by complementing requests and applying the maintenance swap | `LocalController.complemented_output` gives the one-visit output swap. `receiver_dual_not_conjugate` and `receiver_dual_probe_counterexample` distinguish the clocked traces. `no_request_complement_conjugacy` excludes an injective phase-preserving request complement on the encoded line. `receiver_dual_flag_counterexample` gives exchange flag 1 and bypass flag 0 for the stated basis input. |
 | Derived | Tie on uniform fields in the certified flag account | `LocalController.uniform_trace_exchange_toll` gives zero receiver flag Toll. `uniform_flag_persistence_tie` applies persistence with a common baseline. `uniform_remaining_cost_iff` leaves a strict preference exactly when remaining paid work differs. |
 | Derived | Stationary background constraints | `NativeReferenceBackground.stationary_iff` fixes a common value per active mode for the supplied connected update. `OddReferenceSource.rest_modes_distinct` gives distinct occupied witnesses even on the same wall. Neither certificate supplies the physical family. |
 | Excluded | Determining even two open visits from the centre and its two neighbours alone | `OpenHandoff.neighbours_do_not_determine_second_visit` keeps the initial three sites and all ready references fixed while varying the second displaced value. |
@@ -148,14 +149,17 @@ It remains parked.
 
 ## Next derivation
 
-Find the accessible occupied neighbourhood and boundary states
-with their controller fields. Derive the local law that binds these
-fields to a retained trigger for each operation. In the finite
-receiver witness the smallest unresolved decision is whether one
-set request is enough to exchange. Physical selection also needs
-the occupied visits where rules differ and their paid work.
-See the [candidate postulate](ADMISSION.md#candidate-postulate). It must identify the writer's actual input
-port and the path by which the heavy and light guards consume records.
+Derive the occupied neighbourhood, boundary supply and steady traffic
+for each receiver rule. The stationary distribution must reproduce
+its arrivals and retained requests at the same clock phase after the
+cycle. Use a longer horizon if the actual return takes more than one
+period. The [AND/OR test](ADMISSION.md#and-and-or-are-different-dynamics)
+shows that a request complement and maintenance swap cannot remove
+this comparison. Price each stationary trace before selection.
+
+The controller must also identify the writer's input port and the
+records that drive its heavy and light guards. This remains separate
+from the receiver rule and its stationary traffic.
 
 `ClockedRootTrials.history_count_pos_iff` then tests the initial
 request fibres. `BranchPulseContract.comparison_mem` and

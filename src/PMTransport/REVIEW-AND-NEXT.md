@@ -5,6 +5,7 @@
 - Identify the accessible occupied neighbourhood, open boundary supply and the controller for the spatial move, wall loader and receiver branch. See [Admission](PREMISES.md#admission). The
   [autonomous guard test](ADMISSION.md#no-external-controller) leaves
   the mixed-request decision and its occupied paid visits open.
+  Derive and price [stationary traffic under each rule](ADMISSION.md#and-and-or-are-different-dynamics).
 - Supply the occupied seed and a renewal route for sustained operation. See [Sustained reference supply](PREMISES.md#sustained-reference-supply).
 - Specify the receiver tolerance and incoming disturbance. See [Disturbance and acceptance](PREMISES.md#disturbance-and-acceptance).
 

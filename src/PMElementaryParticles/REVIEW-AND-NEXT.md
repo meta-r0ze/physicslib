@@ -39,6 +39,13 @@ the recorded mass ratios to check it.
   [Registration tariff](../PMTransport/PREMISES.md#registration-tariff)
   and [Sustained reference supply](../PMTransport/PREMISES.md#sustained-reference-supply).
 
+  The [AND/OR test](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
+  distinguishes the clocked receiver traces. Compare their stationary
+  traffic and paid work. The electric reference complements the sector
+  flag and keeps the position flag
+  (`ElectricHeavyRecord.reference_flags_from_orbit_bits`).
+  Its selection still depends on the writer trace and prices.
+
   The two-bit colour record gives the down geometric mean at any
   common bit price (`down_geometric_mean`). Its physical selection,
   price per bit and common heavy-flip factor remain open. Compare
