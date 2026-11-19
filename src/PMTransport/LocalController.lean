@@ -76,4 +76,94 @@ theorem receiver_realisation (rule : Rule) (phase : Phase) (s : Registers) (x : 
   rw [← h]
   rfl
 
+
+/-- The two unequal arrivals must use the same decision. Equal arrivals
+    can use either operation and still keep their values. -/
+def Compatible (guard : Guard) : Prop :=
+  guard (false, true) = guard (true, false)
+
+instance (guard : Guard) : Decidable (Compatible guard) :=
+  inferInstanceAs (Decidable (guard (false, true) = guard (true, false)))
+
+private theorem compatible_twice :
+    ∀ (guard : Guard), Compatible guard → ∀ p : Ports,
+      applyGuard guard (applyGuard guard p) = p := by
+  decide +kernel
+
+private theorem incompatible_collision :
+    ∀ (guard : Guard), ¬ Compatible guard →
+      applyGuard guard (false, true) = applyGuard guard (true, false) := by
+  decide +kernel
+
+private def scatter (rule : Rule) (phase : Phase) (s : Registers) : Registers :=
+  (advanceProbe phase ∘ s.1, fun x => applyGuard (rule phase (s.1 x).1) (s.2 x))
+
+private theorem scatter_involutive (rule : Rule) (phase : Phase)
+    (h : ∀ c, Compatible (rule phase c)) :
+    Function.Involutive (scatter rule phase) := by
+  intro s
+  apply Prod.ext
+  · funext x
+    change advanceProbe phase (advanceProbe phase (s.1 x)) = s.1 x
+    rcases s.1 x with ⟨requests, side⟩
+    cases hf : ClockedRootTrials.fire requests phase <;> simp [advanceProbe, hf]
+  · funext x
+    exact compatible_twice _ (h (s.1 x).1) _
+
+/-- The whole line update is reversible exactly for the compatible rows.
+    The inverse undoes the new clock phase, then the local operation,
+    then the two-stream shift. -/
+theorem reversible_iff_rows (rule : Rule) :
+    Function.Bijective (rawTick rule) ↔ ∀ phase c, Compatible (rule phase c) := by
+  constructor
+  · intro h phase c
+    by_contra hn
+    let s : State := (phase, (fun _ => (c, false), fun _ => (false, true)))
+    let t : State := (phase, (fun _ => (c, false), fun _ => (true, false)))
+    have hg := incompatible_collision (rule phase c) hn
+    have he : rawTick rule s = rawTick rule t := by
+      apply Prod.ext
+      · rfl
+      · apply Prod.ext
+        · rfl
+        · funext x
+          exact hg
+    have hp := congrArg (fun u : State => (u.2.2 0).1) (h.1 he)
+    exact Bool.false_ne_true hp
+  · intro h
+    let step (phase : Phase) : Equiv.Perm Registers :=
+      (Equiv.prodCongr (Equiv.refl _) (OpenReferenceFlow.shiftEquiv OpenReferenceFlow.line)).trans
+        ((scatter_involutive rule phase (h phase)).toPerm _)
+    let full : Equiv.Perm State :=
+      (Equiv.prodCongrRight step).trans (Equiv.prodCongr (finRotate Delta) (Equiv.refl _))
+    exact full.bijective
+
+/-- Enumerate the 16 possible Boolean rows individually. No row is
+    identified with another, even when their output values coincide. -/
+def reversibleRows : Finset Guard := Finset.univ.filter Compatible
+
+theorem reversible_rows_count : reversibleRows.card = 8 := by
+  decide +kernel
+
+/-- An independent certified row at each phase and request pair. -/
+abbrev EnumeratedRule := Phase → Requests → ↥reversibleRows
+
+def EnumeratedRule.rule (table : EnumeratedRule) : Rule :=
+  fun phase c => (table phase c).val
+
+theorem enumerated_rule_iff (rule : Rule) :
+    Function.Bijective (rawTick rule) ↔
+      ∃ table : EnumeratedRule, table.rule = rule := by
+  rw [reversible_iff_rows]
+  constructor
+  · intro h
+    exact ⟨fun phase c => ⟨rule phase c, Finset.mem_filter.mpr ⟨Finset.mem_univ _, h phase c⟩⟩,
+      rfl⟩
+  · rintro ⟨table, rfl⟩ phase c
+    exact (Finset.mem_filter.mp (table phase c).property).2
+
+theorem enumerated_rule_count : Fintype.card EnumeratedRule = 8 ^ (4 * 43) := by
+  rw [Fintype.card_fun, Fintype.card_fun, Fintype.card_coe, reversible_rows_count, ← pow_mul]
+  simp [Requests]
+
 end PMTransport.LocalController

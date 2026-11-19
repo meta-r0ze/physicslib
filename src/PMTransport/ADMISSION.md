@@ -160,3 +160,21 @@ neighbourhood. The library supplies no finite quotient of the full
 coherent wire that preserves its writer, branch records and costs.
 An enumeration here tests whether the stated constraints force a
 unique rule even within this restricted family.
+
+### Reversible rule family
+
+At each phase and for each retained request pair, there are 16
+Boolean tables. The unequal arrivals `01` and `10` must have the
+same guard decision. Different decisions send both inputs to the
+same output. On `00` and `11`, either decision gives the same port
+values and the operations remain separately booked.
+
+`LocalController.reversible_iff_rows` lifts this test to a global
+bijection on the open line with the shared clock. It uses the inverse
+stream shift, the involutive local switch and the inverse phase
+advance. `reversible_rows_count` checks all 16 rows in the kernel.
+`enumerated_rule_iff` enumerates precisely the reversible tables
+by independent choices of these rows. There are eight choices at
+each of four requests and 43 phases, hence `8^(4 × 43)` tables
+(`enumerated_rule_count`). This counts literal guard tables and
+requires no quotient or symmetry assumption.
