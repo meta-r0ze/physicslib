@@ -84,6 +84,30 @@ theorem receiver_trace {V : Type*} (s : State V) (t : ℕ) :
     show (1 : ℤ) + t = (t : ℤ) + 1 by omega,
     show (-1 : ℤ) - t = -((t : ℤ) + 1) by omega]
 
+/-- The two horizon-boundary arrivals and the two neighbouring sites
+    agree for the first visit. They need not agree at the second visit
+    even with the same ready reference throughout. -/
+theorem neighbours_do_not_determine_second_visit {V : Type*} (r v w : V) (h : v ≠ w) :
+    ∃ s t : State V,
+      (∀ x : ℤ, -1 ≤ x → x ≤ 1 → s x = t x) ∧
+      (∀ j : ℕ, (run s (j + 1) 0).1 = r ∧ (run t (j + 1) 0).1 = r) ∧
+      run s 1 0 = run t 1 0 ∧ run s 2 0 ≠ run t 2 0 := by
+  let s : State V := fun _ => (v, r)
+  let t : State V := fun x => (if x = -2 then w else v, r)
+  refine ⟨s, t, ?_, ?_, ?_, ?_⟩
+  · intro x hx _
+    have hx' : x ≠ -2 := by omega
+    simp [s, t, hx']
+  · intro j
+    simp [receiver_trace, s, t]
+  · simpa only [Nat.zero_add] using (show run s (0 + 1) 0 = run t (0 + 1) 0 by
+      simp [receiver_trace, s, t])
+  · intro he
+    have he' := congrArg Prod.snd he
+    have hh : v = w := by
+      simpa [receiver_trace s 1, receiver_trace t 1, s, t] using he'
+    exact h hh
+
 /-- At horizon `N`, the most recent displaced value is at the receiver.
 Earlier displaced values occupy successive record slots on the negative line. -/
 theorem export_trace {V : Type*} (s : State V) {N d : ℕ} (hd : d < N) :

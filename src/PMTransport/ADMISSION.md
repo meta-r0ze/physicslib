@@ -26,3 +26,42 @@ occupied configurations, including excitations and controller states, and
 the incoming boundary contents for the chosen clock horizon. To count
 priors, give a finite enumeration or a certified finite quotient with
 its fibre sizes.
+
+## Update and horizon
+
+Use the node and sites −1 and +1 for the first open visit, along the
+primitive root of `OpenHandoff.address_step`. A visit is a routing step.
+A theorem assigning these visits to particular substrate ticks is still
+needed.
+
+| Operation | Certified update | Admission still needed |
+| --- | --- | --- |
+| Root trial at phases 0 and 1 | `ClockedRootTrials.ticks_zero_one`, `ticks_one_two`, `pair_endpoint`. The requests are initial state fields. Each true request applies the same root. | The accessible controller states and the attachment of the clocked carrier probe to actual ports. |
+| Root trial at phases 2–42 | `iterate_controls`, `quiet_trial_tick`, `trial_period_endpoint`. In this trial the requests and carrier persist while the clock advances. | The other operations that may use these slots. |
+| Spatial shift, exchange or bypass | `TwoSiteHandoff.native_step_observed`, `step_trace`, `export_trace` give the destinations for a supplied exchange bit. In the open exchange, `receiver_trace` puts the incoming ready reference in the live port and the previous live arrival in the record. | The clock-conditioned spatial shift, branch bit and downstream port attachment. |
+| Additional register controls | `RegisterControl.extend_encode`, `occupation_conserved`, `phase_unitary` apply to a supplied control and preserve the occupation count. | The joint per-tick operation and how it sets or reuses controls and records. The trial and handoff interfaces take different states. No theorem joins them. |
+
+For visit `k` the open receiver reads initial ports at `−k` and `+k`.
+Through `N` executed visits its arrivals therefore depend only on the
+corresponding initial upstream ports. `export_trace` gives the record
+at each displaced address for that horizon. However,
+`neighbours_do_not_determine_second_visit` gives two completions of
+the same three-site start with the same ready reference at every visit
+and different second records. A three-site calculation is sufficient
+for the first visit only, unless later arrivals are fixed by a boundary
+law. A closed finite ring is a different update.
+
+One 43-tick period suffices to check the isolated trial pair from phase
+zero, including its quiet suffix. It gives no whole-wire upper bound.
+The conditional serial lower bounds in [CLOCK.md](CLOCK.md#periods-per-route)
+are 60 and 152 ticks for the two direct words and 36 and 88 before
+additional work for the restoring words. A schedule across more than
+one period needs the admitted intervening operations and supply
+at each additional visit. The current clock and route results provide
+no finite upper bound on this schedule.
+
+**Joint clocked controller.** Give the reversible successor of the
+occupied wire, reference and record state at each phase, including the
+guard that binds the request and delivered port to each operation.
+The certified updates above fix those transitions whose controls and
+inputs are already specified.

@@ -47,6 +47,58 @@ theorem pair_endpoint (a b : Bool) (z : SubstrateReflection.Lattice) :
   rw [ticks_zero_one, ticks_one_two]
   cases a <;> cases b <;> simp [SubstrateReflection.involutive z]
 
+/-- The trial update advances the phase and retains the initial controls.
+    It does not prepare a new request at either slot. -/
+theorem iterate_controls (requests : Bool × Bool) (z : SubstrateReflection.Lattice)
+    (n : ℕ) :
+    ((tick^[n]) (requests, (z, 0))).1 = requests ∧
+      ((tick^[n]) (requests, (z, 0))).2.2 = (finRotate Delta)^[n] 0 := by
+  induction n with
+  | zero => exact ⟨rfl, rfl⟩
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
+    exact ⟨ih.1, congrArg (finRotate Delta) ih.2⟩
+
+/-- After the trial pair, the remaining ticks in its period act only on
+    the clock. This is a statement about this specified trial update. -/
+theorem quiet_trial_tick (requests : Bool × Bool) (z : SubstrateReflection.Lattice)
+    {n : ℕ} (hfirst : 2 ≤ n) (hlast : n < Delta) :
+    ((tick^[n + 1]) (requests, (z, 0))).2.1 =
+      ((tick^[n]) (requests, (z, 0))).2.1 := by
+  have hphase := (iterate_controls requests z n).2
+  rw [show n = (⟨n, hlast⟩ : Fin Delta).val from rfl,
+    CarrierReferenceCycle.clock_visits] at hphase
+  rw [Function.iterate_succ_apply']
+  change (if fire ((tick^[n]) (requests, (z, 0))).1
+    ((tick^[n]) (requests, (z, 0))).2.2 then _ else _) = _
+  rw [hphase]
+  have h0 : (⟨n, hlast⟩ : Fin Delta) ≠ 0 := by
+    intro h
+    have hn := congrArg Fin.val h
+    change n = 0 at hn
+    omega
+  have h1 : (⟨n, hlast⟩ : Fin Delta) ≠ 1 := by
+    intro h
+    have hn := congrArg Fin.val h
+    change n = 1 at hn
+    omega
+  simp [fire, h0, h1]
+
+/-- The two-slot endpoint persists to the end of this trial period. -/
+theorem trial_period_endpoint (a b : Bool) (z : SubstrateReflection.Lattice)
+    {n : ℕ} (hfirst : 2 ≤ n) (hlast : n ≤ Delta) :
+    ((tick^[n]) ((a, b), (z, 0))).2.1 =
+      if a ≠ b then SubstrateReflection.reflect z else z := by
+  induction n with
+  | zero => omega
+  | succ n ih =>
+    by_cases hn : 2 ≤ n
+    · rw [quiet_trial_tick (a, b) z hn (by omega)]
+      exact ih hn (by omega)
+    · have hn1 : n = 1 := by omega
+      subst n
+      exact congrArg (fun s => s.2.1) (pair_endpoint a b z)
+
 /-- A single retained request drives both boundaries of the original excursion. -/
 theorem shared_fire (b : Bool) (t : Fin Delta) :
     fire (b, b) t = (b && ClockControlledRoot.fire CarrierReferenceCycle.excursionMask t) := by
