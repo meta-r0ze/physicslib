@@ -120,26 +120,43 @@ give the following known budgets.
 | Lepton | 1 | 1 | 2 | `s_d < s_e = s_u`. Down is not the geometric mean. |
 
 `polarity_tradeoff` proves that neither row minimizes the known Toll
-for every charged label. The electron prefers the lepton reference.
-Either quark protocol prefers the colour reference. This result does
-not require measured values. For a single schedule shared by all
-labels a scalar objective needs a rule for weighting the labels.
-If the two polarities are both admitted and if that objective is a
-weighted sum of bit Tolls plus a remainder, the exact cost difference,
-colour minus lepton, is
+for every charged label. The position flag agrees across references.
+The sector flag reverses. `WireReferenceCost.bitToll_difference`
+gives `+1` for each colourless slot and `−1` for each coloured slot.
+For a normalized population that runs the reader on its support,
+`population_difference` gives the expected difference, colour minus
+lepton, as `2 p_colourless − 1`. The raw weighted formula includes both
+the neutrino and, if probed, the vacancy. The earlier
+`WireSchedule.polarity_cost_difference` is the charged-only subtotal.
 
-```text
-w_e − w_u − w_d + (remaining_cost_colour − remaining_cost_lepton).
-```
+The neutral slot in `orbit_record_tolls` and `lepton_reference_toll`
+is the static vacancy. `neutral_slot_tolls` uses `same_wall_pair`
+to check that its active neutrino partner also has electric bit Tolls
+1 and 0. The vacancy has no payload. Its electric sector flag is
+computed only if the circuit probes that basis slot against the
+colour reference. This concerns the relative electric comparison.
+A bare vacancy hypercharge flag is zero.
 
-By `polarity_minimum_iff`, a negative difference selects the colour
-reference, a positive difference selects lepton, and zero ties them.
-With equal remainder, a tie needs `w_e = w_u + w_d`. Equal weights per
-protocol would favour colour in this two-option calculation. The
-substrate results used here supply neither that weighting rule nor
-equal remainders. They also leave physical admission of the two
-candidates open. If a different template uses a genuinely different
-record writer, these two-option inequalities do not compare its cost.
+`expectedRecordCost_eq_mean` identifies the exact bit flags with
+the two indicator events in `NetCost.expectedCost`. The position
+event contains eight slots. The sector event contains twelve for
+lepton and either four or three for colour, depending on whether
+the vacancy is probed. Unit registration costs follow from
+`record_event_counts`, `packet_record_cost` and
+`packet_record_difference`.
+
+| Conditional sampling and visit policy | Colour mean | Lepton mean | Colour minus lepton |
+| --- | --- | --- | --- |
+| Uniform full packet, both comparisons probe the vacancy | 12/16 | 20/16 | −8/16 = −1/2 |
+| Uniform full packet, vacant slot is idle | 11/16 | 20/16 | −9/16 |
+| Uniform on the fifteen occupied slots | 11/15 | 20/15 | −9/15 = −3/5 |
+
+The proposed `−9` is an unnormalized count when the vacancy
+contributes zero. A full-slot probe instead gives `−8` in sum units.
+A ledger of one separately required paid read per slot would use
+sums by `ReadoutAdditivity.additive_read`. That is a different
+execution claim from sampling a single incoming slot per cycle.
+The remainder must have the same units as the bit cost.
 
 `knownToll_eq_of_paid_eq` proves that changing slots or live branch
 while retaining the same polarity and paid visits leaves the subtotal

@@ -84,4 +84,110 @@ theorem massive_pair_flag (t : ℝ) (c : Channels) :
     cases hc : active c <;> simp_all
   exact EventRequirements.massive_flag t _ _ h
 
+
+open ProtocolToll ControlledGluedRegister HeavyFlipControl
+open PMAction.DiagonalReadout
+
+theorem bitToll_opposite (pol : Bool) (c : Channels) :
+    WireSchedule.bitToll pol (opposite c) = WireSchedule.bitToll pol c := by
+  obtain ⟨hq, hs⟩ := ElectricHeavyRecord.same_wall_pair c
+  simp [WireSchedule.bitToll, hq, hs]
+
+/-- A vacancy slot has no occupied payload. If its basis slot is probed
+by this particular reader, its two output flags are those of the neutral
+partner. This is a statement about the operator, not about admission. -/
+theorem neutral_slot_tolls :
+    WireSchedule.bitToll true neutrinoStatic = 1 ∧
+    WireSchedule.bitToll false neutrinoStatic = 0 ∧
+    WireSchedule.bitToll true (opposite neutrinoStatic) = 1 ∧
+    WireSchedule.bitToll false (opposite neutrinoStatic) = 0 := by
+  obtain ⟨_, _, _, hc⟩ := HeavyFlipRecords.orbit_record_tolls 0
+  obtain ⟨_, _, _, hl⟩ := ElectricHeavyRecord.lepton_reference_toll 0
+  have h : WireSchedule.bitToll true neutrinoStatic = 1 := by
+    simpa only [WireSchedule.bitToll, ElectricHeavyRecord.colour_reference_toll] using hc
+  exact ⟨h, hl, (bitToll_opposite _ _).trans h, (bitToll_opposite _ _).trans hl⟩
+
+theorem sector_bit (c : Channels) : (labelRecord c).1 = !colourBulk c := by
+  revert c
+  decide +kernel
+
+/-- The position flag cancels for every slot. The sector flag reverses. -/
+theorem bitToll_difference (c : Channels) :
+    WireSchedule.bitToll true c - WireSchedule.bitToll false c =
+      if colourBulk c = true then -1 else 1 := by
+  rw [WireSchedule.bitToll, WireSchedule.bitToll, ElectricHeavyRecord.phase_sector,
+    ElectricHeavyRecord.phase_sector_lepton_reference, sector_bit]
+  cases colourBulk c <;> simp
+
+/-- Without selecting a measure, the expected gap depends only on the
+total mass assigned to the colourless sector of the sampled packet. -/
+theorem population_difference (p : Channels → ℝ) (hnorm : ∑ c, p c = 1) :
+    (∑ c, p c * WireSchedule.bitToll true c) -
+        (∑ c, p c * WireSchedule.bitToll false c) =
+      2 * (∑ c ∈ univ.filter (fun c : Channels => colourBulk c = false), p c) - 1 := by
+  rw [← sum_sub_distrib]
+  calc
+    _ = ∑ c, (2 * (if colourBulk c = false then p c else 0) - p c) := by
+      apply sum_congr rfl
+      intro c _
+      rw [← mul_sub, bitToll_difference]
+      cases colourBulk c <;> simp [two_mul]
+    _ = _ := by rw [sum_sub_distrib, ← mul_sum, hnorm, sum_filter]
+
+/-- `full` chooses the sample space. `probeVacancy` below instead decides
+whether a sampled vacant slot runs either comparison. -/
+def sampleSlots (full : Bool) : Finset Channels :=
+  univ.filter fun c => full = true ∨ baseProtocol c ≠ none
+
+abbrev Sample (full : Bool) := ↥(sampleSlots full)
+
+/-- Position comparison first, sector second. The exact output flags
+are the indicators of these events. -/
+def recordEvents (full probeVacancy colourReference : Bool) (i : Fin 2) :
+    Finset (Sample full) :=
+  univ.filter fun c =>
+    (probeVacancy = true ∨ baseProtocol c.val ≠ none) ∧
+      (if i = 0 then (labelRecord c.val).2 = true
+       else (labelRecord c.val).1 = colourReference)
+
+theorem expectedRecordCost_eq_mean (full probeVacancy pol : Bool) :
+    expectedCost 1 (recordEvents full probeVacancy pol) =
+      (∑ c : Sample full, if probeVacancy = true ∨ baseProtocol c.val ≠ none
+        then WireSchedule.bitToll pol c.val else 0) / Fintype.card (Sample full) := by
+  unfold expectedCost
+  simp only [one_mul, Fin.sum_univ_two]
+  congr 1
+  apply sum_congr rfl
+  intro c _
+  cases pol <;> by_cases h : probeVacancy = true ∨ baseProtocol c.val ≠ none <;>
+    cases ha : (labelRecord c.val).1 <;> cases hb : (labelRecord c.val).2 <;>
+    simp [recordEvents, h, ha, hb, WireSchedule.bitToll, ElectricHeavyRecord.phase_position,
+      ElectricHeavyRecord.phase_sector, ElectricHeavyRecord.phase_sector_lepton_reference]
+
+theorem sample_card (full : Bool) :
+    Fintype.card (Sample full) = if full then 16 else 15 := by
+  cases full <;> decide +kernel
+
+theorem record_event_counts (full probeVacancy pol : Bool) :
+    (recordEvents full probeVacancy pol 0).card = 8 ∧
+      (recordEvents full probeVacancy pol 1).card =
+        (if pol then if full && probeVacancy then 4 else 3 else 12) := by
+  cases full <;> cases probeVacancy <;> cases pol <;> decide +kernel
+
+/-- Unit registration cost, with the normalization of `NetCost.expectedCost`. -/
+theorem packet_record_cost (full probeVacancy pol : Bool) :
+    expectedCost 1 (recordEvents full probeVacancy pol) =
+      (8 + (if pol then if full && probeVacancy then 4 else 3 else 12)) /
+        (if full then 16 else 15) := by
+  obtain ⟨hpos, hsec⟩ := record_event_counts full probeVacancy pol
+  rw [expected_count_linear, one_mul, Fin.sum_univ_two, prob, prob, hpos, hsec, sample_card]
+  cases full <;> cases probeVacancy <;> cases pol <;> norm_num
+
+theorem packet_record_difference (full probeVacancy : Bool) :
+    expectedCost 1 (recordEvents full probeVacancy true) -
+      expectedCost 1 (recordEvents full probeVacancy false) =
+      if full then (if probeVacancy then -(1 / 2) else -(9 / 16)) else -(3 / 5) := by
+  rw [packet_record_cost, packet_record_cost]
+  cases full <;> cases probeVacancy <;> norm_num
+
 end PMElementaryParticles.WireReferenceCost
