@@ -205,42 +205,45 @@ order of `ε` in `1/Δ`.
 
 ## Marginal cost of the two references
 
-`SharedReference.shared` puts the weak and hypercharge reads on
-one reserved type in its stated layout. Its response test alone
-allows Q or L. `ReferenceEconomy.economy_selects_lepton` selects L
-within the colour-preserving types and its allocation cost model.
-`ReferenceEconomy.reads_reserved` treats the reserved cell as already
-paid by the frame overhead. `SectorObligations.weak_is_owner` identifies
-weak as the repair owner in the stated frame model. These results
-establish sharing for the baseline refreshes.
+These are separate stages in a candidate writer trace. A flag
+contributes registrations only if that comparison is paid. An
+exchange that both restores the live slot and displaces the record
+is one event. Later record shifts have their own price.
 
-`ColourReference.colour_reference_in_payload` puts the colour
-refresh's reference outside that reserved cell when L is reserved.
-`colour_ledger_minimal` gives the existing colour refresh's twelve
-payload obligations. The new electric writer uses a same-position
-charge difference (`ElectricHeavyRecord.sectorDifference`). The
-definition supplies no cell address, ready reference state, clock
-window or restoration rule linking either of its references to a
-baseline maintenance job.
+| Stage | Colour-reference account | Lepton-reference account |
+| --- | --- | --- |
+| Seed loading and bank preparation | A supplied first-wall odd rest seed gives one unit of incoming reference population per visit (`OddReferenceSource.odd_seed_train_restores`). The companion setup gives active and static flag sums 1/2 and 3/4, with mean 5/8 at equal wall weights (`ElectricCompanionSetupToll.primitive_setup_sum`, `equal_slot_setup_sum`). | The same conditional budgets apply if this writer uses that seed and setup. Seed supply, loading admission, visits and which flags are paid remain open for both references. Population is a supply requirement. The inverse decoder's preparation instead gives one flag on its supplied seed (`ElectricPrimitiveToll.preparation_flags`). |
+| Writer pulse control | The exhibited two-bit root writer has factor budget `1 + T_colour/2` per visited input (`ElectricHeavyRecord.pulse_flags`, `two_bit_factor_toll`). | The complemented sector flag gives `1 + T_lepton/2` under the same writer contract (`WireReferenceCost.factorFlagToll_eq`). Use the factor ledger in place of the output-bit ledger. Joint coupling, scheduling and physical pricing of the visits remain open. |
+| Primitive decoder and current alternatives | `ElectricPrimitiveToll.primitive_decoder_flags` and `forward_tolls` account for the alternate short decoder. `ElectricChiralKick.swapped_exposure_toll` and `total_tolls` include its current kicks and intervening swap. | These are other writer circuits. They supply no marginal polarity price for the two-bit word. Both references still need a physical pulse tariff and actual allocation of the selected program. |
+| Export | `OpenHandoff.export_trace` puts one displaced live value from each exchange in a distinct downstream record slot. `sum_exported` gives the same sum of populations at the export slots as on those incoming live states. | The same identity holds for lepton and any supplied record train. Transport of unit-population inputs thus reserves one unit per routed value. It does not price the shift or identify the two-bit record with one or two open routes. Those encodings, visits and tariffs remain open. |
+| Reset and reuse | `OpenHandoff.balanced_basis_repair_flag` gives a flag of 0 for a clean zero and 1/2 for an orthogonal written one, with equal input populations and a fresh zero. It includes a unit phase on the marked port. | The same swap would price each independently encoded and separately paid bit at half its output flag for lepton. This would add `T_ref/2` for two such resets for either reference. The actual writer-to-receiver encoding, reference renewal, any inverse uncompute and any later reuse tariff remain open. |
+| Maintenance sharing | With L in the reserved cell, the colour refresh's reference sits in the payload (`ColourReference.colour_reference_in_payload`). Its twelve payload obligations have cost `12η` in the baseline allocation model (`colour_ledger_minimal`). | `SharedReference.shared` gives one reserved type for weak and hypercharge. `ReferenceEconomy.economy_selects_lepton` picks L under colour preservation and its allocation model. `reads_reserved` treats the reserved cell as paid. This is baseline sharing. Neither reference has a proof that the heavy writer uses the same paid jobs at its required state and time. |
 
-| Remainder term | Certified contribution and open cost |
-| --- | --- |
-| Cell and reference upkeep | `ReferenceEconomy.reads_reserved` prices baseline allocation. Under the additive job ledger, `added_maintenance_eq` charges only writer jobs outside the baseline. `shared_maintenance_free` proves zero marginal upkeep if the writer needs only jobs already done. A reference in the same cell can need a new operation, a different state or an additional visit. Neither reference's writer job set has been identified with its baseline refresh job set. |
-| Position and sector pulses | The position flag is identical on equal input populations. The sector output flag is already included in the bit cost. For the exhibited root writer, `pulse_flags` gives quarter flags for each preparation and return and half the indicated bit flag for the kick. `factorFlagToll_eq` extends `two_bit_factor_toll` to both polarities. The two-write factor ledger is `1 + T_bits/2` per visited input. With the same visit population, the difference is half the output-bit gap. This ledger replaces the two output-flag charges when it is used. Physical conditional-pulse, polarity-control, phase calibration and synchronization charges remain open. |
-| Bank and seed preparation | `ElectricCompanionSetupToll.primitive_setup_flags` and `equal_slot_setup_sum` give the 5/8 equal-wall budget on the supplied companion seed. It cancels if both references use that setup with the same visitation and tariff. `ElectricPrimitiveToll.preparation_flags` gives one flag for the inverse-decoder preparation under its own seed and tariff. Selection of the bank, supply and occupation remain unpriced. |
-| Current and crossing | `ElectricChiralKick.swapped_exposure_toll`, `total_tolls` and `total_toll_wall_pair` price a different forward writer under its state-flag tariff. They give no colour-versus-lepton price for the exact two-bit comparison. `HeavyCrossingCost.uniform_cost` gives a common mean for the same unguarded crossing and displacement prices. The extra guarded operations and their physical firing remain unpriced. |
-| Export, reset and reuse | `ElectricCompanionBank.written_port_ready_iff` gives a restricted ready return. `HeavyFlipNativeBoundary.no_closed_cleaning` excludes universal closed cleaning. The two polarities leave different records. No native export or reset trace and tariff has been derived for both. |
+The closed exchange returns in four steps (`exchange_four_returns`).
+Four uninterrupted exact restorations require every initial slot to
+hold the reference (`four_restorations_iff`). On a ring the
+disturbance returns (`RecordSupply.ring_returns`). An open translated
+route restores indefinitely with the supplied references
+(`lattice_forever`). `CoherentRecordRestoration.prepared_repair`
+retains the input in the record. `twice_undoes` rules out treating
+that occupied record as another fresh reference. Its
+`unitary_reset_factorization` forces a retained encoding for the
+stated linear reset. The companion update returns ready only at
+the active neutral port (`written_port_ready_iff`). Universal
+closed cleaning of the heavy record is excluded
+(`HeavyFlipNativeBoundary.no_closed_cleaning`). None of these
+results supplies new ready references or prices a renewal trace.
 
-If the lepton writer uses the already maintained reference at its
-required state and time with no extra maintenance job, it adds zero
-upkeep. The same argument applies to a supplied colour payload
-reference. Cell placement alone proves neither reuse condition.
-The `12η` refresh ledger and the payload cell allocation rate are
-baseline costs under their own units and cadence. There is no theorem
-that transfers them into a bound on the incremental registrations
-of the writer. The proved factor and setup flags do not bound the
-unpriced difference `ΔR`. It remains open whether that difference
-reaches the relevant selection threshold.
+The marginal upkeep is the sum over writer jobs absent from the
+baseline (`WireReferenceCost.added_maintenance_eq`). If either writer
+uses only baseline jobs at the required state and time, that
+writer adds zero upkeep (`shared_maintenance_free`). A shared cell
+or a payload reference proves no such job inclusion.
+`ElectricHeavyRecord.sectorDifference` fixes a charge subtraction
+and supplies no resource address or restoration rule. The
+`12η` allocation ledger gives no bound in registrations per writer
+input. Common preparation or exports cancel only after checking
+the same work and tariff for both references.
 
 ## Record reference remains undetermined
 

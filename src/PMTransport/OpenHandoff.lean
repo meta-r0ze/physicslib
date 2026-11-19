@@ -174,4 +174,45 @@ theorem receiver_flag (s : State (Fin 2 → ℂ)) (t : ℕ) :
     record_upstream s t 1 (by norm_num), show (1 : ℤ) + t = (t : ℤ) + 1 by omega,
     show (-1 : ℤ) - t = -((t : ℤ) + 1) by omega]
 
+/-- The exported record train preserves the sum of any observable of the
+displaced inputs. In particular, take the observable to be population.
+The statement assigns no registration price to the route. -/
+theorem sum_exported {V A : Type*} [AddCommMonoid A] (s : State V)
+    (N : ℕ) (measure : V → A) :
+    (∑ d : Fin N, measure (run s N (-(d.val : ℤ))).2) =
+      ∑ j : Fin N, measure (s (-(j.val + 1 : ℤ))).1 := by
+  calc
+    _ = ∑ j : Fin N, measure (run s N (-(j.rev.val : ℤ))).2 :=
+      (Equiv.sum_comp Fin.revPerm _).symm
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro j _
+      have hj : (j.rev.val : ℤ) - (N : ℤ) = -(j.val + 1 : ℤ) := by
+        have h := j.isLt
+        simp only [Fin.val_rev]
+        omega
+      rw [export_trace s j.rev.isLt, hj]
+
+/-- A conditional reset price in the existing two-port receiver. Two
+equally weighted basis inputs, one carrying the bit and one a fresh zero,
+have unit joint population. When this comparison registers, exchanging
+a written one has flag probability one half and a written zero has zero.
+An implementation must still supply and admit the bit encoding and the
+fresh reference. -/
+theorem balanced_basis_repair_flag (b : Fin 2) (markPhase : ℂ)
+    (hphase : Complex.normSq markPhase = 1) :
+    let a : ℂ := ((Real.sqrt 2)⁻¹ : ℝ)
+    let input := ActualRootRepair.pack
+      (Pi.single b (if b = 0 then a else markPhase * a)) (Pi.single 0 a)
+    CommonResponse.nsq input = 1 ∧
+      CommonResponse.stateFlag (ActualRootRepair.root.permMatrix ℂ) input =
+        if b = 0 then 0 else 1 / 2 := by
+  have ha : Complex.normSq (((Real.sqrt 2)⁻¹ : ℝ) : ℂ) = 1 / 2 := by
+    rw [Complex.normSq_ofReal, ← sq, inv_pow, Real.sq_sqrt (by norm_num)]
+    norm_num
+  dsimp only
+  rw [ActualRootRepair.population, ActualRootRepair.repair_response]
+  simp only [LinkExpansion.nsq_eq, Fin.sum_univ_two]
+  fin_cases b <;> norm_num [Pi.single_apply, ha, Complex.normSq_neg, Complex.normSq_mul, hphase]
+
 end PMTransport.OpenHandoff

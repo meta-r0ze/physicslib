@@ -100,6 +100,12 @@ reference acceptance law therefore leaves the writer's live
 population open. The [record population account](../PMElementaryParticles/SCHEDULE.md#what-the-open-receiver-supplies)
 relates this to the packet inventory.
 
+`OpenHandoff.sum_exported` preserves the total population of the
+displaced records. `balanced_basis_repair_flag` prices one exact
+comparison in the basis receiver. A balanced clean-zero and written-one
+pair gives a half flag if the exchange is paid. Admission of the
+writer's code and renewal of the fresh zero are separate premises.
+
 ### Odd rest modes as occupied reference candidates
 
 A single carrier basis label has a component outside the antipodal-odd
