@@ -210,6 +210,12 @@ where a conditional pulse acts. The native law that admits and fires it,
 its pulse area, and the existence of a shared stationary calibration
 remain open.
 
+The [generation comparison](GENERATIONS.md#the-charged-lift) counts the
+same selector and crossing support for every charged label.
+`det_flip_at_resonance` gives the same linear response to the supplied
+offset in each selected sector. Its order in `1/Δ` depends on the firing
+law for that offset.
+
 ### Protocol Toll constraints
 
 `ProtocolToll` derives four colour orbits on the active packet from its finite

@@ -134,6 +134,17 @@ def flip (s : BaseProtocol) (c : Channels) (δ ε : ℂ) (κ : Fin 3 → ℂ) :
     Matrix (Fin 3) (Fin 3) ℂ :=
   ResonanceLift.shifted δ κ 2 (ε * (select (some s) * staticBank) c c)
 
+/-- Every selected static protocol has the same linear determinant response
+to the supplied offset. All other channels retain the bare determinant zero. -/
+theorem det_flip_at_resonance (s : BaseProtocol) (hs : s ≠ .neutrino)
+    (c : Channels) (δ ε : ℂ) (κ : Fin 3 → ℂ)
+    (hres : δ ^ 3 = -(κ 0 * κ 1 * κ 2)) :
+    (flip s c δ ε κ).det =
+      if active c = false ∧ baseProtocol c = some s then δ ^ 2 * ε else 0 := by
+  rw [flip, ResonanceLift.det_shifted_at_resonance _ _ _ _ hres,
+    select_static (some s) (by simpa using hs), diagonal_apply_eq]
+  split_ifs <;> simp
+
 /-- If the unmodified calibration wire is kept stationary under the
 same real detuning, that detuning is pinned by its cycle product. -/
 theorem calibrated_detuning (Y R : Matrix (Fin 3) (Fin 3) ℂ)

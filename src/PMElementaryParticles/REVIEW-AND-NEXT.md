@@ -41,26 +41,20 @@ the recorded mass ratios to check it.
 
 - **Lightest masses. [Premise]** For the charged states, derive a
   native law that admits and fires a charge-selective coherent flip.
-  Structural target from the [tier ledger](OVERVIEW.md#tier-ledger-and-the-wire):
-  the ledger's only up/down tier difference is the middle-to-light step,
-  second order in `1/Δ` for up (`3/Δ²`) and first order for down; the
-  electron's value fits second order better despite its tier set. A
-  derived lift should show its order before any value is compared.
-  Derive its pulse area and whether the same real detuning is held by
-  a stationary calibration channel shared across charged protocols.
-  [Charged insertion](OVERVIEW.md#charged-insertion-on-the-static-wall)
-  gives selectors and the exact lift for the candidate on the static
-  vector-class leg. A protocol-blind pulse area with the selector's unit
-  amplitude inserts the same `ε` for each charged protocol, so on the
-  substrate the protocols differ only if the area or amplitude depends on
-  the protocol. Under the derived conversion that is a protocol-dependent
-  Toll, `ε ∝ exp(−T/2)`, from the same schedule as the heavy-label
-  weight. (Comparison only: the offsets matched to recorded ratios differ
-  by about `50×` across protocols.) Derive the physical placement and use the selected
-  generator to determine the light-pair mass-basis rotations in
-  [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
-  Compare the candidate's singular values directly with the recorded mass
-  ratios. The [uniform-to-local check](OVERVIEW.md#lifting-the-resonant-zero)
+  The [generation comparison](GENERATIONS.md#the-charged-lift) excludes
+  the shared route counts as the source of the protocol dependence. The
+  candidate uses the same static vector leg and two comparisons for each
+  charged protocol. `ChargedInsertion.det_flip_at_resonance` proves the
+  same linear determinant response to the supplied offset. Derive an
+  admitted schedule, its pulse area and its order in `1/Δ`. Determine
+  whether an unmodified calibration channel maintains the same real
+  detuning for the three protocols. If the difference comes from the pulse
+  amplitude, apply the Toll conversion `ε ∝ exp(−T/2)` to its
+  label-sensitive schedule. Derive the physical placement of the pulse
+  and use the selected generator to determine the light-pair mass-basis
+  rotations in [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
+  Compare the resulting singular values with the recorded mass ratios
+  only after the derivation. The [uniform-to-local check](OVERVIEW.md#lifting-the-resonant-zero)
   gives the determinant conversion and its spectral limits.
   For neutrinos, derive native admission of the phase gates and coherent
   branch mixer in `PMAction.BranchGateBoundary`, and route the retained

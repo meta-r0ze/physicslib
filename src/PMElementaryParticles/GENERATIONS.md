@@ -79,6 +79,71 @@ combine powers with coefficients and corrections. One value at `Δ = 43`
 cannot distinguish a first-order law with a small coefficient from a
 second-order law with a larger one.
 
+## The charged lift
+
+The existing candidate acts on the static wall. `vector_static_leg`
+places it at `g = 2`, where T carries the vector class. This is an
+insertion address. The zero mode belongs to the whole wire.
+`ChargedInsertion.select_static` uses two phase-matched comparisons for
+each charged protocol. The target is `i` for electron, `−1` for up and
+`−i` for down. Every matching channel is retained with amplitude one,
+including every colour of the matching quark protocol.
+`joint_selector` restricts this readout to the static vector leg.
+
+| Charged protocol | Static address | Comparisons in the selector | Additional node passages and wall crossings in the on-site model |
+| --- | --- | --- | --- |
+| Electron | 2 | 2 | 0 and 0 |
+| Up | 2 | 2 | 0 and 0 |
+| Down | 2 | 2 | 0 and 0 |
+
+The last column counts only the support of the added diagonal term. Its
+two endpoints are on T at the same address. The reference node belongs to
+the F insertion, so this local term adds no node passage and no crossing
+reflections. The Schur response still uses the existing gapped crossing
+link and reference-side factor. A term in the Schur product uses one
+inverse gapped link. That link has the reverse support of the certified
+six-reflection crossing, for every signed label. The reference factor
+contains the same zero- and one-passage routes for all three protocols.
+These are counts in the given circuit and factorization. Primitive
+comparisons, pulse admission and timing would need a native schedule
+before one could claim a shortest native route or count its reflections.
+
+At fixed nonzero bare resonance,
+`ChargedInsertion.det_flip_at_resonance` gives exactly `δ² ε` on every
+selected static channel. `ResonanceLift.shifted_full_zero_iff` and
+`ChargedInsertion.full_zero_iff_unselected` give an exact lift for any
+nonzero supplied offset when the crossing and reference flip are
+invertible. With a positive cycle product, `calibrated_detuning` pins a
+shared real detuning if an unmodified calibration channel stays
+stationary. If the detuning can vary independently, the wall can retune
+to a zero (`ResonanceLift.negative_retuning_exists`).
+`det_shifted_eq_uniform_iff` matches a uniform shift by
+`ε = 3t + 3t²/δ + t³/δ²`. Its first-order coefficient is the same for
+every address and protocol. The matching concerns the determinant. The
+spectra can differ (`det_matched_trace_gap`).
+
+In the normalized bare Schur model above, the lifted determinant has
+magnitude `k² |ε|`. Since the other two singular values tend to
+`√3 k` and `√(2 + k²)` at fixed positive `k`, their product with the
+lightest singular value gives
+`m₁/m₂ = |ε| / (3 √(2 + k²)) + o(|ε|)`.
+Thus all three charged sectors respond at first order in their offset.
+The two factors of `k` in the determinant come from separate rows of the
+common reference factor and cancel from the leading light-to-middle
+ratio. If an insertion law supplies one or two inverse powers of `Δ` in
+`ε`, the ratio inherits that order at leading order in the offset.
+The selector and route supply no such power for the offset.
+
+This excludes the bare route counts as the source of the ledger's
+protocol-dependent lightest step. In this candidate any such difference
+must enter through the label-sensitive pulse or other protocol-dependent
+dynamics, such as a difference in the maintained detuning. A native
+selection and firing law, the offset's scaling, and the existence of
+shared calibration remain open. Three addresses, two route classes and
+three ledger entries therefore describe different features of the model.
+The current results give no identification of a generation with a
+protocol's number of `Δ` steps.
+
 ### Comparison only — declared ledger ratios
 
 With the substrate value of `α`, the bare wire gives `m₂/m₃ ≈ 0.192/Δ`.
