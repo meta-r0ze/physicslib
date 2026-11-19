@@ -7,12 +7,16 @@ count. Particle applications specify which payload and record participate.
 
 ## Module map
 
+The current results give three groups of work. Carrier routing and glue-class
+crossing move the carrier. The receiver and record operations restore and retain
+state. The clock and the comparison ledger govern and account for those visits.
+
 | Task | Entry points | Checked result |
 | --- | --- | --- |
 | Route between sites | `NativeCarrierProtocol`, `NativePacketRouting`, `NativePacketUpdate` | Reversible port routing, exact carrier readout, and locality under the stated routing realization. |
 | Change glue class | `GluedRegister`, `CarrierTriality` | The six-root crossing realizes swap and diagonal triality on glued roots. Triality on a diagonal glued carrier relabels the odd amplitudes by the matrix `M/2`. |
 | Exchange or pass through a node | `TwoSiteHandoff`, `OpenReferenceFlow`, `HandoffAdmittance`, `ReferenceClassHop` | Exact exchange and bypass destinations. Stationarity of a class-definite reference constrains direct class exchange on its wall. |
-| Hold, export, and renew a record | `IndependentRegisters`, `RegisterControl`, `ReferenceMaintenance`, `RecordSupply`, `HomogeneousRouting` | Reversible register banks, exact restoration, and export of the previous state. An open backward orbit allows sustained renewal under the supplied reference conditions. |
+| Hold, export, and renew a record | `OpenHandoff`, `IndependentRegisters`, `RegisterControl`, `ReferenceMaintenance`, `RecordSupply`, `HomogeneousRouting` | Reversible register banks, exact restoration, and export of the previous state. An open backward orbit allows sustained renewal under the supplied reference conditions. |
 | Compare and count | `BranchPulseContract`, `RefreshSchedule`, `CoherentRefresh`, `CoherentGate` | Coherent comparison under the pulse contract, orthogonal records for overlapping outputs, and minimum additive cost for required visits at supplied prices. |
 | Schedule native operations | `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot`, `RootTransferPhase` | The substrate period, reversible clocked words, and root pulse areas. Physical phase admission and absolute timing remain open. |
 
@@ -59,6 +63,34 @@ For live and record amplitudes `Lₓ` and `Rₓ`, the hop flag is
 `‖L₁−R₁‖²/2`. These formulas apply to the specified before-and-after
 state comparisons. Read them as probabilities for normalized input.
 [TwoSiteHandoff](TwoSiteHandoff.lean)
+
+## Open route and reference supply
+
+`OpenHandoff` embeds the two-stream line into actual D₄ sites along the
+primitive root direction `(1,1,0,0)`. Distinct indices give distinct sites,
+and consecutive indices differ by one nearest-neighbour root
+(`address_injective`, `address_is_site`, `address_step`). The transport
+law uses the supplied line shift and receiver exchange.
+
+At visit `k ≥ 1`, the receiver takes its live output from the initial
+record at site `+k`. It accepts the initial live value from site `−k`
+and retains it as the outgoing record (`receiver_trace`). After `N` visits,
+site `−d` for `0 ≤ d < N` holds the displaced live state from site
+`d−N` (`export_trace`). Every displaced value therefore has a distinct
+record destination. The receiver's comparison flag at each visit is half
+the squared amplitude difference between the two corresponding initial
+arrivals (`receiver_flag`).
+
+Restoration through `N` visits holds exactly when the first `N` upstream
+records hold the required reference. The same equivalence holds for any
+specified reference tolerance (`acceptance_iff_supply`). The occupied
+input population required for exact restoration is `N‖r‖²`, or one unit
+per visit for the existing basis reference (`population_required`,
+`basis_population_required`). If the records are loaded by the existing
+root preparation, exact restoration requires its known occupied seed at
+each loading site (`basis_loading_iff`). Physical selection of the seed
+source, admission and timing of the translation and receiver, and the
+registration tariff remain open.
 
 ## Node handoff and admittance
 

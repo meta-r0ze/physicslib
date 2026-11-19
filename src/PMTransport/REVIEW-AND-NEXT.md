@@ -12,8 +12,14 @@ incoming occupied reference, and the branch trigger. Calibrate the elapsed
 time against the substrate clock. Select the physical registration tests
 and add paid registrations to the same trace as the derived state flags.
 
-For repeat operation, identify an admitted open route or an explicit
-reversible renewal step. Derive the incoming resource bound and the
+For repeat operation, the
+[open-route trace](OVERVIEW.md#open-route-and-reference-supply) gives a
+nearest-neighbour D₄ line, the record destinations, and the exact incoming
+reference population required for any finite horizon. The basis-reference
+route uses a different prepared upstream slot per visit and specifies the
+occupied seed required by root loading. Derive the physical admission
+of the translation and the supply of those seeds, or give an explicit
+reversible renewal step. Use the acceptance criterion to derive the
 viability margin against stated disturbances.
 
 Derive the handoff law for labeled traffic and for successive nodes. The current
