@@ -148,6 +148,34 @@ theorem mem_family {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks) :
     s ∈ family p ↔ admissible p s = true := by
   simp [family]
 
+/-- Convert a start tick to a period and a phase, from the supplied clock origin. -/
+def periodPhase {ticks : ℕ} (start : Fin ticks) : ℕ × ℕ :=
+  (start.val / PMSubstrate.E8Values.Delta, start.val % PMSubstrate.E8Values.Delta)
+
+/-- Last exclusive end of a booked block, measured from the clock origin. -/
+def finishTick {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks) : ℕ :=
+  Finset.univ.sup fun e =>
+    match s.2 e with
+    | none => 0
+    | some x => x.1.val + duration p e
+
+def periods {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks) : ℕ :=
+  (finishTick p s + PMSubstrate.E8Values.Delta - 1) / PMSubstrate.E8Values.Delta
+
+theorem finishTick_le_horizon {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks)
+    (hs : s ∈ family p) : finishTick p s ≤ ticks := by
+  have h := (mem_family p s).1 hs
+  simp only [admissible, Bool.and_eq_true, decide_eq_true_eq] at h
+  have hall : ∀ e : Event, fitsEvent p s e = true := by tauto
+  apply Finset.sup_le
+  intro e _
+  have he := hall e
+  cases hplace : s.2 e with
+  | none => simp
+  | some x =>
+    simp only [fitsEvent, hplace, Bool.and_eq_true, decide_eq_true_eq] at he
+    tauto
+
 noncomputable section
 open PMConstants.PacketGaugeActions ProtocolInventory ProtocolToll
 open PMAction DiagonalReadout InterferenceReadout TollAmplitude

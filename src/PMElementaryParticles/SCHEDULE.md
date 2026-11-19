@@ -113,3 +113,24 @@ colour-reference bit subtotal gives the heavy-record pattern only
 under the stated assumptions. Neither opposed attenuation pattern
 has been selected for the physical wire. The selector supplies no
 order of `ε` in `1/Δ`.
+
+## Periods at a minimum
+
+`periodPhase` reads a booked start as a period and a phase.
+`periods` rounds up the last occupied end from the fixed clock
+origin. `finishTick_le_horizon` bounds it on the finite family.
+There is no physically identified minimizer to evaluate.
+
+| Route | Serial base with the short word at one tick per quarter-time | Serial base with the 16-pulse word at its two-tick minimum |
+| --- | --- | --- |
+| Direct, address 0 | 60 ticks, at least two periods | 152 ticks, at least four periods |
+| Enter the reference class, address 1 | 36 ticks plus entry, exit and records. One period requires all added elapsed work to fit seven ticks. | At least 88 ticks before node and records, so at least three periods. |
+| Leave the reference class, address 2 | The same 36-tick subtotal. Add the node, records, two matched tests and the offset when running that candidate. | The same 88-tick subtotal and three-period lower bound, before the added events. |
+
+These are the conditional [clock bounds](../PMTransport/CLOCK.md#periods-per-route).
+They assume one gapped word and one beta word on each beta-driven wall.
+A separate class-changing crossing adds twelve quarter-times. The
+logical record counts agree for electron, up and down in this template.
+The record Tolls differ, and give no elapsed ticks without a control
+clock. Neither equality nor inequality of the full period counts across
+protocols follows at a physical minimum.
