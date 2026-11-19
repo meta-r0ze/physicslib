@@ -260,4 +260,74 @@ theorem mixed_requests_different_destinations (s : State) (x : ℤ)
   rw [hc, hl, hr]
   exact ⟨rfl, rfl⟩
 
+
+open scoped BigOperators
+
+/-- The output comparison account for one supplied exchange decision. -/
+noncomputable def exchangeFlag (guard : Guard) (p : Ports)
+    (value : Bool → Fin 2 → ℂ) : ℝ :=
+  if guard p then CommonResponse.nsq (value p.1 - value p.2) / 2 else 0
+
+theorem exchange_flag_realisation (guard : Guard) (p : Ports)
+    (value : Bool → Fin 2 → ℂ) (edge : TwoSiteHandoff.State (Fin 2 → ℂ))
+    (h : edge 1 = (value p.1, value p.2)) :
+    exchangeFlag guard p value =
+      if guard p then CommonResponse.stateFlag (TwoSiteHandoff.receiverRoot.permMatrix ℂ)
+        (TwoSiteHandoff.field (TwoSiteHandoff.step false edge)) else 0 := by
+  rw [TwoSiteHandoff.exchange_flag, h]
+  rfl
+
+/-- For a supplied weighted set of visits, sum the certified exchange
+    output flags along a trace. The caller supplies the paid visits and
+    their weights. The shift, root trial and other accounts are separate. -/
+noncomputable def traceExchangeToll (rule : Rule) (s : State) (x : ℤ)
+    (value : Bool → Fin 2 → ℂ) {N : ℕ} (weights : Fin N → ℝ) : ℝ :=
+  TollAmplitude.scheduleToll 0 weights fun j =>
+    let state := (rawTick rule)^[j.val] s
+    exchangeFlag (rule state.1 (state.2.1 x).1)
+      (OpenReferenceFlow.streamShift OpenReferenceFlow.line state.2.2 x) value
+
+theorem uniform_trace_exchange_toll (rule : Rule) (s : State) (x : ℤ) (v : Bool)
+    (hs : ∀ i, s.2.2 i = (v, v)) (value : Bool → Fin 2 → ℂ)
+    {N : ℕ} (weights : Fin N → ℝ) :
+    traceExchangeToll rule s x value weights = 0 := by
+  unfold traceExchangeToll TollAmplitude.scheduleToll
+  simp only [zero_add]
+  apply Finset.sum_eq_zero
+  intro j _
+  have hl := uniform_ports_iterate rule s v hs j.val (x - 1)
+  have hr := uniform_ports_iterate rule s v hs j.val (x + 1)
+  change weights j * exchangeFlag _ (((((rawTick rule)^[j.val]) s).2.2 (x - 1)).1,
+    ((((rawTick rule)^[j.val]) s).2.2 (x + 1)).2) value = 0
+  rw [hl, hr]
+  simp [exchangeFlag, LinkExpansion.nsq_eq]
+
+/-- On a homogeneous supplied input, every member of a supplied family
+    ties in the certified exchange flag account with a common baseline. -/
+theorem uniform_flag_persistence_tie (F : Set Rule) (i : Rule) (hi : i ∈ F)
+    (s : State) (x : ℤ) (v : Bool) (hs : ∀ j, s.2.2 j = (v, v))
+    (value : Bool → Fin 2 → ℂ) {N : ℕ} (weights : Fin N → ℝ) (baseline : ℝ) :
+    ∀ j ∈ F,
+      TollAmplitude.wireAmplitude (baseline + traceExchangeToll j s x value weights) ≤
+      TollAmplitude.wireAmplitude (baseline + traceExchangeToll i s x value weights) := by
+  let cost := fun rule => traceExchangeToll rule s x value weights
+  have h := (PersistenceSelection.within_family_iff_cheapest (1 / 2) (by norm_num)
+    cost F baseline i).mpr ⟨hi, fun j _ => by
+      simp only [cost, uniform_trace_exchange_toll _ s x v hs value weights, le_refl]⟩
+  intro j hj
+  simpa [TollAmplitude.wireAmplitude, cost, div_eq_mul_inv, mul_comm] using h.2 j hj
+
+/-- On these inputs a strict preference requires a difference in the
+    remaining paid work. The certified exchange flags cancel. -/
+theorem uniform_remaining_cost_iff (a b : Rule) (s : State) (x : ℤ) (v : Bool)
+    (hs : ∀ j, s.2.2 j = (v, v)) (value : Bool → Fin 2 → ℂ)
+    {N : ℕ} (weights : Fin N → ℝ) (remaining : Rule → ℝ) :
+    TollAmplitude.wireAmplitude (traceExchangeToll b s x value weights + remaining b) <
+        TollAmplitude.wireAmplitude (traceExchangeToll a s x value weights + remaining a) ↔
+      remaining a < remaining b := by
+  rw [TollAmplitude.wireAmplitude_lt_iff,
+    uniform_trace_exchange_toll a s x v hs value weights,
+    uniform_trace_exchange_toll b s x v hs value weights]
+  simp
+
 end PMTransport.LocalController

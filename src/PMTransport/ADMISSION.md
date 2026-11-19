@@ -194,3 +194,44 @@ visits from initial data at a single centre requires the upstream
 ports through `±N` or a law supplying them. A single period tests
 the trial or the local rule at each phase. The direct and restoring
 serial lower bounds still govern any proposed longer physical wire.
+
+### Persistence selection
+
+`traceExchangeToll` prices every table with the sum of its weighted
+exchange output flags over a supplied finite set of visits. An exchange
+compares its arriving values with flag `‖L − R‖²/2`
+(`TwoSiteHandoff.exchange_flag`, `exchange_flag_realisation`).
+Bypass contributes zero to this receiver account. The visit weights
+come from the paid sampling law. `NetCost.expected_count_linear`
+justifies adding expected registrations. The resulting amplitude
+with total Toll `T` is `exp(−T/2)` (`TollAmplitude.wireAmplitude`).
+
+**Outcome (b), tie in the certified flag account.** On the supplied
+uniform reference fields, every table keeps the ports equal and all
+its exchange flags vanish (`uniform_trace_exchange_toll`). The
+two-site hop flag also vanishes on the corresponding uniform inputs
+(`TwoSiteHandoff.hop_flag`). The root probe trace and its local-change
+action are common for a fixed initial probe family. With those accounts
+and a common baseline, `uniform_flag_persistence_tie` applies
+`PersistenceSelection.within_family_iff_cheapest`. Every table ties.
+The two example rules also agree on the tagged open receiver's
+branch at every visit, even with nonuniform arrivals.
+
+On the uniform trace a strict preference is equivalent to a strict
+difference in remaining paid work (`uniform_remaining_cost_iff`).
+The exact guard difference between the two witnesses is whether a
+single retained request triggers exchange. To distinguish their port
+traces, the accessible family must include a mixed request with two
+unequal arrivals. To distinguish their physical costs, supply the
+booked frequency and tariff for any visits where they differ, or a
+signed difference in control and other remaining paid work on the
+same traces. Reversibility and the listed primitive operations do
+not give those inputs.
+
+This is a tie in a specified account on a specified family, not a
+proof that the full physical prices tie. The rule family for the
+full wire remains unspecified. The record reference remains
+undetermined. The reset-inclusive bounds `3/4`, `27/32` and `9/10`
+from the [writer schedule](../PMElementaryParticles/SCHEDULE.md#record-reference-remains-undetermined)
+still require the actual booked population, admitted writer polarities,
+separate balanced resets and the signed remaining price.
