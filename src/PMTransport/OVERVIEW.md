@@ -94,6 +94,12 @@ each loading site (`basis_loading_iff`). Physical selection of the seed
 source, admission and timing of the translation and receiver, and the
 registration tariff remain open.
 
+`OpenHandoff.any_incoming_trace` realizes any given live arrival
+sequence with an exactly restored reference at every visit. The
+reference acceptance law therefore leaves the writer's live
+population open. The [record population account](../PMElementaryParticles/SCHEDULE.md#what-the-open-receiver-supplies)
+relates this to the packet inventory.
+
 ### Odd rest modes as occupied reference candidates
 
 A single carrier basis label has a component outside the antipodal-odd

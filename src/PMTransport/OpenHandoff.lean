@@ -103,6 +103,22 @@ theorem export_trace {V : Type*} (s : State V) {N d : ℕ} (hd : d < N) :
       congr 2
       omega
 
+/-- Even with exact restoration at every visit, the open route can carry
+any supplied incoming live stream. Every displaced value is also visible
+at its exported address. This witness uses no source admission premise. -/
+theorem any_incoming_trace {V : Type*} (reference : V) (traffic : ℕ → V) :
+    ∃ s : State V,
+      (∀ t : ℕ, run s (t + 1) 0 = (reference, traffic t)) ∧
+      (∀ N d : ℕ, d < N → (run s N (-(d : ℤ))).2 = traffic (N - d - 1)) := by
+  let s : State V := fun x => (traffic (-x - 1).toNat, reference)
+  refine ⟨s, ?_, ?_⟩
+  · intro t
+    rw [receiver_trace]
+    simp [s]
+  · intro N d hd
+    rw [export_trace s hd]
+    simp [s]
+
 /-- For any reference acceptance rule, all receiver visits pass exactly
 when each corresponding upstream record passes. This also covers tolerances
 around a chosen reference. -/

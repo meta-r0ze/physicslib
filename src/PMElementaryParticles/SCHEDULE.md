@@ -97,6 +97,32 @@ physical identification is which incoming states actually reach these
 writer visits and whether the cycle cost is a sampled expectation or
 an additive ledger of separately required reads.
 
+### What the open receiver supplies
+
+`OpenHandoff.receiver_trace` brings the reference from the positive
+input line and displaces the live arrival from the negative line into
+the record. `export_trace` tracks that displaced value at each
+downstream record address. `acceptance_iff_supply` tests only the
+positive input line. `RecordSupply.lattice_forever` keeps that
+reference when the backward orbit is open and already supplied.
+
+`OpenHandoff.any_incoming_trace` proves that an exactly supplied
+open receiver permits every live arrival sequence in this model.
+The same reference can therefore accompany different label
+frequencies. This witness concerns the transport update and
+does not admit any particular physical source.
+
+If the writer receives only occupied light payloads, the static
+vacancy has no incoming population (`VacancyProjection.occupied_fixed_iff`).
+A clock or a controller can still book a vacant visit or probe
+the vacant basis slot. No theorem here maps the actual live
+arrivals and the writer guard to all 16 slots, an idle-vacancy
+cadence, or uniform sampling of the 15 occupied slots. The missing
+input is the admitted joint source, routing and firing law on
+the live stream. It must say what counts as a writer visit and
+which ensemble of visits enters the cost. The reference supply
+law cannot replace it.
+
 ## Selection and the unresolved minimum
 
 `minima` gives the exact finite minimizer set for a supplied scalar cost.
