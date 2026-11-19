@@ -26,3 +26,27 @@ distinguishes addresses and the ready bank distinguishes some wall
 states. Other writers, multiple instances of one block, prewritten
 records and parallel schedules are outside this template. No premise
 identifies it with the full family of persistent E8 executions.
+
+## Pricing
+
+`visitFlag` uses `DiagonalReadout.flag` for the electric position and
+sector visits. It uses `EventRequirements.massiveFlag` for a full
+doublet visit with equal wall populations, as justified by `massive_flag`.
+A separate vacancy probe has the uncompensated flags at `3π/4`
+(`ProtocolToll.selector_step_flags`). The two matched visits, evaluated
+on their selected static input, contribute zero by `matched_flag_account`.
+A setup placed on the certified equal-slot companion program uses its
+primitive flag account (`ElectricCompanionSetupToll.equal_slot_setup_sum`).
+Other setup implementations have an unpriced account.
+
+`knownToll` adds the proved flags only where the schedule charges the
+visit. `unpricedVisits` identifies marked visits without a flag
+certificate. `fullToll` also takes an explicit remainder for unpriced
+primitive work, seed supply, export, restoration, renewal and controller
+work. These costs can matter even if the comparison's output flag is zero.
+No remainder is assigned. Comparison-output flags and primitive-factor
+flags can describe different accounts of the same visit. The template
+uses the former for the writer and does not also charge the full factor
+ledger for that writer. The registration policy must justify any extra
+primitive charge. `amplitude` applies `TollAmplitude.wireAmplitude`
+to the full Toll for the persisting unflagged readout.

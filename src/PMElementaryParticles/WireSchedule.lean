@@ -148,4 +148,62 @@ theorem mem_family {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks) :
     s ∈ family p ↔ admissible p s = true := by
   simp [family]
 
+noncomputable section
+open PMConstants.PacketGaugeActions ProtocolInventory ProtocolToll
+open PMAction DiagonalReadout InterferenceReadout TollAmplitude
+open scoped BigOperators
+
+/-- One account for each actual static label, with the opposite wall's
+equal population when the visit reads a massive state. The two prep flags
+are available only for the certified equal-slot companion setup. -/
+def visitFlag (companionSetup colourReference : Bool) (c : Channels) : Event → Option ℝ
+  | .position => some (flag (3 * Real.pi * ElectricHeavyRecord.q c))
+  | .sector => some (flag (3 * Real.pi / 2 * ElectricHeavyRecord.sectorDifference colourReference c))
+  | .doublet => some (EventRequirements.massiveFlag (3 * Real.pi / 2)
+      (ControlledGluedRegister.opposite c) c)
+  | .matchFirst => some (flagProbability (ChargedInsertion.matchedTransport (baseProtocol c)) c)
+  | .matchSecond =>
+      let U := ChargedInsertion.matchedTransport (baseProtocol c)
+      some (flagProbability (U * U) c)
+  | .vacancyProbe => some (hyperchargeFlag (3 * Real.pi / 4) c)
+  | .bankSetup =>
+      if companionSetup then some (((∑ j, ElectricCompanionSetupToll.visitFlag true j) +
+        ∑ j, ElectricCompanionSetupToll.visitFlag false j) / 2) else none
+  | _ => none
+
+def paid {ticks : ℕ} (s : Schedule ticks) (e : Event) : Bool :=
+  ((s.2 e).map (fun x => x.2.2)).getD false
+
+/-- This is a subtotal. A visit with no proved flag contributes only to the
+unpriced part of the account, even if the schedule marks it as paid. -/
+def knownToll {ticks : ℕ} (companionSetup : Bool) (c : Channels) (s : Schedule ticks) : ℝ :=
+  ∑ e, if paid s e then (visitFlag companionSetup s.1 c e).getD 0 else 0
+
+def unpricedVisits {ticks : ℕ} (companionSetup : Bool) (c : Channels)
+    (s : Schedule ticks) : Finset Event :=
+  Finset.univ.filter (fun e => paid s e = true ∧ (visitFlag companionSetup s.1 c e).isNone = true)
+
+/-- The explicit remainder pays the unpriced visits and any additional
+preparation, primitive pulse, export, renewal and controller costs.
+It must be supplied by a physical account. -/
+def fullToll {ticks : ℕ} (companionSetup : Bool) (unpriced : Channels → Schedule ticks → ℝ)
+    (c : Channels) (s : Schedule ticks) : ℝ :=
+  knownToll companionSetup c s + unpriced c s
+
+def amplitude {ticks : ℕ} (companionSetup : Bool) (unpriced : Channels → Schedule ticks → ℝ)
+    (c : Channels) (s : Schedule ticks) : ℝ :=
+  wireAmplitude (fullToll companionSetup unpriced c s)
+
+theorem matched_flag_account (b pol : Bool) (c : Channels) (hc : active c = false) :
+    visitFlag b pol c .matchFirst = some 0 ∧ visitFlag b pol c .matchSecond = some 0 := by
+  obtain ⟨h₁, h₂⟩ := ChargedInsertion.matched_flags_zero (baseProtocol c) c hc rfl
+  exact ⟨congrArg some h₁, congrArg some h₂⟩
+
+theorem knownToll_eq_of_paid_eq {ticks : ℕ} (b : Bool) (c : Channels)
+    {s t : Schedule ticks} (hp : s.1 = t.1) (h : ∀ e, paid s e = paid t e) :
+    knownToll b c s = knownToll b c t := by
+  simp [knownToll, hp, h]
+
+end
+
 end PMElementaryParticles.WireSchedule
