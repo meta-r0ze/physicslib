@@ -1,7 +1,7 @@
 import PMElementaryParticles.ProtocolInventory
 import PMConstants.GaugeLedgers
 import PMConstants.ReferenceMaintenance
-import PMTransport.Machine.RecordSupply
+import PMTransport.Interface
 import PMTransport.Machine.CarrierWeyl
 import PMTransport.Machine.ClockControlledRoot
 import PMTransport.Machine.InBandRootReadout

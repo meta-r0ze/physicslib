@@ -2,7 +2,7 @@ import PMElementaryParticles.ControlledGluedRegister
 import PMElementaryParticles.RefreshMap
 import PMElementaryParticles.VacancyProjection
 import PMAction.CommonResponse
-import PMAction.TollAmplitude
+import PMTransport.Interface
 
 /-!
 # Constraints on a Toll from the glued protocol label

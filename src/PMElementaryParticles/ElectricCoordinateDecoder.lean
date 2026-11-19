@@ -1,6 +1,6 @@
 import PMElementaryParticles.ElectricFourPortRecord
 import PMAction.CompletedCarrierPhase
-import PMTransport.Machine.ClockPeriod
+import PMTransport.Interface
 
 /-!
 # The electric decoder on the four-coordinate carrier sector

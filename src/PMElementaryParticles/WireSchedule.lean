@@ -1,7 +1,7 @@
 import PMElementaryParticles.ElectricHeavyRecord
 import PMElementaryParticles.ChargedInsertion
 import PMElementaryParticles.ElectricCompanionSetupToll
-import PMAction.PersistenceSelection
+import PMTransport.Interface
 
 /-!
 # Finite serial wire-cycle candidates

@@ -1,4 +1,4 @@
-import PMAction.GenerationWalls
+import PMTransport.Interface
 import PMFlavor.ExchangeAxis
 
 /-!

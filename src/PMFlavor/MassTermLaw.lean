@@ -1,6 +1,6 @@
 import PMConstants.Hypercharge
 import PMConstants.CarrierRepresentation
-import PMAction.PersistenceSelection
+import PMTransport.Interface
 import PMSubstrate.ChannelSymmetry
 import PMConstants.SectorObligations
 

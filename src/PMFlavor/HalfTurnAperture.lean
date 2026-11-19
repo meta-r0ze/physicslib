@@ -1,7 +1,7 @@
 import PMFlavor.HalfTurnMixing
 import PMFlavor.KronSeries
 import PMSubstrate.CapacityBarbier
-import PMTransport.HandoffAdmittance
+import PMTransport.Interface
 
 /-!
 # `π` as a length and as an aperture: one Ohmic law for every mixing element

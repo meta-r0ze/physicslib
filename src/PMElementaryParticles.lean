@@ -28,7 +28,7 @@ import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.ChargeProtocols
 import PMElementaryParticles.ProtocolInventory
 import PMElementaryParticles.RefreshMap
-import PMTransport.Machine.CoherentGate
+import PMTransport.Interface
 import PMElementaryParticles.DoubletSign
 import PMElementaryParticles.ProtocolReadout
 import PMElementaryParticles.CycleReadout
@@ -71,7 +71,6 @@ import PMElementaryParticles.NullBoost
 import PMElementaryParticles.PairShell
 import PMElementaryParticles.PairSphere
 import PMElementaryParticles.TauBranching
-import PMTransport.Machine.GluedRegister
 import PMElementaryParticles.ControlledGluedRegister
 import PMElementaryParticles.GappedGluedCrossing
 import PMElementaryParticles.VacancyProjection

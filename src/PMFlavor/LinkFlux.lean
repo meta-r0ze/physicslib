@@ -1,5 +1,5 @@
 import PMFlavor.LinkKronComparison
-import PMAction.GenerationWalls
+import PMTransport.Interface
 
 /-!
 # Where a CP phase can sit on the incidence network: one flux per sector
