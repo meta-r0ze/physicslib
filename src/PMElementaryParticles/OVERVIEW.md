@@ -884,6 +884,30 @@ each protocol occupies is open (REVIEW). Earlier per-species scans fitted measur
 CKM magnitudes; they were removed as Standard-Model fitting, not substrate results (in git history:
 `tools/node_carrier_scan.py`, `tools/reference_wall_mixing_scan.py`, `tools/composite_mass_scan.py`).
 
+## Tier ledger and the wire
+
+The tier ledger (`TierLedger`: up on tiers `{0, 2, 3}`, down and leptons on
+`{0, 1, 2}`, each tier a factor `Δ`) and the derived wire describe the
+generations differently, and this records where they agree
+(`tools/tier_route_check.py`, arithmetic).
+
+* **Routes carry no protocol.** A generation on the wire is a route: the
+  heavy generation inserts directly, the two light ones pass the
+  reference node (`ReferenceClassHop`), and every route acts the same on
+  every label (`GluedRegister.wallStep_class`, `crossing_walls`). The tier
+  sets differ by protocol, so routes alone cannot be the tiers.
+* **Heavy to middle: one power of `Δ` in both.** The wire's step is one
+  node passage, `k = α/2` with `α⁻¹ ≈ πΔ`, so `m₂/m₃ ∝ 1/Δ`
+  (bare: `0.192/Δ`). The ledger's step is one tier for every protocol:
+  `0.32/Δ` (up), `0.96/Δ` (down), `2.56/Δ` (electron). The per-protocol
+  prefactor is what the heavy-label readout must supply.
+* **Middle to light: where up and down differ.** The wire gives
+  `m₁ = 0` at resonance for every protocol. The ledger gives up exactly
+  `3/Δ²` (two tiers) and down `2.1/Δ`, the electron `0.21/Δ` (one tier).
+  So the ledger's up/down tier difference sits entirely in the lightest
+  step: the lightest-mass lift should be second order in `1/Δ` for up and
+  first order for down and the electron.
+
 ## Final channels of a charged-current event
 
 `FinalChannels`: on the register's label (vector frame: axis `0` lepton, `1..3` colour; sign the
