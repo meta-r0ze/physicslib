@@ -1,7 +1,7 @@
 # PMTransport — open work
 
 The [admission chain is paused](PREMISES.md#stopping-point) at the
-prior on accessible histories. The items below record its open dependencies.
+export and disposition law. The items below record its open dependencies.
 
 ## Node handoff
 
@@ -10,7 +10,9 @@ prior on accessible histories. The items below record its open dependencies.
   the mixed-request decision and its occupied paid visits open.
   The [closed-ring test](RING.md#robustness-across-all-positive-hazards)
   ties the best receiver costs. The prior can reverse the pooled
-  survival comparison.
+  survival comparison for comparison flags. The
+  [erasure account](RING.md#boundary-erasure) gives zero for both
+  retained ring rules.
 - Supply the occupied seed and a renewal route for sustained operation. See [Sustained reference supply](PREMISES.md#sustained-reference-supply).
 - Specify the receiver tolerance and incoming disturbance. See [Disturbance and acceptance](PREMISES.md#disturbance-and-acceptance).
 

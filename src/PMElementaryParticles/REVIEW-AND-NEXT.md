@@ -42,8 +42,9 @@ the recorded mass ratios to check it.
   The [AND/OR test](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
   distinguishes the clocked receiver traces. The
   [closed-ring test](../PMTransport/RING.md#pricing-and-selection)
-  ties their best receiver costs, and the
-  [admission chain is paused](../PMTransport/PREMISES.md#stopping-point).
+  ties their best receiver costs. The
+  [admission chain is paused](../PMTransport/PREMISES.md#stopping-point)
+  at the receiver export and disposition law.
   The electric reference complements the sector
   flag and keeps the position flag
   (`ElectricHeavyRecord.reference_flags_from_orbit_bits`).

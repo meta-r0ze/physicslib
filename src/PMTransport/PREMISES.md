@@ -12,16 +12,16 @@ background. An admitted trace includes its occupied ports, request and
 firing guard at each tick, and the output and retained record. See the
 [reachability results](ADMISSION.md).
 
-**Admission chain paused.** The [closed-ring robustness test](RING.md#robustness-across-all-positive-hazards)
-ties the best receiver costs on three, four and five sites. Changing
-only the prior reverses both a conditional mean comparison and
-a pooled survival comparison. Paper I requires the prior as input.
+**Admission chain paused at the boundary.** The unit erasure price
+leaves AND and OR tied on the retained ring. Their tagged open record
+trains also pay the same erasure count under a common disposition.
+See the [boundary account](ADMISSION.md#boundary-erasure).
 
-**Postulate question.** When comparing candidate rules, does the
-accessible family give one prior count to each orbit or one to each
-state? The joint prior also fixes the initial mass of each rule.
-The writer population, heavy and light guards, and record-reference
-selection remain paused at this question.
+**Missing export contract.** Which receiver visits send an occupied
+record past its last use, and does that boundary keep, recycle or erase
+it? In particular, does a mixed request have a disposable export under
+one rule? The unit price supplies no export itinerary. Prior selection
+and the writer remain paused.
 
 Two named parts of Admission remain open.
 
@@ -29,7 +29,7 @@ Two named parts of Admission remain open.
   wire, reference and controller states are accessible? For an open route,
   which further arrivals do the boundary states supply? For prior counts,
   what are the fibres of the request projection on that family?
-- **Joint clocked controller.** What reversible phase-dependent update
+- **Joint clocked controller.** What phase-dependent retained update
   connects the arriving ports and retained controls to the route, writer
   polarity and pulse guards? The isolated trial tick preserves its initial
   requests. The [autonomous guard test](ADMISSION.md#no-external-controller)
@@ -80,9 +80,9 @@ visits register and what is the difference in paid work after matching
 the same jobs at their required state and time?
 
 **Dependence.** Admission determines the visits, participating labels
-and continuing branch. A registration is already priced in units of one
-expected flagged outcome. The assignment of physical visits and prices
-beyond that flag account remains open.
+and continuing branch. The unit erasure account prices a supplied
+disposal event. The conversion of comparison flags and other work to
+paid registrations needs its own premise.
 
 ## Sustained reference supply
 
@@ -142,11 +142,12 @@ It remains parked.
 | Derived | Period, word length and common-tick formula | `E8Values.Delta_eq`, `CarrierReferenceCycle.excursion_boundaries`, `ClassBlindFlip.forwardTimes_total`, `SplitClassBlindFlip.duration_eq`, `RootTransferPhase.half_pulse_word`, `CertainTransferRate.common_tick_rate_ratio`. The rate ratio still uses the two areas and coefficient conversions. |
 | Excluded | Single-frame execution of the stated long serial word | `ClassBlindFlip.certain_does_not_fit_e8_frame` and `certain_with_six_reflections_lower` exclude it at whole-tick certain transfer. `SplitClassBlindFlip.one_tick_budget` gives a different conditional elapsed budget for a short word and one crossing. |
 | Excluded | Selecting the coherent gap from whole-tick samples alone | `RootClockCalibration.phase_alias_iff`, `integer_samples_agree` and `ambiguous_exchange_clock`. A principal-range witness or an admitted statistical probe is needed. |
-| Derived | Reversible autonomous guards in the finite two-stream encoding | `LocalController.reversible_iff_rows` requires one common decision for the unequal ordered arrivals. `reversible_rows_count` and `enumerated_rule_count` give eight rows per phase and request pair. |
-| Excluded | Uniqueness from locality, homogeneity, reversibility and the stated move certificates in that encoding | `LocalController.two_open_compatible_rules` gives different rules with the same tagged open trace (`tagged_open_iterate`). `mixed_requests_different_destinations` distinguishes them on an input with one set request and unequal arrivals. |
-| Excluded | Removing the AND/OR tie by complementing requests and applying the maintenance swap | `LocalController.complemented_output` gives the one-visit output swap. `receiver_dual_not_conjugate` and `receiver_dual_probe_counterexample` distinguish the clocked traces. `no_request_complement_conjugacy` excludes an injective phase-preserving request complement on the encoded line. `receiver_dual_flag_counterexample` gives exchange flag 1 and bypass flag 0 for the stated basis input. |
-| Derived | Closed-ring stationary traffic and tied receiver minima | `RingReceiver.ring_return_three`, `ring_return_four`, `ring_return_five` and `orbit_enumeration_covers` certify the bounded state families. `minimum_orbit_toll` gives zero for either rule and `both_rules_attain_best_survival` compares their best orbits. `survivor_mass_of_subset` gives rule share for a supplied joint ensemble. The [sign checks](RING.md#robustness-across-all-positive-hazards) show that the prior can reverse that share ordering. |
-| Derived | Tie on uniform fields in the certified flag account | `LocalController.uniform_trace_exchange_toll` gives zero receiver flag Toll. `uniform_flag_persistence_tie` applies persistence with a common baseline. `uniform_remaining_cost_iff` leaves a strict preference exactly when remaining paid work differs. |
+| Derived, counted scope | Reversible guards with both streams retained | `LocalController.reversible_iff_rows` and `enumerated_rule_count` count the original core. `BoundaryErasure.annotated_rule_count` gives the conditional product count for separate dispositions. |
+| Excluded | Equating AND and OR by complement and swap | `LocalController.receiver_dual_not_conjugate` and `no_request_complement_conjugacy` apply to the retained dynamics. A flag counterexample compares their receiver flags. |
+| Derived | Erasure price and unchanged identity update | `BoundaryErasure.identity_bijective`, `erased_bit_merges`, `erasing_pays_one` separate the retained permutation and the erasure of one supplied bit. |
+| Derived | No exported erasures on the certified closed ring | `BoundaryErasure.ring_boundary_step`, `ring_cycle_erasure` give zero per cycle. `ring_live_depends_on_record` exhibits a circulating record that feeds the next live slot. |
+| Conditional | Erasure pricing on admitted open visits | `BoundaryErasure.tagged_rule_exports` gives the same tagged train for both rules. `open_cycle_erase_all` gives 43 erased bits if every record is erased outside the core within the period. `exchange_erasure_gap` needs a booked export to the eraser on each exchange and none on bypass. |
+| Derived, counted scope | Retained ring traffic and historical flag costs | `RingReceiver.ring_return_three`, `ring_return_four`, `ring_return_five` and `orbit_enumeration_covers` apply to the retained ring. `minimum_orbit_toll` and `both_rules_attain_best_survival` compare its flag account. The [prior sign checks](RING.md#robustness-across-all-positive-hazards) concern that account. |
 | Derived | Stationary background constraints | `NativeReferenceBackground.stationary_iff` fixes a common value per active mode for the supplied connected update. `OddReferenceSource.rest_modes_distinct` gives distinct occupied witnesses even on the same wall. Neither certificate supplies the physical family. |
 | Excluded | Determining even two open visits from the centre and its two neighbours alone | `OpenHandoff.neighbours_do_not_determine_second_visit` keeps the initial three sites and all ready references fixed while varying the second displaced value. |
 | Derived | Isolated trial reachability and conditional counts | `ClockedRootTrials.iterate_controls`, `quiet_trial_tick`, `trial_period_endpoint` give the phase, retained requests and carrier trace through one period. `history_count_pos_iff`, `all_pairs_history_count`, `shared_request_history_count` reduce reachability to the initial request fibres and enumerate both supplied encodings. The trial update alone cannot establish equal physical priors. |
@@ -161,13 +162,13 @@ It remains parked.
 
 ## Stopping point
 
-The open comparison input is the joint prior on accessible histories,
-including how their mass is assigned to each rule. With every orbit
-retained on three sites, equal pooled orbit counts favour OR at
-`β = 12 log(50/49)`. Equal pooled state counts favour AND at that
-same hazard. On five sites the conditional mean also reverses with
-the prior at `β = 120 log(3/2)`. See the
-[exact sign checks](RING.md#robustness-across-all-positive-hazards).
+The least erasure rate ties in the certified closed ring and in the
+tagged open trace under common disposal. Selecting either rule needs
+a native export and disposition law that gives a different count.
+The missing choice is at the boundary, after the record's last use
+and before disposal. The unit erasure price is fixed in this account.
 
-Paper I gives the survivor law for a supplied ensemble and action.
-Admission stays paused at the choice of ensemble and prior.
+The stopping rule leaves the erasure-merged prior and erasure-priced
+writer reset thresholds untested. The existing numbers
+`3/4`, `27/32`, and `9/10` still describe the separate balanced
+comparison-reset account.

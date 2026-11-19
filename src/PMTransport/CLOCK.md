@@ -204,7 +204,8 @@ does not decide which record value drives the physical pulse.
 | Comparison implementation and repair | In `BranchPulseContract.program_correct`, `ctrl U` applies `U` on the internal second branch between mixers. The minus flag is an output of the entire comparison. Coherent uncomputation restores the prepared input together with the record (`CoherentComparisonRepair.prepared_uncompute`). | Scheduled prices, physical record export or reset, and a rule for which output history continues on the wire. The inverse generally acts on unflagged inputs too (`inverse_not_flag_only`). |
 
 The flag budgets below count the stated visits. A flag becomes a paid
-registration only with the stated tariff and branch accounting. A paid
+registration only with the stated tariff and branch accounting.
+Boundary erasure needs an exported bit booked for reset. A paid
 unflagged schedule keeps amplitude `exp(−T/2)` under
 `TollAmplitude.wireAmplitude`.
 

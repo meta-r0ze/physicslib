@@ -279,11 +279,10 @@ swapped (`receiver_dual_flag_counterexample`). Equal arrivals hide
 this difference.
 
 The [closed-ring test](RING.md) computes stationary traffic on
-three, four and five sites. Both rules attain the same minimum
-receiver Toll. The [robustness check](RING.md#robustness-across-all-positive-hazards)
-shows that changing only the prior can reverse the pooled survival
-ordering. The [admission chain stays paused](PREMISES.md#stopping-point)
-at the prior on accessible histories.
+three, four and five sites. The receiver-flag minima tie and the
+historical Gibbs comparison depends on the prior. With the boundary
+account below the [admission chain stays paused](PREMISES.md#stopping-point)
+at the export and disposition law.
 The electric reference choice still requires its writer trace
 and prices. Choosing colour or lepton complements the electric
 sector bit and keeps the position bit
@@ -299,3 +298,48 @@ is whether to count each orbit once or each accessible state once.
 An initial rule prior, if supplied separately, must also be specified
 before weighting the histories. The two counting conventions give
 different results even on the same closed ring at the same hazard.
+
+## Boundary erasure
+
+The [audit](REVERSIBILITY-AUDIT.md) marks the retained results,
+boundary claims and counts. `BoundaryErasure.identity_bijective`
+keeps the protected update bijective. Keep and recycle preserve
+the exported bit. Erasure merges its two values into the clean
+record. `erasing_pays_one` counts the reset of a booked binary
+record as one unit. The bookable record has already left the
+core and cannot feed its next update.
+
+The existing guard tables retain both circulating streams. A
+separate disposal annotation at each of their 688 input addresses
+gives `8^(4×43) × 3^688` tables, of which
+`8^(4×43) × 2^688` contain no erase instruction
+(`annotated_rule_count`, `retaining_rule_count`). The difference
+counts tables that permit an erase instruction. For a fixed
+itinerary with `m` booked export bits at distinct phase addresses,
+exactly `choose(m,k) × 2^(m−k) × 3^(688−m)` annotations per core
+erase `k` bits in that cycle. Choose the `k` erasing addresses,
+fill the other booked addresses with keep or recycle, then fill
+the unused addresses. `policy_cycle_counts_booked_exports`
+identifies the visits being counted. With no booked exports all
+tables have zero erasures per cycle. None of these table counts
+assigns a physical itinerary or a different core register partition.
+
+| Model | Status | Erased bits per period | Erasure Toll per tick |
+| --- | --- | ---: | ---: |
+| Certified closed ring, either rule | Derived. Both streams remain operands and no port exports. | 0 | 0 |
+| Tagged open train, either rule, keep or recycle the exported bits | Conditional on that disposition. | 0 | 0 |
+| Tagged open train, either rule, erase all booked bits after they leave the core | Conditional on 43 visits and disposal of all 43 bits in the period. | 43 | 1 |
+| One booked erasure on each exchange and none on bypass | Conditional on that export law. OR pays one more per mixed-request visit than AND. | OR minus AND is the mixed-visit count | That count divided by 43 |
+
+`ring_live_depends_on_record` rules out using the circulating
+record slot itself as the discard port of the certified ring.
+`open_export_source` identifies the displaced input at each open
+export address. `tagged_rule_exports` gives the same train for
+both rules on the tagged receiver. `exchange_erasure_gap` gives
+the conditional mixed-visit count. Least erasure Toll selects
+neither rule on the certified ring or on the same tagged open
+train under common disposal. Those ties hold for any prior.
+A mixed-request advantage requires the missing export contract.
+
+The stopping rule leaves the merged-history measure and the writer's
+erasure-priced resets unevaluated.

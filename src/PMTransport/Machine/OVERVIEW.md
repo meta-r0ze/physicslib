@@ -42,7 +42,10 @@ and the price *scale*.
 
 **Derived** E8/persistence content: carrier parity (statistics), the reference
 chirality and charge (`ReferenceAnchor.reference_charges`), the clock period
-(`ClockPeriod.Delta`), the exact maintenance/supply identities, the substrate's
-unboundedness from persistence (`HomogeneousRouting.forever_iff_open`,
-`forever_needs_infinite`) and the minimum-execution cost
+(`ClockPeriod.Delta`), the exact maintenance/supply identities, the open and infinite-domain conditions for uninterrupted
+arbitrary-disturbance restoration in the retained routing
+(`HomogeneousRouting.forever_iff_open`, `forever_needs_infinite`) and the minimum-execution cost
 (`ReferenceMaintenance.minimum_executable_cost`).
+
+The [boundary audit](../REVERSIBILITY-AUDIT.md) distinguishes these
+updates from disposal of exported records.

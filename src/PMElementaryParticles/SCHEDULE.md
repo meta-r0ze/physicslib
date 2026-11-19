@@ -146,7 +146,7 @@ ties the best receiver costs. The
 [robustness check](../PMTransport/RING.md#robustness-across-all-positive-hazards)
 gives a prior-dependent survival ordering. The
 [admission chain is paused](../PMTransport/PREMISES.md#stopping-point)
-at the prior on accessible histories.
+at the receiver export and disposition law.
 The wire comparison still depends on the writer input, retained
 pulse guard and differing paid work.
 
@@ -293,6 +293,11 @@ reset difference is `G/2`. This charges the restoring exchange
 once, including its displacement of the old record. Further travel,
 supply and maintenance enter the remainder `U`. Under that extra
 premise the output-bit ledger has `ΔR = G/2 + U`.
+
+The reset term here prices a separate balanced receiver comparison.
+Boundary erasure counts booked exports actually reset after their
+last use. The flag certificate supplies no writer export itinerary.
+See the [boundary stopping point](../PMTransport/PREMISES.md#stopping-point).
 
 | Common sampling policy | Output-bit gap `G` | Conditional reset contribution to `ΔR` | Colour wins with output flags and those resets if |
 | --- | ---: | ---: | ---: |

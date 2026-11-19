@@ -11,14 +11,13 @@ N times that population. An indefinitely replenished source is not derived
 from finite-memory closed persistence, nor is this infinite background claimed
 to be a normalized one-particle state.
 
-**The source is the vacuum.** Persisting forever forces an unbounded substrate
-(`HomogeneousRouting.forever_needs_infinite`), so the incoming line exists. Away from a
-defect the persisting state is the vacuum: the zero-cost configurations are exactly the
-uniform ones (`MassGap.DefectGap.cost_eq_zero_iff`), and every excitation decays
-(`transfer_contracts_excitations`). A uniform incoming stream holds the same state at every
-site, which is a prepared reference at every site (`vacuum_restores`). So the replenished
-source is the persisting vacuum itself, not an added preparation; what it costs to read it is
-the existing toll.
+A uniform incoming record field supplies the same reference everywhere
+(`vacuum_restores`). This is a candidate persisting background under
+the applicable uniformity theorems. Selecting its occupied reference
+and attaching a receiver to it are separate premises. The backward
+orbit requirement in `HomogeneousRouting.forever_needs_infinite`
+applies to the specified retained update against arbitrary disturbances.
+An exported record can have a separate boundary disposition.
 -/
 noncomputable section
 namespace PMAction.OpenReferenceFlow

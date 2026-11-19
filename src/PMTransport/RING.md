@@ -207,3 +207,20 @@ share likewise favours OR per orbit and AND per state at
 `x = 49/50`, or `β = 12 log(50/49)`. Both reversals use exact
 rational signs. The chosen prior changes the answer even with
 the rule, scope, idle filter and hazard held fixed.
+
+
+## Boundary erasure
+
+This ring retains both streams and supplies no exported bit.
+`BoundaryErasure.ring_boundary_step` and `ring_cycle_erasure`
+give zero erased bits per period and zero erasure Toll per tick
+for AND and OR at every ring size. This tie holds for any prior.
+`ring_live_depends_on_record` shows why erasing a circulating
+record would change the retained update. A new ring with disposal
+needs a separate export port and a certificate identifying which
+information has finished its internal use.
+
+The tables above count comparison flags with the stated prior.
+They remain results of that account. The
+[boundary stopping point](PREMISES.md#stopping-point) leaves the
+erasure-merged prior unevaluated.

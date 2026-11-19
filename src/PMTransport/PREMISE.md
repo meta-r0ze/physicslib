@@ -6,7 +6,7 @@ The [premise ledger](PREMISES.md) tracks the checked results and open inputs.
 
 ## The system
 
-PMTransport studies a reversible machine on E8 nodes.
+PMTransport studies reversible internal register updates on E8 nodes and the disposition of exported records.
 
 | Part | In the machine | In the library |
 | --- | --- | --- |
@@ -21,11 +21,10 @@ identity-defining information (PM-1-Arch, leg update "by Conservation it is
 reversible"). Every decision that treats two inputs differently leaves a
 record (`CoherentGate.unequal_needs_orthogonal`). The record must be kept,
 exported or reused. Once a record is exported, PM does not require that it
-is kept. It can be erased, and the erasure is paid as Toll (Landauer: one
-erased bit costs at least `k_B T ln 2`). Toll is the count of these
-irreversible registrations, so a machine that could not erase would have no
-Toll. Reversibility is a constraint on the system's own registers, not on
-the boundary.
+is kept. It can be erased, and the erasure is paid as Toll. In the standard thermal setting Landauer gives
+a lower bound of `k_B T ln 2` for one unbiased bit. The boundary account
+uses one Toll unit per booked binary erasure. Conservation protects the
+retained registers across the update.
 
 ## The postulate
 
@@ -43,18 +42,19 @@ Transport continues only while four things persist:
 1. the carried state;
 2. the reference, which needs a continuing supply (`OpenHandoff`,
    `RecordSupply`, `OddReferenceSource`);
-3. the record stream, which needs renewal (an open backward orbit,
-   `OpenReferenceFlow`);
+3. the record supply. The retained-stream model uses an open backward
+   orbit for uninterrupted arbitrary-disturbance restoration
+   (`OpenReferenceFlow`);
 4. the clock.
 
 ## Cost
 
-A registration is one expected flagged outcome of a comparison visit. A
-label's Toll counts its registrations, and the wire amplitude is
-`exp(−T/2)` (`PMAction.TollAmplitude`). The price of a record is the
-registrations of its write, export and reset. Which of these a visit pays is
-the open "registration and record lifecycle" item in
-[REVIEW-AND-NEXT](REVIEW-AND-NEXT.md).
+A booked boundary erasure pays one unit per exported bit reset.
+A comparison supplies a flag probability. Its use as a paid
+registration is a separate accounting premise. Once a Toll is
+supplied, the wire amplitude is `exp(−T/2)`
+(`PMAction.TollAmplitude`). See the [boundary account](ADMISSION.md#boundary-erasure)
+and [reversibility audit](REVERSIBILITY-AUDIT.md).
 
 ## Generations
 

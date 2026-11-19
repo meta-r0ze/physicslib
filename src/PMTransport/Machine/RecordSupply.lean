@@ -17,7 +17,7 @@ substrate.
   value is the reference at every tick, whatever disturbances arrive on the live stream. A
   stationary background (`NativeReferenceBackground.stationary_iff`) has every record equal to the
   reference, so it is such a supply.
-* `disturbance_exported`: each arriving live disturbance is not erased. It is written into the
+* `disturbance_exported`: this step writes each arriving live disturbance into the
   record leaving the site, and carried away along the backward stream.
 * `open_orbit_forever`: on an orbit that never returns (for example `X = ℤ`, `e = succ`), the
   repair is exact at every tick.
@@ -101,7 +101,7 @@ theorem clean_supply (o : X) (e : Equiv.Perm X) (s : X → A × A) (r : A) (T : 
   rw [live_at_site o e s t' (fun j hj => hopen (1 + j) (by omega) (by omega))]
   exact hclean (t' + 1) (by omega) htT
 
-/-- **Disturbances are exported, not erased.** The record leaving the site holds the live value
+/-- The record leaving the retained update holds the live value
 that arrived. -/
 theorem disturbance_exported (o : X) (e : Equiv.Perm X) (s : X → A × A) (t : ℕ) :
     (run o e (t + 1) s o).2 = (run o e t s (e⁻¹ o)).1 := by
