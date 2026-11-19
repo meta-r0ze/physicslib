@@ -92,10 +92,30 @@ A common tick provides the same cost horizon across orbit lengths.
 | 3 | 0 | 0.087222214 | 0.289593246 | 0.243445155 | 0.858742518 |
 | 4 | 0 | 0.071325547 | 0.293279325 | 0.233922525 | 1.130260829 |
 
-The minimum is the persistence comparison of individual admitted
-traces. The Gibbs mean conditions on survival in an ensemble of
-traces. Its equal prior counts per orbit are an input to the
-comparison. An ensemble uniform over initial states would give
-larger orbits more prior weight. The lower Gibbs mean under the
-stated counting convention leaves the jointly most-persistent
-orbits tied. Neither comparison adds any empirical input.
+## What Paper I selects
+
+`PersistenceSelection.within_family_iff_cheapest` ranks individual
+candidates with supplied actions in a supplied family. If a candidate
+is a tagged orbit, the cheapest orbit attains the best individual
+survival. `Selection.selection_principle` gives the long-time
+statement for that ensemble. With positive supplied priors and a
+common hazard, histories with a cost rate above the minimum lose
+all survivor share. It does not choose a rule when each has an
+orbit at the same minimum rate.
+
+`Selection.survivor` weights each history by its prior times
+`exp(−β S)`, with `S` the accumulated action at a common horizon.
+If a rule is a class of histories, `survivor_mass_of_subset`
+gives its share as the sum of those weights divided by the common
+normalization. This is a marginal survival share. It is not the
+mean cost of the histories conditional on surviving. If each
+rule first has a separately supplied prior, normalize the within-rule
+prior before calculating its marginal. If one runs a rule through
+successive states, a theorem must supply its accumulated action.
+`LawSelection.law_selection` also takes the law's rate as an input.
+
+`Gibbs.probability_eq_survivor` identifies Gibbs with survivor weights
+at equal priors. It does not say whether initial states, distinct
+orbits, or rules get equal prior weight. The library gives no rule-level
+selection by the conditional mean Toll. It supplies no canonical
+rule ensemble, accessible prior or action for a single whole rule.

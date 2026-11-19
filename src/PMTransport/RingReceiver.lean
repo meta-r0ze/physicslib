@@ -369,6 +369,17 @@ theorem both_rules_attain_best_survival (n bound : ℕ) (either : Bool)
   intro other p hp
   simpa [PersistenceMechanics.Gibbs.weight, cost] using hbest.2 (other, p) hp
 
+/-- A rule represented by a subset of the joint ensemble has the sum
+    of its survivors' shares. Its numerator is a sum of survival
+    weights with the supplied priors. -/
+theorem survivor_mass_of_subset {ι : Type*} [Fintype ι] (members : Finset ι)
+    (prior : ι → ℝ) (β : ℝ) (action : ι → ℝ) :
+    (∑ i ∈ members, PersistenceMechanics.Selection.survivor prior β action i) =
+      (∑ i ∈ members, prior i * PersistenceMechanics.Gibbs.weight β (action i)) /
+        (∑ i, prior i * PersistenceMechanics.Gibbs.weight β (action i)) := by
+  simp only [PersistenceMechanics.Selection.survivor, PersistenceMechanics.Gibbs.weight,
+    Finset.sum_div]
+
 /-- Mean Toll among surviving orbits, conditional on equal orbit priors.
     This is a statistic of the supplied family at the given hazard. -/
 noncomputable def gibbsOrbitMean {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
