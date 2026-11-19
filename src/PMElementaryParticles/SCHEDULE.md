@@ -51,6 +51,52 @@ ledger for that writer. The registration policy must justify any extra
 primitive charge. `amplitude` applies `TollAmplitude.wireAmplitude`
 to the full Toll for the persisting unflagged readout.
 
+## Which population is charged
+
+`NetCost.prob` assigns the uniform measure once the cycle sample space
+`Ω` has been specified. `expected_count_linear` adds event probabilities.
+`TollAmplitude` converts a given label's expected registrations to an
+amplitude. It supplies no rule for choosing the inputs to a shared
+comparison or aggregating their Tolls.
+
+`WireReferenceCost.packet_flag` specializes `DiagonalReadout.state_flag`.
+The flag of a packet state is the sum of the diagonal flags weighted by
+its actual slot populations. `massive_pair_flag` gives half weight to
+each wall within one massive input as in `EventRequirements.massive_flag`.
+This does not determine how often that input is used. The electric
+generator and the hypercharge transport are diagonal. Their action on the
+whole packet establishes the available flags and leaves input sampling
+open.
+
+| Input | Active slots | Static slots | Probability under full-packet uniform sampling |
+| --- | --- | --- | --- |
+| Electron | 1 | 1 | 2/16 |
+| Down | 3 | 3 | 6/16 |
+| Up | 3 | 3 | 6/16 |
+| Neutrino | 1 | 0 | 1/16 |
+| Sterile vacancy | 0 | 1 | 1/16 |
+
+`wall_inventory` and `uniform_slot_weights` check the table from
+`ProtocolInventory`. Each quark has one slot per colour on each wall.
+Replacing a sampled charged pair by its massive state preserves its
+expected flag if its two slot weights are equal and summed into the
+pair's total weight. The neutral active slot and the sterile label
+are distinct inventory entries. The full-slot ensemble samples the
+vacancy. An occupied-only ensemble excludes it and conditions on the
+other slots.
+
+The library proves two relevant conditional uniformity results.
+`uniform_if_inherited` uses the transitive symmetry of the 32 substrate
+carriers and `PreparationSelection.packet_preparation_uniform`. It
+requires that the writer inherits that invariant law on the packet.
+`uniform_if_maximin` applies `PersistenceMaximin.maximin_iff` if the
+writer guarantees worst-case return over all 16 slots. Neither the
+fixed electric comparisons, the charged two-wall populations, nor
+the schedule's least-cost selection proves either premise. The missing
+physical identification is which incoming states actually reach these
+writer visits and whether the cycle cost is a sampled expectation or
+an additive ledger of separately required reads.
+
 ## Selection and the unresolved minimum
 
 `minima` gives the exact finite minimizer set for a supplied scalar cost.
