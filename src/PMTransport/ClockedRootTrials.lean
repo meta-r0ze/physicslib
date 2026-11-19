@@ -118,6 +118,43 @@ theorem shared_request_returns (b : Bool) (z : SubstrateReflection.Lattice) :
   rw [pair_endpoint]
   simp
 
+/-! ## Finite request histories
+
+The pair of retained requests labels the whole trial trace. A finite
+controller background and its request projection are separate inputs.
+The counting statement tests that projection without identifying each
+history with a single physical microstate.
+-/
+
+/-- Count the initial controller microstates that realize a given request history. -/
+def historyCount {M : Type*} (initial : Finset M) (requestOf : M → Bool × Bool)
+    (history : Bool × Bool) : ℕ :=
+  (initial.filter fun m => requestOf m = history).card
+
+/-- The realized histories are exactly the request fibres with positive
+    count, at every elapsed time. The update creates no new request pairs. -/
+theorem history_count_pos_iff {M : Type*} (initial : Finset M)
+    (requestOf : M → Bool × Bool) (z : M → SubstrateReflection.Lattice)
+    (n : ℕ) (history : Bool × Bool) :
+    0 < historyCount initial requestOf history ↔
+      ∃ m ∈ initial, ((tick^[n]) (requestOf m, (z m, 0))).1 = history := by
+  simp only [historyCount, Finset.card_pos, Finset.Nonempty, Finset.mem_filter]
+  simp only [(iterate_controls _ _ _).1]
+
+/-- A supplied controller with one initial state for each pair has equal
+    counts. This enumerates the four encoded initial pairs. -/
+theorem all_pairs_history_count :
+    ∀ history : Bool × Bool, historyCount Finset.univ id history = 1 := by
+  decide +kernel
+
+/-- With one supplied state per shared request, the two single-fire
+    histories are unreachable. The same trial update acts in both cases. -/
+theorem shared_request_history_count :
+    ∀ history : Bool × Bool,
+      historyCount (Finset.univ : Finset Bool) (fun b => (b, b)) history =
+        if history.1 = history.2 then 1 else 0 := by
+  decide +kernel
+
 open PersistenceMechanics.Gibbs RootTransferAccounting
 
 /-- Charge each actual lattice change in the two-tick trace once, at the

@@ -65,3 +65,37 @@ occupied wire, reference and record state at each phase, including the
 guard that binds the request and delivered port to each operation.
 The certified updates above fix those transitions whose controls and
 inputs are already specified.
+
+## Exhaustive trial histories and conditional counts
+
+For a fixed supplied initial lattice carrier `z`, write `Rz` for its
+reflection. The trial state keeps both request bits at every tick.
+There is no export or consumption operation in this trial. After the
+second request the lattice component stays at its endpoint through
+tick 43. The table enumerates every encoded trace from phase zero.
+
+| Retained pair | Guard fires at | After tick 1 | After tick 2 through 43 | One state per pair | One state per shared request |
+| --- | --- | --- | --- | ---: | ---: |
+| false, false | Neither phase | z | z | 1 | 1 |
+| false, true | Phase 1 | z | Rz | 1 | 0 |
+| true, false | Phase 0 | Rz | Rz | 1 | 0 |
+| true, true | Both phases | Rz | z | 1 | 1 |
+
+The first two tick equations and `trial_period_endpoint` give the
+carrier columns. `all_pairs_history_count` and
+`shared_request_history_count` check the finite counts. Even when
+`Rz = z`, the retained requests distinguish these histories in the
+trial state. If the initial controller microstates differ in other
+fields, the count of a history is the size of its initial request
+fibre (`history_count_pos_iff`). This disallows inferring equal
+physical counts from reversibility or from the two clock slots. The
+two columns are conditional enumerations of specified initial control
+encodings.
+
+For the open handoff, `receiver_trace` and `export_trace` describe
+the live, ready and displaced values for every supplied arrival and
+every visit within the horizon. There is no enumeration of joint
+wire traces from the persisting background until the two gaps above
+are filled. In particular, combining the trial table with each
+possible handoff branch by a Cartesian product would require a proof
+that the input controllers and ports admit those combinations.
