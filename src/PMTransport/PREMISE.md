@@ -51,12 +51,20 @@ the open "registration and record lifecycle" item in
 
 ## Generations
 
-On the derived wire a generation is a route. The heavy generation inserts
-directly. The two light generations pass through the reference node
-(`ReferenceClassHop`). Every route acts the same on every label
-(`GluedRegister.wallStep_class`, `crossing_walls`). So a generation is a
-transport object, and a protocol difference needs a gate that reads the
-label.
+A generation is a glue address on the wire. It names the D₄ class omitted
+by its two walls. The chosen reference makes address zero direct and
+sends the other two addresses through the same two-leg node
+(`ReferenceClassHop`, `ReferenceNode`). The route test is shared by all
+labels. The coupled wire has a heavy, a middle and a lightest mode at
+bare resonance. Equal node weights leave the two restoring addresses
+without individual mass ranks.
+
+The charged lift candidate adds a pulse on the same static vector leg
+for each charged protocol. The common route gives the same response to
+the same offset. The label-sensitive firing law and its `Δ` scaling
+remain open. The transport address, its route and the declared ledger
+tiers are related in the
+[generation comparison](../PMElementaryParticles/GENERATIONS.md).
 
 ## Layering
 
