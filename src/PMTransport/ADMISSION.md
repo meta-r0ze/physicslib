@@ -130,3 +130,33 @@ For this decision only, under a common population it suffices to give
 the signed sector mass difference and enough unmatched paid work to
 bound the total on one side of zero. If the two admitted polarities
 use different traffic, compute the two weighted charges separately.
+
+## No external controller
+
+### Finite encoding
+
+The certified streaming step sends one input from each neighbour
+along the chosen root line. Its local output therefore needs the
+centre and the two adjacent sites. The bypass reads both neighbours,
+so a radius-zero encoding loses its arrivals. At the centre the
+trial probe reads the retained request pair and the shared phase.
+It applies the on-site root in phases 0 or 1 as specified by
+`ClockedRootTrials`. The phase advances in `Fin Δ`.
+
+`LocalController` uses two distinguishable port values, the two
+retained request bits and the two points on a moving root orbit.
+This is the smallest alphabet for testing order, all four requests,
+and both outcomes of a reflection. A rule gives one exchange or
+bypass decision per phase, request pair and arriving port pair.
+`radius_one`, `receiver_realisation` and `probe_realises_trial`
+check the local operations against their certified forms. The same
+table applies at every site. The three-site stencil is a finite
+encoding of one update, and the global rule acts on the open line.
+
+This encoding restricts the guard to the arrivals and the local
+retained requests. In particular it keeps the probe and transport
+registers independent. Locality also allows other guards on the same
+neighbourhood. The library supplies no finite quotient of the full
+coherent wire that preserves its writer, branch records and costs.
+An enumeration here tests whether the stated constraints force a
+unique rule even within this restricted family.
