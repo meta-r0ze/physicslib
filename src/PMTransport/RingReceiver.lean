@@ -277,4 +277,103 @@ noncomputable def portPopulation {n : ℕ} (orbit : Finset (State n)) (p : Slot 
     (population : Bool → ℝ) : ℝ :=
   orbitAverage orbit fun s => population (slotValue s.2.2.2 p)
 
+
+/-! ## Pricing and selection -/
+
+noncomputable def basisValue (b : Bool) : Fin 2 → ℂ :=
+  Pi.single (if b then 1 else 0) 1
+
+noncomputable def receiverFlag {n : ℕ} (either : Bool) (s : State n) (x : Fin n) : ℝ :=
+  exchangeFlag (fun _ => exchange either (s.2.1 x)) (arrivals s.2.2.2 x) basisValue
+
+/-- The certified exchange comparator, on two orthogonal unit values. -/
+theorem receiver_flag_eq {n : ℕ} (either : Bool) (s : State n) (x : Fin n) :
+    receiverFlag either s x =
+      if exchange either (s.2.1 x) = true ∧
+        (arrivals s.2.2.2 x).1 ≠ (arrivals s.2.2.2 x).2 then 1 else 0 := by
+  unfold receiverFlag
+  generalize arrivals s.2.2.2 x = p
+  rcases p with ⟨a, b⟩
+  cases a <;> cases b <;> cases h : exchange either (s.2.1 x) <;>
+    norm_num [exchangeFlag, h, basisValue, LinkExpansion.nsq_eq, Fin.sum_univ_two,
+      Pi.single_apply, Complex.normSq_apply]
+
+/-- Expected receiver registrations per tick on an orbit. The sum may
+    cover one receiver or all of them. -/
+noncomputable def orbitToll {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
+    (orbit : Finset (State n)) : ℝ :=
+  orbitAverage orbit fun s => ∑ x ∈ receivers, receiverFlag either s x
+
+private theorem orbit_toll_nonneg {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
+    (orbit : Finset (State n)) : 0 ≤ orbitToll either receivers orbit := by
+  apply div_nonneg _ (by positivity)
+  apply Finset.sum_nonneg
+  intro s _
+  apply Finset.sum_nonneg
+  intro x _
+  rw [receiver_flag_eq]
+  split <;> norm_num
+
+private theorem equal_ports_fixed {n : ℕ} (either : Bool) (q : RequestsField n) (v : Bool) :
+    portStep either q (fun _ => (v, v)) = (fun _ => (v, v)) := by
+  funext x
+  change applyGuard (fun _ => exchange either (q x)) (v, v) = (v, v)
+  unfold applyGuard
+  split <;> rfl
+
+/-- A uniform occupied port field yields zero on both rules, including
+    with mixed requests. Every other orbit has nonnegative Toll. -/
+theorem minimum_orbit_toll (n bound : ℕ) (either : Bool) (receivers : Finset (Fin n)) :
+    ∃ o ∈ enumerateOrbits n either bound, orbitToll either receivers o = 0 ∧
+      ∀ p ∈ enumerateOrbits n either bound, 0 ≤ orbitToll either receivers p := by
+  let fields : Fields n := (fun _ => (true, false), fun _ => false, fun _ => (false, false))
+  let o := orbitWithin either bound (0, fields)
+  have ho : o ∈ enumerateOrbits n either bound := by
+    unfold enumerateOrbits
+    exact Finset.mem_image.mpr ⟨fields, Finset.mem_univ _, rfl⟩
+  refine ⟨o, ho, ?_, fun p _ => orbit_toll_nonneg either receivers p⟩
+  unfold orbitToll orbitAverage
+  have hsum : ∑ s ∈ o, ∑ x ∈ receivers, receiverFlag either s x = 0 := by
+    apply Finset.sum_eq_zero
+    intro s hs
+    obtain ⟨k, _, hks⟩ := Finset.mem_image.mp hs
+    rw [← hks]
+    have hp : ((tick n either)^[k] (0, fields)).2.2.2 = (fun _ => (false, false)) := by
+      rw [ports_iterate]
+      exact (show Function.IsFixedPt (portStep either fields.1) fields.2.2 from
+        equal_ports_fixed either fields.1 false).iterate k
+    apply Finset.sum_eq_zero
+    intro x _
+    rw [receiver_flag_eq, hp]
+    simp [arrivals, OpenReferenceFlow.streamShift]
+  rw [hsum, zero_div]
+
+/-- Each rule attains a minimum over the joint rule and orbit family.
+    The common minimum is zero at any positive hazard. -/
+theorem both_rules_attain_best_survival (n bound : ℕ) (either : Bool)
+    (receivers : Finset (Fin n)) (β : ℝ) (hβ : 0 < β) :
+    ∃ o ∈ enumerateOrbits n either bound, orbitToll either receivers o = 0 ∧
+      ∀ other, ∀ p ∈ enumerateOrbits n other bound,
+        PersistenceMechanics.Gibbs.weight β (orbitToll other receivers p) ≤
+          PersistenceMechanics.Gibbs.weight β (orbitToll either receivers o) := by
+  obtain ⟨o, ho, hz, _⟩ := minimum_orbit_toll n bound either receivers
+  let family : Set (Bool × Finset (State n)) :=
+    {i | i.2 ∈ enumerateOrbits n i.1 bound}
+  let cost : Bool × Finset (State n) → ℝ := fun i => orbitToll i.1 receivers i.2
+  have hbest := (PersistenceSelection.within_family_iff_cheapest β hβ cost family 0
+    (either, o)).mpr ⟨ho, fun j _ => by
+      change orbitToll either receivers o ≤ orbitToll j.1 receivers j.2
+      rw [hz]
+      exact orbit_toll_nonneg j.1 receivers j.2⟩
+  refine ⟨o, ho, hz, ?_⟩
+  intro other p hp
+  simpa [PersistenceMechanics.Gibbs.weight, cost] using hbest.2 (other, p) hp
+
+/-- Mean Toll among surviving orbits, conditional on equal orbit priors.
+    This is a statistic of the supplied family at the given hazard. -/
+noncomputable def gibbsOrbitMean {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
+    (family : Finset (Finset (State n))) (β : ℝ) : ℝ :=
+  let cost : ↥family → ℝ := fun o => orbitToll either receivers o.val
+  ∑ o : ↥family, PersistenceMechanics.Gibbs.probability β cost o * cost o
+
 end PMTransport.RingReceiver

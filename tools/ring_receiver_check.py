@@ -3,6 +3,7 @@
 import argparse
 from collections import Counter
 from dataclasses import dataclass
+from fractions import Fraction
 from functools import cache
 from itertools import product
 from math import gcd, lcm
@@ -80,21 +81,68 @@ def enumerate_traffic(n: int, either: bool):
             yield requests, switches, cycle, PERIOD * block_count, count
 
 
+def tolls(switches: tuple[bool, ...], cycle: PortCycle):
+    # Pair encodings 1 and 2 have unequal values. Certify the unit flag
+    # for these encodings in RingReceiver.receiver_flag_eq.
+    return tuple(Fraction(row[1] + row[2], cycle.length) if exchange else Fraction(0)
+                 for exchange, row in zip(switches, cycle.arrivals))
+
+
+def exp_negative_bounds(x: Fraction):
+    # The tail after term 50 is alternating with strictly decreasing
+    # magnitude for the checked range. Use consecutive partial sums.
+    assert 0 <= x <= 4
+    term = upper = Fraction(1)
+    for k in range(1, 51):
+        term *= -x / k
+        upper += term
+    return upper - term * x / 51, upper
+
+
+def gibbs_bounds(histogram: Counter):
+    denominator_low = denominator_high = Fraction(0)
+    numerator_low = numerator_high = Fraction(0)
+    for cost, count in histogram.items():
+        low, high = exp_negative_bounds(cost)
+        denominator_low += count * low
+        denominator_high += count * high
+        numerator_low += count * cost * low
+        numerator_high += count * cost * high
+    return numerator_low / denominator_high, numerator_high / denominator_low
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--traffic", action="store_true",
                         help="show each request and port cycle with its full orbit multiplicity")
     args = parser.parse_args()
     for n in PORT_PERIOD:
+        means = []
         for either in (False, True):
             periods = Counter()
-            for requests, _, cycle, period, count in enumerate_traffic(n, either):
+            site_costs = Counter()
+            ring_costs = Counter()
+            for requests, switches, cycle, period, count in enumerate_traffic(n, either):
                 periods[period] += count
+                cost = tolls(switches, cycle)
+                site_costs[cost[0]] += count
+                ring_costs[sum(cost)] += count
                 if args.traffic:
                     print(n, "OR" if either else "AND", requests, cycle, period, count)
             assert sum(period * count for period, count in periods.items()) == PERIOD * 32**n
             print(n, "OR" if either else "AND", "orbits", sum(periods.values()),
                   "periods", dict(sorted(periods.items())))
+            assert site_costs[0] and ring_costs[0]
+            bounds = []
+            for name, histogram in (("site 0", site_costs), ("ring sum", ring_costs)):
+                low, high = gibbs_bounds(histogram)
+                print(name, "minimum", min(histogram), "Gibbs mean at beta=1",
+                      f"{float((low + high) / 2):.9f}")
+                print("cost counts", " ".join(f"{c}:{m}" for c, m in sorted(histogram.items())))
+                bounds.append((low, high))
+            means.append(bounds)
+        for (_, and_high), (or_low, _) in zip(*means):
+            assert and_high < or_low
 
 
 if __name__ == "__main__":
