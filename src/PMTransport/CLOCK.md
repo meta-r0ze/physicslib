@@ -90,7 +90,7 @@ permitted quarter-time.
 | Route | With the short word at `q=1` | With the 16-pulse word at `q=2` | Can the full route fit in one 43-tick period? |
 | --- | --- | --- | --- |
 | Direct `g=0` | `24+12+24 = 60`, at least 2 periods | `64+24+64 = 152`, at least 4 periods | Excluded for this serial two-word implementation, for electron, up and down. |
-| Enter the reference class, `g=1` | `36+L₁`. At least 2 periods if `L₁>7`, or if the added work uses that much of the budget. | `88+L₁`, at least 3 periods | The short word leaves at most 7 elapsed ticks for the node and all additional work. The long word excludes one period. |
+| Enter the reference class, `g=1` | `36+L₁`. At least 2 periods if node and added work together exceed 7 ticks. | `88+L₁`, at least 3 periods | The short word leaves at most 7 elapsed ticks for the node and all additional work. The long word excludes one period. |
 | Leave the reference class, `g=2` | `36+L₂`, with the same 7-tick available budget | `88+L₂`, at least 3 periods | The same exclusions apply. Admittance symmetry establishes no equality of `L₁` and `L₂`. |
 
 If the cycle also executes a separate class-changing crossing, add
@@ -149,7 +149,7 @@ does not decide which record value drives the physical pulse.
 | --- | --- | --- |
 | Reference excursion and trial pair | The phase boundary and retained request control the reflection. A false request leaves the carrier idle at that slot. | A source of the requests and a registration test. A double fire can return to the same endpoint and still move twice. |
 | Bare beta and bare crossing words | Each word acts on its whole supplied carrier input. Intermediate coherent pulses evolve both components of that input. | A physical trigger and a proof that the relevant address, chirality and input bank see the word on the chosen clock. |
-| Through the reference node | The reversible handoff model sends the two results to different registers. Bypass goes through. Exchange gives the returning route and restores the receiver when the arriving record supplies its reference (`TwoSiteHandoff.step_trace`, `receiver_agrees_with_line`, `HandoffAdmittance.receiver_exchange_or_bypass`). | An identification of these results with the reference-class insertion and a branch-resolved record and renewal trace. |
+| Through the reference node | The reversible handoff model sends the two results to different registers. Bypass goes through. Exchange gives the returning route and restores the receiver when the arriving record supplies its reference (`TwoSiteHandoff.step_trace`, `first_reference_iff`, `receiver_agrees_with_line`, `HandoffAdmittance.receiver_exchange_or_bypass`). | An identification of these results with the reference-class insertion and a branch-resolved record and renewal trace. |
 | Charged-current comparison | In the full static readout, electron and down write the minus outcome, up and vacancy the plus outcome. The charged-current event depends on the stored doublet bit. | Which mixed-wall input and which visits occur in the physical event. Both bit values can serve their own events. |
 | Heavy guarded endpoint | In `HeavyFlipControl.registered_word`, the matching stored record at the direct address drives the crossing. The record bits and the address persist. It can be the all-zero record or a record containing a flag. `CompanionHeavyFlip.run_pack` checks a companion-based guard with the same conditional endpoint. | A write, export and reuse schedule and an identification of this endpoint control with each physical heavy insertion. |
 | Lightest offset | The candidate retains the plus output at each matched comparison. `matched_flags_zero` gives zero flags for the selected static input. Its joint class and protocol control acts only if a pulse is supplied. | Admit and fire that conditioned pulse. A vacancy-relative minus event is a different comparison. |
@@ -182,3 +182,35 @@ A permanent record can change the timing without changing its truth
 table. The missing result is a joint clocked trace that supplies the
 occupied reference and record, admits the pulse, and identifies which
 histories are counted and which drive each wall's insertion.
+
+## Flip-to-crossing rate
+
+Let `A_f,A_y` be the effective pulse areas and `c_f,c_y` the conversions
+from pulse rates to Hamiltonian coefficients. Let `d_f,d_y` be the
+durations of the individual flip and crossing. With one common tick,
+`CertainTransferRate.common_tick_rate_ratio` gives
+
+```text
+r = K_f / |y| = (c_f / c_y)(A_f / A_y)(d_y / d_f).
+```
+
+In the serial half-pulse execution of either six-reflection crossing,
+`d_y = 12q`. The supplied flip durations are `32q` and `24q`. Thus the
+conditional duration ratios are `3/8` and `1/2`, respectively. They
+give `r` itself if both complete events have equal effective areas and
+coefficient conversions. The denominator here is the duration of one
+flip. The two-wall cycle budget, record overhead and elapsed time
+between firings measure different quantities. Assigning the same area
+or duration law to a node-mediated insertion would need its own
+derivation. So the current results give conditional ratios and leave
+the physical `r` open.
+
+### Comparison only
+
+The recorded first-row wall-leakage diagnostic prefers
+`r ≲ 0.07–0.12` with its stated spectral and readout assumptions. The
+explored duration options span `1/8 ≤ r ≤ 1/2`. The two conditional
+six-reflection ratios above are above the preferred range under equal
+normalization. Neither number selects a pulse, a clock, or a record.
+See [first-row wall leakage](../PMFlavor/REVIEW-AND-NEXT.md#first-row-wall-leakage)
+and the [EP readout comparison](../PMElementaryParticles/OVERVIEW.md#charged-density-and-wall-leakage).

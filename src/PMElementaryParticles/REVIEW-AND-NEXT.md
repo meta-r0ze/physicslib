@@ -11,7 +11,8 @@ factor" item.
 
 **Common blocker.** The heavy-label weight, lightest masses and PMFlavor
 item 2 need a native law that admits and fires a conditioned coherent pulse.
-[PMAction tracks the schedule](../PMAction/REVIEW-AND-NEXT.md#extensions).
+[PMTransport tracks slot bounds and firing branches](../PMTransport/CLOCK.md).
+[PMAction tracks event admission](../PMAction/REVIEW-AND-NEXT.md#extensions).
 The Toll-to-amplitude conversion is established in `PMAction.TollAmplitude`.
 
 ## The protocol readout (first)
