@@ -82,8 +82,12 @@ multiplying through weights.
   serial frame is excluded for that circuit. A serial six-reflection
   crossing on its clock raises the lower bound to 88 ticks. These timing
   results are in [the action overview](../PMAction/OVERVIEW.md). Derive the native firing law on
-  the encoded rest states and the rates it induces. The serial endpoint and
-  elapsed time alone leave the pulse winding free.
+  the encoded rest states and the rates it induces. The
+  [whole-tick alias result](OVERVIEW.md#calibrating-the-root-clock) applies
+  even to the full integer-tick coherent history. Derive the native
+  two-trial statistical transfer on the same root and time unit, or
+  derive a physical first-half-turn bound and calibrate its coherent
+  comparison. Use that rate in the shared firing schedule.
   The first-row comparison is downstream in
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#first-row-wall-leakage).
   Recorded comparison tension (not a constraint on the derivation): with

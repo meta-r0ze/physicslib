@@ -18,7 +18,7 @@ state. The clock and the comparison ledger govern and account for those visits.
 | Exchange or pass through a node | `TwoSiteHandoff`, `OpenReferenceFlow`, `HandoffAdmittance`, `ReferenceClassHop` | Exact exchange and bypass destinations. Stationarity of a class-definite reference constrains direct class exchange on its wall. |
 | Hold, export, and renew a record | `OpenHandoff`, `OddReferenceSource`, `IndependentRegisters`, `RegisterControl`, `ReferenceMaintenance`, `RecordSupply`, `HomogeneousRouting` | Reversible register banks, exact restoration, and export of the previous state. An open backward orbit allows sustained renewal under the supplied reference conditions. |
 | Compare and count | `BranchPulseContract`, `RefreshSchedule`, `CoherentRefresh`, `CoherentGate` | Coherent comparison under the pulse contract, orthogonal records for overlapping outputs, and minimum additive cost for required visits at supplied prices. |
-| Schedule native operations | `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot`, `RootTransferPhase` | The substrate period, reversible clocked words, and root pulse areas. Physical phase admission and absolute timing remain open. |
+| Schedule native operations | `RootClockCalibration`, `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot`, `RootTransferPhase` | The substrate period, reversible clocked words, and root pulse areas. Physical phase admission and absolute timing remain open. |
 
 The [machine overview](Machine/OVERVIEW.md) lists the supporting carrier,
 register, reference, and clock constructions.
@@ -148,6 +148,36 @@ preparation and detector
 (`two_pass_alternative`, `reflected_event_ne_alpha`,
 `one_tick_cost_endpoint`, `pulse_calibration_transfers`).
 The module is [HandoffAdmittance](HandoffAdmittance.lean).
+
+## Calibrating the root clock
+
+A moving root label sees the full complex phase of a reconstructed root
+pulse. Two such pulse maps agree exactly when their accumulated gaps
+differ by an integer multiple of `2π`. A one-tick alias persists at
+every integer tick. Gaps `π` and `3π` both complete a reflection on
+the first tick and give the same entire coherent integer-tick history
+(`phase_alias_iff`, `integer_samples_agree`, `ambiguous_exchange_clock`).
+
+The statistical transfer supplies a separate observable. On a moved
+input label, two trials change the label with weight
+`w = (1 − (1−2p)²)/2 = 2p(1−p)`. On the admissible lazy-transfer
+interval this fixes the attempt parameter and the gap
+`g = −log(1−2w)`. On the prepared vector-class odd live seed, the
+same test reads the total probability on the two record-port labels,
+so the input can be prepared in the odd sector
+(`trial_weight`, `gap_from_trials`, `trial_weight_inj`,
+`odd_seed_trial_weight`).
+
+An exact reflection in `N` unit ticks requires
+`−N log(1−2w) = π + 2πk`. For the principal exchange this gives
+`w = (1 − exp(−π/N))/2`. A coherent flag alone also fixes the rate
+if a separate argument puts the one-tick gap in `[0,π]`
+(`exchange_tick_iff`, `principal_trial_weight`, `principal_flag_inj`).
+The remaining clock input is a native two-trial law with a known time
+unit, or a native bound on the phase together with a calibrated coherent
+comparison. These tests use the existing root transfer and pulse models.
+The allowed firing phases and physical registration tariff remain open.
+[RootClockCalibration](RootClockCalibration.lean)
 
 ## Heavy-label application
 
