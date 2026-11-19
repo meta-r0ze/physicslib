@@ -178,3 +178,19 @@ by independent choices of these rows. There are eight choices at
 each of four requests and 43 phases, hence `8^(4 × 43)` tables
 (`enumerated_rule_count`). This counts literal guard tables and
 requires no quotient or symmetry assumption.
+
+### Reachability per rule
+
+| Input or question | Consequence of the enumerated rule |
+| --- | --- |
+| Uniform occupied field with equal live and record ports | Both values stay equal at every site, for every table and every tick (`uniform_ports_iterate`). This is the uniform port projection of the certified stationary reference fields. It supplies the same value on each stream but does not choose which physical reference occupies them. |
+| Trial probe on any supplied moving root orbit | `read_trial_iterate` reduces every projected trace to `ClockedRootTrials.tick`. All tables preserve the four initial request fibres. The counts are `(1,1,1,1)` for one state per pair or `(1,0,0,1)` for one per shared request in the order above. The accessible controller states determine which counts apply. |
+| Tagged open receiver | If the centre carries the double request and the rest of the line carries the idle pair, a table that exchanges and bypasses on those tags respectively realizes the open-line trace exactly (`tagged_open_iterate`). At visit `k` it reads the ready reference at `+k`, retains the live arrival at `−k`, and exports earlier records as in `receiver_trace` and `export_trace`. The initial tags and contents specify this conditional trace. The rule does not allocate them. |
+| Mixed requests and unequal arrivals | `two_open_compatible_rules` gives two reversible tables agreeing on the entire tagged receiver trace. One exchanges on two true bits, the other on either true bit. `mixed_requests_different_destinations` shows the different outputs for the same input with exactly one set request. |
+| Writer population and heavy and light branches | Neither the port alphabet nor the trial bit is a packet or companion record. The trace supplies the ordered port values, with no identification of the writer's port, vacancy guard, electric polarity, or retained heavy and light guards. The existing heavy and light candidate support remains as stated above. |
+
+A three-site stencil applies at each tick. To compute `N` open
+visits from initial data at a single centre requires the upstream
+ports through `±N` or a law supplying them. A single period tests
+the trial or the local rule at each phase. The direct and restoring
+serial lower bounds still govern any proposed longer physical wire.

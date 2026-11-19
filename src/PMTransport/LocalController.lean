@@ -166,4 +166,98 @@ theorem enumerated_rule_count : Fintype.card EnumeratedRule = 8 ^ (4 * 43) := by
   rw [Fintype.card_fun, Fintype.card_fun, Fintype.card_coe, reversible_rows_count, ← pow_mul]
   simp [Requests]
 
+
+/-- Read the independently supplied root probe at one node. -/
+def readTrial (z : SubstrateReflection.Lattice) (x : ℤ) (s : State) :
+    Requests × ClockControlledRoot.State :=
+  ((s.2.1 x).1, (orbitPoint z (s.2.1 x).2, s.1))
+
+theorem read_trial_iterate (rule : Rule) (z : SubstrateReflection.Lattice)
+    (x : ℤ) (s : State) (n : ℕ) :
+    readTrial z x ((rawTick rule)^[n] s) =
+      (ClockedRootTrials.tick^[n]) (readTrial z x s) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ← ih]
+    exact (probe_realises_trial _ _ z).symm
+
+/-- Equal uniform ports stay equal through every guard table. -/
+theorem uniform_ports_iterate (rule : Rule) (s : State) (v : Bool)
+    (hs : ∀ x, s.2.2 x = (v, v)) (n : ℕ) :
+    ∀ x, ((rawTick rule)^[n] s).2.2 x = (v, v) := by
+  induction n with
+  | zero => exact hs
+  | succ n ih =>
+    intro x
+    rw [Function.iterate_succ_apply']
+    change applyGuard _ (((((rawTick rule)^[n]) s).2.2 (x - 1)).1,
+      ((((rawTick rule)^[n]) s).2.2 (x + 1)).2) = (v, v)
+    rw [ih (x - 1), ih (x + 1)]
+    simp [applyGuard]
+
+/-- Conditional attachment of the open receiver pattern to internal tags. -/
+def OpenCompatible (rule : Rule) : Prop :=
+  ∀ phase p, rule phase (false, false) p = false ∧ rule phase (true, true) p = true
+
+def CentreTagged (s : State) : Prop :=
+  ∀ x, (s.2.1 x).1 = if x = 0 then (true, true) else (false, false)
+
+theorem tagged_open_iterate (rule : Rule) (h : OpenCompatible rule)
+    (s : State) (hs : CentreTagged s) (n : ℕ) :
+    ((rawTick rule)^[n] s).2.2 = OpenHandoff.run s.2.2 n := by
+  have keep (k : ℕ) : CentreTagged ((rawTick rule)^[k] s) := by
+    induction k with
+    | zero => exact hs
+    | succ k ih =>
+      intro x
+      rw [Function.iterate_succ_apply']
+      exact ih x
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    have ht := keep n
+    let u := (rawTick rule)^[n] s
+    rw [Function.iterate_succ_apply']
+    unfold OpenHandoff.run
+    rw [Function.iterate_succ_apply', ← show u.2.2 =
+      (OpenReferenceFlow.evolution 0 OpenReferenceFlow.line)^[n] s.2.2 from ih]
+    funext x
+    have hx := ht x
+    change (u.2.1 x).1 = _ at hx
+    simp only [OpenReferenceFlow.evolution_apply]
+    change applyGuard (rule u.1 (u.2.1 x).1)
+      (((u.2.2) (x - 1)).1, ((u.2.2) (x + 1)).2) = _
+    rw [hx]
+    by_cases h0 : x = 0
+    · simp [h0, applyGuard, (h _ _).2, OpenReferenceFlow.line]
+    · simp [h0, applyGuard, (h _ _).1, OpenReferenceFlow.line]
+
+def exchangeOnBoth : Rule := fun _ c _ => c.1 && c.2
+def exchangeOnEither : Rule := fun _ c _ => c.1 || c.2
+
+/-- Even requiring identical certified open-line traces for the tagged
+    receiver leaves different autonomous rules on mixed requests. -/
+theorem two_open_compatible_rules :
+    Function.Bijective (rawTick exchangeOnBoth) ∧ OpenCompatible exchangeOnBoth ∧
+      Function.Bijective (rawTick exchangeOnEither) ∧ OpenCompatible exchangeOnEither ∧
+      exchangeOnBoth ≠ exchangeOnEither := by
+  refine ⟨(reversible_iff_rows _).mpr (fun _ _ => rfl), fun _ _ => ⟨rfl, rfl⟩,
+    (reversible_iff_rows _).mpr (fun _ _ => rfl), fun _ _ => ⟨rfl, rfl⟩, ?_⟩
+  intro h
+  have hc := congrArg (fun f : Rule => f 0 (true, false) (false, true)) h
+  exact Bool.false_ne_true hc
+
+theorem mixed_requests_different_destinations (s : State) (x : ℤ)
+    (hc : (s.2.1 x).1 = (true, false)) (hl : (s.2.2 (x - 1)).1 = false)
+    (hr : (s.2.2 (x + 1)).2 = true) :
+    (rawTick exchangeOnBoth s).2.2 x = (false, true) ∧
+      (rawTick exchangeOnEither s).2.2 x = (true, false) := by
+  change applyGuard (exchangeOnBoth s.1 (s.2.1 x).1)
+      ((s.2.2 (x - 1)).1, (s.2.2 (x + 1)).2) = _ ∧
+    applyGuard (exchangeOnEither s.1 (s.2.1 x).1)
+      ((s.2.2 (x - 1)).1, (s.2.2 (x + 1)).2) = _
+  rw [hc, hl, hr]
+  exact ⟨rfl, rfl⟩
+
 end PMTransport.LocalController
