@@ -110,7 +110,12 @@ reference when the backward orbit is open and already supplied.
 open receiver permits every live arrival sequence in this model.
 The same reference can therefore accompany different label
 frequencies. This witness concerns the transport update and
-does not admit any particular physical source.
+does not admit any particular physical source. At the restored
+live port the next operation sees the supplied reference. At the
+displaced record port it sees the incoming live value. The heavy
+direct address avoids the reference class
+(`HeavyFlipControl.direct_iff`). None of these facts attaches its
+writer to either receiver port or the bypass stream.
 
 If the writer receives only occupied light payloads, the static
 vacancy has no incoming population (`VacancyProjection.occupied_fixed_iff`).

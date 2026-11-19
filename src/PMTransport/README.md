@@ -23,6 +23,7 @@ The physical clock and registration cost need more work.
 - Read [CLOCK.md](CLOCK.md) for clock certificates and firing constraints.
 - Read [OVERVIEW.md](OVERVIEW.md) to find the results.
 - Read [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md) to find the open work.
+- Read [PREMISES.md](PREMISES.md) for the status of each review item.
 
 ## How to check the library
 

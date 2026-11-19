@@ -2,6 +2,7 @@
 
 There is no paper for this library. This note states what it studies so the
 results have a common frame. It is a working statement, not a result.
+The [premise ledger](PREMISES.md) tracks the checked results and open inputs.
 
 ## The system
 

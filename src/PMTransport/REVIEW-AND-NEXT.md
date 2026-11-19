@@ -1,6 +1,7 @@
 # PMTransport — open work
 
 The [overview](OVERVIEW.md) records the checked results and their hypotheses.
+The [premise ledger](PREMISES.md) classifies the items below.
 
 ## Node handoff
 
