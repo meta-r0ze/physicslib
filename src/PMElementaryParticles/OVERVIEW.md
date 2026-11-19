@@ -903,10 +903,12 @@ generations differently, and this records where they agree
   prefactor is what the heavy-label readout must supply.
 * **Middle to light: where up and down differ.** The wire gives
   `m₁ = 0` at resonance for every protocol. The ledger gives up exactly
-  `3/Δ²` (two tiers) and down `2.1/Δ`, the electron `0.21/Δ` (one tier).
-  So the ledger's up/down tier difference sits entirely in the lightest
-  step: the lightest-mass lift should be second order in `1/Δ` for up and
-  first order for down and the electron.
+  `3/Δ²` (two tiers) and down `2.1/Δ` (one tier). So the ledger's
+  up/down tier difference sits entirely in the lightest step: the
+  lightest-mass lift should be second order in `1/Δ` for up and first
+  order for down. The electron shares down's tier set, but its value
+  `0.21/Δ ≈ 8.9/Δ²` reads more naturally as second order; the tier set
+  does not settle its order.
 
 ## Final channels of a charged-current event
 

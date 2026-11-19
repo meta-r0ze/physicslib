@@ -5,8 +5,9 @@ The tier ledger (QuarkMasses, LeptonMasses) gives each protocol three tiers Delt
 wire gives the heaviest-to-middle ratio one node passage, k = alpha/2 with alpha^-1 ~ pi Delta,
 so one power of 1/Delta, and the lightest mass zero at resonance. This prints the ledger's two
 generation steps in powers of 1/Delta for each protocol: both ledger and wire put the
-heavy-to-middle step at one power of Delta for every protocol, and the ledger puts up's
-middle-to-light step at two powers (exactly 3/Delta^2) and down's and the electron's at one.
+heavy-to-middle step at one power of Delta for every protocol; the ledger puts up's
+middle-to-light step at two powers (exactly 3/Delta^2) and down's at one, while the electron's
+(0.21/Delta = 8.9/Delta^2) reads more naturally as second order despite its tier set.
 """
 import math
 

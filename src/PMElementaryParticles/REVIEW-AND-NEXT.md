@@ -43,9 +43,9 @@ the recorded mass ratios to check it.
   native law that admits and fires a charge-selective coherent flip.
   Structural target from the [tier ledger](OVERVIEW.md#tier-ledger-and-the-wire):
   the ledger's only up/down tier difference is the middle-to-light step,
-  second order in `1/Δ` for up (`3/Δ²`) and first order for down and the
-  electron. A derived lift should show that order before any value is
-  compared.
+  second order in `1/Δ` for up (`3/Δ²`) and first order for down; the
+  electron's value fits second order better despite its tier set. A
+  derived lift should show its order before any value is compared.
   Derive its pulse area and whether the same real detuning is held by
   a stationary calibration channel shared across charged protocols.
   [Charged insertion](OVERVIEW.md#charged-insertion-on-the-static-wall)
