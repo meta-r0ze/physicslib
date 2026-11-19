@@ -26,6 +26,15 @@ the recorded mass ratios to check it.
   conversion, test the charged ladder, and compare the derived gaps with
   `tools/heavy_toll_targets.py`.
 
+  The exact two-bit record makes down the geometric mean of electron
+  and up for any price per registration (`down_geometric_mean`). Two
+  things decide whether it is the readout: the price `λ` per bit, which
+  needs the registration and record lifecycle (write, export, reset) in
+  [PMTransport](../PMTransport/REVIEW-AND-NEXT.md#label-sensitive-handoff)
+  (the ledger-convention comparison reads `λ ≈ 2`), and a common factor
+  on the heavy flip, since up compares at `s_u ≈ 0.67` rather than the
+  bare wire's `1`.
+
   See the [hypercharge constraints](OVERVIEW.md#protocol-toll-constraints),
   [record exclusion](OVERVIEW.md#record-comparisons-and-heavy-flip-toll), and
   [comparison diagnostics](OVERVIEW.md#other-heavy-weight-diagnostics).

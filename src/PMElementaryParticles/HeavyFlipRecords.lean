@@ -224,4 +224,17 @@ theorem orbit_record_ladder (a : Fin 3) :
   rw [TollAmplitude.wireAmplitude_lt_iff, TollAmplitude.wireAmplitude_lt_iff, he, hd, hu]
   norm_num
 
+/-- **Down is the geometric mean.** For any price `λ` per registration, the exact two-bit
+record gives `s_d² = s_e · s_u`: down shares one bit with the electron and none with up, so its
+Toll is the mean of theirs. This holds with no free parameter, before any tariff is fixed. -/
+theorem down_geometric_mean (lam : ℝ) (a : Fin 3) :
+    let s c := TollAmplitude.wireAmplitude (lam * orbitRecordToll c)
+    s (downStatic a) ^ 2 = s electronStatic * s (upStatic a) := by
+  obtain ⟨he, hd, hu, -⟩ := orbit_record_tolls a
+  dsimp only
+  rw [he, hd, hu]
+  unfold TollAmplitude.wireAmplitude
+  rw [sq, ← Real.exp_add, ← Real.exp_add]
+  ring_nf
+
 end PMElementaryParticles.HeavyFlipRecords

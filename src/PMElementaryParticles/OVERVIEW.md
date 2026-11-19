@@ -431,9 +431,23 @@ their own accounting. The finite gate does not select the phase coupling,
 the bank preparation, the polarity as a physical charge convention, or
 the event that fires it.
 
-Comparison only. The exact-bit candidate has gap ratio 1 and the paired
-hypercharge budget has ratio about 0.423. The mass-scale diagnostics in
-`tools/heavy_toll_targets.py` require about 1.1–1.5.
+**Down is the geometric mean.** A registration is one expected flagged
+outcome of a comparison visit; a label's Toll counts them
+(`PMAction.TollAmplitude`). With any price `λ` per registration, the
+exact two-bit Tolls `(2, 1, 0)` for `e, d, u` give `s_d² = s_e · s_u`
+(`down_geometric_mean`): down shares the position bit with the electron
+and the colour bit with up, so it is the parameter-free test of whether
+the two bits add independently.
+
+Comparison only (`tools/down_mean_check.py`). In the tier ledger's own
+mass convention (`m_s(2 GeV)/m_b(m_b)`, `m_c(m_c)/m_t`) the inferred
+weights give `s_d/√(s_e s_u) = 0.96`, and the price read from the
+electron and from down agrees, `λ ≈ 2.04` and `2.13` registrations per
+bit. Up then sits at `s_u ≈ 0.67`, not at the bare wire's `1`. In the
+scan's other conventions the law misses by `14–23%` and the two `λ`
+differ by `15–20%`. The exact-bit candidate has gap ratio 1 and the
+paired hypercharge budget has ratio about 0.423; the mass-scale
+diagnostics in `tools/heavy_toll_targets.py` require about 1.1–1.5.
 
 ### An electric-charge record on both walls
 
