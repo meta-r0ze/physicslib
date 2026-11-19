@@ -9,5 +9,6 @@ import PMTransport.Interface
 import PMTransport.Values
 import PMTransport.LocalController
 import PMTransport.RingReceiver
+import PMTransport.BoundaryErasure
 
 /-! Reversible node-to-node transport and packet handoff on the E8 substrate. -/
