@@ -1,25 +1,39 @@
 #!/usr/bin/env python3
-"""Tier ledger versus wire routes (external, arithmetic; EP OVERVIEW, "Tier ledger and the wire").
-
-The tier ledger (QuarkMasses, LeptonMasses) gives each protocol three tiers Delta^n. The derived
-wire gives the heaviest-to-middle ratio one node passage, k = alpha/2 with alpha^-1 ~ pi Delta,
-so one power of 1/Delta, and the lightest mass zero at resonance. This prints the ledger's two
-generation steps in powers of 1/Delta for each protocol: both ledger and wire put the
-heavy-to-middle step at one power of Delta for every protocol; the ledger puts up's
-middle-to-light step at two powers (exactly 3/Delta^2) and down's at one, while the electron's
-(0.21/Delta = 8.9/Delta^2) reads more naturally as second order despite its tier set.
-"""
+"""Comparison only: arithmetic on the normalized bare wire and declared tier ledger."""
 import math
 
-D, S, C, De = 4, 5, 2, 43
-eta = 171 / 172
-up, down = D / eta, (D + S) / eta
-strange, charm = (D * De + C * S) / eta, D * De**2 / (eta * (S - C))
-bottom, top = De**2 * (D + C / S) / eta, De**3 * (D + 1 / D)
-e, mu, tau = 1.0, 206.768, 3477.0  # LeptonMasses tier ledger values (units of m_e)
-k = (1 / 137.035999) / 2
-print(f"wire, bare: m2/m3 = sqrt(3/2) k = {math.sqrt(1.5) * k:.5f} = {math.sqrt(1.5) * k * De:.3f}/Delta")
-for name, (m1, m2, m3) in {"up": (up, charm, top), "down": (down, strange, bottom),
-                           "electron": (e, mu, tau)}.items():
-    print(f"{name:8s} m2/m3 = {m2 / m3:.5f} = {m2 / m3 * De:.3f}/Delta;  "
-          f"m1/m2 = {m1 / m2:.6f} = {m1 / m2 * De:.3f}/Delta = {m1 / m2 * De**2:.2f}/Delta^2")
+dimension, symmetry, euler, delta, channels = 4, 5, 2, 43, 16
+resolution = dimension * delta
+eta = (resolution - 1) / resolution
+gap = resolution - symmetry
+load = channels + symmetry + euler + 2 * dimension
+# PMSubstrate.geometricIndex and PMConstants.Values.alpha
+impedance = (
+    math.pi * delta + euler - 1 / gap - euler / delta
+    + euler * gap / ((2 * channels)**3 * symmetry * resolution)
+    + 1 / (load * (symmetry + 1) * delta**2)
+)
+alpha = 1 / impedance
+k = alpha / 2
+wire_ratio = math.sqrt(3) * k / math.sqrt(2 + k * k)
+
+up = dimension / eta
+down = (dimension + symmetry) / eta
+strange = (dimension * delta + euler * symmetry) / eta
+charm = dimension * delta**2 / (eta * (symmetry - euler))
+bottom = delta**2 * (dimension + euler / symmetry) / eta
+top = delta**3 * (dimension + 1 / dimension)
+electron = 1.0  # Ledger units of m_e.
+muon = symmetry * delta - euler - 2 * math.pi + (euler + symmetry) * alpha / (1 - alpha)
+tau = euler * delta**2 - symmetry * delta - (dimension + euler)
+
+print("Comparison only: normalized bare wire and declared tier formulas.")
+print(f"bare wire m2/m3 = {wire_ratio:.5f} = {wire_ratio * delta:.3f}/Delta")
+for name, (m1, m2, m3) in {
+    "up": (up, charm, top),
+    "down": (down, strange, bottom),
+    "electron": (electron, muon, tau),
+}.items():
+    print(f"{name:8s} m2/m3 = {m2 / m3:.5f} = {m2 / m3 * delta:.3f}/Delta;  "
+          f"m1/m2 = {m1 / m2:.6f} = {m1 / m2 * delta:.3f}/Delta = "
+          f"{m1 / m2 * delta**2:.2f}/Delta^2")

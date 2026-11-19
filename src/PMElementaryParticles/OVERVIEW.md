@@ -151,7 +151,7 @@ construction projects the existing neutral-degenerate Hamiltonian.
 
 ## Protocol readout
 
-Numerical, `tools/protocol_readout_scan.py`. On the derived wire (`PMAction.ReferenceClassHop`: reference wall `κ_R = (K, k, k)`; `PMAction.CarrierAdmittance`: other wall class-blind, `κ_O = (K, K, K)`; `K = 1`) the cycle resonance is `δ³ = −1` (`PMAction.OtherWallStationary`). At every cube root the bare wire has `m₁ = 0` and `m₂/m₃ = √(3/2) k`: `0.0045` for `k = α/2`, `0.0089` for `k = α`, the same for every protocol. The data (`m_μ/m_τ = 0.0595`, `m_s/m_b ≈ 0.019–0.022`, `m_c/m_t ≈ 0.0036–0.0042`) then need a weight `s` on the heavy label (both walls) per protocol: `s_e : s_d : s_u ≈ 1 : 2.7–3.2 : 12–13.5` for `α/2` (`1 : 2.6–3.1 : 9.6–10.6` for `α`), ordered by charge; the heavy label's mass scales as `s²`. The lazy flip law squares the bare ratio (`2·10⁻⁵`), far below every protocol, so the data favour the coherent event. CKM on the derived wire (weights as fitted): same root `|V_us| ≈ 0.0001`, `|V_cb| ≈ 0.009`, `|V_ub| ≈ 0.008`; different roots `|V_us| = √3/2 ≈ 0.866`, `|V_cb| ≈ 0.010`, `|V_ub| ≈ 0.011` (data `0.225`, `0.041`, `0.0037`): the bare wire's rotation is not the CKM. Mixing tests on the derived wire (`tools/mixing_candidates_check.py`, masses held at data): `|V_us| = 0.225` is reached by a relative flip phase, a light-class asymmetry, or an other-wall cycle phase or asymmetry, so it does not discriminate; `|V_cb|` stays at `0.002–0.010` under every deformation tried (those, the weight on one or both walls, a joint fit, `k/K` from `α/4` to `10α`), with `|V_cb| ≈ |V_ub|`. So the wire's mass matrices cannot give `|V_cb|`; PMFlavor's transfer readout does (`PMFlavor.ReferenceRouting`). Charge-weight test: one `a` in `s ∝ e^{a Y_R}` gives down and up `0.82` and `0.77` (PDG mixed scales), `0.74` and `0.75` (`m_b`, `m_t` at their own scale), 2–11% apart across quark-mass choices (`k = α/2`; `7–18%` at `k = α`). Lightest masses: a real offset `δ = −1 + ε` off the resonance reproduces each `m₁/m₂` with `ε ≈ 0.038 (e), 0.14 (d), 0.0024 (u)`, keeping `m₂/m₃` within 2–7%; with those offsets the same-root CKM is `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065`.
+Numerical, `tools/protocol_readout_scan.py`. On the derived wire (`PMAction.ReferenceClassHop`: reference wall `κ_R = (K, k, k)`; `PMAction.CarrierAdmittance`: other wall class-blind, `κ_O = (K, K, K)`; `K = 1`) the cycle resonance is `δ³ = −1` (`PMAction.OtherWallStationary`). At every cube root the bare wire has `m₁ = 0` and `m₂/m₃ = √3 k / √(2 + k²) ≈ √(3/2) k`: `0.0045` for `k = α/2`, `0.0089` for `k = α`, the same for every protocol. The data (`m_μ/m_τ = 0.0595`, `m_s/m_b ≈ 0.019–0.022`, `m_c/m_t ≈ 0.0036–0.0042`) then need a weight `s` on the heavy label (both walls) per protocol: `s_e : s_d : s_u ≈ 1 : 2.7–3.2 : 12–13.5` for `α/2` (`1 : 2.6–3.1 : 9.6–10.6` for `α`), ordered by charge; the heavy label's mass scales as `s²`. The lazy flip law squares the bare ratio (`2·10⁻⁵`), far below every protocol, so the data favour the coherent event. CKM on the derived wire (weights as fitted): same root `|V_us| ≈ 0.0001`, `|V_cb| ≈ 0.009`, `|V_ub| ≈ 0.008`; different roots `|V_us| = √3/2 ≈ 0.866`, `|V_cb| ≈ 0.010`, `|V_ub| ≈ 0.011` (data `0.225`, `0.041`, `0.0037`): the bare wire's rotation is not the CKM. Mixing tests on the derived wire (`tools/mixing_candidates_check.py`, masses held at data): `|V_us| = 0.225` is reached by a relative flip phase, a light-class asymmetry, or an other-wall cycle phase or asymmetry, so it does not discriminate; `|V_cb|` stays at `0.002–0.010` under every deformation tried (those, the weight on one or both walls, a joint fit, `k/K` from `α/4` to `10α`), with `|V_cb| ≈ |V_ub|`. So the wire's mass matrices cannot give `|V_cb|`; PMFlavor's transfer readout does (`PMFlavor.ReferenceRouting`). Charge-weight test: one `a` in `s ∝ e^{a Y_R}` gives down and up `0.82` and `0.77` (PDG mixed scales), `0.74` and `0.75` (`m_b`, `m_t` at their own scale), 2–11% apart across quark-mass choices (`k = α/2`; `7–18%` at `k = α`). Lightest masses: a real offset `δ = −1 + ε` off the resonance reproduces each `m₁/m₂` with `ε ≈ 0.038 (e), 0.14 (d), 0.0024 (u)`, keeping `m₂/m₃` within 2–7%; with those offsets the same-root CKM is `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065`.
 
 ### Lifting the resonant zero
 
@@ -886,29 +886,10 @@ CKM magnitudes; they were removed as Standard-Model fitting, not substrate resul
 
 ## Tier ledger and the wire
 
-The tier ledger (`TierLedger`: up on tiers `{0, 2, 3}`, down and leptons on
-`{0, 1, 2}`, each tier a factor `Δ`) and the derived wire describe the
-generations differently, and this records where they agree
-(`tools/tier_route_check.py`, arithmetic).
-
-* **Routes carry no protocol.** A generation on the wire is a route: the
-  heavy generation inserts directly, the two light ones pass the
-  reference node (`ReferenceClassHop`), and every route acts the same on
-  every label (`GluedRegister.wallStep_class`, `crossing_walls`). The tier
-  sets differ by protocol, so routes alone cannot be the tiers.
-* **Heavy to middle: one power of `Δ` in both.** The wire's step is one
-  node passage, `k = α/2` with `α⁻¹ ≈ πΔ`, so `m₂/m₃ ∝ 1/Δ`
-  (bare: `0.192/Δ`). The ledger's step is one tier for every protocol:
-  `0.32/Δ` (up), `0.96/Δ` (down), `2.56/Δ` (electron). The per-protocol
-  prefactor is what the heavy-label readout must supply.
-* **Middle to light: where up and down differ.** The wire gives
-  `m₁ = 0` at resonance for every protocol. The ledger gives up exactly
-  `3/Δ²` (two tiers) and down `2.1/Δ` (one tier). So the ledger's
-  up/down tier difference sits entirely in the lightest step: the
-  lightest-mass lift should be second order in `1/Δ` for up and first
-  order for down. The electron shares down's tier set, but its value
-  `0.21/Δ ≈ 8.9/Δ²` reads more naturally as second order; the tier set
-  does not settle its order.
+The [generation comparison](GENERATIONS.md) connects the three glue addresses
+to one direct and two node-mediated routes. It distinguishes address from
+mass rank and compares the shared heavy-to-middle power with the declared
+tiers. The bare wire's lightest mode is zero at resonance.
 
 ## Final channels of a charged-current event
 
