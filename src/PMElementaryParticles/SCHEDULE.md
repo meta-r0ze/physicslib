@@ -50,3 +50,66 @@ uses the former for the writer and does not also charge the full factor
 ledger for that writer. The registration policy must justify any extra
 primitive charge. `amplitude` applies `TollAmplitude.wireAmplitude`
 to the full Toll for the persisting unflagged readout.
+
+## Selection and the unresolved minimum
+
+`minima` gives the exact finite minimizer set for a supplied scalar cost.
+`minima_nonempty` requires a nonempty admitted family.
+`best_survival_iff` applies `PersistenceSelection.within_family_iff_cheapest`.
+The Gibbs normalization preserves the order of the costs with equal
+prior counts (`Gibbs.weight_order`, `probability`). Unequal priors need
+their own supply law (`Selection.survivor_odds`).
+In the template each fresh required comparison appears once. This is
+the Economy case of `RefreshSchedule` and `CoherentRefresh`. The
+template does not assume removal of an optional visit preserves physical
+admission and the remaining costs.
+
+With both electric output flags paid and other work held out of the
+subtotal, `knownToll_recordOnly`, `colour_tolls` and `lepton_tolls`
+give the following known budgets.
+
+| Sector reference | Electron | Up | Down | Survival amplitude order for the bit subtotal |
+| --- | --- | --- | --- | --- |
+| Colour | 2 | 0 | 1 | `s_e < s_d < s_u`. Down is the geometric mean. |
+| Lepton | 1 | 1 | 2 | `s_d < s_e = s_u`. Down is not the geometric mean. |
+
+`polarity_tradeoff` proves that neither row minimizes the known Toll
+for every charged label. The electron prefers the lepton reference.
+Either quark protocol prefers the colour reference. This result does
+not require measured values. For a single schedule shared by all
+labels a scalar objective needs a rule for weighting the labels.
+If the two polarities are both admitted and if that objective is a
+weighted sum of bit Tolls plus a remainder, the exact cost difference,
+colour minus lepton, is
+
+```text
+w_e − w_u − w_d + (remaining_cost_colour − remaining_cost_lepton).
+```
+
+By `polarity_minimum_iff`, a negative difference selects the colour
+reference, a positive difference selects lepton, and zero ties them.
+With equal remainder, a tie needs `w_e = w_u + w_d`. Equal weights per
+protocol would favour colour in this two-option calculation. The
+substrate results used here supply neither that weighting rule nor
+equal remainders. They also leave physical admission of the two
+candidates open. If a different template uses a genuinely different
+record writer, these two-option inequalities do not compare its cost.
+
+`knownToll_eq_of_paid_eq` proves that changing slots or live branch
+while retaining the same polarity and paid visits leaves the subtotal
+fixed. If both placements are admitted and their full costs are equal,
+`tied_minimum` carries optimality from one to the other. A selection
+between those placements needs a phase-specific admission or cost
+rule. Dropping a required or unpriced visit would change the physical
+premise. In particular, the all-idle clock cannot execute this template.
+
+The light-offset candidate at address two keeps the matched plus
+outputs and fires on the stored selector result. Its two paid output
+flags contribute zero for each of electron, up and down. The charged
+pulse and its remaining account have no selected native firing law.
+The vacancy probe has a distinct flag budget `(½,1,½)` in that order.
+Economy does not turn that probe into the required selector. The
+colour-reference bit subtotal gives the heavy-record pattern only
+under the stated assumptions. Neither opposed attenuation pattern
+has been selected for the physical wire. The selector supplies no
+order of `ε` in `1/Δ`.

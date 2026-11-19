@@ -14,6 +14,8 @@ item 2 need a native law that admits and fires a conditioned coherent pulse.
 [PMTransport tracks slot bounds and firing branches](../PMTransport/CLOCK.md).
 [PMAction tracks event admission](../PMAction/REVIEW-AND-NEXT.md#extensions).
 The Toll-to-amplitude conversion is established in `PMAction.TollAmplitude`.
+The [finite selection result](SCHEDULE.md#selection-and-the-unresolved-minimum)
+requires a physically admitted family and its remaining costs.
 
 ## The protocol readout (first)
 

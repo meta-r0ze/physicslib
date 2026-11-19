@@ -384,6 +384,10 @@ a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
 | `HeavyCrossingCost.activity_histogram`, `uniform_cost`, `sign_tie` | Six reflects per carrier give 27 idle, 20 unit and one double displacement across eight amplitudes. The mean charge is `(20 c₁ + c₂)/8`. | Uniform amplitudes for the mean, antipodal weights for the sign tie and supplied prices per displacement. |
 | `HeavyFlipNativeBoundary.no_closed_cleaning`, `tick_event_iff`, `idle_and_excursion_counts`, `cycle_closes`; `GappedGluedCrossing.equalClass_iff` | The untagged probe aliases addresses and closed universal cleaning is impossible. Both idle and two-toggle masks close. The gapped crossing shifts generation. | Address and ready record needed for the clocked endpoint. Separate Schur insertions still need their own firing law. |
 
+[Persistence selection](SCHEDULE.md) enumerates a bounded serial family.
+Its exact polarity threshold leaves label weights, admission and
+unpriced physical work open.
+
 Open premises.
 
 - Supply and renew the occupied seed, admit the joint current, controlled phases and crossing, and schedule the two wall insertions. Retain reset or export in the record trace. See the [clock ledger](../PMTransport/CLOCK.md).

@@ -206,4 +206,118 @@ theorem knownToll_eq_of_paid_eq {ticks : ℕ} (b : Bool) (c : Channels)
 
 end
 
+noncomputable section
+open PMConstants.PacketGaugeActions ProtocolToll
+open PMAction DiagonalReadout TollAmplitude
+
+/-- Exact minima once the physical scalar cost is supplied. -/
+def minima {ticks : ℕ} (p : Premises ticks) (cost : Schedule ticks → ℝ) :
+    Finset (Schedule ticks) := by
+  classical
+  exact (family p).filter (fun s => ∀ t ∈ family p, cost s ≤ cost t)
+
+theorem mem_minima {ticks : ℕ} (p : Premises ticks) (cost : Schedule ticks → ℝ)
+    (s : Schedule ticks) :
+    s ∈ minima p cost ↔ s ∈ family p ∧ ∀ t ∈ family p, cost s ≤ cost t := by
+  classical
+  simp [minima]
+
+theorem minima_nonempty {ticks : ℕ} (p : Premises ticks) (cost : Schedule ticks → ℝ)
+    (h : (family p).Nonempty) : (minima p cost).Nonempty := by
+  obtain ⟨s, hs, hmin⟩ := (family p).exists_min_image cost h
+  exact ⟨s, (mem_minima p cost s).2 ⟨hs, hmin⟩⟩
+
+/-- Economy picks precisely the maximal survival schedules inside the supplied family. -/
+theorem best_survival_iff {ticks : ℕ} (p : Premises ticks) (cost : Schedule ticks → ℝ)
+    (s : Schedule ticks) (β baseline : ℝ) (hβ : 0 < β) :
+    (s ∈ family p ∧ ∀ t ∈ family p,
+      Real.exp (-β * (baseline + cost t)) ≤ Real.exp (-β * (baseline + cost s))) ↔
+      s ∈ minima p cost := by
+  rw [mem_minima]
+  exact PersistenceSelection.within_family_iff_cheapest β hβ cost (↑(family p)) baseline s
+
+theorem tied_minimum {ticks : ℕ} (p : Premises ticks) (cost : Schedule ticks → ℝ)
+    {s t : Schedule ticks} (hs : s ∈ minima p cost) (ht : t ∈ family p)
+    (heq : cost t = cost s) : t ∈ minima p cost := by
+  exact (mem_minima p cost t).2 ⟨ht, fun u hu =>
+    heq.trans_le (((mem_minima p cost s).1 hs).2 u hu)⟩
+
+/-- The observable two-visit subtotal when both electric record flags are paid. -/
+def bitToll (colourReference : Bool) (c : Channels) : ℝ :=
+  flag (3 * Real.pi * ElectricHeavyRecord.q c) +
+    flag (3 * Real.pi / 2 * ElectricHeavyRecord.sectorDifference colourReference c)
+
+/-- In the record-only account, the finite sum is exactly the two write flags. -/
+theorem knownToll_recordOnly {ticks : ℕ} (b : Bool) (c : Channels) (s : Schedule ticks)
+    (hp : paid s .position = true) (hs : paid s .sector = true)
+    (ho : ∀ e, e ≠ .position → e ≠ .sector → paid s e = false) :
+    knownToll b c s = bitToll s.1 c := by
+  classical
+  unfold knownToll bitToll
+  rw [← Finset.sum_subset (Finset.subset_univ ({.position, .sector} : Finset Event)) ?_]
+  · rw [Finset.sum_pair (show Event.position ≠ Event.sector by decide)]
+    simp [hp, hs, visitFlag]
+  · intro e _ he
+    have h : e ≠ Event.position ∧ e ≠ Event.sector := by simpa using he
+    simp [ho e h.1 h.2]
+
+theorem colour_tolls (a : Fin 3) :
+    bitToll true electronStatic = 2 ∧ bitToll true (upStatic a) = 0 ∧
+      bitToll true (downStatic a) = 1 := by
+  obtain ⟨he, hd, hu, -⟩ := HeavyFlipRecords.orbit_record_tolls a
+  simpa only [bitToll, ElectricHeavyRecord.colour_reference_toll] using
+    (show HeavyFlipRecords.orbitRecordToll electronStatic = 2 ∧
+        HeavyFlipRecords.orbitRecordToll (upStatic a) = 0 ∧
+        HeavyFlipRecords.orbitRecordToll (downStatic a) = 1 from ⟨he, hu, hd⟩)
+
+theorem lepton_tolls (a : Fin 3) :
+    bitToll false electronStatic = 1 ∧ bitToll false (upStatic a) = 1 ∧
+      bitToll false (downStatic a) = 2 := by
+  obtain ⟨he, hd, hu, -⟩ := ElectricHeavyRecord.lepton_reference_toll a
+  exact ⟨he, hu, hd⟩
+
+/-- Neither polarity weakly improves the known cost for every charged label. -/
+theorem polarity_tradeoff (a : Fin 3) :
+    bitToll false electronStatic < bitToll true electronStatic ∧
+      bitToll true (upStatic a) < bitToll false (upStatic a) ∧
+      bitToll true (downStatic a) < bitToll false (downStatic a) := by
+  obtain ⟨he, hu, hd⟩ := colour_tolls a
+  obtain ⟨he', hu', hd'⟩ := lepton_tolls a
+  rw [he, hu, hd, he', hu', hd']
+  norm_num
+
+/-- For a common schedule, weights on the three charged labels must be supplied.
+The remainder here includes all other contributions to the scalar objective. -/
+def polarityCost (a : Fin 3) (we wu wd : ℝ) (remainder : Bool → ℝ) (pol : Bool) : ℝ :=
+  we * bitToll pol electronStatic + wu * bitToll pol (upStatic a) +
+    wd * bitToll pol (downStatic a) + remainder pol
+
+/-- Exact threshold when the only candidates differ by sector-reference polarity
+and the two output flags are charged in both. -/
+theorem polarity_cost_difference (a : Fin 3) (we wu wd : ℝ) (remainder : Bool → ℝ) :
+    polarityCost a we wu wd remainder true - polarityCost a we wu wd remainder false =
+      we - wu - wd + (remainder true - remainder false) := by
+  obtain ⟨he, hu, hd⟩ := colour_tolls a
+  obtain ⟨he', hu', hd'⟩ := lepton_tolls a
+  simp only [polarityCost, he, hu, hd, he', hu', hd']
+  ring
+
+theorem polarity_minimum_iff (a : Fin 3) (we wu wd : ℝ) (remainder : Bool → ℝ) :
+    (∀ pol, polarityCost a we wu wd remainder true ≤ polarityCost a we wu wd remainder pol) ↔
+      we - wu - wd + (remainder true - remainder false) ≤ 0 := by
+  rw [← polarity_cost_difference, sub_nonpos]
+  constructor
+  · exact fun h => h false
+  · intro h pol
+    cases pol
+    · exact h
+    · exact le_rfl
+
+theorem polarity_tie_iff (a : Fin 3) (we wu wd : ℝ) (remainder : Bool → ℝ) :
+    polarityCost a we wu wd remainder true = polarityCost a we wu wd remainder false ↔
+      we - wu - wd + (remainder true - remainder false) = 0 := by
+  rw [← polarity_cost_difference, sub_eq_zero]
+
+end
+
 end PMElementaryParticles.WireSchedule
