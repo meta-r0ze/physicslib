@@ -1,4 +1,5 @@
 import PMElementaryParticles.WireSchedule
+import PMTransport.Values
 import PMConstants.PreparationSelection
 import PMConstants.ReferenceEconomy
 import PMSubstrate.PersistenceMaximin
@@ -198,6 +199,23 @@ theorem packet_record_difference (full probeVacancy : Bool) :
   rw [packet_record_cost, packet_record_cost]
   cases full <;> cases probeVacancy <;> norm_num
 
+
+/-- The packet inventory supplies the event counts in the Transport threshold. -/
+theorem packet_record_difference_eq_values (full probeVacancy : Bool) :
+    expectedCost 1 (recordEvents full probeVacancy true) -
+      expectedCost 1 (recordEvents full probeVacancy false) =
+      -PMTransport.Values.outputFlagThreshold full probeVacancy := by
+  rw [packet_record_difference, PMTransport.Values.outputFlagThreshold_eq]
+  cases full <;> cases probeVacancy <;> rfl
+
+/-- With separately paid balanced resets for the two output bits, the
+remaining colour-minus-lepton cost is compared to the reset threshold. -/
+theorem balanced_reset_gap_eq_values (full probeVacancy : Bool) (G : ℝ)
+    (hG : G = expectedCost 1 (recordEvents full probeVacancy true) -
+      expectedCost 1 (recordEvents full probeVacancy false)) :
+    G + G / 2 = -PMTransport.Values.balancedResetThreshold full probeVacancy := by
+  rw [hG, packet_record_difference_eq_values, PMTransport.Values.balancedResetThreshold]
+  ring
 
 /-- For the two principal root writers, each half-unit baseline is the
 two quarter flags from `ElectricHeavyRecord.pulse_flags`. Each signed kick

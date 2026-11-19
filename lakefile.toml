@@ -36,7 +36,7 @@ globs = ["PMConstants", "PMConstants.+"]
 name = "PMTransport"
 srcDir = "src"
 # The machine is built with PMAction. This target adds the packet-level handoff.
-globs = ["PMTransport", "PMTransport.HandoffAdmittance", "PMTransport.TwoSiteHandoff", "PMTransport.OpenHandoff", "PMTransport.OddReferenceSource", "PMTransport.RootClockCalibration", "PMTransport.ClockedRootTrials", "PMTransport.Interface"]
+globs = ["PMTransport", "PMTransport.HandoffAdmittance", "PMTransport.TwoSiteHandoff", "PMTransport.OpenHandoff", "PMTransport.OddReferenceSource", "PMTransport.RootClockCalibration", "PMTransport.ClockedRootTrials", "PMTransport.Interface", "PMTransport.Values"]
 
 [[lean_lib]]
 name = "PMFlavor"
