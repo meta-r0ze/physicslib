@@ -130,3 +130,27 @@ It remains parked.
 | Excluded | Bare untagged heavy selection or closed universal cleaning | `HeavyFlipControl.no_root_only_direct_address` and `HeavyFlipNativeBoundary.no_closed_cleaning`. `ElectricCompanionBank.written_port_ready_iff` restricts reuse via companion advance to the active neutral port. |
 | Derived | Record transport and the conditional reset flag | `OpenHandoff.sum_exported` preserves the exported population. `CoherentRecordRestoration.prepared_repair`, `unitary_reset_factorization` retain the displaced distinction. `OpenHandoff.balanced_basis_repair_flag` gives a half flag for a balanced written one against fresh zero in the admitted basis circuit. `twice_undoes` excludes silent reuse of the occupied record. |
 | Derived | Single-event record requirements | `EventRequirements.pairs_of_sign`, `axis_cannot_choose`, `full_reads_both` give the charged-current doublet requirement. `RefreshMap.asymmetric_gate_records` and `CoherentGate.unequal_needs_orthogonal` constrain the records. |
+
+## Next derivation
+
+An admitted trace gives the occupied live, reference and record ports at
+each tick, the guard and request at each operation, and the next state of
+all those ports, including idle alternatives and displaced records.
+
+`ClockedRootTrials` supplies the two retained slots and the joint-weight
+test for independent trials. An equal-prior history account requires
+equal prior counts of all four retained histories and equal local action
+for both changes. `BranchPulseContract.comparison_mem` and
+`program_correct` constrain the supplied comparison and control.
+`RegisterControl.extend_encode`, `occupation_conserved` and
+`phase_unitary` constrain its reversible realization.
+`PersistenceSelection.within_family_iff_cheapest` selects from the
+resulting family once its costs are supplied.
+
+Derive which occupied ports and native guards generate the trace on
+the E8 clock. Show which histories and their prior counts follow,
+how the record stays available until consumed or exported, and which
+reference is ready at each repeat visit. This should identify the
+writer's booked input mass and the admitted heavy and light branches.
+For the reference comparison, derive or bound the signed difference
+in paid work on that family.
