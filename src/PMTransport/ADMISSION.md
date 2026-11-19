@@ -99,3 +99,34 @@ wire traces from the persisting background until the two gaps above
 are filled. In particular, combining the trial table with each
 possible handoff branch by a Cartesian product would require a proof
 that the input controllers and ports admit those combinations.
+
+## Consequences for the wire
+
+| Question | Result of the reachability check |
+| --- | --- |
+| Writer population | With a common ready reference, `any_incoming_trace` realizes any supplied live arrival sequence in the open model. The restored live port contains the reference, and the displaced record port contains that sequence. The node law is compatible with different traffic and does not identify the writer's input port. `VacancyProjection.occupied_fixed_iff` excludes the sterile basis slot from occupied payloads. It leaves idle bookings and active probes open. None of the three uniform policies is forced. |
+| Heavy branch | `HeavyFlipControl.direct_iff` gives address zero. `no_root_only_direct_address` excludes a guard that reads only the untagged glued root. `ElectricCompanionBank.guarded_companion_transport` gives the candidate with the prepared tag and electric record. The joint controller must supply and retain the tag on the direct wall and fire the guarded crossing. The two reference polarities remain candidates. |
+| Lightest-offset branch | `ChargedInsertion.joint_selector` has support only at address two on a matching charged static label. `matched_flags_zero` gives zero flags on the two matched comparisons. It leaves their control and the offset firing open. The joint controller must retain their plus records and bind them and the static vector test to the pulse. |
+| Trial priors | The same update gives four histories with one state per pair and two histories with one state per shared request. Physical equality requires the accessible finite controller background and its request fibres. |
+| Physical schedule | The trial slots are fixed in the stated experiment. The wire's operation order, overlaps and times of repeat visits need a joint controller and boundary supply. |
+
+**Record reference undetermined.** For two admitted writers with a
+common booked population, let `M_L` and `M_C` be the booked colourless
+and coloured input masses. The output flag difference is
+`G = M_L − M_C` by `WireReferenceCost.booked_population_difference`.
+If both writers also pay a separate balanced reset per independent
+bit, `booked_balanced_reset_difference` gives the total signed
+colour-minus-lepton cost `U + (3/2)(M_L − M_C)`. Here `U` is the
+difference in remaining paid work, in the same units. Its sign
+selects colour when negative, ties at zero and selects lepton when
+positive, provided both schedules are admitted.
+
+The [three reset-inclusive thresholds](../PMElementaryParticles/SCHEDULE.md#record-reference-remains-undetermined)
+are conditional cases of this account. The decisive missing inputs
+are the booked traffic and polarity traces from **Background occupancy
+and boundary supply** and the **Joint clocked controller**, followed
+by the signed remainder under the [Registration tariff](PREMISES.md#registration-tariff).
+For this decision only, under a common population it suffices to give
+the signed sector mass difference and enough unmatched paid work to
+bound the total on one side of zero. If the two admitted polarities
+use different traffic, compute the two weighted charges separately.

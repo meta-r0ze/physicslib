@@ -136,6 +136,18 @@ theorem booked_population_difference (p : Channels → ℝ) :
       cases colourBulk c <;> simp [two_mul]
     _ = _ := by rw [sum_sub_distrib, ← mul_sum, sum_filter]
 
+/-- Cost difference for a common booked population if each bit also pays
+the separate balanced reset. The terms in `U` are still supplied. -/
+theorem booked_balanced_reset_difference (p : Channels → ℝ) (U : ℝ) :
+    let G := (∑ c, p c * WireSchedule.bitToll true c) -
+      (∑ c, p c * WireSchedule.bitToll false c)
+    G + G / 2 + U =
+      U + (3 / 2) * (2 * (∑ c ∈ univ.filter
+        (fun c : Channels => colourBulk c = false), p c) - (∑ c, p c)) := by
+  dsimp only
+  rw [booked_population_difference]
+  ring
+
 /-- For normalized inputs that all run the writer, its total booked mass is one. -/
 theorem population_difference (p : Channels → ℝ) (hnorm : ∑ c, p c = 1) :
     (∑ c, p c * WireSchedule.bitToll true c) -
