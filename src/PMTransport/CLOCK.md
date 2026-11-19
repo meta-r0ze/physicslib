@@ -131,3 +131,54 @@ gapped crossing between successive operations on one amplitude instead
 precludes overlapping those operations. The library leaves the
 physical choice between these executions open. It derives neither a
 minimum full-route period count nor a protocol-dependent one.
+
+## Which branch drives each pulse
+
+`CoherentGate.unequal_needs_orthogonal` requires orthogonal records
+when the two weak outputs would otherwise overlap.
+`RefreshMap.asymmetric_gate_records` gives the discrete version. These
+results determine which inputs the record must distinguish. Either
+polarity preserves this distinction. A reversible controlled gate can
+use either branch if the branch basis is exchanged and the controls
+are relabelled with it. In block form, conjugating `diag(I,U)` by the
+branch swap changes it to `diag(U,I)`. The `RegisterControl` encoding
+preserves the choice of control supplied to it. Conservation therefore
+does not decide which record value drives the physical pulse.
+
+| Event or visit | Branch fixed in the specified circuit | What the physical schedule still needs |
+| --- | --- | --- |
+| Reference excursion and trial pair | The phase boundary and retained request control the reflection. A false request leaves the carrier idle at that slot. | A source of the requests and a registration test. A double fire can return to the same endpoint and still move twice. |
+| Bare beta and bare crossing words | Each word acts on its whole supplied carrier input. Intermediate coherent pulses evolve both components of that input. | A physical trigger and a proof that the relevant address, chirality and input bank see the word on the chosen clock. |
+| Through the reference node | The reversible handoff model sends the two results to different registers. Bypass goes through. Exchange gives the returning route and restores the receiver when the arriving record supplies its reference (`TwoSiteHandoff.step_trace`, `receiver_agrees_with_line`, `HandoffAdmittance.receiver_exchange_or_bypass`). | An identification of these results with the reference-class insertion and a branch-resolved record and renewal trace. |
+| Charged-current comparison | In the full static readout, electron and down write the minus outcome, up and vacancy the plus outcome. The charged-current event depends on the stored doublet bit. | Which mixed-wall input and which visits occur in the physical event. Both bit values can serve their own events. |
+| Heavy guarded endpoint | In `HeavyFlipControl.registered_word`, the matching stored record at the direct address drives the crossing. The record bits and the address persist. It can be the all-zero record or a record containing a flag. `CompanionHeavyFlip.run_pack` checks a companion-based guard with the same conditional endpoint. | A write, export and reuse schedule and an identification of this endpoint control with each physical heavy insertion. |
+| Lightest offset | The candidate retains the plus output at each matched comparison. `matched_flags_zero` gives zero flags for the selected static input. Its joint class and protocol control acts only if a pulse is supplied. | Admit and fire that conditioned pulse. A vacancy-relative minus event is a different comparison. |
+| Comparison implementation and repair | In `BranchPulseContract.program_correct`, `ctrl U` applies `U` on the internal second branch between mixers. The minus flag is an output of the entire comparison. Coherent uncomputation restores the prepared input together with the record (`CoherentComparisonRepair.prepared_uncompute`). | Scheduled prices, physical record export or reset, and a rule for which output history continues on the wire. The inverse generally acts on unflagged inputs too (`inverse_not_flag_only`). |
+
+The flag budgets below count the stated visits. A flag becomes a paid
+registration only with the stated tariff and branch accounting. A paid
+unflagged schedule keeps amplitude `exp(−T/2)` under
+`TollAmplitude.wireAmplitude`.
+
+| Conditional accounting | Electron | Up | Down | Consequence |
+| --- | --- | --- | --- | --- |
+| One uncompensated vacancy comparison | ½ | 1 | ½ | Up has the greatest attenuation under a common positive price. |
+| One visit per heavy orbit bit, with the colour reference | 2 | 0 | 1 | Up has the least attenuation. `ElectricHeavyRecord.colour_reference_toll` agrees with `HeavyFlipRecords.orbit_record_tolls` for this choice. |
+| Two matched static tests for the selected light offset | 0 | 0 | 0 | These two selected output flags supply no label-dependent attenuation. |
+| Own-event charged-current flags | 1 | 0 | 1 | Electron and down tie (`EventRequirements.own_event_tolls`). One common full visit on equal wall populations also ties them, with flags ¾, ¼ and ¾ (`full_massive`). |
+
+The exact charge record can also use a lepton sector reference. It
+changes the budgets to `1, 1, 2` in the same charged order, with the
+same stated phase durations (`ElectricHeavyRecord.lepton_reference_toll`).
+Exact record writing and the timing budget therefore leave even this
+polarity open.
+
+The route and period bounds select none of these budgets as the physical
+Toll. Even which operation pays matters. For example, a shared factor on
+both wire flips cancels from mass ratios, whereas damping only the node
+legs raises the relative heavy weight
+(`EventRequirements.uniform_weight_cancels`, `node_toll_raises_heavy`).
+A permanent record can change the timing without changing its truth
+table. The missing result is a joint clocked trace that supplies the
+occupied reference and record, admits the pulse, and identifies which
+histories are counted and which drive each wall's insertion.
