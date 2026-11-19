@@ -108,4 +108,55 @@ theorem erase_full_cycle (bits : Fin Delta → Bool) :
 theorem full_cycle_rate : tollRate Delta = 1 := by
   norm_num [tollRate, PMAction.Delta_eq]
 
+/-! ## Counted boundary annotations
+
+The current controller keeps both circulating streams in its retained
+state. The separate disposal annotation has the same address as a
+guard decision. Counts here describe tables, before admission of a
+boundary itinerary.
+-/
+
+abbrev Address := LocalController.Phase × LocalController.Requests × LocalController.Ports
+abbrev Policy := Address → Disposition
+abbrev RetainingPolicy := Address → {d : Disposition // d ≠ .erase}
+abbrev AnnotatedRule := LocalController.EnumeratedRule × Policy
+abbrev RetainingRule := LocalController.EnumeratedRule × RetainingPolicy
+
+theorem disposition_count : Fintype.card Disposition = 3 := by decide +kernel
+
+theorem retaining_disposition_count : Fintype.card {d : Disposition // d ≠ .erase} = 2 := by
+  decide +kernel
+
+theorem address_count : Fintype.card Address = 688 := by decide +kernel
+
+theorem policy_count : Fintype.card Policy = 3 ^ 688 := by
+  rw [Fintype.card_fun, disposition_count, address_count]
+
+theorem retaining_policy_count : Fintype.card RetainingPolicy = 2 ^ 688 := by
+  rw [Fintype.card_fun, retaining_disposition_count, address_count]
+
+theorem annotated_rule_count : Fintype.card AnnotatedRule = 8 ^ (4 * 43) * 3 ^ 688 := by
+  rw [Fintype.card_prod, LocalController.enumerated_rule_count, policy_count]
+
+theorem retaining_rule_count : Fintype.card RetainingRule = 8 ^ (4 * 43) * 2 ^ 688 := by
+  rw [Fintype.card_prod, LocalController.enumerated_rule_count, retaining_policy_count]
+
+/-- A table's erase entries count only at addresses actually visited by
+    an exported bit. The itinerary is supplied independently of disposal. -/
+def policyCycle (policy : Policy)
+    (input : Fin Delta → LocalController.Requests × LocalController.Ports)
+    (exports : Fin Delta → Option Bool) : ℕ :=
+  cycleErased (fun t => policy (t, input t)) exports
+
+theorem policy_cycle_counts_booked_exports (policy : Policy)
+    (input : Fin Delta → LocalController.Requests × LocalController.Ports)
+    (exports : Fin Delta → Option Bool) :
+    policyCycle policy input exports =
+      (Finset.univ.filter fun t => policy (t, input t) = .erase ∧ (exports t).isSome).card := by
+  simp [policyCycle, cycleErased, erasedBits, Finset.sum_boole]
+
+theorem policy_cycle_empty (policy : Policy)
+    (input : Fin Delta → LocalController.Requests × LocalController.Ports) :
+    policyCycle policy input (fun _ => none) = 0 := no_export_cycle _
+
 end PMTransport.BoundaryErasure
