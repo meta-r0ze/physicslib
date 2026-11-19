@@ -15,19 +15,19 @@ root-line update. The last edge is a periodic boundary condition.
 We do not infer a geometrically embedded ring of E8 sites from it.
 The neighbourhood needs three distinct sites. A one-site ring
 identifies them all, and `ring_neighbourhood` checks that two sites
-coincide at the two incoming neighbours. We check three sites and
-the next size, four. This is an explicit computational bound.
+coincide at the two incoming neighbours. The checks cover three,
+four and five sites. `ring_five_neighbourhood` checks the last size.
 
 ## Stationary orbits
 
 The requests are constant on each orbit. `ports_iterate` gives
 a permutation of the two port fields for that request pattern.
 `port_step_source` reduces it to a permutation on the individual
-slots. Lean checks all switch patterns on three and four sites
-(`slot_period_three`, `slot_period_four`), with common port periods
-12 and 24. The probe returns after two clock periods. Consequently
-the clocked state from phase zero returns by tick 516 or 1032
-respectively (`ring_return_three`, `ring_return_four`). These are
+slots. Lean checks all switch patterns on three, four and five sites
+(`slot_period_three`, `slot_period_four`, `slot_period_five`), with
+common port periods 12, 24 and 120. The probe returns after two clock
+periods. From phase zero the clocked state returns by tick 516,
+1032 or 5160 (`ring_return_three`, `ring_return_four`, `ring_return_five`). These are
 common bounds. A particular orbit can close sooner.
 
 `enumerateOrbits` deduplicates the sets of states reached from
@@ -45,8 +45,9 @@ output gives every request and port orbit with multiplicity,
 joint arrival counts and port-pair counts at every node. Divide the
 counts by the listed port period. In the printed pair order, live
 label 1 occurs in bins 1 and 3, and record label 1 in bins 2 and 3.
-This retains the probe-degenerate orbits. Indeed, for a port orbit of length `L`, every 43rd tick
-visits the same port orbit because 43 is coprime to 12 and 24.
+This retains the probe-degenerate orbits. For a port orbit of
+length `L`, every 43rd tick visits the same port orbit because 43
+is coprime to each tested port period.
 `probe_one_period` toggles a probe exactly on a mixed request.
 The simultaneous probe map therefore has order `D = 2` if any
 request is mixed and order one otherwise. The phase-zero joint
@@ -60,6 +61,7 @@ the full state count `43 × 32^N`.
 | --- | ---: | ---: |
 | 3 | 7,104 | 12,416 |
 | 4 | 214,048 | 359,968 |
+| 5 | 4,126,528 | 10,569,280 |
 
 ## Pricing and selection
 
@@ -81,10 +83,9 @@ of rules and orbits. Both rules attain the maximum survival.
 
 For comparison, `gibbsOrbitMean` gives one prior count to each
 distinct orbit. For an orbit-cost histogram `H(T)`, the mean is
-`Σ H(T) T exp(−βT) / Σ H(T) exp(−βT)`. The script prints the exact
-rational histograms, and bounds this expression by rational
-exponential intervals at `β = 1`, the survival exponent for
-`wireAmplitude T = exp(−T/2)`. The table gives rounded means.
+`Σ H(T) T exp(−βT) / Σ H(T) exp(−βT)`. This is the original
+three- and four-site comparison at `β = 1`, the survival exponent
+for `wireAmplitude T = exp(−T/2)`. The table gives rounded means.
 A common tick provides the same cost horizon across orbit lengths.
 
 | Sites | Minimum, either rule | Gibbs mean at site 0, AND | OR | Gibbs mean over ring sum, AND | OR |
@@ -119,3 +120,90 @@ at equal priors. It does not say whether initial states, distinct
 orbits, or rules get equal prior weight. The library gives no rule-level
 selection by the conditional mean Toll. It supplies no canonical
 rule ensemble, accessible prior or action for a single whole rule.
+
+## Robustness across all positive hazards
+
+The checked scope is the encoded ring and its receiver flags. We use
+one count per distinct orbit or one count per state, the latter
+multiplying the orbit count by the full clocked length. We check
+the sum over all receivers and the flag account at site zero.
+
+| Filter | Orbits retained in the scored scope |
+| --- | --- |
+| All | Every orbit. |
+| Positive | Orbits with strictly positive Toll. This drops every zero-flag orbit. |
+| Exchange | Orbits with an exchange at a scored site. Equal-arrival exchanges remain. |
+| Requested | Orbits with at least one set request at a scored site. |
+
+The lowest Toll ties in every row under both priors. It is zero
+except under the positive filter. There the site minima are
+`1/4`, `1/6`, `1/8` and the ring minima are `1/3`, `1/4`, `1/5`
+for three, four and five sites, respectively. Those positive
+minima are from the orbit enumeration.
+
+For each rule, let `H(T)` be the prior mass at Toll `T`. The pooled
+survivor share ranks `Z = Σ H(T) exp(−βT)` across the rules. The
+equal-rule survival column divides each `Z` by that rule's prior
+mass before comparison. The mean column ranks the mean Toll
+conditional on survival, with lower Toll preferred.
+
+The calculation covers all `β > 0`. Let `D` be the common port
+period and put `x = exp(−β/D)`. Every `D T` is integral, so the
+partition functions are integer polynomials in `x`. Clearing the
+positive denominators gives an integer polynomial for each gap.
+After removing its lowest power of `x`, substitute
+`x = y/(1+y)` and clear powers of `1+y`. Descartes' rule bounds
+the number of zeros on `0 < x < 1` by the coefficient sign changes.
+Exact rational signs witness every possible crossing here.
+`python3 tools/ring_receiver_check.py --histograms` gives the
+histograms, sign profiles and exact rational root brackets in `x`.
+The Lean certificates establish the finite return bounds and
+receiver flags. The histograms and polynomial sign certificates
+are computed in the script.
+
+In the tables A is AND and O is OR. A single letter applies at
+every positive hazard. Arrows show the order as the hazard increases.
+Numbers in parentheses are rounded transition hazards, with equality
+at each exact root.
+
+### Ring sum
+
+| Sites | Filter | Mean, orbit | Mean, state | Equal rule, orbit | Equal rule, state | Pooled, orbit | Pooled, state |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | all | A | A | A | A | O→A (0.778316) | A |
+| 3 | positive | A | A | A | A | O→A (3.178076) | O→A (1.589662) |
+| 3 | exchange | A→O (4.818138) | A→O (4.941899) | A | A | O→A→O (4.053227, 5.859058) | O→A (1.383889) |
+| 3 | requested | A | A | A | A | O→A (0.778316) | A |
+| 4 | all | A | A | A | A | O→A (0.467771) | A |
+| 4 | positive | A | A | A | A | O→A (1.794628) | O→A (0.580356) |
+| 4 | exchange | A→O (4.467440) | A→O (4.364804) | A | A | O→A (1.670942) | O→A (0.535790) |
+| 4 | requested | A | A | A | A | O→A (0.467771) | A |
+| 5 | all | A→O (21.117831) | A | A | A | O→A (0.787921) | A |
+| 5 | positive | A | A | A | A | O→A (1.305991) | O→A (0.285713) |
+| 5 | exchange | A→O (5.364041) | A→O (6.481760) | A | A | O→A (1.271464) | O→A (0.267258) |
+| 5 | requested | A→O (33.440875) | A | A | A | O→A (0.787921) | A |
+
+### Site zero
+
+| Sites | Filter | Mean, orbit | Mean, state | Equal rule, orbit | Equal rule, state | Pooled, orbit | Pooled, state |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | all | A | A | A | A | O→A (3.381504) | A |
+| 3 | positive | A→O (16.644081) | A→O (11.661167) | A | A→O (39.185444) | O | O |
+| 3 | exchange | A→O (0.224178) | O | A→O (0.448991) | O | O | O |
+| 3 | requested | A | A | A | A | O→A (2.529575) | A |
+| 4 | all | A | A | A | A | O→A (2.525542) | A |
+| 4 | positive | A | A | A | A | O | O |
+| 4 | exchange | A→O (0.371838) | O | A→O (0.747694) | O | O | O |
+| 4 | requested | A | A | A | A | O→A (2.119217) | A |
+| 5 | all | A→O (36.111243) | A→O (69.804823) | A | A | O | A |
+| 5 | positive | A | A | A | A | O→A (36.590662) | O→A (24.666282) |
+| 5 | exchange | A→O (0.000888) | O | A→O (0.001776) | O | O | O |
+| 5 | requested | A→O (47.895991) | A | A | A | O→A (5.680439) | A |
+
+With five sites and all orbits, at `x = 2/3` the ring mean favours
+OR per orbit and AND per state. The common hazard is
+`120 log(3/2)`. With three sites and all orbits, the pooled survivor
+share likewise favours OR per orbit and AND per state at
+`x = 49/50`, or `β = 12 log(50/49)`. Both reversals use exact
+rational signs. The chosen prior changes the answer even with
+the rule, scope, idle filter and hazard held fixed.

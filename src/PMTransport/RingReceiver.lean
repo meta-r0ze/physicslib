@@ -88,6 +88,11 @@ theorem ring_neighbourhood :
       finRotate 4 x ≠ (finRotate 4).symm x) := by
   decide +kernel
 
+theorem ring_five_neighbourhood :
+    ∀ x : Fin 5, finRotate 5 x ≠ x ∧ (finRotate 5).symm x ≠ x ∧
+      finRotate 5 x ≠ (finRotate 5).symm x := by
+  decide +kernel
+
 /-! ## Exact cyclic traffic -/
 
 abbrev Slot (n : ℕ) := Fin n × Bool
@@ -128,6 +133,10 @@ theorem slot_period_three :
 
 theorem slot_period_four :
     ∀ q : Fin 4 → Bool, ∀ p : Slot 4, (portSource q)^[24] p = p := by
+  decide +kernel
+
+theorem slot_period_five :
+    ∀ q : Fin 5 → Bool, ∀ p : Slot 5, (portSource q)^[120] p = p := by
   decide +kernel
 
 private def probeClock (u : Phase × (Requests × Bool)) : Phase × (Requests × Bool) :=
@@ -213,6 +222,10 @@ theorem ring_return_three (either : Bool) (s : State 3) (hs : s.1 = 0) :
 theorem ring_return_four (either : Bool) (s : State 4) (hs : s.1 = 0) :
     (tick 4 either)^[1032] s = s :=
   ring_return either s hs (slot_period_four _) (by decide +kernel) (by decide +kernel)
+
+theorem ring_return_five (either : Bool) (s : State 5) (hs : s.1 = 0) :
+    (tick 5 either)^[5160] s = s :=
+  ring_return either s hs (slot_period_five _) (by decide +kernel) (by decide +kernel)
 
 /-- Starting the enumeration at phase zero loses no orbit. -/
 theorem phase_zero_seed {n : ℕ} (either : Bool) (s : State n) :
