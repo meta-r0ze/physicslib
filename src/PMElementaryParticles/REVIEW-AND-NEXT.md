@@ -40,8 +40,11 @@ the recorded mass ratios to check it.
   and [Sustained reference supply](../PMTransport/PREMISES.md#sustained-reference-supply).
 
   The [AND/OR test](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
-  distinguishes the clocked receiver traces. Compare their stationary
-  traffic and paid work. The electric reference complements the sector
+  distinguishes the clocked receiver traces. The
+  [closed-ring test](../PMTransport/RING.md#pricing-and-selection)
+  ties their best receiver costs, and the
+  [admission chain is paused](../PMTransport/PREMISES.md#stopping-point).
+  The electric reference complements the sector
   flag and keeps the position flag
   (`ElectricHeavyRecord.reference_flags_from_orbit_bits`).
   Its selection still depends on the writer trace and prices.

@@ -140,10 +140,12 @@ The [autonomous guard test](../PMTransport/ADMISSION.md#no-external-controller)
 leaves different receiver rules with the same tagged open trace. Those
 rules tie on uniform ports in the certified receiver flag account.
 The [request complement and maintenance swap](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
-change the clocked trace and can change its flags. The next receiver
-test is stationary traffic and paid work for each rule. A wire
-comparison still requires the admitted writer input, retained pulse
-guard and all differing paid work.
+change the clocked trace and can change its flags. The
+[closed-ring stationary test](../PMTransport/RING.md#pricing-and-selection)
+ties the best receiver costs, and the
+[admission chain is paused](../PMTransport/PREMISES.md#stopping-point).
+The wire comparison still depends on the writer input, retained
+pulse guard and differing paid work.
 
 ## Selection and the unresolved minimum
 

@@ -40,6 +40,7 @@ the effect of retaining all controls in the state.
 | Result | Certificates and scope |
 | --- | --- |
 | Request complement and receiver swap | `LocalController.complemented_output` gives a one-visit identity. `receiver_dual_not_conjugate`, `no_request_complement_conjugacy` give the clocked obstruction. `receiver_dual_population` preserves the summed port population and `receiver_dual_flag_counterexample` distinguishes the flags. |
+| Closed-ring selection | `RingReceiver.tick_bijective` and `orbit_enumeration_covers` give the finite traffic model. `minimum_orbit_toll` and `both_rules_attain_best_survival` give the tied minima. The [ring ledger](RING.md) gives the separate Gibbs means. |
 | Guard selection on uniform ports | `LocalController.exchange_flag_realisation` and `uniform_trace_exchange_toll` give the exchange account. `uniform_flag_persistence_tie` and `uniform_remaining_cost_iff` distinguish the certified tie and its missing tariff. |
 | Flags and registrations | `TwoSiteHandoff.hop_flag`, `exchange_flag` and `OpenHandoff.receiver_flag` give comparison flags. `DiagonalReadout.state_flag` gives the diagonal mixed-population formula. `NetCost.expected_count_linear` sums expected flags under the supplied sampling law. |
 | Pulse and reset accounts | `BranchPulseContract.comparison_mem` and `program_correct` certify the comparisons under the supplied control. `OpenHandoff.balanced_basis_repair_flag` prices a paid exact comparison of a balanced bit with fresh zero. |

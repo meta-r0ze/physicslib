@@ -278,12 +278,13 @@ complemented OR exchange accounts for one, even with the port values
 swapped (`receiver_dual_flag_counterexample`). Equal arrivals hide
 this difference.
 
-The tie on uniform inputs is a physical selection gap in the stated
-account. The next test is to derive a self-consistent stationary
-traffic law for each candidate with its own retained requests,
-occupations and boundary supply. Test invariance at the same clock
-phase after a period, or use a justified longer return horizon.
-Then compare paid flags and remaining work under those laws.
+The [closed-ring test](RING.md) computes self-consistent stationary
+traffic with internal arrivals on three and four sites. Both rules
+give minimum receiver Toll zero. The equal-orbit Gibbs mean at the
+stated hazard is lower for AND. By the stopping rule the
+[admission chain is paused](PREMISES.md#stopping-point). The
+foundational question is whether a single retained request triggers
+exchange.
 The electric reference choice still requires its writer trace
 and prices. Choosing colour or lepton complements the electric
 sector bit and keeps the position bit
