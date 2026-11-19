@@ -72,7 +72,7 @@ namespace Record
 export PMElementaryParticles.CoherentGate (recorded_orthogonal_iff unequal_needs_orthogonal)
 export PMTransport.OpenHandoff (receiver_trace export_trace any_incoming_trace sum_exported
   acceptance_iff_supply population_required basis_population_required basis_loading_iff
-  receiver_flag balanced_basis_repair_flag)
+  receiver_flag balanced_basis_repair_flag neighbours_do_not_determine_second_visit)
 export PMTransport.OddReferenceSource (rest_stationary rest_population load_rest_mode
   loading_pulse_stays_at_rest odd_seed_train_restores)
 export PMAction.RecordSupply (run live_at_site clean_supply disturbance_exported
@@ -111,7 +111,9 @@ end Cost
 The 43-phase period is the substrate period. Admission supplies the
 pulse words and permits their use on occupied registers. Absolute timing
 identifies their elapsed time on the physical clock. Integral certain
-flip bounds apply to the specified serial words.
+flip bounds apply to the specified serial words. The trial histories
+retain their initial requests through the period. Their prior counts
+require Background occupancy and boundary supply.
 -/
 
 namespace Clock
@@ -125,6 +127,8 @@ export PMAction.SplitClassBlindFlip (duration_eq pulse_completed one_tick_budget
 export PMTransport.RootClockCalibration (phase_alias_iff integer_samples_agree trial_weight
   gap_from_trials trial_weight_inj principal_flag_inj)
 export PMTransport.ClockedRootTrials (ticks_zero_one ticks_one_two shared_request_returns
+  iterate_controls quiet_trial_tick trial_period_endpoint historyCount history_count_pos_iff
+  all_pairs_history_count shared_request_history_count history_mass_factorizes
   matches_independent_trial_weight heat_after_two_ticks phase_in_ticks)
 export PMAction.CertainTransferRate (certain_min common_tick_rate_ratio)
 

@@ -128,6 +128,14 @@ the live stream. It must say what counts as a writer visit and
 which ensemble of visits enters the cost. The reference supply
 law cannot replace it.
 
+The [Transport reachability check](../PMTransport/ADMISSION.md#consequences-for-the-wire)
+shows the same three-site start and ready reference can give different
+second records in the open model. The initial occupied and boundary
+states must supply the traffic. The joint clocked controller must
+identify the input port, guard and record polarity. The trial update
+preserves its initial request pair, so its conditional history counts
+give no packet population.
+
 ## Selection and the unresolved minimum
 
 `minima` gives the exact finite minimizer set for a supplied scalar cost.
@@ -278,7 +286,10 @@ Without that reset premise the output-bit thresholds for the full
 `ΔR` remain 1/2, 9/16 and 3/5, respectively
 (`packet_record_difference`). `PMTransport.Values` gives both sets of
 thresholds. The packet identities are `packet_record_difference_eq_values`
-and `balanced_reset_gap_eq_values`. See Transport's
+and `balanced_reset_gap_eq_values`. For any common booked population,
+`booked_balanced_reset_difference` gives
+`U + (3/2)(M_colourless − M_coloured)` under the separate balanced
+resets. See Transport's
 [Admission](../PMTransport/PREMISES.md#admission) and
 [Registration tariff](../PMTransport/PREMISES.md#registration-tariff).
 The factor-pulse ledger by itself

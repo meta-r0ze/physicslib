@@ -54,6 +54,13 @@ The physical protocol still needs to admit the four equally counted
 histories, identify and price the two local registrations, and place its
 coherent pulse on the same clock.
 
+The isolated trial's requests persist unchanged. Its carrier is idle
+in phases 2–42 (`iterate_controls`, `quiet_trial_tick`,
+`trial_period_endpoint`). The [admission check](ADMISSION.md#exhaustive-trial-histories-and-conditional-counts)
+enumerates the four retained pairs. The shared-request preparation
+has only the two equal-bit histories. Physical prior counts require
+the actual controller background.
+
 ## Assumed and open clock inputs
 
 | Status | Input | Consequence |

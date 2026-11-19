@@ -2,13 +2,13 @@
 
 ## Node handoff
 
-- Admit the spatial move, wall loader and receiver branch. See [Admission](PREMISES.md#admission).
+- Identify the accessible occupied neighbourhood, open boundary supply and the controller for the spatial move, wall loader and receiver branch. See [Admission](PREMISES.md#admission).
 - Supply the occupied seed and a renewal route for sustained operation. See [Sustained reference supply](PREMISES.md#sustained-reference-supply).
 - Specify the receiver tolerance and incoming disturbance. See [Disturbance and acceptance](PREMISES.md#disturbance-and-acceptance).
 
 ## Absolute event clock
 
-- Admit the retained trial histories and joint wire schedule. See [Admission](PREMISES.md#admission).
+- Determine the initial request fibres and the joint clocked wire update. See [Admission](PREMISES.md#admission).
 - Calibrate the elapsed time, pulse areas and coefficient readout. See [Absolute timing](PREMISES.md#absolute-timing).
 
 ## Label-sensitive handoff

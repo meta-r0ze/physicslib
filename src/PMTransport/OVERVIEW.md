@@ -4,6 +4,8 @@ Import `PMTransport.Interface` for the theorem families below and
 `PMTransport.Values` for the numbers. Results retain their theorem
 hypotheses. Physical inputs are in the [premise ledger](PREMISES.md).
 The [machine overview](Machine/OVERVIEW.md) maps the upstream modules.
+The [admission check](ADMISSION.md) gives the reachable trial histories
+and the boundary required for repeated open visits.
 
 <a id="node-handoff-and-admittance"></a>
 <a id="two-site-handoff-and-the-six-pillars"></a>
@@ -26,7 +28,7 @@ The [machine overview](Machine/OVERVIEW.md) maps the upstream modules.
 | Result | Certificates and scope |
 | --- | --- |
 | Coherent recording and restoration | `CoherentGate.unequal_needs_orthogonal` requires orthogonal records for unequal outputs with overlap. `CoherentRecordRestoration.prepared_repair`, `unitary_reset_factorization`, `twice_undoes` identify the displaced state and constrain reuse. `IndependentRegisters` and `RegisterControl` provide reversible controls. |
-| Open line and export | `OpenHandoff.address_injective`, `address_is_site`, `address_step` realize the primitive D₄ line. `receiver_trace`, `export_trace` identify the arrivals and distinct displaced-record destinations. `any_incoming_trace` restores a common reference for any supplied live sequence. `sum_exported` preserves the displaced population. |
+| Open line and export | `OpenHandoff.address_injective`, `address_is_site`, `address_step` realize the primitive D₄ line. `receiver_trace`, `export_trace` identify the arrivals and distinct displaced-record destinations. `any_incoming_trace` restores a common reference for any supplied live sequence. `sum_exported` preserves the displaced population. `neighbours_do_not_determine_second_visit` identifies the three-site horizon limit. |
 | Ready reference and renewal | `OpenHandoff.acceptance_iff_supply`, `population_required`, `basis_population_required`, `basis_loading_iff` govern acceptance, population and exact loading. `RecordSupply.open_orbit_forever`, `lattice_forever`, `ring_returns` distinguish open renewal from finite returns. `ReferenceMaintenance` and `HomogeneousRouting` support the supplied orbit. |
 | Odd reference | `OddReferenceSource.basis_label_not_odd`, `root_phase_word_no_basis` exclude the sharp `RootReferencePreparation` seed from odd input under the checked phases. `ReferenceSourceBoundary` gives the uniform-source limits. `rest_stationary`, `rest_population`, `wall_loader_unitary`, `load_rest_mode`, `rest_modes_distinct`, `loading_pulse_stays_at_rest`, `first_wall_ports`, `odd_seed_train_restores` give an alternative from a supplied occupied rest state. |
 
@@ -47,7 +49,7 @@ The [machine overview](Machine/OVERVIEW.md) maps the upstream modules.
 | --- | --- |
 | Period and words | `E8Values.Delta_eq`, `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot` give the period and reversible clocked words. `RootTransferPhase.quarterTime`, `half_pulse_word` give the root time and serial crossing. See the [clock ledger](CLOCK.md#certified-clock-results) for the short and long bounds and `Values` for their direct and restoring counts. |
 | Gap aliases and calibration | `RootClockCalibration.phase_alias_iff`, `integer_samples_agree`, `ambiguous_exchange_clock` give the whole-tick alias. `trial_weight`, `gap_from_trials`, `trial_weight_inj`, `odd_seed_trial_weight` give the statistical calibration. `exchange_tick_iff`, `principal_trial_weight`, `principal_flag_inj` give the principal-range calibration. |
-| Two retained trials | `ClockedRootTrials.pair_endpoint`, `shared_fire`, `matches_independent_trial_weight` give the endpoint law. `heat_after_two_ticks`, `phase_in_ticks`, `exchange_in_ticks_iff`, `principal_weight_in_ticks` give the conversion if a statistical pair occupies two coherent ticks. |
+| Two retained trials | `ClockedRootTrials.pair_endpoint`, `shared_fire`, `matches_independent_trial_weight` give the endpoint law. `heat_after_two_ticks`, `phase_in_ticks`, `exchange_in_ticks_iff`, `principal_weight_in_ticks` give the conversion if a statistical pair occupies two coherent ticks. `iterate_controls`, `quiet_trial_tick`, `trial_period_endpoint` give the isolated trace over one period. `history_count_pos_iff`, `all_pairs_history_count` and `shared_request_history_count` give the conditional counts. |
 | Conditional rate ratios | `CertainTransferRate.common_tick_rate_ratio` and `Values.equal_normalization_rate` give the [rate comparison](CLOCK.md#flip-to-crossing-rate) with the stated areas, conversion factors and clock. |
 
 <a id="heavy-label-application"></a>

@@ -25,9 +25,12 @@ the recorded mass ratios to check it.
 
 - **Heavy-label weight. [Premise]** Derive the admitted writer traces
   for both references. The open handoff can restore an identical
-  reference for any supplied live sequence. The missing traffic
-  input is the writer's booked population, including the treatment
-  of the vacancy. The [lifecycle comparison](SCHEDULE.md#record-reference-remains-undetermined)
+  reference for any supplied live sequence. Even the same three-site
+  start can lead to different second records. The accessible boundary
+  states and the joint clocked controller must give the writer's booked
+  input port, population and vacancy guard. See the
+  [Transport reachability check](../PMTransport/ADMISSION.md#consequences-for-the-wire).
+  The [lifecycle comparison](SCHEDULE.md#record-reference-remains-undetermined)
   then needs the signed difference of paid work after matching
   common jobs. Derive the fresh record supply and encoding, which
   pulse and reset flags register, and which export, renewal and

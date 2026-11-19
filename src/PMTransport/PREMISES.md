@@ -7,15 +7,21 @@ The [clock ledger](CLOCK.md) records timing and the
 
 ## Admission
 
-Admission is the root premise. A candidate trace specifies its occupied
-inputs, the port that feeds each operation, the guard that fires it, and
-the output and retained record. A physical admission law must authorize
-those operations together on the stated input and reference states.
+Admission is reachability under the native update from the persisting
+background. An admitted trace includes its occupied ports, request and
+firing guard at each tick, and the output and retained record. See the
+[reachability results](ADMISSION.md).
 
-**Smallest question.** For each candidate operation, which occupied port
-feeds it and which guard fires it while the required record stays
-available? Give an executable answer for the live state and its record
-together.
+Two named parts of Admission remain open.
+
+- **Background occupancy and boundary supply.** Which initial occupied
+  wire, reference and controller states are accessible? For an open route,
+  which further arrivals do the boundary states supply? For prior counts,
+  what are the fibres of the request projection on that family?
+- **Joint clocked controller.** What reversible phase-dependent update
+  connects the arriving ports and retained controls to the route, writer
+  polarity and pulse guards? The isolated trial tick preserves its initial
+  requests. It cannot supply this connection.
 
 | Open part of Admission | What it decides | Smallest question |
 | --- | --- | --- |
@@ -24,7 +30,7 @@ together.
 | Heavy branch and record reference | Whether either electric writer and the guarded companion crossing are admitted. With paid output flags and separate balanced per-bit resets, the colour advantage bounds the remaining cost at 3/4, 27/32 or 9/10 per input for full-probe, idle-vacancy or occupied-only uniform sampling. | What jointly admits the supplied seed, polarity, record write and the guarded use on both walls? Which output record is retained? |
 | Lightest-offset branch | Whether the retained matched plus branch and static vector-class test can drive the charged offset. Its firing law also affects PMFlavor's in-cycle wall record. | Can the joint selector fire the static insertion using an occupied, retained record and preserve the required calibration? |
 | Label-sensitive and successive handoffs | Which crossings occur for a retained label and whether successive through probabilities multiply. | What is the through law conditional on the preceding history and its record? |
-| Trial histories and phase controls | Whether the physical controller realizes the four retained two-request histories, with equal prior counts for the Gibbs calculation. A principal-range calibration is another conditional route. | Can the controller produce and retain each of the four histories with equal prior counts, or certify that the accumulated phase lies in the principal range? |
+| Trial histories and phase controls | Whether the physical controller realizes the four retained two-request histories, with equal prior counts for the Gibbs calculation. A principal-range calibration is another conditional route. | What are the initial request fibres, and which clocked comparison uses them? Alternatively, can the coherent phase be put in the principal range? |
 | Joint schedule and Hamiltonian update | Which visits, overlaps and controls the two walls can execute. With timing and coefficient readout this decides the physical schedule, the ratio `r`, and the split walk with or without the lazy offset. | Which admitted chronological word acts on the wire and record together, including the controlled crossings, wall insertions, and any one-wall offset? |
 | Shared-register event ownership | Which charged-current and writer records each persisting label needs, and which are retained, reused or exported. This extends the single-event requirement table. | Which labels are present at each visit and which subsequent guard consumes each record? |
 
@@ -123,6 +129,10 @@ It remains parked.
 | Derived | Period, word length and common-tick formula | `E8Values.Delta_eq`, `CarrierReferenceCycle.excursion_boundaries`, `ClassBlindFlip.forwardTimes_total`, `SplitClassBlindFlip.duration_eq`, `RootTransferPhase.half_pulse_word`, `CertainTransferRate.common_tick_rate_ratio`. The rate ratio still uses the two areas and coefficient conversions. |
 | Excluded | Single-frame execution of the stated long serial word | `ClassBlindFlip.certain_does_not_fit_e8_frame` and `certain_with_six_reflections_lower` exclude it at whole-tick certain transfer. `SplitClassBlindFlip.one_tick_budget` gives a different conditional elapsed budget for a short word and one crossing. |
 | Excluded | Selecting the coherent gap from whole-tick samples alone | `RootClockCalibration.phase_alias_iff`, `integer_samples_agree` and `ambiguous_exchange_clock`. A principal-range witness or an admitted statistical probe is needed. |
+| Derived | Stationary background constraints | `NativeReferenceBackground.stationary_iff` fixes a common value per active mode for the supplied connected update. `OddReferenceSource.rest_modes_distinct` gives distinct occupied witnesses even on the same wall. Neither certificate supplies the physical family. |
+| Excluded | Determining even two open visits from the centre and its two neighbours alone | `OpenHandoff.neighbours_do_not_determine_second_visit` keeps the initial three sites and all ready references fixed while varying the second displaced value. |
+| Derived | Isolated trial reachability and conditional counts | `ClockedRootTrials.iterate_controls`, `quiet_trial_tick`, `trial_period_endpoint` give the phase, retained requests and carrier trace through one period. `history_count_pos_iff`, `all_pairs_history_count`, `shared_request_history_count` reduce reachability to the initial request fibres and enumerate both supplied encodings. The trial update alone cannot establish equal physical priors. |
+| Derived | Signed reference difference for a supplied common population | `WireReferenceCost.booked_population_difference`, `booked_balanced_reset_difference` give the output-only and balanced-reset gaps. No traffic law or unpaid-work remainder is assigned. |
 | Derived | Two trial slots, endpoint law and time conversion | `ClockedRootTrials.ticks_zero_one`, `ticks_one_two`, `shared_request_returns`, `matches_independent_trial_weight` give separate requests and the `p²` criterion. `RootClockCalibration.gap_from_trials` and `trial_weight_inj` give identification from the admitted statistic. `ClockedRootTrials.heat_after_two_ticks` and `phase_in_ticks` give the two-tick conversion under the stated identification. |
 | Excluded | Common chiral anticommutation with the specified one-wall offset | `NativeWallOffset.rest_offset_breaks_chirality`. |
 | Derived | Companion seed, setup and current traces | `ElectricChiralKick.clean_first_seed_at_rest`, `two_kicks_from_one_current`, `swapped_exposure_toll`, `total_tolls`; `ElectricCompanionBank.prepares_companion_bank`, `guarded_companion_transport`; `ElectricCompanionSetupToll.short_setup_on_seed_support`, `primitive_setup_sum`. These use a supplied occupied seed and give conditional flag or root counts. |
@@ -133,24 +143,17 @@ It remains parked.
 
 ## Next derivation
 
-An admitted trace gives the occupied live, reference and record ports at
-each tick, the guard and request at each operation, and the next state of
-all those ports, including idle alternatives and displaced records.
+Find the accessible occupied neighbourhood and boundary states
+with their controller fields. Give the native phase-dependent
+coupling that turns these inputs into requests, branch guards, record
+writes and repeat visits. It must identify the writer's actual input
+port and the path by which the heavy and light guards consume records.
 
-`ClockedRootTrials` supplies the two retained slots and the joint-weight
-test for independent trials. An equal-prior history account requires
-equal prior counts of all four retained histories and equal local action
-for both changes. `BranchPulseContract.comparison_mem` and
-`program_correct` constrain the supplied comparison and control.
+`ClockedRootTrials.history_count_pos_iff` then tests the initial
+request fibres. `BranchPulseContract.comparison_mem` and
+`program_correct` constrain the supplied comparison.
 `RegisterControl.extend_encode`, `occupation_conserved` and
-`phase_unitary` constrain its reversible realization.
-`PersistenceSelection.within_family_iff_cheapest` selects from the
-resulting family once its costs are supplied.
-
-Derive which occupied ports and native guards generate the trace on
-the E8 clock. Show which histories and their prior counts follow,
-how the record stays available until consumed or exported, and which
-reference is ready at each repeat visit. This should identify the
-writer's booked input mass and the admitted heavy and light branches.
-For the reference comparison, derive or bound the signed difference
-in paid work on that family.
+`phase_unitary` constrain the reversible realization.
+`PersistenceSelection.within_family_iff_cheapest` compares admitted
+schedules once their costs are supplied. For the reference choice,
+give the booked sector masses and bound the signed unmatched paid work.
