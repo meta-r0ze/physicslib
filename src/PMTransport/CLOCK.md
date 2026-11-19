@@ -40,6 +40,20 @@ statistical pair occupying two substrate ticks, the coherent reflection
 test becomes `−N log(1−2w)/2 = π + 2πk`. Its principal weight is
 `(1 − exp(−2π/N))/2` (`exchange_in_ticks_iff`, `principal_weight_in_ticks`).
 
+On a moving input, the action that charges each change in the two-tick
+trace at the same supplied price `c` takes the values `0, c, c, 2c` on
+the four retained histories. The idle and double-fire histories have the
+same endpoint and different actions for nonzero `c`. The equal-prior
+Gibbs law for these four histories factorizes, with each slot's rate
+`p = exp(−βc)/(1 + exp(−βc))`. The expected action is `2cp`, and the
+endpoint-change weight is `2p(1−p)` (`history_action_additive`,
+`no_endpoint_action`, `history_mass_factorizes`,
+`expected_history_action`, `history_endpoint_weight`).
+
+The physical protocol still needs to admit the four equally counted
+histories, identify and price the two local registrations, and place its
+coherent pulse on the same clock.
+
 ## Assumed and open clock inputs
 
 | Status | Input | Consequence |

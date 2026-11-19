@@ -13,5 +13,3 @@ targeted check. The library build is `./build.sh PMTransport`.
 The [overview](OVERVIEW.md) lists the results. The [clock ledger](CLOCK.md)
 gives the pulse constraints. The [premise ledger](PREMISES.md) lists the
 remaining physical inputs.
-
-This README uses [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/about_STE.html).

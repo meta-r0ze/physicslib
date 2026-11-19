@@ -1,5 +1,6 @@
 import PMAction.EventAccounting
 import PMTransport.Machine.ClockControlledRoot
+import PMTransport.Machine.RootTransferAccounting
 import PMTransport.RootClockCalibration
 
 /-!
@@ -65,6 +66,86 @@ theorem shared_request_returns (b : Bool) (z : SubstrateReflection.Lattice) :
   rw [pair_endpoint]
   simp
 
+open PersistenceMechanics.Gibbs RootTransferAccounting
+
+/-- Charge each actual lattice change in the two-tick trace once, at the
+supplied per-change action. A return can contain two registrations. -/
+def historyAction (cost : ℝ) (z : SubstrateReflection.Lattice)
+    (requests : Bool × Bool) : ℝ :=
+  let middle := tick (requests, (z, 0))
+  let last := tick middle
+  (if middle.2.1 ≠ z then cost else 0) +
+    (if last.2.1 ≠ middle.2.1 then cost else 0)
+
+theorem history_action_additive (cost : ℝ) (z : SubstrateReflection.Lattice)
+    (hmoves : SubstrateReflection.reflect z ≠ z) (requests : Bool × Bool) :
+    historyAction cost z requests =
+      attemptAction cost requests.1 + attemptAction cost requests.2 := by
+  rcases requests with ⟨a, b⟩
+  dsimp only [historyAction]
+  rw [pair_endpoint, ticks_zero_one]
+  cases a <;> cases b <;> simp [attemptAction, hmoves, Ne.symm hmoves]
+
+/-- This history returns to its input while moving at both slots. -/
+theorem double_fire_action (cost : ℝ) (z : SubstrateReflection.Lattice)
+    (hmoves : SubstrateReflection.reflect z ≠ z) :
+    historyAction cost z (true, true) = 2 * cost := by
+  rw [history_action_additive cost z hmoves]
+  simp [attemptAction, two_mul]
+
+/-- The final lattice position alone cannot account for the two moves
+in a returning history with nonzero per-change action. -/
+theorem no_endpoint_action (cost : ℝ) (z : SubstrateReflection.Lattice)
+    (hmoves : SubstrateReflection.reflect z ≠ z) (hcost : cost ≠ 0)
+    (price : SubstrateReflection.Lattice → ℝ) :
+    ¬ ∀ requests : Bool × Bool,
+      historyAction cost z requests = price (tick (tick (requests, (z, 0)))).2.1 := by
+  intro h
+  have idle := h (false, false)
+  have fired := h (true, true)
+  rw [shared_request_returns, history_action_additive cost z hmoves] at idle
+  rw [shared_request_returns, double_fire_action cost z hmoves] at fired
+  simp [attemptAction] at idle
+  exact hcost (by linarith)
+
+/-- Apply the equal-count Gibbs law to the four retained request histories. -/
+def historyMass (β cost : ℝ) (z : SubstrateReflection.Lattice) (requests : Bool × Bool) : ℝ :=
+  probability β (historyAction cost z) requests
+
+private theorem single_attempt_mass (β cost : ℝ) (b : Bool) :
+    probability β (attemptAction cost) b = EventAccounting.binaryMass (gibbsRate β cost) b := by
+  cases b
+  · have h := probabilities_sum_one β (attemptAction cost)
+    simp only [Fintype.sum_bool] at h
+    change probability β (attemptAction cost) false = 1 - gibbsRate β cost
+    unfold gibbsRate
+    linarith
+  · rfl
+
+/-- With all four histories equally counted before survival filtering,
+pricing local movement produces the product law on a moving root orbit. -/
+theorem history_mass_factorizes (β cost : ℝ) (z : SubstrateReflection.Lattice)
+    (hmoves : SubstrateReflection.reflect z ≠ z) (requests : Bool × Bool) :
+    historyMass β cost z requests =
+      EventAccounting.binaryMass (gibbsRate β cost) requests.1 *
+        EventAccounting.binaryMass (gibbsRate β cost) requests.2 := by
+  have hw (r : Bool × Bool) : weight β (historyAction cost z r) =
+      weight β (attemptAction cost r.1) * weight β (attemptAction cost r.2) := by
+    rw [history_action_additive cost z hmoves, weight_add]
+  have hpart : partition β (historyAction cost z) = partition β (attemptAction cost) ^ 2 := by
+    simp only [partition, Fintype.sum_prod_type, hw, ← Finset.mul_sum, ← Finset.sum_mul, pow_two]
+  rw [← single_attempt_mass, ← single_attempt_mass]
+  simp only [historyMass, probability, hw, hpart, pow_two, mul_div_mul_comm]
+
+theorem expected_history_action (β cost : ℝ) (z : SubstrateReflection.Lattice)
+    (hmoves : SubstrateReflection.reflect z ≠ z) :
+    (∑ requests, historyMass β cost z requests * historyAction cost z requests) =
+      2 * cost * gibbsRate β cost := by
+  simp only [history_mass_factorizes β cost z hmoves, history_action_additive cost z hmoves,
+    Fintype.sum_prod_type, Fintype.sum_bool]
+  simp [attemptAction, EventAccounting.binaryMass]
+  ring
+
 def changedWeight (mass : Bool × Bool → ℝ) : ℝ :=
   mass (true, false) + mass (false, true)
 
@@ -99,6 +180,14 @@ theorem independent_trial_weight (p : ℝ) :
   rw [RootClockCalibration.trial_weight e he a moves]
   simp [changedWeight, EventAccounting.binaryMass, RootTransferPhase.residual]
   ring
+
+include he moves in
+theorem history_endpoint_weight (β cost : ℝ) (z : SubstrateReflection.Lattice)
+    (hmoves : SubstrateReflection.reflect z ≠ z) :
+    changedWeight (historyMass β cost z) = RootClockCalibration.trialWeight e a (gibbsRate β cost) := by
+  have hmass := funext (history_mass_factorizes β cost z hmoves)
+  rw [hmass]
+  exact independent_trial_weight e he a moves (gibbsRate β cost)
 
 /-- Normalization for one elapsed clock tick when the squared transfer
 represents the two scheduled ticks. -/
