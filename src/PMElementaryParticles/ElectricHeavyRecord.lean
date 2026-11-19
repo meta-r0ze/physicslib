@@ -135,6 +135,18 @@ theorem colour_reference_toll (c : Channels) :
     HeavyFlipRecords.orbit_bit_price, HeavyFlipRecords.orbit_bit_price]
   simp [add_comm]
 
+/-- The position flag is the same orbit bit under either reference.
+    Colour reads the sector bit and lepton reads its complement. -/
+theorem reference_flags_from_orbit_bits (c : Channels) :
+    DiagonalReadout.flag (3 * π * q c) = HeavyFlipRecords.orbitBitPrice c true ∧
+      DiagonalReadout.flag (3 * π / 2 * sectorDifference true c) =
+        HeavyFlipRecords.orbitBitPrice c false ∧
+      DiagonalReadout.flag (3 * π / 2 * sectorDifference false c) =
+        1 - HeavyFlipRecords.orbitBitPrice c false := by
+  rw [phase_position, phase_sector, phase_sector_lepton_reference,
+    HeavyFlipRecords.orbit_bit_price c true, HeavyFlipRecords.orbit_bit_price c false]
+  cases (labelRecord c).1 <;> norm_num
+
 /-- Swapping the sector reference swaps its charged polarity. Exact readout
 and least phase duration coexist with an electron/down order reversal. -/
 theorem lepton_reference_toll (a : Fin 3) :
