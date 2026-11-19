@@ -84,10 +84,13 @@ multiplying through weights.
   results are in [the action overview](../PMAction/OVERVIEW.md). Derive the native firing law on
   the encoded rest states and the rates it induces. The
   [whole-tick alias result](OVERVIEW.md#calibrating-the-root-clock) applies
-  even to the full integer-tick coherent history. Derive the native
-  two-trial statistical transfer on the same root and time unit, or
-  derive a physical first-half-turn bound and calibrate its coherent
-  comparison. Use that rate in the shared firing schedule.
+  even to the full integer-tick coherent history. The reference excursion
+  supplies consecutive trial slots on the same E8 root. A shared request
+  cancels, and the independent-trial statistic requires joint true-true
+  weight `p²` at equal marginals `p`. Derive that law for the physical
+  requests and establish that the admitted coherent pulse uses the same
+  elapsed time, or derive a physical first-half-turn bound and calibrate
+  its coherent comparison. Use that rate in the shared firing schedule.
   The first-row comparison is downstream in
   [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#first-row-wall-leakage).
   Recorded comparison tension (not a constraint on the derivation): with
@@ -95,8 +98,9 @@ multiplying through weights.
   `r ≲ 0.07–0.12`, below the explored `1/8 ≤ r ≤ 1/2`
   (PMElementaryParticles OVERVIEW, daughter channels). Derive `r` from the
   schedule first, then compare.
-  The absolute clock is `p` (`PMTransport.Machine.RootTransferPhase`, with
-  quarter-time `π/(2 gap p)` ticks).
+  The reconstructed quarter-time is `π/(2 gap p)` in units of a
+  statistical pair. It is `π/gap p` substrate ticks if a pair occupies
+  the two consecutive native slots on the clock of the coherent pulse.
 
 ## Label-sensitive handoff
 

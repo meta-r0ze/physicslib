@@ -18,7 +18,7 @@ state. The clock and the comparison ledger govern and account for those visits.
 | Exchange or pass through a node | `TwoSiteHandoff`, `OpenReferenceFlow`, `HandoffAdmittance`, `ReferenceClassHop` | Exact exchange and bypass destinations. Stationarity of a class-definite reference constrains direct class exchange on its wall. |
 | Hold, export, and renew a record | `OpenHandoff`, `OddReferenceSource`, `IndependentRegisters`, `RegisterControl`, `ReferenceMaintenance`, `RecordSupply`, `HomogeneousRouting` | Reversible register banks, exact restoration, and export of the previous state. An open backward orbit allows sustained renewal under the supplied reference conditions. |
 | Compare and count | `BranchPulseContract`, `RefreshSchedule`, `CoherentRefresh`, `CoherentGate` | Coherent comparison under the pulse contract, orthogonal records for overlapping outputs, and minimum additive cost for required visits at supplied prices. |
-| Schedule native operations | `RootClockCalibration`, `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot`, `RootTransferPhase` | The substrate period, reversible clocked words, and root pulse areas. Physical phase admission and absolute timing remain open. |
+| Schedule native operations | `ClockedRootTrials`, `RootClockCalibration`, `ClockPeriod`, `ClockDynamics`, `ClockControlledRoot`, `RootTransferPhase` | The substrate period, reversible clocked words, and root pulse areas. Physical phase admission and absolute timing remain open. |
 
 The [machine overview](Machine/OVERVIEW.md) lists the supporting carrier,
 register, reference, and clock constructions.
@@ -168,16 +168,35 @@ so the input can be prepared in the odd sector
 (`trial_weight`, `gap_from_trials`, `trial_weight_inj`,
 `odd_seed_trial_weight`).
 
-An exact reflection in `N` unit ticks requires
+The reconstructed generator uses one time unit for the squared statistical
+transfer. In those units an exact reflection after time `N` requires
 `−N log(1−2w) = π + 2πk`. For the principal exchange this gives
-`w = (1 − exp(−π/N))/2`. A coherent flag alone also fixes the rate
-if a separate argument puts the one-tick gap in `[0,π]`
+`w = (1 − exp(−π/N))/2`. A coherent flag also fixes the rate if a separate
+argument puts the accumulated gap in `[0,π]`
 (`exchange_tick_iff`, `principal_trial_weight`, `principal_flag_inj`).
-The remaining clock input is a native two-trial law with a known time
-unit, or a native bound on the phase together with a calibrated coherent
-comparison. These tests use the existing root transfer and pulse models.
-The allowed firing phases and physical registration tariff remain open.
 [RootClockCalibration](RootClockCalibration.lean)
+
+The 43-phase reference excursion has boundaries at phases 0 and 1. A
+reversible tick can apply the same E8 root reflection at either boundary
+and retains the two request bits. The pair advances the clock to phase 2.
+A moved input changes exactly when the two bits differ. Reusing one
+request either runs the closed excursion or leaves the carrier idle,
+giving zero endpoint-change weight. With equal marginals `p` and joint true-true weight `j`, the
+endpoint-change weight is `2(p−j)`. It reproduces the independent-trial
+readout exactly when `j = p²`
+(`pair_endpoint`, `shared_fire`, `matches_independent_trial_weight`).
+
+When the squared statistical transfer represents these two elapsed
+substrate ticks, the generator per tick is `G/2`. The reconstructed
+coherent exchange test after `N` substrate ticks is then
+`−N log(1−2w)/2 = π + 2πk`.
+The principal exchange requires `w = (1 − exp(−2π/N))/2`
+(`heat_after_two_ticks`, `phase_in_ticks`, `exchange_in_ticks_iff`,
+`principal_weight_in_ticks`).
+The physical protocol still needs a source for the joint request law,
+a link between this elapsed time and its coherent pulse, and a registration
+observable and tariff.
+[ClockedRootTrials](ClockedRootTrials.lean)
 
 ## Heavy-label application
 
