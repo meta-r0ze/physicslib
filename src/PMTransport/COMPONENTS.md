@@ -534,3 +534,20 @@ Least Toll does not select a physical member from these data.
 The identity of the physical comparison and its remaining costs
 come before the comparison. A common partial cost does not imply
 that the packet, destination or flag factors through a quotient.
+
+## What propagates downstream
+
+G remains open. The top-down checks narrow the admissible fibre
+actions by equivariance and conservation, and leave at least the
+hold/FIFO witness pair in the certified interface. The previous
+[reach ranking](#remaining-free-inputs-by-reach) therefore still
+applies. Distinct outputs remain possible even at tied booked cost.
+
+| Input | Narrowed interface | Still needed |
+| --- | --- | --- |
+| W, attachment | A common read on a common tagged trace is invariant. Mixed receiver outputs and computed flags are local. | Name the live, record or comparison result read by the writer, and its tick. |
+| B, export | Identity stays bijective when a separate output is disposed of. Tagged exports agree under common disposal. The encoded ring exports zero. | Identify the physical booked output and disposition, including reset and return wiring. |
+| U, carrier to EP | The channel action and conserved totals are explicit on a 16-slot bank. | Intertwine the actual carrier operation and EP label/reader on the same admitted trace. |
+| D, detector | A common mask gives the exact conditional mixed flag rate. | Identify the occupied detector support, reader and booking. |
+
+No input in this table is closed on untagged physical traffic.
