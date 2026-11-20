@@ -12,6 +12,12 @@ import PMTransport.Machine.GluedRegister
 import PMTransport.Machine.ReferenceClassHop
 import PMTransport.Machine.SubstrateWeylRoots
 import PMTransport.Machine.RecordTransport
+import PMTransport.Machine.RegisterInteraction
+import PMTransport.Machine.CarrierTriality
+import PMTransport.Machine.ClockControlledRoot
+import PMTransport.Machine.RootBranchEncoding
+import PMTransport.Machine.InBandRootReadout
+import PMTransport.Machine.CarrierWeyl
 import PMAction.TollAmplitude
 import PMAction.DiagonalReadout
 import PMAction.PersistenceSelection
@@ -176,5 +182,39 @@ export PMAction.SubstrateWeylRoots (embedding_intertwines sector_intertwines
   preserves_norm preserves_glue)
 
 end Symmetry
+
+/-! ## Wire operations
+
+These are the finite carrier, bank and readout operations used by EP.
+The statements retain admission, timing and preparation conditions.
+-/
+
+namespace Wire
+
+namespace Carrier
+export PMAction.CarrierWeyl (lookup lookup_antipode)
+export PMTransport.CarrierTriality (carrierTriality carrierTriality_vector carrier_is_glued
+  diagonalRoot glued_triality_step trialityMatrix triality_cube triality_observed triality_unitary)
+end Carrier
+
+namespace Glued
+export PMElementaryParticles.GluedRegister (M Wt bit carrier crossing dot neg_class neg_ne
+  refl reflectPair root runCrossing triality wallStep_class)
+end Glued
+
+namespace RootBranch
+export PMAction.RootBranchEncoding (embed population root_action swap)
+end RootBranch
+
+namespace Registers
+export PMAction.RegisterInteraction (current current_observed current_unitary evolution_occupation)
+end Registers
+
+namespace Probe
+export PMAction.InBandRootReadout (events record schedule_closes scheduled_read)
+export PMAction.ClockControlledRoot (State fire update)
+end Probe
+
+end Wire
 
 end PMTransport.Interface

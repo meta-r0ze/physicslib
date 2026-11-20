@@ -1,4 +1,4 @@
-import PMTransport.Machine.GluedRegister
+import PMTransport.Interface
 import PMElementaryParticles.ProtocolInventory
 import PMConstants.ChannelOccupancy
 import PMConstants.SectorLinks

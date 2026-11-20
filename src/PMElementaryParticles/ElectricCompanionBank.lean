@@ -1,6 +1,6 @@
 import PMElementaryParticles.CompanionHeavyFlip
 import PMElementaryParticles.ElectricChiralKick
-import PMTransport.Machine.CarrierTriality
+import PMTransport.Interface
 
 /-!
 # Triality preparation of the companion's electric bank
