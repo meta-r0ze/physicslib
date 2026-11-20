@@ -281,17 +281,37 @@ The supplied source, operation, read and cost must refer to the same trace.
   keeps the factor as a certified input, and the higher-order terms
   (`MuonQEDLoops`) stay supplied.
 
-## Next EP priority
+## Rebuild closeout and next priority
 
-Run the localized embedding exhaustively over the 64 request fields and both
-receiver rules. Then derive a booking tick set from a Transport lift, or name
-the missing rule that selects which lift visits are booked.
+**Certified machine.** Transport is closed on its conditional interface;
+receiver flags, guard table, record bookkeeping, bit-ring sums, native
+stationarity bridge, phase-to-record converter, and the coherent coin are
+certified. Transport's remaining named machine inputs are T, L, B, D, J, Q and
+the tariff unit.
 
-## Does the eight-candidate family now differ numerically?
+**EP protocol layer.** `Protocol.Protocol` is finite: 16 labels × 2 references
+× firing patterns × certified phases `{0,π}` × packet site; the full family is
+`Protocol.allProtocols` and `allProtocols_complete`. The per-period Toll is
+`Protocol.receiverToll`. Unconstrained least Toll selects the empty firing
+pattern (`bitRingTotal43_empty_zero`).
 
-**It can, conditional on G.** The localized receiver trace registers zero when
-the exchange pattern is `000`; for every other exchange pattern the 43-tick
-sum is a positive entry of `patternSum` (`localizedSum43_eq_pattern`). AND and
-OR differ exactly when their exchange-pattern table entries differ
-(`localized_and_or_differ_iff`). This depends on the retained request field,
-which is the open controller input G; no request field or rule is selected.
+**Missing definition.** `PersistenceMechanics.Requirements` defines the three
+requirements, six pillar names, the requirement map and abstract
+`PMRequirements`; it does not define six individual predicates on a machine
+state. Task 2 stops there. Consequently the six-pillar filter, alone/together
+closure, and a filtered enumeration are not defined. No larger ring settles
+that gap; the missing predicate definition is the blocker.
+
+**Legacy audit.** The 16-channel layout, `labelRecord` physical record bits,
+tier sets, `QuarkMasses`/`LeptonMasses` formulas, generations as glue
+addresses, heavy-label weight and record Tolls retain the statuses in
+[OVERVIEW](OVERVIEW.md#legacy-audit-task-6): consistent premise, conditional,
+or derived only at the flag level. The heavy reference remains free; no mass
+is derived.
+
+**Next EP priority.** Define the six pillar predicates from the PM
+requirements on the finite `Protocol` state without adding physics. Then rerun
+the complete enumeration and alone/together analysis. After that, select the
+reference record and firing pattern from persistence, and finish the full-ring
+Lean spectrum. The mass reading remains a hypothesis; radiative stage 2 is
+separate and still not started.

@@ -45,13 +45,16 @@ protocol inputs owned by EP, not Transport:
 * the excitation occupancy and reference-record choice O (`refRecord`,
   `bitRingEmbed`, `bitToll_eq_hamming`);
 * the label record, reference and comparison angle theta in the EP half of U;
+  the certified phase set is `{0, π}` (`PhaseToRecord`);
 * which label record W reads;
 * the label Toll and paid-event choice in the EP half of K;
 * the history/prior family H.
 
 EP supplies these from persistence; Transport only supplies the machine
 comparator, receiver-flag computation, tariff unit, links, boundary, clock and
-job mechanics.
+job mechanics. The six individual pillar predicates are not defined in
+`PersistenceMechanics.Requirements`; expressing them on `Protocol` is an EP
+open definition, not a Transport input.
 -/
 
 namespace PMTransport.Interface
