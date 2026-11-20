@@ -104,6 +104,26 @@ the packet site and the request field leaves the sum unchanged
 (`localizedSum43_inactive_zero`). The receiver column and the record
 bit-visit column remain separate, with no certified common ledger.
 
+No certified Transport result forces the retained request field to be the
+same at every site. `HomogeneousRouting.equivariant_is_translation` constrains
+the routing permutation, not the retained requests; `LocalController.radius_one`
+states local dependence. Homogeneous requests are therefore a named hypothesis
+(`HomogeneousRequests`), not a derived result. Under that hypothesis, the four
+uniform request values are enumerated. On the 3-ring, `uniform_falsefalse_sums`
+gives 0 under AND and OR, `uniform_truetrue_sums` gives 43 under both, and the
+mixed uniform values give 0 under AND and 43 under OR
+(`uniform_truefalse_sums`, `uniform_falsetrue_sums`).
+
+The localized embedding and occupancy check generalize to `Fin n`
+(`localizedPortsN`, `localizedPortsN_occupancy`,
+`localized_occupancy_preservedN`). For `n = 3,4,5,6`:
+`empty_uniform_flags_zero` gives zero for every tick and any `T`;
+`full_uniform_flag_count_three` … `_six` give exactly one flag per tick in the
+43-tick window, and `full_uniform_sum43_three` … `_six` give 43. The register-
+per-tick case has the form of a direction flip each tick (the Feynman
+checkerboard reading of mass as a direction-flip rate); that reading is a
+hypothesis for later, not a result here.
+
 The hold/FIFO packet lifts are not derived booking rules. `hold_cell_fixed`
 and `fifo_lift_differs` identify their bank actions, but neither determines a
 receiver booking tick set.

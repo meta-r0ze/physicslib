@@ -549,6 +549,191 @@ theorem localized_period_registrations_eq (either : Bool)
   intro x _
   exact localizedFlag_eq_nat either r vacuum x0 k x
 
+/-! ## Uniform request fields and ring-size generalization
+
+The retained request field is not forced to be site-independent by any
+certified Transport result.  The following results are therefore conditional
+on the named hypothesis of homogeneous requests; the four uniform values stay
+enumerated.
+-/
+
+def HomogeneousRequests {n : ℕ} (r : Fin n → IsolatedRequests) : Prop :=
+  ∃ c : IsolatedRequests, ∀ x, r x = c
+
+theorem firingPattern_ne_iff_mixed :
+    ∀ r : IsolatedSite → IsolatedRequests,
+      firingPattern false r ≠ firingPattern true r ↔
+        ∃ x : IsolatedSite, r x = (true, false) ∨ r x = (false, true) := by
+  decide +kernel
+
+theorem uniform_falsefalse_sums (x0 : IsolatedSite) :
+    localizedSum43 false (fun _ => (false, false)) x0 = 0 ∧
+      localizedSum43 true (fun _ => (false, false)) x0 = 0 := by
+  constructor <;> rw [localizedSum43_eq_pattern] <;> fin_cases x0 <;> decide +kernel
+
+theorem uniform_truetrue_sums (x0 : IsolatedSite) :
+    localizedSum43 false (fun _ => (true, true)) x0 = 43 ∧
+      localizedSum43 true (fun _ => (true, true)) x0 = 43 := by
+  constructor <;> rw [localizedSum43_eq_pattern] <;> fin_cases x0 <;> decide +kernel
+
+theorem uniform_truefalse_sums (x0 : IsolatedSite) :
+    localizedSum43 false (fun _ => (true, false)) x0 = 0 ∧
+      localizedSum43 true (fun _ => (true, false)) x0 = 43 := by
+  constructor <;> rw [localizedSum43_eq_pattern] <;> fin_cases x0 <;> decide +kernel
+
+theorem uniform_falsetrue_sums (x0 : IsolatedSite) :
+    localizedSum43 false (fun _ => (false, true)) x0 = 0 ∧
+      localizedSum43 true (fun _ => (false, true)) x0 = 43 := by
+  constructor <;> rw [localizedSum43_eq_pattern] <;> fin_cases x0 <;> decide +kernel
+
+/-! ## General ring size for uniform requests -/
+
+structure ReceiverFieldsN (n : ℕ) where
+  phase : ℕ
+  requests : Fin n → IsolatedRequests
+  probe : Fin n → Bool
+  wall : Bool
+  record : Bool
+
+def portBitCountN (n : ℕ) (ports : Fin n → IsolatedPorts) : ℕ :=
+  ∑ x, portBitCountPorts (ports x)
+
+def localizedPortsN (n : ℕ) (x0 : Fin n) (packet : PacketLabel) :
+    Fin n → IsolatedPorts :=
+  fun x => if x = x0 then (active packet, false) else (false, false)
+
+def localizedEmbedN (n : ℕ) (c : Fin 3) (_vacuum : VacuumLabel c)
+    (packet : PacketLabel) (x0 : Fin n) (fields : ReceiverFieldsN n) :
+    RingReceiver.State n :=
+  (⟨fields.phase % 43, Nat.mod_lt _ (by norm_num)⟩,
+    (fields.requests, (fields.probe, localizedPortsN n x0 packet)))
+
+theorem localizedPortsN_occupancy (n : ℕ) (x0 : Fin n) (packet : PacketLabel) :
+    portBitCountN n (localizedPortsN n x0 packet) =
+      (if active packet then 1 else 0) := by
+  rw [portBitCountN, Finset.sum_eq_single_of_mem x0 (Finset.mem_univ x0)]
+  · by_cases h : active packet <;>
+      simp [localizedPortsN, portBitCountPorts, h]
+  · intro b _ hb
+    simp [localizedPortsN, portBitCountPorts, hb]
+
+theorem portBitCountN_applyGuard (_n : ℕ) (g : LocalController.Guard)
+    (p : IsolatedPorts) :
+    portBitCountPorts (LocalController.applyGuard g p) = portBitCountPorts p :=
+  portBitCount_applyGuard g p
+
+theorem portBitCountN_arrivals (n : ℕ) (ports : Fin n → IsolatedPorts) :
+    portBitCountN n (RingReceiver.arrivals ports) = portBitCountN n ports := by
+  unfold portBitCountN portBitCountPorts RingReceiver.arrivals
+    OpenReferenceFlow.streamShift
+  rw [Finset.sum_add_distrib, Finset.sum_add_distrib]
+  congr 1
+  · exact Equiv.sum_comp (finRotate n).symm
+      (fun x => if (ports x).1 then 1 else 0)
+  · exact Equiv.sum_comp (finRotate n)
+      (fun x => if (ports x).2 then 1 else 0)
+
+theorem portBitCountN_tick (n : ℕ) (either : Bool) (s : RingReceiver.State n) :
+    portBitCountN n ((RingReceiver.tick n either s).2.2.2) =
+      portBitCountN n s.2.2.2 := by
+  unfold portBitCountN
+  calc
+    (∑ x, portBitCountPorts ((RingReceiver.tick n either s).2.2.2 x)) =
+        ∑ x, portBitCountPorts (RingReceiver.arrivals s.2.2.2 x) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [RingReceiver.tick_ports]
+      exact portBitCountN_applyGuard n _ _
+    _ = ∑ x, portBitCountPorts (s.2.2.2 x) := portBitCountN_arrivals n s.2.2.2
+
+theorem localized_occupancy_preservedN (n : ℕ) (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (packet : PacketLabel) (x0 : Fin n)
+    (fields : ReceiverFieldsN n) (k : ℕ) :
+    portBitCountN n (((RingReceiver.tick n either)^[k]
+      (localizedEmbedN n c vacuum packet x0 fields)).2.2.2) =
+      (if active packet then 1 else 0) := by
+  induction k with
+  | zero => simpa [localizedEmbedN] using localizedPortsN_occupancy n x0 packet
+  | succ k ih =>
+    rw [Function.iterate_succ_apply', portBitCountN_tick, ih]
+
+def fullRequestsN (n : ℕ) : Fin n → IsolatedRequests := fun _ => (true, true)
+
+def emptyRequestsN (n : ℕ) : Fin n → IsolatedRequests := fun _ => (false, false)
+
+def fullFieldsN (n : ℕ) : ReceiverFieldsN n :=
+  ⟨0, fullRequestsN n, fun _ => false, false, false⟩
+
+def emptyFieldsN (n : ℕ) : ReceiverFieldsN n :=
+  ⟨0, emptyRequestsN n, fun _ => false, false, false⟩
+
+def localizedFlagNatN (n : ℕ) (either : Bool) (r : Fin n → IsolatedRequests)
+    (x0 : Fin n) (k : ℕ) (x : Fin n) : ℕ :=
+  if RingReceiver.exchange either (r x) = true ∧
+      (RingReceiver.arrivals
+        ((RingReceiver.portStep either r)^[k] (localizedPortsN n x0 activePacket)) x).1 ≠
+      (RingReceiver.arrivals
+        ((RingReceiver.portStep either r)^[k] (localizedPortsN n x0 activePacket)) x).2
+    then 1 else 0
+
+def localizedSumN (n : ℕ) (either : Bool) (r : Fin n → IsolatedRequests)
+    (x0 : Fin n) (T : ℕ) : ℕ :=
+  ∑ k ∈ Finset.range T, ∑ x : Fin n, localizedFlagNatN n either r x0 k x
+
+/-- Empty uniform firing: no flag at any tick, any ring size and any T. -/
+theorem empty_uniform_flags_zero (n T : ℕ) (either : Bool) (x0 : Fin n) :
+    localizedSumN n either (emptyRequestsN n) x0 T = 0 := by
+  unfold localizedSumN
+  apply Finset.sum_eq_zero
+  intro k _
+  apply Finset.sum_eq_zero
+  intro x _
+  unfold localizedFlagNatN emptyRequestsN
+  simp [RingReceiver.exchange]
+
+/-- Full uniform firing on a 3-ring: 43 flags in 43 ticks. -/
+theorem full_uniform_sum43_three (x0 : Fin 3) :
+    localizedSumN 3 true (fullRequestsN 3) x0 43 = 43 := by
+  revert x0
+  decide +kernel
+
+theorem full_uniform_sum43_four (x0 : Fin 4) :
+    localizedSumN 4 true (fullRequestsN 4) x0 43 = 43 := by
+  revert x0
+  decide +kernel
+
+theorem full_uniform_sum43_five (x0 : Fin 5) :
+    localizedSumN 5 true (fullRequestsN 5) x0 43 = 43 := by
+  revert x0
+  decide +kernel
+
+theorem full_uniform_sum43_six (x0 : Fin 6) :
+    localizedSumN 6 true (fullRequestsN 6) x0 43 = 43 := by
+  revert x0
+  decide +kernel
+
+/-- Full uniform firing on a 3-ring: exactly one flag per tick in the 43-tick
+window, at every site x0. -/
+theorem full_uniform_flag_count_three (x0 : Fin 3) (k : Fin 43) :
+    (∑ x : Fin 3, localizedFlagNatN 3 true (fullRequestsN 3) x0 k.val x) = 1 := by
+  revert x0 k
+  decide +kernel
+
+theorem full_uniform_flag_count_four (x0 : Fin 4) (k : Fin 43) :
+    (∑ x : Fin 4, localizedFlagNatN 4 true (fullRequestsN 4) x0 k.val x) = 1 := by
+  revert x0 k
+  decide +kernel
+
+theorem full_uniform_flag_count_five (x0 : Fin 5) (k : Fin 43) :
+    (∑ x : Fin 5, localizedFlagNatN 5 true (fullRequestsN 5) x0 k.val x) = 1 := by
+  revert x0 k
+  decide +kernel
+
+theorem full_uniform_flag_count_six (x0 : Fin 6) (k : Fin 43) :
+    (∑ x : Fin 6, localizedFlagNatN 6 true (fullRequestsN 6) x0 k.val x) = 1 := by
+  revert x0 k
+  decide +kernel
+
 /-! ## Separate ledger columns
 
 The receiver registration count is measured in registrations per 43-tick

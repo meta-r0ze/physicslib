@@ -36,6 +36,31 @@ the record bit visits remain separate columns with no certified common ledger.
 The hold/FIFO packet lifts move the bank but do not determine a booking tick
 set, so that stop remains.
 
+### Homogeneous requests and ring size
+
+No certified Transport result forces the retained request field to be
+site-independent. `HomogeneousRouting.equivariant_is_translation` constrains
+the routing permutation; `LocalController.radius_one` is local dependence.
+Homogeneous requests are a named hypothesis (`HomogeneousRequests`), not a
+derived result.
+
+Conditional on that hypothesis, the four uniform requests are enumerated on
+the 3-ring: `(false,false)` gives 0 under AND and OR; `(true,true)` gives 43
+under both; a mixed request gives 0 under AND and 43 under OR
+(`uniform_falsefalse_sums`, `uniform_truetrue_sums`,
+`uniform_truefalse_sums`, `uniform_falsetrue_sums`).
+
+The localized embedding and occupancy check are generalized to `Fin n`.
+For `n = 3,4,5,6`, an empty uniform firing pattern gives zero at every tick
+for any `T` (`empty_uniform_flags_zero`); a full uniform firing pattern gives
+exactly one flag per tick in the 43-tick window
+(`full_uniform_flag_count_three` … `_six`) and sum 43
+(`full_uniform_sum43_three` … `_six`).
+
+The register-per-tick case has the form of a direction flip each tick. The
+Feynman-checkerboard reading of mass as the direction-flip rate is a
+hypothesis for later, not a result of this library.
+
 ## Protocol readout blockers
 
 EP inherits a [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout).
