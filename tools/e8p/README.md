@@ -183,14 +183,17 @@ still needing interval proofs, and the Python scripts each addition lets us reti
 This is intentionally additive: a new Lean result becomes a reported, audited value by
 adding its bound wherever it is proved.
 
-## EP conditional mixed witness
+## EP isolated trace and conditional mixed witness
 
-Run `e8p --ep-candidates` for the eight rows supplied by
-`PMElementaryParticles.Values.TransportCandidates`. Each row is labelled
-**conditional (mixed witness, hand-booked)**. The receiver term iterates
-`RingReceiver.mixedBasisRing`, not `IsolatedExcitation.occupiedInput`, and
-the hold/FIFO slot counts are definitions rather than Transport-lift results.
-Receiver and record terms are separate columns with no certified common
-ledger. Experimental mass references appear alongside each row as
-comparisons, with no scores or selection. The existing species ledger reports
-remain separate. The isolated-input trace is still to be computed.
+Run `e8p --ep-candidates` for the eight candidate labels. The report first
+states the isolated trace result: `RingReceiver.tick` iterated on the embedded
+`occupiedInput` registers zero under AND and under OR, so the two rules tie.
+The record bit-visit column is separate and is not added to the receiver
+column.
+
+The rows below are labelled **conditional (mixed witness, hand-booked)**. The
+receiver term iterates `RingReceiver.mixedBasisRing`, not
+`IsolatedExcitation.occupiedInput`, and the hold/FIFO slot counts are
+definitions rather than Transport-lift results. Experimental mass references
+appear alongside each row as comparisons, with no scores or selection. The
+existing species ledger reports remain separate.

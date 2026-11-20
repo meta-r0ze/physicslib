@@ -4,7 +4,7 @@
 marks a physical identification or rule still to be derived.
 **[Certificate]** marks a calculation awaiting formal verification.
 
-## Isolated-excitation input and conditional mixed witness
+## Isolated-excitation input and trace
 
 A mass is the property of one isolated excitation on the vacuum. The sector
 is fixed in `IsolatedExcitation`: a stationary E8 reference plus one packet
@@ -14,13 +14,20 @@ the existing supply and acceptance results. This is the definition of the
 quantity, not a choice of O. The vacuum is a certified family
 (`vacuum_nonunique`).
 
-`IsolatedTrace` is **not** an isolated-input trace. It iterates the mixed
-contention witness `mixedBasisRing` and books hand-defined hold/FIFO slot
-sets. Its receiver and record terms have no certified common ledger. It is
-kept, relabelled, as a conditional (mixed witness, hand-booked) account; its
-`1, 1, 2, 2, 1, 1, 44, 44`, heavy columns, and down-identity theorems do not
-report isolated-excitation values. The isolated-input trace remains to be
-computed on a state built from `occupiedInput`.
+`IsolatedReceiverTrace` embeds that occupancy into `RingReceiver.State 3` and
+iterates `tick` for one period. The packet supplies the common port value;
+phase, requests and probe are named open controller fields. The result is
+zero registration at every site and tick under both rules
+(`isolated_flag_zero_AND`, `isolated_flag_zero_OR`), so AND and OR tie for
+isolated excitations. The receiver registrations per period and the record
+bit visits are separate columns with no certified common ledger. The hold/FIFO
+packet lifts move the bank but do not determine a booking tick set, so Task 4
+stops there.
+
+`IsolatedTrace` remains labelled **conditional (mixed witness, hand-booked)**.
+It iterates `mixedBasisRing`, not `occupiedInput`, and its hold/FIFO slot sets
+are definitions. Its `1, 1, 2, 2, 1, 1, 44, 44`, heavy columns and down-identity
+theorems are not isolated-input results.
 
 ## Protocol readout blockers
 
@@ -30,15 +37,15 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 | Ranked inputs | EP decision |
 | --- | --- |
-| G, T | Clocked packet and pulse firing. The isolated receiver embedding and the lift-derived hold/FIFO tick sets are still missing. |
-| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. The embedded receiver requests, probe and port fields are open; an isolated-input trace must derive them or name them. |
-| K, B, D | The current receiver and record columns are conditional and have no certified common ledger. General preparation, crossing, export and reset tariffs remain open. The retained ring erases nothing. |
-| J, Q, H, L | H is not fixed until the isolated trace is computed; the current mixed witness is not that trace. J, Q and L remain open. |
+| G, T | Phase, requests and probe are named open controller fields in `ReceiverFields`. The hold/FIFO lifts do not determine booking ticks. |
+| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. The embedded receiver port comes from the packet's certified activity bit. General routing and writer attachment remain open. |
+| K, B, D | The isolated receiver column is zero under both rules. The record bit-visit column is separate, with no certified common ledger. General tariffs remain open. |
+| J, Q, H, L | The isolated excitation has one embedded state family, so no history prior is selected. J, Q and L remain open. |
 
-- **Heavy-label weight. [Certificate]** The conditional mixed-witness account
-  restates the certified record columns colour `(2,1,0,1)` and lepton
-  `(1,2,1,0)`, but no isolated-input trace has run. The physical record
-  reference remains open.
+- **Heavy-label weight. [Certificate]** The isolated receiver trace gives
+  zero registrations under both rules. The certified record columns colour
+  `(2,1,0,1)` and lepton `(1,2,1,0)` remain separate and no isolated trace
+  selects a physical record reference.
 - **Lightest masses. [Premise]** Supply the admitted static selector
   and the charged offset on that leg. The
   [generation ledger](GENERATIONS.md#the-charged-lift) gives the exact
@@ -74,16 +81,14 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 ## Next EP priority
 
-Embed `IsolatedExcitation.occupiedInput` into `RingReceiver.State`, name any
-underived controller field, iterate `tick` for one period under AND and OR,
-and replace the hand-booked mixed-witness account with actual isolated-input
-results.
+Derive a booking tick set from a Transport lift, or name the missing rule
+that selects which lift visits are booked. Until then the isolated trace has
+no per-label Toll to assign; only its receiver registration column is derived,
+and it is zero.
 
 ## Does the eight-candidate family now differ numerically?
 
-**Not for isolated excitations.** The only differing numbers are the
-conditional mixed-witness, hand-booked rows. That account does not run
-`occupiedInput`, and its hold/FIFO slot counts are definitions rather than
-Transport lift results. Until the isolated-input trace is computed, AND and
-OR may tie for every isolated mass and no trace-derived eight-candidate
-difference is established.
+**Not for isolated excitations.** The literal isolated trace registers zero
+under AND and under OR, so the two rules tie. The only differing numbers in
+the tree are the conditional mixed-witness, hand-booked rows, which do not run
+`occupiedInput`. The hold/FIFO lifts do not determine their own booking ticks.

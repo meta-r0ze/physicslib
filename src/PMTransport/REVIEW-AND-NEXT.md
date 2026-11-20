@@ -10,11 +10,12 @@ The [bare-line result](COMPONENTS.md#bare-line-stabilizer) separates
 the mathematical stabilizer from the directed marked carrier encoding.
 
 `PMElementaryParticles.IsolatedExcitation` defines the O-sector for the object
-a mass refers to: vacuum plus one packet label. `IsolatedTrace` is only a
-conditional mixed-witness, hand-booked account; it does not run that occupied
-input, and its hold/FIFO slot sets are not results of the Transport lifts. The
-isolated-input trace, its shared ledger unit, and the heavy record reference
-remain open. The [admission chain is paused](PREMISES.md#stopping-point) at the
+a mass refers to: vacuum plus one packet label. `IsolatedReceiverTrace` embeds
+it into `RingReceiver.State 3` and iterates `tick`; the receiver registration
+column is zero under AND and OR, so the rules tie. The record Toll is a
+separate column with no certified common ledger. The hold/FIFO packet lifts do
+not determine booking ticks. `IsolatedTrace` remains a conditional mixed-
+witness, hand-booked account. The [admission chain is paused](PREMISES.md#stopping-point) at the
 mixed receiver readout required by a downstream trace. The
 [component inventory](COMPONENTS.md#interactions) locates the open inputs
 across the lattice at once. The mixed readout is in X → E, D → E and F → E.
