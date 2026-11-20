@@ -1,96 +1,43 @@
 # PMElementaryParticles — open work
 
-[OVERVIEW](OVERVIEW.md) records checked results. **[Premise]** marks a
-physical identification or update rule still to be derived from the E8
-substrate. **[Calculation]** marks work within a specified model.
+[OVERVIEW](OVERVIEW.md) records the checked operations. **[Premise]**
+marks a physical identification or rule still to be derived.
+**[Certificate]** marks a calculation awaiting formal verification.
 
-None of these items blocks the downstream libraries: PMHadrons and later use the tier-ledger masses
-(`QuarkMasses`, `LeptonMasses`), the E8 `G_F` and `α`, and the supplied lepton QED
-(`MuonQEDLoops`). The tau's `B_e` without a supplied value is PMHadrons' "tau inclusive hadronic
-factor" item.
+## Protocol readout blockers
 
-**Common blocker.** The heavy-label weight, lightest masses and PMFlavor
-item 2 need a native law that admits and fires a conditioned coherent pulse.
-[PMTransport tracks slot bounds and firing branches](../PMTransport/CLOCK.md).
-[PMAction tracks event admission](../PMAction/REVIEW-AND-NEXT.md#extensions).
-The Toll-to-amplitude conversion is established in `PMAction.TollAmplitude`.
-The [finite selection result](SCHEDULE.md#selection-and-the-unresolved-minimum)
-requires a physically admitted family and its remaining costs.
+EP inherits a [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout).
+Its open inputs follow the [Transport ranking](../PMTransport/COMPONENTS.md#remaining-free-inputs-by-reach).
+The supplied source, operation, read and cost must refer to the same trace.
 
-## The protocol readout (first)
+| Ranked inputs | EP decision |
+| --- | --- |
+| G, T | Clocked packet and pulse firing. This includes the heavy write, static insertion and shared guard placement. |
+| O, U, W | Accessible writer traffic and its 16-slot embedding. State whether the reader consumes a routed value, retained record or booked comparison. |
+| K, B, D | Which comparisons register, the paid work remaining after common jobs, and which exports pay erasure. |
+| J, Q, H, L | Job reuse, ready references, the population and prior over visits, and successive-link dependence. |
 
-The species masses reported by e8p currently use the tier assignments in
-`QuarkMasses` and `LeptonMasses`. Derive the wire-to-species readout and use
-the recorded mass ratios to check it.
-
-- **Heavy-label weight. [Premise]** Derive the admitted writer traces
-  for both references. The open handoff can restore an identical
-  reference for any supplied live sequence. Even the same three-site
-  start can lead to different second records. The accessible boundary
-  states and the joint clocked controller must give the writer's booked
-  input port, population and vacancy guard. See the
-  [Transport reachability check](../PMTransport/ADMISSION.md#consequences-for-the-wire).
-  The [lifecycle comparison](SCHEDULE.md#record-reference-remains-undetermined)
-  then needs the signed difference of paid work after matching
-  common jobs. Derive the fresh record supply and encoding, which
-  pulse and reset flags register, and which export, renewal and
-  maintenance jobs are already paid. Use the
-  Transport entries for [Admission](../PMTransport/PREMISES.md#admission),
-  [Registration tariff](../PMTransport/PREMISES.md#registration-tariff)
-  and [Sustained reference supply](../PMTransport/PREMISES.md#sustained-reference-supply).
-
-  The [AND/OR test](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
-  distinguishes the clocked receiver traces. The
-  [closed-ring test](../PMTransport/RING.md#pricing-and-selection)
-  ties their best receiver costs. The
-  [admission chain is paused](../PMTransport/PREMISES.md#stopping-point)
-  at the mixed receiver readout needed by a downstream trace.
-  The electric reference complements the sector
-  flag and keeps the position flag
-  (`ElectricHeavyRecord.reference_flags_from_orbit_bits`).
-  Its selection still depends on the writer trace and prices.
-
-  The two-bit colour record gives the down geometric mean at any
-  common bit price (`down_geometric_mean`). Its physical selection,
-  price per bit and common heavy-flip factor remain open. Compare
-  the derived gaps only after those quantities follow.
-  See the [hypercharge constraints](OVERVIEW.md#protocol-toll-constraints),
-  [record exclusion](OVERVIEW.md#record-comparisons-and-heavy-flip-toll), and
-  [comparison diagnostics](OVERVIEW.md#other-heavy-weight-diagnostics).
-
-- **Lightest masses. [Premise]** For the charged states, derive a
-  native law that admits and fires a charge-selective coherent flip.
-  See Transport's [Admission](../PMTransport/PREMISES.md#admission)
-  and [Absolute timing](../PMTransport/PREMISES.md#absolute-timing).
-  The [generation comparison](GENERATIONS.md#the-charged-lift) excludes
-  the shared route counts as the source of the protocol dependence. The
-  candidate uses the same static vector leg and two comparisons for each
-  charged protocol. `ChargedInsertion.det_flip_at_resonance` proves the
-  same linear determinant response to the supplied offset. Derive an
-  admitted record write, export and reuse schedule and its coupling to
-  both the heavy and light pulses. The
-  [phase and handoff calculation](GENERATIONS.md#phase-handoff-and-toll)
-  gives zero flags on the matched input in both comparisons. The single
-  vacancy-relative visit gives a one-to-two flag ratio. If that visit's
-  survival weight sets the light pulse, its price must grow
-  logarithmically in the period to give inverse-period powers.
-  Derive the offset's order and determine whether an unmodified
-  calibration channel maintains the same real detuning for all three
-  protocols. Use the selected generator to derive the light-pair
-  rotations in [PMFlavor](../PMFlavor/REVIEW-AND-NEXT.md#open-work).
-  Compare singular values with recorded ratios after the derivation.
-  The [uniform-to-local check](OVERVIEW.md#lifting-the-resonant-zero)
-  gives the determinant conversion and its spectral limits.
-  For neutrinos, derive native admission of the phase gates and coherent
-  branch mixer in `PMAction.BranchGateBoundary`, and route the retained
-  occupied branch onto the static light wall. Use the
-  [vacancy preparation](OVERVIEW.md#static-vacancy-and-neutral-light-modes)
-  as the candidate circuit for the vacancy-truncated model. For a Dirac
-  mass, derive the native update that uses the reference scalar link to
-  populate the static neutral partner. Derive neutral flips and crossings
-  that split the masses. For diagonal flips, the
-  [paired Schur block](OVERVIEW.md#equal-class-gapped-crossing) requires
-  unequal magnitudes of the three reverse-cycle weights.
+- **Heavy-label weight. [Premise]** Admit both writer references on
+  the same specified traffic and compare their complete paid work.
+  [The schedule account](SCHEDULE.md#record-reference-remains-undetermined)
+  gives the threshold and its scope. The colour-reference two-bit
+  result gives the down geometric mean for a common bit price.
+  Physical reference selection, the price per bit and the common
+  heavy-flip factor remain open.
+- **Lightest masses. [Premise]** Supply the admitted static selector
+  and the charged offset on that leg. The
+  [generation ledger](GENERATIONS.md#the-charged-lift) gives the exact
+  conditional linear response. Its phase and route certificates
+  do not set an inverse-period order. Derive the same calibrated
+  generator before comparing to the first-row PMFlavor readout.
+- **Species and neutral modes. [Premise]** The species assignments in
+  `QuarkMasses`, `LeptonMasses` and `TierLedger` are a declared ledger.
+  Transport does not identify the wire modes with those entries.
+  For neutrinos, admit the static neutral partner and the coherent
+  branch mixer in `BranchGateBoundary`. The paired Schur block
+  requires unequal magnitudes of the reverse-cycle weights for a
+  split from diagonal flips. See [the static vacancy](OVERVIEW.md#static-vacancy-and-neutral-light-modes)
+  and [the gapped crossing](OVERVIEW.md#equal-class-gapped-crossing).
 
 ## Other open work
 

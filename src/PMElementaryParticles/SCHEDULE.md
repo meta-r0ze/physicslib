@@ -128,27 +128,11 @@ the live stream. It must say what counts as a writer visit and
 which ensemble of visits enters the cost. The reference supply
 law cannot replace it.
 
-The [Transport reachability check](../PMTransport/ADMISSION.md#consequences-for-the-wire)
-shows the same three-site start and ready reference can give different
-second records in the open model. The initial occupied and boundary
-states must supply the traffic. The joint clocked controller must
-identify the input port, guard and record polarity. The trial update
-preserves its initial request pair, so its conditional history counts
-give no packet population.
-
-The [autonomous guard test](../PMTransport/ADMISSION.md#no-external-controller)
-leaves different receiver rules with the same tagged open trace. Those
-rules tie on uniform ports in the certified receiver flag account.
-The [request complement and maintenance swap](../PMTransport/ADMISSION.md#and-and-or-are-different-dynamics)
-change the clocked trace and can change its flags. The
-[closed-ring stationary test](../PMTransport/RING.md#pricing-and-selection)
-ties the best receiver costs. The
-[robustness check](../PMTransport/RING.md#robustness-across-all-positive-hazards)
-gives a prior-dependent survival ordering. The
-[admission chain is paused](../PMTransport/PREMISES.md#stopping-point)
-at the mixed receiver readout needed by an admitted writer or insertion.
-The wire comparison still depends on the writer input, retained
-pulse guard and differing paid work.
+The [Transport closeout](../PMTransport/COMPONENTS.md#transport-closeout)
+identifies the scope of tagged symmetry, mixed-input differences
+and the conditional rates. O supplies the writer population and H
+its prior. G, U and W attach the writer to a clocked operation on
+that population. See the [EP blockers](REVIEW-AND-NEXT.md#protocol-readout-blockers).
 
 ## Selection and the unresolved minimum
 
@@ -371,20 +355,7 @@ protocols follows at a physical minimum.
 
 ## Comparison only
 
-- [Down as geometric mean](../../tools/down_mean_check.py). The
-  colour-reference two-bit subtotal gives the identity exactly for a
-  common price. In the ledger convention the diagnostic gives
-  `s_d/√(s_e s_u) = 0.957` and inferred prices 2.043 from electron
-  and 2.131 from down. Other conventions give ratios 0.767 to 0.864.
-  These inferred prices do not identify a native registration tariff.
-- [Tier ratios](../../tools/tier_route_check.py). The declared ledger
-  gives `m₁/m₂ = 3/Δ²` for up and about `2.126/Δ` for down.
-  The electron value is about `0.208/Δ = 8.94/Δ²` at the fixed
-  period. The matched flags provide no power of `1/Δ` for the offset.
-- [First-row leakage](../../tools/first_row_readout.py). Under its
-  stated readout assumptions the comparison prefers roughly
-  `r ≲ 0.07–0.12`. The explored serial-duration options span
-  `1/8 ≤ r ≤ 1/2`. The conditional six-reflection ratios `3/8`
-  and `1/2` from the [clock ledger](../PMTransport/CLOCK.md#flip-to-crossing-rate)
-  exceed that range under equal pulse-area and coupling normalization.
-  There is no selected physical `r` to compare.
+Use the e8p comparisons for measured references. The geometric mean,
+the declared tier ratios and the sensitivity to `r` are separate
+checks. No comparison identifies the writer, its tariff or the
+physical `r`.

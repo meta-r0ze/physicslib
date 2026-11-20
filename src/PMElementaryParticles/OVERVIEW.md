@@ -8,6 +8,9 @@ in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in
 Theorem names are entry points, not exhaustive lists; the Lean source is ground
 truth. Library order: PMSubstrate → PMAction → PMConstants → PMTransport → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). This folder imports nothing from PMFlavor.
 
+For the remaining physical inputs, see the [EP protocol blockers](REVIEW-AND-NEXT.md#protocol-readout-blockers).
+The transport laws are exposed by the [conditional interface](../PMTransport/COMPONENTS.md#transport-closeout).
+
 ## Scope
 
 Paper V models **elementary-particle protocols and their decay** on the E8
@@ -467,10 +470,10 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `PolarMeasure` | the `ℝ³` momentum measure by spherical change of variables: `sphere_area_three`, `integral_radial_three`, `massless_lorentz_measure`, `two_body_phase_space`, `massShell_reduction`; `two_body_from_lebesgue` (`Φ₂ = 1/(8π)` as the energy-shell derivative of the cumulative pair integral over `ℝ³`) | — |
 | `MassiveDaughterSpectrum` | Massive charged daughter, massless neutrino pair: `threshold`, `kinematics`, `radial_measure`, `pair_density`, `massless`, `rate_positive`, `width_scaling` | Contact vertex, transported pair average |
 | `MassiveWidth` | Closed massive-daughter width `G²m⁵/(192π³)·[1−8r+8r³−r⁴−12r² log r]`; `closed_width`, `phase_zero/one/continuous`, `phase_positive`, `threshold_width` | Tree contact spectrum, normalizations |
-| `MuonLifetimeCorrected` | `τ_μ = τ_tree/(f(r)·q)`: `r = (m_e/m_μ)²` (`r_bounds`), derived phase factor `f(r) = MassiveWidth.phase r` (`phase_bounds`, `0.99981295`), `α = 1/geometricIndex`, `corrected_bounds` `2.196987–2.196998 µs` (measured `2.1969811(22)`); e8p `muon_lifetime_s` | one-loop QED factor `q = 1 − (α/2π)(π² − 25/4)` (Kinoshita–Sirlin), supplied; higher orders (≈5 ppm) not included |
+| `MuonLifetimeCorrected` | `τ_μ = τ_tree/(f(r)·q)`: `r = (m_e/m_μ)²` (`r_bounds`), derived phase factor `f(r) = MassiveWidth.phase r` (`phase_bounds`, `0.99981295`), `α = 1/geometricIndex`, `corrected_bounds` `2.196987–2.196998 µs`; e8p `muon_lifetime_s` | one-loop QED factor `q = 1 − (α/2π)(π² − 25/4)` (Kinoshita–Sirlin), supplied; higher orders (≈5 ppm) not included |
 | `MuonQEDLoops` | The QED loop terms of muon decay at E8 inputs, in one place: the coupling at the muon scale `α_r⁻¹ = α⁻¹ − (2/3π) ln(m_μ/m_e) ≈ 135.90` (`log_muon_bounds`, `alphaR_div_pi_bounds`); one loop with its electron-mass terms (`dq1_bounds`); two loops `6.700 (α_r/π)²` (`dq2_bounds`); phase space `dq0` (derived) | the loop coefficients and running-coupling prescription (van Ritbergen–Stuart) |
-| `MuonLifetimeHigherOrder` | `τ_μ = τ_tree/(1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)`: `lifetime_bounds` `2.196974–2.196984 µs` (measured `2.1969811(22)`; the one-loop row was `+5σ`) | via `MuonQEDLoops` |
-| `TauLifetimeCorrected` | Tau lifetime from the measured `τ_μ` and supplied `B_e` with the electronic partial-width ratio corrected: phase space `f(x_μ)/f(x_τ)` (derived), `W` propagator (E8 `M_W`), one-loop QED at each lepton scale (`α(m_τ)⁻¹ = 133.3` supplied); `tau_lifetime_corrected` `291.03–291.06` fs (measured `290.3 ± 0.5`; tree `291.15–291.17`) | measured `τ_μ`, `B_e`, `α(m_τ)` |
+| `MuonLifetimeHigherOrder` | `τ_μ = τ_tree/(1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)`: `lifetime_bounds` `2.196974–2.196984 µs` | via `MuonQEDLoops` |
+| `TauLifetimeCorrected` | Tau lifetime from the measured `τ_μ` and supplied `B_e` with the electronic partial-width ratio corrected: phase space `f(x_μ)/f(x_τ)` (derived), `W` propagator (E8 `M_W`), one-loop QED at each lepton scale (`α(m_τ)⁻¹ = 133.3` supplied); `tau_lifetime_corrected` `291.03–291.06` fs (tree `291.15–291.17`) | measured `τ_μ`, `B_e`, `α(m_τ)` |
 | `MuonRadiativeLog` | The leading one-loop contact log in muon decay vanishes: `c = 0` for charges `(0, −1, −1, 0)` (`leptonic_no_log`) and in the charge-retention order, a conserved `e–μ` current (`retention_no_log`); the leading-log rate factor is one (`rate_factor_one`) | — |
 | `PairInvariantSpectrum` | Uses the massive-daughter tree spectrum to derive the density in `q² = (p − p_e)²`, its physical interval `[0,(m − μ)²]`, and its weighted change of variable with Jacobian `1/(2m)`. The unweighted integral recovers `MassiveWidth.closed_width`. At `μ = 0`, the normalized invariant `z=q²/m²` gives the weight `2(1−z)²(1+2z)` | Tree contact spectrum with massless neutrinos |
 | `RadiativeIntegrals` | Real dilogarithm series equals the integral of `−log(1 − x)/x` on `[0,1]` (`dilog_eq_integral`); `Li₂(1) = π²/6` from the Basel sum. The kernel is integrable at the endpoint and its reflected form `−log x/(1 − x)` has the same integral | — |
@@ -644,12 +647,8 @@ kinematically open in any decay of a light parent, and current weight on
 gapped modes is lost. On the bare derived wire (`s = 1`, `k = α/2`) the
 gap is `4–47` times the light band's top for `1/2 ≥ r ≥ 1/8`
 (`tools/wall_gap_check.py`). The contact weights above apply to the light
-modes alone. Comparison (not a derivation input): with weights fitted to
-recorded masses, `tools/first_row_readout.py` gives leakage `≈ 0.25 r²`;
-with the `1/516` dressing, the measured first-row deficit then prefers
-`r ≲ 0.07–0.12`, while PMAction's explored schedules give
-`1/8 ≤ r ≤ 1/2`. That is a recorded tension, to revisit once the
-schedule and readout are derived. The native current on these states is
+modes alone. Experimental comparisons belong to the e8p report.
+The physical schedule and readout remain open. The native current on these states is
 PMFlavor's.
 
 ## Protocols and the 16-channel inventory

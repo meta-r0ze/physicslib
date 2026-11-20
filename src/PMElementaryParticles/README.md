@@ -7,6 +7,11 @@ decay rates. It builds on PMSubstrate, PMAction and PMConstants. PMFlavor comes 
 it: flavour is the label change of a charged-current event that changes protocol, so
 it needs the protocols first. Library order: PMSubstrate → PMAction → PMConstants → PMTransport → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`).
 
+The [Transport closeout](../PMTransport/COMPONENTS.md#transport-closeout)
+gives the upstream contract. The [EP review](REVIEW-AND-NEXT.md#protocol-readout-blockers)
+maps the admitted path, timing, readout and Toll inputs needed for
+a physical species claim.
+
 ## Main results
 
 - **The `192π³` is not an input.** `MuonRate.muon_rate` derives the massless
