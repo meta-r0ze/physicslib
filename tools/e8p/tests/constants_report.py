@@ -299,6 +299,15 @@ def main():
     assert shells.returncode == 0
     assert "1h11/2" in shells.stdout and "same set" in shells.stdout
     assert "[2, 8, 20, 28, 50, 82, 126]" in shells.stdout
+    ep = run(binary, "--ep-candidates")
+    assert ep.returncode == 0
+    assert "Experimental references are comparison only" in ep.stdout
+    for bank in ("hold bank", "advance FIFO"):
+        for receiver in ("AND", "OR"):
+            for phases in ("0,1", "1,2"):
+                assert ep.stdout.count(f"{bank} / {receiver} / phases {phases}") == 1
+    assert ep.stdout.count("down_mev: candidate mass unresolved") == 8
+    assert "Inverse-period order up/down/electron: open/open/open" in ep.stdout
     assert run(binary, "--help").returncode == 0
     print(f"e8p reporter checks passed: {len(EXPECTED)} rows, five precisions, paper/only filters, audit, latex, CLI")
 

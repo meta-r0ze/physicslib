@@ -4,6 +4,7 @@ import E8PConstants.PMAtoms.Nuclear
 import E8PConstants.PMAtoms.Certified
 import E8PConstants.PMAtoms.Shells
 import E8PConstants.Summary
+import PMElementaryParticles.Values
 
 open E8PConstants
 
@@ -20,6 +21,7 @@ private def usage : String :=
   "  --periodic-table [N]  configuration, Hund multiplicity, E8 nuclear mass vs measured (default 20)\n" ++
   "  --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)\n" ++
   "  --shells        E8 Nilsson single-particle ladder, gaps and closures vs the magic numbers\n" ++
+  "  --ep-candidates  conditional EP witness rows beside experimental mass references\n" ++
   "  --summary       one Markdown page: scoreboard, every comparison by agreeing digits, tensions\n" ++
   "  --masses        E8 nuclear ledger masses vs measured: residual and z in ledger-scatter units\n" ++
   "  --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)\n" ++
@@ -172,6 +174,29 @@ private def derivation (rest : List String) : IO UInt32 := do
     args := #["env", "lean", "--run", "tools/e8p/Derivation.lean"] ++ rest.toArray }
   child.wait
 
+/-- The observations are displayed alongside unresolved witness rows.
+No measured reference enters the candidate family or its order. -/
+private def printEPCandidates : IO Unit := do
+  let out ← IO.getStdout
+  out.putStrLn "EP Transport witnesses. Experimental references are comparison only."
+  let refs : List Key := [.upMeV, .downMeV, .strangeMeV, .charmMeV, .bottomMeV, .topMeV,
+    .muonRatio, .tauRatio]
+  for c in PMElementaryParticles.Values.TransportCandidates.candidates do
+    let (p, q) := PMElementaryParticles.Values.TransportCandidates.phases c
+    let bank := if c.1 then "advance FIFO" else "hold bank"
+    let receiver := if c.2.1 then "OR" else "AND"
+    out.putStrLn s!"\n{bank} / {receiver} / phases {p.val},{q.val}"
+    let rate := PMElementaryParticles.Values.TransportCandidates.allBookedMixedRate c
+    out.putStrLn s!"  Mixed receiver comparison per tick, if all booked = {rate}"
+    out.putStrLn "  Heavy-label amplitude and reference: supplied trace, population and paid work."
+    let order (p : PMElementaryParticles.ProtocolInventory.BaseProtocol) :=
+      (PMElementaryParticles.Values.TransportCandidates.certifiedOffsetOrder c p).elim "open" toString
+    out.putStrLn s!"  Static offset: open. Inverse-period order up/down/electron: {order .up}/{order .down}/{order .electron}."
+    out.putStrLn "  Wire-to-species tier: open."
+    for key in refs do
+      for ref in expRefs key do
+        out.putStrLn s!"  {key.id}: candidate mass unresolved | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
+
 /-- Plain `e8p`: every report, each under a heading, so one checked-in file holds everything. -/
 private def printAll : IO Unit := do
   let out ← IO.getStdout
@@ -190,6 +215,9 @@ def main (args : List String) : IO UInt32 := do
     if a == "--derivation" then return ← derivation args.tail
     if a.startsWith "--derivation=" then
       return ← derivation ((a.drop 13).toString :: args.tail)
+  if args == ["--ep-candidates"] then
+    printEPCandidates
+    return 0
   if args == ["--help"] || args == ["-h"] then
     (← IO.getStdout).putStr usage
     return 0
