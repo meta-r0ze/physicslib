@@ -47,7 +47,7 @@ def muonSpinLag : ℝ := 2 * Real.pi
 /-- Muon: vacuum feedback load `(χ+σ)·α/(1−α)`. -/
 def muonFeedback : ℝ := ((chi + sigma : ℕ) : ℝ) * αe / (1 - αe)
 
-/-- Muon mass in `m_e` units. -/
+/-- [Premise] Muon mass in `m_e` units in the declared species ledger. -/
 def muon : ℝ := muonSweep - muonAnchor - muonSpinLag + muonFeedback
 
 /-- The muon is exactly the sum of its named tier costs. -/
@@ -72,7 +72,7 @@ def tauCoreLatency : ℝ := (sigma : ℝ) * (Delta : ℝ)
 /-- Tau: spacetime anchors. -/
 def tauAnchors : ℝ := (D : ℝ) + (chi : ℝ)
 
-/-- Tau mass in `m_e` units. -/
+/-- [Premise] Tau mass in `m_e` units in the declared species ledger. -/
 def tau : ℝ := tauBoundary - tauCoreLatency - tauAnchors
 
 /-- The tau is exactly the sum of its named tier costs. -/

@@ -44,7 +44,9 @@ abbrev Placement (ticks : ℕ) := Fin ticks × Branch × Bool
 abbrev Schedule (ticks : ℕ) := Bool × (Event → Option (Placement ticks))
 
 /-- All calibration and physical admission choices for this template.
-The horizon is `ticks`. The admission predicate supplies phase availability,
+T supplies `quarterTicks`, `shortFlip` and `otherTicks`. G, L, O, U, W, Q
+and J supply the admitted joint trace. The horizon is `ticks`. The
+admission predicate supplies phase availability,
 record lifecycle, ownership of paid visits, and any further trigger constraints.
 A fresh record in this template needs its writer in the same cycle. -/
 structure Premises (ticks : ℕ) where
@@ -75,7 +77,7 @@ def required {ticks : ℕ} (p : Premises ticks) : Event → Bool
   | .matchFirst | .matchSecond | .offset => p.address == 2
   | _ => false
 
-/-- These are circuit ports in the specified implementation. The heavy
+/-- [Premise] These are circuit ports in the specified implementation. The heavy
 flip's identification with a record-controlled insertion is a premise.
 The doublet comparison writes a bit whose two values may both be used,
 so its control port is represented by the stored record. -/

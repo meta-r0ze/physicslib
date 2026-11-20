@@ -44,6 +44,10 @@ def η : ℝ := overhead
 
 /-! ## Masses -/
 
+/-! The named species below are [Premise] ledger identifications.
+Their numerical theorems are arithmetic certificates on that ledger.
+They do not identify an admitted wire address with a particle. -/
+
 def up : ℝ := (D : ℝ) / η
 def down : ℝ := ((D : ℝ) + (sigma : ℝ)) / η
 def strange : ℝ := ((D : ℝ) * (Delta : ℝ) + (chi : ℝ) * (sigma : ℝ)) / η

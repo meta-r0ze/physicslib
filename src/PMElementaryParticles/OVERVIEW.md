@@ -32,6 +32,21 @@ lifetimes in seconds, with their bounds. Prove a bound there once rather than in
 Shared units and couplings used by every level are in `SharedUnits` (`me`, `ħc`, `α`, `α⁻¹`,
 their bounds, and `G_F` in `m_e⁻²`).
 
+## Transport dependence of EP results
+
+**[Premise]** marks an identification, circuit choice or population
+that is supplied. Each certificate applies on its explicit inputs.
+
+| EP result | Transport inputs | Where the input enters |
+| --- | --- | --- |
+| Admitted serial route and periods | G, T, L, O, Q, J | `WireSchedule.Premises` and the admitted placements supply clock calibration, route, occupancy, renewal and shared jobs. [Premise] The schedule is a serial template. |
+| Heavy guard, bank and readout | G, U, W, O, Q, T | `HeavyFlipControl`, `ElectricCompanionBank` and `ElectricChiralKick` give conditional maps on a supplied seed, record, support and phase. [Premise] The physical heavy branch reads that record. |
+| Booked writer mass and reference | O, H, G, W, D, K, B, J | `WireReferenceCost` takes a booked population or an explicitly declared sampling policy, plus the paid remainder and erasures. [Premise] Uniform sampling and either reset account need their own booking. |
+| Heavy attenuation and down identity | G, U, W, D, K, B | `WireSchedule.bitToll` takes the reference. `WireSchedule.amplitude` takes the unpriced terms and booked schedule. `HeavyFlipRecords.down_geometric_mean` takes the common bit price in the colour polarity. |
+| Lightest charged response and order | G, U, T, W, D, K, L | `ChargedInsertion.det_flip_at_resonance` takes the offset, calibrated detuning and cycle weights. [Premise] Matched ports are physically admitted. Neither the matched flags nor the route fixes the offset's scale. |
+| Tier and species masses | G, U, O, T, L, K | `TierLedger.wireTier` takes the address-to-tier assignment. [Premise] The legacy lists and the named formulas in `QuarkMasses` and `LeptonMasses` are ledger identifications. Their E8 arithmetic is checked. |
+| Decay and subsequent current readout | U, W, G, T, O | The decay theorems on supplied on-shell states, current and support are conditional. [Premise] A physical association of the wave and species requires its admitted trace. |
+
 ## Protocols are not wire modes
 
 The odd carrier modes of a class are the wire's Dirac components, four axes × two walls (`PMAction.CarrierVacuumSector`), and colour cannot act on them while commuting with `β` and the `αⱼ` (`PMAction.ColourRegister`). So protocol identity (lepton or quark, colour, weak partner) is a separate register; the 16-carrier packet is its count and gauge actions. Earlier readings that put the lepton pair on axis `0` and the up/down pair of colour `i` on axis `i` of the wire are withdrawn: `BetaReference` and `UpDownWire` (modules removed), `DoubletSign`'s wire-mode count, `ProtocolReadout`'s carrier-state reading, `CycleReadout`'s weak-pair reading, and the reference-hold test (module removed). Their theorems remain as carrier and matrix facts; the partner difference has to come from the protocol register.

@@ -2,7 +2,7 @@ import PMElementaryParticles.ProtocolDynamics
 
 /-! **Tier ledger.**
 
-The four geometric tiers are `Δ⁰…Δ³`.  Each base protocol occupies a subset:
+The four geometric tiers are `Δ⁰…Δ³`.  The declared [Premise] ledger assigns each base protocol a subset:
 
 ```
 up-type       0, 2, 3
@@ -49,7 +49,7 @@ def electronTiers : List Tier := [t0, t1, t2]
 /-- Allowed tiers for the neutrino protocol. -/
 def neutrinoTiers : List Tier := [t0, t1, t2]
 
-/-- The tier subset of a base protocol. -/
+/-- [Premise] The declared subset of a base protocol. -/
 def tiersFor : BaseProtocol → List Tier
   | .up => upTiers
   | .down => downTiers
@@ -61,15 +61,20 @@ theorem downTiers_length : downTiers.length = 3 := rfl
 theorem electronTiers_length : electronTiers.length = 3 := rfl
 theorem neutrinoTiers_length : neutrinoTiers.length = 3 := rfl
 
-/-- Mass provenance of a protocol state. -/
+/-- [Premise] Assignment of the three wire addresses for the selected protocol. -/
+abbrev WireTierAssignment := BaseProtocol → Fin 3 → Tier
+
+/-- Use a supplied assignment for the physical tier lookup. No address
+is inferred from the order of the declared ledger. -/
+def wireTier (identify : WireTierAssignment) (protocol : BaseProtocol) (address : Fin 3) : Tier :=
+  identify protocol address
+
+/-- These rows certify the arithmetic of the declared ledger. Physical
+identification with a wire mode remains a premise. -/
 def massProvenance : State → Provenance
-  | (.up, t) =>
-      if t.val = 0 ∨ t.val = 2 ∨ t.val = 3 then Provenance.e8 else Provenance.notModeled
-  | (.down, t) =>
-      if t.val = 0 ∨ t.val = 1 ∨ t.val = 2 then Provenance.e8 else Provenance.notModeled
-  | (.electron, t) =>
-      if t.val = 0 ∨ t.val = 1 ∨ t.val = 2 then Provenance.e8 else Provenance.notModeled
   | (.neutrino, _) => Provenance.blocked
+  | (protocol, t) =>
+      if t ∈ tiersFor protocol then Provenance.partialE8 else Provenance.notModeled
 
 /-- Decay provenance of a protocol state. -/
 def decayProvenance : State → Provenance
