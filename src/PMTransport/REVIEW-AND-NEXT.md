@@ -9,7 +9,11 @@ and [ranked inputs](COMPONENTS.md#remaining-free-inputs-by-reach).
 The [bare-line result](COMPONENTS.md#bare-line-stabilizer) separates
 the mathematical stabilizer from the directed marked carrier encoding.
 
-The [admission chain is paused](PREMISES.md#stopping-point) at the
+The isolated-excitation sector now fills O, H and K for the object a mass
+refers to (`PMElementaryParticles.IsolatedExcitation` and `IsolatedTrace`):
+vacuum plus one packet label, one deterministic 43-tick trace, and its booked
+electron and down-label Tolls. General accessible traffic and the heavy record
+reference remain open. The [admission chain is paused](PREMISES.md#stopping-point) at the
 mixed receiver readout required by a downstream trace. The
 [component inventory](COMPONENTS.md#interactions) locates the open inputs
 across the lattice at once. The mixed readout is in X → E, D → E and F → E.
