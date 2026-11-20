@@ -566,3 +566,27 @@ non-idle minimum are the same as for the prescribed excursion
 physical pulse or exchange slots still needs the joint placement
 and timing T/G. The shift example concerns the excursion family.
 It does not move a prescribed trial slot.
+
+## Transport closeout
+
+The conditional interface is complete for the certified operations.
+Use `PMTransport.Interface` for their original laws and
+`PMTransport.Values` for rates and thresholds with booking, work and
+erasure inputs visible. The physical joint update and EP admission
+remain open.
+
+| Certified interface | Physical contract left to the caller | Why the present laws leave it open |
+| --- | --- | --- |
+| Embedded Weyl generators and marked edge groups | L/G/U. Give the marked geometry and its simultaneous action on core and packet. | Different marked edge stabilizers and the probe obstruction. See [marked node symmetries](#marked-node-symmetries). |
+| Reversible controller, conditional FIFO and conservation | G/T/O. Give the admitted fibre operation, ticks and initial traffic. | Two distinct conserving equivariant bank operations over the same core. Distinct excursion masks share a period and minimum cost. |
+| Tagged symmetry and computed receiver output | W/D/U. Give the reader, clocked detector support and label embedding. | The mixed destinations and flag differ and share a local stencil. |
+| Open restoration, records and terminal erasure | Q/B/J. Give continuing ready inputs, booked outputs and any reuse/contending jobs. | Exact results require supplied reference and export contracts. The retained ring has no disposal event. |
+| Expected booked work, conditional minimum and survival | K/H. Identify distinct physical events, rates and priors. | The units and ordering are fixed on a supplied trace. The classified operations do not choose its event list or accessible masses. |
+
+EP can use the rate and amplitude laws on a specified trace. The
+booked mixed comparison uses `mixed_and_survives_iff`. A balanced
+reference-reset threshold can be used for a boundary erasure
+account only under `erasure_reset_matches_balanced_iff`.
+Neither a physical tier identification nor a selected receiver
+is exported. The [ranked ledger](#remaining-free-inputs-by-reach)
+retains all 12 entries.

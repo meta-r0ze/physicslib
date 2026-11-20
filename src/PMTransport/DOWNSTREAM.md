@@ -73,6 +73,11 @@ decisions also agree on its diagonal requests
 
 ## Export-contract requirement
 
+The [propagation table](COMPONENTS.md#what-propagates-downstream)
+records why top-down constraints leave the EP reader and return
+wiring conditional. Import `PMTransport.Values` for the exact
+mixed comparison formula with supplied bookings and work.
+
 `Components.joint_core_iterate` keeps any core-derived observable
 independent of the packet-bank operation for the same core start
 and rule. `joint_two_fifo_placements_differ` separates actual packet

@@ -166,6 +166,12 @@ It remains parked.
 
 ## Stopping point
 
+The [top-down closeout](COMPONENTS.md#transport-closeout) records the
+certified interface and the named physical inputs. The marked
+stabilizers, equivariance, conservation and least-Toll checks leave
+G open. Link and probe markings determine which spatial group acts.
+See [the ranked inputs](COMPONENTS.md#remaining-free-inputs-by-reach).
+
 The [component queue](COMPONENTS.md#remaining-free-inputs-by-reach)
 ranks the remaining inputs. Clock, receiver, FIFO and boundary rate
 bounds concern the certified encodings. The isolated trial leaves

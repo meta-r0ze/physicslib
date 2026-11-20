@@ -7,6 +7,10 @@ The [component inventory](COMPONENTS.md) maps the six pillars, native ports
 and open connections. `PMTransport.Components` exposes the corresponding
 contracts with explicit hypotheses. The [machine overview](Machine/OVERVIEW.md)
 maps the upstream implementation.
+The [Transport closeout](COMPONENTS.md#transport-closeout) links
+the marked Weyl stabilizers, the equivariance and conservation
+filters, and conditional least Toll. The public symmetry exports
+identify the embedded carrier reflections.
 The inventory gives the [encoded rate limits](COMPONENTS.md#per-instance-rates),
 [headroom](COMPONENTS.md#margin-in-matching-units),
 [reversible packet-bank lift](COMPONENTS.md#joint-update-and-its-limit),

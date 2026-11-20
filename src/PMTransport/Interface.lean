@@ -10,6 +10,8 @@ import PMTransport.Machine.RecordSupply
 import PMTransport.Machine.RegisterControl
 import PMTransport.Machine.GluedRegister
 import PMTransport.Machine.ReferenceClassHop
+import PMTransport.Machine.SubstrateWeylRoots
+import PMTransport.Machine.RecordTransport
 import PMAction.TollAmplitude
 import PMAction.DiagonalReadout
 import PMAction.PersistenceSelection
@@ -23,7 +25,9 @@ import PMAction.ReferenceNode
 
 The exports keep the hypotheses and conclusions of the source theorems.
 The original namespaces remain available for existing callers. Premise
-names refer to `PMTransport/PREMISES.md`.
+names refer to `PMTransport/PREMISES.md`. The physical update is a
+client obligation. Phase, branch, reader and work choices appear in
+the original hypotheses. The closure ledger is in `COMPONENTS.md`.
 -/
 
 namespace PMTransport.Interface
@@ -75,6 +79,7 @@ export PMTransport.OpenHandoff (receiver_trace export_trace any_incoming_trace s
   receiver_flag balanced_basis_repair_flag neighbours_do_not_determine_second_visit)
 export PMTransport.OddReferenceSource (rest_stationary rest_population load_rest_mode
   loading_pulse_stays_at_rest odd_seed_train_restores)
+export PMAction.RecordTransport (tick_fifo tick_norm stream_conserved)
 export PMAction.RecordSupply (run live_at_site clean_supply disturbance_exported
   open_orbit_forever lattice_forever ring_returns)
 export PMAction.CoherentRecordRestoration (prepared_repair twice_undoes
@@ -120,6 +125,9 @@ namespace Clock
 
 export PMAction (Delta Delta_eq)
 export PMAction.RootTransferPhase (gap quarterTime quarter_pulse half_pulse half_pulse_word)
+export PMAction.CarrierReferenceCycle (clock_visits clock_closes excursion_boundaries
+  carrier_cost_for_mask minimum_nonidle_carrier_cost)
+export PMAction.ClockControlledRoot (cycle_closes)
 export PMAction.ClassBlindFlip (forwardTimes_total certain_quarter_even
   certain_tick_duration_lower certain_tick_duration_attained certain_does_not_fit_e8_frame
   certain_with_six_reflections_lower)
@@ -153,5 +161,20 @@ export PMAction.ReferenceNode (restoring_two_classes direct_three_classes restor
 export PMElementaryParticles.GluedRegister (crossing_walls crossing_word_glued crossing_word_pure)
 
 end Route
+
+/-! ## Symmetry
+
+These identities apply to the embedded simple roots. Link admission
+and carrier realization supply the markings and the action on a
+physical node. The root laws do not select an equivariant lift.
+-/
+
+namespace Symmetry
+
+export PMAction.CarrierWeyl (simple_is_root)
+export PMAction.SubstrateWeylRoots (embedding_intertwines sector_intertwines
+  preserves_norm preserves_glue)
+
+end Symmetry
 
 end PMTransport.Interface

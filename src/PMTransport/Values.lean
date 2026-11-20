@@ -130,4 +130,26 @@ theorem mixed_and_cheaper_iff (booked : Fin Delta → Bool) (otherAnd otherOr : 
   rw [mixedReceiverRate_and, mixedReceiverRate_or]
   constructor <;> intro h <;> linarith
 
+/-- At positive hazard, the mixed-trace preference uses the same
+explicit work difference and the same booked visits. -/
+theorem mixed_and_survives_iff (β : ℝ) (hβ : 0 < β)
+    (booked : Fin Delta → Bool) (otherAnd otherOr : ℝ) :
+    Real.exp (-β * (mixedReceiverRate true booked + otherOr)) <
+      Real.exp (-β * (mixedReceiverRate false booked + otherAnd)) ↔
+        otherAnd - otherOr < ((Finset.univ.filter fun t => booked t = true).card : ℝ) /
+          (Delta : ℝ) := by
+  rw [(PMAction.PersistenceSelection.survival_strictAnti β hβ).lt_iff_gt]
+  exact mixed_and_cheaper_iff booked otherAnd otherOr
+
+/-- B supplies the colour-minus-lepton erased bits per input.
+The balanced comparison threshold is reproduced only at the
+stated erasure difference, with the same booked output flags. -/
+theorem erasure_reset_matches_balanced_iff (full probeVacancy : Bool)
+    (erasureDifference : ℝ) :
+    outputFlagThreshold full probeVacancy - erasureDifference =
+      balancedResetThreshold full probeVacancy ↔
+        erasureDifference = -(outputFlagThreshold full probeVacancy) / 2 := by
+  unfold balancedResetThreshold
+  constructor <;> intro h <;> linarith
+
 end PMTransport.Values

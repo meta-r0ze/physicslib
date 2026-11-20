@@ -4,7 +4,7 @@ PMTransport describes state and record transfer between E8 nodes.
 See [the working premise](PREMISE.md) for the physical model and build layers.
 
 Import `PMTransport.Interface` for the handoff, record, cost, clock and
-route theorems. Import `PMTransport.Values` for the checked numbers and
+route and embedded symmetry theorems. Import `PMTransport.Values` for the checked numbers and
 their conditions. Use [the component inventory](COMPONENTS.md) and
 `PMTransport.Components` to locate the open contracts.
 

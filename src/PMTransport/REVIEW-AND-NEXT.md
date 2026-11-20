@@ -1,5 +1,12 @@
 # PMTransport — open work
 
+**Interface closed. Physical admission open.** EP should import
+`PMTransport.Interface` for the certified operations and
+`PMTransport.Values` for conditional rates and thresholds. A
+physical EP conclusion needs its admitted path, reader, booked
+work and traffic. See the [closeout](COMPONENTS.md#transport-closeout)
+and [ranked inputs](COMPONENTS.md#remaining-free-inputs-by-reach).
+
 The [admission chain is paused](PREMISES.md#stopping-point) at the
 mixed receiver readout required by a downstream trace. The
 [component inventory](COMPONENTS.md#interactions) locates the open inputs

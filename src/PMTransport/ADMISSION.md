@@ -343,6 +343,12 @@ A mixed-request advantage requires the missing export contract.
 
 ## Downstream scope
 
+[The top-down filter](COMPONENTS.md#equivariant-lifts) keeps both
+equivariant conserving bank witnesses under the certified cellwise
+action. [The least-Toll test](COMPONENTS.md#least-toll-on-certified-traces)
+selects only within a supplied physical booking. The mixed receiver
+gap and the scoped tagged symmetry therefore remain.
+
 The [joint lift](COMPONENTS.md#joint-update-and-its-limit) projects
 to these exact core traces. Its packet bank has a certified FIFO
 permutation. The projection supplies no physical FIFO firing time
