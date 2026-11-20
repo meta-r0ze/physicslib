@@ -344,24 +344,28 @@ the tariff unit.
 **EP protocol layer.** `Protocol.Protocol` is finite: 16 labels × 2 references
 × firing patterns × certified phases `{0,π}` × packet site; the full family is
 `Protocol.allProtocols` and `allProtocols_complete`. `PillarPredicates` defines
-the weakest paper predicates and the variant filter. `SurvivorClasses` quotients
-the raw label to `labelRecord`; reduced survivor counts are proved in
-`survivorsR_cards`, and the robust core is `RobustCore = SurvivorsR
-(true,false,true)` with 1,224 reduced classes (`robust_core_eq`,
-`robust_core_card`). The class table is in the pillar-filter section above.
+the weakest paper predicates. The corrected Margin is `marginUtilization`
+(every registering ring has period count `< 43`); `marginPerRing` and
+`marginTotal` remain named proxies. `SurvivorClasses` quotients the raw label to
+`labelRecord`; `survivorsU_cards` proves `SurvivorsU false = 1650` and
+`SurvivorsU true = 1110`. The robust-core intersection count and class table
+below are evaluation observations because the reduced intersection decide
+exceeded 600 seconds.
 
-**What the filter derives.** Toll excludes empty firing; Margin excludes full
-firing under the per-ring variant; Map excludes labels equal to the reference
-and, with Hamming = 2, leaves only the complementary record. Map with Hamming
-≥ 1 makes up compatible with the lepton reference and neutrino with colour.
-No reference is chosen.
+The corrected class table has one-differing-bit rows with counts
+`{14,15,21,22}` and two-differing-bit rows with
+`{28,29,30,35,36,37,42,43,44}`. Single-ring 43 and two-ring 86 are gone;
+43 remains only as a two-ring sum. Least Toll gives the same minimum 14 for
+every label, with reference up→lepton, down→colour, electron→lepton,
+neutrino→colour.
 
 **What remains.** The multi-protocol composition rule (Capacity Partitioning,
 Reversible Encoding, Impedance Matching) is not defined on the machine; the
-reference choice and firing pattern are not selected; the full-ring Lean
-spectrum is not proved. Legacy tier sets, generation addresses, quark/lepton
-formulas and heavy-label weights remain premises; record Tolls are derived at
-the flag level and conditional on the physical record-port identification.
+firing pattern is not selected; the full-ring Lean spectrum is not proved.
+Legacy tier sets, generation addresses, quark/lepton formulas and heavy-label
+weights remain premises. The per-label least-Toll references contradict a
+single universal heavy-writer reference; `down_geometric_mean` holds only as an
+equal-Toll case under the selected per-label Tolls.
 
 **Next EP priority.** Define the multi-protocol composition state from the
 nested-paper rules and rerun alone/together closure on the proved survivor
