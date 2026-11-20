@@ -59,22 +59,22 @@ are record/readout flags (`EventRequirements.massive_flag`,
 record/readout requirements to `RingReceiver.receiverFlag`; none is invented
 here.
 
-**Task H candidate record-port identification (hypothesis, not certified).**
-The reference records are colour `(false,false)` and lepton `(true,false)` in
-`labelRecord` order. `bitToll_eq_hamming` proves for all 16 labels and both
-references that `WireSchedule.bitToll` equals the Hamming distance from
-`labelRecord c` to `refRecord`; `colour_hamming` identifies the colour row
-with `HeavyFlipRecords.orbitRecordToll`. `RecordPortIdentification` is the
-candidate map: one receiver encounter per record bit, live arrival the label
-bit, record arrival the reference bit, exchange firing. `identification_flag_total`
-sums the two encounter flags to `bitToll`; `identification_record_identity`
-is the record-write bookkeeping. This is a candidate for gap U, not certified.
-
-The request mismatch is explicit: `RingReceiver` combines the two request bits
-into one exchange decision per site/tick, while `WireSchedule` pays
-`.position` and `.sector` separately (`knownToll_recordOnly`). The candidate
-needs one encounter per record bit (two sites, two ticks, or two encounter
-states), not one site/tick for both. Reported, not resolved.
+**Task I reference-background bit rings (hypothesis, not certified).** The
+candidate vacuum is the reference record on both streams everywhere; a packet
+replaces the live bits at one site. Each record bit has its own ring and
+requests. The references are colour `(false,false)` (up record) and lepton
+`(true,false)` (neutrino record). `bitToll_eq_hamming` and `colour_hamming`
+reproduce the EP rows. Complement symmetry is `tick_complement` and
+`receiverFlag_complement`. `bitRingEmbed` is the bit-ring state;
+`bitRingEmbed_equal_zero`, `bitRingEmbed_background_fixed`,
+`bitRingEmbed_false_true`/`bitRingEmbed_true_false` and `bitRingSum43_eq` give
+the per-bit 43-tick result. `bitRingTotal43_eq` gives the total over the two
+rings; `bitRingTotal43_shared` gives
+`bitToll ref c * patternSum (firingPattern either r) x0`. Unconstrained least
+Toll is zero for every label (`bitRingTotal43_empty_zero`); a zero-Hamming
+label is zero for every request field (`bitRingTotal43_hamming_zero`). The
+Task H encounter scaffolding was removed. This remains a hypothesis, not a
+certified identification.
 
 **Record writes are receiver flags (Task G, Step 1).** `record_step_identity`
 on `RingReceiver.State n` equates the one-tick change in record occupancy with

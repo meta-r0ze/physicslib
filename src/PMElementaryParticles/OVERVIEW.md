@@ -122,26 +122,32 @@ never registers at the receiver. On the 4-ring the same zero-iff-empty result
 is `localizedSumN_four_zero_iff_empty`. The n=5 decide did not finish within
 ten minutes; that run was stopped at n=4.
 
-**Candidate record-port identification (Task H, hypothesis).** The candidate
-reference records are colour `(false,false)` and lepton `(true,false)` in
-`labelRecord` order; `bitToll_eq_hamming` proves for all 16 labels and both
-references that `WireSchedule.bitToll` equals the Hamming distance between
-`labelRecord c` and `refRecord`. The colour row is also
-`HeavyFlipRecords.orbitRecordToll` (`colour_hamming`). `RecordPortIdentification`
-is the named hypothesis: each record bit is one receiver encounter with live
-arrival equal to that `labelRecord` bit and record arrival equal to the
-reference-record bit, at a site where exchange fires. `identification_flag_total`
-shows the two encounter flags sum to `bitToll`; `identification_record_identity`
-is the record-write bookkeeping for the encounter state. **This is a candidate
-for gap U, not a certified identification.**
+**Reference-background bit rings (Task I, hypothesis).** The candidate model
+is the vacuum as reference record on both streams everywhere; a packet
+replaces the live bits at one site by its label bits; each record bit
+(sector, position) runs on its own ring with its own requests. The reference
+records are colour `(false,false)` (up record) and lepton `(true,false)`
+(neutrino record). `bitToll_eq_hamming` proves both EP rows equal the Hamming
+distance; `colour_hamming` gives `orbitRecordToll`.
 
-The request mismatch is explicit. `RingReceiver` combines the two retained
-request bits into one `exchange either (requests x)` decision per site and
-tick. `WireSchedule` pays the `.position` and `.sector` events separately
-(`knownToll_recordOnly`). The candidate therefore needs **one encounter per
-record bit**, i.e. two sites or two ticks (or two separate encounter states,
-as used in the test), not one site/tick serving both bits. This is reported,
-not resolved.
+Complement symmetry: `tick_complement` and `receiverFlag_complement` for
+general `n`. `bitRingEmbed` has ports `(refBit,refBit)` everywhere except live
+`labelBit` at `x0`. If `labelBit = refBit`, `bitRingEmbed_equal_zero` gives
+zero flags at every tick; the background alone is fixed
+(`bitRingEmbed_background_fixed`), agreeing with the stationary-background
+uniform/equal-stream condition. If the bits differ, the state is
+`localizedEmbed` or its complement (`bitRingEmbed_false_true`,
+`bitRingEmbed_true_false`), and `bitRingSum43_eq` gives the 43-tick sum as
+`localizedSum43 either requests x0`.
+
+Total over two bit-rings: `bitRingTotal43_eq`; with a shared firing pattern,
+`bitRingTotal43_shared` gives `bitToll ref c * patternSum (firingPattern either r) x0`.
+Least Toll (empty firing in both rings) gives total zero for every label
+(`bitRingTotal43_empty_zero`); a label with zero Hamming distance registers
+zero for every request field (`bitRingTotal43_hamming_zero`). This removes
+the Task H encounter scaffolding; `encounterState` and
+`identification_flag_total` were removed. The model is a hypothesis, not a
+certified identification.
 
 **Record writes are receiver flags (Task G, Step 1).** On `RingReceiver.State n`,
 one tick satisfies `record_step_identity`: record occupancy after the tick
