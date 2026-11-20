@@ -286,4 +286,16 @@ theorem reference_threshold (full probeVacancy : Bool) (R : Bool → ℝ) :
   refine ⟨?_, ?_, ?_⟩ <;> cases full <;> cases probeVacancy <;>
     norm_num at h ⊢ <;> constructor <;> intro hh <;> linarith
 
+/-- When output flags are paid, replacing the balanced comparison
+    reset by a supplied booked erasure count shifts the threshold by
+    the difference of those counts. This supplies no export itinerary. -/
+theorem reference_threshold_with_erasure (full probeVacancy : Bool)
+    (erased remaining : Bool → ℝ) :
+    let C pol := expectedCost 1 (recordEvents full probeVacancy pol) + erased pol + remaining pol
+    C true < C false ↔ remaining true - remaining false <
+      PMTransport.Values.outputFlagThreshold full probeVacancy - (erased true - erased false) := by
+  dsimp only
+  have h := packet_record_difference_eq_values full probeVacancy
+  constructor <;> intro hc <;> linarith
+
 end PMElementaryParticles.WireReferenceCost

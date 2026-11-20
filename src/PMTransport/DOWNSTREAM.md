@@ -96,3 +96,29 @@ datum or the mixed receiver's paid comparison as an input. The
 stopping point is the use of either datum by an admitted writer
 or insertion trace. The affected quantities would be the writer's
 input and the Toll, hence amplitude, on that trace.
+
+## Prior and reset checks
+
+**Derived.** `BoundaryErasure.ring_erasure_survivor_eq` gives
+the normalized supplied prior on the certified no-export ring.
+Every erasure weight is one and there is no extra merger from
+boundary erasure. This does not convert a per-orbit prior to a
+per-state prior or conversely. Projection onto a smaller set of
+retained observables is a separate coarse-graining. On a common
+tagged trace, the same projection and erasure map give the same
+fibres and weights for both rules at the same starting prior.
+The historical ring comparison using receiver flags remains a
+different account.
+
+**Conditional.** For the two electric references, let `B` be the
+output flag threshold and write `E_C − E_L` for the difference in
+booked erased bits per input. With the same paid output flags,
+`WireReferenceCost.reference_threshold_with_erasure` gives the
+exact threshold `B − (E_C − E_L)` for the remaining difference.
+If the two counts agree, the threshold is `B`. The old
+`3/4`, `27/32`, `9/10` values require
+`E_C − E_L = −B/2` to hold in the replacement account. Their
+original proofs use a balanced comparison reset. The certified
+tagged train gives no comparison between the two electric writers'
+export counts. A numeric erasure-reset threshold is therefore
+unfixed, and the existing flag thresholds remain intact.

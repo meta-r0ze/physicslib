@@ -176,6 +176,16 @@ theorem ring_cycle_erasure (d : Fin Delta → Disposition) :
     cycleErased d (fun _ => none) = 0 ∧ tollRate (cycleErased d (fun _ => none)) = 0 :=
   ⟨no_export_cycle d, by rw [no_export_cycle]; simp [tollRate]⟩
 
+/-- The certified closed ring has no boundary erasure, so its erasure
+    survival weights leave a supplied prior unchanged after normalization.
+    This says nothing about how that prior was prepared. -/
+theorem ring_erasure_survivor_eq {H : Type*} [Fintype H]
+    (prior : H → ℝ) (β : ℝ) (d : H → Fin Delta → Disposition) (i : H) :
+    PersistenceMechanics.Selection.survivor prior β
+      (fun j => (cycleErased (d j) (fun _ => none) : ℝ)) i =
+      prior i / ∑ j, prior j := by
+  simp [PersistenceMechanics.Selection.survivor, no_export_cycle]
+
 /-- A circulating record cannot simply be declared disposable. Holding
     the clock, controllers and every live slot fixed, a different
     upstream record can change the next live output of either rule. -/
