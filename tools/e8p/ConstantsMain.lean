@@ -175,14 +175,16 @@ private def derivation (rest : List String) : IO UInt32 := do
   child.wait
 
 /-- The observations are displayed alongside the conditional rows.  The
-isolated trace result is zero registrations under both receiver rules; the
-conditional mixed-witness rows are shown separately.  No measured reference
-enters either family or its order. -/
+uniform control field has zero registrations because its arrivals are equal;
+it is not one excitation.  The localized trace awaits the request-field
+enumeration.  The conditional mixed-witness rows are shown separately.  No
+measured reference enters either family or its order. -/
 private def printEPCandidates : IO Unit := do
   let out ← IO.getStdout
   out.putStrLn "EP reports. Experimental references are comparison only."
-  out.putStrLn "Isolated trace: RingReceiver.tick iterated on the embedded occupiedInput."
-  out.putStrLn "  receiver registrations = 0 under AND and under OR; AND and OR tie."
+  out.putStrLn "Uniform-field control: all sites and both streams carry the packet, not one excitation."
+  out.putStrLn "  Its equal arrivals make receiver registrations zero under AND and OR."
+  out.putStrLn "  This is not the localized isolated excitation; that trace is not yet reported here."
   out.putStrLn "  record Toll is a separate column; it is not added to the receiver column."
   out.putStrLn "Conditional rows below are mixed witness, hand-booked; they do not run occupiedInput."
   let refs : List Key := [.upMeV, .downMeV, .strangeMeV, .charmMeV, .bottomMeV, .topMeV,
@@ -193,7 +195,7 @@ private def printEPCandidates : IO Unit := do
     let receiver := if c.2.1 then "OR" else "AND"
     let te := PMElementaryParticles.Values.TransportCandidates.traceElectronTollNat c
     out.putStrLn s!"\n{bank} / {receiver} / phases {p.val},{q.val}"
-    out.putStrLn "  Isolated trace: registrations = 0 (both rules)."
+    out.putStrLn "  Uniform-field control: registrations = 0 (both rules); not one excitation."
     out.putStrLn s!"  Conditional (mixed witness, hand-booked) electron row = {te}."
     for reference in PMElementaryParticles.Values.TransportCandidates.traceReferences do
       let rname := if reference then "colour" else "lepton"
@@ -205,7 +207,7 @@ private def printEPCandidates : IO Unit := do
     out.putStrLn "  Wire-to-species tier: open; no trace supplies an address-to-tier bit."
     for key in refs do
       for ref in expRefs key do
-        out.putStrLn s!"  {key.id}: isolated trace has no mass label | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
+        out.putStrLn s!"  {key.id}: no localized trace value | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
 
 /-- Plain `e8p`: every report, each under a heading, so one checked-in file holds everything. -/
 private def printAll : IO Unit := do

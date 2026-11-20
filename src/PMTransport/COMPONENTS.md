@@ -140,11 +140,11 @@ consumer of that input. It need not have a physical value yet.
 | L | Free input · Physical link admission | Specify occupied edges, available link capacity and disturbance, and the through law conditional on earlier crossings. | Route availability and the realized transmission product or restoring weight. |
 | Q | Free input · Supply and acceptance | Specify ready-state supply, accepted disturbance and available return capacity at repeat visits. Stationary modes and the population lower bound are conditional on their setup. | Clean visits, restoration and reuse of the writer reference. |
 | D | Free input · Physical observation | Specify the detector's read support and its connection to the flags, including whether a controller sees that flag. The conditional flag formula already applies on a supplied state. | Detected or booked flag count and any flag-controlled pulse. |
-| K | Free input · Registration tariff | The isolated receiver column is derived and zero: `IsolatedReceiverTrace.isolated_period_registrations_zero`. The record bit-visit column is separate and has no certified common ledger with it. `IsolatedTrace` remains **conditional (mixed witness, hand-booked)**. General preparation, crossing, export, reset and reuse tariffs remain free. | Schedule and label Toll, wire amplitude and signed remaining reference cost. No isolated per-label Toll is derived. |
+| K | Free input · Registration tariff | The uniform control field has receiver column zero by equal arrivals (`uniform_period_registrations_zero`); it is not one excitation. The localized occupancy is checked, but its receiver flag awaits the request-field enumeration. The record bit-visit column is separate and has no certified common ledger. `IsolatedTrace` remains **conditional (mixed witness, hand-booked)**. General preparation, crossing, export, reset and reuse tariffs remain free. | Schedule and label Toll, wire amplitude and signed remaining reference cost. No localized per-label Toll is derived. |
 | W | Free input · Mixed receiver readout | Attach the writer or insertion to the routed value **and** destination, a retained/exported record, or the executed comparison and its booked flag, as required by that consumer. The certified EP trace supplies none of these attachments. | Routed payload and writer sampling, or receiver Toll and hence insertion amplitude. |
 | B | Free input · Boundary disposition | Specify which record becomes a booked export, whether it is retained, returned or erased, and the capacity and return connection of that endpoint. | Erased bits per period, restored reference and the erased-bit difference in the reference threshold. |
 | J | Free input · Job ownership and contention | Specify simultaneous jobs, contending uses, and equality of state, time and resource for shared service. | Schedule capacity, reuse and incremental maintenance cost. |
-| H | Free input · Prior and selection family | The isolated excitation has one embedded state family; its receiver registration column is zero under both rules, so no history prior is selected. `BoundaryErasure.ring_erasure_survivor_eq` returns the normalized supplied prior for an aggregate ensemble. | Aggregate survival for general receiver ensembles. |
+| H | Free input · Prior and selection family | The localized embedding keeps one state family, but the retained request field is still open. The uniform control's zero flags do not select a history prior. `BoundaryErasure.ring_erasure_survivor_eq` returns the normalized supplied prior for an aggregate ensemble. | Aggregate survival for general receiver ensembles. |
 | U | Free input · EP joint admission | Specify the embedding of admitted traffic, seed, wall and pulse into the heavy writer or static charged insertion. | Heavy branch, record reference, lightest offset, tier identification and the physical orders in `1/Δ`. |
 
 For E0 the endpoint domains are the finite phase and supplied mask
@@ -419,12 +419,13 @@ It supplies no physical input to this ranking.
 
 **Isolated-excitation input.** `PMElementaryParticles.IsolatedExcitation`
 fixes O for the object a mass refers to: the stationary E8 background plus
-one packet label. `IsolatedReceiverTrace` embeds it into `RingReceiver.State 3`
-and iterates `tick`; the receiver registration column is zero under AND and
-under OR, so the rules tie. The record Toll is a separate column. The hold/FIFO
-packet lifts move the bank but do not determine a booking tick set, which is
-the stop for that task. The conditional mixed-witness rows remain separately
-labelled.
+one packet label. `IsolatedReceiverTrace` keeps two separate fields. The
+uniform field puts the packet on all sites and both streams; its occupancy is
+six and it is not one excitation. The localized field has one live packet at
+one site, record vacuum there, and vacuum elsewhere; its occupancy is checked
+and preserved by `tick`. The localized receiver flag still depends on the
+retained request field and is not yet enumerated. The record Toll remains a
+separate column. The hold/FIFO lifts do not determine booking ticks.
 
 ## Least Toll on certified traces
 

@@ -172,26 +172,27 @@ noncomputable def mass (c : Candidate) (identify : Candidate → TierLedger.Wire
 The operation and scaling law enter through the supplied offset. -/
 def certifiedOffsetOrder (_c : Candidate) (_protocol : BaseProtocol) : Option ℕ := none
 
-/-! ### Isolated-input trace results
+/-! ### Uniform control field, not one excitation
 
-These are the Task 3–5 results computed by iterating `RingReceiver.tick` on
-the embedded `occupiedInput` state.  The receiver column is zero under AND
-and under OR, so the two rules tie for every isolated excitation.  The record
-Toll remains a separate column with its own unit; it is not added here.
+`uniformPorts` puts the packet on all sites and both streams.  Its receiver
+column is zero under AND and OR because the arrivals are equal by construction.
+This is **not** the one-excitation trace.  The localized embedding and its
+occupancy check are in `IsolatedReceiverTrace`; the localized trace is not yet
+reported here.  The number below is a uniform-field control, not a mass value.
 -/
 
-noncomputable def isolatedTraceRegistrations (either : Bool) (c : Fin 3)
+noncomputable def uniformTraceRegistrations (either : Bool) (c : Fin 3)
     (vacuum : IsolatedExcitation.VacuumLabel c) (packet : IsolatedExcitation.PacketLabel)
     (fields : IsolatedExcitation.ReceiverFields) : ℝ :=
-  IsolatedExcitation.isolatedReceiverColumn either c vacuum packet fields
+  IsolatedExcitation.uniformReceiverColumn either c vacuum packet fields
 
-theorem isolatedTraceRegistrations_zero (either : Bool) (c : Fin 3)
+theorem uniformTraceRegistrations_zero (either : Bool) (c : Fin 3)
     (vacuum : IsolatedExcitation.VacuumLabel c) (packet : IsolatedExcitation.PacketLabel)
     (fields : IsolatedExcitation.ReceiverFields) :
-    isolatedTraceRegistrations either c vacuum packet fields = 0 :=
-  IsolatedExcitation.isolatedReceiverColumn_eq_zero either c vacuum packet fields
+    uniformTraceRegistrations either c vacuum packet fields = 0 :=
+  IsolatedExcitation.uniformReceiverColumn_eq_zero either c vacuum packet fields
 
-noncomputable def isolatedTraceRecordToll (reference : Bool) (label : Channels) : ℝ :=
+noncomputable def isolatedRecordColumn (reference : Bool) (label : Channels) : ℝ :=
   IsolatedExcitation.isolatedRecordColumn reference label
 
 /-! ### Conditional mixed-witness, hand-booked values

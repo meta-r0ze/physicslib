@@ -73,15 +73,22 @@ This is the definition of a mass, not a choice of O: occupancy is fixed at
 vacuum plus one excitation. The vacuum is not unique; `vacuum_nonunique`
 records the certified rest-mode family.
 
-`IsolatedReceiverTrace` embeds that occupancy into `RingReceiver.State 3`.
-The packet label supplies the common port value read by both streams; the
-phase, retained requests and probe bits are the open controller fields G/T and
-are named in `ReceiverFields`. On this state the literal iteration of
-`RingReceiver.tick` gives zero registration at every site and tick under AND
-and under OR (`isolated_flag_zero_AND`, `isolated_flag_zero_OR`), hence AND and
-OR tie for isolated excitations (`isolated_AND_OR_tie`) and the 43-tick sum is
-zero (`isolated_period_registrations_zero`). The receiver column and the
-record bit-visit column are separate, with no certified common ledger.
+`IsolatedReceiverTrace` defines two port fields. `uniformPorts` puts the
+packet on all three sites and both streams. That is **not one excitation**:
+`uniformPorts_occupancy` counts six true bits when the packet is active, so it
+fails the occupancy check. Its zero receiver flags (`uniform_flag_zero_AND`,
+`uniform_flag_zero_OR`, `uniform_AND_OR_tie`) are equal-arrival artifacts of
+that control field, not isolated-excitation results.
+
+`localizedPorts x0 packet` is the one-excitation field: site `x0` has live
+`active packet` and record vacuum (`false`), and every other live/record value
+is vacuum. `localizedPorts_occupancy` gives one true bit when the packet is
+active and zero otherwise; `localized_occupancy_preserved` proves this is
+preserved by `RingReceiver.tick` under both rules. The phase, retained
+requests and probe bits are the open controller fields G/T, named in
+`ReceiverFields`. The localized receiver flag and its 43-tick sum are not yet
+computed; they depend on the retained requests. The receiver column and the
+record bit-visit column remain separate, with no certified common ledger.
 
 The hold/FIFO packet lifts are not derived booking rules. `hold_cell_fixed`
 and `fifo_lift_differs` identify their bank actions, but neither determines a
@@ -95,10 +102,12 @@ The heavy record reference remains the certified two-element family
 ### Finite witness output
 
 `Values.TransportCandidates` keeps the conditional mixed-witness rows separate
-from the isolated trace result. The isolated receiver column is zero and AND/OR
-tie; the record Toll is a separate column. The heavy reference, the static
-offset, and the wire-to-tier map remain explicit inputs. See
-[the e8p report](../../tools/e8p/README.md#ep-isolated-trace-and-conditional-mixed-witness).
+from the uniform control field. The uniform receiver column is zero by equal
+arrivals; it is not a one-excitation result. The localized occupancy is
+checked, while its receiver flag awaits the request-field enumeration. The
+record Toll is a separate column. The heavy reference, the static offset, and
+the wire-to-tier map remain explicit inputs. See
+[the e8p report](../../tools/e8p/README.md#ep-uniform-control-and-conditional-mixed-witness).
 
 ## Protocols are not wire modes
 

@@ -14,15 +14,19 @@ the existing supply and acceptance results. This is the definition of the
 quantity, not a choice of O. The vacuum is a certified family
 (`vacuum_nonunique`).
 
-`IsolatedReceiverTrace` embeds that occupancy into `RingReceiver.State 3` and
-iterates `tick` for one period. The packet supplies the common port value;
-phase, requests and probe are named open controller fields. The result is
-zero registration at every site and tick under both rules
-(`isolated_flag_zero_AND`, `isolated_flag_zero_OR`), so AND and OR tie for
-isolated excitations. The receiver registrations per period and the record
-bit visits are separate columns with no certified common ledger. The hold/FIFO
-packet lifts move the bank but do not determine a booking tick set, so Task 4
-stops there.
+`IsolatedReceiverTrace` now separates the uniform control field from the
+localized one. `uniformPorts` has six true bits when the packet is active and
+fails the occupancy check (`uniformPorts_occupancy`); its zero flags under AND
+and OR (`uniform_flag_zero_AND`, `uniform_flag_zero_OR`, `uniform_AND_OR_tie`)
+are equal-arrival artifacts, not isolated-excitation results.
+`localizedPorts x0 packet` has one live packet at `x0`, record vacuum there,
+and vacuum elsewhere; its occupancy is one when active and zero otherwise
+(`localizedPorts_occupancy`) and is preserved by `tick` under both rules
+(`localized_occupancy_preserved`). The localized receiver flag and period sum
+are not yet computed. The receiver registrations per period and the record bit
+visits remain separate columns with no certified common ledger. The hold/FIFO
+packet lifts move the bank but do not determine a booking tick set, so that
+stop remains.
 
 `IsolatedTrace` remains labelled **conditional (mixed witness, hand-booked)**.
 It iterates `mixedBasisRing`, not `occupiedInput`, and its hold/FIFO slot sets
@@ -37,10 +41,10 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 | Ranked inputs | EP decision |
 | --- | --- |
-| G, T | Phase, requests and probe are named open controller fields in `ReceiverFields`. The hold/FIFO lifts do not determine booking ticks. |
-| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. The embedded receiver port comes from the packet's certified activity bit. General routing and writer attachment remain open. |
-| K, B, D | The isolated receiver column is zero under both rules. The record bit-visit column is separate, with no certified common ledger. General tariffs remain open. |
-| J, Q, H, L | The isolated excitation has one embedded state family, so no history prior is selected. J, Q and L remain open. |
+| G, T | Phase, requests and probe are named open controller fields in `ReceiverFields`. The localized receiver flag depends on the request field and is not yet enumerated. The hold/FIFO lifts do not determine booking ticks. |
+| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. `localizedPorts` places the live packet at one site and leaves the record stream at vacuum; the uniform control field is rejected by the occupancy check. General routing and writer attachment remain open. |
+| K, B, D | The uniform control receiver column is zero by equal arrivals; it is not one excitation. The localized receiver column is not yet computed. The record bit-visit column is separate. General tariffs remain open. |
+| J, Q, H, L | The localized embedding is one state family but its request field is still open. J, Q and L remain open. |
 
 - **Heavy-label weight. [Certificate]** The isolated receiver trace gives
   zero registrations under both rules. The certified record columns colour
@@ -81,14 +85,14 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 ## Next EP priority
 
-Derive a booking tick set from a Transport lift, or name the missing rule
-that selects which lift visits are booked. Until then the isolated trace has
-no per-label Toll to assign; only its receiver registration column is derived,
-and it is zero.
+Run the localized embedding exhaustively over the 64 request fields and both
+receiver rules. Then derive a booking tick set from a Transport lift, or name
+the missing rule that selects which lift visits are booked.
 
 ## Does the eight-candidate family now differ numerically?
 
-**Not for isolated excitations.** The literal isolated trace registers zero
-under AND and under OR, so the two rules tie. The only differing numbers in
-the tree are the conditional mixed-witness, hand-booked rows, which do not run
-`occupiedInput`. The hold/FIFO lifts do not determine their own booking ticks.
+**Not established.** The only zero flag result in the tree is for the uniform
+control field, which puts the packet on all sites and both streams and is not
+one excitation. The localized one-excitation field has the correct occupancy,
+but its receiver flag depends on the retained request field and has not been
+enumerated. The conditional mixed-witness rows do not run `occupiedInput`.

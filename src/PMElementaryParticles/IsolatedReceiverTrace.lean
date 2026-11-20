@@ -7,19 +7,21 @@ import PMTransport.Components
 # Embedding the isolated excitation into the retained receiver
 
 `IsolatedExcitation.occupiedInput` supplies one carrier label and one 16-slot
-packet label.  This file embeds that occupancy into a three-site retained
-receiver state.  The packet label supplies the common port value read by both
-streams: with one excitation there is no second arrival.  The phase, retained
-requests and probe bits are **not** derived from the packet; they are the open
-controller fields G/T, so they are named in `ReceiverFields` and kept explicit.
-The two rest modes from `vacuum_nonunique` are indexed by the `wall`/`record`
-arguments of `OccupiedInput` but do not further constrain the Boolean receiver.
+packet label.  This file records two embeddings.
 
-The trace below is the literal iteration of `RingReceiver.tick`.  On the
-uniform two-stream port field both arrivals are equal at every site and tick,
-so `RingReceiver.receiver_flag_eq` gives zero registration under AND and under
-OR.  This is the trace result for the isolated excitation; it is independent
-of the named controller fields.
+* `uniformPorts` is the **uniform field (all sites, both streams)**.  It is not
+  one excitation and is kept only as a control.  Its equal arrivals make the
+  receiver flag zero for a reason built into the embedding, not a machine
+  result.
+* `localizedPorts x0 packet` is the one-excitation field: site `x0` has live
+  `active packet` and record vacuum (`false`); every other site and both
+  record/live values are vacuum (`false`).  This is the embedding to use for
+  the localized trace.
+
+The phase, retained requests and probe bits are not read out of the packet;
+they are the open controller fields G/T and are named in `ReceiverFields`.
+`wall` and `record` index the certified vacuum family from
+`vacuum_nonunique`; both are carried, not selected.
 -/
 
 noncomputable section
@@ -48,27 +50,51 @@ structure ReceiverFields where
   wall : Bool
   record : Bool
 
-/-- Both streams read the same occupied packet label.  This is the one-
-excitation port field; it is derived from `packet` and the certified inventory
-predicate `active`, not from a supplied rate or slot set. -/
-def isolatedPorts (packet : PacketLabel) : IsolatedSite → IsolatedPorts :=
+/-- Number of true port bits in one two-stream port pair. -/
+def portBitCountPorts (p : IsolatedPorts) : ℕ :=
+  (if p.1 then 1 else 0) + (if p.2 then 1 else 0)
+
+/-- Number of true port bits in a three-site port field. -/
+def portBitCount (ports : IsolatedSite → IsolatedPorts) : ℕ :=
+  ∑ x, portBitCountPorts (ports x)
+
+/-- Uniform field: every site has the same live/record value.  This is all
+sites and both streams, not one excitation. -/
+def uniformPorts (packet : PacketLabel) : IsolatedSite → IsolatedPorts :=
   fun _ => (active packet, active packet)
 
-/-- The Task 2 embedding of an occupied input into `RingReceiver.State 3`.
-The occupied input is carried in the vocabulary even though only its packet
-label fixes a derived field; the other fields are the named `ReceiverFields`. -/
+/-- The one-excitation port field: one live packet at `x0`, record vacuum
+there, and vacuum everywhere else.  Here vacuum is the Boolean value `false`;
+the physical reference vector is separately indexed by `ReceiverFields`. -/
+def localizedPorts (x0 : IsolatedSite) (packet : PacketLabel) :
+    IsolatedSite → IsolatedPorts :=
+  fun x => if x = x0 then (active packet, false) else (false, false)
+
+/-- Uniform embedding, retained only as a control field. -/
 def embed (c : Fin 3) (_vacuum : VacuumLabel c) (packet : PacketLabel)
     (fields : ReceiverFields) : State 3 :=
-  (fields.phase, (fields.requests, (fields.probe, isolatedPorts packet)))
+  (fields.phase, (fields.requests, (fields.probe, uniformPorts packet)))
+
+/-- Localized embedding of the one-excitation field. -/
+def localizedEmbed (c : Fin 3) (_vacuum : VacuumLabel c) (packet : PacketLabel)
+    (x0 : IsolatedSite) (fields : ReceiverFields) : State 3 :=
+  (fields.phase, (fields.requests, (fields.probe, localizedPorts x0 packet)))
 
 theorem embed_ports_uniform (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
     (fields : ReceiverFields) (x : IsolatedSite) :
     (embed c vacuum packet fields).2.2.2 x = (active packet, active packet) := rfl
 
+theorem localizedEmbed_ports (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
+    (x0 : IsolatedSite) (fields : ReceiverFields) (x : IsolatedSite) :
+    (localizedEmbed c vacuum packet x0 fields).2.2.2 x =
+      (if x = x0 then (active packet, false) else (false, false)) := rfl
+
 theorem embed_occupied_packet (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
     (_fields : ReceiverFields) :
     occupiedInput c vacuum packet (.inr packet) = true :=
   occupiedInput_packet c vacuum packet
+
+/-! ## Uniform control field: equal arrivals, zero by construction -/
 
 /-- A uniform equal port field is fixed by the guarded receiver step. -/
 theorem uniform_ports_tick (either : Bool) (s : State 3) (v : Bool)
@@ -102,32 +128,29 @@ theorem receiver_flag_zero_of_uniform (either : Bool) (s : State 3) (v : Bool)
   rw [ha]
   simp
 
-/-- Task 3(a): at every site and tick of the literal 43-tick iteration, the
-embedded isolated excitation registers zero under AND. -/
-theorem isolated_flag_zero_AND (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
+/-- Uniform field, not one excitation: zero under AND. -/
+theorem uniform_flag_zero_AND (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
     (fields : ReceiverFields) (k : ℕ) (x : IsolatedSite) :
     receiverFlag false ((tick 3 false)^[k] (embed c vacuum packet fields)) x = 0 := by
   apply receiver_flag_zero_of_uniform
   exact uniform_ports_iterate false _ _ (embed_ports_uniform c vacuum packet fields) k
 
-/-- Task 3(a): the same zero under OR. -/
-theorem isolated_flag_zero_OR (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
+/-- Uniform field, not one excitation: zero under OR. -/
+theorem uniform_flag_zero_OR (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
     (fields : ReceiverFields) (k : ℕ) (x : IsolatedSite) :
     receiverFlag true ((tick 3 true)^[k] (embed c vacuum packet fields)) x = 0 := by
   apply receiver_flag_zero_of_uniform
   exact uniform_ports_iterate true _ _ (embed_ports_uniform c vacuum packet fields) k
 
-/-- AND and OR tie at every isolated site and tick because both register zero. -/
-theorem isolated_AND_OR_tie (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
+/-- Uniform field, not one excitation: AND and OR both register zero. -/
+theorem uniform_AND_OR_tie (c : Fin 3) (vacuum : VacuumLabel c) (packet : PacketLabel)
     (fields : ReceiverFields) (k : ℕ) (x : IsolatedSite) :
     receiverFlag false ((tick 3 false)^[k] (embed c vacuum packet fields)) x =
       receiverFlag true ((tick 3 true)^[k] (embed c vacuum packet fields)) x := by
-  rw [isolated_flag_zero_AND, isolated_flag_zero_OR]
+  rw [uniform_flag_zero_AND, uniform_flag_zero_OR]
 
-/-- The booked receiver registration sum over a full 43-tick isolated period
-is zero, for either rule.  This is the literal sum of `receiverFlag` on the
-iterated embedded state. -/
-theorem isolated_period_registrations_zero (either : Bool) (c : Fin 3)
+/-- Uniform control field: its 43-tick receiver sum is zero. -/
+theorem uniform_period_registrations_zero (either : Bool) (c : Fin 3)
     (vacuum : VacuumLabel c) (packet : PacketLabel) (fields : ReceiverFields) :
     (∑ t : Fin Delta, ∑ x : IsolatedSite,
       receiverFlag either ((tick 3 either)^[t.val]
@@ -137,34 +160,94 @@ theorem isolated_period_registrations_zero (either : Bool) (c : Fin 3)
   apply Finset.sum_eq_zero
   intro x _
   cases either
-  · exact isolated_flag_zero_AND c vacuum packet fields t.val x
-  · exact isolated_flag_zero_OR c vacuum packet fields t.val x
+  · exact uniform_flag_zero_AND c vacuum packet fields t.val x
+  · exact uniform_flag_zero_OR c vacuum packet fields t.val x
 
-/-! ## Task 5: separate ledger columns
+/-! ## Occupancy checks -/
 
-The isolated receiver registration count is measured in registrations per
-43-tick period.  The record Toll is measured in WireSchedule bit visits per
-label.  No certified result in this file puts those two units in one ledger,
-so they are exposed as separate columns and are not added.
+theorem portBitCount_applyGuard (g : LocalController.Guard) (p : IsolatedPorts) :
+    portBitCountPorts (LocalController.applyGuard g p) = portBitCountPorts p := by
+  unfold LocalController.applyGuard portBitCountPorts
+  split <;> simp [add_comm]
+
+theorem portBitCount_arrivals (ports : IsolatedSite → IsolatedPorts) :
+    portBitCount (arrivals ports) = portBitCount ports := by
+  unfold portBitCount portBitCountPorts arrivals OpenReferenceFlow.streamShift
+  rw [Finset.sum_add_distrib, Finset.sum_add_distrib]
+  congr 1
+  · exact Equiv.sum_comp (finRotate 3).symm
+      (fun x => if (ports x).1 then 1 else 0)
+  · exact Equiv.sum_comp (finRotate 3)
+      (fun x => if (ports x).2 then 1 else 0)
+
+theorem portBitCount_tick (either : Bool) (s : State 3) :
+    portBitCount ((tick 3 either s).2.2.2) = portBitCount s.2.2.2 := by
+  unfold portBitCount
+  calc
+    (∑ x, portBitCountPorts ((tick 3 either s).2.2.2 x)) =
+        ∑ x, portBitCountPorts (arrivals s.2.2.2 x) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [tick_ports]
+      exact portBitCount_applyGuard _ _
+    _ = ∑ x, portBitCountPorts (s.2.2.2 x) := portBitCount_arrivals s.2.2.2
+
+/-- Localized occupancy: one true live bit when the packet is active, zero
+otherwise. -/
+theorem localizedPorts_occupancy (x0 : IsolatedSite) (packet : PacketLabel) :
+    portBitCount (localizedPorts x0 packet) = if active packet then 1 else 0 := by
+  rw [portBitCount, Finset.sum_eq_single_of_mem x0 (Finset.mem_univ x0)]
+  · by_cases h : active packet <;>
+      simp [localizedPorts, portBitCountPorts, h]
+  · intro b _ hb
+    simp [localizedPorts, portBitCountPorts, hb]
+
+/-- The localized one-excitation occupancy is preserved by `tick` under both
+rules, at every tick. -/
+theorem localized_occupancy_preserved (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (packet : PacketLabel) (x0 : IsolatedSite)
+    (fields : ReceiverFields) (k : ℕ) :
+    portBitCount (((tick 3 either)^[k]
+      (localizedEmbed c vacuum packet x0 fields)).2.2.2) =
+      (if active packet then 1 else 0) := by
+  induction k with
+  | zero => simpa [localizedEmbed] using localizedPorts_occupancy x0 packet
+  | succ k ih =>
+    rw [Function.iterate_succ_apply']
+    rw [portBitCount_tick, ih]
+
+/-- The old uniform field fails the occupancy check: six true bits when the
+packet is active.  It is not one excitation. -/
+theorem uniformPorts_occupancy (packet : PacketLabel) :
+    portBitCount (uniformPorts packet) = if active packet then 6 else 0 := by
+  by_cases h : active packet <;>
+    simp [portBitCount, uniformPorts, portBitCountPorts, h]
+
+/-! ## Separate ledger columns
+
+The receiver registration count is measured in registrations per 43-tick
+period.  The record Toll is measured in WireSchedule bit visits per label.
+No certified result in this file puts those two units in one ledger, so they
+are exposed as separate columns and are not added.
 -/
 
-/-- Isolated receiver registrations per 43-tick period. -/
-noncomputable def isolatedReceiverColumn (either : Bool) (c : Fin 3)
+/-- Uniform control-field receiver registrations per 43-tick period. -/
+noncomputable def uniformReceiverColumn (either : Bool) (c : Fin 3)
     (vacuum : VacuumLabel c) (packet : PacketLabel) (fields : ReceiverFields) : ℝ :=
   ∑ t : Fin Delta, ∑ x : IsolatedSite,
     receiverFlag either ((tick 3 either)^[t.val] (embed c vacuum packet fields)) x
 
-theorem isolatedReceiverColumn_eq_zero (either : Bool) (c : Fin 3)
+theorem uniformReceiverColumn_eq_zero (either : Bool) (c : Fin 3)
     (vacuum : VacuumLabel c) (packet : PacketLabel) (fields : ReceiverFields) :
-    isolatedReceiverColumn either c vacuum packet fields = 0 := by
-  unfold isolatedReceiverColumn
-  exact_mod_cast isolated_period_registrations_zero either c vacuum packet fields
+    uniformReceiverColumn either c vacuum packet fields = 0 := by
+  unfold uniformReceiverColumn
+  exact_mod_cast uniform_period_registrations_zero either c vacuum packet fields
 
 /-- Record bit visits per label, a separate column with its own unit. -/
 noncomputable def isolatedRecordColumn (reference : Bool) (label : Channels) : ℝ :=
   WireSchedule.bitToll reference label
 
-/-! ## Task 4: the packet lifts
+/-! ## The packet lifts
 
 The certified lifts in `PMTransport.Components` move the packet bank.  They do
 not select receiver booking ticks.  `hold_cell_fixed` and `fifo_lift_differs`
