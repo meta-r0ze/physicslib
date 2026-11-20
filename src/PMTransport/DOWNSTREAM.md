@@ -70,3 +70,29 @@ decisions also agree on its diagonal requests
 | Derived | Receiver comparison flag | `mixed_ring_flags` gives 0 for AND and 1 for OR from the same mixed-request, unequal basis arrivals. This flag is available in the receiver model before any disposition. |
 | Conditional | Paid comparison Toll, the associated wire amplitude, and orbit scores in the flag account | If the one mismatch comparison is the charged Toll, `mixed_ring_flag_amplitudes` gives 1 and `exp(−1/2)`. `mixed_ring_orbit_toll` gives site-zero flag rates 0 and 1 on the two orbits from the common input. The [ring flag and survivor tables](RING.md#robustness-across-all-positive-hazards) distinguish the ensembles under stated priors. |
 | Excluded | A quotient of all published receiver observations by the rule choice | The same mixed input gives different observable destinations and flags. Equality on tagged starts does not extend to that input. |
+
+## Export-contract requirement
+
+**Conditional.** A consumer of the mixed route needs the routed
+value and its live or record destination after the visit. The
+mixed witness distinguishes the through record at −1 from the
+reflected live value at +1. They cannot be represented as the
+same boundary record for a reader of that destination. Expose the
+equivalent route information if the consumer receives the payload
+separately. The destination must stay available through its last use.
+
+**Conditional.** A consumer of a paid receiver comparison needs
+to distinguish the visit that executed exchange and its mismatch
+flag from bypass. The raw branch can differ even when the arrival
+values agree and the mismatch flag is zero. An account of executed
+work therefore needs the branch as well as its flag. A reader of
+the flag rate or its survival amplitude alone needs the booked
+flag account. Disposing of a record is a later operation.
+
+The encoded ring keeps this distinction internally. Its boundary
+exports no bit. The tagged open handoff has no rule-dependent
+distinction to export. No certified EP trace takes the mixed-route
+datum or the mixed receiver's paid comparison as an input. The
+stopping point is the use of either datum by an admitted writer
+or insertion trace. The affected quantities would be the writer's
+input and the Toll, hence amplitude, on that trace.
