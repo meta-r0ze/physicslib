@@ -78,6 +78,13 @@ label is zero for every request field (`bitRingTotal43_hamming_zero`). The
 Task H encounter scaffolding was removed. This remains a hypothesis, not a
 certified identification.
 
+**One firing site: finite observation (Task 2).** `tools/bit_ring_rate_check.py`
+gives 43-tick counts for firing site 0 by `x0`: `n=3 [14,14,15]`,
+`n=4 [10,11,11,11]`, `n=5 [8,8,9,9,9]`, `n=6 [7,7,7,7,7,8]`,
+`n=7 [6,6,6,6,6,6,7]`, `n=8 [5,5,5,5,5,6,6,6]`. On the 43-ring every
+firing site and `x0` give exactly 1. No general-n closed form was proved;
+these are observations, not masses/tiers.
+
 **Record writes are receiver flags (Task G, Step 1).** `record_step_identity`
 on `RingReceiver.State n` equates the one-tick change in record occupancy with
 exchanging `(true,false)` arrivals minus exchanging `(false,true)` arrivals;

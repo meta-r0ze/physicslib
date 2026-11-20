@@ -152,6 +152,16 @@ the Task H encounter scaffolding; `encounterState` and
 `identification_flag_total` were removed. The model is a hypothesis, not a
 certified identification.
 
+**One firing site: finite observation (Task 2).** `tools/bit_ring_rate_check.py`
+computes, without data, the 43-tick flag count for one firing site and one
+start site on n-rings. For firing site 0 the counts by `x0` are:
+`n=3: [14,14,15]`; `n=4: [10,11,11,11]`; `n=5: [8,8,9,9,9]`;
+`n=6: [7,7,7,7,7,8]`; `n=7: [6,6,6,6,6,6,7]`;
+`n=8: [5,5,5,5,5,6,6,6]`. On the 43-ring every firing site and every `x0`
+give exactly **1** (distinct set `{1}`). This is a finite observation, not a
+closed-form theorem and not a mass/tier. The general-n closed form was not
+proved.
+
 **Record writes are receiver flags (Task G, Step 1).** On `RingReceiver.State n`,
 one tick satisfies `record_step_identity`: record occupancy after the tick
 equals record occupancy before plus the number of exchanging sites with
