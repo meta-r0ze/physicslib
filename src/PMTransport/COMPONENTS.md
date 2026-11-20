@@ -416,3 +416,50 @@ ultimately realized.
 
 Layering is a separate build decision in [PREMISES](PREMISES.md#layering).
 It supplies no physical input to this ranking.
+
+## Marked node symmetries
+
+`Components.NodeSymmetry` tests the embedded sector-preserving
+Weyl action. The marked geometry keeps the two D₄ sectors distinct.
+The active factor uses signed axis permutations with even sign
+parity. The other factor acts independently. The phase is a
+separate scalar slot. A spatial sign normal in the slice model is
+an extra marking beyond fixing this scalar phase.
+
+| Certified edge family | Active stabilizer | Generators in the active sector | Order with the other marked sector |
+| --- | --- | --- | --- |
+| All 24 roots of the active sector with no distinguished direction | 192 | Four simple roots. `unsigned_generators`, `diagonal_generators`, `sector_factor`. | 36,864 |
+| Open root line, retaining positive direction `e₀ + e₁` | 8 | Simple roots 0, 2, 3 (`line_generators`). | 1,536 |
+| Directional axis hop `2e₀` with no slice normal | 24 | Simple roots 1, 2, 3 (`axis_generators`). | 4,608 |
+| Axis hop fixing the slice plane, with no marked normal direction | 8 | Swap transverse axes 1 and 2 and flip the pair 2 and 3 (`slice_plane_generators`). | 1,536 |
+| Axis hop within the slice with positive clock normal `e₃` | 4 | Swap transverse axes 1 and 2 and change both their signs (`slice_generators`). | 768 |
+
+`stabilizer_orders` and `paired_orders` check the counts.
+`simpleFrame_carrier` identifies the carrier action with
+`CarrierWeyl.simple`. `simpleFrame_substrate` identifies it with
+the embedded E8 reflections and fixes the other sector. The bare
+abstract ring supplies oriented shifts and a scalar clock, without
+a geometric edge in the E8 lattice. A chosen ring geometry can
+use the corresponding marked link result.
+
+The fixed trial reflection uses `e₀ − e₁` in the first sector.
+The root-line group preserves it up to sign
+(`line_preserves_probe`). The slice group can move it
+(`slice_can_move_probe`). Keeping both the positive axis and that
+reflection axis fixes `e₁` (`axis_fixed_probe_iff`).
+`fixed_probe_orders` gives active order 4 without the slice,
+and 1 with a marked normal. `slice_plane_probe_order` gives 2 for
+the slice with an unmarked normal. The generators are checked in
+`fixed_probe_generators` and `slice_plane_probe_generators`. These extra restrictions apply when the link and
+probe use the same marked sector.
+
+`bare_line_mixing_root` gives a norm-two E8 reflection fixing the
+positive bare line while mixing the two sectors. Thus forgetting
+the markings can enlarge the Weyl stabilizer. No common unmarked edge family, probe and
+Weyl action on the controller and 16-slot reader is supplied. The
+orders above concern the certified marked families. They give no
+order for an arbitrary supplied configuration of links. The
+packet weak, colour and hypercharge actions are certified
+separately by `PacketGaugeActions`. Their matrices give a uniform
+packet action at each bank cell. The library supplies no identification
+of that action with the spatial stabilizer or a finite combined order.

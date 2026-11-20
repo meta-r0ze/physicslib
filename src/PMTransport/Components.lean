@@ -3,6 +3,8 @@ import PMTransport.BoundaryErasure
 import PMTransport.Machine.CarrierReferenceCycle
 import PMTransport.Machine.RecordTransport
 import PMTransport.Machine.RootMaintenance
+import PMTransport.Machine.SubstrateWeylRoots
+import PMTransport.Machine.SliceHop
 import PMConstants.PacketGaugeActions
 import PMConstants.SharedReference
 
@@ -631,5 +633,243 @@ theorem joint_tagged_ticks_equal {R : ℕ}
       exact LocalController.tagged_ticks_equal s.1 hs (n + 1)
     · rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih]
       rfl
+
+/-! ## Weyl stabilizers in a marked D₄ sector
+
+The signed frame is recorded in lookup order. Its action is on integer
+sector coordinates. The other sector and the scalar clock phase are
+separate from the active edge. Reflections are the eight certified
+embedded simple roots, four per sector.
+-/
+
+namespace NodeSymmetry
+
+set_option maxRecDepth 16000
+
+open Finset
+
+abbrev Frame := (Fin 4 → Fin 4) × (Fin 4 → Bool)
+
+def d4 (f : Frame) : Prop :=
+  Function.Injective f.1 ∧ (univ.filter fun i => f.2 i = true).card % 2 = 0
+
+instance (f : Frame) : Decidable (d4 f) := inferInstanceAs (Decidable (_ ∧ _))
+
+def act (f : Frame) (v : Fin 4 → ℤ) : Fin 4 → ℤ :=
+  fun i => if f.2 i then -v (f.1 i) else v (f.1 i)
+
+def identity : Frame := (id, fun _ => false)
+
+def comp (f g : Frame) : Frame :=
+  (g.1 ∘ f.1, fun i => Bool.xor (f.2 i) (g.2 (f.1 i)))
+
+theorem act_comp (f g : Frame) (v : Fin 4 → ℤ) :
+    act (comp f g) v = act f (act g v) := by
+  funext i
+  unfold act comp
+  cases hf : f.2 i <;> cases hg : g.2 (f.1 i) <;> simp [hf, hg]
+
+def simpleFrame : Fin 4 → Frame := ![
+  (Equiv.swap 0 1, fun _ => false),
+  (Equiv.swap 1 2, fun _ => false),
+  (Equiv.swap 2 3, fun _ => false),
+  (Equiv.swap 2 3, fun i => i = 2 || i = 3)]
+
+theorem simpleFrame_root (j : Fin 4) (v : Fin 4 → ℤ) :
+    act (simpleFrame j) v =
+      PMSubstrate.ChannelSymmetry.refl (PMSubstrate.ChannelSymmetry.simple j) v := by
+  funext i
+  fin_cases j <;> fin_cases i <;>
+    norm_num [act, simpleFrame, PMSubstrate.ChannelSymmetry.refl,
+      PMSubstrate.ChannelSymmetry.simple, PMSubstrate.ChannelSymmetry.dot4,
+      Fin.sum_univ_four, Equiv.swap_apply_def]
+
+theorem simpleFrame_carrier (c : Fin 3) (j : Fin 4) (v : CarrierEvents.Carrier c) :
+    CarrierEvents.vector (CarrierWeyl.simple c j v) = act (simpleFrame j) (CarrierEvents.vector v) :=
+  (CarrierWeyl.simple_is_root c j v).trans (simpleFrame_root _ _).symm
+
+theorem simpleFrame_substrate (s t : Bool) (j : Fin 4) (w : SubstrateWeylRoots.Lattice) :
+    SubstrateWeylRoots.sector t (SubstrateWeylRoots.coordinates s j w) =
+      if t = s then act (simpleFrame j) (SubstrateWeylRoots.sector t w)
+      else SubstrateWeylRoots.sector t w := by
+  rw [simpleFrame_root]
+  exact SubstrateWeylRoots.sector_intertwines s t j w
+
+/-- The line fixes the positive root. The axis hop fixes the positive
+axis. The slice also fixes the oriented clock normal. -/
+inductive Link
+  | sector
+  | line
+  | axis
+  | slice
+
+def preserves : Link → Frame → Prop
+  | .sector, _ => True
+  | .line, f => act f (AxisHop.vec OpenHandoff.direction) = AxisHop.vec OpenHandoff.direction
+  | .axis, f => act f (AxisHop.axis 0) = AxisHop.axis 0
+  | .slice, f => act f (AxisHop.axis 0) = AxisHop.axis 0 ∧ act f (AxisHop.axis 3) = AxisHop.axis 3
+
+instance (l : Link) (f : Frame) : Decidable (preserves l f) := by
+  cases l <;> unfold preserves <;> infer_instance
+
+def stabilizer (l : Link) : Finset Frame :=
+  univ.filter fun f => d4 f ∧ preserves l f
+
+/-- Finite enumeration in the marked active D₄ factor. -/
+theorem stabilizer_orders :
+    (stabilizer .sector).card = 192 ∧ (stabilizer .line).card = 8 ∧
+      (stabilizer .axis).card = 24 ∧ (stabilizer .slice).card = 4 := by
+  decide +kernel
+
+def wordFrame : List (Fin 4) → Frame
+  | [] => identity
+  | j :: w => comp (simpleFrame j) (wordFrame w)
+
+def generatorWords : Link → List (List (Fin 4))
+  | .sector => [[0], [1], [2], [3]]
+  | .line => [[0], [2], [3]]
+  | .axis => [[1], [2], [3]]
+  | .slice => [[1], [2, 1, 2, 3, 1, 2]]
+
+/-- Enumeration of products of the proposed generators up to a depth. -/
+def products (gs : Finset Frame) : ℕ → Finset Frame
+  | 0 => {identity}
+  | n + 1 =>
+    let reached := products gs n
+    reached ∪ (gs ×ˢ reached).image (fun p => comp p.1 p.2)
+
+theorem line_generators :
+    products ((generatorWords .line).toFinset.image wordFrame) 3 = stabilizer .line := by
+  decide +kernel
+
+theorem axis_generators :
+    products ((generatorWords .axis).toFinset.image wordFrame) 6 = stabilizer .axis := by
+  decide +kernel
+
+theorem slice_generators :
+    products ((generatorWords .slice).toFinset.image wordFrame) 2 = stabilizer .slice := by
+  decide +kernel
+
+def unsignedFrames : Finset Frame :=
+  (stabilizer .sector).filter fun f => f.2 = fun _ => false
+
+def diagonalFrames : Finset Frame :=
+  (stabilizer .sector).filter fun f => f.1 = id
+
+theorem unsigned_generators :
+    products (([[0], [1], [2]] : List (List (Fin 4))).toFinset.image wordFrame) 6 =
+      unsignedFrames := by
+  decide +kernel
+
+theorem diagonal_generators :
+    products (([[2, 3], [1, 2, 3, 1], [0, 1, 2, 3, 1, 0]] :
+      List (List (Fin 4))).toFinset.image wordFrame) 3 = diagonalFrames := by
+  decide +kernel
+
+theorem sector_factor (f : Frame) (hf : f ∈ stabilizer .sector) :
+    (f.1, fun _ => false) ∈ unsignedFrames ∧ (id, f.2) ∈ diagonalFrames ∧
+      comp (id, f.2) (f.1, fun _ => false) = f := by
+  have hd := (mem_filter.mp hf).2.1
+  refine ⟨mem_filter.mpr ⟨mem_filter.mpr ⟨mem_univ _, ⟨hd.1, by simp⟩, trivial⟩, rfl⟩,
+    mem_filter.mpr ⟨mem_filter.mpr ⟨mem_univ _, ⟨fun _ _ h => h, hd.2⟩, trivial⟩, rfl⟩, ?_⟩
+  apply Prod.ext
+  · rfl
+  · funext i
+    simp [comp]
+
+/-- The line subgroup preserves the unoriented probe reflection root.
+The sliced axis subgroup need not preserve it. -/
+theorem line_preserves_probe :
+    ∀ f ∈ stabilizer .line,
+      act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
+      act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0 := by
+  have h : ∀ f, d4 f → preserves .line f →
+      act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
+        act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0 := by
+    decide +kernel
+  intro f hf
+  exact h f (mem_filter.mp hf).2.1 (mem_filter.mp hf).2.2
+
+theorem slice_can_move_probe :
+    simpleFrame 1 ∈ stabilizer .slice ∧
+      act (simpleFrame 1) (PMSubstrate.ChannelSymmetry.simple 0) ≠
+        PMSubstrate.ChannelSymmetry.simple 0 ∧
+      act (simpleFrame 1) (PMSubstrate.ChannelSymmetry.simple 0) ≠
+        -PMSubstrate.ChannelSymmetry.simple 0 := by
+  decide +kernel
+
+/-- A uniform degree of freedom in the unmarked sector is independent
+of the edge marking. Count pairs in the two embedded signed frames. -/
+theorem paired_orders :
+    ((stabilizer .line) ×ˢ (stabilizer .sector)).card = 1536 ∧
+    ((stabilizer .axis) ×ˢ (stabilizer .sector)).card = 4608 ∧
+    ((stabilizer .slice) ×ˢ (stabilizer .sector)).card = 768 := by
+  obtain ⟨hs, hl, ha, hc⟩ := stabilizer_orders
+  simp [card_product, hs, hl, ha, hc]
+
+private theorem probe_fix_pair : ∀ f, d4 f → preserves .axis f →
+    ((act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
+      act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0) ↔
+        act f (AxisHop.axis 1) = AxisHop.axis 1) := by
+  decide +kernel
+
+/-- With the same fixed probe as the line, the axis geometry further
+restricts the covariance on the original trial encoding. -/
+theorem fixed_probe_orders :
+    ((stabilizer .axis).filter fun f => act f (AxisHop.axis 1) = AxisHop.axis 1).card = 4 ∧
+    ((stabilizer .slice).filter fun f => act f (AxisHop.axis 1) = AxisHop.axis 1).card = 1 := by
+  decide +kernel
+
+theorem axis_fixed_probe_iff (f : Frame) (h : f ∈ stabilizer .axis) :
+    (act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
+      act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0) ↔
+        act f (AxisHop.axis 1) = AxisHop.axis 1 :=
+  probe_fix_pair f (mem_filter.mp h).2.1 (mem_filter.mp h).2.2
+
+/-- Fixing the slice without marking a positive clock normal admits
+normal reversal. The separate scalar phase is unchanged. -/
+def slicePlane : Finset Frame :=
+  (stabilizer .axis).filter fun f => act f (AxisHop.axis 3) = AxisHop.axis 3 ∨
+    act f (AxisHop.axis 3) = -AxisHop.axis 3
+
+theorem slice_plane_order : slicePlane.card = 8 := by decide +kernel
+
+theorem slice_plane_generators :
+    products (([[1], [2, 3]] : List (List (Fin 4))).toFinset.image wordFrame) 5 =
+      slicePlane := by
+  decide +kernel
+
+theorem fixed_probe_generators :
+    products (([[2], [3]] : List (List (Fin 4))).toFinset.image wordFrame) 2 =
+      (stabilizer .axis).filter (fun f => act f (AxisHop.axis 1) = AxisHop.axis 1) ∧
+    (stabilizer .slice).filter (fun f => act f (AxisHop.axis 1) = AxisHop.axis 1) =
+      {identity} := by
+  decide +kernel
+
+theorem slice_plane_probe_order :
+    (slicePlane.filter fun f => act f (AxisHop.axis 1) = AxisHop.axis 1).card = 2 := by
+  decide +kernel
+
+theorem slice_plane_probe_generators :
+    products (([[2, 3]] : List (List (Fin 4))).toFinset.image wordFrame) 1 =
+      slicePlane.filter (fun f => act f (AxisHop.axis 1) = AxisHop.axis 1) := by
+  decide +kernel
+
+/-- A bare line direction has more symmetries than the marked
+sector model. This norm-two E8 reflection fixes the positive line
+and sends an inactive-sector root out of its orthogonal sector. -/
+theorem bare_line_mixing_root :
+    let r : SubstrateWeylRoots.Lattice := Pi.single 0 1
+    let pairing := PMSubstrate.Lattices.pairing
+    let line := SubstrateWeylRoots.root false 0 + 2 • SubstrateWeylRoots.root false 1 +
+      SubstrateWeylRoots.root false 2 + SubstrateWeylRoots.root false 3
+    let inactive := SubstrateWeylRoots.root true 2
+    let active := SubstrateWeylRoots.root false 0
+    SubstrateWeylRoots.sector false ![1, 2, 1, 1, 0, 0, 0, 0] = AxisHop.vec OpenHandoff.direction ∧
+      pairing r r = 2 ∧ line - pairing line r • r = line ∧ pairing inactive active = 0 ∧
+      pairing (inactive - pairing inactive r • r) active ≠ 0 := by
+  decide +kernel
+
+end NodeSymmetry
 
 end PMTransport.Components
