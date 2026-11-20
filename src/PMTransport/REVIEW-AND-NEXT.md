@@ -25,6 +25,15 @@ for the remaining dependencies. The projected core and the
 16-slot FIFO lift reversibly. Their joint firing rule and the
 clocked EP reader still need a physical attachment.
 
+## Bit-ring candidate status
+
+The bit-ring candidate is a hypothesis, not a certified identification. The
+stationarity bridge is `bitRingConfig_stationary` with `bitRingConfig_streams`
+and `bitRingPortBackground_fixed`. The reference is still free (Task 3), no
+certified firing requirement exists (Task 4), and the checkerboard spectrum is
+script-level only (Task 5). The next priority is certifying the record-port
+identification and then selecting the reference; neither is chosen here.
+
 ## Node handoff
 
 - Identify the accessible occupied neighbourhood, open boundary supply and the controller for the spatial move, wall loader and receiver branch. See [Admission](PREMISES.md#admission). The

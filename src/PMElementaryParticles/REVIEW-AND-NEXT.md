@@ -78,6 +78,27 @@ label is zero for every request field (`bitRingTotal43_hamming_zero`). The
 Task H encounter scaffolding was removed. This remains a hypothesis, not a
 certified identification.
 
+**Task 3 reference choice: (c), free.** `ColourReference.colour_reference_in_payload`
+locates a colour reference in the payload but does not select a writer record;
+`SharedReference` supplies a reserved layout cell. Neither identifies the
+bit-ring reference with colour-up `(false,false)` or lepton-neutrino
+`(true,false)`. `vacuum_nonunique` gives rest modes, not record bits. The free
+choice enters in `refRecord` / `bitRingEmbed refBit`.
+
+**Task 4 firing requirement: (b), other ledger only.** No certified result
+requires an excited bit to register again. `CoherentRefresh.minimum_once`,
+`RefreshSchedule.minimal_is_ledger`, `ReferenceMaintenance`,
+`RecordSupply.clean_supply`, `CoherentRecordRestoration.twice_undoes` and the
+conservation requirements are refresh/maintenance/occupation statements. The
+missing link to `receiverFlag` is gap U; no requirement was created.
+
+**Task 5 checkerboard test (hypothesis amplitude).**
+`tools/bit_ring_checkerboard.py` gives a gapless empty-firing ring and a gapped
+full-firing ring with gap `theta` and a small-`k` Dirac-like fit
+`E^2 ≈ sin^2 k + (theta/2)^2`. Script-level pass only; no Lean spectrum
+theorem and no certified coherent per-flip amplitude. The amplitude remains a
+named hypothesis.
+
 **One firing site: finite observation (Task 2).** `tools/bit_ring_rate_check.py`
 gives 43-tick counts for firing site 0 by `x0`: `n=3 [14,14,15]`,
 `n=4 [10,11,11,11]`, `n=5 [8,8,9,9,9]`, `n=6 [7,7,7,7,7,8]`,

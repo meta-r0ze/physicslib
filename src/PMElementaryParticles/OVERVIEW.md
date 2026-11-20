@@ -152,6 +152,30 @@ the Task H encounter scaffolding; `encounterState` and
 `identification_flag_total` were removed. The model is a hypothesis, not a
 certified identification.
 
+**Reference choice (Task 3, outcome c).** The reference stays a free choice.
+`ColourReference.colour_reference_in_payload` locates a colour reference in
+the payload; it does not select a writer record. `SharedReference` supplies one
+reserved cell for weak/hypercharge layouts. Neither identifies the bit-ring
+reference with a sector's zero-Toll record (colour up `(false,false)`, lepton
+neutrino `(true,false)`). `vacuum_nonunique` indexes rest modes, not record bit
+pairs. The choice enters exactly in `refRecord` / `bitRingEmbed refBit`.
+
+**Firing requirement (Task 4, outcome b).** No certified result says an
+excited bit must register again. `CoherentRefresh.minimum_once`,
+`RefreshSchedule.minimal_is_ledger`, `ReferenceMaintenance`,
+`RecordSupply.clean_supply`, `CoherentRecordRestoration.twice_undoes` and the
+conservation requirements concern refresh, maintenance, restoration or
+conserved occupation, not a lower bound on `receiverFlag`. The missing link is
+the same gap U. No requirement was created.
+
+**Checkerboard test (Task 5, hypothesis amplitude).** `tools/bit_ring_checkerboard.py`
+models the two directions with a coin of angle `theta` at firing sites. It
+finds the empty-firing ring gapless and the full-firing ring gapped, with gap
+`theta` and a small-`k` Dirac-like fit `E^2 ≈ sin^2 k + (theta/2)^2`. This is a
+script-level pass for the checkerboard reading, not a Lean spectrum theorem.
+No certified coherent receiver supplies the per-flip amplitude, so the
+amplitude stays an explicit hypothesis.
+
 **One firing site: finite observation (Task 2).** `tools/bit_ring_rate_check.py`
 computes, without data, the 43-tick flag count for one firing site and one
 start site on n-rings. For firing site 0 the counts by `x0` are:
