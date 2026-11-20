@@ -1,5 +1,21 @@
 # PMElementaryParticles — open work
 
+## Current open list
+
+1. Certify the bit-ring-to-lattice line through the vacuum vector, or name the
+   missing map.
+2. Settle shared, sector-local or composite background; colour needs a
+   three-part composite, lepton is a single vector.
+3. Define the multi-protocol composition state from the nested-paper rules and
+   rerun alone/together closure.
+4. Run triality on the attached valid set and derive per-generation costs; the
+   TierLedger orders remain observation only.
+5. Finish the full-ring Lean spectrum; the mass reading remains a hypothesis.
+6. Radiative stage 2 remains not started.
+
+The detailed status sections below are the historical working ledger.
+
+
 **Rebuild plan.** EP is being rebuilt from persistence on the certified
 KAutomaton machine. Order: (1) machine EP uses; (2) finite `Protocol`;
 (3) six pillar predicates from `PersistenceMechanics.Requirements`;

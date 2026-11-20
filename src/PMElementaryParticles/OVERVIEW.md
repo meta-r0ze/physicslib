@@ -11,6 +11,22 @@ truth. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton 
 For the remaining physical inputs, see the [EP protocol blockers](REVIEW-AND-NEXT.md#protocol-readout-blockers).
 The transport laws are exposed by the [conditional interface](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
 
+## Narrative
+
+The certified machine is KAutomaton’s conditional interface: the 43-clock,
+receiver flags, record bookkeeping, bit rings, the phase-to-record converter
+and the coherent coin. EP adds the finite `Protocol` on that machine and the
+weakest pillar predicates from `PersistenceMechanics.Requirements` and the PM
+paper; the corrected Margin is utilization (`marginUtilization`). The robust
+survivor core is `RobustCoreU`, card 1,110. The channel code is attached to E8
+by `ChannelVectors.channelCoord`: active-false labels map to the D4 vector
+class, active-true labels to the certified triality image. What remains is the
+bit-ring-to-lattice line, the shared/composite background selection, the
+multi-protocol composition rule, and the generation/triality run. Legacy
+species, tier, generation and heavy-label results are retained below with
+their audited status. Task-numbered sections below are historical detail; the
+statements here and their theorem names are current.
+
 ## EP persistence rebuild — structure
 
 1. **Machine EP uses.** The certified machine is KAutomaton's conditional
