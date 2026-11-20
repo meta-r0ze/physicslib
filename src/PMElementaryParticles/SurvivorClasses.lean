@@ -145,4 +145,34 @@ theorem survivorsR_cards :
     (SurvivorsR ⟨true, true, true⟩).card = 216 := by
   decide +kernel
 
+/-- Reduced utilization margin: registering rings have period count < 43. -/
+def marginUtilizationR (r : Reduced) : Prop :=
+  ∀ b : Fin 2, bitDiffersR r b → r.phase b →
+    patternSum (r.firing b) r.x0 < 43
+
+def marginUtilBoolR (r : Reduced) : Bool :=
+  (!bitDiffersR r 0 || !r.phase 0 || decide (patternSum (r.firing 0) r.x0 < 43)) &&
+  (!bitDiffersR r 1 || !r.phase 1 || decide (patternSum (r.firing 1) r.x0 < 43))
+
+def satisfiesUtilBool (tollPerRing : Bool) (r : Reduced) : Bool :=
+  capacityR r && marginUtilBoolR r && mapBoolR ⟨false, false, tollPerRing⟩ r &&
+    true && tollBoolR ⟨false, false, tollPerRing⟩ r && governorBoolR r
+
+def SurvivorsU (tollPerRing : Bool) : Finset Reduced :=
+  Finset.univ.filter (fun r => satisfiesUtilBool tollPerRing r)
+
+def RobustCoreU : Finset Reduced :=
+  SurvivorsU false ∩ SurvivorsU true
+
+/-- Minimum period Toll over the robust utilization core for a record class and
+reference; `⊤` means no survivor. -/
+theorem survivorsU_cards :
+    (SurvivorsU false).card = 1650 ∧
+    (SurvivorsU true).card = 1110 := by
+  decide +kernel
+
+noncomputable def minToll (rec : Record) (reference : Bool) : WithTop ℕ :=
+  ((RobustCoreU.filter fun r => r.record = rec ∧ r.reference = reference).image
+    (fun r => tollCountR r)).min
+
 end PMElementaryParticles.SurvivorClasses

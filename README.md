@@ -10,15 +10,15 @@ This output is an informational theoretic dual to the standard model. The Lean p
  * [Persistence Mechanics](src/PersistenceMechanics): survival/hazard, selection
  * [Substrate](src/PMSubstrate): PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
  * [Action](src/PMAction) - PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport.
- * [Constants](src/PMConstants) - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
+ * [Constants](src/PMConstants) - The properties of substrate partitioning (constants: fine-structure α, strong coupling α_s, weak mixing sin²θ_W, scalar quartic λ, electron Yukawa y_e, Higgs VEV v, Higgs mass m_H, Fermi constant G_F, gauge couplings g_W², g_Y², g_3²)
  * [KAutomaton](src/PMKAutomaton) - State and record transfer between E8 nodes, a reversible cellular automaton.
- * [Elementary Particles](src/PMElementaryParticles) - Systems that can persist on top of the substrate.  ("mass" & decay rates)
+ * [Elementary Particles](src/PMElementaryParticles) - Systems that can persist on top of the substrate.  (All 5 x 3 generations, "mass" & decay rates)
  * [Flavor](src/PMFlavor) - Information transfer (flavor mixing, wall spectra, propagation)
- * [Hadrons](src/PMHadrons) - Composites systems: proton, neutron, etc. "Mass", and decays.
- * [Atoms](src/PMAtoms) - Further recursive systems: nucleus (the shape is sort of like chemistry), shell, atom (ending with the full periodic table list of particles that can persist)
+ * [Hadrons](src/PMHadrons) - Composites systems: proton, neutron, etc. Their mass and decays.
+ * [Atoms](src/PMAtoms) - Further recursive systems: nucleus (the shape is sort of like chemistry), shell, atom (e8p has full periodic table list of particles that can persist)
  * [Cosmology](src/PMCosmology) - The lifetime of the substrate systems (expansion of the universe equations, etc)
 
-Todo: need to write a better overview, but as a placeholder here is my blog entry from April 2026 which walks through the layers at a high level.
+Todo: need to write a better overview, but as a placeholder here is my blog summary from April 2026 which walks through the layers at a high level.
 https://metamagic.substack.com/p/persistence-mechanics-and-the-quantum-vacuum
 
 The Lean proofs are conversions and the goal is to only assume that some things persist without inserting anything from the Standard Model, known physics equations or constants.
@@ -28,7 +28,7 @@ The Lean proofs are conversions and the goal is to only assume that some things 
 
 tools/e8p can output all or any specific lean values and the matching experimental value.
 
-The full list can be seen here: [e8p.txt](tools/e8p/e8p_output.txt)
+The full list of values can be seen here: [e8p.txt](tools/e8p/e8p_output.txt)
 
 Example:
 - **1836.152673444–1836.152673445** The Lean proton/electron mass ratio

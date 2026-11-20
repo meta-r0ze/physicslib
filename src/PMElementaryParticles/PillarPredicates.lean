@@ -62,6 +62,17 @@ def marginPerRing (p : Protocol) : Prop :=
 def marginTotal (p : Protocol) : Prop :=
   totalFiringCount p < 6
 
+/-- Margin stated directly on utilization: any registering bit ring must use
+strictly less than the period length.  This replaces the firing-site proxy. -/
+def marginUtilization (p : Protocol) : Prop :=
+  ∀ b : Fin 2, bitDiffers p b → p.phase b →
+    patternSum (p.firing b) p.x0 < 43
+
+theorem marginUtilization_realizes_finiteness :
+    PersistenceMechanics.Requirements.Pillar.requirement
+      PersistenceMechanics.Requirements.Pillar.margin =
+      PersistenceMechanics.Requirements.Requirement.finiteness := rfl
+
 theorem margin_realizes_finiteness :
     PersistenceMechanics.Requirements.Pillar.requirement
       PersistenceMechanics.Requirements.Pillar.margin =
