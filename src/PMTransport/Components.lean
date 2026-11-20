@@ -872,4 +872,65 @@ theorem bare_line_mixing_root :
 
 end NodeSymmetry
 
+/-! ## Equivariance of factorwise actions -/
+
+set_option maxRecDepth 16000 in
+theorem line_probe_equivariant :
+    ∀ f, NodeSymmetry.d4 f → NodeSymmetry.preserves .line f →
+      Function.Commute (NodeSymmetry.act f) (NodeSymmetry.act (NodeSymmetry.simpleFrame 0)) := by
+  have h : ∀ f, NodeSymmetry.d4 f → NodeSymmetry.preserves .line f →
+      NodeSymmetry.comp f (NodeSymmetry.simpleFrame 0) =
+        NodeSymmetry.comp (NodeSymmetry.simpleFrame 0) f := by
+    decide +kernel
+  intro f hf hl v
+  rw [← NodeSymmetry.act_comp, h f hf hl, NodeSymmetry.act_comp]
+
+theorem slice_probe_not_equivariant :
+    ¬ Function.Commute (NodeSymmetry.act (NodeSymmetry.simpleFrame 1))
+      (NodeSymmetry.act (NodeSymmetry.simpleFrame 0)) := by
+  intro h
+  have hn : NodeSymmetry.act (NodeSymmetry.simpleFrame 1)
+      (NodeSymmetry.act (NodeSymmetry.simpleFrame 0) (AxisHop.axis 0)) ≠
+      NodeSymmetry.act (NodeSymmetry.simpleFrame 0)
+      (NodeSymmetry.act (NodeSymmetry.simpleFrame 1) (AxisHop.axis 0)) := by
+    decide +kernel
+  exact hn (h (AxisHop.axis 0))
+
+/-- Apply the same channel matrix in every live and record cell. -/
+def bankAction {R : ℕ} (A : PacketGaugeActions.M) (bank : PacketBank R) : PacketBank R :=
+  fun p => (A *ᵥ (fun a => bank (p.1, a))) p.2
+
+theorem fifo_commutes_bankAction (R : ℕ) (A : PacketGaugeActions.M) :
+    Function.Commute (fifoEquiv R) (bankAction A) := by
+  intro bank
+  rfl
+
+/-- For a factorwise relabelling, equivariance requires the corresponding
+core commutation and one covariance equation on the bank fibre. -/
+theorem joint_commutes_iff {I : Type*} {R : ℕ} (core : I → I)
+    (packet : I → Equiv.Perm (PacketBank R)) (renameCore : I → I)
+    (renameBank : PacketBank R → PacketBank R) :
+    Function.Commute (jointTick core packet) (Prod.map renameCore renameBank) ↔
+      Function.Commute core renameCore ∧
+        ∀ i bank, packet (renameCore i) (renameBank bank) =
+          renameBank (packet i bank) := by
+  constructor
+  · intro h
+    exact ⟨fun i => congrArg Prod.fst (h (i, 0)),
+      fun i bank => congrArg Prod.snd (h (i, bank))⟩
+  · rintro ⟨hc, hp⟩ s
+    exact Prod.ext (hc s.1) (hp s.1 s.2)
+
+/-- Idle and FIFO commute with every cellwise channel matrix as soon as
+the core relabelling itself commutes. This includes all certified packet
+gauge matrices, even without using their unitarity. -/
+theorem hold_fifo_equivariant {I : Type*} (R : ℕ) (core renameCore : I → I)
+    (hc : Function.Commute core renameCore) (A : PacketGaugeActions.M) :
+    Function.Commute (jointTick core (fun _ => Equiv.refl (PacketBank R)))
+      (Prod.map renameCore (bankAction A)) ∧
+    Function.Commute (jointTick core (fun _ => fifoEquiv R))
+      (Prod.map renameCore (bankAction A)) :=
+  ⟨(joint_commutes_iff _ _ _ _).2 ⟨hc, fun _ _ => rfl⟩,
+    (joint_commutes_iff _ _ _ _).2 ⟨hc, fun _ => fifo_commutes_bankAction R A⟩⟩
+
 end PMTransport.Components

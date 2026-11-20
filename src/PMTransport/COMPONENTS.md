@@ -463,3 +463,37 @@ packet weak, colour and hypercharge actions are certified
 separately by `PacketGaugeActions`. Their matrices give a uniform
 packet action at each bank cell. The library supplies no identification
 of that action with the spatial stabilizer or a finite combined order.
+
+## Equivariant lifts
+
+`Components.joint_commutes_iff` is an exact test for a factorwise
+action. The core must commute with its relabelling. The packet
+permutation at the relabelled input must be conjugate to the
+original one by the bank action. This narrows the reversible
+family without choosing a packet action.
+
+For the certified weak, colour and hypercharge matrices the same
+operator is applied in every cell. Both holding and advancing the
+FIFO commute with that action (`hold_fifo_equivariant`). The FIFO
+changes the cell and leaves the channel index intact. This also
+works for common carrier relabellings on every cell. For
+symmetries acting trivially on the marked Boolean core, both AND
+and OR commute, so all four combinations of the two guards and
+two bank actions survive this test. Two bank choices at fixed
+guard already suffice to distinguish the packet projections.
+The mixed witness still distinguishes the guards at fixed bank
+choice.
+
+For spatial relabellings that preserve the line addresses and
+stream orientation, no site or stream swap is induced on that
+line. In using a fixed native probe, only symmetries preserving
+its reflection axis can commute with the fixed-root pulse in
+general. `line_probe_equivariant` checks the line case and
+`slice_probe_not_equivariant` exhibits the fixed-root obstruction.
+The axis counterexample affects the shared probe on
+both guards. It is no evidence against one receiver rule. There
+is no certified factorwise action of the full E8 Weyl group on
+the Boolean requests, probe and 16-slot packet together.
+A stronger equivariance test needs that existing G/U interface
+to identify the action. It cannot turn either surviving bank
+choice into a unique update on the current interface.
