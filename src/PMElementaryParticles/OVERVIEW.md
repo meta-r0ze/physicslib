@@ -543,6 +543,7 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `MuonLifetimeHigherOrder` | `τ_μ = τ_tree/(1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)`: `lifetime_bounds` `2.196974–2.196984 µs` | via `MuonQEDLoops` |
 | `TauLifetimeCorrected` | Tau lifetime from the measured `τ_μ` and supplied `B_e` with the electronic partial-width ratio corrected: phase space `f(x_μ)/f(x_τ)` (derived), `W` propagator (E8 `M_W`), one-loop QED at each lepton scale (`α(m_τ)⁻¹ = 133.3` supplied); `tau_lifetime_corrected` `291.03–291.06` fs (tree `291.15–291.17`) | measured `τ_μ`, `B_e`, `α(m_τ)` |
 | `MuonRadiativeLog` | The leading one-loop contact log in muon decay vanishes: `c = 0` for charges `(0, −1, −1, 0)` (`leptonic_no_log`) and in the charge-retention order, a conserved `e–μ` current (`retention_no_log`); the leading-log rate factor is one (`rate_factor_one`) | — |
+| `RadiativeStage2` | The assembled one-loop kernel is the finite part plus the ultraviolet and infrared regulator logs; both logs cancel because the contact coefficient is zero (`logCoefficient_eq_zero`, `regulator_logs_cancel`, `independent_of_regulators`, `assembled_rate_factor`) | Feynman-parameter finite integrals (stage 3) |
 | `PairInvariantSpectrum` | Uses the massive-daughter tree spectrum to derive the density in `q² = (p − p_e)²`, its physical interval `[0,(m − μ)²]`, and its weighted change of variable with Jacobian `1/(2m)`. The unweighted integral recovers `MassiveWidth.closed_width`. At `μ = 0`, the normalized invariant `z=q²/m²` gives the weight `2(1−z)²(1+2z)` | Tree contact spectrum with massless neutrinos |
 | `RadiativeIntegrals` | Real dilogarithm series equals the integral of `−log(1 − x)/x` on `[0,1]` (`dilog_eq_integral`); `Li₂(1) = π²/6` from the Basel sum. The kernel is integrable at the endpoint and its reflected form `−log x/(1 − x)` has the same integral | — |
 | `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing; applied to the on-axis matrix in `PMFlavor.InclusiveWidth`), `kinematic_bounds` | Orthogonal final states, common kinematics |
@@ -564,7 +565,9 @@ of the virtual and real terms as its input.
 factor from the two external charged legs. In the muon rest frame the
 angular average at electron speed `0 < β < 1` is
 `log((1 + β)/(1 − β))/β − 2`. It multiplies the soft radial integral.
-The regulated virtual and hard-emission terms are derived numerically
+`RadiativeStage2` formalizes the assembled kernel and the cancellation
+of the ultraviolet and infrared regulator logs. The regulated virtual
+and hard-emission terms are derived numerically
 in `tools/muon_radiative_derivation.py` from the substrate's conserved
 wall vertex (`PMAction.SpinorVertex`) with explicit regulators (a
 Pauli–Villars photon, a photon mass and an electron mass). The total is
