@@ -262,3 +262,25 @@ on the supplied packet-bank action and reader attachment.
 | U | FIFO on all 16 packet coordinates when that operation runs. | Identify the wire and EP operator on that joint trace, including carrier crossing and charged insertion. |
 | O | Core request fibres and encoded traffic still project exactly. | Accessible joint starts and occupancy, including boundary supply. |
 | W | Projected core observables are independent of the bank action. | Which projected or packet-bank output is supplied to the EP reader. |
+
+## Fan-out at a receiver
+
+`Components.ring_observations_local` puts the two output values and
+the comparison flag in the same read neighbourhood. Each depends
+on the local requests and the two adjacent arrivals. The guard
+determines outgoing stream identity at that event. Following a stream
+to another node requires its next shift. Local determination provides
+no clock slot or input port to an EP consumer. It does exclude
+reconstructing arbitrary later arrivals from the same initial local
+stencil (`OpenHandoff.neighbours_do_not_determine_second_visit`).
+
+| Possible attachment at the visit | Locally determined datum | Downstream consequence if attached |
+| --- | --- | --- |
+| X → E | Routed value plus live/record destination. The destination on the next link follows the outgoing stream. | Producer of the writer's payload and therefore its input distribution and slot counts. The mixed witness can route to different ports. |
+| F → E | Occupied retained record at a supplied local or arriving slot. A later export is a different visit. | Supplies the writer polarity, readiness or insertion guard when the physical encoding makes the record such an input. |
+| D → E | Executed comparison and its mismatch result on that input. | May furnish a registration and the Toll in `exp(−T/2)`. A zero flag can accompany an executed exchange. |
+
+All three are cases of W. The clock permits reasoning about when the
+core values are available. The EP read event, its position relative
+to that tick and its attachment still require W/T/U. No case follows
+as the sole physical attachment.

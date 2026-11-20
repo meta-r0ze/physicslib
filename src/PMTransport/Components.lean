@@ -584,4 +584,19 @@ theorem joint_boundary_identity {I : Type*} {R : ℕ} (core : Equiv.Perm I)
         s (exported s) (disposition s)).1) :=
   BoundaryErasure.identity_bijective _ exported disposition
 
+/-! ## Local observations of a certified receiver -/
+
+theorem ring_observations_local {n : ℕ} (either : Bool)
+    (s t : RingReceiver.State n) (x : Fin n)
+    (hq : s.2.1 x = t.2.1 x)
+    (hl : (s.2.2.2 ((finRotate n).symm x)).1 = (t.2.2.2 ((finRotate n).symm x)).1)
+    (hr : (s.2.2.2 (finRotate n x)).2 = (t.2.2.2 (finRotate n x)).2) :
+    (RingReceiver.tick n either s).2.2.2 x = (RingReceiver.tick n either t).2.2.2 x ∧
+      RingReceiver.receiverFlag either s x = RingReceiver.receiverFlag either t x := by
+  have ha : RingReceiver.arrivals s.2.2.2 x = RingReceiver.arrivals t.2.2.2 x :=
+    Prod.ext hl hr
+  constructor
+  · rw [RingReceiver.tick_ports, RingReceiver.tick_ports, hq, ha]
+  · rw [RingReceiver.receiver_flag_eq, RingReceiver.receiver_flag_eq, hq, ha]
+
 end PMTransport.Components
