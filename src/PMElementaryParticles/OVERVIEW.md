@@ -273,6 +273,47 @@ certify qualified links/axis moves, but no theorem identifies a bit-ring
 background with a root/axis line or a connected part of the lattice. The
 missing map is the same placement map.
 
+**Attaching the automaton to E8 (Tasks A1–A6).** A1 is proved only for the
+vector-class half. `ChannelVectors.vectorCoord` maps `labelIndex = 2*axis+sign`
+to the doubled-coordinate vector `sign · 2 e_axis`. It satisfies
+`vectorCoord_norm4 = 4`, `vectorCoord_glueClass = 1` on active-false labels,
+and is injective on those eight labels (`vectorCoord_injective_on_activeFalse`,
+`activeFalse_card`). `Channels.minimal_class_card` gives eight minimal vectors
+in the vector class, so this is the vector-class bijection.
+
+The active-true half is **not** assigned: the two spinor classes have
+half-integer minimal vectors with no signed-axis form. The missing map is a
+chosen enumeration from `labelIndex` to the minimal vectors of the active-true
+class. Consequently the full 16-channel map to one sector and two glue classes
+is not certified.
+
+A2: triality (`CarrierTriality`, `GluedRegister.triality`) can carry the
+vector-class map to spinor classes only after that missing spinor coordinate
+map is fixed. The class choice is exactly the generation/glue-address choice;
+class 0 is the reference wall (`HeavyFlipControl.direct`), which breaks
+triality. It is not fixed by a certified A1 map.
+
+A3: under the vector map, lepton `refRecord false = (axis0, sign0)` is the
+single vector `+2 e_0`; colour `refRecord true = (axis≠0, sign0)` is the set
+`{+2 e_1, +2 e_2, +2 e_3}`, not a single vector. `SharedReference` reserved
+cell and `ColourReference.colour_reference_in_payload` remain layout/payload
+objects; neither is proved equal to either vector/set. Outcome remains (c).
+
+A4: no certified E8 line carries the abstract `Fin 3` bit ring. The qualified
+lines/links (`AxisHop`, `NativePacketLinks`, `OpenHandoff`) do not supply the
+bit-ring-to-lattice line map.
+
+A5: because the active-true class is unassigned, shared versus per-sector
+background remains undecided. The P3/P4 per-label and shared tables remain
+conditional. The active-false vector half sits in one D4 vector class, but
+that does not place the full 16-channel packet.
+
+A6: triality checks T1–T3 cannot run on the full valid set without the
+active-true class map. The reference wall and clock are the certified
+triality-breaking structures; `crossing_word_glued` and the clock periods give
+the extra work but no protocol-class cost here. Tier-ledger orders
+`1/Δ`/`1/Δ²` remain observation only.
+
 **Alone/together.** The nested-paper composition rules are Capacity
 Partitioning, Reversible Encoding and Impedance Matching
 (`PM-3-Nested/paper/2_nested_persistence.tex`). They are not a composition rule

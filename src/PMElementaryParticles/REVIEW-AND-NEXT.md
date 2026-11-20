@@ -106,6 +106,22 @@ No certified line in E8 carries the abstract bit ring. The links in `AxisHop`,
 `NativePacketLinks`, `OpenHandoff` and `GenerationWalls` are qualified moves,
 but the bit-ring-to-lattice background map is missing.
 
+**Tasks A1–A6: E8 attachment.** `ChannelVectors.vectorCoord` proves the
+vector-class half of the lead: `labelIndex = 2*axis+sign` maps to
+`sign·2e_axis`, with norm 4, glue class 1 on active-false labels, and an
+injective map on the eight active-false labels. The vector class has eight
+minimal vectors (`Channels.minimal_class_card`). The active-true second class
+is missing: spinor minimal vectors have no signed-axis form, so a separate
+`labelIndex`-to-spinor enumeration is required. The full 16-channel sector/class
+map is therefore not certified.
+
+Under the vector map, lepton reference is `+2e_0`; colour reference is the set
+`{+2e_1,+2e_2,+2e_3}`. `SharedReference` and `ColourReference` remain layout
+objects and are not proved equal to these. No E8 line carries the abstract bit
+ring. Shared/per-sector backgrounds, triality-invariance of the valid set, and
+the T1–T3 checks remain conditional on the missing class/line maps. Tier-ledger
+orders remain observation only.
+
 The nested-paper composition rules (Capacity Partitioning, Reversible Encoding,
 Impedance Matching) do not define a multi-protocol state on the machine, so
 alone/together closure stops at that missing definition. No grouping is assumed.
