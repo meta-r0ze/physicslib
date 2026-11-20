@@ -34,6 +34,24 @@ The original namespaces remain available for existing callers. Premise
 names refer to `PMTransport/PREMISES.md`. The physical update is a
 client obligation. Phase, branch, reader and work choices appear in
 the original hypotheses. The closure ledger is in `COMPONENTS.md`.
+
+## Protocol inputs supplied by EP
+
+Transport's open list contains machine inputs only. The following are
+protocol inputs owned by EP, not Transport:
+
+* the retained request field and firing pattern G (`firingPattern`,
+  `bitRingTotal43_eq`);
+* the excitation occupancy and reference-record choice O (`refRecord`,
+  `bitRingEmbed`, `bitToll_eq_hamming`);
+* the label record, reference and comparison angle theta in the EP half of U;
+* which label record W reads;
+* the label Toll and paid-event choice in the EP half of K;
+* the history/prior family H.
+
+EP supplies these from persistence; Transport only supplies the machine
+comparator, receiver-flag computation, tariff unit, links, boundary, clock and
+job mechanics.
 -/
 
 namespace PMTransport.Interface

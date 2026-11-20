@@ -160,6 +160,17 @@ The register-per-tick case has the form of a direction flip each tick. The
 Feynman-checkerboard reading of mass as the direction-flip rate is a
 hypothesis for later, not a result of this library.
 
+## EP protocol ownership
+
+`IsolatedReceiverTrace` and `RecordPortIdentification` are EP protocol work that
+use the Transport machine. EP owns the protocol inputs: retained request field
+and firing pattern G, excitation occupancy and reference-record choice O, the
+label record/reference/theta part of U, which label record W reads, the label
+Toll/paid-event part of K, and the history/prior family H. The certified label
+dependence is `bitToll_eq_hamming`, `refRecord`, `bitRingTotal43_eq` and
+`firingPattern`. Transport retains the common comparator, receiver-flag
+computation, tariff unit, links, boundary, clock and job mechanics.
+
 ## Protocol readout blockers
 
 EP inherits a [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout).

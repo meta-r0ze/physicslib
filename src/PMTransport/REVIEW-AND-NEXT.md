@@ -25,14 +25,32 @@ for the remaining dependencies. The projected core and the
 16-slot FIFO lift reversibly. Their joint firing rule and the
 clocked EP reader still need a physical attachment.
 
-## Bit-ring candidate status
+## Closeout list
 
-The bit-ring candidate is a hypothesis, not a certified identification. The
-stationarity bridge is `bitRingConfig_stationary` with `bitRingConfig_streams`
-and `bitRingPortBackground_fixed`. The reference is still free (Task 3), no
-certified firing requirement exists (Task 4), and the checkerboard spectrum is
-script-level only (Task 5). The next priority is certifying the record-port
-identification and then selecting the reference; neither is chosen here.
+**Moved to EP:** the retained request field and firing pattern G; the
+excitation occupancy and reference-record choice O; the label record, reference
+and theta in U; which label record W reads; the label Toll/paid-event part of
+K; and the history/prior family H. `IsolatedReceiverTrace` and
+`RecordPortIdentification` are EP protocol work that use the Transport
+machine. The certified label dependence is `bitToll_eq_hamming`, `refRecord`,
+`bitRingTotal43_eq` and `firingPattern`.
+
+**Remaining Transport-only work:**
+
+- `U`: the common machine comparator and record-port comparison, independent
+  of which label record is read;
+- the coherent receiver exchange as a root-transfer pulse of area theta (a
+  machine property, once a coherent amplitude is certified);
+- `T`: clock calibration, serial placement and overlap;
+- `L`: admitted link and successor law;
+- `B`: booked export and disposition;
+- `K`: tariff unit, amplitude conversion and substrate-index reconciliation;
+- `D`, `J`, `Q`: detector support, shared-job mechanics and supply/acceptance
+  mechanics.
+
+Everything else in the old protocol list is either derived, hypothesised in the
+certified machine, or moved to EP. The bit-ring model remains an EP hypothesis,
+not a Transport result.
 
 ## Node handoff
 

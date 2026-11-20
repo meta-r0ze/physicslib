@@ -61,6 +61,16 @@ files were consolidated. The added aliases under `Interface.Wire` are:
 | `Registers` | `current`, `current_observed`, `current_unitary`, `evolution_occupation` |
 | `Probe` | `events`, `record`, `schedule_closes`, `scheduled_read`, `State`, `fire`, `update` |
 
+**EP protocol layer.** `IsolatedReceiverTrace` and
+`RecordPortIdentification` are EP protocol work running on the Transport
+machine; they are not Transport results. EP now owns the retained request field
+and firing pattern G, the excitation occupancy and reference-record choice O,
+the label record/reference/theta part of U, which label record W reads, the
+label Toll/paid-event part of K, and the history/prior family H. Transport keeps
+the common comparator, receiver-flag computation, tariff unit, links, boundary,
+clock and job mechanics. The label dependence is certified by
+`bitToll_eq_hamming`, `refRecord`, `bitRingTotal43_eq` and `firingPattern`.
+
 ### Isolated-excitation input and trace
 
 `IsolatedExcitation` defines the object a mass refers to: the stationary E8
