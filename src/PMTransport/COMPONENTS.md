@@ -284,3 +284,26 @@ All three are cases of W. The clock permits reasoning about when the
 core values are available. The EP read event, its position relative
 to that tick and its attachment still require W/T/U. No case follows
 as the sole physical attachment.
+
+## Readout consumption
+
+Apply the registration test to a specified trace. A read or a persisted
+record makes the result a registration in the stated account. An
+analytical flag or response can be evaluated from the same trace
+without a machine read. The cost of running a gate is a separate
+question, even when its flag is zero.
+
+| Flag or readout family | Consumer in the existing encoding | Registration status |
+| --- | --- | --- |
+| Ring and line receiver exchange flags | `RingReceiver.receiverFlag` and `LocalController.exchangeFlag` are observables. The core step reads the requests and arrivals and routes the values. The ring orbit average and uniform line flag ledgers are external evaluations. | Unregistered by the specified core tick. A local detector or persisted comparison output would need D/W. |
+| Two-site hop and exchange, open receiver | `TwoSiteHandoff.hop_flag`, `exchange_flag` and `OpenHandoff.receiver_flag` compare supplied coherent states. The record stream retains the displaced value. | No flag booking follows from carrying that value. A comparison consumer at that visit needs D. |
+| Root phase and carrier response, calibration and order comparisons | `RootPulseEvents.phase_flag`, `CarrierResponse.reflection_flag`, `RootClockCalibration.principal_flag_inj` and `RootOrderComparison.native_flag` evaluate supplied comparisons. The trial retains its requests and probe endpoint. | The trial endpoint is retained. A measured comparison of the endpoint, or a different phase detector, still needs D and the scheduled read. |
+| Reference sampling and preparation/reset comparisons | `ReferenceSampling.ref_flag`, `SummedReference.sum_flag`, `RootReferencePreparation.setup_comparison_flag` and `OpenHandoff.balanced_basis_repair_flag` evaluate supplied reference states and detector comparisons. | Preparation and coherent return can write a state. A booked setup/reset comparison needs the specified support and consumer. Binary erasure is separate. |
+| Matched lattice, parity and in-band readers | `ScheduledReadout.readGate`, `ParityReadoutCircuit.prepared_read`, `InBandRootReadout.clean_record_reads` write a result to the designated register when the prepared read executes. | Recorded within those supplied read operations. Admission of the physical read, detector/accumulator support and its tariff are still D/G/K. |
+| Interference and diagonal phase flags, including EP massive flags | `InterferenceReadout.flag_formula`, `DiagonalReadout.state_flag` and `EventRequirements.massive_flag` are probabilities on supplied detector inputs. | The formula alone makes no registration. Need the detector support and visit. |
+| Heavy writer and charged insertion | `HeavyFlipRecords.orbit_record_tolls` and `ElectricHeavyRecord.two_bit_factor_toll` count specified logical comparisons. The guarded companion uses a supplied record. `ChargedInsertion.joint_selector` uses the retained selected branch. | Recorded or read when the stipulated circuit with those banks is executed. Its detector/projection and attachment to the admitted trace are D/W/U. A flag or projector expectation alone is no extra registration. |
+
+The missing detector support specifies the occupied input, clock
+phase, result slot or consumer, and the last use of each result.
+It distinguishes the internal readout from an external observation
+and distinguishes a retained bit from a booked exported bit.
