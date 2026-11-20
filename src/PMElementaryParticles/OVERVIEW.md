@@ -131,10 +131,12 @@ amplitudes are `(1 + e^{ix})/2` and `(1 - e^{ix})/2` (`converter_plus`,
 `x = π`, `exact_bit_flip` gives pass amplitude 0 and flip amplitude 1.
 `CoherentRing.ringShift` is the direction-dependent site shift and
 `CoherentRing.ringTick_unitary` proves the full-firing tick
-`(1 ⊗ encounter x) * shift` is unitary for every `n`. The momentum-block
-dispersion `cos E(k) = cos(x/2) cos k` is verified by
-`tools/bit_ring_checkerboard.py`; its Lean block/eigenvalue proof is not
-completed. Empty firing is script-gapless. The mass-like term is `x/2`, the
+`(1 ⊗ encounter x) * shift` is unitary for every `n`. `Dispersion.planeWave`
+defines the plane wave and `Dispersion.planeWave_exp_period` proves its period
+`exp(i k n)=1`. The momentum-block action, explicit `M x k`, trace/determinant
+and eigenvalue proof are not completed in Lean; the dispersion
+`cos E(k) = cos(x/2) cos k` remains script-level
+(`tools/bit_ring_checkerboard.py`). Empty firing is script-gapless. The mass-like term is `x/2`, the
 band gap is `x`. The mass reading remains a hypothesis, not a result.
 
 **Phase-to-record converter.** The certified comparator

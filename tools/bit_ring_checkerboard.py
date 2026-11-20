@@ -8,8 +8,9 @@ The script prints the quasienergy gap and a small-k fit to
 E^2 = a^2 sin^2(k) + m^2.  It is not a certified EP result.
 
 The Lean coherent encounter and full-firing tick are
-`PhaseToRecord.encounter_unitary` and `CoherentRing.ringTick_unitary`; the
-block/eigenvalue proof is not completed.  The mass reading is a hypothesis.
+`PhaseToRecord.encounter_unitary`, `CoherentRing.ringTick_unitary`, and the
+plane-wave period `Dispersion.planeWave_exp_period`; the block action, `M(k)`,
+and eigenvalue proof are not completed.  The mass reading is a hypothesis.
 """
 import numpy as np
 

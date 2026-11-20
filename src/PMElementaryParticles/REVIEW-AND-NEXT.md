@@ -17,11 +17,12 @@ closure. Blocking object: no multi-protocol machine state.
 ## Full-ring Lean spectrum
 
 `CoherentRing.ringTick_unitary` certifies the full-firing coherent tick for
-every `n`; `PhaseToRecord.encounter_unitary` and `exact_bit_flip` remain the
-encounter data. The block/eigenvalue proof `cos E(k) = cos(x/2) cos k` is still
-script-level (`tools/bit_ring_checkerboard.py`). Remaining: momentum-state
-commutation, the explicit `M(k)`, eigenvalues, and the empty-firing gapless
-proof. The mass reading is a hypothesis.
+every `n`; `Dispersion.planeWave` and `planeWave_exp_period` define the plane
+wave and prove `exp(i k n)=1`. The block action, explicit `M(k)`, trace/det
+and eigenvalue proof `cos E(k)=cos(x/2) cos k` are still script-level
+(`tools/bit_ring_checkerboard.py`). Remaining: the momentum action, `M(k)`,
+eigenvalues, and the empty-firing gapless proof. The mass reading is a
+hypothesis.
 
 ## Everything else still open
 
