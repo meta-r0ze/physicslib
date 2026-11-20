@@ -122,6 +122,27 @@ never registers at the receiver. On the 4-ring the same zero-iff-empty result
 is `localizedSumN_four_zero_iff_empty`. The n=5 decide did not finish within
 ten minutes; that run was stopped at n=4.
 
+**Candidate record-port identification (Task H, hypothesis).** The candidate
+reference records are colour `(false,false)` and lepton `(true,false)` in
+`labelRecord` order; `bitToll_eq_hamming` proves for all 16 labels and both
+references that `WireSchedule.bitToll` equals the Hamming distance between
+`labelRecord c` and `refRecord`. The colour row is also
+`HeavyFlipRecords.orbitRecordToll` (`colour_hamming`). `RecordPortIdentification`
+is the named hypothesis: each record bit is one receiver encounter with live
+arrival equal to that `labelRecord` bit and record arrival equal to the
+reference-record bit, at a site where exchange fires. `identification_flag_total`
+shows the two encounter flags sum to `bitToll`; `identification_record_identity`
+is the record-write bookkeeping for the encounter state. **This is a candidate
+for gap U, not a certified identification.**
+
+The request mismatch is explicit. `RingReceiver` combines the two retained
+request bits into one `exchange either (requests x)` decision per site and
+tick. `WireSchedule` pays the `.position` and `.sector` events separately
+(`knownToll_recordOnly`). The candidate therefore needs **one encounter per
+record bit**, i.e. two sites or two ticks (or two separate encounter states,
+as used in the test), not one site/tick serving both bits. This is reported,
+not resolved.
+
 **Record writes are receiver flags (Task G, Step 1).** On `RingReceiver.State n`,
 one tick satisfies `record_step_identity`: record occupancy after the tick
 equals record occupancy before plus the number of exchanging sites with
