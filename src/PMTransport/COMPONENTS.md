@@ -551,3 +551,18 @@ applies. Distinct outputs remain possible even at tied booked cost.
 | D, detector | A common mask gives the exact conditional mixed flag rate. | Identify the occupied detector support, reader and booking. |
 
 No input in this table is closed on untagged physical traffic.
+
+## Clock placement
+
+Spatial stabilizers fix the scalar phase. This alone places no
+operation. The prescribed trial has its own phases 0 and 1. In
+the wider closed root-excursion family the one-phase mask at
+phase 2 fires at phases 1 and 2
+(`Components.shifted_excursion_boundaries`). The period and the
+non-idle minimum are the same as for the prescribed excursion
+(`ClockControlledRoot.cycle_closes`,
+`Components.shifted_excursion_same_cost`,
+`CarrierReferenceCycle.minimum_nonidle_carrier_cost`). Fixing
+physical pulse or exchange slots still needs the joint placement
+and timing T/G. The shift example concerns the excursion family.
+It does not move a prescribed trial slot.

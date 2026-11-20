@@ -987,4 +987,19 @@ theorem equivariant_lift_can_change_population (a : PacketGaugeActions.Channels)
     exact Finset.sum_congr rfl (fun i _ => mul_left_comm 2 (A p.2 i) (bank (p.1, i)))
   · norm_num [doubleBank, Complex.normSq_apply]
 
+/-! ## A clock phase is not selected by the excursion account -/
+
+theorem shifted_excursion_boundaries :
+    CarrierReferenceCycle.boundaries (fun t => decide (t = (2 : Fin Delta))) = {1, 2} := by
+  decide +kernel
+
+theorem shifted_excursion_same_cost (c : Fin 3) (toll : ℝ) :
+    PMSubstrate.NetCost.expectedCost toll
+        (CarrierReferenceCycle.carrierEvents c (fun t => decide (t = (2 : Fin Delta)))) =
+      PMSubstrate.NetCost.expectedCost toll
+        (CarrierReferenceCycle.carrierEvents c CarrierReferenceCycle.excursionMask) := by
+  rw [CarrierReferenceCycle.carrier_cost_for_mask, shifted_excursion_boundaries,
+    CarrierReferenceCycle.carrier_cycle_cost]
+  norm_num
+
 end PMTransport.Components
