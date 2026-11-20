@@ -38,11 +38,21 @@ set, so that stop remains.
 
 ### Homogeneous requests and ring size
 
-No certified Transport result forces the retained request field to be
+**Finding (Task E, Step 1).** Requests are independent initial data; no
+certified relation to the reference background exists. `ClockedRootTrials`
+takes the controller background `initial : Finset M` and the request
+projection `requestOf : M → Bool × Bool` as separate supplied inputs
+(`historyCount`), and its module states that the background and its request
+projection are separate inputs. `LocalController` keeps requests in the
+supplied register state; `RingReceiver` retains them; the native background
+stores reference values, not requests. No map from the background
+configuration to the request field is certified.
+
+Consequently no certified result forces the retained request field to be
 site-independent. `HomogeneousRouting.equivariant_is_translation` constrains
 the routing permutation; `LocalController.radius_one` is local dependence.
 Homogeneous requests are a named hypothesis (`HomogeneousRequests`), not a
-derived result.
+derived result. Steps 2–3 of Task E were not run.
 
 Conditional on that hypothesis, the four uniform requests are enumerated on
 the 3-ring: `(false,false)` gives 0 under AND and OR; `(true,true)` gives 43

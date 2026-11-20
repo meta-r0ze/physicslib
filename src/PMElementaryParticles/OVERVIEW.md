@@ -104,6 +104,13 @@ the packet site and the request field leaves the sum unchanged
 (`localizedSum43_inactive_zero`). The receiver column and the record
 bit-visit column remain separate, with no certified common ledger.
 
+**Finding.** Requests are independent initial data; no certified relation to
+the reference background exists. `ClockedRootTrials` takes the controller
+background and its request projection as separate inputs (`historyCount`);
+`LocalController` and `RingReceiver` retain supplied requests; the native
+background stores reference values, not requests. No map from the background
+configuration to the request field is certified.
+
 No certified Transport result forces the retained request field to be the
 same at every site. `HomogeneousRouting.equivariant_is_translation` constrains
 the routing permutation, not the retained requests; `LocalController.radius_one`
