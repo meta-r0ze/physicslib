@@ -533,7 +533,7 @@ remain open.
 
 | Certified interface | Physical contract left to the caller | Why the present laws leave it open |
 | --- | --- | --- |
-| Embedded Weyl generators and marked edge groups | L/G/U. Give the marked geometry and its simultaneous action on core and packet. | Different marked edge stabilizers and the probe obstruction. See [marked node symmetries](#marked-node-symmetries). |
+| Embedded Weyl generators and marked edge groups | L/G/U. Give the marked geometry and its simultaneous action on core and packet. | Different marked edge stabilizers and the probe obstruction. See [bare-line stabilizer](#bare-line-stabilizer). |
 | Reversible controller, conditional FIFO and conservation | G/T/O. Give the admitted fibre operation, ticks and initial traffic. | Two distinct conserving equivariant bank operations over the same core. Distinct excursion masks share a period and minimum cost. |
 | Tagged symmetry and computed receiver output | W/D/U. Give the reader, clocked detector support and label embedding. | The mixed destinations and flag differ and share a local stencil. |
 | Open restoration, records and terminal erasure | Q/B/J. Give continuing ready inputs, booked outputs and any reuse/contending jobs. | Exact results require supplied reference and export contracts. The retained ring has no disposal event. |
