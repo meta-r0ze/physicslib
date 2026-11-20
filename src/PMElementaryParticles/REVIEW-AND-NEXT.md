@@ -4,10 +4,11 @@
 Transport machine. Order: (1) machine EP uses; (2) finite `Protocol`;
 (3) six pillar predicates from `PersistenceMechanics.Requirements`;
 (4) complete finite enumeration; (5) legacy audit. Current status:
-`Protocol` and its complete finite family are defined; the six individual
-pillar predicates are not present in `Requirements`, so the full filter and
-alone/together analysis stop at that missing definition. Legacy results are
-retained and audited, not deleted.
+`Protocol`, its complete finite family, and the weakest pillar predicates are
+defined. The filter is evaluated; a direct `decide` over all protocols exceeded
+600 seconds, so survivor counts are observations. Alone/together composition
+stops at the missing multi-protocol state. Legacy results are retained and
+audited, not deleted.
 
 
 [OVERVIEW](OVERVIEW.md) records the checked operations. **[Premise]**
@@ -314,27 +315,29 @@ the tariff unit.
 
 **EP protocol layer.** `Protocol.Protocol` is finite: 16 labels × 2 references
 × firing patterns × certified phases `{0,π}` × packet site; the full family is
-`Protocol.allProtocols` and `allProtocols_complete`. The per-period Toll is
-`Protocol.receiverToll`. Unconstrained least Toll selects the empty firing
-pattern (`bitRingTotal43_empty_zero`).
+`Protocol.allProtocols` and `allProtocols_complete`. `PillarPredicates` defines
+the weakest paper predicates and the variant filter. Survivor counts are
+`(F,F,F) 9408`, `(F,F,T) 6432`, `(F,T,F) 4128`, `(F,T,T) 1152`,
+`(T,F,F) 7200`, `(T,F,T) 4896`, `(T,T,F) 3168`, `(T,T,T) 864`; the direct
+`decide` over all protocols exceeded 600 seconds and was stopped.
 
-**Missing definition.** `PersistenceMechanics.Requirements` defines the three
-requirements, six pillar names, the requirement map and abstract
-`PMRequirements`; it does not define six individual predicates on a machine
-state. Task 2 stops there. Consequently the six-pillar filter, alone/together
-closure, and a filtered enumeration are not defined. No larger ring settles
-that gap; the missing predicate definition is the blocker.
+**What the filter derives.** Toll excludes empty firing; Margin excludes full
+firing under the per-ring variant; Map excludes labels equal to the reference
+and, with Hamming = 2, leaves only the complementary record. Map with Hamming
+≥ 1 makes up compatible with the lepton reference and neutrino with colour.
+No reference is chosen.
 
-**Legacy audit.** The 16-channel layout, `labelRecord` physical record bits,
-tier sets, `QuarkMasses`/`LeptonMasses` formulas, generations as glue
-addresses, heavy-label weight and record Tolls retain the statuses in
-[OVERVIEW](OVERVIEW.md#legacy-audit-task-6): consistent premise, conditional,
-or derived only at the flag level. The heavy reference remains free; no mass
-is derived.
+**What remains.** The full survivor count is not kernel-proved; the
+multi-protocol composition rule (Capacity Partitioning, Reversible Encoding,
+Impedance Matching) is not defined on the machine; the reference choice and
+firing pattern are not selected; the full-ring Lean spectrum is not proved.
+Legacy tier sets, generation addresses, quark/lepton formulas and heavy-label
+weights remain premises; record Tolls are derived at the flag level and
+conditional on the physical record-port identification.
 
-**Next EP priority.** Define the six pillar predicates from the PM
-requirements on the finite `Protocol` state without adding physics. Then rerun
-the complete enumeration and alone/together analysis. After that, select the
-reference record and firing pattern from persistence, and finish the full-ring
-Lean spectrum. The mass reading remains a hypothesis; radiative stage 2 is
-separate and still not started.
+**Next EP priority.** Prove the survivor enumeration by a smaller structural
+argument or a faster finite encoding, then define the multi-protocol
+composition state from the nested-paper rules and rerun alone/together closure.
+After that, select the reference and firing pattern from persistence and finish
+the full-ring spectrum. The mass reading remains a hypothesis; radiative stage
+2 is separate and still not started.

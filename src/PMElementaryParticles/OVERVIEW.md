@@ -24,15 +24,14 @@ The transport laws are exposed by the [conditional interface](../PMTransport/COM
    labels, a reference record, one firing pattern per record bit on the 3-ring,
    certified phases `{0,π}`, and one packet site. Its per-period receiver Toll
    is `Protocol.receiverToll`.
-3. **Pillar conditions.** `PersistenceMechanics.Requirements` defines the
-   three requirements and the six pillar names, with the requirement map and
-   sign. It does not define six individual physical predicates on a machine
-   state. Expressing them on `Protocol` would require new definitions; the
-   missing predicates are named below.
+3. **Pillar conditions.** `PillarPredicates` defines the weakest paper
+   predicates on `Protocol`, with named variants for Margin, Map and Toll, and
+   links each to `Requirements.Pillar.requirement`.
 4. **Enumeration.** `Protocol.allProtocols` is the complete finite family of
    16 labels × 2 references × firing patterns × certified phases × packet site
-   (`allProtocols_complete`). No six-pillar filter is applied because the
-   individual pillar predicates are not defined in the library.
+   (`allProtocols_complete`). `PillarPredicates.survivors` filters it by the
+   six predicates. A direct `decide` over all 24,576 protocols exceeded 600
+   seconds; survivor counts are evaluation observations, not kernel proofs.
 5. **Legacy results and status.** The old species, tier, generation and
    heavy-label material is retained as a legacy ledger. Its status is audited
    in the section below and is not derived by this rebuild unless explicitly
