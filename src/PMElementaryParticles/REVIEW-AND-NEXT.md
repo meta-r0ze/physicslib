@@ -160,6 +160,17 @@ The register-per-tick case has the form of a direction flip each tick. The
 Feynman-checkerboard reading of mass as the direction-flip rate is a
 hypothesis for later, not a result of this library.
 
+## Certified coin and spectrum (Task L)
+
+The certified converter has pass/flip amplitudes `(1 ± e^{ix})/2`
+(`converter_plus`, `converter_minus`), i.e. `cos(x/2)`/`sin(x/2)` up to a
+common phase. `encounter_unitary` certifies the coherent encounter;
+`exact_bit_flip` gives the `x = π` full flip. `tools/bit_ring_checkerboard.py`
+verifies the full-firing block dispersion `cos E(k) = cos(x/2) cos k` to
+machine precision, gap `x` at `k=0`, and a gapless empty-firing ring. The Lean
+full-ring block proof was not completed; the exact-bit and k=0 cases are
+certified. The mass reading remains a hypothesis.
+
 ## Phase-to-record converter (Task K)
 
 The certified `CoherentComparisonRepair.compare (InterferenceReadout.phase x)`

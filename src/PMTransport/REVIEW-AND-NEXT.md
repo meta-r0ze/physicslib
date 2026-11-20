@@ -56,6 +56,22 @@ Everything else in the old protocol list is either derived, hypothesised in the
 certified machine, or moved to EP. The bit-ring model remains an EP hypothesis,
 not a Transport result.
 
+## Closeout
+
+Transport machine work is closed on the conditional interface. The receiver
+flag computation W and guard table G are certified. The common comparator U's
+flag identification is certified through the phase-to-record converter
+(`PhaseToRecord.converter_unitary`, `minus_probability`,
+`expected_receiver_flag`). The coherent encounter is certified
+(`encounter_unitary`) with pass/flip amplitudes `(1 ± e^{ix})/2`; at `x=π`
+it is a full flip (`exact_bit_flip`). The full-ring Lean spectrum block proof
+was not completed, but the script verifies `cos E(k)=cos(x/2) cos k` exactly.
+
+What remains is listed as named machine inputs on the conditional interface:
+T (clock), L (link), B (boundary), D (detector support), J (jobs), Q
+(supply/acceptance), and the tariff unit. The mass reading of the spectrum is
+an EP hypothesis, not a Transport result.
+
 ## Node handoff
 
 - Identify the accessible occupied neighbourhood, open boundary supply and the controller for the spatial move, wall loader and receiver branch. See [Admission](PREMISES.md#admission). The

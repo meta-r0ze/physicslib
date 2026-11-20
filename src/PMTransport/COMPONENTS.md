@@ -410,6 +410,16 @@ halves of split inputs are removed to EP; see the section below.
 Layering is a separate build decision in [PREMISES](PREMISES.md#layering).
 It supplies no physical input to this ranking.
 
+**Certified coin (Task L).** The converter's pass/flip amplitudes are
+`(1 ± e^{ix})/2` (`PhaseToRecord.converter_plus`, `converter_minus`), i.e.
+`cos(x/2)`/`sin(x/2)` up to phase. `encounter_unitary` is the coherent
+one-site encounter; `exact_bit_flip` gives the `x=π` full flip. The full-ring
+Lean block spectrum was not completed; the script verifies
+`cos E(k) = cos(x/2) cos k` exactly, with gap `x` and gapless empty firing.
+The mass interpretation is a hypothesis. Transport is otherwise closed on
+the conditional interface: T, L, B, D, J, Q and the tariff unit remain named
+machine inputs.
+
 **Phase-to-record converter (Task K).** `CoherentComparisonRepair.compare (phase x)`
 is a certified unitary (`PhaseToRecord.converter_unitary`). Its minus output has
 probability `DiagonalReadout.flag x` (`minus_probability`), the expected receiver

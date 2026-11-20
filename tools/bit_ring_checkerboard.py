@@ -32,8 +32,11 @@ def main():
         mask = (k > 0.01) & (k < 0.3)
         A = np.vstack([np.sin(k[mask]) ** 2, np.ones(mask.sum())]).T
         a2, m2 = np.linalg.lstsq(A, full[mask, 0] ** 2, rcond=None)[0]
+        exact = np.arccos(np.cos(theta / 2) * np.cos(k))
+        err = np.max(np.abs(np.abs(full[:, 0]) - exact))
         print(f"theta={theta:.2f} gap_empty={gap_empty:.3e} "
-              f"gap_full={gap_full:.6f} m2_fit={m2:.3e} a2_fit={a2:.3e}")
+              f"gap_full={gap_full:.6f} m_exact={gap_full/2:.6f} "
+              f"m2_fit={m2:.3e} a2_fit={a2:.3e} cosE_err={err:.2e}")
 
 
 if __name__ == "__main__":

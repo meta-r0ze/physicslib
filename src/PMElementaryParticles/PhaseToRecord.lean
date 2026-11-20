@@ -22,6 +22,7 @@ noncomputable section
 namespace PMElementaryParticles.PhaseToRecord
 
 open PMAction
+open PMTransport
 open PMAction.CoherentComparisonRepair
 open Matrix
 
@@ -47,6 +48,15 @@ theorem converter_minus (x : ℝ) :
     InterferenceReadout.phase, Matrix.mulVec, dotProduct]
   ring
 
+theorem converter_plus (x : ℝ) :
+    (converter x *ᵥ phaseInput) (.inl ()) =
+      (1 + Complex.exp ((x : ℂ) * Complex.I)) / 2 := by
+  unfold converter phaseInput CoherentComparisonRepair.compare
+  rw [fromBlocks_mulVec]
+  simp [CoherentComparisonRepair.minus, CoherentComparisonRepair.plus,
+    InterferenceReadout.phase, Matrix.mulVec, dotProduct]
+  ring
+
 /-- The mismatch (minus) output probability is exactly the electric flag. -/
 theorem minus_probability (x : ℝ) :
     Complex.normSq ((converter x *ᵥ phaseInput) (.inr ())) =
@@ -54,16 +64,31 @@ theorem minus_probability (x : ℝ) :
   rw [converter_minus, Complex.normSq_div, DiagonalReadout.normSq_one_sub_exp]
   norm_num [DiagonalReadout.flag]
 
-/-- Expected receiver flag after conversion: the minus port registers one, the
-plus port zero. -/
+/-- Receiver weight on a basis outcome: `exchangeFlag` with the outcome as the
+guard and the standard orthogonal basis values. -/
+noncomputable def outcomeWeight (flip : Bool) : ℝ :=
+  LocalController.exchangeFlag (fun _ => flip) (false, true)
+    PMTransport.RingReceiver.basisValue
+
+theorem outcomeWeight_true : outcomeWeight true = 1 := by
+  unfold outcomeWeight LocalController.exchangeFlag
+  simp [PMTransport.RingReceiver.basisValue, LinkExpansion.nsq_eq,
+    Fin.sum_univ_two, Pi.single_apply, Complex.normSq_apply]
+
+theorem outcomeWeight_false : outcomeWeight false = 0 := by
+  unfold outcomeWeight LocalController.exchangeFlag
+  simp
+
+/-- Expected receiver flag after conversion: minus outcome uses `exchangeFlag`
+on the mismatch basis, plus outcome uses `exchangeFlag` on the pass basis. -/
 noncomputable def expectedReceiverFlag (x : ℝ) : ℝ :=
-  Complex.normSq ((converter x *ᵥ phaseInput) (.inr ())) * 1 +
-    Complex.normSq ((converter x *ᵥ phaseInput) (.inl ())) * 0
+  Complex.normSq ((converter x *ᵥ phaseInput) (.inr ())) * outcomeWeight true +
+    Complex.normSq ((converter x *ᵥ phaseInput) (.inl ())) * outcomeWeight false
 
 theorem expected_receiver_flag (x : ℝ) :
     expectedReceiverFlag x = DiagonalReadout.flag x := by
   unfold expectedReceiverFlag
-  rw [minus_probability]
+  rw [outcomeWeight_true, outcomeWeight_false, minus_probability]
   ring
 
 /-- The two converted outcomes are the orthogonal branch records. -/
@@ -101,5 +126,32 @@ theorem converted_branch_records_unequal (a b : ℝ) (hab : Real.sin (a - b) ≠
   have h : plusRecordReal ⬝ᵥ minusRecordReal = 0 := by
     simp [plusRecordReal, minusRecordReal, dotProduct, Fin.sum_univ_two]
   rw [h, mul_zero]
+
+/-! ## Coherent encounter and exact-bit case -/
+
+/-- The certified coherent encounter at a firing site: the comparator acting
+on the two stream directions `.inl` (live/pass) and `.inr` (record/flip). -/
+def encounter (x : ℝ) : Matrix (Unit ⊕ Unit) (Unit ⊕ Unit) ℂ := converter x
+
+theorem encounter_unitary (x : ℝ) :
+    encounter x ∈ unitary (Matrix (Unit ⊕ Unit) (Unit ⊕ Unit) ℂ) :=
+  converter_unitary x
+
+/-- At `x = pi`, the encounter is a full flip: plus amplitude zero, minus
+amplitude one (up to sign). -/
+theorem exact_bit_flip :
+    (encounter Real.pi *ᵥ phaseInput) (.inl ()) = 0 ∧
+      (encounter Real.pi *ᵥ phaseInput) (.inr ()) = 1 := by
+  constructor
+  · change (converter Real.pi *ᵥ phaseInput) (.inl ()) = 0
+    rw [converter_plus]
+    rw [show Complex.exp (((Real.pi : ℝ) : ℂ) * Complex.I) = -1 by
+      rw [Complex.exp_mul_I]; simp]
+    norm_num
+  · change (converter Real.pi *ᵥ phaseInput) (.inr ()) = 1
+    rw [converter_minus]
+    rw [show Complex.exp (((Real.pi : ℝ) : ℂ) * Complex.I) = -1 by
+      rw [Complex.exp_mul_I]; simp]
+    norm_num
 
 end PMElementaryParticles.PhaseToRecord
