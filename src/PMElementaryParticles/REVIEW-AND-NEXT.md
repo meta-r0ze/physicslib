@@ -68,7 +68,9 @@ reproduce the EP rows. Complement symmetry is `tick_complement` and
 `receiverFlag_complement`. `bitRingEmbed` is the bit-ring state;
 `bitRingEmbed_equal_zero`, `bitRingEmbed_background_fixed`,
 `bitRingEmbed_false_true`/`bitRingEmbed_true_false` and `bitRingSum43_eq` give
-the per-bit 43-tick result. `bitRingTotal43_eq` gives the total over the two
+the per-bit 43-tick result. The native stationarity bridge is
+`bitRingConfig_stationary` with `bitRingConfig_streams` and
+`bitRingPortBackground_fixed`. `bitRingTotal43_eq` gives the total over the two
 rings; `bitRingTotal43_shared` gives
 `bitToll ref c * patternSum (firingPattern either r) x0`. Unconstrained least
 Toll is zero for every label (`bitRingTotal43_empty_zero`); a zero-Hamming

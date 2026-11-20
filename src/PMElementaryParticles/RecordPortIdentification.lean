@@ -1,6 +1,7 @@
 import PMElementaryParticles.IsolatedReceiverTrace
 import PMElementaryParticles.HeavyFlipRecords
 import PMElementaryParticles.WireSchedule
+import PMTransport.Machine.NativeReferenceBackground
 
 /-!
 # Reference-background bit rings (candidate model for gap U)
@@ -340,5 +341,48 @@ theorem bitRingTotal43_hamming_zero (c : Channels) (colourReference : Bool)
     rw [hrec]
   rw [if_neg]
   simp [hb]
+
+/-! ## Task 1: stationarity bridge to the native background -/
+
+/-- The bit-ring background as a native reference configuration: one constant
+reference value on every site and every carrier label. -/
+def bitRingConfig (R : ℕ) (refBit : Bool) :
+    NativeCarrierState.Config (Fin (R + 1)) Bool :=
+  fun _ => refBit
+
+/-- The native reference background is stationary on a connected ring. -/
+theorem bitRingConfig_stationary (R : ℕ) (refBit : Bool) :
+    NativeCarrierState.tick (0 : Fin (R + 1)) (finRotate (R + 1))
+        (bitRingConfig R refBit) = bitRingConfig R refBit := by
+  apply (NativeReferenceBackground.stationary_iff
+    (0 : Fin (R + 1)) (finRotate (R + 1))
+    (NativeReferenceBackground.ring_connected R)
+    (bitRingConfig R refBit)).mpr
+  exact ⟨fun _ => refBit, fun x i => ⟨rfl, rfl⟩⟩
+
+/-- The two stream cells used by `stationary_iff` read the same reference bit,
+so the native constant background and the bit-ring uniform port field agree on
+the labelled stream cells. -/
+theorem bitRingConfig_streams (R : ℕ) (refBit : Bool) (x : Fin (R + 1))
+    (i : Fin 2) :
+    bitRingConfig R refBit (x, ActualRootRepair.label (.inl i)) = refBit ∧
+      bitRingConfig R refBit (x, ActualRootRepair.label (.inr i)) = refBit :=
+  ⟨rfl, rfl⟩
+
+/-- The corresponding bit-ring port background is the uniform
+`(refBit,refBit)` field. -/
+def bitRingPortBackground (refBit : Bool) {n : ℕ} : Fin n → IsolatedPorts :=
+  fun _ => (refBit, refBit)
+
+theorem bitRingPortBackground_fixed (n : ℕ) (refBit : Bool) (x0 : Fin n)
+    (requests : Fin n → IsolatedRequests) (either : Bool) (k : ℕ) :
+    ((RingReceiver.tick n either)^[k]
+      (bitRingEmbed refBit refBit x0 requests)).2.2.2 =
+      bitRingPortBackground refBit := by
+  funext x
+  change ((RingReceiver.tick n either)^[k]
+      (bitRingEmbed refBit refBit x0 requests)).2.2.2 x = (refBit, refBit)
+  exact (congrFun (bitRingEmbed_background_fixed refBit x0 requests either k) x).trans
+    (bitRingEmbed_uniform refBit refBit x0 requests rfl x)
 
 end PMElementaryParticles.IsolatedExcitation

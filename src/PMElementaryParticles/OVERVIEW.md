@@ -134,8 +134,11 @@ Complement symmetry: `tick_complement` and `receiverFlag_complement` for
 general `n`. `bitRingEmbed` has ports `(refBit,refBit)` everywhere except live
 `labelBit` at `x0`. If `labelBit = refBit`, `bitRingEmbed_equal_zero` gives
 zero flags at every tick; the background alone is fixed
-(`bitRingEmbed_background_fixed`), agreeing with the stationary-background
-uniform/equal-stream condition. If the bits differ, the state is
+(`bitRingEmbed_background_fixed`). The bridge to
+`NativeReferenceBackground.stationary_iff` is `bitRingConfig_stationary`
+(constant native reference configuration on the connected ring) together with
+`bitRingConfig_streams` and `bitRingPortBackground_fixed`; they agree on the
+labelled stream cells. If the bits differ, the state is
 `localizedEmbed` or its complement (`bitRingEmbed_false_true`,
 `bitRingEmbed_true_false`), and `bitRingSum43_eq` gives the 43-tick sum as
 `localizedSum43 either requests x0`.
