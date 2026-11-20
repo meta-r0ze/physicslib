@@ -680,6 +680,34 @@ def localizedSumN (n : ℕ) (either : Bool) (r : Fin n → IsolatedRequests)
     (x0 : Fin n) (T : ℕ) : ℕ :=
   ∑ k ∈ Finset.range T, ∑ x : Fin n, localizedFlagNatN n either r x0 k x
 
+def mkFieldsN (n : ℕ) (r : Fin n → IsolatedRequests) : ReceiverFieldsN n :=
+  ⟨0, r, fun _ => false, false, false⟩
+
+theorem localizedFlagN_eq_nat (n : ℕ) (either : Bool)
+    (r : Fin n → IsolatedRequests) (vacuum : VacuumLabel 0) (x0 : Fin n)
+    (k : ℕ) (x : Fin n) :
+    receiverFlag either ((RingReceiver.tick n either)^[k]
+      (localizedEmbedN n 0 vacuum activePacket x0 (mkFieldsN n r))) x =
+      (localizedFlagNatN n either r x0 k x : ℝ) := by
+  have hq : ((RingReceiver.tick n either)^[k]
+      (localizedEmbedN n 0 vacuum activePacket x0 (mkFieldsN n r))).2.1 = r := by
+    simpa [mkFieldsN, localizedEmbedN] using RingReceiver.requests_iterate either
+      (localizedEmbedN n 0 vacuum activePacket x0 (mkFieldsN n r)) k
+  have hp : ((RingReceiver.tick n either)^[k]
+      (localizedEmbedN n 0 vacuum activePacket x0 (mkFieldsN n r))).2.2.2 =
+      (RingReceiver.portStep either r)^[k] (localizedPortsN n x0 activePacket) := by
+    rw [RingReceiver.ports_iterate]
+    rfl
+  rw [receiver_flag_eq, hq, hp]
+  unfold localizedFlagNatN
+  by_cases h : RingReceiver.exchange either (r x) = true ∧
+      (RingReceiver.arrivals
+        ((RingReceiver.portStep either r)^[k] (localizedPortsN n x0 activePacket)) x).1 ≠
+      (RingReceiver.arrivals
+        ((RingReceiver.portStep either r)^[k] (localizedPortsN n x0 activePacket)) x).2 <;>
+    simp [h]
+
+
 /-- Empty uniform firing: no flag at any tick, any ring size and any T. -/
 theorem empty_uniform_flags_zero (n T : ℕ) (either : Bool) (x0 : Fin n) :
     localizedSumN n either (emptyRequestsN n) x0 T = 0 := by
