@@ -73,10 +73,41 @@ exchange swaps a packet between them, which reverses its direction.
    remain: the 2 steps inside the clock's `A₄` and the 20 mixed steps. Their
    relative weight, and the weight between the paired classes, are still open.
    No data enters; the `5` of `S₅` is the substrate's, not an input.
-2. *Consistency with `AxisHop` / `SliceHop`.* Those modules describe the
-   within-tick directional factor, which does not advance the clock. This
-   proposal has one root event per tick advancing the clock reading by `±1`.
-   State which update the receiver realizes, or how the two fit together.
+2. *Consistency with `AxisHop` / `SliceHop`* (`tools/clock_slice_alignment.py`).
+   `SliceHop` uses a D4 sector with coordinate 3 as its clock axis. Hops in
+   the slice (clock coordinate 0) stay within a tick, and the roots through
+   the clock axis move the clock coordinate by `±1`. The library never placed
+   that D4 relative to the E8 clock plane. With the current `sectorBasis` the
+   two disagree: slice roots change `clockReading` by 0 or `±6`.
+
+   **There are placements where they agree exactly.** Search over every D4
+   whose slice D3 lies in the clock plane's stabilizer `A₄`:
+
+   | Readings of the 12 clock-axis roots | Labelled placements |
+   | --- | --- |
+   | `±1` (6 each) | 960 |
+   | `±2`, `±4`, `±8` | 480 each |
+
+   In the `±1` class:
+   - every slice root is orthogonal to the clock plane, so spatial hops are
+     clock-silent, as `SliceHop` says;
+   - every clock-axis root is a one-tick root, so `e₀ ± e₃` reads `±1`. That
+     matches `SliceHop`'s "one clock event forward, one backward" for the two
+     clock-routed hop words;
+   - the clock-axis step `2e₃` reads `+2`: two ticks per axis step, matching
+     `AxisHop`'s two root events;
+   - the 6 forward tick roots all lie in one projection class and in its
+     10-orbit, never in the fixed roots. The two classes split the placements
+     480/480;
+   - the orthogonal complement is again a D4, so `E₈ = D₄ ⊕ D₄` still holds.
+
+   So the two pictures are consistent on one condition: **the spacetime D4 is
+   placed so that one step along its clock axis is one E8 clock tick.** The
+   current `sectorBasis` does not satisfy this. It should be replaced by an
+   aligned placement, or the alignment stated as the named condition it is.
+   With alignment, the receiver's tick steps are the D4 clock-axis roots,
+   6 forward and 6 back. That also narrows the open step-weight question in
+   check 1.
 3. *Clock-silent roots.* The 22 roots with phase 0 do not move a packet around
    the ring. Say what they do: internal or transverse motion.
 4. *Lean.* Written in `PMKAutomaton/ClockRing.lean`, awaiting a compile check:
