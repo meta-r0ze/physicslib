@@ -12,6 +12,18 @@ which the packet is held and `FIFO` books every receiver visit.  AND and
 OR are the two certified receiver rules.  The two excursion placements
 are carried as the candidate's clock slots.  The heavy record reference
 is a certified two-element family: the trace does not select it.
+
+Registration ledger for one period:
+
+* `hold` books the phase `starts shifted` only; `FIFO` books every
+  phase `0 … 42`.  At each booked phase the receiver registers exactly
+  when the rule is OR (`mixedReceiverFlagAt_eq`).
+* The electron record is the two exact electric bits
+  (`ElectricHeavyRecord.phase_position`, `phase_sector`); on
+  `electronStatic` both register, giving record Toll two in the colour
+  column and one in the lepton column.
+* The retained ring exports nothing, so every erased-bit count is zero
+  (`trace_erased`).
 -/
 
 noncomputable section
@@ -64,6 +76,15 @@ registration count, not a supplied rate: `mixedReceiverFlagAt_eq` evaluates
 every visited phase. -/
 noncomputable def receiverToll (fifo either _shifted : Bool) : ℝ :=
   (bookedCount fifo : ℝ) * (if either then 1 else 0)
+
+/-- The trace sum: the booked receiver registrations per period. -/
+theorem receiverToll_eq_trace (fifo either shifted : Bool) :
+    receiverToll fifo either shifted =
+      ∑ t : Fin Delta,
+        if bookedMask fifo shifted t then PMTransport.Values.mixedReceiverFlagAt either t else 0 := by
+  unfold receiverToll bookedCount bookedMask bookedSlots
+  cases fifo <;> cases either <;>
+    simp [PMTransport.Values.mixedReceiverFlagAt_eq]
 
 /-- No bit leaves the retained ring, hence no erased bit in the period. -/
 theorem trace_erased (disposition : Fin Delta → PMTransport.BoundaryErasure.Disposition) :
