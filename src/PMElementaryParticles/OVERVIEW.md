@@ -70,6 +70,20 @@ combined closure cannot be decided. The sharing lemmas
 `ColourReference`) remain available, but there is no predicate to satisfy and
 no grouping is assumed.
 
+### Legacy audit (Task 6)
+
+| Legacy result | Status | Reason / theorem |
+| --- | --- | --- |
+| 16-channel layout | Consistent premise | `ProtocolInventory.channels_card` etc. certify the stipulated inventory; the persistence rebuild uses it as the finite label set. Not derived from persistence. |
+| `labelRecord` bits | Consistent premise at the physical record level | `HeavyFlipControl.labelRecord` is certified finite data and `bitToll_eq_hamming` reproduces the rows; no persistence derivation of the physical record identification. |
+| Tier sets `{0,2,3}` / `{0,1,2}` | Consistent premise | `TierLedger.tiersFor` is a declared ledger; no address-to-tier theorem comes from the bit-ring machine. |
+| `QuarkMasses` formulas | Consistent premise | E8 arithmetic is certified; formula-to-tier assignment is declared (`QuarkMasses` legacy audit status). |
+| `LeptonMasses` formulas | Consistent premise | E8 arithmetic and feedback fixed point certified; tier assignment declared (`LeptonMasses` legacy audit status). |
+| Generations as glue addresses `g±1` | Consistent premise | `GenerationWalls`, `GenerationOrientation`, `ControlledGluedRegister` certify the glue structure; no persistence derivation of the generation-to-mass assignment. |
+| `down_geometric_mean` | Conditional/consistent | `HeavyFlipRecords.down_geometric_mean` holds for a common bit price and the colour reference; the reference is free and the mass reading is not derived. |
+| Heavy-label weight | Undetermined | Depends on the free reference and on a firing requirement that is not certified (`bitRingTotal43_empty_zero`; Task 4). |
+| Record Tolls `(2,1,0,1)` / `(1,2,1,0)` | Derived at the flag level / conditional physically | `bitToll_eq_hamming`, `colour_hamming`, `PhaseToRecord.bitToll_eq_expected_conversion`; physical record-port identification remains the admitted trace. |
+
 ## Scope
 
 Paper V models **elementary-particle protocols and their decay** on the E8

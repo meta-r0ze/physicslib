@@ -15,6 +15,10 @@ The per-tier mass/decay status is a provenance ledger, not a derivation.  A
 status records what the current library proves: `e8`, `comparison`, `partial`,
 `blocked`, `notModeled`, or `stable`.
 
+**Legacy audit status.** The tier sets are retained as a declared ledger and are
+not derived by the persistence rebuild. The bit-ring trace has no
+address-to-tier bit. Status: consistent premise, not contradicted.
+
 The isolated-excitation trace books a label Toll on a 43-tick receiver period.
 It carries no address-to-tier bit, so it does not replace this assignment.
 The tier sets stay premises; `wireTier` still takes the identification as an

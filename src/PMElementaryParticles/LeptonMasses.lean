@@ -23,6 +23,10 @@ The paper (`PM-5 §Protocol ledger`) reads each charged lepton as a resonant tie
 
 The charged pion is a hadron; its tier ledger is in `PMHadrons.MesonMasses`.
 
+**Legacy audit status.** This is a declared legacy ledger: the E8 arithmetic and
+the feedback fixed point are certified, but the tier assignment is not derived
+by the persistence rebuild. It remains a premise, not contradicted.
+
 **Status (A7).** The arithmetic is now purely E8-invariant and the feedback term
 is *derived* as the fixed point of its recursive loop; the **assignment** of which
 invariant pays which tier cost is the paper's proposed ledger — a declared model

@@ -13,6 +13,10 @@ exact. These are inventory/counting statements about the stipulated routing mode
 (the paper itself calls it stipulated); they do **not** derive the physical
 identification.
 
+**Legacy audit status.** The 16-channel layout is the stipulated inventory, not a
+derivation from persistence. The persistence rebuild uses it as the finite label
+set, so it is a consistent premise, not contradicted.
+
 * `channels_card` — the substrate has 16 channels.
 * `two_routing_modes` — 12 route through the colour bulk, 4 do not.
 * `hand_split` — 8 active (left-handed temporal boundary) and 8 static.

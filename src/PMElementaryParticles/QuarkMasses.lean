@@ -23,6 +23,11 @@ corrections:
 | bottom (P3, area) | `Δ²(D + χ/σ)/η` | anchor `DΔ²` + latency leak `Δ²χ/σ` |
 | top (P2, volume) | `Δ³(D + 1/D)` | anchor `DΔ³` + capacity leak `Δ³/D` |
 
+**Legacy audit status.** This is a declared legacy ledger: the E8 arithmetic is
+certified, but the assignment of quark formulas to tiers is not derived by the
+persistence rebuild (`Protocol`, `RecordPortIdentification`, `PhaseToRecord`).
+It remains a premise, not contradicted.
+
 **Status (A7).** The arithmetic is E8-invariant and each term is named with the
 paper's reading (`up_ledger` … `top_ledger`). The **assignment** of which invariant
 pays which tier cost is the paper's proposed protocol ledger — a declared model

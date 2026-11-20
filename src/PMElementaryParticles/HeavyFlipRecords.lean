@@ -10,6 +10,13 @@ quark doublet bit from a persisting massive label. Both inputs have the same act
 charge, with weight one half. This applies to arbitrary comparison schedules sharing
 the same record preparation and interacting only through packet hypercharge.
 
+**Legacy audit status.** The record Toll rows are derived as exact flag
+comparisons for the candidate reference record (`bitToll_eq_hamming`), but the
+reference choice and the heavy-label weight remain premises/undetermined. The
+down geometric mean is conditional on the colour reference and a common bit
+price; it is not a persistence-derived mass. Status: conditional/consistent,
+not contradicted.
+
 The full and lepton-only comparison costs can still be evaluated as expected flag
 counts. Their minimum additive cost for a prescribed independent requirement table is
 separate from the ability of those comparisons to write a reversible control record.
