@@ -341,3 +341,40 @@ baseline. The partition identity checks equality to the supplied
 visits and erasures with the baseline provisioning and removed-event
 sets. An equality to that global index remains an event-identification
 input under K, rather than another rate or scalar tariff.
+
+## Admission recheck
+
+**S, tagged core only.** The joint lift projects to the original
+core at every tick. The common tagged open trace still gives the
+same observations under AND and OR
+(`LocalController.tagged_trace_observable_eq`). At a common initial
+packet bank, the same fibre action on both rules preserves equality
+of the full tagged lift (`Components.joint_tagged_ticks_equal`). This
+does not permit two different packet actions or reader attachments
+to be treated as one.
+
+**Derived distinction.** At the mixed witness the Boolean
+destinations still differ, and the computed basis flags are still
+0 and 1 (`LocalController.mixed_open_receiver_destinations`,
+`RingReceiver.mixed_ring_flags`). A pure core transition books
+neither flag. If a detector books exactly that comparison, its
+conditional unit gap survives. If a writer reads the routed value,
+the relevant difference is its destination, even without a flag
+registration. Neither attachment follows from the lift.
+
+**B and H remain.** `BoundaryErasure.tagged_rule_exports` ties the
+tagged export train with common disposal. `ring_cycle_erasure`
+gives zero for the retained ring. `ring_erasure_survivor_eq`
+therefore leaves the normalized supplied prior. A mixed boundary
+export still requires a source port and disposition. Its prior
+requires the accessible initial family and its masses. On the
+electric writers, a physical erasure-reset threshold still needs
+the difference of their booked bit counts.
+
+**Outcome.** No general AND/OR quotient and no selection follow.
+The remaining inputs are joint firing and placement (G/T),
+accessible starts and supply (O/Q), packet and writer realization
+(U), reader attachment and detector support (W/D), the tariff for
+remaining work (K), the export contract (B), and the prior over
+histories (H). J and L apply where contention, reuse or successive
+links affect that trace.

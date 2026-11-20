@@ -615,4 +615,21 @@ theorem booked_toll_sum {Ω C : Type*} [Fintype Ω] [DecidableEq Ω]
       (BoundaryErasure.cycleErased disposition exported : ℝ) := by
   rw [PMSubstrate.NetCost.expected_count_linear, one_mul, Finset.sum_fiberwise]
 
+/-- The tagged open symmetry lifts if the two rules use the same
+packet-bank action on the common core trace. -/
+theorem joint_tagged_ticks_equal {R : ℕ}
+    (packet : LocalController.State → Equiv.Perm (PacketBank R))
+    (s : LocalController.State × PacketBank R) (hs : LocalController.CentreTagged s.1)
+    (n : ℕ) :
+    ((jointTick (LocalController.rawTick LocalController.exchangeOnBoth) packet)^[n] s) =
+      ((jointTick (LocalController.rawTick LocalController.exchangeOnEither) packet)^[n] s) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    apply Prod.ext
+    · rw [joint_core_iterate, joint_core_iterate]
+      exact LocalController.tagged_ticks_equal s.1 hs (n + 1)
+    · rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih]
+      rfl
+
 end PMTransport.Components
