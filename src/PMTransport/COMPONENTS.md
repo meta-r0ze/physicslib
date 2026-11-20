@@ -497,3 +497,22 @@ the Boolean requests, probe and 16-slot packet together.
 A stronger equivariance test needs that existing G/U interface
 to identify the action. It cannot turn either surviving bank
 choice into a unique update on the current interface.
+
+## Conservation filter
+
+| Quantity | Certified conservation and scope |
+| --- | --- |
+| Register occupation | `RegisterControl.occupation_conserved` on the encoded banks. `NativePacketRouting.registers_conserved` on its supplied routing. |
+| Stream totals | `Components.ring_stream_total` preserves the combined live and record total for any value measure. Exchange can transfer between the streams. `OpenHandoff.sum_exported` balances displaced input and the ordered export window, with incoming boundary supply stated. `RecordTransport.stream_conserved` gives the FIFO list law. |
+| Packet population and labels | `Components.fifo_channel_total` preserves each channel total across live and retained memory for any amplitude measure. Holding does so immediately. `RecordTransport.tick_norm` gives total norm preservation. For specified hops use `NativePacketUpdate.native_conserving` and `NativePacketRouting.packet_population`. A gauge action may mix coordinates. Gauge charges commuting with a specified action (`PacketGaugeActions.weak_charge`, `colour_charge`) are distinct from individual cell labels. The bank permutation preserves all channel-diagonal population sums. |
+| Identity registers | `Components.joint_line_bijective_iff`, `joint_ring_bijective` and `joint_boundary_identity`. Erasure merges a separate exported bit under `BoundaryErasure.erased_bit_merges`. |
+| Weyl norm, glue and carrier sector | `SubstrateWeylRoots.preserves_norm`, `preserves_glue`, `CarrierWeyl.simple_is_root`, `CarrierParity.range_iff_odd`, and `ClockControlledRoot.norm_preserved` and `glue_preserved`. The fixed projection continues to use the existing root dynamics. Hold and FIFO leave channel indices unchanged and preserve cell-summed populations in each block. |
+
+The same four hold/FIFO and AND/OR combinations pass the applicable
+checks. Per-cell labels, separate live and record totals in an exchange,
+and erasure of the identity registers are outside those conservation
+claims. Reversible equivariance alone would admit nonconserving
+permutations of the amplitude state. For example
+`equivariant_lift_can_change_population` supplies a commuting scaling
+that changes the norm and is excluded. A physical fibre map must
+preserve the quantities appropriate to its carrier embedding.

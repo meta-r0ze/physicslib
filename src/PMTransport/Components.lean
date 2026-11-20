@@ -933,4 +933,58 @@ theorem hold_fifo_equivariant {I : Type*} (R : ℕ) (core renameCore : I → I)
   ⟨(joint_commutes_iff _ _ _ _).2 ⟨hc, fun _ _ => rfl⟩,
     (joint_commutes_iff _ _ _ _).2 ⟨hc, fun _ => fifo_commutes_bankAction R A⟩⟩
 
+/-! ## Conserved totals -/
+
+theorem ring_stream_total {n : ℕ} (either : Bool) (s : RingReceiver.State n)
+    {M : Type*} [AddCommMonoid M] (measure : Bool → M) :
+    (∑ x, (measure ((RingReceiver.tick n either s).2.2.2 x).1 +
+      measure ((RingReceiver.tick n either s).2.2.2 x).2)) =
+      ∑ x, (measure (s.2.2.2 x).1 + measure (s.2.2.2 x).2) := by
+  calc
+    _ = ∑ x : Fin n, (measure (s.2.2.2 ((finRotate n).symm x)).1 +
+        measure (s.2.2.2 (finRotate n x)).2) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [RingReceiver.tick_ports]
+      change (measure (LocalController.applyGuard
+        (fun _ => RingReceiver.exchange either (s.2.1 x))
+        ((s.2.2.2 ((finRotate n).symm x)).1, (s.2.2.2 (finRotate n x)).2)).1 + _) = _
+      cases h : RingReceiver.exchange either (s.2.1 x) <;>
+        simp [LocalController.applyGuard, RingReceiver.arrivals, OpenReferenceFlow.streamShift,
+          add_comm]
+    _ = _ := by
+      simp only [Finset.sum_add_distrib]
+      rw [Equiv.sum_comp (finRotate n).symm (fun x => measure (s.2.2.2 x).1),
+        Equiv.sum_comp (finRotate n) (fun x => measure (s.2.2.2 x).2)]
+
+/-- Every fixed per-channel total across the bank is preserved. For
+population take `measure = Complex.normSq`. No per-cell assertion follows. -/
+theorem fifo_channel_total (R : ℕ) (bank : PacketBank R) (a : PacketGaugeActions.Channels)
+    {M : Type*} [AddCommMonoid M] (measure : ℂ → M) :
+    (∑ i : Fin (R + 1), measure (fifoEquiv R bank (i, a))) =
+      ∑ i : Fin (R + 1), measure (bank (i, a)) :=
+  Equiv.sum_comp (finRotate (R + 1)) (fun i => measure (bank (i, a)))
+
+/-- An algebraic counterexample to the implication from invertibility
+and channel equivariance to conservation of population. -/
+private noncomputable def doubleBank (R : ℕ) : Equiv.Perm (PacketBank R) where
+  toFun f p := 2 * f p
+  invFun f p := f p / 2
+  left_inv f := by funext p; dsimp; ring
+  right_inv f := by funext p; dsimp; ring
+
+theorem equivariant_lift_can_change_population (a : PacketGaugeActions.Channels) :
+    ∃ e : Equiv.Perm (PacketBank 0),
+      (∀ A : PacketGaugeActions.M, Function.Commute e (bankAction A)) ∧
+      (∑ i : Fin 1, Complex.normSq (e (fun _ => 1) (i, a))) ≠
+        ∑ _i : Fin 1, Complex.normSq (1 : ℂ) := by
+  refine ⟨doubleBank 0, ?_, ?_⟩
+  · intro A bank
+    funext p
+    change 2 * (∑ i, A p.2 i * bank (p.1, i)) =
+      ∑ i, A p.2 i * (2 * bank (p.1, i))
+    rw [Finset.mul_sum]
+    exact Finset.sum_congr rfl (fun i _ => mul_left_comm 2 (A p.2 i) (bank (p.1, i)))
+  · norm_num [doubleBank, Complex.normSq_apply]
+
 end PMTransport.Components
