@@ -16,10 +16,12 @@ closure. Blocking object: no multi-protocol machine state.
 
 ## Full-ring Lean spectrum
 
-Finish the full-firing block dispersion in Lean. Currently only
-`PhaseToRecord.encounter_unitary` and `exact_bit_flip` are certified; the
-script verifies `cos E(k) = cos(x/2) cos k`. Blocking item: full ring-tick Lean
-construction.
+`CoherentRing.ringTick_unitary` certifies the full-firing coherent tick for
+every `n`; `PhaseToRecord.encounter_unitary` and `exact_bit_flip` remain the
+encounter data. The block/eigenvalue proof `cos E(k) = cos(x/2) cos k` is still
+script-level (`tools/bit_ring_checkerboard.py`). Remaining: momentum-state
+commutation, the explicit `M(k)`, eigenvalues, and the empty-firing gapless
+proof. The mass reading is a hypothesis.
 
 ## Everything else still open
 

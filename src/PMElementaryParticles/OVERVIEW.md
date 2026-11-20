@@ -124,16 +124,18 @@ files were consolidated. The added aliases under `Interface.Wire` are:
 | `Registers` | `current`, `current_observed`, `current_unitary`, `evolution_occupation` |
 | `Probe` | `events`, `record`, `schedule_closes`, `scheduled_read`, `State`, `fire`, `update` |
 
-**Certified coin and spectrum.** The converter's pass and flip
+**Certified coin and coherent ring step.** The converter's pass and flip
 amplitudes are `(1 + e^{ix})/2` and `(1 - e^{ix})/2` (`converter_plus`,
 `converter_minus`), i.e. `cos(x/2)` and `sin(x/2)` up to the common phase
 `e^{ix/2}`. `encounter_unitary` gives the coherent one-site encounter. At
-`x = π`, `exact_bit_flip` gives pass amplitude 0 and flip amplitude 1. The
-full-firing ring script `tools/bit_ring_checkerboard.py` verifies the exact
-block dispersion `cos E(k) = cos(x/2) cos k` to machine precision, with gap
-`x` at `k=0`; empty firing is gapless. The Lean full-ring block proof was not
-completed; the k=0 and exact-bit cases are certified. The mass reading of
-this spectrum remains a hypothesis, not a result.
+`x = π`, `exact_bit_flip` gives pass amplitude 0 and flip amplitude 1.
+`CoherentRing.ringShift` is the direction-dependent site shift and
+`CoherentRing.ringTick_unitary` proves the full-firing tick
+`(1 ⊗ encounter x) * shift` is unitary for every `n`. The momentum-block
+dispersion `cos E(k) = cos(x/2) cos k` is verified by
+`tools/bit_ring_checkerboard.py`; its Lean block/eigenvalue proof is not
+completed. Empty firing is script-gapless. The mass-like term is `x/2`, the
+band gap is `x`. The mass reading remains a hypothesis, not a result.
 
 **Phase-to-record converter.** The certified comparator
 `CoherentComparisonRepair.compare (InterferenceReadout.phase x)` is unitary

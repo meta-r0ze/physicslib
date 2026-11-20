@@ -6,6 +6,10 @@ and record the other way, then a coin rotates by theta at every firing site.
 Empty firing has no coin (gapless); full firing has the coin at every site.
 The script prints the quasienergy gap and a small-k fit to
 E^2 = a^2 sin^2(k) + m^2.  It is not a certified EP result.
+
+The Lean coherent encounter and full-firing tick are
+`PhaseToRecord.encounter_unitary` and `CoherentRing.ringTick_unitary`; the
+block/eigenvalue proof is not completed.  The mass reading is a hypothesis.
 """
 import numpy as np
 
