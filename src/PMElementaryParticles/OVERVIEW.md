@@ -206,6 +206,45 @@ differ.
 the lepton reference; neutrino only with colour; down selects colour by least
 Toll; electron selects lepton. `mapBoth` remains the stronger Map variant.
 
+**Shared vs per-label reference (Task P4).** Step 0 is proved without a
+decide: `satisfiesUtil_perRing_imp_total` gives
+`RobustCoreU = SurvivorsU true` (`robustCoreU_eq`) and
+`RobustCoreU.card = 1110` (`robustCoreU_card`).
+
+The background question is **not certified**: outcome (c). The certified
+two-sector facts are `Channels.e8_two_d4_sectors`, `Vacuum.sectors_are_d4`,
+`CarrierVacuumSector`, `IndependentRegisters.sectorEquiv`,
+`bitRingConfig_stationary`, `SharedReference`, `ColourReference` and
+`GenerationWalls`. None identifies a bit-ring background with a specific E8
+lattice or D4 sector, and none assigns the record classes (up/down/electron/
+neutrino) to sectors. The missing object is a certified map from the abstract
+`Fin 3` bit-ring background to the lattice background and a sector assignment
+of record classes.
+
+Conditional shared-reference tables from the corrected class table:
+
+| shared vacuum | valid record classes | minima |
+| --- | --- | --- |
+| colour `(false,false)` | down, electron, neutrino | 14, 28, 14 |
+| lepton `(true,false)` | up, down, electron | 14, 28, 14 |
+
+Under one shared colour reference, **up** fails Map; under one shared lepton
+reference, **neutrino** fails Map. No single shared vacuum is valid for all
+four record classes. The P3 per-label least-Toll references
+(up→lepton, down→colour, electron→lepton, neutrino→colour) are therefore
+conditional on per-label backgrounds and are not certified while Step 1 is
+(c).
+
+**Legacy under shared reference.** With a shared colour vacuum the applicable
+row is `(2,1,0,1)` for down/electron/neutrino and up is invalid; with a shared
+lepton vacuum the row is `(1,2,1,0)` for up/down/electron and neutrino is
+invalid. `down_geometric_mean` is then nontrivial: colour gives
+`T_e,T_d,T_u = 2,1,invalid`; lepton gives `1,2,1`, where
+`s_d² ≠ s_e s_u`. It does not hold nontrivially under either single vacuum.
+The P3 per-label selection makes all three Tolls 1, so the identity holds only
+as an equal-Toll special case. The heavy writer's single reference is
+consistent only with a shared vacuum, which is not certified.
+
 **Alone/together.** The nested-paper composition rules are Capacity
 Partitioning, Reversible Encoding and Impedance Matching
 (`PM-3-Nested/paper/2_nested_persistence.tex`). They are not a composition rule

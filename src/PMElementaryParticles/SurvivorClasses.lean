@@ -171,6 +171,24 @@ theorem survivorsU_cards :
     (SurvivorsU true).card = 1110 := by
   decide +kernel
 
+set_option maxRecDepth 100000 in
+theorem satisfiesUtil_perRing_imp_total :
+    ∀ r : Reduced, satisfiesUtilBool true r = true → satisfiesUtilBool false r = true := by
+  decide +kernel
+
+theorem robustCoreU_eq : RobustCoreU = SurvivorsU true := by
+  ext r
+  simp only [RobustCoreU, SurvivorsU, Finset.mem_inter, Finset.mem_filter, Finset.mem_univ,
+    true_and]
+  constructor
+  · intro h
+    exact h.2
+  · intro h
+    exact ⟨satisfiesUtil_perRing_imp_total r h, h⟩
+
+theorem robustCoreU_card : RobustCoreU.card = 1110 := by
+  rw [robustCoreU_eq, survivorsU_cards.2]
+
 noncomputable def minToll (rec : Record) (reference : Bool) : WithTop ℕ :=
   ((RobustCoreU.filter fun r => r.record = rec ∧ r.reference = reference).image
     (fun r => tollCountR r)).min

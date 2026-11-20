@@ -73,6 +73,22 @@ every label; the least-Toll reference is up→lepton, down→colour,
 electron→lepton, neutrino→colour, unique for up/neutrino and for the
 both-valid rows because the minima differ.
 
+**Task P4: shared vs per-label reference.** Step 0 is proved:
+`satisfiesUtil_perRing_imp_total`, `robustCoreU_eq`, `robustCoreU_card = 1110`.
+Step 1 outcome is **(c) not certified**: the library certifies two D4 sectors
+and a stationary connected background, but no map from the abstract `Fin 3`
+bit-ring background to an E8 lattice/D4 sector and no assignment of record
+classes to sectors. The P3 per-label references are therefore conditional.
+
+Conditional shared tables: colour valid for down/electron/neutrino with minima
+`14,28,14` (up fails Map); lepton valid for up/down/electron with minima
+`14,28,14` (neutrino fails Map). No shared vacuum is valid for all four record
+classes. Under shared colour the row is `(2,1,0,1)` and down/up identity is
+nontrivial; under shared lepton it is `(1,2,1,0)` and the down identity fails
+nontrivially. P3 per-label refs make all selected Tolls 1, so the identity is
+only an equal-Toll special case. The heavy writer's single reference is
+consistent only with a shared vacuum, which is not certified.
+
 The nested-paper composition rules (Capacity Partitioning, Reversible Encoding,
 Impedance Matching) do not define a multi-protocol state on the machine, so
 alone/together closure stops at that missing definition. No grouping is assumed.
@@ -348,27 +364,31 @@ the weakest paper predicates. The corrected Margin is `marginUtilization`
 (every registering ring has period count `< 43`); `marginPerRing` and
 `marginTotal` remain named proxies. `SurvivorClasses` quotients the raw label to
 `labelRecord`; `survivorsU_cards` proves `SurvivorsU false = 1650` and
-`SurvivorsU true = 1110`. The robust-core intersection count and class table
-below are evaluation observations because the reduced intersection decide
-exceeded 600 seconds.
+`SurvivorsU true = 1110`. The robust core is proved without a decide:
+`satisfiesUtil_perRing_imp_total`, `robustCoreU_eq` and
+`robustCoreU_card = 1110`. The corrected class table has one-differing-bit rows
+with counts `{14,15,21,22}` and two-differing-bit rows with
+`{28,29,30,35,36,37,42,43,44}`. Single-ring 43 and two-ring 86 are gone; 43
+remains only as a two-ring sum. Per-label least Toll gives the same minimum 14
+for every label: up→lepton, down→colour, electron→lepton, neutrino→colour.
+Those per-label references are conditional because the shared-versus-sector
+background question is (c) not certified (Task P4).
 
-The corrected class table has one-differing-bit rows with counts
-`{14,15,21,22}` and two-differing-bit rows with
-`{28,29,30,35,36,37,42,43,44}`. Single-ring 43 and two-ring 86 are gone;
-43 remains only as a two-ring sum. Least Toll gives the same minimum 14 for
-every label, with reference up→lepton, down→colour, electron→lepton,
-neutrino→colour.
+**What remains.** The shared-versus-per-label background is not certified
+(Task P4): no map from the abstract bit-ring background to an E8 lattice/D4
+sector or assignment of record classes to sectors. Under one shared colour
+vacuum up fails Map; under one shared lepton vacuum neutrino fails Map, so no
+shared vacuum is valid for all four record classes. The multi-protocol
+composition rule is not defined on the machine; the firing pattern is not
+selected; the full-ring Lean spectrum is not proved. Legacy tier sets,
+generation addresses, quark/lepton formulas and heavy-label weights remain
+premises. `down_geometric_mean` holds nontrivially under neither shared vacuum;
+under the conditional per-label Tolls all selected Tolls are 1, so it holds
+only as an equal-Toll case. The heavy writer's single reference is consistent
+only with a shared vacuum, which is not certified.
 
-**What remains.** The multi-protocol composition rule (Capacity Partitioning,
-Reversible Encoding, Impedance Matching) is not defined on the machine; the
-firing pattern is not selected; the full-ring Lean spectrum is not proved.
-Legacy tier sets, generation addresses, quark/lepton formulas and heavy-label
-weights remain premises. The per-label least-Toll references contradict a
-single universal heavy-writer reference; `down_geometric_mean` holds only as an
-equal-Toll case under the selected per-label Tolls.
-
-**Next EP priority.** Define the multi-protocol composition state from the
-nested-paper rules and rerun alone/together closure on the proved survivor
-classes. Then select the reference and firing pattern from persistence and
-finish the full-ring spectrum. The mass reading remains a hypothesis;
-radiative stage 2 is separate and still not started.
+**Next EP priority.** Certify the background/sector placement of the bit rings
+and the record classes, then decide shared versus sector-local reference. After
+that, define the multi-protocol composition state from the nested-paper rules,
+select the firing pattern, and finish the full-ring spectrum. The mass reading
+remains a hypothesis; radiative stage 2 is separate and still not started.
