@@ -233,7 +233,8 @@ def traceReceiverTollNat (c : Candidate) : ℕ :=
 theorem traceReceiverToll_eq_nat (c : Candidate) :
     IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 = traceReceiverTollNat c := by
   unfold IsolatedExcitation.receiverToll IsolatedExcitation.bookedCount traceReceiverTollNat
-  cases h1 : c.1 <;> cases h2 : c.2.1 <;> simp [h1, h2, PMTransport.Values.Delta_eq]
+  cases h1 : c.1 <;> cases h2 : c.2.1 <;>
+    norm_num [h1, h2, PMTransport.Values.Delta_eq]
 
 /-- Down-label heavy Toll in the same integer form.  Colour adds one record
 visit; lepton adds two. -/
