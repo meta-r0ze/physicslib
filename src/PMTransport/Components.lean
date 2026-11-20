@@ -352,4 +352,75 @@ theorem epEndpoint {writerPopulation consumerWiring paidRemainder insertionAdmis
   toll := ⟨Values.outputFlagThreshold_eq, Values.balancedResetThreshold_eq, toll⟩
   governor := admission
 
+/-! ## Rates of the certified encodings
+
+A load counts an enabled slot of one Boolean event. A bound on an
+encoded slot or port is per instance. It is independent of how many
+instances operate together and of the physical duration of a tick.
+-/
+
+def phaseLoad (fires : Fin Delta → Bool) : ℕ :=
+  (Finset.univ.filter fun t => fires t = true).card
+
+theorem phaseLoad_le_period (fires : Fin Delta → Bool) : phaseLoad fires ≤ 43 := by
+  simpa [phaseLoad] using Finset.card_filter_le (s := (Finset.univ : Finset (Fin Delta)))
+    (p := fun t => fires t = true)
+
+theorem phaseLoad_full : phaseLoad (fun _ => true) = 43 := by
+  simp [phaseLoad]
+
+theorem trial_phaseLoad (requests : Bool × Bool) :
+    phaseLoad (ClockedRootTrials.fire requests) = requests.1.toNat + requests.2.toNat := by
+  rcases requests with ⟨a, b⟩
+  cases a <;> cases b <;> decide +kernel
+
+theorem trial_phaseLoad_le (requests : Bool × Bool) :
+    phaseLoad (ClockedRootTrials.fire requests) ≤ 2 := by
+  rcases requests with ⟨a, b⟩
+  cases a <;> cases b <;> simp [trial_phaseLoad, Bool.toNat]
+
+theorem line_receiver_phaseLoad_le (rule : LocalController.Rule)
+    (s : Fin Delta → LocalController.Registers) (x : ℤ) :
+    phaseLoad (fun t => rule t ((s t).1 x).1
+      (OpenReferenceFlow.streamShift OpenReferenceFlow.line (s t).2 x)) ≤ 43 :=
+  phaseLoad_le_period _
+
+theorem ring_receiver_phaseLoad (either : Bool) (requests : LocalController.Requests) :
+    phaseLoad (fun _ => RingReceiver.exchange either requests) =
+      if RingReceiver.exchange either requests then 43 else 0 := by
+  cases RingReceiver.exchange either requests <;> simp [phaseLoad]
+
+theorem ring_source_neighbour {n : ℕ} (switches : Fin n → Bool) (p : RingReceiver.Slot n) :
+    (RingReceiver.portSource switches p).1 = finRotate n p.1 ∨
+      (RingReceiver.portSource switches p).1 = (finRotate n).symm p.1 := by
+  cases a : p.2 <;> cases b : switches p.1 <;> simp [RingReceiver.portSource, a, b]
+
+theorem fifo_tick_ports (R : ℕ) (input : PacketGaugeActions.Channels → ℂ)
+    (records : Fin R → PacketGaugeActions.Channels → ℂ) :
+    (∀ a, RecordTransport.tick R
+      (fun p => (@Fin.cons R (fun _ => PacketGaugeActions.Channels → ℂ) input records p.1) p.2) (0, a) = (@Fin.snoc R (fun _ => PacketGaugeActions.Channels → ℂ) records input 0) a) ∧
+    (∀ a, RecordTransport.tick R
+      (fun p => (@Fin.cons R (fun _ => PacketGaugeActions.Channels → ℂ) input records p.1) p.2) (Fin.last R, a) = input a) := by
+  exact ⟨RecordTransport.tick_fifo R input records 0,
+    fun a => by simpa using RecordTransport.tick_fifo R input records (Fin.last R) a⟩
+
+theorem ring_flag_le_one {n : ℕ} (either : Bool) (s : RingReceiver.State n) (x : Fin n) :
+    RingReceiver.receiverFlag either s x ≤ 1 := by
+  rw [RingReceiver.receiver_flag_eq]
+  split <;> norm_num
+
+theorem erased_bits_le_one (disposition : BoundaryErasure.Disposition) (exported : Option Bool) :
+    BoundaryErasure.erasedBits disposition exported ≤ 1 := by
+  unfold BoundaryErasure.erasedBits
+  split <;> omega
+
+theorem cycle_erased_le_period (disposition : Fin Delta → BoundaryErasure.Disposition)
+    (exported : Fin Delta → Option Bool) :
+    BoundaryErasure.cycleErased disposition exported ≤ 43 := by
+  unfold BoundaryErasure.cycleErased
+  calc
+    _ ≤ ∑ _ : Fin Delta, (1 : ℕ) :=
+      Finset.sum_le_sum (fun t _ => erased_bits_le_one (disposition t) (exported t))
+    _ = 43 := by simp
+
 end PMTransport.Components

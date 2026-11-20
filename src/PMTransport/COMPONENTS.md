@@ -175,3 +175,25 @@ receiver-rule symmetry follows.
 | AND/OR | G → X, X → L, X → D | The mixed receiver branch, destinations and flags differ. Its downstream use is W. |
 | Prior | B → D, A → A | Which initial histories carry prior mass? H. |
 | Export contract | F → B, X → E, D → E, F → E | Which routed value, record or paid comparison is read, and what is disposed after the last use? W, B. |
+
+## Per-instance rates
+
+Use the substrate phase as the time unit here. These are bounds of the
+specified encodings. T still decides elapsed pulse time, sharing and
+parallel instances. G and O govern which opportunities are used.
+
+| Part | Per tick and per period | Scope or open rate |
+| --- | --- | --- |
+| Clock | One phase advance. Visits 43 phases before closing. | `CarrierReferenceCycle.clock_visits`, `clock_closes` and `Values.Delta_eq`. Physical frequency is T. |
+| Node registers | Two output stream slots per site step. | `TwoSiteHandoff.step_trace` and `LocalController.radius_one`. Separate bank writes and simultaneous jobs are G/J. |
+| Controller | One receiver decision per site and phase, at most 43 exchanges per period. | `Components.line_receiver_phaseLoad_le`. `ring_receiver_phaseLoad` is exact for fixed requests. Retained trial probes have a separate budget. |
+| Root and selector pulses | One possible fire at each trial slot, at most two in its period. | `Components.trial_phaseLoad`, `trial_phaseLoad_le`. Other pulse words need T and G. |
+| Receiver | Two arrivals and at most one exchange per site and tick. One displaced record per visit on the supplied open exchange line. | `LocalController.receiver_realisation`, `OpenHandoff.receiver_trace`, `Components.line_receiver_phaseLoad_le`. The encoded open line has 43 visit slots per period. |
+| Links | One adjacent hop per stream per step. Each ring output reads one of its two adjacent source sites. | `Components.ring_source_neighbour`, `RingReceiver.port_step_source`, `OpenHandoff.address_step`. The chain of physical 16-slot hops has no joint clock assignment (T/G). |
+| Carrier and payload | One source edge per output of the supplied native hop. | `NativePacketUpdate.native_local`. No number of these hops per substrate tick follows (T/L). |
+| Reference and preparation | One ready record supplied per exact open visit. | `OpenHandoff.receiver_trace`, `basis_population_required`. Preparation and renewal cadence is Q/T. |
+| Readout | The specified ring receiver returns one flag of size at most one per site step. | `Components.ring_flag_le_one`. Other detector counts require D and T. |
+| Record path | One FIFO output and one incoming packet accepted per FIFO step, with the record bank shifted. | `RecordTransport.tick_fifo`, `Components.fifo_tick_ports`. FIFO steps per physical tick are T. |
+| Boundary | At most one booked exported bit erased per port per tick, and at most 43 per port per period. | `Components.erased_bits_le_one`, `cycle_erased_le_period`. Actual exports and disposition are B. |
+| Maintenance | A specified job uses one root event. | `RootMaintenance.event_is_root`. Jobs fitting simultaneously or per period are J/T. |
+| EP endpoint | Logical comparisons per candidate write or insertion. | [Clock requirements](CLOCK.md#slot-requirements-for-a-wire-cycle). Clock placements and admitted consumer visits are T/U. |
