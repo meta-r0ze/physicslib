@@ -8,13 +8,13 @@ Given the postulates from Persistence Mechanics that anything that persists has 
 This output is an informational theoretic dual to the standard model. The Lean proofs are as followed, each building only on what comes before it.
 
  * [Persistence Mechanics](src/PersistenceMechanics): survival/hazard, selection
- * [Substrate](src/PMSubstrate): Applying PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
- * [Action](src/PMAction) - Applying PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport; `PMAction/MassGap` proves the mass gap of the distinction substrate
+ * [Substrate](src/PMSubstrate): PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
+ * [Action](src/PMAction) - PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport.
  * [Constants](src/PMConstants) - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
- * [KAutomaton](src/PMKAutomaton) - Reversible carrier, reference, and record transfer between E8 nodes.
- * [Elementary Particles](src/PMElementaryParticles) - Systems that can persist on top of the substrate. (protocols, decay rates)
+ * [KAutomaton](src/PMKAutomaton) - State and record transfer between E8 nodes, a reversible cellular automaton.
+ * [Elementary Particles](src/PMElementaryParticles) - Systems that can persist on top of the substrate.  ("mass" & decay rates)
  * [Flavor](src/PMFlavor) - Information transfer (flavor mixing, wall spectra, propagation)
- * [Hadrons](src/PMHadrons) - Quark composites: nucleons (proton, neutron) with the full six-pillar mass ledger, mesons, and their decays
+ * [Hadrons](src/PMHadrons) - Composites systems: proton, neutron, etc. "Mass", and decays.
  * [Atoms](src/PMAtoms) - Further recursive systems: nucleus (the shape is sort of like chemistry), shell, atom (ending with the full periodic table list of particles that can persist)
  * [Cosmology](src/PMCosmology) - The lifetime of the substrate systems (expansion of the universe equations, etc)
 
