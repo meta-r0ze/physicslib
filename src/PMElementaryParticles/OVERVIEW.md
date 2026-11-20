@@ -84,6 +84,71 @@ no grouping is assumed.
 | Heavy-label weight | Undetermined | Depends on the free reference and on a firing requirement that is not certified (`bitRingTotal43_empty_zero`; Task 4). |
 | Record Tolls `(2,1,0,1)` / `(1,2,1,0)` | Derived at the flag level / conditional physically | `bitToll_eq_hamming`, `colour_hamming`, `PhaseToRecord.bitToll_eq_expected_conversion`; physical record-port identification remains the admitted trace. |
 
+### Pillar predicate results (Tasks 1–5)
+
+`PillarPredicates.lean` adds the weakest predicates from the PM paper:
+
+- Capacity: `tollCount ≤ 2·43`.
+- Margin variants: `marginPerRing` (no ring full) and `marginTotal` (both rings
+  not jointly full).
+- Map variants: `mapAtLeastOne` (Hamming ≥ 1) and `mapBoth` (Hamming = 2).
+- Protocol: `protocolPillar` is `True` on the finite data because the machine
+  tick is reversible (`tick_bijective`) and both rings use the common `Fin 3`
+  clock.
+- Toll variants: `tollTotal` (period total ≥ 1) and `tollPerRing` (each
+  differing ring ≥ 1).
+- Governor: `governorProper` excludes the all-firing transition set.
+
+Each predicate is linked by a `*_realizes_*` theorem to
+`Requirements.Pillar.requirement`.
+
+**Filter.** The complete `survivors` family is filtered by `satisfiesBool`.
+A direct `decide` over all 24,576 protocols exceeded 600 seconds and was
+stopped; the counts below are computed by evaluation and are observations, not
+kernel proofs. Counts by variant `(marginPerRing, mapBoth, tollPerRing)`:
+
+| variant | survivors |
+| --- | ---: |
+| F,F,F | 9,408 |
+| F,F,T | 6,432 |
+| F,T,F | 4,128 |
+| F,T,T | 1,152 |
+| T,F,F | 7,200 |
+| T,F,T | 4,896 |
+| T,T,F | 3,168 |
+| T,T,T | 864 |
+
+The variant choice changes the count. In every variant:
+
+- Toll excludes empty firing.
+- Margin excludes full firing on a ring (per-ring) or both rings jointly
+  (total); `marginPerRing` is stronger.
+- `mapAtLeastOne` excludes labels equal to the reference; `mapBoth` excludes
+  all except the complementary record pair.
+- `governorProper` excludes the all-firing guard set.
+
+**Reference choice under Map.** With `mapAtLeastOne`, colour reference
+`(false,false)` excludes the up-record labels `(false,false)`; lepton reference
+`(true,false)` excludes neutrino-record labels `(true,false)`. Thus up needs
+the lepton reference and neutrino needs colour if a Map difference is required.
+With `mapBoth`, only the complementary record is valid: colour allows electron
+record `(true,true)`; lepton allows down record `(false,true)`. Map does not
+choose a single reference for all labels.
+
+**Rates.** Survivor toll counts are sums of two bit-ring `patternSum` values.
+The possible values observed are `{14,15,21,22,28,29,30,35,36,37,42,43,44,57,58,64,65,86}`;
+the per-ring `marginPerRing` variant removes the 43-capable full-firing ring
+from single-ring contributions. These are period counts, not masses. The counts
+depend on `x0` only through the 43-tick window in `patternSum`.
+
+**Alone/together.** The nested-paper composition rules are Capacity
+Partitioning, Reversible Encoding and Impedance Matching
+(`PM-3-Nested/paper/2_nested_persistence.tex`). They are not a composition rule
+on a single `Protocol`: no multi-protocol state with shared clock/reference,
+capacity partition and interface overhead is defined in the library. The
+composition question therefore stops at that missing definition; no SM grouping
+or confinement is assumed.
+
 ## Scope
 
 Paper V models **elementary-particle protocols and their decay** on the E8

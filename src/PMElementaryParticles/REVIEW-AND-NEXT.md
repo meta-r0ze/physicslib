@@ -25,6 +25,22 @@ loop-closure predicate and no identification of bit-ring position with the
 Delta clock phase. Task 5 cannot decide alone/together closure without the
 missing predicates; no grouping or confinement is assumed.
 
+## Pillar filter status (Tasks 1–5)
+
+`PillarPredicates` defines the weakest paper predicates, with named variants for
+Margin, Map and Toll. Variant survivor counts are `(F,F,F) 9408`, `(F,F,T) 6432`,
+`(F,T,F) 4128`, `(F,T,T) 1152`, `(T,F,F) 7200`, `(T,F,T) 4896`, `(T,T,F) 3168`,
+`(T,T,T) 864`; a direct `decide` over all protocols exceeded 600 seconds and was
+stopped, so these are evaluation observations. Toll excludes empty firing,
+Margin excludes full firing under the chosen margin variant, and Map excludes
+labels equal to the reference. Map with Hamming ≥ 1 makes up compatible with the
+lepton reference and neutrino with colour; Map with Hamming = 2 leaves only the
+complementary record pair. No reference is chosen.
+
+The nested-paper composition rules (Capacity Partitioning, Reversible Encoding,
+Impedance Matching) do not define a multi-protocol state on the machine, so
+alone/together closure stops at that missing definition. No grouping is assumed.
+
 ## Isolated-excitation input and trace
 
 A mass is the property of one isolated excitation on the vacuum. The sector
