@@ -273,46 +273,54 @@ certify qualified links/axis moves, but no theorem identifies a bit-ring
 background with a root/axis line or a connected part of the lattice. The
 missing map is the same placement map.
 
-**Attaching the automaton to E8 (Tasks A1–A6).** A1 is proved only for the
-vector-class half. `ChannelVectors.vectorCoord` maps `labelIndex = 2*axis+sign`
-to the doubled-coordinate vector `sign · 2 e_axis`. It satisfies
-`vectorCoord_norm4 = 4`, `vectorCoord_glueClass = 1` on active-false labels,
-and is injective on those eight labels (`vectorCoord_injective_on_activeFalse`,
-`activeFalse_card`). `Channels.minimal_class_card` gives eight minimal vectors
-in the vector class, so this is the vector-class bijection.
+**Attachment to E8.** The finite record coordinate is
+`labelRecord c = (axis=0, sign=1)` (`RecordCoordinates.labelRecord_eq_axis_sign`).
+`ChannelVectors.channelCoord` is the full 16-channel map:
 
-The active-true half is **not** assigned: the two spinor classes have
-half-integer minimal vectors with no signed-axis form. The missing map is a
-chosen enumeration from `labelIndex` to the minimal vectors of the active-true
-class. Consequently the full 16-channel map to one sector and two glue classes
-is not certified.
+- active-false: `vectorCoord`, the vector-class minimal vector
+  `sign·2e_axis`, with `vectorCoord_norm4 = 4`, `vectorCoord_glueClass = 1`;
+- active-true: `spinorCoord`, the certified triality image of `vectorCoord`,
+  with `channelCoord_glueClass = 2`.
 
-A2: triality (`CarrierTriality`, `GluedRegister.triality`) can carry the
-vector-class map to spinor classes only after that missing spinor coordinate
-map is fixed. The class choice is exactly the generation/glue-address choice;
-class 0 is the reference wall (`HeavyFlipControl.direct`), which breaks
-triality. It is not fixed by a certified A1 map.
+`channelCoord_norm4`, `channelCoord_glueClass`, `channelCoord_injective`, and
+`channelCoord_image_card = 16` prove the full map is an injection of the 16
+channels onto the minimal vectors of two classes. The vector class is the
+active-false class; the active-true class is the certified `c ↦ c+1` triality
+image (`GluedRegister.triality_class`, `CarrierTriality.carrierTriality`). The
+orientation is fixed by that convention, not chosen here.
 
-A3: under the vector map, lepton `refRecord false = (axis0, sign0)` is the
-single vector `+2 e_0`; colour `refRecord true = (axis≠0, sign0)` is the set
-`{+2 e_1, +2 e_2, +2 e_3}`, not a single vector. `SharedReference` reserved
-cell and `ColourReference.colour_reference_in_payload` remain layout/payload
-objects; neither is proved equal to either vector/set. Outcome remains (c).
+Triality gives three attachments by applying `triality^0,1,2`; they are related
+by the certified class shift. The two labelRecord bits are the signed-axis
+coordinates in the vector attachment; in the spinor classes they index the
+triality image, not a geometric signed axis. The attachment index is the glue
+address/generation index (class 0 is the reference wall,
+`HeavyFlipControl.direct`). No attachment is selected.
 
-A4: no certified E8 line carries the abstract `Fin 3` bit ring. The qualified
-lines/links (`AxisHop`, `NativePacketLinks`, `OpenHandoff`) do not supply the
-bit-ring-to-lattice line map.
+Under the vector attachment, lepton `refRecord false = (axis0,sign0)` is the
+single vector `+2e_0`; colour `refRecord true = (axis≠0,sign0)` is the set
+`{+2e_1,+2e_2,+2e_3}`. A single-site stationary background has one value
+(`NativeReferenceBackground.stationary_iff`), so the lepton vector can be a
+single-site background; the full colour reference cannot. It can only be
+carried by a three-part composite of colour-axis vectors, using
+`PacketGaugeActions.permuteColour`/`record_colour`, not by one site.
+`SharedReference` and `ColourReference` remain layout/payload objects; neither
+is proved equal to either reference. Outcome (c) remains.
 
-A5: because the active-true class is unassigned, shared versus per-sector
-background remains undecided. The P3/P4 per-label and shared tables remain
-conditional. The active-false vector half sits in one D4 vector class, but
-that does not place the full 16-channel packet.
+In the lepton vacuum the neutrino record equals the vacuum vector and fails
+Map; in the colour composite the up record is the reference record and fails
+Map. Thus no single vacuum is valid for all four record classes.
 
-A6: triality checks T1–T3 cannot run on the full valid set without the
-active-true class map. The reference wall and clock are the certified
+No certified E8 line carries the abstract `Fin 3` bit ring. `AxisHop` proves an
+axis step is two root events; `OpenHandoff` routes along a primitive root
+direction, not the vacuum axis vector `2e_0`. The map from the bit ring to a
+line through `+2e_0` is missing, so the lattice period/rate cannot replace the
+3-ring registration counts. Those counts remain 3-ring artifacts.
+
+Triality checks on the valid set cannot be completed without the bit-ring line
+map and a chosen attachment. The reference wall and clock are the certified
 triality-breaking structures; `crossing_word_glued` and the clock periods give
-the extra work but no protocol-class cost here. Tier-ledger orders
-`1/Δ`/`1/Δ²` remain observation only.
+the extra work but no per-generation protocol cost here. Tier-ledger orders
+`1/Δ`,`1/Δ²` remain observation only.
 
 **Alone/together.** The nested-paper composition rules are Capacity
 Partitioning, Reversible Encoding and Impedance Matching

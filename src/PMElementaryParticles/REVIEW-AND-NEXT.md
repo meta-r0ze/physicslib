@@ -106,21 +106,29 @@ No certified line in E8 carries the abstract bit ring. The links in `AxisHop`,
 `NativePacketLinks`, `OpenHandoff` and `GenerationWalls` are qualified moves,
 but the bit-ring-to-lattice background map is missing.
 
-**Tasks A1–A6: E8 attachment.** `ChannelVectors.vectorCoord` proves the
-vector-class half of the lead: `labelIndex = 2*axis+sign` maps to
-`sign·2e_axis`, with norm 4, glue class 1 on active-false labels, and an
-injective map on the eight active-false labels. The vector class has eight
-minimal vectors (`Channels.minimal_class_card`). The active-true second class
-is missing: spinor minimal vectors have no signed-axis form, so a separate
-`labelIndex`-to-spinor enumeration is required. The full 16-channel sector/class
-map is therefore not certified.
+**E8 attachment.** `ChannelVectors.channelCoord` gives the full 16-channel
+map: active-false `vectorCoord` is `sign·2e_axis` in the vector class;
+active-true `spinorCoord` is its certified triality image in the adjacent
+class. `channelCoord_norm4`, `channelCoord_glueClass`,
+`channelCoord_injective`, and `channelCoord_image_card = 16` prove the
+injection onto minimal vectors of two classes. The orientation is fixed by the
+certified `c ↦ c+1` triality. The three attachments are its triality powers;
+the attachment index is the generation/glue address.
 
-Under the vector map, lepton reference is `+2e_0`; colour reference is the set
-`{+2e_1,+2e_2,+2e_3}`. `SharedReference` and `ColourReference` remain layout
-objects and are not proved equal to these. No E8 line carries the abstract bit
-ring. Shared/per-sector backgrounds, triality-invariance of the valid set, and
-the T1–T3 checks remain conditional on the missing class/line maps. Tier-ledger
-orders remain observation only.
+Under the vector attachment, lepton reference is `+2e_0`; colour reference is
+the set `{+2e_1,+2e_2,+2e_3}`. `NativeReferenceBackground.stationary_iff`
+permits a single-site lepton background but not the full colour set; the
+colour option needs a three-part composite of colour-axis vectors.
+`SharedReference`/`ColourReference` are still layout objects and are not proved
+equal to these. In the lepton vacuum neutrino fails Map; in the colour
+composite up fails Map.
+
+No certified E8 line carries the abstract bit ring: `AxisHop` has axis steps as
+two root events, and `OpenHandoff` follows a primitive root direction, not the
+`2e_0` vacuum axis. The lattice line/period map is missing. The 3-ring
+registration counts remain artifacts. Triality checks and per-generation costs
+remain conditional; `crossing_word_glued` and clock periods give extra work but
+no protocol-class cost. Tier-ledger orders remain observation only.
 
 The nested-paper composition rules (Capacity Partitioning, Reversible Encoding,
 Impedance Matching) do not define a multi-protocol state on the machine, so

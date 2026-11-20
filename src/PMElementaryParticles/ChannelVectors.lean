@@ -1,5 +1,6 @@
 import PMElementaryParticles.RecordCoordinates
 import PMSubstrate.Channels
+import PMKAutomaton.Machine.GluedRegister
 
 /-!
 # The finite channel code as signed-axis vectors
@@ -26,9 +27,42 @@ open PMElementaryParticles.ProtocolInventory
 def axisIndex (c : PMConstants.PacketGaugeActions.Channels) : Fin 4 :=
   ⟨axis c, by unfold axis; have := (labelIndex c).isLt; omega⟩
 
-/-- Doubled-coordinate vector `sign * 2 e_axis`. -/
+/-- Doubled-coordinate vector `sign * 2 e_axis`, aligned with
+`GluedRegister.carrier 0` (even sign positive, odd sign negative). -/
 def vectorCoord (c : PMConstants.PacketGaugeActions.Channels) : Fin 4 → ℤ :=
-  fun i => if i = axisIndex c then (if signBit c then 2 else -2) else 0
+  fun i => if i = axisIndex c then (if signBit c then -2 else 2) else 0
+
+/-- The active-true class is the certified triality image of the vector
+coordinate, not a new choice. -/
+def spinorCoord (c : PMConstants.PacketGaugeActions.Channels) : Fin 4 → ℤ :=
+  PMElementaryParticles.GluedRegister.triality (vectorCoord c)
+
+theorem vectorCoord_eq_carrier (c : PMConstants.PacketGaugeActions.Channels) :
+    vectorCoord c = PMElementaryParticles.GluedRegister.carrier 0 (labelIndex c) := by
+  revert c
+  decide +kernel
+
+/-- The full channel coordinate: vector class when inactive, triality image
+when active. -/
+def channelCoord (c : PMConstants.PacketGaugeActions.Channels) : Fin 4 → ℤ :=
+  if active c then spinorCoord c else vectorCoord c
+
+theorem channelCoord_norm4 (c : PMConstants.PacketGaugeActions.Channels) :
+    norm4 (channelCoord c) = 4 := by
+  revert c
+  decide +kernel
+
+theorem channelCoord_glueClass (c : PMConstants.PacketGaugeActions.Channels) :
+    glueClass (channelCoord c) = if active c then 2 else 1 := by
+  revert c
+  decide +kernel
+
+theorem channelCoord_injective : Function.Injective channelCoord := by
+  decide +kernel
+
+theorem channelCoord_image_card :
+    (Finset.univ.image channelCoord).card = 16 := by
+  decide +kernel
 
 theorem vectorCoord_norm4 (c : PMConstants.PacketGaugeActions.Channels) :
     norm4 (vectorCoord c) = 4 := by
@@ -59,7 +93,7 @@ theorem activeFalse_card :
 sign bit is the second coordinate. -/
 theorem vectorCoord_axis_sign (c : PMConstants.PacketGaugeActions.Channels) :
     (axisIndex c).val = axis c ∧
-      (vectorCoord c (axisIndex c) = if signBit c then 2 else -2) := by
+      (vectorCoord c (axisIndex c) = if signBit c then -2 else 2) := by
   constructor
   · rfl
   · simp [vectorCoord]
