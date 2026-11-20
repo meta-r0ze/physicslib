@@ -212,3 +212,53 @@ of occupied jobs or the number of pulses per tick. The two stream outputs
 and FIFO arity describe slots rather than occupancy. A ready reference
 requires supply. The other margin entries remain O, Q, L, T or J as shown
 above. A physical reserve cannot be assigned from those slot counts.
+
+## Joint update and its limit
+
+`Components.PacketBank` encodes one incoming 16-slot packet at cell
+zero and the retained record packets at the other cells. The product
+with the retained controller state keeps the distinct encodings visible.
+`jointTick` gives a reversible extension when the core is reversible
+and each supplied packet-bank action is a permutation.
+`joint_lift_iff` classifies all reversible lifts of that fixed core.
+Each has exactly one fibre permutation at each core input.
+`joint_core_iterate` commutes with the core projection at every tick,
+so the line and ring traces and the trial probe projection survive.
+`joint_fifo_restriction` gives the certified FIFO when the fibre
+operation is that FIFO. `fifoEquiv_eq_tick` identifies it on amplitudes.
+It is a FIFO step, with no inference that a physical carrier crossing
+runs at that phase.
+
+`joint_line_bijective_iff` keeps exactly the retained line row
+condition. `joint_ring_bijective` keeps either ring reversible.
+`joint_boundary_identity` applies the certified disposal operation
+after projecting to a separate booked export and leaves the joint
+protected permutation bijective. The exported erasure still merges
+bits under `BoundaryErasure.erased_bit_merges`.
+
+There is a two-case witness at a phase whose FIFO placement is open.
+Holding the bank and executing its existing FIFO give identical
+core projections, but can give different outgoing packet amplitudes
+even with one record cell (`joint_two_fifo_placements_differ`).
+This is the smallest witness to nonuniqueness of the encoded lift.
+It is neither a catalog of physical schedules nor a choice of one.
+Forcing both full factor projections would *impose* an independent
+product (`joint_fixed_projections`). The certified FIFO law gives
+the result of a FIFO firing. It does not impose such a projection at
+every controller tick. The native single-edge hop and the EP
+packet/class operators have their own state and supplied controls.
+An intertwining theorem to a chosen 16-slot wire update is still needed.
+
+Across the family, the core-projected clock, requests, receiver
+branch, Boolean destinations, flags and tagged exports are the same
+at a common core rule and start. So are the parameter-free values
+and conditional formulae in [DOWNSTREAM](DOWNSTREAM.md). The joint
+packet output, effective writer population and paid work can depend
+on the supplied packet-bank action and reader attachment.
+
+| Gap | What the lift narrows | What remains |
+| --- | --- | --- |
+| G | Reversibility and projected guards for both existing core encodings. | Which local conditions and phases enable the actual packet operation. |
+| U | FIFO on all 16 packet coordinates when that operation runs. | Identify the wire and EP operator on that joint trace, including carrier crossing and charged insertion. |
+| O | Core request fibres and encoded traffic still project exactly. | Accessible joint starts and occupancy, including boundary supply. |
+| W | Projected core observables are independent of the bank action. | Which projected or packet-bank output is supplied to the EP reader. |

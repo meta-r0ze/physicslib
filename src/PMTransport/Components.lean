@@ -456,4 +456,132 @@ theorem erasure_margin_attained (bits : Fin Delta → Bool) :
   rw [BoundaryErasure.erase_full_cycle, Delta_eq]
   rfl
 
+/-! ## Reversible lifts of the retained controller
+
+Cell zero holds the incoming 16-slot packet. The other cells hold the
+retained FIFO packets. The fibre map is a supplied operation, with no
+default timing or attachment to a receiver guard.
+-/
+
+abbrev PacketBank (R : ℕ) := Fin (R + 1) × PacketGaugeActions.Channels → ℂ
+
+def fifoEquiv (R : ℕ) : Equiv.Perm (PacketBank R) where
+  toFun f p := f (RecordTransport.shift R p)
+  invFun f p := f ((RecordTransport.shift R).symm p)
+  left_inv f := by ext p; simp
+  right_inv f := by ext p; simp
+
+theorem fifoEquiv_eq_tick (R : ℕ) (bank : PacketBank R) :
+    fifoEquiv R bank = RecordTransport.tick R bank := by
+  funext p
+  rcases p with ⟨i, a⟩
+  exact (RecordTransport.tick_apply R bank i a).symm
+
+def jointTick {I : Type*} {R : ℕ} (core : I → I)
+    (packet : I → Equiv.Perm (PacketBank R)) (s : I × PacketBank R) : I × PacketBank R :=
+  (core s.1, packet s.1 s.2)
+
+theorem joint_core_iterate {I : Type*} {R : ℕ} (core : I → I)
+    (packet : I → Equiv.Perm (PacketBank R)) (s : I × PacketBank R) (n : ℕ) :
+    ((jointTick core packet)^[n] s).1 = core^[n] s.1 := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
+    exact congrArg core ih
+
+theorem joint_bijective_iff {I : Type*} {R : ℕ} (core : I → I)
+    (packet : I → Equiv.Perm (PacketBank R)) :
+    Function.Bijective (jointTick core packet) ↔ Function.Bijective core := by
+  constructor
+  · intro hj
+    constructor
+    · intro x y h
+      exact congrArg Prod.fst (hj.1 (a₁ := (x, (packet x).symm 0))
+        (a₂ := (y, (packet y).symm 0)) (by simp [jointTick, h]))
+    · intro y
+      obtain ⟨s, hs⟩ := hj.2 (y, 0)
+      exact ⟨s.1, congrArg Prod.fst hs⟩
+  · intro h
+    let e := Equiv.ofBijective core h
+    exact ((Equiv.prodCongrRight packet).trans (e.prodCongr (Equiv.refl _))).bijective
+
+/-- Every bijective step over a fixed reversible core has exactly one
+packet-bank permutation at each core input. This is a classification
+of the lifts, before adding any physical locality or firing contract. -/
+theorem joint_lift_iff {I : Type*} {R : ℕ} (core : Equiv.Perm I)
+    (tick : I × PacketBank R → I × PacketBank R)
+    (hc : ∀ s, (tick s).1 = core s.1) :
+    Function.Bijective tick ↔ ∃! packet, tick = jointTick core packet := by
+  constructor
+  · intro ht
+    have hf (x : I) : Function.Bijective (fun bank => (tick (x, bank)).2) := by
+      constructor
+      · intro a b h
+        exact congrArg Prod.snd (ht.1 (Prod.ext
+          ((hc (x, a)).trans (hc (x, b)).symm) h))
+      · intro out
+        obtain ⟨⟨y, bank⟩, hy⟩ := ht.2 (core x, out)
+        have hyx : y = x := core.injective ((hc (y, bank)).symm.trans (congrArg Prod.fst hy))
+        subst y
+        exact ⟨bank, congrArg Prod.snd hy⟩
+    let packet (x : I) : Equiv.Perm (PacketBank R) := Equiv.ofBijective _ (hf x)
+    have heq : tick = jointTick core packet :=
+      funext fun s => Prod.ext (hc s) rfl
+    refine ⟨packet, heq, ?_⟩
+    intro other ho
+    funext x
+    apply Equiv.ext
+    intro bank
+    have h := congrFun (ho.symm.trans heq) (x, bank)
+    exact congrArg Prod.snd h
+  · rintro ⟨packet, rfl, _⟩
+    exact (joint_bijective_iff _ _).2 core.bijective
+
+theorem joint_line_bijective_iff {R : ℕ} (rule : LocalController.Rule)
+    (packet : LocalController.State → Equiv.Perm (PacketBank R)) :
+    Function.Bijective (jointTick (LocalController.rawTick rule) packet) ↔
+      ∀ phase requests, LocalController.Compatible (rule phase requests) :=
+  (joint_bijective_iff _ _).trans (LocalController.reversible_iff_rows rule)
+
+theorem joint_ring_bijective {n R : ℕ} (either : Bool)
+    (packet : RingReceiver.State n → Equiv.Perm (PacketBank R)) :
+    Function.Bijective (jointTick (RingReceiver.tick n either) packet) :=
+  (joint_bijective_iff _ _).mpr (RingReceiver.tick_bijective n either)
+
+theorem joint_fifo_restriction {I : Type*} (R : ℕ) (core : I → I)
+    (s : I × PacketBank R) :
+    (jointTick core (fun _ => fifoEquiv R) s).2 = RecordTransport.tick R s.2 :=
+  fifoEquiv_eq_tick R s.2
+
+/-- Two stipulated factor projections would force the independent
+product. The core projection alone implies no packet projection. -/
+theorem joint_fixed_projections {I : Type*} {R : ℕ} (core : I → I)
+    (packet : PacketBank R → PacketBank R)
+    (tick : I × PacketBank R → I × PacketBank R)
+    (hc : ∀ s, (tick s).1 = core s.1) (hp : ∀ s, (tick s).2 = packet s.2) :
+    tick = Prod.map core packet := by
+  funext s
+  exact Prod.ext (hc s) (hp s)
+
+theorem joint_two_fifo_placements_differ {I : Type*} (core : I → I)
+    (x : I) (a : PacketGaugeActions.Channels) :
+    ∃ bank : PacketBank 1,
+      (jointTick core (fun _ => fifoEquiv 1) (x, bank)).2 (0, a) ≠
+      (jointTick core (fun _ => Equiv.refl _) (x, bank)).2 (0, a) := by
+  refine ⟨fun p => if p.1 = 0 then 0 else 1, ?_⟩
+  change (if finRotate 2 (0 : Fin 2) = 0 then (0 : ℂ) else 1) ≠
+    (if (0 : Fin 2) = 0 then (0 : ℂ) else 1)
+  simp
+
+theorem joint_boundary_identity {I : Type*} {R : ℕ} (core : Equiv.Perm I)
+    (packet : I → Equiv.Perm (PacketBank R))
+    (exported : I × PacketBank R → Option Bool)
+    (disposition : I × PacketBank R → BoundaryErasure.Disposition) :
+    Function.Bijective (fun s =>
+      (BoundaryErasure.step
+        ((Equiv.prodCongrRight packet).trans (core.prodCongr (Equiv.refl _)))
+        s (exported s) (disposition s)).1) :=
+  BoundaryErasure.identity_bijective _ exported disposition
+
 end PMTransport.Components
