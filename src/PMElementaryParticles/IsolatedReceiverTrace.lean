@@ -1,4 +1,5 @@
 import PMElementaryParticles.IsolatedExcitation
+import PMElementaryParticles.WireSchedule
 import PMTransport.RingReceiver
 import PMTransport.Components
 
@@ -134,6 +135,30 @@ theorem isolated_period_registrations_zero (either : Bool) (c : Fin 3)
   cases either
   · exact isolated_flag_zero_AND c vacuum packet fields t.val x
   · exact isolated_flag_zero_OR c vacuum packet fields t.val x
+
+/-! ## Task 5: separate ledger columns
+
+The isolated receiver registration count is measured in registrations per
+43-tick period.  The record Toll is measured in WireSchedule bit visits per
+label.  No certified result in this file puts those two units in one ledger,
+so they are exposed as separate columns and are not added.
+-/
+
+/-- Isolated receiver registrations per 43-tick period. -/
+noncomputable def isolatedReceiverColumn (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (packet : PacketLabel) (fields : ReceiverFields) : ℝ :=
+  ∑ t : Fin Delta, ∑ x : IsolatedSite,
+    receiverFlag either ((tick 3 either)^[t.val] (embed c vacuum packet fields)) x
+
+theorem isolatedReceiverColumn_eq_zero (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (packet : PacketLabel) (fields : ReceiverFields) :
+    isolatedReceiverColumn either c vacuum packet fields = 0 := by
+  unfold isolatedReceiverColumn
+  exact_mod_cast isolated_period_registrations_zero either c vacuum packet fields
+
+/-- Record bit visits per label, a separate column with its own unit. -/
+noncomputable def isolatedRecordColumn (reference : Bool) (label : Channels) : ℝ :=
+  WireSchedule.bitToll reference label
 
 /-! ## Task 4: the packet lifts
 
