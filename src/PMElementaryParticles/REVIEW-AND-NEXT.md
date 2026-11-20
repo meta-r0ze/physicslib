@@ -160,6 +160,22 @@ The register-per-tick case has the form of a direction flip each tick. The
 Feynman-checkerboard reading of mass as the direction-flip rate is a
 hypothesis for later, not a result of this library.
 
+## Common comparator (Task J)
+
+Transport W and G are certified and removed from its open ranking:
+`receiver_flag_eq` and `localized_period_registrations_eq`; `RingReceiver.tick`
+and `receiver_flag_eq`.
+
+The receiver and electric flags share a `CommonResponse` parent only up to
+normalization. `CommonResponse.stateFlag` is `nsq(φ − Uφ)/4`;
+`DiagonalReadout.flag` is `(1 − cos x)/2`; `DiagonalReadout.state_flag` is the
+weighted diagonal average. `CommonComparator.exchangeFlag_eq_two_linkFlag`
+makes the receiver comparison twice the identity `linkFlag`, and
+`CommonComparator.flag_eq_stateFlag` makes the electric flag the unit-phase
+`stateFlag`. EP's exact record bits are `DiagonalReadout.flag` values
+(`ElectricHeavyRecord`, `bitToll_eq_hamming`). The factor-two normalization
+remains; this is not a certified identification and gap U stays open.
+
 ## EP protocol ownership
 
 `IsolatedReceiverTrace` and `RecordPortIdentification` are EP protocol work that

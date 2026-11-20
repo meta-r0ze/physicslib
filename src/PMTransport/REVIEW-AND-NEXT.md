@@ -37,8 +37,10 @@ machine. The certified label dependence is `bitToll_eq_hamming`, `refRecord`,
 
 **Remaining Transport-only work:**
 
-- `U`: the common machine comparator and record-port comparison, independent
-  of which label record is read;
+- `U`: the common machine comparator and record-port comparison. The receiver
+  and electric flags share the `CommonResponse` parent only up to the factor-two
+  normalization (`CommonComparator.exchangeFlag_eq_two_linkFlag`,
+  `flag_eq_stateFlag`); no exact identification is certified;
 - the coherent receiver exchange as a root-transfer pulse of area theta (a
   machine property, once a coherent amplitude is certified);
 - `T`: clock calibration, serial placement and overlap;

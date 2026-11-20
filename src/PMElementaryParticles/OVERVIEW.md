@@ -61,6 +61,18 @@ files were consolidated. The added aliases under `Interface.Wire` are:
 | `Registers` | `current`, `current_observed`, `current_unitary`, `evolution_occupation` |
 | `Probe` | `events`, `record`, `schedule_closes`, `scheduled_read`, `State`, `fire`, `update` |
 
+**Common comparator (Task J).** Receiver and electric flags share the
+`CommonResponse` parent only up to normalization. `CommonResponse.stateFlag` is
+`nsq(φ − Uφ)/4`; `DiagonalReadout.flag` is `(1 − cos x)/2`, and
+`DiagonalReadout.state_flag` is the weighted diagonal average.
+`CommonComparator.exchangeFlag_eq_two_linkFlag` makes `exchangeFlag` twice the
+identity `linkFlag`; `CommonComparator.flag_eq_stateFlag` makes the electric
+flag the unit-phase `stateFlag`. EP's exact record bits are
+`DiagonalReadout.flag` values (`ElectricHeavyRecord`, `bitToll_eq_hamming`).
+The factor-two normalization remains, so this is not a certified identification;
+gap U stays open. Transport W and G are now certified and removed from its open
+ranking.
+
 **EP protocol layer.** `IsolatedReceiverTrace` and
 `RecordPortIdentification` are EP protocol work running on the Transport
 machine; they are not Transport results. EP now owns the retained request field
