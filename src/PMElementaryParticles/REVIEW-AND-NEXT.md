@@ -38,6 +38,27 @@ set, so that stop remains.
 
 ### Homogeneous requests and ring size
 
+**Unconstrained least Toll (Task F, Steps 1–2).** On the 3-ring,
+`localizedSum43_eq_zero_iff_empty` gives receiver sum zero iff the exchange
+pattern is empty, and `localizedSum43_nonempty_ge_fourteen` gives every other
+pattern at least 14. PM least Toll therefore selects the empty firing pattern:
+AND selects request fields with no `(true,true)` site
+(`and_zero_iff_no_true_true`); OR selects request fields with every site
+`(false,false)` (`or_zero_iff_all_false`). An unconstrained isolated packet
+never registers. On the 4-ring the same result is
+`localizedSumN_four_zero_iff_empty`; the n=5 decision run did not finish within
+ten minutes and was stopped at n=4.
+
+**Label constraints (Task F, Step 3).** No certified result says a labelled
+packet needs at least k *receiver* registrations. The existing requirements
+are record/readout flags (`EventRequirements.massive_flag`,
+`DiagonalReadout.state_flag`, `ElectricHeavyRecord.phase_position` /
+`phase_sector`, `HeavyFlipRecords.orbit_record_tolls`,
+`WireSchedule.bitToll`, `CoherentGate.unequal_needs_orthogonal`,
+`GenerationWalls`). The missing link is a certified map from those
+record/readout requirements to `RingReceiver.receiverFlag`; none is invented
+here.
+
 **Finding (Task E, Step 1).** Requests are independent initial data; no
 certified relation to the reference background exists. `ClockedRootTrials`
 takes the controller background `initial : Finset M` and the request

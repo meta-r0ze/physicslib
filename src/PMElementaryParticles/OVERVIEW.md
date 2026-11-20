@@ -111,6 +111,27 @@ background and its request projection as separate inputs (`historyCount`);
 background stores reference values, not requests. No map from the background
 configuration to the request field is certified.
 
+**Unconstrained least Toll.** For the localized one-packet 3-ring,
+`localizedSum43_eq_zero_iff_empty` gives sum zero iff the exchange pattern has
+no firing site. `localizedSum43_nonempty_ge_fourteen` gives every non-empty
+pattern at least 14. Thus PM least Toll selects exactly the empty firing
+pattern: `and_zero_iff_no_true_true` says AND selects request fields with no
+site `(true,true)`; `or_zero_iff_all_false` says OR selects request fields
+with every site `(false,false)`. The unconstrained isolated packet therefore
+never registers at the receiver. On the 4-ring the same zero-iff-empty result
+is `localizedSumN_four_zero_iff_empty`. The n=5 decide did not finish within
+ten minutes; that run was stopped at n=4.
+
+**Label constraints (Step 3).** No certified EP or Transport result states
+that a packet with a given label needs at least k *receiver* registrations.
+The available requirements are in other ledgers: `EventRequirements.massive_flag`,
+`DiagonalReadout.state_flag`, `ElectricHeavyRecord.phase_position` /
+`phase_sector`, `HeavyFlipRecords.orbit_record_tolls`, `WireSchedule.bitToll`,
+`CoherentGate.unequal_needs_orthogonal`, and `GenerationWalls` concern record
+bits, readout flags or endpoint distinctions. The missing link is a certified
+map from a label's record/readout requirement to `RingReceiver.receiverFlag`.
+No such link is created here.
+
 No certified Transport result forces the retained request field to be the
 same at every site. `HomogeneousRouting.equivariant_is_translation` constrains
 the routing permutation, not the retained requests; `LocalController.radius_one`

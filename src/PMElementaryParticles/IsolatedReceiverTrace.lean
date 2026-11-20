@@ -762,6 +762,104 @@ theorem full_uniform_flag_count_six (x0 : Fin 6) (k : Fin 43) :
   revert x0 k
   decide +kernel
 
+/-! ## Task F: unconstrained least Toll
+
+The table `patternSum` has minimum zero exactly on the empty firing pattern.
+-/
+
+theorem localizedSum43Fast_zero_iff_empty :
+    ∀ (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) (either : Bool),
+      localizedSum43Fast either r x0 = 0 ↔
+        ∀ x : IsolatedSite, firingPattern either r x = false := by
+  decide +kernel
+
+theorem localizedSum43_eq_zero_iff_empty (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) :
+    localizedSum43 either r x0 = 0 ↔
+      ∀ x : IsolatedSite, firingPattern either r x = false := by
+  rw [← localizedSum43Fast_eq]
+  exact localizedSum43Fast_zero_iff_empty r x0 either
+
+theorem localizedSum43Fast_nonempty_ge_fourteen :
+    ∀ (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) (either : Bool),
+      (∃ x : IsolatedSite, firingPattern either r x = true) →
+        14 ≤ localizedSum43Fast either r x0 := by
+  decide +kernel
+
+theorem localizedSum43_nonempty_ge_fourteen (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite)
+    (h : ∃ x : IsolatedSite, firingPattern either r x = true) :
+    14 ≤ localizedSum43 either r x0 := by
+  rw [← localizedSum43Fast_eq]
+  exact localizedSum43Fast_nonempty_ge_fourteen r x0 either h
+
+theorem and_zero_iff_no_true_true_fast :
+    ∀ (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite),
+      localizedSum43Fast false r x0 = 0 ↔
+        ∀ x : IsolatedSite, r x ≠ (true, true) := by
+  decide +kernel
+
+/-- AND least Toll: no site has `(true, true)`. -/
+theorem and_zero_iff_no_true_true (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) :
+    localizedSum43 false r x0 = 0 ↔ ∀ x : IsolatedSite, r x ≠ (true, true) := by
+  rw [← localizedSum43Fast_eq]
+  exact and_zero_iff_no_true_true_fast r x0
+
+theorem or_zero_iff_all_false_fast :
+    ∀ (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite),
+      localizedSum43Fast true r x0 = 0 ↔
+        ∀ x : IsolatedSite, r x = (false, false) := by
+  decide +kernel
+
+/-- OR least Toll: every site is `(false, false)`. -/
+theorem or_zero_iff_all_false (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) :
+    localizedSum43 true r x0 = 0 ↔ ∀ x : IsolatedSite, r x = (false, false) := by
+  rw [← localizedSum43Fast_eq]
+  exact or_zero_iff_all_false_fast r x0
+
+theorem localizedSumN_zero_of_empty_firing (n T : ℕ) (either : Bool)
+    (r : Fin n → IsolatedRequests) (x0 : Fin n)
+    (h : ∀ x : Fin n, RingReceiver.exchange either (r x) = false) :
+    localizedSumN n either r x0 T = 0 := by
+  unfold localizedSumN
+  apply Finset.sum_eq_zero
+  intro k _
+  apply Finset.sum_eq_zero
+  intro x _
+  unfold localizedFlagNatN
+  rw [h x]
+  simp
+
+theorem localizedSumN_eight_le_43 (n : ℕ) (either : Bool)
+    (r : Fin n → IsolatedRequests) (x0 : Fin n) :
+    localizedSumN n either r x0 8 ≤ localizedSumN n either r x0 43 := by
+  unfold localizedSumN
+  rw [show 43 = 8 + 35 by norm_num, Finset.sum_range_add]
+  exact Nat.le_add_right _ _
+
+theorem localizedSumN_four_zero8_iff_empty :
+    ∀ (r : Fin 4 → IsolatedRequests) (x0 : Fin 4) (either : Bool),
+      localizedSumN 4 either r x0 8 = 0 ↔
+        ∀ x : Fin 4, RingReceiver.exchange either (r x) = false := by
+  decide +kernel
+
+/-- Task F Step 2: on the 4-ring, zero receiver sum is equivalent to an empty
+firing pattern. -/
+theorem localizedSumN_four_zero_iff_empty (either : Bool)
+    (r : Fin 4 → IsolatedRequests) (x0 : Fin 4) :
+    localizedSumN 4 either r x0 43 = 0 ↔
+      ∀ x : Fin 4, RingReceiver.exchange either (r x) = false := by
+  constructor
+  · intro h43
+    have h8 : localizedSumN 4 either r x0 8 = 0 := by
+      have hle := localizedSumN_eight_le_43 4 either r x0
+      omega
+    exact (localizedSumN_four_zero8_iff_empty r x0 either).1 h8
+  · intro h
+    exact localizedSumN_zero_of_empty_firing 4 43 either r x0 h
+
 /-! ## Separate ledger columns
 
 The receiver registration count is measured in registrations per 43-tick
