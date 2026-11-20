@@ -69,6 +69,24 @@ combined closure cannot be decided. The sharing lemmas
 `ColourReference`) remain available, but there is no predicate to satisfy and
 no grouping is assumed.
 
+**Legacy single-reference assumptions after P3.** The corrected least-Toll
+reference is per label: up→lepton, down→colour, electron→lepton,
+neutrino→colour. Consequently:
+
+- `down_geometric_mean` was stated for the colour reference on all labels. Under
+  the per-label least-Toll references the selected Tolls are
+  `T_e = T_d = T_u = 1`, so the identity still holds numerically, but now as an
+  equal-Toll case rather than the colour-row mean. It is not a universal
+  single-reference statement.
+- The record Toll rows `(2,1,0,1)` (colour) and `(1,2,1,0)` (lepton) remain
+  valid per reference. Per-label selection takes one entry from each row
+  (electron/up from lepton, down/neutrino from colour); neither row is the
+  universal reference.
+- The legacy heavy writer assumed one polarity/reference for all labels. That
+  single-reference assumption is contradicted as universal. The heavy weight
+  remains conditional per label; no single reference is selected for the
+  heavy writer.
+
 ### Legacy audit (Task 6)
 
 | Legacy result | Status | Reason / theorem |
@@ -99,8 +117,11 @@ physical record-port identification.
 `PillarPredicates.lean` adds the weakest predicates from the PM paper:
 
 - Capacity: `tollCount ≤ 2·43`.
-- Margin variants: `marginPerRing` (no ring full) and `marginTotal` (both rings
-  not jointly full).
+- Margin:
+  - `marginUtilization` — directly the paper's Fragility condition: every
+    registering ring has period count `< 43`;
+  - `marginPerRing` and `marginTotal` are retained only as named **proxies**:
+    no ring full, and both rings not jointly full.
 - Map variants: `mapAtLeastOne` (Hamming ≥ 1) and `mapBoth` (Hamming = 2).
 - Protocol: `protocolPillar` is `True` on the finite data because the machine
   tick is reversible (`tick_bijective`) and both rings use the common `Fin 3`
@@ -137,38 +158,53 @@ proved in `SurvivorClasses.survivorsR_cards`:
 The raw counts are these reduced counts times the label multiplicities; they
 are not the primary result.
 
-**Robust core.** With the weakest Map condition (`mapAtLeastOne`) and all
-defensible Margin/Toll variants, `RobustCore` is exactly the
-`(marginPerRing, mapAtLeastOne, tollPerRing)` survivor set
-(`robust_core_eq`) and has 1,224 reduced classes (`robust_core_card`). The
+**Corrected Margin and robust core (Task P3).** `marginUtilization` replaces
+the firing-site proxy for the robust calculation. Reduced survivor counts are
+proved in `SurvivorClasses.survivorsU_cards`:
+
+| `(marginUtilization, tollPerRing)` | reduced survivors |
+| --- | ---: |
+| total Toll | 1,650 |
+| per-ring Toll | 1,110 |
+
+The robust core `RobustCoreU` is the intersection of the total- and per-ring
+Toll variants. A direct decide over the reduced intersection exceeded 600
+seconds and was stopped; the intersection count, class table and minima below
+are evaluation observations, while `survivorsU_cards` is the proved part. The
 class table, with phase multiplicity included, is:
 
 | record | reference | reduced survivors | period registration counts |
 | --- | --- | ---: | --- |
-| up `(false,false)` | lepton | 252 | 14,15,21,22,43 |
+| up `(false,false)` | lepton | 240 | 14,15,21,22 |
 | up | colour | 0 | — |
-| down `(false,true)` | colour | 252 | 14,15,21,22,43 |
-| down | lepton | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
-| electron `(true,true)` | colour | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
-| electron | lepton | 252 | 14,15,21,22,43 |
-| neutrino `(true,false)` | colour | 252 | 14,15,21,22,43 |
+| down `(false,true)` | colour | 240 | 14,15,21,22 |
+| down | lepton | 75 | 28,29,30,35,36,37,42,43,44 |
+| electron `(true,true)` | colour | 75 | 28,29,30,35,36,37,42,43,44 |
+| electron | lepton | 240 | 14,15,21,22 |
+| neutrino `(true,false)` | colour | 240 | 14,15,21,22 |
 | neutrino | lepton | 0 | — |
 
-The one-differing-bit rows have 42 pattern pairs × 3 sites × 2 phases = 252;
-the two-differing-bit rows have 36 pattern pairs × 3 sites = 108. The counts
-are reduced classes, not raw protocols.
+**43 and 86.** The corrected Margin removes every single-ring 43 and the
+two-ring 86. A total of 43 remains only as a two-ring sum, not as a ring at
+utilization 1. The old `marginPerRing`/`marginTotal` proxy tables with 43/86
+are retained as proxy history, not the corrected result.
 
-**Reference per record class (robust core).** Up is valid only with the
-lepton reference; neutrino only with colour; down and electron are valid with
-both. This is the Map condition `mapAtLeastOne`; `mapBoth` is the stronger
-variant and leaves only the complementary record pair. No reference is chosen.
+**Least Toll per label.** On the corrected robust core:
 
-**Rates.** The robust-core period counts are the table above. They are sums
-of two bit-ring `patternSum` values; the one-differing-bit rows use
-`{14,15,21,22,43}`, and the two-differing-bit rows use the pairwise sums
-`{28,29,30,35,36,37,42,43,44,57,58,64,65,86}`. These are registration counts,
-not masses. Dependence on `x0` is only through the 43-tick window in
-`patternSum`.
+| record | valid references | minimum Toll | least-Toll reference |
+| --- | --- | ---: | --- |
+| up | lepton | 14 | lepton |
+| down | colour, lepton | 14, 28 | colour |
+| electron | colour, lepton | 28, 14 | lepton |
+| neutrino | colour | 14 | colour |
+
+Each label reaches the same minimum rate, 14. The reference is unique for
+up, neutrino and for the both-valid down/electron rows because the minima
+differ.
+
+**Reference per record class (corrected robust core).** Up is valid only with
+the lepton reference; neutrino only with colour; down selects colour by least
+Toll; electron selects lepton. `mapBoth` remains the stronger Map variant.
 
 **Alone/together.** The nested-paper composition rules are Capacity
 Partitioning, Reversible Encoding and Impedance Matching

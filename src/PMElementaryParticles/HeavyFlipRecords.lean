@@ -14,8 +14,12 @@ the same record preparation and interacting only through packet hypercharge.
 comparisons for the candidate reference record (`bitToll_eq_hamming`), but the
 reference choice and the heavy-label weight remain premises/undetermined. The
 down geometric mean is conditional on the colour reference and a common bit
-price; it is not a persistence-derived mass. Status: conditional/consistent,
-not contradicted.
+price; it is not a persistence-derived mass. The P3 least-Toll reference is
+per label (up lepton, down colour, electron lepton, neutrino colour); the
+selected Tolls are all 1, so the geometric mean holds only as an equal-Toll
+case, not as a universal colour-row statement. Status: conditional/consistent,
+not contradicted; the single-reference heavy writer assumption is contradicted
+as universal.
 
 The full and lepton-only comparison costs can still be evaluated as expected flag
 counts. Their minimum additive cost for a prescribed independent requirement table is

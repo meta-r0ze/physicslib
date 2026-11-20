@@ -26,6 +26,14 @@ loop-closure predicate and no identification of bit-ring position with the
 Delta clock phase. Task 5 cannot decide alone/together closure without the
 missing predicates; no grouping or confinement is assumed.
 
+**Legacy single-reference assumptions after P3.** The least-Toll reference is
+per label: up→lepton, down→colour, electron→lepton, neutrino→colour.
+`down_geometric_mean` still holds numerically because the selected Tolls are
+all 1, but its colour-row premise is no longer universal. The record Toll rows
+`(2,1,0,1)`/`(1,2,1,0)` remain valid per reference; per-label selection mixes
+entries from both. The legacy heavy writer's single reference is contradicted
+as universal and remains conditional per label.
+
 **Legacy audit after the filter.** Map derives reference exclusions per label
 (Hamming ≥ 1: up needs lepton, neutrino needs colour; Hamming = 2: only the
 complementary record). Toll excludes empty firing; Margin excludes full firing
@@ -33,32 +41,37 @@ under the per-ring variant. Tier sets, generation addresses, quark/lepton
 formulas and heavy-label weights remain premises; record Tolls remain derived
 at the flag level and conditional on the physical record-port identification.
 
-## Pillar filter status (Tasks 1–5)
+## Pillar filter status (Tasks 1–5, P3 correction)
 
-`PillarPredicates` defines the weakest paper predicates, with named variants for
-Margin, Map and Toll. `SurvivorClasses` quotients the raw label to
-`labelRecord` (`satisfies_labelRecord_invariant`, `survives_iff_reduced`).
-Reduced survivor counts are proved in `survivorsR_cards`; the raw counts are
-these times the label multiplicities 6,6,2,2.
+`PillarPredicates` defines the weakest paper predicates. Margin's corrected
+form is `marginUtilization`: every registering ring has period count `< 43`,
+directly the Fragility/utilization failure mode. `marginPerRing` and
+`marginTotal` remain named proxies only.
 
-The robust core uses `mapAtLeastOne` and all Margin/Toll variants:
-`RobustCore = SurvivorsR (true,false,true)` (`robust_core_eq`), with 1,224
-reduced classes (`robust_core_card`). Class table:
+`SurvivorClasses` quotients the raw label to `labelRecord`
+(`satisfies_labelRecord_invariant`, `survives_iff_reduced`). With corrected
+Margin, reduced survivor counts are `SurvivorsU false = 1650`,
+`SurvivorsU true = 1110` (`survivorsU_cards`). The robust core is the
+intersection of both Toll variants; its direct reduced decide exceeded 600
+seconds, so the intersection count, table and minima below are evaluation
+observations. The corrected class table:
 
 | record | reference | reduced survivors | period counts |
 | --- | --- | ---: | --- |
-| up | lepton | 252 | 14,15,21,22,43 |
+| up | lepton | 240 | 14,15,21,22 |
 | up | colour | 0 | — |
-| down | colour | 252 | 14,15,21,22,43 |
-| down | lepton | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
-| electron | colour | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
-| electron | lepton | 252 | 14,15,21,22,43 |
-| neutrino | colour | 252 | 14,15,21,22,43 |
+| down | colour | 240 | 14,15,21,22 |
+| down | lepton | 75 | 28,29,30,35,36,37,42,43,44 |
+| electron | colour | 75 | 28,29,30,35,36,37,42,43,44 |
+| electron | lepton | 240 | 14,15,21,22 |
+| neutrino | colour | 240 | 14,15,21,22 |
 | neutrino | lepton | 0 | — |
 
-Up needs the lepton reference; neutrino needs colour; down and electron accept
-both. `mapBoth` is the stronger variant and leaves only the complementary
-record. No reference is chosen.
+The corrected Margin removes every single-ring 43 and the two-ring 86; a total
+of 43 remains only as a two-ring sum. Least Toll gives the same minimum 14 for
+every label; the least-Toll reference is up→lepton, down→colour,
+electron→lepton, neutrino→colour, unique for up/neutrino and for the
+both-valid rows because the minima differ.
 
 The nested-paper composition rules (Capacity Partitioning, Reversible Encoding,
 Impedance Matching) do not define a multi-protocol state on the machine, so
