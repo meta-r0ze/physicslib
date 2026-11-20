@@ -47,6 +47,33 @@ that is supplied. Each certificate applies on its explicit inputs.
 | Tier and species masses | G, U, O, T, L, K | `TierLedger.wireTier` takes the address-to-tier assignment. [Premise] The legacy lists and the named formulas in `QuarkMasses` and `LeptonMasses` are ledger identifications. Their E8 arithmetic is checked. |
 | Decay and subsequent current readout | U, W, G, T, O | The decay theorems on supplied on-shell states, current and support are conditional. [Premise] A physical association of the wave and species requires its admitted trace. |
 
+### Public Transport imports
+
+EP imports only `PMTransport.Interface` and `PMTransport.Values`
+from Transport. Nine Machine import statements across seven
+files were consolidated. The added aliases under `Interface.Wire` are:
+
+| Section | Exports |
+| --- | --- |
+| `Carrier` | `lookup`, `lookup_antipode`, `carrierTriality`, `carrierTriality_vector`, `carrier_is_glued`, `diagonalRoot`, `glued_triality_step`, `trialityMatrix`, `triality_cube`, `triality_observed`, `triality_unitary` |
+| `Glued` | `M`, `Wt`, `bit`, `carrier`, `crossing`, `dot`, `neg_class`, `neg_ne`, `refl`, `reflectPair`, `root`, `runCrossing`, `triality`, `wallStep_class` |
+| `RootBranch` | `embed`, `population`, `root_action`, `swap` |
+| `Registers` | `current`, `current_observed`, `current_unitary`, `evolution_occupation` |
+| `Probe` | `events`, `record`, `schedule_closes`, `scheduled_read`, `State`, `fire`, `update` |
+
+### Finite witness output
+
+`Values.TransportCandidates` checks eight distinct witness rows
+from hold/FIFO, AND/OR and the two excursion placements. This covers
+the stated finite witness product. Broader physical admission
+remains conditional. The row reports the clock slots and the
+unit receiver flag rate on the fully booked mixed basis trace.
+It takes the admitted schedule and paid remainder for the heavy
+amplitude, booked population and erasures for the reference
+comparison, the calibrated offset for the static determinant
+response, and the wire-to-tier map for tier and [Premise] mass-ledger lookup. Inverse-period
+orders stay open. See [the e8p report](../../tools/e8p/README.md#ep-transport-witnesses).
+
 ## Protocols are not wire modes
 
 The odd carrier modes of a class are the wire's Dirac components, four axes × two walls (`PMAction.CarrierVacuumSector`), and colour cannot act on them while commuting with `β` and the `αⱼ` (`PMAction.ColourRegister`). So protocol identity (lepton or quark, colour, weak partner) is a separate register; the 16-carrier packet is its count and gauge actions. Earlier readings that put the lepton pair on axis `0` and the up/down pair of colour `i` on axis `i` of the wire are withdrawn: `BetaReference` and `UpDownWire` (modules removed), `DoubletSign`'s wire-mode count, `ProtocolReadout`'s carrier-state reading, `CycleReadout`'s weak-pair reading, and the reference-hold test (module removed). Their theorems remain as carrier and matrix facts; the partner difference has to come from the protocol register.

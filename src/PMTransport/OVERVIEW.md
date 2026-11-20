@@ -10,7 +10,9 @@ maps the upstream implementation.
 The [Transport closeout](COMPONENTS.md#transport-closeout) links
 the marked Weyl stabilizers, the equivariance and conservation
 filters, and conditional least Toll. The public symmetry exports
-identify the embedded carrier reflections.
+identify the embedded carrier reflections. See the
+[bare-line stabilizer](COMPONENTS.md#bare-line-stabilizer) for the checked
+E7 generators, their sector action and the cited group orders.
 The inventory gives the [encoded rate limits](COMPONENTS.md#per-instance-rates),
 [headroom](COMPONENTS.md#margin-in-matching-units),
 [reversible packet-bank lift](COMPONENTS.md#joint-update-and-its-limit),

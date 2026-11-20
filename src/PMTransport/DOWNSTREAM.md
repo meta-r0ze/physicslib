@@ -17,13 +17,13 @@ when the former have no receiver argument.
 | EP insertion and schedule | `HeavyFlipControl`, `HeavyFlipRecords`, `ElectricHeavyRecord`, `ChargedInsertion`, `ProtocolToll`, `WireSchedule`, `WireReferenceCost`. The heavy word and candidate light offset use supplied label, address, reference, record, phase and booked costs. | The selector identities and flag and amplitude formulae are fixed for their arguments. An effective insertion, writer input, or chosen reference can only depend on a receiver rule through a certified embedding of that trace and its paid work. |
 | EP packet readers | `VacancyProjection`, `ElectricCoordinateDecoder`, `RefreshMap` and the native frame, branch-encoding, register and carrier readers. | The operators act on supplied slots and tags. They have no attachment to the mixed-request receiver. |
 
-The direct EP imports are `Interface` from its umbrella and
-`HeavyFlipRecords`, `HeavyFlipControl`, `VacancyProjection`,
-`ElectricCoordinateDecoder`, `RefreshMap`, `WireSchedule` and
-`ProtocolToll`. `WireReferenceCost` imports `Values` for the two
-threshold accounts. The direct machine imports in EP provide carrier
-frames, root readout, triality, register interaction and branch
-encoding. They precede the AND/OR controller.
+EP imports `PMTransport.Interface` and `PMTransport.Values`.
+The `Interface.Wire` exports cover the carrier, glued register,
+root branch, current and probe used by EP. The
+[EP dependency ledger](../PMElementaryParticles/OVERVIEW.md#transport-dependence-of-ep-results)
+records the physical inputs to those operations.
+`EP.Values.TransportCandidates` (in `PMElementaryParticles.Values`)
+indexes the eight checkable witness rows.
 
 Flavor uses the same interface for `LinkFlux`, `ExchangeChirality`,
 `MassTermLaw`, `AllRootRestoration`, `RootRepairSelection` and

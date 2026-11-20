@@ -6,6 +6,8 @@
 physical EP conclusion needs its admitted path, reader, booked
 work and traffic. See the [closeout](COMPONENTS.md#transport-closeout)
 and [ranked inputs](COMPONENTS.md#remaining-free-inputs-by-reach).
+The [bare-line result](COMPONENTS.md#bare-line-stabilizer) separates
+the mathematical stabilizer from the directed marked carrier encoding.
 
 The [admission chain is paused](PREMISES.md#stopping-point) at the
 mixed receiver readout required by a downstream trace. The

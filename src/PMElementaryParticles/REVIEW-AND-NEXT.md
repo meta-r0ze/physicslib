@@ -56,3 +56,12 @@ The supplied source, operation, read and cost must refer to the same trace.
   (stage 3). Until then `MuonLifetimeCorrected` keeps the factor as a
   certified input, and the higher-order terms (`MuonQEDLoops`) stay
   supplied.
+
+## Next EP priority
+
+Derive the heavy writer's admitted input and output on one clocked
+trace. Identify its occupied source, its retained or exported record
+and its booked comparison in the same state and phase. This targets
+G, O, U and W together and supplies the population needed by the
+paid reference comparison. The finite witnesses and experimental
+references do not decide that trace.

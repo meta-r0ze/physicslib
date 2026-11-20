@@ -494,8 +494,9 @@ The axis counterexample affects the shared probe on
 both guards. It is no evidence against one receiver rule. There
 is no certified factorwise action of the full E8 Weyl group on
 the Boolean requests, probe and 16-slot packet together.
-A stronger equivariance test needs that existing G/U interface
-to identify the action. It cannot turn either surviving bank
+The [bare-line check](#bare-line-stabilizer) identifies the larger
+group. A stronger physical equivariance test needs G/U to identify
+its joint action. It cannot turn either surviving bank
 choice into a unique update on the current interface.
 
 ## Conservation filter
@@ -598,7 +599,7 @@ Allowing the line's sign adds the commuting reflection in the line
 root, giving W(E7) × C2, of order 5,806,080. These orders and the
 parabolic stabilizer identification are cited facts.
 [Green and Xu, §3](https://www.cambridge.org/core/journals/forum-of-mathematics-sigma/article/orthogonal-roots-macdonald-representations-and-quasiparabolic-sets/F6F652B181E985A2D0F5C73662A6FB4A)
-and [Winter and van Luijk, §2](https://link.springer.com/article/10.1007/s00373-021-02315-8).
+and [Winter and van Luijk, §2 and Appendix A](https://link.springer.com/article/10.1007/s00373-021-02315-8).
 
 Lean checks the explicit conjugating root word in
 `NodeSymmetry.bare_conjugating_word`. In the highest-root chamber
