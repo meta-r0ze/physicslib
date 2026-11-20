@@ -183,13 +183,14 @@ still needing interval proofs, and the Python scripts each addition lets us reti
 This is intentionally additive: a new Lean result becomes a reported, audited value by
 adding its bound wherever it is proved.
 
-## EP Transport witnesses
+## EP isolated-excitation traces
 
 Run `e8p --ep-candidates` for the eight rows supplied by
 `PMElementaryParticles.Values.TransportCandidates`. Each shows its
-bank motion, receiver, excursion slots and the unit mixed receiver
-rate if all comparisons are booked. That rate concerns the encoded
-receiver. The candidate's species masses, writer polarity and
-insertion order remain unresolved. Experimental mass references
-appear alongside each row as comparisons, with no scores or
-selection. The existing species ledger reports remain separate.
+bank motion, receiver and excursion slots, then the booked electron
+Toll per 43-tick period from `Values.IsolatedTrace`, its amplitude
+`exp(-T/2)`, and the down-label heavy-writer Toll and weight for both
+certified record references (colour and lepton). The trace does not
+select the reference. Experimental mass references appear alongside
+each row as comparisons, with no scores or selection. The existing
+species ledger reports remain separate.
