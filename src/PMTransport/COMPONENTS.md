@@ -307,3 +307,37 @@ The missing detector support specifies the occupied input, clock
 phase, result slot or consumer, and the last use of each result.
 It distinguishes the internal readout from an external observation
 and distinguishes a retained bit from a booked exported bit.
+
+## Toll by operation
+
+`Components.booked_toll_sum` partitions supplied booked unit
+registrations by component owner. It equals
+`NetCost.expectedCost` on the same events, plus the separately booked
+boundary erasures. Each registration must be a single event in that
+list. Multiple readers do not prove multiple executed writes. The
+identity uses the uniform law on the supplied sample space of
+`NetCost`. A nonuniform law still needs its supplied masses and the
+weighted accounting rule (`EventAccounting.weighted_linear`).
+
+| Component | Certifiable account | Stage still missing |
+| --- | --- | --- |
+| Clock | Clock phase and duration bounds. | Price of physically advancing and sharing the clock. |
+| Registers | Occupation is conserved under the encoded update. | Cost of a physical read, write or preparation outside the specified counters. |
+| Controller | Null receiver flag registration in the retained tick without an attached detector. | Cost of switching or retaining the physical guard. |
+| Pulses | `CarrierEvents.uniform_activation` counts a supplied uniform primitive activation. | Primitive tariffs and which complete word is run and paid. |
+| Receiver | The branch and flag are computed on the stated arrivals. | Physical flag booking and any separate receiver work. |
+| Links | Conditional current and admittance. | Price of the executed crossings and traffic. |
+| Carrier | Slot and wall dimensions. | Paid work for the actual carried label and wall. |
+| Reference | Exact supplied restoration and conditional preparation/reset flags. | Seed and maintenance price and its reuse at a common visit. |
+| Readout | `InBandRootReadout.expected_read_undo_cost` prices the actual two root events on the clean norm-two sample at the supplied unit price. | Selection of that detector and the tariff for other detectors and gates. |
+| Records | Logical record preservation and FIFO. | Physical write, hold, export and reuse, plus any reset other than a booked erase. |
+| Boundary | One Toll per booked erased bit. Zero on the certified retained ring. | Which physical bits reach the port and their disposition. |
+| Maintenance | Minimum supplied job ledger under `RefreshSchedule.minimal_is_ledger`. | Job ownership, shared upkeep and remaining prices. |
+| EP | Conditional output flag and balanced reset thresholds. | Booked visits, writer population and the difference in all other work, including any actual erasure reset. |
+
+`NetIndex.index_as_net_transitions` is the substrate's six-term
+baseline. The partition identity checks equality to the supplied
+`NetCost` event total. There is no identification of these machine
+visits and erasures with the baseline provisioning and removed-event
+sets. An equality to that global index remains an event-identification
+input under K, rather than another rate or scalar tariff.

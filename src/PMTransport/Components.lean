@@ -599,4 +599,20 @@ theorem ring_observations_local {n : ℕ} (either : Bool)
   · rw [RingReceiver.tick_ports, RingReceiver.tick_ports, hq, ha]
   · rw [RingReceiver.receiver_flag_eq, RingReceiver.receiver_flag_eq, hq, ha]
 
+/-! ## Accounting for supplied registrations and exported erasures -/
+
+/-- Partition the booked unit registrations by their supplied owner.
+The erased bits are additional booked erasure events on this trace.
+A read and a later erasure are separate operations. This equality
+does not identify which visits physically register. -/
+theorem booked_toll_sum {Ω C : Type*} [Fintype Ω] [DecidableEq Ω]
+    [Fintype C] [DecidableEq C] {k : ℕ} (owner : Fin k → C) (events : Fin k → Finset Ω)
+    (disposition : Fin Delta → BoundaryErasure.Disposition) (exported : Fin Delta → Option Bool) :
+    (∑ c : C, ∑ i ∈ Finset.univ.filter (fun i => owner i = c),
+      PMSubstrate.NetCost.prob (events i)) +
+      (BoundaryErasure.cycleErased disposition exported : ℝ) =
+    PMSubstrate.NetCost.expectedCost 1 events +
+      (BoundaryErasure.cycleErased disposition exported : ℝ) := by
+  rw [PMSubstrate.NetCost.expected_count_linear, one_mul, Finset.sum_fiberwise]
+
 end PMTransport.Components
