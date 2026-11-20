@@ -1,5 +1,15 @@
 # PMElementaryParticles — open work
 
+**Rebuild plan.** EP is being rebuilt from persistence on the certified
+Transport machine. Order: (1) machine EP uses; (2) finite `Protocol`;
+(3) six pillar predicates from `PersistenceMechanics.Requirements`;
+(4) complete finite enumeration; (5) legacy audit. Current status:
+`Protocol` and its complete finite family are defined; the six individual
+pillar predicates are not present in `Requirements`, so the full filter and
+alone/together analysis stop at that missing definition. Legacy results are
+retained and audited, not deleted.
+
+
 [OVERVIEW](OVERVIEW.md) records the checked operations. **[Premise]**
 marks a physical identification or rule still to be derived.
 **[Certificate]** marks a calculation awaiting formal verification.

@@ -11,6 +11,33 @@ truth. Library order: PMSubstrate → PMAction → PMConstants → PMTransport �
 For the remaining physical inputs, see the [EP protocol blockers](REVIEW-AND-NEXT.md#protocol-readout-blockers).
 The transport laws are exposed by the [conditional interface](../PMTransport/COMPONENTS.md#transport-closeout).
 
+## EP persistence rebuild — structure
+
+1. **Machine EP uses.** The certified machine is Transport's conditional
+   interface: `PMTransport.Interface` for operations and
+   `PMTransport.Values` for conditional rates. The isolated-excitation sector
+   is `IsolatedExcitation`/`IsolatedReceiverTrace`; the bit-ring machine is
+   `RecordPortIdentification`; the phase-to-record converter and coin are
+   `PhaseToRecord` and `CommonComparator`. Transport keeps T, L, B, D, J, Q
+   and the tariff unit as named machine inputs.
+2. **Protocol definition.** `Protocol.Protocol` is finite data: one of the 16
+   labels, a reference record, one firing pattern per record bit on the 3-ring,
+   certified phases `{0,π}`, and one packet site. Its per-period receiver Toll
+   is `Protocol.receiverToll`.
+3. **Pillar conditions.** `PersistenceMechanics.Requirements` defines the
+   three requirements and the six pillar names, with the requirement map and
+   sign. It does not define six individual physical predicates on a machine
+   state. Expressing them on `Protocol` would require new definitions; the
+   missing predicates are named below.
+4. **Enumeration.** `Protocol.allProtocols` is the complete finite family of
+   16 labels × 2 references × firing patterns × certified phases × packet site
+   (`allProtocols_complete`). No six-pillar filter is applied because the
+   individual pillar predicates are not defined in the library.
+5. **Legacy results and status.** The old species, tier, generation and
+   heavy-label material is retained as a legacy ledger. Its status is audited
+   in the section below and is not derived by this rebuild unless explicitly
+   stated.
+
 ## Scope
 
 Paper V models **elementary-particle protocols and their decay** on the E8
