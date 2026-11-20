@@ -174,33 +174,25 @@ private def derivation (rest : List String) : IO UInt32 := do
     args := #["env", "lean", "--run", "tools/e8p/Derivation.lean"] ++ rest.toArray }
   child.wait
 
-/-- The observations are displayed alongside the conditional rows.  The
-uniform control field has zero registrations because its arrivals are equal;
-it is not one excitation.  The localized trace awaits the request-field
-enumeration.  The conditional mixed-witness rows are shown separately.  No
-measured reference enters either family or its order. -/
+/-- The uniform control field is shown only to record that its zero flags are
+an equal-arrival artifact.  It is not one excitation.  The localized trace is
+not yet reported.  No measured reference enters the candidate family or its
+order. -/
 private def printEPCandidates : IO Unit := do
   let out ← IO.getStdout
-  out.putStrLn "EP reports. Experimental references are comparison only."
-  out.putStrLn "Uniform-field control: all sites and both streams carry the packet, not one excitation."
-  out.putStrLn "  Its equal arrivals make receiver registrations zero under AND and OR."
-  out.putStrLn "  This is not the localized isolated excitation; that trace is not yet reported here."
-  out.putStrLn "  record Toll is a separate column; it is not added to the receiver column."
-  out.putStrLn "Conditional rows below are mixed witness, hand-booked; they do not run occupiedInput."
+  out.putStrLn "EP uniform-field control. Experimental references are comparison only."
+  out.putStrLn "The packet is on all sites and both streams; this is not one excitation."
+  out.putStrLn "Its equal arrivals give zero receiver registrations under AND and OR."
+  out.putStrLn "The localized one-excitation receiver flag is not yet enumerated."
+  out.putStrLn "The record bit-visit column is separate and is not reported here."
   let refs : List Key := [.upMeV, .downMeV, .strangeMeV, .charmMeV, .bottomMeV, .topMeV,
     .muonRatio, .tauRatio]
   for c in PMElementaryParticles.Values.TransportCandidates.candidates do
     let (p, q) := PMElementaryParticles.Values.TransportCandidates.phases c
     let bank := if c.1 then "advance FIFO" else "hold bank"
     let receiver := if c.2.1 then "OR" else "AND"
-    let te := PMElementaryParticles.Values.TransportCandidates.traceElectronTollNat c
     out.putStrLn s!"\n{bank} / {receiver} / phases {p.val},{q.val}"
-    out.putStrLn "  Uniform-field control: registrations = 0 (both rules); not one excitation."
-    out.putStrLn s!"  Conditional (mixed witness, hand-booked) electron row = {te}."
-    for reference in PMElementaryParticles.Values.TransportCandidates.traceReferences do
-      let rname := if reference then "colour" else "lepton"
-      let td := PMElementaryParticles.Values.TransportCandidates.traceHeavyTollNat c reference
-      out.putStrLn s!"  Conditional (mixed witness, hand-booked) heavy row ({rname} record) = {td}."
+    out.putStrLn "  Uniform control: registrations = 0 (both rules); not one excitation."
     let order (p : PMElementaryParticles.ProtocolInventory.BaseProtocol) :=
       (PMElementaryParticles.Values.TransportCandidates.certifiedOffsetOrder c p).elim "open" toString
     out.putStrLn s!"  Static offset: open. Inverse-period order up/down/electron: {order .up}/{order .down}/{order .electron}."

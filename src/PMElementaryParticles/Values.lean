@@ -6,7 +6,6 @@ import PMElementaryParticles.MuonLifetimeCorrected
 import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.WireReferenceCost
-import PMElementaryParticles.IsolatedTrace
 import PMElementaryParticles.IsolatedReceiverTrace
 import PMElementaryParticles.TierLedger
 import PMTransport.Values
@@ -194,111 +193,6 @@ theorem uniformTraceRegistrations_zero (either : Bool) (c : Fin 3)
 
 noncomputable def isolatedRecordColumn (reference : Bool) (label : Channels) : ℝ :=
   IsolatedExcitation.isolatedRecordColumn reference label
-
-/-! ### Conditional mixed-witness, hand-booked values
-
-These are **not** isolated-input traces.  They restate the conditional values
-in `IsolatedTrace`, which iterates `RingReceiver.mixedBasisRing` and uses
-hand-defined hold/FIFO slot sets.  The receiver and record terms are separate
-columns; no certified result puts them in one ledger.  Do not read these rows
-as trace-derived masses.  The isolated-input trace is still to be computed on
-a state built from `IsolatedExcitation.occupiedInput`.
--/
-
-/-- Conditional mixed-witness electron row; not an isolated-input trace. -/
-noncomputable def traceElectronToll (c : Candidate) : ℝ :=
-  IsolatedExcitation.electronToll c.1 c.2.1 c.2.2
-
-/-- Amplitude of the conditional mixed-witness row. -/
-noncomputable def traceElectronAmplitude (c : Candidate) : ℝ :=
-  PMAction.TollAmplitude.wireAmplitude (traceElectronToll c)
-
-theorem traceElectronToll_cases (c : Candidate) :
-    traceElectronToll c = if c.2.1 then (if c.1 then 44 else 2) else 1 :=
-  IsolatedExcitation.electronToll_cases c.1 c.2.1 c.2.2
-
-/-- Conditional mixed-witness heavy row; not an isolated-input trace. -/
-noncomputable def traceHeavyToll (c : Candidate) (reference : Bool) (a : Fin 3) : ℝ :=
-  IsolatedExcitation.heavyToll c.1 c.2.1 c.2.2 reference a
-
-noncomputable def traceHeavyWeight (c : Candidate) (reference : Bool) (a : Fin 3) : ℝ :=
-  IsolatedExcitation.heavyWeight c.1 c.2.1 c.2.2 reference a
-
-theorem traceHeavyToll_colour (c : Candidate) (a : Fin 3) :
-    IsolatedExcitation.bookedToll c.1 c.2.1 c.2.2 true ProtocolToll.electronStatic =
-        IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 2 ∧
-      traceHeavyToll c true a = IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 1 := by
-  obtain ⟨he, hd, -⟩ := IsolatedExcitation.heavyToll_colour c.1 c.2.1 c.2.2 a
-  exact ⟨he, hd⟩
-
-theorem traceHeavyToll_lepton (c : Candidate) (a : Fin 3) :
-    IsolatedExcitation.bookedToll c.1 c.2.1 c.2.2 false ProtocolToll.electronStatic =
-        IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 1 ∧
-      traceHeavyToll c false a = IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 2 := by
-  obtain ⟨he, hd, -⟩ := IsolatedExcitation.heavyToll_lepton c.1 c.2.1 c.2.2 a
-  exact ⟨he, hd⟩
-
-/-- Conditional mixed-witness integer row printed by `e8p`. -/
-def traceElectronTollNat (c : Candidate) : ℕ :=
-  if c.2.1 then (if c.1 then 44 else 2) else 1
-
-theorem traceElectronToll_eq_nat (c : Candidate) :
-    traceElectronToll c = traceElectronTollNat c := by
-  rw [traceElectronToll_cases]
-  unfold traceElectronTollNat
-  by_cases h2 : c.2.1
-  · by_cases h1 : c.1 <;> simp [h2, h1]
-  · simp [h2]
-
-def traceReceiverTollNat (c : Candidate) : ℕ :=
-  if c.2.1 then (if c.1 then 43 else 1) else 0
-
-theorem traceReceiverToll_eq_nat (c : Candidate) :
-    IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 = traceReceiverTollNat c := by
-  unfold IsolatedExcitation.receiverToll IsolatedExcitation.bookedCount traceReceiverTollNat
-  cases h1 : c.1 <;> cases h2 : c.2.1 <;>
-    norm_num [h1, h2, PMTransport.Values.Delta_eq]
-
-/-- Conditional mixed-witness heavy integer row. -/
-def traceHeavyTollNat (c : Candidate) (reference : Bool) : ℕ :=
-  traceReceiverTollNat c + (if reference then 1 else 2)
-
-theorem traceHeavyToll_eq_nat (c : Candidate) (reference : Bool) (a : Fin 3) :
-    traceHeavyToll c reference a = traceHeavyTollNat c reference := by
-  unfold traceHeavyToll traceHeavyTollNat IsolatedExcitation.heavyToll
-  cases reference
-  · obtain ⟨-, hd, -⟩ := IsolatedExcitation.heavyToll_lepton c.1 c.2.1 c.2.2 a
-    rw [hd, traceReceiverToll_eq_nat]
-    simp [traceReceiverTollNat]
-  · obtain ⟨-, hd, -⟩ := IsolatedExcitation.heavyToll_colour c.1 c.2.1 c.2.2 a
-    rw [hd, traceReceiverToll_eq_nat]
-    simp [traceReceiverTollNat]
-
-/-- The conditional account does not select the heavy record reference. -/
-def traceReferences : List Bool := [false, true]
-
-theorem traceReferences_complete : ∀ b : Bool, b ∈ traceReferences := by decide +kernel
-
-theorem down_geometric_mean_trace (c : Candidate) (a : Fin 3) :
-    (IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 true (ProtocolToll.downStatic a)) ^ 2 =
-      IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 true ProtocolToll.electronStatic *
-        IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 true (ProtocolToll.upStatic a) :=
-  IsolatedExcitation.down_geometric_mean_colour c.1 c.2.1 c.2.2 a
-
-theorem down_geometric_mean_trace_lepton_fails (c : Candidate) (a : Fin 3) :
-    (IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false (ProtocolToll.downStatic a)) ^ 2 ≠
-      IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false ProtocolToll.electronStatic *
-        IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false (ProtocolToll.upStatic a) :=
-  IsolatedExcitation.down_geometric_mean_lepton_fails c.1 c.2.1 c.2.2 a
-
-/-- Explicitly labelled conditional alias: mixed witness, hand-booked. -/
-noncomputable def conditionalMixedElectronToll (c : Candidate) : ℝ :=
-  IsolatedExcitation.conditionalMixedElectronToll c.1 c.2.1 c.2.2
-
-/-- Explicitly labelled conditional alias: mixed witness, hand-booked. -/
-noncomputable def conditionalMixedHeavyToll (c : Candidate) (reference : Bool)
-    (a : Fin 3) : ℝ :=
-  IsolatedExcitation.conditionalMixedHeavyToll c.1 c.2.1 c.2.2 reference a
 
 end TransportCandidates
 

@@ -183,7 +183,7 @@ still needing interval proofs, and the Python scripts each addition lets us reti
 This is intentionally additive: a new Lean result becomes a reported, audited value by
 adding its bound wherever it is proved.
 
-## EP uniform control and conditional mixed witness
+## EP uniform control
 
 Run `e8p --ep-candidates` for the eight candidate labels. The report shows a
 **uniform-field control**, not the localized isolated excitation: the packet is
@@ -191,11 +191,6 @@ on all sites and both streams, its occupancy is six when active, and its equal
 arrivals make the receiver flag zero under AND and OR. The localized
 one-excitation embedding has the correct one-bit occupancy and is preserved by
 `tick`, but its receiver flag has not yet been enumerated over the request
-field.
-
-The rows below are labelled **conditional (mixed witness, hand-booked)**. The
-receiver term iterates `RingReceiver.mixedBasisRing`, not the localized
-occupied input, and the hold/FIFO slot counts are definitions rather than
-Transport-lift results. Experimental mass references appear alongside each row
-as comparisons, with no scores or selection. The existing species ledger
-reports remain separate.
+field. Experimental mass references appear alongside each row as comparisons,
+with no scores or selection. The existing species ledger reports remain
+separate.

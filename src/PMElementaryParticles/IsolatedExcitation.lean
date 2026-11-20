@@ -16,7 +16,7 @@ vacuum plus one packet, which is what the quantity "mass" refers to.  The
 background itself is a certified family (`vacuum_stationary` and
 `vacuum_nonunique`), not a single preferred vector.
 
-The clocked trace and its booked values live in `IsolatedTrace`.
+The localized receiver embedding and its occupancy check live in `IsolatedReceiverTrace`.
 -/
 
 noncomputable section

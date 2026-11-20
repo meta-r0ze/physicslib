@@ -92,22 +92,20 @@ record bit-visit column remain separate, with no certified common ledger.
 
 The hold/FIFO packet lifts are not derived booking rules. `hold_cell_fixed`
 and `fifo_lift_differs` identify their bank actions, but neither determines a
-receiver booking tick set. That is the Task 4 stop. `IsolatedTrace` remains a
-**conditional mixed-witness, hand-booked** account; its `1, 1, 2, 2, 1, 1, 44,
-44` rows and `down_geometric_mean_*` theorems are not isolated-input results.
+receiver booking tick set.
 
 The heavy record reference remains the certified two-element family
 `{lepton, colour}`. The tier sets in `TierLedger` remain premises.
 
 ### Finite witness output
 
-`Values.TransportCandidates` keeps the conditional mixed-witness rows separate
-from the uniform control field. The uniform receiver column is zero by equal
-arrivals; it is not a one-excitation result. The localized occupancy is
-checked, while its receiver flag awaits the request-field enumeration. The
-record Toll is a separate column. The heavy reference, the static offset, and
-the wire-to-tier map remain explicit inputs. See
-[the e8p report](../../tools/e8p/README.md#ep-uniform-control-and-conditional-mixed-witness).
+`Values.TransportCandidates` keeps only the uniform control field. Its
+receiver column is zero by equal arrivals; it is not a one-excitation result.
+The localized occupancy is checked, while its receiver flag awaits the
+request-field enumeration. The record Toll is a separate column. The heavy
+reference, the static offset, and the wire-to-tier map remain explicit inputs.
+See
+[the e8p report](../../tools/e8p/README.md#ep-uniform-control).
 
 ## Protocols are not wire modes
 
@@ -552,7 +550,6 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `MuonLifetimeHigherOrder` | `τ_μ = τ_tree/(1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)`: `lifetime_bounds` `2.196974–2.196984 µs` | via `MuonQEDLoops` |
 | `TauLifetimeCorrected` | Tau lifetime from the measured `τ_μ` and supplied `B_e` with the electronic partial-width ratio corrected: phase space `f(x_μ)/f(x_τ)` (derived), `W` propagator (E8 `M_W`), one-loop QED at each lepton scale (`α(m_τ)⁻¹ = 133.3` supplied); `tau_lifetime_corrected` `291.03–291.06` fs (tree `291.15–291.17`) | measured `τ_μ`, `B_e`, `α(m_τ)` |
 | `MuonRadiativeLog` | The leading one-loop contact log in muon decay vanishes: `c = 0` for charges `(0, −1, −1, 0)` (`leptonic_no_log`) and in the charge-retention order, a conserved `e–μ` current (`retention_no_log`); the leading-log rate factor is one (`rate_factor_one`) | — |
-| `RadiativeStage2` | Only the leading-log coefficient statement: the contact coefficient is zero (`logCoefficient_eq_zero`) and a toy finite-plus-log expression inherits that zero (`leadingLogKernel_eq_finite`, `leadingLogKernel_independent_of_log_scales`, `leadingLogRateFactor`). This is **not** stage 2 and does not assemble diagrams or cancel IR logs | vertex, self-energy and real-emission assembly; UV/IR cancellation; stage 3 finite integrals |
 | `PairInvariantSpectrum` | Uses the massive-daughter tree spectrum to derive the density in `q² = (p − p_e)²`, its physical interval `[0,(m − μ)²]`, and its weighted change of variable with Jacobian `1/(2m)`. The unweighted integral recovers `MassiveWidth.closed_width`. At `μ = 0`, the normalized invariant `z=q²/m²` gives the weight `2(1−z)²(1+2z)` | Tree contact spectrum with massless neutrinos |
 | `RadiativeIntegrals` | Real dilogarithm series equals the integral of `−log(1 − x)/x` on `[0,1]` (`dilog_eq_integral`); `Li₂(1) = π²/6` from the Basel sum. The kernel is integrable at the endpoint and its reflected form `−log x/(1 − x)` has the same integral | — |
 | `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing; applied to the on-axis matrix in `PMFlavor.InclusiveWidth`), `kinematic_bounds` | Orthogonal final states, common kinematics |
@@ -574,9 +571,8 @@ of the virtual and real terms as its input.
 factor from the two external charged legs. In the muon rest frame the
 angular average at electron speed `0 < β < 1` is
 `log((1 + β)/(1 − β))/β − 2`. It multiplies the soft radial integral.
-`RadiativeStage2` only records that the leading-log contact coefficient is
-zero. Radiative stage 2—assembling the vertex, self-energies and real
-emission and showing the ultraviolet and infrared logs cancel—remains open.
+Radiative stage 2—assembling the vertex, self-energies and real emission and
+showing the ultraviolet and infrared logs cancel—has not been started.
 The regulated virtual
 and hard-emission terms are derived numerically
 in `tools/muon_radiative_derivation.py` from the substrate's conserved

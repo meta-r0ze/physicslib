@@ -14,8 +14,7 @@ a mass refers to: vacuum plus one packet label. `IsolatedReceiverTrace` embeds
 it into `RingReceiver.State 3` and iterates `tick`; the receiver registration
 column is zero under AND and OR, so the rules tie. The record Toll is a
 separate column with no certified common ledger. The hold/FIFO packet lifts do
-not determine booking ticks. `IsolatedTrace` remains a conditional mixed-
-witness, hand-booked account. The [admission chain is paused](PREMISES.md#stopping-point) at the
+not determine booking ticks. The [admission chain is paused](PREMISES.md#stopping-point) at the
 mixed receiver readout required by a downstream trace. The
 [component inventory](COMPONENTS.md#interactions) locates the open inputs
 across the lattice at once. The mixed readout is in X → E, D → E and F → E.

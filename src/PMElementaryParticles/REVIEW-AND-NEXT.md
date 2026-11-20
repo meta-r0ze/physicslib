@@ -28,11 +28,6 @@ visits remain separate columns with no certified common ledger. The hold/FIFO
 packet lifts move the bank but do not determine a booking tick set, so that
 stop remains.
 
-`IsolatedTrace` remains labelled **conditional (mixed witness, hand-booked)**.
-It iterates `mixedBasisRing`, not `occupiedInput`, and its hold/FIFO slot sets
-are definitions. Its `1, 1, 2, 2, 1, 1, 44, 44`, heavy columns and down-identity
-theorems are not isolated-input results.
-
 ## Protocol readout blockers
 
 EP inherits a [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout).
@@ -58,8 +53,8 @@ The supplied source, operation, read and cost must refer to the same trace.
   generator before comparing to the first-row PMFlavor readout.
 - **Species and neutral modes. [Premise]** The species assignments in
   `QuarkMasses`, `LeptonMasses` and `TierLedger` are a declared ledger.
-  The conditional mixed-witness account has no address-to-tier bit, so it
-  does not replace the tier sets. For neutrinos, admit the
+  The localized trace has no address-to-tier bit, so it cannot replace the
+  tier sets. For neutrinos, admit the
   static neutral partner and the coherent branch mixer in
   `BranchGateBoundary`. The paired Schur block requires unequal magnitudes
   of the reverse-cycle weights for a split from diagonal flips. See
@@ -77,11 +72,11 @@ The supplied source, operation, read and cost must refer to the same trace.
   collinear regulators. The total is independent of each regulator and
   reproduces the inclusive kernel pointwise (`z = 0.1 … 0.9`, to `10⁻⁴`
   relative at `m_e = 3·10⁻⁴`), so its integral is `π² − 25/4`
-  (`tools/muon_radiative_certificate.py`). Radiative stage 2 remains open. `RadiativeStage2` records only that the
-  leading-log contact coefficient is zero; it does not assemble the vertex,
-  self-energy and real-emission diagrams or show the regulator logs cancel.
-  Until stage 3, `MuonLifetimeCorrected` keeps the factor as a certified
-  input, and the higher-order terms (`MuonQEDLoops`) stay supplied.
+  (`tools/muon_radiative_certificate.py`). Radiative stage 2 has not been
+  started: it must assemble the vertex, self-energy and real-emission diagrams
+  and show the regulator logs cancel. Until stage 3, `MuonLifetimeCorrected`
+  keeps the factor as a certified input, and the higher-order terms
+  (`MuonQEDLoops`) stay supplied.
 
 ## Next EP priority
 
@@ -95,4 +90,4 @@ the missing rule that selects which lift visits are booked.
 control field, which puts the packet on all sites and both streams and is not
 one excitation. The localized one-excitation field has the correct occupancy,
 but its receiver flag depends on the retained request field and has not been
-enumerated. The conditional mixed-witness rows do not run `occupiedInput`.
+enumerated.
