@@ -172,4 +172,22 @@ def certifiedOffsetOrder (_c : Candidate) (_protocol : BaseProtocol) : Option ‚Ñ
 
 end TransportCandidates
 
+/-! ## Down protocol
+
+The colour reference, common bit price and all remaining paid work
+are separate from the declared species ledger.
+-/
+
+open ProtocolToll in
+theorem down_colour_geometric_mean (price : ‚Ñù) (a : Fin 3) :
+    let s c := PMAction.TollAmplitude.wireAmplitude (price * WireSchedule.bitToll true c)
+    s (downStatic a) ^ 2 = s electronStatic * s (upStatic a) := by
+  simpa only [WireSchedule.bitToll, ElectricHeavyRecord.colour_reference_toll] using
+    HeavyFlipRecords.down_geometric_mean price a
+
+/-- [Premise] This is the declared down protocol ledger, with no
+identification of an admitted wire address with a tier. -/
+theorem down_declared_tiers :
+    (TierLedger.tiersFor .down).map Fin.val = [0, 1, 2] := rfl
+
 end PMElementaryParticles.Values

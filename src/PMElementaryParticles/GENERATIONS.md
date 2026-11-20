@@ -85,6 +85,19 @@ combine powers with coefficients and corrections. One value at `Δ = 43`
 cannot distinguish a first-order law with a small coefficient from a
 second-order law with a larger one.
 
+## Down protocol
+
+| Claim | Status |
+| --- | --- |
+| Tier set | **[Premise]** `Values.down_declared_tiers` checks the declared set `{0,1,2}`. A physical address-to-tier assignment is an explicit input. |
+| Heavy-flip record Tolls (electron, down, up, neutral) | Colour gives `(2,1,0,1)`. Lepton gives `(1,2,1,0)` in the specified two-bit comparisons. See `HeavyFlipRecords.orbit_record_tolls` and `ElectricHeavyRecord.lepton_reference_toll`. |
+| Geometric mean | `Values.down_colour_geometric_mean` gives `s_d² = s_e·s_u` for a common bit price in the colour-reference record account. Any common amplitude factor preserves the identity. Unequal additional label costs need a separate check. |
+
+The eight witnesses choose no heavy-writer reference. Down still
+needs G, O, U and W for that write, T and D for its placement and
+booking, K and B for its paid lifecycle, and Q/J/H/L where supply,
+sharing, averaging or successive transport enters.
+
 ## The charged lift
 
 The existing candidate acts on the static wall. `vector_static_leg`
