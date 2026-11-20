@@ -22,6 +22,10 @@ Each postulate reading is certified against the actual substrate theorem in
 
 The three requirements are also stated abstractly (`PMRequirements`), with the framework
 consequence that Conservation + Causality is reversibility.
+
+Concrete weakest predicates on the EP finite protocol are in
+`PMElementaryParticles.PillarPredicates`; each is linked back to this module's
+`Pillar.requirement`.
 -/
 
 namespace PersistenceMechanics.Requirements

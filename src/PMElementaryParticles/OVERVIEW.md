@@ -84,6 +84,17 @@ no grouping is assumed.
 | Heavy-label weight | Undetermined | Depends on the free reference and on a firing requirement that is not certified (`bitRingTotal43_empty_zero`; Task 4). |
 | Record Tolls `(2,1,0,1)` / `(1,2,1,0)` | Derived at the flag level / conditional physically | `bitToll_eq_hamming`, `colour_hamming`, `PhaseToRecord.bitToll_eq_expected_conversion`; physical record-port identification remains the admitted trace. |
 
+**Filter-derived changes to the legacy audit.** The Map predicate now derives
+reference exclusions per label: with Hamming ≥ 1, up-record labels are invalid
+under the colour reference and neutrino-record labels under the lepton
+reference; with Hamming = 2 only the complementary record pair survives. The
+Toll predicate excludes empty firing, so the unconstrained least-Toll zero is
+not a survivor once Toll is imposed. The Margin predicate excludes full firing
+under the per-ring variant. Tier sets, generation addresses, quark/lepton
+formulas and heavy-label weights are unchanged: the filter does not derive
+them. Record Tolls remain derived at the flag level and conditional on the
+physical record-port identification.
+
 ### Pillar predicate results (Tasks 1–5)
 
 `PillarPredicates.lean` adds the weakest predicates from the PM paper:

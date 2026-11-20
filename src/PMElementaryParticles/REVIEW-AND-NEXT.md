@@ -25,6 +25,13 @@ loop-closure predicate and no identification of bit-ring position with the
 Delta clock phase. Task 5 cannot decide alone/together closure without the
 missing predicates; no grouping or confinement is assumed.
 
+**Legacy audit after the filter.** Map derives reference exclusions per label
+(Hamming ≥ 1: up needs lepton, neutrino needs colour; Hamming = 2: only the
+complementary record). Toll excludes empty firing; Margin excludes full firing
+under the per-ring variant. Tier sets, generation addresses, quark/lepton
+formulas and heavy-label weights remain premises; record Tolls remain derived
+at the flag level and conditional on the physical record-port identification.
+
 ## Pillar filter status (Tasks 1–5)
 
 `PillarPredicates` defines the weakest paper predicates, with named variants for
