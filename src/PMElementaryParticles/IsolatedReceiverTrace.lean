@@ -860,6 +860,183 @@ theorem localizedSumN_four_zero_iff_empty (either : Bool)
   · intro h
     exact localizedSumN_zero_of_empty_firing 4 43 either r x0 h
 
+/-! ## Task G: record bookkeeping and receiver flags -/
+
+def bitInt (b : Bool) : ℤ := if b then 1 else 0
+
+def recordOccInt {n : ℕ} (ports : Fin n → IsolatedPorts) : ℤ :=
+  ∑ x, bitInt (ports x).2
+
+def arrivalRecordOcc {n : ℕ} (ports : Fin n → IsolatedPorts) : ℤ :=
+  ∑ x, bitInt (RingReceiver.arrivals ports x).2
+
+theorem arrival_record_eq {n : ℕ} (ports : Fin n → IsolatedPorts) :
+    arrivalRecordOcc ports = recordOccInt ports := by
+  unfold arrivalRecordOcc recordOccInt
+  simp only [RingReceiver.arrivals, OpenReferenceFlow.streamShift]
+  exact Equiv.sum_comp (finRotate n)
+    (fun x => bitInt (ports x).2)
+
+def upTerm (g : Bool) (p : IsolatedPorts) : ℤ :=
+  if g = true ∧ p = (true, false) then 1 else 0
+
+def downTerm (g : Bool) (p : IsolatedPorts) : ℤ :=
+  if g = true ∧ p = (false, true) then 1 else 0
+
+def deltaTerm (g : Bool) (p : IsolatedPorts) : ℤ :=
+  if g then bitInt p.1 - bitInt p.2 else 0
+
+theorem deltaTerm_eq (g : Bool) (p : IsolatedPorts) :
+    deltaTerm g p = upTerm g p - downTerm g p := by
+  rcases p with ⟨a, b⟩
+  cases g <;> cases a <;> cases b <;> norm_num [deltaTerm, upTerm, downTerm, bitInt]
+
+theorem record_step_identity (n : ℕ) (either : Bool) (s : RingReceiver.State n) :
+    recordOccInt ((RingReceiver.tick n either s).2.2.2) =
+      recordOccInt s.2.2.2 +
+        (∑ x, upTerm (RingReceiver.exchange either (s.2.1 x))
+          (RingReceiver.arrivals s.2.2.2 x)) -
+        (∑ x, downTerm (RingReceiver.exchange either (s.2.1 x))
+          (RingReceiver.arrivals s.2.2.2 x)) := by
+  have hguard (x : Fin n) :
+      bitInt (LocalController.applyGuard
+        (fun _ => RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)).2 =
+      bitInt (RingReceiver.arrivals s.2.2.2 x).2 +
+        deltaTerm (RingReceiver.exchange either (s.2.1 x))
+          (RingReceiver.arrivals s.2.2.2 x) := by
+    rcases RingReceiver.arrivals s.2.2.2 x with ⟨a, b⟩
+    cases h : RingReceiver.exchange either (s.2.1 x) <;>
+      norm_num [LocalController.applyGuard, deltaTerm, bitInt, h]
+  unfold recordOccInt
+  simp only [RingReceiver.tick_ports]
+  have h1 : (∑ x, bitInt (LocalController.applyGuard
+        (fun _ => RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)).2) =
+      (∑ x, bitInt (RingReceiver.arrivals s.2.2.2 x).2) +
+        ∑ x, deltaTerm (RingReceiver.exchange either (s.2.1 x))
+          (RingReceiver.arrivals s.2.2.2 x) := by
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro x _
+    exact hguard x
+  rw [h1]
+  have h2 : (∑ x, bitInt (RingReceiver.arrivals s.2.2.2 x).2) =
+      ∑ x, bitInt (s.2.2.2 x).2 := by
+    simpa [arrivalRecordOcc, recordOccInt] using arrival_record_eq s.2.2.2
+  rw [h2]
+  have h3 : (∑ x, deltaTerm (RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)) =
+      (∑ x, upTerm (RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)) -
+      (∑ x, downTerm (RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)) := by
+    rw [← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro x _
+    exact deltaTerm_eq _ _
+  rw [h3]
+  ring
+
+def flagCountInt {n : ℕ} (either : Bool) (requests : Fin n → IsolatedRequests)
+    (ports : Fin n → IsolatedPorts) : ℤ :=
+  ∑ x, if RingReceiver.exchange either (requests x) = true ∧
+      (RingReceiver.arrivals ports x).1 ≠ (RingReceiver.arrivals ports x).2
+    then 1 else 0
+
+theorem flagCountInt_eq (either : Bool) (requests : Fin n → IsolatedRequests)
+    (ports : Fin n → IsolatedPorts) :
+    flagCountInt either requests ports =
+      (∑ x, upTerm (RingReceiver.exchange either (requests x))
+        (RingReceiver.arrivals ports x)) +
+      (∑ x, downTerm (RingReceiver.exchange either (requests x))
+        (RingReceiver.arrivals ports x)) := by
+  unfold flagCountInt
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro x _
+  rcases RingReceiver.arrivals ports x with ⟨a, b⟩
+  cases h : RingReceiver.exchange either (requests x) <;>
+    cases a <;> cases b <;> norm_num [upTerm, downTerm, h]
+
+def recordFlagStep {n : ℕ} (either : Bool) (s : RingReceiver.State n) : ℤ :=
+  (∑ x, upTerm (RingReceiver.exchange either (s.2.1 x))
+    (RingReceiver.arrivals s.2.2.2 x)) +
+  (∑ x, downTerm (RingReceiver.exchange either (s.2.1 x))
+    (RingReceiver.arrivals s.2.2.2 x))
+
+theorem record_step_abs_le (n : ℕ) (either : Bool) (s : RingReceiver.State n) :
+    |recordOccInt ((RingReceiver.tick n either s).2.2.2) -
+      recordOccInt s.2.2.2| ≤ recordFlagStep either s := by
+  rw [record_step_identity]
+  unfold recordFlagStep
+  have hu : 0 ≤ ∑ x, upTerm (RingReceiver.exchange either (s.2.1 x))
+      (RingReceiver.arrivals s.2.2.2 x) := by
+    apply Finset.sum_nonneg
+    intro x _
+    unfold upTerm
+    split <;> norm_num
+  have hd : 0 ≤ ∑ x, downTerm (RingReceiver.exchange either (s.2.1 x))
+      (RingReceiver.arrivals s.2.2.2 x) := by
+    apply Finset.sum_nonneg
+    intro x _
+    unfold downTerm
+    split <;> norm_num
+  rw [show recordOccInt s.2.2.2 +
+      (∑ x, upTerm (RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)) -
+      (∑ x, downTerm (RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)) - recordOccInt s.2.2.2 =
+      (∑ x, upTerm (RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)) -
+      (∑ x, downTerm (RingReceiver.exchange either (s.2.1 x))
+        (RingReceiver.arrivals s.2.2.2 x)) by ring]
+  rw [abs_sub_le_iff]
+  constructor <;> linarith
+
+def recordFlagSum {n : ℕ} (either : Bool) (s : RingReceiver.State n) (T : ℕ) : ℤ :=
+  ∑ k ∈ Finset.range T, recordFlagStep either ((RingReceiver.tick n either)^[k] s)
+
+theorem record_net_le_flagSum (n : ℕ) (either : Bool) (s : RingReceiver.State n)
+    (T : ℕ) :
+    |recordOccInt (((RingReceiver.tick n either)^[T] s).2.2.2) -
+      recordOccInt s.2.2.2| ≤ recordFlagSum either s T := by
+  induction T with
+  | zero => simp [recordFlagSum]
+  | succ T ih =>
+    rw [Function.iterate_succ_apply']
+    have hstep := record_step_abs_le n either ((RingReceiver.tick n either)^[T] s)
+    have htri := abs_sub_le
+      (recordOccInt (((RingReceiver.tick n either)^[T] s).2.2.2))
+      (recordOccInt s.2.2.2)
+      (recordOccInt ((RingReceiver.tick n either
+        ((RingReceiver.tick n either)^[T] s)).2.2.2))
+    -- use htri in the form current - start ≤ current - previous + previous - start
+    have hle : |recordOccInt ((RingReceiver.tick n either
+        ((RingReceiver.tick n either)^[T] s)).2.2.2) - recordOccInt s.2.2.2| ≤
+        |recordOccInt ((RingReceiver.tick n either
+          ((RingReceiver.tick n either)^[T] s)).2.2.2) -
+          recordOccInt (((RingReceiver.tick n either)^[T] s).2.2.2)| +
+        |recordOccInt (((RingReceiver.tick n either)^[T] s).2.2.2) -
+          recordOccInt s.2.2.2| := by
+      simpa using (abs_sub_le
+        (recordOccInt ((RingReceiver.tick n either
+          ((RingReceiver.tick n either)^[T] s)).2.2.2))
+        (recordOccInt (((RingReceiver.tick n either)^[T] s).2.2.2))
+        (recordOccInt s.2.2.2))
+    unfold recordFlagSum
+    rw [Finset.sum_range_succ]
+    have hsum : |recordOccInt ((RingReceiver.tick n either
+        ((RingReceiver.tick n either)^[T] s)).2.2.2) -
+        recordOccInt (((RingReceiver.tick n either)^[T] s).2.2.2)| +
+        |recordOccInt (((RingReceiver.tick n either)^[T] s).2.2.2) -
+          recordOccInt s.2.2.2| ≤
+        recordFlagStep either ((RingReceiver.tick n either)^[T] s) +
+          ∑ x ∈ Finset.range T, recordFlagStep either ((RingReceiver.tick n either)^[x] s) :=
+      add_le_add hstep ih
+    rw [add_comm (recordFlagStep either ((RingReceiver.tick n either)^[T] s))] at hsum
+    exact le_trans hle hsum
+
 /-! ## Separate ledger columns
 
 The receiver registration count is measured in registrations per 43-tick

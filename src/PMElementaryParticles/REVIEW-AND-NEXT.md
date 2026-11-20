@@ -59,6 +59,27 @@ are record/readout flags (`EventRequirements.massive_flag`,
 record/readout requirements to `RingReceiver.receiverFlag`; none is invented
 here.
 
+**Record writes are receiver flags (Task G, Step 1).** `record_step_identity`
+on `RingReceiver.State n` equates the one-tick change in record occupancy with
+exchanging `(true,false)` arrivals minus exchanging `(false,true)` arrivals;
+`flagCountInt_eq` identifies the receiver flag count with the sum of those
+counts. `record_step_abs_le` and `record_net_le_flagSum` give the one-tick and
+T-tick absolute bounds.
+
+**Task G, Step 2 outcome: (b).** `WireSchedule.bitToll` and
+`HeavyFlipRecords.orbit_record_tolls` count `labelRecord` exact flags
+(`ElectricHeavyRecord.phase_position`/`phase_sector`, `orbitBitPrice`). No
+certified map identifies that record bit with a `RingReceiver` record-stream
+port or with record occupancy. The gap-U objects are the
+`WireSchedule`/`HeavyFlipRecords` record bit, the `ElectricHeavyRecord` exact
+comparison flag, and the `RingReceiver` record-port value. Step 3 was not run.
+
+**Achievable 43-tick sums (observation).** On the 3-ring the distinct sums
+are `{0,14,15,21,22,43}` (`patternTable`, `localizedSum43_eq_pattern`). The
+n=4 full 43-tick decide exceeded 600 seconds and was stopped; the n=4
+zero/empty theorem `localizedSumN_four_zero_iff_empty` remains. These are
+registration counts, not masses or tiers.
+
 **Finding (Task E, Step 1).** Requests are independent initial data; no
 certified relation to the reference background exists. `ClockedRootTrials`
 takes the controller background `initial : Finset M` and the request

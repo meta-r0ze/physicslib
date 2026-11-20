@@ -122,6 +122,33 @@ never registers at the receiver. On the 4-ring the same zero-iff-empty result
 is `localizedSumN_four_zero_iff_empty`. The n=5 decide did not finish within
 ten minutes; that run was stopped at n=4.
 
+**Record writes are receiver flags (Task G, Step 1).** On `RingReceiver.State n`,
+one tick satisfies `record_step_identity`: record occupancy after the tick
+equals record occupancy before plus the number of exchanging sites with
+arrivals `(true,false)` minus the number with `(false,true)`. The receiver
+flag count is the sum of those two counts (`flagCountInt_eq`). The one-tick
+absolute bound is `record_step_abs_le`, and its T-tick iteration is
+`record_net_le_flagSum`. The port stream shift is a permutation, so it does
+not break the identity.
+
+**The EP record bit is a different object (Task G, Step 2, outcome b).**
+`WireSchedule.bitToll` and `HeavyFlipRecords.orbit_record_tolls` count the
+two exact electric record comparisons (`ElectricHeavyRecord.phase_position`,
+`phase_sector`, `orbitBitPrice`). The certified objects are the `labelRecord`
+bits and their exact-flag prices. `RingReceiver` has a record-stream Boolean
+port; no certified map identifies `labelRecord` with that port or with the
+record occupancy used above. The objects needing identification are the
+`WireSchedule`/`HeavyFlipRecords` record bit, `ElectricHeavyRecord`'s exact
+comparison flag, and the `RingReceiver` record-port value/occupancy. This is
+gap U. Step 3 was therefore not run.
+
+**Achievable 43-tick sums (observation).** On the 3-ring, `patternTable` via
+`localizedSum43_eq_pattern` gives exactly `{0, 14, 15, 21, 22, 43}` over all
+request fields, both rules and all `x0`. The n=4 full 43-tick decide exceeded
+600 seconds and was stopped; the n=4 zero/empty result
+`localizedSumN_four_zero_iff_empty` is still certified. These are
+registration counts, not masses or tiers.
+
 **Label constraints (Step 3).** No certified EP or Transport result states
 that a packet with a given label needs at least k *receiver* registrations.
 The available requirements are in other ledgers: `EventRequirements.massive_flag`,
