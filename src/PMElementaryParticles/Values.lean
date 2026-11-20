@@ -171,20 +171,21 @@ noncomputable def mass (c : Candidate) (identify : Candidate → TierLedger.Wire
 The operation and scaling law enter through the supplied offset. -/
 def certifiedOffsetOrder (_c : Candidate) (_protocol : BaseProtocol) : Option ℕ := none
 
-/-! ### Trace-derived isolated-excitation values
+/-! ### Conditional mixed-witness, hand-booked values
 
-The occupied input and the retained 43-phase receiver trace are in
-`IsolatedExcitation`.  These are the eight candidate rows, not supplied
-rates.  The electron trace uses the lepton record column because every
-electron packet label is colourless.  The heavy writer carries both
-certified record columns; the trace does not select one.
+These are **not** isolated-input traces.  They restate the conditional values
+in `IsolatedTrace`, which iterates `RingReceiver.mixedBasisRing` and uses
+hand-defined hold/FIFO slot sets.  The receiver and record terms are separate
+columns; no certified result puts them in one ledger.  Do not read these rows
+as trace-derived masses.  The isolated-input trace is still to be computed on
+a state built from `IsolatedExcitation.occupiedInput`.
 -/
 
-/-- Booked electron Toll per 43-tick period, from the candidate trace. -/
+/-- Conditional mixed-witness electron row; not an isolated-input trace. -/
 noncomputable def traceElectronToll (c : Candidate) : ℝ :=
   IsolatedExcitation.electronToll c.1 c.2.1 c.2.2
 
-/-- Electron amplitude `exp(-T/2)` on the same trace. -/
+/-- Amplitude of the conditional mixed-witness row. -/
 noncomputable def traceElectronAmplitude (c : Candidate) : ℝ :=
   PMAction.TollAmplitude.wireAmplitude (traceElectronToll c)
 
@@ -192,8 +193,7 @@ theorem traceElectronToll_cases (c : Candidate) :
     traceElectronToll c = if c.2.1 then (if c.1 then 44 else 2) else 1 :=
   IsolatedExcitation.electronToll_cases c.1 c.2.1 c.2.2
 
-/-- Heavy-writer (down-label) booked Toll on the same trace, for either
-certified record reference. -/
+/-- Conditional mixed-witness heavy row; not an isolated-input trace. -/
 noncomputable def traceHeavyToll (c : Candidate) (reference : Bool) (a : Fin 3) : ℝ :=
   IsolatedExcitation.heavyToll c.1 c.2.1 c.2.2 reference a
 
@@ -214,8 +214,7 @@ theorem traceHeavyToll_lepton (c : Candidate) (a : Fin 3) :
   obtain ⟨he, hd, -⟩ := IsolatedExcitation.heavyToll_lepton c.1 c.2.1 c.2.2 a
   exact ⟨he, hd⟩
 
-/-- The integer Toll values printed by `e8p`.  The theorem below identifies
-them with the trace-derived real values. -/
+/-- Conditional mixed-witness integer row printed by `e8p`. -/
 def traceElectronTollNat (c : Candidate) : ℕ :=
   if c.2.1 then (if c.1 then 44 else 2) else 1
 
@@ -236,8 +235,7 @@ theorem traceReceiverToll_eq_nat (c : Candidate) :
   cases h1 : c.1 <;> cases h2 : c.2.1 <;>
     norm_num [h1, h2, PMTransport.Values.Delta_eq]
 
-/-- Down-label heavy Toll in the same integer form.  Colour adds one record
-visit; lepton adds two. -/
+/-- Conditional mixed-witness heavy integer row. -/
 def traceHeavyTollNat (c : Candidate) (reference : Bool) : ℕ :=
   traceReceiverTollNat c + (if reference then 1 else 2)
 
@@ -252,8 +250,7 @@ theorem traceHeavyToll_eq_nat (c : Candidate) (reference : Bool) (a : Fin 3) :
     rw [hd, traceReceiverToll_eq_nat]
     simp [traceReceiverTollNat]
 
-/-- The trace does not select the heavy record reference.  Both columns are
-carried; this is the smallest certified family. -/
+/-- The conditional account does not select the heavy record reference. -/
 def traceReferences : List Bool := [false, true]
 
 theorem traceReferences_complete : ∀ b : Bool, b ∈ traceReferences := by decide +kernel

@@ -178,8 +178,8 @@ private def derivation (rest : List String) : IO UInt32 := do
 No measured reference enters the candidate family or its order. -/
 private def printEPCandidates : IO Unit := do
   let out ← IO.getStdout
-  out.putStrLn "EP isolated-excitation traces. Experimental references are comparison only."
-  out.putStrLn "Toll is in booked unit registrations per 43-tick period; the printed amplitude is exp(-Toll/2)."
+  out.putStrLn "EP conditional (mixed witness, hand-booked) rows. Experimental references are comparison only."
+  out.putStrLn "These rows do not run IsolatedExcitation.occupiedInput; receiver and record terms are separate columns."
   let refs : List Key := [.upMeV, .downMeV, .strangeMeV, .charmMeV, .bottomMeV, .topMeV,
     .muonRatio, .tauRatio]
   for c in PMElementaryParticles.Values.TransportCandidates.candidates do
@@ -188,18 +188,18 @@ private def printEPCandidates : IO Unit := do
     let receiver := if c.2.1 then "OR" else "AND"
     let te := PMElementaryParticles.Values.TransportCandidates.traceElectronTollNat c
     out.putStrLn s!"\n{bank} / {receiver} / phases {p.val},{q.val}"
-    out.putStrLn s!"  Electron trace: booked Toll = {te}, amplitude exp(-{te}/2)."
+    out.putStrLn s!"  Conditional mixed-witness electron row = {te}; amplitude of that row exp(-{te}/2)."
     for reference in PMElementaryParticles.Values.TransportCandidates.traceReferences do
       let rname := if reference then "colour" else "lepton"
       let td := PMElementaryParticles.Values.TransportCandidates.traceHeavyTollNat c reference
-      out.putStrLn s!"  Heavy writer ({rname} record): down-label Toll = {td}, weight exp(-{td}/2)."
+      out.putStrLn s!"  Conditional mixed-witness heavy row ({rname} record) = {td}; exp(-{td}/2)."
     let order (p : PMElementaryParticles.ProtocolInventory.BaseProtocol) :=
       (PMElementaryParticles.Values.TransportCandidates.certifiedOffsetOrder c p).elim "open" toString
     out.putStrLn s!"  Static offset: open. Inverse-period order up/down/electron: {order .up}/{order .down}/{order .electron}."
-    out.putStrLn "  Wire-to-species tier: open; the trace supplies no address-to-tier bit."
+    out.putStrLn "  Wire-to-species tier: open; the conditional row supplies no address-to-tier bit."
     for key in refs do
       for ref in expRefs key do
-        out.putStrLn s!"  {key.id}: trace amplitude is dimensionless | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
+        out.putStrLn s!"  {key.id}: conditional row is dimensionless | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
 
 /-- Plain `e8p`: every report, each under a heading, so one checked-in file holds everything. -/
 private def printAll : IO Unit := do

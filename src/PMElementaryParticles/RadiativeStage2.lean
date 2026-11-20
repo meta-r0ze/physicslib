@@ -1,14 +1,18 @@
 import PMElementaryParticles.MuonRadiativeLog
 
 /-!
-# Radiative stage 2: the assembled kernel and regulator-log cancellation
+# The leading-log contact coefficient is zero (not radiative stage 2)
 
-The one-loop contact dressing is the sum of the finite kernel and the
-ultraviolet and infrared regulator logs.  For muon decay the charged-current
-contact has zero log coefficient (`MuonRadiativeLog.leptonic_no_log` and
-`retention_no_log`).  Consequently the assembled kernel is independent of both
-regulator scales.  This is the stage-2 statement; the Feynman-parameter
-integrals that fix the finite part are stage 3 and are not claimed here.
+This file records one fact: the leading-log coefficient of the muon's
+charged-current contact is zero (`MuonRadiativeLog.leptonic_no_log` and
+`retention_no_log`).  The toy `leadingLogKernel` below is a finite part plus
+two supplied log terms multiplied by that same coefficient; it is
+independent of those supplied scales because the coefficient is zero.
+
+This is **not** radiative stage 2.  It does not assemble the vertex,
+self-energy and real-emission diagrams, and it does not show that the
+ultraviolet and infrared regulator logs cancel between them.  Radiative
+stage 2 remains open in `REVIEW-AND-NEXT.md`.
 -/
 
 noncomputable section
@@ -22,26 +26,25 @@ def logCoefficient : ℝ := contactCoefficient 0 (-1) (-1) 0
 
 theorem logCoefficient_eq_zero : logCoefficient = 0 := leptonic_no_log
 
-/-- The assembled one-loop kernel: a finite part plus the ultraviolet and
-infrared regulator logs, both with the same contact coefficient. -/
-def assembledKernel (α uvLog irLog finite : ℝ) : ℝ :=
+/-- A leading-log toy kernel: finite part plus two supplied log terms with
+zero contact coefficient.  This is not an assembled diagram kernel. -/
+def leadingLogKernel (α uvLog irLog finite : ℝ) : ℝ :=
   finite + (2 * logCoefficient * (α / (4 * Real.pi))) * (uvLog + irLog)
 
-/-- Stage 2: both regulator logs cancel. -/
-theorem regulator_logs_cancel (α uvLog irLog finite : ℝ) :
-    assembledKernel α uvLog irLog finite = finite := by
-  rw [assembledKernel, logCoefficient_eq_zero]
+/-- The toy leading-log kernel reduces to its finite part. -/
+theorem leadingLogKernel_eq_finite (α uvLog irLog finite : ℝ) :
+    leadingLogKernel α uvLog irLog finite = finite := by
+  rw [leadingLogKernel, logCoefficient_eq_zero]
   ring
 
-/-- The assembled kernel has zero derivative in either regulator scale. -/
-theorem independent_of_regulators (α uvLog irLog finite : ℝ) :
-    assembledKernel α uvLog irLog finite = assembledKernel α 0 0 finite := by
-  rw [regulator_logs_cancel, regulator_logs_cancel]
+/-- The toy kernel is independent of the two supplied log scales. -/
+theorem leadingLogKernel_independent_of_log_scales (α uvLog irLog finite : ℝ) :
+    leadingLogKernel α uvLog irLog finite = leadingLogKernel α 0 0 finite := by
+  rw [leadingLogKernel_eq_finite, leadingLogKernel_eq_finite]
 
-/-- The assembled rate factor is one at leading log, so the surviving
-regulator dependence is the finite kernel alone. -/
-theorem assembled_rate_factor (α uvLog irLog : ℝ) :
-    assembledKernel α uvLog irLog 1 = 1 :=
-  regulator_logs_cancel α uvLog irLog 1
+/-- The leading-log rate factor is one for the toy kernel. -/
+theorem leadingLogRateFactor (α uvLog irLog : ℝ) :
+    leadingLogKernel α uvLog irLog 1 = 1 :=
+  leadingLogKernel_eq_finite α uvLog irLog 1
 
 end PMElementaryParticles.RadiativeStage2

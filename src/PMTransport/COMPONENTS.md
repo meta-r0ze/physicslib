@@ -52,7 +52,7 @@ and feedback are included in their owning components above.
 | Arbiter for contending visits | Missing · J | `RefreshSchedule.minimal_is_ledger` and `CoherentRefresh.minimum_once` certify a schedule for a supplied required set and prices. No joint arbitration on a common clock is supplied. |
 | Ground or shared reference | Defined in Lean | `SharedReference.shared` identifies the reserved cell for the weak and hypercharge layout. `ColourReference.colour_reference_in_payload` locates its separate reference. Writer sharing at the same state and time is open · J. |
 | Termination and sink | Defined in Lean for candidates · B | `OpenHandoff.export_trace`, `RecordSupply.ring_returns` and `BoundaryErasure.deliver` specify different endpoints. The admitted export and disposition are missing. |
-| Power-on state | Isolated excitation defined · O | `RegisterVacuum`, `CarrierVacuumSector.range_iff_odd` and `NativeReferenceBackground.stationary_iff` constrain starts. `IsolatedExcitation.occupiedInput` supplies vacuum plus one packet label; the accessible family for general traffic is still missing. |
+| Power-on state | Isolated input defined · O | `RegisterVacuum`, `CarrierVacuumSector.range_iff_odd` and `NativeReferenceBackground.stationary_iff` constrain starts. `IsolatedExcitation.occupiedInput` supplies vacuum plus one packet label; the embedded receiver state and the accessible family for general traffic are still missing. |
 | Fan-out to readers | Missing · W | The routed-value port, retained record port and comparison flag are typed separately. The EP attachment is open. The prose in [DOWNSTREAM](DOWNSTREAM.md#export-contract-requirement) describes its required inputs. |
 | Per-part energy budget | Missing · K | `CarrierEvents.uniform_activation`, `OpenHandoff.balanced_basis_repair_flag` and `BoundaryErasure.erasing_pays_one` give exact accounts in their scopes. No exhaustive assignment of paid work to the parts exists. |
 
@@ -140,11 +140,11 @@ consumer of that input. It need not have a physical value yet.
 | L | Free input · Physical link admission | Specify occupied edges, available link capacity and disturbance, and the through law conditional on earlier crossings. | Route availability and the realized transmission product or restoring weight. |
 | Q | Free input · Supply and acceptance | Specify ready-state supply, accepted disturbance and available return capacity at repeat visits. Stationary modes and the population lower bound are conditional on their setup. | Clean visits, restoration and reuse of the writer reference. |
 | D | Free input · Physical observation | Specify the detector's read support and its connection to the flags, including whether a controller sees that flag. The conditional flag formula already applies on a supplied state. | Detected or booked flag count and any flag-controlled pulse. |
-| K | Free input · Registration tariff | **Certified for the isolated trace:** `IsolatedTrace.receiverToll` books the receiver visits and `bookedToll` adds the certified two-bit record, giving electron and heavy Tolls per 43-tick period. General preparation, crossing, export, reset and reuse tariffs remain free. | Schedule and label Toll, wire amplitude and signed remaining reference cost. The isolated electron and down-label values are now concrete. |
+| K | Free input · Registration tariff | The current `IsolatedTrace` rows are **conditional (mixed witness, hand-booked)**: `receiverToll` iterates `mixedBasisRing` and the hold/FIFO slot sets are definitions. Receiver and record terms are separate columns with no certified common ledger. General preparation, crossing, export, reset and reuse tariffs remain free. | Schedule and label Toll, wire amplitude and signed remaining reference cost. The isolated-input values remain not derived. |
 | W | Free input · Mixed receiver readout | Attach the writer or insertion to the routed value **and** destination, a retained/exported record, or the executed comparison and its booked flag, as required by that consumer. The certified EP trace supplies none of these attachments. | Routed payload and writer sampling, or receiver Toll and hence insertion amplitude. |
 | B | Free input · Boundary disposition | Specify which record becomes a booked export, whether it is retained, returned or erased, and the capacity and return connection of that endpoint. | Erased bits per period, restored reference and the erased-bit difference in the reference threshold. |
 | J | Free input · Job ownership and contention | Specify simultaneous jobs, contending uses, and equality of state, time and resource for shared service. | Schedule capacity, reuse and incremental maintenance cost. |
-| H | Free input · Prior and selection family | **Fixed for one mass:** the isolated excitation defines one deterministic trace, so there is no prior over histories (`IsolatedTrace.electronToll`/`heavyToll`). `BoundaryErasure.ring_erasure_survivor_eq` still returns the normalized supplied prior for an aggregate ensemble. | Aggregate survival for general receiver ensembles; the isolated mass needs no aggregate prior. |
+| H | Free input · Prior and selection family | The isolated-input trace is not yet computed, so H is not fixed by `IsolatedTrace`; its current rows are a conditional mixed-witness account. `BoundaryErasure.ring_erasure_survivor_eq` returns the normalized supplied prior for an aggregate ensemble. | Aggregate survival for general receiver ensembles. |
 | U | Free input · EP joint admission | Specify the embedding of admitted traffic, seed, wall and pulse into the heavy writer or static charged insertion. | Heavy branch, record reference, lightest offset, tier identification and the physical orders in `1/Δ`. |
 
 For E0 the endpoint domains are the finite phase and supplied mask
@@ -417,116 +417,13 @@ ultimately realized.
 Layering is a separate build decision in [PREMISES](PREMISES.md#layering).
 It supplies no physical input to this ranking.
 
-**Isolated-excitation trace.** `PMElementaryParticles.IsolatedExcitation`
-fixes O and H for the object a mass refers to: the stationary E8 background
-plus one packet label, with one deterministic 43-tick receiver trace. The
-trace fills K for that object with the booked electron and down-label Tolls.
-It does not supply a general accessible population, a general tariff, or the
-heavy record reference. The latter stays the certified two-element family
-`{lepton, colour}` (`Values.traceReferences`). The choice of placement does not
-change the per-period count because the period is cyclic; the hold/FIFO bank
-motion and the AND/OR receiver rule do.
-
-## Marked node symmetries
-
-`Components.NodeSymmetry` tests the embedded sector-preserving
-Weyl action. The marked geometry keeps the two D₄ sectors distinct.
-The active factor uses signed axis permutations with even sign
-parity. The other factor acts independently. The phase is a
-separate scalar slot. A spatial sign normal in the slice model is
-an extra marking beyond fixing this scalar phase.
-
-| Certified edge family | Active stabilizer | Generators in the active sector | Order with the other marked sector |
-| --- | --- | --- | --- |
-| All 24 roots of the active sector with no distinguished direction | 192 | Four simple roots. `unsigned_generators`, `diagonal_generators`, `sector_factor`. | 36,864 |
-| Open root line, retaining positive direction `e₀ + e₁` | 8 | Simple roots 0, 2, 3 (`line_generators`). | 1,536 |
-| Directional axis hop `2e₀` with no slice normal | 24 | Simple roots 1, 2, 3 (`axis_generators`). | 4,608 |
-| Axis hop fixing the slice plane, with no marked normal direction | 8 | Swap transverse axes 1 and 2 and flip the pair 2 and 3 (`slice_plane_generators`). | 1,536 |
-| Axis hop within the slice with positive clock normal `e₃` | 4 | Swap transverse axes 1 and 2 and change both their signs (`slice_generators`). | 768 |
-
-`stabilizer_orders` and `paired_orders` check the counts.
-`simpleFrame_carrier` identifies the carrier action with
-`CarrierWeyl.simple`. `simpleFrame_substrate` identifies it with
-the embedded E8 reflections and fixes the other sector. The bare
-abstract ring supplies oriented shifts and a scalar clock, without
-a geometric edge in the E8 lattice. A chosen ring geometry can
-use the corresponding marked link result.
-
-The fixed trial reflection uses `e₀ − e₁` in the first sector.
-The root-line group preserves it up to sign
-(`line_preserves_probe`). The slice group can move it
-(`slice_can_move_probe`). Keeping both the positive axis and that
-reflection axis fixes `e₁` (`axis_fixed_probe_iff`).
-`fixed_probe_orders` gives active order 4 without the slice,
-and 1 with a marked normal. `slice_plane_probe_order` gives 2 for
-the slice with an unmarked normal. The generators are checked in
-`fixed_probe_generators` and `slice_plane_probe_generators`. These extra restrictions apply when the link and
-probe use the same marked sector.
-
-`bare_line_mixing_root` gives a norm-two E8 reflection fixing the
-positive bare line while mixing the two sectors. Thus forgetting
-the markings can enlarge the Weyl stabilizer. No common unmarked edge family, probe and
-Weyl action on the controller and 16-slot reader is supplied. The
-orders above concern the certified marked families. They give no
-order for an arbitrary supplied configuration of links. The
-packet weak, colour and hypercharge actions are certified
-separately by `PacketGaugeActions`. Their matrices give a uniform
-packet action at each bank cell. The library supplies no identification
-of that action with the spatial stabilizer or a finite combined order.
-
-## Equivariant lifts
-
-`Components.joint_commutes_iff` is an exact test for a factorwise
-action. The core must commute with its relabelling. The packet
-permutation at the relabelled input must be conjugate to the
-original one by the bank action. This narrows the reversible
-family without choosing a packet action.
-
-For the certified weak, colour and hypercharge matrices the same
-operator is applied in every cell. Both holding and advancing the
-FIFO commute with that action (`hold_fifo_equivariant`). The FIFO
-changes the cell and leaves the channel index intact. This also
-works for common carrier relabellings on every cell. For
-symmetries acting trivially on the marked Boolean core, both AND
-and OR commute, so all four combinations of the two guards and
-two bank actions survive this test. Two bank choices at fixed
-guard already suffice to distinguish the packet projections.
-The mixed witness still distinguishes the guards at fixed bank
-choice.
-
-For spatial relabellings that preserve the line addresses and
-stream orientation, no site or stream swap is induced on that
-line. In using a fixed native probe, only symmetries preserving
-its reflection axis can commute with the fixed-root pulse in
-general. `line_probe_equivariant` checks the line case and
-`slice_probe_not_equivariant` exhibits the fixed-root obstruction.
-The axis counterexample affects the shared probe on
-both guards. It is no evidence against one receiver rule. There
-is no certified factorwise action of the full E8 Weyl group on
-the Boolean requests, probe and 16-slot packet together.
-The [bare-line check](#bare-line-stabilizer) identifies the larger
-group. A stronger physical equivariance test needs G/U to identify
-its joint action. It cannot turn either surviving bank
-choice into a unique update on the current interface.
-
-## Conservation filter
-
-| Quantity | Certified conservation and scope |
-| --- | --- |
-| Register occupation | `RegisterControl.occupation_conserved` on the encoded banks. `NativePacketRouting.registers_conserved` on its supplied routing. |
-| Stream totals | `Components.ring_stream_total` preserves the combined live and record total for any value measure. Exchange can transfer between the streams. `OpenHandoff.sum_exported` balances displaced input and the ordered export window, with incoming boundary supply stated. `RecordTransport.stream_conserved` gives the FIFO list law. |
-| Packet population and labels | `Components.fifo_channel_total` preserves each channel total across live and retained memory for any amplitude measure. Holding does so immediately. `RecordTransport.tick_norm` gives total norm preservation. For specified hops use `NativePacketUpdate.native_conserving` and `NativePacketRouting.packet_population`. A gauge action may mix coordinates. Gauge charges commuting with a specified action (`PacketGaugeActions.weak_charge`, `colour_charge`) are distinct from individual cell labels. The bank permutation preserves all channel-diagonal population sums. |
-| Identity registers | `Components.joint_line_bijective_iff`, `joint_ring_bijective` and `joint_boundary_identity`. Erasure merges a separate exported bit under `BoundaryErasure.erased_bit_merges`. |
-| Weyl norm, glue and carrier sector | `SubstrateWeylRoots.preserves_norm`, `preserves_glue`, `CarrierWeyl.simple_is_root`, `CarrierParity.range_iff_odd`, and `ClockControlledRoot.norm_preserved` and `glue_preserved`. The fixed projection continues to use the existing root dynamics. Hold and FIFO leave channel indices unchanged and preserve cell-summed populations in each block. |
-
-The same four hold/FIFO and AND/OR combinations pass the applicable
-checks. Per-cell labels, separate live and record totals in an exchange,
-and erasure of the identity registers are outside those conservation
-claims. Reversible equivariance alone would admit nonconserving
-permutations of the amplitude state. For example
-`equivariant_lift_can_change_population` supplies a commuting scaling
-that changes the norm and is excluded. A physical fibre map must
-preserve the quantities appropriate to its carrier embedding.
+**Isolated-excitation input.** `PMElementaryParticles.IsolatedExcitation`
+fixes O for the object a mass refers to: the stationary E8 background plus
+one packet label. The current `IsolatedTrace` file is a conditional (mixed
+witness, hand-booked) account; it does not run that occupied input and its
+hold/FIFO slot sets are not Transport-lift results. The isolated-input trace,
+the lift-derived tick sets, the shared ledger unit and the heavy record
+reference remain open.
 
 ## Least Toll on certified traces
 

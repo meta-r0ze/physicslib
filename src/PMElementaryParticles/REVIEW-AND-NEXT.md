@@ -4,26 +4,23 @@
 marks a physical identification or rule still to be derived.
 **[Certificate]** marks a calculation awaiting formal verification.
 
-## Isolated-excitation trace (closed for the mass object)
+## Isolated-excitation input and conditional mixed witness
 
 A mass is the property of one isolated excitation on the vacuum. The sector
-is now fixed in `IsolatedExcitation`: a stationary E8 reference from
-`RegisterVacuum`, `CarrierVacuumSector` and `NativeReferenceBackground`, plus
-one packet carrying a single 16-slot label. `occupiedInput_admitted` proves
-the valid two-bank occupancy and `occupiedInput_supply`/`occupiedInput_acceptance`
-are the existing supply and acceptance results. This is the definition of the
+is fixed in `IsolatedExcitation`: a stationary E8 reference plus one packet
+carrying a single 16-slot label. `occupiedInput_admitted` proves the valid
+two-bank occupancy and `occupiedInput_supply`/`occupiedInput_acceptance` are
+the existing supply and acceptance results. This is the definition of the
 quantity, not a choice of O. The vacuum is a certified family
-(`vacuum_nonunique`), so the trace carries the smallest relevant family: the
-two certified record references, lepton and colour.
+(`vacuum_nonunique`).
 
-`IsolatedTrace` runs one full 43-tick period. Electron booked Tolls in
-candidate order (hold/FIFO × AND/OR × two placements) are
-`1, 1, 2, 2, 1, 1, 44, 44`; amplitudes are `exp(-T/2)`. The trace registers
-the receiver comparison and the two exact electric record bits; the retained
-ring exports nothing, so every erased-bit count is zero. The heavy writer
-gives down-label Tolls `(K+1)` for colour and `(K+2)` for lepton, where `K`
-is the common receiver count. The colour trace satisfies
-`s_d² = s_e · s_u` for every candidate; the lepton trace does not.
+`IsolatedTrace` is **not** an isolated-input trace. It iterates the mixed
+contention witness `mixedBasisRing` and books hand-defined hold/FIFO slot
+sets. Its receiver and record terms have no certified common ledger. It is
+kept, relabelled, as a conditional (mixed witness, hand-booked) account; its
+`1, 1, 2, 2, 1, 1, 44, 44`, heavy columns, and down-identity theorems do not
+report isolated-excitation values. The isolated-input trace remains to be
+computed on a state built from `occupiedInput`.
 
 ## Protocol readout blockers
 
@@ -33,16 +30,15 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 | Ranked inputs | EP decision |
 | --- | --- |
-| G, T | Clocked packet and pulse firing. The isolated trace fixes the 43-tick receiver placement and shows that the two excursion placements do not change its per-period count. General pulse firing, the heavy crossing and the static insertion remain open. |
-| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. The embedding of general writer traffic and its 16-slot routing remain open. The trace's reader consumes the retained receiver flag and the stored record bit, not a routed general value. |
-| K, B, D | The isolated booked Toll is now trace-derived: receiver visits plus the certified two-bit record. General preparation, crossing, export and reset tariffs remain open. The retained ring erases nothing. |
-| J, Q, H, L | H is fixed for the isolated mass (one deterministic trace, no prior). J, Q and L remain open for sustained supply, shared jobs and successive links. |
+| G, T | Clocked packet and pulse firing. The isolated receiver embedding and the lift-derived hold/FIFO tick sets are still missing. |
+| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. The embedded receiver requests, probe and port fields are open; an isolated-input trace must derive them or name them. |
+| K, B, D | The current receiver and record columns are conditional and have no certified common ledger. General preparation, crossing, export and reset tariffs remain open. The retained ring erases nothing. |
+| J, Q, H, L | H is not fixed until the isolated trace is computed; the current mixed witness is not that trace. J, Q and L remain open. |
 
-- **Heavy-label weight. [Certificate]** The trace supplies the two certified
-  record columns, but not which one is physical. Colour gives
-  `(2,1,0,1)` and lepton `(1,2,1,0)` on the same trace. The colour column
-  gives the down geometric mean; the lepton column does not. The remaining
-  input is the physical record reference, not the paid work.
+- **Heavy-label weight. [Certificate]** The conditional mixed-witness account
+  restates the certified record columns colour `(2,1,0,1)` and lepton
+  `(1,2,1,0)`, but no isolated-input trace has run. The physical record
+  reference remains open.
 - **Lightest masses. [Premise]** Supply the admitted static selector
   and the charged offset on that leg. The
   [generation ledger](GENERATIONS.md#the-charged-lift) gives the exact
@@ -51,8 +47,8 @@ The supplied source, operation, read and cost must refer to the same trace.
   generator before comparing to the first-row PMFlavor readout.
 - **Species and neutral modes. [Premise]** The species assignments in
   `QuarkMasses`, `LeptonMasses` and `TierLedger` are a declared ledger.
-  The isolated trace has no address-to-tier bit, so it does not replace
-  the tier sets; it only books a label Toll. For neutrinos, admit the
+  The conditional mixed-witness account has no address-to-tier bit, so it
+  does not replace the tier sets. For neutrinos, admit the
   static neutral partner and the coherent branch mixer in
   `BranchGateBoundary`. The paired Schur block requires unequal magnitudes
   of the reverse-cycle weights for a split from diagonal flips. See
@@ -70,27 +66,24 @@ The supplied source, operation, read and cost must refer to the same trace.
   collinear regulators. The total is independent of each regulator and
   reproduces the inclusive kernel pointwise (`z = 0.1 … 0.9`, to `10⁻⁴`
   relative at `m_e = 3·10⁻⁴`), so its integral is `π² − 25/4`
-  (`tools/muon_radiative_certificate.py`). Stage 2 now formalizes the
-  assembled kernel and the cancellation of the regulator logs in
-  `RadiativeStage2`; the Feynman-parameter integrals (stage 3) remain.
+  (`tools/muon_radiative_certificate.py`). Radiative stage 2 remains open. `RadiativeStage2` records only that the
+  leading-log contact coefficient is zero; it does not assemble the vertex,
+  self-energy and real-emission diagrams or show the regulator logs cancel.
   Until stage 3, `MuonLifetimeCorrected` keeps the factor as a certified
   input, and the higher-order terms (`MuonQEDLoops`) stay supplied.
 
 ## Next EP priority
 
-Identify which certified heavy record reference—colour or lepton—the
-physical writer uses. That is the only remaining binary input in the
-trace-derived heavy Toll and down identity. After it, derive the
-address-to-tier map so the three trace Tolls can be assigned to the
-declared generation rows.
+Embed `IsolatedExcitation.occupiedInput` into `RingReceiver.State`, name any
+underived controller field, iterate `tick` for one period under AND and OR,
+and replace the hand-booked mixed-witness account with actual isolated-input
+results.
 
 ## Does the eight-candidate family now differ numerically?
 
-Yes, in the booked Toll and amplitude, and only through the two structural
-coordinates that survive the trace. The hold/FIFO bank motion changes the
-number of booked receiver visits (1 versus 43), and AND/OR changes the flag
-(0 versus 1). The two excursion placements do not change the per-period
-count, because the 43-phase clock is cyclic and both placements book the same
-visit count. The heavy writer adds the reference difference: colour gives
-down Toll `K+1`, lepton `K+2`. The tier sets still do not differ by candidate
-and remain premises.
+**Not for isolated excitations.** The only differing numbers are the
+conditional mixed-witness, hand-booked rows. That account does not run
+`occupiedInput`, and its hold/FIFO slot counts are definitions rather than
+Transport lift results. Until the isolated-input trace is computed, AND and
+OR may tie for every isolated mass and no trace-derived eight-candidate
+difference is established.

@@ -61,7 +61,7 @@ files were consolidated. The added aliases under `Interface.Wire` are:
 | `Registers` | `current`, `current_observed`, `current_unitary`, `evolution_occupation` |
 | `Probe` | `events`, `record`, `schedule_closes`, `scheduled_read`, `State`, `fire`, `update` |
 
-### Isolated-excitation trace
+### Isolated-excitation input and the conditional mixed witness
 
 `IsolatedExcitation` defines the object a mass refers to: the stationary E8
 reference (`Vacuum`/`RegisterVacuum`, `CarrierVacuumSector`, and
@@ -71,34 +71,28 @@ the two-bank occupancy; `occupiedInput_supply` and
 `occupiedInput_acceptance` are the existing supply and acceptance results.
 This is the definition of a mass, not a choice of O: occupancy is fixed at
 vacuum plus one excitation. The vacuum is not unique; `vacuum_nonunique`
-records the certified rest-mode family, and the trace carries the heavy record
-reference as the two-element family `{lepton, colour}`.
+records the certified rest-mode family.
 
-`IsolatedTrace` runs the retained 43-phase receiver for one full period. For
-each of the eight candidates it computes the booked Toll per period and the
-amplitude `exp(-T/2)` (PMAction.TollAmplitude). The eight electron values are
-`1, 1, 2, 2, 1, 1, 44, 44` in candidate order (hold/FIFO, AND/OR, then the two
-placements). The trace registers the receiver flags and the two exact electric
-record bits (`ElectricHeavyRecord.phase_position`, `phase_sector`); the
-retained ring exports nothing, so every erased-bit count is zero
-(`BoundaryErasure.ring_cycle_erasure`).
+`IsolatedTrace` currently records a **conditional mixed-witness, hand-booked**
+account. It iterates `RingReceiver.mixedBasisRing`, not
+`occupiedInput`, and its hold/FIFO slot counts are definitions rather than
+results of the Transport packet lifts. Its receiver term and its record term
+are also separate columns with no certified common ledger. The values
+`1, 1, 2, 2, 1, 1, 44, 44` and the `down_geometric_mean_*` theorems therefore
+must not be read as isolated-input traces or as one Toll. The isolated-input
+trace is not yet derived.
 
-The heavy writer repeats the trace for the down label. The certified record
-columns are `(2,1,0,1)` for colour and `(1,2,1,0)` for lepton
-(`heavyToll_colour`, `heavyToll_lepton`). The trace does not select one.
-On the colour trace `down_geometric_mean_colour` proves
-`s_d² = s_e · s_u` for every candidate; on the lepton trace
-`down_geometric_mean_lepton_fails` shows it fails. The tier sets in
-`TierLedger` remain premises: the trace has no address-to-tier bit.
+The heavy record reference remains the certified two-element family
+`{lepton, colour}`. The tier sets in `TierLedger` remain premises.
 
 ### Finite witness output
 
 `Values.TransportCandidates` checks eight witness rows from hold/FIFO,
-AND/OR and the two excursion placements. The row now reports the trace-derived
-electron Toll and amplitude, and the down-label heavy Toll and weight for both
-certified record references. The trace leaves the heavy reference, the static
-offset, and the wire-to-tier map as explicit inputs. Inverse-period orders stay
-open. See [the e8p report](../../tools/e8p/README.md#ep-isolated-excitation-traces).
+AND/OR and the two excursion placements. The row now reports the conditional
+mixed-witness, hand-booked electron and heavy values, separately labelled.
+It does not claim an isolated-input trace. The heavy reference, the static
+offset, and the wire-to-tier map remain explicit inputs. See
+[the e8p report](../../tools/e8p/README.md#ep-conditional-mixed-witness).
 
 ## Protocols are not wire modes
 
@@ -543,7 +537,7 @@ ledgers are labels; the substrate objects are protocols, tiers and cohorts.
 | `MuonLifetimeHigherOrder` | `τ_μ = τ_tree/(1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)`: `lifetime_bounds` `2.196974–2.196984 µs` | via `MuonQEDLoops` |
 | `TauLifetimeCorrected` | Tau lifetime from the measured `τ_μ` and supplied `B_e` with the electronic partial-width ratio corrected: phase space `f(x_μ)/f(x_τ)` (derived), `W` propagator (E8 `M_W`), one-loop QED at each lepton scale (`α(m_τ)⁻¹ = 133.3` supplied); `tau_lifetime_corrected` `291.03–291.06` fs (tree `291.15–291.17`) | measured `τ_μ`, `B_e`, `α(m_τ)` |
 | `MuonRadiativeLog` | The leading one-loop contact log in muon decay vanishes: `c = 0` for charges `(0, −1, −1, 0)` (`leptonic_no_log`) and in the charge-retention order, a conserved `e–μ` current (`retention_no_log`); the leading-log rate factor is one (`rate_factor_one`) | — |
-| `RadiativeStage2` | The assembled one-loop kernel is the finite part plus the ultraviolet and infrared regulator logs; both logs cancel because the contact coefficient is zero (`logCoefficient_eq_zero`, `regulator_logs_cancel`, `independent_of_regulators`, `assembled_rate_factor`) | Feynman-parameter finite integrals (stage 3) |
+| `RadiativeStage2` | Only the leading-log coefficient statement: the contact coefficient is zero (`logCoefficient_eq_zero`) and a toy finite-plus-log expression inherits that zero (`leadingLogKernel_eq_finite`, `leadingLogKernel_independent_of_log_scales`, `leadingLogRateFactor`). This is **not** stage 2 and does not assemble diagrams or cancel IR logs | vertex, self-energy and real-emission assembly; UV/IR cancellation; stage 3 finite integrals |
 | `PairInvariantSpectrum` | Uses the massive-daughter tree spectrum to derive the density in `q² = (p − p_e)²`, its physical interval `[0,(m − μ)²]`, and its weighted change of variable with Jacobian `1/(2m)`. The unweighted integral recovers `MassiveWidth.closed_width`. At `μ = 0`, the normalized invariant `z=q²/m²` gives the weight `2(1−z)²(1+2z)` | Tree contact spectrum with massless neutrinos |
 | `RadiativeIntegrals` | Real dilogarithm series equals the integral of `−log(1 − x)/x` on `[0,1]` (`dilog_eq_integral`); `Li₂(1) = π²/6` from the Basel sum. The kernel is integrable at the endpoint and its reflected form `−log x/(1 − x)` has the same integral | — |
 | `InclusiveMixing` | Unresolved orthogonal channels: `amplitude_weight`, `equal_kinematics` (sum = 1 for any unitary mixing; applied to the on-axis matrix in `PMFlavor.InclusiveWidth`), `kinematic_bounds` | Orthogonal final states, common kinematics |
@@ -565,8 +559,10 @@ of the virtual and real terms as its input.
 factor from the two external charged legs. In the muon rest frame the
 angular average at electron speed `0 < β < 1` is
 `log((1 + β)/(1 − β))/β − 2`. It multiplies the soft radial integral.
-`RadiativeStage2` formalizes the assembled kernel and the cancellation
-of the ultraviolet and infrared regulator logs. The regulated virtual
+`RadiativeStage2` only records that the leading-log contact coefficient is
+zero. Radiative stage 2—assembling the vertex, self-energies and real
+emission and showing the ultraviolet and infrared logs cancel—remains open.
+The regulated virtual
 and hard-emission terms are derived numerically
 in `tools/muon_radiative_derivation.py` from the substrate's conserved
 wall vertex (`PMAction.SpinorVertex`) with explicit regulators (a

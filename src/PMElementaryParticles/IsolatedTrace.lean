@@ -4,26 +4,24 @@ import PMElementaryParticles.ProtocolInventory
 import PMElementaryParticles.WireReferenceCost
 
 /-!
-# The clocked trace of an isolated excitation
+# Conditional mixed-witness, hand-booked account
 
-One full substrate period (`Delta = 43`).  The retained ring receiver runs
-on the occupied input of `IsolatedExcitation`; `hold` books the phase at
-which the packet is held and `FIFO` books every receiver visit.  AND and
-OR are the two certified receiver rules.  The two excursion placements
-are carried as the candidate's clock slots.  The heavy record reference
-is a certified two-element family: the trace does not select it.
+**This is not a trace of `IsolatedExcitation.occupiedInput`.**  The receiver
+term below iterates `RingReceiver.mixedBasisRing`, the mixed-request
+contention witness, through `PMTransport.Values.mixedReceiverFlagAt`.  The
+booked slot sets are hand definitions: `hold` books one slot and `FIFO`
+books all 43.  Those slot sets are not derived from the Transport packet
+lifts.  The receiver registrations and the record Toll are kept as separate
+columns: no certified result puts them in one ledger.
 
-Registration ledger for one period:
+The numbers in this file are therefore **conditional (mixed witness,
+hand-booked)**.  The isolated-input trace must be computed on a state built
+from `IsolatedExcitation.occupiedInput`; that is a separate task.  Nothing
+below claims the isolated excitation has been run.
 
-* `hold` books the phase `starts shifted` only; `FIFO` books every
-  phase `0 … 42`.  At each booked phase the receiver registers exactly
-  when the rule is OR (`mixedReceiverFlagAt_eq`).
-* The electron record is the two exact electric bits
-  (`ElectricHeavyRecord.phase_position`, `phase_sector`); on
-  `electronStatic` both register, giving record Toll two in the colour
-  column and one in the lepton column.
-* The retained ring exports nothing, so every erased-bit count is zero
-  (`trace_erased`).
+The heavy record reference is a certified two-element family; this file
+does not select it.  The retained ring exports nothing, so its erased-bit
+count is zero for that retained ring (`BoundaryErasure.ring_cycle_erasure`).
 -/
 
 noncomputable section
@@ -212,5 +210,18 @@ theorem down_geometric_mean_lepton_fails (fifo either shifted : Bool) (a : Fin 3
   have hinj := Real.exp_injective h
   ring_nf at hinj
   linarith
+
+/-! ## Conditional mixed-witness labels
+
+These aliases make the status explicit at use sites.  They are the same
+hand-booked mixed-witness values as above, not isolated-input traces.
+-/
+
+noncomputable def conditionalMixedElectronToll (fifo either shifted : Bool) : ℝ :=
+  electronToll fifo either shifted
+
+noncomputable def conditionalMixedHeavyToll (fifo either shifted : Bool)
+    (reference : Bool) (a : Fin 3) : ℝ :=
+  heavyToll fifo either shifted reference a
 
 end PMElementaryParticles.IsolatedExcitation
