@@ -36,14 +36,29 @@ at the flag level and conditional on the physical record-port identification.
 ## Pillar filter status (Tasks 1–5)
 
 `PillarPredicates` defines the weakest paper predicates, with named variants for
-Margin, Map and Toll. Variant survivor counts are `(F,F,F) 9408`, `(F,F,T) 6432`,
-`(F,T,F) 4128`, `(F,T,T) 1152`, `(T,F,F) 7200`, `(T,F,T) 4896`, `(T,T,F) 3168`,
-`(T,T,T) 864`; a direct `decide` over all protocols exceeded 600 seconds and was
-stopped, so these are evaluation observations. Toll excludes empty firing,
-Margin excludes full firing under the chosen margin variant, and Map excludes
-labels equal to the reference. Map with Hamming ≥ 1 makes up compatible with the
-lepton reference and neutrino with colour; Map with Hamming = 2 leaves only the
-complementary record pair. No reference is chosen.
+Margin, Map and Toll. `SurvivorClasses` quotients the raw label to
+`labelRecord` (`satisfies_labelRecord_invariant`, `survives_iff_reduced`).
+Reduced survivor counts are proved in `survivorsR_cards`; the raw counts are
+these times the label multiplicities 6,6,2,2.
+
+The robust core uses `mapAtLeastOne` and all Margin/Toll variants:
+`RobustCore = SurvivorsR (true,false,true)` (`robust_core_eq`), with 1,224
+reduced classes (`robust_core_card`). Class table:
+
+| record | reference | reduced survivors | period counts |
+| --- | --- | ---: | --- |
+| up | lepton | 252 | 14,15,21,22,43 |
+| up | colour | 0 | — |
+| down | colour | 252 | 14,15,21,22,43 |
+| down | lepton | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
+| electron | colour | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
+| electron | lepton | 252 | 14,15,21,22,43 |
+| neutrino | colour | 252 | 14,15,21,22,43 |
+| neutrino | lepton | 0 | — |
+
+Up needs the lepton reference; neutrino needs colour; down and electron accept
+both. `mapBoth` is the stronger variant and leaves only the complementary
+record. No reference is chosen.
 
 The nested-paper composition rules (Capacity Partitioning, Reversible Encoding,
 Impedance Matching) do not define a multi-protocol state on the machine, so
@@ -316,10 +331,11 @@ the tariff unit.
 **EP protocol layer.** `Protocol.Protocol` is finite: 16 labels × 2 references
 × firing patterns × certified phases `{0,π}` × packet site; the full family is
 `Protocol.allProtocols` and `allProtocols_complete`. `PillarPredicates` defines
-the weakest paper predicates and the variant filter. Survivor counts are
-`(F,F,F) 9408`, `(F,F,T) 6432`, `(F,T,F) 4128`, `(F,T,T) 1152`,
-`(T,F,F) 7200`, `(T,F,T) 4896`, `(T,T,F) 3168`, `(T,T,T) 864`; the direct
-`decide` over all protocols exceeded 600 seconds and was stopped.
+the weakest paper predicates and the variant filter. `SurvivorClasses` quotients
+the raw label to `labelRecord`; reduced survivor counts are proved in
+`survivorsR_cards`, and the robust core is `RobustCore = SurvivorsR
+(true,false,true)` with 1,224 reduced classes (`robust_core_eq`,
+`robust_core_card`). The class table is in the pillar-filter section above.
 
 **What the filter derives.** Toll excludes empty firing; Margin excludes full
 firing under the per-ring variant; Map excludes labels equal to the reference
@@ -327,17 +343,15 @@ and, with Hamming = 2, leaves only the complementary record. Map with Hamming
 ≥ 1 makes up compatible with the lepton reference and neutrino with colour.
 No reference is chosen.
 
-**What remains.** The full survivor count is not kernel-proved; the
-multi-protocol composition rule (Capacity Partitioning, Reversible Encoding,
-Impedance Matching) is not defined on the machine; the reference choice and
-firing pattern are not selected; the full-ring Lean spectrum is not proved.
-Legacy tier sets, generation addresses, quark/lepton formulas and heavy-label
-weights remain premises; record Tolls are derived at the flag level and
-conditional on the physical record-port identification.
+**What remains.** The multi-protocol composition rule (Capacity Partitioning,
+Reversible Encoding, Impedance Matching) is not defined on the machine; the
+reference choice and firing pattern are not selected; the full-ring Lean
+spectrum is not proved. Legacy tier sets, generation addresses, quark/lepton
+formulas and heavy-label weights remain premises; record Tolls are derived at
+the flag level and conditional on the physical record-port identification.
 
-**Next EP priority.** Prove the survivor enumeration by a smaller structural
-argument or a faster finite encoding, then define the multi-protocol
-composition state from the nested-paper rules and rerun alone/together closure.
-After that, select the reference and firing pattern from persistence and finish
-the full-ring spectrum. The mass reading remains a hypothesis; radiative stage
-2 is separate and still not started.
+**Next EP priority.** Define the multi-protocol composition state from the
+nested-paper rules and rerun alone/together closure on the proved survivor
+classes. Then select the reference and firing pattern from persistence and
+finish the full-ring spectrum. The mass reading remains a hypothesis;
+radiative stage 2 is separate and still not started.

@@ -112,44 +112,63 @@ physical record-port identification.
 Each predicate is linked by a `*_realizes_*` theorem to
 `Requirements.Pillar.requirement`.
 
-**Filter.** The complete `survivors` family is filtered by `satisfiesBool`.
-A direct `decide` over all 24,576 protocols exceeded 600 seconds and was
-stopped; the counts below are computed by evaluation and are observations, not
-kernel proofs. Counts by variant `(marginPerRing, mapBoth, tollPerRing)`:
+**Filter and quotient.** `SurvivorClasses.Reduced` quotients the raw label to
+`labelRecord`; `satisfies_labelRecord_invariant` proves labels with the same
+record are indistinguishable to every predicate when the other fields agree.
+`survives_iff_reduced` identifies the raw filter with `SurvivorsR`. The raw
+label multiplicities are 6 for `(false,false)`, 6 for `(false,true)`, 2 for
+`(true,true)` and 2 for `(true,false)`. Reference, firing patterns, phases and
+`x0` are read by at least one predicate; no further quotient is used.
 
-| variant | survivors |
+Reduced survivor counts by variant `(marginPerRing, mapBoth, tollPerRing)` are
+proved in `SurvivorClasses.survivorsR_cards`:
+
+| variant | reduced survivors |
 | --- | ---: |
-| F,F,F | 9,408 |
-| F,F,T | 6,432 |
-| F,T,F | 4,128 |
-| F,T,T | 1,152 |
-| T,F,F | 7,200 |
-| T,F,T | 4,896 |
-| T,T,F | 3,168 |
-| T,T,T | 864 |
+| F,F,F | 2,352 |
+| F,F,T | 1,608 |
+| F,T,F | 1,032 |
+| F,T,T | 288 |
+| T,F,F | 1,800 |
+| T,F,T | 1,224 |
+| T,T,F | 792 |
+| T,T,T | 216 |
 
-The variant choice changes the count. In every variant:
+The raw counts are these reduced counts times the label multiplicities; they
+are not the primary result.
 
-- Toll excludes empty firing.
-- Margin excludes full firing on a ring (per-ring) or both rings jointly
-  (total); `marginPerRing` is stronger.
-- `mapAtLeastOne` excludes labels equal to the reference; `mapBoth` excludes
-  all except the complementary record pair.
-- `governorProper` excludes the all-firing guard set.
+**Robust core.** With the weakest Map condition (`mapAtLeastOne`) and all
+defensible Margin/Toll variants, `RobustCore` is exactly the
+`(marginPerRing, mapAtLeastOne, tollPerRing)` survivor set
+(`robust_core_eq`) and has 1,224 reduced classes (`robust_core_card`). The
+class table, with phase multiplicity included, is:
 
-**Reference choice under Map.** With `mapAtLeastOne`, colour reference
-`(false,false)` excludes the up-record labels `(false,false)`; lepton reference
-`(true,false)` excludes neutrino-record labels `(true,false)`. Thus up needs
-the lepton reference and neutrino needs colour if a Map difference is required.
-With `mapBoth`, only the complementary record is valid: colour allows electron
-record `(true,true)`; lepton allows down record `(false,true)`. Map does not
-choose a single reference for all labels.
+| record | reference | reduced survivors | period registration counts |
+| --- | --- | ---: | --- |
+| up `(false,false)` | lepton | 252 | 14,15,21,22,43 |
+| up | colour | 0 | — |
+| down `(false,true)` | colour | 252 | 14,15,21,22,43 |
+| down | lepton | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
+| electron `(true,true)` | colour | 108 | 28,29,30,35,36,37,42,43,44,57,58,64,65,86 |
+| electron | lepton | 252 | 14,15,21,22,43 |
+| neutrino `(true,false)` | colour | 252 | 14,15,21,22,43 |
+| neutrino | lepton | 0 | — |
 
-**Rates.** Survivor toll counts are sums of two bit-ring `patternSum` values.
-The possible values observed are `{14,15,21,22,28,29,30,35,36,37,42,43,44,57,58,64,65,86}`;
-the per-ring `marginPerRing` variant removes the 43-capable full-firing ring
-from single-ring contributions. These are period counts, not masses. The counts
-depend on `x0` only through the 43-tick window in `patternSum`.
+The one-differing-bit rows have 42 pattern pairs × 3 sites × 2 phases = 252;
+the two-differing-bit rows have 36 pattern pairs × 3 sites = 108. The counts
+are reduced classes, not raw protocols.
+
+**Reference per record class (robust core).** Up is valid only with the
+lepton reference; neutrino only with colour; down and electron are valid with
+both. This is the Map condition `mapAtLeastOne`; `mapBoth` is the stronger
+variant and leaves only the complementary record pair. No reference is chosen.
+
+**Rates.** The robust-core period counts are the table above. They are sums
+of two bit-ring `patternSum` values; the one-differing-bit rows use
+`{14,15,21,22,43}`, and the two-differing-bit rows use the pairwise sums
+`{28,29,30,35,36,37,42,43,44,57,58,64,65,86}`. These are registration counts,
+not masses. Dependence on `x0` is only through the 43-tick window in
+`patternSum`.
 
 **Alone/together.** The nested-paper composition rules are Capacity
 Partitioning, Reversible Encoding and Impedance Matching
