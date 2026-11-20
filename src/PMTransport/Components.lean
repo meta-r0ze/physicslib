@@ -423,4 +423,37 @@ theorem cycle_erased_le_period (disposition : Fin Delta → BoundaryErasure.Disp
       Finset.sum_le_sum (fun t _ => erased_bits_le_one (disposition t) (exported t))
     _ = 43 := by simp
 
+/-! ## Headroom in matching units -/
+
+/-- Empty slots of the isolated trial clock. The all-true requests attain
+the worst-case load. These slots are not reserved for concurrent work. -/
+theorem trial_slot_margin (requests : Bool × Bool) :
+    41 ≤ 43 - phaseLoad (ClockedRootTrials.fire requests) := by
+  have := trial_phaseLoad_le requests
+  omega
+
+theorem trial_slot_margin_attained :
+    43 - phaseLoad (ClockedRootTrials.fire (true, true)) = 41 := by
+  rw [trial_phaseLoad]
+  rfl
+
+/-- One receiver opportunity at every phase can be used, under either
+guard, on the all-true request pair. -/
+theorem ring_exchange_full_load (either : Bool) :
+    43 - phaseLoad (fun _ => RingReceiver.exchange either (true, true)) = 0 := by
+  rw [ring_receiver_phaseLoad]
+  cases either <;> rfl
+
+theorem ring_flag_margin_attained :
+    1 - RingReceiver.receiverFlag true RingReceiver.mixedBasisRing 0 = 0 := by
+  rw [RingReceiver.mixed_ring_flags.2]
+  norm_num
+
+/-- The binary port can exhaust its accounting capacity if every input
+is booked for erasure. This is an attainable model load. -/
+theorem erasure_margin_attained (bits : Fin Delta → Bool) :
+    43 - BoundaryErasure.cycleErased (fun _ => .erase) (fun t => some (bits t)) = 0 := by
+  rw [BoundaryErasure.erase_full_cycle, Delta_eq]
+  rfl
+
 end PMTransport.Components

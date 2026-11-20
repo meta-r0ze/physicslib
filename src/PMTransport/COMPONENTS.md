@@ -197,3 +197,18 @@ parallel instances. G and O govern which opportunities are used.
 | Boundary | At most one booked exported bit erased per port per tick, and at most 43 per port per period. | `Components.erased_bits_le_one`, `cycle_erased_le_period`. Actual exports and disposition are B. |
 | Maintenance | A specified job uses one root event. | `RootMaintenance.event_is_root`. Jobs fitting simultaneously or per period are J/T. |
 | EP endpoint | Logical comparisons per candidate write or insertion. | [Clock requirements](CLOCK.md#slot-requirements-for-a-wire-cycle). Clock placements and admitted consumer visits are T/U. |
+
+## Margin in matching units
+
+| Encoded reserve | Capacity and maximum load | Worst-case margin |
+| --- | --- | --- |
+| Clock slots left by the isolated trials | 43 phases, at most two fires, both attainable | 41 unused trial slots. `Components.trial_slot_margin` and `trial_slot_margin_attained`. Shared capacity remains T/J. |
+| Controller and receiver exchange opportunities | 43 opportunities and 43 possible exchanges for each rule | Zero unused opportunities at maximum load. `Components.ring_exchange_full_load`. This counts operations, even on equal values. |
+| Specified comparison flag | One unit and an attained unit flag for the OR basis witness | Zero headroom in flag units in this case. `Components.ring_flag_margin_attained`. This is independent of booking. |
+| Boundary per binary export port | 43 opportunities and 43 possible erased bits | Zero unused slots at maximum load. `Components.erasure_margin_attained`. The retained ring uses zero and leaves the entire accounting capacity unused. |
+
+Each pair uses the same unit. A carrier count does not bound the number
+of occupied jobs or the number of pulses per tick. The two stream outputs
+and FIFO arity describe slots rather than occupancy. A ready reference
+requires supply. The other margin entries remain O, Q, L, T or J as shown
+above. A physical reserve cannot be assigned from those slot counts.
