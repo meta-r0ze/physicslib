@@ -6,6 +6,7 @@ import PMElementaryParticles.MuonLifetimeCorrected
 import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.WireReferenceCost
+import PMElementaryParticles.IsolatedTrace
 import PMElementaryParticles.TierLedger
 import PMTransport.Values
 
@@ -169,6 +170,67 @@ noncomputable def mass (c : Candidate) (identify : Candidate → TierLedger.Wire
 /-- A numeric light-offset order is absent from the witness labels.
 The operation and scaling law enter through the supplied offset. -/
 def certifiedOffsetOrder (_c : Candidate) (_protocol : BaseProtocol) : Option ℕ := none
+
+/-! ### Trace-derived isolated-excitation values
+
+The occupied input and the retained 43-phase receiver trace are in
+`IsolatedExcitation`.  These are the eight candidate rows, not supplied
+rates.  The electron trace uses the lepton record column because every
+electron packet label is colourless.  The heavy writer carries both
+certified record columns; the trace does not select one.
+-/
+
+/-- Booked electron Toll per 43-tick period, from the candidate trace. -/
+noncomputable def traceElectronToll (c : Candidate) : ℝ :=
+  IsolatedExcitation.electronToll c.1 c.2.1 c.2.2
+
+/-- Electron amplitude `exp(-T/2)` on the same trace. -/
+noncomputable def traceElectronAmplitude (c : Candidate) : ℝ :=
+  PMAction.TollAmplitude.wireAmplitude (traceElectronToll c)
+
+theorem traceElectronToll_cases (c : Candidate) :
+    traceElectronToll c = if c.2.1 then (if c.1 then 44 else 2) else 1 :=
+  IsolatedExcitation.electronToll_cases c.1 c.2.1 c.2.2
+
+/-- Heavy-writer (down-label) booked Toll on the same trace, for either
+certified record reference. -/
+noncomputable def traceHeavyToll (c : Candidate) (reference : Bool) (a : Fin 3) : ℝ :=
+  IsolatedExcitation.heavyToll c.1 c.2.1 c.2.2 reference a
+
+noncomputable def traceHeavyWeight (c : Candidate) (reference : Bool) (a : Fin 3) : ℝ :=
+  IsolatedExcitation.heavyWeight c.1 c.2.1 c.2.2 reference a
+
+theorem traceHeavyToll_colour (c : Candidate) (a : Fin 3) :
+    IsolatedExcitation.bookedToll c.1 c.2.1 c.2.2 true ProtocolToll.electronStatic =
+        IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 2 ∧
+      traceHeavyToll c true a = IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 1 := by
+  obtain ⟨he, hd, -⟩ := IsolatedExcitation.heavyToll_colour c.1 c.2.1 c.2.2 a
+  exact ⟨he, hd⟩
+
+theorem traceHeavyToll_lepton (c : Candidate) (a : Fin 3) :
+    IsolatedExcitation.bookedToll c.1 c.2.1 c.2.2 false ProtocolToll.electronStatic =
+        IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 1 ∧
+      traceHeavyToll c false a = IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 + 2 := by
+  obtain ⟨he, hd, -⟩ := IsolatedExcitation.heavyToll_lepton c.1 c.2.1 c.2.2 a
+  exact ⟨he, hd⟩
+
+/-- The trace does not select the heavy record reference.  Both columns are
+carried; this is the smallest certified family. -/
+def traceReferences : List Bool := [false, true]
+
+theorem traceReferences_complete : ∀ b : Bool, b ∈ traceReferences := by decide +kernel
+
+theorem down_geometric_mean_trace (c : Candidate) (a : Fin 3) :
+    (IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 true (ProtocolToll.downStatic a)) ^ 2 =
+      IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 true ProtocolToll.electronStatic *
+        IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 true (ProtocolToll.upStatic a) :=
+  IsolatedExcitation.down_geometric_mean_colour c.1 c.2.1 c.2.2 a
+
+theorem down_geometric_mean_trace_lepton_fails (c : Candidate) (a : Fin 3) :
+    (IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false (ProtocolToll.downStatic a)) ^ 2 ≠
+      IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false ProtocolToll.electronStatic *
+        IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false (ProtocolToll.upStatic a) :=
+  IsolatedExcitation.down_geometric_mean_lepton_fails c.1 c.2.1 c.2.2 a
 
 end TransportCandidates
 
