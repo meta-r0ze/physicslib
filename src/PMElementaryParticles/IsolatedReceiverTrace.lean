@@ -32,6 +32,7 @@ open PMElementaryParticles.ProtocolInventory
 open PMTransport
 open PMTransport.RingReceiver
 open PMAction
+open scoped BigOperators
 
 /-- Three sites is the smallest certified ring with two distinct incoming
 neighbours (`RingReceiver.ring_neighbourhood`). -/
@@ -222,6 +223,331 @@ theorem uniformPorts_occupancy (packet : PacketLabel) :
     portBitCount (uniformPorts packet) = if active packet then 6 else 0 := by
   by_cases h : active packet <;>
     simp [portBitCount, uniformPorts, portBitCountPorts, h]
+
+/-! ## Localized trace helpers
+
+The active packet is a fixed 16-slot label with `active = true`; the request
+field stays the named open controller input G.
+-/
+
+def activePacket : PacketLabel := Sum.inl ((0 : Fin 3), (0 : Fin 2))
+
+theorem active_activePacket : active activePacket = true := rfl
+
+/-- The request field is retained; this is `RingReceiver.requests_iterate`. -/
+theorem localized_requests_retained (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (packet : PacketLabel) (x0 : IsolatedSite)
+    (fields : ReceiverFields) (k : ℕ) :
+    ((tick 3 either)^[k] (localizedEmbed c vacuum packet x0 fields)).2.1 =
+      fields.requests :=
+  RingReceiver.requests_iterate either _ k
+
+private theorem port_iterate_source_iso (either : Bool)
+    (q : IsolatedSite → IsolatedRequests) (ports : IsolatedSite → IsolatedPorts)
+    (p : RingReceiver.Slot 3) (k : ℕ) :
+    RingReceiver.slotValue ((RingReceiver.portStep either q)^[k] ports) p =
+      RingReceiver.slotValue ports
+        ((RingReceiver.portSource (RingReceiver.exchange either ∘ q))^[k] p) := by
+  induction k generalizing p with
+  | zero => rfl
+  | succ k ih =>
+    rw [Function.iterate_succ_apply', RingReceiver.port_step_source, ih,
+      Function.iterate_succ_apply]
+
+/-- The port field of the localized state has period 12 under both rules and
+every request field, by the certified three-site slot period. -/
+theorem portStep_period_twelve (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (ports : IsolatedSite → IsolatedPorts) :
+    (RingReceiver.portStep either r)^[12] ports = ports := by
+  funext x
+  apply Prod.ext
+  · have h := port_iterate_source_iso either r ports (x, false) 12
+    simpa [RingReceiver.slotValue, RingReceiver.slot_period_three] using h
+  · have h := port_iterate_source_iso either r ports (x, true) 12
+    simpa [RingReceiver.slotValue, RingReceiver.slot_period_three] using h
+
+theorem localized_ports_period_twelve (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (packet : PacketLabel) (x0 : IsolatedSite)
+    (fields : ReceiverFields) :
+    ((tick 3 either)^[12] (localizedEmbed c vacuum packet x0 fields)).2.2.2 =
+      (localizedEmbed c vacuum packet x0 fields).2.2.2 := by
+  rw [RingReceiver.ports_iterate]
+  exact portStep_period_twelve either fields.requests (localizedPorts x0 packet)
+
+def mkFields (r : IsolatedSite → IsolatedRequests) : ReceiverFields :=
+  ⟨0, r, fun _ => false, false, false⟩
+
+def localizedPortsAt (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) (k : ℕ) : IsolatedSite → IsolatedPorts :=
+  (RingReceiver.portStep either r)^[k] (localizedPorts x0 activePacket)
+
+/-- Computable receiver flag on the localized state. -/
+def localizedFlagNat (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) (k : ℕ) (x : IsolatedSite) : ℕ :=
+  if RingReceiver.exchange either (r x) = true ∧
+      (RingReceiver.arrivals (localizedPortsAt either r x0 k) x).1 ≠
+      (RingReceiver.arrivals (localizedPortsAt either r x0 k) x).2
+    then 1 else 0
+
+/-- The computable flag is the actual `receiverFlag` on the iterated localized
+embedding. -/
+theorem localizedFlag_eq_nat (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (vacuum : VacuumLabel 0) (x0 : IsolatedSite) (k : ℕ) (x : IsolatedSite) :
+    receiverFlag either ((tick 3 either)^[k]
+      (localizedEmbed 0 vacuum activePacket x0 (mkFields r))) x =
+      (localizedFlagNat either r x0 k x : ℝ) := by
+  have hq : ((tick 3 either)^[k]
+      (localizedEmbed 0 vacuum activePacket x0 (mkFields r))).2.1 = r := by
+    simpa [mkFields] using localized_requests_retained either 0
+      vacuum activePacket x0 (mkFields r) k
+  have hp : ((tick 3 either)^[k]
+      (localizedEmbed 0 vacuum activePacket x0 (mkFields r))).2.2.2 =
+      localizedPortsAt either r x0 k := by
+    rw [RingReceiver.ports_iterate]
+    rfl
+  rw [receiver_flag_eq, hq, hp]
+  unfold localizedFlagNat
+  by_cases h : RingReceiver.exchange either (r x) = true ∧
+      (RingReceiver.arrivals (localizedPortsAt either r x0 k) x).1 ≠
+      (RingReceiver.arrivals (localizedPortsAt either r x0 k) x).2 <;>
+    simp [h]
+
+def localizedInner (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) (k : ℕ) : ℕ :=
+  ∑ x : IsolatedSite, localizedFlagNat either r x0 k x
+
+def localizedSum (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) (n : ℕ) : ℕ :=
+  ∑ k ∈ Finset.range n, localizedInner either r x0 k
+
+def localizedPeriodSum (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) : ℕ :=
+  localizedSum either r x0 12
+
+def localizedSum43 (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) : ℕ :=
+  localizedSum either r x0 43
+
+theorem localizedPortsAt_add_twelve (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) (k : ℕ) :
+    localizedPortsAt either r x0 (k + 12) = localizedPortsAt either r x0 k := by
+  unfold localizedPortsAt
+  rw [Function.iterate_add_apply, portStep_period_twelve]
+
+theorem localizedInner_add_twelve (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) (k : ℕ) :
+    localizedInner either r x0 (k + 12) = localizedInner either r x0 k := by
+  unfold localizedInner
+  apply Finset.sum_congr rfl
+  intro x _
+  unfold localizedFlagNat
+  rw [localizedPortsAt_add_twelve]
+
+theorem localizedInner_add_mul_twelve (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) (n k : ℕ) :
+    localizedInner either r x0 (12 * n + k) = localizedInner either r x0 k := by
+  induction n generalizing k with
+  | zero => simp
+  | succ n ih =>
+    rw [show 12 * (n + 1) + k = 12 * n + (k + 12) by omega]
+    rw [ih (k + 12), localizedInner_add_twelve]
+
+theorem localizedSum36_eq (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) :
+    localizedSum either r x0 36 = 3 * localizedPeriodSum either r x0 := by
+  unfold localizedSum localizedPeriodSum
+  rw [show 36 = 12 + 24 by norm_num, Finset.sum_range_add]
+  rw [show 24 = 12 + 12 by norm_num, Finset.sum_range_add]
+  have h1 : (∑ k ∈ Finset.range 12,
+      localizedInner either r x0 (12 + k)) =
+      ∑ k ∈ Finset.range 12, localizedInner either r x0 k := by
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [show 12 + k = 12 * 1 + k by norm_num,
+      localizedInner_add_mul_twelve]
+  have h2 : (∑ k ∈ Finset.range 12,
+      localizedInner either r x0 (12 + (12 + k))) =
+      ∑ k ∈ Finset.range 12, localizedInner either r x0 k := by
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [show 12 + (12 + k) = 12 * 2 + k by omega,
+      localizedInner_add_mul_twelve]
+  rw [h1, h2]
+  rw [show localizedSum either r x0 12 =
+    ∑ k ∈ Finset.range 12, localizedInner either r x0 k by rfl]
+  ring_nf
+
+theorem localizedSum43_eq (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) :
+    localizedSum43 either r x0 =
+      3 * localizedPeriodSum either r x0 + localizedSum either r x0 7 := by
+  unfold localizedSum43
+  unfold localizedSum
+  rw [show 43 = 36 + 7 by norm_num, Finset.sum_range_add]
+  change localizedSum either r x0 36 +
+    ∑ k ∈ Finset.range 7, localizedInner either r x0 (36 + k) = _
+  rw [localizedSum36_eq]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [show 36 + k = 12 * 3 + k by omega,
+    localizedInner_add_mul_twelve]
+
+def localizedSum43Fast (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) : ℕ :=
+  3 * localizedPeriodSum either r x0 + localizedSum either r x0 7
+
+theorem localizedSum43Fast_eq (either : Bool) (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) :
+    localizedSum43Fast either r x0 = localizedSum43 either r x0 :=
+  (localizedSum43_eq either r x0).symm
+
+/-- The exchange pattern is the only part of the retained request field that
+enters a receiver flag. -/
+def firingPattern (either : Bool) (r : IsolatedSite → IsolatedRequests) :
+    IsolatedSite → Bool :=
+  fun x => RingReceiver.exchange either (r x)
+
+def sameRequests (q : IsolatedSite → Bool) : IsolatedSite → IsolatedRequests :=
+  fun x => (q x, q x)
+
+def boolCode (b : Bool) : ℕ := if b then 1 else 0
+
+def patternCode (q : IsolatedSite → Bool) : ℕ :=
+  boolCode (q 0) + 2 * boolCode (q 1) + 4 * boolCode (q 2)
+
+/-- Computed 43-tick sums by firing pattern and packet site.  The order is
+`patternCode` 0…7, then `x0` 0,1,2. -/
+def patternTable : List (List ℕ) :=
+  [[0, 0, 0],
+   [14, 14, 15],
+   [15, 14, 14],
+   [43, 21, 22],
+   [14, 15, 14],
+   [21, 22, 43],
+   [22, 43, 21],
+   [43, 43, 43]]
+
+def patternSum (q : IsolatedSite → Bool) (x0 : IsolatedSite) : ℕ :=
+  ((patternTable.getD (patternCode q) []).getD x0.val 0)
+
+/-- Rotation of the retained request field. -/
+def rotateRequest (d : IsolatedSite) (r : IsolatedSite → IsolatedRequests) :
+    IsolatedSite → IsolatedRequests :=
+  fun x => r (x - d)
+
+def rotateSite (d x0 : IsolatedSite) : IsolatedSite := x0 + d
+
+def rotatePattern (d : IsolatedSite) (q : IsolatedSite → Bool) :
+    IsolatedSite → Bool :=
+  fun x => q (x - d)
+
+theorem patternSum_rotate (q : IsolatedSite → Bool) (x0 d : IsolatedSite) :
+    patternSum (rotatePattern d q) (rotateSite d x0) = patternSum q x0 := by
+  revert q x0 d
+  decide +kernel
+
+theorem localizedSum43Fast_eq_pattern :
+    ∀ (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) (either : Bool),
+      localizedSum43Fast either r x0 = patternSum (firingPattern either r) x0 := by
+  decide +kernel
+
+/-- Task B(c): the 43-tick localized sum is the table entry of the exchange
+pattern.  The state is `(tick 3 either)^[k] (localizedEmbed ...)` with
+`activePacket`. -/
+theorem localizedSum43_eq_pattern (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) :
+    localizedSum43 either r x0 = patternSum (firingPattern either r) x0 := by
+  rw [← localizedSum43Fast_eq]
+  exact localizedSum43Fast_eq_pattern r x0 either
+
+/-- Task B(b): rotating both the packet site and the retained request field
+leaves the localized 43-tick sum unchanged. -/
+theorem localizedSum43_rotate (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (x0 d : IsolatedSite) :
+    localizedSum43 either (rotateRequest d r) (rotateSite d x0) =
+      localizedSum43 either r x0 := by
+  rw [localizedSum43_eq_pattern, localizedSum43_eq_pattern]
+  change patternSum (rotatePattern d (firingPattern either r)) (rotateSite d x0) =
+    patternSum (firingPattern either r) x0
+  exact patternSum_rotate (firingPattern either r) x0 d
+
+/-- The localized sums do depend on `x0` for a fixed request field, so the
+ring is only invariant under simultaneous rotation. -/
+theorem localizedSum43_x0_depends :
+    ∃ r : IsolatedSite → IsolatedRequests, ∃ x0 x1 : IsolatedSite,
+      localizedSum43 true r x0 ≠ localizedSum43 true r x1 := by
+  refine ⟨(fun x => if x = 2 then (true, true) else (false, false)), 0, 1, ?_⟩
+  rw [localizedSum43_eq_pattern, localizedSum43_eq_pattern]
+  decide +kernel
+
+/-- Task B(a): AND and OR sums differ exactly when their exchange-pattern
+table entries differ.  This is a decidable condition on the retained request
+field. -/
+def sumsDiffer (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) : Prop :=
+  patternSum (firingPattern false r) x0 ≠
+    patternSum (firingPattern true r) x0
+
+theorem localized_and_or_differ_iff (r : IsolatedSite → IsolatedRequests)
+    (x0 : IsolatedSite) :
+    localizedSum43 false r x0 ≠ localizedSum43 true r x0 ↔ sumsDiffer r x0 := by
+  rw [localizedSum43_eq_pattern false r x0,
+    localizedSum43_eq_pattern true r x0]
+  rfl
+
+/-- The inactive packet has no live port; every receiver flag and every sum
+is zero. -/
+def inactivePacket : PacketLabel := Sum.inr (Sum.inr (Sum.inr ((0 : Fin 2))))
+
+theorem active_inactivePacket : active inactivePacket = false := rfl
+
+theorem localized_inactive_flag_zero (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (x0 : IsolatedSite) (fields : ReceiverFields)
+    (k : ℕ) (x : IsolatedSite) :
+    receiverFlag either ((tick 3 either)^[k]
+      (localizedEmbed c vacuum inactivePacket x0 fields)) x = 0 := by
+  apply receiver_flag_zero_of_uniform
+  have h : ∀ y, (localizedEmbed c vacuum inactivePacket x0 fields).2.2.2 y =
+      (false, false) := by
+    intro y
+    simp [localizedEmbed, localizedPorts, active_inactivePacket]
+  exact uniform_ports_iterate either _ false h k
+
+theorem localizedSum43_inactive_zero (either : Bool) (c : Fin 3)
+    (vacuum : VacuumLabel c) (x0 : IsolatedSite) (fields : ReceiverFields) :
+    (∑ t : Fin Delta, ∑ x : IsolatedSite,
+      receiverFlag either ((tick 3 either)^[t.val]
+        (localizedEmbed c vacuum inactivePacket x0 fields)) x) = 0 := by
+  apply Finset.sum_eq_zero
+  intro t _
+  apply Finset.sum_eq_zero
+  intro x _
+  exact localized_inactive_flag_zero either c vacuum x0 fields t.val x
+
+/-- The actual 43-tick receiver sum on the localized embedded state equals the
+computed localized sum.  State: `(tick 3 either)^[k] (localizedEmbed ...)` with
+`activePacket`; requests `mkFields r`. -/
+theorem localized_period_registrations_eq (either : Bool)
+    (r : IsolatedSite → IsolatedRequests) (vacuum : VacuumLabel 0)
+    (x0 : IsolatedSite) :
+    (∑ t : Fin 43, ∑ x : IsolatedSite,
+      receiverFlag either ((tick 3 either)^[t.val]
+        (localizedEmbed 0 vacuum activePacket x0 (mkFields r))) x) =
+      (localizedSum43 either r x0 : ℝ) := by
+  let f : ℕ → ℝ := fun k => ∑ x : IsolatedSite,
+    receiverFlag either ((tick 3 either)^[k]
+      (localizedEmbed 0 vacuum activePacket x0 (mkFields r))) x
+  change (∑ t : Fin 43, f t.val) = _
+  rw [Fin.sum_univ_eq_sum_range]
+  unfold localizedSum43 localizedSum localizedInner
+  rw [Nat.cast_sum]
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [Nat.cast_sum]
+  change f k = ∑ x : IsolatedSite, (localizedFlagNat either r x0 k x : ℝ)
+  apply Finset.sum_congr rfl
+  intro x _
+  exact localizedFlag_eq_nat either r vacuum x0 k x
 
 /-! ## Separate ledger columns
 

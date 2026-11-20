@@ -22,11 +22,19 @@ are equal-arrival artifacts, not isolated-excitation results.
 `localizedPorts x0 packet` has one live packet at `x0`, record vacuum there,
 and vacuum elsewhere; its occupancy is one when active and zero otherwise
 (`localizedPorts_occupancy`) and is preserved by `tick` under both rules
-(`localized_occupancy_preserved`). The localized receiver flag and period sum
-are not yet computed. The receiver registrations per period and the record bit
-visits remain separate columns with no certified common ledger. The hold/FIFO
-packet lifts move the bank but do not determine a booking tick set, so that
-stop remains.
+(`localized_occupancy_preserved`). Requests are retained
+(`localized_requests_retained`) and the localized port field has period 12
+(`portStep_period_twelve`), so the 43-tick sum is three periods plus seven
+ticks (`localizedSum43_eq`). The sum depends only on the exchange pattern
+(`localizedSum43_eq_pattern`, `patternSum`). AND and OR differ exactly when
+their pattern-table entries differ (`localized_and_or_differ_iff`,
+`sumsDiffer`). Simultaneous rotation of packet site and requests leaves the
+sum unchanged (`localizedSum43_rotate`); for fixed requests it can depend on
+`x0` (`localizedSum43_x0_depends`). An inactive packet gives zero
+(`localizedSum43_inactive_zero`). The receiver registrations per period and
+the record bit visits remain separate columns with no certified common ledger.
+The hold/FIFO packet lifts move the bank but do not determine a booking tick
+set, so that stop remains.
 
 ## Protocol readout blockers
 
@@ -36,10 +44,10 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 | Ranked inputs | EP decision |
 | --- | --- |
-| G, T | Phase, requests and probe are named open controller fields in `ReceiverFields`. The localized receiver flag depends on the request field and is not yet enumerated. The hold/FIFO lifts do not determine booking ticks. |
-| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. `localizedPorts` places the live packet at one site and leaves the record stream at vacuum; the uniform control field is rejected by the occupancy check. General routing and writer attachment remain open. |
-| K, B, D | The uniform control receiver column is zero by equal arrivals; it is not one excitation. The localized receiver column is not yet computed. The record bit-visit column is separate. General tariffs remain open. |
-| J, Q, H, L | The localized embedding is one state family but its request field is still open. J, Q and L remain open. |
+| G, T | Phase, requests and probe are named open controller fields in `ReceiverFields`. Requests are retained and enumerated by their exchange pattern. The localized 43-tick sum is `patternSum (firingPattern either r) x0`; AND and OR differ exactly when those table entries differ (`localized_and_or_differ_iff`). The hold/FIFO lifts do not determine booking ticks. |
+| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. `localizedPorts` places the live packet at one site and leaves the record stream at vacuum; the uniform control field is rejected by the occupancy check. The localized receiver flag is computed by `receiver_flag_eq`; the record Toll remains a separate column. General routing and writer attachment remain open. |
+| K, B, D | The localized receiver sum is the `patternSum` table; the record bit-visit column is separate with no common ledger. General tariffs remain open. |
+| J, Q, H, L | The localized embedding has one state family; the request field is an enumerated input, not a selected history. J, Q and L remain open. |
 
 - **Heavy-label weight. [Certificate]** The isolated receiver trace gives
   zero registrations under both rules. The certified record columns colour
@@ -86,8 +94,9 @@ the missing rule that selects which lift visits are booked.
 
 ## Does the eight-candidate family now differ numerically?
 
-**Not established.** The only zero flag result in the tree is for the uniform
-control field, which puts the packet on all sites and both streams and is not
-one excitation. The localized one-excitation field has the correct occupancy,
-but its receiver flag depends on the retained request field and has not been
-enumerated.
+**It can, conditional on G.** The localized receiver trace registers zero when
+the exchange pattern is `000`; for every other exchange pattern the 43-tick
+sum is a positive entry of `patternSum` (`localizedSum43_eq_pattern`). AND and
+OR differ exactly when their exchange-pattern table entries differ
+(`localized_and_or_differ_iff`). This depends on the retained request field,
+which is the open controller input G; no request field or rule is selected.

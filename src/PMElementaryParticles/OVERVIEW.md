@@ -86,9 +86,23 @@ is vacuum. `localizedPorts_occupancy` gives one true bit when the packet is
 active and zero otherwise; `localized_occupancy_preserved` proves this is
 preserved by `RingReceiver.tick` under both rules. The phase, retained
 requests and probe bits are the open controller fields G/T, named in
-`ReceiverFields`. The localized receiver flag and its 43-tick sum are not yet
-computed; they depend on the retained requests. The receiver column and the
-record bit-visit column remain separate, with no certified common ledger.
+`ReceiverFields`.
+
+The requests are retained (`localized_requests_retained`). The localized port
+field has period 12 (`portStep_period_twelve`,
+`localized_ports_period_twelve`), so the 43-tick sum is three full periods
+plus seven ticks (`localizedSum43_eq`). The exact sum depends only on the
+exchange pattern (`localizedSum43_eq_pattern`), with table
+`patternSum` / `patternTable`. For pattern code 0…7 (q0 least significant,
+entries for x0 = 0,1,2): `000→0,0,0`; `100→14,14,15`; `010→15,14,14`;
+`110→43,21,22`; `001→14,15,14`; `101→21,22,43`; `011→22,43,21`;
+`111→43,43,43`. AND and OR differ exactly when their pattern-table entries
+differ (`localized_and_or_differ_iff`, `sumsDiffer`). Simultaneously rotating
+the packet site and the request field leaves the sum unchanged
+(`localizedSum43_rotate`), but for fixed requests the sum can depend on `x0`
+(`localizedSum43_x0_depends`). An inactive packet gives zero
+(`localizedSum43_inactive_zero`). The receiver column and the record
+bit-visit column remain separate, with no certified common ledger.
 
 The hold/FIFO packet lifts are not derived booking rules. `hold_cell_fixed`
 and `fifo_lift_differs` identify their bank actions, but neither determines a
@@ -101,8 +115,8 @@ The heavy record reference remains the certified two-element family
 
 `Values.TransportCandidates` keeps only the uniform control field. Its
 receiver column is zero by equal arrivals; it is not a one-excitation result.
-The localized occupancy is checked, while its receiver flag awaits the
-request-field enumeration. The record Toll is a separate column. The heavy
+The localized 43-tick sums are the `patternSum` table above, conditional on
+the exchange pattern from the retained request field. The record Toll is a separate column. The heavy
 reference, the static offset, and the wire-to-tier map remain explicit inputs.
 See
 [the e8p report](../../tools/e8p/README.md#ep-uniform-control).
