@@ -14,6 +14,11 @@ neutrino      0, 1, 2
 The per-tier mass/decay status is a provenance ledger, not a derivation.  A
 status records what the current library proves: `e8`, `comparison`, `partial`,
 `blocked`, `notModeled`, or `stable`.
+
+The isolated-excitation trace books a label Toll on a 43-tick receiver period.
+It carries no address-to-tier bit, so it does not replace this assignment.
+The tier sets stay premises; `wireTier` still takes the identification as an
+explicit input.
 -/
 
 noncomputable section

@@ -214,6 +214,43 @@ theorem traceHeavyToll_lepton (c : Candidate) (a : Fin 3) :
   obtain ⟨he, hd, -⟩ := IsolatedExcitation.heavyToll_lepton c.1 c.2.1 c.2.2 a
   exact ⟨he, hd⟩
 
+/-- The integer Toll values printed by `e8p`.  The theorem below identifies
+them with the trace-derived real values. -/
+def traceElectronTollNat (c : Candidate) : ℕ :=
+  if c.2.1 then (if c.1 then 44 else 2) else 1
+
+theorem traceElectronToll_eq_nat (c : Candidate) :
+    traceElectronToll c = traceElectronTollNat c := by
+  rw [traceElectronToll_cases]
+  unfold traceElectronTollNat
+  by_cases h2 : c.2.1
+  · by_cases h1 : c.1 <;> simp [h2, h1]
+  · simp [h2]
+
+def traceReceiverTollNat (c : Candidate) : ℕ :=
+  if c.2.1 then (if c.1 then 43 else 1) else 0
+
+theorem traceReceiverToll_eq_nat (c : Candidate) :
+    IsolatedExcitation.receiverToll c.1 c.2.1 c.2.2 = traceReceiverTollNat c := by
+  unfold IsolatedExcitation.receiverToll IsolatedExcitation.bookedCount traceReceiverTollNat
+  cases h1 : c.1 <;> cases h2 : c.2.1 <;> simp [h1, h2, PMTransport.Values.Delta_eq]
+
+/-- Down-label heavy Toll in the same integer form.  Colour adds one record
+visit; lepton adds two. -/
+def traceHeavyTollNat (c : Candidate) (reference : Bool) : ℕ :=
+  traceReceiverTollNat c + (if reference then 1 else 2)
+
+theorem traceHeavyToll_eq_nat (c : Candidate) (reference : Bool) (a : Fin 3) :
+    traceHeavyToll c reference a = traceHeavyTollNat c reference := by
+  unfold traceHeavyToll traceHeavyTollNat IsolatedExcitation.heavyToll
+  cases reference
+  · obtain ⟨-, hd, -⟩ := IsolatedExcitation.heavyToll_lepton c.1 c.2.1 c.2.2 a
+    rw [hd, traceReceiverToll_eq_nat]
+    simp [traceReceiverTollNat]
+  · obtain ⟨-, hd, -⟩ := IsolatedExcitation.heavyToll_colour c.1 c.2.1 c.2.2 a
+    rw [hd, traceReceiverToll_eq_nat]
+    simp [traceReceiverTollNat]
+
 /-- The trace does not select the heavy record reference.  Both columns are
 carried; this is the smallest certified family. -/
 def traceReferences : List Bool := [false, true]
