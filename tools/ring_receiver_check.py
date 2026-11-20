@@ -1,4 +1,4 @@
-"""Exact finite enumeration for PMTransport.RingReceiver, with orbit multiplicity."""
+"""Exact finite enumeration for PMKAutomaton.RingReceiver, with orbit multiplicity."""
 
 import argparse
 from collections import Counter

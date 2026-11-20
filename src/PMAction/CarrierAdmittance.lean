@@ -1,6 +1,6 @@
 import PMAction.ConfinedAxialCurrent
 import PMAction.ChiralityConvention
-import PMTransport.Machine.CarrierEvents
+import PMKAutomaton.Machine.CarrierEvents
 
 /-!
 # Carrier admittance on the wire: every conserving exchange is scalar on the reference

@@ -1,5 +1,5 @@
 import PMConstants.CarrierActions
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # Where the doublet sign lives, and why the wire cannot see it

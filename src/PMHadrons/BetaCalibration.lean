@@ -3,7 +3,7 @@ import PMHadrons.NeutronRate
 import PMElementaryParticles.MuonLifetime
 import PMSubstrate.E8Values
 import Mathlib.Tactic
-import PMTransport.Machine.CarrierVacuumSector
+import PMKAutomaton.Machine.CarrierVacuumSector
 
 /-! **Experimental/candidate module.** Not part of `certifiedMass`.
 

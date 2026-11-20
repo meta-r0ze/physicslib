@@ -1,5 +1,5 @@
 import PMAction.OrderRestoration
-import PMTransport.Machine.RootOrderComparison
+import PMKAutomaton.Machine.RootOrderComparison
 import PMFlavor.FlavourOrderComparison
 
 /-!

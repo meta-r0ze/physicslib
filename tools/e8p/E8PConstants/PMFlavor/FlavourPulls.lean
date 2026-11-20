@@ -1,11 +1,11 @@
 import PMFlavor.Values
-import PMTransport.Values
+import PMKAutomaton.Values
 
 /-!
 # The flavour measurement pulls (moved from the PMFlavor comparison leaf)
 
 The flavour values come from `PMFlavor.Values` (`vus`, `vcb`, `vub`, `pmnsSin2`, `q2`).
-The conditional serial rate ratios come from `PMTransport.Values`. The direct measurements
+The conditional serial rate ratios come from `PMKAutomaton.Values`. The direct measurements
 come from PDG 2024 / NuFIT 6.0 (PMNS: normal ordering, IC19 without SK-atm; with SK-atm
 `θ₂₃` is in the lower octant, `0.470`, and the model value `0.575` is `6σ` above it). (`vub`/`vcb` carry the convention's names; PMFlavor REVIEW item 0.)
 -/
@@ -75,9 +75,9 @@ theorem first_row_deficit_test :
 upper end of the first-row wall-leakage diagnostic in the Flavor review.
 The diagnostic uses the measured first-row deficit and its stated readout. -/
 theorem serial_rate_first_row_comparison :
-    (0.12 : ℝ) < PMTransport.Values.longSerialR ∧
-    (0.12 : ℝ) < PMTransport.Values.shortSerialR := by
-  rw [PMTransport.Values.longSerialR_eq, PMTransport.Values.shortSerialR_eq]
+    (0.12 : ℝ) < PMKAutomaton.Values.longSerialR ∧
+    (0.12 : ℝ) < PMKAutomaton.Values.shortSerialR := by
+  rw [PMKAutomaton.Values.longSerialR_eq, PMKAutomaton.Values.shortSerialR_eq]
   norm_num
 
 end E8PConstants.FlavourPulls

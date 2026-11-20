@@ -1,5 +1,5 @@
 import PMElementaryParticles.ControlledGluedRegister
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # Finite control of the direct heavy flip

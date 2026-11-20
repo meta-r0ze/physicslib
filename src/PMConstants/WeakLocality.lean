@@ -52,7 +52,7 @@ involution.
   payload would restore nothing the clock refresh had not.
 
 A sector refreshes an address only with its own events (or, for the abelian phase, riding on
-events that occur): that is what a repair is in `PMTransport.Machine.FactorRepair`.
+events that occur): that is what a repair is in `PMKAutomaton.Machine.FactorRepair`.
 -/
 
 namespace PMConstants.WeakLocality

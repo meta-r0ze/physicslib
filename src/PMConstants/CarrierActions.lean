@@ -1,5 +1,5 @@
 import PMConstants.CarrierRepresentation
-import PMTransport.Machine.CarrierResponse
+import PMKAutomaton.Machine.CarrierResponse
 
 /-! Actual finite carrier operations behind two representation columns.
 No continuous gauge group or clock-refresh assignment is inferred from the

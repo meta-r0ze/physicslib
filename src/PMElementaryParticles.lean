@@ -28,7 +28,7 @@ import PMElementaryParticles.QuarkMasses
 import PMElementaryParticles.ChargeProtocols
 import PMElementaryParticles.ProtocolInventory
 import PMElementaryParticles.RefreshMap
-import PMTransport.Interface
+import PMKAutomaton.Interface
 import PMElementaryParticles.DoubletSign
 import PMElementaryParticles.ProtocolReadout
 import PMElementaryParticles.CycleReadout

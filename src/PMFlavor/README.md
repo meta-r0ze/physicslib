@@ -80,7 +80,7 @@ label state.
 
 ## Build
 
-Lean 4.34.1, with sibling dependencies pinned through Lake. Library order: PMSubstrate → PMAction → PMConstants → PMTransport → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). PMFlavor comes after
+Lean 4.34.1, with sibling dependencies pinned through Lake. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). PMFlavor comes after
 PMElementaryParticles because a flavour change is the label change of an event that changes protocol.
 
 ```sh

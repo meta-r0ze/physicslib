@@ -1,7 +1,7 @@
 import PMAction.CoherentComparisonRepair
 import PMAction.DiagonalReadout
 import PMElementaryParticles.CommonComparator
-import PMTransport.Machine.CoherentGate
+import PMKAutomaton.Machine.CoherentGate
 
 /-!
 # Phase-to-record conversion by the certified comparator
@@ -22,7 +22,7 @@ noncomputable section
 namespace PMElementaryParticles.PhaseToRecord
 
 open PMAction
-open PMTransport
+open PMKAutomaton
 open PMAction.CoherentComparisonRepair
 open Matrix
 
@@ -68,11 +68,11 @@ theorem minus_probability (x : ℝ) :
 guard and the standard orthogonal basis values. -/
 noncomputable def outcomeWeight (flip : Bool) : ℝ :=
   LocalController.exchangeFlag (fun _ => flip) (false, true)
-    PMTransport.RingReceiver.basisValue
+    PMKAutomaton.RingReceiver.basisValue
 
 theorem outcomeWeight_true : outcomeWeight true = 1 := by
   unfold outcomeWeight LocalController.exchangeFlag
-  simp [PMTransport.RingReceiver.basisValue, LinkExpansion.nsq_eq,
+  simp [PMKAutomaton.RingReceiver.basisValue, LinkExpansion.nsq_eq,
     Fin.sum_univ_two, Pi.single_apply, Complex.normSq_apply]
 
 theorem outcomeWeight_false : outcomeWeight false = 0 := by

@@ -1,7 +1,7 @@
 import PMElementaryParticles.IsolatedReceiverTrace
 import PMElementaryParticles.HeavyFlipRecords
 import PMElementaryParticles.WireSchedule
-import PMTransport.Machine.NativeReferenceBackground
+import PMKAutomaton.Machine.NativeReferenceBackground
 
 /-!
 # Reference-background bit rings (candidate model for gap U)
@@ -29,8 +29,8 @@ open PMConstants.PacketGaugeActions
 open PMElementaryParticles.ProtocolInventory
 open PMElementaryParticles.HeavyFlipControl
 open PMElementaryParticles.WireSchedule
-open PMTransport
-open PMTransport.RingReceiver
+open PMKAutomaton
+open PMKAutomaton.RingReceiver
 open PMAction
 
 /-- Hamming distance of two 2-bit records. -/

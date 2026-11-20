@@ -1,5 +1,5 @@
 import PMFlavor.ReferenceSafeRestoration
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # Persistence selects a concrete required native repair

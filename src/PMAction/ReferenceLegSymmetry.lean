@@ -1,4 +1,4 @@
-import PMTransport.Machine.ReferenceSampling
+import PMKAutomaton.Machine.ReferenceSampling
 
 /-!
 # A reference-conditioned leg response cannot tell the two light classes apart

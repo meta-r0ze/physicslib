@@ -18,7 +18,7 @@ the reference (lepton) axis, as a shared axis label (`DressingInheritance`). The
 carrier vectors as spacetime displacements, which the library does not hold: a carrier label is not a
 site (`PMConstants.WeakLocality`). They are kept as the strongest case; `placement_invisible` and
 `node_denominator_real` do not depend on them, and with the library's weaker premise there is no
-placement in time to vary at all. In the doubled coordinates of `PMTransport.Machine.CarrierEvents` a `D₄`
+placement in time to vary at all. In the doubled coordinates of `PMKAutomaton.Machine.CarrierEvents` a `D₄`
 root one tick forward is `(2, ±2, 0, 0)` up to spatial permutation, an axis move of the walk, so one
 tick is `2` units on axis `0`. Then (`ExchangeAxis`):
 * vector-class carriers: `6` are equal-time axis displacements (`vector_free`), `2` are pure ticks

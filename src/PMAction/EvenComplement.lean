@@ -1,4 +1,4 @@
-import PMTransport.Machine.CarrierVacuumSector
+import PMKAutomaton.Machine.CarrierVacuumSector
 
 /-!
 # The even complement: the native wall gates are not conservative there

@@ -1,7 +1,7 @@
 import PMConstants.ChannelOccupancy
 import PMConstants.ReferenceLink
 import PMElementaryParticles.GappedGluedCrossing
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # The occupied light projection from the packet gauge action

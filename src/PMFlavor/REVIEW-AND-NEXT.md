@@ -96,17 +96,17 @@ numbers needs this table next to them.
 
 ## First-row wall leakage
 
-Close the row in dependency order. The PMTransport and PMFlavor operator work
+Close the row in dependency order. The PMKAutomaton and PMFlavor operator work
 can proceed independently. The physical channel sum uses the resulting
 external modes and current.
 
-1. **PMTransport.** Derive the native clock ratio `r = K_f/|y|` from the selected
+1. **PMKAutomaton.** Derive the native clock ratio `r = K_f/|y|` from the selected
    crossing and flip schedule in common time units. Check whether the actual
    generator has the off-diagonal rest form used for chiral pairing. The
    native one-wall lazy offset breaks that grading symmetry about any common energy.
    Glued support and stationarity still admit every positive ratio
    (`WallGapCalibration.arbitrary_cyclic_ratio`).
-   [Clock work](../PMTransport/REVIEW-AND-NEXT.md#absolute-event-clock)
+   [Clock work](../PMKAutomaton/REVIEW-AND-NEXT.md#absolute-event-clock)
 2. **PMElementaryParticles (done).** The parent is the light mass
    eigenstate, the daughters are the light modes, and the gapped modes are
    closed channels by the spectrum's order (gap above the light band).

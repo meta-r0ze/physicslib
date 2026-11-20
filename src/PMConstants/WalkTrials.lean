@@ -1,5 +1,5 @@
-import PMTransport.Machine.WalkReferenceProtocol
-import PMTransport.Machine.WalkReferenceCycle
+import PMKAutomaton.Machine.WalkReferenceProtocol
+import PMKAutomaton.Machine.WalkReferenceCycle
 import PMConstants.BudgetReadout
 
 /-!

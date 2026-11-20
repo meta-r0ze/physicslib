@@ -1,5 +1,5 @@
 import PMAction.OrderComparison
-import PMTransport.Machine.ReferenceSampling
+import PMKAutomaton.Machine.ReferenceSampling
 
 /-!
 # Exact restoration fixes the endpoint comparison response

@@ -1,5 +1,5 @@
 import PMElementaryParticles.HeavyFlipControl
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # Native parity, address and clock obstructions for the heavy flip

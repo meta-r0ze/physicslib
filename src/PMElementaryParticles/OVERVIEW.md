@@ -6,19 +6,19 @@ The single map of what Paper V proves and what later work can reuse. Open work i
 in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in
 [`README.md`](README.md). Sources are under `PMElementaryParticles/`, imported by `PMElementaryParticles.lean`.
 Theorem names are entry points, not exhaustive lists; the Lean source is ground
-truth. Library order: PMSubstrate → PMAction → PMConstants → PMTransport → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). This folder imports nothing from PMFlavor.
+truth. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). This folder imports nothing from PMFlavor.
 
 For the remaining physical inputs, see the [EP protocol blockers](REVIEW-AND-NEXT.md#protocol-readout-blockers).
-The transport laws are exposed by the [conditional interface](../PMTransport/COMPONENTS.md#transport-closeout).
+The transport laws are exposed by the [conditional interface](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
 
 ## EP persistence rebuild — structure
 
-1. **Machine EP uses.** The certified machine is Transport's conditional
-   interface: `PMTransport.Interface` for operations and
-   `PMTransport.Values` for conditional rates. The isolated-excitation sector
+1. **Machine EP uses.** The certified machine is KAutomaton's conditional
+   interface: `PMKAutomaton.Interface` for operations and
+   `PMKAutomaton.Values` for conditional rates. The isolated-excitation sector
    is `IsolatedExcitation`/`IsolatedReceiverTrace`; the bit-ring machine is
    `RecordPortIdentification`; the phase-to-record converter and coin are
-   `PhaseToRecord` and `CommonComparator`. Transport keeps T, L, B, D, J, Q
+   `PhaseToRecord` and `CommonComparator`. KAutomaton keeps T, L, B, D, J, Q
    and the tariff unit as named machine inputs.
 2. **Protocol definition.** `Protocol.Protocol` is finite data: one of the 16
    labels, a reference record, one firing pattern per record bit on the 3-ring,
@@ -199,12 +199,12 @@ lifetimes in seconds, with their bounds. Prove a bound there once rather than in
 Shared units and couplings used by every level are in `SharedUnits` (`me`, `ħc`, `α`, `α⁻¹`,
 their bounds, and `G_F` in `m_e⁻²`).
 
-## Transport dependence of EP results
+## KAutomaton dependence of EP results
 
 **[Premise]** marks an identification, circuit choice or population
 that is supplied. Each certificate applies on its explicit inputs.
 
-| EP result | Transport inputs | Where the input enters |
+| EP result | KAutomaton inputs | Where the input enters |
 | --- | --- | --- |
 | Admitted serial route and periods | G, T, L, O, Q, J | `WireSchedule.Premises` and the admitted placements supply clock calibration, route, occupancy, renewal and shared jobs. [Premise] The schedule is a serial template. |
 | Heavy guard, bank and readout | G, U, W, O, Q, T | `HeavyFlipControl`, `ElectricCompanionBank` and `ElectricChiralKick` give conditional maps on a supplied seed, record, support and phase. [Premise] The physical heavy branch reads that record. |
@@ -214,10 +214,10 @@ that is supplied. Each certificate applies on its explicit inputs.
 | Tier and species masses | G, U, O, T, L, K | `TierLedger.wireTier` takes the address-to-tier assignment. [Premise] The legacy lists and the named formulas in `QuarkMasses` and `LeptonMasses` are ledger identifications. Their E8 arithmetic is checked. |
 | Decay and subsequent current readout | U, W, G, T, O | The decay theorems on supplied on-shell states, current and support are conditional. [Premise] A physical association of the wave and species requires its admitted trace. |
 
-### Public Transport imports
+### Public KAutomaton imports
 
-EP imports only `PMTransport.Interface` and `PMTransport.Values`
-from Transport. Nine Machine import statements across seven
+EP imports only `PMKAutomaton.Interface` and `PMKAutomaton.Values`
+from KAutomaton. Nine Machine import statements across seven
 files were consolidated. The added aliases under `Interface.Wire` are:
 
 | Section | Exports |
@@ -259,15 +259,15 @@ identity `linkFlag`; `CommonComparator.flag_eq_stateFlag` makes the electric
 flag the unit-phase `stateFlag`. EP's exact record bits are
 `DiagonalReadout.flag` values (`ElectricHeavyRecord`, `bitToll_eq_hamming`).
 The factor-two normalization remains, so this is not a certified identification;
-gap U stays open. Transport W and G are now certified and removed from its open
+gap U stays open. KAutomaton W and G are now certified and removed from its open
 ranking.
 
 **EP protocol layer.** `IsolatedReceiverTrace` and
-`RecordPortIdentification` are EP protocol work running on the Transport
-machine; they are not Transport results. EP now owns the retained request field
+`RecordPortIdentification` are EP protocol work running on the KAutomaton
+machine; they are not KAutomaton results. EP now owns the retained request field
 and firing pattern G, the excitation occupancy and reference-record choice O,
 the label record/reference/theta part of U, which label record W reads, the
-label Toll/paid-event part of K, and the history/prior family H. Transport keeps
+label Toll/paid-event part of K, and the history/prior family H. KAutomaton keeps
 the common comparator, receiver-flag computation, tariff unit, links, boundary,
 clock and job mechanics. The label dependence is certified by
 `bitToll_eq_hamming`, `refRecord`, `bitRingTotal43_eq` and `firingPattern`.
@@ -424,7 +424,7 @@ request fields, both rules and all `x0`. The n=4 full 43-tick decide exceeded
 `localizedSumN_four_zero_iff_empty` is still certified. These are
 registration counts, not masses or tiers.
 
-**Label constraints (Step 3).** No certified EP or Transport result states
+**Label constraints (Step 3).** No certified EP or KAutomaton result states
 that a packet with a given label needs at least k *receiver* registrations.
 The available requirements are in other ledgers: `EventRequirements.massive_flag`,
 `DiagonalReadout.state_flag`, `ElectricHeavyRecord.phase_position` /
@@ -434,7 +434,7 @@ bits, readout flags or endpoint distinctions. The missing link is a certified
 map from a label's record/readout requirement to `RingReceiver.receiverFlag`.
 No such link is created here.
 
-No certified Transport result forces the retained request field to be the
+No certified KAutomaton result forces the retained request field to be the
 same at every site. `HomogeneousRouting.equivariant_is_translation` constrains
 the routing permutation, not the retained requests; `LocalController.radius_one`
 states local dependence. Homogeneous requests are therefore a named hypothesis
@@ -843,7 +843,7 @@ work still decide the polarity.
 
 Open premises.
 
-- Supply and renew the occupied seed, admit the joint current, controlled phases and crossing, and schedule the two wall insertions. Retain reset or export in the record trace. See the [clock ledger](../PMTransport/CLOCK.md).
+- Supply and renew the occupied seed, admit the joint current, controlled phases and crossing, and schedule the two wall insertions. Retain reset or export in the record trace. See the [clock ledger](../PMKAutomaton/CLOCK.md).
 - Derive the event and tariff. Choose which visits register, which polarity persists, and how the displacement and preparation prices enter. For a price on the node rather than the direct flip, use `node_toll_raises_heavy`.
 - The half-period and node-phase diagnostics suggest competing scores. Their selected cadence and paid visits remain open.
 

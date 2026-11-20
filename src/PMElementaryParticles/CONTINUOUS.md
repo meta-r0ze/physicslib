@@ -14,7 +14,7 @@ physics is large compared with the spacing, and as a bound that every discrete s
 * When a process is only a few sites wide, the sum is not close to an integral. Then we use
   the sum.
 
-The choice needs a certified support and scale separation. See the [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout) for the distinction between an operation and its admitted path.
+The choice needs a certified support and scale separation. See the [conditional KAutomaton interface](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout) for the distinction between an operation and its admitted path.
 
 ## Rule 1: a persistent volume has walls
 

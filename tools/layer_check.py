@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Where PMTransport.Machine actually sits in the import graph.
+"""Where PMKAutomaton.Machine actually sits in the import graph.
 
-Prints the lower layer the machine needs: every PMTransport.Machine module plus every
+Prints the lower layer the machine needs: every PMKAutomaton.Machine module plus every
 PMAction (or other) module imported, transitively, by one of them. A clean split
 "machine below PMAction" needs that whole set below the rest of PMAction. Also lists the
 machine modules that depend on no PMAction module at all.
@@ -14,7 +14,7 @@ mods = {}
 for f in glob.glob(src + "/**/*.lean", recursive=True):
     m = os.path.relpath(f, src)[:-5].replace(os.sep, ".")
     mods[m] = re.findall(r"^import\s+([\w.]+)", open(f).read(), re.M)
-mach = {m for m in mods if m.startswith("PMTransport.Machine.")}
+mach = {m for m in mods if m.startswith("PMKAutomaton.Machine.")}
 lower, stack = set(mach), list(mach)
 while stack:
     for i in mods.get(stack.pop(), []):
@@ -33,7 +33,7 @@ above = sorted(m for m in allA if m not in lower and any(i in mach for i in mods
 print(f"machine modules: {len(mach)}; with no PMAction dependency: {len(free)}")
 print(f"PMAction modules below the machine: {len(action)} of {len(allA)}")
 print(f"PMAction modules above the machine (import it, not imported by it): {len(above)}")
-other = sorted(m for m in lower if not m.startswith(("PMAction", "PMTransport.Machine")))
+other = sorted(m for m in lower if not m.startswith(("PMAction", "PMKAutomaton.Machine")))
 print(f"other modules below the machine: {other or 'none'}")
 if "--list" in sys.argv:
     print("\n# machine with no PMAction dependency"); print("\n".join(free))

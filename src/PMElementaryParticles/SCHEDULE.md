@@ -2,7 +2,7 @@
 
 ## Admissible candidates
 
-[Clock ledger](../PMTransport/CLOCK.md) records the available words.
+[Clock ledger](../PMKAutomaton/CLOCK.md) records the available words.
 [Generations](GENERATIONS.md) records their address and label support.
 `WireSchedule.family` enumerates a bounded, serial, fresh-record
 template for one cycle at a supplied glue address. A candidate stores a
@@ -128,7 +128,7 @@ the live stream. It must say what counts as a writer visit and
 which ensemble of visits enters the cost. The reference supply
 law cannot replace it.
 
-The [Transport closeout](../PMTransport/COMPONENTS.md#transport-closeout)
+The [KAutomaton closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout)
 identifies the scope of tagged symmetry, mixed-input differences
 and the conditional rates. O supplies the writer population and H
 its prior. G, U and W attach the writer to a clocked operation on
@@ -226,7 +226,7 @@ is one event. Later record shifts have their own price.
 | Seed loading and bank preparation | A supplied first-wall odd rest seed gives one unit of incoming reference population per visit (`OddReferenceSource.odd_seed_train_restores`). The companion setup gives active and static flag sums 1/2 and 3/4, with mean 5/8 at equal wall weights (`ElectricCompanionSetupToll.primitive_setup_sum`, `equal_slot_setup_sum`). | The same conditional budgets apply if this writer uses that seed and setup. Seed supply, loading admission, visits and which flags are paid remain open for both references. Population is a supply requirement. The inverse decoder's preparation instead gives one flag on its supplied seed (`ElectricPrimitiveToll.preparation_flags`). |
 | Writer pulse control | The exhibited two-bit root writer has factor budget `1 + T_colour/2` per visited input (`ElectricHeavyRecord.pulse_flags`, `two_bit_factor_toll`). | The complemented sector flag gives `1 + T_lepton/2` under the same writer contract (`WireReferenceCost.factorFlagToll_eq`). Use the factor ledger in place of the output-bit ledger. Joint coupling, scheduling and physical pricing of the visits remain open. |
 | Primitive decoder and current alternatives | `ElectricPrimitiveToll.primitive_decoder_flags` and `forward_tolls` account for the alternate short decoder. `ElectricChiralKick.swapped_exposure_toll` and `total_tolls` include its current kicks and intervening swap. | These are other writer circuits. They supply no marginal polarity price for the two-bit word. Both references still need a physical pulse tariff and actual allocation of the selected program. |
-| Export | `OpenHandoff.export_trace` puts one displaced live value from each exchange in a distinct downstream record slot. `sum_exported` gives the same sum of populations at the export slots as on those incoming live states. | The same identity holds for lepton and any supplied record train. Transport of unit-population inputs thus reserves one unit per routed value. It does not price the shift or identify the two-bit record with one or two open routes. Those encodings, visits and tariffs remain open. |
+| Export | `OpenHandoff.export_trace` puts one displaced live value from each exchange in a distinct downstream record slot. `sum_exported` gives the same sum of populations at the export slots as on those incoming live states. | The same identity holds for lepton and any supplied record train. KAutomaton of unit-population inputs thus reserves one unit per routed value. It does not price the shift or identify the two-bit record with one or two open routes. Those encodings, visits and tariffs remain open. |
 | Reset and reuse | `OpenHandoff.balanced_basis_repair_flag` gives a flag of 0 for a clean zero and 1/2 for an orthogonal written one, with equal input populations and a fresh zero. It includes a unit phase on the marked port. | The same swap would price each independently encoded and separately paid bit at half its output flag for lepton. This would add `T_ref/2` for two such resets for either reference. The actual writer-to-receiver encoding, reference renewal, any inverse uncompute and any later reuse tariff remain open. |
 | Maintenance sharing | With L in the reserved cell, the colour refresh's reference sits in the payload (`ColourReference.colour_reference_in_payload`). Its twelve payload obligations have cost `12η` in the baseline allocation model (`colour_ledger_minimal`). | `SharedReference.shared` gives one reserved type for weak and hypercharge. `ReferenceEconomy.economy_selects_lepton` picks L under colour preservation and its allocation model. `reads_reserved` treats the reserved cell as paid. This is baseline sharing. Neither reference has a proof that the heavy writer uses the same paid jobs at its required state and time. |
 
@@ -286,7 +286,7 @@ replacement threshold `B − (E_C − E_L)`, with output flag threshold
 `B` and booked erase counts per input `E_C` and `E_L`. Equal erase
 counts leave `B`. The tagged receiver train does not supply the
 difference between the two writer counts. See the
-[boundary stopping point](../PMTransport/PREMISES.md#stopping-point).
+[boundary stopping point](../PMKAutomaton/PREMISES.md#stopping-point).
 
 | Common sampling policy | Output-bit gap `G` | Conditional reset contribution to `ΔR` | Colour wins with output flags and those resets if |
 | --- | ---: | ---: | ---: |
@@ -296,14 +296,14 @@ difference between the two writer counts. See the
 
 Without that reset premise the output-bit thresholds for the full
 `ΔR` remain 1/2, 9/16 and 3/5, respectively
-(`packet_record_difference`). `PMTransport.Values` gives both sets of
+(`packet_record_difference`). `PMKAutomaton.Values` gives both sets of
 thresholds. The packet identities are `packet_record_difference_eq_values`
 and `balanced_reset_gap_eq_values`. For any common booked population,
 `booked_balanced_reset_difference` gives
 `U + (3/2)(M_colourless − M_coloured)` under the separate balanced
-resets. See Transport's
-[Admission](../PMTransport/PREMISES.md#admission) and
-[Registration tariff](../PMTransport/PREMISES.md#registration-tariff).
+resets. See KAutomaton's
+[Admission](../PMKAutomaton/PREMISES.md#admission) and
+[Registration tariff](../PMKAutomaton/PREMISES.md#registration-tariff).
 The factor-pulse ledger by itself
 has gap `G/2` (`factor_flag_difference`). If the two reset
 comparisons are additionally paid and distinct from the writer
@@ -345,7 +345,7 @@ There is no physically identified minimizer to evaluate.
 | Enter the reference class, address 1 | 36 ticks plus entry, exit and records. One period requires all added elapsed work to fit seven ticks. | At least 88 ticks before node and records, so at least three periods. |
 | Leave the reference class, address 2 | The same 36-tick subtotal. Add the node, records, two matched tests and the offset when running that candidate. | The same 88-tick subtotal and three-period lower bound, before the added events. |
 
-These are the conditional [clock bounds](../PMTransport/CLOCK.md#periods-per-route).
+These are the conditional [clock bounds](../PMKAutomaton/CLOCK.md#periods-per-route).
 They assume one gapped word and one beta word on each beta-driven wall.
 A separate class-changing crossing adds twelve quarter-times. The
 logical record counts agree for electron, up and down in this template.

@@ -1,6 +1,6 @@
 import PMElementaryParticles.CompanionHeavyFlip
 import PMElementaryParticles.ElectricChiralKick
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # Triality preparation of the companion's electric bank
@@ -20,8 +20,8 @@ namespace PMElementaryParticles.ElectricCompanionBank
 open Matrix PMAction CarrierEvents
 open PMConstants.PacketGaugeActions
 
-open PMTransport.CarrierTriality
-export PMTransport.CarrierTriality
+open PMKAutomaton.CarrierTriality
+export PMKAutomaton.CarrierTriality
   (carrierTriality trialityMatrix triality_unitary triality_observed diagonalRoot glued_triality_step)
 
 def seed : Fin 4 → ℂ := Pi.single 0 1

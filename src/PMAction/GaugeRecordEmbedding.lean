@@ -1,4 +1,4 @@
-import PMTransport.Machine.WalkReferenceCoupling
+import PMKAutomaton.Machine.WalkReferenceCoupling
 
 /-!
 # Gauge-compatible record modes with a separate payload index

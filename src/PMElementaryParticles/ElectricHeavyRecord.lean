@@ -1,6 +1,6 @@
 import PMElementaryParticles.HeavyFlipRecords
 import PMConstants.ReferenceRestoration
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # Two exact record visits from the packet's electric generator

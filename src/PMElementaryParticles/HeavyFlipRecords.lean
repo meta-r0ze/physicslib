@@ -1,6 +1,6 @@
 import PMElementaryParticles.EventRequirements
 import PMElementaryParticles.HeavyFlipControl
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-!
 # Both-wall hypercharge records on the heavy flip

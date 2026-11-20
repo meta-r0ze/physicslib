@@ -195,7 +195,7 @@ pair at the moment it annihilates?** The pillar view also shows why the earlier 
 they cut the cone (Margin) or the survivors (Governor), the two pillars the kaon shares with the
 pion.
 
-**What `PMTransport/Machine` says about the register (Nov 2026).** `IndependentRegisters` builds an
+**What `PMKAutomaton/Machine` says about the register (Nov 2026).** `IndependentRegisters` builds an
 internal label as a separate occupied register bank: the configuration is a product, relabelling
 one bank leaves the other untouched (`left_untouched`, `right_untouched`), the two updates
 commute (`updates_commute`), and the readout is the tensor product (`tensor_observed`).

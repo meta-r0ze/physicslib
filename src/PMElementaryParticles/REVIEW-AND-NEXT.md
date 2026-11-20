@@ -1,7 +1,7 @@
 # PMElementaryParticles — open work
 
 **Rebuild plan.** EP is being rebuilt from persistence on the certified
-Transport machine. Order: (1) machine EP uses; (2) finite `Protocol`;
+KAutomaton machine. Order: (1) machine EP uses; (2) finite `Protocol`;
 (3) six pillar predicates from `PersistenceMechanics.Requirements`;
 (4) complete finite enumeration; (5) legacy audit. Current status:
 `Protocol`, its complete finite family, and the weakest pillar predicates are
@@ -245,7 +245,7 @@ identification closes for all phases; no new unitary was defined.
 
 ## Common comparator (Task J)
 
-Transport W and G are certified and removed from its open ranking:
+KAutomaton W and G are certified and removed from its open ranking:
 `receiver_flag_eq` and `localized_period_registrations_eq`; `RingReceiver.tick`
 and `receiver_flag_eq`.
 
@@ -262,18 +262,18 @@ remains; this is not a certified identification and gap U stays open.
 ## EP protocol ownership
 
 `IsolatedReceiverTrace` and `RecordPortIdentification` are EP protocol work that
-use the Transport machine. EP owns the protocol inputs: retained request field
+use the KAutomaton machine. EP owns the protocol inputs: retained request field
 and firing pattern G, excitation occupancy and reference-record choice O, the
 label record/reference/theta part of U, which label record W reads, the label
 Toll/paid-event part of K, and the history/prior family H. The certified label
 dependence is `bitToll_eq_hamming`, `refRecord`, `bitRingTotal43_eq` and
-`firingPattern`. Transport retains the common comparator, receiver-flag
+`firingPattern`. KAutomaton retains the common comparator, receiver-flag
 computation, tariff unit, links, boundary, clock and job mechanics.
 
 ## Protocol readout blockers
 
-EP inherits a [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout).
-Its open inputs follow the [Transport ranking](../PMTransport/COMPONENTS.md#remaining-free-inputs-by-reach).
+EP inherits a [conditional KAutomaton interface](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
+Its open inputs follow the [KAutomaton ranking](../PMKAutomaton/COMPONENTS.md#remaining-free-inputs-by-reach).
 The supplied source, operation, read and cost must refer to the same trace.
 
 | Ranked inputs | EP decision |
@@ -322,10 +322,10 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 ## Rebuild closeout and next priority
 
-**Certified machine.** Transport is closed on its conditional interface;
+**Certified machine.** KAutomaton is closed on its conditional interface;
 receiver flags, guard table, record bookkeeping, bit-ring sums, native
 stationarity bridge, phase-to-record converter, and the coherent coin are
-certified. Transport's remaining named machine inputs are T, L, B, D, J, Q and
+certified. KAutomaton's remaining named machine inputs are T, L, B, D, J, Q and
 the tariff unit.
 
 **EP protocol layer.** `Protocol.Protocol` is finite: 16 labels × 2 references

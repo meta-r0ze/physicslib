@@ -8,7 +8,7 @@ import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.WireReferenceCost
 import PMElementaryParticles.IsolatedReceiverTrace
 import PMElementaryParticles.TierLedger
-import PMTransport.Values
+import PMKAutomaton.Values
 
 /-!
 # PMElementaryParticles canonical values
@@ -59,7 +59,7 @@ export PMElementaryParticles.QuarkMasses
   (up down strange charm bottom top up_value down_value strange_value charm_value bottom_value
     top_value)
 
-/-! ## Finite Transport witness family
+/-! ## Finite KAutomaton witness family
 
 These eight rows index the hold/FIFO, AND/OR and placement witnesses.
 They do not enumerate all possible physical EP updates. The first two
@@ -86,8 +86,8 @@ theorem candidates_complete : ∀ c : Candidate, c ∈ candidates := by
 theorem candidates_count : candidates.length = 8 ∧ candidates.Nodup := by
   decide +kernel
 
-def phases (c : Candidate) : Fin PMTransport.Values.Delta × Fin PMTransport.Values.Delta :=
-  PMTransport.Values.excursionSlots c.2.2
+def phases (c : Candidate) : Fin PMKAutomaton.Values.Delta × Fin PMKAutomaton.Values.Delta :=
+  PMKAutomaton.Values.excursionSlots c.2.2
 
 /-- Unit comparison registrations per tick at site zero if the mixed
 basis input is supplied and all visits are booked. This is a receiver
@@ -96,8 +96,8 @@ def allBookedMixedRate (c : Candidate) : ℕ := if c.2.1 then 1 else 0
 
 theorem allBookedMixedRate_eq (c : Candidate) :
     (allBookedMixedRate c : ℝ) =
-      PMTransport.Values.mixedReceiverRate c.2.1 (fun _ => true) := by
-  rw [PMTransport.Values.mixedReceiverRate_all_booked]
+      PMKAutomaton.Values.mixedReceiverRate c.2.1 (fun _ => true) := by
+  rw [PMKAutomaton.Values.mixedReceiverRate_all_booked]
   by_cases h : c.2.1 <;> simp [allBookedMixedRate, h]
 
 /-- The common input measures the writer's booked population. The reset

@@ -1,5 +1,5 @@
 import PMAction.ClassBlindFlip
-import PMTransport.Machine.CarrierVacuumSector
+import PMKAutomaton.Machine.CarrierVacuumSector
 import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 
 /-!

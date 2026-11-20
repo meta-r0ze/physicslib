@@ -1,5 +1,5 @@
 import PMAction.CarrierGateCompletion
-import PMTransport.Machine.OrthogonalRootPhase
+import PMKAutomaton.Machine.OrthogonalRootPhase
 import PMAction.StateIdentification
 
 /-!

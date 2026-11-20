@@ -1,4 +1,4 @@
-import PMTransport.Interface
+import PMKAutomaton.Interface
 import PMElementaryParticles.ProtocolInventory
 import PMConstants.ChannelOccupancy
 import PMConstants.SectorLinks

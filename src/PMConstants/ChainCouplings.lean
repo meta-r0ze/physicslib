@@ -1,5 +1,5 @@
 import PMAction.EventCoupling
-import PMTransport.Machine.SummedReference
+import PMKAutomaton.Machine.SummedReference
 import PMConstants.ReferenceStiffness
 import PMConstants.EventStiffness
 

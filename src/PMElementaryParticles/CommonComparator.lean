@@ -1,5 +1,5 @@
 import PMAction.DiagonalReadout
-import PMTransport.LocalController
+import PMKAutomaton.LocalController
 import PMElementaryParticles.RecordPortIdentification
 
 /-!
@@ -20,7 +20,7 @@ noncomputable section
 namespace PMElementaryParticles.CommonComparator
 
 open PMConstants.PacketGaugeActions
-open PMTransport LocalController
+open PMKAutomaton LocalController
 open PMAction
 
 /-- Receiver comparison is twice the identity link flag. -/

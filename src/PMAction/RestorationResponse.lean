@@ -1,4 +1,4 @@
-import PMTransport.Machine.CoherentRecordRestoration
+import PMKAutomaton.Machine.CoherentRecordRestoration
 import PMAction.ControllerHamiltonian
 
 /-!

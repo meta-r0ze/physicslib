@@ -1,4 +1,4 @@
-import PMTransport.Machine.InterferenceReadout
+import PMKAutomaton.Machine.InterferenceReadout
 import PMAction.LinkEvolution
 import PMAction.TollAmplitude
 import PMAction.CommonResponse

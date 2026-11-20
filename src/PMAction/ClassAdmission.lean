@@ -1,4 +1,4 @@
-import PMTransport.Machine.CarrierClassBundle
+import PMKAutomaton.Machine.CarrierClassBundle
 
 /-!
 # All three glue classes are admitted

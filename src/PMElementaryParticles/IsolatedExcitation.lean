@@ -1,12 +1,12 @@
-import PMTransport.Interface
-import PMTransport.Values
+import PMKAutomaton.Interface
+import PMKAutomaton.Values
 import PMElementaryParticles.ProtocolInventory
 
 /-!
 # The isolated-excitation sector and its clocked trace
 
 A mass is a property of one isolated excitation on the vacuum.  The import
-surface is still `PMTransport.Interface` and `PMTransport.Values`; the
+surface is still `PMKAutomaton.Interface` and `PMKAutomaton.Values`; the
 transitive names of the machine are used only to state the existing
 acceptance, supply and stationary-background results.
 
@@ -39,20 +39,20 @@ the carrier factor of the E8 vacuum.  There are twelve such modes (three
 carriers, two walls, two rest axes); `vacuum_nonunique` records that no
 single one is selected by stationarity. -/
 def vacuumMode (c : Fin 3) (wall record : Bool) : VacuumLabel c → ℂ :=
-  PMTransport.OddReferenceSource.restMode c wall record
+  PMKAutomaton.OddReferenceSource.restMode c wall record
 
 theorem vacuum_stationary (c : Fin 3) (wall record : Bool) (p : ℝ)
     (hp : 0 < p) (hp' : p < 1 / 2) :
     (PMAction.NativeSector.nativeHamiltonian c p 0 0) *ᵥ vacuumMode c wall record = 0 :=
-  PMTransport.OddReferenceSource.rest_stationary c wall record p hp hp'
+  PMKAutomaton.OddReferenceSource.rest_stationary c wall record p hp hp'
 
 theorem vacuum_population (c : Fin 3) (wall record : Bool) :
     CommonResponse.nsq (vacuumMode c wall record) = 1 :=
-  PMTransport.OddReferenceSource.rest_population c wall record
+  PMKAutomaton.OddReferenceSource.rest_population c wall record
 
 theorem vacuum_nonunique (c : Fin 3) (wall : Bool) :
     vacuumMode c wall false ≠ vacuumMode c wall true :=
-  PMTransport.OddReferenceSource.rest_modes_distinct c wall
+  PMKAutomaton.OddReferenceSource.rest_modes_distinct c wall
 
 /-- The stationary two-stream background supplying the reference at every
 site.  Its value is the supplied reference `r`; the family is not a
@@ -105,7 +105,7 @@ theorem occupiedInput_admitted (c : Fin 3) (vacuum : VacuumLabel c) (packet : Pa
 
 /-- Reference supply: if the incoming record cells carry the packet label and
 the retained orbit is open, every receiver visit reads that label.  This is
-`RecordSupply.clean_supply`, exported through the Transport interface. -/
+`RecordSupply.clean_supply`, exported through the KAutomaton interface. -/
 theorem occupiedInput_supply {X : Type*} [DecidableEq X] (o : X)
     (e : Equiv.Perm X) (s : X → Channels × Channels) (packet : PacketLabel) (T : ℕ)
     (hclean : ∀ m, 1 ≤ m → m ≤ T → (s ((e ^ m) o)).2 = packet)
@@ -117,10 +117,10 @@ theorem occupiedInput_supply {X : Type*} [DecidableEq X] (o : X)
 /-- Any acceptance rule on the retained route factors through the supplied
 upstream records.  This is the existing `acceptance_iff_supply`, used here
 to certify that the isolated packet is the accepted input of the trace. -/
-theorem occupiedInput_acceptance {V : Type*} (s : PMTransport.OpenHandoff.State V)
+theorem occupiedInput_acceptance {V : Type*} (s : PMKAutomaton.OpenHandoff.State V)
     (accepts : V → Prop) (N : ℕ) :
-    (∀ j : Fin N, accepts (PMTransport.OpenHandoff.run s (j.val + 1) 0).1) ↔
+    (∀ j : Fin N, accepts (PMKAutomaton.OpenHandoff.run s (j.val + 1) 0).1) ↔
       (∀ j : Fin N, accepts (s (j.val + 1 : ℤ)).2) :=
-  PMTransport.OpenHandoff.acceptance_iff_supply s accepts N
+  PMKAutomaton.OpenHandoff.acceptance_iff_supply s accepts N
 
 end PMElementaryParticles.IsolatedExcitation

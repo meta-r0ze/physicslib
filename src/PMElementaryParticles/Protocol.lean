@@ -27,8 +27,8 @@ set_option maxRecDepth 10000
 namespace PMElementaryParticles.Protocol
 
 open PMConstants.PacketGaugeActions
-open PMTransport
-open PMTransport.RingReceiver
+open PMKAutomaton
+open PMKAutomaton.RingReceiver
 open PMElementaryParticles.IsolatedExcitation
 open PMElementaryParticles.HeavyFlipControl
 

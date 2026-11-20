@@ -2,7 +2,7 @@ name = "physicslib"
 version = "0.1.0"
 defaultTargets = [
   "PersistenceMechanics", "PMSubstrate", "PMAction", "PMConstants",
-  "PMTransport", "PMElementaryParticles", "PMFlavor", "PMHadrons", "PMAtoms", "PMCosmology",
+  "PMKAutomaton", "PMElementaryParticles", "PMFlavor", "PMHadrons", "PMAtoms", "PMCosmology",
   "CN1", "ELEM", "Classification"
 ]
 
@@ -25,7 +25,7 @@ globs = ["PMSubstrate", "PMSubstrate.Research.+"]
 name = "PMAction"
 srcDir = "src"
 # The native machine shares lower-level proofs with PMAction.
-globs = ["PMAction", "PMAction.+", "PMTransport.Machine", "PMTransport.Machine.+"]
+globs = ["PMAction", "PMAction.+", "PMKAutomaton.Machine", "PMKAutomaton.Machine.+"]
 
 [[lean_lib]]
 name = "PMConstants"
@@ -33,10 +33,10 @@ srcDir = "src"
 globs = ["PMConstants", "PMConstants.+"]
 
 [[lean_lib]]
-name = "PMTransport"
+name = "PMKAutomaton"
 srcDir = "src"
 # The machine is built with PMAction. This target adds the packet-level handoff.
-globs = ["PMTransport", "PMTransport.HandoffAdmittance", "PMTransport.TwoSiteHandoff", "PMTransport.OpenHandoff", "PMTransport.OddReferenceSource", "PMTransport.RootClockCalibration", "PMTransport.ClockedRootTrials", "PMTransport.Interface", "PMTransport.Values", "PMTransport.LocalController", "PMTransport.RingReceiver", "PMTransport.BoundaryErasure", "PMTransport.Components"]
+globs = ["PMKAutomaton", "PMKAutomaton.HandoffAdmittance", "PMKAutomaton.TwoSiteHandoff", "PMKAutomaton.OpenHandoff", "PMKAutomaton.OddReferenceSource", "PMKAutomaton.RootClockCalibration", "PMKAutomaton.ClockedRootTrials", "PMKAutomaton.Interface", "PMKAutomaton.Values", "PMKAutomaton.LocalController", "PMKAutomaton.RingReceiver", "PMKAutomaton.BoundaryErasure", "PMKAutomaton.Components"]
 
 [[lean_lib]]
 name = "PMFlavor"

@@ -1,7 +1,7 @@
 import PMElementaryParticles.ProtocolInventory
 import PMConstants.GaugeLedgers
 import PMConstants.ReferenceMaintenance
-import PMTransport.Interface
+import PMKAutomaton.Interface
 
 /-! The least refinement of the protocol inventory that predicts the native weak
 refresh. Two successive protocol observations recover the active/static distinction.

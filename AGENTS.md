@@ -25,7 +25,7 @@ src/PersistenceMechanics.lean + src/PersistenceMechanics/
 src/PMSubstrate.lean         + src/PMSubstrate/
 src/PMAction.lean            + src/PMAction/
 src/PMConstants.lean         + src/PMConstants/
-src/PMTransport.lean         + src/PMTransport/
+src/PMKAutomaton.lean         + src/PMKAutomaton/
 src/PMElementaryParticles.lean + src/PMElementaryParticles/
 src/PMFlavor.lean            + src/PMFlavor/
 src/PMHadrons.lean           + src/PMHadrons/

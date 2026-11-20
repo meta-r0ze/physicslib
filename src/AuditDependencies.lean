@@ -2,7 +2,7 @@ import PersistenceMechanics
 import PMSubstrate
 import PMAction
 import PMConstants
-import PMTransport
+import PMKAutomaton
 import PMFlavor
 import PMElementaryParticles
 import PMHadrons
@@ -19,11 +19,11 @@ run_cmd do
   let anyPrefix (ps : List Name) (n : Name) : Bool := ps.any (fun p => p.isPrefixOf n)
   -- The native machine shares the PMAction build layer. Packet-level
   -- transport follows PMConstants.
-  let machine (n : Name) : Bool := (`PMTransport.Machine).isPrefixOf n
-  let transport (n : Name) : Bool := (`PMTransport).isPrefixOf n && !machine n
+  let machine (n : Name) : Bool := (`PMKAutomaton.Machine).isPrefixOf n
+  let transport (n : Name) : Bool := (`PMKAutomaton).isPrefixOf n && !machine n
   -- Modules that make up the checked paper tree (the `src` libraries).
   let paperMod (n : Name) : Bool :=
-    anyPrefix [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMTransport, `PMFlavor,
+    anyPrefix [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMKAutomaton, `PMFlavor,
       `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] n
   -- The `tools/e8p` value tool; it may import `src`, but `src` must not import it.
   let toolsMod (n : Name) : Bool :=
@@ -48,11 +48,11 @@ run_cmd do
     else if (`PMAtoms).isPrefixOf mod then
       (`PMCosmology).isPrefixOf dep
     else if (`PMSubstrate).isPrefixOf mod then
-      anyPrefix [`PMAction, `PMConstants, `PMTransport, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
+      anyPrefix [`PMAction, `PMConstants, `PMKAutomaton, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`PersistenceMechanics).isPrefixOf mod then
-      anyPrefix [`PMSubstrate, `PMAction, `PMConstants, `PMTransport, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
+      anyPrefix [`PMSubstrate, `PMAction, `PMConstants, `PMKAutomaton, `PMFlavor, `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else if (`Classification).isPrefixOf mod || (`CN1).isPrefixOf mod || (`ELEM).isPrefixOf mod then
-      anyPrefix [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMTransport, `PMFlavor,
+      anyPrefix [`PersistenceMechanics, `PMSubstrate, `PMAction, `PMConstants, `PMKAutomaton, `PMFlavor,
         `PMElementaryParticles, `PMHadrons, `PMAtoms, `PMCosmology] dep
     else
       false

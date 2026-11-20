@@ -1,5 +1,5 @@
 import PMFlavor.ReferenceSafeRestoration
-import PMTransport.Interface
+import PMKAutomaton.Interface
 import PMFlavor.TransitionSelection
 
 /-!

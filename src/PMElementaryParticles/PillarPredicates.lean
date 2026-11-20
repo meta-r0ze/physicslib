@@ -20,8 +20,8 @@ namespace PMElementaryParticles.PillarPredicates
 open PMElementaryParticles.Protocol
 open PMElementaryParticles.IsolatedExcitation
 open PMElementaryParticles.HeavyFlipControl
-open PMTransport
-open PMTransport.RingReceiver
+open PMKAutomaton
+open PMKAutomaton.RingReceiver
 
 /-- Number of firing sites on one record-bit ring. -/
 def firingCount (p : Protocol) (b : Fin 2) : ℕ :=

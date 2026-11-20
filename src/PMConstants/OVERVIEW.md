@@ -183,15 +183,15 @@ The physical controller behind the weak fraction, the VEV and the shared repair 
 
 - **Repair counts.** A root event acts in one gauge factor and the abelian phase rides on its
   amplitude, so Conservation and Economy give one event per displaced factor
-  (`PMTransport.Machine.FactorRepair`), and the repair must cover every displacement the factors can
+  (`PMKAutomaton.Machine.FactorRepair`), and the repair must cover every displacement the factors can
   produce (`covering_least`). Hence the typed repairs `(2,1,1,1,1)` (`RootRepairRule.repairs_least`,
   `repairs_cover`), one event for the gauge links and the scalar (`SectorRepair.sector_least`), and
   one for the electron, a colour and weak singlet (`RootRepairRule.electron_one_event`, the VEV's
   repair factor). With them the event-priced chain gives equal weak and hypercharge indices and
   `clockRatio` (`rule_chain_mixing`).
 - **Primitive events.** The comparison gate's coherent step is one root reflection at quarter
-  period (`PMTransport.Machine.CarrierRootGate`); refresh events are root reflections on two-carrier
-  cells (`PMTransport.Machine.RootMaintenance`); the comparison circuit's admission, preparation,
+  period (`PMKAutomaton.Machine.CarrierRootGate`); refresh events are root reflections on two-carrier
+  cells (`PMKAutomaton.Machine.RootMaintenance`); the comparison circuit's admission, preparation,
   clean record cell, gates and prices are each discharged (`PMAction.SpatialComparison`).
 - **Weak confined to the clock.** Weak's events are internal and do not move, so they reach the
   time row only; wires are displaced along a root; the uniform weak action is restored with the
@@ -410,6 +410,6 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `CarrierRegisterChirality` | Full-state matching obstructions and zero-kernel agreement |
 
 The node handoff uses these constants in
-[PMTransport.HandoffAdmittance](../PMTransport/HandoffAdmittance.lean).
-The [transport overview](../PMTransport/OVERVIEW.md#node-handoff-and-admittance)
+[PMKAutomaton.HandoffAdmittance](../PMKAutomaton/HandoffAdmittance.lean).
+The [transport overview](../PMKAutomaton/OVERVIEW.md#node-handoff-and-admittance)
 gives the reversible receiver model and the relation to conductance.

@@ -1,4 +1,4 @@
-import PMTransport.Interface
+import PMKAutomaton.Interface
 import PMFlavor.ExchangeAxis
 
 /-!

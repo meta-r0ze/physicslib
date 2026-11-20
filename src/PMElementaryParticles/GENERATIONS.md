@@ -7,9 +7,9 @@
 | Tier ledger | `TierLedger.tiersFor` and the four length lemmas, `QuarkMasses`, `LeptonMasses` | Each protocol lists three tiers in ascending order. The highest occupied tier is 3 for up and 2 for down, electron and neutrino. Neutrino masses remain open. | Up uses `{0, 2, 3}`. Down, electron and neutrino use `{0, 1, 2}`. The assignments are [Premise]. Their formulas use the substrate's `Δ = 43`. |
 
 The physical route, heavy writer and lightest-offset branch depend on
-the [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout).
-[Absolute timing](../PMTransport/PREMISES.md#absolute-timing) and the
-[Registration tariff](../PMTransport/PREMISES.md#registration-tariff)
+the [conditional KAutomaton interface](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
+[Absolute timing](../PMKAutomaton/PREMISES.md#absolute-timing) and the
+[Registration tariff](../PMKAutomaton/PREMISES.md#registration-tariff)
 supply the elapsed and paid costs of that trace.
 
 ## From glue address to route

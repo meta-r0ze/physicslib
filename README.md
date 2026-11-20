@@ -11,7 +11,7 @@ This output is an informational theoretic dual to the standard model. The Lean p
  * [Substrate](src/PMSubstrate): Applying PM to the vacuum to derive the E8 lattice with its split on D4, clock 43, invariants, etc.
  * [Action](src/PMAction) - Applying PM dynamics on the substrate to get the Lagrangian and General Relativity and gauge/scalar transport; `PMAction/MassGap` proves the mass gap of the distinction substrate
  * [Constants](src/PMConstants) - The properties of substrate partitioning (constants, sectors, running, gauge group factors)
- * [Transport](src/PMTransport) - Reversible carrier, reference, and record transfer between E8 nodes.
+ * [KAutomaton](src/PMKAutomaton) - Reversible carrier, reference, and record transfer between E8 nodes.
  * [Elementary Particles](src/PMElementaryParticles) - Systems that can persist on top of the substrate. (protocols, decay rates)
  * [Flavor](src/PMFlavor) - Information transfer (flavor mixing, wall spectra, propagation)
  * [Hadrons](src/PMHadrons) - Quark composites: nucleons (proton, neutron) with the full six-pillar mass ledger, mesons, and their decays

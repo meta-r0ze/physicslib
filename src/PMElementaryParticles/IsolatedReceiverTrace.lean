@@ -1,7 +1,7 @@
 import PMElementaryParticles.IsolatedExcitation
 import PMElementaryParticles.WireSchedule
-import PMTransport.RingReceiver
-import PMTransport.Components
+import PMKAutomaton.RingReceiver
+import PMKAutomaton.Components
 
 /-!
 # Embedding the isolated excitation into the retained receiver
@@ -29,8 +29,8 @@ namespace PMElementaryParticles.IsolatedExcitation
 
 open PMConstants.PacketGaugeActions
 open PMElementaryParticles.ProtocolInventory
-open PMTransport
-open PMTransport.RingReceiver
+open PMKAutomaton
+open PMKAutomaton.RingReceiver
 open PMAction
 open scoped BigOperators
 
@@ -552,7 +552,7 @@ theorem localized_period_registrations_eq (either : Bool)
 /-! ## Uniform request fields and ring-size generalization
 
 The retained request field is not forced to be site-independent by any
-certified Transport result.  The following results are therefore conditional
+certified KAutomaton result.  The following results are therefore conditional
 on the named hypothesis of homogeneous requests; the four uniform values stay
 enumerated.
 -/
@@ -1063,7 +1063,7 @@ noncomputable def isolatedRecordColumn (reference : Bool) (label : Channels) : â
 
 /-! ## The packet lifts
 
-The certified lifts in `PMTransport.Components` move the packet bank.  They do
+The certified lifts in `PMKAutomaton.Components` move the packet bank.  They do
 not select receiver booking ticks.  `hold_cell_fixed` and `fifo_lift_differs`
 identify the two lift actions; no tick set is derived from them.
 -/

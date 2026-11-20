@@ -31,7 +31,7 @@ the actual update stencil and adjacency, not postulated.
 
 ## Where to look
 
-- [PMTransport.Machine](../PMTransport/Machine/README.md) contains the native
+- [PMKAutomaton.Machine](../PMKAutomaton/Machine/README.md) contains the native
   operations that build with PMAction.
 
 - **[OVERVIEW.md](OVERVIEW.md)** — what is proved and reusable: the module map,

@@ -1,5 +1,5 @@
-import PMTransport.Machine.RootTransferPhase
-import PMTransport.Machine.CarrierWeyl
+import PMKAutomaton.Machine.RootTransferPhase
+import PMKAutomaton.Machine.CarrierWeyl
 
 /-!
 # The on-site detuning as a native event rate
