@@ -23,3 +23,13 @@ is proved. `Audit.lean` prints the axioms of the main results (only
 
 Toolchain and Mathlib match the paper-series projects (Lean 4.34.1, Mathlib `d13f23b`). Build:
 `./build.sh PersistenceMechanics`.
+
+## Nested Rule 3: Impedance Matching
+
+`ImpedanceMatching` states the interface rule of Nested Persistence for the
+positive-real law: reflection `r = (Z_l − Z_s)/(Z_l + Z_s)`, transmission
+`T = 1 − r²`, the conserved ledger `P r² + P T = P` (`ledger`), the reserve
+criterion `P r² ≤ B ⇔ T ≥ 1 − B/P` (`admissible_iff_transmission`), and exact
+matching under zero reserve (`zero_reserve_matched`). It is a budget condition,
+not an optimality claim. The K-Automaton instance is
+`PMElementaryParticles.ImpedanceLedger`. (Written, awaiting a compile check.)

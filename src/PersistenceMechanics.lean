@@ -11,3 +11,4 @@ import PersistenceMechanics.InformationTransfer
 import PersistenceMechanics.ChannelMeasure
 import PersistenceMechanics.SelectionSymmetry
 import PersistenceMechanics.Requirements
+import PersistenceMechanics.ImpedanceMatching

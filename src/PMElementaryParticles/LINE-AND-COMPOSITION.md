@@ -131,11 +131,19 @@ automaton:
   relational form: values relative to a reference `x_o`, together with the
   reference value itself, because "dropping the reference value merges
   distinct constant configurations."
-- **Impedance Matching.** On the machine this is the certified converter. The
-  pass and flip probabilities `cos²(x/2)` and `sin²(x/2)` are the transmission
-  `T` and reflection `r²` of the paper's ledger `Pr² + PT = P`. Reflected load
-  is registrations. Admissibility `Pr² ≤ B` is the Margin reserve. At `x = π`
-  reflection is total, so a reserve is required.
+- **Impedance Matching.** Written in Lean, awaiting a compile check. The general
+  rule is `PersistenceMechanics.ImpedanceMatching`: `ledger`,
+  `admissible_iff_transmission`, `zero_reserve_matched`, `realize`. The machine
+  instance is `PMElementaryParticles.ImpedanceLedger`. There the certified
+  converter's flip probability `flag x = sin²(x/2)` is the reflected fraction
+  `r²`, and its pass probability is the transmission `T`
+  (`converter_is_interface`, `converter_ledger`). The equivalent interface has
+  source `1 − s` and load `1 + s`, with `s = |sin(x/2)|`. The exact record bit
+  `x = π` is the total-reflection limit. Over a period, reflected plus
+  transmitted load is the number of encounters (`period_ledger`). With zero
+  reserve nothing registers (`zero_reserve_no_registration`). So a protocol
+  that meets the Toll floor needs a positive reserve (`toll_needs_reserve`):
+  Rule 3 on the machine is the converter's ledger plus the Margin reserve.
 
 **A composite state.** `k` protocols on one 43-ring, sharing the clock and the
 vacuum (`+2e₀`, task B3), each with its own packet. The firing pattern is
