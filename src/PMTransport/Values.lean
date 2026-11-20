@@ -152,4 +152,22 @@ theorem erasure_reset_matches_balanced_iff (full probeVacancy : Bool)
   unfold balancedResetThreshold
   constructor <;> intro h <;> linarith
 
+/-- The two certified placements of a closed non-idle root excursion.
+The Boolean indexes an example, with no physical placement selected. -/
+def excursionSlots (shifted : Bool) : Fin Delta × Fin Delta :=
+  if shifted then (1, 2) else (0, 1)
+
+theorem excursionSlots_boundaries (shifted : Bool) :
+    PMAction.CarrierReferenceCycle.boundaries
+      (fun t => decide (t = (excursionSlots shifted).2)) =
+        {(excursionSlots shifted).1, (excursionSlots shifted).2} := by
+  cases shifted <;> decide +kernel
+
+theorem mixedReceiverRate_all_booked (either : Bool) :
+    mixedReceiverRate either (fun _ => true) = if either then 1 else 0 := by
+  cases either
+  · exact mixedReceiverRate_and _
+  · rw [mixedReceiverRate_or]
+    norm_num [Delta_eq]
+
 end PMTransport.Values
