@@ -75,16 +75,28 @@ missing entry has a gap ID. For the substrate totals see
 | Clock | `Values.Delta_eq` | `Components.trial_slot_margin` · T/J | `CarrierReferenceCycle.clock_closes` | `ClockedRootTrials.quiet_trial_tick` | global only · T | `CarrierReferenceCycle.clock_visits` · T |
 | Node registers | `TwoSiteHandoff.port_count` | missing · O | `RegisterControl.occupation_conserved` | `IndependentRegisters.occupied_encode` | global only · K | `LocalController.radius_one` · G/J |
 | Controller | `LocalController.enumerated_rule_count` | `Components.ring_exchange_full_load` · O | `LocalController.reversible_iff_rows` | `LocalController.radius_one` | No receiver flag booking in the core · K/D | `Components.line_receiver_phaseLoad_le` · G |
-| Root and selector pulses | `CarrierEvents.active_card` | `RootTransferPhase.quarterTime_positive` | `RootTransferPhase.phase_unitary` | `BranchPulseContract.program_correct` | `CarrierEvents.uniform_activation` · K | `Components.trial_phaseLoad_le` · G/T |
+| Root and selector pulses | `CarrierEvents.active_card` | N/A · NA4 | `RootTransferPhase.phase_unitary` | `BranchPulseContract.program_correct` | `CarrierEvents.uniform_activation` · K | `Components.trial_phaseLoad_le` · G/T |
 | Receiver | `TwoSiteHandoff.port_count` | `Components.ring_exchange_full_load` · Q | `TwoSiteHandoff.exchange_four_returns` | `LocalController.receiver_realisation` | `RingReceiver.mixed_ring_flags` · K | `Components.line_receiver_phaseLoad_le` · G |
-| Links | missing · L | missing · L | `OpenHandoff.address_step` | `OpenReferenceFlow.bypass_transmits` | `HandoffAdmittance.node_current` · K | `Components.ring_source_neighbour` · G/L |
+| Links | N/A · NA1 | N/A · NA1 | `OpenHandoff.address_step` | `OpenReferenceFlow.bypass_transmits` | `HandoffAdmittance.node_current` · K | `Components.ring_source_neighbour` · G/L |
 | Carrier and payload | `CarrierEvents.carrier_card`, `PacketGaugeActions.channel_index_bijective` | missing · O | `CarrierEvents.reflection_involutive` | `GenerationWalls.one_class_per_wall` | global only · K | `NativePacketUpdate.native_local` · G/T |
 | Reference and preparation | `SharedReference.reserved_single` | `OddReferenceSource.odd_reference_population` · Q | `SharedReference.shared` | `OpenHandoff.acceptance_iff_supply` | missing · K | `OpenHandoff.receiver_trace` · Q/T |
 | Readout and flag account | missing · D | `DiagonalReadout.flag_bounds`, `Components.ring_flag_margin_attained` · D | `DiagonalReadout.state_flag` | `BranchPulseContract.program_correct` | `InBandRootReadout.expected_read_undo_cost` · K/D | `Components.ring_flag_le_one` · D/T |
 | Record path | `RecordTransport.history_memory_bound` | missing · Q | `RecordTransport.stream_conserved` | `OpenHandoff.sum_exported` | missing · K | `Components.fifo_tick_ports` · W/T |
 | Boundary and sink | `BoundaryErasure.disposition_count` | `Components.erasure_margin_attained` · B | `BoundaryErasure.identity_bijective` | `BoundaryErasure.erased_bit_merges` | `BoundaryErasure.erasing_pays_one` | `Components.cycle_erased_le_period` · B |
-| Maintenance and job coordination | missing · J | global only · J | `RootMaintenance.event_is_root` | `RefreshSchedule.minimal_is_ledger` | missing · K | `RootMaintenance.event_is_root` · J/T |
-| EP writer and insertion endpoint | `PacketGaugeActions.channel_index_bijective` | missing · O | `GenerationWalls.one_class_per_wall` | missing · W | `Values.outputFlagThreshold_eq`, `Values.balancedResetThreshold_eq` · K | missing · U/T |
+| Maintenance and job coordination | N/A · NA2 | N/A · NA2 | `RootMaintenance.event_is_root` | `RefreshSchedule.minimal_is_ledger` | missing · K | `RootMaintenance.event_is_root` · J/T |
+| EP writer and insertion endpoint | `PacketGaugeActions.channel_index_bijective` | N/A · NA3 | `GenerationWalls.one_class_per_wall` | missing · W | `Values.outputFlagThreshold_eq`, `Values.balancedResetThreshold_eq` · K | missing · U/T |
+
+### Not applicable
+
+| ID | Pillar cells | Reason and owning interface |
+| --- | --- | --- |
+| NA1 | Links Capacity and Margin | An edge is the address and transport map. It holds no persistent store. Traffic limits belong to the node ports and schedule (G/L/T). |
+| NA2 | Maintenance Capacity and Margin | The job list coordinates other registers. It has no reserve of its own. Contention for the registers and clock stays J/T. |
+| NA3 | EP endpoint Margin | This is the declared Transport-to-EP read interface. It has no stored reserve. Accessible writer inputs stay O/W. |
+| NA4 | Root and selector pulse Margin | A pulse is an operation on a register. Positive quarter-time is a time bound. Available slack belongs to the clock and register, under T/J. |
+
+These entries remove no clock, traffic, work or occupancy requirement
+from the owning component.
 
 ## Interactions
 
@@ -211,8 +223,7 @@ parallel instances. G and O govern which opportunities are used.
 Each pair uses the same unit. A carrier count does not bound the number
 of occupied jobs or the number of pulses per tick. The two stream outputs
 and FIFO arity describe slots rather than occupancy. A ready reference
-requires supply. The other margin entries remain O, Q, L, T or J as shown
-above. A physical reserve cannot be assigned from those slot counts.
+requires supply. The remaining applicable margin entries require the inputs shown above. A physical reserve cannot be assigned from those slot counts.
 
 ## Joint update and its limit
 
