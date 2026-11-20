@@ -89,6 +89,23 @@ nontrivially. P3 per-label refs make all selected Tolls 1, so the identity is
 only an equal-Toll special case. The heavy writer's single reference is
 consistent only with a shared vacuum, which is not certified.
 
+**Task P5: record coordinates and E8 placement.** `RecordCoordinates` proves
+`labelIndex = 2*axis + sign` and `labelRecord = (axis=0, sign=1)`. This is a
+finite-code coordinate statement only. No theorem identifies `labelIndex` with
+the minimal vectors of a specific D₄ glue class, despite
+`Channels.minimal_class_card` and `Channels.nu_eq`; the sector/class bijection
+is missing. All 16 channels are therefore not certified to lie in one D4
+sector; per-sector backgrounds are not excluded.
+
+The reference records are colour `(axis≠0,sign0)` and lepton
+`(axis0,sign0)`. `SharedReference` and `ColourReference` are layout/payload
+objects; neither is proved equal to either `refRecord`. Outcome: references are
+not identifiable with a certified E8 object.
+
+No certified line in E8 carries the abstract bit ring. The links in `AxisHop`,
+`NativePacketLinks`, `OpenHandoff` and `GenerationWalls` are qualified moves,
+but the bit-ring-to-lattice background map is missing.
+
 The nested-paper composition rules (Capacity Partitioning, Reversible Encoding,
 Impedance Matching) do not define a multi-protocol state on the machine, so
 alone/together closure stops at that missing definition. No grouping is assumed.

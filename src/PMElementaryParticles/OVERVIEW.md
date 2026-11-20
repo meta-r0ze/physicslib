@@ -245,6 +245,34 @@ The P3 per-label selection makes all three Tolls 1, so the identity holds only
 as an equal-Toll special case. The heavy writer's single reference is
 consistent only with a shared vacuum, which is not certified.
 
+**Record coordinates and E8 placement (Task P5).** The lead is verified only at
+the finite-code level. `RecordCoordinates.labelIndex_decomp` writes
+`labelIndex c = 2*axis + sign`, and `labelRecord_eq_axis_sign` proves
+`labelRecord c = (axis = 0, sign = 1)`. `channelCode_card` records the
+`Bool × Fin 8` code: two walls × eight signed axes.
+
+No certified theorem identifies `labelIndex` with the eight minimal vectors of
+a specific `D₄` glue class. `Channels.minimal_class_card` proves each nontrivial
+class has eight minimal vectors, and `Channels.nu_eq` counts 16 channels per
+sector, but the bijection from `labelIndex`/`PacketGaugeActions.Channels` to a
+sector and glue class is missing. Consequently the report does not certify that
+all 16 channels lie in one D4 sector; the per-sector background option is not
+excluded by the library.
+
+Reference records are the coordinate pairs colour `(axis≠0, sign0)` and lepton
+`(axis0, sign0)`. `SharedReference` supplies a reserved layout cell and
+`ColourReference.colour_reference_in_payload` locates a colour reference in the
+payload. Neither is proved equal to either `refRecord`; the missing object is a
+map from the layout/payload reference to a minimal vector of the identified
+class. Task P5 Step 2 is therefore outcome (c): the references exist as
+objects but are not identifiable in the certified library.
+
+No certified line in E8 carries the abstract `Fin 3` bit ring. `AxisHop`,
+`NativePacketLinks`, `OpenHandoff`, `ReferenceClassHop` and `GenerationWalls`
+certify qualified links/axis moves, but no theorem identifies a bit-ring
+background with a root/axis line or a connected part of the lattice. The
+missing map is the same placement map.
+
 **Alone/together.** The nested-paper composition rules are Capacity
 Partitioning, Reversible Encoding and Impedance Matching
 (`PM-3-Nested/paper/2_nested_persistence.tex`). They are not a composition rule
