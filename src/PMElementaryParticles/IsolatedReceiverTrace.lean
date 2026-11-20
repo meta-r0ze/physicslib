@@ -38,11 +38,15 @@ abbrev IsolatedSite := Fin 3
 abbrev IsolatedRequests := LocalController.Requests
 abbrev IsolatedPorts := LocalController.Ports
 
-/-- Named open controller fields.  These are not read out of the packet. -/
+/-- Named open controller fields.  The phase, requests and probe are not read
+out of the packet.  `wall` and `record` index the certified vacuum family from
+`vacuum_nonunique`; both are carried, not selected. -/
 structure ReceiverFields where
   phase : Fin Delta
   requests : IsolatedSite → IsolatedRequests
   probe : IsolatedSite → Bool
+  wall : Bool
+  record : Bool
 
 /-- Both streams read the same occupied packet label.  This is the one-
 excitation port field; it is derived from `packet` and the certified inventory
