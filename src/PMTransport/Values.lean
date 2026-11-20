@@ -1,5 +1,6 @@
 import PMTransport.Interface
 import PMTransport.RingReceiver
+import PMTransport.BoundaryErasure
 
 /-!
 # Transport values
@@ -104,21 +105,28 @@ comparison at unit registration Toll. The retained ring exports
 nothing. A physical comparison still needs O, D and K.
 -/
 
+def mixedReceiverFlagAt (either : Bool) (t : Fin Delta) : ℝ :=
+  RingReceiver.receiverFlag either ((RingReceiver.tick 3 either)^[t.val]
+    RingReceiver.mixedBasisRing) 0
+
 def mixedReceiverRate (either : Bool) (booked : Fin Delta → Bool) : ℝ :=
-  (∑ t : Fin Delta, if booked t then
-    RingReceiver.receiverFlag either ((RingReceiver.tick 3 either)^[t.val]
-      RingReceiver.mixedBasisRing) 0 else 0) / (Delta : ℝ)
+  (∑ t : Fin Delta, if booked t then mixedReceiverFlagAt either t else 0) / (Delta : ℝ)
+
+theorem mixedReceiverFlagAt_eq (either : Bool) (t : Fin Delta) :
+    mixedReceiverFlagAt either t = if either then 1 else 0 := by
+  unfold mixedReceiverFlagAt
+  exact RingReceiver.mixed_ring_iterate_flag either t.val 0
 
 theorem mixedReceiverRate_and (booked : Fin Delta → Bool) :
     mixedReceiverRate false booked = 0 := by
-  simp [mixedReceiverRate, RingReceiver.mixed_ring_iterate_flag]
+  simp [mixedReceiverRate, mixedReceiverFlagAt_eq]
 
 theorem mixedReceiverRate_or (booked : Fin Delta → Bool) :
     mixedReceiverRate true booked =
       ((Finset.univ.filter fun t => booked t = true).card : ℝ) / (Delta : ℝ) := by
   unfold mixedReceiverRate
   congr 1
-  simp_rw [RingReceiver.mixed_ring_iterate_flag, ite_true]
+  simp_rw [mixedReceiverFlagAt_eq, ite_true]
   rw [Finset.sum_boole]
 
 /-- The other booked work includes any erasure rate on an extended
