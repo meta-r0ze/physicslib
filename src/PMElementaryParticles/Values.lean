@@ -7,6 +7,7 @@ import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.WireReferenceCost
 import PMElementaryParticles.IsolatedTrace
+import PMElementaryParticles.IsolatedReceiverTrace
 import PMElementaryParticles.TierLedger
 import PMTransport.Values
 
@@ -171,6 +172,28 @@ noncomputable def mass (c : Candidate) (identify : Candidate → TierLedger.Wire
 The operation and scaling law enter through the supplied offset. -/
 def certifiedOffsetOrder (_c : Candidate) (_protocol : BaseProtocol) : Option ℕ := none
 
+/-! ### Isolated-input trace results
+
+These are the Task 3–5 results computed by iterating `RingReceiver.tick` on
+the embedded `occupiedInput` state.  The receiver column is zero under AND
+and under OR, so the two rules tie for every isolated excitation.  The record
+Toll remains a separate column with its own unit; it is not added here.
+-/
+
+noncomputable def isolatedTraceRegistrations (either : Bool) (c : Fin 3)
+    (vacuum : IsolatedExcitation.VacuumLabel c) (packet : IsolatedExcitation.PacketLabel)
+    (fields : IsolatedExcitation.ReceiverFields) : ℝ :=
+  IsolatedExcitation.isolatedReceiverColumn either c vacuum packet fields
+
+theorem isolatedTraceRegistrations_zero (either : Bool) (c : Fin 3)
+    (vacuum : IsolatedExcitation.VacuumLabel c) (packet : IsolatedExcitation.PacketLabel)
+    (fields : IsolatedExcitation.ReceiverFields) :
+    isolatedTraceRegistrations either c vacuum packet fields = 0 :=
+  IsolatedExcitation.isolatedReceiverColumn_eq_zero either c vacuum packet fields
+
+noncomputable def isolatedTraceRecordToll (reference : Bool) (label : Channels) : ℝ :=
+  IsolatedExcitation.isolatedRecordColumn reference label
+
 /-! ### Conditional mixed-witness, hand-booked values
 
 These are **not** isolated-input traces.  They restate the conditional values
@@ -266,6 +289,15 @@ theorem down_geometric_mean_trace_lepton_fails (c : Candidate) (a : Fin 3) :
       IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false ProtocolToll.electronStatic *
         IsolatedExcitation.bookedAmplitude c.1 c.2.1 c.2.2 false (ProtocolToll.upStatic a) :=
   IsolatedExcitation.down_geometric_mean_lepton_fails c.1 c.2.1 c.2.2 a
+
+/-- Explicitly labelled conditional alias: mixed witness, hand-booked. -/
+noncomputable def conditionalMixedElectronToll (c : Candidate) : ℝ :=
+  IsolatedExcitation.conditionalMixedElectronToll c.1 c.2.1 c.2.2
+
+/-- Explicitly labelled conditional alias: mixed witness, hand-booked. -/
+noncomputable def conditionalMixedHeavyToll (c : Candidate) (reference : Bool)
+    (a : Fin 3) : ℝ :=
+  IsolatedExcitation.conditionalMixedHeavyToll c.1 c.2.1 c.2.2 reference a
 
 end TransportCandidates
 

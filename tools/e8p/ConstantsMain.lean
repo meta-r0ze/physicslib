@@ -174,12 +174,17 @@ private def derivation (rest : List String) : IO UInt32 := do
     args := #["env", "lean", "--run", "tools/e8p/Derivation.lean"] ++ rest.toArray }
   child.wait
 
-/-- The observations are displayed alongside the trace-derived witness rows.
-No measured reference enters the candidate family or its order. -/
+/-- The observations are displayed alongside the conditional rows.  The
+isolated trace result is zero registrations under both receiver rules; the
+conditional mixed-witness rows are shown separately.  No measured reference
+enters either family or its order. -/
 private def printEPCandidates : IO Unit := do
   let out ← IO.getStdout
-  out.putStrLn "EP conditional (mixed witness, hand-booked) rows. Experimental references are comparison only."
-  out.putStrLn "These rows do not run IsolatedExcitation.occupiedInput; receiver and record terms are separate columns."
+  out.putStrLn "EP reports. Experimental references are comparison only."
+  out.putStrLn "Isolated trace: RingReceiver.tick iterated on the embedded occupiedInput."
+  out.putStrLn "  receiver registrations = 0 under AND and under OR; AND and OR tie."
+  out.putStrLn "  record Toll is a separate column; it is not added to the receiver column."
+  out.putStrLn "Conditional rows below are mixed witness, hand-booked; they do not run occupiedInput."
   let refs : List Key := [.upMeV, .downMeV, .strangeMeV, .charmMeV, .bottomMeV, .topMeV,
     .muonRatio, .tauRatio]
   for c in PMElementaryParticles.Values.TransportCandidates.candidates do
@@ -188,18 +193,19 @@ private def printEPCandidates : IO Unit := do
     let receiver := if c.2.1 then "OR" else "AND"
     let te := PMElementaryParticles.Values.TransportCandidates.traceElectronTollNat c
     out.putStrLn s!"\n{bank} / {receiver} / phases {p.val},{q.val}"
-    out.putStrLn s!"  Conditional mixed-witness electron row = {te}; amplitude of that row exp(-{te}/2)."
+    out.putStrLn "  Isolated trace: registrations = 0 (both rules)."
+    out.putStrLn s!"  Conditional (mixed witness, hand-booked) electron row = {te}."
     for reference in PMElementaryParticles.Values.TransportCandidates.traceReferences do
       let rname := if reference then "colour" else "lepton"
       let td := PMElementaryParticles.Values.TransportCandidates.traceHeavyTollNat c reference
-      out.putStrLn s!"  Conditional mixed-witness heavy row ({rname} record) = {td}; exp(-{td}/2)."
+      out.putStrLn s!"  Conditional (mixed witness, hand-booked) heavy row ({rname} record) = {td}."
     let order (p : PMElementaryParticles.ProtocolInventory.BaseProtocol) :=
       (PMElementaryParticles.Values.TransportCandidates.certifiedOffsetOrder c p).elim "open" toString
     out.putStrLn s!"  Static offset: open. Inverse-period order up/down/electron: {order .up}/{order .down}/{order .electron}."
-    out.putStrLn "  Wire-to-species tier: open; the conditional row supplies no address-to-tier bit."
+    out.putStrLn "  Wire-to-species tier: open; no trace supplies an address-to-tier bit."
     for key in refs do
       for ref in expRefs key do
-        out.putStrLn s!"  {key.id}: conditional row is dimensionless | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
+        out.putStrLn s!"  {key.id}: isolated trace has no mass label | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
 
 /-- Plain `e8p`: every report, each under a heading, so one checked-in file holds everything. -/
 private def printAll : IO Unit := do
