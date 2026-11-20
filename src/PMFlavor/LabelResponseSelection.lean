@@ -8,7 +8,7 @@ Apply Paper II's actual `stateFlag` to the supplied flavour evolution. A
 weighted orthonormal flavour ensemble probes overlaps between preparation and
 energy eigenmodes. For uniform weights it probes only the spectrum: its mean
 flag rate is independent of every mixing angle and phase. Uniform preparation
-over physical generations is not derived from uniformity of the sixteen packet
+over physical label states is not derived from uniformity of the sixteen packet
 channels. Neither these weights nor an event price are selected here.
 -/
 noncomputable section
