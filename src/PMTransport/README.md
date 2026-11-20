@@ -5,7 +5,8 @@ See [the working premise](PREMISE.md) for the physical model and build layers.
 
 Import `PMTransport.Interface` for the handoff, record, cost, clock and
 route theorems. Import `PMTransport.Values` for the checked numbers and
-their conditions.
+their conditions. Use [the component inventory](COMPONENTS.md) and
+`PMTransport.Components` to locate the open contracts.
 
 Run `./build.sh lean PMTransport.Interface PMTransport.Values` for a
 targeted check. The library build is `./build.sh PMTransport`.

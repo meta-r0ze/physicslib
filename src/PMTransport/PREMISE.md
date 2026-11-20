@@ -6,15 +6,22 @@ The [premise ledger](PREMISES.md) tracks the checked results and open inputs.
 
 ## The system
 
-PMTransport studies reversible internal register updates on E8 nodes and the disposition of exported records.
+PMTransport studies a lattice of E8 nodes. In the encoded line and ring
+models the same local rule acts at every site with a common phase. The
+lattice view names the parts and ports. The complete joint update for
+the carrier packet and retained controls remains open.
 
-| Part | In the machine | In the library |
+| Part | Role at a node | In the library |
 | --- | --- | --- |
-| Tape | sites with a live and a record register | `TwoSiteHandoff`, `OpenHandoff` |
-| Head | the receiver at a node | exchange and bypass (`TwoSiteHandoff`) |
-| Rule | exchange or bypass, controlled by a branch and a phase | `BranchPulseContract`, `RegisterControl` |
-| Controller | the substrate clock (period `Δ = 43`) | `ClockPeriod`, `ClockedRootTrials` |
-| Payload | a label on a generation's two walls: 2 × 8 = 16 slots | `ControlledGluedRegister` (16 channels) |
+| Registers | Live and record stream slots, plus retained controls | `TwoSiteHandoff`, `LocalController` |
+| Receiver | Exchange or bypass on two arrivals | `TwoSiteHandoff`, `OpenHandoff` |
+| Rule | Local guard and branch-dependent pulses | `LocalController`, `BranchPulseContract`, `RegisterControl` |
+| Clock | Shared phase with period `Δ = 43` in the certified clock models | `ClockPeriod`, `ClockedRootTrials` |
+| Link and payload | Directed transfers and two-wall packet labels with 16 slots | `OpenReferenceFlow`, `GluedRegister`, `PacketGaugeActions` |
+| Boundary | Keep, recycle or erase a supplied export | `BoundaryErasure` |
+
+The [component inventory](COMPONENTS.md) gives the remaining parts and
+the scope of their connections.
 
 Inside a system, the update is reversible: Conservation keeps the
 identity-defining information (PM-1-Arch, leg update "by Conservation it is

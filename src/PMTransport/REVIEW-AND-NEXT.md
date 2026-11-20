@@ -1,7 +1,11 @@
 # PMTransport — open work
 
 The [admission chain is paused](PREMISES.md#stopping-point) at the
-mixed receiver readout required by a downstream trace. The items below record its open dependencies.
+mixed receiver readout required by a downstream trace. The
+[component inventory](COMPONENTS.md#interactions) locates the open inputs
+across the lattice at once. The mixed readout is in X → E, D → E and F → E.
+The [regress map](COMPONENTS.md#where-the-earlier-questions-sit) links
+earlier questions to their cells.
 
 ## Node handoff
 

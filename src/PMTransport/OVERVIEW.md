@@ -3,7 +3,10 @@
 Import `PMTransport.Interface` for the theorem families below and
 `PMTransport.Values` for the numbers. Results retain their theorem
 hypotheses. Physical inputs are in the [premise ledger](PREMISES.md).
-The [machine overview](Machine/OVERVIEW.md) maps the upstream modules.
+The [component inventory](COMPONENTS.md) maps the six pillars, native ports
+and open connections. `PMTransport.Components` exposes the corresponding
+contracts with explicit hypotheses. The [machine overview](Machine/OVERVIEW.md)
+maps the upstream implementation.
 The [admission check](ADMISSION.md) gives the reachable trial histories
 and the boundary required for repeated open visits. Its
 [autonomous guard test](ADMISSION.md#no-external-controller) checks
