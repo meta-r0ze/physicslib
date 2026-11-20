@@ -38,6 +38,38 @@ The transport laws are exposed by the [conditional interface](../PMTransport/COM
    in the section below and is not derived by this rebuild unless explicitly
    stated.
 
+### Pillar availability and enumeration outcome (Tasks 2–5)
+
+`PersistenceMechanics.Requirements` supplies the three requirements, the six
+pillar names, the requirement map, `Pillar.regulates` and `Pillar.sign`, plus
+the abstract `PMRequirements`. It does **not** supply six individual physical
+predicates on a machine state. The missing pieces are concrete predicates for
+Capacity, Margin, Map, Protocol, Toll and Governor on `Protocol`. Without them
+the six-pillar filter and the alone/together analysis cannot be performed
+without inventing new definitions; that is the Task 2 stop.
+
+`Protocol.allProtocols` is nevertheless complete
+(`allProtocols_complete`): 16 labels × 2 references × 2^6 firing patterns ×
+2^2 certified phases × 3 packet sites = 24,576 finite protocols. No protocol
+is filtered. Grouped by `labelRecord` (reference choice doubles each):
+`(false,false)` 6, `(false,true)` 6, `(true,true)` 2, `(true,false)` 2.
+Reference groups are colour and lepton. Since no pillar predicate exists, no
+3-ring result settles the filter; a larger ring is not the missing piece—the
+missing piece is the predicate definition.
+
+**Loop closure / Delta (Task 4).** No pillar predicate in `Requirements`
+requires a state return within `Delta`. `RingReceiver` has a clock phase
+`finRotate Delta`, and the bit-ring ports use `finRotate n`; no certified
+theorem identifies the bit-ring position with the clock phase. The
+“one firing site on the 43-ring gives one registration per period” statement
+is therefore not certified here.
+
+**Alone/together (Task 5).** Since the six predicates are missing, alone and
+combined closure cannot be decided. The sharing lemmas
+(`WireReferenceCost.shared_maintenance_free`, `SharedReference`,
+`ColourReference`) remain available, but there is no predicate to satisfy and
+no grouping is assumed.
+
 ## Scope
 
 Paper V models **elementary-particle protocols and their decay** on the E8

@@ -14,6 +14,17 @@ retained and audited, not deleted.
 marks a physical identification or rule still to be derived.
 **[Certificate]** marks a calculation awaiting formal verification.
 
+## Rebuild Tasks 2–5 status
+
+`PersistenceMechanics.Requirements` defines the three requirements, six pillar
+names, requirement/sign maps and abstract `PMRequirements`; it does not define
+six physical predicates on a machine state. Task 2 stops at that missing
+definition. Task 3 enumerates the complete finite `Protocol.allProtocols`
+(24,576 protocols) but applies no six-pillar filter. Task 4 finds no certified
+loop-closure predicate and no identification of bit-ring position with the
+Delta clock phase. Task 5 cannot decide alone/together closure without the
+missing predicates; no grouping or confinement is assumed.
+
 ## Isolated-excitation input and trace
 
 A mass is the property of one isolated excitation on the vacuum. The sector
