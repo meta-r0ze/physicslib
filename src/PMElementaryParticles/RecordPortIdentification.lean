@@ -14,6 +14,12 @@ its own ring with its own retained request field.
 The colour reference record is `(false,false)` (the up record); the lepton
 reference record is `(true,false)` (the neutrino record), in the
 `(sector,position)` order of `labelRecord`.
+
+The phase-to-orthogonal conversion is certified in
+`PMElementaryParticles.PhaseToRecord`: `CoherentComparisonRepair.compare
+(phase x)` is unitary, and its minus output has probability
+`DiagonalReadout.flag x`.  This closes the flag-level record-port relation;
+the bit-ring model above remains the vacuum/reference hypothesis.
 -/
 
 noncomputable section

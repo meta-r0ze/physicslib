@@ -37,10 +37,12 @@ machine. The certified label dependence is `bitToll_eq_hamming`, `refRecord`,
 
 **Remaining Transport-only work:**
 
-- `U`: the common machine comparator and record-port comparison. The receiver
-  and electric flags share the `CommonResponse` parent only up to the factor-two
-  normalization (`CommonComparator.exchangeFlag_eq_two_linkFlag`,
-  `flag_eq_stateFlag`); no exact identification is certified;
+- `U`: **flag identification done.** The certified comparator
+  `CoherentComparisonRepair.compare (phase x)` converts the phase encoding to
+  orthogonal records; `PhaseToRecord.minus_probability` gives
+  `DiagonalReadout.flag x`, and the expected receiver flag is `flag x`
+  (`expected_receiver_flag`). The factor-two normalization is only the two
+  encodings. The physical port wiring remains part of the admitted trace;
 - the coherent receiver exchange as a root-transfer pulse of area theta (a
   machine property, once a coherent amplitude is certified);
 - `T`: clock calibration, serial placement and overlap;

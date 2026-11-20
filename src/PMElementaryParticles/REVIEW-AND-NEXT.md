@@ -160,6 +160,18 @@ The register-per-tick case has the form of a direction flip each tick. The
 Feynman-checkerboard reading of mass as the direction-flip rate is a
 hypothesis for later, not a result of this library.
 
+## Phase-to-record converter (Task K)
+
+The certified `CoherentComparisonRepair.compare (InterferenceReadout.phase x)`
+is the converter (`PhaseToRecord.converter_unitary`). On `phaseInput`, its minus
+output has probability `DiagonalReadout.flag x` (`minus_probability`), and the
+expected receiver flag is `flag x` (`expected_receiver_flag`). The two converted
+branch records are orthogonal (`converted_records_orthogonal`) and meet
+`CoherentGate.unequal_needs_orthogonal` (`converted_branch_records_unequal`).
+`bitToll_eq_expected_conversion` recovers the EP row. The factor of two is only
+the phase (`nsq/4`) versus orthogonal (`nsq/2`) encoding. Gap U's flag
+identification closes for all phases; no new unitary was defined.
+
 ## Common comparator (Task J)
 
 Transport W and G are certified and removed from its open ranking:

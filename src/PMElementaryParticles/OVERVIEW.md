@@ -61,6 +61,17 @@ files were consolidated. The added aliases under `Interface.Wire` are:
 | `Registers` | `current`, `current_observed`, `current_unitary`, `evolution_occupation` |
 | `Probe` | `events`, `record`, `schedule_closes`, `scheduled_read`, `State`, `fire`, `update` |
 
+**Phase-to-record converter (Task K).** The certified comparator
+`CoherentComparisonRepair.compare (InterferenceReadout.phase x)` is unitary
+(`PhaseToRecord.converter_unitary`). On the phase-encoded input `phaseInput`,
+the minus output has probability exactly `DiagonalReadout.flag x`
+(`minus_probability`), and the expected receiver flag is `flag x`
+(`expected_receiver_flag`). The converted branch records are orthogonal
+(`converted_records_orthogonal`, `converted_branch_records_unequal`), and
+`bitToll_eq_expected_conversion` recovers the EP row. The factor of two is the
+phase encoding (`nsq/4`) versus orthogonal receiver encoding (`nsq/2`). Gap U's
+flag identification closes for all phases; no new unitary was defined.
+
 **Common comparator (Task J).** Receiver and electric flags share the
 `CommonResponse` parent only up to normalization. `CommonResponse.stateFlag` is
 `nsq(φ − Uφ)/4`; `DiagonalReadout.flag` is `(1 − cos x)/2`, and
