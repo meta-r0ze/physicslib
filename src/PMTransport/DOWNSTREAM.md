@@ -73,6 +73,15 @@ decisions also agree on its diagonal requests
 
 ## Export-contract requirement
 
+`Components.joint_core_iterate` keeps any core-derived observable
+independent of the packet-bank operation for the same core start
+and rule. `joint_two_fifo_placements_differ` separates actual packet
+outputs. `ring_observations_local` bounds both receiver outputs
+and the computed flag by the same inputs. This leaves the physical
+reader and its tick as inputs. See the
+[fan-out cases](COMPONENTS.md#fan-out-at-a-receiver).
+
+
 **Conditional.** A consumer of the mixed route needs the routed
 value and its live or record destination after the visit. The
 mixed witness distinguishes the through record at −1 from the

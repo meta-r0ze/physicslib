@@ -343,6 +343,16 @@ A mixed-request advantage requires the missing export contract.
 
 ## Downstream scope
 
+The [joint lift](COMPONENTS.md#joint-update-and-its-limit) projects
+to these exact core traces. Its packet bank has a certified FIFO
+permutation. The projection supplies no physical FIFO firing time
+or packet operator. The [fan-out result](COMPONENTS.md#fan-out-at-a-receiver)
+puts the routed pair and computed comparison in one receiver
+stencil. A clocked EP attachment and detector support are still
+required to use either one. The retained core routes its values
+without booking that comparison.
+
+
 The [downstream audit](DOWNSTREAM.md) separates fixed values and
 formulae from observations of receiver traces. **Symmetry.**
 `LocalController.tagged_ticks_equal` and

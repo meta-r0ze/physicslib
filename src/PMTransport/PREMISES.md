@@ -166,6 +166,29 @@ It remains parked.
 
 ## Stopping point
 
+The [component queue](COMPONENTS.md#remaining-free-inputs-by-reach)
+ranks the remaining inputs. Clock, receiver, FIFO and boundary rate
+bounds concern the certified encodings. The isolated trial leaves
+41 slots. Joint sharing, physical placement and occupancy remain open.
+
+The reversible packet-bank lift keeps both line and ring core
+projections (`Components.joint_core_iterate`,
+`joint_line_bijective_iff`, `joint_ring_bijective`). The FIFO law
+holds at a supplied firing. Holding or shifting the bank can give
+different outputs on the same core tick. Supply the local firing
+condition and clock placement for the admitted packet and record
+operation. This is part of the Joint clocked controller and its EP
+realization.
+
+`Components.ring_observations_local` puts the ordered outputs and
+computed flag in the same stencil. Supply the EP attachment, its
+clocked read and the detector support for any booked flag. A computed
+flag is outside the retained core registration account.
+`Components.booked_toll_sum` reconciles the supplied booked events
+and erasures. Physical event identification and any additional work
+remain part of Registration tariff.
+
+
 The rule choice is a symmetry of the common tagged trace.
 The unrestricted receiver interface observes mixed-request
 destinations and flags. To use either difference downstream,

@@ -5,7 +5,11 @@ mixed receiver readout required by a downstream trace. The
 [component inventory](COMPONENTS.md#interactions) locates the open inputs
 across the lattice at once. The mixed readout is in X → E, D → E and F → E.
 The [regress map](COMPONENTS.md#where-the-earlier-questions-sit) links
-earlier questions to their cells.
+earlier questions to their cells. See the
+[ranked free inputs](COMPONENTS.md#remaining-free-inputs-by-reach)
+for the remaining dependencies. The projected core and the
+16-slot FIFO lift reversibly. Their joint firing rule and the
+clocked EP reader still need a physical attachment.
 
 ## Node handoff
 

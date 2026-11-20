@@ -6,7 +6,8 @@ a common clock, the same rule at each site and two directed streams.
 The packet has 16 slots. The boundary can account for erasure of a booked
 export, separately from the reversible internal step. The Boolean line
 and ring states and the 16-slot carrier are separate encodings. Their
-joint physical update is open.
+reversible lifts preserve the core projection. Their physical packet
+operation and its clock placement remain open.
 
 The [premise ledger](PREMISES.md) owns the physical questions. This page
 locates them at component interfaces. [Machine](Machine/OVERVIEW.md)
@@ -71,19 +72,19 @@ missing entry has a gap ID. For the substrate totals see
 
 | Component | Capacity | Margin | Map | Protocol | Toll | Governor |
 | --- | --- | --- | --- | --- | --- | --- |
-| Clock | `Values.Delta_eq` | missing · T | `CarrierReferenceCycle.clock_closes` | `ClockedRootTrials.quiet_trial_tick` | global only · T | missing · T |
-| Node registers | `TwoSiteHandoff.port_count` | missing · O | `RegisterControl.occupation_conserved` | `IndependentRegisters.occupied_encode` | global only · K | missing · G |
-| Controller | `LocalController.enumerated_rule_count` | global only · O | `LocalController.reversible_iff_rows` | `LocalController.radius_one` | missing · K | missing · G |
-| Root and selector pulses | `CarrierEvents.active_card` | `RootTransferPhase.quarterTime_positive` | `RootTransferPhase.phase_unitary` | `BranchPulseContract.program_correct` | `CarrierEvents.uniform_activation` · K | missing · G |
-| Receiver | `TwoSiteHandoff.port_count` | missing · Q | `TwoSiteHandoff.exchange_four_returns` | `LocalController.receiver_realisation` | `RingReceiver.mixed_ring_flags` · K | missing · G |
-| Links | missing · L | missing · L | `OpenHandoff.address_step` | `OpenReferenceFlow.bypass_transmits` | `HandoffAdmittance.node_current` · K | missing · G |
-| Carrier and payload | `CarrierEvents.carrier_card`, `PacketGaugeActions.channel_index_bijective` | missing · O | `CarrierEvents.reflection_involutive` | `GenerationWalls.one_class_per_wall` | global only · K | missing · G |
-| Reference and preparation | `SharedReference.reserved_single` | `OddReferenceSource.odd_reference_population` · Q | `SharedReference.shared` | `OpenHandoff.acceptance_iff_supply` | missing · K | missing · Q |
-| Readout and flag account | missing · D | `DiagonalReadout.flag_bounds` | `DiagonalReadout.state_flag` | `BranchPulseContract.program_correct` | `TollAmplitude.wireAmplitude_sq` · K | missing · D |
-| Record path | `RecordTransport.history_memory_bound` | missing · Q | `RecordTransport.stream_conserved` | `OpenHandoff.sum_exported` | missing · K | missing · W |
-| Boundary and sink | `BoundaryErasure.disposition_count` | missing · B | `BoundaryErasure.identity_bijective` | `BoundaryErasure.erased_bit_merges` | `BoundaryErasure.erasing_pays_one` | missing · B |
-| Maintenance and job coordination | missing · J | global only · J | `RootMaintenance.event_is_root` | `RefreshSchedule.minimal_is_ledger` | missing · K | missing · J |
-| EP writer and insertion endpoint | `PacketGaugeActions.channel_index_bijective` | missing · O | `GenerationWalls.one_class_per_wall` | missing · W | `Values.outputFlagThreshold_eq`, `Values.balancedResetThreshold_eq` · K | missing · U |
+| Clock | `Values.Delta_eq` | `Components.trial_slot_margin` · T/J | `CarrierReferenceCycle.clock_closes` | `ClockedRootTrials.quiet_trial_tick` | global only · T | `CarrierReferenceCycle.clock_visits` · T |
+| Node registers | `TwoSiteHandoff.port_count` | missing · O | `RegisterControl.occupation_conserved` | `IndependentRegisters.occupied_encode` | global only · K | `LocalController.radius_one` · G/J |
+| Controller | `LocalController.enumerated_rule_count` | `Components.ring_exchange_full_load` · O | `LocalController.reversible_iff_rows` | `LocalController.radius_one` | No receiver flag booking in the core · K/D | `Components.line_receiver_phaseLoad_le` · G |
+| Root and selector pulses | `CarrierEvents.active_card` | `RootTransferPhase.quarterTime_positive` | `RootTransferPhase.phase_unitary` | `BranchPulseContract.program_correct` | `CarrierEvents.uniform_activation` · K | `Components.trial_phaseLoad_le` · G/T |
+| Receiver | `TwoSiteHandoff.port_count` | `Components.ring_exchange_full_load` · Q | `TwoSiteHandoff.exchange_four_returns` | `LocalController.receiver_realisation` | `RingReceiver.mixed_ring_flags` · K | `Components.line_receiver_phaseLoad_le` · G |
+| Links | missing · L | missing · L | `OpenHandoff.address_step` | `OpenReferenceFlow.bypass_transmits` | `HandoffAdmittance.node_current` · K | `Components.ring_source_neighbour` · G/L |
+| Carrier and payload | `CarrierEvents.carrier_card`, `PacketGaugeActions.channel_index_bijective` | missing · O | `CarrierEvents.reflection_involutive` | `GenerationWalls.one_class_per_wall` | global only · K | `NativePacketUpdate.native_local` · G/T |
+| Reference and preparation | `SharedReference.reserved_single` | `OddReferenceSource.odd_reference_population` · Q | `SharedReference.shared` | `OpenHandoff.acceptance_iff_supply` | missing · K | `OpenHandoff.receiver_trace` · Q/T |
+| Readout and flag account | missing · D | `DiagonalReadout.flag_bounds`, `Components.ring_flag_margin_attained` · D | `DiagonalReadout.state_flag` | `BranchPulseContract.program_correct` | `InBandRootReadout.expected_read_undo_cost` · K/D | `Components.ring_flag_le_one` · D/T |
+| Record path | `RecordTransport.history_memory_bound` | missing · Q | `RecordTransport.stream_conserved` | `OpenHandoff.sum_exported` | missing · K | `Components.fifo_tick_ports` · W/T |
+| Boundary and sink | `BoundaryErasure.disposition_count` | `Components.erasure_margin_attained` · B | `BoundaryErasure.identity_bijective` | `BoundaryErasure.erased_bit_merges` | `BoundaryErasure.erasing_pays_one` | `Components.cycle_erased_le_period` · B |
+| Maintenance and job coordination | missing · J | global only · J | `RootMaintenance.event_is_root` | `RefreshSchedule.minimal_is_ledger` | missing · K | `RootMaintenance.event_is_root` · J/T |
+| EP writer and insertion endpoint | `PacketGaugeActions.channel_index_bijective` | missing · O | `GenerationWalls.one_class_per_wall` | missing · W | `Values.outputFlagThreshold_eq`, `Values.balancedResetThreshold_eq` · K | missing · U/T |
 
 ## Interactions
 
@@ -99,15 +100,15 @@ component appears in that component's row.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | C | `CarrierReferenceCycle.clock_closes` | `ClockedRootTrials.iterate_controls` | `ClockedRootTrials.ticks_zero_one` / `ticks_one_two` | `ClockControlledRoot.norm_preserved` · T | unspecified · G | unspecified · T | unspecified · E0 | `CarrierReferenceCycle.reference_encoded` | `RootClockCalibration.trial_weight` · T | unspecified · T | `BoundaryErasure.policy_cycle_counts_booked_exports` | unspecified · T | unspecified · T |
 | N | `ClockedRootTrials.iterate_controls` | `RegisterControl.occupation_conserved` | `LocalController.radius_one` · O | `RegisterControl.extend_encode` | `LocalController.receiver_realisation` [live, record] | `TwoSiteHandoff.step_trace` [live, record] | `IndependentRegisters.sectorEquiv` | `RegisterVacuum.evolution_readout`, `NativeReferenceBackground.stationary_iff` · O | `InterferenceReadout.flag_bounds` · D | `RecordTransport.tick_fifo` [record] | `BoundaryErasure.identity_bijective` [retained] | unspecified · J | unspecified · W |
-| G | `LocalController.control_iterates_eq` | `LocalController.reversible_iff_rows` | `LocalController.two_open_compatible_rules`, `tagged_trace_observable_eq` · S | `BranchPulseContract.comparison_mem` · G | `LocalController.guard_decisions_eq_iff` · G | `LocalController.radius_one` · G | unspecified · G | unspecified · Q | `RingReceiver.mixed_ring_flags` [flag] · D | unspecified · W | unspecified · B | unspecified · J | unspecified · U |
+| G | `LocalController.control_iterates_eq` | `LocalController.reversible_iff_rows`, `Components.joint_line_bijective_iff` | `LocalController.two_open_compatible_rules`, `tagged_trace_observable_eq` · S | `BranchPulseContract.comparison_mem` · G | `LocalController.guard_decisions_eq_iff` · G | `LocalController.radius_one` · G | unspecified · G | unspecified · Q | `RingReceiver.mixed_ring_flags` [flag] · D | unspecified · W | unspecified · B | unspecified · J | unspecified · U |
 | P | `RootClockCalibration.phase_alias_iff` · T | `RegisterControl.phase_unitary` | unspecified · G | `RootTransferPhase.half_pulse_word` | `TwoSiteHandoff.receiver_half_pulse` | `GluedRegister.crossing_word_glued` | `CarrierEvents.reflection_involutive` | `OddReferenceSource.load_rest_mode` · Q | `BranchPulseContract.program_correct` [comparison] | `CoherentRecordRestoration.prepared_repair` | unspecified · E0 | `RootMaintenance.event_is_root` | `ChargedInsertion.joint_selector`, `HeavyFlipControl.no_root_only_direct_address` · U |
-| X | unspecified · E0 | `TwoSiteHandoff.step_trace` [live, record] | unspecified · G | unspecified · E0 | `TwoSiteHandoff.exchange_four_returns` | `LocalController.mixed_open_receiver_destinations` [live, record] | unspecified · U | `OpenHandoff.receiver_trace` [live], `OpenHandoff.acceptance_iff_supply` | `TwoSiteHandoff.exchange_flag`, `RingReceiver.mixed_ring_flags` [flag] | `OpenHandoff.export_trace` [record], `BoundaryErasure.tagged_rule_exports` · S | unspecified · B | unspecified · J | unspecified · W [routed value + live/record destination] |
+| X | unspecified · E0 | `TwoSiteHandoff.step_trace` [live, record] | unspecified · G | unspecified · E0 | `TwoSiteHandoff.exchange_four_returns` | `LocalController.mixed_open_receiver_destinations` [live, record] | unspecified · U | `OpenHandoff.receiver_trace` [live], `OpenHandoff.acceptance_iff_supply` | `TwoSiteHandoff.exchange_flag`, `RingReceiver.mixed_ring_flags`, `Components.ring_observations_local` [flag] · D | `OpenHandoff.export_trace` [record], `BoundaryErasure.tagged_rule_exports` · S | unspecified · B | unspecified · J | unspecified · W [routed value + live/record destination] |
 | L | unspecified · E0 | `TwoSiteHandoff.step_trace` [live, record] | `LocalController.radius_one` | unspecified · E0 | `TwoSiteHandoff.arrivals_observed` [live, record] | `OpenHandoff.address_step`, `EdgeLocality.edge_local_native` | `GluedRegister.crossing_word_glued` | `OpenHandoff.acceptance_iff_supply` [record] | `HandoffAdmittance.node_current`, `TwoSiteHandoff.hop_flag` | `OpenHandoff.export_trace` [record] | unspecified · B | unspecified · E0 | unspecified · L |
 | M | unspecified · E0 | `CarrierVacuumSector.range_iff_odd` | unspecified · G | `CarrierEvents.active_card` | unspecified · U | `GluedRegister.crossing_word_glued` | `GenerationWalls.one_class_per_wall` | `ReferenceClassHop.touches_reference_class` | `DiagonalReadout.state_flag`, `EventRequirements.massive_flag` | `CoherentGate.unequal_needs_orthogonal` | unspecified · E0 | `EventRequirements.full_reads_both` · J | `PacketGaugeActions.channel_index_bijective`, `EventRequirements.massive_flag` · O |
 | R | unspecified · E0 | `OddReferenceSource.first_wall_ports` · O | unspecified · Q | `OddReferenceSource.loading_pulse_stays_at_rest` | `OpenHandoff.acceptance_iff_supply` [record] | `ReferenceClassHop.stationary_iff` | unspecified · O | `NativeReferenceBackground.stationary_iff` | `OpenHandoff.balanced_basis_repair_flag` [flag] | `RecordSupply.clean_supply` · Q | unspecified · B [reset baseline] | `SharedReference.shared` · J | `ElectricHeavyRecord.colour_reference_toll` / `lepton_reference_toll` · J |
-| D | unspecified · E0 | unspecified · E0 | unspecified · D | unspecified · E0 | unspecified · E0 | unspecified · E0 | unspecified · E0 | unspecified · E0 | `DiagonalReadout.flag_bounds`, `TollAmplitude.wireAmplitude_sq` | unspecified · W [flag versus stored bit] | unspecified · B [flag versus booked export] | `NetCost.expected_count_linear` · K | unspecified · W [executed comparison + booked flag] |
-| F | unspecified · E0 | `CoherentRecordRestoration.unitary_reset_factorization` [record] | unspecified · G [retained record feedback] | unspecified · G | `RecordSupply.live_at_site`, `OpenHandoff.receiver_trace` [record] | `OpenHandoff.export_trace` [record] | unspecified · U | `RecordSupply.ring_returns`, `CoherentRecordRestoration.twice_undoes` | `OpenHandoff.receiver_flag` [flag] · D | `RecordTransport.tick_fifo`, `stream_conserved` | `BoundaryErasure.open_export_source`, `BoundaryErasure.erasing_pays_one` · B [booked export] | unspecified · J | unspecified · W [retained/exported record port] |
-| B | unspecified · E0 | `BoundaryErasure.identity_bijective` | unspecified · B | unspecified · E0 | unspecified · E0 | unspecified · B | unspecified · E0 | unspecified · Q [physical ready state] | `BoundaryErasure.erasing_pays_one`, `ring_erasure_survivor_eq` · H | `BoundaryErasure.kept_bit_injective` / `recycled_bit_injective` · B [return wiring] | `BoundaryErasure.erased_bit_merges` | `BoundaryErasure.policy_cycle_counts_booked_exports` · K | `WireReferenceCost.reference_threshold_with_erasure` · B |
+| D | unspecified · E0 | unspecified · E0 | unspecified · D | unspecified · E0 | unspecified · E0 | unspecified · E0 | unspecified · E0 | unspecified · E0 | `DiagonalReadout.flag_bounds`, `TollAmplitude.wireAmplitude_sq` | unspecified · W [flag versus stored bit] | unspecified · B [flag versus booked export] | `NetCost.expected_count_linear`, `Components.booked_toll_sum` · K | unspecified · W [executed comparison + booked flag] |
+| F | unspecified · E0 | `CoherentRecordRestoration.unitary_reset_factorization` [record] | unspecified · G [retained record feedback] | unspecified · G | `RecordSupply.live_at_site`, `OpenHandoff.receiver_trace` [record] | `OpenHandoff.export_trace` [record] | unspecified · U | `RecordSupply.ring_returns`, `CoherentRecordRestoration.twice_undoes` | `OpenHandoff.receiver_flag` [flag] · D | `RecordTransport.tick_fifo`, `stream_conserved`, `Components.joint_fifo_restriction` · T | `BoundaryErasure.open_export_source`, `BoundaryErasure.erasing_pays_one` · B [booked export] | unspecified · J | unspecified · W [retained/exported record port] |
+| B | unspecified · E0 | `BoundaryErasure.identity_bijective`, `Components.joint_boundary_identity` | unspecified · B | unspecified · E0 | unspecified · E0 | unspecified · B | unspecified · E0 | unspecified · Q [physical ready state] | `BoundaryErasure.erasing_pays_one`, `ring_erasure_survivor_eq` · H | `BoundaryErasure.kept_bit_injective` / `recycled_bit_injective` · B [return wiring] | `BoundaryErasure.erased_bit_merges` | `BoundaryErasure.policy_cycle_counts_booked_exports` · K | `WireReferenceCost.reference_threshold_with_erasure` · B |
 | A | unspecified · T | unspecified · J | unspecified · J | `RootMaintenance.canonical_is_root` | unspecified · J | unspecified · J | unspecified · E0 | `CoherentRefresh.minimum_once`, `WireReferenceCost.shared_maintenance_free` · J | `RefreshSchedule.minimal_is_ledger` · K | unspecified · J | unspecified · B | `PersistenceSelection.within_family_iff_cheapest` · H | `WireReferenceCost.shared_maintenance_free` · J |
 | E | unspecified · E0 | unspecified · E0 | unspecified · U | unspecified · U | unspecified · W | unspecified · U | `ChargedInsertion.vector_static_leg` · U | unspecified · J | `ElectricHeavyRecord.two_bit_factor_toll`, `EventRequirements.massive_flag` | `HeavyFlipRecords.orbit_record_tolls` · W [record polarity] | unspecified · B | `WireReferenceCost.booked_population_difference` · H | `ChargedInsertion.joint_selector`, `WireReferenceCost.reference_threshold_with_erasure` · U |
 
@@ -166,15 +167,15 @@ receiver-rule symmetry follows.
 
 | Earlier level | Cell or pillar | Open question |
 | --- | --- | --- |
-| Price | D → A, P Toll, B → D | Which work is booked, and which exported bits are erased? K, B. |
-| Schedule | A → G, A → X, A Protocol | Which visits are required, concurrent and separately paid? J, K. |
-| Clock | C → P, C → E | Which physical tick and area realize the candidate word? T. |
+| Price | D → A, P Toll, B → D | The supplied total reconciles. Physical booking and export stay K/D/B. |
+| Schedule | A → G, A → X, A Protocol | Encoded rates bound one instance. Joint slot ownership and work stay J/T/K. |
+| Clock | C → P, C → E | The isolated trial leaves 41 slots. Calibration and placement stay T. |
 | Selection | A → A, A → E | Which traces and paid costs enter the comparison? H, K. |
 | Admission | N → G, R → X, E Governor | Which occupied states, references and EP attachments are accessible? O, Q, U. |
-| Update rule | G → P, G → X, F → G | How do the retained records control pulses, routing and readiness? G. |
+| Update rule | G → P, G → X, F → G | The core and FIFO lift separately. Physical packet firing and feedback stay G/T/U. |
 | AND/OR | G → X, X → L, X → D | The mixed receiver branch, destinations and flags differ. Its downstream use is W. |
 | Prior | B → D, A → A | Which initial histories carry prior mass? H. |
-| Export contract | F → B, X → E, D → E, F → E | Which routed value, record or paid comparison is read, and what is disposed after the last use? W, B. |
+| Export contract | F → B, X → E, D → E, F → E | All receiver candidates are local. W/D say which one is read. B says what is disposed after use. |
 
 ## Per-instance rates
 
@@ -378,3 +379,29 @@ accessible starts and supply (O/Q), packet and writer realization
 remaining work (K), the export contract (B), and the prior over
 histories (H). J and L apply where contention, reuse or successive
 links affect that trace.
+
+## Remaining free inputs by reach
+
+The ranking counts distinct outputs in this ledger that directly use
+each input in at least one certified conditional route or account.
+Each output occupies one place in the count. The counts describe
+dependency reach, independently of whether the conditional route is
+ultimately realized.
+
+| Input | Output count | Affected outputs |
+| --- | --- | --- |
+| G · Local firing and packet action | 7 | Receiver branch, realized route, writer population, heavy crossing, lightest insertion, physical schedule, per-label Toll. |
+| T · Clock placement and calibration | 6 | Physical schedule, elapsed route periods, physical `r`, heavy crossing, lightest insertion, read availability. |
+| O · Accessible occupied background | 5 | Trial prior counts, writer population, sampled reference threshold, readiness, reachable wire modes. |
+| U · Carrier and EP realization | 5 | Writer population, heavy crossing, lightest insertion, tier identification, scaling in `1/Δ`. |
+| W · Reader attachment | 5 | Writer population, record polarity, heavy crossing, lightest insertion, insertion amplitude. |
+| K · Paid work and event identification | 5 | Per-label Toll, wire amplitude, reference selection, schedule selection, substrate-index reconciliation. |
+| B · Export and disposition | 4 | Erased bits per period, renewed readiness, merged-history weights, erasure-reset threshold. |
+| D · Detector support | 4 | Registration count, receiver Toll, insertion amplitude, calibration statistic. |
+| J · Shared jobs and contention | 3 | Physical schedule, incremental maintenance Toll, reference selection. |
+| Q · Reference supply and acceptance | 3 | Clean visits, sustained renewal, heavy bank readiness. |
+| H · History family and prior | 2 | Aggregate receiver survival, expected writer Toll. |
+| L · Admitted link and successor law | 2 | Realized route, effective through weight. |
+
+Layering is a separate build decision in [PREMISES](PREMISES.md#layering).
+It supplies no physical input to this ranking.

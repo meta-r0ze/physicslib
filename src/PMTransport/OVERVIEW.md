@@ -7,6 +7,10 @@ The [component inventory](COMPONENTS.md) maps the six pillars, native ports
 and open connections. `PMTransport.Components` exposes the corresponding
 contracts with explicit hypotheses. The [machine overview](Machine/OVERVIEW.md)
 maps the upstream implementation.
+The inventory gives the [encoded rate limits](COMPONENTS.md#per-instance-rates),
+[headroom](COMPONENTS.md#margin-in-matching-units),
+[reversible packet-bank lift](COMPONENTS.md#joint-update-and-its-limit),
+and [booked Toll account](COMPONENTS.md#toll-by-operation).
 The [admission check](ADMISSION.md) gives the reachable trial histories
 and the boundary required for repeated open visits. Its
 [autonomous guard test](ADMISSION.md#no-external-controller) checks
