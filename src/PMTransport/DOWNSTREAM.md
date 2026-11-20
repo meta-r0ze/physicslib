@@ -33,3 +33,40 @@ ratios for its labelled comparison. None of these or the EP modules
 imports `LocalController`, `RingReceiver` or `BoundaryErasure`.
 The Transport umbrella also exposes those three model modules, so
 their observable trace differences matter to a claim of machine symmetry.
+
+## Comparison on the same input
+
+**Derived.** Each expression in `Values` and each EP ledger formula
+above is the same function at the same arguments. This includes
+the period 43, the short and long serial budgets 60/152 and 36/88,
+the normalized rate ratios 1/2 and 3/8, both families of reference
+thresholds, and the conditional `α`, `α/2`, `w^q` and
+`exp(−T/2)` formulae. The receiver rule is absent from these
+definitions. This establishes no equality of supplied physical
+clock words, weights, costs or packet traffic.
+
+**Derived.** `LocalController.control_iterates_eq` gives the same
+clock, requests and probe from a common start on any trace. The
+admitted initial controller support remains a premise. The clock
+and comparison theorems in `Interface.Clock` apply to that supplied
+support.
+
+**Symmetry, on tagged traces.** `LocalController.tagged_ticks_equal`
+gives equality of the complete retained state at every tick.
+`tagged_trace_observable_eq` carries that equality through any
+common trace readout. `BoundaryErasure.tagged_rule_exports`
+identifies the same exported value at every tagged record address.
+Supply, restoration, export populations, and any use of the
+same paid and disposal maps on that trace agree. The guard
+decisions also agree on its diagonal requests
+(`guard_decisions_eq_iff`).
+
+## Distinguishing observables
+
+| Status | Quantity that differs | Witness or condition |
+| --- | --- | --- |
+| Derived | Executed branch | At the same receiver `guard_decisions_eq_iff` makes the decisions differ exactly for a mixed request. This can happen with equal arrivals. |
+| Derived | Ordered live and record outputs, live restoration, and destination of the incoming value | `guard_outputs_eq_iff` gives an output difference precisely for mixed requests with unequal arrivals. In `mixed_open_receiver_ports` the retained pair is `(false,true)` for AND and `(true,false)` for OR. If the arriving record is the reference, OR returns it to live and AND leaves it in record. `mixed_open_receiver_destinations` sends the same marked value to the record port at −1 for AND and the live port at +1 for OR. This is different realized transmission, with the constitutive coefficient `α` held fixed. A value's population follows its port. |
+| Derived | Receiver comparison flag | `mixed_ring_flags` gives 0 for AND and 1 for OR from the same mixed-request, unequal basis arrivals. This flag is available in the receiver model before any disposition. |
+| Conditional | Paid comparison Toll, the associated wire amplitude, and orbit scores in the flag account | If the one mismatch comparison is the charged Toll, `mixed_ring_flag_amplitudes` gives 1 and `exp(−1/2)`. `mixed_ring_orbit_toll` gives site-zero flag rates 0 and 1 on the two orbits from the common input. The [ring flag and survivor tables](RING.md#robustness-across-all-positive-hazards) distinguish the ensembles under stated priors. |
+| Excluded | A quotient of all published receiver observations by the rule choice | The same mixed input gives different observable destinations and flags. Equality on tagged starts does not extend to that input. |

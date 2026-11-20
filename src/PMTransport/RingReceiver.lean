@@ -311,11 +311,73 @@ theorem receiver_flag_eq {n : ℕ} (either : Bool) (s : State n) (x : Fin n) :
     norm_num [exchangeFlag, h, basisValue, LinkExpansion.nsq_eq, Fin.sum_univ_two,
       Pi.single_apply, Complex.normSq_apply]
 
+/-- A common ring input with mixed requests and unequal arrivals. -/
+def mixedBasisRing : State 3 :=
+  (0, (fun _ => (true, false), (fun _ => false, fun _ => (false, true))))
+
+/-- On the same occupied input the AND receiver bypasses and OR runs
+    the unit mismatch comparison. This is a flag account, separate from
+    erasure at any boundary. -/
+theorem mixed_ring_flags :
+    receiverFlag false mixedBasisRing 0 = 0 ∧
+      receiverFlag true mixedBasisRing 0 = 1 := by
+  constructor <;> rw [receiver_flag_eq] <;>
+    simp [mixedBasisRing, arrivals, OpenReferenceFlow.streamShift, exchange]
+
+/-- The amplitude difference when that one paid receiver comparison
+    supplies the entire specified Toll. -/
+theorem mixed_ring_flag_amplitudes :
+    TollAmplitude.wireAmplitude (receiverFlag false mixedBasisRing 0) = 1 ∧
+      TollAmplitude.wireAmplitude (receiverFlag true mixedBasisRing 0) = Real.exp (-(1 : ℝ) / 2) := by
+  rw [mixed_ring_flags.1, mixed_ring_flags.2]
+  simp [TollAmplitude.wireAmplitude]
+
 /-- Expected receiver registrations per tick on an orbit. The sum may
     cover one receiver or all of them. -/
 noncomputable def orbitToll {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
     (orbit : Finset (State n)) : ℝ :=
   orbitAverage orbit fun s => ∑ x ∈ receivers, receiverFlag either s x
+
+private theorem mixed_ports_remain_unequal (either : Bool) (n : ℕ) :
+    ∃ p : Ports, p.1 ≠ p.2 ∧
+      ((tick 3 either)^[n] mixedBasisRing).2.2.2 = (fun _ => p) := by
+  induction n with
+  | zero => exact ⟨(false, true), Bool.false_ne_true, rfl⟩
+  | succ n ih =>
+    obtain ⟨p, hneq, hp⟩ := ih
+    let s := (tick 3 either)^[n] mixedBasisRing
+    have hq : s.2.1 = (fun _ => (true, false)) := requests_iterate _ _ _
+    refine ⟨if either then p.swap else p, ?_, ?_⟩
+    · cases either
+      · exact hneq
+      · exact Ne.symm hneq
+    · rw [Function.iterate_succ_apply']
+      change (tick 3 either s).2.2.2 = _
+      funext x
+      rw [tick_ports, hq, show s.2.2.2 = (fun _ => p) from hp]
+      cases either <;> rfl
+
+theorem mixed_ring_iterate_flag (either : Bool) (n : ℕ) (x : Fin 3) :
+    receiverFlag either ((tick 3 either)^[n] mixedBasisRing) x = if either then 1 else 0 := by
+  obtain ⟨p, hneq, hp⟩ := mixed_ports_remain_unequal either n
+  rw [receiver_flag_eq, requests_iterate, hp]
+  cases either <;> simp [mixedBasisRing, arrivals, OpenReferenceFlow.streamShift, exchange, hneq]
+
+theorem mixed_ring_orbit_toll (either : Bool) :
+    orbitToll either {0} (orbitWithin either 516 mixedBasisRing) = if either then 1 else 0 := by
+  let orbit := orbitWithin either 516 mixedBasisRing
+  have hzero : mixedBasisRing ∈ orbit :=
+    Finset.mem_image.mpr ⟨0, Finset.mem_range.mpr (by decide +kernel), rfl⟩
+  have hcard : (orbit.card : ℝ) ≠ 0 := by exact_mod_cast (Finset.card_pos.mpr ⟨_, hzero⟩).ne'
+  have hsum : (∑ s ∈ orbit, receiverFlag either s 0) = ∑ _s ∈ orbit, (if either then 1 else 0) := by
+    apply Finset.sum_congr rfl
+    intro s hs
+    obtain ⟨n, _, rfl⟩ := Finset.mem_image.mp hs
+    exact mixed_ring_iterate_flag either n 0
+  change ((∑ s ∈ orbit, ∑ x ∈ ({0} : Finset (Fin 3)), receiverFlag either s x) / orbit.card) = _
+  simp only [Finset.sum_singleton]
+  rw [hsum, Finset.sum_const, nsmul_eq_mul]
+  exact mul_div_cancel_left₀ _ hcard
 
 private theorem orbit_toll_nonneg {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
     (orbit : Finset (State n)) : 0 ≤ orbitToll either receivers orbit := by

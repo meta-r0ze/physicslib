@@ -248,6 +248,50 @@ theorem two_open_compatible_rules :
   have hc := congrArg (fun f : Rule => f 0 (true, false) (false, true)) h
   exact Bool.false_ne_true hc
 
+theorem guard_decisions_eq_iff (phase : Phase) (c : Requests) (p : Ports) :
+    exchangeOnBoth phase c p = exchangeOnEither phase c p ↔ c.1 = c.2 := by
+  rcases c with ⟨a, b⟩
+  cases a <;> cases b <;> simp [exchangeOnBoth, exchangeOnEither]
+
+theorem guard_outputs_eq_iff (phase : Phase) (c : Requests) (p : Ports) :
+    applyGuard (exchangeOnBoth phase c) p = applyGuard (exchangeOnEither phase c) p ↔
+      c.1 = c.2 ∨ p.1 = p.2 := by
+  rcases c with ⟨a, b⟩
+  rcases p with ⟨l, r⟩
+  cases a <;> cases b <;> cases l <;> cases r <;>
+    simp [exchangeOnBoth, exchangeOnEither, applyGuard]
+
+/-- At a common start the phase, requests and probe evolve independently
+    of the receiver guard. -/
+theorem control_iterates_eq (a b : Rule) (s : State) (n : ℕ) :
+    (((rawTick a)^[n] s).1, ((rawTick a)^[n] s).2.1) =
+      (((rawTick b)^[n] s).1, ((rawTick b)^[n] s).2.1) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
+    exact congrArg (fun q : Phase × (ℤ → Requests × Bool) =>
+      (finRotate Delta q.1, advanceProbe q.1 ∘ q.2)) ih
+
+/-- The tagged open route agrees as a full retained state at every tick,
+    including the request and probe fields, from the same start. -/
+theorem tagged_ticks_equal (s : State) (hs : CentreTagged s) (n : ℕ) :
+    (rawTick exchangeOnBoth)^[n] s = (rawTick exchangeOnEither)^[n] s := by
+  have h := control_iterates_eq exchangeOnBoth exchangeOnEither s n
+  have ha : OpenCompatible exchangeOnBoth := fun _ _ => ⟨rfl, rfl⟩
+  have hb : OpenCompatible exchangeOnEither := fun _ _ => ⟨rfl, rfl⟩
+  refine Prod.ext (congrArg (fun c : Phase × (ℤ → Requests × Bool) => c.1) h) ?_
+  exact Prod.ext (congrArg (fun c : Phase × (ℤ → Requests × Bool) => c.2) h)
+    ((tagged_open_iterate _ ha s hs n).trans (tagged_open_iterate _ hb s hs n).symm)
+
+/-- Any read of the common tagged trace is invariant under the rule
+    choice. This statement applies to supplied readouts at fixed inputs. -/
+theorem tagged_trace_observable_eq {A : Type*} (readout : (ℕ → State) → A)
+    (s : State) (hs : CentreTagged s) :
+    readout (fun n => (rawTick exchangeOnBoth)^[n] s) =
+      readout (fun n => (rawTick exchangeOnEither)^[n] s) :=
+  congrArg readout (funext (tagged_ticks_equal s hs))
+
 theorem mixed_requests_different_destinations (s : State) (x : ℤ)
     (hc : (s.2.1 x).1 = (true, false)) (hl : (s.2.2 (x - 1)).1 = false)
     (hr : (s.2.2 (x + 1)).2 = true) :
@@ -260,6 +304,26 @@ theorem mixed_requests_different_destinations (s : State) (x : ℤ)
   rw [hc, hl, hr]
   exact ⟨rfl, rfl⟩
 
+
+/-- One mixed receiver and one arriving marked value. All other
+    receivers have idle requests. -/
+def mixedArrival : State :=
+  (0, (fun x => ((decide (x = 0), false), false),
+    fun x => (false, decide (x = 1))))
+
+theorem mixed_open_receiver_ports :
+    (rawTick exchangeOnBoth mixedArrival).2.2 0 = (false, true) ∧
+      (rawTick exchangeOnEither mixedArrival).2.2 0 = (true, false) :=
+  mixed_requests_different_destinations mixedArrival 0 rfl rfl rfl
+
+/-- The next shift sends the marked arrival through to the record at
+    minus one under AND, or back to the live port at plus one under OR. -/
+theorem mixed_open_receiver_destinations :
+    ((rawTick exchangeOnBoth)^[2] mixedArrival).2.2 (-1) = (false, true) ∧
+      ((rawTick exchangeOnBoth)^[2] mixedArrival).2.2 1 = (false, false) ∧
+      ((rawTick exchangeOnEither)^[2] mixedArrival).2.2 (-1) = (false, false) ∧
+      ((rawTick exchangeOnEither)^[2] mixedArrival).2.2 1 = (true, false) :=
+  ⟨rfl, rfl, rfl, rfl⟩
 
 /-! ## Complementing the requests -/
 
