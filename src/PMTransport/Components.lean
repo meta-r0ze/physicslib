@@ -870,6 +870,75 @@ theorem bare_line_mixing_root :
       pairing (inactive - pairing inactive r • r) active ≠ 0 := by
   decide +kernel
 
+/-! ### Bare root line
+
+Use the integral simple-root coordinates of the E8 Gram matrix.
+The marked positive edge is the second basis root. Conjugating the
+standard highest-root stabilizer gives the seven reflections below.
+-/
+
+open PMSubstrate.Lattices
+
+def coordinateRoot (i : Fin 8) : SubstrateWeylRoots.Lattice := Pi.single i 1
+
+def bareReflect (r z : SubstrateWeylRoots.Lattice) : SubstrateWeylRoots.Lattice :=
+  z - pairing z r • r
+
+def highestRoot : SubstrateWeylRoots.Lattice := ![2, 3, 4, 6, 5, 4, 3, 2]
+
+def toHighest : List (Fin 8) :=
+  [3, 2, 0, 4, 3, 2, 5, 4, 3, 1, 6, 5, 4, 3, 2, 0, 7, 6, 5, 4, 3, 1, 2, 3, 4, 5, 6, 7]
+
+def runRootWord (word : List (Fin 8)) (z : SubstrateWeylRoots.Lattice) :
+    SubstrateWeylRoots.Lattice :=
+  word.foldl (fun x i => bareReflect (coordinateRoot i) x) z
+
+def bareGenerators : Fin 7 → SubstrateWeylRoots.Lattice :=
+  ![coordinateRoot 7, coordinateRoot 4, coordinateRoot 6, coordinateRoot 5,
+    ![0, 1, 1, 2, 1, 0, 0, 0], coordinateRoot 0, coordinateRoot 2]
+
+theorem bare_line_coordinates :
+    coordinateRoot 1 = SubstrateWeylRoots.root false 0 + 2 • SubstrateWeylRoots.root false 1 +
+      SubstrateWeylRoots.root false 2 + SubstrateWeylRoots.root false 3 := by
+  decide +kernel
+
+theorem bare_conjugating_word :
+    runRootWord toHighest (coordinateRoot 1) = highestRoot ∧
+      (∀ i : Fin 7, pairing highestRoot (coordinateRoot i.castSucc) = 0 ∧
+        runRootWord toHighest.reverse (coordinateRoot i.castSucc) = bareGenerators i) ∧
+      pairing highestRoot (coordinateRoot 7) = 1 := by
+  decide +kernel
+
+theorem bare_generators_gram :
+    (∀ i, pairing (bareGenerators i) (coordinateRoot 1) = 0) ∧
+      ∀ i j, pairing (bareGenerators i) (bareGenerators j) = gram i.castSucc j.castSucc := by
+  decide +kernel
+
+theorem bare_generators_fix_direction (i : Fin 7) :
+    bareReflect (bareGenerators i) (coordinateRoot 1) = coordinateRoot 1 := by
+  fin_cases i <;> decide +kernel
+
+theorem bare_reverse_direction :
+    bareReflect (coordinateRoot 1) (coordinateRoot 1) = -coordinateRoot 1 := by
+  decide +kernel
+
+/-- Sector action on the actual spanning roots. The coefficient
+table is computed in the integral substrate Gram matrix. -/
+def bareSectorCoefficients (i : Fin 7) (sector : Bool) (j : Fin 4) : ℤ :=
+  pairing (SubstrateWeylRoots.root sector j) (bareGenerators i)
+
+theorem bare_generator_sector_action (i : Fin 7) (sector : Bool) (j : Fin 4) :
+    bareReflect (bareGenerators i) (SubstrateWeylRoots.root sector j) =
+      SubstrateWeylRoots.root sector j - bareSectorCoefficients i sector j • bareGenerators i := rfl
+
+theorem bare_sector_coefficients :
+    ∀ i : Fin 7,
+      (fun j => bareSectorCoefficients i false j) =
+        (![![0,0,0,0], ![0,1,-2,0], ![0,0,0,0], ![0,0,1,-1], ![0,-1,0,2], ![1,0,0,-1], ![-2,1,0,0]] : Fin 7 → Fin 4 → ℤ) i ∧
+      (fun j => bareSectorCoefficients i true j) =
+        (![![1,-2,1,1], ![0,0,0,0], ![-2,1,0,0], ![1,0,0,0], ![0,0,0,0], ![0,0,-1,0], ![0,0,0,0]] : Fin 7 → Fin 4 → ℤ) i := by
+  decide +kernel
+
 end NodeSymmetry
 
 /-! ## Equivariance of factorwise actions -/

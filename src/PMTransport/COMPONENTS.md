@@ -590,3 +590,35 @@ account only under `erasure_reset_matches_balanced_iff`.
 Neither a physical tier identification nor a selected receiver
 is exported. The [ranked ledger](#remaining-free-inputs-by-reach)
 retains all 12 entries.
+
+### Bare-line stabilizer
+
+The mathematical root stabilizer is W(E7), of order 2,903,040.
+Allowing the line's sign adds the commuting reflection in the line
+root, giving W(E7) × C2, of order 5,806,080. These orders and the
+parabolic stabilizer identification are cited facts.
+[Green and Xu, §3](https://www.cambridge.org/core/journals/forum-of-mathematics-sigma/article/orthogonal-roots-macdonald-representations-and-quasiparabolic-sets/F6F652B181E985A2D0F5C73662A6FB4A)
+and [Winter and van Luijk, §2](https://link.springer.com/article/10.1007/s00373-021-02315-8).
+
+Lean checks the explicit conjugating root word in
+`NodeSymmetry.bare_conjugating_word`. In the highest-root chamber
+the first seven E8 simple roots are perpendicular to the highest
+root. Their conjugates give the seven generators in this repository's
+line coordinates, with the E7 Gram matrix and exact sector action
+in `bare_generators_gram` and `bare_sector_coefficients`. The
+standard parabolic generator theorem gives exhaustiveness. The
+same Lean calculation identifies the direction and the extra sign
+reflection in `bare_line_coordinates` and `bare_reverse_direction`.
+
+| Marking | Effect and justification |
+| --- | --- |
+| Directed edge and stream roles | The sign reflection reverses the positive direction. Keeping the two stream roles fixed removes this operation from the directed encoding. The substrate does not select a stream-role assignment. |
+| Scalar phase | A separate phase coordinate supplies no spatial normal. A chosen spatial normal gives the different marked slice groups above. Its identification with the substrate clock is an encoding input. |
+| Two named D₄ sectors | Some positive-line stabilizers mix them, as witnessed by `bare_line_mixing_root`. Requiring separate sector actions is a restriction of the carrier encoding. |
+| Fixed trial probe | A spatial action moving its reflection axis breaks the fixed-root pulse on either receiver. The marked line subgroup commutes with that probe in `line_probe_equivariant`. |
+
+The largest common action implemented on the directed marked line still
+admits AND and OR with hold or FIFO under cellwise packet covariance.
+The full bare-line action does not act on that marked encoding, and
+no joint Weyl action on its Boolean requests and 16-slot packet follows.
+There is no full-group removal of an individual candidate.
