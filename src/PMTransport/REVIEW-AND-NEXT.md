@@ -1,7 +1,7 @@
 # PMTransport — open work
 
 The [admission chain is paused](PREMISES.md#stopping-point) at the
-export and disposition law. The items below record its open dependencies.
+mixed receiver readout required by a downstream trace. The items below record its open dependencies.
 
 ## Node handoff
 

@@ -282,7 +282,7 @@ The [closed-ring test](RING.md) computes stationary traffic on
 three, four and five sites. The receiver-flag minima tie and the
 historical Gibbs comparison depends on the prior. With the boundary
 account below the [admission chain stays paused](PREMISES.md#stopping-point)
-at the export and disposition law.
+at the use of a mixed receiver output by an admitted downstream trace.
 The electric reference choice still requires its writer trace
 and prices. Choosing colour or lepton complements the electric
 sector bit and keeps the position bit
@@ -341,5 +341,32 @@ neither rule on the certified ring or on the same tagged open
 train under common disposal. Those ties hold for any prior.
 A mixed-request advantage requires the missing export contract.
 
-The stopping rule leaves the merged-history measure and the writer's
-erasure-priced resets unevaluated.
+## Downstream scope
+
+The [downstream audit](DOWNSTREAM.md) separates fixed values and
+formulae from observations of receiver traces. **Symmetry.**
+`LocalController.tagged_ticks_equal` and
+`tagged_trace_observable_eq` cover every common read of the full
+tagged trace, including its clock and controller fields. A common
+erasure projection and supplied prior therefore give equal
+merged weights there.
+
+**Excluded.** A quotient of the unrestricted machine by AND/OR
+would forget different destinations and receiver flags.
+`mixed_open_receiver_destinations` and
+`RingReceiver.mixed_ring_flags` exhibit the difference at the
+same input, before disposal. No certified EP consumer maps that
+mixed trace to a writer or insertion.
+
+**Conditional.** If such a trace is read, keep its routed value
+and destination or its executed comparison and booked flag
+through the relevant read. The missing choice is which of these
+observations a writer or insertion consumes. It bears on writer
+population and on the Toll in the wire amplitude. The
+[admission chain stays paused](PREMISES.md#stopping-point) here.
+
+**Derived.** The no-export ring's erasure weights give the
+normalized supplied prior. **Conditional.** For reset erasure
+the electric-reference threshold needs the difference of the
+writers' booked erase counts. See the
+[prior and reset checks](DOWNSTREAM.md#prior-and-reset-checks).

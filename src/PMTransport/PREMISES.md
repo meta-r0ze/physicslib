@@ -12,16 +12,18 @@ background. An admitted trace includes its occupied ports, request and
 firing guard at each tick, and the output and retained record. See the
 [reachability results](ADMISSION.md).
 
-**Admission chain paused at the boundary.** The unit erasure price
-leaves AND and OR tied on the retained ring. Their tagged open record
-trains also pay the same erasure count under a common disposition.
-See the [boundary account](ADMISSION.md#boundary-erasure).
+**Admission chain paused at the mixed receiver readout.** AND and
+OR agree on the entire tagged open trace. A mixed request can
+change the executed branch, destination and receiver flag on the
+same input. See the [downstream audit](DOWNSTREAM.md).
 
-**Missing export contract.** Which receiver visits send an occupied
-record past its last use, and does that boundary keep, recycle or erase
-it? In particular, does a mixed request have a disposable export under
-one rule? The unit price supplies no export itinerary. Prior selection
-and the writer remain paused.
+**Missing export contract.** Does an admitted downstream writer
+or insertion consume the mixed receiver's routed value or paid
+comparison? If it does, the boundary must carry the value and its
+destination, or the executed comparison and its flag, as required
+by that read. These data would affect writer traffic or the Toll
+used in the wire amplitude. The certified EP formulae take no
+such receiver trace as an input.
 
 Two named parts of Admission remain open.
 
@@ -145,6 +147,8 @@ It remains parked.
 | Derived, counted scope | Reversible guards with both streams retained | `LocalController.reversible_iff_rows` and `enumerated_rule_count` count the original core. `BoundaryErasure.annotated_rule_count` gives the conditional product count for separate dispositions. |
 | Excluded | Equating AND and OR by complement and swap | `LocalController.receiver_dual_not_conjugate` and `no_request_complement_conjugacy` apply to the retained dynamics. A flag counterexample compares their receiver flags. |
 | Derived | Erasure price and unchanged identity update | `BoundaryErasure.identity_bijective`, `erased_bit_merges`, `erasing_pays_one` separate the retained permutation and the erasure of one supplied bit. |
+| Symmetry | Rule choice on the tagged open trace | `LocalController.tagged_ticks_equal` and `tagged_trace_observable_eq` give the same retained state and common trace readout at every tick. `BoundaryErasure.tagged_rule_exports` gives the same tagged train. |
+| Excluded | Collapsing all receiver observations to one rule | `LocalController.mixed_open_receiver_destinations` distinguishes the through and reflected values. `RingReceiver.mixed_ring_flags` and `mixed_ring_orbit_toll` distinguish the flag accounts. |
 | Derived | No exported erasures on the certified closed ring | `BoundaryErasure.ring_boundary_step`, `ring_cycle_erasure` give zero per cycle. `ring_live_depends_on_record` exhibits a circulating record that feeds the next live slot. |
 | Conditional | Erasure pricing on admitted open visits | `BoundaryErasure.tagged_rule_exports` gives the same tagged train for both rules. `open_cycle_erase_all` gives 43 erased bits if every record is erased outside the core within the period. `exchange_erasure_gap` needs a booked export to the eraser on each exchange and none on bypass. |
 | Derived, counted scope | Retained ring traffic and historical flag costs | `RingReceiver.ring_return_three`, `ring_return_four`, `ring_return_five` and `orbit_enumeration_covers` apply to the retained ring. `minimum_orbit_toll` and `both_rules_attain_best_survival` compare its flag account. The [prior sign checks](RING.md#robustness-across-all-positive-hazards) concern that account. |
@@ -162,13 +166,21 @@ It remains parked.
 
 ## Stopping point
 
-The least erasure rate ties in the certified closed ring and in the
-tagged open trace under common disposal. Selecting either rule needs
-a native export and disposition law that gives a different count.
-The missing choice is at the boundary, after the record's last use
-and before disposal. The unit erasure price is fixed in this account.
+The rule choice is a symmetry of the common tagged trace.
+The unrestricted receiver interface observes mixed-request
+destinations and flags. To use either difference downstream,
+identify the admitted reader of the routed bit or booked comparison.
+The writer population and its physical insertion or survival
+amplitude await that contract.
 
-The stopping rule leaves the erasure-merged prior and erasure-priced
-writer reset thresholds untested. The existing numbers
-`3/4`, `27/32`, and `9/10` still describe the separate balanced
-comparison-reset account.
+**Derived.** With zero erasures on the ring,
+`BoundaryErasure.ring_erasure_survivor_eq` leaves the supplied prior
+after normalization. A common tagged readout and disposition also
+give equal merged weights for the same prior.
+
+**Conditional.** The existing `3/4`, `27/32`, and `9/10` values
+are balanced comparison thresholds. With the output flags paid
+and a supplied erasure ledger the threshold shifts by the
+colour-minus-lepton erase-count difference
+(`WireReferenceCost.reference_threshold_with_erasure`).
+A numeric shift requires the actual writer exports.

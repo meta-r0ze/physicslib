@@ -44,7 +44,7 @@ the recorded mass ratios to check it.
   [closed-ring test](../PMTransport/RING.md#pricing-and-selection)
   ties their best receiver costs. The
   [admission chain is paused](../PMTransport/PREMISES.md#stopping-point)
-  at the receiver export and disposition law.
+  at the mixed receiver readout needed by a downstream trace.
   The electric reference complements the sector
   flag and keeps the position flag
   (`ElectricHeavyRecord.reference_flags_from_orbit_bits`).

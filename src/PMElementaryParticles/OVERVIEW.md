@@ -352,6 +352,10 @@ a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
 
 ### Heavy flip and record certificates
 
+`WireReferenceCost.reference_threshold_with_erasure` shifts the
+output-flag threshold by the difference in booked writer erasures.
+The balanced comparison reset keeps its own conditional thresholds.
+
 <a id="finite-control-of-the-direct-heavy-flip"></a>
 <a id="record-comparisons-and-heavy-flip-toll"></a>
 <a id="an-electric-charge-record-on-both-walls"></a>

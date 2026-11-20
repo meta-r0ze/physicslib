@@ -220,7 +220,12 @@ record would change the retained update. A new ring with disposal
 needs a separate export port and a certificate identifying which
 information has finished its internal use.
 
-The tables above count comparison flags with the stated prior.
-They remain results of that account. The
-[boundary stopping point](PREMISES.md#stopping-point) leaves the
-erasure-merged prior unevaluated.
+**Derived.** The closed ring retains the routed distinction.
+On the common mixed basis input, `mixed_ring_orbit_toll` gives
+site-zero flag rates 0 for AND and 1 for OR. The tables above
+price comparison flags with the stated prior. For erasure alone,
+`ring_erasure_survivor_eq` gives the normalized supplied prior
+because the ring exports no bit and every erasure weight is one.
+The open tagged-trace symmetry and the
+[boundary stopping point](PREMISES.md#stopping-point) are separate
+from these ring observations.

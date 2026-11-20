@@ -16,6 +16,7 @@ the effect of retaining all controls in the state.
 
 | Result | Certificates and scope |
 | --- | --- |
+| Tagged equivalence and mixed-request readouts | `LocalController.tagged_trace_observable_eq` gives equality on tagged starts. `mixed_open_receiver_destinations` and `RingReceiver.mixed_ring_orbit_toll` distinguish the mixed outputs and flag rates. The [downstream audit](DOWNSTREAM.md) identifies the records a downstream read would need. |
 | Reversible local guards | `LocalController.radius_one`, `receiver_realisation`, `reversible_iff_rows` and `enumerated_rule_count` classify the guarded two-stream encoding. `tagged_open_iterate` and `two_open_compatible_rules` give distinct rules realizing the same tagged open trace. |
 | Carrier and port routing | `NativeCarrierProtocol`, `NativePacketRouting`, `NativePacketUpdate` give native readout and locality for the supplied routing. `TwoSiteHandoff.port_count` gives two live and two record modes per site. See the [substrate pillars](../PMSubstrate/Pillars.lean) and [wire application](../PMElementaryParticles/README.md#the-six-pillars-on-the-wire). |
 | Exchange and bypass | `TwoSiteHandoff.arrivals_observed`, `step_trace`, `export_trace`, `exchange_lookup`, `native_step_observed`, `receiver_agrees_with_line` give the destinations. `receiver_half_pulse` realizes exchange on an admitted root phase. `OpenReferenceFlow.exchange_reflects`, `bypass_transmits` identify the reflected and through streams. |

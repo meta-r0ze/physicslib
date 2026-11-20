@@ -146,7 +146,7 @@ ties the best receiver costs. The
 [robustness check](../PMTransport/RING.md#robustness-across-all-positive-hazards)
 gives a prior-dependent survival ordering. The
 [admission chain is paused](../PMTransport/PREMISES.md#stopping-point)
-at the receiver export and disposition law.
+at the mixed receiver readout needed by an admitted writer or insertion.
 The wire comparison still depends on the writer input, retained
 pulse guard and differing paid work.
 
@@ -297,7 +297,12 @@ premise the output-bit ledger has `ΔR = G/2 + U`.
 The reset term here prices a separate balanced receiver comparison.
 Boundary erasure counts booked exports actually reset after their
 last use. The flag certificate supplies no writer export itinerary.
-See the [boundary stopping point](../PMTransport/PREMISES.md#stopping-point).
+`WireReferenceCost.reference_threshold_with_erasure` gives the
+replacement threshold `B − (E_C − E_L)`, with output flag threshold
+`B` and booked erase counts per input `E_C` and `E_L`. Equal erase
+counts leave `B`. The tagged receiver train does not supply the
+difference between the two writer counts. See the
+[boundary stopping point](../PMTransport/PREMISES.md#stopping-point).
 
 | Common sampling policy | Output-bit gap `G` | Conditional reset contribution to `ΔR` | Colour wins with output flags and those resets if |
 | --- | ---: | ---: | ---: |
