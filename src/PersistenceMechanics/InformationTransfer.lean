@@ -23,30 +23,30 @@ namespace PersistenceMechanics.InformationTransfer
 open PersistenceMechanics.EffectiveAction
 
 inductive TransferMode
-  | boundaryConduction
-  | capacityPromotion
-  | coordinateJump
+  | inCycle
+  | referenceWall
+  | otherWall
   deriving DecidableEq, Repr
 
 def TransferMode.adjacent : TransferMode → Bool
-  | .boundaryConduction => true
-  | .capacityPromotion => true
-  | .coordinateJump => false
+  | .inCycle => true
+  | .referenceWall => true
+  | .otherWall => false
 
 def TransferMode.continuous : TransferMode → Bool
-  | .boundaryConduction => true
-  | .capacityPromotion => false
-  | .coordinateJump => false
+  | .inCycle => true
+  | .referenceWall => false
+  | .otherWall => false
 
 def TransferMode.expandsCapacity : TransferMode → Bool
-  | .boundaryConduction => false
-  | .capacityPromotion => true
-  | .coordinateJump => false
+  | .inCycle => false
+  | .referenceWall => true
+  | .otherWall => false
 
 theorem modes_pairwise_distinct :
-    TransferMode.boundaryConduction ≠ .capacityPromotion ∧
-    TransferMode.boundaryConduction ≠ .coordinateJump ∧
-    TransferMode.capacityPromotion ≠ .coordinateJump := by
+    TransferMode.inCycle ≠ .referenceWall ∧
+    TransferMode.inCycle ≠ .otherWall ∧
+    TransferMode.referenceWall ≠ .otherWall := by
   decide
 
 /-- A transfer channel: phase action, cost, required capacity, margin. -/
@@ -70,11 +70,11 @@ def TransferChannel.admissible (available : ℝ) (c : TransferChannel) : Prop :=
   c.capacityRequired ≤ available
 
 /-- Boundary conduction is interface-limited: it cannot expand capacity. -/
-theorem boundaryConduction_not_expanding :
-    TransferMode.boundaryConduction.expandsCapacity = false := rfl
+theorem inCycle_not_expanding :
+    TransferMode.inCycle.expandsCapacity = false := rfl
 
 /-- Capacity promotion is the only mode that expands the capacity bound. -/
-theorem capacityPromotion_expands :
-    TransferMode.capacityPromotion.expandsCapacity = true := rfl
+theorem referenceWall_expands :
+    TransferMode.referenceWall.expandsCapacity = true := rfl
 
 end PersistenceMechanics.InformationTransfer
