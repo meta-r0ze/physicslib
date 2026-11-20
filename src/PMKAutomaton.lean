@@ -11,5 +11,6 @@ import PMKAutomaton.LocalController
 import PMKAutomaton.RingReceiver
 import PMKAutomaton.BoundaryErasure
 import PMKAutomaton.Components
+import PMKAutomaton.ClockRing
 
 /-! Internal E8 node transport, packet handoff and booked boundary erasure. -/

@@ -1,7 +1,9 @@
 # The line and composition problems
 
-Status: proposals with numerical checks. Nothing here is proved in Lean yet.
-The check script is `tools/clock_ring_check.py` (exploration, no data).
+Status: proposals with numerical checks. The clock phase and the root counts of
+section 1 are written in Lean in `PMKAutomaton/ClockRing.lean` (not yet
+compile-checked). The check script is `tools/clock_ring_check.py` (exploration,
+no data).
 
 ## 1. The line problem: what closes the receiver ring
 
@@ -61,8 +63,14 @@ exchange swaps a packet between them, which reverses its direction.
    State which update the receiver realizes, or how the two fit together.
 3. *Clock-silent roots.* The 22 roots with phase 0 do not move a packet around
    the ring. Say what they do: internal or transverse motion.
-4. *Lean.* The phase map on roots, the counts above, and the statement that the
-   receiver ring with one-tick root steps is `ℤ/Δ`.
+4. *Lean.* Written in `PMKAutomaton/ClockRing.lean`, awaiting a compile check:
+   `clockReading` and its additivity, `rootList_complete` (via
+   `ThetaE8.e8_card_roots`), the counts (`one_tick_roots`, `minus_tick_roots`,
+   `silent_roots`, `moving_roots`, `plus_split`), `walk_returns_iff` (a walk of
+   `+1` roots closes exactly when 43 divides its length) and `plus_step_rotates`
+   (a `+1` step is `finRotate 43`). Still to state: the identification of
+   `RingReceiver`'s tick with one root event, and its site index with the
+   reading.
 
 ## 2. The composition problem: the nested rules on the machine
 
