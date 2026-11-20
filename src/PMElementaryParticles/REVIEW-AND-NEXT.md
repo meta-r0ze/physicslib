@@ -123,6 +123,13 @@ colour option needs a three-part composite of colour-axis vectors.
 equal to these. In the lepton vacuum neutrino fails Map; in the colour
 composite up fails Map.
 
+The colour reference cannot be one site value; the smallest candidate carrier
+is the three colour-axis vectors, using `PacketGaugeActions.permuteColour` and
+`record_colour`. `SharedReference`/`ColourReference` do not define that
+composite. The nested composition rules (Capacity Partitioning, Reversible
+Encoding, Impedance Matching) do not define a multi-protocol machine state, so
+colour-referenced all-pillar closure inside a composite remains conditional.
+
 No certified E8 line carries the abstract bit ring: `AxisHop` has axis steps as
 two root events, and `OpenHandoff` follows a primitive root direction, not the
 `2e_0` vacuum axis. The lattice line/period map is missing. The 3-ring
@@ -415,21 +422,21 @@ for every label: up→lepton, down→colour, electron→lepton, neutrino→colou
 Those per-label references are conditional because the shared-versus-sector
 background question is (c) not certified (Task P4).
 
-**What remains.** The shared-versus-per-label background is not certified
-(Task P4): no map from the abstract bit-ring background to an E8 lattice/D4
-sector or assignment of record classes to sectors. Under one shared colour
-vacuum up fails Map; under one shared lepton vacuum neutrino fails Map, so no
-shared vacuum is valid for all four record classes. The multi-protocol
-composition rule is not defined on the machine; the firing pattern is not
-selected; the full-ring Lean spectrum is not proved. Legacy tier sets,
-generation addresses, quark/lepton formulas and heavy-label weights remain
-premises. `down_geometric_mean` holds nontrivially under neither shared vacuum;
-under the conditional per-label Tolls all selected Tolls are 1, so it holds
-only as an equal-Toll case. The heavy writer's single reference is consistent
-only with a shared vacuum, which is not certified.
+**What remains.** The full channel→minimal-vector map is certified
+(`ChannelVectors.channelCoord`), but no certified bit-ring-to-lattice line map
+exists, so shared/per-sector backgrounds and per-sector tables remain
+conditional. The colour reference cannot be a single-site vacuum; it needs a
+three-part colour composite, and the multi-protocol composition rules are not
+defined on the machine. In the lepton vacuum neutrino fails Map; in a colour
+composite up fails Map. The firing pattern is not selected and the full-ring
+Lean spectrum is not proved. Legacy tier sets, generation addresses,
+quark/lepton formulas and heavy-label weights remain premises; record Tolls are
+derived at the flag level. `down_geometric_mean` holds nontrivially under
+neither single shared vacuum; under the conditional per-label Tolls all
+selected Tolls are 1, so it holds only as an equal-Toll case.
 
-**Next EP priority.** Certify the background/sector placement of the bit rings
-and the record classes, then decide shared versus sector-local reference. After
+**Next EP priority.** Certify the bit-ring-to-lattice line (or state its
+missing map), then settle shared versus sector/composite backgrounds. After
 that, define the multi-protocol composition state from the nested-paper rules,
 select the firing pattern, and finish the full-ring spectrum. The mass reading
 remains a hypothesis; radiative stage 2 is separate and still not started.

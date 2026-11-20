@@ -310,11 +310,26 @@ In the lepton vacuum the neutrino record equals the vacuum vector and fails
 Map; in the colour composite the up record is the reference record and fails
 Map. Thus no single vacuum is valid for all four record classes.
 
+The colour composite is not a single-site vacuum. The smallest certified
+object carrying it is the three colour-axis vectors `+2e_1,+2e_2,+2e_3`,
+acted on by `PacketGaugeActions.permuteColour` and `record_colour`; the layout
+references `SharedReference`/`ColourReference` supply no such composite state.
+The nested-paper rules—Capacity Partitioning, Reversible Encoding and
+Impedance Matching (`PM-3-Nested/paper/2_nested_persistence.tex`)—do not define
+a multi-protocol composite state on the machine. Colour-referenced protocols
+therefore cannot be tested for all six pillars inside a composite without that
+missing definition.
+
 No certified E8 line carries the abstract `Fin 3` bit ring. `AxisHop` proves an
 axis step is two root events; `OpenHandoff` routes along a primitive root
 direction, not the vacuum axis vector `2e_0`. The map from the bit ring to a
 line through `+2e_0` is missing, so the lattice period/rate cannot replace the
 3-ring registration counts. Those counts remain 3-ring artifacts.
+
+Per-generation tier comparison is observation only. The attached model has no
+per-generation cost; `crossing_word_glued` and the clock periods give the
+certified extra work, but not a protocol-class price. The TierLedger orders
+`1/Δ` and `1/Δ²` are listed only for later comparison, not derived here.
 
 Triality checks on the valid set cannot be completed without the bit-ring line
 map and a chosen attachment. The reference wall and clock are the certified
