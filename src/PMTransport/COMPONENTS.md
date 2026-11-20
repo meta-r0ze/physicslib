@@ -516,3 +516,21 @@ permutations of the amplitude state. For example
 `equivariant_lift_can_change_population` supplies a commuting scaling
 that changes the norm and is excluded. A physical fibre map must
 preserve the quantities appropriate to its carrier embedding.
+
+## Least Toll on certified traces
+
+The [selection theorem](Interface.lean) minimizes the cost within
+a supplied admitted family. Compare equal observation windows and
+use the same rate units.
+
+| Trace or booking | Certified differential | Consequence |
+| --- | --- | --- |
+| Tagged open trace with common reader and disposal | Same booked core comparisons and tagged exports. `tagged_trace_observable_eq` and `tagged_rule_exports`. In the all-erase account, each pays one per tick (`open_cycle_erase_all`). | **S** on the tagged read and erasure account. Equal remaining work is needed for equality of the complete Toll. |
+| Retained ring without a comparison reader | No comparison registration and no exported erasure. `ring_cycle_erasure`. | The certified subtotal is zero for either guard and either bank placement. Distinguishable outputs still exist. A zero subtotal is a cost tie, not a machine symmetry. |
+| Site zero on the occupied mixed ring with the same booked comparisons | `Values.mixedReceiverRate_and` gives zero for AND. `mixedReceiverRate_or` gives the booked fraction of the period for OR. Booking all 43 gives a unit difference per tick. | AND is cheaper in this comparison when its extra remaining rate is smaller than that fraction (`mixed_and_cheaper_iff`). With equal other work and a positive booked fraction it has greater survival. |
+| Mixed export or paid FIFO and hold visits | The boundary charges its booked erased bits. The joint lift does not book a comparison, pick the exported port, or price a FIFO write. | The difference needs the existing W/D/B/K inputs. Arbitrary trace averaging also needs O/H. |
+
+Least Toll does not select a physical member from these data.
+The identity of the physical comparison and its remaining costs
+come before the comparison. A common partial cost does not imply
+that the packet, destination or flag factors through a quotient.

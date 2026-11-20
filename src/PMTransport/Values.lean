@@ -1,4 +1,5 @@
 import PMTransport.Interface
+import PMTransport.RingReceiver
 
 /-!
 # Transport values
@@ -94,5 +95,39 @@ theorem balancedResetThreshold_eq (full probeVacancy : Bool) :
       if full then (if probeVacancy then 3 / 4 else 27 / 32) else 9 / 10 := by
   rw [balancedResetThreshold, outputFlagThreshold_eq]
   cases full <;> cases probeVacancy <;> norm_num
+
+/-! ## Mixed receiver registration rate
+
+D supplies the booked visits. This rate is for site zero on the
+certified mixed-basis ring trace. It prices only the specified
+comparison at unit registration Toll. The retained ring exports
+nothing. A physical comparison still needs O, D and K.
+-/
+
+def mixedReceiverRate (either : Bool) (booked : Fin Delta → Bool) : ℝ :=
+  (∑ t : Fin Delta, if booked t then
+    RingReceiver.receiverFlag either ((RingReceiver.tick 3 either)^[t.val]
+      RingReceiver.mixedBasisRing) 0 else 0) / (Delta : ℝ)
+
+theorem mixedReceiverRate_and (booked : Fin Delta → Bool) :
+    mixedReceiverRate false booked = 0 := by
+  simp [mixedReceiverRate, RingReceiver.mixed_ring_iterate_flag]
+
+theorem mixedReceiverRate_or (booked : Fin Delta → Bool) :
+    mixedReceiverRate true booked =
+      ((Finset.univ.filter fun t => booked t = true).card : ℝ) / (Delta : ℝ) := by
+  unfold mixedReceiverRate
+  congr 1
+  simp_rw [RingReceiver.mixed_ring_iterate_flag, ite_true]
+  rw [Finset.sum_boole]
+
+/-- The other booked work includes any erasure rate on an extended
+trace. The total comparison is conditional on those same rate units. -/
+theorem mixed_and_cheaper_iff (booked : Fin Delta → Bool) (otherAnd otherOr : ℝ) :
+    mixedReceiverRate false booked + otherAnd < mixedReceiverRate true booked + otherOr ↔
+      otherAnd - otherOr < ((Finset.univ.filter fun t => booked t = true).card : ℝ) /
+        (Delta : ℝ) := by
+  rw [mixedReceiverRate_and, mixedReceiverRate_or]
+  constructor <;> intro h <;> linarith
 
 end PMTransport.Values
