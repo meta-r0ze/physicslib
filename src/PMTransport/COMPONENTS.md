@@ -52,7 +52,7 @@ and feedback are included in their owning components above.
 | Arbiter for contending visits | Missing · J | `RefreshSchedule.minimal_is_ledger` and `CoherentRefresh.minimum_once` certify a schedule for a supplied required set and prices. No joint arbitration on a common clock is supplied. |
 | Ground or shared reference | Defined in Lean | `SharedReference.shared` identifies the reserved cell for the weak and hypercharge layout. `ColourReference.colour_reference_in_payload` locates its separate reference. Writer sharing at the same state and time is open · J. |
 | Termination and sink | Defined in Lean for candidates · B | `OpenHandoff.export_trace`, `RecordSupply.ring_returns` and `BoundaryErasure.deliver` specify different endpoints. The admitted export and disposition are missing. |
-| Power-on state | Defined in Lean for candidates · O | `RegisterVacuum`, `CarrierVacuumSector.range_iff_odd` and `NativeReferenceBackground.stationary_iff` constrain starts. The accessible occupied family is missing. |
+| Power-on state | Isolated excitation defined · O | `RegisterVacuum`, `CarrierVacuumSector.range_iff_odd` and `NativeReferenceBackground.stationary_iff` constrain starts. `IsolatedExcitation.occupiedInput` supplies vacuum plus one packet label; the accessible family for general traffic is still missing. |
 | Fan-out to readers | Missing · W | The routed-value port, retained record port and comparison flag are typed separately. The EP attachment is open. The prose in [DOWNSTREAM](DOWNSTREAM.md#export-contract-requirement) describes its required inputs. |
 | Per-part energy budget | Missing · K | `CarrierEvents.uniform_activation`, `OpenHandoff.balanced_basis_repair_flag` and `BoundaryErasure.erasing_pays_one` give exact accounts in their scopes. No exhaustive assignment of paid work to the parts exists. |
 
@@ -135,16 +135,16 @@ consumer of that input. It need not have a physical value yet.
 | E0 | E8-fixed in the encoded operations | The typed update and its projections have no argument of the indicated kind at that direct port. The endpoint domains below give the scope. This class makes no claim of a physical absence in the full lattice. | None through that direct port of the certified operation. |
 | S | Symmetry on tagged traces | `LocalController.tagged_trace_observable_eq` and `BoundaryErasure.tagged_rule_exports` identify the entire tagged retained trace and its export under AND/OR. | Every common observation of that trace. The mixed-input witness lies outside this symmetry. |
 | T | Free input · Absolute timing | Assign the physical tick, pulse area, serial placement and allowed overlap for an admitted word. This includes capacity left in a period and any clock-specific price. | Route periods, physical `r`, and which setup/refresh/write fits in the frame. |
-| O | Free input · Background occupancy | Specify accessible occupied ports, the actual packet ensemble, its empty-slot treatment and the initial reference and request fibres. | Writer population and sampling threshold, basis-loading capacity and trial history counts. |
+| O | Free input · Background occupancy | **Certified for the isolated-excitation sector:** `PMElementaryParticles.IsolatedExcitation.occupiedInput` is the stationary E8 reference plus one 16-slot packet label, and `occupiedInput_admitted` proves the valid two-bank occupancy. The stationary background is a certified family, not a unique vector (`vacuum_stationary`, `vacuum_nonunique`). Accessible occupied ports for general traffic remain free. | Writer population and sampling threshold, basis-loading capacity and trial history counts. The isolated sector fixes the occupancy used by the mass trace. |
 | G | Free input · Joint controller | Specify which local conditions enable the shift, pulse, wall loader and receiver. Include retained-record feedback and any throttling outside the finite table. The certified table count is not such a rule. | Executed branch, pulse word, realized crossing and receiver flag. |
 | L | Free input · Physical link admission | Specify occupied edges, available link capacity and disturbance, and the through law conditional on earlier crossings. | Route availability and the realized transmission product or restoring weight. |
 | Q | Free input · Supply and acceptance | Specify ready-state supply, accepted disturbance and available return capacity at repeat visits. Stationary modes and the population lower bound are conditional on their setup. | Clean visits, restoration and reuse of the writer reference. |
 | D | Free input · Physical observation | Specify the detector's read support and its connection to the flags, including whether a controller sees that flag. The conditional flag formula already applies on a supplied state. | Detected or booked flag count and any flag-controlled pulse. |
-| K | Free input · Registration tariff | Specify booked comparisons and distinct paid preparation, crossing, export, reset or reuse. A current coefficient, activation probability or minimum at given prices is not a tariff for these stages. | Schedule and label Toll, wire amplitude and signed remaining reference cost. |
+| K | Free input · Registration tariff | **Certified for the isolated trace:** `IsolatedTrace.receiverToll` books the receiver visits and `bookedToll` adds the certified two-bit record, giving electron and heavy Tolls per 43-tick period. General preparation, crossing, export, reset and reuse tariffs remain free. | Schedule and label Toll, wire amplitude and signed remaining reference cost. The isolated electron and down-label values are now concrete. |
 | W | Free input · Mixed receiver readout | Attach the writer or insertion to the routed value **and** destination, a retained/exported record, or the executed comparison and its booked flag, as required by that consumer. The certified EP trace supplies none of these attachments. | Routed payload and writer sampling, or receiver Toll and hence insertion amplitude. |
 | B | Free input · Boundary disposition | Specify which record becomes a booked export, whether it is retained, returned or erased, and the capacity and return connection of that endpoint. | Erased bits per period, restored reference and the erased-bit difference in the reference threshold. |
 | J | Free input · Job ownership and contention | Specify simultaneous jobs, contending uses, and equality of state, time and resource for shared service. | Schedule capacity, reuse and incremental maintenance cost. |
-| H | Free input · Prior and selection family | Specify the compared histories and their prior. `BoundaryErasure.ring_erasure_survivor_eq` returns the normalized supplied prior on the retained ring. | Aggregate survival for receiver rules and expected writer Toll. |
+| H | Free input · Prior and selection family | **Fixed for one mass:** the isolated excitation defines one deterministic trace, so there is no prior over histories (`IsolatedTrace.electronToll`/`heavyToll`). `BoundaryErasure.ring_erasure_survivor_eq` still returns the normalized supplied prior for an aggregate ensemble. | Aggregate survival for general receiver ensembles; the isolated mass needs no aggregate prior. |
 | U | Free input · EP joint admission | Specify the embedding of admitted traffic, seed, wall and pulse into the heavy writer or static charged insertion. | Heavy branch, record reference, lightest offset, tier identification and the physical orders in `1/Δ`. |
 
 For E0 the endpoint domains are the finite phase and supplied mask
@@ -416,6 +416,16 @@ ultimately realized.
 
 Layering is a separate build decision in [PREMISES](PREMISES.md#layering).
 It supplies no physical input to this ranking.
+
+**Isolated-excitation trace.** `PMElementaryParticles.IsolatedExcitation`
+fixes O and H for the object a mass refers to: the stationary E8 background
+plus one packet label, with one deterministic 43-tick receiver trace. The
+trace fills K for that object with the booked electron and down-label Tolls.
+It does not supply a general accessible population, a general tariff, or the
+heavy record reference. The latter stays the certified two-element family
+`{lepton, colour}` (`Values.traceReferences`). The choice of placement does not
+change the per-period count because the period is cyclic; the hold/FIFO bank
+motion and the AND/OR receiver rule do.
 
 ## Marked node symmetries
 

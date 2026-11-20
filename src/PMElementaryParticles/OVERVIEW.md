@@ -61,18 +61,44 @@ files were consolidated. The added aliases under `Interface.Wire` are:
 | `Registers` | `current`, `current_observed`, `current_unitary`, `evolution_occupation` |
 | `Probe` | `events`, `record`, `schedule_closes`, `scheduled_read`, `State`, `fire`, `update` |
 
+### Isolated-excitation trace
+
+`IsolatedExcitation` defines the object a mass refers to: the stationary E8
+reference (`Vacuum`/`RegisterVacuum`, `CarrierVacuumSector`, and
+`NativeReferenceBackground.background_stationary`) plus one packet carrying a
+single 16-slot label. `occupiedInput_valid` and `occupiedInput_admitted` prove
+the two-bank occupancy; `occupiedInput_supply` and
+`occupiedInput_acceptance` are the existing supply and acceptance results.
+This is the definition of a mass, not a choice of O: occupancy is fixed at
+vacuum plus one excitation. The vacuum is not unique; `vacuum_nonunique`
+records the certified rest-mode family, and the trace carries the heavy record
+reference as the two-element family `{lepton, colour}`.
+
+`IsolatedTrace` runs the retained 43-phase receiver for one full period. For
+each of the eight candidates it computes the booked Toll per period and the
+amplitude `exp(-T/2)` (PMAction.TollAmplitude). The eight electron values are
+`1, 1, 2, 2, 1, 1, 44, 44` in candidate order (hold/FIFO, AND/OR, then the two
+placements). The trace registers the receiver flags and the two exact electric
+record bits (`ElectricHeavyRecord.phase_position`, `phase_sector`); the
+retained ring exports nothing, so every erased-bit count is zero
+(`BoundaryErasure.ring_cycle_erasure`).
+
+The heavy writer repeats the trace for the down label. The certified record
+columns are `(2,1,0,1)` for colour and `(1,2,1,0)` for lepton
+(`heavyToll_colour`, `heavyToll_lepton`). The trace does not select one.
+On the colour trace `down_geometric_mean_colour` proves
+`s_d² = s_e · s_u` for every candidate; on the lepton trace
+`down_geometric_mean_lepton_fails` shows it fails. The tier sets in
+`TierLedger` remain premises: the trace has no address-to-tier bit.
+
 ### Finite witness output
 
-`Values.TransportCandidates` checks eight distinct witness rows
-from hold/FIFO, AND/OR and the two excursion placements. This covers
-the stated finite witness product. Broader physical admission
-remains conditional. The row reports the clock slots and the
-unit receiver flag rate on the fully booked mixed basis trace.
-It takes the admitted schedule and paid remainder for the heavy
-amplitude, booked population and erasures for the reference
-comparison, the calibrated offset for the static determinant
-response, and the wire-to-tier map for tier and [Premise] mass-ledger lookup. Inverse-period
-orders stay open. See [the e8p report](../../tools/e8p/README.md#ep-transport-witnesses).
+`Values.TransportCandidates` checks eight witness rows from hold/FIFO,
+AND/OR and the two excursion placements. The row now reports the trace-derived
+electron Toll and amplitude, and the down-label heavy Toll and weight for both
+certified record references. The trace leaves the heavy reference, the static
+offset, and the wire-to-tier map as explicit inputs. Inverse-period orders stay
+open. See [the e8p report](../../tools/e8p/README.md#ep-isolated-excitation-traces).
 
 ## Protocols are not wire modes
 

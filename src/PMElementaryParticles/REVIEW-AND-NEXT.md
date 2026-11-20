@@ -4,6 +4,27 @@
 marks a physical identification or rule still to be derived.
 **[Certificate]** marks a calculation awaiting formal verification.
 
+## Isolated-excitation trace (closed for the mass object)
+
+A mass is the property of one isolated excitation on the vacuum. The sector
+is now fixed in `IsolatedExcitation`: a stationary E8 reference from
+`RegisterVacuum`, `CarrierVacuumSector` and `NativeReferenceBackground`, plus
+one packet carrying a single 16-slot label. `occupiedInput_admitted` proves
+the valid two-bank occupancy and `occupiedInput_supply`/`occupiedInput_acceptance`
+are the existing supply and acceptance results. This is the definition of the
+quantity, not a choice of O. The vacuum is a certified family
+(`vacuum_nonunique`), so the trace carries the smallest relevant family: the
+two certified record references, lepton and colour.
+
+`IsolatedTrace` runs one full 43-tick period. Electron booked Tolls in
+candidate order (hold/FIFO × AND/OR × two placements) are
+`1, 1, 2, 2, 1, 1, 44, 44`; amplitudes are `exp(-T/2)`. The trace registers
+the receiver comparison and the two exact electric record bits; the retained
+ring exports nothing, so every erased-bit count is zero. The heavy writer
+gives down-label Tolls `(K+1)` for colour and `(K+2)` for lepton, where `K`
+is the common receiver count. The colour trace satisfies
+`s_d² = s_e · s_u` for every candidate; the lepton trace does not.
+
 ## Protocol readout blockers
 
 EP inherits a [conditional Transport interface](../PMTransport/COMPONENTS.md#transport-closeout).
@@ -12,18 +33,16 @@ The supplied source, operation, read and cost must refer to the same trace.
 
 | Ranked inputs | EP decision |
 | --- | --- |
-| G, T | Clocked packet and pulse firing. This includes the heavy write, static insertion and shared guard placement. |
-| O, U, W | Accessible writer traffic and its 16-slot embedding. State whether the reader consumes a routed value, retained record or booked comparison. |
-| K, B, D | Which comparisons register, the paid work remaining after common jobs, and which exports pay erasure. |
-| J, Q, H, L | Job reuse, ready references, the population and prior over visits, and successive-link dependence. |
+| G, T | Clocked packet and pulse firing. The isolated trace fixes the 43-tick receiver placement and shows that the two excursion placements do not change its per-period count. General pulse firing, the heavy crossing and the static insertion remain open. |
+| O, U, W | The isolated occupancy is vacuum plus one packet and is certified. The embedding of general writer traffic and its 16-slot routing remain open. The trace's reader consumes the retained receiver flag and the stored record bit, not a routed general value. |
+| K, B, D | The isolated booked Toll is now trace-derived: receiver visits plus the certified two-bit record. General preparation, crossing, export and reset tariffs remain open. The retained ring erases nothing. |
+| J, Q, H, L | H is fixed for the isolated mass (one deterministic trace, no prior). J, Q and L remain open for sustained supply, shared jobs and successive links. |
 
-- **Heavy-label weight. [Premise]** Admit both writer references on
-  the same specified traffic and compare their complete paid work.
-  [The schedule account](SCHEDULE.md#record-reference-remains-undetermined)
-  gives the threshold and its scope. The colour-reference two-bit
-  result gives the down geometric mean for a common bit price.
-  Physical reference selection, the price per bit and the common
-  heavy-flip factor remain open.
+- **Heavy-label weight. [Certificate]** The trace supplies the two certified
+  record columns, but not which one is physical. Colour gives
+  `(2,1,0,1)` and lepton `(1,2,1,0)` on the same trace. The colour column
+  gives the down geometric mean; the lepton column does not. The remaining
+  input is the physical record reference, not the paid work.
 - **Lightest masses. [Premise]** Supply the admitted static selector
   and the charged offset on that leg. The
   [generation ledger](GENERATIONS.md#the-charged-lift) gives the exact
@@ -32,11 +51,12 @@ The supplied source, operation, read and cost must refer to the same trace.
   generator before comparing to the first-row PMFlavor readout.
 - **Species and neutral modes. [Premise]** The species assignments in
   `QuarkMasses`, `LeptonMasses` and `TierLedger` are a declared ledger.
-  Transport does not identify the wire modes with those entries.
-  For neutrinos, admit the static neutral partner and the coherent
-  branch mixer in `BranchGateBoundary`. The paired Schur block
-  requires unequal magnitudes of the reverse-cycle weights for a
-  split from diagonal flips. See [the static vacancy](OVERVIEW.md#static-vacancy-and-neutral-light-modes)
+  The isolated trace has no address-to-tier bit, so it does not replace
+  the tier sets; it only books a label Toll. For neutrinos, admit the
+  static neutral partner and the coherent branch mixer in
+  `BranchGateBoundary`. The paired Schur block requires unequal magnitudes
+  of the reverse-cycle weights for a split from diagonal flips. See
+  [the static vacancy](OVERVIEW.md#static-vacancy-and-neutral-light-modes)
   and [the gapped crossing](OVERVIEW.md#equal-class-gapped-crossing).
 
 ## Other open work
@@ -50,18 +70,27 @@ The supplied source, operation, read and cost must refer to the same trace.
   collinear regulators. The total is independent of each regulator and
   reproduces the inclusive kernel pointwise (`z = 0.1 … 0.9`, to `10⁻⁴`
   relative at `m_e = 3·10⁻⁴`), so its integral is `π² − 25/4`
-  (`tools/muon_radiative_certificate.py`). Remaining: formal verification
-  in Lean. State the assembled kernel and the cancellation of the
-  regulator logs (stage 2), then the Feynman-parameter integrals
-  (stage 3). Until then `MuonLifetimeCorrected` keeps the factor as a
-  certified input, and the higher-order terms (`MuonQEDLoops`) stay
-  supplied.
+  (`tools/muon_radiative_certificate.py`). Stage 2 now formalizes the
+  assembled kernel and the cancellation of the regulator logs in
+  `RadiativeStage2`; the Feynman-parameter integrals (stage 3) remain.
+  Until stage 3, `MuonLifetimeCorrected` keeps the factor as a certified
+  input, and the higher-order terms (`MuonQEDLoops`) stay supplied.
 
 ## Next EP priority
 
-Derive the heavy writer's admitted input and output on one clocked
-trace. Identify its occupied source, its retained or exported record
-and its booked comparison in the same state and phase. This targets
-G, O, U and W together and supplies the population needed by the
-paid reference comparison. The finite witnesses and experimental
-references do not decide that trace.
+Identify which certified heavy record reference—colour or lepton—the
+physical writer uses. That is the only remaining binary input in the
+trace-derived heavy Toll and down identity. After it, derive the
+address-to-tier map so the three trace Tolls can be assigned to the
+declared generation rows.
+
+## Does the eight-candidate family now differ numerically?
+
+Yes, in the booked Toll and amplitude, and only through the two structural
+coordinates that survive the trace. The hold/FIFO bank motion changes the
+number of booked receiver visits (1 versus 43), and AND/OR changes the flag
+(0 versus 1). The two excursion placements do not change the per-period
+count, because the 43-phase clock is cyclic and both placements book the same
+visit count. The heavy writer adds the reference difference: colour gives
+down Toll `K+1`, lepton `K+2`. The tier sets still do not differ by candidate
+and remain premises.
