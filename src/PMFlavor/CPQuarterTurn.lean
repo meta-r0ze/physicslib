@@ -2,7 +2,7 @@ import Mathlib.Analysis.Complex.Basic
 import Mathlib.Tactic
 
 /-!
-# A right angle at `α` needs a quarter turn; the substrate's weak refresh does not supply one
+# Retained excluded-route lemmas: quarter turn at alpha
 
 The paper's `δ = arctan(σ/χ)` puts the unitarity triangle's angle `α` at `89.5°`; `α = π/2` exactly
 gives `δ = 67.7°`, indistinguishable at present precision (REVIEW). The paper is a draft; the

@@ -563,7 +563,7 @@ theorem sample_event_not_admissible (rep : Equiv.Perm Packet)
 without any repair. So a per-cycle contract (check only at the end) admits
 lepton-touching roots in pairs, violating B − L in between. The derived
 restriction `R 0 = 0` requires per-step maintenance: every event root
-must avoid axis 0 at every tick. Closed in `PMFlavor.PerStepContract`:
+must avoid axis 0 at every tick. The former `PMFlavor.PerStepContract` candidate (removed) recorded:
 `run_roots_axis_zero` and `sampleEvent_pair_not_maintained`. -/ 
 theorem sampleEvent_involutive : Function.Involutive sampleEvent := by
   intro v

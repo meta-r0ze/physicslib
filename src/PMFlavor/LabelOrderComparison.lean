@@ -1,12 +1,12 @@
 import PMAction.OrderComparison
 import PMFlavor.ReferenceSelection
-import PMFlavor.FlavourResponseSelection
+import PMFlavor.LabelResponseSelection
 import PMFlavor.NativeFlavourPropagation
 
 /-!
 # A joint-sector comparison can observe relative flavour mixing
 
-The separate uniform comparisons in `FlavourResponseSelection` see only
+The separate uniform comparisons in `LabelResponseSelection` see only
 individual spectra. Compare the two evolution orders instead, using Paper II's
 existing reversible comparison readout. The exact finite response depends on
 noncommutation, so it can distinguish relative frames without choosing unequal
@@ -21,7 +21,7 @@ links is not assumed to follow from their separate preparations.
 noncomputable section
 set_option synthInstance.maxSize 512
 set_option backward.isDefEq.respectTransparency false
-namespace PMFlavor.FlavourOrderComparison
+namespace PMFlavor.LabelOrderComparison
 open Matrix PMAction
 open scoped Kronecker
 
@@ -171,4 +171,4 @@ theorem native_wall_flag (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
     (native_step_observed a p hp hp1 k δ Y s) (native_step_observed a p hp hp1 k δ Z t) ψ
 
 end Native
-end PMFlavor.FlavourOrderComparison
+end PMFlavor.LabelOrderComparison

@@ -35,7 +35,7 @@ derived invariants, `FlavourInvariants`):
 |---|---|---|---|
 | `s₁₂` (`cabibbo`, `vus`) | `π/(ν−χ) = π/14` | share candidate; aperture premises; readout rule derived. The E8 root word needs a wall record and a firing law (`InCycleEvent`) | `HalfTurnAperture`, `ConductionRule` |
 | `s₁₃` (`vub`) | `1/(χα⁻¹+π)` | two-leg series path derived; boundary `π` a premise; names consistent with the wire (`PMAction.WireMass`) | `VubSeriesPath`, `TransferAmplitude.jump` |
-| `\|V_cb\|` | `(π+χ)/(α⁻¹−Dπ)` | supplied; no derived amplitude (library rules excluded) | `CKM`, `VcbEnvelope` (unbased) |
+| `\|V_cb\|` | `(π+χ)/(α⁻¹−Dπ)` | supplied; no derived amplitude (library rules excluded) | `CKM`, removed unbased envelope candidate |
 | `δ` | `arctan(σ/χ)` | supplied; no phase source in the library (item 5) | `CKM`, `CPPhases` |
 | `A`, `ρ̄`, `η̄`, `J`, `sin 2β`, `γ` | from the four above | exact consequences (barred `ρ̄`, `η̄`: `WolfensteinBar.zbar_eq`) | `Wolfenstein`, `WolfensteinBar`, `TriangleAngles`, `TriangleGamma` |
 | `q² = 515/516` | dressing | derived under one premise | `DressingEvent` |
@@ -142,18 +142,19 @@ These numbers do not select the native schedule or external states.
 
 ## Cleanup
 
-- Rename `FlavourPulls` (now only `weak_mixing_shared`) and `FlavourPostulates` (defines `φ`, `pi_b`,
-  `sqrt5_b` in the `FlavourPulls` namespace), and the `Flavour…` transfer-selection modules. Replace
-  "generation" by "label state" in docstrings as they are touched. `TransferGraph.mode`: rename to the
-  in-cycle / reference-wall / other-wall changes.
-- Candidate to retire: `TransferGenerator` (the Cayley completion: a power series in `A`, the `w = ½`
-  case, excluded with the jump at `U = 1`; its equal-lead-width premise is not derived). It is cited in
-  OVERVIEW ("The transfer is the Cayley form") and in `PMAction.WallHopPhase`, `MassInsertion`
-  docstrings, so retiring it means rewriting those.
-- Candidates to remove (no importers, superseded): `PerStepContract` (marked experimental),
-  `CPQuarterTurn` (an excluded route; its lemmas are cited in item 5), `VcbEnvelope` (unbased; only
-  `CandidateTests` uses it).
+Done:
 
-Working notes: avoid `simp` on a transposed matrix literal or a product of three literals; name the
-intermediate literal and use `rfl` (`LinkKronComparison.Lcg_eq_transpose`). Numerical scans belong
-outside Lean and are labelled external.
+- `FlavourPulls` renamed to `SharedWeakMixing` (`weak_mixing_shared` only).
+- `FlavourPostulates` renamed to `FlavourConstants`, namespace `PMFlavor.FlavourConstants`.
+- `FlavourResponseSelection` → `LabelResponseSelection`.
+- `FlavourOrderComparison` → `LabelOrderComparison`.
+- `FlavourStationarity` → `LabelStationarity`.
+- `TransferGraph.mode` constructors are `inCycle`, `referenceWall`, `otherWall`.
+- `TransferGenerator` marked retired: excluded route; citing text in OVERVIEW,
+  `WallHopPhase` and `MassInsertion` updated.
+- `PerStepContract` removed.
+- `VcbEnvelope` removed, including its use in `CandidateTests`.
+- `CPQuarterTurn` kept: its cited lemmas remain in the file.
+
+Remaining: none from this cleanup list. Any new flavor derivation work is in
+the open items above.

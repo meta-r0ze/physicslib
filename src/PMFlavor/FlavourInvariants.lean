@@ -1,6 +1,6 @@
 import PMSubstrate.E8Values
 import PMFlavor.CKM
-import PMFlavor.FlavourPostulates
+import PMFlavor.FlavourConstants
 import PMFlavor.PMNS
 import Mathlib.Tactic
 
@@ -15,7 +15,7 @@ Paper IV writes its six flavour inputs as functions of the substrate invariants
     sin²θ₁₂ = 1/(2φ)        sin²θ₂₃ = (1/χ)(1 + π/(ν + σ))    sin²θ₁₃ = (σ − χ)/α⁻¹
     δ_CP = arctan(σ/χ)
 
-`CKM`, `FlavourPulls` and `PMNS` previously spelled these with the **evaluated
+`CKM`, `FlavourConstants` and `PMNS` previously spelled these with the **evaluated
 numerals** — `Real.pi / 14`, `2 * αinv + Real.pi`, `Real.pi + 2`, `21`, `3`,
 `5/2` — with no Lean statement tying `14` to `ν − χ` and so on. The invariants
 themselves are not assumptions: `parameters_forced` derives
@@ -94,7 +94,7 @@ def vcbf : ℝ := (Real.pi + chi) / (CKM.αinv - D * Real.pi)
 /-- `δ_CP = arctan(σ/χ)`. -/
 def deltaf : ℝ := Real.arctan (sigma / chi)
 /-- `sin²θ₁₂ = 1/(2φ)`. φ is **not** derived — see the header. -/
-def solarf : ℝ := 1 / (2 * FlavourPulls.φ)
+def solarf : ℝ := 1 / (2 * FlavourConstants.φ)
 /-- `sin²θ₂₃ = (1/χ)(1 + π/(ν + σ))`. -/
 def atmosf : ℝ := (1 / chi) * (1 + Real.pi / (nu + sigma))
 /-- `sin²θ₁₃ = (σ − χ)/α⁻¹`. -/
@@ -114,7 +114,7 @@ theorem delta_eq_ : deltaf = CKM.δ := by
 theorem solar_eq : solarf = PMNS.sineSquared 0 := rfl
 theorem sineSq_1 : PMNS.sineSquared 1 = (1 + Real.pi / 21) / 2 := rfl
 theorem sineSq_2 : PMNS.sineSquared 2 = 3 / CKM.αinv := rfl
-theorem sineSq_0 : PMNS.sineSquared 0 = 1 / (2 * FlavourPulls.φ) := rfl
+theorem sineSq_0 : PMNS.sineSquared 0 = 1 / (2 * FlavourConstants.φ) := rfl
 
 theorem atmos_eq : atmosf = PMNS.sineSquared 1 := by
   rw [sineSq_1]
@@ -146,7 +146,7 @@ this records the definitions, not a derivation of the formulas. -/
 theorem formula_definitions_use_no_measurement_literal :
     s12f = Real.pi / (nu - chi) ∧ s13f = 1 / (chi * CKM.αinv + Real.pi) ∧
       vcbf = (Real.pi + chi) / (CKM.αinv - D * Real.pi) ∧
-        solarf = 1 / (2 * FlavourPulls.φ) ∧
+        solarf = 1 / (2 * FlavourConstants.φ) ∧
           atmosf = (1 / chi) * (1 + Real.pi / (nu + sigma)) ∧
             reactorf = (sigma - chi) / CKM.αinv :=
   ⟨rfl, rfl, rfl, rfl, rfl, rfl⟩

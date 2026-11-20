@@ -12,7 +12,7 @@ This tests proposed stationary references; it selects neither dynamics nor masse
 -/
 
 noncomputable section
-namespace PMFlavor.FlavourStationarity
+namespace PMFlavor.LabelStationarity
 open Matrix Complex
 
 abbrev M := Matrix (Fin 3) (Fin 3) ℂ
@@ -105,4 +105,4 @@ theorem pmns_zero_iff_constant (energy : Fin 3 → ℝ) (a : Fin 3) (f : ℝ) :
   exact SpectralVariance.zero_iff_constant _ _
     (fun i => normSq_pos.mpr (GenerationBreaking.pmns_all_nonzero a i)) f
 
-end PMFlavor.FlavourStationarity
+end PMFlavor.LabelStationarity

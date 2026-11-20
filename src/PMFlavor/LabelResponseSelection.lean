@@ -13,7 +13,7 @@ channels. Neither these weights nor an event price are selected here.
 -/
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
-namespace PMFlavor.FlavourResponseSelection
+namespace PMFlavor.LabelResponseSelection
 open Matrix PMAction
 abbrev M := Matrix (Fin 3) (Fin 3) ℂ
 
@@ -84,4 +84,4 @@ theorem uniform_tie (U V : M) (hu : U * Uᴴ=1) (hv : V * Vᴴ=1)
     average (fun _ => 1/3) U energy t = average (fun _ => 1/3) V energy t := by
   rw [uniform_formula U hu, uniform_formula V hv]
 
-end PMFlavor.FlavourResponseSelection
+end PMFlavor.LabelResponseSelection

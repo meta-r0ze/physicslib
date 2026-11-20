@@ -12,15 +12,15 @@ open Matrix
 lemma input_bounds (i : Fin 3) :
     (![0.30901,0.57479,0.0218920] : Fin 3 → ℝ) i<PMNS.sineSquared i ∧
     PMNS.sineSquared i<(![0.30902,0.57481,0.0218921] : Fin 3 → ℝ) i := by
-  have hs:=FlavourPulls.sqrt5_b
-  have hp:=FlavourPulls.pi_b
+  have hs:=FlavourConstants.sqrt5_b
+  have hp:=FlavourConstants.pi_b
   have ha:=CKM.ai_bounds
   fin_cases i
-  · change 0.30901<1/(2*FlavourPulls.φ) ∧ 1/(2*FlavourPulls.φ)<0.30902
-    have hd : 0<2*FlavourPulls.φ := by unfold FlavourPulls.φ; positivity
+  · change 0.30901<1/(2*FlavourConstants.φ) ∧ 1/(2*FlavourConstants.φ)<0.30902
+    have hd : 0<2*FlavourConstants.φ := by unfold FlavourConstants.φ; positivity
     constructor
-    · rw [lt_div_iff₀ hd]; unfold FlavourPulls.φ; linarith [hs.2]
-    · rw [div_lt_iff₀ hd]; unfold FlavourPulls.φ; linarith [hs.1]
+    · rw [lt_div_iff₀ hd]; unfold FlavourConstants.φ; linarith [hs.2]
+    · rw [div_lt_iff₀ hd]; unfold FlavourConstants.φ; linarith [hs.1]
   · change 0.57479<(1+Real.pi/21)/2 ∧ (1+Real.pi/21)/2<0.57481
     constructor <;> linarith
   · change 0.0218920<3/CKM.αinv ∧ 3/CKM.αinv<0.0218921

@@ -1,6 +1,6 @@
 import PMAction.OrderRestoration
 import PMKAutomaton.Machine.RootOrderComparison
-import PMFlavor.FlavourOrderComparison
+import PMFlavor.LabelOrderComparison
 
 /-!
 # An executable reference-preserving order repair and its minimum ledger

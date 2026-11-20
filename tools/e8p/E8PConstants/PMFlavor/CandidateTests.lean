@@ -1,4 +1,3 @@
-import PMFlavor.VcbEnvelope
 import PMFlavor.VubSeriesPath
 import PMFlavor.HalfTurnMixing
 import PMFlavor.TransferAmplitude
@@ -19,13 +18,11 @@ candidate's value with a frozen measured number; none selects a construction.
   derived `515/516` (`DressingEvent`) does not rest on them.
 * `promo_rules_excluded`: the three amplitude rules of `PMFlavor.TransferAmplitude` give
   `|promotion/jump| = 1`, `≈ 1.98`, `≈ 23.7`; each is more than `13σ` from `|V_cb|/|V_ub| = 10.76 ± 0.645`.
-* `divider_fits`, `current_divider_fits`, `ratio_fits`: the `VcbEnvelope` forms against
-  `|V_cb| = 0.0411 ± 0.0012` and `|V_cb|/|V_ub| = 10.76 ± 0.64`.
 -/
 
 noncomputable section
 namespace E8PConstants.CandidateTests
-open PMFlavor PMFlavor.VcbEnvelope
+open PMFlavor
 
 theorem quark_share_fits : |Real.pi / 14 - 0.22453| / 0.00085 < 1 := by
   have h1 := Real.pi_gt_d4; have h2 := Real.pi_lt_d4
@@ -62,42 +59,6 @@ theorem vcb_not_two_leg (k : ℤ) (hk : -6 ≤ k) :
   have hden : 255 < 2 * CKM.αinv + k * Real.pi := by linarith
   rw [div_lt_iff₀ (by linarith)]
   nlinarith
-
-theorem divider_fits : |env 1 / env 39 - 0.0411| / 0.0012 < 1 := by
-  have h := env_bounds_div
-  rw [div_lt_one (by norm_num), abs_lt]; constructor <;> linarith [h.1, h.2]
-
-/-- **The standard current divider also fits.** A unit current entering the refreshed hop splits
-between the refresh-tick branch (`env 1`) and the free branch (`env 39`); the share through the free
-branch is `env 1 / (env 1 + env 39) ≈ 0.0397`, `1.2σ` low. This needs no drive of size `env 1`
-(unit source, as for `|V_ub|`), at the cost of `1σ` in the fit; the data do not separate it from the
-ratio form. -/
-theorem current_divider_fits : |env 1 / (env 1 + env 39) - 0.0411| / 0.0012 < 2 := by
-  have h1 := Real.pi_gt_d4; have h2 := Real.pi_lt_d4
-  have hp : 0 < env 1 + env 39 := by
-    have := env_pos 1 (by norm_num); have := env_pos 39 (by norm_num); linarith
-  unfold env at hp ⊢
-  rw [div_lt_iff₀ (by norm_num), abs_lt]
-  constructor
-  · rw [lt_sub_iff_add_lt, lt_div_iff₀ hp]; nlinarith
-  · rw [sub_lt_iff_lt_add, div_lt_iff₀ hp]; nlinarith
-
-/-- The ratio `|V_cb|/|V_ub|`, the quark parity breaking, is within `2σ`
-(`11.45` against `0.0411/0.00382 = 10.76 ± 0.64`). -/
-theorem ratio_fits :
-    |amp (env 1) (env 39) / amp 1 (2 * CKM.αinv + Real.pi) - 10.76| / 0.645 < 2 := by
-  have h := env_bounds_div
-  have ha := CKM.ai_bounds
-  have hp1 := Real.pi_gt_d4; have hp2 := Real.pi_lt_d4
-  have hpos : 0 < 2 * CKM.αinv + Real.pi := by linarith
-  have e : amp (env 1) (env 39) / amp 1 (2 * CKM.αinv + Real.pi) =
-      env 1 / env 39 * (2 * CKM.αinv + Real.pi) := by
-    unfold amp; field_simp
-  have l := mul_lt_mul_of_pos_right h.1 hpos
-  have u := mul_lt_mul_of_pos_right h.2 hpos
-  rw [e, div_lt_iff₀ (by norm_num), abs_lt]
-  constructor <;> linarith
-
 
 /-! ## Which reference-exclusion share the first row allows (moved from `PMFlavor.CabibboDressing`)
 

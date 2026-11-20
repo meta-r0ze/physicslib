@@ -5,11 +5,11 @@ import PMFlavor.CKMDressing
 import PMFlavor.CKMClosure
 import PMFlavor.Wolfenstein
 import PMFlavor.WolfensteinBar
-import PMFlavor.FlavourPostulates
+import PMFlavor.FlavourConstants
 import PMFlavor.GoldenGeometry
 import PMFlavor.SixHundredCell
 import PMFlavor.PMNSGeometry
-import PMFlavor.FlavourPulls
+import PMFlavor.SharedWeakMixing
 import PMFlavor.UnitarityTriangle
 import PMFlavor.JarlskogReview
 import PMFlavor.CPPhases
@@ -34,7 +34,7 @@ import PMFlavor.GenerationPersistence
 import PMFlavor.ReferenceFlavour
 import PMFlavor.ReferenceSpectrum
 import PMFlavor.SpectralVariance
-import PMFlavor.FlavourStationarity
+import PMFlavor.LabelStationarity
 
 import PMFlavor.NativeFlavourCurrent
 import PMFlavor.NativeMassBasis
@@ -44,10 +44,10 @@ import PMFlavor.NativeFlavourStationarity
 
 import PMFlavor.ReferenceSelection
 import PMFlavor.NativeReferenceFreedom
-import PMFlavor.FlavourResponseSelection
+import PMFlavor.LabelResponseSelection
 import PMFlavor.SelectionSymmetry
 import PMFlavor.TransitionSelection
-import PMFlavor.FlavourOrderComparison
+import PMFlavor.LabelOrderComparison
 import PMFlavor.ReferenceSafeRestoration
 import PMFlavor.RootRepairSelection
 import PMFlavor.RestorationBudget
@@ -59,7 +59,6 @@ import PMFlavor.SpectralGapOrder
 import PMFlavor.SubstrateLink
 import PMFlavor.ChordBranch
 import PMFlavor.FlavourCoherence
-import PMFlavor.PerStepContract
 import PMFlavor.WolfensteinOctant
 import PMFlavor.CabibboDressing
 import PMFlavor.ReactorConductance
@@ -80,7 +79,6 @@ import PMFlavor.DressingEvent
 import PMFlavor.DressingInheritance
 import PMFlavor.HalfTurnMixing
 import PMFlavor.VubSeriesPath
-import PMFlavor.VcbEnvelope
 import PMFlavor.KronSeries
 import PMFlavor.HalfTurnAperture
 import PMFlavor.CPQuarterTurn

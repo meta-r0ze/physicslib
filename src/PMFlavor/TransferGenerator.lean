@@ -1,7 +1,12 @@
 import PMFlavor.ThirdGenerationMixing
 
 /-!
-# The charged-current transfer is zero-energy scattering: the Cayley form
+# Retired route: zero-energy scattering and the Cayley form
+
+**Retired: excluded route.** This candidate is kept for history. It is a power
+series in `A`, the `w = 1/2` case, and is excluded with the jump at `U = 1`;
+its equal-lead-width premise is not derived. It is not the charged-current
+transfer.
 
 `ThirdGenerationMixing` excludes a conserving mass link carrying the CKM. The reading with a test is: the masses are generation-diagonal
 (`GenerationLabel`: root moves conserve the label) and the CKM is the charged current's transfer

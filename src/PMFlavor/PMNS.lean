@@ -1,5 +1,5 @@
 import PMFlavor.CKMDressing
-import PMFlavor.FlavourPostulates
+import PMFlavor.FlavourConstants
 
 /-! The complete proposed Dirac-PMNS matrix, not only its four input numbers.
 The three angles are supplied formulas. The phase is not: it is fixed by the
@@ -12,17 +12,17 @@ open Matrix
 
 /-- The three supplied squared sines, in 12, 23, 13 order. -/
 def sineSquared : Fin 3 → ℝ :=
-  ![1/(2*FlavourPulls.φ), (1+Real.pi/21)/2, 3/CKM.αinv]
+  ![1/(2*FlavourConstants.φ), (1+Real.pi/21)/2, 3/CKM.αinv]
 
 theorem sineSquared_range (j : Fin 3) : 0<sineSquared j ∧ sineSquared j<1 := by
-  have hφ : 1<FlavourPulls.φ := by
-    have h:=FlavourPulls.sqrt5_b
-    unfold FlavourPulls.φ
+  have hφ : 1<FlavourConstants.φ := by
+    have h:=FlavourConstants.sqrt5_b
+    unfold FlavourConstants.φ
     linarith
   have hai := CKM.ai_bounds
-  have hp := FlavourPulls.pi_b
+  have hp := FlavourConstants.pi_b
   fin_cases j
-  · change 0<1/(2*FlavourPulls.φ) ∧ 1/(2*FlavourPulls.φ)<1
+  · change 0<1/(2*FlavourConstants.φ) ∧ 1/(2*FlavourConstants.φ)<1
     constructor
     · positivity
     · rw [div_lt_one (by positivity)]; linarith

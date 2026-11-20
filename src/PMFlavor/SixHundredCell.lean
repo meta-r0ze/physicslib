@@ -11,15 +11,15 @@ namespace PMFlavor.SixHundredCell
 
 open PMFlavor
 
-local notation "φ" => FlavourPulls.φ
+local notation "φ" => FlavourConstants.φ
 
 lemma phi_sq : φ ^ 2 = φ + 1 := by
-  unfold FlavourPulls.φ
+  unfold FlavourConstants.φ
   have h : (Real.sqrt 5) ^ 2 = 5 := Real.sq_sqrt (by norm_num)
   nlinarith
 
 lemma phi_pos : 0 < φ := by
-  unfold FlavourPulls.φ
+  unfold FlavourConstants.φ
   have h := Real.sqrt_nonneg 5
   linarith
 

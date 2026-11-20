@@ -2,7 +2,7 @@ import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Tactic
 
 /-!
-# Flavour postulates and numerical enclosures
+# Flavour constants and numerical enclosures
 
 This module isolates the two numerical inputs that the derivation modules need:
 the golden-ratio postulate `φ` and the certified enclosures for `π` and `√5`.
@@ -14,7 +14,7 @@ form `1/(2φ)` that uses it is still supplied.
 -/
 
 noncomputable section
-namespace PMFlavor.FlavourPulls
+namespace PMFlavor.FlavourConstants
 
 /-- The solar-sector postulate `φ = (1 + √5)/2`. -/
 def φ : ℝ := (1 + Real.sqrt 5) / 2
@@ -27,4 +27,4 @@ lemma sqrt5_b : (2.2360679 : ℝ) < Real.sqrt 5 ∧ Real.sqrt 5 < 2.2360680 := b
   have hn := Real.sqrt_nonneg 5
   constructor <;> nlinarith
 
-end PMFlavor.FlavourPulls
+end PMFlavor.FlavourConstants

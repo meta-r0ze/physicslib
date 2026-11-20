@@ -1,10 +1,10 @@
 import PMConstants.TableConsequences
 import PMSubstrate.Impedance
-import PMFlavor.FlavourPostulates
+import PMFlavor.FlavourConstants
 import PMFlavor.CKM
 
 /-!
-# Paper IV's mixing formulas against PDG 2024 and NuFIT 6.0, and the shared weak mixing
+# Shared weak mixing
 
 The CKM values are `PMFlavor.Values` (`CKM.s12`, `s13`, `vcb`, …); this file no longer keeps its
 own copies. The measured pulls are in e8p (`E8PConstants/PMFlavor/FlavourPulls`).
@@ -26,7 +26,7 @@ Paper III's `Δ/N_sys = 1849/8295` (`weak_mixing_shared`), since `3πη/(2·π/1
 -/
 
 noncomputable section
-namespace PMFlavor.FlavourPulls
+namespace PMFlavor.SharedWeakMixing
 open PMSubstrate
 
 /-- **Paper IV's weak mixing is Paper III's.** -/
@@ -42,4 +42,4 @@ theorem weak_mixing_shared :
   field_simp
   ring
 
-end PMFlavor.FlavourPulls
+end PMFlavor.SharedWeakMixing

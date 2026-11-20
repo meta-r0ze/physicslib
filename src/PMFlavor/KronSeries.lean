@@ -22,7 +22,7 @@ light sector of `PMAction.WallSeesaw`) eliminating the node is Kron reduction:
   misses the node's own conductance.
 
 So the series-path premise of `VubSeriesPath` follows from Conservation (the link is a Laplacian)
-and the node elimination. The same Kirchhoff network gives dividers (`VcbEnvelope`'s
+and the node elimination. The same Kirchhoff network gives dividers (the removed unbased envelope candidate's
 `env 1 / env (Δ − D)` is the potential fraction across one element of a series chain); which
 elements the `c`-side hop drives through is the remaining reading there.
 -/

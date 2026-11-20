@@ -20,7 +20,7 @@ chirality, with `P = 1 + Γ` (twice the projector):
   in-wall kinetic hops alone give every reduced coupling a real value, and the loop flux is `0` or
   `π`: no CP phase.
 
-So the CP flux the CKM needs (`PMFlavor.TransferGenerator`, numerically `49.1 ± 1.1°`) does not come
+So the CP flux the CKM needs (retired `PMFlavor.TransferGenerator` route, numerically `49.1 ± 1.1°`) does not come
 from the in-wall kinetic hop. What is left: the node-crossing hops, which are spinor-class
 displacements with a time-axis component `±1` (`PMFlavor.ExchangeAxis.spinor_touch`), where the
 hop is not a spatial `αⱼ` term; or a background holonomy around the transfer loop. Neither is

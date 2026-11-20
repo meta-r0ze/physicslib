@@ -145,7 +145,7 @@ energies with the relativistic energy law and the light/heavy seesaw;
 native carrier and reproduce exact flavour evolution and probabilities.
 
 **Reference persistence.** `ReferenceSpectrum`: persistence iff a single-energy
-eigenspace. `SpectralVariance`, `FlavourStationarity`: residual coordinates and
+eigenspace. `SpectralVariance`, `LabelStationarity`: residual coordinates and
 gap bounds. `persistent_single_frequency`: a persisting state is one energy/
 frequency, hence on-shell (now `PMConstants.OnShell.persistent_single_frequency`, shared with
 PMElementaryParticles).
@@ -153,12 +153,12 @@ PMElementaryParticles).
 **Selection and restoration.** `AllRootRestoration`, `RootRepairSelection`,
 `RestorationBudget`: the six-reflection restoring alphabet, unique cheapest word,
 minimum density. The five selection tests (`ReferenceSelection`,
-`NativeReferenceFreedom`, `FlavourResponseSelection`, `SelectionSymmetry`,
+`NativeReferenceFreedom`, `LabelResponseSelection`, `SelectionSymmetry`,
 `TransitionSelection`) isolate what a persistence cost can and cannot select.
 
 **Lepton axis, Dirac survival.** `LeptonAxisRestriction` (per-cycle contract) plus
 `MassTermLaw` give `dirac_survival`: only the Dirac neutrino mass term survives;
-active-Majorana and sterile terms are unreachable. `PerStepContract` strengthens
+active-Majorana and sterile terms are unreachable. Former `PerStepContract` (removed) strengthened
 this to per-step maintenance: `perStep_root_axis_zero` derives the restriction
 from a single restored step, `run_roots_axis_zero` gives it for every event in a
 restored run, and `sampleEvent_pair_not_maintained` closes the paired-event
@@ -329,16 +329,16 @@ the supplied `δ = arctan(σ/χ)` stands without one. The clock cycle does not s
 the sign exchange on vector carriers (`CarrierActions.weak`), which keeps every class, so it never
 permutes generations, and its phases are `±1`.
 
-**The transfer is the Cayley form.** `TransferGenerator`: zero-energy scattering through a
-Hermitian network with equal leads `γ` (Landauer, `HandoffAdmittance`; zero energy, `KronSeries`;
+**Retired route: the Cayley form.** `TransferGenerator` is retained as a retired, excluded route:
+zero-energy scattering through a Hermitian network with equal leads `γ` (Landauer, `HandoffAdmittance`; zero energy, `KronSeries`;
 one price, Closure) is `1 − 2iγ(−K + iγ)⁻¹`, eigenvalue by eigenvalue `−(1 − ix)/(1 + ix)` with
 `x = k/γ` (`mw_eq_cayley`), a phase (`cayley_unimodular`). Only coupling ratios are data. With
 this generator the PDG CKM gives a flux of `49.1 ± 1.1°` and `K₁₃/K₁₂ = 0.0185 ± 0.0005`;
 `VubSeriesPath`'s `(1/(2α⁻¹ + π))/(π/14) = 0.0161` is `4.7σ` low, so its agreement with `|V_ub|` is
 with the full amplitude (which includes the route through the in-cycle pair), not with the path it
 constructs. Retired as structural; the formula stays as a numerical observation. These numbers are
-external fits conditional on two premises, zero-energy scattering on generation leads and equal lead
-widths, neither derived (`TransferGenerator`).
+external fits conditional on two premises, zero-energy scattering on label-state leads and equal lead
+widths, neither derived. The module `TransferGenerator` is marked retired.
 
 **Derived inputs and Wolfenstein.** `FlavourInvariants` shows the numerals in the
 six supplied flavour formulas are the Paper I invariants evaluated; the functional
@@ -381,12 +381,12 @@ lepton-axis state's mixing a probability `∝ α` (one leg; the reactor angle). 
 is a Laplacian, so eliminating the node is Kron reduction and a quark coupling is a series
 admittance; `VubSeriesPath`: the path admittance `1/(2α⁻¹ + π)` (two node legs and a unit boundary in
 series) is derived.
-Candidates: `VcbEnvelope` (`|V_cb|` as a refresh-tick envelope over the free cycle),
+Former candidates: the removed unbased envelope module (`|V_cb|` as a refresh-tick envelope over the free cycle),
 `HalfTurnMixing` and `HalfTurnAperture` (the in-cycle mixings as the half-turn refresh shared over
 the type-preserving channels: `s₁₂ = π/14`, `sin²θ₁₂ = π/10`, with `π` a length along boundaries
 and an aperture through the refresh), `ReactorConductance` (the reactor angle as a node conductance
 into the spatial outlets). The modules that picked integers by which fit the data (`MixingTests`,
-`ReactorConductance.channel_count_unique`, `VcbEnvelope.drive_unique`, `free_ticks_needed`) were
+`ReactorConductance.channel_count_unique`, `free_ticks_needed`) were
 removed; the remaining comparisons with data are in `E8PConstants.CandidateTests` and
 `E8PConstants.FlavourPulls`.
 
@@ -415,7 +415,7 @@ pentagon (`GoldenGeometry`, `SixHundredCell`). Status of each mixing observable 
 refers to in brackets):
 * `s₁₂ = π/14` [`2K₁₂/γ`], `sin²θ₁₂ = π/10`: candidates with listed premises (`HalfTurnAperture`);
 * `|V_ub|`: the path admittance is derived; its identification with `|S₁₃|` is not (`VubSeriesPath`);
-* `|V_cb|`: candidate formula, no schedule basis for its reading (`VcbEnvelope`);
+* `|V_cb|`: candidate formula, no schedule basis for its reading (removed unbased envelope candidate);
 * `δ_CKM`: supplied (`arctan(σ/χ)`), no mechanism in the library;
 * `sin²θ₁₃ = 3α`: candidate formula with named outlets and readout (`ReactorConductance`);
 * `sin²θ₂₃`: supplied (`PMNSGeometry`), no construction.

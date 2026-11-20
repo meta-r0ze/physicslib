@@ -7,7 +7,7 @@ import PMKAutomaton.Interface
 # `π` as a length and as an aperture: one Ohmic law for every mixing element
 
 The node-crossing paths use `π` as an impedance (a unit boundary, `VubSeriesPath`, `KronSeries`;
-the envelopes `env w = πw + χ` of `VcbEnvelope`; the node's capacity term `πΔ` in `Z_geo`). The
+the envelopes `env w = πw + χ` of the removed unbased envelope candidate; the node's capacity term `πΔ` in `Z_geo`). The
 in-cycle mixing needs `π/N` as an admittance (`HalfTurnMixing`). Both follow from Ohm's geometric
 law, conductance = aperture / length (`ohmic`), once it is said which way the transfer crosses the
 half-turn.

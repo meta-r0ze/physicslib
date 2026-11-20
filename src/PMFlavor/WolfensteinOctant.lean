@@ -1,5 +1,5 @@
 import PMFlavor.FlavourInvariants
-import PMFlavor.FlavourPostulates
+import PMFlavor.FlavourConstants
 import Mathlib.Tactic
 
 /-!
@@ -35,10 +35,10 @@ statements an earlier review item was missing.
 
 noncomputable section
 namespace PMFlavor.WolfensteinOctant
-open FlavourInvariants FlavourPulls
+open FlavourInvariants FlavourConstants
 
 /-- `√5` lies in `(2.2360679, 2.2360680)`, restated locally so this module does not
-depend on the proof layout of `FlavourPulls`. -/
+depend on the proof layout of `FlavourConstants`. -/
 private lemma sqrt5_b : (2.2360679 : ℝ) < Real.sqrt 5 ∧ Real.sqrt 5 < 2.2360680 := by
   have h := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
   have hn := Real.sqrt_nonneg 5

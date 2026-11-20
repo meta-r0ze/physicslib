@@ -24,7 +24,7 @@ label `m = b + c`).
   node-suppressed mixings, and the other two mix with each other in-cycle.
 
 Names used below: `Y_gap` is the inter-wall link of `WallSeesaw`; `M_direct` a term joining the two
-light modes directly; `K_cc` the charged-current transfer network of `TransferGenerator`.
+light modes directly; `K_cc` the charged-current transfer network of the retired `TransferGenerator` route.
 
 **The data fix which way the insertion acts** (ordering only, no fitted numbers). If the insertion
 enters the mass directly (larger amplitude, heavier), the label-`v` generation is the heaviest and
@@ -52,7 +52,7 @@ For the directional (non-Hermitian) crossing of `InterWallDiagonal` the light pa
 masses do not come from inverting the link (`δ²Y⁻¹` or `D Y⁻¹ D`). What is left is a term that joins the two chiral zero modes directly
 (wall 1 `Γ = +1` to wall 2 `Γ = −1`, the slot of `WallSeesaw`'s effective `M`), carrying the label
 class, so the mass matrix is generation-diagonal with entries set by the insertions. This is the
-premise of the transfer reading (`TransferGenerator`). It is what survives, not yet a derivation:
+premise of the retired transfer reading (`TransferGenerator`). It is what survives, not yet a derivation:
 the library's wall Hamiltonian has no such direct zero-mode term (its inter-wall hop joins the
 gapped components), and the equal-class crossing the gluing allows would add generation off-diagonal
 mass entries unless it is absent or small (`PMAction/REVIEW-AND-NEXT.md`).

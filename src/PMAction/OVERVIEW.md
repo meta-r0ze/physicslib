@@ -389,7 +389,7 @@ controls/admission premises and the selection of group, representation and β.
   `ReciprocalReflection`, `OsterwalderSchrader` (OS semi-inner-product, `os_cauchy_schwarz`), the
   assembled OS quotient (`osCore_normSq_eq`, `mem_osNullSubmodule_iff`, `quotientForm`,
   `quotientInnerProductSpace`), `QuotientClosure.gibbs_quotient_invariant`; per-step maintenance in
-  PM-4 (`PerStepContract`).
+  PM-4 (the removed `PerStepContract` candidate is no longer current).
 - **Gap:** `DefectGap`, `GapStability`, and the substrate gap `MassGap.SlabGap.slab_gap_explicit`
   (mass `≥ β/2` per tick, `CubicBox.box_mass_gap`). The gauge layer is a separate continuous field
   (`NativePacketRouting.pure_permutation_refinement_trivial`); its gap is the quantum Yang–Mills

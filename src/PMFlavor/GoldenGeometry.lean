@@ -20,14 +20,14 @@ open PMFlavor
 
 /-- The positive pentagon-diagonal ratio is the golden ratio. -/
 theorem pentagon_ratio_eq_phi {d : ℝ} (hd : 1 < d) (h : d ^ 2 = 1 + d) :
-    d = FlavourPulls.φ := by
+    d = FlavourConstants.φ := by
   have hsq : (2 * d - 1) ^ 2 = 5 := by nlinarith
   have hpos : 0 < 2 * d - 1 := by linarith
   have hroot : 2 * d - 1 = Real.sqrt 5 := by
     calc
       2 * d - 1 = Real.sqrt ((2 * d - 1) ^ 2) := (Real.sqrt_sq hpos.le).symm
       _ = Real.sqrt 5 := by rw [hsq]
-  unfold FlavourPulls.φ
+  unfold FlavourConstants.φ
   linarith
 
 /-- The pentagon aperture gives the solar squared sine. -/

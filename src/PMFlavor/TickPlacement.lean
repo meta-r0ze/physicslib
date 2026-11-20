@@ -34,7 +34,7 @@ update.
 
 Something outside the update acting between ticks could, and the only candidate is the weak
 refresh. But the refresh has no special tick: weak reaches all `43` clock addresses
-(`PMConstants.WeakLocality`, `RequirementRows`; the same fact that contradicts `VcbEnvelope`'s tick
+(`PMConstants.WeakLocality`, `RequirementRows`; the same fact that contradicts the removed unbased envelope candidate's tick
 reading). So the discrete-time route gives no class dependence. The class dependence of the
 diagonal masses is then the node passage the library already has: spinor insertions touch the
 reference axis and cross the node (`NodeElimination`), while six of eight vector insertions stay

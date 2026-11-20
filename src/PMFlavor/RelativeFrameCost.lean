@@ -1,4 +1,4 @@
-import PMFlavor.FlavourOrderComparison
+import PMFlavor.LabelOrderComparison
 import PMFlavor.ReferenceSelection
 import Mathlib.Tactic
 
@@ -8,12 +8,12 @@ import Mathlib.Tactic
 The five selection tests of Paper IV fail for one structural reason. Every
 readout used so far either divides the reference out completely
 (`ReferenceSelection.invariant_cost_tie`), sees only one sector's spectrum
-(`FlavourResponseSelection.uniform_tie`), or is minimized at zero throughput
+(`LabelResponseSelection.uniform_tie`), or is minimized at zero throughput
 (`TransitionSelection.zero_flux_minimum`). None of them can price one
 generation pair against another, so `SelectionSymmetry.unique_minimum_form`
 applies and any unique minimum of such a cost is `S₃`-invariant.
 
-The joint-order readout of `FlavourOrderComparison` is different. Its response
+The joint-order readout of `LabelOrderComparison` is different. Its response
 is the squared Frobenius norm of the commutator of two updates,
 
     frameCost A B = ‖A B − B A‖² / 12.
@@ -43,7 +43,7 @@ range and show every value up to the plane maximum `gap/6` is reached.
 
 **What it still does not do.** For one plane the response is even in `s`
 (`sign_tie01`) and it is CP-even (`conjugation_tie`, inherited from
-`FlavourOrderComparison`), so it fixes `s²` but neither its sign nor a
+`LabelOrderComparison`), so it fixes `s²` but neither its sign nor a
 conjugation branch. A required signal therefore determines a level set, not a
 point. The gap ordering selects *which pair* transfers most cheaply; the amount
 still needs the gaps, the period and the signal budget as inputs, and the plane
@@ -54,7 +54,7 @@ measured angle is used anywhere in this file.
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 namespace PMFlavor.RelativeFrameCost
-open Matrix PMAction FlavourOrderComparison
+open Matrix PMAction LabelOrderComparison
 abbrev M := Matrix (Fin 3) (Fin 3) ℂ
 
 /-- The **relative-frame cost** of two sector updates: the mean joint-order
@@ -501,8 +501,8 @@ theorem sign_tie01 (phase : Fin 3 → ℂ) (c s : ℝ) :
 
 /-- **CP-even.** The response cannot select a conjugation branch. -/
 theorem conjugation_tie (A B : M) :
-    frameCost (FlavourOrderComparison.conjugated A)
-      (FlavourOrderComparison.conjugated B) = frameCost A B :=
-  FlavourOrderComparison.conjugation_tie A B
+    frameCost (LabelOrderComparison.conjugated A)
+      (LabelOrderComparison.conjugated B) = frameCost A B :=
+  LabelOrderComparison.conjugation_tie A B
 
 end PMFlavor.RelativeFrameCost

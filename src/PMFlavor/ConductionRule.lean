@@ -1,6 +1,6 @@
 import PMFlavor.HalfTurnAperture
 import PMFlavor.TransferGraph
-import PMFlavor.FlavourPostulates
+import PMFlavor.FlavourConstants
 import PMFlavor.CKM
 
 /-!
@@ -48,12 +48,12 @@ theorem lepton_rule : share 10 = Real.pi / 10 := by
 
 /-- **The supplied solar value applies a sine to the share.** -/
 theorem sine_reading_differs :
-    Real.sin (Real.pi / 10) = 1 / (2 * FlavourPulls.φ) ∧
+    Real.sin (Real.pi / 10) = 1 / (2 * FlavourConstants.φ) ∧
       0.005 < Real.pi / 10 - Real.sin (Real.pi / 10) ∧
       Real.pi / 10 - Real.sin (Real.pi / 10) < 0.006 := by
   have hg := HalfTurnMixing.half_turn_golden
   have hs := HalfTurnMixing.half_turn_sine
-  have h5 := FlavourPulls.sqrt5_b
+  have h5 := FlavourConstants.sqrt5_b
   have hp1 := Real.pi_gt_d4; have hp2 := Real.pi_lt_d4
   refine ⟨by rw [hg]; rfl, ?_, ?_⟩ <;> rw [hs] <;> linarith
 

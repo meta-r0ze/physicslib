@@ -1,5 +1,5 @@
 import PMFlavor.NativeFlavourPropagation
-import PMFlavor.FlavourStationarity
+import PMFlavor.LabelStationarity
 
 /-!
 # The reference stationarity residual on actual configuration amplitudes
@@ -102,7 +102,7 @@ theorem sampled_iff_of_band (v : Fin 3 → ℂ) (hv : v ≠ 0) (tick : ℝ) (ht 
   exact ReferenceSpectrum.one_tick_iff_of_band E v hv tick ht hband
 
 theorem residual_eq (U : FlavourCurrent.M) (hU : U * Uᴴ = 1) (a : Fin 3) (ω : ℝ) :
-    residual c p k δ Y Ψ ρ U a ω = FlavourStationarity.residual U E a ω := by
+    residual c p k δ Y Ψ ρ U a ω = LabelStationarity.residual U E a ω := by
   let v := MassMixing.mass U E *ᵥ Pi.single a 1 - (ω : ℂ) • Pi.single a 1
   have hv : generator c p k δ Y *ᵥ (frame c Ψ ρ U *ᵥ Pi.single a 1) -
       (ω : ℂ) • (frame c Ψ ρ U *ᵥ Pi.single a 1) = frame c Ψ ρ U *ᵥ v := by
@@ -115,29 +115,29 @@ theorem residual_eq (U : FlavourCurrent.M) (hU : U * Uᴴ = 1) (a : Fin 3) (ω :
     simpa only [CommonResponse.nsq, dotProduct, Pi.star_apply, Complex.star_def,
       ← Complex.normSq_eq_conj_mul_self, Complex.re_sum, Complex.ofReal_re] using hn
   rw [residual, hv, hs]
-  exact (FlavourStationarity.physical_residual U hU E a ω).symm
+  exact (LabelStationarity.physical_residual U hU E a ω).symm
 
 theorem variance_identity (U : FlavourCurrent.M) (hU : U * Uᴴ = 1) (a : Fin 3) (ω : ℝ) :
     residual c p k δ Y Ψ ρ U a ω =
-      SpectralVariance.variance (FlavourStationarity.weights U a) E +
-        (SpectralVariance.mean (FlavourStationarity.weights U a) E - ω)^2 := by
+      SpectralVariance.variance (LabelStationarity.weights U a) E +
+        (SpectralVariance.mean (LabelStationarity.weights U a) E - ω)^2 := by
   rw [residual_eq c p hp hp1 k δ Y Ψ ρ E he hΨ hρ U hU]
-  exact FlavourStationarity.minimum_residual U hU E a ω
+  exact LabelStationarity.minimum_residual U hU E a ω
 
 theorem gap_lower_bound (U : FlavourCurrent.M) (hU : U * Uᴴ = 1) (a : Fin 3) (ω : ℝ) :
     Complex.normSq (U a 0) * Complex.normSq (U a 1) * (E 0-E 1)^2 ≤
       residual c p k δ Y Ψ ρ U a ω := by
   rw [residual_eq c p hp hp1 k δ Y Ψ ρ E he hΨ hρ U hU]
-  exact FlavourStationarity.gap_lower_bound U hU E a ω
+  exact LabelStationarity.gap_lower_bound U hU E a ω
 
 theorem pmns_zero_iff (a : Fin 3) (ω : ℝ) :
     residual c p k δ Y Ψ ρ PMNS.matrix a ω = 0 ↔ ∀ i, E i = ω := by
   rw [residual_eq c p hp hp1 k δ Y Ψ ρ E he hΨ hρ PMNS.matrix PMNS.rows]
-  exact FlavourStationarity.pmns_zero_iff_constant E a ω
+  exact LabelStationarity.pmns_zero_iff_constant E a ω
 
 theorem pmns_positive (hgap : E 0 ≠ E 1) (a : Fin 3) (ω : ℝ) :
     0 < residual c p k δ Y Ψ ρ PMNS.matrix a ω := by
   rw [residual_eq c p hp hp1 k δ Y Ψ ρ E he hΨ hρ PMNS.matrix PMNS.rows]
-  exact FlavourStationarity.pmns_residual_positive E hgap a ω
+  exact LabelStationarity.pmns_residual_positive E hgap a ω
 
 end PMFlavor.NativeFlavourStationarity

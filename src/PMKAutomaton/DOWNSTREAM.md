@@ -28,7 +28,7 @@ indexes the eight checkable witness rows.
 Flavor uses the same interface for `LinkFlux`, `ExchangeChirality`,
 `MassTermLaw`, `AllRootRestoration`, `RootRepairSelection` and
 `HalfTurnAperture`. `ReferenceSafeRestoration` uses the machine root
-order comparison. `FlavourPulls` reads the two normalized serial
+order comparison. `SharedWeakMixing` reads the two normalized serial
 ratios for its labelled comparison. None of these or the EP modules
 imports `LocalController`, `RingReceiver` or `BoundaryErasure`.
 The KAutomaton umbrella also exposes those three model modules, so

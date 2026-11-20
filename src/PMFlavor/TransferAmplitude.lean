@@ -28,7 +28,7 @@ So the library's rules give `|promotion/jump| ∈ {1, ≈ 1.98, ≈ 23.7}`. Read
 (e8p's naming, `TransferGraph`), the comparison with measurement is in
 `E8PConstants.CandidateTests` (`promo_rules_excluded`): all three are excluded. The wall must change
 the amplitude by a factor the existing rules do not produce. The one
-form in the library that reaches it, `VcbEnvelope`'s refresh-tick envelope `env 1 / env (Δ − D)`, has
+form in the library that reaches it, the removed unbased envelope candidate's refresh-tick envelope `env 1 / env (Δ − D)`, has
 no schedule basis (REVIEW).
 -/
 
