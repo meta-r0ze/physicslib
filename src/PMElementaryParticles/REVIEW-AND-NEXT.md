@@ -17,7 +17,7 @@ Remaining:
 
 ## Composition problem — the three nested rules proved
 
-See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md). Two of the nested
+See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md). All three nested
 rules are proved on the machine: Capacity Partitioning (`CapacityLedger`),
 Impedance Matching (`ImpedanceLedger`; Toll needs a Margin reserve) and
 Reversible Encoding (`RecordEncoding`). The colour
