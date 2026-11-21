@@ -27,11 +27,16 @@ reference needs a triple" hypothesis is withdrawn. Remaining:
 
 - compile-check `PersistenceMechanics/ImpedanceMatching.lean`,
   `ReversibleEncoding.lean`, `ImpedanceLedger.lean` and `RecordEncoding.lean`;
-- write Capacity Partitioning on the machine;
+- compile-check `PersistenceMechanics/CapacityPartitioning.lean` and
+  `CapacityLedger.lean` (all three nested rules are now written);
 - the vacuum choice (lepton `+e₀` or colour-symmetric) is open again; use the
   P4 shared-vacuum tables;
-- the source of cost differences between protocols: generation (triality
-  attachment) costs on the 43-ring.
+- generations: the aligned clock breaks triality. The coset signatures are
+  vector (7, 7, 2), spinor (4, 4, 0) and conjugate spinor (4, 4, 8), counting
+  one-tick `+1`, one-tick `−1` and clock-silent roots
+  (`tools/generation_clock_signature.py`). Next: match the cosets to the glue
+  address `g`, and state the dynamics rule that turns step counts into cost per
+  period.
 
 ## Full-ring Lean spectrum
 

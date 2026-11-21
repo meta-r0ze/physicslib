@@ -129,9 +129,14 @@ exchange swaps a packet between them, which reverses its direction.
 The three rules (`PM-3-Nested/paper/2_nested_persistence.tex`), stated on the
 automaton:
 
-- **Capacity Partitioning.** Per period, the protocols' registrations plus
-  interface overhead fit within the ring's capacity. This is a necessary
-  budget, the same shape as the Capacity pillar.
+- **Capacity Partitioning.** Written in Lean, awaiting a compile check. The general
+  rule is `PersistenceMechanics.CapacityPartitioning`: `global_budget`,
+  `count_lower_bound`, and `bounded_backlog_zero_drift` / `service_balance` (a
+  bounded queue over a repeating cycle has zero drift). The machine instance is
+  `PMElementaryParticles.CapacityLedger`. One ring offers `Δ = 43` exchange
+  opportunities per period. If every protocol meets the Toll floor, at most 43
+  protocols share a ring (`ring_protocol_bound`). With a Margin reserve `R` kept
+  free, at most `43 − R` do (`ring_protocol_bound_reserve`).
 - **Reversible Encoding.** The joint encoding must be injective. The paper's
   relational form: values relative to a reference `x_o`, together with the
   reference value itself, because "dropping the reference value merges
@@ -194,11 +199,49 @@ Consequences:
   apply again. In the colour vacuum up fails Map; in the lepton vacuum the neutrino
   does.
 
-## 3. What this unblocks
+## 3. Generations under the clock
+
+`tools/generation_clock_signature.py` (exploration, no data).
+
+With the spacetime D4 aligned to the clock plane, `E₈` splits as
+`D₄(spacetime) ⊕ D₄(internal)` plus three glue cosets of 64 roots each. The glue
+classes are the generations: the three nontrivial `D₄` glue classes, related by
+triality (`PMKAutomaton/GENERATIONS.md`). Exact triality would make the three cosets
+identical. The aligned clock does not. In every one of the 10 distinct aligned
+placements the cosets have these signatures:
+
+| Coset (relative to the spacetime frame) | one-tick `+1` | one-tick `−1` | clock-silent |
+| --- | --- | --- | --- |
+| vector | 7 | 7 | 2 |
+| spinor | 4 | 4 | 0 |
+| conjugate spinor | 4 | 4 | 8 |
+| (spacetime `D₄`) | 6 | 6 | 12 |
+| (internal `D₄`) | 1 | 1 | 0 |
+
+The totals match the clock counts: 22 one-tick roots each way and 22 silent. The
+vector coset is identified by its clock-axis components (0 or `±1`; the spinor
+cosets have `±½`).
+
+**What this establishes.** The clock breaks triality completely. All three
+generations are distinguishable by the steps available to them: one generation has
+the most one-tick steps (7), and the other two share 4 but differ in clock-silent
+steps (0 against 8). This is the first difference between generations derived from
+E8 alone.
+
+**What it does not yet establish:**
+
+- Which coset is the library's glue address `g`, including the reference wall `g = 0`
+  (`HeavyFlipControl.direct`). That needs `ChannelVectors`' internal-D4 attachment
+  placed against the aligned spacetime frame.
+- How step counts become per-period cost. That needs a dynamics rule: for example,
+  whether clock-silent steps act like a mass term (moves that do not advance the
+  clock) or like transverse motion. That rule has not been chosen, and it has not been
+  compared with the tier ledger.
+
+## 4. What this unblocks
 
 - Re-running the pillar survivors on the 43-ring.
 - Shared vs composite backgrounds, and whether colour protocols persist alone.
 - Triality and generation costs on a ring of the right size.
-- The remaining candidate source of cost differences between protocols:
-  generation (triality attachment) costs on the 43-ring. The colour-reference
-  angle has been withdrawn.
+- The source of cost differences between protocols: the clock-broken triality
+  signatures of section 3. The colour-reference angle has been withdrawn.

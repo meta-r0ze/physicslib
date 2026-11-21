@@ -13,3 +13,4 @@ import PersistenceMechanics.SelectionSymmetry
 import PersistenceMechanics.Requirements
 import PersistenceMechanics.ImpedanceMatching
 import PersistenceMechanics.ReversibleEncoding
+import PersistenceMechanics.CapacityPartitioning

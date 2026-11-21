@@ -1,0 +1,75 @@
+import Mathlib.Tactic
+
+/-!
+# Nested Rule 1: Capacity Partitioning
+
+The partition rule of Nested Persistence (`PM-3-Nested/paper/2_nested_persistence.tex`,
+"Capacity Partitioning"). Work `w i` demanded by task `i` is served by subsystems `j` with
+capacity `C j` and interface overhead `h j`. A feasible allocation `s i j ≥ 0` serves every
+task (`∑ j, s i j = w i`) and fits every subsystem (`∑ i, s i j + h j ≤ C j`).
+
+* `global_budget`: feasibility implies `∑ w + ∑ h ≤ ∑ C`.
+* `count_lower_bound`: with equal capacity `C > 0`, the number of subsystems is at least
+  `(∑ w + ∑ h)/C`.
+* `bounded_backlog_zero_drift`, `service_balance`: in a repeating cycle, a queue whose
+  boundary backlog stays bounded has zero net drift, so cycle-total service equals
+  `ρ ·` cycle-total demand.
+
+These are necessary conditions. They do not construct a schedule or select a unique split.
+No substrate is assumed here.
+-/
+
+namespace PersistenceMechanics.CapacityPartitioning
+
+open Finset
+
+variable {I J : Type*} [Fintype I] [Fintype J]
+
+/-- A feasible allocation of demands `w` to subsystems with capacity `C` and overhead `h`. -/
+structure Feasible (w : I → ℝ) (C h : J → ℝ) (s : I → J → ℝ) : Prop where
+  nonneg : ∀ i j, 0 ≤ s i j
+  serves : ∀ i, ∑ j, s i j = w i
+  fits : ∀ j, ∑ i, s i j + h j ≤ C j
+
+/-- **The global budget.** -/
+theorem global_budget {w : I → ℝ} {C h : J → ℝ} {s : I → J → ℝ} (hf : Feasible w C h s) :
+    ∑ i, w i + ∑ j, h j ≤ ∑ j, C j := by
+  have hw : ∑ i, w i = ∑ j, ∑ i, s i j := by
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl fun i _ => (hf.serves i).symm
+  calc ∑ i, w i + ∑ j, h j = ∑ j, (∑ i, s i j + h j) := by
+        rw [hw, Finset.sum_add_distrib]
+    _ ≤ ∑ j, C j := Finset.sum_le_sum fun j _ => hf.fits j
+
+/-- **Subsystem count.** With equal capacity `Cc > 0` there are at least
+`(∑ w + ∑ h)/Cc` subsystems. -/
+theorem count_lower_bound {w : I → ℝ} {h : J → ℝ} {s : I → J → ℝ} {Cc : ℝ} (hC : 0 < Cc)
+    (hf : Feasible w (fun _ => Cc) h s) :
+    (∑ i, w i + ∑ j, h j) / Cc ≤ Fintype.card J := by
+  have hb := global_budget hf
+  rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hb
+  rw [div_le_iff₀ hC]
+  exact hb
+
+/-- **Bounded backlog forces zero drift.** If the boundary queue `q0 + n D` stays within `B`
+for every cycle `n`, then `D = 0`. -/
+theorem bounded_backlog_zero_drift (q0 D B : ℝ) (h : ∀ n : ℕ, |q0 + n * D| ≤ B) : D = 0 := by
+  by_contra hD
+  rcases lt_or_gt_of_ne hD with hneg | hpos
+  · obtain ⟨n, hn⟩ := exists_nat_gt ((q0 + B) / (-D))
+    have hb := (abs_le.mp (h n)).1
+    have hlt : q0 + B < n * (-D) := by rwa [div_lt_iff₀ (by linarith)] at hn
+    linarith
+  · obtain ⟨n, hn⟩ := exists_nat_gt ((B - q0) / D)
+    have hb := (abs_le.mp (h n)).2
+    have hlt : B - q0 < n * D := by rwa [div_lt_iff₀ hpos] at hn
+    linarith
+
+/-- **Service balance over a cycle.** Bounded backlog with per-cycle drift
+`ρ · demand − service` forces `service = ρ · demand`. -/
+theorem service_balance (q0 ρ Sd Ss B : ℝ) (h : ∀ n : ℕ, |q0 + n * (ρ * Sd - Ss)| ≤ B) :
+    Ss = ρ * Sd := by
+  have := bounded_backlog_zero_drift q0 _ B h
+  linarith
+
+end PersistenceMechanics.CapacityPartitioning

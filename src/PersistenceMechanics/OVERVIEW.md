@@ -44,3 +44,13 @@ reference value with the differences from it is reversible
 (`relational_injective`), and dropping the reference merges exactly the global
 shifts (`differences_eq_iff`). The protocol-record instance is
 `PMElementaryParticles.RecordEncoding`. (Written, awaiting a compile check.)
+
+## Nested Rule 1: Capacity Partitioning
+
+`CapacityPartitioning` states the partition rule. A feasible allocation serves
+every task and fits every subsystem, so `∑ w + ∑ h ≤ ∑ C` (`global_budget`). With
+equal capacity the subsystem count is at least `(∑ w + ∑ h)/C`
+(`count_lower_bound`). Over a repeating cycle, bounded backlog forces zero drift,
+so service balances demand (`bounded_backlog_zero_drift`, `service_balance`). The
+clock-ring instance is `PMElementaryParticles.CapacityLedger`. (Written, awaiting a
+compile check.)
