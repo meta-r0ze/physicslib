@@ -1,8 +1,8 @@
 # The line and composition problems
 
-Status: proposals with numerical checks. The clock phase and the root counts of
-section 1 are written in Lean in `PMKAutomaton/ClockRing.lean` (not yet
-compile-checked). The check script is `tools/clock_ring_check.py` (exploration,
+Status: the clock phase, the root counts and the walk closure of section 1 are
+proved in Lean (`PMKAutomaton/ClockRing.lean`); the alignment, weights and
+generation results are numerical checks. The check script is `tools/clock_ring_check.py` (exploration,
 no data).
 
 ## 1. The line problem: what closes the receiver ring
@@ -115,7 +115,7 @@ exchange swaps a packet between them, which reverses its direction.
    check 1.
 3. *Clock-silent roots.* The 22 roots with phase 0 do not move a packet around
    the ring. Say what they do: internal or transverse motion.
-4. *Lean.* Written in `PMKAutomaton/ClockRing.lean`, awaiting a compile check:
+4. *Lean.* Proved in `PMKAutomaton/ClockRing.lean`:
    `clockReading` and its additivity, `rootList_complete` (via
    `ThetaE8.e8_card_roots`), the counts (`one_tick_roots`, `minus_tick_roots`,
    `silent_roots`, `moving_roots`, `plus_split`), `walk_returns_iff` (a walk of
@@ -129,7 +129,7 @@ exchange swaps a packet between them, which reverses its direction.
 The three rules (`PM-3-Nested/paper/2_nested_persistence.tex`), stated on the
 automaton:
 
-- **Capacity Partitioning.** Written in Lean, awaiting a compile check. The general
+- **Capacity Partitioning.** Proved in Lean. The general
   rule is `PersistenceMechanics.CapacityPartitioning`: `global_budget`,
   `count_lower_bound`, and `bounded_backlog_zero_drift` / `service_balance` (a
   bounded queue over a repeating cycle has zero drift). The machine instance is
@@ -141,7 +141,7 @@ automaton:
   relational form: values relative to a reference `x_o`, together with the
   reference value itself, because "dropping the reference value merges
   distinct constant configurations."
-- **Impedance Matching.** Written in Lean, awaiting a compile check. The general
+- **Impedance Matching.** Proved in Lean. The general
   rule is `PersistenceMechanics.ImpedanceMatching`: `ledger`,
   `admissible_iff_transmission`, `zero_reserve_matched`, `realize`. The machine
   instance is `PMElementaryParticles.ImpedanceLedger`. There the certified
@@ -160,7 +160,7 @@ vacuum (`+2e₀`, task B3), each with its own packet. The firing pattern is
 joint, and Toll adds over packets (`record_step_identity` per ring).
 
 **The colour question: resolved, and the earlier hypothesis is withdrawn.**
-Reversible Encoding is written in Lean, awaiting a compile check: the general rule
+Reversible Encoding is proved in Lean: the general rule
 `PersistenceMechanics.ReversibleEncoding` and its instance
 `PMElementaryParticles.RecordEncoding`.
 

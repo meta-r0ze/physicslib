@@ -32,7 +32,7 @@ positive-real law: reflection `r = (Z_l − Z_s)/(Z_l + Z_s)`, transmission
 criterion `P r² ≤ B ⇔ T ≥ 1 − B/P` (`admissible_iff_transmission`), and exact
 matching under zero reserve (`zero_reserve_matched`). It is a budget condition,
 not an optimality claim. The K-Automaton instance is
-`PMElementaryParticles.ImpedanceLedger`. (Written, awaiting a compile check.)
+`PMElementaryParticles.ImpedanceLedger`. (Compiled.)
 
 ## Nested Rule 2: Reversible Encoding
 
@@ -43,7 +43,7 @@ metadata `m` is reversible exactly when `m` separates every fibre of `q`
 reference value with the differences from it is reversible
 (`relational_injective`), and dropping the reference merges exactly the global
 shifts (`differences_eq_iff`). The protocol-record instance is
-`PMElementaryParticles.RecordEncoding`. (Written, awaiting a compile check.)
+`PMElementaryParticles.RecordEncoding`. (Compiled.)
 
 ## Nested Rule 1: Capacity Partitioning
 
@@ -52,5 +52,4 @@ every task and fits every subsystem, so `∑ w + ∑ h ≤ ∑ C` (`global_budge
 equal capacity the subsystem count is at least `(∑ w + ∑ h)/C`
 (`count_lower_bound`). Over a repeating cycle, bounded backlog forces zero drift,
 so service balances demand (`bounded_backlog_zero_drift`, `service_balance`). The
-clock-ring instance is `PMElementaryParticles.CapacityLedger`. (Written, awaiting a
-compile check.)
+clock-ring instance is `PMElementaryParticles.CapacityLedger`. (Compiled.)
