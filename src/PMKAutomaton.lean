@@ -14,5 +14,6 @@ import PMKAutomaton.Components
 import PMKAutomaton.ClockRing
 import PMKAutomaton.ClockAlignment
 import PMKAutomaton.ClockTickWeights
+import PMKAutomaton.ClockSites
 
 /-! Internal E8 node transport, packet handoff and booked boundary erasure. -/

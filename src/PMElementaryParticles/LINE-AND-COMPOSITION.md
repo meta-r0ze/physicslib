@@ -10,6 +10,9 @@ are proved in `PMKAutomaton/ClockAlignment.lean` (`a_mem` … `beta_mem`,
 The equal-weight tick orbit is proved in `PMKAutomaton/ClockTickWeights.lean`
 (`clockReading_reflect`, `forward_closed`, `forward_one_orbit`,
 `backward_closed`, `backward_one_orbit`); Closure itself remains the stated
+premise. The receiver-site identification is proved in
+`PMKAutomaton/ClockSites.lean` (`site`, `ring_size`, `site_add_forward`,
+`site_add_backward`, `arrivals_are_lattice_steps`); the update model remains a
 premise. The placement search and its counts, the ten-placement robustness and
 the choice of reference class remain numerical or named inputs.
 The check scripts are `tools/clock_ring_check.py`, `tools/clock_tick_weights.py`
@@ -147,9 +150,16 @@ exchange swaps a packet between them, which reverses its direction.
    `spinorRoots_length`, `conjugateSpinorRoots_length`), their clock signatures
    (`vectorRoots_counts`, `spinorRoots_counts`, `conjugateSpinorRoots_counts`),
    the `±cu` class (`cu_key`, `neg_cu_key`) and the total decompositions
-   (`plus_total`, `minus_total`, `silent_total`). Still to state: the
-   identification of `RingReceiver`'s tick with one root event, and its site
-   index with the reading.
+   (`plus_total`, `minus_total`, `silent_total`). Proved in
+   `PMKAutomaton/ClockSites.lean`: the receiver site is the clock reading
+   (`site`), the ring size is the substrate period (`ring_size`, `43 = Δ`), a
+   forward tick root advances a site (`site_add_forward`) and a backward tick
+   root retreats it (`site_add_backward`), so the live arrival comes from one
+   forward step back and the record arrival from one backward step back
+   (`arrivals_are_lattice_steps`).
+
+   What remains a premise: **one receiver tick is one root event** (the update
+   model), and **Closure** for the equal weights. Neither is proved here.
 
 ## 2. The composition problem: the nested rules on the machine
 

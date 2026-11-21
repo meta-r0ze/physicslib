@@ -8,11 +8,19 @@ See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md). The clock closes the
 receiver ring. One root event per tick changes the E8 clock reading by `±1`,
 so the ring has exactly `Δ = 43` sites (`PMKAutomaton/ClockRing.lean`). `SliceHop` agrees once its D4 is placed with its clock axis on the
 clock plane, and the six forward tick steps then carry equal weight.
+
+`RingReceiver`'s site index is identified with `clockReading` in
+`PMKAutomaton/ClockSites.lean`: `site` is the reading, `ring_size` proves
+`43 = Δ`, `site_add_forward` and `site_add_backward` give the two step
+directions, and `arrivals_are_lattice_steps` identifies the live and record
+arrivals as one forward and one backward lattice step. Remaining premises: one
+receiver tick is one root event (the update model), and Closure for the equal
+weights.
+
 Remaining:
 
 - replace `sectorBasis` with an aligned placement, or state the alignment as a
   named hypothesis, and recheck the modules that use its coordinates;
-- identify `RingReceiver`'s site index with `clockReading` (`n = Δ`);
 - replace the 3-ring registration counts with 43-ring results.
 
 ## Composition problem — the three nested rules proved
