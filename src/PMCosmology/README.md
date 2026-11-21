@@ -42,7 +42,7 @@ saturation, thermodynamic and primordial arguments. It builds on Papers I–V.
 - **[OVERVIEW.md](OVERVIEW.md)** — the module map, the certified numbers, and the
   **draft-status risks / possible bugs** (frozen inputs, CP discrepancy, dark-ratio
   ambiguity). **Start here.**
-- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)** — the remaining work, split into
+- **[TODO.md](TODO.md)** — the remaining work, split into
   Lean-checkable arithmetic and physical model inputs.
 - **[PREDICTIONS.md](PREDICTIONS.md)** — the map from the general cosmology questions
   to PM's answers (predictions vs conditional rescalings vs not defined).

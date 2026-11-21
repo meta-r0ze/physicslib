@@ -3,7 +3,7 @@
 **Superseded (Nov 2026).** This is the old `3³` spectral template with the `41/43` margin
 (`877.1–877.2 s`), now retired: the margin acted as a Governor above one. The E8 neutron is the
 continuum route, `PMHadrons.NeutronContinuum` (`923.37–923.39 s`; see
-`src/PMHadrons/REVIEW-AND-NEXT.md` §0, §2 and `src/PMElementaryParticles/CONTINUOUS.md`).
+`src/PMHadrons/TODO.md` §0, §2 and `src/PMElementaryParticles/CONTINUOUS.md`).
 
 Comparison calculation, not a theorem input.
 
@@ -45,5 +45,5 @@ above one on the rate, which a Governor cannot be
 `DecayChannel` template as the pion (`|V_ud|²` in map, shared margin `R` with `|V_ud|²R = 32/33`,
 no Governor), the neutron is `948.69–948.70 s` (`neutronLifetimeUnifiedSeconds_bounds`), +8.0%.
 The 8.0% is the neutron-only Coulomb, `g_A` and low-energy radiative pieces
-(`PMHadrons/REVIEW-AND-NEXT.md` §0).
+(`PMHadrons/TODO.md` §0).
 

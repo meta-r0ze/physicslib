@@ -14,7 +14,7 @@ A generation state puts a nontrivial class `b` on wall 1 and a nontrivial class 
 (`IsGen`), an off-diagonal coset of `D₄* ⊕ D₄*`; its label is `b + c`, the third class
 (`PMAction.GenerationLabel`). There are six ordered pairs (`gen_count`), two orientations per label.
 `PMAction.GenerationWalls` instead encodes a generation's modes as single carriers on one wall;
-relating the two state spaces is the next step (`REVIEW-AND-NEXT.md`).
+relating the two state spaces is the next step (`TODO.md`).
 
 **E₈ moves (translations by `(a, a)`).**
 * `glue_conserves_label`: they conserve the label.

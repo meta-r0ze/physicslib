@@ -3,7 +3,7 @@ import PMAction.GenerationOrientation
 /-!
 # A generation-diagonal mass from allowed moves: a crossing and a label-class carrier
 
-Step 3 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`). Within one orientation convention
+Step 3 of the generation sector (`PMAction/TODO.md`). Within one orientation convention
 (`GenerationWalls.side`: generation `g` carries class `g + 1` on wall `true`, `g − 1` on wall
 `false`), wall is chirality (`PMAction.DomainWall`), so a mass joins a generation's two walls.
 
@@ -34,7 +34,7 @@ node-suppressed for the two others: one heavy generation and two light ones, the
 generation whose two mixings both cross the node (`PMAction.GenerationSector`,
 `PMAction.MassInsertion`). That is the observed pattern (one heavy, weakly mixed generation). Not
 fixed here: the size of the node factor (the leg rule gives `α⁻¹` or `α^{−1/2}` and does not match
-the measured heavy/middle ratios, `PMFlavor/REVIEW-AND-NEXT.md`), and the split of the two light
+the measured heavy/middle ratios, `PMFlavor/TODO.md`), and the split of the two light
 generations, which are degenerate at this order (their insertions are the two spinor classes; the
 weak wall distinguishes them, `PMFlavor.ExchangeChirality`).
 -/

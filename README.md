@@ -78,7 +78,7 @@ Each module under `src/` has three documents with separate jobs:
 ```text
 README.md           build, layout and import boundary
 OVERVIEW.md         what is checked, with theorem entry points
-REVIEW-AND-NEXT.md  what remains open from the paper conversion
+TODO.md  what remains open from the paper conversion
 ```
 How a lattice gives continuum results, and when it does not, is explained in
 [`src/PMElementaryParticles/CONTINUOUS.md`](src/PMElementaryParticles/CONTINUOUS.md).

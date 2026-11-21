@@ -106,7 +106,7 @@ external modes and current.
    native one-wall lazy offset breaks that grading symmetry about any common energy.
    Glued support and stationarity still admit every positive ratio
    (`WallGapCalibration.arbitrary_cyclic_ratio`).
-   [Clock work](../PMKAutomaton/REVIEW-AND-NEXT.md#absolute-event-clock)
+   [Clock work](../PMKAutomaton/TODO.md#absolute-event-clock)
 2. **PMElementaryParticles (done).** The parent is the light mass
    eigenstate, the daughters are the light modes, and the gapped modes are
    closed channels by the spectrum's order (gap above the light band).

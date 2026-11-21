@@ -19,7 +19,7 @@ composite-level role:
   (`(R_M − σ)/R_M = 167/172`), and the channels and interaction direction are filtered. The
   composite's **emission boundary** is exactly the Toll event `PMSubstrate.ValidToll`, with weight
   `tollTerm` (`PMSubstrate.uniform_toll`). This is the boundary factor of a decay — the object the
-  SM comparison calls `fπ`/`fK` (`REVIEW-AND-NEXT.md` item 2).
+  SM comparison calls `fπ`/`fK` (`TODO.md` item 2).
 
 * **Governor** restricts (Causality). A credit over the `Δ`-cycle that the clock advance cannot
   distinguish is uniform, `χ/Δ = 2/43` per slot (`PMSubstrate.ImpedanceTerms.governor_uniform`), and

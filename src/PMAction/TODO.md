@@ -1,7 +1,7 @@
 # PMAction — open work
 
 Checked results are in [OVERVIEW](OVERVIEW.md). The shared clock, record and
-handoff tasks are in the [transport review](../PMKAutomaton/REVIEW-AND-NEXT.md).
+handoff tasks are in the [transport review](../PMKAutomaton/TODO.md).
 
 **Extension** marks a stronger result beyond the present theorem scope. **Certificate** marks an
 external calculation awaiting formal verification. Each current theorem states its hypotheses.

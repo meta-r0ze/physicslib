@@ -3,7 +3,7 @@ import PMAction.PolarizationIngredients
 /-!
 # Step (ii) of the subtracted lattice polarization, first part: per-root expansions in `q`
 
-The route for step (ii) (`PMAction/REVIEW-AND-NEXT.md`): with the Ward identity
+The route for step (ii) (`PMAction/TODO.md`): with the Ward identity
 (`FiniteVertex.ward`), `S(k + q) = S(k) + ΔS` exactly, and `PolarizationAverage.inv_expand`
 expands `1/S(k + q)` in `ΔS` with no Taylor step. All remaining `q`-dependence then sits in
 trigonometric functions of `x = a r·q/2`, per root, times functions of `A = a r·k`. This module

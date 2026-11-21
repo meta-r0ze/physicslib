@@ -4,7 +4,7 @@ import Mathlib.LinearAlgebra.Matrix.Hermitian
 /-!
 # Within one convention the wall crossing is one-directional, so it is not Hermitian
 
-Step 5 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`). `PMAction.WallExchange`: the
+Step 5 of the generation sector (`PMAction/TODO.md`). `PMAction.WallExchange`: the
 inter-wall link `Y` is Hermitian exactly when the update is symmetric under the wall-parity
 exchange. `PMAction.InterWallDiagonal` and `MassInsertion` split on whether it is. This module
 settles it for the equal-class crossing within one orientation convention.

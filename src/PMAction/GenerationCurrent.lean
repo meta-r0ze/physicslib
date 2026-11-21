@@ -3,7 +3,7 @@ import PMAction.GenerationMass
 /-!
 # Generation changes within one convention: a carrier and a glue move, a directed cycle per wall
 
-Step 4 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`). In the orientation convention of
+Step 4 of the generation sector (`PMAction/TODO.md`). In the orientation convention of
 `GenerationWalls` (generation `g` is the pair `(e (g + 1), e (g − 1))` on walls `true`/`false`,
 `GenerationOrientation`), which moves change the generation?
 

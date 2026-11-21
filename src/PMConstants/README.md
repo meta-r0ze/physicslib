@@ -4,7 +4,7 @@ Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum III: Nested Persi
 — constants, sectors, running and gauge factors.
 
 - What is checked: [OVERVIEW.md](OVERVIEW.md) — module map and results.
-- What remains: [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md) — constant-by-constant open
+- What remains: [TODO.md](TODO.md) — constant-by-constant open
   physical dependencies.
 
 Build: Lean 4.34.1, in the single Lake package of this repository, with

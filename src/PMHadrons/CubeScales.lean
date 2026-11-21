@@ -34,7 +34,7 @@ emitted electron is not one of the nucleon's resources: it leaves through the To
 **Consequence: the lepton cube's spacing, and the Coulomb `κ`.** The channel reads Laplacian
 eigenvalues (the non-relativistic kinetic operator of a mass-`m_e` particle) in units of `m_e`, so
 the hop `ħ²/(2 m_e a²)` equals `m_e`: `a_e = ħ/(√2 m_e c)` (`lepton_hop`). This is the
-non-relativistic link `κ = 4π√2` of `PMHadrons/REVIEW-AND-NEXT.md` §0.2, now forced by the channel's
+non-relativistic link `κ = 4π√2` of `PMHadrons/TODO.md` §0.2, now forced by the channel's
 own definition rather than chosen.
 -/
 

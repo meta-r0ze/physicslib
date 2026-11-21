@@ -4,7 +4,7 @@ import PMAction.CommonResponse
 /-! Exact finite flavour evolution from supplied eigenenergies and mixing:
 `U · diag(e^{−iE t}) · Uᴴ`, a one-parameter unitary group. Valid algebra; the physical premise is
 in its use. That the substrate update at the clock acts on wall modes this way is open
-(`PMAction/REVIEW-AND-NEXT.md`, "Update as `e^{−iHt}` on wall modes"); `PMFlavor.NativeFlavourPropagation`
+(`PMAction/TODO.md`, "Update as `e^{−iHt}` on wall modes"); `PMFlavor.NativeFlavourPropagation`
 shows the native wall generator's exponential is this evolution on prepared eigenmodes.
 The Hamiltonian and probability readout are inputs. This supplies no physical
 neutrino masses, relativistic energy approximation or exclusion of Majorana terms. -/

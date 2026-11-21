@@ -47,7 +47,7 @@ invariance of every lattice correction (see the Yang–Mills scope note in `PMAc
 
 ## Example: the neutron's electron
 
-Neutron decay shows all three rules (`PMHadrons/REVIEW-AND-NEXT.md` §2,
+Neutron decay shows all three rules (`PMHadrons/TODO.md` §2,
 `tools/beta_channel_modes.py`).
 
 1. An older template put the emitted electron on its own `3×3×3` cube. That gave
@@ -106,7 +106,7 @@ not depend on the shape: every boundary of constant width `Δ` has length `πΔ`
 | --- | --- | --- |
 | The light carrier and its spin fraction | it is confined to a persistent cube | `PMAction.ConfinedCarrier` |
 | The proton's charge potential on the cube | exact Green function of the cube | `PMAction.CubeGreen3` |
-| Hadron colour coupling | the cube scale is near the strong-coupling region | `PMAction/REVIEW-AND-NEXT.md` A.3 |
+| Hadron colour coupling | the cube scale is near the strong-coupling region | `PMAction/TODO.md` A.3 |
 
 ## What is proved
 

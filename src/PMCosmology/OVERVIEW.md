@@ -1,7 +1,7 @@
 # PMCosmology — overview of checked results
 
 The single map of what Paper VI proves and what remains an input or a draft-stage
-proposal. Open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build
+proposal. Open work is in [`TODO.md`](TODO.md); build
 instructions are in [`README.md`](README.md). Sources are under `PMCosmology/`,
 imported by `PMCosmology.lean`. Theorem names are entry points, not exhaustive lists.
 This is the most draft-stage paper, so the "risks" section is as important as the

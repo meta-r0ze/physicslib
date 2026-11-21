@@ -31,13 +31,13 @@ SM values. The tools/e8p contains experimental values.
 Text Housekeeping: Modules should have 
 - README.md
 - OVERVIEW.md
-- REVIEW-AND-NEXT.md
+- TODO.md
 
 - Review for out of date text
 - Review for major duplication
 - Review for WIP md files that are old and maybe should be merged in and cleaned up
 - Review for anything that was research, marked and done and can be removed
-- Review that the REVIEW-AND-NEXT to see if its suggestions are the right order and review if tasks are already solved in another module or can be easily solved by using something in another module
+- Review that the TODO to see if its suggestions are the right order and review if tasks are already solved in another module or can be easily solved by using something in another module
 
 
 Do not edit `src/classification/` except for its license/provenance files; it is vendored Apache-2.0 code with its own `Audit.lean`.

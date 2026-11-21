@@ -55,7 +55,7 @@ class, so the mass matrix is generation-diagonal with entries set by the inserti
 premise of the retired transfer reading (`TransferGenerator`). It is what survives, not yet a derivation:
 the library's wall Hamiltonian has no such direct zero-mode term (its inter-wall hop joins the
 gapped components), and the equal-class crossing the gluing allows would add generation off-diagonal
-mass entries unless it is absent or small (`PMAction/REVIEW-AND-NEXT.md`).
+mass entries unless it is absent or small (`PMAction/TODO.md`).
 
 What this does not give: the size of the node suppression of the two light generations' masses,
 or what splits those two (the `s`/`c` asymmetry, `ExchangeChirality`). For leptons the third

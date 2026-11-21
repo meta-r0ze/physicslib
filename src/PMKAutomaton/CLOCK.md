@@ -265,5 +265,5 @@ The recorded first-row wall-leakage diagnostic prefers
 explored duration options span `1/8 ≤ r ≤ 1/2`. The two conditional
 six-reflection ratios above are above the preferred range under equal
 normalization. Neither number selects a pulse, a clock, or a record.
-See [first-row wall leakage](../PMFlavor/REVIEW-AND-NEXT.md#first-row-wall-leakage)
+See [first-row wall leakage](../PMFlavor/TODO.md#first-row-wall-leakage)
 and the [EP readout comparison](../PMElementaryParticles/OVERVIEW.md#charged-density-and-wall-leakage).

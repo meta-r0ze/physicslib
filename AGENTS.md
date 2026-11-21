@@ -6,7 +6,7 @@ Lean 4 formalization of **Persistence Mechanics** applied to the vacuum. It
 contains the paper-series libraries, their audits, and the `e8p` value tool.
 
 The Lean source is the ground truth. The prose docs (`README.md`,
-`src/*/OVERVIEW.md`, `src/*/REVIEW-AND-NEXT.md`, `tools/e8p/README`) are maps;
+`src/*/OVERVIEW.md`, `src/*/TODO.md`, `tools/e8p/README`) are maps;
 when they disagree with a theorem, the theorem wins.
 
 Any new proofs are finding the values of the E8 substrate and *then* comparing it to
@@ -39,7 +39,7 @@ src/AuditDependencies.lean   paper import-boundary audit
 ```
 
 Each paper library has its own `README.md`, `OVERVIEW.md` and
-`REVIEW-AND-NEXT.md`. Read those before changing a module.
+`TODO.md`. Read those before changing a module.
 
 ## Build and check
 
@@ -86,7 +86,7 @@ Under the hood this is one Lake package with one `.lake` cache. The e8p binary i
   belong in `tools/e8p/E8PConstants/Experimental.lean` or the falsifiable
   prediction ledger.
 - When adding or changing a theorem, update the relevant `OVERVIEW.md` and
-  `REVIEW-AND-NEXT.md`.
+  `TODO.md`.
 - The papers were early drafts, this lean is the source of truth and when a formal
   proof find an error the papers will be updated to match the proofs derived here.
 - Run `./build.sh` on the appropriate change before finishing.
@@ -104,4 +104,4 @@ Under the hood this is one Lake package with one `.lake` cache. The e8p binary i
 The Yang–Mills branch is a test of persistence mechanics, not a construction of
 quantum Yang–Mills. Its classical continuum limit and finite-volume Euclidean
 setup are in scope; the Clay-level quantum program is not. See
-`src/PMAction/OVERVIEW.md` and `src/PMAction/REVIEW-AND-NEXT.md`.
+`src/PMAction/OVERVIEW.md` and `src/PMAction/TODO.md`.

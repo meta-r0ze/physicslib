@@ -45,7 +45,7 @@ already absorb the average symmetry cost along the line, and most of the offset 
 itself, which the swap removes. A consistent occupancy ledger would also carry the symmetric
 filling energy (`≈ 37.5` MeV per nucleon with `ℏω(A)`), turning the link weights into a potential;
 the substrate has no link potential separate from the net link cost, so that rebuild is not
-attempted (`REVIEW-AND-NEXT.md` §1 item 1).
+attempted (`TODO.md` §1 item 1).
 
 **The potential part: a persistence filter on like pairs.** A link joins two nucleons, each with
 `spinStates = 2` (`Shells.spinStates_eq_trace`, from `PL.trace`), so a link has `2² = 4` spin

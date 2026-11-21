@@ -7,7 +7,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 /-!
 # The exponential decay law from Paper I's survival law
 
-`REVIEW-AND-NEXT` item 3 asks for the decay law from the dynamics, distinguishing exact finite
+`TODO` item 3 asks for the decay law from the dynamics, distinguishing exact finite
 updates from a continuum limit. `Survival` proves consequences of a supplied exponential law.
 
 **Exact on the tick lattice.** Paper I prices persistence per cycle: surviving a cycle of net cost

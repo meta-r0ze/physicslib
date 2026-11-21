@@ -1,7 +1,7 @@
 # PMAtoms — overview of checked results
 
 The map of what the atomic/composite extension proves. Open work is in
-[`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); build instructions are in
+[`TODO.md`](TODO.md); build instructions are in
 [`README.md`](README.md). Sources are under `PMAtoms/`, imported by
 `PMAtoms.lean`.
 

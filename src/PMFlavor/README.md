@@ -74,7 +74,7 @@ label state.
 ## Layout
 
 - What is checked: [OVERVIEW.md](OVERVIEW.md).
-- What remains: [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md).
+- What remains: [TODO.md](TODO.md).
 - Comparisons with measurement: `tools/e8p/E8PConstants/PMFlavor` (`CandidateTests`, `FlavourPulls`,
   `ExperimentalPulls`); no derivation module imports them.
 

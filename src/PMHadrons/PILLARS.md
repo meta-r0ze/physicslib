@@ -208,7 +208,7 @@ what the count leaves out. The count `f = v/|Ω|` contains no carrier mass, whil
 `f_K/f_π − 1` is driven by the strange mass. The kaon's Margin to `μν` (`388 MeV` vs `34 MeV`)
 is the pillar value that carries that mass, and it is the next place to look. `WalkSpeed` (a
 massive species is slower, `|cos r|`) is the other mass channel; a slower cone was tried
-(`REVIEW-AND-NEXT` §3) and needs a persistence-fixed speed.
+(`TODO` §3) and needs a persistence-fixed speed.
 
 **What E8 itself says (Nov 2026).** E8's assigned kaon count is `|Ω_K| = Δ² − ν² = 1593`
 (`EmissionScale.kaonModes`): the one-cycle cone with its first `ν` time slices removed, and no
@@ -244,10 +244,10 @@ The fixed-volume calculation already permits pion dressing on existing sites. A 
 ## Next
 
 Open items (the returning pion pair's Toll, the Governor cap on the colour coupling, and the
-comparison with the mass ledgers) are tracked in [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md),
+comparison with the mass ledgers) are tracked in [TODO.md](TODO.md),
 "Nucleon and pion dressing".
 
-## Appendix: calculation log (moved from `PMAction/REVIEW-AND-NEXT.md` A.3, Nov 2026)
+## Appendix: calculation log (moved from `PMAction/TODO.md` A.3, Nov 2026)
 
 Kept for the record, in the order it happened; later entries correct earlier ones (the `5.6`/`1.27` exchange result, the `4³` candidate and the `Z_A = 1` claim are all superseded as noted).
 

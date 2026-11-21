@@ -56,7 +56,7 @@ Uniform measures come from Closure (`ClosureSymmetry.invariant_measure_uniform`)
 
 **Not derived inside Lean:** the postulates above, and PM's definitions of the pillars (Governor
 restricts transitions, Protocol coordinates them; a vertex sees only local observations, which is
-Postulate I). See [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md) for the missing implications.
+Postulate I). See [`TODO.md`](TODO.md) for the missing implications.
 
 ## Layout
 

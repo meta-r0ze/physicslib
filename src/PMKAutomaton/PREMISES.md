@@ -1,6 +1,6 @@
 # KAutomaton premise ledger
 
-This is the status ledger for [REVIEW-AND-NEXT](REVIEW-AND-NEXT.md).
+This is the status ledger for [TODO](TODO.md).
 Derived and excluded results retain the hypotheses of their theorems.
 The [clock ledger](CLOCK.md) records timing and the
 [writer schedule](../PMElementaryParticles/SCHEDULE.md) records costs.

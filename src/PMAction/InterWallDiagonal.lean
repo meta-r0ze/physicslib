@@ -40,7 +40,7 @@ cannot come from the inter-wall link alone: it needs a generation-diagonal term.
 crossing cannot supply one. A crossing that changes the class by the generation label (class `b` on
 one wall to class `c` on the other, `b ≠ c`) would, but it is not an E₈ vector, so it is a
 composite: a crossing and a single-wall carrier shift. This is the open question in
-`REVIEW-AND-NEXT.md`, now narrowed: the diagonal mass is a composite process or a flavour-dependent
+`TODO.md`, now narrowed: the diagonal mass is a composite process or a flavour-dependent
 on-site term, and the off-diagonal (equal-class) part is what the gluing allows directly.
 -/
 

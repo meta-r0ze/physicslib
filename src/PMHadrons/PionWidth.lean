@@ -19,7 +19,7 @@ On E8, `f_π` is the composite's **emission overlap** for a single carrier -- ho
 persistent configuration sheds one -- not an independent scale. It is currently the assigned
 placeholder `pionDecayConstantE8 = v/(Δ²+Δ−χ)` (`M`); the SM comparison is `f_π ≈ 130.2` MeV.
 Computing the overlap from the composite configuration is the open construction
-(`REVIEW-AND-NEXT.md` item 2).
+(`TODO.md` item 2).
 -/
 
 noncomputable section

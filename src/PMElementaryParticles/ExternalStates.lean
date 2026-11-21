@@ -3,7 +3,7 @@ import PMConstants.OnShell
 /-!
 # External states are on-shell mass eigenstates, from persistence
 
-`REVIEW-AND-NEXT` item 1 keeps "positive on-shell energies" of the external states as a
+`TODO` item 1 keeps "positive on-shell energies" of the external states as a
 hypothesis. Part of it follows from persistence.
 
 Write a state in an energy eigenbasis of its Hamiltonian, with energies `E j` and

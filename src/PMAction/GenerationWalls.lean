@@ -36,7 +36,7 @@ whole-generation wall swap keeps the label and reverses the orientation, and thi
 the reversed pair as two different generations; that is what `exchange_not_generation_only`
 records. A single-component crossing at a fixed class changes the two walls' classes by unequal
 amounts, which is neither an `E₈` move nor a single-wall shift (`PMAction.GenerationSector`); whether
-it is physical is open (`PMAction/REVIEW-AND-NEXT.md`, generation sector, step 3). The counting
+it is physical is open (`PMAction/TODO.md`, generation sector, step 3). The counting
 results here do not depend on it.
 -/
 

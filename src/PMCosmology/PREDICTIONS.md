@@ -33,7 +33,7 @@ one constraint, not two. They land on the SH0ES/DES side of the H₀/S₈ tensio
 `Ω_b h²`, `Ω_c h²`, `Ω_Λ`, `A_s`, `N_eff`, `Y_p`, `D/H`, recombination `z_*`, the
 age, the growth factor, the full `P(k)`, the metric/horizon, and absolute Hubble
 units. Papers I–VI define no Lean densities, amplitudes or expansion history for
-these; adding them means new model postulates (see `REVIEW-AND-NEXT.md` Part B).
+these; adding them means new model postulates (see `TODO.md` Part B).
 
 ## How to use
 

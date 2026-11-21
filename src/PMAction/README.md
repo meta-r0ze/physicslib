@@ -37,7 +37,7 @@ the actual update stencil and adjacency, not postulated.
 - **[OVERVIEW.md](OVERVIEW.md)** — what is proved and reusable: the module map,
   the spectrum/split/locality results, the interpretation boundaries, and what each
   later paper may rely on. **Start here to find a theorem you can use.**
-- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)** — the remaining obligations, one
+- **[TODO.md](TODO.md)** — the remaining obligations, one
   list, with nothing already done.
 
 ## Build and audit

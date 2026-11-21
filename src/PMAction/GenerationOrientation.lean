@@ -26,7 +26,7 @@ nontrivial classes (`Good e`), so no identification is chosen.
   classes by **different** nontrivial amounts (`e (g + 1)` on one wall, `e (g − 1)` on the other). That
   is neither an `E₈` translation (equal amounts) nor a single-wall shift (one wall), so it is not one
   of the moves `GenerationSector` allows. Whether it is a physical move is open (chirality, step 3 in
-  `PMAction/REVIEW-AND-NEXT.md`).
+  `PMAction/TODO.md`).
 -/
 
 namespace PMAction.GenerationOrientation

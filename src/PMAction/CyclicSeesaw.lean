@@ -4,7 +4,7 @@ import PMAction.WallSeesaw
 /-!
 # The seesaw on the one-directional crossing link
 
-Step 6 of the generation sector (`PMAction/REVIEW-AND-NEXT.md`): what steps 1 to 5 give the flavour
+Step 6 of the generation sector (`PMAction/TODO.md`): what steps 1 to 5 give the flavour
 sector. Within one orientation convention the equal-class crossing puts the inter-wall link `Y`
 (wall-`false` generation to wall-`true` generation) only at the positions `(h + 1, h)`
 (`PMAction.GenerationParity.crossing_entry`). So `Y` is a weighted cyclic shift `cyc y`, one

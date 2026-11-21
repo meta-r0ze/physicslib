@@ -19,7 +19,7 @@ configuration holds. This module makes the "minimum room" reading precise, all E
 * `two_le_length_of_colourNeutral` / `occupancy_ge_two_of_colourNeutral` — a colour-neutral
   composite needs at least two carriers, so under one cell per carrier it needs at least
   `χ = 2` cells. This derives the pion's occupancy **lower bound**; the kaon's extra `σ` is the
-  remaining input (`REVIEW-AND-NEXT.md` item 1).
+  remaining input (`TODO.md` item 1).
 * `tied_minimal_of_moved` — a relabeling that preserves persistence and occupancy and moves a
   least-occupancy placement produces a *second* one, so occupancy alone does not select a
   placement and `n` stays an input until the persistence predicate forces a unique minimizer.

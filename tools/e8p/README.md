@@ -151,7 +151,7 @@ filtering, audit, and LaTeX blocks; it does not duplicate any formula.
 
 ## Coverage and next work
 
-See **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)**. Current coverage: 98 values, matched against `PM-1-Arch/calculations/constants.txt`.
+See **[TODO.md](TODO.md)**. Current coverage: 98 values, matched against `PM-1-Arch/calculations/constants.txt`.
 Paper 0: the substrate invariants `Δ, ν, σ, χ, D`, the derived loads
 `L_intrinsic, L_embed, L_substrate, N, RM`, plus `N_c`, the GUT Weinberg angle and
 the boundary-storage ratio. Paper 1: `alpha_inv`, `alpha`, and the six α⁻¹ pillars

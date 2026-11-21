@@ -8,7 +8,7 @@ it: flavour is the label change of a charged-current event that changes protocol
 it needs the protocols first. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`).
 
 The [KAutomaton closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout)
-gives the upstream contract. The [EP review](REVIEW-AND-NEXT.md#protocol-readout-blockers)
+gives the upstream contract. The [EP review](TODO.md#everything-else-still-open)
 maps the admitted path, timing, readout and Toll inputs needed for
 a physical species claim.
 
@@ -65,14 +65,14 @@ Toll is derived and Margin is the open number. Fill in Margin, and Map follows.
   (module-by-module) and what remains a physical input. **Start here to find a
   theorem you can use.**
 - **[GENERATIONS.md](GENERATIONS.md)** compares glue addresses, wire routes and tier assignments.
-- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)** — the remaining work, split into
+- **[TODO.md](TODO.md)** — the remaining work, split into
   **mathematical proof gaps fillable in Lean** and **physical model inputs**.
 - The paper source is under `../../paper/`.
 
 ## Sibling libraries
 
-`PMHadrons` builds on this library: [README](../PMHadrons/README.md), [OVERVIEW](../PMHadrons/OVERVIEW.md), [REVIEW-AND-NEXT](../PMHadrons/REVIEW-AND-NEXT.md).
-`PMAtoms` is a separate library in the same package: [README](../PMAtoms/README.md), [OVERVIEW](../PMAtoms/OVERVIEW.md), [REVIEW-AND-NEXT](../PMAtoms/REVIEW-AND-NEXT.md).
+`PMHadrons` builds on this library: [README](../PMHadrons/README.md), [OVERVIEW](../PMHadrons/OVERVIEW.md), [TODO](../PMHadrons/TODO.md).
+`PMAtoms` is a separate library in the same package: [README](../PMAtoms/README.md), [OVERVIEW](../PMAtoms/OVERVIEW.md), [TODO](../PMAtoms/TODO.md).
 
 ## Build and audit
 

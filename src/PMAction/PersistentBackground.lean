@@ -4,7 +4,7 @@ import PMAction.PersistenceSelection
 /-!
 # The initial background from persistence
 
-`REVIEW-AND-NEXT` item 3 asks for the initial background of the reference protocol. Under
+`TODO` item 3 asks for the initial background of the reference protocol. Under
 Paper I's survival law (`PersistenceSelection`), the most persistent configuration is the one of
 least excess price. Economy selects exactly the stationary fields
 (`NativeReferenceBackground.minimum_iff_fixed`). On a connected protocol those are exactly the

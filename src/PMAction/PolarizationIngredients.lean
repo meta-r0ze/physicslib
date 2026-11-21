@@ -3,7 +3,7 @@ import PMAction.PolarizationContact
 /-!
 # Step (i) of the subtracted lattice polarization: pointwise `O(a²)` ingredient bounds
 
-`PMAction/REVIEW-AND-NEXT.md` ("Subtracted lattice polarization"): bound the lattice polarization
+`PMAction/TODO.md` ("Subtracted lattice polarization"): bound the lattice polarization
 against the continuum after subtracting `q = 0`, resolving the `q²` coefficient
 (`tools/lattice_polarization_check.py`: the difference is `C a² (hi² − lo²)`, `C ≈ 1.38`). This
 module is step (i): each lattice ingredient against its continuum form, per root, so the later

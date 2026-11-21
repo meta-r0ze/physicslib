@@ -43,8 +43,8 @@ exist unless noted):
 ## Decay comparison and export follow-ups
 
 The physical kernels and channel normalization are owned by
-[PMElementaryParticles](../../src/PMElementaryParticles/REVIEW-AND-NEXT.md) and
-[PMHadrons](../../src/PMHadrons/REVIEW-AND-NEXT.md); do not patch catalog numbers to match data.
+[PMElementaryParticles](../../src/PMElementaryParticles/TODO.md) and
+[PMHadrons](../../src/PMHadrons/TODO.md); do not patch catalog numbers to match data.
 
 - **Follow improved source calculations (upstream dependency).** Add the corrected tau partial-width ratio, full-Fermi/outer-radiative
   neutron rows, and kaon semileptonic rows as their source proofs become available. The kaon

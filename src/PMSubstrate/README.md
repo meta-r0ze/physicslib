@@ -4,7 +4,7 @@ Lean 4 proofs for *Persistence Mechanics of the Quantum Vacuum I: The E8 Substra
 Fine-Structure Constant*.
 
 - What is checked: [OVERVIEW.md](OVERVIEW.md) — main theorem, postulates, six terms, module map.
-- What remains: [REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md) — the missing physical implications.
+- What remains: [TODO.md](TODO.md) — the missing physical implications.
 
 Build: Lean 4.34.1, in the single Lake package of this repository, with the
 vendored `classification/` package.

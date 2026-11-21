@@ -56,7 +56,7 @@ comparison, not a derivation.
 
 - **[OVERVIEW.md](OVERVIEW.md)**: what is proved, module by module, the six-pillar occupancy
   account, and the E8 decay checks.
-- **[REVIEW-AND-NEXT.md](REVIEW-AND-NEXT.md)**: open work, weak-width normalization first.
+- **[TODO.md](TODO.md)**: open work, weak-width normalization first.
 - **[PILLARS.md](PILLARS.md)**: the six pillars at the hadron level, values and calculation log.
 
 ## Build and audit

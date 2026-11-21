@@ -12,7 +12,7 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 The emitted electron is not a resource of any persistent volume: it leaves through the Toll
 boundary (`TollGovernor`). Only a persistent volume's own sites are refreshed, so nothing confines
 the electron, and its modes are those of the unbounded lattice at its own spacing, whose low-energy
-limit is the continuum (`PMHadrons/REVIEW-AND-NEXT.md` §2, `tools/beta_channel_modes.py`). The
+limit is the continuum (`PMHadrons/TODO.md` §2, `tools/beta_channel_modes.py`). The
 rate is then the same phase-space construction as the muon's (`PMElementaryParticles.MuonRate`,
 `PolarMeasure`):
 
@@ -32,7 +32,7 @@ with `E₀ = m_n − m_p` (`neutronCutoffExact`), `|V_ud|² R = 32/33` (`vud_sq_
 
 The `3×3×3` spectral template (`DecayInstantiation`, `948.69–948.70 s`) is this route without
 Coulomb to `0.6%`; it is kept as a comparison. What remains between `923 s` and `878.4 s` is `g_A`
-(`PMAction/REVIEW-AND-NEXT.md` A.2) and the low-energy radiative correction.
+(`PMAction/TODO.md` A.2) and the low-energy radiative correction.
 -/
 
 noncomputable section

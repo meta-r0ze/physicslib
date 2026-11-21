@@ -2,7 +2,7 @@
 
 This is the narrative map of the PM atom ladder. It is not the theorem index —
 that is [`OVERVIEW.md`](OVERVIEW.md) — and it is not the open-work list — that is
-[`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md). It explains **how the pieces fit**.
+[`TODO.md`](TODO.md). It explains **how the pieces fit**.
 
 ## 1. Ownership
 
@@ -202,7 +202,7 @@ with the regime column marking the Cm/Cf boundary. Checkpoint decision: e8p is *
 
 1. [`README.md`](README.md) — modules and build
 2. [`OVERVIEW.md`](OVERVIEW.md) — theorem index
-3. [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md) — open work
+3. [`TODO.md`](TODO.md) — open work
 4. this file — the narrative
 5. `NUCLEAR-GRAPH.md`, `nuclei_arrangement.md` — graph/line details
 6. `E8AtomValues.lean` — E8 ownership

@@ -207,7 +207,7 @@ under `0`, `+` and scalar multiplication (`osNull_zero`/`osNull_add`/`osNull_smu
 `Submodule`. The physical Hilbert space of the OS reconstruction is the quotient
 `V ⧸ osNullSubmodule`; assembling the descended inner-product instance on that quotient is the
 remaining scaffolding (it needs the `SeparationQuotient`/`Matrix.PosSemidef.toInnerProductSpace`
-machinery, scoped in `PMAction/REVIEW-AND-NEXT.md`). -/
+machinery, scoped in `PMAction/TODO.md`). -/
 def osNullSubmodule (B : V → V → ℂ)
     (hadd₁ : ∀ x y z, B (x + y) z = B x z + B y z)
     (hadd₂ : ∀ x y z, B x (y + z) = B x y + B x z)

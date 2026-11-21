@@ -3,7 +3,7 @@
 *Persistence Mechanics of the Quantum Vacuum IV: Information Transfer.*
 
 This is the single overview of what Paper IV proves and how it hands off to the
-later libraries. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). The actionable open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md);
+later libraries. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). The actionable open work is in [`TODO.md`](TODO.md);
 build/layout instructions are in [`README.md`](README.md). The Lean source is the
 ground truth; theorem names below are entry points, not an exhaustive list.
 

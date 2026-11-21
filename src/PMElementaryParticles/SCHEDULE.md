@@ -132,7 +132,7 @@ The [KAutomaton closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout)
 identifies the scope of tagged symmetry, mixed-input differences
 and the conditional rates. O supplies the writer population and H
 its prior. G, U and W attach the writer to a clocked operation on
-that population. See the [EP blockers](REVIEW-AND-NEXT.md#protocol-readout-blockers).
+that population. See the [EP blockers](TODO.md#everything-else-still-open).
 
 ## Selection and the unresolved minimum
 

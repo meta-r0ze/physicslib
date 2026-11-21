@@ -2,7 +2,7 @@
 
 The module map for Paper III's constants, sectors, running and gauge factors. Build
 instructions are in [`README.md`](README.md); the constant-by-constant open
-dependencies are in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md).
+dependencies are in [`TODO.md`](TODO.md).
 
 ## Entry points
 

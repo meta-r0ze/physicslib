@@ -1,14 +1,14 @@
 # SCOPE — the open physics frontier
 
 The Lean tree is the ground truth for what is *checked*; each module's
-`REVIEW-AND-NEXT.md` lists that module's residues. This file is the cross-cutting map
+`TODO.md` lists that module's residues. This file is the cross-cutting map
 of the **open physics questions** — where the papers discuss them (cloned under the
 sibling `PM/`, `PM-1-Arch/`, … repositories), what the tree covers, and whether the
 item is a postulate, scoped out, a conditional relation, or a missing construction.
 Update it when a frontier closes.
 
 For the premises, inputs and open physics a reader should know about, see
-[`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md); each folder's `REVIEW-AND-NEXT.md` has the working list.
+[`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md); each folder's `TODO.md` has the working list.
 
 ## The model in one line
 One finite E8 substrate + persistence (survival / hazard / selection). E8 values are
@@ -40,7 +40,7 @@ derived, then compared to SM values by `tools/e8p`.
 - **out of scope** — state once, as the Yang–Mills note does in `AGENTS.md`.
 - **conditional relation** — derive the "if input X then output Y" (already done for
   the VEV, the interface correction, the cosmo rescaling; more is listed in the
-  module `REVIEW-AND-NEXT` files).
+  module `TODO` files).
 - **missing construction** — build the object (joint state space, metric dynamics).
 
 ## Where the choices can be eliminated

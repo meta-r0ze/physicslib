@@ -22,7 +22,7 @@ quantum is `ShellSystem.shellQuantum (z+n)` (`= shellEnergyUnit / A^{1/3}`). Swi
 smooth reference is rebuilt; the rational enclosure then needs an `A^{1/3}` bound
 (`CertifiedNumerics.cbrt`).
 
-**Comparison (`REVIEW-AND-NEXT.md` §1).** With either E8 level scheme the shell term is 3–4×
+**Comparison (`TODO.md` §1).** With either E8 level scheme the shell term is 3–4×
 the `certifiedMass` residual and uncorrelated with it. The E8 ledger is not a liquid drop plus a
 shell correction; its smooth part already carries that structure. So `certifiedMassFull` is kept
 as the dependency edge for the comparison, not as a published mass.

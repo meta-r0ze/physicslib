@@ -6,7 +6,7 @@ nucleons, then nuclei, then atoms, and ask what persists and what decays. The
 point is to produce **testable lifetime/mass comparisons**, not to restate
 textbook atomic physics.
 
-Sibling libraries: `PMElementaryParticles` — [README](../PMElementaryParticles/README.md), [OVERVIEW](../PMElementaryParticles/OVERVIEW.md), [REVIEW-AND-NEXT](../PMElementaryParticles/REVIEW-AND-NEXT.md); `PMHadrons` (nucleons and mesons, which `PMAtoms` builds on) — [README](../PMHadrons/README.md), [OVERVIEW](../PMHadrons/OVERVIEW.md), [REVIEW-AND-NEXT](../PMHadrons/REVIEW-AND-NEXT.md).
+Sibling libraries: `PMElementaryParticles` — [README](../PMElementaryParticles/README.md), [OVERVIEW](../PMElementaryParticles/OVERVIEW.md), [TODO](../PMElementaryParticles/TODO.md); `PMHadrons` (nucleons and mesons, which `PMAtoms` builds on) — [README](../PMHadrons/README.md), [OVERVIEW](../PMHadrons/OVERVIEW.md), [TODO](../PMHadrons/TODO.md).
 
 Build:
 
@@ -90,7 +90,7 @@ the substrate/persistence ledger's quantity. A concrete nuclear rate is still an
 open E8 derivation; the library fixes the `rate → lifetime` step and proves the
 structural decays in the meantime.
 
-Open work is in [`REVIEW-AND-NEXT.md`](REVIEW-AND-NEXT.md); proved results are in
+Open work is in [`TODO.md`](TODO.md); proved results are in
 [`OVERVIEW.md`](OVERVIEW.md).
 
 ## Comparison appendices

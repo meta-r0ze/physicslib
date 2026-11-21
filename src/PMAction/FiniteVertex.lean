@@ -16,7 +16,7 @@ contraction with `q` is the difference of inverse propagators.
 
 So inserting `w = k + q/2` into `vertex_gap` is not the physical finite-`q` vertex; the difference is
 `O(a² q²)` relative per root, which survives as `O(a²)` in the `q²` coefficient and must be carried
-in the subtracted lattice polarization (`REVIEW-AND-NEXT.md`). The two-field contact (seagull) term
+in the subtracted lattice polarization (`TODO.md`). The two-field contact (seagull) term
 and its longitudinal Ward identity are derived in `PolarizationContact`; the wrapped finite-grid
 cancellation and longitudinal regulator limit are in `FinitePolarization`.
 -/

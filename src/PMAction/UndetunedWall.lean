@@ -23,7 +23,7 @@ that mixed two state spaces; withdrawn, PMAction OVERVIEW.)
 
 So with `δ_O = 0` there are two equal heavy masses and one light: the reverse of the observed
 pattern (one heavy) in every charged sector. The other wall's detuning is therefore required, not
-optional. What fixes its size is open (`PMAction/REVIEW-AND-NEXT.md`).
+optional. What fixes its size is open (`PMAction/TODO.md`).
 -/
 
 noncomputable section
