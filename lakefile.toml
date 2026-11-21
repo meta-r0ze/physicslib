@@ -46,7 +46,7 @@ globs = ["PMFlavor", "PMFlavor.+"]
 [[lean_lib]]
 name = "PMElementaryParticles"
 srcDir = "src"
-globs = ["PMElementaryParticles", "PMElementaryParticles.+", "PMElementaryParticles.ChannelPlacement", "PMElementaryParticles.RingRates"]
+globs = ["PMElementaryParticles", "PMElementaryParticles.+", "PMElementaryParticles.ChannelPlacement", "PMElementaryParticles.RingRates", "PMElementaryParticles.RingSurvivors"]
 
 [[lean_lib]]
 name = "PMHadrons"
