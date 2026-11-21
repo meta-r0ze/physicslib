@@ -2,7 +2,18 @@
 
 The native E8 finite machine: reversible constructions over the substrate's
 carrier/register/reference/record state, with exact all-state readout. Entry
-points are theorem names, not exhaustive lists.
+points are theorem names, not exhaustive lists. It includes the native carriers,
+registers, references, records, roots and clock, with their reversible update
+and readout theorems.
+
+The machine and the PMAction finite proofs share a build layer. Import
+`PMKAutomaton.Machine` to use its full interface. Import an individual module to
+use a smaller part of it. [Open work](../TODO.md).
+
+```sh
+./build.sh lean PMKAutomaton.Machine.CarrierEvents
+./build.sh fast PMAction
+```
 
 ## Base dependency
 

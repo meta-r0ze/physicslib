@@ -117,7 +117,7 @@ the admitted operation and supplied orbit.
 
 **Decision.** This is a build-boundary choice. PMAction and
 `PMKAutomaton.Machine` share finite dependencies. The packet interface
-sits above PMConstants. See [the working premise](PREMISE.md#layering)
+sits above PMConstants. See [the working premise](README.md#layering)
 and the [dependency audit](../AuditDependencies.lean).
 
 **Smallest question.** If a stand-alone machine build is needed, which
