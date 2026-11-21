@@ -19,7 +19,7 @@ derived or a named conditional. So the comparison is not a fit — there is one 
 a fixed integer substrate behind the dimensionless predictions.
 
 (The companion comparison-level hypotheses — matching law, physical measure, state space — are
-listed in `OPEN-PROBLEMS.md`; here we label the constants they act on.)
+listed in the module `TODO.md` files; here we label the constants they act on.)
 -/
 
 noncomputable section

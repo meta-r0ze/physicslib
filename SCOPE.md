@@ -7,8 +7,8 @@ sibling `PM/`, `PM-1-Arch/`, … repositories), what the tree covers, and whethe
 item is a postulate, scoped out, a conditional relation, or a missing construction.
 Update it when a frontier closes.
 
-For the premises, inputs and open physics a reader should know about, see
-[`OPEN-PROBLEMS.md`](OPEN-PROBLEMS.md); each folder's `TODO.md` has the working list.
+For the premises, inputs and open physics a reader should know about, see the
+per-module `TODO.md` files; each folder's `TODO.md` has the working list.
 
 ## The model in one line
 One finite E8 substrate + persistence (survival / hazard / selection). E8 values are

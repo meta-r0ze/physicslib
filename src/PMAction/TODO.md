@@ -13,7 +13,15 @@ None open.
 The protocol register (which E8 structure carries protocol identity) is Paper III's application, not
 a PMAction premise: PMAction supplies the constraints (`ColourRegister`: colour is a separate factor,
 not the carrier axes), the factor construction (`IndependentRegisters`) and the stationary even sector
-(`EvenComplement`). It is tracked in PMElementaryParticles REVIEW.
+(`EvenComplement`). It is tracked in the [PMElementaryParticles open list](../PMElementaryParticles/TODO.md).
+
+## Scope premises
+
+- **Spacetime and amplitude structure.** Derive the Lorentzian signature and complex amplitude from
+  substrate persistence instead of entering them as modelling premises; the finite gauge measure has
+  site-reflection positivity. Blocker: no selection principle fixes the signature or complex structure,
+  and the MassGap branch covers only the distinction substrate, not a continuum relativistic gauge
+  theory (see [MassGap/README.md](MassGap/README.md)).
 
 ## Extensions
 

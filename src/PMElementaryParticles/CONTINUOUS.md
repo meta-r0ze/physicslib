@@ -113,4 +113,4 @@ not depend on the shape: every boundary of constant width `Δ` has length `πΔ`
 The continuum objects are proved in Lean: the integrals, the measures and the bounds.
 That a lattice sum approaches its integral far below the cutoff is the standard limit. The
 library checks it with numbers (the tools above). It does not prove it in general. A general
-proof for interacting fields is out of scope (`OPEN-PROBLEMS.md` §4).
+proof for interacting fields is out of scope (see [PMAction open list](../PMAction/TODO.md), scope premises).

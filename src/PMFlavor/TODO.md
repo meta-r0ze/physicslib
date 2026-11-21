@@ -93,6 +93,12 @@ numbers needs this table next to them.
 7. **Transfer selection.** `ReferenceSelection`, `RelativeFrameCost`, `TransferWorkLaw`, `TransferAmount`,
    `SpectralGapOrder`, `ChordBranch` run on `PMAction.FlavourEvolution` and are conditional until PMAction
    shows the substrate update acts on wall modes as `e^{−iHt}`.
+8. **Scale and orientation inputs.** Derive the unit anchors that turn dimensionful readouts into
+   numbers (including the electron mass and the SI tick), and select the wall magnitude and the
+   functional forms of the mixing relations. A cost depending only on squared mixing moduli ties the
+   conjugate CP branches. Blocker: no scale-invariant cost singles out a scale along a nontrivial
+   rescaling orbit, and the selection-symmetry results do not yet fix the orientation or the
+   functional forms.
 
 ## First-row wall leakage
 

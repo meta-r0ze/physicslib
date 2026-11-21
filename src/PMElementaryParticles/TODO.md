@@ -56,6 +56,10 @@ hypothesis.
 
 ## Everything else still open
 
+- **Elementary masses and widths.** Derive the assignment of invariant costs to lepton and quark
+  tiers, the allowed transition histories and their rates, and connect the charged-current operator to
+  the physical contact vertex and final-state readout. Blocking item: the carrier-to-protocol contact
+  and readout map.
 - Shared vs sector/composite background: no certified placement of the
   bit-ring background or selection of the colour composite. Blocking item:
   the line/placement map.
