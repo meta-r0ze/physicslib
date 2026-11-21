@@ -37,6 +37,10 @@ satisfies every postulate, so the set is consistent. Comparison with measured α
 unimodular, nonzero lattices. `VacuumIndependence` gives, for each postulate, a lattice meeting
 every other one but not that one (hyperbolic plane, D4, A2, ℤ, E8 ⊕ E8).
 
+`Channels.sectorBasis` is one placement of the two D4 sectors; it is not clock-aligned.
+`PMKAutomaton.AlignedSectors.alignedSectorBasis` is the clock-aligned placement with the same
+`d4d4` Gram matrix (`aligned_d4d4`).
+
 ## The six terms
 
 Each term is an expected number of transitions per cycle (`NetCost.expected_count_linear`,
