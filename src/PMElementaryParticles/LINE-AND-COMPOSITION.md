@@ -264,6 +264,19 @@ the table is numerical, not proved. The vector coset is identified by its
 clock-axis components (0 or `±1`; the spinor cosets have `±½`); the `±cu`
 membership is `cu_key` and `neg_cu_key`.
 
+**Cosets are wall-crossing steps.** In `ControlledGluedRegister.wallClass`, the
+walls of generation `g` are the two classes other than `g`. `WallCrossing`
+proves that the roots moving between those two walls are exactly the coset of
+the omitted class: `wall_crossing_filter` and `moves_iff`, with the three
+concrete pairs `generation_vector_crossing`, `generation_spinor_crossing` and
+`generation_conjugateSpinor_crossing`. Thus the coset signatures count each
+generation's forward, backward and clock-silent wall crossings:
+coset `(0,1)` gives (7, 7, 2), `(1,1)` gives (4, 4, 0), and `(1,0)` gives
+(4, 4, 8).
+
+The **channel-placement identification** (named, not proved) is that the
+sixteen channels sit in the internal `D4`; the step-to-cost rule remains open.
+
 **What this establishes.** The clock breaks triality completely. All three
 generations are distinguishable by the steps available to them: one generation has
 the most one-tick steps (7), and the other two share 4 but differ in clock-silent
