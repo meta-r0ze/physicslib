@@ -1018,9 +1018,26 @@ its own packet. The firing pattern is joint, and Toll adds over packets
 | --- | --- | --- | --- |
 | Glue address | `GenerationWalls.one_class_per_wall`, `GenerationOrientation.type_label`, `ControlledGluedRegister.wallClass` | The three nontrivial D4 glue classes label three pairs. Each pair omits its own class. The glue structure gives a cyclic action and leaves mass ordering open. | Each address carries the same 16-channel inventory. |
 | Wire route | `ReferenceClassHop.stationary_iff`, `touches_reference_class`, `HeavyFlipControl.direct_iff`, `ReferenceNode.restoring_series` | One address has a direct insertion and two need the reference node. The direct address is `g = 0`, the unsuppressed row in the normalized bare mass matrix. The two restoring addresses have equal link weight. The middle and lightest masses are modes of the coupled matrix. | The route test uses the wall classes for every label. The bare mass matrix is shared. |
-| E8 vector-class attachment | `ChannelVectors.vectorCoord`, `vectorCoord_norm4`, `vectorCoord_glueClass`, `vectorCoord_injective_on_activeFalse` | `ChannelVectors.channelCoord` sends active-false `labelIndex = 2*axis+sign` to `sign·2e_axis` in the D4 vector class and active-true to the certified triality image `c ↦ c+1`. It is injective onto 16 minimal vectors of two classes; the three attachments are its triality powers. The bit-ring line map and per-generation costs remain conditional. | Per label; the class/generation choice is not fixed by a certified full map. |
-| Clock signature | `PMKAutomaton.ClockAlignment`: `a_mem` … `beta_mem`, `internalRoots_length`, `spacetimeRoots_length`, `sliceRoots_silent`, `clockAxisRoots_counts`, `vectorRoots_counts`, `spinorRoots_counts`, `conjugateSpinorRoots_counts`, `cu_key`, `neg_cu_key`, `plus_total`, `minus_total`, `silent_total`; `PMKAutomaton.WallCrossing`: `wall_crossing_filter`, `generation_vector_crossing`, `generation_spinor_crossing`, `generation_conjugateSpinor_crossing` | The aligned clock breaks triality. For one certified aligned placement the signatures are vector `(7,7,2)`, spinor `(4,4,0)`, conjugate spinor `(4,4,8)`. Each coset is exactly the wall-crossing steps of the generation whose two walls are the other classes. The vector coset contains `±cu`. Taking the reference class to be the coset carrying the clock, `g = 0` is the vector coset and `g = 1,2` are the spinor cosets: equal one-tick counts, different silent counts. | Which of `g = 1,2` is the zero-silent coset depends on the triality orientation. The ten-placement robustness is numerical; the reference-class choice and the sixteen-channel placement in the internal D4 are named premises; the step-to-cost rule is open. |
+| E8 vector-class attachment | `ChannelVectors.vectorCoord`, `vectorCoord_norm4`, `vectorCoord_glueClass`, `vectorCoord_injective_on_activeFalse`; `ChannelPlacement.channelE8` | `ChannelVectors.channelCoord` sends active-false `labelIndex = 2*axis+sign` to `sign·2e_axis` in its D4 vector class and active-true to the certified triality image `c ↦ c+1`. `ChannelPlacement.channelE8` maps these coordinates into the aligned internal D4 and proves injectivity. The class/generation assignment is now read from the internal key table. | Per label; the step-to-cost rule remains open. |
+| Clock signature | `PMKAutomaton.ClockAlignment`: `a_mem` … `beta_mem`, `internalRoots_length`, `spacetimeRoots_length`, `sliceRoots_silent`, `clockAxisRoots_counts`, `vectorRoots_counts`, `spinorRoots_counts`, `conjugateSpinorRoots_counts`, `cu_key`, `neg_cu_key`, `plus_total`, `minus_total`, `silent_total`; `PMKAutomaton.WallCrossing`: `wall_crossing_filter`, `generation_vector_crossing`, `generation_spinor_crossing`, `generation_conjugateSpinor_crossing` | The aligned clock breaks triality. For one certified aligned placement the signatures are vector `(7,7,2)`, spinor `(4,4,0)`, conjugate spinor `(4,4,8)`. Each coset is exactly the wall-crossing steps of the generation whose two walls are the other classes. The vector coset contains `±cu`. The internal placement fixes `g = 0` as the vector coset, `g = 1` as the conjugate-spinor coset and `g = 2` as the spinor coset. | The ten-placement robustness is numerical; the step-to-cost rule is open. |
 | Tier ledger | `TierLedger.tiersFor` and the four length lemmas, `QuarkMasses`, `LeptonMasses` | Each protocol lists three tiers in ascending order. The highest occupied tier is 3 for up and 2 for down, electron and neutrino. Neutrino masses remain open. | Up uses `{0,2,3}`; down, electron and neutrino use `{0,1,2}`. The assignments are a named premise. Their formulas use `Δ = 43`. |
+
+**Internal placement and library indices.** `ChannelPlacement` proves the
+channel embedding, its internal class key and the matching glue cosets. With
+`wallClass g b = if b then g - 1 else g + 1` and `active` as the wall bit, the
+generation's own class is the third key `(1,0)`; `wallClass 0 false = 1` and
+`wallClass 0 true = 2`.
+
+| Library class index | Internal key | Matching `glueKey` coset | Coset signature |
+| --- | --- | --- | --- |
+| `0` | `(1,0)` | `(0,1)` vector, carries `±cu` | `(7,7,2)` |
+| `1` | `(1,1)` | `(1,0)` conjugate spinor | `(4,4,8)` |
+| `2` | `(0,1)` | `(1,1)` spinor | `(4,4,0)` |
+
+Library class `0` is the clock's vector coset (`referenceClass_eq_clock`), so
+the identification "reference class = coset carrying the clock" follows from
+the library's own conventions. The orientation is fixed: `g = 1` is the
+`(4,4,8)` conjugate-spinor coset and `g = 2` is the `(4,4,0)` spinor coset.
 
 The physical route, heavy writer and lightest-offset branch depend on the
 [conditional KAutomaton interface](../../src/PMKAutomaton/COMPONENTS.md#kautomaton-closeout).

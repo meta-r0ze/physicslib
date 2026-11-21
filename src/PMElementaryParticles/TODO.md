@@ -42,9 +42,6 @@ This file is the open list only.
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
   must use the one-tick count for the heavy-to-light step and may use silent
   steps only to split the two light generations.
-- **Fix the triality orientation.** The matching gives `g = 0` as the vector
-  coset and `g = 1,2` as the spinor cosets. Which of `g = 1,2` is the
-  zero-silent coset depends on `GluedRegister.triality` and is not fixed.
 - **Complete the charged lift.** The static selector supplies no inverse power
   of `Δ` for the offset. A native selection and firing law, the offset's
   scaling, and the existence of shared calibration remain open.

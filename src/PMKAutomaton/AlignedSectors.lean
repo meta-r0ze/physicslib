@@ -83,4 +83,21 @@ theorem sector0_slice_silent (z : V) (hz : z ∈ spacetimeRoots)
 theorem sector1_not_silent : ∀ z ∈ internalRoots, clockReading z ≠ 0 :=
   internalRoots_not_silent
 
+
+/-- Combined witness: the aligned D4 block Gram, the clock plane, silent
+spacetime slice roots and clock-axis roots of reading `±1`. This stays in
+`PMKAutomaton` because `PMSubstrate.Vacuum` cannot import downstream modules. -/
+theorem aligned_sectors_clock_witness :
+    alignedSectorBasis.transpose * Lattices.gram * alignedSectorBasis = Channels.d4d4 ∧
+      (∀ z ∈ sliceRoots, pair z ClockPlane.cu = 0 ∧ pair z ClockPlane.cv = 0 ∧
+        clockReading z = 0) ∧
+      (∀ z ∈ clockAxisRoots, clockReading z = 1 ∨ clockReading z = -1) := by
+  refine ⟨aligned_d4d4, ?_, ?_⟩
+  · intro z hz
+    have hz' := List.mem_filter.mp hz
+    have hpair : pair z ClockPlane.cu = 0 ∧ pair z ClockPlane.cv = 0 :=
+      of_decide_eq_true hz'.2
+    exact ⟨hpair.1, hpair.2, sliceRoots_silent z hz⟩
+  · decide +kernel
+
 end PMKAutomaton.AlignedSectors
