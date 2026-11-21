@@ -27,7 +27,7 @@ reads the clock by pairing with that plane:
 So a packet that makes one root event per tick, each changing the reading by
 `±1`, lives on a ring of exactly 43 sites (`Δ`, `PMSubstrate.E8Values.Delta_eq`).
 The identification of the receiver's tick with one such root event is the
-modelling step; it is stated in `PMElementaryParticles/LINE-AND-COMPOSITION.md`,
+modelling step; it is stated in `SCOPE.md` named premises,
 which also lists the checks still open (step weights between the two projection
 classes, consistency with `SliceHop`). Exploration script:
 `tools/clock_ring_check.py`.

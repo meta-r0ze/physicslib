@@ -22,11 +22,11 @@ survivor core is `RobustCoreU`, card 1,110 (`robustCoreU_card`). The channel
 code is attached to E8 by `ChannelVectors.channelCoord`: active-false labels
 map to the D4 vector class, active-true labels to the certified triality image
 (`channelCoord_glueClass`, `channelCoord_injective`). What remains is the
-bit-ring-to-lattice line, the shared/composite background selection, the
-multi-protocol composition rule, and the generation/triality run. Legacy
-species, tier, generation and heavy-label results are retained below with
-their audited status. The detailed task history is in [HISTORY.md](HISTORY.md);
-the statements here and their theorem names are current.
+shared/composite background selection, the multi-protocol composition rule, and
+the step-to-cost rule for the generation signatures. The line and clock ring are
+proved below. Legacy species, tier, generation and heavy-label results are
+retained below with their audited status; the task-numbered working record is in
+git history.
 
 ## EP persistence rebuild — structure
 
@@ -58,18 +58,22 @@ the statements here and their theorem names are current.
 
 - Machine and protocol: `Protocol.receiverToll`, `PillarPredicates.marginUtilization`.
 - Robust survivors: `SurvivorClasses.robustCoreU_card = 1110`; reduced counts
-  `survivorsU_cards`.
+  `survivorsU_cards`. The 3-ring observations are `SurvivorsU false = 1650`
+  and `SurvivorsU true = 1110`; the per-label least-Toll references are
+  up→lepton, down→colour, electron→lepton and neutrino→colour, with all
+  selected Tolls `1`.
 - E8 attachment: `ChannelVectors.channelCoord`; active-false vector class,
   active-true certified triality image (`channelCoord_glueClass`,
   `channelCoord_injective`, `channelCoord_image_card`).
 - References: lepton `+2e_0`; colour `{+2e_1,+2e_2,+2e_3}`, from
   `RecordCoordinates.labelRecord_eq_axis_sign` and
   `ChannelVectors.vectorCoord_eq_carrier`.
-- Missing: bit-ring-to-lattice line, shared/composite background,
-  multi-protocol composition, full-ring spectrum.
-- Legacy status: the legacy audit table is retained in [HISTORY](HISTORY.md);
-  the current statuses are `ProtocolInventory`, `QuarkMasses`, `LeptonMasses`,
-  `TierLedger` and `HeavyFlipRecords` as marked in their module docs.
+- Missing: shared/composite background, multi-protocol composition, full-ring
+  spectrum and the step-to-cost rule.
+- Legacy status: `ProtocolInventory`, `QuarkMasses`, `LeptonMasses`,
+  `TierLedger` and `HeavyFlipRecords` carry the audited statuses in their
+  module docs; tier sets, generation addresses, quark/lepton formulas and the
+  heavy-label weight remain premises.
 
 All registration counts `14, 15, 21, 22, 28, ...` are **3-ring artifacts**,
 not E8 values.
@@ -180,17 +184,16 @@ The retained receiver state and occupancy checks are
 `IsolatedReceiverTrace.localizedPorts_occupancy` and
 `localized_occupancy_preserved`; requests are retained
 (`localized_requests_retained`) and the 3-ring sum is
-`localizedSum43_eq_pattern`. The detailed task history is in
-[HISTORY.md](HISTORY.md). **All registration counts `14,15,21,22,28,...` are
-3-ring artifacts, not E8 values.**
+`localizedSum43_eq_pattern`. **All registration counts `14,15,21,22,28,...`
+are 3-ring artifacts, not E8 values.**
 
 ### Finite witness output
 
 `Values.TransportCandidates` keeps only the uniform control field. Its
 receiver column is zero by equal arrivals; it is not a one-excitation result.
-The localized 43-tick sums are the `patternSum` table in
-[HISTORY.md](HISTORY.md), conditional on the exchange pattern from the retained
-request field. They are **3-ring artifacts**, not E8 values. The record Toll is
+The localized 43-tick sums are `patternSum` of the firing pattern,
+conditional on the exchange pattern from the retained request field
+(`localizedSum43_eq_pattern`). They are **3-ring artifacts**, not E8 values. The record Toll is
 a separate column. The heavy
 reference, the static offset, and the wire-to-tier map remain explicit inputs.
 See
@@ -377,13 +380,13 @@ where a conditional pulse acts. The native law that admits and fires it,
 its pulse area, and the existence of a shared stationary calibration
 remain open.
 
-The [generation comparison](GENERATIONS.md#the-charged-lift) counts the
+The [charged lift below](#the-charged-lift) counts the
 same selector and crossing support for every charged label.
 `det_flip_at_resonance` gives the same linear response to the supplied
 offset in each selected sector. Its order in `1/Δ` depends on the firing
 law for that offset.
 
-The [phase and handoff calculation](GENERATIONS.md#phase-handoff-and-toll)
+The [phase and handoff calculation](#phase-handoff-and-toll)
 separates the selector's phase distance from a spatial layer count.
 The uncompensated comparison gives flags `½, 1, ½` for electron, up and
 down. The selected label gives zero flags in both matched comparisons
@@ -733,7 +736,7 @@ CKM magnitudes; they were removed as Standard-Model fitting, not substrate resul
 
 ## Tier ledger and the wire
 
-The [generation comparison](GENERATIONS.md) connects the three glue addresses
+The [generation comparison below](#generations-on-the-e8-wire) connects the three glue addresses
 to one direct and two node-mediated routes. It distinguishes address from
 mass rank and compares the shared heavy-to-middle power with the declared
 tiers. The bare wire's lightest mode is zero at resonance.
@@ -889,6 +892,348 @@ physical interaction; the flux; radiative corrections; the particle/mass ledger;
 and asymptotic-particle interpretation; the decay-law subsystem/environment. The
 `M⁵` law is a consequence of the contact model, not a universal rule for every
 persistent excitation.
+
+## Line, composition and the clock
+
+**The clock closes the receiver ring.** The clock states are the discriminant
+group of the E8 clock plane `ℤcu + ℤcv` (`PMSubstrate.ClockPlane.clock_glue`,
+`w ↦ w₁ − 2w₂ mod 43`). A lattice point reads the clock by
+`clockReading z = (⟨z,cu⟩ − 2⟨z,cv⟩) mod 43`. `ClockRing` proves `clockReading`
+additive, `rootList_complete` (from `ThetaE8.e8_card_roots`), the counts
+`one_tick_roots = 22`, `minus_tick_roots = 22`, `silent_roots = 22`,
+`moving_roots = 218`, and `plus_split`: eleven `+1` roots project as `(1,0)` and
+eleven as `(−1,−1)`. The 22 silent roots are 20 orthogonal to the clock plane
+plus `±cu`. `walk_returns_iff` says a walk of `+1` roots closes exactly when 43
+divides its length, and `plus_step_rotates` identifies a `+1` step with
+`finRotate 43`.
+
+The exploration scripts for these facts are `tools/clock_ring_check.py`,
+`tools/clock_tick_weights.py`, `tools/clock_slice_alignment.py`,
+`tools/clock_stabilizer_orbits.py`, `tools/generation_clock_signature.py` and
+`tools/bit_ring_rate_check.py` (no data).
+
+The ring therefore has `n = Δ = 43` sites, not 3. The live stream steps by
+`+1` roots and the record stream by `−1` roots; an exchange swaps a packet
+between them and reverses its direction. Consequences: the 3-ring numbers are
+replaced by 43-ring numbers; one firing site per period gives exactly one
+registration; the Toll floor is met by one firing site per period, while Margin
+still excludes trapping between adjacent firing sites; a ring site is a clock
+phase, matching `ClockedRootTrials` at phases 0 and 1.
+
+**Aligned D4 and tick weights.** `ClockAlignment` certifies one placement with
+simple roots `a`, `b`, `c`, `beta` (`a_mem` … `beta_mem`), inner products
+`pair_a_b`, `pair_b_c`, `pair_b_beta = −1`, and pairwise orthogonality of
+`a`, `c`, `beta` (`pair_a_c`, `pair_a_beta`, `pair_c_beta`). The internal D4 is
+`internalRoots_length = 24`; the spacetime D4 is `spacetimeRoots_length = 24`.
+The slice roots are `sliceRoots_length = 12` and clock-silent
+(`sliceRoots_silent`); the clock-axis roots satisfy `clockAxisRoots_counts`:
+six read `+1` and six read `−1`. The forward and backward tick sets have
+`forwardRoots_length = backwardRoots_length = 6`.
+
+The glue key is
+`glueKey r = ((⟨r,a⟩+⟨r,c⟩) mod 2, (⟨r,a⟩+⟨r,beta⟩) mod 2)`. It is additive
+(`glueKey_add`), vanishes on both D4s, and its three nonzero values are the
+cosets. `vectorRoots_length`, `spinorRoots_length` and
+`conjugateSpinorRoots_length` give 64 roots each; `vectorRoots_counts` is
+`(7,7,2)`, `spinorRoots_counts` is `(4,4,0)` and
+`conjugateSpinorRoots_counts` is `(4,4,8)` for forward, backward and silent
+roots. `cu_key` and `neg_cu_key` place `±cu` in the vector coset, and
+`plus_total`, `minus_total`, `silent_total` add the classes to the clock totals.
+
+`ClockTickWeights` proves every slice reflection fixes the clock reading
+(`clockReading_reflect`), preserves the forward and backward sets
+(`forward_closed`, `backward_closed`), and acts transitively on each set
+(`forward_one_orbit`, `backward_one_orbit`; two reflections suffice). Thus the
+six forward and six backward steps are single orbits under the substrate
+symmetries that fix the clock. Closure then gives equal weights within each set;
+Closure itself is the named premise in [SCOPE](../../SCOPE.md#named-premises).
+
+`ClockSites` identifies the receiver site with the reading:
+`site z = toFin (clockReading z)`, `ring_size : 43 = Δ`,
+`site_add_forward`/`site_add_backward`, and `arrivals_are_lattice_steps`: the
+live arrival comes from one forward step back and the record arrival from one
+backward step back. The update model and Closure are the two named premises,
+not Lean theorems.
+
+The alignment search is numerical. Over every D4 with slice D3 in the clock
+plane's stabilizer A4, the clock-axis readings are `±1` in 960 labelled
+placements and `±2,±4,±8` in 480 each. In the `±1` class every slice root is
+orthogonal to the clock plane; every clock-axis root is a one-tick root;
+`e₀ ± e₃` reads `±1`; `2e₃` reads `+2`, matching the two root events of
+`AxisHop`; the six forward roots lie in one projection class and its 10-orbit,
+never in the fixed roots; the two classes split 480/480; and the orthogonal
+complement is again a D4. The pointwise stabilizer of the clock plane is
+generated by the 20 orthogonal roots, an A4 system with `W(A4) ≅ S5` of order
+120; the orthogonal roots form a second A4 containing `cu`. The 22 one-tick
+roots form four orbits: one fixed root plus a 10-orbit for each projection
+class. The fixed roots lie in the clock's A4; `r ↦ r − cu` pairs the classes.
+These orbit and placement counts are script-level; the six-step orbit and its
+equal weights are Lean-proved for the certified placement.
+
+**Composition rules.** Capacity Partitioning is
+`PersistenceMechanics.CapacityPartitioning` (`global_budget`,
+`count_lower_bound`, `bounded_backlog_zero_drift`, `service_balance`); its
+machine instance is `CapacityLedger`. One ring offers 43 exchange opportunities
+per period, so at most 43 protocols share a ring (`ring_protocol_bound`), or
+`43 − R` with a Margin reserve `R` (`ring_protocol_bound_reserve`).
+
+Impedance Matching is `PersistenceMechanics.ImpedanceMatching` (`ledger`,
+`admissible_iff_transmission`, `zero_reserve_matched`, `realize`), with machine
+instance `ImpedanceLedger`. The converter's flip `flag x = sin²(x/2)` is the
+reflected fraction `r²`, and its pass probability is the transmission
+(`converter_is_interface`, `converter_ledger`). The equivalent interface has
+source `1 − s` and load `1 + s`, `s = |sin(x/2)|`; `x = π` is total reflection.
+Over a period, reflected plus transmitted load is the number of encounters
+(`period_ledger`); zero reserve registers nothing
+(`zero_reserve_no_registration`), so a Toll-floor protocol needs positive
+reserve (`toll_needs_reserve`).
+
+Reversible Encoding is `PersistenceMechanics.ReversibleEncoding`, with instance
+`PMElementaryParticles.RecordEncoding`. The paper's relational form keeps values
+relative to a reference `x_o` together with `x_o` itself, because dropping the
+reference merges distinct constant configurations. The record `labelRecord` merges labels:
+six per colour class and two per lepton class (`record_fibers`), so the record
+alone is not reversible (`record_not_injective`). The packet channel code is
+reversible metadata (`packet_encoding_injective`), so Rule 2 holds inside the
+packet and no external colour store is needed; any reversible metadata has at
+least six states (`metadata_lower_bound`). The record comparator is colour-blind
+(`bitToll_colour_blind`).
+
+The colour reference is one site state, not the set `{e₁,e₂,e₃}`. The bit-level record
+compares the lepton-axis bit and the sign bit; the colour-symmetric state
+`(0,1,1,1)` has the colour record (`colourSymmetric_lepton_axis`,
+`colourSymmetric_positive`) and is fixed by every colour permutation
+(`colourSymmetric_invariant`). Hence colour does not force composites, no
+partial comparison angle `1/√3` enters (`colour_axis_overlap`), and the vacuum
+question reopens: in the colour vacuum up fails Map; in the lepton vacuum the
+neutrino does.
+
+`k` protocols on one 43-ring share the clock and the vacuum `+2e₀`, each with
+its own packet. The firing pattern is joint, and Toll adds over packets
+(`record_step_identity` per ring).
+
+## Generations on the E8 wire
+
+| Reading | What fixes it | Count, order and heavy state | Protocol dependence |
+| --- | --- | --- | --- |
+| Glue address | `GenerationWalls.one_class_per_wall`, `GenerationOrientation.type_label`, `ControlledGluedRegister.wallClass` | The three nontrivial D4 glue classes label three pairs. Each pair omits its own class. The glue structure gives a cyclic action and leaves mass ordering open. | Each address carries the same 16-channel inventory. |
+| Wire route | `ReferenceClassHop.stationary_iff`, `touches_reference_class`, `HeavyFlipControl.direct_iff`, `ReferenceNode.restoring_series` | One address has a direct insertion and two need the reference node. The direct address is `g = 0`, the unsuppressed row in the normalized bare mass matrix. The two restoring addresses have equal link weight. The middle and lightest masses are modes of the coupled matrix. | The route test uses the wall classes for every label. The bare mass matrix is shared. |
+| E8 vector-class attachment | `ChannelVectors.vectorCoord`, `vectorCoord_norm4`, `vectorCoord_glueClass`, `vectorCoord_injective_on_activeFalse` | `ChannelVectors.channelCoord` sends active-false `labelIndex = 2*axis+sign` to `sign·2e_axis` in the D4 vector class and active-true to the certified triality image `c ↦ c+1`. It is injective onto 16 minimal vectors of two classes; the three attachments are its triality powers. The bit-ring line map and per-generation costs remain conditional. | Per label; the class/generation choice is not fixed by a certified full map. |
+| Clock signature | `PMKAutomaton.ClockAlignment`: `a_mem` … `beta_mem`, `internalRoots_length`, `spacetimeRoots_length`, `sliceRoots_silent`, `clockAxisRoots_counts`, `vectorRoots_counts`, `spinorRoots_counts`, `conjugateSpinorRoots_counts`, `cu_key`, `neg_cu_key`, `plus_total`, `minus_total`, `silent_total`; `PMKAutomaton.WallCrossing`: `wall_crossing_filter`, `generation_vector_crossing`, `generation_spinor_crossing`, `generation_conjugateSpinor_crossing` | The aligned clock breaks triality. For one certified aligned placement the signatures are vector `(7,7,2)`, spinor `(4,4,0)`, conjugate spinor `(4,4,8)`. Each coset is exactly the wall-crossing steps of the generation whose two walls are the other classes. The vector coset contains `±cu`. Taking the reference class to be the coset carrying the clock, `g = 0` is the vector coset and `g = 1,2` are the spinor cosets: equal one-tick counts, different silent counts. | Which of `g = 1,2` is the zero-silent coset depends on the triality orientation. The ten-placement robustness is numerical; the reference-class choice and the sixteen-channel placement in the internal D4 are named premises; the step-to-cost rule is open. |
+| Tier ledger | `TierLedger.tiersFor` and the four length lemmas, `QuarkMasses`, `LeptonMasses` | Each protocol lists three tiers in ascending order. The highest occupied tier is 3 for up and 2 for down, electron and neutrino. Neutrino masses remain open. | Up uses `{0,2,3}`; down, electron and neutrino use `{0,1,2}`. The assignments are a named premise. Their formulas use `Δ = 43`. |
+
+The physical route, heavy writer and lightest-offset branch depend on the
+[conditional KAutomaton interface](../../src/PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
+[Absolute timing](../../src/PMKAutomaton/TODO.md#absolute-timing) and the
+[Registration tariff](../../src/PMKAutomaton/TODO.md#registration-tariff)
+supply the elapsed and paid costs of that trace.
+
+### From glue address to route
+
+In the glued register T is static and F is active. In
+`ControlledGluedRegister.wallClass` the Boolean is the activity flag, so T uses
+`false` and F uses `true`. Class indices are vector `0`, spinor `1`, conjugate
+spinor `2`.
+
+| Glue address | Static T, `g + 1` | Active F, `g − 1` | Reference-wall insertion |
+| --- | --- | --- | --- |
+| 0 | 1 | 2 | Direct |
+| 1 | 2 | 0 | Through the node |
+| 2 | 0 | 1 | Through the node |
+
+The direct condition is that neither endpoint class is reference class `0`
+(`HeavyFlipControl.direct`); `ReferenceClassHop.touches_reference_class` proves
+the pair contains `0` exactly when `g ≠ 0`. The reference breaks triality by
+occupying a chosen class. In the conserving Hermitian exchange model its
+stationarity excludes the direct exchange on the light chirality when that
+exchange touches its class.
+
+In the conserving node model each restoring move uses two equal legs with
+admittance `α`; one node passage gives `k/K = α/2`
+(`ReferenceNode.restoring_series`, `NodeAmplitude.node_series`). Free spectator
+ports preserve this value. The direct route has zero node passages and is
+normalized to `K = 1`. Reading admittance as a Hamiltonian rate needs the event
+law in `NodeAmplitude`.
+
+A wall step preserves glue class (`GluedRegister.wallStep_class`). The
+same-generation endpoint exchange changes glue class and has a certified
+six-reflection word (`crossing_word_glued`,
+`ControlledGluedRegister.runCrossing_encode`). The equal-class gapped crossing
+shifts the address by `+2` from T to F and preserves the signed label; its word
+uses four swap reflections and two parity reflections
+(`GappedGluedCrossing.equalClass_iff`, `runGappedCrossing_encode`,
+`forward_entry`). The three- and one-reflection counts in
+`tools/event_clock_check.py` concern single-carrier endpoints, not word lengths
+or lower bounds for the glued register. These crossings and the on-wall node
+insertion count different operations.
+
+### Where the readings agree
+
+The glue and wire readings share the three addresses: one direct and two
+restoring routes. The ledger has three entries per protocol; its sorted entries
+can be compared with the sorted wire masses, with no derived assignment of the
+two restoring addresses to the two light mass ranks.
+
+For the normalized bare Schur mass, take the other-wall cycle to have unit
+weights and resonance `δ = −1`. With the direct row first,
+`M = D(−I + P)`, `D = diag(1,k,k)`, `P` the three-cycle. Then
+`MM† = D(3I − J)D`, with `J` all ones. The Gram matrix has a zero eigenvalue;
+`(0,1,−1)` has eigenvalue `3k²`; the trace gives `2 + k²`. For `0 < k < 1` the
+sorted singular values are `0, √3 k, √(2 + k²)`; the leading heavy-to-middle
+factor is `√(3/2) k`, and the exact ratio is `√3 k/√(2 + k²)`.
+
+In the substrate impedance model `Z = πΔ + O(1)` at fixed other parameters
+(`PMSubstrate.Impedance.capacityTerm`, `impedance`), so one node passage gives
+one leading inverse power of `Δ`. The ledger's highest two tiers are also one
+power apart for each protocol; this is a leading-power agreement. The bare wire
+has an exact lightest zero at resonance, while the ledger assigns a nonzero
+lightest charged mass and puts the lowest two tiers two powers apart for up and
+one apart for down and electron. At `Δ = 43` one value cannot distinguish a
+first-order law with a small coefficient from a second-order law with a larger
+one.
+
+### Down protocol
+
+The tier set is a premise: `Values.down_declared_tiers` checks `{0,1,2}`, but a
+physical address-to-tier assignment is an input. Heavy-flip record Tolls are
+colour `(2,1,0,1)` and lepton `(1,2,1,0)` in the specified two-bit comparisons
+(`HeavyFlipRecords.orbit_record_tolls`,
+`ElectricHeavyRecord.lepton_reference_toll`). The geometric mean
+`Values.down_colour_geometric_mean` gives `s_d² = s_e·s_u` for a common bit
+price in the colour-reference account; any common amplitude factor preserves
+it. Unequal additional label costs need a separate check. The eight witnesses
+choose no heavy-writer reference. Down still needs G, O, U and W for that
+write, T and D for placement and booking, K and B for its paid lifecycle, and
+Q/J/H/L where supply, sharing, averaging or successive transport enters.
+
+### The charged lift
+
+The existing candidate acts on the static wall. `vector_static_leg` places it
+at `g = 2`, where T carries the vector class; this is an insertion address, and
+the zero mode belongs to the whole wire. `ChargedInsertion.select_static` uses
+two phase-matched comparisons for each charged protocol. The target is `i` for
+electron, `−1` for up and `−i` for down. Every matching channel is retained
+with amplitude one, including every colour of the matching quark protocol.
+`joint_selector` restricts this readout to the static vector leg. For electron,
+up and down the static address is `2`, the selector has two comparisons, and
+the on-site model adds zero node passages and zero wall crossings. The last
+count is only the support of the added diagonal term: its endpoints are on T at
+the same address, and the reference node belongs to the F insertion. The Schur
+response still uses the gapped crossing link and reference-side factor: a term
+in the Schur product uses one inverse gapped link, with the reverse support of
+the certified six-reflection crossing for every signed label. The reference
+factor contains the same zero- and one-passage routes for all three protocols.
+These are counts in the given circuit and factorization; primitive
+comparisons, pulse admission and timing still need a native schedule before a
+shortest native route or reflection count can be claimed.
+
+At fixed nonzero bare resonance, `ChargedInsertion.det_flip_at_resonance` gives
+exactly `δ² ε` on every selected static channel.
+`ResonanceLift.shifted_full_zero_iff` and
+`ChargedInsertion.full_zero_iff_unselected` give an exact lift for any nonzero
+supplied offset when the crossing and reference flip are invertible. With a
+positive cycle product, `calibrated_detuning` pins a shared real detuning if an
+unmodified calibration channel stays stationary; if the detuning varies
+independently, the wall can retune to zero
+(`ResonanceLift.negative_retuning_exists`). `det_shifted_eq_uniform_iff`
+matches a uniform shift by `ε = 3t + 3t²/δ + t³/δ²`; its first-order
+coefficient is the same for every address and protocol. The matching concerns
+the determinant; the spectra can differ (`det_matched_trace_gap`).
+
+In the normalized bare Schur model the lifted determinant has magnitude
+`k² |ε|`. Since the other two singular values tend to `√3 k` and `√(2 + k²)`
+at fixed positive `k`, their product with the lightest singular value gives
+`m₁/m₂ = |ε| / (3 √(2 + k²)) + o(|ε|)`. All three charged sectors respond at
+first order in their offset; the two factors of `k` come from separate rows of
+the common reference factor and cancel from the leading light-to-middle ratio.
+If an insertion law supplies one or two inverse powers of `Δ` in `ε`, the ratio
+inherits that order. The selector and route supply no such power for the
+offset.
+
+This excludes the bare route counts as the source of the ledger's
+protocol-dependent lightest step. In this candidate that difference must enter
+through the label-sensitive pulse or other protocol-dependent dynamics, such
+as maintained detuning. A native selection and firing law, the offset's
+scaling, and the existence of shared calibration are not supplied. Three
+addresses, two route classes and three ledger entries describe different
+features of the model; no result identifies a generation with a protocol's
+number of `Δ` steps.
+
+### Phase, handoff and Toll
+
+At `t = 3π/4` the static hypercharge tags give angles
+`0, −3π/2, π, −π/2` for vacancy, electron, up and down; their eigenphases are
+`1, i, −1, −i`. Shortest angular distances from phase one are `0,1,2,1`
+quarter-turns. For the electron this discards a full turn of the signed
+difference between `−3π/2` and `π/2`.
+
+At this parameter the transport is diagonal
+(`VacancyProjection.hypercharge_eq_diagonal`). It multiplies each label by its
+phase in one packet-operator application and keeps the label's position. The
+relative phase labels a channel and specifies the correction on the transported
+comparison branch. The packet has no handoff edge for each quarter-turn. In the
+existing pulse implementation the same branch rotations appear for any
+controlled transport (`BranchPulseContract.program_correct`). Continuous branch
+rotation, controlled transport and conditioned flip still need native admission
+and pricing.
+
+| Static label | Shortest angular distance (quarter-turns) | Vacancy-relative flag at `t` | At `2t` | Flags when matched target |
+| --- | --- | --- | --- | --- |
+| Vacancy | 0 | 0 | 0 | 0, 0 |
+| Electron | 1 | ½ | 1 | 0, 0 |
+| Up | 2 | 1 | 0 | 0, 0 |
+| Down | 1 | ½ | 1 | 0, 0 |
+
+The vacancy-relative columns follow `ProtocolToll.selector_step_flags`,
+`flags_three_quarter` and the vacancy flag lemma. They are expectations from
+one test, not successful-handoff counts. An equal-price schedule charging both
+uncorrected flags separately would score electron, up and down as `3/2, 1,
+3/2`. The actual selector uses the two matched comparisons:
+`ChargedInsertion.matched_flags_zero` proves their selected flags vanish, and
+`select_static` gives unit retained amplitude. The cost of carrying out the
+comparison and maintaining its controller is not supplied.
+
+In the spatial handoff model `HandoffAdmittance.handoff_from_conductance`
+identifies `α` as the through probability. The unique all-pass history of `q`
+timed layers has probability `α^q` under independent through weights
+(`direct_crossing`, `direct_crossing_prob`); its coherent amplitude magnitude,
+if that history carries the insertion, is `α^(q/2)`. Taking the angular count as
+a layer count would give orders `Δ⁻¹` for up and `Δ⁻¹ᐟ²` for electron and down.
+The `α/2` of a two-leg conserving node is a different calculation, an effective
+series admittance (`NodeAmplitude.node_series`).
+
+For a scheduled unflagged wire the survival model gives amplitude `exp(−T/2)`
+for Toll `T` in expected registrations (`TollAmplitude.wireAmplitude`). If a
+schedule charges the single uncorrected comparison with weight `w` and a common
+baseline, relative amplitudes are `exp(−w/4)` for electron and down and
+`exp(−w/2)` for up, a square relation. A fixed weight gives constant relative
+factors as `Δ` varies. An `α, α²` pair requires `w = 4 log(1/α)` for exact
+equality (`ProtocolToll.selector_half_flag_weight_iff`). For leading powers the
+weight needs that logarithmic growth up to a bounded term, plus the common
+insertion scale. The flag calculation supplies neither schedule nor weight.
+
+Amplitudes multiply along a specified coherent history; a probability product
+and survival amplitude describe the same attenuation if the effective negative
+log of that probability is used. Identifying that log with expected-registration
+Toll needs a physical derivation. The insertion channel and its offset's
+inverse-period order are not supplied.
+
+A common source for the heavy weight and light lift would need a native
+record-and-fire schedule with both placements. The conditional two-bit heavy
+record has flag budgets `2, 0, 1` for electron, up and down
+(`HeavyFlipRecords.orbit_record_tolls`); with a positive price per flag it makes
+up the least attenuated, whereas the single vacancy-relative flag makes up the
+most attenuated. The shared auxiliary hypercharge readout on the two walls
+cannot write the heavy record's quark bit exactly
+(`HeavyFlipRecords.no_exact_quark_record`).
+
+### Comparison only — declared ledger ratios
+
+With the substrate `α`, the bare wire gives `m₂/m₃ ≈ 0.192/Δ`. The declared
+formulas give about `0.316/Δ` for up, `0.962/Δ` for down and `2.557/Δ` for
+electron. For `m₁/m₂` they give exactly `3/Δ²` for up, about `2.126/Δ` for down
+and about `0.208/Δ = 8.94/Δ²` for electron at the stated period. See
+`tools/tier_route_check.py`.
 
 ## Verification
 

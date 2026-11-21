@@ -1,5 +1,7 @@
 # PMAtoms — open work
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 **Open.** The bulk: with both isospin terms present the stable-line masses are `≈ 110 m_e`
 heavy on average, because `certifiedMass`'s bulk terms (and the alpha-cluster binding) already
 carry the average symmetry cost along the line. A full-chart ledger needs the bulk re-derived

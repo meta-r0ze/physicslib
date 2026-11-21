@@ -1,5 +1,7 @@
 # PMSubstrate — open work (todo)
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 Checked mathematics is in [`OVERVIEW.md`](OVERVIEW.md). This file lists what is still
 missing. The main theorem is conditional on the postulates in `OVERVIEW.md`; the open
 items are the arrows from persistence to those postulates and from the substrate to the

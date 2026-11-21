@@ -1,47 +1,73 @@
 # PMElementaryParticles — open work
 
-Current detail is in [HISTORY.md](HISTORY.md). This file is the open list only.
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+This file is the open list only.
 
-## Line problem
+## Line and ring
 
-See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md).
+- **Replace `sectorBasis`.** The current D4 coordinates disagree with the clock
+  plane: slice roots change the reading by `0` or `±6`. Replace the basis with
+  the aligned placement, or state the alignment as a named hypothesis, then
+  recheck every module that uses its coordinates.
+- **Move the registration counts to the 43-ring.** The `14,15,21,22,28,...`
+  counts are 3-ring artifacts. Recompute the firing patterns, Toll floor and
+  Margin tests on the 43-ring; do not use the old counts as E8 values.
+- **Say what the clock-silent roots do.** The 22 roots at phase `0` do not move
+  a packet around the ring. Identify their role as internal or transverse
+  motion and its observable consequence.
+- **Re-run the pillar survivors on the 43-ring.** The survivor and robust-core
+  tables were computed on the 3-ring. The clock ring changes the registration
+  opportunities, so the alone/together result must be recomputed there.
 
-- State the update model: one receiver tick is one root event.
-- State Closure for the equal weights on the tick steps.
-- Replace `sectorBasis` with an aligned placement, or state the alignment as a
-  named hypothesis, and recheck the modules that use its coordinates.
-- Replace the 3-ring registration counts with 43-ring results.
+## Composition and vacuum
 
-## Composition problem
+- **Choose the vacuum.** Both candidate references are single-site states:
+  lepton `+e₀` and the colour-symmetric state. The P4 shared-vacuum tables
+  remain the comparison; no shared vacuum is valid for all four record classes.
+- **Settle shared versus sector-local or composite placement.** The blocker is
+  the vacuum/reference choice, not the line map: two D4 sectors and a stationary
+  connected background are certified, but the record-class-to-sector assignment
+  is not.
+- **Reference identity.** `refRecord` is not proved equal to `SharedReference`
+  or `ColourReference`. The blocking item is the E8/layout reference map from
+  the finite record to a D4 minimal-vector class.
+- **Multi-protocol composition.** Define the composite state for `k` protocols
+  on one 43-ring from the nested-paper rules. Alone/together closure cannot be
+  decided until that joint state exists.
 
-See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md).
+## Generations and costs
 
-- Choose the vacuum: lepton `+e₀` or the colour-symmetric state; use the P4
-  shared-vacuum tables.
-- Fix the triality orientation of the aligned-clock cosets and state the rule
-  that turns step counts into cost per period. It must use the one-tick count
-  for the heavy-to-light step.
+- **Derive the step-to-cost rule for the coset signatures.** The certified
+  signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
+  `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
+  must use the one-tick count for the heavy-to-light step and may use silent
+  steps only to split the two light generations.
+- **Fix the triality orientation.** The matching gives `g = 0` as the vector
+  coset and `g = 1,2` as the spinor cosets. Which of `g = 1,2` is the
+  zero-silent coset depends on `GluedRegister.triality` and is not fixed.
+- **Complete the charged lift.** The static selector supplies no inverse power
+  of `Δ` for the offset. A native selection and firing law, the offset's
+  scaling, and the existence of shared calibration remain open.
 
 ## Full-ring Lean spectrum
 
-- Prove the momentum action, the explicit `M(k)`, its trace/determinant and the
-  eigenvalue identity `cos E(k)=cos(x/2) cos k`.
-- Prove the empty-firing spectrum gapless.
+- **Prove the spectral block.** Prove the momentum action, the explicit `M(k)`,
+  its trace and determinant, and the eigenvalue identity
+  `cos E(k)=cos(x/2) cos k`. The mass reading stays the named hypothesis in
+  [SCOPE](../../SCOPE.md#named-premises).
+- **Prove the empty-firing spectrum gapless.** The present certificates cover
+  the full-firing unitary tick and the plane-wave periodicity. The empty-firing
+  gapless claim is still script-level.
 
 ## Everything else still open
 
-- **Elementary masses and widths.** Derive the assignment of invariant costs to lepton and quark
-  tiers, the allowed transition histories and their rates, and connect the charged-current operator to
-  the physical contact vertex and final-state readout. Blocking item: the carrier-to-protocol contact
-  and readout map.
-- Shared vs sector/composite background: no certified placement of the
-  bit-ring background or selection of the colour composite. Blocking item:
-  the line/placement map.
-- Reference identity: `refRecord` is not proved equal to `SharedReference` or
-  `ColourReference`. Blocking item: the E8/layout reference map.
-- Multi-protocol composition: same missing object as above.
-- Triality and per-generation costs: conditional on the line/attachment map.
-  Blocking item: the bit-ring-to-lattice line.
-- Radiative stage 2: not started. Blocking item: assembled diagram kernel.
-- Legacy single-reference assumptions: conditional per label; the heavy writer
-  single reference is not certified. Blocking item: background choice.
+- **Elementary masses and widths.** Derive the assignment of invariant costs to
+  lepton and quark tiers, the allowed transition histories and their rates.
+  Connect the charged-current operator to the physical contact vertex and
+  final-state readout; the blocker is the carrier-to-protocol contact and
+  readout map.
+- **Radiative stage 2.** This is not started. The blocker is the assembled
+  diagram kernel, not an individual loop integral.
+- **Legacy single-reference assumptions.** The heavy writer's single reference
+  is not certified; the choice is conditional per label. The blocker is the
+  background/vacuum choice above.

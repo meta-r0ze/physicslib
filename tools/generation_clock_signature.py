@@ -2,7 +2,7 @@
 
 With the spacetime D4 aligned to the E8 clock plane (tools/clock_slice_alignment.py),
 E8 = D4(spacetime) + D4(internal) + three glue cosets of 64 roots each. The glue
-classes are the generations (PMKAutomaton GENERATIONS.md: the three nontrivial D4 glue
+classes are the generations (PMElementaryParticles/OVERVIEW.md#generations-on-the-e8-wire: the three nontrivial D4 glue
 classes, related by triality). Exact triality would make the three cosets identical.
 
 This script classifies the 240 roots by coset for every distinct aligned placement and

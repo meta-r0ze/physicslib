@@ -1,5 +1,7 @@
 # e8p — open work
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 ## constants.txt parity — remaining values
 
 Not yet in `e8p`, compared against `PM-1-Arch/calculations/constants.txt`:

@@ -1,5 +1,7 @@
 # PMCosmology — open work (todo)
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 See [`PREDICTIONS.md`](PREDICTIONS.md) for the map from the general cosmology
 questions to PM's answers (what it predicts, what is a conditional rescaling, and
 what is not defined).

@@ -1,5 +1,7 @@
 # PMKAutomaton — open work
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 The certified interface and checked results are in [OVERVIEW](OVERVIEW.md) and
 [COMPONENTS](COMPONENTS.md). This file lists only the open physical admission and
 named machine inputs.

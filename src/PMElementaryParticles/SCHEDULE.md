@@ -3,7 +3,7 @@
 ## Admissible candidates
 
 [Clock ledger](../PMKAutomaton/CLOCK.md) records the available words.
-[Generations](GENERATIONS.md) records their address and label support.
+[Generations](OVERVIEW.md#generations-on-the-e8-wire) records their address and label support.
 `WireSchedule.family` enumerates a bounded, serial, fresh-record
 template for one cycle at a supplied glue address. A candidate stores a
 start tick, live port and registration bit for each present block. It

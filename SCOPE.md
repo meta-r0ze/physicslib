@@ -34,6 +34,32 @@ derived, then compared to SM values by `tools/e8p`.
 | Origin of the complex structure (why ℂ amplitudes) | PM-2 amplitudes | model choice | **postulate** |
 | Electromagnetic matching `α⁻¹(0) = Z_geo` | PM-1 `7_correspondences.tex` §EM matching; `PMConstants.ResponseMatching` | **closed**: the constants layer *defines* `α` as the substrate's admittance (`CertifiedConstants.α := causalCoupling`), so `α⁻¹ = Z_geo` is a theorem and the impedance form is the rationalized-units normalization `g² = 4πα` (`matching_frontier_iff_admittance`); equivalently the electric calibration (`matching_frontier_iff_calibration`) at the electric ledger workload (`footprint_eq_electric_ledger`) | **closed**; content = the identification `α = κ`, tested in e8p |
 
+## Named premises
+
+These are identification or modelling premises, not theorem hypotheses hidden in
+the text. Each appears once here; the owning TODO links back to this table.
+
+| Premise | Where it enters in Lean | What depends on it |
+| --- | --- | --- |
+| One receiver tick is one root event | `PMKAutomaton.ClockSites.site`, `arrivals_are_lattice_steps`; `PMKAutomaton.RingReceiver.tick` | EP line and ring traces, registration-count readings, particle-trace schedules |
+| Closure: a substrate-defined weight is invariant under the substrate symmetries that fix the clock | `PMKAutomaton.ClockTickWeights.forward_one_orbit`, `backward_one_orbit`; `PMKAutomaton.Machine.SliceHop` | Equal weights of the six forward and six backward tick steps; tick-word costs |
+| The reference class is the coset carrying the clock | `PMKAutomaton.ClockAlignment.vectorRoots_counts`, `cu_key`; `PMKAutomaton.WallCrossing`; `PMAction.CarrierReferenceCycle` | The `g = 0` vector / `g = 1,2` spinor matching, route and tier comparisons |
+| The sixteen channels sit in the internal `D4` | `PMKAutomaton.WallCrossing` docs; `PMElementaryParticles.ChannelVectors.channelCoord` | Per-generation channel inventory, wall-crossing counts, cost-per-step readings |
+| The aligned spacetime `D4` has one clock-axis step equal to one E8 clock tick | `PMKAutomaton.ClockAlignment.a` … `beta`, `clockAxisRoots_counts`; `AxisHop`, `SliceHop` | Replacing `sectorBasis`; clock-routed hop words; the aligned placement recheck |
+| Tier assignments `{0,2,3}` for up and `{0,1,2}` for down, electron and neutrino | `PMElementaryParticles.TierLedger.tiersFor`, `QuarkMasses`, `LeptonMasses` | Species mass ledgers, tier descent, decay channel tiers |
+| The mass reading of the full-ring spectrum is a hypothesis | `PMKAutomaton.ClockRing`, `Dispersion`; EP mass reading | Identifying the spectral block with a particle mass; the band gap is `x`, the mass-like term `x/2` |
+| Lorentzian signature `(+,−,−,−)` and complex amplitudes | `SCOPE` coverage; `PMAction` amplitude and continuum modules | Continuum limits, unitary amplitudes, comparison phases |
+| The EP protocol serial route and its admitted schedule | `PMElementaryParticles.WireSchedule.Premises` | Elapsed and paid route costs, writer traffic, scheduled readout |
+| The heavy branch reads the supplied record and bank | `PMAction.HeavyFlipControl`, `ElectricCompanionBank`, `ElectricChiralKick` | Heavy label branch, writer population, companion crossing |
+| The booked writer population and reset account | `PMAction.WireReferenceCost`, `PMKAutomaton.Values` thresholds | Reference thresholds, erasure versus balanced-reset accounts |
+| The lightest charged offset and admitted matched ports | `PMAction.ChargedInsertion.det_flip_at_resonance`, `ResonanceLift` | Charged mass ordering, lightest ratio, selector comparison counts |
+| The physical species association for decay and current readout | EP decay theorems, `ExternalStates`; `PMAction.NativeExternal` | Particle identification, decay channels and external-state readout |
+| The three persistence premises of `HazardForm` | `PersistenceMechanics.HazardForm`; `PMElementaryParticles.MeanLife` | Mean life, survival weights, lifetime comparisons |
+| Strong-CP and VEV structural premises | `PMConstants.VevPremises`, `StrongLedgerBounds`; `UnitTransferWitness` | Constant normalization, strong-CP selection, unit-transfer comparison |
+| The machine inputs `T,L,B,D,J,Q` and the tariff unit | `PMKAutomaton.Interface` conditional exports | Physical admission, booked work, detector support, supply and acceptance |
+| The cosmological load/response/continuity premises | `PMCosmology.Hypotheses.CosmoModel` | `H_late`, `S8_late`, background and composition comparisons |
+| The flavour aperture and forward-composition premises | `PMFlavor.HalfTurnAperture`, `PMFlavor.TransferAmplitude`, `PMFlavor.ConductionRule` | `s12`, `s13`, `|V_cb|` candidates and the completion-order choice |
+
 ## How each kind is closed
 - **postulate** — state it once and stop calling it derived; the tree already flags
   Born rule / signature this way inside modules.

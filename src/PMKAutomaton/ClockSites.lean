@@ -17,7 +17,7 @@ backward root step back.
 
 The identification of one receiver tick with one root event is the update
 model, and Closure for equal weights is the premise stated in
-`PMElementaryParticles/LINE-AND-COMPOSITION.md`. Neither premise is proved here.
+`SCOPE.md` named premises. Neither premise is proved here.
 -/
 
 namespace PMKAutomaton.ClockSites

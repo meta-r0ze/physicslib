@@ -1,5 +1,7 @@
 # PMAction — open work
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 Checked results are in [OVERVIEW](OVERVIEW.md). The shared clock, record and
 handoff tasks are in the [transport review](../PMKAutomaton/TODO.md).
 

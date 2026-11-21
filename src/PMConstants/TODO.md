@@ -1,5 +1,7 @@
 # PMConstants — open work
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 - **Physical constant selection.** Derive the VEV correction factors, the gravitational-handoff
   interpretation, the integrated polarization remainder and the Lean verification of the unit-transfer
   history. Strong-CP selection still rests on the anomaly relation plus least-cost selection among

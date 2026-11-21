@@ -80,7 +80,7 @@ by its two walls. The reference choice and the direct and restoring route types
 are checked in the [route results](OVERVIEW.md#route). The label-sensitive firing
 law and its `Δ` scaling remain open; see the [open list](TODO.md). The transport
 address, its route and the declared ledger tiers are related in the
-[generation comparison](../PMElementaryParticles/GENERATIONS.md).
+[generation comparison](../PMElementaryParticles/OVERVIEW.md#generations-on-the-e8-wire).
 
 ## Layering
 

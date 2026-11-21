@@ -1,5 +1,7 @@
 # PMFlavor — open work
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 Open work only. Closed results and retired routes are in [OVERVIEW](OVERVIEW.md);
 the terms (wire, label state, protocol, event, `J`, `U`) are in [README](README.md).
 

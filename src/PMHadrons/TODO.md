@@ -1,5 +1,7 @@
 # PMHadrons — open work
 
+Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
+
 Results are in [OVERVIEW](OVERVIEW.md); the pillar calculations and their log are in
 [PILLARS.md](PILLARS.md).
 
