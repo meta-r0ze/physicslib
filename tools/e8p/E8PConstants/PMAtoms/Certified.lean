@@ -1,6 +1,5 @@
-import PMAtoms.CertifiedEnclosure
-import PMAtoms.NuclearRegime
-import PMAtoms.HundRule
+import Batteries.Data.Float.Rat
+import PMAtoms.Values
 import E8PConstants.Format
 import E8PConstants.PMAtoms.Periodic
 
@@ -17,10 +16,10 @@ Everything printed here is read from `src/`; this module only formats and compar
   (`≈ 0.0026 u`, `≈ 2.5 MeV`); the floor of the bulk terms is `≈ 3.3 m_e` (`PMAtoms/RESIDUALS.md`).
   It is not a mass surface over `(Z, N)`: off the stable line it has no isospin restoring term
   (`PMAtoms.IsospinLedger`).
-* **Regime** — `PMAtoms.regimeOf`; `beyond` is past the `Z = 96, N = 152` frontier.
+* **Regime** — `PMAtoms.Values.regimeOf`; `beyond` is past the `Z = 96, N = 152` frontier.
 * **Residual** — `E8 − measured` (the sign used in `PMAtoms/RESIDUALS.md`).
 * **Measured** — frozen isotope masses (`Periodic`), comparison only.
-* **Ground multiplicity** — `PMAtoms.Hund.groundMultiplicity` (Hund's first rule, derived by
+* **Ground multiplicity** — `PMAtoms.Values.groundMultiplicity` (Hund's first rule, derived by
   counting, on the Aufbau configuration; the fill order is an input).
 -/
 
@@ -28,19 +27,19 @@ namespace E8PConstants
 open PMAtoms
 
 /-- Where the enclosure is printed: `A > 4` (the mean-field ledger; `A ≤ 4` uses the line
-counts) and inside the deformed frontier (`PMAtoms.deformedFrontierB`). -/
-def certifiedDomain (z n : Nat) : Bool := decide (4 < z + n) && PMAtoms.deformedFrontierB z n
+counts) and inside the deformed frontier (`PMAtoms.Values.deformedFrontierB`). -/
+def certifiedDomain (z n : Nat) : Bool := decide (4 < z + n) && PMAtoms.Values.deformedFrontierB z n
 
 /-- Enclosure of `certifiedMass` in `m_e` (`PMAtoms.cmLo`, `cmHi` at 6 digits). -/
 def certifiedME (z n : Nat) : Option (Rat × Rat) :=
-  if certifiedDomain z n then some (cmLo z n 6, cmHi z n 6) else none
+  if certifiedDomain z n then some (PMAtoms.Values.cmLo z n 6, PMAtoms.Values.cmHi z n 6) else none
 
 /-- The same enclosure in `u` (`m_e` in `u` is a unit input). -/
 def certifiedU (z n : Nat) : Option (Rat × Rat) :=
   (certifiedME z n).map (fun p => (p.1 * electronMassU, p.2 * electronMassU))
 
 def regimeStr (z n : Nat) : String :=
-  match PMAtoms.regimeOf z n with
+  match PMAtoms.Values.regimeOf z n with
   | .light => "light" | .mid => "mid"
   | .deformedActinide => "deformed" | .beyondFrontier => "beyond"
 
@@ -69,8 +68,39 @@ def residualU (z n : Nat) : Option Rat :=
   | some p, some m => some ((p.1 + p.2) / 2 - m)
   | _, _ => none
 
-/-- Stable-line scatter of the ledger, `4.8 m_e` rms (`PMAtoms/RESIDUALS.md`). -/
-def ledgerScatterME : Rat := 48 / 10
+/-- Standard isotopes (`Z = 1..maxZ`) plus the extended comparison set. -/
+def certifiedNuclei (maxZ : Nat) : List (Nat × Nat) :=
+  ((List.range maxZ).map (fun i => (i + 1, standardMassNumber.getD i (2 * (i + 1)))))
+    ++ extendedIsotopeMassU.map (fun ((z, a), _) => (z, a))
+
+/-- Convert a rational to Float for the RMS display calculation. -/
+def ratToFloat (q : Rat) : Float := Float.ofInt q.num / Float.ofNat q.den
+
+/-- Residuals in `m_e` for the 26 stable-line nuclei with `12 ≤ A ≤ 208`. -/
+def stableLineResidualsME : List Rat :=
+  (certifiedNuclei 20).filterMap fun p =>
+    if 12 ≤ p.2 ∧ p.2 ≤ 208 then
+      (residualU p.1 (p.2 - p.1)).map (fun r => r / electronMassU)
+    else none
+
+/-- Mean of the stable-line residuals. -/
+def stableLineMeanME : Float :=
+  let xs := (stableLineResidualsME.map ratToFloat)
+  if xs = [] then 0 else xs.sum / Float.ofNat xs.length
+
+/-- RMS about the mean of the 26 stable-line residuals. -/
+def stableLineRmsAboutMeanME : Float :=
+  let xs := (stableLineResidualsME.map ratToFloat)
+  let m := stableLineMeanME
+  if xs = [] then 0 else
+    Float.sqrt ((xs.map (fun x => (x - m) ^ 2)).sum / Float.ofNat xs.length)
+
+/-- Stable-line scatter of the ledger, rounded to `4.8 m_e` about the mean of
+the 26 frozen nuclei with `12 ≤ A ≤ 208` (`PMAtoms/RESIDUALS.md`). -/
+def ledgerScatterME : Rat :=
+  let tenths := Float.round (stableLineRmsAboutMeanME * 10)
+  if tenths = (48 : Float) then 48 / 10
+  else (tenths / 10).toRat?.getD (48 / 10)
 
 /-- Residual in units of the ledger's stable-line scatter (a model z-score, not an experimental
 σ: measured masses are known to `~10⁻⁹ u`, so the comparison scale is the model's own scatter). -/
@@ -100,11 +130,6 @@ def certifiedRow (z a : Nat) : String :=
     | some r => (signed r 6, signed (r / electronMassU) 2)
     | none => ("—", "—")
   s!"{z}  {symbol z}  {a}  {n}  {meStr}  {uStr}  {isoStr z a}  {rU}  {rME}  {zStr z n}  {regimeStr z n}"
-
-/-- Standard isotopes (`Z = 1..maxZ`) plus the extended comparison set. -/
-def certifiedNuclei (maxZ : Nat) : List (Nat × Nat) :=
-  ((List.range maxZ).map (fun i => (i + 1, standardMassNumber.getD i (2 * (i + 1)))))
-    ++ extendedIsotopeMassU.map (fun ((z, a), _) => (z, a))
 
 def certifiedTable (maxZ : Nat) : List String :=
   let header :=
@@ -153,8 +178,8 @@ def certifiedNuclide (z n : Nat) : List String :=
 
 /-- `2S+1` from Hund's rule, with the observed term when it differs (`Z ≤ 54`). -/
 def multiplicityStr (z : Nat) : String :=
-  let g := PMAtoms.Hund.groundMultiplicity z
-  match PMAtoms.Hund.observedMultiplicity[z - 1]? with
+  let g := PMAtoms.Values.groundMultiplicity z
+  match PMAtoms.Values.observedMultiplicity[z - 1]? with
   | some o => if o == g then toString g else s!"{g}≠{o}"
   | none => toString g
 
@@ -162,7 +187,7 @@ def multiplicityStr (z : Nat) : String :=
 def multiplicityScore (maxZ : Nat) : Nat × Nat :=
   let zs := (List.range maxZ).map (· + 1)
   let cmp := zs.filterMap fun z =>
-    (PMAtoms.Hund.observedMultiplicity[z - 1]?).map (· == PMAtoms.Hund.groundMultiplicity z)
+    (PMAtoms.Values.observedMultiplicity[z - 1]?).map (· == PMAtoms.Values.groundMultiplicity z)
   (cmp.count true, cmp.length)
 
 def periodicTable (maxZ : Nat) : List String :=

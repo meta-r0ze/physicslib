@@ -29,7 +29,6 @@ import PMCosmology.Background
 import PMSubstrate.Readouts
 import PMConstants.PlanckReadout
 import E8PConstants.PMSubstrate.ExperimentalComparison
-import E8PConstants.PMAtoms.AlphaClockComparison
 import E8PConstants.PMAtoms.E8TickUnit
 import E8PConstants.PMFlavor.ExperimentalPulls
 import E8PConstants.PMConstants.ScalarAccounting

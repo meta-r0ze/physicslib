@@ -2,7 +2,9 @@ import PMElementaryParticles.SharedUnits
 import PMElementaryParticles.PhysicalUnits
 import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.QuarkMasses
+import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.MuonLifetimeCorrected
+import PMElementaryParticles.TauE8
 import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.WireReferenceCost
@@ -39,6 +41,8 @@ export PMElementaryParticles.SharedUnits
 export PMElementaryParticles.PhysicalUnits
   (electronTime electronTime_pos electronTime_tight muonLifetimeSeconds muonLifetimeSeconds_tight
     tauLifetimeSeconds tauLifetimeSeconds_bounds)
+export PMElementaryParticles.MuonLifetime (muonLifetime muonLifetime_pos)
+export PMElementaryParticles.TauE8 (tauLifetimeE8)
 export PMElementaryParticles.MuonLifetimeCorrected (muonLifetimeCorrected corrected_bounds)
 
 /-- The muon lifetime with the full Fermi-theory QED series. -/

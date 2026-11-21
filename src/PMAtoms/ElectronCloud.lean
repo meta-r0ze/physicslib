@@ -72,6 +72,40 @@ def orbitalList : List SpinOrbital :=
 /-- Fill `Z` electrons into the lowest hydrogenic orbitals. -/
 def fillCloud (z : Nat) : Cloud := (orbitalList.take z).toFinset
 
+/-- The hydrogenic sum `Σ 1/n²` over the same occupied orbitals. -/
+def cloudSum (z : ℕ) : ℚ :=
+  ((orbitalList.take z).map (fun o => (1 : ℚ) / (o.n : ℚ) ^ 2)).sum
+
+theorem orbitalList_nodup : orbitalList.Nodup := by
+  decide
+
+/-- The cloud binding energy is the certified Rydberg energy times the same
+orbital sum. -/
+theorem bindingEV_fillCloud (z : ℕ) :
+    Cloud.bindingEV (fillCloud z) = -rydbergEV * (cloudSum z : ℝ) := by
+  unfold Cloud.bindingEV fillCloud cloudSum Cloud.orbitalEnergyEV
+  rw [List.sum_toFinset _ (List.Pairwise.take (i := z) orbitalList_nodup)]
+  have hleft : (List.map (fun o => -rydbergEV / (o.n : ℝ) ^ 2)
+        (List.take z orbitalList)).sum =
+      -rydbergEV * (List.map (fun o => (1 : ℝ) / (o.n : ℝ) ^ 2)
+        (List.take z orbitalList)).sum := by
+    rw [show (fun o : SpinOrbital => -rydbergEV / (o.n : ℝ) ^ 2) =
+        (fun o : SpinOrbital => -rydbergEV * (1 / (o.n : ℝ) ^ 2)) by
+      funext o
+      ring]
+    exact List.sum_map_mul_left _ _ _
+  have hcast : ∀ l : List SpinOrbital,
+      (List.map (fun o => (1 : ℝ) / (o.n : ℝ) ^ 2) l).sum =
+        ((List.map (fun o => (1 : ℚ) / (o.n : ℚ) ^ 2) l).sum : ℝ) := by
+    intro l
+    induction l with
+    | nil => norm_num
+    | cons o l ih =>
+        rw [List.map_cons, List.sum_cons, List.map_cons, List.sum_cons, ih]
+        push_cast
+        ring
+  rw [hleft, hcast (List.take z orbitalList)]
+
 /-- The combined atom: nucleus (colour/baryon sector) + electron cloud
 (lepton/charge sector). -/
 structure AtomSystem where

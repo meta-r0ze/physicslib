@@ -21,9 +21,10 @@ of `PMAction.GenerationWalls` (the native label is kept), and the inter-wall ter
 * `seesaw_close_pair`: so under `WallSeesaw` (light masses `c/σᵢ`) the two lightest generations
   have masses within a factor `2`. The exact one-flavour mass `(√(σ² + 4δ₀²) − σ)/2` keeps the
   factor `2` (it is `2δ₀²/(√(σ² + 4δ₀²) + σ)`, and doubling `σ` at most halves it).
-* `no_measured_lepton_traceless`: the measured charged leptons are pairwise more than a factor
-  `4` apart (`measured_gaps`), so no such link gives them. The same holds for every
-  quark sector (smallest ratio `m_s/m_d ≈ 20`).
+* `no_measured_lepton_traceless`: if the two light masses are more than a factor `4`
+  apart, no such link gives them. The measured charged-lepton check is in e8p; the
+  library theorem takes the gap as a plain hypothesis. The same holds for every quark
+  sector (smallest ratio `m_s/m_d ≈ 20`).
 
 **Scope (audit).** The equal-class crossing is directional: class `c` sits in generation `c − 1` on
 wall 1 and in `c + 1` on wall 2, so the wall-2-to-wall-1 block has one entry per row, a weighted
@@ -48,14 +49,6 @@ noncomputable section
 namespace PMAction.InterWallDiagonal
 open PMAction.GenerationWalls
 
-/-- Measured charged-lepton masses in MeV (PDG 2024). -/
-def IsMeasuredLepton (m : ℝ) : Prop := m = 0.51099895 ∨ m = 105.6583755 ∨ m = 1776.93
-
-theorem measured_gaps (a b : ℝ) (ha : IsMeasuredLepton a) (hb : IsMeasuredLepton b) (h : a < b) :
-    4 * a < b := by
-  rcases ha with rfl | rfl | rfl <;> rcases hb with rfl | rfl | rfl <;>
-    first | (norm_num at h; done) | norm_num
-
 /-- **An equal-class crossing always changes the generation.** -/
 theorem crossing_changes_generation : ∀ (b : Bool) (c : Fin 3), omitted b c ≠ omitted (!b) c := by
   decide
@@ -75,14 +68,15 @@ theorem seesaw_close_pair (k a b : ℝ) (hk : 0 < k) (hb : 0 < |b|) (ha : 0 < |a
   rw [show 2 * (k / |a|) = (2 * k) / |a| by ring, div_le_div_iff₀ hb ha]
   nlinarith [mul_le_mul_of_nonneg_left hab hk.le]
 
-/-- **No traceless link gives two measured charged leptons** as its two lightest masses. -/
+/-- **No traceless link gives two light masses more than a factor `4` apart.** -/
 theorem no_measured_lepton_traceless (k a b : ℝ) (hk : 0 < k) (hb : 0 < |b|) (hba : |b| ≤ |a|)
-    (hab : |a| ≤ 2 * |b|) (hlo : IsMeasuredLepton (k / |a|)) (hhi : IsMeasuredLepton (k / |b|))
+    (hab : |a| ≤ 2 * |b|)
+    (hgap : 4 * (k / |a|) < k / |b|)
     (hne : k / |a| ≠ k / |b|) : False := by
   have ha : 0 < |a| := lt_of_lt_of_le hb hba
   have hle : k / |a| ≤ k / |b| := div_le_div_of_nonneg_left hk.le hb hba
   have hlt : k / |a| < k / |b| := lt_of_le_of_ne hle hne
-  have h4 := measured_gaps _ _ hlo hhi hlt
+  have h4 := hgap
   have h2 := seesaw_close_pair k a b hk hb ha hab
   have hpos : 0 < k / |a| := div_pos hk ha
   linarith

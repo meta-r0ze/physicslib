@@ -56,7 +56,7 @@ globs = ["PMHadrons", "PMHadrons.+"]
 [[lean_lib]]
 name = "PMAtoms"
 srcDir = "src"
-globs = ["PMAtoms", "PMAtoms.+"]
+globs = ["PMAtoms", "PMAtoms.+", "PMAtoms.Values"]
 
 [[lean_lib]]
 name = "PMCosmology"

@@ -1,6 +1,4 @@
-import PMAtoms.Shells
-import PMAtoms.Aufbau
-import PMAtoms.ElectronCloud
+import PMAtoms.Values
 import PMSubstrate.SIUnits
 import E8PConstants.Format
 
@@ -8,7 +6,7 @@ import E8PConstants.Format
 # Periodic-table data and the electron configuration readout
 
 Frozen comparison data (standard weights, isotope masses, element symbols) and the electron
-configuration, read from `PMAtoms.Aufbau.configuration` (capacities `2(2ℓ+1)` proved in
+configuration, read from `PMAtoms.Values.configuration` (capacities `2(2ℓ+1)` proved in
 `PMAtoms.Shells`; the fill order is a supplied input there). No mass model lives here: the
 nuclear mass column of `--periodic-table` is `PMAtoms.certifiedMass` (`E8PConstants.Certified`).
 -/
@@ -19,15 +17,15 @@ namespace E8PConstants
 def subshellLabel (nl : Nat × Nat) : String :=
   toString nl.1 ++ ["s", "p", "d", "f"].getD nl.2 "?"
 
-/-- Electron configuration of `z` electrons, from `PMAtoms.Aufbau.configuration`. -/
+/-- Electron configuration of `z` electrons, from `PMAtoms.Values.configuration`. -/
 def configuration (z : Nat) : String :=
   String.intercalate " "
-    ((PMAtoms.Aufbau.configuration z).map (fun (nl, k) => subshellLabel nl ++ toString k))
+    ((PMAtoms.Values.configuration z).map (fun (nl, k) => subshellLabel nl ++ toString k))
 
 /-- Electrons per principal shell `[K, L, M, N]`, from the same configuration. -/
 def shellCounts (z : Nat) : List Nat :=
   (List.range 4).map (fun i =>
-    ((PMAtoms.Aufbau.configuration z).filter (fun (nl, _) => nl.1 = i + 1)).foldl
+    ((PMAtoms.Values.configuration z).filter (fun (nl, _) => nl.1 = i + 1)).foldl
       (fun acc (_, k) => acc + k) 0)
 
 /-- Electron mass in atomic mass units, read from the canonical unit entry. -/
@@ -36,14 +34,10 @@ def electronMassU : Rat := PMSubstrate.SIUnits.electronMassU
 /-- Electron rest energy in MeV, read from the canonical exact-rational entry. -/
 def electronMassMeV : Rat := PMSubstrate.SIUnits.electronMassMeVRat
 
-/-- Hydrogenic cloud series `Σ 1/n²` over the first `z` spin-orbitals of
-`PMAtoms.orbitalList` (the `ElectronCloud` filling; no screening). -/
-def cloudSum (z : Nat) : Rat :=
-  ((PMAtoms.orbitalList.take z).map
-    (fun o => (1 : Rat) / ((o.n : Nat) : Rat) ^ 2)).sum
-
-/-- Hydrogenic cloud binding in eV (`ElectronCloud.bindingEV` with the certified Rydberg bound). -/
-def cloudEnergyRat (z : Nat) : Rat := -((bounds .rydbergEV).1) * cloudSum z
+/-- Hydrogenic cloud binding in eV, formatted with the lower rational endpoint of
+the certified Rydberg enclosure. The orbital sum is `PMAtoms.cloudSum`; this is
+formatting, not a second cloud value. -/
+def cloudEnergyRat (z : Nat) : Rat := -((bounds .rydbergEV).1) * PMAtoms.Values.cloudSum z
 
 /-- Standard atomic weights (IUPAC, u) for Z = 1..20, frozen comparison data. -/
 def standardWeightU : List Rat := [

@@ -1,2 +1,3 @@
 import E8PConstants.Catalog
 import E8PConstants.Format
+import E8PConstants.PMAction.InterWallDiagonalCheck

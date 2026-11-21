@@ -73,8 +73,6 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
 - `--nuclear` still prints the He-4 closure gap, the mirror link difference and the static
   charge energies as text citing their theorems; print them from `src/` values if a computable
   form is added there.
-- The hydrogenic cloud column (`cloudSum`) is a rational mirror of
-  `PMAtoms.ElectronCloud.bindingEV`; move a `ℚ` form into `src/` to drop the mirror.
 - Add `--particle <spec>`: accept `6 7` aka carbon 13 v.s. the more stable carbon 12, print `Z/N/A`, configuration, shell counts, `2S+1`, E8 nuclear mass (`certifiedMass`), tabulated isotopic mass and half-life/decay. This is a lookup/display feature over frozen isotope data, not a new model value.
 - **Electron-mass inputs.** `ElectroweakBounds.electronGeV`, `FloorNeutrino.meEV` and
   `StrongRunning.mZ` use `0.51099895` (CODATA truncated by `1.35×10⁻⁹`); `SharedUnits.me` and
@@ -82,14 +80,10 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
   unify on `SharedUnits.me` when their proofs are next touched. `SharedUnits.hbarc = 197.3269804`
   is likewise truncated (`2×10⁻¹⁰`).
 
-- `E8TickUnit` and `AlphaClockComparison` (now `E8PConstants/PMAtoms/`) are model definitions no row uses; move them to `src/`
-  or drop them from `PMAtoms/OVERVIEW.md`. `ledgerScatterME = 4.8` is typed in; compute it from
-  the isotope table.
+- `E8TickUnit` is the SI comparison conversion; `AlphaClockComparison` now lives in `src/PMAtoms/`. `ledgerScatterME` is computed from the 26 stable-line residuals.
 - **Candidate scalar rows from `src/`**: `K_ℓ3` at leading order (`PMHadrons.KaonSemileptonic`),
   the shell spacing coefficient `χ·m_p/Δ`, the O-17 spin–orbit splitting. Each needs a theorem
   with numeric bounds.
-- **Shell adjacency in Lean.** `--shells` sorts `nilssonE8CostQ`; a `decide` theorem that the
-  sorted ladder is the one printed would move the adjacency from the tool into `src/`.
 - Add a `--cite` mode.
 - Point the papers' `\CatchFileBetweenTags` at `e8p --latex` output.
 - Rename the directory to the final package name if `e8p` is kept as the binary.

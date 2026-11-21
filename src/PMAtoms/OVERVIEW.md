@@ -27,6 +27,7 @@ elementary protocols (PMElementaryParticles)
 
 | Module | Checked result | Retained inputs |
 | --- | --- | --- |
+| `Values` | Re-exports the PMAtoms values used by e8p: nuclear types, hydrogen/cloud values, materials, shell ladder/closures, certified-mass enclosures, alpha/fission/e8 tick values | no new computation |
 | `Nucleus` | `Q=Z`, `B=Z+N` as sums of nucleon values (`charge_eq_nucleons`, `baryon_eq_nucleons`); `β⁻`, `β⁺`, capture, `α`, fission conserve `Q`/`B` with lepton number on the lepton side; conservation permits a channel from every `(Z,N) ≠ (0,0)` (`conservation_permits_all`); `Persists` is local minimality of a supplied cost; lower-cost daughters vanish by `PersistenceMechanics.Selection` | binding/cost order, allowed routes and rates |
 | `NuclearGraph` | `NucleonLabel`, `LinkType` (`pp/pn/nn`), `completeEdgeCount`; `h3_counts` (0,2,1), `he3_counts` (1,2,0), `he4_counts` (1,4,1); `tetrahedron`/degree cap 4; `bindingComplete` decomposition | link weights, tetrahedron closure, packing |
 | `NuclearFolding` | `Folding`, `coulombEnergy`, `coulombEnergy_scale`; `softenedKernel a r = 1/√(r²+a²)` with `softenedKernel_scale`, `softenedKernel_le_inv`; `e8ChargeCoupling = πD/(2σ)`; `sphereCoulomb` | actual folded positions | `Folding (A)` positions in `Fin 3`; `dist`; `coulombEnergy`; `dist_scale`; `coulombEnergy_scale : E(λF)=E(F)/λ`; `coulombEnergy_folded` at radius `A^{1/3}` | absolute charge coupling |
@@ -84,7 +85,6 @@ elementary protocols (PMElementaryParticles)
 | `E8Tick` | `e8Tick = Δ = 43`, `lifetimeTicks`; pure E8 period | unit conversion |
 | `ClockHierarchy` | `nestedPeriod`, `nestedFlux`, `parallelRate`, `serialLifetime`, `clockDividedRate`, positivity and product identities; `nestedPeriod_10_2_6 = 5160` | composition law is a model question |
 | `AlphaClockComparison` | `capacityPeriod`, `gatedPeriod`, `alphaAttempt_eq_inv_capacityPeriod`, `alphaNestedAttempt`, `capacity_vs_nested_ratio = workload²` | current capacity convention contrasted with nested clocks |
-| `E8TickUnit` | comparison conversion `electronSecond = ħc/(m_e c²)`, `e8TickSeconds`, `muonLifetimeTicks`, `pionLifetimeTicks`, `kaonLifetimeTicks`, `tauLifetimeTicks`, `neutralPionLifetimeTicks`, `pionLifetimeCorrectedTicks`, `u238FissionTicks`, `cf252FissionTicks`; uses measured unit inputs | not an E8 prediction |
 | `SpectralMeasure` | `betaChannelMeasure`, `betaSelectedProbability`, `betaSelectedProbability_nonneg`, `neutronSelectedProbability`, `muonSelectedProbability`; finite spectral weights as a `ChannelMeasure` | numerical normalization |
 | `BetaDecay` | `betaDaughter`, `betaQ`, `betaAllowed`, `betaChannel`; `betaWidth = (G Vud)²M²f/(2π³)`, `betaWidth_pos`, `betaLifetime`; `betaEndpoint`, `betaPhaseSpace`, `betaWidthRecoil`, `betaLifetimeRecoil` with supplied Fermi function and radiative factor | supplied nuclear matrix element and Fermi/radiative factors |
 | `NuclearLedger` | `certifiedMass = nuclearMassPackingShellPaired` on `certifiedDomain = deformedFrontier`; `certifiedDomain_cm`, `certifiedDomain_cf`, `certifiedMass_decomp` |

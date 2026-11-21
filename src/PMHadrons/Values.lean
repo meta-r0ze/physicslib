@@ -8,6 +8,8 @@ import PMHadrons.NeutronPrediction
 import PMHadrons.TollGovernor
 import PMHadrons.DecayInstantiation
 import PMHadrons.NeutronContinuum
+import PMHadrons.NeutralPionWidth
+import PMSubstrate.E8Margin
 import PMHadrons.ChargedCurrentRate
 
 /-!
@@ -41,9 +43,11 @@ export PMHadrons.CompositeMasses
     kaonPlus_mev_value)
 export PMHadrons.MesonMasses (pionPlus pionPlus_value pionPlus_mev_value cellBudget)
 export PMHadrons.PionWidth
-  (pionDecayConstantE8 pionDecayConstantE8_bounds pionDecayConstantMeV_bounds)
+  (pionDecayConstantE8 pionDecayConstantE8_bounds pionDecayConstantMeV_bounds pionLifetimeE8)
 export PMHadrons.KaonWidth
-  (kaonDecayConstantE8 kaonDecayConstantE8_bounds kaonDecayConstantMeV_bounds)
+  (kaonDecayConstantE8 kaonDecayConstantE8_bounds kaonDecayConstantMeV_bounds kaonLifetimeE8)
+export PMHadrons.NeutralPionWidth (neutralPionLifetimeE8)
+export PMSubstrate.E8Margin (pionCorrectedLifetime)
 export PMHadrons.KaonPionRatio (kaonPionWidthRatio kaonPionWidthRatio_bounds)
 export PMHadrons
   (neutronMarginFactor neutronMarginFactor_eq pionLifetimeCorrectedSeconds

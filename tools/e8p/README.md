@@ -122,7 +122,7 @@ names), `Experimental` (measured references), `Format` (text/JSON/LaTeX).
 | `PMElementaryParticles/` | `LeptonMassPulls`, `QuarkMassPulls`, `TauLifetimePulls` | `src/PMElementaryParticles` |
 | `PMFlavor/` | `FlavourPulls`, `ExperimentalPulls` (values only from `PMFlavor.Values`); `CandidateTests` (candidate formulas against data, not reported values) | `src/PMFlavor` |
 | `PMHadrons/` | `CompositeMassPulls` | `src/PMHadrons` |
-| `PMAtoms/` | `Certified` (`--masses`), `Periodic` (`--periodic-table`), `Shells` (`--shells`), `Nuclear` (`--nuclear`), `E8TickUnit`, `AlphaClockComparison` | `src/PMAtoms` |
+| `PMAtoms/` | `Certified` (`--masses`), `Periodic` (`--periodic-table`), `Shells` (`--shells`), `Nuclear` (`--nuclear`), `E8TickUnit` | `src/PMAtoms`, `src/PMAtoms/Values.lean` |
 
 Namespaces are unchanged (`E8PConstants.CompositeMassPulls`, …), so theorem names cited in the
 catalog do not depend on the folder.

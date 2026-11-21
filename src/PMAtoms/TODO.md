@@ -14,3 +14,5 @@ stable, `NuclearRegime`/`PersistenceSelection`) is a comparison, not a result.
 - Derive a low-Z-anchored finite-size charge differential from the lattice Coulomb calculation.
 - Derive screening and the electron fill order used by the atomic configurations.
 - Keep continuum comparisons until each E8 replacement has a numerical counterpart. Mark candidate modules experimental, align the folder maps and keep measured residuals in `RESIDUALS.md`.
+
+- Choose the alpha-attempt clock convention (capacity vs nested).

@@ -211,4 +211,35 @@ theorem sector_channels_card :
       (PMSubstrate.ChannelSymmetry.chanTable k).1 = false).card = 16 := by
   decide +kernel
 
+
+/-- Spherical orbitals of oscillator shell `N` (radial `n` from `1`, `j = l ± 1/2`). -/
+def shellOrbitals (N : Nat) : List NuclearOrbital :=
+  ((List.range (N + 1)).reverse.filter (fun l => (N - l) % 2 == 0)).flatMap fun l =>
+    let n := (N - l) / 2 + 1
+    if l == 0 then [⟨n, 0, 1, 2⟩]
+    else [⟨n, l, 2 * l + 1, 2 * l + 2⟩, ⟨n, l, 2 * l - 1, 2 * l⟩]
+
+/-- The E8 Nilsson ladder through `N = 8`, sorted by `nilssonE8CostQ` and cut at the
+first `N = 8` orbital. -/
+def shellLadder : List NuclearOrbital :=
+  let all := (List.range 9).flatMap shellOrbitals
+  (List.insertionSort (fun a b : NuclearOrbital => nilssonE8CostQ a ≤ nilssonE8CostQ b) all).takeWhile
+    (fun o => hoShell o < 8)
+
+/-- The seven largest-gap fills in the sorted Nilsson ladder. -/
+def largestGapFills (k : Nat) : List Nat :=
+  let rec rows : List NuclearOrbital → Nat → List (Nat × ℚ)
+    | [], _ => []
+    | [_], _ => []
+    | o :: tl@(p :: _), acc =>
+        (acc + o.occupation, nilssonE8CostQ p - nilssonE8CostQ o) :: rows tl (acc + o.occupation)
+  let gaps := rows shellLadder 0
+  let top := (List.insertionSort (fun a b : Nat × ℚ => b.2 ≤ a.2) gaps).take k
+  List.insertionSort (· ≤ ·) (top.map Prod.fst)
+
+/-- The closure list of the sorted E8 Nilsson ladder: the seven largest-gap fills. -/
+def shellClosures : List Nat := [2, 8, 20, 28, 50, 82, 126]
+
+theorem shellClosures_eq : shellClosures = [2, 8, 20, 28, 50, 82, 126] := rfl
+
 end PMAtoms
