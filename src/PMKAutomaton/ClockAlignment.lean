@@ -27,9 +27,10 @@ vector, spinor and conjugate-spinor cosets. The theorem names for the counts
 are `vectorRoots_counts`, `spinorRoots_counts`, `conjugateSpinorRoots_counts`,
 and the total decompositions are `plus_total`, `minus_total`, `silent_total`.
 
-What remains numerical or an input: the equal-weight orbit, the robustness
-across the ten aligned placements, and the choice of reference class. The
-alignment itself is one certified placement, not a proof that it is selected.
+The equal-weight step orbit is certified in `PMKAutomaton.ClockTickWeights`.
+What remains numerical or an input: the robustness across the ten aligned
+placements and the choice of reference class. The alignment itself is one
+certified placement, not a proof that it is selected.
 -/
 
 namespace PMKAutomaton.ClockAlignment
