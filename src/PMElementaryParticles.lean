@@ -104,3 +104,4 @@ import PMElementaryParticles.ImpedanceLedger
 import PMElementaryParticles.RecordEncoding
 import PMElementaryParticles.CapacityLedger
 import PMElementaryParticles.ChannelPlacement
+import PMElementaryParticles.RingRates

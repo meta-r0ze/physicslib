@@ -9,9 +9,10 @@ This file is the open list only.
   plane: slice roots change the reading by `0` or `±6`. Replace the basis with
   the aligned placement, or state the alignment as a named hypothesis, then
   recheck every module that uses its coordinates.
-- **Move the registration counts to the 43-ring.** The `14,15,21,22,28,...`
-  counts are 3-ring artifacts. Recompute the firing patterns, Toll floor and
-  Margin tests on the 43-ring; do not use the old counts as E8 values.
+- **Extend the 43-ring count beyond one firing site.** `RingRates` proves the
+  one-site formula and the `n = 43, T = 43` result. Recompute general firing
+  patterns, the Toll floor and Margin tests on the 43-ring; do not use the old
+  `14,15,21,22,28,...` toy counts as E8 values.
 - **Say what the clock-silent roots do.** The 22 roots at phase `0` do not move
   a packet around the ring. Identify their role as internal or transverse
   motion and its observable consequence.

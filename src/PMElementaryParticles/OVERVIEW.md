@@ -75,8 +75,18 @@ git history.
   module docs; tier sets, generation addresses, quark/lepton formulas and the
   heavy-label weight remain premises.
 
-All registration counts `14, 15, 21, 22, 28, ...` are **3-ring artifacts**,
-not E8 values.
+**One firing site on the receiver ring.** With firing site `s` and start
+site `x0`, the first registration has offset
+`d = (s + n − 1 − x0) mod n`. Over `T` ticks the count is
+`(T + n − 1 − d) / n` (`RingRates.predictedCount`). The formula is
+kernel-checked for `n = 3, …, 8` at `T = 43`
+(`formula_three` … `formula_eight`). On the clock ring, `n = T = 43`, a single
+firing site registers exactly once for every `x0` and `s`
+(`RingRates.ring43_one`, `ring_Delta_one`, linked to `ClockSites.ring_size`).
+
+The registration counts `14, 15, 21, 22, 28, ...` are **3-ring toy values**,
+not E8 values. The general firing-pattern and survivor recomputation remains
+open.
 
 ## Scope
 
@@ -184,8 +194,8 @@ The retained receiver state and occupancy checks are
 `IsolatedReceiverTrace.localizedPorts_occupancy` and
 `localized_occupancy_preserved`; requests are retained
 (`localized_requests_retained`) and the 3-ring sum is
-`localizedSum43_eq_pattern`. **All registration counts `14,15,21,22,28,...`
-are 3-ring artifacts, not E8 values.**
+`localizedSum43_eq_pattern`. These are **3-ring toy values**, not E8 values;
+the 43-ring one-site count is in `RingRates` above.
 
 ### Finite witness output
 
@@ -193,7 +203,8 @@ are 3-ring artifacts, not E8 values.**
 receiver column is zero by equal arrivals; it is not a one-excitation result.
 The localized 43-tick sums are `patternSum` of the firing pattern,
 conditional on the exchange pattern from the retained request field
-(`localizedSum43_eq_pattern`). They are **3-ring artifacts**, not E8 values. The record Toll is
+(`localizedSum43_eq_pattern`). These are **3-ring toy values**, not E8 values.
+The record Toll is
 a separate column. The heavy
 reference, the static offset, and the wire-to-tier map remain explicit inputs.
 See
@@ -914,9 +925,8 @@ The exploration scripts for these facts are `tools/clock_ring_check.py`,
 
 The ring therefore has `n = Δ = 43` sites, not 3. The live stream steps by
 `+1` roots and the record stream by `−1` roots; an exchange swaps a packet
-between them and reverses its direction. Consequences: the 3-ring numbers are
-replaced by 43-ring numbers; one firing site per period gives exactly one
-registration; the Toll floor is met by one firing site per period, while Margin
+between them and reverses its direction. Consequences: one firing site per
+period gives exactly one registration (`RingRates.ring43_one`); the Toll floor is met by one firing site per period, while Margin
 still excludes trapping between adjacent firing sites; a ring site is a clock
 phase, matching `ClockedRootTrials` at phases 0 and 1.
 
