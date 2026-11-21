@@ -2,57 +2,31 @@
 
 Current detail is in [HISTORY.md](HISTORY.md). This file is the open list only.
 
-## Line problem — clock closure proved
+## Line problem
 
-See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md). The clock closes the
-receiver ring. One root event per tick changes the E8 clock reading by `±1`,
-so the ring has exactly `Δ = 43` sites (`PMKAutomaton/ClockRing.lean`). `SliceHop` agrees once its D4 is placed with its clock axis on the
-clock plane, and the six forward tick steps then carry equal weight.
+See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md).
 
-`RingReceiver`'s site index is identified with `clockReading` in
-`PMKAutomaton/ClockSites.lean`: `site` is the reading, `ring_size` proves
-`43 = Δ`, `site_add_forward` and `site_add_backward` give the two step
-directions, and `arrivals_are_lattice_steps` identifies the live and record
-arrivals as one forward and one backward lattice step. Remaining premises: one
-receiver tick is one root event (the update model), and Closure for the equal
-weights.
+- State the update model: one receiver tick is one root event.
+- State Closure for the equal weights on the tick steps.
+- Replace `sectorBasis` with an aligned placement, or state the alignment as a
+  named hypothesis, and recheck the modules that use its coordinates.
+- Replace the 3-ring registration counts with 43-ring results.
 
-Remaining:
+## Composition problem
 
-- replace `sectorBasis` with an aligned placement, or state the alignment as a
-  named hypothesis, and recheck the modules that use its coordinates;
-- replace the 3-ring registration counts with 43-ring results.
+See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md).
 
-## Composition problem — the three nested rules proved
-
-See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md). All three nested
-rules are proved on the machine: Capacity Partitioning (`CapacityLedger`),
-Impedance Matching (`ImpedanceLedger`; Toll needs a Margin reserve) and
-Reversible Encoding (`RecordEncoding`). The colour
-reference is one site state, so it does not force composites. The "colour
-reference needs a triple" hypothesis is withdrawn. Remaining:
-
-- the vacuum choice (lepton `+e₀` or colour-symmetric) is open again; use the
-  P4 shared-vacuum tables;
-- generations: the aligned clock breaks triality. The coset signatures are
-  vector (7, 7, 2), spinor (4, 4, 0) and conjugate spinor (4, 4, 8), counting
-  one-tick `+1`, one-tick `−1` and clock-silent roots
-  (`tools/generation_clock_signature.py`). The vector coset carries the clock
-  root `±cu`. Taking the reference class to be the coset that carries the clock,
-  `g = 0` is the vector coset and `g = 1, 2` are the spinor cosets (equal tick
-  counts, different silent counts). Next: fix the triality orientation (which of
-  `g = 1, 2`), and state the rule that turns step counts into cost per period. It
-  must use the one-tick count for the heavy-to-light step.
+- Choose the vacuum: lepton `+e₀` or the colour-symmetric state; use the P4
+  shared-vacuum tables.
+- Fix the triality orientation of the aligned-clock cosets and state the rule
+  that turns step counts into cost per period. It must use the one-tick count
+  for the heavy-to-light step.
 
 ## Full-ring Lean spectrum
 
-`CoherentRing.ringTick_unitary` certifies the full-firing coherent tick for
-every `n`; `Dispersion.planeWave` and `planeWave_exp_period` define the plane
-wave and prove `exp(i k n)=1`. The block action, explicit `M(k)`, trace/det
-and eigenvalue proof `cos E(k)=cos(x/2) cos k` are still script-level
-(`tools/bit_ring_checkerboard.py`). Remaining: the momentum action, `M(k)`,
-eigenvalues, and the empty-firing gapless proof. The mass reading is a
-hypothesis.
+- Prove the momentum action, the explicit `M(k)`, its trace/determinant and the
+  eigenvalue identity `cos E(k)=cos(x/2) cos k`.
+- Prove the empty-firing spectrum gapless.
 
 ## Everything else still open
 

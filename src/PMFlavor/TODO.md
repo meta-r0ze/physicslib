@@ -1,58 +1,13 @@
 # PMFlavor — open work
 
-Closed results and retired routes are in [OVERVIEW](OVERVIEW.md); what flavour is here and the terms
-(wire, label state, protocol, event, `J`, `U`) are in [README](README.md).
-
-**Purpose and rule.** PMFlavor finds `J`, the label-change amplitudes of one charged-current event,
-for carriers off and on the reference axis. The observed matrices are `U_uᴴ J U_d`; `U` belongs to the
-wire (PMAction) and the protocols (PMElementaryParticles). Every number comes from E8 structure or a
-narrowly stated premise; data are only the final test (e8p). Do not fit integers or parameters to
-data, and do not frame work as fitting Standard Model sectors.
-
-**Where the entries now stand.** `ReferenceRouting` gives a direct
-in-cycle route and two node routes, whose common reference value is
-`α/2` (`PMAction.ReferenceNode`). The glued register uses the signed
-label for the weak partner, and the tagged in-cycle word acts on that
-label. Derive how the node distinguishes the two weak partners and
-gives unequal amplitudes (item 2).
-[Wall orientation and weak refresh](OVERVIEW.md#wall-orientation-and-weak-refresh)
-
-| Label change | Off the axis | On the axis |
-|---|---|---|
-| class `0`, `2 → 1`, in-cycle | `π/14` [`s₁₂`]: share candidate (`HalfTurnAperture`), readout rule derived (`ConductionRule`); an E8 root word gives the geometric edge with a wall record; native firing stays open (item 2) | the same rule gives `π/10`; e8p prints `1/(2φ) = sin(π/10)` [`sin²θ₁₂`] (decision pending) |
-| class `2`, `1 → 0`, node, up member holds the reference's class | no derived amplitude; the library's rules are excluded (`TransferAmplitude`) [`\|V_cb\|`, printed `(π+χ)/(α⁻¹−Dπ)`] | no construction [`sin²θ₂₃`, printed `(1+π/(ν+σ))/χ`] |
-| class `1`, `0 → 2`, node, down member holds it | `1/(2α⁻¹+π)`: two-leg series path derived; boundary `π` a premise [`s₁₃`] | `3/α⁻¹`: one leg into three outlets, candidate (`ReactorConductance`) [`sin²θ₁₃`] |
-| phase | none in the library [`δ = arctan(σ/χ)` printed] | derived from the angles (`ReferenceFlavour`) [`δ_PMNS`] |
-| loss | `q² = 515/516`, derived under one premise (`DressingEvent`) | — |
-
-## The chain behind each value in `Values` (2026-11-16)
-
-What e8p prints is `PMFlavor.Values`. Each number's derivation status, so a comparison is read with
-its chain in view (`CKM` docstring: the four CKM forms are supplied model formulas whose numerals are
-derived invariants, `FlavourInvariants`):
-
-| Value | Formula | Status | Where |
-|---|---|---|---|
-| `s₁₂` (`cabibbo`, `vus`) | `π/(ν−χ) = π/14` | share candidate; aperture premises; readout rule derived. The E8 root word needs a wall record and a firing law (`InCycleEvent`) | `HalfTurnAperture`, `ConductionRule` |
-| `s₁₃` (`vub`) | `1/(χα⁻¹+π)` | two-leg series path derived; boundary `π` a premise; names consistent with the wire (`PMAction.WireMass`) | `VubSeriesPath`, `TransferAmplitude.jump` |
-| `\|V_cb\|` | `(π+χ)/(α⁻¹−Dπ)` | supplied; no derived amplitude (library rules excluded) | `CKM`, removed unbased envelope candidate |
-| `δ` | `arctan(σ/χ)` | supplied; no phase source in the library (item 5) | `CKM`, `CPPhases` |
-| `A`, `ρ̄`, `η̄`, `J`, `sin 2β`, `γ` | from the four above | exact consequences (barred `ρ̄`, `η̄`: `WolfensteinBar.zbar_eq`) | `Wolfenstein`, `WolfensteinBar`, `TriangleAngles`, `TriangleGamma` |
-| `q² = 515/516` | dressing | derived under one premise | `DressingEvent` |
-| `sin²θ₁₂` | `1/(2φ)` | on-axis rule gives `π/10`; decision pending (item 3) | `PMNS`, `ConductionRule` |
-| `sin²θ₂₃` | `(1+π/21)/2` | no construction (item 4) | `PMNS` |
-| `sin²θ₁₃` | `3/α⁻¹` | candidate: one leg into three outlets | `ReactorConductance` |
-
-So the close CKM numbers rest on two derived paths (`s₁₃`, the consequences) and on supplied forms
-(`|V_cb|`, `δ`) and candidates (`s₁₂`, PMNS). The wire's mass matrices cannot supply them (their
-rotations keep `|V_cb| ≤ 0.010`, PMElementaryParticles OVERVIEW); `J` is the source. Presenting the
-numbers needs this table next to them.
+Open work only. Closed results and retired routes are in [OVERVIEW](OVERVIEW.md);
+the terms (wire, label state, protocol, event, `J`, `U`) are in [README](README.md).
 
 ## Open work
 
 1. **`U` from the protocol readout.** The observed matrix is `U_uᴴ J U_d`. On the derived wire the
    mass-matrix rotations are small for the heavy–light part (`|V_cb|`-size `≤ 0.010`) and depend on the
-   lightest-mass offsets for the light pair (PMElementaryParticles REVIEW, "Lightest masses"); until
+   lightest-mass offsets for the light pair (the [PMElementaryParticles open list](../PMElementaryParticles/TODO.md), "Lightest masses"); until
    those are derived, comparisons at `U = 1` (items 2, 3, 5) are conditional.
 2. **The amplitude of each entry of `J`.**
    - In-cycle (`u–s`): `InCycleEvent` supplies the root word for `2 → 1`
@@ -113,11 +68,7 @@ external modes and current.
    Glued support and stationarity still admit every positive ratio
    (`WallGapCalibration.arbitrary_cyclic_ratio`).
    [Clock work](../PMKAutomaton/TODO.md#absolute-timing)
-2. **PMElementaryParticles (done).** The parent is the light mass
-   eigenstate, the daughters are the light modes, and the gapped modes are
-   closed channels by the spectrum's order (gap above the light band).
-   [Daughter channels](../PMElementaryParticles/OVERVIEW.md#charged-density-and-wall-leakage)
-3. **PMFlavor.** Build the native label-change event `J` on these states.
+2. **PMFlavor.** Build the native label-change event `J` on these states.
    `InCycleEvent` gives the geometric light-pair word and its wall-record
    requirement. `WeakCurrentBridge.modelCurrent_eq_PL` and
    `NativeFlavourCurrent.compressed` already give the chiral lift for a
@@ -130,12 +81,6 @@ external modes and current.
    factors through unequal contact weights by
    `DressingInheritance.calibrated_contact_deficit`.
 
-**Comparison.** The outlet dressing alone gives `1/516 ≈ 1.94·10⁻³`.
-`tools/first_row_readout.py` reports the wall-only deficit at about
-`0.25 r²` for fitted wire weights and `0.08 r²` for equal weights, using
-measured CKM entries and an unweighted light spectral window. The diagnostic
-bounds `r ≲ 0.07–0.12` use the frozen comparison `(1.6 ± 0.7)·10⁻³`.
-These numbers do not select the native schedule or external states.
 
 ## Data relations to explain (targets, not fits)
 
@@ -145,22 +90,3 @@ These numbers do not select the native schedule or external states.
   longer gives this (`LightPairTexture` is the algebra of the withdrawn placement).
 - `|V_cb| = 0.041` is below `√(m_s/m_b)` and `√(m_c/m_t)`; `|V_ub/V_cb| ≈ 0.093`.
 - No charged-lepton square-root relation; the large PMNS angles point to the neutrino protocol.
-
-## Cleanup
-
-Done:
-
-- `FlavourPulls` renamed to `SharedWeakMixing` (`weak_mixing_shared` only).
-- `FlavourPostulates` renamed to `FlavourConstants`, namespace `PMFlavor.FlavourConstants`.
-- `FlavourResponseSelection` → `LabelResponseSelection`.
-- `FlavourOrderComparison` → `LabelOrderComparison`.
-- `FlavourStationarity` → `LabelStationarity`.
-- `TransferGraph.mode` constructors are `inCycle`, `referenceWall`, `otherWall`.
-- `TransferGenerator` marked retired: excluded route; citing text in OVERVIEW,
-  `WallHopPhase` and `MassInsertion` updated.
-- `PerStepContract` removed.
-- `VcbEnvelope` removed, including its use in `CandidateTests`.
-- `CPQuarterTurn` kept: its cited lemmas remain in the file.
-
-Remaining: none from this cleanup list. Any new flavor derivation work is in
-the open items above.

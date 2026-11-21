@@ -1,29 +1,21 @@
 # PMKAutomaton — open work
 
-**Interface closed. Physical admission open.** EP should import
-`PMKAutomaton.Interface` for the certified operations and
-`PMKAutomaton.Values` for conditional rates and thresholds. A
-physical EP conclusion needs its admitted path, reader, booked
-work and traffic. See the [closeout](COMPONENTS.md#kautomaton-closeout)
-and [ranked inputs](COMPONENTS.md#remaining-free-inputs-by-reach).
-The [bare-line result](COMPONENTS.md#bare-line-stabilizer) separates
-the mathematical stabilizer from the directed marked carrier encoding.
+The certified interface and checked results are in [OVERVIEW](OVERVIEW.md) and
+[COMPONENTS](COMPONENTS.md). This file lists only the open physical admission and
+named machine inputs.
 
-`PMElementaryParticles.IsolatedExcitation` defines the O-sector for the object
-a mass refers to: vacuum plus one packet label. `IsolatedReceiverTrace` embeds
-it into `RingReceiver.State 3` and iterates `tick`; the receiver registration
-column is zero under AND and OR, so the rules tie. The record Toll is a
-separate column with no certified common ledger. The hold/FIFO packet lifts do
-not determine booking ticks. The [admission chain is paused](#stopping-point) at the
-mixed receiver readout required by a downstream trace. The
-[component inventory](COMPONENTS.md#interactions) locates the open inputs
-across the lattice at once. The mixed readout is in X → E, D → E and F → E.
-The [regress map](COMPONENTS.md#where-the-earlier-questions-sit) links
-earlier questions to their cells. See the
-[ranked free inputs](COMPONENTS.md#remaining-free-inputs-by-reach)
-for the remaining dependencies. The projected core and the
-16-slot FIFO lift reversibly. Their joint firing rule and the
-clocked EP reader still need a physical attachment.
+## Machine interface gaps
+
+- `U`: the physical port wiring of the certified comparator remains part of the
+  admitted trace.
+- The coherent receiver exchange as a root-transfer pulse of area theta, once a
+  coherent amplitude is certified.
+- `T`: clock calibration, serial placement and overlap.
+- `L`: admitted link and successor law.
+- `B`: booked export and disposition.
+- `K`: tariff unit, amplitude conversion and substrate-index reconciliation.
+- `D`, `J`, `Q`: detector support, shared-job mechanics and supply/acceptance
+  mechanics.
 
 ## Stopping point
 
@@ -31,53 +23,6 @@ The admission chain is paused at the mixed receiver readout required by a
 downstream trace. The certified EP formulae take no such receiver trace as an
 input. See [Admission](ADMISSION.md) and the
 [export contract](COMPONENTS.md#what-propagates-downstream).
-
-## Closeout list
-
-**Moved to EP:** the retained request field and firing pattern G; the
-excitation occupancy and reference-record choice O; the label record, reference
-and theta in U; which label record W reads; the label Toll/paid-event part of
-K; and the history/prior family H. `IsolatedReceiverTrace` and
-`RecordPortIdentification` are EP protocol work that use the KAutomaton
-machine. The certified label dependence is `bitToll_eq_hamming`, `refRecord`,
-`bitRingTotal43_eq` and `firingPattern`.
-
-**Remaining KAutomaton-only work:**
-
-- `U`: **flag identification done.** The certified comparator
-  `CoherentComparisonRepair.compare (phase x)` converts the phase encoding to
-  orthogonal records; `PhaseToRecord.minus_probability` gives
-  `DiagonalReadout.flag x`, and the expected receiver flag is `flag x`
-  (`expected_receiver_flag`). The factor-two normalization is only the two
-  encodings. The physical port wiring remains part of the admitted trace;
-- the coherent receiver exchange as a root-transfer pulse of area theta (a
-  machine property, once a coherent amplitude is certified);
-- `T`: clock calibration, serial placement and overlap;
-- `L`: admitted link and successor law;
-- `B`: booked export and disposition;
-- `K`: tariff unit, amplitude conversion and substrate-index reconciliation;
-- `D`, `J`, `Q`: detector support, shared-job mechanics and supply/acceptance
-  mechanics.
-
-Everything else in the old protocol list is either derived, hypothesised in the
-certified machine, or moved to EP. The bit-ring model remains an EP hypothesis,
-not a KAutomaton result.
-
-## Closeout
-
-KAutomaton machine work is closed on the conditional interface. The receiver
-flag computation W and guard table G are certified. The common comparator U's
-flag identification is certified through the phase-to-record converter
-(`PhaseToRecord.converter_unitary`, `minus_probability`,
-`expected_receiver_flag`). The coherent encounter is certified
-(`encounter_unitary`) with pass/flip amplitudes `(1 ± e^{ix})/2`; at `x=π`
-it is a full flip (`exact_bit_flip`). The full-ring Lean spectrum block proof
-was not completed, but the script verifies `cos E(k)=cos(x/2) cos k` exactly.
-
-What remains is listed as named machine inputs on the conditional interface:
-T (clock), L (link), B (boundary), D (detector support), J (jobs), Q
-(supply/acceptance), and the tariff unit. The mass reading of the spectrum is
-an EP hypothesis, not a KAutomaton result.
 
 ## Admission
 

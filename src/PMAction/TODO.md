@@ -6,15 +6,6 @@ handoff tasks are in the [transport review](../PMKAutomaton/TODO.md).
 **Extension** marks a stronger result beyond the present theorem scope. **Certificate** marks an
 external calculation awaiting formal verification. Each current theorem states its hypotheses.
 
-## Substrate premises
-
-None open.
-
-The protocol register (which E8 structure carries protocol identity) is Paper III's application, not
-a PMAction premise: PMAction supplies the constraints (`ColourRegister`: colour is a separate factor,
-not the carrier axes), the factor construction (`IndependentRegisters`) and the stationary even sector
-(`EvenComplement`). It is tracked in the [PMElementaryParticles open list](../PMElementaryParticles/TODO.md).
-
 ## Scope premises
 
 - **Spacetime and amplitude structure.** Derive the Lorentzian signature and complex amplitude from
