@@ -9,7 +9,7 @@ and ring states and the 16-slot carrier are separate encodings. Their
 reversible lifts preserve the core projection. Their physical packet
 operation and its clock placement remain open.
 
-The [premise ledger](PREMISES.md) owns the physical questions. This page
+The [open list](TODO.md) owns the physical questions. This page
 locates them at component interfaces. [Machine](Machine/OVERVIEW.md)
 indexes the implementation and its continuum applications.
 [Interface](Interface.lean) and [Values](Values.lean) remain the certified
@@ -53,7 +53,7 @@ and feedback are included in their owning components above.
 | Ground or shared reference | Defined in Lean | `SharedReference.shared` identifies the reserved cell for the weak and hypercharge layout. `ColourReference.colour_reference_in_payload` locates its separate reference. Writer sharing at the same state and time is open · J. |
 | Termination and sink | Defined in Lean for candidates · B | `OpenHandoff.export_trace`, `RecordSupply.ring_returns` and `BoundaryErasure.deliver` specify different endpoints. The admitted export and disposition are missing. |
 | Power-on state | Isolated input defined · O | `RegisterVacuum`, `CarrierVacuumSector.range_iff_odd` and `NativeReferenceBackground.stationary_iff` constrain starts. `IsolatedExcitation.occupiedInput` supplies vacuum plus one packet label; the embedded receiver state and the accessible family for general traffic are still missing. |
-| Fan-out to readers | Missing · W | The routed-value port, retained record port and comparison flag are typed separately. The EP attachment is open. The prose in [DOWNSTREAM](DOWNSTREAM.md#export-contract-requirement) describes its required inputs. |
+| Fan-out to readers | Missing · W | The routed-value port, retained record port and comparison flag are typed separately. The EP attachment is open. The [export contract](#what-propagates-downstream) describes its required inputs. |
 | Per-part energy budget | Missing · K | `CarrierEvents.uniform_activation`, `OpenHandoff.balanced_basis_repair_flag` and `BoundaryErasure.erasing_pays_one` give exact accounts in their scopes. No exhaustive assignment of paid work to the parts exists. |
 
 None of the physical interfaces in this checklist has a complete contract
@@ -264,7 +264,7 @@ An intertwining theorem to a chosen 16-slot wire update is still needed.
 Across the family, the core-projected clock, requests, receiver
 branch, Boolean destinations, flags and tagged exports are the same
 at a common core rule and start. So are the parameter-free values
-and conditional formulae in [DOWNSTREAM](DOWNSTREAM.md). The joint
+and conditional formulae in the [export contract](#what-propagates-downstream). The joint
 packet output, effective writer population and paid work can depend
 on the supplied packet-bank action and reader attachment.
 
@@ -407,7 +407,7 @@ halves of split inputs are removed to EP; see the section below.
 | Q · Reference supply and acceptance | 3 | Clean visits, sustained renewal, heavy bank readiness. The reference record choice is EP. |
 | L · Admitted link and successor law | 2 | Realized route, effective through weight. |
 
-Layering is a separate build decision in [PREMISES](PREMISES.md#layering).
+Layering is a separate build decision in [the open list](TODO.md#layering).
 It supplies no physical input to this ranking.
 
 **Certified coin (Task L).** The converter's pass/flip amplitudes are
@@ -507,6 +507,23 @@ applies. Distinct outputs remain possible even at tied booked cost.
 | D, detector | A common mask gives the exact conditional mixed flag rate. | Identify the occupied detector support, reader and booking. |
 
 No input in this table is closed on untagged physical traffic.
+
+**Export contract.** The fixed values in `Values` and `Interface` have no
+receiver-rule argument: they are the same functions at the same arguments. A mixed
+receiver trace can differ only in its routed value and destination, or in the
+executed comparison and its booked flag. No certified EP trace consumes either
+datum. A consumer that needs one must expose the equivalent route information and
+keep the destination or branch available through its last use; a flag rate or
+survival amplitude alone needs only the booked comparison.
+
+The no-export ring leaves the supplied prior normalized
+(`BoundaryErasure.ring_erasure_survivor_eq`). For reset erasure the
+electric-reference threshold is `B − (E_C − E_L)`
+(`WireReferenceCost.reference_threshold_with_erasure`), where `B` is the output
+flag threshold and `E_C − E_L` the difference in booked erased bits. The old
+`3/4`, `27/32`, `9/10` values therefore require `E_C − E_L = −B/2` in the
+replacement account; the certified tagged train gives no such export-count
+difference.
 
 ## Clock placement
 

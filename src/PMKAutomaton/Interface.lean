@@ -31,7 +31,7 @@ import PMAction.ReferenceNode
 
 The exports keep the hypotheses and conclusions of the source theorems.
 The original namespaces remain available for existing callers. Premise
-names refer to `PMKAutomaton/PREMISES.md`. The physical update is a
+names refer to `PMKAutomaton/TODO.md`. The physical update is a
 client obligation. Phase, branch, reader and work choices appear in
 the original hypotheses. The closure ledger is in `COMPONENTS.md`.
 

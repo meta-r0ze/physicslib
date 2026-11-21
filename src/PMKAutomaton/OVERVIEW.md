@@ -2,7 +2,7 @@
 
 Import `PMKAutomaton.Interface` for the theorem families below and
 `PMKAutomaton.Values` for the numbers. Results retain their theorem
-hypotheses. Physical inputs are in the [premise ledger](PREMISES.md).
+hypotheses. Physical inputs are in the [open list](TODO.md).
 The [component inventory](COMPONENTS.md) maps the six pillars, native ports
 and open connections. `PMKAutomaton.Components` exposes the corresponding
 contracts with explicit hypotheses. The [machine overview](Machine/OVERVIEW.md)
@@ -29,7 +29,7 @@ the effect of retaining all controls in the state.
 
 | Result | Certificates and scope |
 | --- | --- |
-| Tagged equivalence and mixed-request readouts | `LocalController.tagged_trace_observable_eq` gives equality on tagged starts. `mixed_open_receiver_destinations` and `RingReceiver.mixed_ring_orbit_toll` distinguish the mixed outputs and flag rates. The [downstream audit](DOWNSTREAM.md) identifies the records a downstream read would need. |
+| Tagged equivalence and mixed-request readouts | `LocalController.tagged_trace_observable_eq` gives equality on tagged starts. `mixed_open_receiver_destinations` and `RingReceiver.mixed_ring_orbit_toll` distinguish the mixed outputs and flag rates. The [downstream audit](COMPONENTS.md#what-propagates-downstream) identifies the records a downstream read would need. |
 | Reversible local guards | `LocalController.radius_one`, `receiver_realisation`, `reversible_iff_rows` and `enumerated_rule_count` classify the guarded two-stream encoding. `tagged_open_iterate` and `two_open_compatible_rules` give distinct rules realizing the same tagged open trace. |
 | Carrier and port routing | `NativeCarrierProtocol`, `NativePacketRouting`, `NativePacketUpdate` give native readout and locality for the supplied routing. `TwoSiteHandoff.port_count` gives two live and two record modes per site. See the [substrate pillars](../PMSubstrate/Pillars.lean) and [wire application](../PMElementaryParticles/README.md#the-six-pillars-on-the-wire). |
 | Exchange and bypass | `TwoSiteHandoff.arrivals_observed`, `step_trace`, `export_trace`, `exchange_lookup`, `native_step_observed`, `receiver_agrees_with_line` give the destinations. `receiver_half_pulse` realizes exchange on an admitted root phase. `OpenReferenceFlow.exchange_reflects`, `bypass_transmits` identify the reflected and through streams. |
@@ -54,8 +54,8 @@ the effect of retaining all controls in the state.
 | Result | Certificates and scope |
 | --- | --- |
 | Request complement and receiver swap | `LocalController.complemented_output` gives a one-visit identity. `receiver_dual_not_conjugate`, `no_request_complement_conjugacy` give the clocked obstruction. `receiver_dual_population` preserves the summed port population and `receiver_dual_flag_counterexample` distinguishes the flags. |
-| Erasure at a separate export port | `BoundaryErasure.identity_bijective` preserves the protected update. `erasing_pays_one` counts a booked binary erasure. `ring_cycle_erasure` gives zero on the retained ring. `tagged_rule_exports` gives the common open export train. See the [reversibility audit](REVERSIBILITY-AUDIT.md). |
-| Closed-ring selection | `RingReceiver.tick_bijective` and `orbit_enumeration_covers` give the finite traffic model. `minimum_orbit_toll` and `both_rules_attain_best_survival` give the tied minima. `survivor_mass_of_subset` gives rule shares for a supplied prior. The [ring ledger](RING.md#robustness-across-all-positive-hazards) gives the exact hazard sign profiles. |
+| Erasure at a separate export port | `BoundaryErasure.identity_bijective` preserves the protected update. `erasing_pays_one` counts a booked binary erasure. `ring_cycle_erasure` gives zero on the retained ring. `tagged_rule_exports` gives the common open export train. See the [reversibility audit](OVERVIEW.md#reversibility-boundary). |
+| Closed-ring selection | `RingReceiver.tick_bijective` and `orbit_enumeration_covers` give the finite traffic model. `minimum_orbit_toll` and `both_rules_attain_best_survival` give the tied minima. `survivor_mass_of_subset` gives rule shares for a supplied prior. |
 | Guard selection on uniform ports | `LocalController.exchange_flag_realisation` and `uniform_trace_exchange_toll` give the exchange account. `uniform_flag_persistence_tie` and `uniform_remaining_cost_iff` distinguish the certified tie and its missing tariff. |
 | Flags and registrations | `TwoSiteHandoff.hop_flag`, `exchange_flag` and `OpenHandoff.receiver_flag` give comparison flags. `DiagonalReadout.state_flag` gives the diagonal mixed-population formula. `NetCost.expected_count_linear` sums expected flags under the supplied sampling law. |
 | Pulse and reset accounts | `BranchPulseContract.comparison_mem` and `program_correct` certify the comparisons under the supplied control. `OpenHandoff.balanced_basis_repair_flag` prices a paid exact comparison of a balanced bit with fresh zero. |
@@ -94,6 +94,31 @@ the effect of retaining all controls in the state.
 `ElectricHeavyRecord` uses `RootBranchEncoding` for the branch decoder.
 `ReferenceSafeRestoration` uses `RootOrderComparison` for its order test.
 These constructions use implementation definitions outside the interface.
+
+## Reversibility boundary
+
+The retained local update is reversible. A comparison flag is an observable,
+not automatically a booked registration; exported records and their disposal are
+a separate boundary operation. The product of the reversible local maps with an
+external disposal is not claimed reversible. Counts and priors are conditional
+on the retained streams.
+
+- **Retained updates.** Root, carrier, port, record and phase-controlled
+  circuits are reversible on their supplied registers. Their scope is the
+  hypotheses of `TwoSiteHandoff`, `OpenReferenceFlow`, `LocalController`,
+  `RingReceiver`, `CoherentRecordRestoration` and the clock modules.
+- **Boundary claims.** Ready input, displaced output, renewal, finite-memory
+  horizons, closed resets and flag-based tariffs apply to the specified transport
+  and supplied states. Export addresses describe the retained train before
+  erasure; restoration needs the stated upstream supply.
+- **Counted scopes.** Compatible rows, equal histories, cycle returns,
+  orbit histograms and Gibbs priors retain the indicated streams. They do not
+  classify disposed histories. The ring-orbit histograms for three to five sites
+  were exploratory; the certified quantities are the return bounds, receiver
+  flags and their minima.
+
+The theorem-level classification is retained in the module hypotheses; this
+section is the boundary map.
 
 The packet-level interface follows PMConstants. PMAction and PMConstants
 can still import the upstream machine modules. The

@@ -58,5 +58,5 @@ arbitrary-disturbance restoration in the retained routing
 (`HomogeneousRouting.forever_iff_open`, `forever_needs_infinite`) and the minimum-execution cost
 (`ReferenceMaintenance.minimum_executable_cost`).
 
-The [boundary audit](../REVERSIBILITY-AUDIT.md) distinguishes these
+The [boundary audit](../OVERVIEW.md#reversibility-boundary) distinguishes these
 updates from disposal of exported records.

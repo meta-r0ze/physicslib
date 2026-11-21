@@ -6,7 +6,7 @@ import PMKAutomaton.BoundaryErasure
 # KAutomaton values
 
 The period is a substrate count. The tick bounds, rate ratios and record
-thresholds have the premises stated below. See `PREMISES.md`.
+thresholds have the premises stated below. See `TODO.md`.
 -/
 
 noncomputable section

@@ -286,7 +286,7 @@ replacement threshold `B − (E_C − E_L)`, with output flag threshold
 `B` and booked erase counts per input `E_C` and `E_L`. Equal erase
 counts leave `B`. The tagged receiver train does not supply the
 difference between the two writer counts. See the
-[boundary stopping point](../PMKAutomaton/PREMISES.md#stopping-point).
+[boundary stopping point](../PMKAutomaton/TODO.md#stopping-point).
 
 | Common sampling policy | Output-bit gap `G` | Conditional reset contribution to `ΔR` | Colour wins with output flags and those resets if |
 | --- | ---: | ---: | ---: |
@@ -302,8 +302,8 @@ and `balanced_reset_gap_eq_values`. For any common booked population,
 `booked_balanced_reset_difference` gives
 `U + (3/2)(M_colourless − M_coloured)` under the separate balanced
 resets. See KAutomaton's
-[Admission](../PMKAutomaton/PREMISES.md#admission) and
-[Registration tariff](../PMKAutomaton/PREMISES.md#registration-tariff).
+[Admission](../PMKAutomaton/TODO.md#admission) and
+[Registration tariff](../PMKAutomaton/TODO.md#registration-tariff).
 The factor-pulse ledger by itself
 has gap `G/2` (`factor_flag_difference`). If the two reset
 comparisons are additionally paid and distinct from the writer

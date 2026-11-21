@@ -11,7 +11,7 @@ Run `./build.sh lean PMKAutomaton.Interface PMKAutomaton.Values PMKAutomaton.Com
 targeted check. The library build is `./build.sh PMKAutomaton`.
 
 The [overview](OVERVIEW.md) lists the results. The [clock ledger](CLOCK.md)
-gives the pulse constraints. The [premise ledger](PREMISES.md) lists the
+gives the pulse constraints. The [open list](TODO.md) lists the
 remaining physical inputs.
 
 ## The system
@@ -74,7 +74,7 @@ A comparison supplies a flag probability. Its use as a paid
 registration is a separate accounting premise. Once a Toll is
 supplied, the wire amplitude is `exp(−T/2)`
 (`PMAction.TollAmplitude`). See the [boundary account](ADMISSION.md#boundary-erasure)
-and [reversibility audit](REVERSIBILITY-AUDIT.md).
+and [reversibility audit](OVERVIEW.md#reversibility-boundary).
 
 ## Generations
 

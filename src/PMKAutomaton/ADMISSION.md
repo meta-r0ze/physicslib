@@ -125,7 +125,7 @@ The [three reset-inclusive thresholds](../PMElementaryParticles/SCHEDULE.md#reco
 are conditional cases of this account. The decisive missing inputs
 are the booked traffic and polarity traces from **Background occupancy
 and boundary supply** and the **Joint clocked controller**, followed
-by the signed remainder under the [Registration tariff](PREMISES.md#registration-tariff).
+by the signed remainder under the [Registration tariff](TODO.md#registration-tariff).
 For this decision only, under a common population it suffices to give
 the signed sector mass difference and enough unmatched paid work to
 bound the total on one side of zero. If the two admitted polarities
@@ -278,10 +278,9 @@ complemented OR exchange accounts for one, even with the port values
 swapped (`receiver_dual_flag_counterexample`). Equal arrivals hide
 this difference.
 
-The [closed-ring test](RING.md) computes stationary traffic on
-three, four and five sites. The receiver-flag minima tie and the
+The closed-ring test computes stationary traffic on three, four and five sites The receiver-flag minima tie and the
 historical Gibbs comparison depends on the prior. With the boundary
-account below the [admission chain stays paused](PREMISES.md#stopping-point)
+account below the [admission chain stays paused](TODO.md#stopping-point)
 at the use of a mixed receiver output by an admitted downstream trace.
 The electric reference choice still requires its writer trace
 and prices. Choosing colour or lepton complements the electric
@@ -301,7 +300,7 @@ different results even on the same closed ring at the same hazard.
 
 ## Boundary erasure
 
-The [audit](REVERSIBILITY-AUDIT.md) marks the retained results,
+The [audit](OVERVIEW.md#reversibility-boundary) marks the retained results,
 boundary claims and counts. `BoundaryErasure.identity_bijective`
 keeps the protected update bijective. Keep and recycle preserve
 the exported bit. Erasure merges its two values into the clean
@@ -343,7 +342,7 @@ A mixed-request advantage requires the missing export contract.
 
 ## Downstream scope
 
-[The top-down filter](COMPONENTS.md#equivariant-lifts) keeps both
+[The top-down filter](COMPONENTS.md#remaining-free-inputs-by-reach) keeps both
 equivariant conserving bank witnesses under the certified cellwise
 action. [The least-Toll test](COMPONENTS.md#least-toll-on-certified-traces)
 selects only within a supplied physical booking. The mixed receiver
@@ -359,7 +358,7 @@ required to use either one. The retained core routes its values
 without booking that comparison.
 
 
-The [downstream audit](DOWNSTREAM.md) separates fixed values and
+The [downstream audit](COMPONENTS.md#what-propagates-downstream) separates fixed values and
 formulae from observations of receiver traces. **Symmetry.**
 `LocalController.tagged_ticks_equal` and
 `tagged_trace_observable_eq` cover every common read of the full
@@ -379,10 +378,10 @@ and destination or its executed comparison and booked flag
 through the relevant read. The missing choice is which of these
 observations a writer or insertion consumes. It bears on writer
 population and on the Toll in the wire amplitude. The
-[admission chain stays paused](PREMISES.md#stopping-point) here.
+[admission chain stays paused](TODO.md#stopping-point) here.
 
 **Derived.** The no-export ring's erasure weights give the
 normalized supplied prior. **Conditional.** For reset erasure
 the electric-reference threshold needs the difference of the
 writers' booked erase counts. See the
-[prior and reset checks](DOWNSTREAM.md#prior-and-reset-checks).
+[prior and reset checks](COMPONENTS.md#what-propagates-downstream).

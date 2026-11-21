@@ -10,8 +10,8 @@
 
 The physical route, heavy writer and lightest-offset branch depend on
 the [conditional KAutomaton interface](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
-[Absolute timing](../PMKAutomaton/PREMISES.md#absolute-timing) and the
-[Registration tariff](../PMKAutomaton/PREMISES.md#registration-tariff)
+[Absolute timing](../PMKAutomaton/TODO.md#absolute-timing) and the
+[Registration tariff](../PMKAutomaton/TODO.md#registration-tariff)
 supply the elapsed and paid costs of that trace.
 
 ## From glue address to route
