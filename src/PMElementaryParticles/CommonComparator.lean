@@ -35,7 +35,7 @@ theorem exchangeFlag_eq_two_linkFlag (guard : Guard) (p : Ports)
   split
   · simp [Matrix.one_mulVec]
     ring
-  · simp [Matrix.one_mulVec]
+  · simp
 
 /-- The electric flag is the common state flag of a unit phase. -/
 theorem flag_eq_stateFlag (x : ℝ) :
