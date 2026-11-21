@@ -16,9 +16,6 @@ remaining physical inputs.
 
 ## The system
 
-There is no paper for this library. This section states what it studies so the
-results have a common frame. It is a working statement, not a result.
-
 PMKAutomaton studies a lattice of E8 nodes. In the encoded line and ring
 models the same local rule acts at every site with a common phase. The
 lattice view names the parts and ports. The complete joint update for
