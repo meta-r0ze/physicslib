@@ -117,7 +117,7 @@ theorem satisfies_labelRecord_invariant (v : Variant) (p q : Protocol)
 /-- Every predicate reads the reduced data only. -/
 theorem survives_iff_reduced (v : Variant) (p : Protocol) :
     p ∈ survivors v ↔ ofProtocol p ∈ SurvivorsR v := by
-  simp [survivors, SurvivorsR, satisfies, satisfiesBool_eq, allProtocols]
+  simp [survivors, SurvivorsR, satisfiesBool_eq, allProtocols]
 
 /-- The four defensible variants with the weakest Map condition. -/
 def RobustVariants : List Variant :=

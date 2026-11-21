@@ -29,9 +29,12 @@ reference needs a triple" hypothesis is withdrawn. Remaining:
 - generations: the aligned clock breaks triality. The coset signatures are
   vector (7, 7, 2), spinor (4, 4, 0) and conjugate spinor (4, 4, 8), counting
   one-tick `+1`, one-tick `−1` and clock-silent roots
-  (`tools/generation_clock_signature.py`). Next: match the cosets to the glue
-  address `g`, and state the dynamics rule that turns step counts into cost per
-  period.
+  (`tools/generation_clock_signature.py`). The vector coset carries the clock
+  root `±cu`. Taking the reference class to be the coset that carries the clock,
+  `g = 0` is the vector coset and `g = 1, 2` are the spinor cosets (equal tick
+  counts, different silent counts). Next: fix the triality orientation (which of
+  `g = 1, 2`), and state the rule that turns step counts into cost per period. It
+  must use the one-tick count for the heavy-to-light step.
 
 ## Full-ring Lean spectrum
 

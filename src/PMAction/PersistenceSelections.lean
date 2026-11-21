@@ -110,7 +110,7 @@ theorem robust_iff (X : Matrix (Fin 3) (Fin 3) ℂ) (u : Fin 3 → ℂ) :
       funext d
       by_cases hd : d = c
       · subst hd; simp; ring
-      · simp [Function.update, hd, Pi.single_apply]
+      · simp [Function.update, hd]
     rw [hu', mulVec_sub, h1, zero_sub, mulVec_smul, neg_eq_zero, smul_eq_zero] at h2
     have h3 : X *ᵥ Pi.single c (u c) = 0 := h2.resolve_left (by norm_num)
     have key : X b c * u c = 0 := by

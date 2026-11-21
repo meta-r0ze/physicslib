@@ -97,7 +97,7 @@ def minusRecord : Unit ⊕ Unit → ℂ := fun p => if p = .inr () then 1 else 0
 
 theorem converted_records_orthogonal :
     plusRecord ⬝ᵥ minusRecord = 0 := by
-  simp [plusRecord, minusRecord, dotProduct, Fintype.sum_sum_type]
+  simp [plusRecord, minusRecord, dotProduct]
 
 /-- The orthogonal-record hypothesis of `CoherentGate.unequal_needs_orthogonal`
 is met by the converted branch records. -/
@@ -119,7 +119,7 @@ theorem bitToll_eq_expected_conversion (colourReference : Bool)
 def plusRecordReal : Fin 2 → ℝ := ![1, 0]
 def minusRecordReal : Fin 2 → ℝ := ![0, 1]
 
-theorem converted_branch_records_unequal (a b : ℝ) (hab : Real.sin (a - b) ≠ 0) :
+theorem converted_branch_records_unequal (a b : ℝ) (_hab : Real.sin (a - b) ≠ 0) :
     CoherentGate.tensor (CoherentGate.col0 a) plusRecordReal ⬝ᵥ
       CoherentGate.tensor (CoherentGate.col1 b) minusRecordReal = 0 := by
   rw [CoherentGate.tensor_dot]

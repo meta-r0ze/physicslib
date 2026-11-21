@@ -32,7 +32,7 @@ theorem exchangeFlag_eq_two_linkFlag (guard : Guard) (p : Ports)
           (value p.2) (value p.1)
       else 0 := by
   unfold LocalController.exchangeFlag CommonResponse.linkFlag CommonResponse.nsq
-  split <;> simp [Matrix.one_mulVec] <;> ring
+  split <;> (simp [Matrix.one_mulVec]; ring)
 
 /-- The electric flag is the common state flag of a unit phase. -/
 theorem flag_eq_stateFlag (x : ℝ) :

@@ -228,15 +228,49 @@ the most one-tick steps (7), and the other two share 4 but differ in clock-silen
 steps (0 against 8). This is the first difference between generations derived from
 E8 alone.
 
-**What it does not yet establish:**
+**Matching the cosets to the library's glue address `g`.** In the library a
+generation's glue address `g` omits its own class: its walls are the classes
+`g ± 1` (`ControlledGluedRegister.wallClass`). Class 0 is the reference class.
+`g = 0` is the direct address: its walls avoid the reference, and it supplies the
+unsuppressed row (`HeavyFlipControl.direct_iff`). `g = 1, 2` need the reference
+node, and their link weights are equal (`GENERATIONS.md`). So generation `g`
+corresponds to the coset of its own class, and the question is which coset is the
+reference class 0.
 
-- Which coset is the library's glue address `g`, including the reference wall `g = 0`
-  (`HeavyFlipControl.direct`). That needs `ChannelVectors`' internal-D4 attachment
-  placed against the aligned spacetime frame.
-- How step counts become per-period cost. That needs a dynamics rule: for example,
-  whether clock-silent steps act like a mass term (moves that do not advance the
-  clock) or like transverse motion. That rule has not been chosen, and it has not been
-  compared with the tier ledger.
+In every aligned placement **the vector coset carries the clock**. Its two
+clock-silent roots are exactly `±cu`, the clock-plane root, and it contains 8
+roots of the clock's own `A₄`. The spinor cosets contain no root of the clock's
+`A₄`. So the coset singled out by the spacetime frame and the coset that carries
+the clock are the same coset.
+
+Taking the reference class to be the coset that carries the clock (a named
+identification: the reference is clock-driven, `CarrierReferenceCycle`, but no
+theorem places it in a coset), the matching is:
+
+| Glue address | Library role | Coset | one-tick `±1` | silent |
+| --- | --- | --- | --- | --- |
+| `g = 0` | direct, unsuppressed row | vector (carries `±cu`) | 7 | 2 |
+| `g = 1, 2` | reference node, equal link weight | spinor | 4 | 0 |
+| | | conjugate spinor | 4 | 8 |
+
+Which of `g = 1, 2` is the 0-silent coset depends on the orientation of
+`GluedRegister.triality` (`c ↦ c + 1`), which is not fixed here.
+
+**Two consistency checks with the existing library.**
+
+- The library says the two restoring addresses have equal link weight. The clock
+  gives them equal one-tick step counts (4 and 4). That agrees.
+- The library says the middle-to-lightest split is open. The clock separates the
+  two restoring cosets only by clock-silent steps (0 against 8). So silent steps
+  are the one E8 difference available for that split.
+
+**A constraint on the dynamics rule.** Under this matching, the clock-silent count
+cannot be the overall mass ordering. The heavy direct generation (`g = 0`) has 2
+silent steps, between the two light ones (0 and 8). The one-tick count is what
+separates `g = 0` (7) from `g = 1, 2` (4). So a rule for cost per period must use
+the one-tick count for the heavy-to-light step and can use silent steps only to
+split the two light generations. It has not been chosen, and nothing here is
+compared with the tier ledger.
 
 ## 4. What this unblocks
 

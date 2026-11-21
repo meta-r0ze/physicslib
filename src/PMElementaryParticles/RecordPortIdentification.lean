@@ -103,8 +103,7 @@ theorem receiverFlag_complement (n : ℕ) (either : Bool) (s : RingReceiver.Stat
     (x : Fin n) :
     RingReceiver.receiverFlag either (complementPortState s) x =
       RingReceiver.receiverFlag either s x := by
-  simp [RingReceiver.receiver_flag_eq, complementPortState, complementPorts,
-    arrivals_complement]
+  simp [RingReceiver.receiver_flag_eq, complementPortState, arrivals_complement]
 
 /-! ## Step 2: bit-ring embedding -/
 
@@ -208,14 +207,14 @@ theorem bitRingSum43_eq (either : Bool) (refBit labelBit : Bool)
       if labelBit ≠ refBit then (localizedSum43 either requests x0 : ℝ) else 0 := by
   by_cases h : labelBit = refBit
   · subst labelBit
-    rw [if_neg (by simp)]
+    rw [ite_eq_right (by simp)]
     unfold bitRingSum43
     apply Finset.sum_eq_zero
     intro t _
     apply Finset.sum_eq_zero
     intro x _
     exact bitRingEmbed_equal_zero refBit refBit x0 requests rfl either t.val x
-  · rw [if_pos h]
+  · rw [ite_eq_left h]
     cases refBit
     · have hlabel : labelBit = true := by
         cases labelBit <;> simp_all
@@ -283,7 +282,7 @@ theorem bitRingTotal43_shared (c : Channels) (colourReference : Bool) (either : 
   unfold hamming bitOf refRecord
   rcases h : labelRecord c with ⟨s, p⟩
   cases colourReference <;> cases s <;> cases p <;>
-    simp [localizedSum43_eq_pattern, h] <;> ring
+    simp [localizedSum43_eq_pattern] <;> ring
 
 /-! ## Step 4: least Toll and zero-Hamming labels -/
 
@@ -345,7 +344,7 @@ theorem bitRingTotal43_hamming_zero (c : Channels) (colourReference : Bool)
   intro b _
   have hb : bitOf (labelRecord c) b = bitOf (refRecord colourReference) b := by
     rw [hrec]
-  rw [if_neg]
+  rw [ite_eq_right]
   simp [hb]
 
 /-! ## Task 1: stationarity bridge to the native background -/

@@ -74,7 +74,7 @@ lemma doubleRoot_isRoot (hpd : p ∣ disc m) :
         + (-2 * (bInt m : ZMod p) ^ 2) * hi + (-1 : ZMod p) * hdisc + hd0
     exact (mul_eq_zero.mp key).resolve_left h4
 
-include hα hK hm in
+include hα hm in
 /-- For `p ∣ d`, `minpoly ω ≡ (X - r)²` mod `p`. -/
 theorem minpoly_omegaInt_map_of_dvd_disc (hpd : p ∣ disc m) :
     (minpoly ℤ (omegaInt hα)).map (Int.castRingHom (ZMod p)) =
@@ -89,7 +89,7 @@ include hα hK hm in
 theorem monicFactorsMod_of_dvd_disc (hpd : p ∣ disc m) :
     RingOfIntegers.monicFactorsMod (omegaInt hα) p = {X - C (doubleRoot m p)} := by
   unfold RingOfIntegers.monicFactorsMod
-  rw [minpoly_omegaInt_map_of_dvd_disc hα hK hm p hpd, sq,
+  rw [minpoly_omegaInt_map_of_dvd_disc hα hm p hpd, sq,
     UniqueFactorizationMonoid.normalizedFactors_mul (X_sub_C_ne_zero _) (X_sub_C_ne_zero _),
     UniqueFactorizationMonoid.normalizedFactors_irreducible (irreducible_X_sub_C _),
     (monic_X_sub_C _).normalize_eq_self, Multiset.singleton_add, Multiset.toFinset_cons,
@@ -112,7 +112,7 @@ theorem ramified_of_dvd_disc (hpd : p ∣ disc m) :
   · have := Ideal.ramificationIdx_primesOverSpanEquivMonicFactorsMod_symm_apply'
       (not_dvd_exponent_omegaInt hα hK hm p) (e ⟨P, hP⟩).2
     rw [Subtype.coe_eta, e.symm_apply_apply, hmem,
-      minpoly_omegaInt_map_of_dvd_disc hα hK hm p hpd,
+      minpoly_omegaInt_map_of_dvd_disc hα hm p hpd,
       multiplicity_pow_self (X_sub_C_ne_zero _) (not_isUnit_X_sub_C _)] at this
     exact this
 

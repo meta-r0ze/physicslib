@@ -37,16 +37,31 @@ abbrev CertifiedPhase := Bool
 
 def phaseValue (b : CertifiedPhase) : ℝ := if b then Real.pi else 0
 
-/-- One protocol on the 3-ring. -/
+end PMElementaryParticles.Protocol
+
+namespace PMElementaryParticles
+
+/-- One protocol on the 3-ring. Its operations live in the namespace
+`PMElementaryParticles.Protocol`. -/
 structure Protocol where
-  label : Channels
+  label : PMConstants.PacketGaugeActions.Channels
   reference : Bool
   firing : Fin 2 → Fin 3 → Bool
-  phase : Fin 2 → CertifiedPhase
+  phase : Fin 2 → Protocol.CertifiedPhase
   x0 : Fin 3
 
 deriving instance DecidableEq for Protocol
 deriving instance Fintype for Protocol
+
+end PMElementaryParticles
+
+namespace PMElementaryParticles.Protocol
+
+open PMConstants.PacketGaugeActions
+open PMKAutomaton
+open PMKAutomaton.RingReceiver
+open PMElementaryParticles.IsolatedExcitation
+open PMElementaryParticles.HeavyFlipControl
 
 /-- The label record bit at sector/position. -/
 def labelBit (p : Protocol) (b : Fin 2) : Bool :=

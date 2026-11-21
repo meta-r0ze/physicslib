@@ -124,3 +124,11 @@ for cl in classes:
     comp=collections.Counter(ip(r,axis) for r in cl)
     kind="vector (clock-axis components 0,+-1)" if set(comp)<= {0,2,-2} else "spinor (components +-1/2)"
     print(f"coset +1:{cnt[1]} -1:{cnt[-1]} silent:{cnt[0]}  <r,2e3> counts {dict(comp)} -> {kind}")
+
+# Which coset carries the clock? Check +-cu and the roots of the clock's own A4.
+cu_t=tuple(int(x) for x in cu)
+A4clock=[r for r in roots if all(ip(r,x)==0 for x in A4)]
+for cl in classes:
+    cnt=collections.Counter(ph(r) for r in cl)
+    print(f"coset +1:{cnt[1]} silent:{cnt[0]}  contains cu: {cu_t in cl}  contains -cu: "
+          f"{tuple(-x for x in cu_t) in cl}  roots of the clock's A4: {sum(r in A4clock for r in cl)}")
