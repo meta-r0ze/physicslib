@@ -57,11 +57,21 @@ git history.
 ### Current status and legacy ledger
 
 - Machine and protocol: `Protocol.receiverToll`, `PillarPredicates.marginUtilization`.
-- Robust survivors: `SurvivorClasses.robustCoreU_card = 1110`; reduced counts
-  `survivorsU_cards`. The 3-ring observations are `SurvivorsU false = 1650`
-  and `SurvivorsU true = 1110`; the per-label least-Toll references are
-  up→lepton, down→colour, electron→lepton and neutrino→colour, with all
-  selected Tolls `1`.
+- Survivors on the 43-ring (`RingSurvivors`), proved without enumerating
+  firing patterns:
+
+  | Pillar | Statement on the 43-ring | Lean |
+  |---|---|---|
+  | Toll floor | A bit ring registers in one period iff some site carries a request. Toll excludes exactly the empty pattern on a differing ring. | `first_arrival_floor`, `sum_zero_iff`, `ring43_toll_iff` |
+  | Least Toll | Every Toll-admissible pattern costs at least the Hamming distance to the reference. One firing site per differing ring attains it. | `ringTotal_ge_hamming`, `ringTotal_oneSite` |
+  | Minimum | One firing site gives exactly one registration per period. | `one_site_floor`, `RingRates.ring43_one` |
+  | Margin | Two adjacent firing sites trap the packet: 43 registrations in 43 ticks. Margin excludes this case. | `trapping_saturates` |
+  | Map | The reference-equal label is excluded (record level). | `PillarPredicates` |
+
+  Least-Toll references per label: up→lepton, down→colour, electron→lepton,
+  neutrino→colour (Hamming `1`, `bitToll_eq_hamming`). The 3-ring counts
+  (`robustCoreU_card = 1110`, `SurvivorsU false = 1650`) are toy-ring
+  observations, not E8 values.
 - E8 attachment: `ChannelVectors.channelCoord`; active-false vector class,
   active-true certified triality image (`channelCoord_glueClass`,
   `channelCoord_injective`, `channelCoord_image_card`).
@@ -85,8 +95,9 @@ firing site registers exactly once for every `x0` and `s`
 (`RingRates.ring43_one`, `ring_Delta_one`, linked to `ClockSites.ring_size`).
 
 The registration counts `14, 15, 21, 22, 28, ...` are **3-ring toy values**,
-not E8 values. The general firing-pattern and survivor recomputation remains
-open.
+not E8 values. For any firing pattern, the packet walks the ring until its
+first exchanging site and registers there within one period
+(`RingSurvivors.first_arrival_floor`, any `n`).
 
 ## Scope
 
@@ -926,7 +937,7 @@ The exploration scripts for these facts are `tools/clock_ring_check.py`,
 The ring therefore has `n = Δ = 43` sites, not 3. The live stream steps by
 `+1` roots and the record stream by `−1` roots; an exchange swaps a packet
 between them and reverses its direction. Consequences: one firing site per
-period gives exactly one registration (`RingRates.ring43_one`); the Toll floor is met by one firing site per period, while Margin
+period gives exactly one registration (`RingRates.ring43_one`); any nonempty pattern registers at least once (`RingSurvivors.first_arrival_floor`), so the Toll floor is met by one firing site per period, while Margin
 still excludes trapping between adjacent firing sites; a ring site is a clock
 phase, matching `ClockedRootTrials` at phases 0 and 1.
 

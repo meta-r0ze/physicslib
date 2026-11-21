@@ -5,20 +5,21 @@ This file is the open list only.
 
 ## Line and ring
 
-- **Replace `sectorBasis`.** The current D4 coordinates disagree with the clock
-  plane: slice roots change the reading by `0` or `±6`. Replace the basis with
-  the aligned placement, or state the alignment as a named hypothesis, then
-  recheck every module that uses its coordinates.
-- **Extend the 43-ring count beyond one firing site.** `RingRates` proves the
-  one-site formula and the `n = 43, T = 43` result. Recompute general firing
-  patterns, the Toll floor and Margin tests on the 43-ring; do not use the old
-  `14,15,21,22,28,...` toy counts as E8 values.
+- **Finish replacing `sectorBasis`.** The old D4 coordinates disagree with the
+  clock plane (slice roots change the reading by `0` or `±6`).
+  `AlignedSectors.alignedSectorBasis` is the aligned placement and
+  `ChannelPlacement` uses it. `PMSubstrate.Vacuum` and `PMSubstrate.Channels`
+  still use `sectorBasis`; move them and recheck their results.
+- **Characterise the Margin ceiling on the 43-ring.** `RingSurvivors` proves
+  the Toll floor and least Toll for every firing pattern, and one saturating
+  (trapping) pattern. The exact set of patterns with utilization `1` is not
+  stated. Do it only if a downstream result needs it.
 - **Say what the clock-silent roots do.** The 22 roots at phase `0` do not move
   a packet around the ring. Identify their role as internal or transverse
   motion and its observable consequence.
-- **Re-run the pillar survivors on the 43-ring.** The survivor and robust-core
-  tables were computed on the 3-ring. The clock ring changes the registration
-  opportunities, so the alone/together result must be recomputed there.
+- **Alone/together on the 43-ring.** Single-protocol survivors are restated on
+  the 43-ring (`RingSurvivors`). The alone/together (several protocols on one
+  ring) result is still the 3-ring computation.
 
 ## Composition and vacuum
 
