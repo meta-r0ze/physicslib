@@ -39,8 +39,8 @@ the scope of their connections.
 Inside a system, the update is reversible: Conservation keeps the
 identity-defining information (PM-1-Arch, leg update "by Conservation it is
 reversible"). Every decision that treats two inputs differently leaves a
-record (`CoherentGate.unequal_needs_orthogonal`). The record must be kept,
-exported or reused. Once a record is exported, PM does not require that it
+record; the checked record statement is in the [record results](OVERVIEW.md#record).
+The record must be kept, exported or reused. Once a record is exported, PM does not require that it
 is kept. It can be erased, and the erasure is paid as Toll. In the standard thermal setting Landauer gives
 a lower bound of `k_B T ln 2` for one unbiased bit. The boundary account
 uses one Toll unit per booked binary erasure. Conservation protects the
@@ -71,26 +71,18 @@ KAutomaton continues only while four things persist:
 
 A booked boundary erasure pays one unit per exported bit reset.
 A comparison supplies a flag probability. Its use as a paid
-registration is a separate accounting premise. Once a Toll is
-supplied, the wire amplitude is `exp(−T/2)`
-(`PMAction.TollAmplitude`). See the [boundary account](ADMISSION.md#boundary-erasure)
-and [reversibility audit](OVERVIEW.md#reversibility-boundary).
+registration is a separate accounting premise. See the
+[boundary account](ADMISSION.md#boundary-erasure), the
+[cost results](OVERVIEW.md#cost), and the
+[reversibility boundary](OVERVIEW.md#reversibility-boundary).
 
 ## Generations
 
-A generation is a glue address on the wire. It names the D₄ class omitted
-by its two walls. The chosen reference makes address zero direct and
-sends the other two addresses through the same two-leg node
-(`ReferenceClassHop`, `ReferenceNode`). The route test is shared by all
-labels. The coupled wire has a heavy, a middle and a lightest mode at
-bare resonance. Equal node weights leave the two restoring addresses
-without individual mass ranks.
-
-The charged lift candidate adds a pulse on the same static vector leg
-for each charged protocol. The common route gives the same response to
-the same offset. The label-sensitive firing law and its `Δ` scaling
-remain open. The transport address, its route and the declared ledger
-tiers are related in the
+A generation is a glue address on the wire: it names the D₄ class omitted
+by its two walls. The reference choice and the direct and restoring route types
+are checked in the [route results](OVERVIEW.md#route). The label-sensitive firing
+law and its `Δ` scaling remain open; see the [open list](TODO.md). The transport
+address, its route and the declared ledger tiers are related in the
 [generation comparison](../PMElementaryParticles/GENERATIONS.md).
 
 ## Layering

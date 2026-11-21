@@ -1,8 +1,6 @@
 # PMKAutomaton — checked results
 
-Import `PMKAutomaton.Interface` for the theorem families below and
-`PMKAutomaton.Values` for the numbers. Results retain their theorem
-hypotheses. Physical inputs are in the [open list](TODO.md).
+The theorem families below retain their hypotheses. Physical inputs are in the [open list](TODO.md).
 The [component inventory](COMPONENTS.md) maps the six pillars, native ports
 and open connections. `PMKAutomaton.Components` exposes the corresponding
 contracts with explicit hypotheses. The [machine overview](Machine/OVERVIEW.md)
@@ -54,7 +52,7 @@ the effect of retaining all controls in the state.
 | Result | Certificates and scope |
 | --- | --- |
 | Request complement and receiver swap | `LocalController.complemented_output` gives a one-visit identity. `receiver_dual_not_conjugate`, `no_request_complement_conjugacy` give the clocked obstruction. `receiver_dual_population` preserves the summed port population and `receiver_dual_flag_counterexample` distinguishes the flags. |
-| Erasure at a separate export port | `BoundaryErasure.identity_bijective` preserves the protected update. `erasing_pays_one` counts a booked binary erasure. `ring_cycle_erasure` gives zero on the retained ring. `tagged_rule_exports` gives the common open export train. See the [reversibility audit](OVERVIEW.md#reversibility-boundary). |
+| Erasure at a separate export port | `BoundaryErasure.identity_bijective` preserves the protected update. `erasing_pays_one` counts a booked binary erasure. `ring_cycle_erasure` gives zero on the retained ring. `tagged_rule_exports` gives the common open export train. See the [reversibility boundary](#reversibility-boundary). |
 | Closed-ring selection | `RingReceiver.tick_bijective` and `orbit_enumeration_covers` give the finite traffic model. `minimum_orbit_toll` and `both_rules_attain_best_survival` give the tied minima. `survivor_mass_of_subset` gives rule shares for a supplied prior. |
 | Guard selection on uniform ports | `LocalController.exchange_flag_realisation` and `uniform_trace_exchange_toll` give the exchange account. `uniform_flag_persistence_tie` and `uniform_remaining_cost_iff` distinguish the certified tie and its missing tariff. |
 | Flags and registrations | `TwoSiteHandoff.hop_flag`, `exchange_flag` and `OpenHandoff.receiver_flag` give comparison flags. `DiagonalReadout.state_flag` gives the diagonal mixed-population formula. `NetCost.expected_count_linear` sums expected flags under the supplied sampling law. |
