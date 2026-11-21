@@ -24,7 +24,7 @@ With `κ = 1/ν = 1/16`, `μ = χ/σ = 2/5` in the standard spherical Nilsson fo
   `e = N + 3/2 − κ·(2 l·s + μ·(l(l+1) − ⟨l(l+1)⟩_N))`,  `⟨l(l+1)⟩_N = N(N+3)/2`
 
 (`nilssonE8CostQ`), the largest gaps through `N = 7` are at `2, 8, 20, 28, 50, 82, 126`
-(numerical check), for example `28: 3/8`, `50: 19/40`, `82: 23/40`, `126: 7/20` against
+(kernel-checked in `largestGapFills_eq`), for example `28: 3/8`, `50: 19/40`, `82: 23/40`, `126: 7/20` against
 `40: 3/10` (`nilssonE8_gaps`). A Strutinsky check gives `δE ≈ −1.1 ℏω` at both `Z = 82` and
 `N = 126`, about `−16` MeV for Pb-208 with `ℏω(208)`; standard microscopic values are
 `−12` to `−14` MeV. This form breaks five near-degenerate pairs of the recorded textbook order
@@ -72,8 +72,8 @@ the comparison picks the second for spin–orbit (§2). Measured comparison (out
 `1.97` MeV with `χ/Δ` (as `ShellSystem` uses it, `κ(l+½)·ℏω`). The `p₁/₂–p₃/₂` splitting in N-15 is
 `6.32` MeV; the two give `3.32` and `1.23` MeV.
 
-What this does **not** settle: the gap sizes are checked here, but which orbitals are adjacent
-in the full sorted spectrum is a numerical check, not a Lean theorem.
+The gap sizes and the sorted ladder's seven largest-gap fills are checked in the kernel:
+`nilssonE8_gaps` gives the gaps and `largestGapFills_eq` gives the fills.
 -/
 
 namespace PMAtoms
@@ -219,27 +219,215 @@ def shellOrbitals (N : Nat) : List NuclearOrbital :=
     if l == 0 then [⟨n, 0, 1, 2⟩]
     else [⟨n, l, 2 * l + 1, 2 * l + 2⟩, ⟨n, l, 2 * l - 1, 2 * l⟩]
 
+/-- The orbitals through `N = 8`, before sorting. -/
+def allOrbitals : List NuclearOrbital := (List.range 9).flatMap shellOrbitals
+
+/-- Every enumerated orbital has `j = l ± 1/2`. -/
+theorem allOrbitals_j2 :
+    ∀ o ∈ allOrbitals, o.j2 = 2 * o.l + 1 ∨ o.j2 + 1 = 2 * o.l := by
+  decide
+
 /-- The E8 Nilsson ladder through `N = 8`, sorted by `nilssonE8CostQ` and cut at the
 first `N = 8` orbital. -/
 def shellLadder : List NuclearOrbital :=
-  let all := (List.range 9).flatMap shellOrbitals
-  (List.insertionSort (fun a b : NuclearOrbital => nilssonE8CostQ a ≤ nilssonE8CostQ b) all).takeWhile
+  (List.insertionSort (fun a b : NuclearOrbital => nilssonE8CostQ a ≤ nilssonE8CostQ b) allOrbitals).takeWhile
     (fun o => hoShell o < 8)
+
+/-- The integer numerator of `4 * spinOrbitQ`, for the integer-scaled cost. -/
+def spinOrbitZ4 (o : NuclearOrbital) : ℤ :=
+  if o.j2 = 2 * o.l + 1 then (o.l : ℤ)
+  else if o.j2 + 1 = 2 * o.l then -((o.l : ℤ) + 1)
+  else ((o.j2 : ℤ) * ((o.j2 : ℤ) + 2) - 4 * (o.l : ℤ) * ((o.l : ℤ) + 1) - 3) / 4
+
+/-- `80 * nilssonE8CostQ`, written as an integer without division. -/
+def nilssonE8CostZ (o : NuclearOrbital) : ℤ :=
+  let N : ℤ := hoShell o
+  80 * N + 120 - 5 * spinOrbitZ4 o - 2 * (o.l : ℤ) * ((o.l : ℤ) + 1) + N * (N + 3)
+
+/-- For an enumerated orbital, `spinOrbitZ4` is twice `spinOrbitQ`. -/
+theorem spinOrbitZ4_cast (o : NuclearOrbital)
+    (h : o.j2 = 2 * o.l + 1 ∨ o.j2 + 1 = 2 * o.l) :
+    (spinOrbitZ4 o : ℚ) = 2 * spinOrbitQ o := by
+  rcases h with h | h
+  · simp [spinOrbitZ4, spinOrbitQ, h]
+    ring
+  · have hne : o.j2 ≠ 2 * o.l + 1 := by omega
+    have hq : (o.j2 : ℚ) = 2 * (o.l : ℚ) - 1 := by
+      have := congrArg (fun n : ℕ => (n : ℚ)) h
+      push_cast at this
+      linarith
+    simp [spinOrbitZ4, spinOrbitQ, h, hne, hq]
+    ring
+
+/-- The integer-scaled cost is `80` times the rational Nilsson cost. -/
+theorem nilssonE8CostZ_cast (o : NuclearOrbital)
+    (h : o.j2 = 2 * o.l + 1 ∨ o.j2 + 1 = 2 * o.l) :
+    (nilssonE8CostZ o : ℚ) = 80 * nilssonE8CostQ o := by
+  simp only [nilssonE8CostZ, nilssonE8CostQ]
+  push_cast
+  rw [spinOrbitZ4_cast o h]
+  ring
+
+/-- Ordering by the rational and integer-scaled Nilsson costs agrees on enumerated orbitals. -/
+theorem nilssonE8CostQ_le_iff_Z (a b : NuclearOrbital)
+    (ha : a.j2 = 2 * a.l + 1 ∨ a.j2 + 1 = 2 * a.l)
+    (hb : b.j2 = 2 * b.l + 1 ∨ b.j2 + 1 = 2 * b.l) :
+    nilssonE8CostQ a ≤ nilssonE8CostQ b ↔ nilssonE8CostZ a ≤ nilssonE8CostZ b := by
+  constructor
+  · intro h
+    have h' : (nilssonE8CostZ a : ℚ) ≤ (nilssonE8CostZ b : ℚ) := by
+      rw [nilssonE8CostZ_cast a ha, nilssonE8CostZ_cast b hb]
+      nlinarith
+    exact_mod_cast h'
+  · intro h
+    have h' : (nilssonE8CostZ a : ℚ) ≤ (nilssonE8CostZ b : ℚ) := by exact_mod_cast h
+    rw [nilssonE8CostZ_cast a ha, nilssonE8CostZ_cast b hb] at h'
+    nlinarith
+
+/-- The same ladder sorted on the integer-scaled cost. -/
+def shellLadderZ : List NuclearOrbital :=
+  (List.insertionSort (fun a b : NuclearOrbital => nilssonE8CostZ a ≤ nilssonE8CostZ b) allOrbitals).takeWhile
+    (fun o => hoShell o < 8)
+
+/-- The rational and integer-scaled sorts give the same ladder. -/
+theorem shellLadder_eq_shellLadderZ : shellLadder = shellLadderZ := by
+  let rQ : NuclearOrbital → NuclearOrbital → Prop := fun a b => nilssonE8CostQ a ≤ nilssonE8CostQ b
+  let rZ : NuclearOrbital → NuclearOrbital → Prop := fun a b => nilssonE8CostZ a ≤ nilssonE8CostZ b
+  have hrel : ∀ a ∈ allOrbitals, ∀ b ∈ allOrbitals, rQ a b ↔ rZ a b := by
+    intro a ha b hb
+    exact nilssonE8CostQ_le_iff_Z a b (allOrbitals_j2 a ha) (allOrbitals_j2 b hb)
+  have h := List.map_insertionSort rQ rZ id allOrbitals hrel
+  simp [rQ, rZ, allOrbitals, shellLadder, shellLadderZ] at h ⊢
+  exact congrArg (List.takeWhile (fun o : NuclearOrbital => hoShell o < 8)) h
+
+/-- Rows of the rational ladder: cumulative fill and gap to the next orbital. -/
+def rowsQ : List NuclearOrbital → Nat → List (Nat × ℚ)
+  | [], _ => []
+  | [_], _ => []
+  | o :: p :: tl, acc =>
+      (acc + o.occupation, nilssonE8CostQ p - nilssonE8CostQ o) :: rowsQ (p :: tl) (acc + o.occupation)
+
+/-- Rows of the integer-scaled ladder: cumulative fill and gap to the next orbital. -/
+def rowsZ : List NuclearOrbital → Nat → List (Nat × ℤ)
+  | [], _ => []
+  | [_], _ => []
+  | o :: p :: tl, acc =>
+      (acc + o.occupation, nilssonE8CostZ p - nilssonE8CostZ o) :: rowsZ (p :: tl) (acc + o.occupation)
+
+/-- Scale a rational row's gap by `80` and take its integer numerator. -/
+def rowScale (p : Nat × ℚ) : Nat × ℤ := (p.1, (80 * p.2).num)
+
+/-- Scaling a rational row gives the corresponding integer row. -/
+theorem rowScale_row (fill : Nat) (c cn : ℚ) (cz cnz : ℤ)
+    (hc : (cz : ℚ) = 80 * c) (hcn : (cnz : ℚ) = 80 * cn) :
+    rowScale (fill, cn - c) = (fill, cnz - cz) := by
+  simp only [rowScale, Prod.mk.injEq]
+  constructor
+  · trivial
+  · have h : 80 * (cn - c) = ((cnz - cz : ℤ) : ℚ) := by
+      rw [mul_sub, ← hcn, ← hc]
+      push_cast
+      ring
+    rw [h, Rat.num_intCast]
+
+/-- Scaling every rational row gives the integer rows. -/
+theorem rowsQ_map (l : List NuclearOrbital) (acc : Nat)
+    (h : ∀ o ∈ l, (nilssonE8CostZ o : ℚ) = 80 * nilssonE8CostQ o) :
+    (rowsQ l acc).map rowScale = rowsZ l acc := by
+  induction l generalizing acc with
+  | nil => simp [rowsQ, rowsZ]
+  | cons x xs ih =>
+      cases xs with
+      | nil => simp [rowsQ, rowsZ]
+      | cons y ys =>
+          simp only [rowsQ, rowsZ, List.map_cons, List.cons.injEq]
+          constructor
+          · exact rowScale_row (acc + x.occupation) (nilssonE8CostQ x) (nilssonE8CostQ y)
+              (nilssonE8CostZ x) (nilssonE8CostZ y)
+              (h x (by simp)) (h y (by simp))
+          · exact ih (acc + x.occupation) (fun o ho => h o (by simp [ho]))
+
+/-- Every rational row's scaled gap is `80` times its original gap. -/
+theorem rowsQ_rowScale_cast (l : List NuclearOrbital) (acc : Nat)
+    (h : ∀ o ∈ l, (nilssonE8CostZ o : ℚ) = 80 * nilssonE8CostQ o) :
+    ∀ p ∈ rowsQ l acc, ((rowScale p).2 : ℚ) = 80 * p.2 := by
+  induction l generalizing acc with
+  | nil => simp [rowsQ]
+  | cons x xs ih =>
+      cases xs with
+      | nil => simp [rowsQ]
+      | cons y ys =>
+          simp only [rowsQ, List.mem_cons]
+          intro p hp
+          rcases hp with rfl | hp
+          · have hq : ((80 * (nilssonE8CostQ y - nilssonE8CostQ x)).num : ℚ) =
+                80 * (nilssonE8CostQ y - nilssonE8CostQ x) := by
+              have hz : 80 * (nilssonE8CostQ y - nilssonE8CostQ x) =
+                  ((nilssonE8CostZ y - nilssonE8CostZ x : ℤ) : ℚ) := by
+                rw [mul_sub, ← h y (by simp), ← h x (by simp)]
+                push_cast
+                ring
+              rw [hz, Rat.num_intCast]
+            simp [rowScale, hq]
+          · exact ih (acc + x.occupation) (fun o ho => h o (by simp [ho])) p hp
 
 /-- The seven largest-gap fills in the sorted Nilsson ladder. -/
 def largestGapFills (k : Nat) : List Nat :=
-  let rec rows : List NuclearOrbital → Nat → List (Nat × ℚ)
-    | [], _ => []
-    | [_], _ => []
-    | o :: tl@(p :: _), acc =>
-        (acc + o.occupation, nilssonE8CostQ p - nilssonE8CostQ o) :: rows tl (acc + o.occupation)
-  let gaps := rows shellLadder 0
+  let gaps := rowsQ shellLadder 0
   let top := (List.insertionSort (fun a b : Nat × ℚ => b.2 ≤ a.2) gaps).take k
   List.insertionSort (· ≤ ·) (top.map Prod.fst)
 
-/-- The closure list of the sorted E8 Nilsson ladder: the seven largest-gap fills. -/
-def shellClosures : List Nat := [2, 8, 20, 28, 50, 82, 126]
+/-- The same seven largest-gap fills, computed on the integer-scaled ladder. -/
+def largestGapFillsZ (k : Nat) : List Nat :=
+  let gaps := rowsZ shellLadderZ 0
+  let top := (List.insertionSort (fun a b : Nat × ℤ => b.2 ≤ a.2) gaps).take k
+  List.insertionSort (· ≤ ·) (top.map Prod.fst)
 
-theorem shellClosures_eq : shellClosures = [2, 8, 20, 28, 50, 82, 126] := rfl
+/-- Every orbital in the integer-scaled ladder has `j = l ± 1/2`. -/
+theorem shellLadderZ_j2 :
+    ∀ o ∈ shellLadderZ, o.j2 = 2 * o.l + 1 ∨ o.j2 + 1 = 2 * o.l := by
+  decide
+
+/-- The rational and integer-scaled fill computations agree. -/
+theorem largestGapFills_eq_Z (k : Nat) : largestGapFills k = largestGapFillsZ k := by
+  unfold largestGapFills largestGapFillsZ
+  rw [shellLadder_eq_shellLadderZ]
+  let rQ : Nat × ℚ → Nat × ℚ → Prop := fun a b => b.2 ≤ a.2
+  let rZ : Nat × ℤ → Nat × ℤ → Prop := fun a b => b.2 ≤ a.2
+  let gapsQ := rowsQ shellLadderZ 0
+  let gapsZ := rowsZ shellLadderZ 0
+  have hcost : ∀ o ∈ shellLadderZ, (nilssonE8CostZ o : ℚ) = 80 * nilssonE8CostQ o := by
+    intro o ho
+    exact nilssonE8CostZ_cast o (shellLadderZ_j2 o ho)
+  have hrows : gapsQ.map rowScale = gapsZ := rowsQ_map shellLadderZ 0 hcost
+  have hrel : ∀ a ∈ gapsQ, ∀ b ∈ gapsQ, rQ a b ↔ rZ (rowScale a) (rowScale b) := by
+    intro a ha b hb
+    have ha' : ((rowScale a).2 : ℚ) = 80 * a.2 := rowsQ_rowScale_cast shellLadderZ 0 hcost a ha
+    have hb' : ((rowScale b).2 : ℚ) = 80 * b.2 := rowsQ_rowScale_cast shellLadderZ 0 hcost b hb
+    constructor
+    · intro hba
+      have hq : ((rowScale b).2 : ℚ) ≤ ((rowScale a).2 : ℚ) := by
+        rw [hb', ha']
+        nlinarith
+      exact_mod_cast hq
+    · intro hba
+      have hq : ((rowScale b).2 : ℚ) ≤ ((rowScale a).2 : ℚ) := by exact_mod_cast hba
+      rw [hb', ha'] at hq
+      nlinarith
+  have hsort := List.map_insertionSort rQ rZ rowScale gapsQ hrel
+  have htop : ((List.insertionSort rQ gapsQ).take k).map rowScale =
+      (List.insertionSort rZ gapsZ).take k := by
+    rw [List.map_take, hsort, hrows]
+  have htop_fst : (((List.insertionSort rQ gapsQ).take k).map Prod.fst) =
+      (((List.insertionSort rZ gapsZ).take k).map Prod.fst) := by
+    have := congrArg (List.map Prod.fst) htop
+    simpa [rowScale, List.map_map, Function.comp_def] using this
+  exact congrArg (List.insertionSort (· ≤ ·)) htop_fst
+
+/-- The seven largest-gap fills of the sorted E8 Nilsson ladder are the measured magic
+numbers. -/
+theorem largestGapFills_eq : largestGapFills 7 = [2, 8, 20, 28, 50, 82, 126] := by
+  rw [largestGapFills_eq_Z]
+  decide
 
 end PMAtoms

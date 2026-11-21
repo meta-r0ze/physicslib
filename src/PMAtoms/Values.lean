@@ -27,7 +27,7 @@ is introduced here.
   `hbarCEVAngstrom`, and their bounds.
 * Electron cloud: `cloudSum`, `bindingEV_fillCloud`, `fillCloud`, `orbitalList`.
 * Aufbau and shell structure: `configuration`, `nilssonE8CostQ`, `hoShell`,
-  `nilssonE8_gaps`.
+  `nilssonE8_gaps`, `largestGapFills`, `largestGapFills_eq`.
 * Nuclear ledger: `certifiedMass`, `cmLo`, `cmHi`, `certifiedMass_bounds`,
   `regimeOf`, `deformedFrontierB`, `Hund.groundMultiplicity`.
 * Ticks and decay scales: `e8Tick`, `lifetimeTicks`, `fissionFullLifetime`,
@@ -50,7 +50,7 @@ export PMAtoms.Cloud (bindingEV binding_nonpos massCorrectionME)
 export PMAtoms
   (NuclearOrbital nilssonE8CostQ hoShell nilssonE8_gaps
     nilssonE8_spinOrbit_closures nilssonKappa_eq_channel nilssonMu_eq_latency
-    shellOrbitals shellLadder largestGapFills shellClosures shellClosures_eq)
+    shellOrbitals shellLadder largestGapFills largestGapFills_eq)
 export PMAtoms
   (cmLo cmHi certifiedMass certifiedMass_bounds regimeOf deformedFrontier
     deformedFrontierB)

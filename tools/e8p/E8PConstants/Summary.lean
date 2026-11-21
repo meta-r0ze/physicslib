@@ -89,7 +89,7 @@ def summaryLines : List String :=
   let zs := nuclei.filterMap (fun p => scatterZ p.1 (p.2 - p.1))
   let zWithin (t : Rat) := (zs.filter (fun q => absQ q ≤ t)).length
   let hund := multiplicityScore 54
-  let closures := PMAtoms.Values.shellClosures
+  let closures := PMAtoms.Values.largestGapFills 7
   let header := "| quantity | E8 (proved, midpoint) | measured | unit | digits | σ | measured inputs | reference | Lean theorem |"
   let rule := "|---|---:|---:|---|---:|---:|---|---|---|"
   let unitOnly := cs.filter (fun c => (otherInputs c.key).isEmpty)

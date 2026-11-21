@@ -41,7 +41,7 @@ private def padR (s : String) (w : Nat) : String :=
   s ++ String.ofList (List.replicate (w - s.length) ' ')
 
 def shellsTable : List String :=
-  let closures := shellClosures
+  let closures := largestGapFills 7
   let header := s!"{padR "orbital" 9}{padL "N" 3}{padL "2j+1" 6}{padL "fill" 6}" ++
     s!"{padL "cost (ħω)" 12}{padL "gap to next" 14}  "
   let rows := ladderRows.map fun (o, fill, g) =>
