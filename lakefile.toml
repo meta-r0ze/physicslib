@@ -36,7 +36,7 @@ globs = ["PMConstants", "PMConstants.+"]
 name = "PMKAutomaton"
 srcDir = "src"
 # The machine is built with PMAction. This target adds the packet-level handoff.
-globs = ["PMKAutomaton", "PMKAutomaton.HandoffAdmittance", "PMKAutomaton.TwoSiteHandoff", "PMKAutomaton.OpenHandoff", "PMKAutomaton.OddReferenceSource", "PMKAutomaton.RootClockCalibration", "PMKAutomaton.ClockedRootTrials", "PMKAutomaton.Interface", "PMKAutomaton.Values", "PMKAutomaton.LocalController", "PMKAutomaton.RingReceiver", "PMKAutomaton.BoundaryErasure", "PMKAutomaton.Components", "PMKAutomaton.ClockRing", "PMKAutomaton.ClockAlignment"]
+globs = ["PMKAutomaton", "PMKAutomaton.HandoffAdmittance", "PMKAutomaton.TwoSiteHandoff", "PMKAutomaton.OpenHandoff", "PMKAutomaton.OddReferenceSource", "PMKAutomaton.RootClockCalibration", "PMKAutomaton.ClockedRootTrials", "PMKAutomaton.Interface", "PMKAutomaton.Values", "PMKAutomaton.LocalController", "PMKAutomaton.RingReceiver", "PMKAutomaton.BoundaryErasure", "PMKAutomaton.Components", "PMKAutomaton.ClockRing", "PMKAutomaton.ClockAlignment", "PMKAutomaton.ClockTickWeights"]
 
 [[lean_lib]]
 name = "PMFlavor"
