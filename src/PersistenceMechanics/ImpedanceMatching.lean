@@ -54,7 +54,7 @@ theorem zero_reserve_matched {P : ℝ} (hP : 0 < P) {Zs Zl : ℝ} (hs : 0 < Zs) 
     (h : P * reflection Zs Zl ^ 2 ≤ 0) : Zl = Zs := by
   have hr : reflection Zs Zl ^ 2 ≤ 0 := by
     by_contra hc
-    push_neg at hc
+    push Not at hc
     have := mul_pos hP hc
     linarith
   have h2 : reflection Zs Zl ^ 2 = 0 := le_antisymm hr (sq_nonneg _)

@@ -48,7 +48,7 @@ theorem plus_probability (x : ℝ) :
     Complex.normSq ((converter x *ᵥ phaseInput) (.inl ())) =
       1 - DiagonalReadout.flag x := by
   rw [converter_plus, Complex.normSq_div, normSq_one_add_exp]
-  norm_num [DiagonalReadout.flag] <;> ring
+  norm_num [DiagonalReadout.flag]
 
 /-- **The converter's ledger.** Pass plus flip probability is one. -/
 theorem converter_ledger (x : ℝ) :
@@ -110,7 +110,7 @@ reserve). -/
 theorem toll_needs_reserve (xs : List ℝ) (h : ∃ x ∈ xs, DiagonalReadout.flag x ≠ 0) :
     0 < reflectedLoad xs := by
   by_contra hc
-  push_neg at hc
+  push Not at hc
   obtain ⟨x, hx, hne⟩ := h
   exact hne (zero_reserve_no_registration xs hc x hx)
 

@@ -94,8 +94,8 @@ theorem colourSymmetric_lepton_axis : colourSymmetric 0 = 0 := by
 
 /-- Every colour component is positive: its sign record is `+`. -/
 theorem colourSymmetric_positive (j : Fin 4) (hj : j ≠ 0) : 0 < colourSymmetric j := by
-  rw [colourSymmetric_eq, if_neg hj]
-  norm_num
+  rw [colourSymmetric_eq]
+  simp [hj]
 
 /-- **Colour symmetry.** Every permutation of the colour axes fixes it. -/
 theorem colourSymmetric_invariant (σ : Equiv.Perm (Fin 4)) (h0 : σ 0 = 0) :
