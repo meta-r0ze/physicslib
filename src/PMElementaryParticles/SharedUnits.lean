@@ -21,6 +21,8 @@ def αinv : ℝ := geometricIndex
 
 /-- Electron mass in MeV (`PMSubstrate.SIUnits`, CODATA 2022). -/
 def me : ℝ := PMSubstrate.SIUnits.electronMassMeV
+/-- Electron mass in atomic mass units (`PMSubstrate.SIUnits`, CODATA 2022). -/
+def electronMassU : ℚ := PMSubstrate.SIUnits.electronMassU
 /-- `ħc` in MeV·fm (`PMSubstrate.SIUnits`). -/
 def hbarc : ℝ := PMSubstrate.SIUnits.hbarcMeVFm
 

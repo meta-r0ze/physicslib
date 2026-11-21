@@ -1,6 +1,7 @@
 import PMAtoms.Shells
 import PMAtoms.Aufbau
 import PMAtoms.ElectronCloud
+import PMSubstrate.SIUnits
 import E8PConstants.Format
 
 /-!
@@ -29,11 +30,11 @@ def shellCounts (z : Nat) : List Nat :=
     ((PMAtoms.Aufbau.configuration z).filter (fun (nl, _) => nl.1 = i + 1)).foldl
       (fun acc (_, k) => acc + k) 0)
 
-/-- Electron mass in atomic mass units (CODATA 2022), a unit conversion input. -/
-def electronMassU : Rat := 548579909065 / 10^15
+/-- Electron mass in atomic mass units, read from the canonical unit entry. -/
+def electronMassU : Rat := PMSubstrate.SIUnits.electronMassU
 
-/-- Electron rest energy in MeV (CODATA 2022), a unit conversion input. -/
-def electronMassMeV : Rat := 51099895069 / 10^11
+/-- Electron rest energy in MeV, read from the canonical exact-rational entry. -/
+def electronMassMeV : Rat := PMSubstrate.SIUnits.electronMassMeVRat
 
 /-- Hydrogenic cloud series `Σ 1/n²` over the first `z` spin-orbitals of
 `PMAtoms.orbitalList` (the `ElectronCloud` filling; no screening). -/

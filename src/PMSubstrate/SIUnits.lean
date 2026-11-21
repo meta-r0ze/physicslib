@@ -26,6 +26,10 @@ namespace PMSubstrate.SIUnits
 
 /-- Electron rest energy in MeV (CODATA 2022). -/
 def electronMassMeV : ℝ := 0.51099895069
+/-- Electron mass in atomic mass units (CODATA 2022). -/
+def electronMassU : ℚ := 548579909065 / 10^15
+/-- Exact rational companion of `electronMassMeV` for display arithmetic. -/
+def electronMassMeVRat : ℚ := 51099895069 / 10^11
 /-- Electron rest energy in eV (CODATA 2022). -/
 def electronMassEV : ℝ := 510998.95069
 /-- Electron rest energy in GeV (CODATA 2022). -/
