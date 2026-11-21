@@ -2,17 +2,36 @@
 
 Current detail is in [HISTORY.md](HISTORY.md). This file is the open list only.
 
-## Line problem — parked for Kate
+## Line problem — proposed, awaiting compile
 
-Certify the bit-ring tick as an `AxisHop` step on the `2e_0` axis and give the
-packet period in clock ticks, or name the missing line map. Until then the
-3-ring registration counts are artifacts.
+See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md). The clock closes the
+receiver ring. One root event per tick changes the E8 clock reading by `±1`,
+so the ring has exactly `Δ = 43` sites (`PMKAutomaton/ClockRing.lean`, not yet
+compiled). `SliceHop` agrees once its D4 is placed with its clock axis on the
+clock plane, and the six forward tick steps then carry equal weight.
+Remaining:
 
-## Composition problem — parked for Kate
+- compile-check `ClockRing.lean`;
+- replace `sectorBasis` with an aligned placement, or state the alignment as a
+  named hypothesis, and recheck the modules that use its coordinates;
+- identify `RingReceiver`'s site index with `clockReading` (`n = Δ`);
+- replace the 3-ring registration counts with 43-ring results.
 
-Define the multi-protocol state from the nested-paper rules (Capacity
-Partitioning, Reversible Encoding, Impedance Matching) and rerun alone/together
-closure. Blocking object: no multi-protocol machine state.
+## Composition problem — rules written, awaiting compile
+
+See [LINE-AND-COMPOSITION.md](LINE-AND-COMPOSITION.md). Two of the nested
+rules are written on the machine: Impedance Matching (`ImpedanceLedger`; Toll
+needs a Margin reserve) and Reversible Encoding (`RecordEncoding`). The colour
+reference is one site state, so it does not force composites. The "colour
+reference needs a triple" hypothesis is withdrawn. Remaining:
+
+- compile-check `PersistenceMechanics/ImpedanceMatching.lean`,
+  `ReversibleEncoding.lean`, `ImpedanceLedger.lean` and `RecordEncoding.lean`;
+- write Capacity Partitioning on the machine;
+- the vacuum choice (lepton `+e₀` or colour-symmetric) is open again; use the
+  P4 shared-vacuum tables;
+- the source of cost differences between protocols: generation (triality
+  attachment) costs on the 43-ring.
 
 ## Full-ring Lean spectrum
 

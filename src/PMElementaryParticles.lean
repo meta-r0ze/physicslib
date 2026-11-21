@@ -101,3 +101,4 @@ import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.MuonQEDLoops
 import PMElementaryParticles.ImpedanceLedger
+import PMElementaryParticles.RecordEncoding

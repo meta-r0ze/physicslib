@@ -12,3 +12,4 @@ import PersistenceMechanics.ChannelMeasure
 import PersistenceMechanics.SelectionSymmetry
 import PersistenceMechanics.Requirements
 import PersistenceMechanics.ImpedanceMatching
+import PersistenceMechanics.ReversibleEncoding

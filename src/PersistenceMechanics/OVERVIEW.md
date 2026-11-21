@@ -33,3 +33,14 @@ criterion `P r² ≤ B ⇔ T ≥ 1 − B/P` (`admissible_iff_transmission`), and
 matching under zero reserve (`zero_reserve_matched`). It is a budget condition,
 not an optimality claim. The K-Automaton instance is
 `PMElementaryParticles.ImpedanceLedger`. (Written, awaiting a compile check.)
+
+## Nested Rule 2: Reversible Encoding
+
+`ReversibleEncoding` states the encoding rule. A coarse description `q` plus
+metadata `m` is reversible exactly when `m` separates every fibre of `q`
+(`encode_injective_iff`). Then fibres have at most `|M|` states
+(`fiber_card_le`) and `|X| ≤ |Q|·|M|` (`card_le_mul`). For site data, the
+reference value with the differences from it is reversible
+(`relational_injective`), and dropping the reference merges exactly the global
+shifts (`differences_eq_iff`). The protocol-record instance is
+`PMElementaryParticles.RecordEncoding`. (Written, awaiting a compile check.)
