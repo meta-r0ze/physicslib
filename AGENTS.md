@@ -68,6 +68,8 @@ LEAN_JOBS=8 ./build.sh lean src/PMAtoms/TwoLedger.lean
 
 `fast` builds only OLean artifacts (no C/ilean); `FAST_OLD=1` additionally
 skips transitive dependency checks when imports are unchanged.
+Heavy certificates with no importers belong in `PMChecks`; `fast`, `build`, and
+the default target skip it, `full` builds it.
 
 Under the hood this is one Lake package with one `.lake` cache. The e8p binary is
 `.lake/build/bin/e8p`.

@@ -71,7 +71,8 @@ git history.
   Least-Toll references per label: up→lepton, down→colour, electron→lepton,
   neutrino→colour (Hamming `1`, `bitToll_eq_hamming`). The 3-ring counts
   (`robustCoreU_card = 1110`, `SurvivorsU false = 1650`) are toy-ring
-  observations, not E8 values.
+  observations, not E8 values.  These counts are the `SurvivorClasses`
+  certificate in `PMChecks`; not in the default build.
 - E8 attachment: `ChannelVectors.channelCoord`; active-false vector class,
   active-true certified triality image (`channelCoord_glueClass`,
   `channelCoord_injective`, `channelCoord_image_card`).

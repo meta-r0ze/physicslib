@@ -9,7 +9,7 @@ usage() {
 Usage:
   ./build.sh                Build libraries, run audits
   ./build.sh all            Same as ./build.sh
-  ./build.sh full           Build libraries, run audits, run e8p checks
+  ./build.sh full           Build libraries and PMChecks, run audits, run e8p checks
   ./build.sh build          Build libraries only
   ./build.sh audit          Run audits only
   ./build.sh e8p            Build e8p and run its formatter/reporter checks
@@ -33,6 +33,9 @@ Usage:
   ./build.sh <module>       Build one target, e.g. ./build.sh PMAction
   ./build.sh <file.lean>    Build one file's OLean, e.g. ./build.sh src/PMAction.lean
   ./build.sh help           This text
+
+Heavy certificates with no importers belong in PMChecks; `fast`, `build` and
+the default target skip it, `full` builds it.
 
 Set LAKE_BIN to use a non-default lake binary.
 Set LEAN_JOBS to control `./build.sh lean` threads (default 4).
@@ -188,6 +191,7 @@ case "${1:-all}" in
     ;;
   full)
     "$LAKE" build
+    "$LAKE" build PMChecks
     run_audits
     run_e8p_tests
     ;;

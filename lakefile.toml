@@ -64,6 +64,12 @@ srcDir = "src"
 globs = ["PMCosmology", "PMCosmology.+"]
 
 [[lean_lib]]
+name = "PMChecks"
+srcDir = "src"
+# Heavy certificates / checks with no importers; not in the default targets.
+globs = ["PMChecks", "PMChecks.+"]
+
+[[lean_lib]]
 name = "CN1"
 srcDir = "src/classification"
 globs = ["CN1.Foundations.+", "CN1.Finite.+"]
