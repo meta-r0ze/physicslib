@@ -5,8 +5,8 @@ import PMElementaryParticles.RecordPortIdentification
 # Structural survivor facts on the 43-ring
 
 The packet starts on the live stream at `x0`. While it meets no exchanging site
-it moves one site per tick (`quiet_walk`). Every site is reached within `n`
-ticks (`reach`), so the first exchanging site on its path registers it
+it moves one site per tick (`RingRates.quiet_walk`). Every site is reached
+within `n` ticks (`RingRates.reach`), so the first exchanging site on its path registers it
 (`first_arrival_floor`). Hence a bit ring registers in one period if and only
 if some site exchanges (`sum_zero_iff`, `ring43_toll_iff`).
 
@@ -84,85 +84,6 @@ theorem oneSiteTotal_eq_hamming (c : PMConstants.PacketGaugeActions.Channels)
 section FirstArrival
 
 variable {n : ℕ}
-
-/-- One port step is the stream shift followed by the on-site exchange. -/
-theorem portStep_apply (either : Bool) (r : Fin n → IsolatedRequests)
-    (P : PMKAutomaton.RingReceiver.PortField n) (x : Fin n) :
-    PMKAutomaton.RingReceiver.portStep either r P x =
-      PMKAutomaton.LocalController.applyGuard
-        (fun _ => PMKAutomaton.RingReceiver.exchange either (r x))
-        (PMKAutomaton.RingReceiver.arrivals P x) := rfl
-
-theorem localized_live (y z : Fin n) :
-    (localizedPortsN n y activePacket z).1 = decide (z = y) := by
-  by_cases h : z = y <;> simp [localizedPortsN, h, active_activePacket]
-
-theorem localized_record (y z : Fin n) :
-    (localizedPortsN n y activePacket z).2 = false := by
-  by_cases h : z = y <;> simp [localizedPortsN, h]
-
-/-- A packet on the live stream at `y` arrives at `finRotate n y`. -/
-theorem arrivals_localized (y x : Fin n) :
-    PMKAutomaton.RingReceiver.arrivals (localizedPortsN n y activePacket) x =
-      (decide (x = finRotate n y), false) := by
-  change ((localizedPortsN n y activePacket ((finRotate n)⁻¹ x)).1,
-      (localizedPortsN n y activePacket (finRotate n x)).2) = _
-  rw [localized_live, localized_record]
-  congr 1
-  exact decide_eq_decide.mpr Equiv.Perm.inv_eq_iff_eq
-
-/-- With no exchange at the arrival site, the packet moves one site. -/
-theorem portStep_quiet (either : Bool) (r : Fin n → IsolatedRequests) (y : Fin n)
-    (hq : PMKAutomaton.RingReceiver.exchange either (r (finRotate n y)) = false) :
-    PMKAutomaton.RingReceiver.portStep either r (localizedPortsN n y activePacket) =
-      localizedPortsN n (finRotate n y) activePacket := by
-  funext x
-  rw [portStep_apply, arrivals_localized]
-  by_cases hx : x = finRotate n y
-  · subst hx
-    simp_all [PMKAutomaton.LocalController.applyGuard, localizedPortsN,
-      active_activePacket]
-  · simp_all [PMKAutomaton.LocalController.applyGuard, localizedPortsN]
-
-/-- Until its first exchanging site, the packet walks the ring. -/
-theorem quiet_walk (either : Bool) (r : Fin n → IsolatedRequests) (x0 : Fin n)
-    (j : ℕ) (hq : ∀ i < j,
-      PMKAutomaton.RingReceiver.exchange either (r ((finRotate n)^[i + 1] x0)) = false) :
-    (PMKAutomaton.RingReceiver.portStep either r)^[j] (localizedPortsN n x0 activePacket) =
-      localizedPortsN n ((finRotate n)^[j] x0) activePacket := by
-  induction j with
-  | zero => rfl
-  | succ j ih =>
-    have hj := hq j (Nat.lt_succ_self j)
-    rw [Function.iterate_succ_apply' (⇑(finRotate n))] at hj
-    rw [Function.iterate_succ_apply' (⇑(PMKAutomaton.RingReceiver.portStep either r)),
-      ih (fun i hi => hq i (Nat.lt_succ_of_lt hi)),
-      Function.iterate_succ_apply' (⇑(finRotate n))]
-    exact portStep_quiet either r _ hj
-
-theorem finRotate_iterate_val (k m : ℕ) (x : Fin (k + 1)) :
-    ((finRotate (k + 1))^[m] x).val = (x.val + m) % (k + 1) := by
-  induction m with
-  | zero => simp [Nat.mod_eq_of_lt x.isLt]
-  | succ m ih =>
-    rw [Function.iterate_succ_apply', finRotate_apply, Fin.val_add, ih, Fin.val_one',
-      ← Nat.add_mod, Nat.add_assoc]
-
-/-- Every site is reached within one lap. -/
-theorem reach (k : ℕ) (x0 s : Fin (k + 1)) :
-    ∃ m < k + 1, (finRotate (k + 1))^[m + 1] x0 = s := by
-  have hx := x0.isLt
-  have hs := s.isLt
-  by_cases h : x0.val < s.val
-  · refine ⟨s.val - x0.val - 1, by omega, Fin.ext ?_⟩
-    rw [finRotate_iterate_val,
-      show x0.val + (s.val - x0.val - 1 + 1) = s.val by omega]
-    exact Nat.mod_eq_of_lt hs
-  · refine ⟨s.val + k - x0.val, by omega, Fin.ext ?_⟩
-    rw [finRotate_iterate_val,
-      show x0.val + (s.val + k - x0.val + 1) = s.val + (k + 1) by omega,
-      Nat.add_mod_right]
-    exact Nat.mod_eq_of_lt hs
 
 /-- The arrival at the first exchanging site registers. -/
 theorem flag_at_arrival (either : Bool) (r : Fin n → IsolatedRequests) (x0 : Fin n)

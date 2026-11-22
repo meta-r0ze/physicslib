@@ -86,14 +86,14 @@ git history.
   module docs; tier sets, generation addresses, quark/lepton formulas and the
   heavy-label weight remain premises.
 
-**One firing site on the receiver ring.** With firing site `s` and start
-site `x0`, the first registration has offset
-`d = (s + n − 1 − x0) mod n`. Over `T` ticks the count is
-`(T + n − 1 − d) / n` (`RingRates.predictedCount`). The formula is
-kernel-checked for `n = 3, …, 8` at `T = 43`
-(`formula_three` … `formula_eight`). On the clock ring, `n = T = 43`, a single
-firing site registers exactly once for every `x0` and `s`
-(`RingRates.ring43_one`, `ring_Delta_one`, linked to `ClockSites.ring_size`).
+**One firing site on the receiver ring.** The live packet walks forward to
+the firing site `s` (`RingRates.quiet_walk`), is exchanged onto the record
+stream and registers (`portStep_fire`), then walks backward (`record_walk`)
+and reaches `s` again only after a full lap (`symm_iterate_ne_self`). So one
+firing site registers exactly once in every `n`-tick period, for every ring
+size `n`, start site and guard (`RingRates.one_site_exact`, structural, no
+kernel enumeration). On the clock ring `n = 43` this is `ring43_one` and
+`ring_Delta_one` (linked to `ClockSites.ring_size`).
 
 The registration counts `14, 15, 21, 22, 28, ...` are **3-ring toy values**,
 not E8 values. For any firing pattern, the packet walks the ring until its
