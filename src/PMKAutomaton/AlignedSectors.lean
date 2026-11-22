@@ -4,21 +4,19 @@ import PMSubstrate.Channels
 /-!
 # A clock-aligned pair of D4 sectors
 
-`PMSubstrate.Channels.sectorBasis` supplies two orthogonal D4 sectors in E8, but
-its coordinates are not aligned with the clock plane. This module supplies a
-second placement. Its first four columns are the aligned spacetime D4 of
+`PMSubstrate.Channels.sectorBasis` is the clock-aligned pair of orthogonal D4
+sectors in E8. Its first four columns are the aligned spacetime D4 of
 `ClockAlignment`; the last four are an internal D4, chosen from
 `ClockAlignment.internalRoots`.
 
-The matrix identity `aligned_d4d4` proves that the new columns have the same
-block Gram matrix as `Channels.sectorBasis`. The spacetime block's slice roots
-are clock-silent (`sector0_slice_silent`) and the internal block has no
-clock-silent root (`sector1_not_silent`).
+`alignedSectorBasis` writes the same placement from the base-13 codes
+`a,b,c,beta,p,q,r,s`; `alignedSectorBasis_eq` certifies that the two writings
+agree. The matrix identity `aligned_d4d4` records the block Gram matrix. The
+spacetime block's slice roots are clock-silent (`sector0_slice_silent`) and the
+internal block has no clock-silent root (`sector1_not_silent`).
 
-The placement changes the coordinates, not the Gram identity. Dependents that
-use only `e8_two_d4_sectors` are independent of the choice; dependents that use
-`sectorBasis` coordinates must be rechecked before switching. This module does
-not switch them.
+The aligned placement is now the only one; the old unaligned coordinates are
+gone from `Channels.sectorBasis`.
 -/
 
 namespace PMKAutomaton.AlignedSectors
@@ -59,6 +57,12 @@ def alignedColumns : Fin 8 → V := ![a, b, c, beta, p, q, r, s]
 last four are the internal D4. -/
 def alignedSectorBasis : Matrix (Fin 8) (Fin 8) ℤ :=
   fun i j => alignedColumns j i
+
+/-- **The clock-aligned placement is the single substrate placement.**  The
+explicit `Channels.sectorBasis` literal and the code-built `alignedSectorBasis`
+agree. -/
+theorem alignedSectorBasis_eq : alignedSectorBasis = Channels.sectorBasis := by
+  decide +kernel
 
 /-- **The aligned placement has the same D4 block Gram matrix.** -/
 theorem aligned_d4d4 :

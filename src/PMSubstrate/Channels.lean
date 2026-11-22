@@ -4,7 +4,8 @@ import PMSubstrate.Lattices
 # Sectors and channels from the lattice
 
 * `e8_two_d4_sectors`: `E₈` contains two orthogonal `D₄` root sectors (Postulate B; the sector
-  type `D₄` is forced among rank-4 root sectors by `Sectors.sector_selection`).
+  type `D₄` is forced among rank-4 root sectors by `Sectors.sector_selection`). The placement is
+the clock-aligned one; the alignment is certified in `PMKAutomaton.AlignedSectors`.
 * A **channel** is a nontrivial glue class of a sector (an element of `D₄*/D₄ ≅ (ℤ/2)²`); its
   **capacity** is its number of minimal, least-cost vectors. `minimal_class_card`: each of the
   three nontrivial classes (vector, spinor, conjugate spinor) has exactly 8. This replaces the
@@ -86,16 +87,21 @@ theorem d4_even_sum_model : d4Basisᵀ * d4Basis = d4Gram ∧
     ∀ i, Even (∑ j, d4Basis j i) := by
   refine ⟨by decide, by decide⟩
 
-/-- Two orthogonal `D₄` sectors spanned by roots of `E₈`. -/
+/-- Two orthogonal `D₄` sectors spanned by roots of `E₈`, in the
+**clock-aligned placement**.  The first four columns are the spacetime `D₄`
+(`a,b,c,beta` of `PMKAutomaton.ClockAlignment`), the last four the internal
+`D₄` (`p,q,r,s`).  That the columns are those roots, and that the spacetime
+block's slice roots are clock-silent while the internal block has no silent
+root, is certified in `PMKAutomaton.AlignedSectors`. -/
 def sectorBasis : Matrix (Fin 8) (Fin 8) ℤ := (!![
-  -1, -1, -2, -3, -2, -1, -1, -1;
-  -1, -2, -2, -3, -3, -3, -2, -1;
-  0, 0, 0, 0, 0, 1, 1, 1;
-  1, 2, 2, 3, 3, 2, 1, 1;
-  0, 0, 1, 0, 0, 0, 0, 0;
-  -1, -1, -2, -2, -1, -1, 0, 0;
-  0, 1, 1, 2, 1, 1, 0, 0;
-  1, 0, 1, 1, 1, 1, 0, 0])ᵀ
+  -2, -3, -4, -6, -5, -4, -3, -2;
+  0, 0, 0, 0, 0, 0, 0, 1;
+  0, 0, 0, 0, 0, 0, 1, 0;
+  0, 1, 1, 2, 2, 2, 1, 0;
+  0, -1, -1, -2, -1, 0, 0, 0;
+  0, 0, 0, 1, 0, 0, 0, 0;
+  0, 0, 0, 0, 1, 0, 0, 0;
+  0, 0, 1, 0, 0, 0, 0, 0])ᵀ
 
 def d4d4 : Matrix (Fin 8) (Fin 8) ℤ := !![
   2, -1, 0, 0, 0, 0, 0, 0;
