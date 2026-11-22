@@ -108,7 +108,8 @@ theorem arrivals_localized (y x : Fin n) :
   change ((localizedPortsN n y activePacket ((finRotate n)⁻¹ x)).1,
       (localizedPortsN n y activePacket (finRotate n x)).2) = _
   rw [localized_live, localized_record]
-  simp [Equiv.Perm.inv_eq_iff_eq]
+  congr 1
+  exact decide_eq_decide.mpr Equiv.Perm.inv_eq_iff_eq
 
 /-- With no exchange at the arrival site, the packet moves one site. -/
 theorem portStep_quiet (either : Bool) (r : Fin n → IsolatedRequests) (y : Fin n)
@@ -119,9 +120,9 @@ theorem portStep_quiet (either : Bool) (r : Fin n → IsolatedRequests) (y : Fin
   rw [portStep_apply, arrivals_localized]
   by_cases hx : x = finRotate n y
   · subst hx
-    simp [PMKAutomaton.LocalController.applyGuard, hq, localizedPortsN,
+    simp_all [PMKAutomaton.LocalController.applyGuard, localizedPortsN,
       active_activePacket]
-  · simp [PMKAutomaton.LocalController.applyGuard, hx, localizedPortsN]
+  · simp_all [PMKAutomaton.LocalController.applyGuard, localizedPortsN]
 
 /-- Until its first exchanging site, the packet walks the ring. -/
 theorem quiet_walk (either : Bool) (r : Fin n → IsolatedRequests) (x0 : Fin n)
@@ -139,19 +140,29 @@ theorem quiet_walk (either : Bool) (r : Fin n → IsolatedRequests) (x0 : Fin n)
       Function.iterate_succ_apply' (⇑(finRotate n))]
     exact portStep_quiet either r _ hj
 
-theorem finRotate_iterate (k m : ℕ) (x : Fin (k + 1)) :
-    (finRotate (k + 1))^[m] x = x + (m : Fin (k + 1)) := by
+theorem finRotate_iterate_val (k m : ℕ) (x : Fin (k + 1)) :
+    ((finRotate (k + 1))^[m] x).val = (x.val + m) % (k + 1) := by
   induction m with
-  | zero => simp
+  | zero => simp [Nat.mod_eq_of_lt x.isLt]
   | succ m ih =>
-    rw [Function.iterate_succ_apply', ih, finRotate_succ_apply, Nat.cast_succ, add_assoc]
+    rw [Function.iterate_succ_apply', finRotate_apply, Fin.val_add, ih, Fin.val_one',
+      ← Nat.add_mod, Nat.add_assoc]
 
 /-- Every site is reached within one lap. -/
 theorem reach (k : ℕ) (x0 s : Fin (k + 1)) :
     ∃ m < k + 1, (finRotate (k + 1))^[m + 1] x0 = s := by
-  refine ⟨(s - x0 - 1).val, (s - x0 - 1).isLt, ?_⟩
-  rw [finRotate_iterate, Nat.cast_succ, Fin.cast_val_eq_self]
-  abel
+  have hx := x0.isLt
+  have hs := s.isLt
+  by_cases h : x0.val < s.val
+  · refine ⟨s.val - x0.val - 1, by omega, Fin.ext ?_⟩
+    rw [finRotate_iterate_val,
+      show x0.val + (s.val - x0.val - 1 + 1) = s.val by omega]
+    exact Nat.mod_eq_of_lt hs
+  · refine ⟨s.val + k - x0.val, by omega, Fin.ext ?_⟩
+    rw [finRotate_iterate_val,
+      show x0.val + (s.val + k - x0.val + 1) = s.val + (k + 1) by omega,
+      Nat.add_mod_right]
+    exact Nat.mod_eq_of_lt hs
 
 /-- The arrival at the first exchanging site registers. -/
 theorem flag_at_arrival (either : Bool) (r : Fin n → IsolatedRequests) (x0 : Fin n)
@@ -162,7 +173,8 @@ theorem flag_at_arrival (either : Bool) (r : Fin n → IsolatedRequests) (x0 : F
   rw [Function.iterate_succ_apply' (⇑(finRotate n))] at hs ⊢
   unfold localizedFlagNatN
   rw [quiet_walk either r x0 j hq, arrivals_localized]
-  exact if_pos ⟨hs, by simp⟩
+  simp only [finRotate_apply] at hs ⊢
+  simp [hs]
 
 /-- Floor: any exchanging site gives at least one registration within `n` ticks. -/
 theorem first_arrival_floor (either : Bool) (r : Fin n → IsolatedRequests) (x0 : Fin n)
