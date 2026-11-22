@@ -1,4 +1,4 @@
-import PMKAutomaton.Machine.AxisHop
+import PMKAutomaton.Machine.ClockEps
 
 /-!
 # The directional hop in the aligned clock
@@ -31,7 +31,7 @@ open AxisHop
 open PMKAutomaton.ClockRing
 
 /-- A root event is clock-silent when its aligned clock reading is zero. -/
-def silentRoot (t : Tri) : Prop := clockReading (rootE8 t) = 0
+def silentRoot (t : Tri) : Prop := clockReading (ClockEps.rootE8 t) = 0
 
 instance (t : Tri) : Decidable (silentRoot t) := by unfold silentRoot; infer_instance
 
@@ -62,8 +62,8 @@ set_option maxRecDepth 100000 in
 /-- **Each clock-moving word has one event reading `+1` and one reading `−1`.** -/
 theorem clock_words_signs :
     ∀ p ∈ clockWords,
-      (clockReading (rootE8 p.1) = 1 ∧ clockReading (rootE8 p.2) = -1) ∨
-        (clockReading (rootE8 p.1) = -1 ∧ clockReading (rootE8 p.2) = 1) := by
+      (clockReading (ClockEps.rootE8 p.1) = 1 ∧ clockReading (ClockEps.rootE8 p.2) = -1) ∨
+        (clockReading (ClockEps.rootE8 p.1) = -1 ∧ clockReading (ClockEps.rootE8 p.2) = 1) := by
   decide +kernel
 
 /-- Exchange the two `+1` ε coordinates `0` and `1`. -/
