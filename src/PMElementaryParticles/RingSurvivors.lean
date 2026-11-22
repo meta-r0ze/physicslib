@@ -162,7 +162,7 @@ theorem flag_at_arrival (either : Bool) (r : Fin n → IsolatedRequests) (x0 : F
   rw [Function.iterate_succ_apply' (⇑(finRotate n))] at hs ⊢
   unfold localizedFlagNatN
   rw [quiet_walk either r x0 j hq, arrivals_localized]
-  simp [hs]
+  exact if_pos ⟨hs, by simp⟩
 
 /-- Floor: any exchanging site gives at least one registration within `n` ticks. -/
 theorem first_arrival_floor (either : Bool) (r : Fin n → IsolatedRequests) (x0 : Fin n)
