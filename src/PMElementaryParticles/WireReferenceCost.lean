@@ -49,15 +49,20 @@ theorem uniform_if_maximin (p : Channels → ℝ)
     (PMSubstrate.PersistenceMaximin.maximin_iff p).mp h c
 
 /-- An alternative uniformity proof when the writer's inputs really inherit
-the invariant 32-carrier preparation by restriction and renormalization. -/
+the invariant 32-carrier preparation by restriction and renormalization.  The
+injective placement `emb` into the substrate channels is supplied by the
+caller (EP: `ChannelPlacement.packetChannel`). -/
 theorem uniform_if_inherited
+    (emb : Channels → Bool × PMSubstrate.ChannelSymmetry.V4)
+    (_emb_inj : Function.Injective emb)
+    (hmem : ∀ c, emb c ∈ PMSubstrate.ChannelSymmetry.channels)
     (P : Bool × PMSubstrate.ChannelSymmetry.V4 → ℝ)
     (hP : ∀ i, ∀ x ∈ PMSubstrate.ChannelSymmetry.channels,
       P (PMSubstrate.ChannelSymmetry.gen i x) = P x)
     (p : Channels → ℝ) (k : ℝ)
-    (hp : ∀ c, p c = k * P (PMConstants.PreparationSelection.toChannel c))
+    (hp : ∀ c, p c = k * P (emb c))
     (hsum : ∑ c, p c = 1) (c : Channels) : p c = 1 / 16 := by
-  rw [PMConstants.PreparationSelection.packet_preparation_uniform P hP p k hp hsum,
+  rw [PMConstants.PreparationSelection.packet_preparation_uniform emb _emb_inj hmem P hP p k hp hsum,
     PersistenceMechanics.LawSelection.uniform, channels_card]
   norm_num
 

@@ -348,7 +348,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `RunningLinks` | Paper III's running coefficients come from Paper II |
 | `MatterRunning` | Paper II's dynamics applied to Paper III's derived content |
 | hypercharge scope (measured W-mass selection) | moved to the e8p comparison layer (`E8PConstants.HyperScope`) |
-| `PreparationSelection` | The uniform preparation as an instance of law selection |
+| `PreparationSelection` | The uniform preparation as an instance of law selection; `packet_preparation_uniform` is placement-free (any injective placement of the packet channels into the 32 substrate channels), with the placement supplied by EP (`ChannelPlacement.packetChannel`) |
 | `ScalePairing` | Which electric coupling the colour formula pairs with `α_s(M_Z)` |
 | `StableReadout` | Why the colour formula pairs `α(0)` with `α_s(M_Z)` |
 | `RegulatoryLabels` | The 23 regulatory labels are the coordinates of a link hop |

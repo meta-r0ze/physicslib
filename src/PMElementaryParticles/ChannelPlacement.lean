@@ -1,5 +1,7 @@
 import PMKAutomaton.AlignedSectors
 import PMElementaryParticles.ChannelVectors
+import PMConstants.PreparationSelection
+import PMElementaryParticles.WireReferenceCost
 
 /-!
 # Placing the sixteen channels in the aligned internal D4
@@ -185,5 +187,49 @@ theorem restoring_classes :
     libraryIndex (1, 1) = 1 ∧ libraryIndex (0, 1) = 2 ∧
       matchingGlueKey (1, 1) = (1, 0) ∧ matchingGlueKey (0, 1) = (1, 1) := by
   decide
+
+/-! ## The packet channels in the substrate channel set -/
+
+/-- The packet's sixteen channels placed in the substrate channel set: the
+internal (`true`) sector of `ChannelSymmetry.channels`, at the derived
+coordinates `channelCoord`.  The sector `true` is the second (`p,q,r,s`) block
+of `AlignedSectors.alignedSectorBasis`, the internal D4; `ChannelSymmetry.channels`
+indexes the two D4 factors by `Bool` (`false` = first, `true` = second). -/
+def packetChannel (c : PMConstants.PacketGaugeActions.Channels) :
+    Bool × PMSubstrate.ChannelSymmetry.V4 :=
+  (true, channelCoord c)
+
+/-- The derived placement is injective. -/
+theorem packetChannel_injective : Function.Injective packetChannel := by
+  intro c d h
+  exact channelCoord_injective (congrArg Prod.snd h)
+
+/-- The derived placement lands in the substrate's 32 channels. -/
+theorem packetChannel_mem : ∀ c, packetChannel c ∈ PMSubstrate.ChannelSymmetry.channels := by
+  decide +kernel
+
+/-- **The packet preparation is uniform** through the derived placement.  This
+is the placement-free `PreparationSelection.packet_preparation_uniform`
+instantiated at `packetChannel`, so it needs no chosen `chanTable` entries. -/
+theorem packet_preparation_uniform_channelCoord
+    (P : Bool × PMSubstrate.ChannelSymmetry.V4 → ℝ)
+    (hP : ∀ i, ∀ x ∈ PMSubstrate.ChannelSymmetry.channels,
+      P (PMSubstrate.ChannelSymmetry.gen i x) = P x)
+    (p : PMConstants.PacketGaugeActions.Channels → ℝ) (k : ℝ)
+    (hp : ∀ c, p c = k * P (packetChannel c)) (hsum : ∑ c, p c = 1) :
+    p = PersistenceMechanics.LawSelection.uniform :=
+  PMConstants.PreparationSelection.packet_preparation_uniform
+    packetChannel packetChannel_injective packetChannel_mem P hP p k hp hsum
+
+/-- The `WireReferenceCost` uniformity bound through the derived placement. -/
+theorem uniform_if_inherited_channelCoord
+    (P : Bool × PMSubstrate.ChannelSymmetry.V4 → ℝ)
+    (hP : ∀ i, ∀ x ∈ PMSubstrate.ChannelSymmetry.channels,
+      P (PMSubstrate.ChannelSymmetry.gen i x) = P x)
+    (p : PMConstants.PacketGaugeActions.Channels → ℝ) (k : ℝ)
+    (hp : ∀ c, p c = k * P (packetChannel c))
+    (hsum : ∑ c, p c = 1) (c : PMConstants.PacketGaugeActions.Channels) : p c = 1 / 16 :=
+  PMElementaryParticles.WireReferenceCost.uniform_if_inherited
+    packetChannel packetChannel_injective packetChannel_mem P hP p k hp hsum c
 
 end PMElementaryParticles.ChannelPlacement
