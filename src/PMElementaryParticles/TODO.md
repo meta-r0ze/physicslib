@@ -14,15 +14,6 @@ This file is the open list only.
   the Toll floor and least Toll for every firing pattern, and one saturating
   (trapping) pattern. The exact set of patterns with utilization `1` is not
   stated. Do it only if a downstream result needs it.
-- **Prove what the clock-silent roots do.** `tools/clock_plane_projection.py`
-  (all 10 aligned placements) finds two kinds. The 8 silent roots of the
-  conjugate-spinor coset (`g = 1`) are internal (clock-plane projection `0`);
-  its ring steps equal the spacetime ring step. The 2 silent roots of the vector
-  coset (`g = 0`) are `±cu`, transverse in the clock plane. The spinor coset
-  (`g = 2`) has none, and its ring steps differ from the spacetime step by `cu`.
-  Prove this for the certified placement, then its consequence: per lap, `g = 1`
-  has no transverse drift, `g = 2` has a forced drift `43·cu`, and `g = 0` can
-  cancel its drift with `±cu`.
 - **Alone/together on the 43-ring.** Single-protocol survivors are restated on
   the 43-ring (`RingSurvivors`). The alone/together (several protocols on one
   ring) result is still the 3-ring computation.
