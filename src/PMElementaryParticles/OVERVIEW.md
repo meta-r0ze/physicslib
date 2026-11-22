@@ -938,8 +938,8 @@ divides its length, and `plus_step_rotates` identifies a `+1` step with
 
 The exploration scripts for these facts are `tools/clock_ring_check.py`,
 `tools/clock_tick_weights.py`, `tools/clock_slice_alignment.py`,
-`tools/clock_stabilizer_orbits.py`, `tools/generation_clock_signature.py` and
-`tools/bit_ring_rate_check.py` (no data).
+`tools/clock_stabilizer_orbits.py`, `tools/generation_clock_signature.py`,
+`tools/clock_plane_projection.py` and `tools/bit_ring_rate_check.py` (no data).
 
 The ring therefore has `n = Δ = 43` sites, not 3. The live stream steps by
 `+1` roots and the record stream by `−1` roots; an exchange swaps a packet
