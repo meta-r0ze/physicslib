@@ -29,7 +29,7 @@ So a packet that makes one root event per tick, each changing the reading by
 The identification of the receiver's tick with one such root event is the
 modelling step; it is stated in `SCOPE.md` named premises,
 which also lists the checks still open (step weights between the two projection
-classes, consistency with `SliceHop`). Exploration script:
+classes, consistency with `SliceHop.silent_words_eq_orbit`). Exploration script:
 `tools/clock_ring_check.py`.
 -/
 

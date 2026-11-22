@@ -14,8 +14,11 @@ the six backward steps.
 
 The closure step is the same premise as in `SliceHop`: a weight defined inside
 the substrate is invariant under the substrate's symmetries that fix the clock.
-Given that premise, the six forward steps carry equal weight and the six
-backward steps carry equal weight. Closure itself is not proved here.
+`SliceHop.silent_words_eq_orbit` shows the four clock-silent hop words are one
+orbit of the clock-fixing swaps `swap01`, `swap23`, and `SliceHop.slice_uniform`
+turns invariance under those swaps into a uniform weight. Given that premise,
+the six forward steps carry equal weight and the six backward steps carry equal
+weight. Closure itself is not proved here.
 
 The finite orbit checks are `forward_closed`, `forward_one_orbit`,
 `backward_closed` and `backward_one_orbit`; the clock invariance of a slice

@@ -16,7 +16,7 @@ E8 reflections, `simple_is_root`) are such involutions:
 
 So the comparison gate's coherent step is a single root word of length one, run for a quarter
 period. The remaining gate content is the controlled transport, whose root words are the
-directional hops (`AxisHop`).
+directional hops (`AxisHop.h_two_roots`, `AxisHop.h_words_count`, `SliceHop.slice_uniform`).
 -/
 
 noncomputable section

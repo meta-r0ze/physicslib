@@ -706,8 +706,8 @@ inductive Link
 def preserves : Link → Frame → Prop
   | .sector, _ => True
   | .line, f => act f (AxisHop.vec OpenHandoff.direction) = AxisHop.vec OpenHandoff.direction
-  | .axis, f => act f (AxisHop.axis 0) = AxisHop.axis 0
-  | .slice, f => act f (AxisHop.axis 0) = AxisHop.axis 0 ∧ act f (AxisHop.axis 3) = AxisHop.axis 3
+  | .axis, f => act f (AxisHop.epsAxis 0) = AxisHop.epsAxis 0
+  | .slice, f => act f (AxisHop.epsAxis 0) = AxisHop.epsAxis 0 ∧ act f (AxisHop.epsAxis 3) = AxisHop.epsAxis 3
 
 instance (l : Link) (f : Frame) : Decidable (preserves l f) := by
   cases l <;> unfold preserves <;> infer_instance
@@ -810,27 +810,27 @@ theorem paired_orders :
 private theorem probe_fix_pair : ∀ f, d4 f → preserves .axis f →
     ((act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
       act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0) ↔
-        act f (AxisHop.axis 1) = AxisHop.axis 1) := by
+        act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) := by
   decide +kernel
 
 /-- With the same fixed probe as the line, the axis geometry further
 restricts the covariance on the original trial encoding. -/
 theorem fixed_probe_orders :
-    ((stabilizer .axis).filter fun f => act f (AxisHop.axis 1) = AxisHop.axis 1).card = 4 ∧
-    ((stabilizer .slice).filter fun f => act f (AxisHop.axis 1) = AxisHop.axis 1).card = 1 := by
+    ((stabilizer .axis).filter fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1).card = 4 ∧
+    ((stabilizer .slice).filter fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1).card = 1 := by
   decide +kernel
 
 theorem axis_fixed_probe_iff (f : Frame) (h : f ∈ stabilizer .axis) :
     (act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
       act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0) ↔
-        act f (AxisHop.axis 1) = AxisHop.axis 1 :=
+        act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1 :=
   probe_fix_pair f (mem_filter.mp h).2.1 (mem_filter.mp h).2.2
 
 /-- Fixing the slice without marking a positive clock normal admits
 normal reversal. The separate scalar phase is unchanged. -/
 def slicePlane : Finset Frame :=
-  (stabilizer .axis).filter fun f => act f (AxisHop.axis 3) = AxisHop.axis 3 ∨
-    act f (AxisHop.axis 3) = -AxisHop.axis 3
+  (stabilizer .axis).filter fun f => act f (AxisHop.epsAxis 3) = AxisHop.epsAxis 3 ∨
+    act f (AxisHop.epsAxis 3) = -AxisHop.epsAxis 3
 
 theorem slice_plane_order : slicePlane.card = 8 := by decide +kernel
 
@@ -841,18 +841,18 @@ theorem slice_plane_generators :
 
 theorem fixed_probe_generators :
     products (([[2], [3]] : List (List (Fin 4))).toFinset.image wordFrame) 2 =
-      (stabilizer .axis).filter (fun f => act f (AxisHop.axis 1) = AxisHop.axis 1) ∧
-    (stabilizer .slice).filter (fun f => act f (AxisHop.axis 1) = AxisHop.axis 1) =
+      (stabilizer .axis).filter (fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) ∧
+    (stabilizer .slice).filter (fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) =
       {identity} := by
   decide +kernel
 
 theorem slice_plane_probe_order :
-    (slicePlane.filter fun f => act f (AxisHop.axis 1) = AxisHop.axis 1).card = 2 := by
+    (slicePlane.filter fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1).card = 2 := by
   decide +kernel
 
 theorem slice_plane_probe_generators :
     products (([[2, 3]] : List (List (Fin 4))).toFinset.image wordFrame) 1 =
-      slicePlane.filter (fun f => act f (AxisHop.axis 1) = AxisHop.axis 1) := by
+      slicePlane.filter (fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) := by
   decide +kernel
 
 /-- A bare line direction has more symmetries than the marked
@@ -959,11 +959,11 @@ theorem slice_probe_not_equivariant :
       (NodeSymmetry.act (NodeSymmetry.simpleFrame 0)) := by
   intro h
   have hn : NodeSymmetry.act (NodeSymmetry.simpleFrame 1)
-      (NodeSymmetry.act (NodeSymmetry.simpleFrame 0) (AxisHop.axis 0)) ≠
+      (NodeSymmetry.act (NodeSymmetry.simpleFrame 0) (AxisHop.epsAxis 0)) ≠
       NodeSymmetry.act (NodeSymmetry.simpleFrame 0)
-      (NodeSymmetry.act (NodeSymmetry.simpleFrame 1) (AxisHop.axis 0)) := by
+      (NodeSymmetry.act (NodeSymmetry.simpleFrame 1) (AxisHop.epsAxis 0)) := by
     decide +kernel
-  exact hn (h (AxisHop.axis 0))
+  exact hn (h (AxisHop.epsAxis 0))
 
 /-- Apply the same channel matrix in every live and record cell. -/
 def bankAction {R : ℕ} (A : PacketGaugeActions.M) (bank : PacketBank R) : PacketBank R :=
