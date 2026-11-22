@@ -48,16 +48,6 @@ This file is the open list only.
   of `Δ` for the offset. A native selection and firing law, the offset's
   scaling, and the existence of shared calibration remain open.
 
-## Full-ring Lean spectrum
-
-- **Prove the spectral block.** Prove the momentum action, the explicit `M(k)`,
-  its trace and determinant, and the eigenvalue identity
-  `cos E(k)=cos(x/2) cos k`. The mass reading stays the named hypothesis in
-  [SCOPE](../../SCOPE.md#named-premises).
-- **Prove the empty-firing spectrum gapless.** The present certificates cover
-  the full-firing unitary tick and the plane-wave periodicity. The empty-firing
-  gapless claim is still script-level.
-
 ## Everything else still open
 
 - **Elementary masses and widths.** Derive the assignment of invariant costs to

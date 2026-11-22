@@ -158,11 +158,18 @@ amplitudes are `(1 + e^{ix})/2` and `(1 - e^{ix})/2` (`converter_plus`,
 `CoherentRing.ringTick_unitary` proves the full-firing tick
 `(1 ⊗ encounter x) * shift` is unitary for every `n`. `Dispersion.planeWave`
 defines the plane wave and `Dispersion.planeWave_exp_period` proves its period
-`exp(i k n)=1`. The momentum-block action, explicit `M x k`, trace/determinant
-and eigenvalue proof are not completed in Lean; the dispersion
-`cos E(k) = cos(x/2) cos k` remains script-level
-(`tools/bit_ring_checkerboard.py`). Empty firing is script-gapless. The mass-like term is `x/2`, the
-band gap is `x`. The mass reading remains a hypothesis, not a result.
+`exp(i k n)=1`. The spectral block is now proved in Lean (`Dispersion`):
+
+| Result | Theorem |
+| --- | --- |
+| explicit encounter entries | `encounter_inl_inl` (`e^{ix/2} cos(x/2)`), `encounter_inl_inr` (`-i e^{ix/2} sin(x/2)`) |
+| momentum action | `ringTick_mulVec_planeWave`: `ringTick n x *ᵥ planeWave n m u = planeWave n m (M x (waveNumber n m) *ᵥ u)` |
+| trace and determinant | `M_trace`: `2 e^{ix/2} cos(x/2) cos k`; `M_det`: `e^{ix}` |
+| eigenvalue identity | `M_eigenvalue_plus`/`M_eigenvalue_minus`: `λ = e^{ix/2} e^{±iE}` satisfies `λ² − trace·λ + det = 0` when `cos E = cos(x/2) cos k` |
+| empty firing | `encounter_zero`, `M_zero`, `M_zero_eigenvalues`: `M 0 k = shiftDiag k` with eigenvalues `e^{∓ik}` |
+
+The zero-momentum gap offset is `E(0) = x/2` (`gap_offset`), the band gap is
+`x`. The mass reading remains a hypothesis, not a result.
 
 **Phase-to-record converter.** The certified comparator
 `CoherentComparisonRepair.compare (InterferenceReadout.phase x)` is unitary
