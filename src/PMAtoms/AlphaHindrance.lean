@@ -66,7 +66,7 @@ noncomputable def alphaRateHindered (hindranceScale : ℝ)
 
 theorem alphaRateHindered_pos (hindranceScale : ℝ)
     (parent daughter : AlphaLevel) (p : Nuclide)
-    (hZ : 0 < p.Z) (hN : 0 < p.N) :
+    (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaRateHindered hindranceScale parent daughter p :=
   mul_pos (alphaAttempt_pos hZ hN)
     (alphaActivationHindered_pos hindranceScale parent daughter p)

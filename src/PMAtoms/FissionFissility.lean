@@ -61,7 +61,7 @@ theorem fissionActivationE8_pos (p : Nuclide) : 0 < fissionActivationE8 p := by
 noncomputable def fissionRateE8 (p : Nuclide) : ℝ :=
   alphaAttempt p * fissionActivationE8 p
 
-theorem fissionRateE8_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem fissionRateE8_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < fissionRateE8 p :=
   mul_pos (alphaAttempt_pos hZ hN) (fissionActivationE8_pos p)
 

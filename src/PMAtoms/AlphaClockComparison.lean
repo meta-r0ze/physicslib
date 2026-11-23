@@ -37,7 +37,7 @@ theorem alphaFlux_eq_inv_tick : alphaFlux = 1 / e8Tick := by
 
 /-- The current alpha attempt is the inverse capacity period. -/
 theorem alphaAttempt_eq_inv_capacityPeriod {p : Nuclide}
-    (hZ : 0 < p.Z) (hN : 0 < p.N) :
+    (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     alphaAttempt p = 1 / capacityPeriod (alphaWorkload p) := by
   have hw : 0 < alphaWorkload p := alphaWorkload_pos hZ hN
   unfold alphaAttempt capacityPeriod
@@ -59,7 +59,7 @@ theorem capacity_vs_nested_ratio {workload : ℝ} (hw : 0 < workload) :
   field_simp [hw.ne', ht.ne']
 
 theorem alpha_capacity_vs_nested_ratio {p : Nuclide}
-    (hZ : 0 < p.Z) (hN : 0 < p.N) :
+    (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     alphaAttempt p / alphaNestedAttempt p = (alphaWorkload p) ^ 2 := by
   rw [alphaAttempt_eq_inv_capacityPeriod hZ hN]
   unfold alphaNestedAttempt

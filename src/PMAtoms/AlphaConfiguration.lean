@@ -90,7 +90,7 @@ noncomputable def alphaRateConfigured (parent daughter : NuclearOrbital)
   alphaAttempt p * alphaActivationConfigured parent daughter p
 
 theorem alphaRateConfigured_pos (parent daughter : NuclearOrbital) (p : Nuclide)
-    (hZ : 0 < p.Z) (hN : 0 < p.N) :
+    (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaRateConfigured parent daughter p :=
   mul_pos (alphaAttempt_pos hZ hN)
     (alphaActivationConfigured_pos parent daughter p)

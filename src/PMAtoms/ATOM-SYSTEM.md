@@ -55,7 +55,7 @@ The certified core is:
 - `3×3×3` interior-vertex selection
 - typed `pp/pn/nn` channel partition and mean-field counts
 - closure rank
-- alpha-cluster phase/surviving-budget count
+- whole alpha-closure count `⌊min(Z,N)/2⌋` and phase/surviving-budget
 - E8 magic ladder and shell occupations
 - exact `2×2×2` and `3×3×3` lattice Green functions
 - `cube3Lap_green`
@@ -97,8 +97,8 @@ The structure of the ledger is more unified than its layers suggest (`Persistenc
   of one cubic packing complex with Euler characteristic `1` (`packing_euler`,
   `packingClosureRank_eq_faces_sub_cells`).
 - **Margins are the substrate's Governor rule** (a credit spread over the `Δ` clock slots): the
-  beta margin `41/43 = 1 + governorTerm` with credit `χ`, and the alpha suppression `1 − gap/Δ`
-  with the isospin gap as credit.
+  beta margin `41/43 = 1 + governorTerm` with credit `χ`, and the whole-alpha closure count `⌊min(Z,N)/2⌋`, the alpha suppression `1 − gap/Δ`
+  and the isospin gap as credit.
 - **Decay factors are pillar slots** of `PersistenceMechanics.DecayChannel`
   (`*PillarChannel`).
 - **The nucleus reuses the nucleon ledger**: link weights `πD` and `σ/2` are the proton and

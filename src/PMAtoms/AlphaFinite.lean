@@ -78,15 +78,16 @@ theorem alphaFiniteLifetime_ratio (attempt : ℝ) (p ref : Nuclide)
   rw [← Real.exp_add]
   ring_nf
 
-/-- Alpha structural workload: the alpha capacity `min(Z,N)/2`. -/
+/-- Alpha structural workload: the alpha capacity `⌊min(Z,N)/2⌋`. -/
 def alphaWorkload (p : Nuclide) : ℝ :=
   alphaCapacity p.Z p.N
 
-theorem alphaWorkload_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem alphaWorkload_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaWorkload p := by
   unfold alphaWorkload alphaCapacity
-  have hmin : 0 < min p.Z p.N := Nat.lt_of_le_of_lt (Nat.zero_le _) (lt_min hZ hN)
-  positivity
+  have hmin : 2 ≤ min p.Z p.N := le_min hZ hN
+  have h : 0 < min p.Z p.N / 2 := Nat.div_pos hmin (by norm_num)
+  exact_mod_cast h
 
 /-- E8 clock flux in inverse `m_e` units. -/
 def alphaFlux : ℝ :=
@@ -103,7 +104,7 @@ theorem alphaFlux_pos : 0 < alphaFlux := by
 def alphaAttempt (p : Nuclide) : ℝ :=
   alphaWorkload p * alphaFlux
 
-theorem alphaAttempt_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem alphaAttempt_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaAttempt p :=
   mul_pos (alphaWorkload_pos hZ hN) alphaFlux_pos
 
@@ -111,7 +112,7 @@ theorem alphaAttempt_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
 noncomputable def alphaFiniteRateE8 (p : Nuclide) : ℝ :=
   alphaFiniteRate (alphaAttempt p) p
 
-theorem alphaFiniteRateE8_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem alphaFiniteRateE8_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaFiniteRateE8 p :=
   alphaFiniteRate_pos (alphaAttempt p) p (alphaAttempt_pos hZ hN)
 
@@ -119,7 +120,7 @@ theorem alphaFiniteRateE8_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
 noncomputable def alphaFiniteLifetimeE8 (p : Nuclide) : ℝ :=
   alphaFiniteLifetime (alphaAttempt p) p
 
-theorem alphaFiniteLifetimeE8_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem alphaFiniteLifetimeE8_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaFiniteLifetimeE8 p :=
   alphaFiniteLifetime_pos (alphaAttempt p) p (alphaAttempt_pos hZ hN)
 
@@ -146,7 +147,7 @@ theorem alphaActivation_pos : 0 < alphaActivation := by
 noncomputable def alphaRateScale (p : Nuclide) : ℝ :=
   alphaAttempt p * alphaActivation
 
-theorem alphaRateScale_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem alphaRateScale_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaRateScale p :=
   mul_pos (alphaAttempt_pos hZ hN) alphaActivation_pos
 
@@ -183,7 +184,7 @@ theorem alphaActivationQ_pos (p : Nuclide) : 0 < alphaActivationQ p := by
 noncomputable def alphaRateQ (p : Nuclide) : ℝ :=
   alphaAttempt p * alphaActivationQ p
 
-theorem alphaRateQ_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem alphaRateQ_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaRateQ p :=
   mul_pos (alphaAttempt_pos hZ hN) (alphaActivationQ_pos p)
 
@@ -214,7 +215,7 @@ theorem alphaActivationQ2_pos (p : Nuclide) : 0 < alphaActivationQ2 p := by
 noncomputable def alphaRateQ2 (p : Nuclide) : ℝ :=
   alphaAttempt p * alphaActivationQ2 p
 
-theorem alphaRateQ2_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem alphaRateQ2_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < alphaRateQ2 p :=
   mul_pos (alphaAttempt_pos hZ hN) (alphaActivationQ2_pos p)
 

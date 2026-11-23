@@ -34,6 +34,9 @@ Post-frontier entries are marked separately.
 | Cm-244 | 96 | 148 | +0.02406 | frontier |
 | Cf-252 | 98 | 154 | +0.02234 | **beyond frontier** |
 
+Every tabulated nucleus has even `min(Z,N)`, so the whole-closure count
+`⌊min(Z,N)/2⌋` leaves these residuals unchanged.
+
 The Cm/Cf entries are boundary data, not certified-ledger fits.
 
 ## Structure of the residual (comparison)
@@ -50,7 +53,7 @@ curvature term `A^{1/3}` is collinear with `A, A^{2/3}` and does not lower it
 entropy bound is `10²–10⁴` nats against `~A` cells, so entropy-holography does not bind nuclei.
 
 **Shell term.** On the 26 frozen nuclides with `12 ≤ A ≤ 208`, `certifiedMass` has residual rms
-`4.8 m_e` (mean `−7.9`). The E8 shell term `ℏω(A)·(δE_Z + δE_N)` (`ShellGaps`, Strutinsky with
+`5.0 m_e` (mean `−6.4`) after counting whole alpha closures. The E8 shell term `ℏω(A)·(δE_Z + δE_N)` (`ShellGaps`, Strutinsky with
 `γ = 1.2 ℏω`) has rms `14–20 m_e` and correlation `0.03` (`κ = 1/ν`) or `0.37` (`κ = χ/Δ`) with
 it; adding it gives `15–22 m_e`. `closureBinding` and `alphaClosureBinding` are bulk terms
 (hundreds of `m_e`), not shell terms. The E8 ledger is not a liquid drop plus a shell
@@ -76,7 +79,8 @@ surface over `(Z, N)`.
 
 **Occupancy symmetry term.** Adding `8.3 MeV·(N−Z)²/A` (separate `p`/`n` filling with `ℏω(A)`,
 `IsospinLedger`) gives a minimum for every `A`, at `Z ≈ A/2`: A = 56, 90, 120, 208, 238 → `Z = 28,
-45, 60, 104, 119`. Stable-line residual rms `4.8 → 42 m_e`, mean `−7.9 → +19`.
+45, 60, 104, 119`. Stable-line residual rms `5.0 → 42 m_e`, mean `−6.4 → +19` (the `valleyMass` term cancels
+`alphaClosureBinding`, so these figures do not depend on the half/whole alpha count).
 
 **`valleyMass` (occupancy term replacing the alpha isospin suppression).** Lowest isobar `Z = 18,
 24, 37, 47, 82, 92` at `A = 40, 56, 90, 120, 208, 238` (stable `20, 26, 40, 50, 82, 92`).
@@ -89,8 +93,8 @@ cube count, exact at `A = n³` (`packingLinks_cube`), and the closure rank is it
 edge-isoperimetric optimum on the cubic lattice (quasi-cubes plus an optimal partial layer). That
 exact count is `1–2` links below the continuous form between cubes (`A = 208`: `517` vs `518.7`).
 Used in place of the continuous form (links and closure rank, no other change) on the 26 stable
-nuclides with `12 ≤ A ≤ 208`: mean `|R|` `8.05 → 6.76 m_e`, mean `−7.9 → +5.5`, rms about the
-mean `4.84 → 5.76`. So the count's discreteness is not the lever, confirming the earlier crude
+nuclides with `12 ≤ A ≤ 208`, on the earlier half-alpha ledger: mean `|R|` `8.05 → 6.76 m_e`,
+mean `−7.9 → +5.5`, rms about the mean `4.84 → 5.76`. So the count's discreteness is not the lever, confirming the earlier crude
 test. Volume and surface share one link weight `w = πD(σ−χ)/σ` because both come from the same
 link count; the regression's ~5% surface offset would need surface links weighted differently,
 and the substrate gives no reason for that. The ledger's floor stays `~3.3 m_e ≈ 1.7 MeV`.

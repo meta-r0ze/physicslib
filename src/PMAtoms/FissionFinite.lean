@@ -39,7 +39,7 @@ theorem fissionActivation_pos : 0 < fissionActivation := by
 noncomputable def fissionRateScale (p : Nuclide) : ℝ :=
   alphaAttempt p * fissionActivation
 
-theorem fissionRateScale_pos {p : Nuclide} (hZ : 0 < p.Z) (hN : 0 < p.N) :
+theorem fissionRateScale_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
     0 < fissionRateScale p :=
   mul_pos (alphaAttempt_pos hZ hN) fissionActivation_pos
 

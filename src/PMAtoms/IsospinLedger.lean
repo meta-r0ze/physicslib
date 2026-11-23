@@ -16,7 +16,8 @@ with `L(A) = packingLinks A`, `w = πD·(σ−χ)/σ` and `s = σ/ν = 5/16`. So
 **linear** in the neutron excess `N − Z` at fixed `A`, and favours neutrons: there is no
 `(N − Z)²/A` symmetry term in the link ledger. In `certifiedMass` the only terms that prefer
 `N ≈ Z` are the Coulomb charge (which pushes the other way, towards neutrons) and the alpha-cluster
-term `(Δ/D)·min(Z,N)/2·(1 − |N−Z|/Δ)`, which is piecewise linear in `Z` and switches off at
+term `(Δ/D)·⌊min(Z,N)/2⌋·(1 − |N−Z|/Δ)`, which is piecewise linear in `Z` on each interval of
+constant `⌊min(Z,N)/2⌋` and switches off at
 `|N − Z| ≥ Δ`.
 
 **Symmetry energy, term by term.** The standard model's symmetry energy

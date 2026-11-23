@@ -331,20 +331,23 @@ theorem chargePairs_mono {m n : Nat} (h : m ≤ n) : chargePairs m ≤ chargePai
 
 /-! ## Alpha-cluster closure (mid-mass term)
 
-Alpha-conjugate nuclei (`N = Z`, `Z` even) are chains of closed tetrahedra.
-Each alpha contributes a closure `Δ/D = 43/4 m_e`.  The term is switched off for
-non-alpha-conjugate nuclei, so it does not disturb the mirror or Pb.
+Alpha-cluster occupation is counted in whole alpha closures: `⌊min(Z,N)/2⌋`
+closed tetrahedra, each contributing a closure `Δ/D = 43/4 m_e`.  The occupation
+is linearly suppressed by the isospin gap `|Z−N|` over one substrate period `Δ`
+and vanishes once the gap reaches `Δ`.  Odd `min(Z,N)` floors to whole
+closures, so a lone unpaired nucleon does not contribute half a tetrahedron.
 -/
 
 /-- Isospin gap `|Z−N|`. -/
 def isospinGap (z n : Nat) : Nat := if z ≤ n then n - z else z - n
 
-/-- Alpha-cluster occupation: `min(Z,N)/2`, linearly suppressed by the isospin
-gap over one substrate period `Δ`, and zero once the gap reaches `Δ`. -/
+/-- Alpha-cluster occupation: `⌊min(Z,N)/2⌋` whole alpha closures (closed
+tetrahedra), linearly suppressed by the isospin gap over one substrate period
+`Δ`, and zero once the gap reaches `Δ`. -/
 def alphaCount (z n : Nat) : ℝ :=
   let gap := isospinGap z n
   if 4 ≤ z + n then
-    if gap < Δ then ((min z n : Nat) : ℝ) / 2 * (1 - (gap : ℝ) / (Δ : ℝ)) else 0
+    if gap < Δ then (((min z n) / 2 : Nat) : ℝ) * (1 - (gap : ℝ) / (Δ : ℝ)) else 0
   else 0
 
 /-- Alpha-cluster closure weight `Δ/D = 43/4 m_e`. -/
@@ -377,7 +380,7 @@ theorem alphaCount_h3 : alphaCount 1 2 = 0 := by
 theorem alphaCount_he3 : alphaCount 2 1 = 0 := by
   norm_num [alphaCount, isospinGap, Δ, PMSubstrate.baseline]
 
-theorem alphaCount_li7 : alphaCount 3 4 = 63 / 43 := by
+theorem alphaCount_li7 : alphaCount 3 4 = 42 / 43 := by
   norm_num [alphaCount, isospinGap, Δ, PMSubstrate.baseline]
 
 theorem alphaCount_ar40 : alphaCount 18 22 = 351 / 43 := by
@@ -394,12 +397,13 @@ theorem nuclearMassPackingAlpha_decomp (z n : Nat) :
 /-! ## Alpha persistence budget
 
 The linear isospin suppression is a surviving-budget rule: an alpha cluster has
-capacity `min(Z,N)/2`, the isospin gap spends one unit of the `Δ`-period budget,
+capacity `⌊min(Z,N)/2⌋`, the isospin gap spends one unit of the `Δ`-period budget,
 and the surviving fraction is `(Δ − gap)/Δ`.
 -/
 
-/-- Alpha capacity before the isospin toll. -/
-def alphaCapacity (z n : Nat) : ℝ := ((min z n : Nat) : ℝ) / 2
+/-- Alpha capacity before the isospin toll: `⌊min(Z,N)/2⌋` whole alpha
+closures. -/
+def alphaCapacity (z n : Nat) : ℝ := (((min z n) / 2 : Nat) : ℝ)
 
 /-- Remaining `Δ`-period budget after the isospin gap. -/
 def isospinBudget (z n : Nat) : Nat :=

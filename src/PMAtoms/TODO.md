@@ -16,3 +16,7 @@ stable, `NuclearRegime`/`PersistenceSelection`) is a comparison, not a result.
 - Keep continuum comparisons until each E8 replacement has a numerical counterpart. Mark candidate modules experimental, align the folder maps and keep measured residuals in `RESIDUALS.md`.
 
 - Choose the alpha-attempt clock convention (capacity vs nested).
+
+- Derive the residual offset left after whole alpha closures: `≈ −5 m_e` for `A < 70` and
+  `≈ −12 m_e` for Sn–Pb. Candidates: the linear isospin suppression of alphas, and the
+  identified weights. Derive, do not fit.

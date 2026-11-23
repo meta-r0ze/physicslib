@@ -83,7 +83,7 @@ theorem packingWeight_bounds :
 def alphaCountQ (z n : ℕ) : ℚ :=
   if 4 ≤ z + n then
     (if isospinGap z n < Δ then
-      (min z n : ℚ) / 2 * (1 - (isospinGap z n : ℚ) / (Δ : ℚ)) else 0)
+      (((min z n) / 2 : Nat) : ℚ) * (1 - (isospinGap z n : ℚ) / (Δ : ℚ)) else 0)
   else 0
 
 /-- `shellCorrectionPaired` as a computable `ℚ`. -/

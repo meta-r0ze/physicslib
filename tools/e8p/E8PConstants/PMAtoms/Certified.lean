@@ -12,7 +12,7 @@ Everything printed here is read from `src/`; this module only formats and compar
   It is noncomputable (`π`, `A^(2/3)`, `√`); `PMAtoms.certifiedMass_bounds` proves the computable
   rational enclosure `[cmLo, cmHi]` used here. The enclosure is the exact value of the formula to
   the printed digits, **not** the model's accuracy.
-* **Accuracy** — on the stable line the ledger matches measured masses to `4.8 m_e` rms
+* **Accuracy** — on the stable line the ledger matches measured masses to `5.0 m_e` rms
   (`≈ 0.0026 u`, `≈ 2.5 MeV`); the floor of the bulk terms is `≈ 3.3 m_e` (`PMAtoms/RESIDUALS.md`).
   It is not a mass surface over `(Z, N)`: off the stable line it has no isospin restoring term
   (`PMAtoms.IsospinLedger`).
@@ -95,12 +95,11 @@ def stableLineRmsAboutMeanME : Float :=
   if xs = [] then 0 else
     Float.sqrt ((xs.map (fun x => (x - m) ^ 2)).sum / Float.ofNat xs.length)
 
-/-- Stable-line scatter of the ledger, rounded to `4.8 m_e` about the mean of
+/-- Stable-line scatter of the ledger, rounded to `5.0 m_e` about the mean of
 the 26 frozen nuclei with `12 ≤ A ≤ 208` (`PMAtoms/RESIDUALS.md`). -/
 def ledgerScatterME : Rat :=
   let tenths := Float.round (stableLineRmsAboutMeanME * 10)
-  if tenths = (48 : Float) then 48 / 10
-  else (tenths / 10).toRat?.getD (48 / 10)
+  (tenths / 10).toRat?.getD 5
 
 /-- Residual in units of the ledger's stable-line scatter (a model z-score, not an experimental
 σ: measured masses are known to `~10⁻⁹ u`, so the comparison scale is the model's own scatter). -/
@@ -142,7 +141,7 @@ def certifiedTable (maxZ : Nat) : List String :=
   let notes := [
     "E8 ledger = PMAtoms.certifiedMass (stable-line nuclear ledger), printed as its proved rational",
     "  enclosure: the formula's exact value to these digits, not its accuracy.",
-    "z(scatter) = (E8 − measured) / 4.8 m_e, the ledger's rms scatter on the stable line",
+    "z(scatter) = (E8 − measured) / 5.0 m_e, the ledger's rms scatter on the stable line",
     "  (≈ 0.0026 u, ≈ 2.5 MeV). A model z-score, not an experimental σ. ✓ |z|≤1, ~ |z|≤2, ! >2.",
     "measured = frozen isotope mass (comparison only). E8−meas uses the enclosure midpoint.",
     "regime = PMAtoms.regimeOf; — = outside the printed domain (A ≤ 4 or past the Z=96, N=152 frontier)." ]
@@ -163,7 +162,7 @@ def certifiedNuclide (z n : Nat) : List String :=
           let rME := r / electronMassU
           [ s!"  measured (frozen isotope mass)   {isoStr z a} u",
             s!"  E8 − measured                    {signed r 6} u  =  {signed rME 2} m_e  =  {signed (rME * electronMassMeV) 3} MeV",
-            s!"  ledger scatter (stable line)     ±{fixedDecimal (lowerScaled (ledgerScatterME * electronMassU) 4) 4} u rms  (4.8 m_e)",
+            s!"  ledger scatter (stable line)     ±{fixedDecimal (lowerScaled (ledgerScatterME * electronMassU) 4) 4} u rms  (5.0 m_e)",
             s!"  z (residual / scatter)           {signed (rME / ledgerScatterME) 2} {zGlyph (rME / ledgerScatterME)}" ]
         | none => [ "  measured: no frozen isotope mass for this nucleus" ]
       head ++ cmp ++
@@ -208,7 +207,7 @@ def periodicTable (maxZ : Nat) : List String :=
   let notes := [
     "configuration = PMAtoms.Aufbau.configuration: capacities 2(2ℓ+1) proved (PMAtoms.Shells); the fill order is a supplied input.",
     s!"2S+1 = PMAtoms.Hund.groundMultiplicity: Hund's first rule derived by counting same-spin pairs (PMAtoms.HundRule); g≠o marks an observed term o that differs; {(multiplicityScore maxZ).1} of {(multiplicityScore maxZ).2} match (misses are Aufbau configuration exceptions).",
-    "E8 ledger = midpoint of the PMAtoms.certifiedMass enclosure (— for A ≤ 4); z = residual / 4.8 m_e (the ledger's stable-line scatter).",
+    "E8 ledger = midpoint of the PMAtoms.certifiedMass enclosure (— for A ≤ 4); z = residual / 5.0 m_e (the ledger's stable-line scatter).",
     "cloud = hydrogenic electron binding Σ −R∞/n² (PMAtoms.ElectronCloud, certified R∞), no screening.",
     "measured = frozen isotope mass (comparison only)." ]
   (header :: rows) ++ ("" :: notes)

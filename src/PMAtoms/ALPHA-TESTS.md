@@ -43,7 +43,7 @@ Using the E8 ledger
 
 ```
 c = 1
-K = alphaCapacity = min(Z,N)/2
+K = alphaCapacity = ⌊min(Z,N)/2⌋
 f = 1/Δ = 1/43
 ```
 
@@ -243,7 +243,7 @@ both parents are deformed (`7/2⁻[743]`, `1/2⁺[631]`); the E8 spectrum here i
 
 ## Attempt frequency: capacity flux vs Governor (`NuclearRateUnit`)
 
-`AlphaFinite.alphaAttempt = min(Z,N)/2 · 1/Δ` (≈ `1.07` for U-238). The Governor candidate
+`AlphaFinite.alphaAttempt = ⌊min(Z,N)/2⌋ · 1/Δ` (≈ `1.07` for U-238). The Governor candidate
 `χ/Δ = 2/43` replaces it by a factor `min(Z,N)/4` (≈ 23–25 here); `χ/Δ` per alpha cluster doubles
 it. On the even-even entries of the `(43/8)Z/√Q − 84` table the geometric mean of model/obs is
 `0.71` with the capacity flux, `≈ 17` with `χ/Δ` alone, and `0.36` with `χ/Δ` per cluster.
