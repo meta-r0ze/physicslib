@@ -145,9 +145,17 @@ This file is the open list only.
   a neutral ring step pairs `2`. Tried and failed: "a state must sit on the tick
   lattice, so a half-step flip cannot complete alone". It makes the clock generation
   the heaviest; the up/down offsets need it lightest (top/bottom ≈ 41 needs distinct
-  tiers in the heaviest generation). Next lead: the generation register (stay/move
-  walk, `KoideCosets`, `KoideSelection`), which sets generation mass ratios without
-  `Δ` powers.
+  tiers in the heaviest generation).
+- **Generation masses as flip-matrix singular values (`tools/pm_sector/masses.py`).**
+  The Δ-power tiers are a legacy fit. On the derived sector a mass is a singular value
+  of the per-sector flip (Yukawa) matrix `F(g,g') = Δ^−k`, `k` = root steps from `L(g)` to
+  `R(g')`. Representative placement: up rank 1 (one heavy state), down rank 2 with ratio
+  `44.1` (`b/s ≈ 44.7`, scheme-dependent), leptons ratio `1.1` (`τ/μ = 16.8`). Over all
+  allowed root choices the results vary (down `44.1` in 1/3; up rank 1 in 1/4; leptons
+  never near `16.8`). Tried, not the spectrum: a stay/move register over gauge-neutral
+  roots (20, an A4 system) gives `1 : 13.9 : 194`. Next: fix the open root choices from
+  readings, and put path counts and clock phases into the entries (one minimal path
+  per entry is not enough for the leptons).
 - **`wallClass` versus the derived walls.** Labels now use `GaugeSector.wallKey`
   (`EPSector.sector_spine`). The cyclic `ControlledGluedRegister.wallClass` disagrees
   for generation 2 (doublets in `(1,0)`; the sector needs `(0,1)`) and is still used by
