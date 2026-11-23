@@ -73,6 +73,26 @@ The record-bit Map of the 3-ring `PillarPredicates` (PMChecks) does not see
 charge or chirality and keeps six. Open: the generation readout, and the neutrino mass without
 the singlet.
 
+### Gauge sector and mass pairs (derived; Python checks, Lean open)
+
+The placement rows above (`Label on the packet`, `Placement per generation`) use the
+internal D4. That placement breaks colour and the weak flip, and no internal-D4
+placement can keep them. The sector below replaces it. The checks are in
+`tools/pm_sector/`; the data is `tools/pm_sector/sector_data.json`.
+
+| Step | Statement | Readings used |
+|---|---|---|
+| No internal-D4 placement | No placement of the 16 channels in the internal D4 keeps colour and the weak flip. | Symmetries by root reflections |
+| Charge needs a direction | The charge is the pairing with one direction `y`. In rank 5 there is no room for it. The least rank is 6. | Charge conservation, walls (doublets in one glue coset, singlets in another) |
+| Fewest roots | Of the rank-6 sectors that contain the internal D4, the smallest that passes is D4 + 2A1: the internal D4 and two orthogonal spacetime roots. | Economy |
+| Time | Gauge roots and `y` are orthogonal to the clock time vector `t`. This leaves one sector: both extra roots clock-silent. One is the weak flip; the other carries the charge. `y = (0,1,−2,0,1,0,3,3)` gives `3Y` exactly. | Conservation under the tick |
+| Generations | The sector holds all three generations with one `y`. Generation `(0,1)` uses no root of the others. Generations `(1,0)` and `(1,1)` share their quark-doublet roots and put their doublets in coset `(0,1)`. The cyclic `wallClass` disagrees for generation 2. | as above |
+| Mass pairs | A mass flips left to right. Charge fixes the doublet member: up uses `T3 = +1/2`, down and lepton use `−1/2`. In generations `(1,0)` and `(1,1)` the up flip is one root step and the down flip two. | Charge conservation |
+| Step → `Δ` | At least Toll a root move fires with probability `1/Δ` per tick. An intermediate of a two-step flip is not a channel, or has another charge, so it does not persist. Both steps fire in one tick: rate `Δ^−k`. So up − down = `0, 1, 1` in powers of `Δ`, as the declared tiers say, if the clock generation is tier 0. | Least Toll, Map, Conservation |
+
+Open: the generation tiers (`Δ⁰`, `Δ¹`, `Δ²`), the root choice in generation `(0,1)`,
+the lepton choice, the `wallClass` fix, and Lean certificates for every row.
+
 ### Current status and legacy ledger
 
 - Machine and program: `EPSpine.Program`, `ProgramWitness.Pillars`.
