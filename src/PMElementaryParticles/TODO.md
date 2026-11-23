@@ -125,9 +125,15 @@ This file is the open list only.
   lepton: `−1/2`). In generations `(1,0)` and `(1,1)` the up transition is one root
   step and the down transition two, for every root choice; generation `(0,1)` is
   free. Declared tiers give up − down = `0, 1, 1`: a match if the clock generation is
-  tier 0 and one fewer root step is one more power of `Δ`. To derive: the step → `Δ`
-  rule, the root choice in generation `(0,1)`, and the lepton choice (declared
-  lepton tiers equal down's, so two steps).
+  tier 0 and one fewer root step is one more power of `Δ`. Step → `Δ` rule
+  (`tools/pm_sector/intermediates.py`): mass is the left ↔ right flip rate; at least
+  Toll a root move fires with probability `1/Δ` per tick; intermediates of a
+  multi-step transition are never channels except `u_R` on the down path, which
+  changes charge; so no intermediate persists (Map, Conservation), all `k` steps
+  fire in one tick, and the rate goes as `Δ^−k`. To formalize in Lean. Still to
+  derive: the root choice in generation `(0,1)`, the lepton choice (declared lepton
+  tiers equal down's, so two steps), and the generation tiers themselves (which
+  of `(1,0)`, `(1,1)` is tier 1).
 - **`wallClass` orientation for generation 2 disagrees with the derived sector.**
   The cyclic rule puts generation 2's doublets in wall 1, i.e. glue coset `(1,0)`;
   the sector requires the vector coset `(0,1)`. Generations 0 and 1 agree. Decide
