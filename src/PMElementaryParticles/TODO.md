@@ -38,10 +38,12 @@ This file is the open list only.
 
 - **Derive the equal split (Koide).** `KoideSplit` proves `Q = 2/3` iff the
   generation-symmetric and symmetry-breaking parts of the amplitudes have
-  equal norm. Capacity partitioning does not select a split. A uniform law
-  over the three coset slots gives `Q = 1`; a uniform law over two channels
-  (clock-touched / clock-free, one bit) gives `Q = 2/3`. Derive which
-  partition the substrate's mass record uses. Then derive the remaining phase
+  equal norm, i.e. the record "generation-symmetric or not" is a fair coin
+  (`koide_iff_fair`; measured leptons: share `0.499998`). Capacity partitioning
+  does not select a split, and the clock ledger's fair flag is a different
+  coin (`shiftFlag_at_koide`: `3/8`). Derive that the substrate records a
+  protocol's generation as this one bit, with no preference between its
+  outcomes. Then derive the remaining phase
   from the clock (the only triality breaker). Lead: the wire mass
   `D_R (δ_O + cyc κ_O)` has a circulant factor; a Hermitian circulant amplitude
   operator meets Koide iff its on-site and hopping parts have equal norm.
