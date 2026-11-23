@@ -120,6 +120,14 @@ This file is the open list only.
   direction. Generation `(0,1)` is disjoint from the others; `(1,0)` and `(1,1)` must
   share their quark-doublet roots. Walls: `(1,0)` and `(1,1)` put their doublets in
   the vector coset `(0,1)`; `(0,1)` may use either spinor coset.
+- **Up/down tier offset from the mass pairs (`tools/pm_sector/pairs.py`).** On the
+  derived sector, charge conservation fixes the pairs (up: `T3 = +1/2` member; down,
+  lepton: `−1/2`). In generations `(1,0)` and `(1,1)` the up transition is one root
+  step and the down transition two, for every root choice; generation `(0,1)` is
+  free. Declared tiers give up − down = `0, 1, 1`: a match if the clock generation is
+  tier 0 and one fewer root step is one more power of `Δ`. To derive: the step → `Δ`
+  rule, the root choice in generation `(0,1)`, and the lepton choice (declared
+  lepton tiers equal down's, so two steps).
 - **`wallClass` orientation for generation 2 disagrees with the derived sector.**
   The cyclic rule puts generation 2's doublets in wall 1, i.e. glue coset `(1,0)`;
   the sector requires the vector coset `(0,1)`. Generations 0 and 1 agree. Decide
