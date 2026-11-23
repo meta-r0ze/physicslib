@@ -100,11 +100,19 @@ This file is the open list only.
   mass pair (right singlet minus left doublet member, same colour) has norm
   `4, 4, 12` over the three colours. In a weight placement both symmetries are
   Weyl reflections and preserve inner products.
-- **Repair the channel placement (blocks the tier derivation).** Find an
-  assignment of the 16 channels to internal-D4 vectors (`labelIndex`, `active`)
-  on which every colour permutation and the weak flip preserve all inner
-  products, or prove none exists. Then re-run `EPLabel`, `EPLabelGen`
-  (statements that use `channelE8Gen`) and the pair tier count.
+- **Replace the internal-D4 channel placement (blocks the tier derivation).**
+  No assignment of the 16 channels to the 24 norm-4 internal-D4 vectors lets
+  colour and the weak flip act by isometries (`tools/placement_d4_nogo.py`,
+  exhaustive over the order-1152 group: with two fixed singlets colour moves
+  nothing else). The 16 fit as the spinor weights of a D5 (SO(10)), where colour
+  and the weak flip are Weyl reflections and exactly two weights are fixed. Every
+  glue-coset root extends the internal D4 to a D5: 12 D5, 4 per coset, each adding
+  one spacetime direction `d` (`tools/d5_extension_check.py`). Clock reading of `d`:
+  vector coset `0, 0, 0, 2`; the two spinor cosets `±1` only. Next: derive which D5
+  (lead: `d` clock-silent, which leaves three, all in the vector coset), place the
+  channels as its spinor weights, certify the symmetries in Lean, then re-run
+  `EPLabel`, `EPLabelGen` and the pair tier count. Lean certificate of the D4
+  no-go is also open.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
