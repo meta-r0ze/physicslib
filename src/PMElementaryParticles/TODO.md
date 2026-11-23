@@ -134,6 +134,11 @@ This file is the open list only.
   derive: the root choice in generation `(0,1)`, the lepton choice (declared lepton
   tiers equal down's, so two steps), and the generation tiers themselves (which
   of `(1,0)`, `(1,1)` is tier 1).
+  Tried (2026-11-23), does not decide: Economy as fewest distinct transition
+  records. Leptons can share the down record (`h_e = h_d`) only in generation
+  `(0,1)`, which narrows its (up, down, lepton) steps to `(1,1,1)`, `(2,2,2)`,
+  `(1,2,2)`, `(2,1,1)`; in `(1,0)` and `(1,1)` it is never possible, and up is never the
+  conjugate of down (`h_u ≠ −h_d`) in any generation.
 - **`wallClass` orientation for generation 2 disagrees with the derived sector.**
   The cyclic rule puts generation 2's doublets in wall 1, i.e. glue coset `(1,0)`;
   the sector requires the vector coset `(0,1)`. Generations 0 and 1 agree. Decide
