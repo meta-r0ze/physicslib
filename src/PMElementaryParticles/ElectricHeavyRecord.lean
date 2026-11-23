@@ -22,14 +22,22 @@ open PMAction Real Matrix
 abbrev q (c : Channels) : ℝ := (ChargeProtocols.Q c).re
 
 open PMConstants.GeneratorNormalization PMConstants.PacketTraceForm in
-/-- The charge phases use the actual unbroken packet generator. -/
+/-- The packet generator's diagonal is the carrier charge (`ChargeProtocols.Q`). -/
+theorem generator_diag (c : Channels) : (t3 + hyperGen) c c = ChargeProtocols.Q c := by
+  rw [ChargeProtocols.Q_eval]
+  rcases c with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> fin_cases s <;>
+    simp [t3, hyperGen, weakGen, PMConstants.PacketGaugeActions.charge,
+      PMConstants.PacketGaugeActions.block, kroneckerMap_apply, Matrix.add_apply] <;> norm_num
+
+open PMConstants.GeneratorNormalization PMConstants.PacketTraceForm in
+/-- The packet generator is the diagonal of the carrier charge. -/
 theorem electric_generator : t3 + hyperGen = diagonal (fun c => (q c : ℂ)) := by
   have h := PMConstants.ReferenceRestoration.t3_isDiag.add
     PMConstants.ReferenceRestoration.hyper_isDiag
   rw [← h.diagonal_diag]
   congr 1
   funext c
-  change ChargeProtocols.Q c = (q c : ℂ)
+  rw [Matrix.diag_apply, generator_diag]
   rcases ChargeProtocols.charge_values c with hc | hc | hc | hc <;> norm_num [q, hc]
 
 theorem charge_from_bits (c : Channels) :

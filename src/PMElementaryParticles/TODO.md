@@ -128,14 +128,10 @@ This file is the open list only.
   eliminations by layer, node and carrier level first.
   Seeds (review 2026-11-23). EP uses a Standard Model form where an earlier module
   has a PM or E8 reason; switch to the earlier module:
-  * Charges: `ProgramClasses`, `ChargeProtocols` use `PacketGaugeActions.charge`
-    ("existing assignment") and `Hypercharge.standard` (fixed by gauge-invariant
-    Yukawa couplings); `CarrierRepresentation.charges_from_carriers` gives them from
-    carriers (lepton axis = reserved cell, sign = the only axis-keeping move).
-  * "Left-handed" (`ProtocolInventory.active`, stipulated): `PMAction.ChiralityConvention`
-    gives the reason, the weak current acts on the wall that carries the reference.
-  * Species names (`BaseProtocol` up, down, electron, neutrino): read them as carrier
-    axis, sign and wall (`CarrierRepresentation`).
+  * Standard Model generators still used: `VacancyProjection`, `ElectricChiralKick`,
+    `MassiveVolume` (`hyperGen`, `weakGen`); `ElectricHeavyRecord.electric_generator` is
+    a check that the generator diagonal is the carrier charge. Read them from
+    `CarrierChannels` instead.
   * Masses (`LeptonMasses`, `QuarkMasses`, `TierLedger`, declared): `PMAction.GenerationMass`,
     `MassInsertion`, `DetuningMass`, `GenerationSector` give a PM mass: a mass joins a
     generation's two walls by a crossing (common `y`) and a single-wall carrier

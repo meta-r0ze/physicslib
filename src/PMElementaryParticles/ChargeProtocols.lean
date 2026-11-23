@@ -1,12 +1,15 @@
 import PMConstants.ReferenceMasses
+import PMElementaryParticles.CarrierChannels
 import PMConstants.ReferenceAxis
 
 /-!
-# Paper V's charge protocols from Paper III's packet
+# Charge protocols from the carriers
 
 Paper V's routing protocols state that colourless packets carry integer charge and coloured
-packets fractional charge in thirds (`Q_quark = Y/3`, the colour bulk `σ − χ = 3`). With Paper III's
-derived packet (charges from `Hypercharge.standard`, unbroken `Q = T₃ + Y/2`):
+packets fractional charge in thirds. The charge here comes from the carriers
+(`CarrierChannels.electric`): `bl/2 + t3`, with `bl` set by the carrier's axis (lepton axis `−1`,
+colour axes `1/3`, `CarrierRepresentation.bl_traceless`) and `t3` by its sign. The same formula
+holds on both walls (`CarrierChannels`).
 
 * `charge_values`: every carrier's charge is one of `2/3, −1/3, 0, −1`.
 * `thirds`: `3Q` is an integer on every carrier.
@@ -19,9 +22,10 @@ The denominator `3` is the number of colour axes, the axes orthogonal to the ref
 
 noncomputable section
 namespace PMElementaryParticles.ChargeProtocols
-open PMConstants Matrix GeneratorNormalization PacketTraceForm
+open PMConstants Matrix
 
-def Q (c : PacketGaugeActions.Channels) : ℂ := (t3 + hyperGen) c c
+/-- The electric charge of a channel, from its carrier. -/
+def Q (c : PacketGaugeActions.Channels) : ℂ := (CarrierChannels.electric c : ℂ)
 
 lemma Q_eval (c : PacketGaugeActions.Channels) :
     Q c = match c with
@@ -30,8 +34,8 @@ lemma Q_eval (c : PacketGaugeActions.Channels) :
       | .inr (.inr (.inl s)) => if s = 0 then 0 else -1
       | .inr (.inr (.inr s)) => if s = 0 then 0 else -1 := by
   rcases c with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> fin_cases s <;>
-    simp [Q, t3, hyperGen, weakGen, PacketGaugeActions.charge, PacketGaugeActions.block,
-      kroneckerMap_apply, Matrix.add_apply] <;> norm_num
+    simp [Q, CarrierChannels.electric, CarrierChannels.axis, CarrierChannels.positiveSign,
+      CarrierChannels.blAxis, CarrierChannels.t3Sign] <;> norm_num
 
 theorem charge_values (c : PacketGaugeActions.Channels) :
     Q c = 2/3 ∨ Q c = -1/3 ∨ Q c = 0 ∨ Q c = -1 := by

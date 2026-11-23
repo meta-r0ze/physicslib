@@ -1,18 +1,19 @@
 import PMConstants.PacketGaugeActions
+import PMElementaryParticles.CarrierChannels
 
 /-!
 # Program classes: five per generation
 
 The 16 packet channels (`PMConstants.PacketGaugeActions.Channels`) carry the
 substrate's own actions: the weak flip `flipWeak`, the colour transpositions
-`permuteColour`, and the charge `charge` (its diagonal is the hypercharge).
+`permuteColour`, and the wall charge from the carriers (`CarrierChannels.hyper`).
 
 * Under the weak and colour actions the channels fall into six classes
   (`classOf`): invariant (`classOf_flipWeak`, `classOf_permuteColour`), onto
   (`classOf_surjective`), and each class is one orbit (`class_transitive`).
 * Exactly two classes are left fixed by every weak and colour action
   (`unmoved_iff`): the two singlets.
-* Exactly one channel has zero charge diagonal (`charge_zero_iff`).
+* Exactly one channel has zero wall charge (`charge_zero_iff`).
 * So exactly one class is fixed by every action **and** carries no charge
   (`invisible_iff`): class `4`, the total singlet `.inr (.inr (.inr 0))`.
   No substrate observable distinguishes it from the vacuum.
@@ -67,19 +68,20 @@ instance (c : Channels) : Decidable (Unmoved c) := by unfold Unmoved; infer_inst
 
 theorem unmoved_iff : ∀ c, Unmoved c ↔ (classOf c = 4 ∨ classOf c = 5) := by decide
 
-/-- Exactly one channel has zero charge. -/
-theorem charge_zero_iff (c : Channels) : charge c c = 0 ↔ c = .inr (.inr (.inr 0)) := by
-  fin_cases c <;> norm_num [charge, block, channelIndex, Matrix.kroneckerMap_apply]
+/-- Exactly one channel has zero wall charge (the carrier charge, `CarrierChannels.hyper`):
+the positive lepton-axis carrier on the wall without the reference. -/
+theorem charge_zero_iff (c : Channels) : CarrierChannels.hyper c = 0 ↔ c = .inr (.inr (.inr 0)) := by
+  revert c; decide +kernel
 
 /-- **Exactly one class is invisible to every substrate observable.** -/
-theorem invisible_iff (c : Channels) : (Unmoved c ∧ charge c c = 0) ↔ classOf c = 4 := by
+theorem invisible_iff (c : Channels) : (Unmoved c ∧ CarrierChannels.hyper c = 0) ↔ classOf c = 4 := by
   rw [unmoved_iff, charge_zero_iff]
   revert c
   decide
 
 /-- **Five classes are distinguishable from the vacuum.** -/
 theorem visible_class_iff (k : Fin 6) :
-    (∃ c, classOf c = k ∧ ¬ (Unmoved c ∧ charge c c = 0)) ↔ k ≠ 4 := by
+    (∃ c, classOf c = k ∧ ¬ (Unmoved c ∧ CarrierChannels.hyper c = 0)) ↔ k ≠ 4 := by
   simp only [invisible_iff]
   revert k
   decide

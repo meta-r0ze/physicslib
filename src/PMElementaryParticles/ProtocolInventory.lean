@@ -7,7 +7,13 @@ Paper V's §4 claims the 16-channel substrate admits **four base routing protoco
 (electron, up, down, neutrino), two routing modes (colour bulk or not), three
 geometric anchors (D=4 manifold, χ=2 boundary, none), and exactly **one sterile
 vacancy** — the unanchored, uncoloured, static slot. Paper III's
-`CarrierRepresentation` proves the carrier multiplicities and charges; this module
+`CarrierRepresentation` proves the carrier multiplicities and charges, and
+`CarrierChannels` reads each channel as a wall, a carrier axis and a sign. The protocol names
+are labels for those triples (`baseProtocol_carrier`): up/down are the colour-axis carriers by
+sign, electron/neutrino the lepton-axis carriers by sign, and the sterile vacancy is the positive
+lepton-axis carrier on the wall without the reference. "Active" is the wall that carries the
+reference (`active_eq_wall`); `PMAction.ChiralityConvention` (`weak_acts_on_reference`) shows the
+weak current acts on that wall, so "left-handed" names it. This module
 proves that Paper V's *protocol* reading of the same `Channels` type is internally
 exact. These are inventory/counting statements about the stipulated routing model
 (the paper itself calls it stipulated); they do **not** derive the physical
@@ -19,13 +25,14 @@ set, so it is a consistent premise, not contradicted.
 
 * `channels_card` — the substrate has 16 channels.
 * `two_routing_modes` — 12 route through the colour bulk, 4 do not.
-* `hand_split` — 8 active (left-handed temporal boundary) and 8 static.
+* `hand_split` — 8 on the reference wall (active) and 8 on the other wall.
 * `anchor_split` — 12 manifold (quark), 2 boundary (electron), 2 unanchored.
 * `inventory_split` — up 6, down 6, electron 2, neutrino 1, sterile 1, summing to 16.
 * `sterile_iff_no_base` — the sterile vacancy is exactly the single uncoloured,
   static, unanchored channel with no base protocol.
-* `baseProtocol_charge` — the structural classification reproduces the charges
-  computed from Paper III's generator (`ChargeProtocols.Q`).
+* `baseProtocol_charge` — the protocol labels carry the carrier charges
+  (`ChargeProtocols.Q`, `bl/2 + t3`).
+* `active_eq_wall`, `baseProtocol_carrier` — the labels as wall, axis and sign.
 -/
 
 noncomputable section
@@ -54,7 +61,8 @@ def colourBulk : Channels → Bool
   | .inr (.inl _) => true
   | _ => false
 
-/-- Coupled to the active (left-handed) temporal boundary. -/
+/-- On the wall that carries the reference (`active_eq_wall`); called left-handed because the weak
+current acts on it (`PMAction.ChiralityConvention.weak_acts_on_reference`). -/
 def active : Channels → Bool
   | .inl _ => true
   | .inr (.inl _) => false
@@ -84,7 +92,7 @@ theorem two_routing_modes :
       (Finset.univ.filter fun c : Channels => colourBulk c = false).card = 4 := by
   constructor <;> decide +kernel
 
-/-- **Hand split.** 8 active (left-handed boundary) and 8 static channels. -/
+/-- **Hand split.** 8 channels on the reference wall, 8 on the other. -/
 theorem hand_split :
     (Finset.univ.filter fun c : Channels => active c = true).card = 8 ∧
       (Finset.univ.filter fun c : Channels => active c = false).card = 8 := by
@@ -122,7 +130,7 @@ theorem sterile_iff_no_base (c : Channels) :
 set_option linter.unusedTactic false
 set_option linter.unreachableTactic false
 
-/-- **The structural classification reproduces Paper III's generator charges.** -/
+/-- **The protocol labels carry the carrier charges.** -/
 theorem baseProtocol_charge :
     (∀ c : Channels, baseProtocol c = some .up → ChargeProtocols.Q c = 2/3) ∧
     (∀ c : Channels, baseProtocol c = some .down → ChargeProtocols.Q c = -1/3) ∧
@@ -141,5 +149,16 @@ theorem colourBulk_false_iff_leptonic (c : Channels) :
   rcases c with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> fin_cases s <;>
     simp [colourBulk, ReferenceMasses.leptonic]
 
-end PMElementaryParticles.ProtocolInventory
+/-- "Active" is the wall that carries the reference. -/
+theorem active_eq_wall : ∀ c : Channels, active c = CarrierChannels.wall c := by decide
 
+/-- **The protocol labels are wall, carrier axis and sign.** -/
+theorem baseProtocol_carrier : ∀ c : Channels,
+    baseProtocol c =
+      if CarrierChannels.axis c ≠ 0 then
+        some (if CarrierChannels.positiveSign c then .up else .down)
+      else if CarrierChannels.positiveSign c = false then some .electron
+      else if CarrierChannels.wall c then some .neutrino else none := by
+  decide
+
+end PMElementaryParticles.ProtocolInventory

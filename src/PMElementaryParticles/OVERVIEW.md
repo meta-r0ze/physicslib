@@ -60,7 +60,7 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Step | Statement | Lean |
 |---|---|---|
 | Classes | Weak and colour actions split the 16 channels into 6 orbits. | `classOf`, `classOf_flipWeak`, `classOf_permuteColour`, `classOf_surjective`, `class_transitive` |
-| Invisible class | Exactly one class is fixed by every action and has zero charge: the total singlet. | `unmoved_iff`, `charge_zero_iff`, `invisible_iff` |
+| Invisible class | Exactly one class is fixed by every action and has zero wall charge (the carrier charge, `CarrierChannels.hyper`): the positive lepton-axis carrier on the wall without the reference. | `unmoved_iff`, `charge_zero_iff`, `invisible_iff` |
 | Map | Read with the substrate's observables, Map removes that class. Five classes (15 channels) remain. With three glue cosets: fifteen programs. | `visible_class_iff`, `visibleClasses_card` |
 | Generation-blind ring | A ring step is a spacetime clock-axis root (glue key `0`), so it never changes a packet's coset; `n` steps keep the coset and move the receiver site `n` places, forward or back. | `EPSpine.clockAxis_key`, `step_keeps_generation`, `forward_walk`, `backward_walk` |
 | Program on the node machinery | `EPSpine.Program`: label, generation (one of 3 nonzero glue keys), reference, firing patterns on the 43-site ring, and an E8 packet root in the program's coset; the start site is the packet's clock reading. The packet stays in its coset and tracks the ring. | `Program`, `generation_card`, `program_walk` |
@@ -765,7 +765,8 @@ independent of each regulator and tends to the kernel above as
 
 | Modules | Checked result |
 | --- | --- |
-| `ChargeProtocols` | Charges from Paper III packets; `thirds`; `integer_iff_colourless` |
+| `CarrierChannels` | Each channel is a wall (the reference wall is "left", `PMAction.ChiralityConvention`), a carrier axis (lepton axis `0`, colour `1–3`) and a sign; wall charge `bl` or `bl + 2 t3` and electric charge `bl/2 + t3` from the carriers (`CarrierRepresentation`); `packet_charge_eq`: the packet's charge table is this carrier charge |
+| `ChargeProtocols` | Electric charge from the carriers; `thirds`; `integer_iff_colourless` |
 | `LeptonMasses` | `m_μ`, `m_τ` written in canonical E8 invariants and decomposed into named tier costs (`muon_ledger`, `tau_ledger`; the `π⁺` ledger is in `PMHadrons.MesonMasses`); muon feedback derived as a recursive fixed point (`muonFeedback_fixpoint`); E8-only enclosures (measured tensions in `tools/e8p/E8PConstants/PMElementaryParticles/LeptonMassPulls.lean`) |
 | `QuarkMasses` | Six quark formulas written in canonical E8 invariants and decomposed into named tier costs (`up_ledger`…`top_ledger`); E8-only enclosures (measured pulls in `tools/e8p/E8PConstants/PMElementaryParticles/QuarkMassPulls.lean`) |
 | `KoideSplit` | Three amplitudes `v` (masses `m = v²`) split into a generation-symmetric part and a symmetry-breaking part, orthogonal (`normSq_split`). The Koide ratio `Q = Σv²/(Σv)²` equals `1/3 + |breaking|²/(3|symmetric|²)` (`koideQ_eq`), so `Q = 2/3` iff the two parts have equal norm (`koide_iff_equal_split`); `Q` does not depend on which coset is first (`koideQ_cyclic`). Equivalently, the two-outcome record "generation-symmetric or not" is a fair coin (`koide_iff_fair`). This is not the clock ledger's fair flag: that flag is a fidelity under the cyclic shift and equals `3/8` at `Q = 2/3` (`shiftFlag_at_koide`). In the pair-plus-one limit (two degenerate generations, one distinct; the library's equal-link-weight restoring pair plus the direct address), `Q = 2/3` fixes the distinct amplitude at `(4 + 3√2)` times the pair's (`pairPlusOne_koide`), mass ratio `34 + 24√2 ≈ 67.94`. For the Hermitian circulant `a·1 + b·P + b̄·P⁻¹` on the three cosets (stay `a`; move forward `b` on the live stream, back `b̄` on the record stream), `Q = 2/3` iff the move weight `2|b|²` equals the stay weight `a²` (`circulant_koide`); the phase of `b` is left free. Linear algebra only. Prior art: Koide (1981) for `Q = 2/3`, Brannen (2006) for the circulant form; the contribution sought is their derivation on the E8 machine. Comparison (not in Lean): the measured leptons give `Q = 0.666664`; the declared ledger gives `0.666654`; imposing `Q = 2/3` on the ledger's `e`, `μ` gives `m_τ = 3477.44 m_e` (measured `3477.36 ± 0.18`; ledger `3477.00`). |
@@ -879,25 +880,28 @@ PMFlavor's.
 ## Protocols and the 16-channel inventory
 
 Paper V's §4 reads the 16-channel substrate as four base routing protocols, two
-routing modes, three anchors and a single sterile vacancy. `ProtocolInventory`
-proves the *stipulated* inventory is internally exact and agrees with Paper III:
+routing modes, three anchors and a single sterile vacancy. The protocol names are labels for
+carriers (`CarrierChannels`): up/down are the colour-axis carriers by sign, electron/neutrino the
+lepton-axis carriers by sign, and the sterile vacancy is the positive lepton-axis carrier on the
+wall without the reference (`baseProtocol_carrier`). "Active" is the reference wall
+(`active_eq_wall`). `ProtocolInventory` proves the inventory is internally exact:
 
 - `channels_card`: 16 channels (`ν = 16`).
 - `two_routing_modes`: 12 route through the colour bulk, 4 do not.
-- `hand_split`: 8 active (left-handed boundary), 8 static.
+- `hand_split`: 8 on the reference wall (active), 8 on the other wall.
 - `anchor_split`: 12 manifold (D=4), 2 boundary (χ=2), 2 unanchored.
 - `inventory_split`: up 6, down 6, electron 2, neutrino 1, sterile 1 (= 16).
 - `baseProtocol_cases`: exactly four base protocols (`electron`, `up`, `down`, `neutrino`).
 - `sterile_iff_no_base`: the sterile vacancy is the unique uncoloured, static,
   unanchored channel.
-- `baseProtocol_charge`: the structural classification reproduces Paper III's
-  generator charges (`up=2/3`, `down=-1/3`, `electron=-1`, `neutrino=0`).
+- `baseProtocol_charge`: the labels carry the carrier charges (`up=2/3`, `down=-1/3`,
+  `electron=-1`, `neutrino=0`).
 - `colourBulk_false_iff_leptonic`: the no-colour channels are exactly the
   integer-charge (leptonic) ones (`ChargeProtocols.integer_iff_colourless`).
 
-This checks the paper's enumeration/counting; it does **not** derive the physical
-identification of those channels with particles (the paper calls the inventory
-stipulated).
+The carrier reading leaves three named premises (`CarrierRepresentation`): one axis is the
+lepton axis (the reserved cell), the sign is the doublet index, and the right-wall charge adds
+`2 t3`.
 
 **Decay dynamics as routing change (`ProtocolDynamics`).** The paper models decay
 as a change of routing protocol. `ProtocolDynamics` makes that concrete on the
