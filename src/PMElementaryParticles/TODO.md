@@ -86,6 +86,13 @@ This file is the open list only.
   Open: the factor `Δⁿ` must come from how many independent 43-periods a program's
   record spans; derive that count per (generation, label) and test it on the
   declared tier sets.
+  Result (2026-11-23, `tools/tier_count_check.py`): one program's data cannot give
+  it. Every coset root pairs ±1 with every channel vector, and the split of silent
+  and one-tick roots by that pairing depends on the generation only. The only
+  label-dependent datum is the label's clock reading, a phase in `Z₄₃` that also
+  depends on colour and is negated between up-type and down-type. So up-type
+  `{0,2,3}` against down-type `{0,1,2}` needs data outside one program (weak partner
+  or composite), or the declared up tier set is a premise to review.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
