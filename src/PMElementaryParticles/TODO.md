@@ -105,12 +105,16 @@ This file is the open list only.
   no internal-D4 placement can keep them (`tools/placement_d4_nogo.py`). Persistence
   elimination (`tools/pm_sector_wall.py`, `pm_sector_charge.py`; readings in the
   docstring: symmetries by root reflections, channels as E8 roots, hypercharge as a
-  direction in the sector, `active` as the wall bit, least rank):
-  internal D4 fails (no weak reflection commutes with colour); D4 + A1 meets
-  symmetries + charge and symmetries + walls but never all three; D5 (all 12) fails
-  symmetries + walls. So no rank-5 sector meets all readings. Next: rank 6
-  (D6, D5+A1, D4+A2, D4+2A1, E6), and audit the two weakest readings (hypercharge
-  direction inside the sector; `active` as the wall bit in every generation).
+  direction in the sector, `active` as the wall bit, least rank, then fewest roots):
+  internal D4 fails (no weak reflection commutes with colour); D4 + A1 passes only if
+  the charge direction may leave the sector, so hypercharge needs its own direction;
+  D5 (all 12) fails symmetries + walls. Rank 6 (`tools/pm_sector_rank6.py`, 140
+  sectors): D4+2A1, D4+A2, D5+A1, D6 pass; E6 failed in the instance tested.
+  Fewest roots selects D4+2A1 (internal D4 + two orthogonal spacetime A1: weak flip
+  and charge direction); all 18 pass and differ only by the clock (both extra roots
+  silent: 3; one silent, one clock-axis: 12; both clock-axis: 3). Next: a clock
+  reading that selects among the 18, then place the channels and redo `EPLabel`,
+  `EPLabelGen` and the pair tier count. Lean certificates for the eliminations open.
   Earlier note withdrawn: the D5 family split (two cosets by the sign along `d`,
   `tools/d5_family_cosets.py`) is not the library's wall bit.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
