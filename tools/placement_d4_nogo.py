@@ -1,17 +1,13 @@
 """No symmetric placement of the 16 channels in the internal D4 (exhaustive check; no data).
 
-Candidates: the 24 norm-4 vectors of the internal D4 in doubled epsilon coordinates
-(8 vector class 2*(+-e_i), 16 spinor class (+-1)^4), as ChannelVectors uses. A placement
-respects colour and the weak flip iff both act by isometries of this set and the placement is
-equivariant. The isometry group has order 1152 (139 involutions). For every colour S3 (A, B
-involutions with (AB)^3 = 1) and weak flip W (involution commuting with both), the script
-counts the orbit types the channels need: two vectors fixed by colour and W (neutral and
-charged singlets), a colour-fixed W-swapped pair (lepton doublet), W-fixed colour 3-orbits
-(up and down singlets), and a free 6-orbit (quark doublet).
-Result (2026-11-23): no (A, B, W) has them. Whenever two vectors are fixed by all, colour
-moves nothing else. In 4 dimensions colour needs a plane and W one more direction, so the
-fixed set is one line and the singlets can only be +-x.
-SM hint: the 16 are the spinor weights of D5 (SO(10)); see tools/d5_extension_check.py.
+Candidates: the 24 norm-4 vectors of the internal D4 (doubled epsilon coordinates). Colour S3
+(involutions A, B with (AB)^3 = 1) and weak flip W (involution commuting with both) must act by
+isometries of this set (group of order 1152), with each channel's exact stabilizer: nu, e fixed
+by all; L fixed by colour, moved by W; u, d fixed by W and one colour transposition; Q fixed by
+one colour transposition only (orbit 6).
+Result (2026-11-23, exact stabilizers; the first version wrongly asked for a free Q orbit and
+reached the same answer): no (A, B, W) has all types. Whenever two vectors are fixed by all,
+no vector has the u/d stabilizer.
 """
 import numpy as np, itertools
 vecs=[]
@@ -48,39 +44,26 @@ isI=lambda M:(M==I2).all()
 inv=[M for M in G if isI(mul(M,M)) and not isI(M)]
 print('involutions',len(inv))
 act=lambda M,v:tuple(((M@np.array(v))//2).tolist())
-sols=[]
-for A in inv:
-    for B in inv:
-        AB=mul(A,B)
-        if isI(AB) or not isI(mul(AB,mul(AB,AB))): continue
-        for W in inv:
-            if not (mul(W,A)==mul(A,W)).all() or not (mul(W,B)==mul(B,W)).all(): continue
-            fixedC=[v for v in vecs if act(A,v)==v and act(B,v)==v]
-            sing=[v for v in fixedC if act(W,v)==v]
-            Lp=[v for v in fixedC if act(W,v)!=v]
-            orb3=[v for v in vecs if act(W,v)==v and not(act(A,v)==v and act(B,v)==v)]
-            # free orbit check: vector with trivial stabilizer in S3xZ2
-            grp=[I2,A,B,mul(A,B),mul(B,A),mul(A,mul(B,A))]
-            grp=grp+[mul(W,g) for g in grp]
-            free=[v for v in vecs if sum(act(g,v)==v for g in grp)==1]
-            if len(sing)>=2 and len(Lp)>=2 and len(orb3)>=6 and len(free)>=6:
-                sols.append((A,B,W,len(sing),len(Lp),len(orb3),len(free)))
-print('candidate (A,B,W) with enough orbits:',len(sols))
-for s in sols[:3]: print(s[3:])
+
 import collections
-stats=collections.Counter()
+# Channel stabilizers in S3(colour) x Z2(weak), generators A=(01), B=(12), W.
+# nu, e: whole group. L: colour S3, W moves. u_a, d_a: <transposition fixing a, W>, A or B moves.
+# Q(a,b): <transposition fixing a> only.
+found=collections.Counter(); example=None
 for A in inv:
     for B in inv:
         AB=mul(A,B)
         if isI(AB) or not isI(mul(AB,mul(AB,AB))): continue
         for W in inv:
             if not (mul(W,A)==mul(A,W)).all() or not (mul(W,B)==mul(B,W)).all(): continue
-            fixedC=[v for v in vecs if act(A,v)==v and act(B,v)==v]
-            sing=[v for v in fixedC if act(W,v)==v]
-            Lp=[v for v in fixedC if act(W,v)!=v]
-            orb3=[v for v in vecs if act(W,v)==v and not(act(A,v)==v and act(B,v)==v)]
-            grp=[I2,A,B,mul(A,B),mul(B,A),mul(A,mul(B,A))]; grp=grp+[mul(W,g) for g in grp]
-            free=[v for v in vecs if sum(act(g,v)==v for g in grp)==1]
-            stats[(len(sing),len(Lp),len(orb3),len(free))]+=1
-print('(colour+weak fixed, colour-fixed weak-swapped, weak-fixed colour-moved, free) : count')
-for k,v in sorted(stats.items()): print(k,v)
+            fix=lambda M,v:act(M,v)==v
+            sing=[v for v in vecs if fix(A,v) and fix(B,v) and fix(W,v)]
+            L=[v for v in vecs if fix(A,v) and fix(B,v) and not fix(W,v)]
+            U=[v for v in vecs if fix(B,v) and fix(W,v) and not fix(A,v)]      # colour 0 rep
+            Qv=[v for v in vecs if fix(B,v) and not fix(W,v) and not fix(A,v) and not fix(mul(B,W),v) or False]
+            Qv=[v for v in vecs if fix(B,v) and not fix(A,v) and not fix(W,v) and not fix(mul(A,W),v)]
+            ok = len(sing)>=2 and len(L)>=2 and len(U)>=2 and len(Qv)>=1
+            found[(len(sing),len(L),len(U),len(Qv))]+=1
+            if ok and example is None: example=(A,B,W,sing,L,U,Qv)
+for k,v in sorted(found.items()): print('(singlets, L-type, u/d-type, Q-type) candidates',k,'x',v)
+print('example found:',example is not None)

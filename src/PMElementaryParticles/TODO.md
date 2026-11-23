@@ -100,28 +100,19 @@ This file is the open list only.
   mass pair (right singlet minus left doublet member, same colour) has norm
   `4, 4, 12` over the three colours. In a weight placement both symmetries are
   Weyl reflections and preserve inner products.
-- **Replace the internal-D4 channel placement (blocks the tier derivation).**
-  No assignment of the 16 channels to the 24 norm-4 internal-D4 vectors lets
-  colour and the weak flip act by isometries (`tools/placement_d4_nogo.py`,
-  exhaustive over the order-1152 group: with two fixed singlets colour moves
-  nothing else). The 16 fit as the spinor weights of a D5 (SO(10)), where colour
-  and the weak flip are Weyl reflections and exactly two weights are fixed. Every
-  glue-coset root extends the internal D4 to a D5: 12 D5, 4 per coset, each adding
-  one spacetime direction `d` (`tools/d5_extension_check.py`). Clock reading of `d`:
-  vector coset `0, 0, 0, 2`; the two spinor cosets `±1` only. Next: derive which D5
-  (lead: `d` clock-silent, which leaves three, all in the vector coset), place the
-  channels as its spinor weights, certify the symmetries in Lean, then re-run
-  `EPLabel`, `EPLabelGen` and the pair tier count. Lean certificate of the D4
-  no-go is also open.
-  Structure (2026-11-23, `tools/d5_family_cosets.py`): with E8 = D5 + A3, the roots
-  fall into eight 16-blocks (one family each, by A3 weight) and six 10-blocks
-  (Higgs-like). For all 12 D5, every 16-block lies in the two cosets other than the
-  D5's own, 8 + 8, and the coset of a root is the sign of its pairing with `d`.
-  That is `wallClass` (generation `g` uses the two walls other than `g`) with the
-  wall bit read along `d`. So: generation `g` = a D5 through coset `g`, its labels =
-  one 16-block of E8 roots. The labels then carry nonzero glue keys, so `EPLabel`'s
-  key-0 labels and `genPacket` must be redone. Still to derive: which of the 4 D5
-  in each coset, which 16-block, and which internal axis is the weak one.
+- **Derive the gauge sector that carries the 16 channels (blocks the tier
+  derivation).** The internal-D4 placement breaks colour and the weak flip, and
+  no internal-D4 placement can keep them (`tools/placement_d4_nogo.py`). Persistence
+  elimination (`tools/pm_sector_wall.py`, `pm_sector_charge.py`; readings in the
+  docstring: symmetries by root reflections, channels as E8 roots, hypercharge as a
+  direction in the sector, `active` as the wall bit, least rank):
+  internal D4 fails (no weak reflection commutes with colour); D4 + A1 meets
+  symmetries + charge and symmetries + walls but never all three; D5 (all 12) fails
+  symmetries + walls. So no rank-5 sector meets all readings. Next: rank 6
+  (D6, D5+A1, D4+A2, D4+2A1, E6), and audit the two weakest readings (hypercharge
+  direction inside the sector; `active` as the wall bit in every generation).
+  Earlier note withdrawn: the D5 family split (two cosets by the sign along `d`,
+  `tools/d5_family_cosets.py`) is not the library's wall bit.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
