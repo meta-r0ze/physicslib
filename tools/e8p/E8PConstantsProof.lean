@@ -14,14 +14,12 @@ import E8PConstants.PMElementaryParticles.QuarkMassPulls
 import E8PConstants.PMConstants.WeakMassPulls
 import E8PConstants.PMConstants.ReadoutPulls
 import E8PConstants.PMElementaryParticles.TauLifetimePulls
-import PMElementaryParticles.LeptonMasses
 import PMHadrons.MesonMasses
 import PMHadrons.PionWidth
 import PMHadrons.KaonWidth
 import PMHadrons.KaonPionRatio
 import PMHadrons.DecayInstantiation
-import PMElementaryParticles.QuarkMasses
-import PMElementaryParticles.TauLifetime
+import PMElementaryParticles.Values
 import PMConstants.WMassTest
 import PMConstants.GaugeLedgers
 import PMConstants.ColourChannels
@@ -70,7 +68,7 @@ def value : Key → ℝ
   | .clusteringLate => (832 : ℝ) / 1000 / PMCosmology.loadFactor
   | .protonRatio => PMHadrons.Values.proton
   | .neutronRatio => PMHadrons.Values.neutron
-  | .muonRatio => PMElementaryParticles.LeptonMasses.muon
+  | .muonRatio => PMElementaryParticles.Values.muon
   | .hubbleSigma => (1 / 2 : ℝ) * PMCosmology.loadFactor
   | .s8Sigma => ((13 : ℝ) / 1000) / PMCosmology.loadFactor
   | .omegaRatio => PMCosmology.Tensions.omegaRatio
@@ -114,19 +112,19 @@ def value : Key → ℝ
   | .pmnsE31 => PMFlavor.Values.pmnsEntry 2 0
   | .pmnsE32 => PMFlavor.Values.pmnsEntry 2 1
   | .pmnsE33 => PMFlavor.Values.pmnsEntry 2 2
-  | .tauRatio => PMElementaryParticles.LeptonMasses.tau
+  | .tauRatio => PMElementaryParticles.Values.tau
   | .protonRadius => 4 * PMHadrons.CompositeMasses.hbarc / (PMHadrons.Values.proton * PMHadrons.CompositeMasses.me)
   | .pion0MeV => PMHadrons.Values.pion0 * PMHadrons.CompositeMasses.me
   | .kaon0MeV => PMHadrons.Values.kaon0 * PMHadrons.CompositeMasses.me
   | .kaonPlusMeV => PMHadrons.Values.kaonPlus * PMHadrons.CompositeMasses.me
   | .baryonPmJ => PMCosmology.Primordial.baryonRatio PMFlavor.Values.jarlskog
   | .baryonPm3J => PMCosmology.Primordial.baryonRatio PMFlavor.Values.jarlskogGeo
-  | .upMeV => PMElementaryParticles.QuarkMasses.up * PMHadrons.CompositeMasses.me
-  | .downMeV => PMElementaryParticles.QuarkMasses.down * PMHadrons.CompositeMasses.me
-  | .strangeMeV => PMElementaryParticles.QuarkMasses.strange * PMHadrons.CompositeMasses.me
-  | .charmMeV => PMElementaryParticles.QuarkMasses.charm * PMHadrons.CompositeMasses.me
-  | .bottomMeV => PMElementaryParticles.QuarkMasses.bottom * PMHadrons.CompositeMasses.me
-  | .topMeV => PMElementaryParticles.QuarkMasses.top * PMHadrons.CompositeMasses.me
+  | .upMeV => PMElementaryParticles.Values.up * PMElementaryParticles.Values.me
+  | .downMeV => PMElementaryParticles.Values.down * PMElementaryParticles.Values.me
+  | .strangeMeV => PMElementaryParticles.Values.strange * PMElementaryParticles.Values.me
+  | .charmMeV => PMElementaryParticles.Values.charm * PMElementaryParticles.Values.me
+  | .bottomMeV => PMElementaryParticles.Values.bottom * PMElementaryParticles.Values.me
+  | .topMeV => PMElementaryParticles.Values.top * PMElementaryParticles.Values.me
   | .pionPlusMeV => PMHadrons.Values.pionPlus * PMHadrons.CompositeMasses.me
   | .fPiMeV => PMHadrons.Values.pionDecayConstantE8 * PMHadrons.CompositeMasses.me
   | .fKMeV => PMHadrons.Values.kaonDecayConstantE8 * PMHadrons.CompositeMasses.me
@@ -151,8 +149,8 @@ def value : Key → ℝ
   | .vud => PMFlavor.Values.vud
   | .vudDressed => PMFlavor.Values.vudDressed
   | .tauLifetimeFs => PMElementaryParticles.Values.tauLifetimeCorrectedFs
-  | .muonLifetimeFinite => PMElementaryParticles.muonFiniteLifetime
-  | .tauLifetimeE8Natural => PMElementaryParticles.TauE8.tauLifetimeE8
+  | .muonLifetimeFinite => PMElementaryParticles.Values.muonFiniteLifetime
+  | .tauLifetimeE8Natural => PMElementaryParticles.Values.tauLifetimeE8
   | .neutronSpectralFraction => PMHadrons.neutronSpectralFraction
   | .neutronLifetimeE8 => PMHadrons.neutronLifetimeE8
   | .muonLifetimeSeconds => PMElementaryParticles.Values.muonLifetimeFull
@@ -176,6 +174,7 @@ def value : Key → ℝ
   | .rydbergEV => PMAtoms.rydbergEV
   | .bohrRadius => PMAtoms.bohrRadiusAngstrom
   | .shell4 => PMAtoms.shellCapacity 4
+  | .generations => (Fintype.card PMElementaryParticles.Values.Generation : ℝ)
 
 /-- Every runtime row is certified against the named current model definition. -/
 theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k ≤ ((bounds k).2 : ℝ) := by
@@ -225,7 +224,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | muonRatio =>
-    have h := PMElementaryParticles.LeptonMasses.muon_value
+    have h := PMElementaryParticles.Values.muon_value
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | omegaRatio =>
@@ -338,29 +337,29 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | upMeV =>
-    have h := PMElementaryParticles.QuarkMasses.up_value
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.up, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
+    have h := PMElementaryParticles.Values.up_value
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | downMeV =>
-    have h := PMElementaryParticles.QuarkMasses.down_value
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.down, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
+    have h := PMElementaryParticles.Values.down_value
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | strangeMeV =>
-    have h := PMElementaryParticles.QuarkMasses.strange_value
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.strange, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
+    have h := PMElementaryParticles.Values.strange_value
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | charmMeV =>
-    have h := PMElementaryParticles.QuarkMasses.charm_value
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.charm, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
+    have h := PMElementaryParticles.Values.charm_value
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | bottomMeV =>
-    have h := PMElementaryParticles.QuarkMasses.bottom_value
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.bottom, PMElementaryParticles.QuarkMasses.η,
-      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
+    have h := PMElementaryParticles.Values.bottom_value
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | topMeV =>
-    have h := PMElementaryParticles.QuarkMasses.top_value
-    norm_num [bounds, value, PMElementaryParticles.QuarkMasses.top,
-      PMHadrons.CompositeMasses.me, PMSubstrate.SIUnits.electronMassMeV] at h ⊢
+    have h := PMElementaryParticles.Values.top_value
+    norm_num [bounds, value] at h ⊢
+    exact ⟨h.1.le, h.2.le⟩
   | rydbergEV =>
     have h := PMAtoms.rydbergEV_bounds
     norm_num [bounds, value] at h ⊢
@@ -373,6 +372,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     have h := PMAtoms.shell_capacities
     norm_num [bounds, value] at h ⊢
     exact ⟨h.2.2.2.le, h.2.2.2.le⟩
+  | generations => norm_num [bounds, value, PMElementaryParticles.Values.generation_card]
   | vud =>
     have h := PMFlavor.Values.vud_bounds
     norm_num [bounds, value] at h ⊢
@@ -386,11 +386,11 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | muonLifetimeFinite =>
-    have h := PMElementaryParticles.muonFiniteLifetime_bounds
+    have h := PMElementaryParticles.Values.muonFiniteLifetime_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | tauLifetimeE8Natural =>
-    have h := PMElementaryParticles.TauE8.tauLifetimeE8_bounds
+    have h := PMElementaryParticles.Values.tauLifetimeE8_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronSpectralFraction =>
@@ -557,10 +557,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     have h := PMConstants.WMassTest.ratio_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
-  | tauRatio => norm_num [bounds, value, PMElementaryParticles.LeptonMasses.tau,
-      PMElementaryParticles.LeptonMasses.tauBoundary,
-      PMElementaryParticles.LeptonMasses.tauCoreLatency,
-      PMElementaryParticles.LeptonMasses.tauAnchors]
+  | tauRatio => norm_num [bounds, value, PMElementaryParticles.Values.tau_value]
   | protonRadius =>
     have h := PMHadrons.Values.protonRadius_value
     norm_num [bounds, value] at h ⊢

@@ -1,18 +1,18 @@
 import PMHadrons.MesonMasses
 import PMHadrons.CompositeMasses
-import PMElementaryParticles.LeptonMasses
+import PMElementaryParticles.Values
 
 /-!
 # Charged-lepton / pion measured pulls (moved from the PMElementaryParticles leaf)
 
-The E8 lepton and pion formulas and their E8-only enclosures stay in
-`PMElementaryParticles.LeptonMasses`; the CODATA 2022 / PDG measured comparisons
+The E8 lepton and pion formulas and their E8-only enclosures are read through
+`PMElementaryParticles.Values`; the CODATA 2022 / PDG measured comparisons
 live here. No measured number enters a theorem statement used by the derivation.
 -/
 
 noncomputable section
 namespace E8PConstants.LeptonMassPulls
-open PMElementaryParticles.LeptonMasses
+open PMElementaryParticles.Values
 open PMHadrons.MesonMasses
 open PMHadrons.CompositeMasses
 

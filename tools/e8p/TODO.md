@@ -89,3 +89,11 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
 - Rename the directory to the final package name if `e8p` is kept as the binary.
 
 Tighten the broad natural-unit muon, tau and neutron lifetime rows and finite meson bounds when their source enclosures improve.
+
+## Read only each library's Values
+
+EP is done: `E8PConstantsProof` and the EP pulls modules read `PMElementaryParticles.Values`.
+Still open: the other libraries. `E8PConstantsProof` imports internal modules of PMConstants,
+PMHadrons, PMSubstrate, PMCosmology and PMAtoms, and several proofs unfold internal definitions.
+`LeptonMassPulls` still reads pion and kaon names from `PMHadrons.MesonMasses`. For each library,
+export the bounds e8p needs from its Values module, then switch the import.

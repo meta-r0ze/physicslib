@@ -88,6 +88,12 @@ def visibleClasses : Finset (Fin 6) := Finset.univ.filter (· ≠ 4)
 
 theorem visibleClasses_card : visibleClasses.card = 5 := by decide
 
+/-- The channels outside the invisible class. -/
+def visibleChannels : Finset Channels := Finset.univ.filter (fun c => classOf c ≠ 4)
+
+/-- Fifteen visible channels per generation. -/
+theorem visible_channels_card : visibleChannels.card = 15 := by decide
+
 end PMElementaryParticles.ProgramClasses
 
 end

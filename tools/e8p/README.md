@@ -183,14 +183,11 @@ still needing interval proofs, and the Python scripts each addition lets us reti
 This is intentionally additive: a new Lean result becomes a reported, audited value by
 adding its bound wherever it is proved.
 
-## EP uniform control
+## EP program spine
 
-Run `e8p --ep-candidates` for the eight candidate labels. The report shows a
-**uniform-field control**, not the localized isolated excitation: the packet is
-on all sites and both streams, its occupancy is six when active, and its equal
-arrivals make the receiver flag zero under AND and OR. The localized
-one-excitation embedding has the correct one-bit occupancy and is preserved by
-`tick`, but its receiver flag has not yet been enumerated over the request
-field. Experimental mass references appear alongside each row as comparisons,
-with no scores or selection. The existing species ledger reports remain
-separate.
+Run `e8p --ep-spine` for the EP program spine. It reads only `PMElementaryParticles.Values`.
+It shows exact counts, not fitted values: 3 generations (the nonzero glue cosets), 5 visible
+classes (the total singlet is invisible), 15 visible channels per generation, and 15 programs.
+Each program meets the six pillars on the 43-site ring (`spine_generations`). Masses are open.
+The generation count has a catalog row, `light_generations`, compared with `N_ν` from the Z
+invisible width.

@@ -30,6 +30,7 @@ inductive Key where
   | pionFiniteLifetimeSeconds | kaonFiniteLifetimeSeconds
   | neutralPionFiniteLifetimeSeconds
   | rydbergEV | bohrRadius | shell4
+  | generations
   deriving BEq, DecidableEq, Repr
 
 def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFraction,
@@ -55,7 +56,7 @@ def keys : List Key := [.inverseAlpha, .alpha, .overhead, .footprint, .weakFract
   .neutralPionFiniteWidth, .neutralPionFiniteLifetime,
   .pionFiniteLifetimeSeconds, .kaonFiniteLifetimeSeconds,
   .neutralPionFiniteLifetimeSeconds,
-  .rydbergEV, .bohrRadius, .shell4]
+  .rydbergEV, .bohrRadius, .shell4, .generations]
 
 def Key.id : Key → String
   | .inverseAlpha => "alpha_inv" | .alpha => "alpha" | .overhead => "eta"
@@ -150,6 +151,7 @@ def Key.id : Key → String
   | .rydbergEV => "rydberg_ev"
   | .bohrRadius => "bohr_radius"
   | .shell4 => "shell_capacity_n4"
+  | .generations => "light_generations"
 
 /-- Exact rational bounds, including exact values as equal endpoints. These
 are closed enclosures; the underlying theorems often prove strict inequalities. -/
@@ -269,6 +271,7 @@ def bounds : Key → Rat × Rat
   | .rydbergEV => (13.6056931158, 13.6056931159)
   | .bohrRadius => (0.5291772106829, 0.5291772106830)
   | .shell4 => (32, 32)
+  | .generations => (3, 3)
 
 def Key.unit : Key → String
   | .electronMassInput | .vev | .higgsMass => "GeV"
@@ -288,6 +291,7 @@ def Key.unit : Key → String
   | .pionFiniteLifetime | .kaonFiniteLifetime | .neutralPionFiniteLifetime => "m_e^-1"
   | .hubbleLate => "km/s/Mpc"
   | .rydbergEV => "eV" | .bohrRadius => "Å" | .shell4 => "states"
+  | .generations => "generations"
   | .fermi => "GeV^-2"
   | _ => "dimensionless"
 
@@ -413,6 +417,7 @@ def Key.theoremName : Key → String
   | .rydbergEV => "PMAtoms.rydbergEV_bounds"
   | .bohrRadius => "PMAtoms.bohrRadius_bounds"
   | .shell4 => "PMAtoms.shell_capacities"
+  | .generations => "PMElementaryParticles.EPSpine.generation_card"
   | .downMeV => "PMElementaryParticles.QuarkMasses.down_value"
   | .strangeMeV => "PMElementaryParticles.QuarkMasses.strange_value"
   | .charmMeV => "PMElementaryParticles.QuarkMasses.charm_value"
@@ -479,6 +484,7 @@ def Key.paper : Key → Nat
   | .rydbergEV => 5
   | .bohrRadius => 5
   | .shell4 => 5
+  | .generations => 5
   | .downMeV => 5
   | .strangeMeV => 5
   | .charmMeV => 5
@@ -593,6 +599,7 @@ def Key.formula : Key → String
   | .rydbergEV => "R_\\infty=\\alpha^2 m_e c^2/2"
   | .bohrRadius => "a_0=\\hbar c/(\\alpha m_e c^2)"
   | .shell4 => "\\sum_{\\ell=0}^{n-1}2(2\\ell+1)=2n^2"
+  | .generations => "|(\\mathbb{Z}_2)^2\\setminus\\{0\\}|=3"
   | .muonLifetimeSeconds => "\\tau_\\mu=192\\pi^3/(G_F^2 m_\\mu^5\\,(1+\\Delta q^{(0)}+\\Delta q^{(1)}+\\Delta q^{(2)}))"
   | .kaonPionRatio => "\\frac{\\Gamma_K}{\\Gamma_\\pi}=\\frac{\\pi^2}{196-\\pi^2}\\left(\\frac{70}{59}\\right)^2\\frac{m_K}{m_\\pi}\\frac{(1-m_\\mu^2/m_K^2)^2}{(1-m_\\mu^2/m_\\pi^2)^2}\\frac{1+\\delta_K}{1+\\delta_\\pi}"
   | .pionLifetimePredicted => "\\frac{8\\pi}{G_F^2\\,q^2|V_{ud}|^2 f_\\pi^2 m_\\pi m_\\mu^2(1-m_\\mu^2/m_\\pi^2)^2(1+\\delta_\\pi)}"
@@ -683,6 +690,7 @@ def Key.caveat : Key → String
   | .neutralPionFiniteWidth | .neutralPionFiniteLifetime | .neutralPionFiniteLifetimeSeconds =>
       "gamma-gamma partial channel, not total pi0 lifetime; no Dalitz width; reference is the total-lifetime average divided by BR(gamma gamma)"
   | .rydbergEV | .bohrRadius => "atoms comparison; unit-sensitive"
+  | .generations => "nonzero glue cosets of the aligned D4+D4 placement (exact count, no input); the total singlet is invisible (ProgramClasses.invisible_iff); N_nu counts light neutrinos (m < m_Z/2) only"
   | _ => ""
 
 end E8PConstants

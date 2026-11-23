@@ -21,7 +21,7 @@ private def usage : String :=
   "  --periodic-table [N]  configuration, Hund multiplicity, E8 nuclear mass vs measured (default 20)\n" ++
   "  --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)\n" ++
   "  --shells        E8 Nilsson single-particle ladder, gaps and closures vs the magic numbers\n" ++
-  "  --ep-candidates  conditional EP witness rows beside experimental mass references\n" ++
+  "  --ep-spine    EP program spine: generations, visible classes, programs (exact counts)\n" ++
   "  --summary       one Markdown page: scoreboard, every comparison by agreeing digits, tensions\n" ++
   "  --masses        E8 nuclear ledger masses vs measured: residual and z in ledger-scatter units\n" ++
   "  --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)\n" ++
@@ -174,32 +174,26 @@ private def derivation (rest : List String) : IO UInt32 := do
     args := #["env", "lean", "--run", "tools/e8p/Derivation.lean"] ++ rest.toArray }
   child.wait
 
-/-- The uniform control field is shown only to record that its zero flags are
-an equal-arrival artifact.  It is not one excitation.  The localized trace is
-not yet reported.  No measured reference enters the candidate family or its
-order. -/
-private def printEPCandidates : IO Unit := do
+/-- The EP program spine, read from `PMElementaryParticles.Values`. These are exact counts
+(theorems), not fitted values. The generation count is compared with data in the catalog row
+`light_generations`. -/
+private def printEPSpine : IO Unit := do
   let out ← IO.getStdout
-  out.putStrLn "EP uniform-field control. Experimental references are comparison only."
-  out.putStrLn "The packet is on all sites and both streams; this is not one excitation."
-  out.putStrLn "Its equal arrivals give zero receiver registrations under AND and OR."
-  out.putStrLn "The localized one-excitation receiver flag is not yet enumerated."
-  out.putStrLn "The record bit-visit column is separate and is not reported here."
-  let refs : List Key := [.upMeV, .downMeV, .strangeMeV, .charmMeV, .bottomMeV, .topMeV,
-    .muonRatio, .tauRatio]
-  for c in PMElementaryParticles.Values.TransportCandidates.candidates do
-    let (p, q) := PMElementaryParticles.Values.TransportCandidates.phases c
-    let bank := if c.1 then "advance FIFO" else "hold bank"
-    let receiver := if c.2.1 then "OR" else "AND"
-    out.putStrLn s!"\n{bank} / {receiver} / phases {p.val},{q.val}"
-    out.putStrLn "  Uniform control: registrations = 0 (both rules); not one excitation."
-    let order (p : PMElementaryParticles.ProtocolInventory.BaseProtocol) :=
-      (PMElementaryParticles.Values.TransportCandidates.certifiedOffsetOrder c p).elim "open" toString
-    out.putStrLn s!"  Static offset: open. Inverse-period order up/down/electron: {order .up}/{order .down}/{order .electron}."
-    out.putStrLn "  Wire-to-species tier: open; no trace supplies an address-to-tier bit."
-    for key in refs do
-      for ref in expRefs key do
-        out.putStrLn s!"  {key.id}: no localized trace value | experiment {expValueText ref} ± {expUncText ref} {key.unit} [{ref.citation}]"
+  let gens := Fintype.card PMElementaryParticles.Values.Generation
+  let visible := PMElementaryParticles.Values.visibleClasses.card
+  let channels := PMElementaryParticles.Values.visibleChannels.card
+  let programs := Fintype.card (PMElementaryParticles.Values.Generation × {k : Fin 6 // k ≠ 4})
+  out.putStrLn "EP program spine (PMElementaryParticles.Values). Exact counts; no measured input."
+  out.putStrLn s!"  generations (nonzero glue keys)              {gens}  [generation_card]"
+  out.putStrLn  "  weak x colour classes of the 16 channels     6"
+  out.putStrLn s!"  visible classes (total singlet is invisible) {visible}  [visibleClasses_card, invisible_iff]"
+  out.putStrLn s!"  visible channels per generation              {channels}  [visible_channels_card]"
+  out.putStrLn s!"  programs (generation x visible class)        {programs}  [programs_card]"
+  out.putStrLn "  Each program meets the six pillars on the 43-site ring and keeps its generation"
+  out.putStrLn "  and its label on every forward walk [spine_generations]."
+  out.putStrLn "  The invisible class has no program [singlet_no_program]."
+  out.putStrLn "  Masses: open (no readout from the ring to a mass yet)."
+  out.putStrLn "  Compare: light_generations row (N_nu from the Z invisible width)."
 
 /-- Plain `e8p`: every report, each under a heading, so one checked-in file holds everything. -/
 private def printAll : IO Unit := do
@@ -219,8 +213,8 @@ def main (args : List String) : IO UInt32 := do
     if a == "--derivation" then return ← derivation args.tail
     if a.startsWith "--derivation=" then
       return ← derivation ((a.drop 13).toString :: args.tail)
-  if args == ["--ep-candidates"] then
-    printEPCandidates
+  if args == ["--ep-spine"] then
+    printEPSpine
     return 0
   if args == ["--help"] || args == ["-h"] then
     (← IO.getStdout).putStr usage

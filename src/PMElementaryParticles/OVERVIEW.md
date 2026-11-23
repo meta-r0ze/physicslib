@@ -135,7 +135,10 @@ widths, the particle channel inventory) live in [`PMHadrons`](../PMHadrons/OVERV
 Downstream libraries import `PMElementaryParticles.Values` (like `PMSubstrate.E8Values`,
 `PMConstants.Values`, `PMFlavor.Values`): `me`, `hbarc`, `electronTime` (+ `electronTime_tight`),
 `αe`, `αinv`, `fermiME` (+ `fermiME_tight`), `muon`, `tau`, the six quark masses and the muon/tau
-lifetimes in seconds, with their bounds. Prove a bound there once rather than inline.
+lifetimes in seconds, with their bounds, and the program spine (`Generation`, `generation_card`,
+`visibleClasses_card`, `visible_channels_card`, `invisible_iff`, `Program`, `programs_card`,
+`spine_generations`). Prove a bound in its own module and name it in `Values`. `Values` holds no
+computation. `e8p` reads EP only through `Values`.
 
 Shared units and couplings used by every level are in `SharedUnits` (`me`, `ħc`, `α`, `α⁻¹`,
 their bounds, and `G_F` in `m_e⁻²`).
@@ -237,7 +240,7 @@ the 43-ring one-site count is in `RingRates` above.
 
 ### Finite witness output
 
-`Values.TransportCandidates` keeps only the uniform control field. Its
+`TransportCandidates` (its own module; `e8p` does not read it) keeps only the uniform control field. Its
 receiver column is zero by equal arrivals; it is not a one-excitation result.
 The localized 43-tick sums are `patternSum` of the firing pattern,
 conditional on the exchange pattern from the retained request field
@@ -1164,12 +1167,12 @@ one.
 
 ### Down protocol
 
-The tier set is a premise: `Values.down_declared_tiers` checks `{0,1,2}`, but a
+The tier set is a premise: `DownProtocol.down_declared_tiers` checks `{0,1,2}`, but a
 physical address-to-tier assignment is an input. Heavy-flip record Tolls are
 colour `(2,1,0,1)` and lepton `(1,2,1,0)` in the specified two-bit comparisons
 (`HeavyFlipRecords.orbit_record_tolls`,
 `ElectricHeavyRecord.lepton_reference_toll`). The geometric mean
-`Values.down_colour_geometric_mean` gives `s_d² = s_e·s_u` for a common bit
+`DownProtocol.down_colour_geometric_mean` gives `s_d² = s_e·s_u` for a common bit
 price in the colour-reference account; any common amplitude factor preserves
 it. Unequal additional label costs need a separate check. The eight witnesses
 choose no heavy-writer reference. Down still needs G, O, U and W for that

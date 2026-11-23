@@ -1,10 +1,10 @@
-import PMElementaryParticles.TauLifetime
+import PMElementaryParticles.Values
 
 /-!
 # Tau-lifetime measured pull (moved from the PMElementaryParticles leaf)
 
 The tree-level tau lifetime `tauLife` and its E8-only enclosure stay in
-`PMElementaryParticles.TauLifetime`; the PDG measured comparison lives here.
+`PMElementaryParticles.TauLifetime` and are read here through `PMElementaryParticles.Values`; the PDG measured comparison lives here.
 
 With the standard small corrections (electron phase space in the muon, W
 propagator in the tau, the difference of the QED corrections at the two masses)
@@ -14,7 +14,7 @@ combined with the `B_e` error (`±0.65` fs) as `0.82` fs, lies in `(0.8, 1.0)σ`
 
 noncomputable section
 namespace E8PConstants.TauLifetimePulls
-open PMElementaryParticles.TauLifetime
+open PMElementaryParticles.Values
 
 theorem tau_lifetime_pull (c : ℝ) (hc : 0.9995 ≤ c ∧ c ≤ 0.9997) :
     0.8 < (c * tauLife - 290.3) / 0.82 ∧ (c * tauLife - 290.3) / 0.82 < 1.0 := by

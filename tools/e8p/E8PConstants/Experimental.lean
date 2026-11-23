@@ -74,6 +74,9 @@ def expRefs : Key → List ExpRef
   | .rydbergEV => [⟨13.605693122990, 0.0000000043, "codata_2022"⟩]
   -- CODATA 2022 `a₀ = 0.529177210544(82)` Å; σ combines it with the `m_e` input (`1.6×10⁻¹⁰` Å).
   | .bohrRadius => [⟨0.529177210544, 0.00000000018, "codata_2022"⟩]
+  -- Light neutrino species from the Z invisible width, LEP with the corrected Bhabha luminosity
+  -- (Janot and Jadach, PLB 803 (2020) 135319; PDG 2024 average). Light means m < m_Z/2.
+  | .generations => [⟨2.9963, 0.0074, "janot_jadach_2020"⟩]
   | .vud | .vudDressed => [⟨0.97367, 0.00032, "pdg_2024"⟩]
   | .tauLifetimeFs => [⟨290.3, 0.82, "pdg_2024"⟩]
   | .neutronLifetimePredicted => [⟨878.4, 0.5, "pdg_2024"⟩]

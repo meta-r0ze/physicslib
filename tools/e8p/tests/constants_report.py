@@ -46,7 +46,7 @@ EXPECTED = {
     # paper 5
     "proton_ratio", "neutron_ratio", "muon_ratio",
     "tau_ratio", "proton_radius", "pion0_mev", "kaon0_mev", "kaon_plus_mev",
-    "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
+    "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev", "light_generations",
     "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
     "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
     "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_muonic_partial_lifetime_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
@@ -174,7 +174,7 @@ def main():
                       "ckm_s13", "ckm_s23", "ckm_vcb", "vud", "vud_dressed"}
     assert ids(5) == {"proton_ratio", "neutron_ratio", "muon_ratio", "tau_ratio",
                       "proton_radius", "pion0_mev", "kaon0_mev", "kaon_plus_mev",
-                      "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev",
+                      "up_mev", "down_mev", "strange_mev", "charm_mev", "bottom_mev", "top_mev", "light_generations",
                       "pion_plus_mev", "f_pi_mev", "f_k_mev", "neutrino_floor_mass", "tau_lifetime_fs", "muon_lifetime_finite",
                       "tau_lifetime_e8_natural", "neutron_spectral_fraction", "neutron_lifetime_e8",
     "muon_lifetime_s", "neutron_lifetime_s", "neutron_lifetime_predicted_s", "pion_lifetime_predicted_s", "kaon_muonic_partial_lifetime_s", "kaon_pion_width_ratio", "neutron_lifetime_unified_s",
@@ -299,15 +299,11 @@ def main():
     assert shells.returncode == 0
     assert "1h11/2" in shells.stdout and "same set" in shells.stdout
     assert "[2, 8, 20, 28, 50, 82, 126]" in shells.stdout
-    ep = run(binary, "--ep-candidates")
+    ep = run(binary, "--ep-spine")
     assert ep.returncode == 0
-    assert "Experimental references are comparison only" in ep.stdout
-    for bank in ("hold bank", "advance FIFO"):
-        for receiver in ("AND", "OR"):
-            for phases in ("0,1", "1,2"):
-                assert ep.stdout.count(f"{bank} / {receiver} / phases {phases}") == 1
-    assert ep.stdout.count("down_mev: no localized trace value") == 8
-    assert "Inverse-period order up/down/electron: open/open/open" in ep.stdout
+    assert "generations (nonzero glue keys)              3" in ep.stdout
+    assert "visible channels per generation              15" in ep.stdout
+    assert "programs (generation x visible class)        15" in ep.stdout
     assert run(binary, "--help").returncode == 0
     print(f"e8p reporter checks passed: {len(EXPECTED)} rows, five precisions, paper/only filters, audit, latex, CLI")
 
