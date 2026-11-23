@@ -128,12 +128,11 @@ This file is the open list only.
   eliminations by layer, node and carrier level first.
   Seeds (review 2026-11-23). EP uses a Standard Model form where an earlier module
   has a PM or E8 reason; switch to the earlier module:
-  * Masses (`LeptonMasses`, `QuarkMasses`, `TierLedger`, declared): `PMAction.GenerationMass`,
-    `MassInsertion`, `DetuningMass`, `GenerationSector` give a PM mass: a mass joins a
-    generation's two walls by a crossing (common `y`) and a single-wall carrier
-    (`κ_label`), one heavy and two light generations; there the heavy one is the
-    vector-label generation, against the ledger's ordering. Open there: the node
-    factor and the light split.
+  * Masses: EP's generations sit in `PMAction`'s mass structure (`GenerationMasses`); the
+    heavy generation is the glue key `(0,1)`. Mass values wait on `PMAction/TODO.md`: the
+    direct term that joins the two walls, the node factor of a mass, the split of the two
+    light generations, and the lepton reading (one leg from the node). Until then
+    `LeptonMasses`, `QuarkMasses` and `TierLedger` stay comparison premises.
   No earlier reason, so named premises: the Koide modules (a data relation), the
   supplied QED coefficients, `B_e` and `α(m_τ)` in the lifetime modules.
 - **Certify the per-wall symmetry of the placement.** The 16 channels are two walls

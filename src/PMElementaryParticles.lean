@@ -108,3 +108,4 @@ import PMElementaryParticles.ChannelPlacement
 import PMElementaryParticles.RingRates
 import PMElementaryParticles.RingSurvivors
 import PMElementaryParticles.TransportCandidates
+import PMElementaryParticles.GenerationMasses
