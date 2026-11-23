@@ -36,6 +36,15 @@ This file is the open list only.
 
 ## Generations and costs
 
+- **Derive the equal split (Koide).** `KoideSplit` proves `Q = 2/3` iff the
+  generation-symmetric and symmetry-breaking parts of the amplitudes have
+  equal norm. Capacity partitioning does not select a split. A uniform law
+  over the three coset slots gives `Q = 1`; a uniform law over two channels
+  (clock-touched / clock-free, one bit) gives `Q = 2/3`. Derive which
+  partition the substrate's mass record uses. Then derive the remaining phase
+  from the clock (the only triality breaker). Lead: the wire mass
+  `D_R (δ_O + cyc κ_O)` has a circulant factor; a Hermitian circulant amplitude
+  operator meets Koide iff its on-site and hopping parts have equal norm.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
