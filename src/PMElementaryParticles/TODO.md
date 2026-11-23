@@ -9,11 +9,6 @@ This file is the open list only.
   on the physical 43-ring. Move `Protocol` and the 3-ring parts of
   `PillarPredicates` / `SurvivorClasses` to PMChecks, and restate any EP
   result that still reads `Protocol` on `EPSpine.Program`.
-- **Channel placement per generation.** The library wall rule puts a
-  generation-`g` channel in class `wallClass g (active c)`; `channelE8` is the
-  `g = 0` placement (`ChannelPlacement.libraryIndex_channelKey`). Rotate it by
-  internal triality for `g = 1, 2` and restate `EPLabel.spine_labelled` with
-  the rotated vectors.
 - **Neutrino mass without the singlet.** The removed class is the
   right-handed-neutrino-like channel. A neutrino mass must not need it
   (`NeutrinoContext`).
