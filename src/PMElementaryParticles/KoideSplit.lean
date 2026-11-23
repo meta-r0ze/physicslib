@@ -4,6 +4,7 @@ import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Analysis.Real.Sqrt
 
 /-!
 # The Koide ratio as a singlet/doublet split
@@ -164,6 +165,55 @@ theorem shiftFlag_at_koide (v : Fin 3 → ℝ) (h : total v ≠ 0)
   have h2 : total v ^ 2 ≠ 0 := pow_ne_zero 2 h
   field_simp
   ring
+
+
+/-! ## The pair-plus-one limit -/
+
+/-- Two degenerate generations with amplitude `α` and one distinct generation
+with amplitude `α + β`. -/
+def pairPlusOne (α β : ℝ) : Fin 3 → ℝ := ![α, α, α + β]
+
+theorem pairPlusOne_split (α β : ℝ) :
+    normSq (doublet (pairPlusOne α β)) = 2 * β ^ 2 / 3 ∧
+      normSq (singlet (pairPlusOne α β)) = (3 * α + β) ^ 2 / 3 := by
+  constructor
+  · simp only [normSq, doublet, total, pairPlusOne, Fin.sum_univ_three]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.head_cons, Matrix.tail_cons]
+    ring
+  · rw [normSq_singlet]
+    simp only [total, pairPlusOne, Fin.sum_univ_three]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.head_cons, Matrix.tail_cons]
+    ring
+
+/-- **In the pair-plus-one limit, `Q = 2/3` fixes the distinct/pair amplitude
+excess:** `β = 3(1 + √2) α`, so the distinct amplitude is `(4 + 3√2) α`. -/
+theorem pairPlusOne_koide {α β : ℝ} (hα : 0 < α) (hβ : 0 ≤ β) :
+    koideQ (pairPlusOne α β) = 2 / 3 ↔ β = 3 * (1 + Real.sqrt 2) * α := by
+  have ht : total (pairPlusOne α β) ≠ 0 := by
+    simp only [total, pairPlusOne, Fin.sum_univ_three]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.head_cons, Matrix.tail_cons]
+    linarith
+  rw [koide_iff_equal_split _ ht, (pairPlusOne_split α β).1, (pairPlusOne_split α β).2]
+  have h2 : Real.sqrt 2 * Real.sqrt 2 = 2 := Real.mul_self_sqrt (by norm_num)
+  have hs : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have hs1 : 1 < Real.sqrt 2 := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  constructor
+  · intro h
+    have hsq : (Real.sqrt 2 * β) ^ 2 = (3 * α + β) ^ 2 := by nlinarith
+    have hl : Real.sqrt 2 * β = 3 * α + β := by
+      have h1 : 0 ≤ Real.sqrt 2 * β := by positivity
+      have h3 : 0 ≤ 3 * α + β := by linarith
+      nlinarith [sq_nonneg (Real.sqrt 2 * β - (3 * α + β)),
+        sq_nonneg (Real.sqrt 2 * β + (3 * α + β))]
+    nlinarith
+  · intro h
+    subst h
+    nlinarith
 
 end PMElementaryParticles.KoideSplit
 
