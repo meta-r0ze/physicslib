@@ -36,6 +36,11 @@ This file is the open list only.
 
 ## Generations and costs
 
+- **Identify the generation register's stay/move step with one tick of the
+  conjugate-spinor walk.** `KoideCosets.cospinor_walk_koide` proves that walk
+  is Koide-fair (`8 : 4 : 4`), and it is the only coset whose local roots are
+  pure stays and pure ring steps (`ClockPlaneProjection`). The step from the
+  43-site ring to the three-generation register is not derived.
 - **Derive the equal split (Koide).** `KoideSplit` proves `Q = 2/3` iff the
   generation-symmetric and symmetry-breaking parts of the amplitudes have
   equal norm, i.e. the record "generation-symmetric or not" is a fair coin

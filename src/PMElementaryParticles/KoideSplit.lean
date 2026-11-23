@@ -258,6 +258,31 @@ theorem circulant_koide (a u w : ℝ) (ha : a ≠ 0) :
     field_simp
     nlinarith [h]
 
+
+/-! ## Lazy walk with equal root-event weights -/
+
+/-- **A lazy walk is Koide-fair iff it stays as often as it moves.** One tick is
+one root event, all equally weighted: `s` events stay, `f` move forward and `f`
+move back. The amplitudes are the square roots of the probabilities:
+`a = √(s/(s+2f))`, `|b|² = u² + w² = f/(s+2f)` (any phase). Then
+`Q = 2/3 ↔ s = 2f`. -/
+theorem lazyWalk_koide_iff (s f u w : ℝ) (hs : 0 < s) (hf : 0 ≤ f)
+    (huw : u ^ 2 + w ^ 2 = f / (s + 2 * f)) :
+    koideQ (circulantSpectrum (Real.sqrt (s / (s + 2 * f))) u w) = 2 / 3 ↔ s = 2 * f := by
+  have hden : 0 < s + 2 * f := by linarith
+  have ha2 : Real.sqrt (s / (s + 2 * f)) ^ 2 = s / (s + 2 * f) :=
+    Real.sq_sqrt (div_nonneg hs.le hden.le)
+  have ha : Real.sqrt (s / (s + 2 * f)) ≠ 0 :=
+    (Real.sqrt_pos.mpr (div_pos hs hden)).ne'
+  rw [circulant_koide _ u w ha, huw, ha2]
+  constructor
+  · intro h
+    field_simp at h
+    linarith
+  · intro h
+    rw [h]
+    field_simp
+
 end PMElementaryParticles.KoideSplit
 
 end
