@@ -154,8 +154,10 @@ This file is the open list only.
   allowed root choices the results vary (down `44.1` in 1/3; up rank 1 in 1/4; leptons
   never near `16.8`). Tried, not the spectrum: a stay/move register over gauge-neutral
   roots (20, an A4 system) gives `1 : 13.9 : 194`. Next: fix the open root choices from
-  readings, and put path counts and clock phases into the entries (one minimal path
-  per entry is not enough for the leptons).
+  readings, and derive the entry weight. Tried: path counts
+  (`tools/pm_sector/flip_paths.py`) collapse the hierarchy (ratios 2 to 6 in every
+  sector); clock phases drop out for a program at rest (zero mode). One path per entry
+  has no reading behind it. The entry weight is the open object.
 - **`wallClass` versus the derived walls.** Labels now use `GaugeSector.wallKey`
   (`EPSector.sector_spine`). The cyclic `ControlledGluedRegister.wallClass` disagrees
   for generation 2 (doublets in `(1,0)`; the sector needs `(0,1)`) and is still used by
