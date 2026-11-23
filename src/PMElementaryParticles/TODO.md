@@ -162,6 +162,11 @@ This file is the open list only.
   two-step paths is a separate same-tick history, so the up/down offset is `Δ/14 ≈ 3`,
   not `Δ`. The data (`c/s ≈ 14`, `t/b ≈ 41`) fit one path. Either a reading restricts
   the paths, or the multi-step amplitude is not a sum of per-path rates.
+  Flips are Higgs moves (`tools/pm_sector/higgs_moves.py`): a flip carries the Higgs
+  doublet's numbers, so sector and neutral moves alone reach no flip. Every one-step
+  flip is a single Higgs-type root (40 of them, 10 per sign pair); two-step flips have
+  6 to 8 paths with one Higgs move, giving an offset `Δ/6` to `Δ/8`. Open: the
+  multi-step amplitude, from a reading, not a fit.
 - **`wallClass` versus the derived walls.** Labels now use `GaugeSector.wallKey`
   (`EPSector.sector_spine`). The cyclic `ControlledGluedRegister.wallClass` disagrees
   for generation 2 (doublets in `(1,0)`; the sector needs `(0,1)`) and is still used by
