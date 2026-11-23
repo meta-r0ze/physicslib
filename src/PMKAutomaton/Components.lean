@@ -715,10 +715,265 @@ instance (l : Link) (f : Frame) : Decidable (preserves l f) := by
 def stabilizer (l : Link) : Finset Frame :=
   univ.filter fun f => d4 f ∧ preserves l f
 
+/-! ### Cached stabilizer closures
+
+`stabilizer l` is the same finite set in every later proof.  Each literal is
+computed once, and `decide +kernel` on the literal is cheap, so the later
+declarations no longer recompute the filter. -/
+
+/-- Cached literal for `stabilizer .sector`. -/
+def stabilizerSectorLit : Finset Frame := [
+  (![0, 1, 2, 3], ![false, false, false, false]),
+  (![0, 1, 2, 3], ![true, true, false, false]),
+  (![0, 1, 2, 3], ![true, false, true, false]),
+  (![0, 1, 2, 3], ![false, true, true, false]),
+  (![0, 1, 2, 3], ![true, false, false, true]),
+  (![0, 1, 2, 3], ![false, true, false, true]),
+  (![0, 1, 2, 3], ![false, false, true, true]),
+  (![0, 1, 2, 3], ![true, true, true, true]),
+  (![1, 0, 2, 3], ![false, false, false, false]),
+  (![1, 0, 2, 3], ![true, true, false, false]),
+  (![1, 0, 2, 3], ![true, false, true, false]),
+  (![1, 0, 2, 3], ![false, true, true, false]),
+  (![1, 0, 2, 3], ![true, false, false, true]),
+  (![1, 0, 2, 3], ![false, true, false, true]),
+  (![1, 0, 2, 3], ![false, false, true, true]),
+  (![1, 0, 2, 3], ![true, true, true, true]),
+  (![2, 1, 0, 3], ![false, false, false, false]),
+  (![2, 1, 0, 3], ![true, true, false, false]),
+  (![2, 1, 0, 3], ![true, false, true, false]),
+  (![2, 1, 0, 3], ![false, true, true, false]),
+  (![2, 1, 0, 3], ![true, false, false, true]),
+  (![2, 1, 0, 3], ![false, true, false, true]),
+  (![2, 1, 0, 3], ![false, false, true, true]),
+  (![2, 1, 0, 3], ![true, true, true, true]),
+  (![1, 2, 0, 3], ![false, false, false, false]),
+  (![1, 2, 0, 3], ![true, true, false, false]),
+  (![1, 2, 0, 3], ![true, false, true, false]),
+  (![1, 2, 0, 3], ![false, true, true, false]),
+  (![1, 2, 0, 3], ![true, false, false, true]),
+  (![1, 2, 0, 3], ![false, true, false, true]),
+  (![1, 2, 0, 3], ![false, false, true, true]),
+  (![1, 2, 0, 3], ![true, true, true, true]),
+  (![2, 0, 1, 3], ![false, false, false, false]),
+  (![2, 0, 1, 3], ![true, true, false, false]),
+  (![2, 0, 1, 3], ![true, false, true, false]),
+  (![2, 0, 1, 3], ![false, true, true, false]),
+  (![2, 0, 1, 3], ![true, false, false, true]),
+  (![2, 0, 1, 3], ![false, true, false, true]),
+  (![2, 0, 1, 3], ![false, false, true, true]),
+  (![2, 0, 1, 3], ![true, true, true, true]),
+  (![0, 2, 1, 3], ![false, false, false, false]),
+  (![0, 2, 1, 3], ![true, true, false, false]),
+  (![0, 2, 1, 3], ![true, false, true, false]),
+  (![0, 2, 1, 3], ![false, true, true, false]),
+  (![0, 2, 1, 3], ![true, false, false, true]),
+  (![0, 2, 1, 3], ![false, true, false, true]),
+  (![0, 2, 1, 3], ![false, false, true, true]),
+  (![0, 2, 1, 3], ![true, true, true, true]),
+  (![3, 2, 1, 0], ![false, false, false, false]),
+  (![3, 2, 1, 0], ![true, true, false, false]),
+  (![3, 2, 1, 0], ![true, false, true, false]),
+  (![3, 2, 1, 0], ![false, true, true, false]),
+  (![3, 2, 1, 0], ![true, false, false, true]),
+  (![3, 2, 1, 0], ![false, true, false, true]),
+  (![3, 2, 1, 0], ![false, false, true, true]),
+  (![3, 2, 1, 0], ![true, true, true, true]),
+  (![2, 3, 1, 0], ![false, false, false, false]),
+  (![2, 3, 1, 0], ![true, true, false, false]),
+  (![2, 3, 1, 0], ![true, false, true, false]),
+  (![2, 3, 1, 0], ![false, true, true, false]),
+  (![2, 3, 1, 0], ![true, false, false, true]),
+  (![2, 3, 1, 0], ![false, true, false, true]),
+  (![2, 3, 1, 0], ![false, false, true, true]),
+  (![2, 3, 1, 0], ![true, true, true, true]),
+  (![2, 1, 3, 0], ![false, false, false, false]),
+  (![2, 1, 3, 0], ![true, true, false, false]),
+  (![2, 1, 3, 0], ![true, false, true, false]),
+  (![2, 1, 3, 0], ![false, true, true, false]),
+  (![2, 1, 3, 0], ![true, false, false, true]),
+  (![2, 1, 3, 0], ![false, true, false, true]),
+  (![2, 1, 3, 0], ![false, false, true, true]),
+  (![2, 1, 3, 0], ![true, true, true, true]),
+  (![3, 1, 2, 0], ![false, false, false, false]),
+  (![3, 1, 2, 0], ![true, true, false, false]),
+  (![3, 1, 2, 0], ![true, false, true, false]),
+  (![3, 1, 2, 0], ![false, true, true, false]),
+  (![3, 1, 2, 0], ![true, false, false, true]),
+  (![3, 1, 2, 0], ![false, true, false, true]),
+  (![3, 1, 2, 0], ![false, false, true, true]),
+  (![3, 1, 2, 0], ![true, true, true, true]),
+  (![1, 3, 2, 0], ![false, false, false, false]),
+  (![1, 3, 2, 0], ![true, true, false, false]),
+  (![1, 3, 2, 0], ![true, false, true, false]),
+  (![1, 3, 2, 0], ![false, true, true, false]),
+  (![1, 3, 2, 0], ![true, false, false, true]),
+  (![1, 3, 2, 0], ![false, true, false, true]),
+  (![1, 3, 2, 0], ![false, false, true, true]),
+  (![1, 3, 2, 0], ![true, true, true, true]),
+  (![1, 2, 3, 0], ![false, false, false, false]),
+  (![1, 2, 3, 0], ![true, true, false, false]),
+  (![1, 2, 3, 0], ![true, false, true, false]),
+  (![1, 2, 3, 0], ![false, true, true, false]),
+  (![1, 2, 3, 0], ![true, false, false, true]),
+  (![1, 2, 3, 0], ![false, true, false, true]),
+  (![1, 2, 3, 0], ![false, false, true, true]),
+  (![1, 2, 3, 0], ![true, true, true, true]),
+  (![3, 0, 1, 2], ![false, false, false, false]),
+  (![3, 0, 1, 2], ![true, true, false, false]),
+  (![3, 0, 1, 2], ![true, false, true, false]),
+  (![3, 0, 1, 2], ![false, true, true, false]),
+  (![3, 0, 1, 2], ![true, false, false, true]),
+  (![3, 0, 1, 2], ![false, true, false, true]),
+  (![3, 0, 1, 2], ![false, false, true, true]),
+  (![3, 0, 1, 2], ![true, true, true, true]),
+  (![0, 3, 1, 2], ![false, false, false, false]),
+  (![0, 3, 1, 2], ![true, true, false, false]),
+  (![0, 3, 1, 2], ![true, false, true, false]),
+  (![0, 3, 1, 2], ![false, true, true, false]),
+  (![0, 3, 1, 2], ![true, false, false, true]),
+  (![0, 3, 1, 2], ![false, true, false, true]),
+  (![0, 3, 1, 2], ![false, false, true, true]),
+  (![0, 3, 1, 2], ![true, true, true, true]),
+  (![0, 1, 3, 2], ![false, false, false, false]),
+  (![0, 1, 3, 2], ![true, true, false, false]),
+  (![0, 1, 3, 2], ![true, false, true, false]),
+  (![0, 1, 3, 2], ![false, true, true, false]),
+  (![0, 1, 3, 2], ![true, false, false, true]),
+  (![0, 1, 3, 2], ![false, true, false, true]),
+  (![0, 1, 3, 2], ![false, false, true, true]),
+  (![0, 1, 3, 2], ![true, true, true, true]),
+  (![3, 1, 0, 2], ![false, false, false, false]),
+  (![3, 1, 0, 2], ![true, true, false, false]),
+  (![3, 1, 0, 2], ![true, false, true, false]),
+  (![3, 1, 0, 2], ![false, true, true, false]),
+  (![3, 1, 0, 2], ![true, false, false, true]),
+  (![3, 1, 0, 2], ![false, true, false, true]),
+  (![3, 1, 0, 2], ![false, false, true, true]),
+  (![3, 1, 0, 2], ![true, true, true, true]),
+  (![1, 3, 0, 2], ![false, false, false, false]),
+  (![1, 3, 0, 2], ![true, true, false, false]),
+  (![1, 3, 0, 2], ![true, false, true, false]),
+  (![1, 3, 0, 2], ![false, true, true, false]),
+  (![1, 3, 0, 2], ![true, false, false, true]),
+  (![1, 3, 0, 2], ![false, true, false, true]),
+  (![1, 3, 0, 2], ![false, false, true, true]),
+  (![1, 3, 0, 2], ![true, true, true, true]),
+  (![1, 0, 3, 2], ![false, false, false, false]),
+  (![1, 0, 3, 2], ![true, true, false, false]),
+  (![1, 0, 3, 2], ![true, false, true, false]),
+  (![1, 0, 3, 2], ![false, true, true, false]),
+  (![1, 0, 3, 2], ![true, false, false, true]),
+  (![1, 0, 3, 2], ![false, true, false, true]),
+  (![1, 0, 3, 2], ![false, false, true, true]),
+  (![1, 0, 3, 2], ![true, true, true, true]),
+  (![3, 0, 2, 1], ![false, false, false, false]),
+  (![3, 0, 2, 1], ![true, true, false, false]),
+  (![3, 0, 2, 1], ![true, false, true, false]),
+  (![3, 0, 2, 1], ![false, true, true, false]),
+  (![3, 0, 2, 1], ![true, false, false, true]),
+  (![3, 0, 2, 1], ![false, true, false, true]),
+  (![3, 0, 2, 1], ![false, false, true, true]),
+  (![3, 0, 2, 1], ![true, true, true, true]),
+  (![0, 3, 2, 1], ![false, false, false, false]),
+  (![0, 3, 2, 1], ![true, true, false, false]),
+  (![0, 3, 2, 1], ![true, false, true, false]),
+  (![0, 3, 2, 1], ![false, true, true, false]),
+  (![0, 3, 2, 1], ![true, false, false, true]),
+  (![0, 3, 2, 1], ![false, true, false, true]),
+  (![0, 3, 2, 1], ![false, false, true, true]),
+  (![0, 3, 2, 1], ![true, true, true, true]),
+  (![0, 2, 3, 1], ![false, false, false, false]),
+  (![0, 2, 3, 1], ![true, true, false, false]),
+  (![0, 2, 3, 1], ![true, false, true, false]),
+  (![0, 2, 3, 1], ![false, true, true, false]),
+  (![0, 2, 3, 1], ![true, false, false, true]),
+  (![0, 2, 3, 1], ![false, true, false, true]),
+  (![0, 2, 3, 1], ![false, false, true, true]),
+  (![0, 2, 3, 1], ![true, true, true, true]),
+  (![3, 2, 0, 1], ![false, false, false, false]),
+  (![3, 2, 0, 1], ![true, true, false, false]),
+  (![3, 2, 0, 1], ![true, false, true, false]),
+  (![3, 2, 0, 1], ![false, true, true, false]),
+  (![3, 2, 0, 1], ![true, false, false, true]),
+  (![3, 2, 0, 1], ![false, true, false, true]),
+  (![3, 2, 0, 1], ![false, false, true, true]),
+  (![3, 2, 0, 1], ![true, true, true, true]),
+  (![2, 3, 0, 1], ![false, false, false, false]),
+  (![2, 3, 0, 1], ![true, true, false, false]),
+  (![2, 3, 0, 1], ![true, false, true, false]),
+  (![2, 3, 0, 1], ![false, true, true, false]),
+  (![2, 3, 0, 1], ![true, false, false, true]),
+  (![2, 3, 0, 1], ![false, true, false, true]),
+  (![2, 3, 0, 1], ![false, false, true, true]),
+  (![2, 3, 0, 1], ![true, true, true, true]),
+  (![2, 0, 3, 1], ![false, false, false, false]),
+  (![2, 0, 3, 1], ![true, true, false, false]),
+  (![2, 0, 3, 1], ![true, false, true, false]),
+  (![2, 0, 3, 1], ![false, true, true, false]),
+  (![2, 0, 3, 1], ![true, false, false, true]),
+  (![2, 0, 3, 1], ![false, true, false, true]),
+  (![2, 0, 3, 1], ![false, false, true, true]),
+  (![2, 0, 3, 1], ![true, true, true, true])].toFinset
+
+theorem stabilizer_sector_eq : stabilizer .sector = stabilizerSectorLit := by decide +kernel
+
+/-- Cached literal for `stabilizer .line`. -/
+def stabilizerLineLit : Finset Frame := [
+  (![0, 1, 2, 3], ![false, false, false, false]),
+  (![0, 1, 2, 3], ![false, false, true, true]),
+  (![1, 0, 2, 3], ![false, false, false, false]),
+  (![1, 0, 2, 3], ![false, false, true, true]),
+  (![0, 1, 3, 2], ![false, false, false, false]),
+  (![0, 1, 3, 2], ![false, false, true, true]),
+  (![1, 0, 3, 2], ![false, false, false, false]),
+  (![1, 0, 3, 2], ![false, false, true, true])].toFinset
+
+theorem stabilizer_line_eq : stabilizer .line = stabilizerLineLit := by decide +kernel
+
+/-- Cached literal for `stabilizer .axis`. -/
+def stabilizerAxisLit : Finset Frame := [
+  (![0, 1, 2, 3], ![false, false, false, false]),
+  (![0, 1, 2, 3], ![false, true, true, false]),
+  (![0, 1, 2, 3], ![false, true, false, true]),
+  (![0, 1, 2, 3], ![false, false, true, true]),
+  (![0, 2, 1, 3], ![false, false, false, false]),
+  (![0, 2, 1, 3], ![false, true, true, false]),
+  (![0, 2, 1, 3], ![false, true, false, true]),
+  (![0, 2, 1, 3], ![false, false, true, true]),
+  (![0, 3, 1, 2], ![false, false, false, false]),
+  (![0, 3, 1, 2], ![false, true, true, false]),
+  (![0, 3, 1, 2], ![false, true, false, true]),
+  (![0, 3, 1, 2], ![false, false, true, true]),
+  (![0, 1, 3, 2], ![false, false, false, false]),
+  (![0, 1, 3, 2], ![false, true, true, false]),
+  (![0, 1, 3, 2], ![false, true, false, true]),
+  (![0, 1, 3, 2], ![false, false, true, true]),
+  (![0, 3, 2, 1], ![false, false, false, false]),
+  (![0, 3, 2, 1], ![false, true, true, false]),
+  (![0, 3, 2, 1], ![false, true, false, true]),
+  (![0, 3, 2, 1], ![false, false, true, true]),
+  (![0, 2, 3, 1], ![false, false, false, false]),
+  (![0, 2, 3, 1], ![false, true, true, false]),
+  (![0, 2, 3, 1], ![false, true, false, true]),
+  (![0, 2, 3, 1], ![false, false, true, true])].toFinset
+
+theorem stabilizer_axis_eq : stabilizer .axis = stabilizerAxisLit := by decide +kernel
+
+/-- Cached literal for `stabilizer .slice`. -/
+def stabilizerSliceLit : Finset Frame := [
+  (![0, 1, 2, 3], ![false, false, false, false]),
+  (![0, 1, 2, 3], ![false, true, true, false]),
+  (![0, 2, 1, 3], ![false, false, false, false]),
+  (![0, 2, 1, 3], ![false, true, true, false])].toFinset
+
+theorem stabilizer_slice_eq : stabilizer .slice = stabilizerSliceLit := by decide +kernel
+
 /-- Finite enumeration in the marked active D₄ factor. -/
 theorem stabilizer_orders :
     (stabilizer .sector).card = 192 ∧ (stabilizer .line).card = 8 ∧
       (stabilizer .axis).card = 24 ∧ (stabilizer .slice).card = 4 := by
+  rw [stabilizer_sector_eq, stabilizer_line_eq, stabilizer_axis_eq, stabilizer_slice_eq]
   decide +kernel
 
 def wordFrame : List (Fin 4) → Frame
@@ -740,14 +995,17 @@ def products (gs : Finset Frame) : ℕ → Finset Frame
 
 theorem line_generators :
     products ((generatorWords .line).toFinset.image wordFrame) 3 = stabilizer .line := by
+  rw [stabilizer_line_eq]
   decide +kernel
 
 theorem axis_generators :
     products ((generatorWords .axis).toFinset.image wordFrame) 6 = stabilizer .axis := by
+  rw [stabilizer_axis_eq]
   decide +kernel
 
 theorem slice_generators :
     products ((generatorWords .slice).toFinset.image wordFrame) 2 = stabilizer .slice := by
+  rw [stabilizer_slice_eq]
   decide +kernel
 
 def unsignedFrames : Finset Frame :=
@@ -759,11 +1017,13 @@ def diagonalFrames : Finset Frame :=
 theorem unsigned_generators :
     products (([[0], [1], [2]] : List (List (Fin 4))).toFinset.image wordFrame) 6 =
       unsignedFrames := by
+  rw [unsignedFrames, stabilizer_sector_eq]
   decide +kernel
 
 theorem diagonal_generators :
     products (([[2, 3], [1, 2, 3, 1], [0, 1, 2, 3, 1, 0]] :
       List (List (Fin 4))).toFinset.image wordFrame) 3 = diagonalFrames := by
+  rw [diagonalFrames, stabilizer_sector_eq]
   decide +kernel
 
 theorem sector_factor (f : Frame) (hf : f ∈ stabilizer .sector) :
@@ -783,12 +1043,8 @@ theorem line_preserves_probe :
     ∀ f ∈ stabilizer .line,
       act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
       act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0 := by
-  have h : ∀ f, d4 f → preserves .line f →
-      act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
-        act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0 := by
-    decide +kernel
-  intro f hf
-  exact h f (mem_filter.mp hf).2.1 (mem_filter.mp hf).2.2
+  rw [stabilizer_line_eq]
+  decide +kernel
 
 theorem slice_can_move_probe :
     simpleFrame 1 ∈ stabilizer .slice ∧
@@ -796,6 +1052,7 @@ theorem slice_can_move_probe :
         PMSubstrate.ChannelSymmetry.simple 0 ∧
       act (simpleFrame 1) (PMSubstrate.ChannelSymmetry.simple 0) ≠
         -PMSubstrate.ChannelSymmetry.simple 0 := by
+  rw [stabilizer_slice_eq]
   decide +kernel
 
 /-- A uniform degree of freedom in the unmarked sector is independent
@@ -811,13 +1068,21 @@ private theorem probe_fix_pair : ∀ f, d4 f → preserves .axis f →
     ((act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
       act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0) ↔
         act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) := by
-  decide +kernel
+  have h : ∀ f ∈ stabilizer .axis,
+      ((act f (PMSubstrate.ChannelSymmetry.simple 0) = PMSubstrate.ChannelSymmetry.simple 0 ∨
+        act f (PMSubstrate.ChannelSymmetry.simple 0) = -PMSubstrate.ChannelSymmetry.simple 0) ↔
+          act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) := by
+    rw [stabilizer_axis_eq]
+    decide +kernel
+  intro f hd hp
+  exact h f (mem_filter.mpr ⟨mem_univ _, hd, hp⟩)
 
 /-- With the same fixed probe as the line, the axis geometry further
 restricts the covariance on the original trial encoding. -/
 theorem fixed_probe_orders :
     ((stabilizer .axis).filter fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1).card = 4 ∧
     ((stabilizer .slice).filter fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1).card = 1 := by
+  rw [stabilizer_axis_eq, stabilizer_slice_eq]
   decide +kernel
 
 theorem axis_fixed_probe_iff (f : Frame) (h : f ∈ stabilizer .axis) :
@@ -832,11 +1097,14 @@ def slicePlane : Finset Frame :=
   (stabilizer .axis).filter fun f => act f (AxisHop.epsAxis 3) = AxisHop.epsAxis 3 ∨
     act f (AxisHop.epsAxis 3) = -AxisHop.epsAxis 3
 
-theorem slice_plane_order : slicePlane.card = 8 := by decide +kernel
+theorem slice_plane_order : slicePlane.card = 8 := by
+  rw [slicePlane, stabilizer_axis_eq]
+  decide +kernel
 
 theorem slice_plane_generators :
     products (([[1], [2, 3]] : List (List (Fin 4))).toFinset.image wordFrame) 5 =
       slicePlane := by
+  rw [slicePlane, stabilizer_axis_eq]
   decide +kernel
 
 theorem fixed_probe_generators :
@@ -844,15 +1112,18 @@ theorem fixed_probe_generators :
       (stabilizer .axis).filter (fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) ∧
     (stabilizer .slice).filter (fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) =
       {identity} := by
+  rw [stabilizer_axis_eq, stabilizer_slice_eq]
   decide +kernel
 
 theorem slice_plane_probe_order :
     (slicePlane.filter fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1).card = 2 := by
+  rw [slicePlane, stabilizer_axis_eq]
   decide +kernel
 
 theorem slice_plane_probe_generators :
     products (([[2, 3]] : List (List (Fin 4))).toFinset.image wordFrame) 1 =
       slicePlane.filter (fun f => act f (AxisHop.epsAxis 1) = AxisHop.epsAxis 1) := by
+  rw [slicePlane, stabilizer_axis_eq]
   decide +kernel
 
 /-- A bare line direction has more symmetries than the marked
