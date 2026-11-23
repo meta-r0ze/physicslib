@@ -2,7 +2,7 @@ import PMAtoms.AlphaFinite
 import PMAtoms.ClockHierarchy
 import Mathlib.Tactic
 
-/-! **Experimental/candidate module.**
+/-! **Experimental/candidate module.** Not part of `certifiedMass`.
 
 # Capacity clocks vs nested clocks
 

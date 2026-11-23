@@ -13,11 +13,11 @@ Everything printed here is read from `src/`; this module only formats and compar
   rational enclosure `[cmLo, cmHi]` used here. The enclosure is the exact value of the formula to
   the printed digits, **not** the model's accuracy.
 * **Accuracy** — on the stable line the ledger matches measured masses to `5.0 m_e` rms
-  (`≈ 0.0026 u`, `≈ 2.5 MeV`); the floor of the bulk terms is `≈ 3.3 m_e` (`PMAtoms/RESIDUALS.md`).
+  (`≈ 0.0026 u`, `≈ 2.5 MeV`); the floor of the bulk terms is `≈ 3.3 m_e` (`PMAtoms/OVERVIEW.md` §Comparison).
   It is not a mass surface over `(Z, N)`: off the stable line it has no isospin restoring term
   (`PMAtoms.IsospinLedger`).
 * **Regime** — `PMAtoms.Values.regimeOf`; `beyond` is past the `Z = 96, N = 152` frontier.
-* **Residual** — `E8 − measured` (the sign used in `PMAtoms/RESIDUALS.md`).
+* **Residual** — `E8 − measured` (the sign used in `PMAtoms/OVERVIEW.md` §Comparison).
 * **Measured** — frozen isotope masses (`Periodic`), comparison only.
 * **Ground multiplicity** — `PMAtoms.Values.groundMultiplicity` (Hund's first rule, derived by
   counting, on the Aufbau configuration; the fill order is an input).
@@ -96,7 +96,7 @@ def stableLineRmsAboutMeanME : Float :=
     Float.sqrt ((xs.map (fun x => (x - m) ^ 2)).sum / Float.ofNat xs.length)
 
 /-- Stable-line scatter of the ledger, rounded to `5.0 m_e` about the mean of
-the 26 frozen nuclei with `12 ≤ A ≤ 208` (`PMAtoms/RESIDUALS.md`). -/
+the 26 frozen nuclei with `12 ≤ A ≤ 208` (`PMAtoms/OVERVIEW.md` §Comparison). -/
 def ledgerScatterME : Rat :=
   let tenths := Float.round (stableLineRmsAboutMeanME * 10)
   (tenths / 10).toRat?.getD 5

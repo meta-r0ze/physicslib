@@ -14,6 +14,12 @@ coherent-action amplitude:
 Thus the finite spectral rate is a population/margin factor in the general
 `DecayChannel` algebra, while `EffectiveAction.decoherenceRate` remains the
 separate phase-loss channel.
+
+**Method note (`tools/spectral_beta.py`).** On an `n×n×n` Dirichlet cube the
+mode weight is `w = exp(−λ)`, with
+`λ = 6 − 2cos(πa/(n+1)) − 2cos(πb/(n+1)) − 2cos(πc/(n+1))`. The open-weight
+fraction is smooth and cutoff-controlled. It is not a lifetime: it multiplies
+the unknown `β·c0`.
 -/
 
 noncomputable section

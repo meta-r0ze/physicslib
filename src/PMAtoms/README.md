@@ -93,22 +93,8 @@ structural decays in the meantime.
 Open work is in [`TODO.md`](TODO.md); proved results are in
 [`OVERVIEW.md`](OVERVIEW.md).
 
-## Comparison appendices
+## Comparison
 
-These are evidence/validation companions, not part of the theorem tree (they hold
-comparison data and narrative). They are reviewed as a set, not merged into
-`OVERVIEW.md`:
-
-| File | Role |
-| --- | --- |
-| [`ATOM-SYSTEM.md`](ATOM-SYSTEM.md) | narrative map of the atom ladder (how the pieces fit) |
-| [`CHECKPOINT.md`](CHECKPOINT.md) | certified-core checkpoint summary and known limitations |
-| [`DECAY-VALIDATION.md`](DECAY-VALIDATION.md) | frozen decay validation table (comparison values) |
-| [`RESIDUALS.md`](RESIDUALS.md) | certified-ledger residuals `certifiedMass − m_iso` |
-| [`ALPHA-TESTS.md`](ALPHA-TESTS.md) | alpha lifetime comparison tables |
-| [`NEUTRON-PREDICTION.md`](NEUTRON-PREDICTION.md) | neutron beta prediction comparison |
-| [`SPECTRAL-BETA.md`](SPECTRAL-BETA.md) | finite spectral beta weights (tool: `tools/spectral_beta.py`) |
-| [`FISSION-TESTS.md`](FISSION-TESTS.md) | fission scale diagnostics |
-| [`FISSION-RESOLVED.md`](FISSION-RESOLVED.md) | fragment-resolved fission tests |
-| [`FISSION-INERTIA.md`](FISSION-INERTIA.md) | collective-inertia partial-lifetime tests |
-| [`FISSION-OUT-OF-SAMPLE.md`](FISSION-OUT-OF-SAMPLE.md) | fission out-of-sample check |
+Comparison numbers, the residual table and the candidate-module table are in
+[`OVERVIEW.md`](OVERVIEW.md#comparison). The current values are in
+[`tools/e8p/e8p_output.txt`](../../tools/e8p/e8p_output.txt).

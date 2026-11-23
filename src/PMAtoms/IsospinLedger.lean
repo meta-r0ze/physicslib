@@ -65,7 +65,7 @@ alpha-cluster suppression, the lowest isobar is `Z = 8, 13, 19, 26, 40, 52, 59, 
 92`): within two units through Pb, nine at U-238. The stable-line masses are then `≈ 110 m_e`
 heavy on average, for the bulk reason above.
 
-**Comparison (outside Lean, `RESIDUALS.md`).** The isobar of lowest `certifiedMass`
+**Comparison (outside Lean, `OVERVIEW.md` §Comparison).** The isobar of lowest `certifiedMass`
 matches the stable isobar for `A = 12, 16, 27, 40`. It is `Z = 28` at `A = 56` (stable `26`), `45`
 at `A = 90` (`40`), `53` at `A = 107` (`47`). From `A ≈ 120` there is no local minimum near the
 stable isobar: around Sn-120 the mass is locally flat or maximal in `Z`, and it falls steadily

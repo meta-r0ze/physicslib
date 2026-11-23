@@ -16,7 +16,7 @@ saturate" is a cost-functional question (`PersistenceMechanics.SelectionSymmetry
 the same framing the hadron occupancy uses.
 
 Two open items remain (REVIEW §1): the alpha-layer **saturation** past a closed core (every N=Z
-nucleus past O-16 is over-bound by ≈`1.1–1.2 m_e` per alpha cluster, `RESIDUALS.md`), and the heavy
+nucleus past O-16 is over-bound by ≈`1.1–1.2 m_e` per alpha cluster, `OVERVIEW.md` §Comparison), and the heavy
 **deformation occupancy shape** (candidate `43/288`; holdout scatter `±0.019 u`).
 -/
 

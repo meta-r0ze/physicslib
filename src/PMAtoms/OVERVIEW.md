@@ -68,7 +68,7 @@ elementary protocols (PMElementaryParticles)
 | `CollectiveE8` | `alphaBarrier_eq=43`, `fissionBarrier_eq=43/6`, `e8ClockPeriod_eq=43`; `alphaChannelE8`, `fissionChannelE8`; `alphaBarrierGeiger`, `alphaQ`, `alphaChannelGeiger`; `magicDistance`, `daughterShellGapZ/N`, `daughterShellDistance` (Euclidean; U-238 10, Cm-244 √40, Cf-252 0), `alphaPreformationShell`, `alphaBarrierShellPreformed`, `alphaChannelShellPreformed`; `daughterClosureHindrance`, `alphaPhaseSpace`, `alphaWidthE8`, `alphaMeanLifeE8`, `alphaRelativeLifetimeE8` | frontier-local alpha model; rates/lifetimes |
 | `CollectiveRate` | `barrierRate`, `collectiveRate_pos`, `collectiveMeanLife_pos`, `PersistsOn`, `persistsOn_mono`, `persistsOn_nil`, `not_persistsOn_of_lt_meanLife`; `tollTime`, `PersistsAtToll`, `persistsAtToll_iff` |
 | `FragmentOverlap` | the α/fission fragment overlap (the hadron `Emission` analogue): `fragmentOverlap`, `fragmentWidth = barrierRate · overlap² · phase`, `fragmentWidth_eq_partialWidth` (= `T²·phase` with `T = √barrierRate · overlap`), positivity | the fragment configuration (the overlap value) |
-| `NuclearRateUnit` | the Governor attempt frequency candidate: `attemptFrequency = χ/Δ = 2/43` (`attemptFrequency_eq`), `governorChannelRate_eq` (= `RateModel.channelRate` with `β·c0 = χ/Δ`). Compared with the α table (`ALPHA-TESTS.md`): the capacity attempt `min(Z,N)/(2Δ)` used by `AlphaFinite` is closer | the identification `β·c0 = χ/Δ` |
+| `NuclearRateUnit` | the Governor attempt frequency candidate: `attemptFrequency = χ/Δ = 2/43` (`attemptFrequency_eq`), `governorChannelRate_eq` (= `RateModel.channelRate` with `β·c0 = χ/Δ`). Compared with the α table (this file, §Comparison): the capacity attempt `min(Z,N)/(2Δ)` used by `AlphaFinite` is closer | the identification `β·c0 = χ/Δ` |
 | `NuclearOccupancy` | the nucleus occupancy `A = Z + N`, the closure predicates (`ProtonClosed`/`NeutronClosed`/`DoublyClosed`), the frontier closure pair (`frontier_doublyClosed`: `Z=96`, `N=152`; `frontier_occupancy = 248`) | the saturation / deformation cost functional |
 | `PersistenceSelection` | the exit table wired into the rate layer: `nuclearExitRateSystem`, `nuclearExitRateSystem_totalRate`, `nuclearPersistsOn_iff`, `selectedNuclide_min` | the barrier/rate unit (`NuclearRateUnit`) |
 | `CollectiveRegime` | collective envelope; `alphaChannel`, `fissionChannel`, `alphaChannel_totalMass`, `fissionChannel_totalMass` |
@@ -94,8 +94,8 @@ elementary protocols (PMElementaryParticles)
 | `SingleParticle` | schematic `nlj` orbital sequence through `126` and `184`; `nuclearOrbitals126_occupation`, `nuclearOrbitals184_occupation`; schematic `orbitalEnergy`, `orbitalLevels`, `cumulativeEnergy`, `smoothEnergy`, `strutinskyCorrection`; `spinOrbit`, `nilssonEnergy`, `nilssonLevels`, `nilssonCumulative`, `nilssonCorrection` |
 | `ShellSystem` | shell pillars: Capacity `2j+1` and the oscillator `2n+l` order (`orbital_capacity`, `oscillator_order`), the cumulative ladder carries the magic numbers (`closures_on_ladder`); Map `χ` is the closure boundary (`mapTerm_eq`); Protocol is the orbital successor (`protocol_deterministic`); Toll is emission (`shellEmissionWidth_eq_partialWidth`); Margin is the reference cone (`marginSpace_card = 343914`); `l2_ratio_forced` and `e8OrbitalOrder` for the recorded fine order with `κ = χ/Δ`; spacing `ℏω(A) = χ·m_p/(Δ·A^{1/3})` (`shellQuantum`, `shellQuantum_cube`, `shellQuantum_antitone`) — about 6% above `41 A^{-1/3}` MeV | the uniform-coupling reading of spin–orbit |
 | `ShellGaps` | closures as gaps: with `κ = χ/Δ` the largest gaps are `20, 40, 70` (`shellSystem_gaps`, `shellSystem_oscillator_closures_dominate`); with `κ = 1/ν`, `μ = χ/σ` in the standard Nilsson form they are `2, 8, 20, 28, 50, 82, 126` (`nilssonE8_gaps`, `nilssonE8_spinOrbit_closures`); smooth reference is the plain oscillator (`ho_degeneracy`, `l2_shell_average`, `spinOrbit_trace_zero`); `1/ν` is one over the channel count and one sector's symmetries reach all `16` channels (`nilssonKappa_eq_channel`, `sector_orbit`); `μ = χ/σ` is the quark latency ratio (`nilssonMu_eq_latency`); α level formulas compared (`nilssonEnergy_inverts_shells`, `alpha_standard_gaps`) | the reading of spin–orbit as a uniform coupling over the sector's channels |
-| `ShellMass` | `certifiedMassFull = certifiedMass + ℏω·(Strutinsky)` dependency edge with a rational enclosure; comparison only (the E8 shell term is 3–4× the ledger residual and uncorrelated, `RESIDUALS.md`) | not a published mass |
-| `IsospinLedger` | closed form of the typed link binding `L(A)·(w + s(N−Z)/A)` (`packingBindingTyped_closed`), constant per-step change `2sL(A)/A` (`packingBindingTyped_step`): the link ledger is linear in `N−Z` | comparison with the stability valley (`RESIDUALS.md`) |
+| `ShellMass` | `certifiedMassFull = certifiedMass + ℏω·(Strutinsky)` dependency edge with a rational enclosure; comparison only (the E8 shell term is 3–4× the ledger residual and uncorrelated, §Comparison) | not a published mass |
+| `IsospinLedger` | closed form of the typed link binding `L(A)·(w + s(N−Z)/A)` (`packingBindingTyped_closed`), constant per-step change `2sL(A)/A` (`packingBindingTyped_step`): the link ledger is linear in `N−Z` | comparison with the stability valley (§Comparison) |
 | `HundRule` | Hund's first rule from the persistence filter: same-spin pairs `C(up,2)+C(down,2)` are maximized by the aligned split (`hund_maximizes`), uniquely up to mirror (`hund_unique`), `2S = min(k, 2m−k)` (`hundSpin2_eq`); ground multiplicities on the Aufbau configurations match observation for `Z = 1–54` except Cr, Nb, Mo, Pd (`groundMultiplicity_aufbau`, `aufbau_mismatches`), which match on their observed configurations (`groundMultiplicity_exceptions`) | the fill order (`Aufbau`) |
 | `NuclearShells` | `e8ShellLadder`, `e8ShellOccupations` aliases; `nuclearMagic = [2,8,20,28,50,82,96,126,152,184]`, each closure proved as an E8 expression; `nuclearShellSizes = [2,6,12,8,22,32,14,30,26,32]` |
 | `Shells` | `orbitalCapacity l = 2(2l+1)`, `shellCapacity n = 2n²`, `shell_capacities : 2,8,18,32` | spin-1/2, angular-momentum degeneracy |
@@ -104,6 +104,35 @@ elementary protocols (PMElementaryParticles)
 | `ListCohorts` | multiplicity-preserving list cohorts; `charge3`/`listCharge3`, odd fermion parity, weak partner; `muon_list_mem`, `electron_list_not`, `electron_neutrino_list_not` | nuclear candidate set and E8 rates |
 | `TransitionSelection` | `TransitionFamily`, `familyCost`; every nonempty candidate set has a least-cost family (`exists_least_cost`); `selectedFamily_min` and `selectedRate_le`; `selected_is_persistence_optimum` | the candidate set of substrate families |
 | `PersistenceRate` | `RateSystem`, `totalRate`, `Persists` = total hazard zero, `not_persists_of_pos`, `MeanLife = 1/totalRate`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | E8 channel rates |
+
+## Model identifications
+
+These are E8 ratios. The physical assignment is a model input. Most weights have the form `Δ/k` or `Δ²/k`.
+
+| Weight | `k` | Reading |
+| --- | --- | --- |
+| alpha closure `Δ/D` | 4 | the 4 links or 4 nucleons of a square |
+| shell `Δ/(D+χ)`, fission fragment shell | 6 | the 6 links of a bulk vertex |
+| fission yield `Δ²/(D+σ)` | 9 | the 9 nucleons of a `3×3` face |
+| fission cost `Δ²/(ν+D+σ+χ)` | 27 | the 27 nucleons of the smallest `3×3×3` cube |
+| alpha cost `Δ²/(ν+σ)` | 21 | none |
+| deformation `Δ/((D+χ)(σ−χ)ν)` | 288 | none |
+
+Two counting rules were scored in advance. Counting the links that an event closes matches 2 of 6. Counting the nucleons that take part matches 3 of 6. So no single participant rule derives the weights.
+
+## Candidate and experimental modules
+
+These modules are exploratory. They are not part of `certifiedMass`. Each module docstring starts with the same status line.
+
+| Module | Status | Limit |
+| --- | --- | --- |
+| `NuclearDeformation` | candidate | The training fit is good. The holdout fails at `±0.01 u`. |
+| `ShapePotential` | structural | The literal Landau minima are not predictive. |
+| `SingleParticle` | structural | The Nilsson/Strutinsky terms are not predictive yet. |
+| `CollectiveRegime` | structural | It gives a mass envelope only. |
+| `CollectiveRate` | structural | The barrier normalization is open. |
+| `AlphaClockComparison` | candidate | The clock convention (capacity or nested) is not chosen. |
+| `ShellGaps` | candidate reading | The closure ladder is checked. The uniform spin-orbit coupling is a candidate reading. |
 
 ## E8 provenance audit
 
@@ -140,3 +169,55 @@ masses that use the full six-pillar ledger, and they are the template the nucleu
     empirical Nilsson `μ` grows from `≈ 0` (`N ≤ 2`) to `≈ 0.6` (`N = 5`), E8 has one constant;
   - the shell spacing `ℏω(A) = χ·m_p/(Δ·A^{1/3})` has no `A^{-2/3}` term: 6% above
     `41 A^{-1/3}` MeV at all `A`, 24% above the two-term fit `45 A^{-1/3} − 25 A^{-2/3}` at `A = 16`.
+
+## Comparison
+
+Comparison data only. The current values are in `tools/e8p/e8p_output.txt`. Read a residual together with its regime: the smooth ledger, or the collective/fission regime.
+
+### Nuclear mass residuals
+
+`certifiedMass` matches the measured stable-line masses to rms `5.0 m_e` (mean `−6.4`). The sample is the 26 frozen nuclei with `12 ≤ A ≤ 208`. The residual is `certifiedMass − m_iso` in atomic mass units.
+
+| nucleus | residual (u) | regime |
+| --- | --- | --- |
+| He-4 | −0.00014 | light |
+| C-12 | +0.00076 | light |
+| O-16 | −0.00018 | light |
+| Ca-40 | −0.00674 | light |
+| Ni-62 | +0.00029 | mid |
+| Sn-120 | −0.00606 | mid |
+| Pb-208 | −0.00363 | mid |
+| U-238 | +0.00246 | deformed |
+| Cm-244 | +0.02406 | frontier |
+| Cf-252 | +0.02234 | beyond frontier |
+
+Every tabulated nucleus has even `min(Z,N)`. The whole-closure count `⌊min(Z,N)/2⌋` leaves these values unchanged.
+
+The link binding is linear in `N−Z` (`IsospinLedger.packingBindingTyped_closed`). So the ledger has no `(N−Z)²` valley above `A ≈ 56`. A SEMF regression, an occupancy term, a link-count replacement and a persistence-weight term were tested. None lifts the floor. The E8 shell term has rms `14–20 m_e` and correlation `0.03` or `0.37` with the residual. It does not improve the ledger. Cm/Cf are a regime change, not an outlier. See the `IsospinLedger`, `ShellMass` and `NuclearOccupancy` docstrings.
+
+### Alpha lifetimes
+
+The frontier-local width uses `B = (43/14)·Z/√Q + (σ/2)·d` and `F = exp(−ν/(d+1))`, with `τ ∝ exp(B)/F`. With the improved cost `C = (43/8)·Z/√Q − 84`, most of the 11 emitters are within a factor of four. U-235 is the outlier. The two-level mixing `σχ/(χ·gap + 1)` fixes U-235 (`0.99`) and Pu-239 (`1.01`). It leaves the even-even chain unchanged. The absolute `cKf` scale is too long by about `10¹⁵`. The width is frontier-local, not a universal Geiger–Nuttall law.
+
+### Fission
+
+The E8 cost is `C = 1849/27 − 10·(Z²/A − 39)`, with the `N=152` shell gain `43/6`. The five-nucleus set (U-238, Cf-252, Fm-254, No-252, Rf-256) is within a factor of about `2.4`. The full-yield sum with scale `Δ²/(D+σ) = 1849/9` puts all five within a factor of about `1.6`. The superheavy governor `χ·max(Z−100, 0)` gives a factor of about `4`. The out-of-sample U-234 and Pu-242 failures sit at `N=142` and `N=148`. The subshell costs `+Δ/σ` and `−Δ/ν` fix them (`FissionYield.fissionSubshellCost`). The one-shot scale is a candidate, not a universal law.
+
+### Beta and neutron
+
+The finite `n×n×n` Dirichlet cube gives the mode weight `w = exp(−λ)`, with `λ = 6 − 2cos(πa/(n+1)) − 2cos(πb/(n+1)) − 2cos(πc/(n+1))`. The open-weight fraction is smooth and cutoff-controlled (`tools/spectral_beta.py`).
+
+| n | E=2 | E=4 | E=6 | E=10 |
+| --- | --- | --- | --- | --- |
+| 3 | 0.452840 | 0.783118 | 0.989261 | 0.999906 |
+| 4 | 0.288109 | 0.815430 | 0.979104 | 0.999982 |
+| 5 | 0.452504 | 0.853439 | 0.986638 | 0.999959 |
+| 6 | 0.550541 | 0.866333 | 0.982722 | 0.999933 |
+| 8 | 0.552289 | 0.878052 | 0.985674 | 0.999947 |
+| 10 | 0.570565 | 0.882195 | 0.985418 | 0.999949 |
+
+The fraction is not a lifetime. It multiplies the unknown `β·c0`. The old `3³` neutron template with the `41/43` margin (`877 s`) is retired. The current neutron is the PMHadrons continuum route (`923.37–923.39 s`, `PMHadrons.NeutronContinuum`).
+
+### Decay labels
+
+`prediction`: an E8 value before comparison. `candidate`: an E8 form that data support. `calibrated`: uses a measured reference. `structural`: a channel or identity only. `blocked`: a missing E8 input.
