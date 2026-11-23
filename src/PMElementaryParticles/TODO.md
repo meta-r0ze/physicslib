@@ -86,92 +86,6 @@ This file is the open list only.
   Open: the factor `Δⁿ` must come from how many independent 43-periods a program's
   record spans; derive that count per (generation, label) and test it on the
   declared tier sets.
-  Result (2026-11-23, `tools/tier_count_check.py`): one program's data cannot give
-  it. Every coset root pairs ±1 with every channel vector, and the split of silent
-  and one-tick roots by that pairing depends on the generation only. The only
-  label-dependent datum is the label's clock reading, a phase in `Z₄₃` that also
-  depends on colour and is negated between up-type and down-type. So up-type
-  `{0,2,3}` against down-type `{0,1,2}` needs data outside one program (weak partner
-  or composite), or the declared up tier set is a premise to review.
-  Pair step blocked (2026-11-23, `tools/placement_colour_check.py`): the channel
-  placement is not colour- or weak-symmetric. Only the identity and the swap of
-  colours 0 and 1 preserve the inner products of the 16 placed vectors; the weak
-  flip does not (doublet members are placed as `v` and `−v`). So the charge-correct
-  mass pair (right singlet minus left doublet member, same colour) has norm
-  `4, 4, 12` over the three colours. In a weight placement both symmetries are
-  Weyl reflections and preserve inner products.
-- **Derive the gauge sector that carries the 16 channels (blocks the tier
-  derivation).** The internal-D4 placement breaks colour and the weak flip, and
-  no internal-D4 placement can keep them (`tools/placement_d4_nogo.py`). Persistence
-  elimination (`tools/pm_sector_wall.py`, `pm_sector_charge.py`; readings in the
-  docstring: symmetries by root reflections, channels as E8 roots, hypercharge as a
-  direction in the sector, `active` as the wall bit, least rank, then fewest roots):
-  internal D4 fails (no weak reflection commutes with colour); D4 + A1 passes only if
-  the charge direction may leave the sector, so hypercharge needs its own direction;
-  D5 (all 12) fails symmetries + walls. Rank 6 (`tools/pm_sector_rank6.py`, 140
-  sectors): D4+2A1, D4+A2, D5+A1, D6 pass; E6 failed in the instance tested.
-  Fewest roots selects D4+2A1 (internal D4 + two orthogonal spacetime A1: weak flip
-  and charge direction); all 18 pass and differ only by the clock (both extra roots
-  silent: 3; one silent, one clock-axis: 12; both clock-axis: 3). Time reading
-  (`tools/pm_sector/`): gauge roots and the charge direction commute with time
-  translation (orthogonal to the clock time vector `t`). Result: a unique sector
-  (both extra roots clock-silent, charge direction orthogonal to `t`); the weak flip
-  is always the same extra root. It hosts all three generations with one charge
-  direction. Generation `(0,1)` is disjoint from the others; `(1,0)` and `(1,1)` must
-  share their quark-doublet roots. Walls: `(1,0)` and `(1,1)` put their doublets in
-  the vector coset `(0,1)`; `(0,1)` may use either spinor coset.
-- **Up/down tier offset from the mass pairs (`tools/pm_sector/pairs.py`).** On the
-  derived sector, charge conservation fixes the pairs (up: `T3 = +1/2` member; down,
-  lepton: `−1/2`). In generations `(1,0)` and `(1,1)` the up transition is one root
-  step and the down transition two, for every root choice; generation `(0,1)` is
-  free. Declared tiers give up − down = `0, 1, 1`: a match if the clock generation is
-  tier 0 and one fewer root step is one more power of `Δ`. Step → `Δ` rule
-  (`tools/pm_sector/intermediates.py`): mass is the left ↔ right flip rate; at least
-  Toll a root move fires with probability `1/Δ` per tick; intermediates of a
-  multi-step transition are never channels except `u_R` on the down path, which
-  changes charge; so no intermediate persists (Map, Conservation), all `k` steps
-  fire in one tick, and the rate goes as `Δ^−k`. To formalize in Lean. Still to
-  derive: the root choice in generation `(0,1)`, the lepton choice (declared lepton
-  tiers equal down's, so two steps), and the generation tiers themselves (which
-  of `(1,0)`, `(1,1)` is tier 1).
-  Tried (2026-11-23), does not decide: Economy as fewest distinct transition
-  records. Leptons can share the down record (`h_e = h_d`) only in generation
-  `(0,1)`, which narrows its (up, down, lepton) steps to `(1,1,1)`, `(2,2,2)`,
-  `(1,2,2)`, `(2,1,1)`; in `(1,0)` and `(1,1)` it is never possible, and up is never the
-  conjugate of down (`h_u ≠ −h_d`) in any generation.
-  Generation tiers, reduction (2026-11-23): a mass flip is a wall crossing by the
-  generation's own coset roots (`GaugeSector.placement_walls`; `WallCrossing`). Flips pair
-  with the time vector `0` or `±2` in the clock generation and `±1` in the other two;
-  a neutral ring step pairs `2`. Tried and failed: "a state must sit on the tick
-  lattice, so a half-step flip cannot complete alone". It makes the clock generation
-  the heaviest; the up/down offsets need it lightest (top/bottom ≈ 41 needs distinct
-  tiers in the heaviest generation).
-- **Generation masses as flip-matrix singular values (`tools/pm_sector/masses.py`).**
-  The Δ-power tiers are a legacy fit. On the derived sector a mass is a singular value
-  of the per-sector flip (Yukawa) matrix `F(g,g') = Δ^−k`, `k` = root steps from `L(g)` to
-  `R(g')`. Representative placement: up rank 1 (one heavy state), down rank 2 with ratio
-  `44.1` (`b/s ≈ 44.7`, scheme-dependent), leptons ratio `1.1` (`τ/μ = 16.8`). Over all
-  allowed root choices the results vary (down `44.1` in 1/3; up rank 1 in 1/4; leptons
-  never near `16.8`). Tried, not the spectrum: a stay/move register over gauge-neutral
-  roots (20, an A4 system) gives `1 : 13.9 : 194`. Next: fix the open root choices from
-  readings, and derive the entry weight. Tried: path counts
-  (`tools/pm_sector/flip_paths.py`) collapse the hierarchy (ratios 2 to 6 in every
-  sector); clock phases drop out for a program at rest (zero mode). One path per entry
-  has no reading behind it. The entry weight is the open object.
-  This also corrects the step → `Δ` rule: by its own logic each of the 14 ordered
-  two-step paths is a separate same-tick history, so the up/down offset is `Δ/14 ≈ 3`,
-  not `Δ`. The data (`c/s ≈ 14`, `t/b ≈ 41`) fit one path. Either a reading restricts
-  the paths, or the multi-step amplitude is not a sum of per-path rates.
-  Flips are Higgs moves (`tools/pm_sector/higgs_moves.py`): a flip carries the Higgs
-  doublet's numbers, so sector and neutral moves alone reach no flip. Every one-step
-  flip is a single Higgs-type root (40 of them, 10 per sign pair); two-step flips have
-  6 to 8 paths with one Higgs move, giving an offset `Δ/6` to `Δ/8`. Open: the
-  multi-step amplitude, from a reading, not a fit.
-- **`wallClass` versus the derived walls.** Labels now use `GaugeSector.wallKey`
-  (`EPSector.sector_spine`). The cyclic `ControlledGluedRegister.wallClass` disagrees
-  for generation 2 (doublets in `(1,0)`; the sector needs `(0,1)`) and is still used by
-  the register modules. Decide whether to restate `wallClass` from the sector. Lean
-  certificates for the eliminations are open.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
@@ -203,3 +117,25 @@ This file is the open list only.
 - **Legacy single-reference assumptions.** The heavy writer's single reference
   is not certified; the choice is conditional per label. The blocker is the
   background/vacuum choice above.
+
+## Premises and the cross-wall mass (review 2026-11-23)
+
+- **EP premise ledger.** List every premise EP rests on, one line each, with its
+  status: proved in Lean from PM, named premise, or imported from the Standard Model
+  (for example the hypercharge table in `PacketGaugeActions`, the lepton axis and the
+  sign as doublet index in `CarrierRepresentation`, `TierLedger` tier sets, the
+  `LeptonMasses`/`QuarkMasses` ledgers, κ_τ data in `FermionMassLaw`). Order the
+  eliminations by layer, node and carrier level first.
+- **Certify the per-wall symmetry of the placement.** The 16 channels are two walls
+  of 8 carriers (`CarrierRepresentation`). In the `EPLabelGen` placement, colour
+  permutations and the weak flip keep every inner product within each wall, in all
+  three generations (checked numerically). State and prove this in Lean. Inner
+  products between the two walls are not substrate costs; do not test symmetries on
+  them.
+- **Cross-wall mass from the detuning law.** The mass is the information between the
+  two walls. Derive the detuning a left–right pair puts across the boundary and read
+  it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use
+  Standard Model Yukawa matrices, Dirac flip rates or Higgs-doublet quantum numbers.
+- **Tier counting (untested).** If each tier adds a record on a site distinct from those
+  already used (records do not merge), the counts are falling factorials `Δ`,
+  `Δ(Δ−1)`, `Δ(Δ−1)(Δ−2)`, not `Δⁿ`. Derive the count at node level before comparing.

@@ -65,39 +65,13 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Generation-blind ring | A ring step is a spacetime clock-axis root (glue key `0`), so it never changes a packet's coset; `n` steps keep the coset and move the receiver site `n` places, forward or back. | `EPSpine.clockAxis_key`, `step_keeps_generation`, `forward_walk`, `backward_walk` |
 | Program on the node machinery | `EPSpine.Program`: label, generation (one of 3 nonzero glue keys), reference, firing patterns on the 43-site ring, and an E8 packet root in the program's coset; the start site is the packet's clock reading. The packet stays in its coset and tracks the ring. | `Program`, `generation_card`, `program_walk` |
 | Spine | Every generation and every visible class has a program meeting all six pillars; the singlet has none; `3 × 5 = 15`. | `EPSpine.spine`, `singlet_no_program`, `programs_card` |
-| Label on the packet | `EPSector`: a labelled packet is the program's packet plus its placed label (`GaugeSector.placement`). The gauge readout (pairings with the colour roots, the weak root and the charge direction) tells the 16 channels apart in each generation. A forward ring step conserves the charge exactly when it is gauge neutral; there are two such steps and they sum to the time vector. A walk by a neutral step keeps the generation and the label readout and moves the site. | `EPSector.readout`, `placement_readout_injective`, `forward_charge_iff`, `neutralSteps_length`, `neutralSteps_sum_time`, `neutral_walk` |
-| Spine on the sector | Every generation and every visible class has a program meeting all six pillars; its label sits in the wall the `active` bit names; generation and label are kept on every neutral walk. The internal-D4 placement (`EPLabel`, `EPLabelGen`) is retired to PMChecks: it breaks colour and the weak flip. | `EPSector.sector_spine`, `GaugeSector.placement_walls` |
+| Label on the packet | A labelled packet is a coset root plus the label's channel vector. Its state is site (clock reading), generation (glue key) and label (internal content: pairings with the internal simple roots). Channel vectors carry no glue key; ring steps have zero internal content; distinct labels have distinct internal content. So a ring walk moves only the site: generation and label are conserved and the label reads back at any time. | `EPLabel.channel_glueKey`, `clockAxis_internalContent`, `channel_internalContent_injective`, `walk_keeps_label`, `label_readout`, `labels_distinct`, `spine_labelled` |
+| Placement per generation | Generation `g`'s channel vectors are the certified internal triality applied `g` times to the reference placement. In every generation every channel sits in the class the library wall rule requires (`wallClass g (active c)`), carries no glue key, and the labels stay distinct. The spine holds per generation with each generation's own channel vectors. | `EPLabelGen.channelE8Gen`, `channelKeyGen_wallClass`, `channelGen_glueKey`, `channelGen_internalContent_injective`, `genIndex_bijective`, `spine_generations` |
 | Witnesses | Every visible class has a 43-ring program meeting all six pillars: least-Toll reference (Hamming `1` for every label), one firing site per ring, exactly one registration per ring per period, at the least Toll. The invisible class has none. | `ProgramWitness.visible_class_has_program`, `leastRef_hamming`, `witness_pillars`, `witness_total`, `invisible_class_no_program` |
 
 The record-bit Map of the 3-ring `PillarPredicates` (PMChecks) does not see
 charge or chirality and keeps six. Open: the generation readout, and the neutrino mass without
 the singlet.
-
-### Gauge sector and mass pairs (derived; Python checks, Lean for one placement)
-
-The rows above now use this sector. The old internal-D4 placement breaks colour and the
-weak flip, and no internal-D4 placement can keep them. The checks are in
-`tools/pm_sector/`; the data is `tools/pm_sector/sector_data.json`.
-
-| Step | Statement | Readings used |
-|---|---|---|
-| No internal-D4 placement | No placement of the 16 channels in the internal D4 keeps colour and the weak flip. | Symmetries by root reflections |
-| Charge needs a direction | The charge is the pairing with one direction `y`. In rank 5 there is no room for it. The least rank is 6. | Charge conservation, walls (doublets in one glue coset, singlets in another) |
-| Fewest roots | Of the rank-6 sectors that contain the internal D4, the smallest that passes is D4 + 2A1: the internal D4 and two orthogonal spacetime roots. | Economy |
-| Time | Gauge roots and `y` are orthogonal to the clock time vector `t`. This leaves one sector: both extra roots clock-silent. One is the weak flip; the other carries the charge. `y = (0,1,−2,0,1,0,3,3)` gives `3Y` exactly. | Conservation under the tick |
-| Generations | The sector holds all three generations with one `y`. Generation `(0,1)` uses no root of the others. Generations `(1,0)` and `(1,1)` share their quark-doublet roots and put their doublets in coset `(0,1)`. The cyclic `wallClass` disagrees for generation 2. | as above |
-| Mass pairs | A mass flips left to right. Charge fixes the doublet member: up uses `T3 = +1/2`, down and lepton use `−1/2`. In generations `(1,0)` and `(1,1)` the up flip is one root step and the down flip two. | Charge conservation |
-| Step → `Δ` | At least Toll a root move fires with probability `1/Δ` per tick. An intermediate of a two-step flip is not a channel, or has another charge, so it does not persist. Both steps fire in one tick: rate `Δ^−k` per path. Correction: a norm-4 flip has 14 ordered two-step paths, so the rate is `14 Δ^−2` and the up/down offset is `Δ/14 ≈ 3`, not `Δ` (data: `c/s ≈ 14`, `t/b ≈ 41`). The rule is incomplete: the multi-step amplitude is open. | Least Toll, Map, Conservation |
-
-Lean: `GaugeSector` certifies one representative placement by `decide`: the sector roots
-and their pairings, clock silence, the time vector, `chargeDir` giving `3Y`, the weak and
-colour reflections as `flipWeak` and `permuteColour`, the wall keys, and the one-step up and
-two-step down flips in generations 1 and 2 (`placement_charge`, `weak_reflection`,
-`colourA_reflection`, `colourB_reflection`, `placement_walls`, `up_flip_one_step`,
-`down_flip_two_steps`). The eliminations (uniqueness) are still Python checks.
-
-Open: the generation tiers (`Δ⁰`, `Δ¹`, `Δ²`), the root choice in generation `(0,1)`,
-the lepton choice, the `wallClass` fix, and Lean certificates for the eliminations.
 
 ### Current status and legacy ledger
 

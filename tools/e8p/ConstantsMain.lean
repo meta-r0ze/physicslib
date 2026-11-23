@@ -190,7 +190,7 @@ private def printEPSpine : IO Unit := do
   out.putStrLn s!"  visible channels per generation              {channels}  [visible_channels_card]"
   out.putStrLn s!"  programs (generation x visible class)        {programs}  [programs_card]"
   out.putStrLn "  Each program meets the six pillars on the 43-site ring and keeps its generation"
-  out.putStrLn "  and its label on every gauge-neutral walk [sector_spine]."
+  out.putStrLn "  and its label on every forward walk [spine_generations]."
   out.putStrLn "  The invisible class has no program [singlet_no_program]."
   out.putStrLn "  Masses: open (no readout from the ring to a mass yet)."
   out.putStrLn "  Compare: light_generations row (N_nu from the Z invisible width)."

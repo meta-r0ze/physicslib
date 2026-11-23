@@ -9,7 +9,7 @@ import PMElementaryParticles.MuonLifetimeHigherOrder
 import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.TauLifetime
 import PMElementaryParticles.LeptonLifetime
-import PMElementaryParticles.EPSector
+import PMElementaryParticles.EPLabelGen
 
 /-!
 # PMElementaryParticles canonical values
@@ -35,13 +35,9 @@ Single import for the units, couplings, masses and lifetimes that later librarie
 * Program spine: `Generation` with `generation_card` (3 glue cosets); `classOf` with
   `visibleClasses_card` (5 visible classes), `visible_channels_card` (15 channels) and
   `invisible_iff` (the total singlet is the one invisible class); `Program` with
-  `programs_card` (15), `singlet_no_program`, and `sector_spine` (each generation and
-  visible class has a program that meets all six pillars, sits in its wall, and keeps its
-  generation and label on every neutral ring walk).
-* Gauge sector (`GaugeSector`, `EPSector`): `placement` of the 16 channels per generation,
-  `chargeDir` with `placement_charge` (`3Y`), `timeVec`, `placement_walls`, the gauge
-  `readout` with `placement_readout_injective`, `neutralSteps` (two, summing to `timeVec`),
-  and the mass flips `up_flip_one_step`, `down_flip_two_steps`.
+  `programs_card` (15), `singlet_no_program`, and `spine_generations` (each generation and
+  visible class has a program that meets all six pillars and keeps its generation and label on
+  the ring).
 
 This module only names results. Computation lives in its own modules (for example
 `TransportCandidates`).
@@ -86,11 +82,6 @@ export PMElementaryParticles.ProgramClasses
   (classOf visibleClasses visibleClasses_card visibleChannels visible_channels_card invisible_iff)
 export PMElementaryParticles.EPSpine
   (Generation generation_card Program programs_card singlet_no_program)
-export PMElementaryParticles.EPSector
-  (sector_spine readout neutralSteps neutralSteps_length neutralSteps_sum_time
-    placement_readout_injective)
-export PMElementaryParticles.GaugeSector
-  (placement chargeDir timeVec placement_charge placement_walls up_flip_one_step
-    down_flip_two_steps)
+export PMElementaryParticles.EPLabelGen (spine_generations)
 
 end PMElementaryParticles.Values
