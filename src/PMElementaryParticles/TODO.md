@@ -9,10 +9,11 @@ This file is the open list only.
   on the physical 43-ring. Move `Protocol` and the 3-ring parts of
   `PillarPredicates` / `SurvivorClasses` to PMChecks, and restate any EP
   result that still reads `Protocol` on `EPSpine.Program`.
-- **Label on the packet (step 3).** The 16 channels sit in the internal D4
-  (`ChannelPlacement.channelE8`); ring steps are spacetime roots. Prove the
-  ring dynamics leave the label's internal part unchanged, and fix how a
-  channel's own glue class combines with the program's generation coset.
+- **Channel placement per generation.** The library wall rule puts a
+  generation-`g` channel in class `wallClass g (active c)`; `channelE8` is the
+  `g = 0` placement (`ChannelPlacement.libraryIndex_channelKey`). Rotate it by
+  internal triality for `g = 1, 2` and restate `EPLabel.spine_labelled` with
+  the rotated vectors.
 - **Neutrino mass without the singlet.** The removed class is the
   right-handed-neutrino-like channel. A neutrino mass must not need it
   (`NeutrinoContext`).
