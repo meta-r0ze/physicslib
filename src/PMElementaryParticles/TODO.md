@@ -113,6 +113,15 @@ This file is the open list only.
   channels as its spinor weights, certify the symmetries in Lean, then re-run
   `EPLabel`, `EPLabelGen` and the pair tier count. Lean certificate of the D4
   no-go is also open.
+  Structure (2026-11-23, `tools/d5_family_cosets.py`): with E8 = D5 + A3, the roots
+  fall into eight 16-blocks (one family each, by A3 weight) and six 10-blocks
+  (Higgs-like). For all 12 D5, every 16-block lies in the two cosets other than the
+  D5's own, 8 + 8, and the coset of a root is the sign of its pairing with `d`.
+  That is `wallClass` (generation `g` uses the two walls other than `g`) with the
+  wall bit read along `d`. So: generation `g` = a D5 through coset `g`, its labels =
+  one 16-block of E8 roots. The labels then carry nonzero glue keys, so `EPLabel`'s
+  key-0 labels and `genPacket` must be redone. Still to derive: which of the 4 D5
+  in each coset, which 16-block, and which internal axis is the weak one.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
