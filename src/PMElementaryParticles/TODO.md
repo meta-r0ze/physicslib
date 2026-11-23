@@ -158,6 +158,10 @@ This file is the open list only.
   (`tools/pm_sector/flip_paths.py`) collapse the hierarchy (ratios 2 to 6 in every
   sector); clock phases drop out for a program at rest (zero mode). One path per entry
   has no reading behind it. The entry weight is the open object.
+  This also corrects the step → `Δ` rule: by its own logic each of the 14 ordered
+  two-step paths is a separate same-tick history, so the up/down offset is `Δ/14 ≈ 3`,
+  not `Δ`. The data (`c/s ≈ 14`, `t/b ≈ 41`) fit one path. Either a reading restricts
+  the paths, or the multi-step amplitude is not a sum of per-path rates.
 - **`wallClass` versus the derived walls.** Labels now use `GaugeSector.wallKey`
   (`EPSector.sector_spine`). The cyclic `ControlledGluedRegister.wallClass` disagrees
   for generation 2 (doublets in `(1,0)`; the sector needs `(0,1)`) and is still used by
