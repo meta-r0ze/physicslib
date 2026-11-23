@@ -10,9 +10,6 @@ This file is the open list only.
   shows the substrate's observables leave exactly that class
   indistinguishable from the vacuum. Restate Map on classes and rerun the
   survivor results.
-- **Witness per class.** For each of the five classes give a 43-ring program
-  that meets Toll, Margin and Governor (`RingSurvivors` gives the tools), so
-  each class exists, not only survives.
 - **Neutrino mass without the singlet.** The removed class is the
   right-handed-neutrino-like channel. A neutrino mass must not need it
   (`NeutrinoContext`).

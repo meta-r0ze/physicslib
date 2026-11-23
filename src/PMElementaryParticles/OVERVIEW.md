@@ -65,10 +65,10 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Classes | Weak and colour actions split the 16 channels into 6 orbits. | `classOf`, `classOf_flipWeak`, `classOf_permuteColour`, `classOf_surjective`, `class_transitive` |
 | Invisible class | Exactly one class is fixed by every action and has zero charge: the total singlet. | `unmoved_iff`, `charge_zero_iff`, `invisible_iff` |
 | Map | Read with the substrate's observables, Map removes that class. Five classes (15 channels) remain. With three glue cosets: fifteen programs. | `visible_class_iff`, `visibleClasses_card` |
+| Witnesses | Every visible class has a 43-ring program meeting all six pillars: least-Toll reference (Hamming `1` for every label), one firing site per ring, exactly one registration per ring per period, at the least Toll. The invisible class has none. | `ProgramWitness.visible_class_has_program`, `leastRef_hamming`, `witness_pillars`, `witness_total`, `invisible_class_no_program` |
 
 The record-bit Map of `PillarPredicates` does not see charge or chirality and
-keeps six. Open: the implementation part (Toll, Margin, Governor witnesses on
-the 43-ring per class), the generation readout, and the neutrino mass without
+keeps six. Open: the generation readout, and the neutrino mass without
 the singlet.
 
 ### Current status and legacy ledger
