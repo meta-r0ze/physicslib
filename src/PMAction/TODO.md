@@ -31,3 +31,26 @@ external calculation awaiting formal verification. Each current theorem states i
 - **Carrier spectrum and radius.** Certify the lowest positive level of the full 216-dimensional
   operator and the spin-up rms radius in Lean. The existing exact subspace and radius calculations are
   in `tools/carrier_mode_exact.py` and `tools/carrier_rms_certificate.py`.
+
+## Generation masses
+
+The generation-mass modules (`MassInsertion`, `GenerationMass`, `GenerationSector`,
+`GenerationOrientation`, `InterWallDiagonal`) point here.
+
+- **Reconcile the two levels of the wall crossing.** `WallTransfer` (Conservation) makes the
+  equal-class crossing the mass bilinear, the only term joining the walls. `DomainWall` and
+  `WallSeesaw` put the same crossing on the gapped components, so masses come only through the
+  seesaw `δ² Y⁻¹`. The two give opposite patterns (`tools/generation_mass_levels.py`): the
+  carrier level gives one heavy and two light generations (the class amplitudes, `1 : 1 : α⁻¹`);
+  the seesaw gives one light and two heavy, for a flavour-blind detuning and for a label
+  insertion. `MassInsertion`'s CKM ordering also excludes the seesaw. Restate the domain-wall
+  Hamiltonian so the crossing acts on the chiral zero modes, or show why it cannot.
+- **Node factor of a mass.** At the carrier level the masses are the crossing amplitudes: the
+  reference class in-cycle (`1`), the spinor classes through the node. Two legs for colour
+  carriers (`PMFlavor.NodeElimination`) give `α`, so heavy/light `= α⁻¹ ≈ 137`. Lepton-axis
+  carriers are one leg from the node (`√α`). Open: the down-type and lepton sectors (the leg rule
+  alone gives `α⁻¹` and `α^{−1/2}`), and what splits the two light generations (degenerate at
+  this order). Comparisons belong in e8p.
+- **Single crossing at a fixed class.** Whether `GenerationOrientation.single_crossing_unequal`
+  is a physical move.
+
