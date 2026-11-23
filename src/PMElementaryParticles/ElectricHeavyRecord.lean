@@ -3,11 +3,11 @@ import PMConstants.ReferenceRestoration
 import PMKAutomaton.Interface
 
 /-!
-# Two exact record visits from the packet's electric generator
+# Two exact record visits from the carriers' electric charge
 
 The first visit measures the parity of `3Q`. Given that bit, the second
 compares the charge against the quark with the same doublet position.
-Both use the same unbroken generator. The phase separations and their
+Both use the same electric charge, that of the carriers (`ChargeProtocols.Q`, `bl/2 + t3`). The phase separations and their
 principal times follow from the charge spectrum. This supplies a comparison
 contract, with a branch encoded on a moved root pair, subject to admission
 of the controlled transport and preparation of the seed bank.
@@ -20,25 +20,6 @@ open PMConstants.PacketGaugeActions HeavyFlipControl ControlledGluedRegister
 open PMAction Real Matrix
 
 abbrev q (c : Channels) : ℝ := (ChargeProtocols.Q c).re
-
-open PMConstants.GeneratorNormalization PMConstants.PacketTraceForm in
-/-- The packet generator's diagonal is the carrier charge (`ChargeProtocols.Q`). -/
-theorem generator_diag (c : Channels) : (t3 + hyperGen) c c = ChargeProtocols.Q c := by
-  rw [ChargeProtocols.Q_eval]
-  rcases c with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> fin_cases s <;>
-    simp [t3, hyperGen, weakGen, PMConstants.PacketGaugeActions.charge,
-      PMConstants.PacketGaugeActions.block, kroneckerMap_apply, Matrix.add_apply] <;> norm_num
-
-open PMConstants.GeneratorNormalization PMConstants.PacketTraceForm in
-/-- The packet generator is the diagonal of the carrier charge. -/
-theorem electric_generator : t3 + hyperGen = diagonal (fun c => (q c : ℂ)) := by
-  have h := PMConstants.ReferenceRestoration.t3_isDiag.add
-    PMConstants.ReferenceRestoration.hyper_isDiag
-  rw [← h.diagonal_diag]
-  congr 1
-  funext c
-  rw [Matrix.diag_apply, generator_diag]
-  rcases ChargeProtocols.charge_values c with hc | hc | hc | hc <;> norm_num [q, hc]
 
 theorem charge_from_bits (c : Channels) :
     q c = (if (labelRecord c).1 then 0 else 2 / 3) -

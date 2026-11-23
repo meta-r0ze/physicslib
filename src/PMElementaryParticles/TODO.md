@@ -128,10 +128,6 @@ This file is the open list only.
   eliminations by layer, node and carrier level first.
   Seeds (review 2026-11-23). EP uses a Standard Model form where an earlier module
   has a PM or E8 reason; switch to the earlier module:
-  * Standard Model generators still used: `VacancyProjection`, `ElectricChiralKick`,
-    `MassiveVolume` (`hyperGen`, `weakGen`); `ElectricHeavyRecord.electric_generator` is
-    a check that the generator diagonal is the carrier charge. Read them from
-    `CarrierChannels` instead.
   * Masses (`LeptonMasses`, `QuarkMasses`, `TierLedger`, declared): `PMAction.GenerationMass`,
     `MassInsertion`, `DetuningMass`, `GenerationSector` give a PM mass: a mass joins a
     generation's two walls by a crossing (common `y`) and a single-wall carrier

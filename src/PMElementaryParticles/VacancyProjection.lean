@@ -2,48 +2,56 @@ import PMConstants.ChannelOccupancy
 import PMConstants.ReferenceLink
 import PMElementaryParticles.GappedGluedCrossing
 import PMKAutomaton.Interface
+import PMElementaryParticles.CarrierChannels
 
 /-!
-# The occupied light projection from the packet gauge action
+# The occupied light projection from the carrier wall charge
 
-The absolute hypercharge operator detects exactly the occupied directions
-of the glued protocol inventory, including coherent superpositions. Its
-range projection removes the single gauge-invisible static slot. Carried
-to the wall model, this gives the existing vacancy-truncated static flip.
-The isolation result below concerns the label-preserving rest Hamiltonian.
+The wall charge of the carriers (`CarrierChannels.hyper`, the hypercharge) as a diagonal
+operator, `wallCharge`, detects exactly the occupied directions of the glued protocol inventory,
+including coherent superpositions. Its range projection removes the single gauge-invisible static
+slot. The packet's charge generator is this operator (`charge_eq_wall`). Carried to the wall
+model, this gives the existing vacancy-truncated static flip. The isolation result below concerns
+the label-preserving rest Hamiltonian.
 -/
 
 noncomputable section
 namespace PMElementaryParticles.VacancyProjection
 
-open Matrix PMConstants.PacketGaugeActions PMConstants.PacketTraceForm
+open Matrix PMConstants.PacketGaugeActions
 open PMElementaryParticles.ProtocolInventory PMElementaryParticles.ControlledGluedRegister
 open scoped Kronecker
 
-/-- Hypercharge is diagonal in the existing packet basis. -/
-theorem hyper_diagonal : hyperGen = diagonal (fun c => hyperGen c c) := by
+/-- The carrier wall charge as a diagonal operator. -/
+def wallCharge : M := diagonal fun c => (CarrierChannels.hyper c : ℂ)
+
+/-- The packet charge generator has no off-diagonal entries. -/
+theorem charge_offDiag {i j : Channels} (h : i ≠ j) : charge i j = 0 := by
+  rcases i with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> rcases j with ⟨b, t⟩ | ⟨b, t⟩ | t | t <;>
+    simp_all [charge, block, Matrix.kroneckerMap_apply, Matrix.one_apply, Matrix.diagonal_apply,
+      Prod.ext_iff]
+  tauto
+
+theorem charge_eq_diag : charge = diagonal (fun c => charge c c) := by
   ext i j
   by_cases h : i = j
-  · subst j
-    simp
-  · rw [Matrix.diagonal_apply_ne _ h]
-    exact PMConstants.ReferenceRestoration.hyper_isDiag h
+  · subst j; simp
+  · rw [Matrix.diagonal_apply_ne _ h, charge_offDiag h]
+
+/-- **The packet charge generator is the carrier wall charge.** -/
+theorem charge_eq_wall : charge = wallCharge := by
+  rw [charge_eq_diag, wallCharge]
+  congr 1
+  funext c
+  exact CarrierChannels.packet_charge_eq c
 
 /-- The full hypercharge transport generator in the channel basis. -/
 theorem charge_diagonal :
     charge = diagonal (fun c => ((PMConstants.ChannelOccupancy.tag c).2.2 : ℂ) / 3) := by
-  have h : (2 : ℂ) • PMConstants.PacketTraceForm.hyperGen = charge := by
-    simp [PMConstants.PacketTraceForm.hyperGen, smul_smul]
-  calc
-    charge = (2 : ℂ) • PMConstants.PacketTraceForm.hyperGen := h.symm
-    _ = _ := by
-      rw [hyper_diagonal, ← diagonal_smul]
-      congr 1
-      funext c
-      change (2 : ℂ) * PMConstants.PacketTraceForm.hyperGen c c = _
-      rw [PMConstants.PacketTraceForm.hyperGen, Matrix.smul_apply, smul_eq_mul,
-        PMConstants.ChannelOccupancy.charge_entries]
-      ring
+  rw [charge_eq_diag]
+  congr 1
+  funext c
+  exact PMConstants.ChannelOccupancy.charge_entries c
 
 /-- The packet hypercharge as real channel charges `tag/3`. -/
 theorem charge_real :
@@ -68,28 +76,31 @@ theorem hypercharge_flag (t : ℝ) (c : Channels) :
       PMAction.DiagonalReadout.flag (t * (((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3)) :=
   PMAction.DiagonalReadout.transport_flag charge_hermitian _ charge_real t c
 
-/-- The hypercharge entry vanishes exactly on the inventory vacancy. -/
-theorem hyper_entry_zero_iff (c : Channels) :
-    hyperGen c c = 0 ↔ baseProtocol c = none := by
-  rw [hyperGen, Matrix.smul_apply, smul_eq_mul, PMConstants.ChannelOccupancy.charge_entries]
-  rcases c with ⟨i, s⟩ | ⟨i, s⟩ | s | s <;> fin_cases s <;>
-    norm_num [PMConstants.ChannelOccupancy.tag, baseProtocol]
+/-- The wall charge vanishes exactly on the inventory vacancy. -/
+theorem wall_zero_iff : ∀ c : Channels, CarrierChannels.hyper c = 0 ↔ baseProtocol c = none := by
+  decide +kernel
+
+theorem wall_entry_zero_iff (c : Channels) :
+    wallCharge c c = 0 ↔ baseProtocol c = none := by
+  rw [wallCharge, Matrix.diagonal_apply_eq, ← wall_zero_iff c]
+  exact_mod_cast Iff.rfl
 
 /-- The result applies to all amplitudes, so linear combinations of occupied
 channels cannot produce additional invisible directions. -/
-theorem hyper_kernel_iff (v : Channels → ℂ) :
-    hyperGen *ᵥ v = 0 ↔ ∀ c, baseProtocol c ≠ none → v c = 0 := by
-  conv_lhs => rw [hyper_diagonal]
+theorem wall_kernel_iff (v : Channels → ℂ) :
+    wallCharge *ᵥ v = 0 ↔ ∀ c, baseProtocol c ≠ none → v c = 0 := by
+  have hd : wallCharge = diagonal (fun c => wallCharge c c) := by simp [wallCharge]
+  conv_lhs => rw [hd]
   constructor
   · intro h c hc
     have hcoord := congrFun h c
     rw [Matrix.mulVec_diagonal, Pi.zero_apply] at hcoord
-    exact (mul_eq_zero.mp hcoord).resolve_left (fun hz => hc ((hyper_entry_zero_iff c).mp hz))
+    exact (mul_eq_zero.mp hcoord).resolve_left (fun hz => hc ((wall_entry_zero_iff c).mp hz))
   · intro h
     funext c
     rw [Matrix.mulVec_diagonal, Pi.zero_apply]
     by_cases hc : baseProtocol c = none
-    · rw [(hyper_entry_zero_iff c).mpr hc, zero_mul]
+    · rw [(wall_entry_zero_iff c).mpr hc, zero_mul]
     · rw [h c hc, mul_zero]
 
 private theorem vacancy_iff : ∀ c : Channels,
@@ -98,9 +109,9 @@ private theorem vacancy_iff : ∀ c : Channels,
 
 /-- The only gauge-invisible direction is the static sterile basis line. -/
 theorem invisible_line (v : Channels → ℂ) :
-    hyperGen *ᵥ v = 0 ↔
+    wallCharge *ᵥ v = 0 ↔
       ∃ z : ℂ, v = Pi.single PMConstants.ReferenceLink.nuR z := by
-  rw [hyper_kernel_iff]
+  rw [wall_kernel_iff]
   constructor
   · intro h
     refine ⟨v PMConstants.ReferenceLink.nuR, ?_⟩
@@ -114,13 +125,13 @@ theorem invisible_line (v : Channels → ℂ) :
     have hn : c ≠ PMConstants.ReferenceLink.nuR := fun h => hc ((vacancy_iff c).mpr h)
     simp [hn]
 
-/-- Projection onto the directions visible to absolute hypercharge. -/
-def occupied : M := diagonal fun c => if hyperGen c c = 0 then 0 else 1
+/-- Projection onto the directions visible to the wall charge. -/
+def occupied : M := diagonal fun c => if wallCharge c c = 0 then 0 else 1
 
 theorem occupied_eq_inventory :
     occupied = diagonal (fun c => if baseProtocol c = none then 0 else 1) := by
   unfold occupied
-  simp only [hyper_entry_zero_iff]
+  simp only [wall_entry_zero_iff]
 
 theorem occupied_hermitian : occupied.IsHermitian := by
   rw [occupied_eq_inventory]
@@ -156,25 +167,22 @@ theorem gauge_updates_preserve (U : Matrix (Fin 2) (Fin 2) ℂ)
         PMConstants.PacketGaugeActions.colour V * occupied
     simp [hb, PMConstants.PacketGaugeActions.colour, block_mul]
 
-/-- The fixed space of the projector is exactly the range of the existing
-hypercharge generator. The inverse on each occupied coordinate is explicit. -/
+/-- The fixed space of the projector is exactly the range of the wall charge. The inverse on
+each occupied coordinate is explicit. -/
 theorem occupied_fixed_iff (v : Channels → ℂ) :
-    occupied *ᵥ v = v ↔ ∃ u : Channels → ℂ, hyperGen *ᵥ u = v := by
+    occupied *ᵥ v = v ↔ ∃ u : Channels → ℂ, wallCharge *ᵥ u = v := by
   have hApply (u : Channels → ℂ) (c : Channels) :
-      (hyperGen *ᵥ u) c = hyperGen c c * u c := by
-    calc
-      (hyperGen *ᵥ u) c = (diagonal (fun i => hyperGen i i) *ᵥ u) c :=
-        congrArg (fun M : Matrix Channels Channels ℂ => (M *ᵥ u) c) hyper_diagonal
-      _ = _ := Matrix.mulVec_diagonal _ _ _
+      (wallCharge *ᵥ u) c = wallCharge c c * u c := by
+    simp [wallCharge, Matrix.mulVec_diagonal]
   constructor
   · intro hv
-    refine ⟨fun c => v c / hyperGen c c, ?_⟩
+    refine ⟨fun c => v c / wallCharge c c, ?_⟩
     funext c
     rw [hApply]
     have he := congrFun hv c
     change (occupied *ᵥ v) c = v c at he
     rw [occupied, Matrix.mulVec_diagonal] at he
-    by_cases hc : hyperGen c c = 0
+    by_cases hc : wallCharge c c = 0
     · have hv0 : v c = 0 := by simpa [hc] using he.symm
       simp [hc, hv0]
     · field_simp
@@ -182,7 +190,7 @@ theorem occupied_fixed_iff (v : Channels → ℂ) :
     unfold occupied
     funext c
     rw [Matrix.mulVec_diagonal, hApply]
-    by_cases hc : hyperGen c c = 0 <;> simp [hc]
+    by_cases hc : wallCharge c c = 0 <;> simp [hc]
 
 open PMElementaryParticles.GappedGluedCrossing PMAction
 

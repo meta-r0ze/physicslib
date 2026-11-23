@@ -33,10 +33,8 @@ def port : Sites → Fin 4 := Sum.elim id id
 def onHigh (j : Fin 4) : Bool := decide (2 ≤ j.val)
 def onLow (j : Fin 4) : Bool := decide (j.val % 2 = 1)
 
+/-- The electric charge of the carriers (`ChargeProtocols.Q`) as a diagonal operator. -/
 def packetQ : Matrix Channels Channels ℂ := diagonal fun c => (q c : ℂ)
-
-open PMConstants.GeneratorNormalization PMConstants.PacketTraceForm in
-theorem packetQ_eq : packetQ = t3 + hyperGen := electric_generator.symm
 
 theorem packetQ_hermitian : packetQ.IsHermitian := by
   rw [packetQ, Matrix.isHermitian_diagonal_iff]
