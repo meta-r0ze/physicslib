@@ -5,6 +5,14 @@ This file is the open list only.
 
 ## Program classes
 
+- **Retire the 3-ring `Protocol`.** `EPSpine.Program` is the EP program type
+  on the physical 43-ring. Move `Protocol` and the 3-ring parts of
+  `PillarPredicates` / `SurvivorClasses` to PMChecks, and restate any EP
+  result that still reads `Protocol` on `EPSpine.Program`.
+- **Label on the packet (step 3).** The 16 channels sit in the internal D4
+  (`ChannelPlacement.channelE8`); ring steps are spacetime roots. Prove the
+  ring dynamics leave the label's internal part unchanged, and fix how a
+  channel's own glue class combines with the program's generation coset.
 - **Neutrino mass without the singlet.** The removed class is the
   right-handed-neutrino-like channel. A neutrino mass must not need it
   (`NeutrinoContext`).

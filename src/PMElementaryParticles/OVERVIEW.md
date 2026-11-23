@@ -65,6 +65,9 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Classes | Weak and colour actions split the 16 channels into 6 orbits. | `classOf`, `classOf_flipWeak`, `classOf_permuteColour`, `classOf_surjective`, `class_transitive` |
 | Invisible class | Exactly one class is fixed by every action and has zero charge: the total singlet. | `unmoved_iff`, `charge_zero_iff`, `invisible_iff` |
 | Map | Read with the substrate's observables, Map removes that class. Five classes (15 channels) remain. With three glue cosets: fifteen programs. | `visible_class_iff`, `visibleClasses_card` |
+| Generation-blind ring | A ring step is a spacetime clock-axis root (glue key `0`), so it never changes a packet's coset; `n` steps keep the coset and move the receiver site `n` places, forward or back. | `EPSpine.clockAxis_key`, `step_keeps_generation`, `forward_walk`, `backward_walk` |
+| Program on the node machinery | `EPSpine.Program`: label, generation (one of 3 nonzero glue keys), reference, firing patterns on the 43-site ring, and an E8 packet root in the program's coset; the start site is the packet's clock reading. The packet stays in its coset and tracks the ring. | `Program`, `generation_card`, `program_walk` |
+| Spine | Every generation and every visible class has a program meeting all six pillars; the singlet has none; `3 × 5 = 15`. | `EPSpine.spine`, `singlet_no_program`, `programs_card` |
 | Witnesses | Every visible class has a 43-ring program meeting all six pillars: least-Toll reference (Hamming `1` for every label), one firing site per ring, exactly one registration per ring per period, at the least Toll. The invisible class has none. | `ProgramWitness.visible_class_has_program`, `leastRef_hamming`, `witness_pillars`, `witness_total`, `invisible_class_no_program` |
 
 The record-bit Map of `PillarPredicates` does not see charge or chirality and
