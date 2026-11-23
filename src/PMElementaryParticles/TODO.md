@@ -5,10 +5,6 @@ This file is the open list only.
 
 ## Program classes
 
-- **Retire the 3-ring `Protocol`.** `EPSpine.Program` is the EP program type
-  on the physical 43-ring. Move `Protocol` and the 3-ring parts of
-  `PillarPredicates` / `SurvivorClasses` to PMChecks, and restate any EP
-  result that still reads `Protocol` on `EPSpine.Program`.
 - **Neutrino mass without the singlet.** The removed class is the
   right-handed-neutrino-like channel. A neutrino mass must not need it
   (`NeutrinoContext`).

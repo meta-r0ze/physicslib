@@ -1,8 +1,12 @@
-import PMElementaryParticles.Protocol
+import PMChecks.PMElementaryParticles.Protocol
 import PersistenceMechanics.Requirements
 import PMElementaryParticles.ProgramClasses
 
 /-!
+**3-ring check (PMChecks).** The pillars on the physical 43-site ring are
+`ProgramWitness.Pillars` (with the requirement links `*_realizes`); these
+predicates on the toy-ring `Protocol` back the `SurvivorClasses` certificate only.
+
 # Weakest pillar predicates on finite protocols
 
 The definitions and failure modes are from

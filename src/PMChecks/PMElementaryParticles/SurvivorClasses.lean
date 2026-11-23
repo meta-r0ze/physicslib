@@ -1,4 +1,4 @@
-import PMElementaryParticles.PillarPredicates
+import PMChecks.PMElementaryParticles.PillarPredicates
 
 /-!
 # Structural survivor classes for the pillar filter

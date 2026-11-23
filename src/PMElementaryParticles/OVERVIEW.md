@@ -13,46 +13,43 @@ The transport laws are exposed by the [conditional interface](../PMKAutomaton/CO
 
 ## Narrative
 
-The certified machine is KAutomaton’s conditional interface: the 43-clock,
-receiver flags, record bookkeeping, bit rings, the phase-to-record converter
-and the coherent coin. EP adds the finite `Protocol` on that machine and the
-weakest pillar predicates from `PersistenceMechanics.Requirements` and the PM
-paper; the corrected Margin is utilization (`marginUtilization`). The robust
-survivor core is `RobustCoreU`, card 1,110 (`robustCoreU_card`). The channel
-code is attached to E8 by `ChannelVectors.channelCoord`: active-false labels
-map to the D4 vector class, active-true labels to the certified triality image
-(`channelCoord_glueClass`, `channelCoord_injective`). What remains is the
-shared/composite background selection, the multi-protocol composition rule, and
-the step-to-cost rule for the generation signatures. The line and clock ring are
-proved below. Legacy species, tier, generation and heavy-label results are
-retained below with their audited status; the task-numbered working record is in
-git history.
+EP runs on KAutomaton's certified machine: the E8 lattice with the 43-tick
+clock, the reversible receiver ring, the bit rings and the phase-to-record
+converter. An EP program (`EPSpine.Program`) is a label, a generation (one of
+the three glue cosets), a reference, firing patterns on the 43-site clock ring,
+and an E8 packet in its coset. Ring steps are spacetime root events: they move
+the packet's site and keep its generation and its label. The six pillars
+(`ProgramWitness.Pillars`, each linked to its requirement) select the
+programs: the substrate's observables leave six label classes, Map removes the
+one invisible class, and every remaining class runs in every generation at the
+least Toll: fifteen programs (`EPLabelGen.spine_generations`). What remains is
+the readout (masses and widths from the programs), the vacuum and composite
+placement, and multi-protocol composition. Legacy species, tier and
+heavy-label ledgers are retained below with their audited status.
 
 ## EP persistence rebuild — structure
 
-1. **Machine EP uses.** The certified machine is KAutomaton's conditional
-   interface: `PMKAutomaton.Interface` for operations and
-   `PMKAutomaton.Values` for conditional rates. The isolated-excitation sector
-   is `IsolatedExcitation`/`IsolatedReceiverTrace`; the bit-ring machine is
-   `RecordPortIdentification`; the phase-to-record converter and coin are
-   `PhaseToRecord` and `CommonComparator`. KAutomaton keeps T, L, B, D, J, Q
-   and the tariff unit as named machine inputs.
-2. **Protocol definition.** `Protocol.Protocol` is finite data: one of the 16
-   labels, a reference record, one firing pattern per record bit on the 3-ring,
-   certified phases `{0,π}`, and one packet site. Its per-period receiver Toll
-   is `Protocol.receiverToll`.
-3. **Pillar conditions.** `PillarPredicates` defines the weakest paper
-   predicates on `Protocol`, with named variants for Margin, Map and Toll, and
-   links each to `Requirements.Pillar.requirement`.
-4. **Enumeration.** `Protocol.allProtocols` is the complete finite family of
-   16 labels × 2 references × firing patterns × certified phases × packet site
-   (`allProtocols_complete`). `PillarPredicates.survivors` filters it by the
-   six predicates. A direct `decide` over all 24,576 protocols exceeded 600
-   seconds; survivor counts are evaluation observations, not kernel proofs.
-5. **Legacy results and status.** The old species, tier, generation and
-   heavy-label material is retained as a legacy ledger. Its status is audited
-   in the section below and is not derived by this rebuild unless explicitly
-   stated.
+1. **Machine EP uses.** KAutomaton's interface (`PMKAutomaton.Interface`,
+   `PMKAutomaton.Values`), the clock ring (`ClockRing`, `ClockSites`,
+   `ClockAlignment`), the receiver ring (`RingReceiver`), the isolated
+   excitation (`IsolatedExcitation`, `IsolatedReceiverTrace`), the bit rings
+   (`RecordPortIdentification`) and the converter (`PhaseToRecord`,
+   `CommonComparator`).
+2. **Program.** `EPSpine.Program` on the 43-site clock ring; generation-blind
+   ring dynamics (`EPSpine`), the label on the packet (`EPLabel`), and the
+   per-generation channel placement (`EPLabelGen`).
+3. **Pillars.** `ProgramWitness.Pillars` on the 43-ring, with the requirement
+   links (`capacity_realizes` … `governor_realizes`); the structural ring
+   results are in `RingRates` and `RingSurvivors`.
+4. **Classes and witnesses.** `ProgramClasses` (six classes, one invisible) and
+   `ProgramWitness` (a running program per visible class); the spine is
+   `EPLabelGen.spine_generations`.
+5. **3-ring checks.** The earlier toy-ring `Protocol`, its pillar predicates
+   and the survivor enumeration are certificates in PMChecks
+   (`PMChecks.PMElementaryParticles.Protocol`, `.PillarPredicates`,
+   `.SurvivorClasses`); not in the default build.
+6. **Legacy results and status.** The old species, tier, generation and
+   heavy-label material is retained as a legacy ledger, audited below.
 
 ### Program classes (the EP end state)
 
@@ -72,13 +69,13 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Placement per generation | Generation `g`'s channel vectors are the certified internal triality applied `g` times to the reference placement. In every generation every channel sits in the class the library wall rule requires (`wallClass g (active c)`), carries no glue key, and the labels stay distinct. The spine holds per generation with each generation's own channel vectors. | `EPLabelGen.channelE8Gen`, `channelKeyGen_wallClass`, `channelGen_glueKey`, `channelGen_internalContent_injective`, `genIndex_bijective`, `spine_generations` |
 | Witnesses | Every visible class has a 43-ring program meeting all six pillars: least-Toll reference (Hamming `1` for every label), one firing site per ring, exactly one registration per ring per period, at the least Toll. The invisible class has none. | `ProgramWitness.visible_class_has_program`, `leastRef_hamming`, `witness_pillars`, `witness_total`, `invisible_class_no_program` |
 
-The record-bit Map of `PillarPredicates` does not see charge or chirality and
-keeps six. Open: the generation readout, and the neutrino mass without
+The record-bit Map of the 3-ring `PillarPredicates` (PMChecks) does not see
+charge or chirality and keeps six. Open: the generation readout, and the neutrino mass without
 the singlet.
 
 ### Current status and legacy ledger
 
-- Machine and protocol: `Protocol.receiverToll`, `PillarPredicates.marginUtilization`.
+- Machine and program: `EPSpine.Program`, `ProgramWitness.Pillars`.
 - Survivors on the 43-ring (`RingSurvivors`), proved without enumerating
   firing patterns:
 
@@ -88,7 +85,7 @@ the singlet.
   | Least Toll | Every Toll-admissible pattern costs at least the Hamming distance to the reference. One firing site per differing ring attains it. | `ringTotal_ge_hamming`, `ringTotal_oneSite` |
   | Minimum | One firing site gives exactly one registration per period. | `one_site_floor`, `RingRates.ring43_one` |
   | Margin | Two adjacent firing sites trap the packet: 43 registrations in 43 ticks. Margin excludes this case. | `trapping_saturates` |
-  | Map | The reference-equal label is excluded (record level). | `PillarPredicates` |
+  | Map | The reference-equal label is excluded (record level); the invisible class is excluded (class level). | `ProgramWitness.MapRecord`, `ProgramWitness.MapClass` |
 
   Least-Toll references per label: up→lepton, down→colour, electron→lepton,
   neutrino→colour (Hamming `1`, `bitToll_eq_hamming`). The 3-ring counts

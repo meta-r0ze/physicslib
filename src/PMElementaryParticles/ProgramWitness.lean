@@ -1,5 +1,6 @@
 import PMElementaryParticles.RingSurvivors
 import PMElementaryParticles.ProgramClasses
+import PersistenceMechanics.Requirements
 
 /-!
 # A running program for every visible class
@@ -109,6 +110,26 @@ Toll-admissible program (`RingSurvivors.ringTotal_ge_hamming`). -/
 theorem witness_total (c : Channels) :
     ringTotal c (leastRef c) (fun _ => oneFiringN 43 0) 0 = 1 := by
   rw [ringTotal_oneSite c (leastRef c) (fun _ => 0) 0, leastRef_hamming]
+
+/-! ## Each pillar and the requirement it realizes
+
+The paper's map from pillars to the three requirements
+(`PersistenceMechanics.Requirements.Pillar.requirement`): Capacity and Margin
+realize finiteness, Map and Protocol realize conservation, Toll and Governor
+realize causality. -/
+
+open PersistenceMechanics.Requirements in
+theorem capacity_realizes : Pillar.requirement Pillar.capacity = Requirement.finiteness := rfl
+open PersistenceMechanics.Requirements in
+theorem margin_realizes : Pillar.requirement Pillar.margin = Requirement.finiteness := rfl
+open PersistenceMechanics.Requirements in
+theorem map_realizes : Pillar.requirement Pillar.map = Requirement.conservation := rfl
+open PersistenceMechanics.Requirements in
+theorem protocol_realizes : Pillar.requirement Pillar.protocol = Requirement.conservation := rfl
+open PersistenceMechanics.Requirements in
+theorem toll_realizes : Pillar.requirement Pillar.toll = Requirement.causality := rfl
+open PersistenceMechanics.Requirements in
+theorem governor_realizes : Pillar.requirement Pillar.governor = Requirement.causality := rfl
 
 end PMElementaryParticles.ProgramWitness
 

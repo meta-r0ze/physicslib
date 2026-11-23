@@ -2,6 +2,9 @@ import PMElementaryParticles.PhaseToRecord
 import PMElementaryParticles.RecordPortIdentification
 
 /-!
+**3-ring check (PMChecks).** The EP program type on the physical 43-site ring is
+`EPSpine.Program`; this toy-ring protocol backs the `SurvivorClasses` certificate only.
+
 # EP protocols on the certified bit-ring machine
 
 A protocol is finite data only:
