@@ -22,6 +22,12 @@ So `Q = 2/3` exactly when the symmetric part and the symmetry-breaking part
 have equal norm (`koide_iff_equal_split`). Both norms, and so `Q`, are
 unchanged by a cyclic relabelling of the generations (`koideQ_cyclic`).
 
+Read as a two-outcome record, "is the state generation-symmetric or not",
+`Q = 2/3` says that record is a fair coin (`koide_iff_fair`). This is not
+the fair flag of `PMAction.ClockLedger`: that flag measures fidelity under the
+cyclic shift, and at `Q = 2/3` it is `3/8` (`shiftFlag_at_koide`). So the
+clock ledger's `1/2` does not by itself give Koide.
+
 This is linear algebra only: no premise and no data.
 -/
 
@@ -109,6 +115,55 @@ theorem normSq_cyc (v : Fin 3 → ℝ) : normSq (cyc v) = normSq v := by
 /-- **The split, and so `Q`, does not depend on which coset is called first.** -/
 theorem koideQ_cyclic (v : Fin 3 → ℝ) : koideQ (cyc v) = koideQ v := by
   rw [koideQ, koideQ, total_cyc, normSq_cyc]
+
+
+/-! ## Koide as a fair binary record -/
+
+/-- Share of the norm in the symmetry-breaking part: the probability that the
+state is *not* generation-symmetric (projective two-outcome question). -/
+def breakingShare (v : Fin 3 → ℝ) : ℝ := normSq (doublet v) / normSq v
+
+/-- **`Q = 2/3` iff the two-outcome record "symmetric / broken" is a fair coin.** -/
+theorem koide_iff_fair (v : Fin 3 → ℝ) (h : total v ≠ 0) :
+    koideQ v = 2 / 3 ↔ breakingShare v = 1 / 2 := by
+  rw [koide_iff_equal_split v h, breakingShare, normSq_split v]
+  have hs : 0 < normSq (singlet v) := by rw [normSq_singlet]; positivity
+  have hd : 0 ≤ normSq (doublet v) := Finset.sum_nonneg (fun i _ => sq_nonneg _)
+  have hpos : normSq (singlet v) + normSq (doublet v) ≠ 0 := by linarith
+  constructor
+  · intro he; rw [he]; field_simp; ring
+  · intro hf; field_simp at hf; linarith
+
+/-- Overlap of the state with its cyclic relabelling. -/
+def shiftOverlap (v : Fin 3 → ℝ) : ℝ := ∑ i, v i * cyc v i
+
+theorem shiftOverlap_eq (v : Fin 3 → ℝ) :
+    shiftOverlap v = (total v ^ 2 - normSq v) / 2 := by
+  simp only [shiftOverlap, cyc, total, normSq, Fin.sum_univ_three]
+  simp only [Fin.isValue, Fin.reduceAdd]
+  ring
+
+/-- The fidelity flag of the cyclic relabelling, `(1 − ⟨v, Cv⟩/|v|²)/2`, the
+flag measure of `PMAction.ClockLedger` evaluated on the state `v`. -/
+def shiftFlag (v : Fin 3 → ℝ) : ℝ := (1 - shiftOverlap v / normSq v) / 2
+
+/-- **At `Q = 2/3` the fidelity flag is `3/8`, not `1/2`.** So the clock ledger's
+fair flag (a fixed-point-free shift flags `1/2` averaged over states) is a
+different coin from the Koide record. -/
+theorem shiftFlag_at_koide (v : Fin 3 → ℝ) (h : total v ≠ 0)
+    (hk : koideQ v = 2 / 3) : shiftFlag v = 3 / 8 := by
+  have hn : normSq v ≠ 0 := by
+    rw [normSq_split]
+    have hs : 0 < normSq (singlet v) := by rw [normSq_singlet]; positivity
+    have hd : 0 ≤ normSq (doublet v) := Finset.sum_nonneg (fun i _ => sq_nonneg _)
+    linarith
+  have hq : normSq v = 2 / 3 * total v ^ 2 := by
+    have h2 : total v ^ 2 ≠ 0 := pow_ne_zero 2 h
+    rw [koideQ] at hk; field_simp at hk; linarith
+  rw [shiftFlag, shiftOverlap_eq, hq]
+  have h2 : total v ^ 2 ≠ 0 := pow_ne_zero 2 h
+  field_simp
+  ring
 
 end PMElementaryParticles.KoideSplit
 
