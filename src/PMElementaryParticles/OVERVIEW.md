@@ -54,6 +54,23 @@ git history.
    in the section below and is not derived by this rebuild unless explicitly
    stated.
 
+### Program classes (the EP end state)
+
+EP's target is a classification: up to the substrate's symmetries, the
+programs that meet the six pillars form a finite set of classes, each with a
+witness program and a readout. The label part is in `ProgramClasses`:
+
+| Step | Statement | Lean |
+|---|---|---|
+| Classes | Weak and colour actions split the 16 channels into 6 orbits. | `classOf`, `classOf_flipWeak`, `classOf_permuteColour`, `classOf_surjective`, `class_transitive` |
+| Invisible class | Exactly one class is fixed by every action and has zero charge: the total singlet. | `unmoved_iff`, `charge_zero_iff`, `invisible_iff` |
+| Map | Read with the substrate's observables, Map removes that class. Five classes (15 channels) remain. With three glue cosets: fifteen programs. | `visible_class_iff`, `visibleClasses_card` |
+
+The record-bit Map of `PillarPredicates` does not see charge or chirality and
+keeps six. Open: the implementation part (Toll, Margin, Governor witnesses on
+the 43-ring per class), the generation readout, and the neutrino mass without
+the singlet.
+
 ### Current status and legacy ledger
 
 - Machine and protocol: `Protocol.receiverToll`, `PillarPredicates.marginUtilization`.
