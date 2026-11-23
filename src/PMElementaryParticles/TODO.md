@@ -5,11 +5,6 @@ This file is the open list only.
 
 ## Program classes
 
-- **Make Map class-level in `PillarPredicates`.** The record-bit Map keeps the
-  total singlet (record equal to the left-handed neutrino's). `ProgramClasses`
-  shows the substrate's observables leave exactly that class
-  indistinguishable from the vacuum. Restate Map on classes and rerun the
-  survivor results.
 - **Neutrino mass without the singlet.** The removed class is the
   right-handed-neutrino-like channel. A neutrino mass must not need it
   (`NeutrinoContext`).

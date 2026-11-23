@@ -1,5 +1,6 @@
 import PMElementaryParticles.Protocol
 import PersistenceMechanics.Requirements
+import PMElementaryParticles.ProgramClasses
 
 /-!
 # Weakest pillar predicates on finite protocols
@@ -187,5 +188,52 @@ def survivors (v : Variant) : Finset Protocol :=
 theorem survivors_mem_iff (v : Variant) (p : Protocol) :
     p ∈ survivors v ↔ satisfies v p := by
   simp [survivors, satisfies, allProtocols]
+
+
+/-! ## Class-level Map
+
+The record-bit Map compares a 2-bit record with the reference. It does not see
+charge or chirality, so it keeps the total singlet, whose record equals the
+left-handed neutrino's. Map's failure mode is a record that the substrate's
+observables cannot distinguish from the reference: `ProgramClasses.invisible_iff`
+shows exactly one class (the total singlet, class `4`) is fixed by every weak
+and colour action and has zero charge. `mapClass` removes it. -/
+
+/-- Map at class level: the label's class is visible to the substrate's observables. -/
+def mapClass (p : Protocol) : Prop := ProgramClasses.classOf p.label ≠ 4
+
+instance (p : Protocol) : Decidable (mapClass p) := by unfold mapClass; infer_instance
+
+/-- All pillars with the class-level Map added. -/
+def satisfiesClass (v : Variant) (p : Protocol) : Prop := satisfies v p ∧ mapClass p
+
+def survivorsClass (v : Variant) : Finset Protocol :=
+  allProtocols.filter (fun p => satisfiesBool v p = true ∧ mapClass p)
+
+set_option maxRecDepth 10000 in
+theorem survivorsClass_mem_iff (v : Variant) (p : Protocol) :
+    p ∈ survivorsClass v ↔ satisfiesClass v p := by
+  unfold survivorsClass satisfiesClass satisfies
+  rw [Finset.mem_filter]
+  exact ⟨fun h => h.2, fun h => ⟨allProtocols_complete p, h⟩⟩
+
+set_option maxRecDepth 10000 in
+theorem survivorsClass_subset (v : Variant) : survivorsClass v ⊆ survivors v := by
+  intro p hp
+  rw [survivors_mem_iff]
+  exact ((survivorsClass_mem_iff v p).1 hp).1
+
+set_option maxRecDepth 10000 in
+/-- The total singlet never survives. -/
+theorem singlet_not_survivor (v : Variant) (p : Protocol)
+    (h : ProgramClasses.classOf p.label = 4) : p ∉ survivorsClass v := by
+  rw [survivorsClass_mem_iff]
+  exact fun hp => hp.2 h
+
+/-- Fifteen of the sixteen labels are visible. -/
+theorem visible_labels_card :
+    (Finset.univ.filter fun c : PMConstants.PacketGaugeActions.Channels =>
+      ProgramClasses.classOf c ≠ 4).card = 15 := by
+  decide
 
 end PMElementaryParticles.PillarPredicates

@@ -102,6 +102,24 @@ theorem tollCount_eq (p : Protocol) :
 def labelMultiplicity (rec : Record) : ℕ :=
   (Finset.univ.filter fun c : PMConstants.PacketGaugeActions.Channels => labelRecord c = rec).card
 
+/-- Labels sharing a record class that are visible to the substrate's
+observables (`PillarPredicates.mapClass`). The total singlet shares the
+record `(true,false)` with the left-handed neutrino and is removed. -/
+def visibleLabelMultiplicity (rec : Record) : ℕ :=
+  (Finset.univ.filter fun c : PMConstants.PacketGaugeActions.Channels =>
+    labelRecord c = rec ∧ ProgramClasses.classOf c ≠ 4).card
+
+theorem labelMultiplicity_table :
+    labelMultiplicity (false, false) = 6 ∧ labelMultiplicity (false, true) = 6 ∧
+      labelMultiplicity (true, false) = 2 ∧ labelMultiplicity (true, true) = 2 := by
+  decide
+
+/-- Class-level Map changes only the `(true,false)` record class: `2 → 1`. -/
+theorem visibleLabelMultiplicity_table :
+    visibleLabelMultiplicity (false, false) = 6 ∧ visibleLabelMultiplicity (false, true) = 6 ∧
+      visibleLabelMultiplicity (true, false) = 1 ∧ visibleLabelMultiplicity (true, true) = 2 := by
+  decide
+
 /-- Labels sharing a record class are indistinguishable to every pillar
 predicate when the other protocol fields agree. -/
 theorem satisfies_labelRecord_invariant (v : Variant) (p q : Protocol)
@@ -118,6 +136,15 @@ theorem satisfies_labelRecord_invariant (v : Variant) (p q : Protocol)
 theorem survives_iff_reduced (v : Variant) (p : Protocol) :
     p ∈ survivors v ↔ ofProtocol p ∈ SurvivorsR v := by
   simp [survivors, SurvivorsR, satisfiesBool_eq, allProtocols]
+
+/-- With the class-level Map, a protocol survives iff its reduced image
+survives and its label is visible. -/
+theorem survivesClass_iff_reduced (v : Variant) (p : Protocol) :
+    p ∈ survivorsClass v ↔
+      ofProtocol p ∈ SurvivorsR v ∧ ProgramClasses.classOf p.label ≠ 4 := by
+  rw [survivorsClass_mem_iff]
+  unfold satisfiesClass mapClass
+  rw [← survives_iff_reduced, survivors_mem_iff]
 
 /-- The four defensible variants with the weakest Map condition. -/
 def RobustVariants : List Variant :=
