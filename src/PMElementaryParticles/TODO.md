@@ -75,16 +75,17 @@ This file is the open list only.
   gives only −1.7σ to −1.5σ. The muon's remaining miss is `1.1×10⁻⁵ m_e ≈ 0.21 α²`,
   the size of a second-order term. Both residuals need a rule from the cost
   derivation below, not a chosen coefficient.
-  Pillar route (2026-11-23): the six pillar costs already exist as functions of a
-  parameter record (`PMSubstrate.Impedance`; `α⁻¹` is their sum at `baseline`).
-  Term by term, the muon ledger pays Capacity at period 2 (`2π`), Map (`χ`) and a
-  regulator-type feedback; the tau ledger pays Map (`χ`) and `D` only. Lead, not a
-  result: adding the muon's missing Toll and Margin at `baseline`
-  (`1.185×10⁻⁵ + 2.9×10⁻⁶`) moves the muon from −2.4σ to +0.18σ (Toll) or +0.81σ
-  (both), but only with the `α⁻¹` signs; with the ledger's own subtract sign it is
-  −5.6σ. The tau's missing terms at `baseline` are below `0.05 m_e`, too small for
-  its `0.36`. Open: derive the parameter record of a tier-`n` program and each
-  term's sign, then evaluate all six pillars for e, μ, τ.
+  Pillar route (2026-11-23), result: the ledger corrections are not the
+  `PMSubstrate.Impedance` pillars under any one sign rule. With the `α⁻¹` signs,
+  Capacity, Map and the regulator have the wrong sign. With all signs reversed they
+  match, but Toll and Margin then give −5.6σ, and Protocol + Governor at `baseline`
+  (`0.05250`) differ from the muon feedback (`0.05146`) by `+226σ`. The fit of
+  baseline Toll to the muon residual (+0.18σ) is therefore withdrawn as a lead.
+  The ring pillars do not split generations either: the least-cost witness pays
+  one registration per period for all 45 programs (`ProgramWitness.witness_total`).
+  Open: the factor `Δⁿ` must come from how many independent 43-periods a program's
+  record spans; derive that count per (generation, label) and test it on the
+  declared tier sets.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
