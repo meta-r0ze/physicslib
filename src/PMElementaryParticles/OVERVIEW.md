@@ -65,8 +65,8 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Generation-blind ring | A ring step is a spacetime clock-axis root (glue key `0`), so it never changes a packet's coset; `n` steps keep the coset and move the receiver site `n` places, forward or back. | `EPSpine.clockAxis_key`, `step_keeps_generation`, `forward_walk`, `backward_walk` |
 | Program on the node machinery | `EPSpine.Program`: label, generation (one of 3 nonzero glue keys), reference, firing patterns on the 43-site ring, and an E8 packet root in the program's coset; the start site is the packet's clock reading. The packet stays in its coset and tracks the ring. | `Program`, `generation_card`, `program_walk` |
 | Spine | Every generation and every visible class has a program meeting all six pillars; the singlet has none; `3 × 5 = 15`. | `EPSpine.spine`, `singlet_no_program`, `programs_card` |
-| Label on the packet | A labelled packet is a coset root plus the label's channel vector. Its state is site (clock reading), generation (glue key) and label (internal content: pairings with the internal simple roots). Channel vectors carry no glue key; ring steps have zero internal content; distinct labels have distinct internal content. So a ring walk moves only the site: generation and label are conserved and the label reads back at any time. | `EPLabel.channel_glueKey`, `clockAxis_internalContent`, `channel_internalContent_injective`, `walk_keeps_label`, `label_readout`, `labels_distinct`, `spine_labelled` |
-| Placement per generation | Generation `g`'s channel vectors are the certified internal triality applied `g` times to the reference placement. In every generation every channel sits in the class the library wall rule requires (`wallClass g (active c)`), carries no glue key, and the labels stay distinct. The spine holds per generation with each generation's own channel vectors. | `EPLabelGen.channelE8Gen`, `channelKeyGen_wallClass`, `channelGen_glueKey`, `channelGen_internalContent_injective`, `genIndex_bijective`, `spine_generations` |
+| Label on the packet | `EPSector`: a labelled packet is the program's packet plus its placed label (`GaugeSector.placement`). The gauge readout (pairings with the colour roots, the weak root and the charge direction) tells the 16 channels apart in each generation. A forward ring step conserves the charge exactly when it is gauge neutral; there are two such steps and they sum to the time vector. A walk by a neutral step keeps the generation and the label readout and moves the site. | `EPSector.readout`, `placement_readout_injective`, `forward_charge_iff`, `neutralSteps_length`, `neutralSteps_sum_time`, `neutral_walk` |
+| Spine on the sector | Every generation and every visible class has a program meeting all six pillars; its label sits in the wall the `active` bit names; generation and label are kept on every neutral walk. The internal-D4 placement (`EPLabel`, `EPLabelGen`) is retired to PMChecks: it breaks colour and the weak flip. | `EPSector.sector_spine`, `GaugeSector.placement_walls` |
 | Witnesses | Every visible class has a 43-ring program meeting all six pillars: least-Toll reference (Hamming `1` for every label), one firing site per ring, exactly one registration per ring per period, at the least Toll. The invisible class has none. | `ProgramWitness.visible_class_has_program`, `leastRef_hamming`, `witness_pillars`, `witness_total`, `invisible_class_no_program` |
 
 The record-bit Map of the 3-ring `PillarPredicates` (PMChecks) does not see
@@ -75,9 +75,8 @@ the singlet.
 
 ### Gauge sector and mass pairs (derived; Python checks, Lean for one placement)
 
-The placement rows above (`Label on the packet`, `Placement per generation`) use the
-internal D4. That placement breaks colour and the weak flip, and no internal-D4
-placement can keep them. The sector below replaces it. The checks are in
+The rows above now use this sector. The old internal-D4 placement breaks colour and the
+weak flip, and no internal-D4 placement can keep them. The checks are in
 `tools/pm_sector/`; the data is `tools/pm_sector/sector_data.json`.
 
 | Step | Statement | Readings used |

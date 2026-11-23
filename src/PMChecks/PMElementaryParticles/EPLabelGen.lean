@@ -1,6 +1,10 @@
-import PMElementaryParticles.EPLabel
+import PMChecks.PMElementaryParticles.EPLabel
 
 /-!
+
+**Retired (2026-11-23).** This module uses the internal-D4 placement, which breaks colour and
+the weak flip (no internal-D4 placement keeps them). `PMElementaryParticles.EPSector` replaces
+it, on the derived sector of `PMElementaryParticles.GaugeSector`. Kept as a check.
 # Channel placement per generation
 
 The library wall rule puts a generation-`g` channel in internal class

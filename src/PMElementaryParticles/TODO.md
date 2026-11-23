@@ -139,14 +139,11 @@ This file is the open list only.
   `(0,1)`, which narrows its (up, down, lepton) steps to `(1,1,1)`, `(2,2,2)`,
   `(1,2,2)`, `(2,1,1)`; in `(1,0)` and `(1,1)` it is never possible, and up is never the
   conjugate of down (`h_u ≠ −h_d`) in any generation.
-- **`wallClass` orientation for generation 2 disagrees with the derived sector.**
-  The cyclic rule puts generation 2's doublets in wall 1, i.e. glue coset `(1,0)`;
-  the sector requires the vector coset `(0,1)`. Generations 0 and 1 agree. Decide
-  from the sector: replace the cyclic rule, then place the channels, re-prove
-  `EPLabel`, `EPLabelGen`, and run the pair tier count. Lean certificates for the
-  eliminations are open.
-  Earlier note withdrawn: the D5 family split (two cosets by the sign along `d`,
-  `tools/d5_family_cosets.py`) is not the library's wall bit.
+- **`wallClass` versus the derived walls.** Labels now use `GaugeSector.wallKey`
+  (`EPSector.sector_spine`). The cyclic `ControlledGluedRegister.wallClass` disagrees
+  for generation 2 (doublets in `(1,0)`; the sector needs `(0,1)`) and is still used by
+  the register modules. Decide whether to restate `wallClass` from the sector. Lean
+  certificates for the eliminations are open.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period

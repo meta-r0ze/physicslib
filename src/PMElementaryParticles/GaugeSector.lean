@@ -1,4 +1,5 @@
-import PMElementaryParticles.EPLabelGen
+import PMElementaryParticles.EPSpine
+import PMElementaryParticles.ProtocolInventory
 
 /-!
 # The derived gauge sector and one channel placement (certificate)
@@ -14,7 +15,7 @@ the placement is forced; those eliminations are separate.
   forward clock-axis root pairs `2` with it. The gauge roots are orthogonal to it.
 * `chargeDir` is an E8 vector orthogonal to the colour, weak and time directions. Its pairing
   with a placed channel is `3Y` (`charge3`), the diagonal of `PacketGaugeActions.charge`.
-* `placement g` puts the 16 channels of generation `g` (`EPLabelGen.genIndex` order) on E8
+* `placement g` puts the 16 channels of generation `g` (`EPSector.sectorIndex` order) on E8
   roots. Reflection in `weak` is `flipWeak`; reflection in `colourA`, `colourB` is
   `permuteColour 0 1`, `permuteColour 1 2`.
 * Walls: in each generation all doublets have one glue key and all singlets another, and
@@ -163,7 +164,7 @@ def wallKey : Fin 3 → Bool → ZMod 2 × ZMod 2
   | 1, true => (0, 1) | 1, false => (1, 1)
   | 2, true => (0, 1) | 2, false => (1, 0)
 
-/-- Generation `g`'s own glue key (`EPLabelGen.genIndex` order). -/
+/-- Generation `g`'s own glue key (`EPSector.sectorIndex` order). -/
 def ownKey : Fin 3 → ZMod 2 × ZMod 2
   | 0 => (0, 1) | 1 => (1, 0) | 2 => (1, 1)
 

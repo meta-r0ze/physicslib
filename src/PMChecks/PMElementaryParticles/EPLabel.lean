@@ -2,6 +2,10 @@ import PMElementaryParticles.EPSpine
 import PMElementaryParticles.ChannelPlacement
 
 /-!
+
+**Retired (2026-11-23).** This module uses the internal-D4 placement, which breaks colour and
+the weak flip (no internal-D4 placement keeps them). `PMElementaryParticles.EPSector` replaces
+it, on the derived sector of `PMElementaryParticles.GaugeSector`. Kept as a check.
 # The label rides the packet
 
 A labelled packet is a coset root plus the label's channel vector:
