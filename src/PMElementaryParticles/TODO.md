@@ -112,9 +112,20 @@ This file is the open list only.
   sectors): D4+2A1, D4+A2, D5+A1, D6 pass; E6 failed in the instance tested.
   Fewest roots selects D4+2A1 (internal D4 + two orthogonal spacetime A1: weak flip
   and charge direction); all 18 pass and differ only by the clock (both extra roots
-  silent: 3; one silent, one clock-axis: 12; both clock-axis: 3). Next: a clock
-  reading that selects among the 18, then place the channels and redo `EPLabel`,
-  `EPLabelGen` and the pair tier count. Lean certificates for the eliminations open.
+  silent: 3; one silent, one clock-axis: 12; both clock-axis: 3). Time reading
+  (`tools/pm_sector/`): gauge roots and the charge direction commute with time
+  translation (orthogonal to the clock time vector `t`). Result: a unique sector
+  (both extra roots clock-silent, charge direction orthogonal to `t`); the weak flip
+  is always the same extra root. It hosts all three generations with one charge
+  direction. Generation `(0,1)` is disjoint from the others; `(1,0)` and `(1,1)` must
+  share their quark-doublet roots. Walls: `(1,0)` and `(1,1)` put their doublets in
+  the vector coset `(0,1)`; `(0,1)` may use either spinor coset.
+- **`wallClass` orientation for generation 2 disagrees with the derived sector.**
+  The cyclic rule puts generation 2's doublets in wall 1, i.e. glue coset `(1,0)`;
+  the sector requires the vector coset `(0,1)`. Generations 0 and 1 agree. Decide
+  from the sector: replace the cyclic rule, then place the channels, re-prove
+  `EPLabel`, `EPLabelGen`, and run the pair tier count. Lean certificates for the
+  eliminations are open.
   Earlier note withdrawn: the D5 family split (two cosets by the sign along `d`,
   `tools/d5_family_cosets.py`) is not the library's wall bit.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
