@@ -49,16 +49,20 @@ complement of `Y⁻¹` is the inverse of `Y`'s light block). Three levels, kept 
   `1.52`; every sector's light pair is at least `16.8` apart.
 For the directional (non-Hermitian) crossing of `InterWallDiagonal` the light pair is not degenerate
 (sampled ratios up to `10⁶`), so this exclusion holds only in the Hermitian case. There, the light
-masses do not come from inverting the link (`δ²Y⁻¹` or `D Y⁻¹ D`). What is left is a term that joins the two chiral zero modes directly
-(wall 1 `Γ = +1` to wall 2 `Γ = −1`, the slot of `WallSeesaw`'s effective `M`), carrying the label
-class, so the mass matrix is generation-diagonal with entries set by the insertions. This is the
-premise of the retired transfer reading (`TransferGenerator`). It is what survives, not yet a derivation:
-the library's wall Hamiltonian has no such direct zero-mode term (its inter-wall hop joins the
-gapped components), and the equal-class crossing the gluing allows would add generation off-diagonal
-mass entries unless it is absent or small (`PMAction/TODO.md`).
+masses do not come from inverting the link (`δ²Y⁻¹` or `D Y⁻¹ D`). What is left is the insertion of the label class, so the mass matrix is
+generation-diagonal with entries set by the insertions. `PMAction.CompositeMass` places it in the
+Hamiltonian: the single-wall carrier sits in the on-site chirality-flip slot
+(`PMAction.CarrierFlip`), so it is a correction to `δ` and not a separate direct term.
+`CompositeMass.composite_diag`: the two cyclic terms have no diagonal, so the diagonal mass is
+linear in the carrier amplitudes. `CompositeMass.diag_class_independent`: with a class-independent
+crossing the three masses differ only by their carrier amplitudes. What stays open is the
+amplitudes themselves, and the size of the generation-off-diagonal cyclic terms
+(`PMAction/TODO.md`).
 
-What this does not give: the size of the node suppression of the two light generations' masses,
-or what splits those two (the `s`/`c` asymmetry, `ExchangeChirality`). For leptons the third
+What this does not give: the size of the node suppression of the two light generations' masses.
+It also makes their degeneracy structural at this order: they share one node amplitude, so
+`CompositeMass.diag_class_independent` gives them equal masses, and splitting them needs a further
+effect (the `s`/`c` asymmetry, `ExchangeChirality`). For leptons the third
 generation is not weakly mixed (PMNS), so the lepton side needs its own reading (`NodeElimination`:
 lepton-axis states mix by one leg).
 -/

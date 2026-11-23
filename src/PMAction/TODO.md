@@ -34,23 +34,29 @@ external calculation awaiting formal verification. Each current theorem states i
 
 ## Generation masses
 
-The generation-mass modules (`MassInsertion`, `GenerationMass`, `GenerationSector`,
-`GenerationOrientation`, `InterWallDiagonal`) point here.
+The generation-mass modules (`MassInsertion`, `GenerationMass`, `CompositeMass`, `CyclicSeesaw`,
+`GenerationParity`, `GenerationOrientation`) point here.
 
-- **Reconcile the two levels of the wall crossing.** `WallTransfer` (Conservation) makes the
-  equal-class crossing the mass bilinear, the only term joining the walls. `DomainWall` and
-  `WallSeesaw` put the same crossing on the gapped components, so masses come only through the
-  seesaw `δ² Y⁻¹`. The two give opposite patterns (`tools/generation_mass_levels.py`): the
-  carrier level gives one heavy and two light generations (the class amplitudes, `1 : 1 : α⁻¹`);
-  the seesaw gives one light and two heavy, for a flavour-blind detuning and for a label
-  insertion. `MassInsertion`'s CKM ordering also excludes the seesaw. Restate the domain-wall
-  Hamiltonian so the crossing acts on the chiral zero modes, or show why it cannot.
-- **Node factor of a mass.** At the carrier level the masses are the crossing amplitudes: the
-  reference class in-cycle (`1`), the spinor classes through the node. Two legs for colour
-  carriers (`PMFlavor.NodeElimination`) give `α`, so heavy/light `= α⁻¹ ≈ 137`. Lepton-axis
-  carriers are one leg from the node (`√α`). Open: the down-type and lepton sectors (the leg rule
-  alone gives `α⁻¹` and `α^{−1/2}`), and what splits the two light generations (degenerate at
-  this order). Comparisons belong in e8p.
+Settled, so not open: where the mass sits. The crossing within one convention is one-directional,
+never Hermitian (`GenerationParity`), and the seesaw on the crossing alone gives three equal masses
+(`CyclicSeesaw.gram_equal`), so the crossing carries no hierarchy. The generation-diagonal mass is
+the single-wall carrier of the label class in the on-site chirality-flip slot, a correction to `δ`
+(`CompositeMass`): its diagonal is linear in the carrier amplitudes (`composite_diag`), and for a
+class-independent crossing the three masses differ only by those amplitudes
+(`diag_class_independent`).
+
+- **Carrier amplitude per class.** One amplitude per class sets the three masses. The label class
+  of one generation is the reference's class, whose displacement can avoid the reference axis; every
+  displacement of the other two classes touches it (`PMFlavor.ExchangeAxis` as carrier counts), so
+  those two pass the reference node. Derive the amplitude of a displacement that crosses the node,
+  with the leg weight from the handoff price (`PMConstants.HandoffAdmittance.closure_one_price`,
+  one leg or two, `PMFlavor.NodeElimination`). Until then the hierarchy has one free amplitude.
+- **Split the suppressed pair.** The two node-crossing classes share one amplitude, so
+  `CompositeMass.diag_class_independent` makes them degenerate. A further effect must split them
+  (`PMFlavor.ExchangeChirality`: the weak wall separates the two classes). Comparisons belong in
+  e8p; species names belong in `PMElementaryParticles`.
+- **Regime and the off-diagonal terms.** `CompositeMass.composite_expansion` keeps two cyclic
+  terms, of relative size `δ/κ`. Fix the regime (`|κ|` against `|δ|`) and read those terms as a
+  mixing prediction (`PMFlavor`).
 - **Single crossing at a fixed class.** Whether `GenerationOrientation.single_crossing_unequal`
   is a physical move.
-

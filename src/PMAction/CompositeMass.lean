@@ -22,8 +22,11 @@ crossing alone gives three equal seesaw masses. This module places the carrier i
   generation-diagonal and linear in the carrier amplitude.
 
 So the composite is a correction to `δ`, not a separate direct term: item (2) of PMAction's "Mass
-terms". The diagonal mass is linear in `κ`, so the generation with the largest carrier amplitude is
-the heaviest. That agrees with the direction `MassInsertion` says the data choose.
+terms". `composite_diag` makes that exact: the two cyclic terms have no diagonal, so the diagonal
+mass is linear in `κ`, and the generation with the largest carrier amplitude is the heaviest. That
+agrees with the direction `MassInsertion` says the data choose. `diag_class_independent`: for a
+class-independent crossing (`DomainWall`'s one hop) the three diagonal masses differ only by their
+carrier amplitudes, so equal amplitudes give equal masses.
 
 **Premise.** The single-wall carrier acts as a chirality flip on its wall, in the slot of `δβ`.
 `PMAction.CarrierFlip`: for an in-wall Wilson hop this is its Wilson part, `−(r/2)β`; its kinetic part
@@ -92,5 +95,45 @@ theorem composite_expansion (y κ κ' : Fin 3 → ℂ) (δ : ℂ) (hy : ∀ j, y
     cyc_mul_cycInv, cycInv_mul_cyc]
   rw [smul_add, smul_smul]
   abel
+
+/-! ## The diagonal of the composite -/
+
+/-- The crossing has no diagonal. -/
+theorem cyc_diag_zero (κ : Fin 3 → ℂ) : ∀ j : Fin 3, cyc κ j j = 0 := by
+  intro j; fin_cases j <;> simp [cyc]
+
+/-- The reverse shift has no diagonal. -/
+theorem cycInv_diag_zero (y : Fin 3 → ℂ) : ∀ j : Fin 3, cycInv y j j = 0 := by
+  intro j; fin_cases j <;> simp [cycInv]
+
+/-- **The composite mass is diagonal and linear in the carrier amplitudes.** The two cyclic terms
+of `composite_expansion` (`δ² Y⁻¹` and `diag(κ/y) · cyc κ'`) have no diagonal, so generation `j`
+keeps only the two terms linear in a carrier. The carrier on the wall-`false` side enters at the
+shifted index, the support of `GenerationMass.composite_cross_then_shift`. -/
+theorem composite_diag (y κ κ' : Fin 3 → ℂ) (δ : ℂ) (hy : ∀ j, y j ≠ 0) :
+    (fun j : Fin 3 =>
+        ((δ • (1 : Matrix (Fin 3) (Fin 3) ℂ) + cyc κ) * (cyc y)⁻¹ * (δ • 1 + cyc κ')) j j) =
+      fun j : Fin 3 =>
+        δ * ((y j)⁻¹ * κ' j) + δ * (![κ 2 * (y 2)⁻¹, κ 0 * (y 0)⁻¹, κ 1 * (y 1)⁻¹] j) := by
+  funext j
+  rw [composite_expansion y κ κ' δ hy]
+  fin_cases j <;>
+    simp [cycInv, cyc, Matrix.add_apply, Matrix.smul_apply, Matrix.diagonal_apply,
+      Matrix.mul_apply]
+
+/-- **With a class-independent crossing the diagonal mass ratios are the carrier amplitude
+ratios.** `DomainWall`'s inter-wall hop is one fixed matrix, so the crossing is class-independent
+(`CyclicSeesaw.gram_equal`) and carries no hierarchy of its own: generation `j`'s mass is
+`δ (κ'_j + κ_{j-1}) / a`, so the three masses differ only by their carrier amplitudes. Two equal
+amplitudes give two equal masses, so one node amplitude leaves the suppressed pair degenerate. -/
+theorem diag_class_independent (a δ : ℂ) (κ κ' : Fin 3 → ℂ) (ha : a ≠ 0) :
+    (fun j : Fin 3 =>
+        ((δ • (1 : Matrix (Fin 3) (Fin 3) ℂ) + cyc κ) * (cyc fun _ => a)⁻¹
+          * (δ • 1 + cyc κ')) j j) =
+      fun j : Fin 3 => δ * a⁻¹ * (κ' j + ![κ 2, κ 0, κ 1] j) := by
+  have h := composite_diag (fun _ => a) κ κ' δ (fun _ => ha)
+  funext j
+  rw [congrFun h j]
+  fin_cases j <;> simp <;> ring
 
 end PMAction.CompositeMass
