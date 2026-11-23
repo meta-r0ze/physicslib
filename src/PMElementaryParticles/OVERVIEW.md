@@ -73,7 +73,7 @@ The record-bit Map of the 3-ring `PillarPredicates` (PMChecks) does not see
 charge or chirality and keeps six. Open: the generation readout, and the neutrino mass without
 the singlet.
 
-### Gauge sector and mass pairs (derived; Python checks, Lean open)
+### Gauge sector and mass pairs (derived; Python checks, Lean for one placement)
 
 The placement rows above (`Label on the packet`, `Placement per generation`) use the
 internal D4. That placement breaks colour and the weak flip, and no internal-D4
@@ -90,8 +90,15 @@ placement can keep them. The sector below replaces it. The checks are in
 | Mass pairs | A mass flips left to right. Charge fixes the doublet member: up uses `T3 = +1/2`, down and lepton use `−1/2`. In generations `(1,0)` and `(1,1)` the up flip is one root step and the down flip two. | Charge conservation |
 | Step → `Δ` | At least Toll a root move fires with probability `1/Δ` per tick. An intermediate of a two-step flip is not a channel, or has another charge, so it does not persist. Both steps fire in one tick: rate `Δ^−k`. So up − down = `0, 1, 1` in powers of `Δ`, as the declared tiers say, if the clock generation is tier 0. | Least Toll, Map, Conservation |
 
+Lean: `GaugeSector` certifies one representative placement by `decide`: the sector roots
+and their pairings, clock silence, the time vector, `chargeDir` giving `3Y`, the weak and
+colour reflections as `flipWeak` and `permuteColour`, the wall keys, and the one-step up and
+two-step down flips in generations 1 and 2 (`placement_charge`, `weak_reflection`,
+`colourA_reflection`, `colourB_reflection`, `placement_walls`, `up_flip_one_step`,
+`down_flip_two_steps`). The eliminations (uniqueness) are still Python checks.
+
 Open: the generation tiers (`Δ⁰`, `Δ¹`, `Δ²`), the root choice in generation `(0,1)`,
-the lepton choice, the `wallClass` fix, and Lean certificates for every row.
+the lepton choice, the `wallClass` fix, and Lean certificates for the eliminations.
 
 ### Current status and legacy ledger
 
