@@ -52,6 +52,11 @@ This file is the open list only.
   is Koide-fair (`8 : 4 : 4`), and it is the only coset whose local roots are
   pure stays and pure ring steps (`ClockPlaneProjection`). The step from the
   43-site ring to the three-generation register is not derived.
+- **Derive the generation record premise (`KoideSelection.GenerationRecord`).**
+  With it, Koide follows from `LawSelection` (compiled). Show the substrate
+  records a protocol's generation as one bit (triality-symmetric or
+  breaking) with the norm share as its law. The lepton sector then needs one
+  more derived number, `m_μ/m_e` (equivalently the Fourier phase).
 - **Derive the equal split (Koide).** `KoideSplit` proves `Q = 2/3` iff the
   generation-symmetric and symmetry-breaking parts of the amplitudes have
   equal norm, i.e. the record "generation-symmetric or not" is a fair coin
