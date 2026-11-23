@@ -24,11 +24,15 @@ stable, `NuclearRegime`/`PersistenceSelection`) is a comparison, not a result.
 - Derive a channel rule for the `41/43` phase margin, and test the E8 tick on a second
   clock-sensitive decay.
 - Replace the amplitude ledger with species-specific spinors.
-- Derive a low-Z-anchored finite-size charge differential from the lattice Coulomb calculation.
+- Derive the charge coefficient from the uncalibrated lattice Green function. The mirror data
+  give `k ≈ 1.30 m_e`; the present `c·3/5 = 0.754` is too small, and `c = πD/(2σ) = 1.257` is
+  within 3.5%.
+- Re-derive or remove the typed `σ/ν` asymmetry. The `A ≥ 11` mirror data do not support it; a
+  two-parameter fit gives it a negative coefficient.
+- Derive the residual offset left after whole alpha closures: `≈ −5 m_e` for `A < 70` and
+  `≈ −12 m_e` for Sn–Pb. Candidates: the linear isospin suppression of alphas, and the
+  identified weights. Derive, do not fit.
 - Derive screening and the electron fill order used by the atomic configurations.
 - Keep continuum comparisons until each E8 replacement has a numerical counterpart. Mark
   candidate modules experimental and keep the measured residuals in `OVERVIEW.md` §Comparison.
 - Choose the alpha-attempt clock convention (capacity vs nested).
-- Derive the residual offset left after whole alpha closures: `≈ −5 m_e` for `A < 70` and
-  `≈ −12 m_e` for Sn–Pb. Candidates: the linear isospin suppression of alphas, and the
-  identified weights. Derive, do not fit.

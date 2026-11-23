@@ -195,6 +195,30 @@ Every tabulated nucleus has even `min(Z,N)`. The whole-closure count `⌊min(Z,N
 
 The link binding is linear in `N−Z` (`IsospinLedger.packingBindingTyped_closed`). So the ledger has no `(N−Z)²` valley above `A ≈ 56`. A SEMF regression, an occupancy term, a link-count replacement and a persistence-weight term were tested. None lifts the floor. The E8 shell term has rms `14–20 m_e` and correlation `0.03` or `0.37` with the residual. It does not improve the ledger. Cm/Cf are a regime change, not an outlier. See the `IsospinLedger`, `ShellMass` and `NuclearOccupancy` docstrings.
 
+### Mirror nuclei (charge term)
+
+Comparison only. The data are the AME2020 atomic masses (`mass_1.mas20.txt`, AMDC/IAEA;
+Chinese Physics C 45, 030002 (2021), DOI `10.1088/1674-1137/abddaf`). The sample is the 63 mirror
+pairs with `|N−Z| = 1` or `2` and `5 ≤ A ≤ 75`, with both masses measured. The packing, closure,
+alpha and shell terms cancel for a mirror pair. So the mass difference isolates the charge term,
+the typed `σ/ν` channel asymmetry and the free-nucleon swap.
+
+Let `d = Z−N`. The E8 split is `swap = d(p+1−n)`, `typed = d·2e·(5/16)/A` and
+`charge = d·(πD/(2σ))(3/5)(A−1)/√(A^{2/3}+1)`, with `e = 3(A−A^{2/3})`. The measured charge
+coefficient is `k ≈ 1.30 m_e`. This is `1.733 ± 0.05` times the present `c·3/5 = 0.754`, and it
+is flat in `A`. The `|N−Z| = 1` and `2` sets agree (1.733 and 1.720). The measured coefficient is
+within 3.5% of `c = πD/(2σ) = 1.257`, that is, of the charge term without the single `3/5` sphere
+factor.
+
+The mirror data do not support the typed `σ/ν` term. A two-parameter fit gives it a negative
+coefficient. The apparent rise of `(meas−swap)/(E8−swap)` with `A` is the dilution of the E8
+typed term, not a radius-law effect: the charge-only ratio is flat.
+
+Dropping the `3/5` alone adds `+245 m_e` to Sn-120. So the bulk weights have been compensating.
+The absolute masses do not separate the charge term from the bulk. `LatticeCharge3` has the exact
+lattice Green function, but `latticeNormalization3` calibrates it to `sphereCoulomb` and so
+imports the `3/5`. The uncalibrated lattice coefficient is open.
+
 ### Alpha lifetimes
 
 The frontier-local width uses `B = (43/14)·Z/√Q + (σ/2)·d` and `F = exp(−ν/(d+1))`, with `τ ∝ exp(B)/F`. With the improved cost `C = (43/8)·Z/√Q − 84`, most of the 11 emitters are within a factor of four. U-235 is the outlier. The two-level mixing `σχ/(χ·gap + 1)` fixes U-235 (`0.99`) and Pu-239 (`1.01`). It leaves the even-even chain unchanged. The absolute `cKf` scale is too long by about `10¹⁵`. The width is frontier-local, not a universal Geiger–Nuttall law.
