@@ -46,7 +46,15 @@ This file is the open list only.
   outcomes. Then derive the remaining phase
   from the clock (the only triality breaker). Lead: the wire mass
   `D_R (δ_O + cyc κ_O)` has a circulant factor; a Hermitian circulant amplitude
-  operator meets Koide iff its on-site and hopping parts have equal norm.
+  operator meets Koide iff its on-site and hopping parts have equal norm
+  (`circulant_koide`: stay weight `a²` = move weight `2|b|²`).
+  Tried and failed (do not retry): the clock ledger's fair flag (`3/8` at
+  Koide, `shiftFlag_at_koide`); the angle between the two ring-step kinds in
+  the clock-plane metric (`arccos(21/22) = 0.306` rad, not `0.222`); the
+  local-root generation walk (stay 26, moves 16/8/16; `Q = 0.52`). The bare
+  library wire `diag(1,α/2,α/2)(P − I)` gives `Q = 0.883` and a massless
+  lightest mode. Comparison: the measured leptons need the circulant phase
+  `δ ≈ 2/9 − 1.7×10⁻⁷`; `δ = 2/9` exactly is excluded by the muon.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period

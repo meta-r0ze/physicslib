@@ -215,6 +215,49 @@ theorem pairPlusOne_koide {α β : ℝ} (hα : 0 < α) (hβ : 0 ≤ β) :
     subst h
     nlinarith
 
+
+/-! ## Stay / move form: the Hermitian circulant -/
+
+/-- Eigenvalues of the Hermitian circulant `a·1 + b·P + b̄·P⁻¹` on the three
+cosets (`P` the cyclic relabelling, `b = u + i w`): `a + 2u` and
+`a − u ± √3 w`. In the K-Automaton reading, `a` is the amplitude to stay in the
+coset and `b`, `b̄` the amplitudes to move one coset forward (live stream) or
+back (record stream). -/
+def circulantSpectrum (a u w : ℝ) : Fin 3 → ℝ :=
+  ![a + 2 * u, a - u + Real.sqrt 3 * w, a - u - Real.sqrt 3 * w]
+
+theorem circulantSpectrum_total (a u w : ℝ) : total (circulantSpectrum a u w) = 3 * a := by
+  simp only [total, circulantSpectrum, Fin.sum_univ_three]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  ring
+
+theorem circulantSpectrum_normSq (a u w : ℝ) :
+    normSq (circulantSpectrum a u w) = 3 * a ^ 2 + 6 * (u ^ 2 + w ^ 2) := by
+  have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  simp only [normSq, circulantSpectrum, Fin.sum_univ_three]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  nlinarith [h3]
+
+/-- **Koide is a fair stay/move split.** For the Hermitian circulant, `Q = 2/3`
+iff the weight to move (`2|b|²`, forward plus back) equals the weight to stay
+(`a²`). The phase of `b` is free: it sets which generation is lightest and
+the remaining mass ratios (a flux `3·arg b` around the three-coset loop). -/
+theorem circulant_koide (a u w : ℝ) (ha : a ≠ 0) :
+    koideQ (circulantSpectrum a u w) = 2 / 3 ↔ 2 * (u ^ 2 + w ^ 2) = a ^ 2 := by
+  have ht : total (circulantSpectrum a u w) ≠ 0 := by
+    rw [circulantSpectrum_total]; exact mul_ne_zero (by norm_num) ha
+  rw [koideQ, circulantSpectrum_normSq, circulantSpectrum_total]
+  have h2 : (3 * a) ^ 2 ≠ 0 := pow_ne_zero 2 (mul_ne_zero (by norm_num) ha)
+  constructor
+  · intro h
+    field_simp at h
+    nlinarith [h]
+  · intro h
+    field_simp
+    nlinarith [h]
+
 end PMElementaryParticles.KoideSplit
 
 end
