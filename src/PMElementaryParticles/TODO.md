@@ -93,6 +93,18 @@ This file is the open list only.
   depends on colour and is negated between up-type and down-type. So up-type
   `{0,2,3}` against down-type `{0,1,2}` needs data outside one program (weak partner
   or composite), or the declared up tier set is a premise to review.
+  Pair step blocked (2026-11-23, `tools/placement_colour_check.py`): the channel
+  placement is not colour- or weak-symmetric. Only the identity and the swap of
+  colours 0 and 1 preserve the inner products of the 16 placed vectors; the weak
+  flip does not (doublet members are placed as `v` and `−v`). So the charge-correct
+  mass pair (right singlet minus left doublet member, same colour) has norm
+  `4, 4, 12` over the three colours. In a weight placement both symmetries are
+  Weyl reflections and preserve inner products.
+- **Repair the channel placement (blocks the tier derivation).** Find an
+  assignment of the 16 channels to internal-D4 vectors (`labelIndex`, `active`)
+  on which every colour permutation and the weak flip preserve all inner
+  products, or prove none exists. Then re-run `EPLabel`, `EPLabelGen`
+  (statements that use `channelE8Gen`) and the pair tier count.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
