@@ -15,11 +15,6 @@ This file is the open list only.
 
 ## Line and ring
 
-- **Finish replacing `sectorBasis`.** The old D4 coordinates disagree with the
-  clock plane (slice roots change the reading by `0` or `±6`).
-  `AlignedSectors.alignedSectorBasis` is the aligned placement and
-  `ChannelPlacement` uses it. `PMSubstrate.Vacuum` and `PMSubstrate.Channels`
-  still use `sectorBasis`; move them and recheck their results.
 - **Characterise the Margin ceiling on the 43-ring.** `RingSurvivors` proves
   the Toll floor and least Toll for every firing pattern, and one saturating
   (trapping) pattern. The exact set of patterns with utilization `1` is not
