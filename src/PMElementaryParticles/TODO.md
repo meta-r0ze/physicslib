@@ -66,11 +66,30 @@ This file is the open list only.
   library wire `diag(1,α/2,α/2)(P − I)` gives `Q = 0.883` and a massless
   lightest mode. Comparison: the measured leptons need the circulant phase
   `δ ≈ 2/9 − 1.7×10⁻⁷`; `δ = 2/9` exactly is excluded by the muon.
+- **Derive the feedback coefficient of each charged lepton.** Review result
+  (no arithmetic error): the muon ledger has a feedback term `(χ+σ)·α/(1−α)`;
+  the tau ledger has none, and nothing derives either choice. The tau is low by
+  `0.36(18) m_e` (−2.0σ). A feedback `k·α/(1−α)` brings it within 1σ for any
+  `k` in `(24.5, 73.5)`, so `Δ`, `Δ+σ`, `Δ+χ+σ` all fit and the data cannot select one.
+  The muon's own rule, applied to the tau (`χ+σ`, or all its non-`Δ` invariants),
+  gives only −1.7σ to −1.5σ. The muon's remaining miss is `1.1×10⁻⁵ m_e ≈ 0.21 α²`,
+  the size of a second-order term. Both residuals need a rule from the cost
+  derivation below, not a chosen coefficient.
 - **Derive the step-to-cost rule for the coset signatures.** The certified
   signatures are vector `(7,7,2)`, spinor `(4,4,0)` and conjugate spinor
   `(4,4,8)` for forward, backward and silent wall crossings. A cost per period
   must use the one-tick count for the heavy-to-light step and may use silent
   steps only to split the two light generations.
+  Constraint (checked 2026-11-23): step statistics on one 43-ring cannot give
+  the hierarchy. Every coset has forward = backward, so a uniform walk has no
+  drift. Its period cost scales with `1/p_move` (`7/8`, `1`, `1/2`): ratios at
+  most `2`. A no-backtrack period scales as `p_fwd^43`: ratios `(8/7)^43 ≈ 312`
+  and `(7/4)^43 ≈ 2.8×10¹⁰`, not powers of `Δ`. The ledgers need the leading
+  power `Δⁿ` (point, line, area, volume), so the rule must give each program a
+  whole number `n`. It cannot depend on the generation only: lepton and down
+  tiers are `{0,1,2}` but up tiers are `{0,2,3}` (`TierLedger.tiersFor`). Test
+  for a candidate rule: it reproduces these declared tier sets over all
+  45 programs before any mass is compared.
 - **Complete the charged lift.** The static selector supplies no inverse power
   of `Δ` for the offset. A native selection and firing law, the offset's
   scaling, and the existence of shared calibration remain open.
