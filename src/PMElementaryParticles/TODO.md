@@ -139,6 +139,15 @@ This file is the open list only.
   `(0,1)`, which narrows its (up, down, lepton) steps to `(1,1,1)`, `(2,2,2)`,
   `(1,2,2)`, `(2,1,1)`; in `(1,0)` and `(1,1)` it is never possible, and up is never the
   conjugate of down (`h_u ≠ −h_d`) in any generation.
+  Generation tiers, reduction (2026-11-23): a mass flip is a wall crossing by the
+  generation's own coset roots (`GaugeSector.placement_walls`; `WallCrossing`). Flips pair
+  with the time vector `0` or `±2` in the clock generation and `±1` in the other two;
+  a neutral ring step pairs `2`. Tried and failed: "a state must sit on the tick
+  lattice, so a half-step flip cannot complete alone". It makes the clock generation
+  the heaviest; the up/down offsets need it lightest (top/bottom ≈ 41 needs distinct
+  tiers in the heaviest generation). Next lead: the generation register (stay/move
+  walk, `KoideCosets`, `KoideSelection`), which sets generation mass ratios without
+  `Δ` powers.
 - **`wallClass` versus the derived walls.** Labels now use `GaugeSector.wallKey`
   (`EPSector.sector_spine`). The cyclic `ControlledGluedRegister.wallClass` disagrees
   for generation 2 (doublets in `(1,0)`; the sector needs `(0,1)`) and is still used by
