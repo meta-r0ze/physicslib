@@ -1,4 +1,5 @@
 import PMElementaryParticles.EPLabel
+import PMElementaryParticles.CarrierChannels
 
 /-!
 # Channel placement per generation
@@ -22,6 +23,21 @@ coordinates (`channelE8Gen`).
 `spine_generations`: every generation and visible class has a program meeting
 all six pillars whose packet carries that generation's own channel vector, in
 the wall-rule class, and keeps generation and label on every ring walk.
+
+## Per-wall symmetry
+
+The sixteen channels are two domain walls of eight carriers
+(`PMConstants.CarrierRepresentation`, read per channel by `CarrierChannels.wall`). Within one
+wall the colour exchanges and the weak flip are exact symmetries of this placement:
+
+* `colour_wall_invariant`, `weak_wall_invariant`: both moves keep a channel's wall.
+* `colour_preserves_wall_pairs`, `weak_preserves_wall_pairs`: for two channels on the **same**
+  wall, both moves leave the lattice pairing of their placed vectors unchanged, in all three
+  generations. Since the transpositions generate the colour group, this is invariance under the
+  whole group.
+Nothing is claimed between the two walls. A pairing of a left-wall with a right-wall channel is
+not a substrate cost, so it is not a quantity a symmetry should be tested on, whether or not one
+happens to hold there.
 -/
 
 noncomputable section
@@ -108,6 +124,32 @@ theorem spine_generations (g : Generation) (k : Fin 6) (hk : k ≠ 4) :
   refine ⟨p, rfl, hc, hp, channelKeyGen_wallClass _ _, fun f hf h1 n => ⟨?_, ?_⟩⟩
   · rw [(forward_walk _ f hf h1 n).1, genPacket_key]
   · exact genPacket_readout p f hf n
+
+/-! ## Per-wall symmetry of the placement -/
+
+/-- Colour exchange keeps a channel's wall. -/
+theorem colour_wall_invariant : ∀ (a b : Fin 3) (c : Channels),
+    CarrierChannels.wall (permuteColour a b c) = CarrierChannels.wall c := by decide
+
+/-- The weak flip keeps a channel's wall. -/
+theorem weak_wall_invariant : ∀ c : Channels,
+    CarrierChannels.wall (flipWeak c) = CarrierChannels.wall c := by decide
+
+/-- **Colour exchange is an exact symmetry within a wall.** For two channels on the same wall,
+the lattice pairing of their placed vectors is unchanged, in every generation. The
+transpositions generate the colour group, so this is invariance under the group. -/
+theorem colour_preserves_wall_pairs : ∀ (g : Fin 3) (a b : Fin 3) (c c' : Channels),
+    CarrierChannels.wall c = CarrierChannels.wall c' →
+      pair (channelE8Gen g (permuteColour a b c)) (channelE8Gen g (permuteColour a b c'))
+        = pair (channelE8Gen g c) (channelE8Gen g c') := by
+  decide +kernel
+
+/-- **The weak flip is an exact symmetry within a wall.** -/
+theorem weak_preserves_wall_pairs : ∀ (g : Fin 3) (c c' : Channels),
+    CarrierChannels.wall c = CarrierChannels.wall c' →
+      pair (channelE8Gen g (flipWeak c)) (channelE8Gen g (flipWeak c'))
+        = pair (channelE8Gen g c) (channelE8Gen g c') := by
+  decide +kernel
 
 end PMElementaryParticles.EPLabelGen
 

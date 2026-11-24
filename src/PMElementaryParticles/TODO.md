@@ -152,12 +152,6 @@ This file is the open list only.
   insertion-to-crossing rate ratios for a supplied alternating cycle with a
   retained center. The isolated geometric exchange pair gives its own exit
   weight. Identify which physical schedule supplies the mass-slot readout. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
-- **Certify the per-wall symmetry of the placement.** The 16 channels are two walls
-  of 8 carriers (`CarrierRepresentation`). In the `EPLabelGen` placement, colour
-  permutations and the weak flip keep every inner product within each wall, in all
-  three generations (checked numerically). State and prove this in Lean. Inner
-  products between the two walls are not substrate costs; do not test symmetries on
-  them.
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use
