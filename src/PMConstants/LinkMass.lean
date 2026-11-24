@@ -62,7 +62,7 @@ def theta (g gp W₁ W₂ W₃ B : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
 /-- **The generator used here is the free one at the carriers' link charge.** -/
 theorem thetaY_one (g gp W₁ W₂ W₃ B : ℝ) :
     thetaY g gp 1 W₁ W₂ W₃ B = theta g gp W₁ W₂ W₃ B := by
-  ext i j; fin_cases i <;> fin_cases j <;> norm_num [thetaY, theta] <;> ring
+  ext i j; fin_cases i <;> fin_cases j <;> norm_num [thetaY, theta]
 
 theorem theta_pauli (g gp W₁ W₂ W₃ B : ℝ) :
     theta g gp W₁ W₂ W₃ B =

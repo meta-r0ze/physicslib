@@ -128,9 +128,10 @@ theorem bl_unique {f : Fin 4 → ℂ}
   have h1 : f 1 = 1/3 := by
     rw [Matrix.trace_diagonal, Fin.sum_univ_four, hl, ← h12, ← h13] at htr
     linear_combination htr / 3
+  have hcases : ∀ i : Fin 4, i = 0 ∨ i = 1 ∨ i = 2 ∨ i = 3 := by decide
   have hf : f = ![-1, 1/3, 1/3, 1/3] := by
     funext i
-    fin_cases i
+    rcases hcases i with rfl | rfl | rfl | rfl
     · simpa using hl
     · simpa using h1
     · rw [← h12]; simpa using h1
