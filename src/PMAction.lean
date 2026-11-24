@@ -147,6 +147,8 @@ import PMAction.NodeAmplitude
 import PMAction.UndetunedWall
 import PMAction.WireMass
 import PMAction.WireLightBound
+import PMAction.WireResonanceSpectrum
+import PMAction.WallSeesawAccuracy
 import PMAction.SignFlip
 import PMAction.GenerationLabel
 import PMAction.MassInsertion

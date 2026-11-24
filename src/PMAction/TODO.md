@@ -45,18 +45,21 @@ the single-wall carrier of the label class in the on-site chirality-flip slot, a
 class-independent crossing the three masses differ only by those amplitudes
 (`diag_class_independent`).
 
-- **Carrier amplitude per class.** One amplitude per class sets the three masses. The label class
-  of one generation is the reference's class, whose displacement can avoid the reference axis; every
-  displacement of the other two classes touches it (`PMFlavor.ExchangeAxis` as carrier counts), so
-  those two pass the reference node. Derive the amplitude of a displacement that crosses the node,
-  with the leg weight from the handoff price (`PMConstants.HandoffAdmittance.closure_one_price`,
-  one leg or two, `PMFlavor.NodeElimination`). Until then the hierarchy has one free amplitude.
+- **Carrier amplitude per class.** On the wire, the reference's class and stationarity distinguish
+  the direct insertion from the two restoring insertions (`PMKAutomaton.Machine.ReferenceClassHop`).
+  `ReferenceNode` derives `α/2` for a conserving two-leg node. `CertainTransferRate` derives
+  principal pulse areas and their rate ratio for supplied weights and durations. The open input is
+  the admitted pulse for each insertion, its retained output, and its duration and normalization
+  in the same clock units as the gapped crossing.
 - **Split the suppressed pair.** The two node-crossing classes share one amplitude, so
   `CompositeMass.diag_class_independent` makes them degenerate. A further effect must split them
   (`PMFlavor.ExchangeChirality`: the weak wall separates the two classes). Comparisons belong in
   e8p; species names belong in `PMElementaryParticles`.
-- **Regime and the off-diagonal terms.** `CompositeMass.composite_expansion` keeps two cyclic
-  terms, of relative size `δ/κ`. Fix the regime (`|κ|` against `|δ|`) and read those terms as a
-  mixing prediction (`PMFlavor`).
+- **Regime and the spectrum.** `WireResonanceSpectrum` certifies the bare masses and the cubic
+  with a real static offset. `WallSeesawAccuracy.full_energy_near_schur` controls the error for
+  each full light energy when the crossing is common and the two coupling norms are bounded.
+  The exact test `full_energy_iff` also gives a reduced determinant for root isolation.
+  Derive the coupling bounds from the admitted rates and match the light modes in order. Retain the
+  cyclic terms in the spectrum and use the resulting eigenvectors for the PMFlavor rotation.
 - **Single crossing at a fixed class.** Whether `GenerationOrientation.single_crossing_unequal`
   is a physical move.

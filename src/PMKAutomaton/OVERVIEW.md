@@ -23,6 +23,10 @@ the effect of retaining all controls in the state.
 <a id="node-handoff-and-admittance"></a>
 <a id="two-site-handoff-and-the-six-pillars"></a>
 
+The packet interface's `Handoff.principal_through_area_eq` calibrates the
+principal exchange area from the geometric current law when the readout
+is the through stream. The elapsed clock and wall-rate conversion are inputs.
+
 ## Handoff
 
 | Result | Certificates and scope |
@@ -63,6 +67,11 @@ the effect of retaining all controls in the state.
 <a id="calibrating-the-root-clock"></a>
 
 ## Clock
+
+The finite `ClockRing` geometry is shared by PMAction's native hops and the
+packet receiver. Its implementation is in `Machine.ClockRing`. Existing
+`PMKAutomaton.ClockRing` imports still expose the same declarations. The
+native `ClockEps` lift uses the substrate's canonical aligned sector basis.
 
 | Result | Certificates and scope |
 | --- | --- |

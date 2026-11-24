@@ -20,6 +20,9 @@ dependencies are in [`TODO.md`](TODO.md).
 - `SectorObligations`: the reference/update contract (exact refresh, weak ownership, colour reads).
 - `ReadScale`, `OnShell`: the matching scales from persistence and frame independence.
 - `VevEntry`: how the vacuum value enters the fermion masses (law A).
+- `WireMassBounds.bare_middle_heavy_bounds`: the normalized bare-wire ratio at `k = α/2`
+  lies between `0.0044` and `0.0045`, using the geometric enclosure of `α`. The assignment
+  of this admittance to the normalized Hamiltonian coefficient is a benchmark input.
 - `GenerationEncoding`: exhaustive three-pair classification, the distinction between
   pair types and independent physical generations, and exact retained-label storage.
 - `GenerationHistory`: an actual companion-carrier encoding, its coherent isometry,

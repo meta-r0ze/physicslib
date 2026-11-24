@@ -1,5 +1,4 @@
 import Mathlib.Tactic
-import PMKAutomaton.AlignedSectors
 
 /-!
 # The microscopic hop in the aligned clock
@@ -21,10 +20,6 @@ the coordinate picture (`epsAxis` and the `p 3 = 0` filter) is the
 
 noncomputable section
 namespace PMAction.AxisHop
-open PMKAutomaton.ClockRing
-open PMKAutomaton.AlignedSectors
-open PMSubstrate
-open Matrix
 
 /-- A vector in `{−1, 0, 1}⁴`, encoded by `Fin 3` (`0 ↦ 0`, `1 ↦ 1`, `2 ↦ −1`). -/
 abbrev Tri := Fin 4 → Fin 3

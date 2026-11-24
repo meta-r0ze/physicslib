@@ -61,12 +61,10 @@ all exist already, so nothing is lost. It needs a compiler in the loop, because 
 
 ## New work this layer owes the mass chain
 
-- **The carrier amplitude of a node-crossing displacement.** `PMAction.CompositeMass` leaves the
-  three generation masses as the three carrier amplitudes
-  (`CompositeMass.diag_class_independent`). The reference class crosses in-cycle; the other two
-  touch the reference axis and pass the node. Derive that amplitude from the handoff price
-  (`PMKAutomaton.HandoffAdmittance.closure_one_price`) with the leg count of
-  `PMFlavor.NodeElimination`. Until then the generation hierarchy has one free amplitude.
+- **The carrier amplitude of a node-restoring displacement.** `WireMassBounds` bounds the bare
+  ratio with `k = α/2` as a benchmark. The conserving two-leg node supplies an admittance. The
+  packet interface owns the admission, pulse readout and timing needed to turn it into a wall
+  coefficient. The full wire eigenvalues then come from the coupled mass matrix.
 
 ## Carried over
 

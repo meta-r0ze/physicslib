@@ -1,4 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 
 /-!
 # A certain transfer fixes a rate only with the event's duration
@@ -80,5 +81,38 @@ theorem common_tick_rate_ratio (tick flipTicks crossTicks flipArea crossArea
         (crossFactor * (crossArea / (crossTicks * tick))) =
       (flipFactor / crossFactor) * (flipArea / crossArea) * (crossTicks / flipTicks) := by
   field_simp [ht.ne', hf.ne', hc.ne', hA, hC]
+
+/-- A supplied transfer probability fixes the pulse area on the nonnegative
+principal branch. This is the weight on the transferred port. -/
+theorem principal_transfer_area {θ weight : ℝ} (hθ : 0 ≤ θ)
+    (hprincipal : θ ≤ Real.pi / 2) (hweight : Real.sin θ ^ 2 = weight) :
+    θ = Real.arcsin (Real.sqrt weight) := by
+  rw [← hweight, Real.sqrt_sq (Real.sin_nonneg_of_nonneg_of_le_pi hθ (by
+    linarith [Real.pi_pos]))]
+  exact (Real.arcsin_sin (by linarith [Real.pi_pos]) hprincipal).symm
+
+/-- A supplied through weight fixes the pulse area when the through port is
+the untransferred port of the same two-state exchange. -/
+theorem principal_through_area {θ weight : ℝ} (hθ : 0 ≤ θ)
+    (hprincipal : θ ≤ Real.pi / 2) (hweight : Real.cos θ ^ 2 = weight) :
+    θ = Real.arccos (Real.sqrt weight) := by
+  rw [← hweight, Real.sqrt_sq (Real.cos_nonneg_of_mem_Icc ⟨by
+    linarith [Real.pi_pos], hprincipal⟩)]
+  exact (Real.arccos_cos hθ (by linarith [Real.pi_pos])).symm
+
+/-- For principal transfer pulses, a restoring operation with known
+transfer weight and a certain direct operation have a rate ratio fixed
+by their pulse areas and durations. -/
+theorem principal_transfer_rate_ratio {restoring direct restoringTime directTime weight : ℝ}
+    (hr : 0 ≤ restoring) (hrp : restoring ≤ Real.pi / 2)
+    (hd : 0 ≤ direct) (hdp : direct ≤ Real.pi / 2)
+    (hrt : 0 < restoringTime) (hdt : 0 < directTime)
+    (hweight : Real.sin restoring ^ 2 = weight) (hcertain : Real.sin direct ^ 2 = 1) :
+    (restoring / restoringTime) / (direct / directTime) =
+      (2 * Real.arcsin (Real.sqrt weight) / Real.pi) * (directTime / restoringTime) := by
+  have hDirect := principal_transfer_area hd hdp hcertain
+  rw [Real.sqrt_one, Real.arcsin_one] at hDirect
+  rw [principal_transfer_area hr hrp hweight, hDirect]
+  field_simp [hrt.ne', hdt.ne', Real.pi_ne_zero]
 
 end PMAction.CertainTransferRate

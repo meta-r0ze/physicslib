@@ -228,6 +228,9 @@ shows closed injective updates cannot finitely prepare a stationary state.
   each off-diagonal entry is `dᵢ (δ̄ (cyc κ)ᵢⱼ + δ conj (cyc κ)ⱼᵢ) d̄ⱼ` (`left_gram_entry`): first order
   in the carriers and scaled by `dᵢ d̄ⱼ`. The persistence rotation on the reference's wall is then about
   `|dᵢ/dⱼ| · |κ_O/δ_O|` (perturbative reading), suppressed by the label states' mass ratio.
+- `CertainTransferRate.principal_transfer_area` and `principal_through_area` invert the transferred
+  and untransferred weights on the nonnegative principal branch. The ratio of two transfer rates
+  depends on their durations as well as their pulse areas (`principal_transfer_rate_ratio`).
 - `CertainTransferRate`: a two-state transfer `sin²(tτ)` is certain iff `cos(tτ) = 0` (`certain_iff`),
   so a certain event of duration `τ` has `tτ ≥ π/2` (`certain_min`) and flip at least `rπ/(4τ)`
   (`flip_lower`). Admittance (`NodeAmplitude`'s `K = 1`) fixes the carrier's rate only with the event's
@@ -237,6 +240,9 @@ shows closed injective updates cannot finitely prepare a stationary state.
   the move between generations `h`, `h + 1` has class `e h`; `shift κ_O h = κ_O h`, `shift_entry`; the
   vector carrier joins the heavy label to label `1`, `vector_on_heavy_edge`). `undetuned`: at `δ = 0` it
   is `UndetunedWall.undetuned_masses`; `det_mass`: `κ_R 0 κ_R 1 κ_R 2 (δ³ + κ_O 0 κ_O 1 κ_O 2)`.
+- `WireResonanceSpectrum` computes the cubic for the normalized real wire with a supplied static
+  offset on address 2 (`char_eval`). At zero offset the nonnegative masses are
+  `0`, `√(3k²)` and `√(2+k²)` (`bare_mass_spectrum`).
 - `WireLightBound`: for the derived wire with `K = 1`, carriers `(1, k, k)`, real `δ ≥ 0` and
   `0 < k ≤ 1/10`, the eigenvalues `a ≤ b` of `M Mᵀ` (Mathlib's Hermitian eigenvalues; `vieta`,
   `eig_nonneg`) satisfy `k² b ≤ 2a` (`eigen_ratio_bound`): lightest-to-middle mass ratio `≥ k/√2`. Steps:
@@ -257,6 +263,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
 - `LightLeakage`: for a symmetric gapped block with `G² = g²` (`norm_map_of_sq`), `G − E` is coercive
   (`coercive`), so a light eigenstate's gapped part is at most `v/(|g| − |E|)` (`leakage_bound`). For
   the wire: allowed leakage `L` holds once the largest flip is `≤ √(L/(1−L)) (|y| − |E|)`.
+- `WallSeesawAccuracy.full_energy_near_schur` bounds the distance from each in-gap full rest
+  energy `E` to the zero-energy Schur spectrum by `|E|vw/(|g|(|g|−|E|))`. Here `g` is the common
+  cyclic crossing and `v,w` bound the two coupling directions in Euclidean norm. The proof uses
+  `LightLeakage.schur_residual_bound` and `eigenvalue_near_residual`. The exact test
+  `full_energy_iff` keeps the energy in the reduced determinant.
 - `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
   Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each
   root weighted by `sinc(a r·q/2)`; the midpoint vertex alone misses it by `O(a²|k||q|³)`

@@ -75,7 +75,10 @@ coefficient normalization it fixes `r = K_f/|y|` and the inputs to
 occupy, and what phase area and Hamiltonian coefficient does it realize on the
 stated slots? Supply either the statistical-pair calibration on the coherent
 clock or a calibrated principal-range pulse. The clock period and conditional
-word bounds hold before this identification.
+word bounds hold before this identification. `Interface.Handoff.principal_through_area_eq`
+recovers the area for a supplied principal through pulse and the geometric current law.
+The admitted port, principal branch, duration and conversion into the wall coefficient
+still need to be established.
 
 ## Registration tariff
 
@@ -113,7 +116,9 @@ operation and supplied orbit.
 ## Layering
 
 This is a build-boundary choice. PMAction and `PMKAutomaton.Machine` share
-finite dependencies; the packet interface sits above PMConstants.
+finite dependencies; the packet interface sits above PMConstants. The clock
+reading is shared through `Machine.ClockRing` and the native axis hop no
+longer imports packet-layer placement.
 
 **Smallest question.** If a stand-alone machine build is needed, which common
 finite base will the two layers import, with the existing module paths preserved?

@@ -1,4 +1,6 @@
 import PMKAutomaton.Machine.AxisHop
+import PMKAutomaton.Machine.ClockRing
+import PMSubstrate.Channels
 
 /-!
 # The aligned clock in ε coordinates
@@ -18,7 +20,6 @@ the clock side.
 noncomputable section
 namespace PMAction.ClockEps
 open PMKAutomaton.ClockRing
-open PMKAutomaton.AlignedSectors
 open PMSubstrate
 open Matrix
 open PMAction.AxisHop
@@ -29,7 +30,7 @@ def d4FromEps (y : Fin 4 → ℤ) : Fin 4 → ℤ :=
 
 /-- The aligned spacetime lift of a `D₄` ε vector. -/
 def spacetimeE8 (y : Fin 4 → ℤ) : V :=
-  alignedSectorBasis *ᵥ (fun i => if h : (i : ℕ) < 4 then d4FromEps y ⟨(i : ℕ), h⟩ else 0)
+  Channels.sectorBasis *ᵥ (fun i => if h : (i : ℕ) < 4 then d4FromEps y ⟨(i : ℕ), h⟩ else 0)
 
 /-- The E8 lift of a `D₄` root. -/
 def rootE8 (t : Tri) : V := spacetimeE8 (vec t)

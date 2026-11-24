@@ -88,6 +88,14 @@ theorem through_weight_eq_alpha (t : ℝ)
     Real.cos t ^ 2 = PMSubstrate.causalCoupling :=
   through_eq_conductance h
 
+/-- With the through stream as the untransferred port, a principal-range
+exchange pulse that realizes the geometric admittance has this area. -/
+theorem principal_through_area_eq (t : ℝ) (ht : 0 ≤ t) (ht' : t ≤ Real.pi / 2)
+    (h : ∀ nL nR, leftOutflow (Real.cos t ^ 2) nL nR - nL =
+      PMSubstrate.causalCoupling * (nR - nL)) :
+    t = Real.arccos (Real.sqrt PMSubstrate.causalCoupling) :=
+  PMAction.CertainTransferRate.principal_through_area ht ht' (through_weight_eq_alpha t h)
+
 end Handoff
 
 /-! ## Record
@@ -165,7 +173,8 @@ export PMKAutomaton.ClockedRootTrials (ticks_zero_one ticks_one_two shared_reque
   iterate_controls quiet_trial_tick trial_period_endpoint historyCount history_count_pos_iff
   all_pairs_history_count shared_request_history_count history_mass_factorizes
   matches_independent_trial_weight heat_after_two_ticks phase_in_ticks)
-export PMAction.CertainTransferRate (certain_min common_tick_rate_ratio)
+export PMAction.CertainTransferRate (certain_min common_tick_rate_ratio principal_transfer_area
+  principal_through_area principal_transfer_rate_ratio)
 
 end Clock
 
