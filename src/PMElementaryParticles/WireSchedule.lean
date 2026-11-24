@@ -178,6 +178,49 @@ theorem finishTick_le_horizon {ticks : ℕ} (p : Premises ticks) (s : Schedule t
     simp only [fitsEvent, hplace, Bool.and_eq_true, decide_eq_true_eq] at he
     tauto
 
+/-- Required events have an actual placement with positive duration, an
+allowed branch and the stated earlier visits. Physical admission remains
+the supplied predicate of the schedule. -/
+theorem required_placement {ticks : ℕ} {p : Premises ticks} {s : Schedule ticks}
+    (hs : s ∈ family p) {e : Event} (he : required p e = true) :
+    ∃ x, s.2 e = some x ∧ 0 < duration p e ∧ branchAllowed e x.2.1 = true ∧
+      ∀ f ∈ predecessors e, endsBefore p s f e = true := by
+  have h := (mem_family p s).1 hs
+  simp only [admissible, Bool.and_eq_true, decide_eq_true_eq] at h
+  have hall : ∀ e : Event, fitsEvent p s e = true := by tauto
+  have hx := hall e
+  cases hp : s.2 e with
+  | none => simp [fitsEvent, hp, he] at hx
+  | some x =>
+    refine ⟨x, rfl, ?_⟩
+    simp only [fitsEvent, hp, Bool.and_eq_true, decide_eq_true_eq,
+      List.all_eq_true] at hx
+    tauto
+
+/-- The exclusive finish of a placed event is bounded by the schedule finish. -/
+theorem placement_le_finish {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks)
+    {e : Event} {x : Placement ticks} (hx : s.2 e = some x) :
+    x.1.val + duration p e ≤ finishTick p s := by
+  have h := Finset.le_sup (s := Finset.univ) (f := fun e =>
+    match s.2 e with
+    | none => 0
+    | some x => x.1.val + duration p e) (Finset.mem_univ e)
+  rw [hx] at h
+  exact h
+
+/-- The sum of the three booked durations is a lower bound for the elapsed
+time when the visits are in succession. Waiting may make the elapsed time
+larger. -/
+theorem serial_three_le_finish {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks)
+    {a b c : Event} {x y z : Placement ticks}
+    (hx : s.2 a = some x) (hy : s.2 b = some y) (hz : s.2 c = some z)
+    (hab : endsBefore p s a b = true) (hbc : endsBefore p s b c = true) :
+    duration p a + duration p b + duration p c ≤ finishTick p s := by
+  have hLast := placement_le_finish p s hz
+  simp only [endsBefore, hx, hy, decide_eq_true_eq] at hab
+  simp only [endsBefore, hy, hz, decide_eq_true_eq] at hbc
+  omega
+
 noncomputable section
 open PMConstants.PacketGaugeActions ProtocolInventory ProtocolToll
 open PMAction DiagonalReadout InterferenceReadout TollAmplitude

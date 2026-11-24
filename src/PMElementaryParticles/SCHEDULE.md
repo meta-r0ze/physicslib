@@ -332,6 +332,66 @@ The colour ordering and the down geometric mean remain properties
 of the colour record at a common bit price. The lepton candidate
 still gives `s_d < s_e = s_u`.
 
+## Charged-lepton insertion trace
+
+| Route | Retained datum and consumer | What still needs admission |
+| --- | --- | --- |
+| Direct, address 0 | With the short electric writer, an occupied neutral coordinate seed is prepared, kicked at `3π/2` and `3π`, and decoded to port 2. The port reads `(true, true)` and supplies the companion guard (`charged_lepton_written_port`, `charged_lepton_port_fires`). The open receiver can feed the writer from a specified occupied live arrival through a downstream record slot (`occupied_arrival_writes`). | Select the occupied source, bank supply and the writer slots of this implementation. The transported port requires renewal. The inverse bank circuit rebalances it using the opposite-wall label (`charged_lepton_bank_uncompute`). Admit and time that return separately. |
+| Restoring, addresses 1 and 2 | When the payload arrives live and the reference arrives on the record stream, exchange restores the live reference and passes the same payload through the downstream record stream (`restored_live_and_payload_iff`, `restoring_payload_trace`). At an adjacent exit, one further tick and another exchange deliver it live and retain the other arrival (`restoring_entry_exit`). The same ports are realized by two native ticks of an open-compatible controller with both requests set at entry and exit and idle requests at the intermediate live source (`restoring_native_two_ticks`). For a marker already arriving on the record stream, the mixed bypass witness carries it through (`mixed_throughArrival`). | Identify the incoming streams at each native visit on each address. Attach the coherent pulse, its phase and its duration to the selected ports and certify the exit consumer. |
+
+The short writer is a concrete candidate with its own two kicks and
+decoding word. With inverse-short bank preparation, the preparation
+and decoder consume 27 and 25 root quarter-times, respectively. The kicks,
+companion control, and independent bank return have additional scheduling inputs.
+
+The schedule proves elapsed lower bounds for the supplied serial word
+template. The direct route cannot fit a 43-tick period. A restoring route
+within one period requires the short word at one tick per quarter-time,
+with at most seven ticks for its two node visits combined. Tests, waiting
+and other booked work can further reduce the available time.
+`MassInsertionTrace.direct_elapsed` and `restoring_elapsed` give the
+unrounded bounds for general horizons. The individual elapsed times of
+the admitted pulses are the inputs to PMAction's rate conversion.
+
+### Restoring class change and its clock cost
+
+The two adjacent exchanges carry the gapped payload unchanged. Its glue
+class differs from that of the required endpoint
+(`RestoringWallShift.gapped_payload_ne_endpoint`). The four-reflection
+`classShiftWord` advances both carrier factors in place. Composing it after
+the gapped crossing and the open delivery gives the encoded endpoint
+(`restoring_exit_then_class_shift`). For address 1 the class changes from
+`2` to `0`; for address 2 it changes from `0` to `1`.
+
+At two root quarter-times per reflection this word needs eight quarter-times.
+Booking that work serially inside the two node visits exceeds their seven-tick
+combined budget in a one-period restoring schedule
+(`no_single_period_with_serial_class_shift`). An overlapping or integrated
+implementation would need its own timing and admission proof. The unitary
+two-port pulse candidate labels the transferred port with the shifted address
+and preserves the signed index. Its weight and pulse duration still need a
+native readout in crossing-clock units.
+
+### Which weight belongs to the shifted pulse
+
+The shifted port receives the cross-branch contribution from one input and
+the stay-branch contribution from the other. `shiftedOutflow_eq` gives the
+population law on those two incoherent inputs. If the resulting net current
+equals the steady current of the two equal legs with a floating node, the
+shifted weight is exactly `α/2`. A principal pulse then has area
+`arcsin(√(α/2))`. Its rate relative to the direct pulse also uses both
+durations (`steady_rate_ratio`).
+
+For the isolated three-port coherent execution, entry-live to exit-live
+goes through the intermediate record port. The exit amplitude is
+`−sin(θ) sin(φ)` and the weight is the product of the two exchange weights.
+If both local unexchanged through weights are `α`, the output of this
+particular exchange-exchange route is `(1−α)² > α/2`. To establish the
+steady calibration, identify the physical output with the balanced
+floating-node readout and account for any extra histories and renewal
+visits. To use an isolated pulse sequence, calibrate the weights, relative
+phase and duration of that sequence on the admitted ports.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.

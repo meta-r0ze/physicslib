@@ -67,7 +67,7 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Spine | Every generation and every visible class has a program meeting all six pillars; the singlet has none; `3 × 5 = 15`. | `EPSpine.spine`, `singlet_no_program`, `programs_card` |
 | Label on the packet | A labelled packet is a coset root plus the label's channel vector. Its state is site (clock reading), generation (glue key) and label (internal content: pairings with the internal simple roots). Channel vectors carry no glue key; ring steps have zero internal content; distinct labels have distinct internal content. So a ring walk moves only the site: generation and label are conserved and the label reads back at any time. | `EPLabel.channel_glueKey`, `clockAxis_internalContent`, `channel_internalContent_injective`, `walk_keeps_label`, `label_readout`, `labels_distinct`, `spine_labelled` |
 | Placement per generation | Generation `g`'s channel vectors are the certified internal triality applied `g` times to the reference placement. In every generation every channel sits in the class the library wall rule requires (`wallClass g (active c)`), carries no glue key, and the labels stay distinct. The spine holds per generation with each generation's own channel vectors. | `EPLabelGen.channelE8Gen`, `channelKeyGen_wallClass`, `channelGen_glueKey`, `channelGen_internalContent_injective`, `genIndex_bijective`, `spine_generations` |
-| Generation masses | A generation's mass joins its two walls and needs an insertion of its label class (`PMAction.MassInsertion`). EP's generation is that label. The generation whose label is the reference's class (vector) is heavy: its insertion stays off the reference axis; the other two touch it and pass through the node. That generation is the glue key `(0,1)`, the clock coset. No mass values yet: the direct wall-joining term, the node factor and the light split are open upstream. The ledgers (`LeptonMasses`, `QuarkMasses`, `TierLedger`) stay comparison premises. | `GenerationMasses.toGlue_matches`, `label_eq_key`, `heavy_iff`, `heavy_label`, `heavy_key` |
+| Generation masses | The generation label selects the direct reference-wall insertion at glue key `(0,1)`. The other two labels require reference restoration. PMAction gives the conditional composite mass and spectral readout. EP composes the short electric writer from an occupied seed through the charged-lepton port, reads the companion guard, and proves reversible bank renewal in coordinates. The open exchange trace tracks the restoring payload through the adjacent exit. The serial timing bounds are conditional on the schedule. The ledgers remain comparison premises. | `GenerationMasses.label_eq_key`, `heavy_key`, `MassInsertionTrace.charged_lepton_written_port`, `charged_lepton_port_fires`, `charged_lepton_bank_uncompute`, `restoring_native_two_ticks`, `occupied_arrival_writes`, `restoring_in_one_period` |
 | Witnesses | Every visible class has a 43-ring program meeting all six pillars: least-Toll reference (Hamming `1` for every label), one firing site per ring, exactly one registration per ring per period, at the least Toll. The invisible class has none. | `ProgramWitness.visible_class_has_program`, `leastRef_hamming`, `witness_pillars`, `witness_total`, `invisible_class_no_program` |
 
 The record-bit Map of the 3-ring `PillarPredicates` (PMChecks) does not see
@@ -1144,6 +1144,26 @@ uses four swap reflections and two parity reflections
 `tools/event_clock_check.py` concern single-carrier endpoints, not word lengths
 or lower bounds for the glued register. These crossings and the on-wall node
 insertion count different operations.
+
+The encoded restoring endpoint needs a same-wall class shift after the
+equal-class crossing. `RestoringWallShift.cross_then_class_shift` checks a
+four-reflection forward-triality word on both factors. The crossing lands on
+active address `g + 2`; the word returns it to `g` while retaining the signed
+label and the crossing's parity action. This gives `2 → 0` at address 1 and
+`0 → 1` at address 2. The open exchange trace can feed the unchanged gapped
+payload to the word. For coherent calibration, `classPulse_weight` locates the
+transfer at the shifted signed slot, and `classPulse_rate_ratio` takes its
+weight and elapsed time as inputs.
+
+The shifted port's weighted output population is now explicit
+(`RestoringPulseCalibration.shiftedOutflow_eq`). Matching its current to a
+floating steady two-leg node fixes the shifted weight to `α/2` and gives its
+principal rate formula with supplied event durations (`steady_rate_ratio`).
+The isolated entry and exit exchanges give the product of their two exchange
+amplitudes on the live output (`stagedPulse_amplitude`). When each local
+unexchanged through weight is `α`, this gives `(1−α)²` on the
+exchange-exchange exit (`staged_geometric_weight`). Which current or
+pulse readout attaches to the native restoring schedule remains open.
 
 ### Where the readings agree
 

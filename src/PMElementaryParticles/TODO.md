@@ -128,13 +128,29 @@ This file is the open list only.
   eliminations by layer, node and carrier level first.
   Seeds (review 2026-11-23). EP uses a Standard Model form where an earlier module
   has a PM or E8 reason; switch to the earlier module:
-  * Masses: EP's generations sit in `PMAction`'s mass structure (`GenerationMasses`); the
-    heavy generation is the glue key `(0,1)`. Mass values wait on `PMAction/TODO.md`: the
-    direct term that joins the two walls, the node factor of a mass, the split of the two
-    light generations, and the lepton reading (one leg from the node). Until then
-    `LeptonMasses`, `QuarkMasses` and `TierLedger` stay comparison premises.
+  * Masses: EP's generations sit in `PMAction.CompositeMass` and its full-wall spectral test.
+    The direct generation is the glue key `(0,1)`. `MassInsertionTrace` certifies the prepared
+    direct record, the mixed-rule distinction for the candidate restoring readout, and the
+    serial timing bounds. The admitted pulse for each route is still needed.
+    `LeptonMasses`, `QuarkMasses` and `TierLedger` remain comparison premises.
   No earlier reason, so named premises: the Koide modules (a data relation), the
   supplied QED coefficients, `B_e` and `α(m_τ)` in the lifetime modules.
+- **Attach the charged-lepton insertion to a reachable trace.** The open receiver
+  now routes a supplied occupied arrival to the short writer. The prepared writer's
+  port 2 yields `(true, true)` and supplies the companion guard. Select the native
+  occupied source, bank preparation and the writer's scheduled slots. Admit and time the
+  inverse bank circuit after the guard's last use. It rebalances the occupied port
+  using the opposite-wall label. For each restoring address, establish the incoming
+  streams and the exit consumer on the physical trace. The adjacent exchange trace
+  already restores the entry reference and delivers the same payload live at the
+  exit for supplied arrivals and retained requests. A four-reflection word supplies
+  the subsequent class shift on both restoring routes. Its separate serial execution
+  inside the node visits exceeds a single period. Establish either the admitted
+  longer schedule or a native integrated operation. Calibrate the shifted pulse port
+  and its elapsed ticks in crossing-clock units. `RestoringPulseCalibration`
+  gives the rate under a steady floating-node current match. An isolated
+  geometric exchange pair has a different exit weight. Identify which
+  physical schedule produces the current used to calibrate the mass slot. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
 - **Certify the per-wall symmetry of the placement.** The 16 channels are two walls
   of 8 carriers (`CarrierRepresentation`). In the `EPLabelGen` placement, colour
   permutations and the weak flip keep every inner product within each wall, in all

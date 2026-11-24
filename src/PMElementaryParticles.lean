@@ -94,6 +94,9 @@ import PMElementaryParticles.HeavyFlipNativeBoundary
 import PMElementaryParticles.ResonanceLift
 import PMElementaryParticles.ChargedInsertion
 import PMElementaryParticles.WireSchedule
+import PMElementaryParticles.MassInsertionTrace
+import PMElementaryParticles.RestoringWallShift
+import PMElementaryParticles.RestoringPulseCalibration
 import PMElementaryParticles.WireReferenceCost
 import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog

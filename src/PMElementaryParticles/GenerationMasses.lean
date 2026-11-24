@@ -9,13 +9,11 @@ EP's masses come from `PMAction`'s mass structure, not from the declared ledgers
 
 A generation puts one glue class on each wall. Its label is the third class
 (`PMAction.GenerationLabel`). A generation's own mass joins its two walls, so it needs an
-insertion of the label class (`PMAction.MassInsertion.bilinear_gap`). The reference sits in the
-vector class `v` (`PMConstants.CarrierRepresentation`). The generation with label `v` is the
-one whose walls carry neither copy of `v` (`MassInsertion.label_is_reference_iff`). Its insertion is
-a vector displacement, which can stay off the reference axis; the other two generations'
-insertions are spinor displacements, which always touch it (`PMFlavor.ExchangeAxis`), so they pass
-through the reference node (`PMFlavor.NodeElimination`). So one generation is heavy and two are
-light.
+insertion of the label class (`PMAction.MassInsertion.bilinear_gap`). The reference sits in the vector class `v` (`PMConstants.CarrierRepresentation`). The
+generation with label `v` has neither wall in that class
+(`MassInsertion.label_is_reference_iff`). Its carrier insertion is direct; the other labels
+touch the reference's class on one wall (`ReferenceClassHop.touches_reference_class`) and use
+the restoring route in the wire model.
 
 This module places EP's generations in that structure.
 
@@ -30,10 +28,10 @@ So EP generation `(0,1)` is the heavy one (third generation: τ, t, b). This is 
 ordering, set by where the reference sits. It is not the ledgers' reading of generation `0` as
 "tier 0".
 
-Open upstream (`PMAction/TODO.md`), so no mass values here: the direct zero-mode term that joins
-the two walls is not in the wall Hamiltonian; the size of the node factor for a mass; the split
-of the two light generations (degenerate at this order, `MassInsertion.light_pair_degenerate`);
-and the lepton reading (lepton-axis states are one leg from the node, `NodeElimination`).
+`PMAction.CompositeMass` gives the generation-diagonal term from carrier insertions in the
+chirality-flip slots. `MassInsertionTrace` identifies the charged-lepton candidate readouts
+and serial timing bounds. The wall coefficients and spectrum still need the admitted trace
+with calibrated pulses.
 -/
 
 namespace PMElementaryParticles.GenerationMasses
