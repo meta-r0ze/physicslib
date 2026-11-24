@@ -6,14 +6,11 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 /-!
 # Hermitian link masses: θ̄ = θ, with CP violation still allowed in mixing
 
-**This module holds two unrelated things** (`TODO.md`, naming). The Hermitian-link route to `θ̄`
-(`thetaBar`, `thetaBar_eq_theta`, `det_real_of_hermitian`, `arg_det_zero`) is superseded for `θ̄`
-by `ThetaBarSelection`, and `PMAction.GenerationParity` shows the generation crossing is never
+This module is the Hermitian-link route to `θ̄` only. It is superseded for `θ̄` by
+`ThetaBarSelection`, and `PMAction.GenerationParity` shows the generation crossing is never
 Hermitian; `WallParityExchange` and `PMFlavor.MassMixing` still use it, and `cp_with_hermitian`
-stands on its own. The vacuum weight `Z` and its cost results (`Z_zero`, `theta_zero_maximal`,
-`Z_pi`, `theta_pi_costlier`) are the **current** route's machinery, used by `ThetaBarSelection`,
-`PersistenceClosures`, `WindingWeights`, `SubstrateCharge` and `UnitTransferWitness`. `Z` belongs
-in a module named for the vacuum weight.
+stands on its own. The vacuum weight `Z`, which used to live here and is the current route's
+machinery, is in `VacuumWeight`.
 
 `CPPhases` showed that a real update forces `θ ∈ πℤ` but would also force `J = 0`, so the
 complex phases must sit in flavour mixing while the strong-CP combination
@@ -35,14 +32,9 @@ invariant under exchanging the sectors. Exchange maps the inter-sector link matr
   `H_u = diag(1,2,3)` and complex Hermitian `H_d`, `det[H_u, H_d] = 4i ≠ 0`; Jarlskog's criterion
   `det[H_u, H_d] ∝ iJ` makes `J ≠ 0` possible.
 
-Which of `θ = 0` and `θ = π` persists. Paper II's two-tick transfer matrix is `e^{−H}`, a
-positive operator, so the weights `w_n` of the winding sectors are nonnegative. The vacuum
-weight is `Z(θ) = Σₙ wₙ e^{inθ}`:
-
-* `theta_zero_maximal`: `‖Z(θ)‖ ≤ Z(0)` for every `θ`; the cost `−log Z` is lowest at `θ = 0`.
-* `theta_pi_costlier`: if any odd winding sector has positive weight, `Re Z(π) < Z(0)` strictly.
-
-So the persistent vacuum is `θ = 0`, and with Hermitian positive link masses `θ̄ = 0`.
+Which of `θ = 0` and `θ = π` persists is `VacuumWeight`'s question: the persistent vacuum is
+`θ = 0` (`VacuumWeight.theta_zero_maximal`, `theta_pi_costlier`), and with Hermitian positive link
+masses `θ̄ = 0`.
 Remaining premise: sector-exchange invariance of the link coefficients. For `θ̄` alone this route
 is superseded: `ThetaBarSelection` gives `θ̄ = 0` for any mass phase from the chiral-anomaly
 premise. Hermitian links still matter for `cp_with_hermitian` (CP violation in mixing).
@@ -97,44 +89,5 @@ theorem cp_with_hermitian : (Hu * Hd - Hd * Hu).det = 4 * I := by
   rw [Matrix.det_fin_three]
   simp [Hu, Hd]
   ring_nf
-
-/-! ## Which CP-conserving vacuum persists -/
-
-/-- Vacuum weight of the winding sectors `S` with nonnegative weights `w`. -/
-def Z (S : Finset ℤ) (w : ℤ → ℝ) (θ : ℝ) : ℂ :=
-  ∑ n ∈ S, (w n : ℂ) * Complex.exp (((n : ℝ) * θ : ℝ) * I)
-
-theorem Z_zero (S : Finset ℤ) (w : ℤ → ℝ) : Z S w 0 = ((∑ n ∈ S, w n : ℝ) : ℂ) := by
-  simp [Z]
-
-theorem theta_zero_maximal (S : Finset ℤ) (w : ℤ → ℝ) (hw : ∀ n, 0 ≤ w n) (θ : ℝ) :
-    ‖Z S w θ‖ ≤ ∑ n ∈ S, w n := by
-  unfold Z
-  refine (norm_sum_le _ _).trans (le_of_eq ?_)
-  refine Finset.sum_congr rfl (fun n _ => ?_)
-  rw [norm_mul, Complex.norm_exp_ofReal_mul_I, mul_one, Complex.norm_real, Real.norm_eq_abs,
-    abs_of_nonneg (hw n)]
-
-theorem Z_pi (S : Finset ℤ) (w : ℤ → ℝ) :
-    Z S w Real.pi = ((∑ n ∈ S, w n * (-1 : ℝ) ^ n.natAbs : ℝ) : ℂ) := by
-  unfold Z
-  push_cast
-  refine Finset.sum_congr rfl (fun n _ => ?_)
-  congr 1
-  rw [show (n : ℂ) * (Real.pi : ℂ) * I = (n : ℂ) * (Real.pi * I) by ring,
-    Complex.exp_int_mul, Complex.exp_pi_mul_I]
-  obtain ⟨k, hk | hk⟩ := Int.eq_nat_or_neg n
-  · subst hk; simp
-  · subst hk; rw [_root_.zpow_neg, zpow_natCast]; simp [← inv_pow]
-
-theorem theta_pi_costlier (S : Finset ℤ) (w : ℤ → ℝ) (hw : ∀ n, 0 ≤ w n)
-    {n₀ : ℤ} (hn₀ : n₀ ∈ S) (hodd : Odd n₀.natAbs) (hpos : 0 < w n₀) :
-    (Z S w Real.pi).re < ∑ n ∈ S, w n := by
-  rw [Z_pi, Complex.ofReal_re]
-  apply Finset.sum_lt_sum
-  · intro n _
-    rcases neg_one_pow_eq_or ℝ n.natAbs with h | h <;> rw [h] <;> nlinarith [hw n]
-  · refine ⟨n₀, hn₀, ?_⟩
-    rw [hodd.neg_one_pow]; linarith
 
 end PMConstants.HermitianMass

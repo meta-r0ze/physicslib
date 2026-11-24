@@ -261,7 +261,8 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `StrongLedgerTest` | Only one integer strong ledger survives |
 | `CPPhases` | A real update fixes θ, and also forbids the measured CP violation |
 | `UnitTransferWitness` | The unit-winding witness from inertia certificates: a strictly row-dominant `B = Qᴴ H Q` with `N` negative diagonal entries gives `det H ≠ 0` and `negCount H = N` (`witness_of_certificate`), so `theta_zero_of_certificates` is `SubstrateCharge.theta_zero_substrate` with its count hypotheses replaced by two certificates. External premise: `tools/unit_transfer_certificate.py` checks the certificates for the `L = 3` trivial and unit-flux Wilson kernels (`162`, `163`) in ball arithmetic. Correspondence: spin matrices and Hermiticity (`PMAction.TorusWilson`) and the constant flux (`PMAction.TorusFlux`) are proved; that the script assembles `wilsonH` from those links is a reviewed code statement (in the module docstring), and the site order does not matter (a permutation leaves the certificate's `B` unchanged). |
-| `HermitianMass` | Hermitian link masses: θ̄ = θ, with CP violation still allowed in mixing |
+| `HermitianMass` | Hermitian link masses: θ̄ = θ, with CP violation still allowed in mixing. Superseded for θ̄ by `ThetaBarSelection`; kept for `cp_with_hermitian` and its two remaining users |
+| `VacuumWeight` | The vacuum weight `Z` of the winding sectors: `θ = 0` is the least-cost CP-conserving vacuum |
 | `ColourCount` | What fixes the colour ledger: an exploration |
 | `SectorExchange` | Sector exchange makes the link mass Hermitian; one doublet's phase cancels in θ̄ |
 | `ColourChannels` | Colour refreshes the coloured channels: `L₃ = 12η` |

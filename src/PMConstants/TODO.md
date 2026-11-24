@@ -42,8 +42,7 @@ Comparisons belong in `tools/e8p`. These modules still hold measured values.
   (`link_charge_one`, `thetaY_one`, from `CarrierRepresentation.carrierCharges_yukawa`). The
   transport `θ = (g/2)W·σ + (g′/2)Y B` itself is still put in by hand. The route: the link is
   transported by the packet actions restricted to it, and `link_quadratic` is already the
-  second-order form of the event law's price, so this closes once the continuous completion above
-  does.
+  second-order form of the event law's price, so this closes once the weak factor above does.
 - **Stiffness per unit of conserved charge.** `GeneratorNormalization` selects charge units over
   the packet trace form and names the one step left: a derivation, from the event law, that
   refresh stiffness is counted per unit of conserved charge. That is the `(g/2)`, `(g′/2)`
@@ -52,17 +51,9 @@ Comparisons belong in `tools/e8p`. These modules still hold measured values.
   vector class by triality, the sign as the doublet index, and the reserved (lepton) axis. They
   are the only inputs to the charge table (`carrierCharges_eq_standard`) and, through
   `ReferenceAxis`, to the colour subgroup and hypercharge generator of the packet action as well.
-  Named in SCOPE; the
-  concentration of load on the reserved-axis premise is now this layer's main single risk.
-
-## Naming
-
-- **`HermitianMass` holds two unrelated things.** The superseded Hermitian-link route to `θ̄`
-  (`thetaBar`, `thetaBar_eq_theta`, still used by `WallParityExchange` and
-  `PMFlavor.MassMixing`) and the live vacuum weight `Z` with its cost results (`Z_zero`,
-  `theta_zero_maximal`, `Z_pi`, `theta_pi_costlier`), which `ThetaBarSelection`,
-  `PersistenceClosures`, `WindingWeights`, `SubstrateCharge` and `UnitTransferWitness` all use.
-  Split `Z` into a module named for the vacuum weight. Ten files reference the names.
+  Named in SCOPE. The concentration of load on the reserved-axis premise is now this layer's main
+  single risk: it carries every charge in the tower and the colour subgroup, and nothing else
+  would catch it being wrong.
 
 ## New work this layer owes the mass chain
 

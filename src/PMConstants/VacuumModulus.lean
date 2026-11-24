@@ -19,7 +19,7 @@ Premise: the zero-winding sector, the vacuum persisting without tunnelling, has 
 
 noncomputable section
 namespace PMConstants.VacuumModulus
-open Complex HermitianMass
+open Complex VacuumWeight
 
 lemma cos_lt_one_of {θ : ℝ} (hθ : θ ∈ Set.Ioc (-Real.pi) Real.pi) (hne : θ ≠ 0) :
     Real.cos θ < 1 := by

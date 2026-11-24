@@ -50,6 +50,7 @@ import PMConstants.WMassTest
 import PMConstants.StrongLedgerTest
 import PMConstants.CPPhases
 import PMConstants.HermitianMass
+import PMConstants.VacuumWeight
 import PMConstants.ColourCount
 import PMConstants.SectorExchange
 import PMConstants.ColourChannels

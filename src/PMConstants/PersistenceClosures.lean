@@ -1,5 +1,5 @@
 import PMConstants.ReferenceEconomy
-import PMConstants.HermitianMass
+import PMConstants.VacuumWeight
 
 /-!
 # Closures by persistence
@@ -23,7 +23,7 @@ moved by the gauge action, and the regulation would not persist under it. With t
 hypercharge `Y_L = -1`, `link_from_covariance` gives the link charge `h = 1` and, with flux
 conservation and the unit link, the standard charges and `Y_ν = 0`.
 
-**θ̄ = 0, from minimum cost.** `HermitianMass.theta_zero_maximal` gives `‖Z(θ)‖ ≤ Z(0)` from the
+**θ̄ = 0, from minimum cost.** `VacuumWeight.theta_zero_maximal` gives `‖Z(θ)‖ ≤ Z(0)` from the
 positive transfer weights, and `theta_pi_costlier` separates `0` from `π`.
 `strict_vafa_witten`: with the unit winding sector weighted, `Re Z(θ) < Z(0)` for every `θ ≠ 0` in
 `(-π, π]`, so `θ = 0` is the unique least-cost vacuum on the whole circle **when the cost is read
@@ -93,8 +93,8 @@ theorem strict_selects_zero (E : ℝ → ℝ) (hVW : ∀ θ ∈ Set.Ioc (-Real.p
   linarith [hVW θ hθ hne, hmin 0 h0]
 
 lemma Z_re (S : Finset ℤ) (w : ℤ → ℝ) (θ : ℝ) :
-    (HermitianMass.Z S w θ).re = ∑ n ∈ S, w n * Real.cos (n * θ) := by
-  unfold HermitianMass.Z
+    (VacuumWeight.Z S w θ).re = ∑ n ∈ S, w n * Real.cos (n * θ) := by
+  unfold VacuumWeight.Z
   rw [Complex.re_sum]
   refine Finset.sum_congr rfl (fun n _ => ?_)
   rw [Complex.re_ofReal_mul, Complex.exp_ofReal_mul_I_re]
@@ -103,7 +103,7 @@ lemma Z_re (S : Finset ℤ) (w : ℤ → ℝ) (θ : ℝ) :
 winding sector weighted, every `θ ≠ 0` in `(-π, π]` has `Re Z(θ) < Z(0)`. -/
 theorem strict_vafa_witten (S : Finset ℤ) (w : ℤ → ℝ) (hw : ∀ n, 0 ≤ w n) (h1 : (1 : ℤ) ∈ S)
     (hpos : 0 < w 1) (θ : ℝ) (hθ : θ ∈ Set.Ioc (-Real.pi) Real.pi) (hne : θ ≠ 0) :
-    (HermitianMass.Z S w θ).re < ∑ n ∈ S, w n := by
+    (VacuumWeight.Z S w θ).re < ∑ n ∈ S, w n := by
   rw [Z_re]
   apply Finset.sum_lt_sum
   · intro n _; nlinarith [hw n, Real.cos_le_one (n * θ)]
@@ -128,9 +128,9 @@ theorem strict_vafa_witten (S : Finset ℤ) (w : ℤ → ℝ) (hw : ∀ n, 0 ≤
 `strict_vafa_witten`, yet `‖Z(π)‖ = Z(0)`: the modulus does not single out `θ = 0`. Uniqueness of
 the physical vacuum needs the cost to be read from `Re Z`, or stronger support assumptions. -/
 theorem abs_not_unique :
-    ‖HermitianMass.Z {-1, 1} (fun _ => 1) Real.pi‖ =
+    ‖VacuumWeight.Z {-1, 1} (fun _ => 1) Real.pi‖ =
       ∑ n ∈ ({-1, 1} : Finset ℤ), (fun _ : ℤ => (1 : ℝ)) n := by
-  rw [HermitianMass.Z_pi]
+  rw [VacuumWeight.Z_pi]
   norm_num [Finset.sum_pair (show (-1 : ℤ) ≠ 1 by norm_num)]
 
 /-- **A reversible closed update cannot restore every state to one.** If `f` is injective and

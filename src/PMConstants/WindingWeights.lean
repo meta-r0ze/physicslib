@@ -105,7 +105,7 @@ theorem theta_zero_unique [TopologicalSpace Ω] [μ.IsOpenPosMeasure] {β : ℝ}
     {U₀ U₁ : Set Ω} (hU₀ : IsOpen U₀) (hne₀ : U₀.Nonempty) (hsub₀ : U₀ ⊆ sector 0)
     (hU₁ : IsOpen U₁) (hne₁ : U₁.Nonempty) (hsub₁ : U₁ ⊆ sector 1)
     (θ : ℝ) (hθ : θ ∈ Set.Ioc (-Real.pi) Real.pi) (hne : θ ≠ 0) :
-    ‖HermitianMass.Z T (fun n => weight μ β S (sector n)) θ‖ <
+    ‖VacuumWeight.Z T (fun n => weight μ β S (sector n)) θ‖ <
       ∑ n ∈ T, weight μ β S (sector n) :=
   VacuumModulus.strict_modulus T _ (fun n => weight_nonneg μ β S (sector n)) h0 h1
     (weight_pos μ hβ hS hSm (measure_pos_of_open μ hU₀ hne₀ hsub₀))
@@ -135,7 +135,7 @@ theorem theta_zero_admissible [TopologicalSpace Ω] [μ.IsOpenPosMeasure] {β : 
     (x₀ x₁ : Adm) (hx₀ : Q x₀ = 0) (hx₁ : Q x₁ = 1)
     (T : Finset ℤ) (h0 : (0 : ℤ) ∈ T) (h1 : (1 : ℤ) ∈ T)
     (θ : ℝ) (hθ : θ ∈ Set.Ioc (-Real.pi) Real.pi) (hne : θ ≠ 0) :
-    ‖HermitianMass.Z T (fun n => weight μ β S (chargeSector Adm Q n)) θ‖ <
+    ‖VacuumWeight.Z T (fun n => weight μ β S (chargeSector Adm Q n)) θ‖ <
       ∑ n ∈ T, weight μ β S (chargeSector Adm Q n) :=
   theta_zero_unique μ hβ hS hSm (chargeSector Adm Q) T h0 h1
     (chargeSector_open hAdm Q hQ 0) ⟨_, x₀, hx₀, rfl⟩ subset_rfl

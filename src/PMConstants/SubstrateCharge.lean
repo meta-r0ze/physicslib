@@ -63,7 +63,7 @@ theorem theta_zero_substrate {Ω : Type*} [MeasurableSpace Ω] [TopologicalSpace
     (hq₀ : negCount (hherm x₀) = N₀) (hq₁ : negCount (hherm x₁) = N₀ + 1)
     (T : Finset ℤ) (h0 : (0 : ℤ) ∈ T) (h1 : (1 : ℤ) ∈ T)
     (θ : ℝ) (hθ : θ ∈ Set.Ioc (-Real.pi) Real.pi) (hne : θ ≠ 0) :
-    ‖HermitianMass.Z T (fun k => WindingWeights.weight μ β S
+    ‖VacuumWeight.Z T (fun k => WindingWeights.weight μ β S
         (WindingWeights.chargeSector {x | (H x).det ≠ 0} (charge H hherm N₀) k)) θ‖ <
       ∑ k ∈ T, WindingWeights.weight μ β S
         (WindingWeights.chargeSector {x | (H x).det ≠ 0} (charge H hherm N₀) k) :=

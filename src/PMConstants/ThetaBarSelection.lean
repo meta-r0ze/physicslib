@@ -1,9 +1,10 @@
 import PMConstants.VacuumModulus
+import PMConstants.HermitianMass
 
 /-!
 # The selected vacuum has `θ̄ = 0` for any quark mass phase
 
-`HermitianMass` and `SectorExchange` reach `θ̄ = 0` in two steps: the vacuum selects `θ = 0`
+`VacuumWeight` and `SectorExchange` reach `θ̄ = 0` in two steps: the vacuum selects `θ = 0`
 (`VacuumModulus.strict_modulus`), and Hermitian positive masses make `arg det M = 0`. The second
 step needs a unique least-cost update (`exchange_fixed_of_unique`), which fails for continuous
 tie families (`PMFlavor.ReferenceSelection`).
@@ -37,7 +38,7 @@ here it is the persistence selection of the vacuum phase.
 
 noncomputable section
 namespace PMConstants.ThetaBarSelection
-open Complex HermitianMass
+open Complex HermitianMass VacuumWeight
 
 /-- Vacuum weight with the quark mass phase `α` carried once per unit winding. -/
 def Zm (S : Finset ℤ) (w : ℤ → ℝ) (α θ : ℝ) : ℂ :=
