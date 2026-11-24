@@ -427,6 +427,13 @@ Elementary Particles
     exp  = 0.000002196981 ± 2.200000e-12  (pdg_2024)
     diff = -2.100000e-12
     σ    = -0.96
+  light_generations  —  |(\mathbb{Z}_2)^2\setminus\{0\}|=3
+    value   = [3.000000000000000000, 3.000000000000000000] generations  (exact 3)
+    theorem = PMElementaryParticles.EPSpine.generation_card
+    note    = nonzero glue cosets of the aligned D4+D4 placement (exact count, no input); the total singlet is invisible (ProgramClasses.invisible_iff); N_nu counts light neutrinos (m < m_Z/2) only
+    exp  = 2.996300000000 ± 0.007400000000  (janot_jadach_2020)
+    diff = 0.003700000000
+    σ    = +0.50
 
 Hadrons
   proton_ratio  —  \Delta^2-\pi D-\frac{1}{D}+5Z_{TOL}-\frac{Z_{MAR}}{\chi}-\alpha(D+\frac1D)
@@ -804,6 +811,9 @@ Elementary Particles
       exp 0.000002196981 ± 2.200000e-12 (pdg_2024); diff -2.100000e-12; σ -0.96
       decay: inclusive total lifetime; mu -> e nu nubar [gamma]; massive tree phase space plus the Fermi-theory QED series through two loops with electron-mass terms (van Ritbergen-Stuart); E8 G_F, alpha and m_mu/m_e; alpha(m_mu) from E8 alpha; supplied series coefficients
       note: E8 G_F, m_mu/m_e and alpha; phase space f(r) derived (MassiveWidth.phase); the QED series 1 + dq0 + dq1 + dq2 of van Ritbergen-Stuart supplied (one-loop with electron-mass terms, two-loop 6.700, alpha(m_mu)^-1 = alpha^-1 - (2/3pi) ln(m_mu/m_e)); higher orders are below 1 ppm; G_F itself is scored in fermi_constant, so this reference is not scored
+  ✓ light_generations: model [3.000000000000000000, 3.000000000000000000] generations
+      exp 2.996300000000 ± 0.007400000000 (janot_jadach_2020); diff 0.003700000000; σ +0.50
+      note: nonzero glue cosets of the aligned D4+D4 placement (exact count, no input); the total singlet is invisible (ProgramClasses.invisible_iff); N_nu counts light neutrinos (m < m_Z/2) only
 
 Hadrons
   ✓ proton_ratio: model [1836.152673444000000000, 1836.152673445000000000] dimensionless
@@ -900,8 +910,8 @@ Cosmology
       exp 5.360000000000 ± 0.050000000000 (planck2018); diff -0.193333333334; σ -3.87
       note: raw ratio before correction; not scored, compare omega_ratio
 
-62 comparisons over 63 values:
-  |σ| ≤ 1: 39   |σ| ≤ 2: 53   |σ| ≤ 3: 55
+63 comparisons over 64 values:
+  |σ| ≤ 1: 40   |σ| ≤ 2: 54   |σ| ≤ 3: 56
   12 context references not scored (·): uncorrected intermediates, the superseded Jarlskog proposal, CMB references for late-universe values.
   63 values have no experimental reference (proved intervals only).
 
@@ -912,9 +922,9 @@ Cosmology
   Paper 1: N = 7; χ² = 59.859; reduced χ² = 8.551
   Paper 3: N = 7; χ² = 2.031; reduced χ² = 0.290
   Paper 4: N = 18; χ² = 52.768; reduced χ² = 2.931
-  Paper 5: N = 24; χ² = 8808.086; reduced χ² = 367.003
+  Paper 5: N = 25; χ² = 8808.336; reduced χ² = 352.333
   Paper 6: N = 6; χ² = 1.973; reduced χ² = 0.328
-  All selected: N = 62; χ² = 8924.719; reduced χ² = 143.947
+  All selected: N = 63; χ² = 8924.969; reduced χ² = 141.666
 
 ==================== Summary (e8p --summary) ====================
 
@@ -932,9 +942,9 @@ names it in the `measured inputs` column. The tau pull already combines its life
 
 ## Scoreboard
 
-- 126 values with proved enclosures; 63 have a measured reference.
-- 62 scored comparisons: |σ| ≤ 1: **39**, |σ| ≤ 2: **53**, |σ| ≤ 3: **55**.
-- Of these, 58 use no measured input beyond the units: |σ| ≤ 1: **35**, ≤ 2: **49**, ≤ 3: **51**. The rest name their measured anchor in the `measured inputs` column.
+- 127 values with proved enclosures; 64 have a measured reference.
+- 63 scored comparisons: |σ| ≤ 1: **40**, |σ| ≤ 2: **54**, |σ| ≤ 3: **56**.
+- Of these, 59 use no measured input beyond the units: |σ| ≤ 1: **36**, ≤ 2: **50**, ≤ 3: **52**. The rest name their measured anchor in the `measured inputs` column.
 - 12 references shown for context and not scored (see below).
 - Nuclear masses (`--masses`): 31 nuclei, |z| ≤ 1: 11, ≤ 2: 23, ≤ 3: 29 in units of the ledger's stable-line scatter (5.0 m_e).
 - Nuclear shell closures (`--shells`): [2, 8, 20, 28, 50, 82, 126]; measured magic numbers [2, 8, 20, 28, 50, 82, 126].
@@ -990,6 +1000,7 @@ arithmetic intervals do not include theory uncertainty from omitted channels or 
 | `omega_ratio` | 5.3775 | 5.3600 ± 0.050 | dimensionless | 2 | +0.35 | — | planck2018 | `PMCosmology.Tensions.omegaRatio_bounds` |
 | `wolf_A` | 0.82035 | 0.82600 ± 0.015 | dimensionless | 2 | -0.38 | — | navas_review_2024 | `PMFlavor.Values.wolfA_bounds` |
 | `z_eq` | 3377.2 | 3387.0 ± 21 | dimensionless | 2 | -0.47 | — | planck_2018 | `PMCosmology.Background.z_eq_bounds` |
+| `light_generations` | 3.0000 | 2.9963 ± 0.0074 | generations | 2 | +0.50 | — | janot_jadach_2020 | `PMElementaryParticles.EPSpine.generation_card` |
 | `neutral_pion_finite_lifetime_s` | 8.4600e-17 | 8.5304e-17 ± 1.3e-18 | s | 2 | -0.54 | — | pdg_2024_pi0_gamma_gamma_partial | `PMHadrons.neutralPionFiniteLifetimeSeconds_bounds` |
 | `cabibbo` | 0.22439 | 0.22501 ± 6.8e-4 | dimensionless | 2 | -0.90 | — | navas_review_2024 | `PMFlavor.Values.cabibbo_bounds` |
 | `tau_lifetime_fs` | 291.04 | 290.30 ± 0.82 | fs | 2 | +0.90 | measured_muon_lifetime, B_e | pdg_2024 | `PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds` |
