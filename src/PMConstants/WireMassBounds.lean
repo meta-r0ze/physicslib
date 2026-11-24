@@ -1,4 +1,4 @@
-import PMAction.WireResonanceSpectrum
+import PMAction.WireShiftedSpectrum
 import PMConstants.CertifiedConstants
 
 /-!
@@ -40,5 +40,22 @@ theorem bare_middle_heavy_bounds :
   · apply (sq_lt_sq₀ (by positivity) (by positivity)).mp
     rw [mul_pow, hnum, hden]
     nlinarith only [hkloSq, hkhiSq]
+
+/-- At the same benchmark coefficient, every normalized static insertion
+strictly between zero and one leaves the middle-to-heavy ratio below 0.00730. -/
+theorem shifted_middle_heavy_bound (s : ℝ) (hs : 0 < s) (hs₁ : s < 1) :
+    let k := α / 2
+    ∃ m₁ m₂ m₃ : ℝ, 0 < m₁ ∧ m₁ < m₂ ∧ m₂ < m₃ ∧ m₂ / m₃ < 0.00730 ∧
+      ∀ m : ℝ, 0 ≤ m →
+        (m ^ 2 ∈ spectrum ℝ (PMAction.WireResonanceSpectrum.gram k s) ↔
+          m = m₁ ∨ m = m₂ ∨ m = m₃) := by
+  intro k
+  have hk : 0 < k := by dsimp [k]; linarith [alpha_bounds.1]
+  have hk₁ : k < 1 := by dsimp [k]; linarith [alpha_bounds.2]
+  obtain ⟨m₁, m₂, m₃, h₁, h₂, h₃, hratio, hspec⟩ :=
+    PMAction.WireShiftedSpectrum.ordered_mass_spectrum k s hk hk₁ hs hs₁
+  refine ⟨m₁, m₂, m₃, h₁, h₂, h₃, hratio.trans ?_, hspec⟩
+  dsimp [k]
+  linarith [alpha_bounds.2]
 
 end PMConstants.WireMassBounds

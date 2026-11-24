@@ -1,5 +1,5 @@
 import PMElementaryParticles.RestoringWallShift
-import PMAction.ReferenceNodeBoundary
+import PMAction.AlternatingReferenceNode
 
 /-!
 # Calibrating the restoring output
@@ -79,6 +79,58 @@ theorem steady_rate_ratio (g : Fin 3) (a : Fin 8)
       (2 * Real.arcsin (Real.sqrt (α / 2)) / Real.pi) * (directTime / moveTime) :=
   classPulse_rate_ratio g a hθ hprincipal hd hdp hm hdt
     ((shifted_weight_iff_steady_current θ g a).mp hCurrent) hcertain
+
+/-! ## Alternating incoherent visits to a retained center -/
+
+open PMAction.AlternatingReferenceNode in
+/-- Match the shifted port to the current per complete two-visit cycle. -/
+theorem shifted_weight_iff_alternating_current (θ : ℝ) (g : Fin 3) (a : Fin 8)
+    {w : ℝ} (hw₀ : 0 < w) (hw₁ : w ≤ 1) :
+    let weight := Complex.normSq (classPulse θ (.inr (g + 1, a)) (.inl (g, a)))
+    (∀ l r : ℝ, shiftedOutflow θ g a l r - l =
+      visit w (fixedCenter w l r) r - fixedCenter w l r) ↔
+      weight = w / (2 - w) := by
+  intro weight
+  simp only [shiftedOutflow_eq]
+  change (∀ l r : ℝ, leftOutflow weight l r - l =
+    visit w (fixedCenter w l r) r - fixedCenter w l r) ↔ _
+  constructor
+  · intro h
+    apply through_eq_conductance
+    intro l r
+    rw [h, (fixed_current w l r hw₀ hw₁).1]
+  · intro h l r
+    rw [node_current, h, (fixed_current w l r hw₀ hw₁).1]
+
+open PMAction.AlternatingReferenceNode PMAction.CertainTransferRate in
+/-- The direct and alternating restoring rates relative to the crossing.
+The restoring tick count covers the entire cycle supplying the measured
+model current. The crossing area, Hamiltonian conversions and native
+identification of the events are inputs. -/
+theorem alternating_crossing_rate_ratios (g : Fin 3) (a : Fin 8)
+    {θ direct crossing tick directTicks moveTicks crossTicks w : ℝ}
+    (directFactor moveFactor crossFactor : ℝ)
+    (hw₀ : 0 < w) (hw₁ : w ≤ 1)
+    (hθ : 0 ≤ θ) (hprincipal : θ ≤ Real.pi / 2)
+    (hd : 0 ≤ direct) (hdp : direct ≤ Real.pi / 2) (hcertain : Real.sin direct ^ 2 = 1)
+    (ht : 0 < tick) (hdt : 0 < directTicks) (hmt : 0 < moveTicks) (hct : 0 < crossTicks)
+    (hc : crossing ≠ 0) (hcf : crossFactor ≠ 0)
+    (hCurrent : ∀ l r : ℝ, shiftedOutflow θ g a l r - l =
+      visit w (fixedCenter w l r) r - fixedCenter w l r) :
+    let crossRate := crossFactor * (crossing / (crossTicks * tick))
+    (directFactor * (direct / (directTicks * tick))) / crossRate =
+      (directFactor / crossFactor) * ((Real.pi / 2) / crossing) * (crossTicks / directTicks) ∧
+    (moveFactor * (θ / (moveTicks * tick))) / crossRate =
+      (moveFactor / crossFactor) * (Real.arcsin (Real.sqrt (w / (2 - w))) / crossing) *
+        (crossTicks / moveTicks) := by
+  have hw := (shifted_weight_iff_alternating_current θ g a hw₀ hw₁).mp hCurrent
+  rw [classPulse_weight] at hw
+  have hmove := principal_transfer_area hθ hprincipal hw
+  have hdirect : direct = Real.pi / 2 := by
+    simpa using principal_transfer_area hd hdp hcertain
+  rw [hdirect, hmove]
+  exact ⟨common_tick_rate_ratio _ _ _ _ _ _ _ ht hdt hct hc hcf,
+    common_tick_rate_ratio _ _ _ _ _ _ _ ht hmt hct hc hcf⟩
 
 /-! ## Isolated sequential exchange on a matched carrier lane -/
 

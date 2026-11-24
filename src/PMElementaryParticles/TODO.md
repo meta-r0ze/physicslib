@@ -148,9 +148,10 @@ This file is the open list only.
   inside the node visits exceeds a single period. Establish either the admitted
   longer schedule or a native integrated operation. Calibrate the shifted pulse port
   and its elapsed ticks in crossing-clock units. `RestoringPulseCalibration`
-  gives the rate under a steady floating-node current match. An isolated
-  geometric exchange pair has a different exit weight. Identify which
-  physical schedule produces the current used to calibrate the mass slot. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  gives the rate under a steady floating-node current match and gives both
+  insertion-to-crossing rate ratios for a supplied alternating cycle with a
+  retained center. The isolated geometric exchange pair gives its own exit
+  weight. Identify which physical schedule supplies the mass-slot readout. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
 - **Certify the per-wall symmetry of the placement.** The 16 channels are two walls
   of 8 carriers (`CarrierRepresentation`). In the `EPLabelGen` placement, colour
   permutations and the weak flip keep every inner product within each wall, in all

@@ -62,7 +62,8 @@ all exist already, so nothing is lost. It needs a compiler in the loop, because 
 ## New work this layer owes the mass chain
 
 - **The carrier amplitude of a node-restoring displacement.** `WireMassBounds` bounds the bare
-  ratio with `k = α/2` as a benchmark. The conserving two-leg node supplies an admittance. The
+  ratio with `k = α/2` as a benchmark, both at zero static offset and uniformly for offsets
+  in `(0,1)`. The conserving two-leg node supplies an admittance. The
   packet interface owns the admission, pulse readout and timing needed to turn it into a wall
   coefficient. The full wire eigenvalues then come from the coupled mass matrix.
 

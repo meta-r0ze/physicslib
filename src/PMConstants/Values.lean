@@ -138,6 +138,6 @@ export PMConstants.StrongLedgerTest (ledgerCoupling alpha_footprint_bounds ledge
 export PMAction.WallDispersion (massSqM rr)
 export PMConstants.VevEntry (link_kappa_neg economy_law_A)
 export PMConstants.VevCorrections (V Y x V_bounds Y_val x_bounds)
-export PMConstants.WireMassBounds (bare_middle_heavy_bounds)
+export PMConstants.WireMassBounds (bare_middle_heavy_bounds shifted_middle_heavy_bound)
 
 end PMConstants.Values

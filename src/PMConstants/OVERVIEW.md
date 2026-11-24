@@ -23,6 +23,8 @@ dependencies are in [`TODO.md`](TODO.md).
 - `WireMassBounds.bare_middle_heavy_bounds`: the normalized bare-wire ratio at `k = α/2`
   lies between `0.0044` and `0.0045`, using the geometric enclosure of `α`. The assignment
   of this admittance to the normalized Hamiltonian coefficient is a benchmark input.
+  `shifted_middle_heavy_bound` keeps that benchmark below `0.00730` for every normalized
+  static offset in `(0,1)`, with all three ordered masses positive.
 - `GenerationEncoding`: exhaustive three-pair classification, the distinction between
   pair types and independent physical generations, and exact retained-label storage.
 - `GenerationHistory`: an actual companion-carrier encoding, its coherent isometry,

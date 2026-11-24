@@ -136,6 +136,7 @@ import PMAction.ExactZeroMode
 import PMAction.EvenComplement
 import PMAction.ReferenceNode
 import PMAction.ReferenceNodeBoundary
+import PMAction.AlternatingReferenceNode
 import PMAction.PersistenceSelections
 import PMAction.NativeDetuning
 import PMAction.WilsonPointForced
@@ -148,6 +149,7 @@ import PMAction.UndetunedWall
 import PMAction.WireMass
 import PMAction.WireLightBound
 import PMAction.WireResonanceSpectrum
+import PMAction.WireShiftedSpectrum
 import PMAction.WallSeesawAccuracy
 import PMAction.SignFlip
 import PMAction.GenerationLabel

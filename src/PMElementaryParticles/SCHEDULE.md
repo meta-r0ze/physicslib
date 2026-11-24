@@ -392,6 +392,14 @@ floating-node readout and account for any extra histories and renewal
 visits. To use an isolated pulse sequence, calibrate the weights, relative
 phase and duration of that sequence on the admitted ports.
 
+If fresh incoherent inputs visit right then left and the center is retained
+between visits and across cycles, `AlternatingReferenceNode.fixed_current`
+gives the current per complete cycle. The shifted port matches it at weight
+`w/(2-w)`, where `w` is transfer to the center. The common-tick conversion
+`alternating_crossing_rate_ratios` uses the complete cycle's tick count.
+Selecting this regime requires a native source of repeated inputs and the
+retained-center readout.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.

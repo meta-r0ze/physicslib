@@ -50,13 +50,16 @@ class-independent crossing the three masses differ only by those amplitudes
   `ReferenceNode` derives `α/2` for a conserving two-leg node. `CertainTransferRate` derives
   principal pulse areas and their rate ratio for supplied weights and durations. The open input is
   the admitted pulse for each insertion, its retained output, and its duration and normalization
-  in the same clock units as the gapped crossing.
+  in the same clock units as the gapped crossing. `AlternatingReferenceNode` also derives a
+  current per two-visit cycle for fresh incoherent input and a retained center.
 - **Split the suppressed pair.** The two node-crossing classes share one amplitude, so
   `CompositeMass.diag_class_independent` makes them degenerate. A further effect must split them
   (`PMFlavor.ExchangeChirality`: the weak wall separates the two classes). Comparisons belong in
   e8p; species names belong in `PMElementaryParticles`.
 - **Regime and the spectrum.** `WireResonanceSpectrum` certifies the bare masses and the cubic
-  with a real static offset. `WallSeesawAccuracy.full_energy_near_schur` controls the error for
+  with a real static offset. `WireShiftedSpectrum.ordered_mass_spectrum` isolates three
+  positive ordered Schur masses for `0 < k < 1` and a normalized static offset in `(0,1)`.
+  `WallSeesawAccuracy.full_energy_near_schur` controls the error for
   each full light energy when the crossing is common and the two coupling norms are bounded.
   The exact test `full_energy_iff` also gives a reduced determinant for root isolation.
   Derive the coupling bounds from the admitted rates and match the light modes in order. Retain the

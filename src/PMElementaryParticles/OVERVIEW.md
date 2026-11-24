@@ -1162,8 +1162,13 @@ principal rate formula with supplied event durations (`steady_rate_ratio`).
 The isolated entry and exit exchanges give the product of their two exchange
 amplitudes on the live output (`stagedPulse_amplitude`). When each local
 unexchanged through weight is `α`, this gives `(1−α)²` on the
-exchange-exchange exit (`staged_geometric_weight`). Which current or
-pulse readout attaches to the native restoring schedule remains open.
+exchange-exchange exit (`staged_geometric_weight`). Alternating fresh
+incoherent arrivals with the center retained yields a per-cycle coefficient
+`w/(2-w)` for local transfer weight `w` (`AlternatingReferenceNode.fixed_current`).
+`alternating_crossing_rate_ratios` converts the direct and shifted areas to
+crossing-relative rates on one common tick. It uses the entire restoring
+cycle duration and the supplied crossing area and coefficient conversions.
+The native selection of the schedule and readout remains open.
 
 ### Where the readings agree
 

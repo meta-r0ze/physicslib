@@ -1,0 +1,152 @@
+import PMAction.WireResonanceSpectrum
+import Mathlib.Topology.Order.IntermediateValue
+
+/-!
+# Positive masses of the shifted resonant Schur wire
+
+A positive static insertion at address 2 splits the bare zero mode. For
+normalized restoring weight and insertion both between zero and one, three
+disjoint intervals isolate all squared singular values.
+-/
+
+noncomputable section
+namespace PMAction.WireShiftedSpectrum
+
+open WireResonanceSpectrum
+
+private theorem root_between (p : Polynomial ℝ) {a b : ℝ} (hab : a < b)
+    (ha : p.eval a < 0) (hb : 0 < p.eval b) :
+    ∃ x ∈ Set.Ioo a b, p.eval x = 0 := by
+  obtain ⟨x, hx, hz⟩ := intermediate_value_Icc hab.le p.continuous.continuousOn
+    (show (0 : ℝ) ∈ Set.Icc (p.eval a) (p.eval b) from ⟨ha.le, hb.le⟩)
+  exact ⟨x, ⟨hx.1.lt_of_ne (by rintro rfl; linarith),
+    hx.2.lt_of_ne (by rintro rfl; linarith)⟩, hz⟩
+
+private theorem char_signs (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
+    (hs : 0 < s) (hs₁ : s < 1) :
+    let p := (gram k s).charpoly
+    p.eval 0 < 0 ∧ 0 < p.eval (k ^ 2) ∧ p.eval (3 * k ^ 2) < 0 ∧
+      p.eval (max 1 (3 * k ^ 2)) < 0 ∧ 0 < p.eval 4 := by
+  intro p
+  have hk2 : 0 < k ^ 2 := by positivity
+  have hk2₁ : k ^ 2 < 1 := by nlinarith [mul_pos hk (sub_pos.mpr hk₁)]
+  have hs2₁ : s ^ 2 < 1 := by nlinarith [mul_pos hs (sub_pos.mpr hs₁)]
+  have hδ : 0 < s * (2 - s) := mul_pos hs (by linarith)
+  have hδ₁ : s * (2 - s) ≤ 1 := by nlinarith [sq_nonneg (1 - s)]
+  have hsmall : s * (2 - s) * k ^ 2 < 1 :=
+    (mul_lt_mul_of_pos_left hk2₁ hδ).trans_le (by simpa using hδ₁)
+  have hshift : ∀ t : ℝ, p.eval t = t * (t - 3 * k ^ 2) * (t - (2 + k ^ 2)) +
+      s * (2 - s) * k ^ 2 * t * (t - (1 + 2 * k ^ 2)) - k ^ 4 * s ^ 2 := by
+    intro t
+    dsimp only [p]
+    rw [char_eval]
+    ring
+  have h3 : p.eval (3 * k ^ 2) < 0 := by
+    rw [hshift]
+    have hterm : s * (2 - s) * k ^ 2 * (3 * k ^ 2) *
+        (3 * k ^ 2 - (1 + 2 * k ^ 2)) < 0 :=
+      mul_neg_of_pos_of_neg (by positivity) (by linarith)
+    have hsub : 0 ≤ k ^ 4 * s ^ 2 := by positivity
+    simp only [sub_self, mul_zero, zero_mul, zero_add]
+    linarith
+  refine ⟨?_, ?_, h3, ?_, ?_⟩
+  · rw [hshift]
+    simp only [zero_mul, mul_zero, add_zero, zero_sub, neg_lt_zero]
+    positivity
+  · rw [hshift, show k ^ 2 * (k ^ 2 - 3 * k ^ 2) * (k ^ 2 - (2 + k ^ 2)) +
+      s * (2 - s) * k ^ 2 * k ^ 2 * (k ^ 2 - (1 + 2 * k ^ 2)) - k ^ 4 * s ^ 2 =
+        k ^ 4 * (4 - 2 * s - s * (2 - s) * k ^ 2) by ring]
+    exact mul_pos (by positivity) (by linarith)
+  · rcases le_total 1 (3 * k ^ 2) with h | h
+    · rwa [max_eq_right h]
+    · rw [max_eq_left h, hshift]
+      have hbase : 1 * (1 - 3 * k ^ 2) * (1 - (2 + k ^ 2)) ≤ 0 :=
+        mul_nonpos_of_nonneg_of_nonpos (by linarith) (by linarith)
+      have hterm : s * (2 - s) * k ^ 2 * 1 * (1 - (1 + 2 * k ^ 2)) ≤ 0 :=
+        mul_nonpos_of_nonneg_of_nonpos (by positivity) (by linarith)
+      have hsub : 0 < k ^ 4 * s ^ 2 := by positivity
+      linarith
+  · rw [hshift]
+    have hterm : 0 ≤ s * (2 - s) * k ^ 2 * 4 * (4 - (1 + 2 * k ^ 2)) :=
+      mul_nonneg (by positivity) (by linarith)
+    have hsub : k ^ 4 * s ^ 2 < 1 := by
+      calc
+        k ^ 4 * s ^ 2 ≤ 1 * s ^ 2 := by
+          gcongr
+          nlinarith [mul_pos hk2 (sub_pos.mpr hk2₁)]
+        _ < 1 := by simpa using hs2₁
+    have hbase : (4 : ℝ) ≤ 4 * (4 - 3 * k ^ 2) * (4 - (2 + k ^ 2)) := by
+      calc
+        (4 : ℝ) = 4 * 1 * 1 := by norm_num
+        _ ≤ _ := by gcongr <;> linarith
+    linarith
+
+/-- Three disjoint positive intervals isolate the entire squared mass spectrum. -/
+theorem squared_spectrum (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
+    (hs : 0 < s) (hs₁ : s < 1) :
+    ∃ x y z : ℝ, x ∈ Set.Ioo 0 (k ^ 2) ∧ y ∈ Set.Ioo (k ^ 2) (3 * k ^ 2) ∧
+      z ∈ Set.Ioo (max 1 (3 * k ^ 2)) 4 ∧
+      ∀ t : ℝ, t ∈ spectrum ℝ (gram k s) ↔ t = x ∨ t = y ∨ t = z := by
+  classical
+  let p := (gram k s).charpoly
+  have hmonic : p.Monic := Matrix.charpoly_monic _
+  have hk2 : 0 < k ^ 2 := by positivity
+  have hk2₁ : k ^ 2 < 1 := by nlinarith [mul_pos hk (sub_pos.mpr hk₁)]
+  obtain ⟨h0, h1, h3, hmax, h4⟩ := char_signs k s hk hk₁ hs hs₁
+  obtain ⟨x, hx, hx0⟩ := root_between p hk2 h0 h1
+  obtain ⟨y, hy, hy0⟩ := root_between (-p) (by linarith : k ^ 2 < 3 * k ^ 2)
+    (by simpa using h1) (by simpa using h3)
+  have hy0' : p.eval y = 0 := by simpa using hy0
+  obtain ⟨z, hz, hz0⟩ := root_between p (max_lt (by norm_num) (by linarith)) hmax h4
+  have h3z := (le_max_right (1 : ℝ) (3 * k ^ 2)).trans_lt hz.1
+  refine ⟨x, y, z, hx, hy, hz, fun t => ?_⟩
+  rw [Matrix.mem_spectrum_iff_isRoot_charpoly, Polynomial.IsRoot]
+  change p.eval t = 0 ↔ _
+  constructor
+  · intro ht
+    by_contra! hn
+    obtain ⟨htx, hty, htz⟩ := hn
+    have hxy := (hx.2.trans hy.1).ne
+    have hyz := (hy.2.trans h3z).ne
+    have hxz := (hx.2.trans (hy.1.trans (hy.2.trans h3z))).ne
+    have hcard : ({t, x, y, z} : Finset ℝ).card ≤ p.natDegree := by
+      apply Polynomial.card_le_degree_of_subset_roots
+      intro r hr
+      rw [Finset.mem_val, Finset.mem_insert, Finset.mem_insert, Finset.mem_insert,
+        Finset.mem_singleton] at hr
+      rw [Polynomial.mem_roots hmonic.ne_zero, Polynomial.IsRoot]
+      rcases hr with h | h | h | h <;> subst r <;> assumption
+    simp [htx, hty, htz, hxy, hyz, hxz, p] at hcard
+  · rintro (rfl | rfl | rfl) <;> assumption
+
+/-- The shifted Schur wire has exactly three distinct positive masses. The
+middle-to-heavy ratio is uniformly bounded over the whole insertion interval. -/
+theorem ordered_mass_spectrum (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
+    (hs : 0 < s) (hs₁ : s < 1) :
+    ∃ m₁ m₂ m₃ : ℝ, 0 < m₁ ∧ m₁ < m₂ ∧ m₂ < m₃ ∧ m₂ / m₃ < 2 * k ∧
+      ∀ m : ℝ, 0 ≤ m → (m ^ 2 ∈ spectrum ℝ (gram k s) ↔
+        m = m₁ ∨ m = m₂ ∨ m = m₃) := by
+  obtain ⟨x, y, z, hx, hy, hz, hspec⟩ := squared_spectrum k s hk hk₁ hs hs₁
+  have hxy := hx.2.trans hy.1
+  have hyz := hy.2.trans ((le_max_right (1 : ℝ) (3 * k ^ 2)).trans_lt hz.1)
+  have hz₁ : 1 < z := (le_max_left _ _).trans_lt hz.1
+  have hzroot : 1 < Real.sqrt z := by
+    simpa using (Real.sqrt_lt_sqrt (by norm_num : (0 : ℝ) ≤ 1) hz₁)
+  have hym : Real.sqrt y < 2 * k := by
+    apply (sq_lt_sq₀ (Real.sqrt_nonneg _) (by positivity)).mp
+    rw [Real.sq_sqrt (hx.1.trans hxy).le]
+    nlinarith [hy.2, sq_pos_of_pos hk]
+  have hratio : Real.sqrt y / Real.sqrt z < 2 * k := by
+    rw [div_lt_iff₀ (by linarith : 0 < Real.sqrt z)]
+    exact hym.trans (lt_mul_of_one_lt_right (by positivity) hzroot)
+  have root_eq (m u : ℝ) (hm : 0 ≤ m) (hu : 0 ≤ u) :
+      m ^ 2 = u ↔ m = Real.sqrt u := by
+    conv_lhs => rhs; rw [← Real.sq_sqrt hu]
+    exact sq_eq_sq₀ hm (Real.sqrt_nonneg _)
+  refine ⟨Real.sqrt x, Real.sqrt y, Real.sqrt z, Real.sqrt_pos.2 hx.1,
+    Real.sqrt_lt_sqrt hx.1.le hxy, Real.sqrt_lt_sqrt (hx.1.trans hxy).le hyz, hratio, ?_⟩
+  intro m hm
+  rw [hspec, root_eq _ _ hm hx.1.le, root_eq _ _ hm (hx.1.trans hxy).le,
+    root_eq _ _ hm (hx.1.trans (hxy.trans hyz)).le]
+
+end PMAction.WireShiftedSpectrum
