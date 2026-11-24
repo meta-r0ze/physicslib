@@ -194,9 +194,12 @@ invisible width.
 
 ## Charged-lepton wire benchmark
 
-Run `e8p --lepton-wire` for the unscored Schur comparison at `k = α/2`, real resonance,
-and unit crossing. The report gives the certified bare middle-to-heavy mass ratio
-and the uniform upper bound when the normalized static offset is in `(0,1)`. It
-compares both with the quotient of the repository's frozen muon/electron and
-tau/electron references. The reference interval uses the supplied endpoints of each
-input. The physical rates and full-wall spectrum remain open.
+Run `e8p --lepton-wire` for the unscored, normalized resonant Schur comparison.
+The report shows the historical coefficient `α/2` and the common-duration
+principal-pulse rate based on the steady two-leg current. It compares the
+bare ratio and the positive-offset bound to the quotient of the frozen
+muon/electron and tau/electron reference intervals. The report also inverts
+the bare ratio exactly to constrain the direct/restoring duration ratio and
+gives a necessary lower bound for offsets in `(0,1)`. These comparison
+constraints apply to the equal-rate benchmark family. The native rates and
+full-wall spectrum remain open.
