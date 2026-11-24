@@ -20,6 +20,8 @@ import PMConstants.TableConsequences
 import PMConstants.ResourceLedger
 import PMConstants.ScalarSector
 import PMConstants.FermionMassLaw
+import PMConstants.StrongLedgerTest
+import PMConstants.Partition
 import PMConstants.VevEntry
 
 /-!
@@ -126,6 +128,9 @@ export PMConstants.TableConsequences (Premises)
 export PMConstants.ResourceLedger (sterile_counted)
 export PMConstants.ScalarSector (higgsSq higgs_from_fermi lambda_insensitive)
 export PMConstants.FermionMassLaw (kappa_cost_light kappa_amp_light massA_event_priced)
+export PMConstants (footprint overhead)
+export PMConstants.CertifiedConstants (α)
+export PMConstants.StrongLedgerTest (ledgerCoupling alpha_footprint_bounds ledger_twelve ledger_separation)
 export PMAction.WallDispersion (massSqM rr)
 export PMConstants.VevEntry (link_kappa_neg economy_law_A)
 
