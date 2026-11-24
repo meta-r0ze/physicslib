@@ -44,6 +44,23 @@ theorem geometric_equality_requires_ratio (ρm ρr : ℝ) (hr : 0 < ρr) :
   rw [equality_redshift ρm ρr _ hr (by have := Real.pi_pos; linarith)]
   constructor <;> intro h <;> linarith
 
+/-- With darkRatio units of cold dark matter per baryon unit, baryons supply
+6/37 of baryon-plus-cold-dark-matter density. -/
+theorem baryon_fraction_of_cold_matter (b : ℝ) (hb : 0 < b) :
+    b / (b + darkRatio * b) = 6 / 37 := by
+  rw [exact_ratios.2.2]
+  field_simp [show b + 31 / 6 * b ≠ 0 by positivity]
+  ring
+
+/-- At equality, when these two matter components balance radiation, baryons
+supply 3/37 of the combined matter and radiation density. -/
+theorem baryon_fraction_at_equality (b r : ℝ) (hb : 0 < b)
+    (heq : b + darkRatio * b = r) :
+    b / (b + darkRatio * b + r) = 3 / 37 := by
+  rw [← heq, exact_ratios.2.2]
+  apply (div_eq_iff (by positivity)).2
+  ring
+
 /-- If the vacuum density is postulated to track load, its derivative tracks it. -/
 theorem density_derivative (ρ0 a Ldot : ℝ) (L : ℝ → ℝ)
     (hL : HasDerivAt L Ldot a) :

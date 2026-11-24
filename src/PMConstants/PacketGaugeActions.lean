@@ -9,9 +9,21 @@ assignment of `Hypercharge.standard`, which the carriers derive
 (`CarrierRepresentation.carrierCharges_eq_standard`). The axis and chirality readings are derived
 upstream: the reference singles out one axis (`ReferenceAxis`,
 `CarrierRepresentation.one_axis`), and "left" names the wall that carries the reference, because
-the weak current repairs it (`PMAction.ChiralityConvention.weak_acts_on_reference`). Restriction
-to SU(2)/SU(3) is possible; uniqueness or physical selection of those subgroups and their
-normalization is not proved. -/
+the weak current repairs it (`PMAction.ChiralityConvention.weak_acts_on_reference`).
+
+The subgroup is the reserved axis's consequence, in `ReferenceAxis`:
+* colour is the stabilizer of the reference axis among Hermitian SU(4) generators
+  (`ReferenceAxis.axis_stabilizer`), which is what gives three colours;
+* the hypercharge direction is forced: `bl` is the only axis charge that commutes with colour, is
+  traceless and reads `−1` on the reference axis (`ReferenceAxis.bl_unique`, with
+  `diagonal_commutant` supplying the equality on the three colour axes that was previously read off
+  the colour interpretation);
+* the doublet is the sign pair, because the sign flip is the only move between the two carriers on
+  one axis (`CarrierActions.same_axis_iff`).
+
+What is not proved here: that the action on the sign pair is the *continuous* SU(2) rather than that
+flip, and the generator normalization, which `GeneratorNormalization` reduces to one event-law
+step. -/
 noncomputable section
 namespace PMConstants.PacketGaugeActions
 open Matrix Finset

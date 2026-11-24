@@ -10,12 +10,16 @@ a theorem input and not error bars of the checked tree.
 | Question | PM answer | Lean source | Measured reference |
 | --- | --- | --- | --- |
 | `Ω_DM/Ω_b` | `31/6 = 5.1667` | `Scaling.exact_ratios` (`darkRatio`) | Planck `5.36 ± 0.05` |
-| matter–radiation equality `1+z_eq` | `1075π ≈ 3377.212` (geometric proposal) | `Background.z_eq_bounds` | `z_eq ≈ 3400` (Planck) |
+| matter–radiation equality `z_eq` | `1075π ≈ 3377.212` (geometric proposal) | `Background.z_eq_bounds` | `z_eq ≈ 3400` (Planck) |
 | baryon asymmetry `η_B` | `J/(16168π)` → `5.951×10⁻¹⁰` (matrix `pmJ`), `6.073×10⁻¹⁰` (geometric `pm3J`) | `Primordial.baryon_windows` | Planck `(6.12 ± 0.04)×10⁻¹⁰` |
 | channel-overhead complement | `31/32 = 0.96875` | `Scaling.scalarIndex` | **not** a spectral tilt — a complement, no direct comparison |
 
 These are testable as-is (a measured `Ω_DM/Ω_b ≠ 31/6`, or `z_eq` far from `1075π`,
 would refute the proposal). `z_eq` is a geometric *proposal*, not a derivation.
+
+### Baryons at matter–radiation equality
+
+Identifying `darkRatio` with cold dark matter per unit baryon density gives a baryon fraction of 6/37 (0.16216) among baryons and cold dark matter. When those components balance radiation, baryons supply 3/37 (0.08108) of the combined density. Both follow from the same composition assumption. Planck 2018 TT,TE,EE+lowE+lensing gives central physical densities of 0.02237 for baryons and 0.1200 for cold dark matter, implying 0.15713 and, on the same equality convention, 0.07856. The PM fractions are about 3.2% higher. This comparison uses inferred base-ΛCDM parameters and provides one composition test. [Planck Collaboration, Table 2](https://arxiv.org/abs/1807.06209)
 
 ## Conditional rescalings (frozen inputs × constitutive response)
 

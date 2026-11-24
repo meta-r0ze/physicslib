@@ -30,15 +30,30 @@ Comparisons belong in `tools/e8p`. These modules still hold measured values.
 
 ## Premises to name or derive
 
-- **The SU(2) and SU(3) subgroups.** `PacketGaugeActions` restricts to them; uniqueness and
-  normalization are not proved. Name it in SCOPE or derive the restriction.
+- **The weak `SU(2)` on the sign pair.** Two thirds of the old subgroup premise are now derived in
+  `ReferenceAxis`: colour is the stabilizer of the reference axis (`axis_stabilizer`, already
+  there), and `bl` is the only axis charge that commutes with colour, is traceless and reads `−1`
+  on that axis (`bl_unique`, new, with `diagonal_commutant`). What is left is the weak factor: the
+  sign flip is the only move between the two carriers on an axis
+  (`CarrierActions.same_axis_iff`), but that the action on the pair is the continuous `SU(2)` is
+  not proved. Named in SCOPE.
 - **The link transport form.** `LinkMass` has the substrate picture (the scalar doublet is the
-  link between the two D₄ sectors) but transports it with `θ = (g/2)W·σ + (g′/2)B` and
-  hypercharge `1` put in by hand. Derive the transport or name the premise.
+  link between the two D₄ sectors) and the link's unit charge is now derived
+  (`link_charge_one`, `thetaY_one`, from `CarrierRepresentation.carrierCharges_yukawa`). The
+  transport `θ = (g/2)W·σ + (g′/2)Y B` itself is still put in by hand. The route: the link is
+  transported by the packet actions restricted to it, and `link_quadratic` is already the
+  second-order form of the event law's price, so this closes once the continuous completion above
+  does.
+- **Stiffness per unit of conserved charge.** `GeneratorNormalization` selects charge units over
+  the packet trace form and names the one step left: a derivation, from the event law, that
+  refresh stiffness is counted per unit of conserved charge. That is the `(g/2)`, `(g′/2)`
+  normalization, and it belongs next to `PMAction.CommonResponse`/`LinkFromEvents`.
 - **The carrier premises.** `CarrierRepresentation` rests on three: both sectors carried to the
   vector class by triality, the sign as the doublet index, and the reserved (lepton) axis. They
-  are now the only inputs to the charge table (`carrierCharges_eq_standard`), so they belong in
-  SCOPE.
+  are the only inputs to the charge table (`carrierCharges_eq_standard`) and, through
+  `ReferenceAxis`, to the colour subgroup and hypercharge generator of the packet action as well.
+  Named in SCOPE; the
+  concentration of load on the reserved-axis premise is now this layer's main single risk.
 
 ## Naming
 

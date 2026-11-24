@@ -56,13 +56,20 @@ the text. Each appears once here; the owning TODO links back to this table.
 | Strong-CP and VEV structural premises | `PMConstants.VevPremises`, `StrongLedgerBounds`; `UnitTransferWitness` | Constant normalization, strong-CP selection, unit-transfer comparison |
 | The machine inputs `T,L,B,D,J,Q` and the tariff unit | `PMKAutomaton.Interface` conditional exports | Physical admission, booked work, detector support, supply and acceptance |
 | The cosmological load/response/continuity premises | `PMCosmology.Hypotheses.CosmoModel` | `H_late`, `S8_late`, background and composition comparisons |
-| The three carrier premises: both sectors carried to the vector class by triality, the sign as the doublet index, and the reserved (lepton) axis | `PMConstants.CarrierRepresentation` (`charges_from_carriers`, `carrierCharges_eq_standard`) | The channel charge table, the channel types and multiplicities, every downstream charge |
+| The three carrier premises: both sectors carried to the vector class by triality, the sign as the doublet index, and the reserved (lepton) axis | `PMConstants.CarrierRepresentation` (`charges_from_carriers`, `carrierCharges_eq_standard`) | The channel charge table, the channel types and multiplicities, every downstream charge; and, through `PMConstants.ReferenceAxis`, the colour subgroup and the hypercharge generator of the packet action |
 | The representation content: one generation with a sterile singlet | `PMConstants.Hypercharge`, `RequirementTable` | The sixteen-channel inventory and its ledgers |
-| The SU(2) and SU(3) subgroups of the packet action, and their normalization | `PMConstants.PacketGaugeActions` | Weak and colour actions on the packet, gauge ledgers |
-| The link transport form `θ = (g/2)W·σ + (g′/2)B` with unit hypercharge | `PMConstants.LinkMass` | W and Z masses from the inter-sector link |
+| The weak `SU(2)` on the sign pair. Colour and the hypercharge direction are derived (`PMConstants.ReferenceAxis.axis_stabilizer`, `bl_unique`); the sign flip is the only move between the two carriers on an axis (`CarrierActions.same_axis_iff`), but that the action on the pair is the continuous `SU(2)` is not proved | `PMConstants.PacketGaugeActions` | Weak action on the packet, the weak ledger |
+| Refresh stiffness is counted per unit of conserved charge, not per unit of packet trace form | `PMConstants.GeneratorNormalization` | The generator normalization, the mixing value, `g` and `g′` |
+| The link transport form `θ = (g/2)W·σ + (g′/2)Y B`. The link charge `Y = 1` is derived (`LinkMass.link_charge_one`, `thetaY_one`); the transport form itself is not | `PMConstants.LinkMass` | W and Z masses from the inter-sector link |
 | The flavour aperture and forward-composition premises | `PMFlavor.HalfTurnAperture`, `PMFlavor.TransferAmplitude`, `PMFlavor.ConductionRule` | `s12`, `s13`, `|V_cb|` candidates and the completion-order choice |
 
-Two former rows are now derived. `PMElementaryParticles.ChannelPlacement.channelE8`
+Three former rows are now narrower or derived. The link's unit hypercharge is a consequence of the
+carriers (`CarrierRepresentation.carrierCharges_yukawa` with `carrierCharges_eq_standard`, read as
+hops by `SectorLinks.standard_links`), and the subgroup selection of the packet action is a
+consequence of the reserved axis (`ReferenceAxis.axis_stabilizer` for colour, `bl_unique` for the
+hypercharge direction), leaving only the weak `SU(2)` on the sign pair.
+
+Two former rows are fully derived. `PMElementaryParticles.ChannelPlacement.channelE8`
 places the sixteen channels in the aligned internal D4. Its class table and
 `referenceClass_eq_clock` identify library class `0` with the clock-carrying
 vector coset, so the reference-class identification is a consequence of the

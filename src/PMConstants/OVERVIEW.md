@@ -252,7 +252,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `StrongRunning` | The strong-coupling running test to the tau mass |
 | `GaugeStiffness` | One rule for the gauge readouts: link stiffness proportional to refresh workload |
 | `StiffnessIndices` | Per-sector normalization from the generation's channel content |
-| `SectorLinks` | The inter-sector link is the scalar doublet |
+| `SectorLinks` | The inter-sector link is the scalar doublet; its hops carry `|ΔY| = 1`, which `LinkMass.link_charge_one` uses to derive the link's unit hypercharge |
 | `ChiralAnomalies` | Gauge anomalies of the two-sector assignment |
 | `BaryonNumber` | Baryon number from the axis ledger (`1/3` on colour, `0` on the lepton axis, matching `ReferenceAxis.bl`); native reversible gates preserve it, so a reversible update cannot create a baryon asymmetry (`no_asymmetry_from_reversible`) |
 | `LinkMass` | W and Z masses from the inter-sector link |
