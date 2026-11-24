@@ -1,4 +1,5 @@
 import PMAction.CertainTransferRate
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 
 /-!
 # A rate from an admittance needs the event's duration
@@ -51,7 +52,6 @@ theorem rate_ratio (w₁ w₂ τ₁ τ₂ : ℝ) (hτ₁ : τ₁ ≠ 0) (hτ₂ 
     rate w₂ τ₂ / rate w₁ τ₁ = area w₂ / area w₁ * (τ₁ / τ₂) := by
   unfold rate
   field_simp
-  ring
 
 /-- **A common duration cancels, leaving the area ratio.** -/
 theorem rate_ratio_common_duration (w₁ w₂ τ : ℝ) (hτ : τ ≠ 0) (h₁ : area w₁ ≠ 0) :
@@ -63,8 +63,8 @@ def restoringRate (w : ℝ) : ℝ := area w / (Real.pi / 2)
 
 theorem restoringRate_eq (w : ℝ) :
     restoringRate w = 2 / Real.pi * Real.arcsin (Real.sqrt w) := by
-  rw [restoringRate, area, div_div_eq_mul_div, eq_div_iff Real.pi_ne_zero]
-  field_simp
+  rw [restoringRate, area, div_div_eq_mul_div]
+  ring
 
 /-- **The certain crossing is the unit of that reading.** -/
 theorem restoringRate_one : restoringRate 1 = 1 := by
