@@ -293,9 +293,6 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `DepthEvents` | The gravitational attenuation from the event law: why `α`, and why `α^{43/2}` |
 | `CarrierRepresentation` | The channel representation from Paper I's carriers |
 | `Generations` | Three unordered distinct-class pair types under the vector-faithful packet contract |
-| `GenerationEncoding` | Exhaustive pair classification, exact binary encoding and 48-versus-24 linear capacity bound |
-| `GenerationHistory` | Companion-carrier representation, coherent isometry and native root-word preservation |
-| `GenerationWalls` | Two-wall representation, balanced incidence classification and wall-exchange test |
 | `GenerationVacuumChoice` | Native class-sector vacuum as an alternative readout contract; no selected masses or generations |
 | `CarrierPhaseComparison` | Exact comparison on packet involutions, with controlled phases and supplied spatial cells |
 | `FloorNeutrino` | Bare thermal tower and common-scale splitting obstruction |
@@ -399,12 +396,16 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `ReferenceMaintenance` | Compatibility names; generic reversible tasks now live in Paper II. |
 | `ReferenceMaintenanceLedger` | Executable conditional ledgers and a partition countermodel |
 | `SectorCapabilities` | Capabilities of the actual carrier operations |
-| `GenerationEncoding` | Three packet types, retained labels and finite encoding capacity |
-| `GenerationHistory` | Companion-carrier encoding and generation-preserving root words |
-| `GenerationWalls` | Wall-retaining packet encodings and the wall-exchange constraint |
 | `GenerationVacuumChoice` | Existing class-sector vacua and unbroken class degeneracy |
 | `CarrierPhaseComparison` | Marker-free comparison on the actual packet permutations |
-| `PMConstantsProof` | Build-time certificates for the native constants reporter |
+| `ColourNormalization` | The colour generators' trace normalization is not a separate choice |
+| `ControllerIdentification` | Physical controller identification |
+| `Provenance` | The degrees-of-freedom ledger: which headline constants are predictions |
+| `RegisterWidth` | What `η = 171/172` needs from a cell when the reference is a stored value |
+| `ResponseMatching` | The electromagnetic matching as a substrate response equation (S5) |
+| `RootRepairRule` | The typed repair lengths from the gauge factors |
+| `SectorRepair` | Whether the gauge, scalar and fermion sectors share one repair length |
+| `WeakUniform` | Why the weak refresh acts uniformly on its sector |
 | `CarrierRegisterModel` | Independent occupied banks for actual vacuum and packet labels |
 | `CarrierRegisterVacuum` | Full native vacuum generator on those configuration banks |
 | `CarrierRegisterChirality` | Full-state matching obstructions and zero-kernel agreement |
@@ -413,3 +414,8 @@ The node handoff uses these constants in
 [PMKAutomaton.HandoffAdmittance](../PMKAutomaton/HandoffAdmittance.lean).
 The [transport overview](../PMKAutomaton/OVERVIEW.md#node-handoff-and-admittance)
 gives the reversible receiver model and the relation to conductance.
+
+The generation-sector modules moved to [PMAction](../PMAction/OVERVIEW.md)
+(`GenerationEncoding`, `GenerationHistory`, `GenerationWalls`); `GenerationVacuumChoice` stays
+here. The constants reporter is `tools/e8p`, which reads this library through
+[`Values`](Values.lean) alone.

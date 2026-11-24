@@ -6,6 +6,15 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 /-!
 # Hermitian link masses: θ̄ = θ, with CP violation still allowed in mixing
 
+**This module holds two unrelated things** (`TODO.md`, naming). The Hermitian-link route to `θ̄`
+(`thetaBar`, `thetaBar_eq_theta`, `det_real_of_hermitian`, `arg_det_zero`) is superseded for `θ̄`
+by `ThetaBarSelection`, and `PMAction.GenerationParity` shows the generation crossing is never
+Hermitian; `WallParityExchange` and `PMFlavor.MassMixing` still use it, and `cp_with_hermitian`
+stands on its own. The vacuum weight `Z` and its cost results (`Z_zero`, `theta_zero_maximal`,
+`Z_pi`, `theta_pi_costlier`) are the **current** route's machinery, used by `ThetaBarSelection`,
+`PersistenceClosures`, `WindingWeights`, `SubstrateCharge` and `UnitTransferWitness`. `Z` belongs
+in a module named for the vacuum weight.
+
 `CPPhases` showed that a real update forces `θ ∈ πℤ` but would also force `J = 0`, so the
 complex phases must sit in flavour mixing while the strong-CP combination
 `θ̄ = θ − arg det(M_u M_d)` stays real. Paper IV's `CKM.ckm_det` shows complex mixing with a

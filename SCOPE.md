@@ -56,6 +56,10 @@ the text. Each appears once here; the owning TODO links back to this table.
 | Strong-CP and VEV structural premises | `PMConstants.VevPremises`, `StrongLedgerBounds`; `UnitTransferWitness` | Constant normalization, strong-CP selection, unit-transfer comparison |
 | The machine inputs `T,L,B,D,J,Q` and the tariff unit | `PMKAutomaton.Interface` conditional exports | Physical admission, booked work, detector support, supply and acceptance |
 | The cosmological load/response/continuity premises | `PMCosmology.Hypotheses.CosmoModel` | `H_late`, `S8_late`, background and composition comparisons |
+| The three carrier premises: both sectors carried to the vector class by triality, the sign as the doublet index, and the reserved (lepton) axis | `PMConstants.CarrierRepresentation` (`charges_from_carriers`, `carrierCharges_eq_standard`) | The channel charge table, the channel types and multiplicities, every downstream charge |
+| The representation content: one generation with a sterile singlet | `PMConstants.Hypercharge`, `RequirementTable` | The sixteen-channel inventory and its ledgers |
+| The SU(2) and SU(3) subgroups of the packet action, and their normalization | `PMConstants.PacketGaugeActions` | Weak and colour actions on the packet, gauge ledgers |
+| The link transport form `θ = (g/2)W·σ + (g′/2)B` with unit hypercharge | `PMConstants.LinkMass` | W and Z masses from the inter-sector link |
 | The flavour aperture and forward-composition premises | `PMFlavor.HalfTurnAperture`, `PMFlavor.TransferAmplitude`, `PMFlavor.ConductionRule` | `s12`, `s13`, `|V_cb|` candidates and the completion-order choice |
 
 Two former rows are now derived. `PMElementaryParticles.ChannelPlacement.channelE8`
