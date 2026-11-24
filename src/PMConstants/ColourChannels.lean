@@ -13,9 +13,9 @@ SU(2) from the clock row. This module asks what colour links act on.
 * Rule (colour ledger). Colour links maintain the payload of the channels they act on, so the
   colour workload is that payload: `L₃ = 12η = 513/43` (`colour_ledger`). Using the bare count `12`
   would drop the reference overhead that the same footprint charges to every payload channel.
-* `strong_from_channels`: `0.11799 < α N_sys/(12η) < 0.11800`, inside the window of
-  `ColourCount.ledger_window` and within `0.01σ` of `0.1180 ± 0.0009`. The data window has width
-  about `0.55` in `L₃`, so this agreement alone is not evidence; the rule is.
+* `strong_from_channels`: the readout is `0.11799 < α N_sys/(12η) < 0.11800`. The comparison with
+  the measured coupling, and the width of the window it sits in, are in
+  `tools/e8p/E8PConstants/PMConstants/StrongLedgerPulls.lean`.
 * `close_to_paper`: the paper's `(16η + 1/4)α` differs from the ledger value by less than
   `0.0001`, so the ledger form replaces it without moving the comparison.
 * `weak_not_per_channel`: the same per-channel rule for SU(2) (eight left-handed channels, `8η`)
@@ -51,9 +51,6 @@ theorem strong_from_channels :
   constructor
   · rw [lt_div_iff₀ (by norm_num)]; linarith [h.1]
   · rw [div_lt_iff₀ (by norm_num)]; linarith [h.2]
-
-theorem in_window : (11.66 : ℝ) < colourLedger ∧ colourLedger < 12.21 := by
-  rw [colour_ledger]; constructor <;> norm_num
 
 theorem close_to_paper :
     |α * footprint / colourLedger - (16 * overhead + 1/4) * α| < 0.0001 := by

@@ -23,6 +23,7 @@ import PMConstants.FermionMassLaw
 import PMConstants.StrongLedgerTest
 import PMConstants.Partition
 import PMConstants.VevEntry
+import PMConstants.VevCorrections
 
 /-!
 # PMConstants canonical values
@@ -121,6 +122,8 @@ export PMConstants.Depth (gravity)
 export PMConstants.FloorNeutrino (floor_bounds meEV)
 export PMConstants.Bulk (floorMass)
 export PMConstants.ColourChannels (colourLedger colour_ledger strong_from_channels)
+export PMConstants.ColourCount (root_count positive_roots link_triangles)
+export PMConstants.GaugeStiffness (strongWorkload)
 export PMConstants.ContentWeight (chi footprintW colourW extensive_w_mass extensive_strong)
 export PMConstants.ReadoutAccounting (rawWMass selectedWeights)
 export PMConstants.SharedReference (quarkWMass ReferenceLayout)
@@ -133,5 +136,6 @@ export PMConstants.CertifiedConstants (α)
 export PMConstants.StrongLedgerTest (ledgerCoupling alpha_footprint_bounds ledger_twelve ledger_separation)
 export PMAction.WallDispersion (massSqM rr)
 export PMConstants.VevEntry (link_kappa_neg economy_law_A)
+export PMConstants.VevCorrections (V x V_bounds x_bounds)
 
 end PMConstants.Values

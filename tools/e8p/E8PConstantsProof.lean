@@ -13,6 +13,7 @@ import E8PConstants.PMConstants.WeakMassPulls
 import E8PConstants.PMConstants.ReadoutPulls
 import E8PConstants.PMConstants.FermionLawPulls
 import E8PConstants.PMConstants.StrongLedgerPulls
+import E8PConstants.PMConstants.VevFormPulls
 import E8PConstants.PMElementaryParticles.TauLifetimePulls
 import PMHadrons.MesonMasses
 import PMHadrons.PionWidth

@@ -16,10 +16,11 @@ each reading rules out.
   relative displacement `x` gives the factor `1 + x`.
 * `residual_series`: if each repair left a residual fraction `r` that was repaired again, the
   factor would be `1 + x/(1 − r)`. Exactness is `r = 0`, giving `1 + x`; `r = x` gives `1/(1 − x)`,
-  the geometric form (`VevCorrections.geometric_excluded`).
+  the geometric form (window comparison: `E8PConstants.VevFormPulls.geometric_excluded`).
 * `compound_lower`, `compound_excluded`: replacing the one repair by `n ≥ 2` equal partial repairs
   gives `(1 + x/n)ⁿ ≥ 1 + x + x²/4`, which the Fermi window excludes for every `n ≥ 2`; `n → ∞` is
-  `eˣ` (`VevCorrections.exp_excluded`). Only `n = 1`, which is `PersistenceClosures.one_repair`, fits.
+  `eˣ` (window comparison: `E8PConstants.VevFormPulls.exp_excluded`). Only `n = 1`, which is
+  `PersistenceClosures.one_repair`, fits.
 
 **One axis's share.**
 * `normalized_share`: with the noise shares fixed by exact repair (`NoiseShare.share_spatial`:

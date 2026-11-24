@@ -13,6 +13,13 @@ here.
   within three standard deviations of `α_s(M_Z) = 0.1180 ± 0.0009` (PDG 2024). Every `L₃ ≤ 11`
   gives more than `0.1279`; every `L₃ ≥ 13` gives less than `0.1083`. Integers in this range are
   about 8% apart, so landing within 3σ of one is a falsifiability check, not evidence.
+* `ledger_window`: the same measured window read as a band on `L₃` itself. Any `L₃` whose readout
+  is within 3σ lies in `(11.66, 12.21)`.
+* `candidates_in_window`: of the substrate counts that `PMConstants.ColourCount` lists, three sit
+  in that band — `12` (the positive roots of D₄), `16η − 4` and the paper's
+  `N_sys/(16η + 1/4)` — while `11` and `13` do not. The band has width about `0.55`, so the
+  comparison cannot separate the three; the channel-count rule does.
+* `ledger_in_window`: the derived ledger `12η` is in the band.
 -/
 
 namespace E8PConstants.StrongLedgerPulls
@@ -47,5 +54,41 @@ theorem integer_ledger_unique (L : ℕ) (hL : 0 < L) :
     have h12 := ledger_twelve
     rw [abs_lt]
     constructor <;> linarith [h12.1, h12.2]
+
+/-- The measured window read as a band on the ledger. -/
+theorem ledger_window {L : ℝ} (hL : 0 < L)
+    (h : |PMConstants.Values.α * PMConstants.Values.footprint / L - 0.1180| < 3 * 0.0009) :
+    11.66 < L ∧ L < 12.21 := by
+  have hb := alpha_footprint_bounds
+  rw [abs_lt] at h
+  obtain ⟨h1, h2⟩ := h
+  constructor
+  · by_contra hc; push Not at hc
+    have : PMConstants.Values.α * PMConstants.Values.footprint / 11.66 ≤
+        PMConstants.Values.α * PMConstants.Values.footprint / L :=
+      div_le_div_of_nonneg_left (by linarith [hb.1]) hL hc
+    have h3 : (0.1207 : ℝ) < PMConstants.Values.α * PMConstants.Values.footprint / 11.66 := by
+      rw [lt_div_iff₀ (by norm_num)]; linarith [hb.1]
+    linarith
+  · by_contra hc; push Not at hc
+    have : PMConstants.Values.α * PMConstants.Values.footprint / L ≤
+        PMConstants.Values.α * PMConstants.Values.footprint / 12.21 :=
+      div_le_div_of_nonneg_left (by linarith [hb.1]) (by norm_num) hc
+    have h3 : PMConstants.Values.α * PMConstants.Values.footprint / 12.21 < (0.1153 : ℝ) := by
+      rw [div_lt_iff₀ (by norm_num)]; linarith [hb.2]
+    linarith
+
+/-- Three structurally different substrate counts sit in the band; `11` and `13` do not. -/
+theorem candidates_in_window :
+    (11.66 : ℝ) < 12 ∧ (11.66 : ℝ) < 16 * overhead - 4 ∧ 16 * overhead - 4 < 12.21 ∧
+      (11.66 : ℝ) < strongWorkload ∧ strongWorkload < 12.21 ∧
+      ¬ ((11.66 : ℝ) < 11) ∧ ¬ ((13 : ℝ) < 12.21) := by
+  refine ⟨by norm_num, ?_, ?_, ?_, ?_, by norm_num, by norm_num⟩ <;>
+    norm_num [PMConstants.overhead, PMConstants.GaugeStiffness.strongWorkload,
+      PMConstants.footprint]
+
+/-- The derived ledger is in the band. -/
+theorem ledger_in_window : (11.66 : ℝ) < colourLedger ∧ colourLedger < 12.21 := by
+  rw [colour_ledger]; constructor <;> norm_num
 
 end E8PConstants.StrongLedgerPulls

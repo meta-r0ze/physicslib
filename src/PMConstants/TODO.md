@@ -9,19 +9,21 @@ Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 
 Comparisons belong in `tools/e8p`. These modules still hold measured values.
 
-- **Data that selects.** Two done: the fermion mass law (the event law and Economy each select
-  law A, `κ_τ` comparisons in e8p) and the strong ledger (`ColourChannels.colour_ledger` derives
-  `L₃ = 12η` from the colour-bulk channel count; the `α_s` comparison is in e8p).
-  Still open: `VevCorrections` fixes the linear form `1 + x` and the boundary term `χ/(Dπ)` from
-  the data (`exp_excluded`, `geometric_excluded`); `VevImpedance` now supplies the substrate
-  reason (series addition is exactly first order), so move those exclusions to e8p.
-- **The α_s comparison window.** `ColourChannels.in_window`, `ColourCount.ledger_window` and
-  `ContentWeight` still carry the measured `α_s` window. Move the window to e8p and keep the
-  channel-count rule here.
+- **Data that selects.** Three done: the fermion mass law (the event law and Economy each select
+  law A, `κ_τ` comparisons in e8p); the strong ledger (`ColourChannels.colour_ledger` derives
+  `L₃ = 12η` from the colour-bulk channel count; the `α_s` comparison and the window are in e8p);
+  and the VEV's linear correction form (`VevReadout.exact_net_is_identity` and `residual_series`
+  derive `1 + x` from exact repair; the `exp` and geometric window comparisons are in e8p).
+  Still open: the rest of `VevCorrections` and `VevReadout` state their results against the Fermi
+  window itself (`divisor_window`, `dimension_window`, `boundary_unique`,
+  `bare_dimension_excluded`, `qed_like_excluded`, `compound_excluded`, `total_excluded`). The
+  derivations they test now exist (`VevBoundary` for `χ/(Dπ)`, `VevNoise.noise_share` and
+  `VevReadout.normalized_share` for the divisor), so the whole group moves in one pass: keep the
+  derived form here, put every window statement in e8p.
 - **Measured numbers in conclusions.** Move the comparison and keep the conditional form:
   `ScalarSector.higgs_from_fermi` (measured `G_F` in, `125.26–125.28` GeV out), `WMassTest`,
-  `VevEntry`, `VevCorrections`, `VevAccounting`, `VevBoundary`, `PlanckReadout`,
-  `GravityAccounting`, `ColourChannels`, `ColourCount`, `BoundaryStorage`, `ReferenceMasses`.
+  `VevEntry`, `VevAccounting`, `VevBoundary`, `PlanckReadout`,
+  `GravityAccounting`, `BoundaryStorage`, `ReferenceMasses`.
 - **Prose only.** About twenty further modules name measured values in docstrings
   (`Provenance`, `TableConsequences`, `RegulatoryLabels`, …). Relabel, no code change.
   `ElectroweakBounds.electronGeV` stays: it is the one declared external input.

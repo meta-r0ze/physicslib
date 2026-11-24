@@ -16,9 +16,10 @@ written as the formula times the ratio of correction factors.
 * `divisor_window`: with divisor `k` (natural), `v` lies in the window exactly for `k = 3` or
   `k = 4`. The data cannot separate `σ - χ = 3` from `D = 4`.
 
-**The topological term has exactly the stated form.**
-* `exp_excluded`: `exp x` in place of `1 + x` puts `v` above `246.22001`.
-* `geometric_excluded`: `1/(1 - x)` (the sum `Σ xᵏ`) puts `v` above `246.22038`.
+**The topological term has exactly the stated form.** `VevReadout` derives the linear form from
+exact repair (`exact_net_is_identity`, `residual_series`), so the iterated forms `exp x` and
+`1/(1 − x)` are ruled out by the repair count, not by the window; their window comparisons are in
+`tools/e8p/E8PConstants/PMConstants/VevFormPulls.lean`.
 * `bare_dimension_excluded`: `α/D` without the boundary term puts `v` above `246.2366`.
 * `qed_like_excluded`: `3α/(4π)` puts `v` below `246.2167`.
 
@@ -30,7 +31,8 @@ written as the formula times the ratio of correction factors.
 * *One repair gives the linear form.* `1/(1 - x)` is repairs of repairs, `exp x` continuous
   compounding; the anchor's maintenance is one repair, which is exactly first order. That count is
   derived: the electron is a colour and weak singlet, so its repair is one root event
-  (`RootRepairRule.electron_one_event`). The data reject both iterated forms.
+  (`RootRepairRule.electron_one_event`), and `VevReadout.residual_series` turns the count into the
+  factor. The window comparisons agree and are kept in e8p.
 * *The noise lands on the axes orthogonal to the reference.* Derived in `VevNoise.noise_share`:
   the clock refresh removes noise on the time axis (weak refreshes the clock row,
   `WeakConfinement`), and the kept axis symmetry makes the three spatial axes equivalent, so each
@@ -101,20 +103,6 @@ theorem divisor_window (k : ℕ) (hk : 0 < k) :
       exact_mod_cast this
     omega
   · rintro (rfl | rfl) <;> norm_num [Y_val] <;> constructor <;> nlinarith [hv.1, hv.2]
-
-theorem exp_excluded : 246.22001 < V * Real.exp x / (1 + x) := by
-  have hv := V_bounds
-  have hx := x_bounds
-  have he : 1 + x + x ^ 2 / 2 ≤ Real.exp x := Real.quadratic_le_exp_of_nonneg (by linarith)
-  rw [lt_div_iff₀ (by linarith)]
-  have : V * (1 + x + x ^ 2 / 2) ≤ V * Real.exp x := mul_le_mul_of_nonneg_left he (by linarith)
-  nlinarith
-
-theorem geometric_excluded : 246.22038 < V / ((1 - x) * (1 + x)) := by
-  have hv := V_bounds
-  have hx := x_bounds
-  rw [lt_div_iff₀ (by nlinarith)]
-  nlinarith
 
 theorem bare_dimension_excluded : 246.2366 < V * (1 + α / 4) / (1 + x) := by
   have hv := V_bounds
