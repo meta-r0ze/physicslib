@@ -12,16 +12,14 @@ The VEV is `v = (χΔ² - 188) α⁻¹ m_e (1 + x)(1 - Y/3)`, `x = α/D_eff`, `D
 written as the formula times the ratio of correction factors.
 
 **The noise term is needed, and its divisor is `3` or `4`.**
-* `noise_needed`: dropping `δ_noise` puts `v` above `246.21987`, outside the window.
 * `divisor_window`: with divisor `k` (natural), `v` lies in the window exactly for `k = 3` or
   `k = 4`. The data cannot separate `σ - χ = 3` from `D = 4`.
 
 **The topological term has exactly the stated form.** `VevReadout` derives the linear form from
 exact repair (`exact_net_is_identity`, `residual_series`), so the iterated forms `exp x` and
-`1/(1 − x)` are ruled out by the repair count, not by the window; their window comparisons are in
-`tools/e8p/E8PConstants/PMConstants/VevFormPulls.lean`.
-* `bare_dimension_excluded`: `α/D` without the boundary term puts `v` above `246.2366`.
-* `qed_like_excluded`: `3α/(4π)` puts `v` below `246.2167`.
+`1/(1 − x)` are ruled out by the repair count, not by the window. Those window comparisons, and
+the ones that need no library result (`noise_needed`, `bare_dimension_excluded`,
+`qed_like_excluded`), are in `tools/e8p/E8PConstants/PMConstants/VevFormPulls.lean`.
 
 **The boundary term.**
 * `dimension_window`: the window pins the effective dimension to `(4.1584, 4.1599)`.
@@ -64,11 +62,6 @@ lemma x_bounds : (0.0017545277 : ℝ) < x ∧ x < 0.0017545279 := by
 /-- The formula with noise divisor `k`. -/
 def withDivisor (k : ℝ) : ℝ := V * (1 - Y / k) / (1 - Y / 3)
 
-theorem noise_needed : 246.21987 < V / (1 - Y / 3) := by
-  have hv := V_bounds
-  rw [lt_div_iff₀ (by norm_num [Y_val])]
-  norm_num [Y_val]; nlinarith [hv.1]
-
 /-- **Only divisors 3 and 4 fit.** -/
 theorem divisor_window (k : ℕ) (hk : 0 < k) :
     (246.21957 < withDivisor k ∧ withDivisor k < 246.21971) ↔ k = 3 ∨ k = 4 := by
@@ -103,24 +96,6 @@ theorem divisor_window (k : ℕ) (hk : 0 < k) :
       exact_mod_cast this
     omega
   · rintro (rfl | rfl) <;> norm_num [Y_val] <;> constructor <;> nlinarith [hv.1, hv.2]
-
-theorem bare_dimension_excluded : 246.2366 < V * (1 + α / 4) / (1 + x) := by
-  have hv := V_bounds
-  have hx := x_bounds
-  have ha := alpha_bounds
-  rw [lt_div_iff₀ (by linarith)]
-  nlinarith
-
-theorem qed_like_excluded : V * (1 + 3 * α / (4 * Real.pi)) / (1 + x) < 246.2167 := by
-  have hv := V_bounds
-  have hx := x_bounds
-  have ha := alpha_bounds
-  have hp := pi_bounds
-  have hq : 3 * α / (4 * Real.pi) < 0.0017422 := by
-    rw [div_lt_iff₀ (by linarith)]; nlinarith
-  rw [div_lt_iff₀ (by linarith)]
-  have h1 : V * (3 * α / (4 * Real.pi)) < V * 0.0017422 := mul_lt_mul_of_pos_left hq (by linarith)
-  nlinarith
 
 /-! ## The boundary term is exactly `χ/(4π)` -/
 

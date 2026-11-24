@@ -5,28 +5,32 @@ Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premise
 Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 [`Values`](Values.lean) alone; add a name there rather than importing an internal module.
 
-## Measured numbers that should live in e8p
+## The Fermi window in the VEV subsystem
 
-Comparisons belong in `tools/e8p`. These modules still hold measured values.
+`e8p` owns comparisons; this library owns derived forms. Everywhere else in PMConstants that rule
+now holds. One subsystem does not, and it is a restructuring rather than a cleanup.
 
-- **Data that selects.** Three done: the fermion mass law (the event law and Economy each select
-  law A, `κ_τ` comparisons in e8p); the strong ledger (`ColourChannels.colour_ledger` derives
-  `L₃ = 12η` from the colour-bulk channel count; the `α_s` comparison and the window are in e8p);
-  and the VEV's linear correction form (`VevReadout.exact_net_is_identity` and `residual_series`
-  derive `1 + x` from exact repair; the `exp` and geometric window comparisons are in e8p).
-  Still open: the rest of `VevCorrections` and `VevReadout` state their results against the Fermi
-  window itself (`divisor_window`, `dimension_window`, `boundary_unique`,
-  `bare_dimension_excluded`, `qed_like_excluded`, `compound_excluded`, `total_excluded`). The
-  derivations they test now exist (`VevBoundary` for `χ/(Dπ)`, `VevNoise.noise_share` and
-  `VevReadout.normalized_share` for the divisor), so the whole group moves in one pass: keep the
-  derived form here, put every window statement in e8p.
-- **Measured numbers in conclusions.** Move the comparison and keep the conditional form:
-  `ScalarSector.higgs_from_fermi` (measured `G_F` in, `125.26–125.28` GeV out), `WMassTest`,
-  `VevEntry`, `VevAccounting`, `VevBoundary`, `PlanckReadout`,
-  `GravityAccounting`, `BoundaryStorage`, `ReferenceMasses`.
-- **Prose only.** About twenty further modules name measured values in docstrings
-  (`Provenance`, `TableConsequences`, `RegulatoryLabels`, …). Relabel, no code change.
-  `ElectroweakBounds.electronGeV` stays: it is the one declared external input.
+Done, for the record: the fermion mass law, the strong ledger and the VEV's linear correction form
+each have a substrate derivation here with the measured comparison in `e8p`
+(`FermionLawPulls`, `StrongLedgerPulls`, `VevFormPulls`).
+
+What is left is that nine results state their conclusion **against the measured Fermi window**
+`(246.21957, 246.21971)` rather than deriving a form, and the library leans on them:
+
+| Result | In | Used by |
+| --- | --- | --- |
+| `divisor_window` | `VevCorrections` | `NoiseShare.selected_divisor`, `VevReadout.total_excluded`, `vev_from_readout` |
+| `dimension_window`, `boundary_unique` | `VevCorrections` | `VevBoundary.boundary_excluded` and every sibling exclusion |
+| `Fits` and seven exclusions | `VevBoundary` | the module is built on it |
+| `compound_excluded`, `total_excluded`, `vev_from_readout` | `VevReadout` | nothing |
+| `chi_over_k`, `payload_weighted_excluded` | `BoundaryStorage` | nothing |
+
+So the move is one pass over `VevCorrections`, `VevReadout`, `VevBoundary`, `NoiseShare` and
+`BoundaryStorage`: keep the substrate objects and derived forms here (`withDivisor`,
+`withDimension`, `parallelClosures`, `VevNoise.noise_share`, `VevReadout.normalized_share`), and
+put every statement that names the window in `e8p`. The derivations the window statements confirm
+all exist already, so nothing is lost. It needs a compiler in the loop, because `Fits` and
+`divisor_window` are load-bearing and the five modules are interlocked.
 
 ## Premises to name or derive
 

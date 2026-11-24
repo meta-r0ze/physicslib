@@ -18,6 +18,17 @@ The Fermi window agrees, and that agreement is a comparison, so it lives here.
   `(246.21957, 246.21971)` that the measured Fermi constant fixes
   (`PMConstants.VevAccounting.fermi_window`).
 * `geometric_excluded`: `1/(1 − x)`, the sum `Σ xᵏ`, puts `v` above `246.22038` GeV.
+
+Three further exclusions that no library result rests on, moved here for the same reason:
+
+* `noise_needed`: dropping the noise factor `1 − Y/3` puts `v` above `246.21987` GeV.
+* `bare_dimension_excluded`: `α/D` without the boundary term puts `v` above `246.2366` GeV. The
+  boundary term itself is built in `PMConstants.VevBoundary`.
+* `qed_like_excluded`: a QED-like `3α/(4π)` puts `v` below `246.2167` GeV.
+
+The window statements the library still rests on (`PMConstants.VevCorrections.divisor_window`,
+`dimension_window`, `boundary_unique`, and `VevReadout`'s and `VevBoundary`'s results built on
+them) stay there for now; see that library's `TODO`.
 -/
 
 noncomputable section
@@ -39,6 +50,32 @@ theorem geometric_excluded : 246.22038 < V / ((1 - x) * (1 + x)) := by
   have hv := V_bounds
   have hx := x_bounds
   rw [lt_div_iff₀ (by nlinarith)]
+  nlinarith
+
+/-- Dropping the noise factor leaves the window. -/
+theorem noise_needed : 246.21987 < V / (1 - Y / 3) := by
+  have hv := V_bounds
+  rw [lt_div_iff₀ (by norm_num [Y_val])]
+  norm_num [Y_val]; nlinarith [hv.1]
+
+/-- The bare dimension, with no boundary term, leaves the window. -/
+theorem bare_dimension_excluded : 246.2366 < V * (1 + α / 4) / (1 + x) := by
+  have hv := V_bounds
+  have hx := x_bounds
+  have ha := alpha_bounds
+  rw [lt_div_iff₀ (by linarith)]
+  nlinarith
+
+/-- A QED-like correction leaves the window on the other side. -/
+theorem qed_like_excluded : V * (1 + 3 * α / (4 * Real.pi)) / (1 + x) < 246.2167 := by
+  have hv := V_bounds
+  have hx := x_bounds
+  have ha := alpha_bounds
+  have hp := pi_bounds
+  have hq : 3 * α / (4 * Real.pi) < 0.0017422 := by
+    rw [div_lt_iff₀ (by linarith)]; nlinarith
+  rw [div_lt_iff₀ (by linarith)]
+  have h1 : V * (3 * α / (4 * Real.pi)) < V * 0.0017422 := mul_lt_mul_of_pos_left hq (by linarith)
   nlinarith
 
 end E8PConstants.VevFormPulls

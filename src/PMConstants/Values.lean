@@ -108,7 +108,7 @@ alias vev_ratio_bounds := JointConstants.vev_ratio_bounds
 These are the `PMConstants` results `e8p` reports. They are re-exported here so the reporter
 imports `Values` alone. -/
 
-export PMConstants.ElectroweakBounds (coupling_bounds w_mass_bounds z_mass_bounds)
+export PMConstants.ElectroweakBounds (coupling_bounds w_mass_bounds z_mass_bounds pi_bounds)
 export PMConstants.ElectroweakE8 (vevRatio)
 export PMConstants.WMassTest (wMass ratio_bounds)
 export PMConstants.GaugeSpectrum (wMassSquared zMassSquared)
@@ -136,6 +136,6 @@ export PMConstants.CertifiedConstants (α)
 export PMConstants.StrongLedgerTest (ledgerCoupling alpha_footprint_bounds ledger_twelve ledger_separation)
 export PMAction.WallDispersion (massSqM rr)
 export PMConstants.VevEntry (link_kappa_neg economy_law_A)
-export PMConstants.VevCorrections (V x V_bounds x_bounds)
+export PMConstants.VevCorrections (V Y x V_bounds Y_val x_bounds)
 
 end PMConstants.Values
