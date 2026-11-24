@@ -1,6 +1,4 @@
-import PMConstants.SectorCapabilities
-import PMConstants.ResourceLedger
-import PMConstants.TableConsequences
+import PMConstants.Values
 
 /-!
 # Which hypercharge scope the W mass allows
