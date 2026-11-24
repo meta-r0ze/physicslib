@@ -4,10 +4,14 @@ import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.Reindex
 import Mathlib.Data.Matrix.Block
 
-/-! Common unitary weak and colour actions on the actual packet, with the
-existing hypercharge assignment. The inherited axis/chirality interpretation
-is not derived here. Restriction to SU(2)/SU(3) is possible; uniqueness or
-physical selection of those subgroups and their normalization is not proved. -/
+/-! Common unitary weak and colour actions on the actual packet, with the hypercharge
+assignment of `Hypercharge.standard`, which the carriers derive
+(`CarrierRepresentation.carrierCharges_eq_standard`). The axis and chirality readings are derived
+upstream: the reference singles out one axis (`ReferenceAxis`,
+`CarrierRepresentation.one_axis`), and "left" names the wall that carries the reference, because
+the weak current repairs it (`PMAction.ChiralityConvention.weak_acts_on_reference`). Restriction
+to SU(2)/SU(3) is possible; uniqueness or physical selection of those subgroups and their
+normalization is not proved. -/
 noncomputable section
 namespace PMConstants.PacketGaugeActions
 open Matrix Finset

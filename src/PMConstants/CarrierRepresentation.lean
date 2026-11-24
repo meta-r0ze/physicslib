@@ -23,7 +23,9 @@ lepton number as the fourth "colour".
   lepton charge `−1`, colour is `1/3`.
 * `charges_from_carriers`: with `Y = B − L` on the left and `Y = B − L + 2T₃` on the right
   (`T₃ = ±1/2` from the sign), the carriers reproduce Paper III's forced charges
-  (`Hypercharge.standard`): `1/3, 4/3, −2/3, −1, −2, 0`.
+  (`Hypercharge.standard`): `1/3, 4/3, −2/3, −1, −2, 0`. The right wall's extra `2T₃` is the
+  insertion of a link of unit charge, not a separate reading (`carrier_table`,
+  `carrierCharges_yukawa`).
 
 Premises: both domain-wall sectors use a class carried to the vector class by triality (any
 nontrivial class is, keeping the roots: `PMSubstrate.ChannelSymmetry.class_to_vector`; and all
@@ -34,6 +36,12 @@ tone (`ReferenceFrames`, η), the cell holds one carrier state (`ReferenceEconom
 and a carrier lies on exactly one axis (`one_axis`), so the reference singles out one axis
 (`ReferenceAxis`). Which axis that is breaks `SU(4)` to colour
 times lepton number; a natural reading is the temporal axis, whose clock SU(2) refreshes.
+
+So this module's premises are three, and they are the only inputs to the charge table: the
+triality carry of both sectors to the vector class, the sign as the doublet index, and the
+reserved axis. The lepton charge `−1` is the normalization of `bl_traceless`, and the unit link is
+`SectorLinks`. `Hypercharge`'s flux and Yukawa conditions are consequences, not further premises
+(`carrierCharges_flux`, `carrierCharges_yukawa`).
 -/
 
 namespace PMConstants.CarrierRepresentation
@@ -90,5 +98,58 @@ theorem charges_from_carriers (v : V) :
     bl v = hyper standard (leftType v) ∧ bl v + 2 * t3 v = hyper standard (rightType v) := by
   unfold bl t3 leftType rightType
   cases onLepton v <;> cases positive v <;> simp [hyper, standard] <;> norm_num
+
+/-! ## The charge table from the carriers
+
+`Hypercharge` selects its table with a flux condition, a Yukawa-balance condition, a neutral
+sterile channel and a unit scalar charge. On the carriers the first two are not extra conditions:
+flux conservation is tracelessness over the four axes (`carrierCharges_flux`), and the Yukawa
+balance is the statement that the link carries one unit of charge (`carrierCharges_yukawa`). So
+the table follows from the carrier geometry, the forced lepton charge and the unit link
+(`carrierCharges_eq_standard`).
+-/
+
+/-- The charge table read from the carriers: lepton-number value `b` on the reserved axis, `a` on
+each colour axis, and the right wall shifted by `2 t3` for a link of charge `h`. -/
+def carrierCharges (a b h : ℚ) : Hypercharge.Charges := ⟨a, a + h, a - h, b, b - h, b + h⟩
+
+/-- **The table in terms of `bl` and `t3`.** The left wall carries the axis value; the right wall
+adds `2 h t3`, the insertion of a link of charge `h`. -/
+theorem carrier_table (a b h : ℚ) (v : V) :
+    RequirementTable.hyper (carrierCharges a b h) (leftType v) = (if onLepton v then b else a) ∧
+      RequirementTable.hyper (carrierCharges a b h) (rightType v) =
+        (if onLepton v then b else a) + 2 * h * t3 v := by
+  unfold carrierCharges leftType rightType t3
+  cases onLepton v <;> cases positive v <;>
+    simp [RequirementTable.hyper] <;> ring
+
+/-- **Flux conservation is axis tracelessness.** The two further flux conditions hold for every
+`a`, `b`, `h`. -/
+theorem carrierCharges_flux (a b h : ℚ) (htr : 3 * a + b = 0) :
+    Hypercharge.Flux (carrierCharges a b h) := by
+  dsimp [Hypercharge.Flux, carrierCharges]
+  exact ⟨by linarith, by ring, by ring⟩
+
+/-- **The Yukawa balance is the unit link.** The right wall differs from the left by the link's
+own charge, so the balance holds by construction, for any `h`. -/
+theorem carrierCharges_yukawa (a b h : ℚ) : Hypercharge.Yukawa (carrierCharges a b h) h :=
+  ⟨rfl, rfl, rfl, rfl⟩
+
+/-- **The carrier table is the standard table.** Tracelessness over the four axes with the forced
+lepton charge (`bl_traceless`) and one unit of link charge give exactly `Hypercharge.standard`.
+No Yukawa-invariance premise is used. -/
+theorem carrierCharges_eq_standard (a b : ℚ) (htr : 3 * a + b = 0) (hl : b = -1) :
+    carrierCharges a b 1 = Hypercharge.standard := by
+  obtain ⟨ha, -⟩ := bl_traceless a b htr hl
+  subst hl
+  subst ha
+  norm_num [carrierCharges, Hypercharge.standard]
+
+/-- The carriers' own values are that table: `bl` on the left wall, `bl + 2 t3` on the right. -/
+theorem charges_eq_carrier_table (v : V) :
+    bl v = RequirementTable.hyper (carrierCharges (1/3) (-1) 1) (leftType v) ∧
+      bl v + 2 * t3 v = RequirementTable.hyper (carrierCharges (1/3) (-1) 1) (rightType v) := by
+  rw [carrierCharges_eq_standard (1/3) (-1) (by norm_num) rfl]
+  exact charges_from_carriers v
 
 end PMConstants.CarrierRepresentation

@@ -3,11 +3,18 @@ import Mathlib.Tactic
 /-!
 # Charge selection from specified conservation and coupling constraints
 
-The representation content (one generation, including a sterile singlet) and
-the charge normalization are hypotheses. These are not derived from rank alone.
-Linear flux conservation by itself leaves a continuous right-quark split.
-Gauge-invariant Yukawa couplings plus a neutral sterile channel and a unit
-scalar charge remove the freedom. No geometric numerator is chosen by hand.
+Linear flux conservation by itself leaves a continuous right-quark split
+(`split_conserves`). Adding the Yukawa balance, a neutral sterile channel and a unit scalar
+charge removes the freedom (`charges_forced`). No geometric numerator is chosen by hand.
+
+**These two conditions are the carrier geometry, not separate readings.** On the carriers of
+`CarrierRepresentation`, flux conservation is tracelessness over the four axes
+(`carrierCharges_flux`) and the Yukawa balance is the statement that the link carries one unit of
+charge (`carrierCharges_yukawa`). With the forced lepton charge of `bl_traceless`, the table here
+is the carrier table (`carrierCharges_eq_standard`), so `standard` is a derived object and the
+name is the Standard Model's for the same charges. What stays a premise is the representation
+content (one generation with a sterile singlet) and the three carrier premises listed in
+`CarrierRepresentation`.
 -/
 
 namespace PMConstants.Hypercharge
