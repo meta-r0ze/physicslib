@@ -17,9 +17,19 @@ between them. The coupling modifier is `κ = (v/m)·dm/dv`; the Standard Model v
   order `m`.
 * Law B, the link sets the detuning amplitude: `δ = y v`. Then `κ = 2(m + 1)/(2m + 1)`
   (`kappa_amp`), and for light fermions `1.98 < κ ≤ 2` (`kappa_amp_light`).
-* `tau_decides`: against `κ_τ = 0.92 ± 0.08` (CMS, 2022), law A's pull is at most `1.0` and
-  law B's exceeds `13`. The data select law A: the detuning cost, not its amplitude, is linear in
-  the link. This agrees with the event law, which prices the squared amplitude.
+**The event law selects law A, with no measured input.** Under the event law a displacement is
+priced by its square: the link cost is `(toll·m/4)‖φ̂ − U_εφ̂‖²` (`PMAction.CommonResponse`,
+`PMConstants.LinkFromEvents`). The link's vacuum value is therefore a cost, so it is proportional
+to the *square* of the detuning it induces, `v = c δ²`. At such a link law A returns the wall's
+own mass, `PMAction.DetuningMass.lightMass δ` (`massA_event_priced`), while law B returns
+`lightMass (δ²)` (`massB_event_priced`); the two agree only at `δ = 0` and `δ = 1`
+(`laws_agree_iff`). So the detuning cost, not its amplitude, is linear in the link. `VevEntry`
+selects the same law independently, from Economy: hypercharge balance forces an odd number of
+doublet insertions and Economy admits exactly one, so the mass is linear in `v`
+(`VevEntry.economy_law_A`).
+
+The measured check against `κ_τ` is a comparison and lives in
+`tools/e8p/E8PConstants/PMConstants/FermionLawPulls.lean`.
 -/
 
 noncomputable section
@@ -103,21 +113,51 @@ theorem kappa_cost_light {m : ℝ} (h0 : 0 ≤ m) (h1 : m ≤ 1/100) :
   · rw [lt_div_iff₀ hd]; linarith
   · rw [div_le_one hd]; linarith
 
+/-! ## The event law prices a displacement by its square
+
+So the link's value is the cost `v = c δ²` of the detuning `δ` it induces, and the law that
+returns the wall's own mass at that link is law A. -/
+
+/-- **Law A at an event-priced link is the wall's mass.** -/
+theorem massA_event_priced {c δ : ℝ} (hc : 0 < c) (hδ : 0 ≤ δ) :
+    massA c⁻¹ (c * δ ^ 2) = PMAction.DetuningMass.lightMass δ := by
+  rw [massA_detuning (by positivity)]
+  congr 1
+  rw [inv_mul_eq_div, mul_comm, mul_div_assoc, div_self hc.ne', mul_one, Real.sqrt_sq hδ]
+
+/-- **Law B at the same link is not.** It returns the mass of a wall detuned by `δ²`. -/
+theorem massB_event_priced {c δ : ℝ} (hc : 0 < c) :
+    massB c⁻¹ (c * δ ^ 2) = PMAction.DetuningMass.lightMass (δ ^ 2) := by
+  rw [massB_detuning]
+  congr 1
+  rw [inv_mul_eq_div, mul_comm, mul_div_assoc, div_self hc.ne', mul_one]
+
+/-- **The two laws agree only at `δ = 0` and `δ = 1`.** Elsewhere the event-law pricing
+distinguishes them, with no measured input. -/
+theorem laws_agree_iff {c δ : ℝ} (hc : 0 < c) (hδ : 0 ≤ δ) :
+    massA c⁻¹ (c * δ ^ 2) = massB c⁻¹ (c * δ ^ 2) ↔ δ = 0 ∨ δ = 1 := by
+  rw [massA_event_priced hc hδ, massB_event_priced hc]
+  unfold PMAction.DetuningMass.lightMass
+  constructor
+  · intro h
+    have hs : Real.sqrt (δ ^ 2 + 1/4) = Real.sqrt ((δ ^ 2) ^ 2 + 1/4) := by linarith
+    have e1 := Real.sq_sqrt (show (0:ℝ) ≤ δ ^ 2 + 1/4 by positivity)
+    have e2 := Real.sq_sqrt (show (0:ℝ) ≤ (δ ^ 2) ^ 2 + 1/4 by positivity)
+    have h2 : δ ^ 2 + 1/4 = (δ ^ 2) ^ 2 + 1/4 := by rw [← e1, ← e2, hs]
+    have h4 : δ ^ 2 * (δ - 1) * (δ + 1) = 0 := by nlinarith [h2]
+    rcases mul_eq_zero.mp h4 with h5 | h5
+    · rcases mul_eq_zero.mp h5 with h6 | h6
+      · exact Or.inl (by nlinarith [h6])
+      · exact Or.inr (by linarith)
+    · exact Or.inl (by linarith)
+  · rintro (rfl | rfl) <;> norm_num
+
 theorem kappa_amp_light {m : ℝ} (h0 : 0 ≤ m) (h1 : m ≤ 1/100) :
     1.98 < 2 * (m + 1) / (2 * m + 1) ∧ 2 * (m + 1) / (2 * m + 1) ≤ 2 := by
   have hd : 0 < 2 * m + 1 := by linarith
   constructor
   · rw [lt_div_iff₀ hd]; linarith
   · rw [div_le_iff₀ hd]; linarith
-
-theorem tau_decides {m : ℝ} (h0 : 0 ≤ m) (h1 : m ≤ 1/100) :
-    |(m + 1) / (2 * m + 1) - 0.92| / 0.08 ≤ 1.0 ∧
-      13 < |2 * (m + 1) / (2 * m + 1) - 0.92| / 0.08 := by
-  obtain ⟨a1, a2⟩ := kappa_cost_light h0 h1
-  obtain ⟨b1, b2⟩ := kappa_amp_light h0 h1
-  constructor
-  · rw [abs_of_pos (by linarith), div_le_iff₀ (by norm_num)]; linarith
-  · rw [abs_of_pos (by linarith), lt_div_iff₀ (by norm_num)]; linarith
 
 /-- The coupling modifier of law A, from its actual derivative. -/
 theorem law_cost {y v : ℝ} (hyv : 0 < y * v) :

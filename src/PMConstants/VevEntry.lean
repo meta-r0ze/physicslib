@@ -7,18 +7,22 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 # How the VEV enters the wall masses: the inter-wall link is excluded
 
 `FermionMassLaw` compares two ways the link vacuum value `v` could set the light fermion's mass,
-through the detuning. Law A is the cost `δ² ∝ v`, and law B is the amplitude `δ ∝ v`; `tau_decides`
-selects A. A third possibility is that `v` sets the *inter-wall link* `y`, which joins the two
+through the detuning. Law A is the cost `δ² ∝ v`, and law B is the amplitude `δ ∝ v`. The event
+law selects A with no measured input (`FermionMassLaw.massA_event_priced`), and so does Economy
+here (`economy_law_A`). A third possibility is that `v` sets the *inter-wall link* `y`, which joins the two
 chiral walls, as a Yukawa coupling joins left and right fermions. Paper II's exact two-wall
 spectrum (`WallDispersion`) decides it.
 
 * `link_kappa`: with `y = c v`, the light branch has coupling modifier
   `κ = (v/m) dm/dv = −y²/r < 0`, where `r = √(y⁴ + 4y²δ²)`. The mass falls as the link grows (the
   seesaw `m₋² = δ⁴/m₊²`).
-* `link_excluded`: against `κ_τ = 0.92 ± 0.08`, a negative `κ` is more than `11σ` away.
+* `link_kappa_neg`: that reading makes `κ` negative, so the mass *falls* as the link grows. The
+  event law prices a displacement by its square, so the vacuum value is a cost and sets `δ²`
+  (law A), not an amplitude; `κ > 0` follows.
 
-Together with `tau_decides` (law B more than `13σ` away), the VEV enters through the detuning cost
-(law A), not its amplitude and not the inter-wall link.
+So the VEV enters through the detuning cost (law A), not its amplitude and not the inter-wall
+link. The measured `κ_τ` comparisons are in
+`tools/e8p/E8PConstants/PMConstants/FermionLawPulls.lean`.
 
 * `kappa_power`, `kappa_power_light`, `yukawa_selects_A`: for `δ² = c vᵠ`, a light fermion has
   `κ → q`. A mass linear in `v` gives `q = 1`, which is law A (`mPow_one`).
@@ -74,13 +78,6 @@ theorem link_kappa_neg (δ y : ℝ) (hy : 0 < y) (hδ : δ ≠ 0) :
   rw [link_kappa δ y hy hδ]
   have := rr_pos δ y hy.ne'
   have : 0 < y ^ 2 / rr δ y := by positivity
-  linarith
-
-/-- **The inter-wall link is excluded** by the measured `κ_τ = 0.92 ± 0.08` (more than `11σ`). -/
-theorem link_excluded (δ y : ℝ) (hy : 0 < y) (hδ : δ ≠ 0) :
-    11 < |y / (2 * massSqM δ y) * (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) - 0.92| / 0.08 := by
-  have h := link_kappa_neg δ y hy hδ
-  rw [abs_of_neg (by linarith), lt_div_iff₀ (by norm_num)]
   linarith
 
 /-! ## Law A is the Yukawa-linear entry -/

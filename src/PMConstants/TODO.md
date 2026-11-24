@@ -9,11 +9,10 @@ Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 
 Comparisons belong in `tools/e8p`. These modules still hold measured values.
 
-- **Data that selects.** `FermionMassLaw` picks law A over law B with CMS `κ_τ = 0.92 ± 0.08`;
-  its own docstring gives the substrate reason (the event law prices the squared amplitude), so
-  the data step is removable, not only movable. `StrongLedgerTest` selects the integer ledger
-  `L = 12` against `α_s = 0.1180 ± 0.0009`. `VevImpedance` fixes the linear form `1 + x` and the
-  boundary term `χ/(Dπ)` from the data.
+- **Data that selects.** `StrongLedgerTest` selects the integer ledger `L = 12` against
+  `α_s = 0.1180 ± 0.0009`. `VevImpedance` fixes the linear form `1 + x` and the boundary term
+  `χ/(Dπ)` from the data. (The fermion mass law is done: the event law and Economy each select
+  law A, and the `κ_τ` comparisons moved to e8p.)
 - **Measured numbers in conclusions.** Move the comparison and keep the conditional form:
   `ScalarSector.higgs_from_fermi` (measured `G_F` in, `125.26–125.28` GeV out), `WMassTest`,
   `VevEntry`, `VevCorrections`, `VevAccounting`, `VevBoundary`, `PlanckReadout`,
