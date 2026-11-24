@@ -191,3 +191,12 @@ classes (the total singlet is invisible), 15 visible channels per generation, an
 Each program meets the six pillars on the 43-site ring (`spine_generations`). Masses are open.
 The generation count has a catalog row, `light_generations`, compared with `N_ν` from the Z
 invisible width.
+
+## Charged-lepton wire benchmark
+
+Run `e8p --lepton-wire` for the unscored Schur comparison at `k = α/2`, real resonance,
+and unit crossing. The report gives the certified bare middle-to-heavy mass ratio
+and the uniform upper bound when the normalized static offset is in `(0,1)`. It
+compares both with the quotient of the repository's frozen muon/electron and
+tau/electron references. The reference interval uses the supplied endpoints of each
+input. The physical rates and full-wall spectrum remain open.
