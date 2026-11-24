@@ -1,4 +1,4 @@
-import PMConstants.ScalarSector
+import PMConstants.Values
 
 /-!
 # The scalar ledger picks the same channel accounting
@@ -30,7 +30,7 @@ def higgsSqPayload (GF : ℝ) : ℝ := 2 * lambdaPayload / (Real.sqrt 2 * GF)
 
 theorem payload_higgs {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5) :
     125.52 < Real.sqrt (higgsSqPayload GF) ∧ Real.sqrt (higgsSqPayload GF) < 125.53 := by
-  have hs := JointConstants.sqrt_two_bounds
+  have hs := PMConstants.Values.sqrt_two_bounds
   have hd : 0 < Real.sqrt 2 * GF := by nlinarith [hs.1, h.1]
   have hlo : (125.52 : ℝ)^2 < higgsSqPayload GF := by
     unfold higgsSqPayload lambdaPayload overhead

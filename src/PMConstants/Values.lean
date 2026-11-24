@@ -2,6 +2,23 @@ import PMConstants.CurrentConstants
 import PMConstants.ElectroweakE8
 import PMConstants.ElectroweakBounds
 import PMConstants.JointConstants
+import PMConstants.WMassTest
+import PMConstants.GaugeLedgers
+import PMConstants.GaugeSpectrum
+import PMConstants.GaugeTraceNormalization
+import PMConstants.GeneratorNormalization
+import PMConstants.PlanckReadout
+import PMConstants.GravityAccounting
+import PMConstants.FloorNeutrino
+import PMConstants.ColourChannels
+import PMConstants.ContentWeight
+import PMConstants.Depth
+import PMConstants.Bulk
+import PMConstants.ReadoutAccounting
+import PMConstants.SharedReference
+import PMConstants.TableConsequences
+import PMConstants.ResourceLedger
+import PMConstants.ScalarSector
 
 /-!
 # PMConstants canonical values
@@ -25,6 +42,9 @@ names; keep using them only for regression/exclusion work.
 
 Entry point: `Values.current_snapshot` for the dimensionless values, with the
 individual `*_bounds` re-exported for direct use.
+
+The second half of the module re-exports the gauge, gravity, readout and ledger names that `e8p`
+reports, so the reporter reads this module alone and never a `PMConstants` internal.
 -/
 
 noncomputable section
@@ -44,6 +64,9 @@ abbrev electronYukawa : ℝ := CurrentConstants.electronYukawa
 
 /-- Dimensionful electron-mass anchor in GeV (comparison input, not E8-derived). -/
 abbrev electronGeV : ℝ := ElectroweakBounds.electronGeV
+
+/-- The anchor as the substrate's SI electron mass, for unfolding downstream. -/
+theorem electronGeV_eq : electronGeV = PMSubstrate.SIUnits.electronMassGeV := rfl
 
 /-- VEV from the canonical `alpha`, in `me` units. -/
 abbrev vev (me : ℝ) : ℝ := ElectroweakE8.vev alpha me
@@ -74,5 +97,31 @@ alias weak_squared_bounds := ElectroweakBounds.weak_squared_bounds
 alias hypercharge_squared_bounds := ElectroweakBounds.hypercharge_squared_bounds
 alias strong_squared_bounds := ElectroweakBounds.strong_squared_bounds
 alias vev_ratio_bounds := JointConstants.vev_ratio_bounds
+
+/-! ## Reported names
+
+These are the `PMConstants` results `e8p` reports. They are re-exported here so the reporter
+imports `Values` alone. -/
+
+export PMConstants.ElectroweakBounds (coupling_bounds w_mass_bounds z_mass_bounds)
+export PMConstants.ElectroweakE8 (vevRatio)
+export PMConstants.WMassTest (wMass ratio_bounds)
+export PMConstants.GaugeSpectrum (wMassSquared zMassSquared)
+export PMConstants.GaugeLedgers (reqY ledger hyper_value)
+export PMConstants.GaugeTraceNormalization (rawMixing raw_mixing_exact)
+export PMConstants.GeneratorNormalization (mixing trace_form_gives_raw charge_units_give_effective)
+export PMConstants.PlanckReadout (planckMass planckMass_bounds)
+export PMConstants.JointConstants (electronClosureRatio electron_closure_bounds sqrt_two_bounds)
+export PMConstants.GravityAccounting (residual_tight_bounds channels_as_frame)
+export PMConstants.Depth (gravity)
+export PMConstants.FloorNeutrino (floor_bounds meEV)
+export PMConstants.Bulk (floorMass)
+export PMConstants.ColourChannels (colourLedger colour_ledger strong_from_channels)
+export PMConstants.ContentWeight (chi footprintW colourW extensive_w_mass extensive_strong)
+export PMConstants.ReadoutAccounting (rawWMass selectedWeights)
+export PMConstants.SharedReference (quarkWMass ReferenceLayout)
+export PMConstants.TableConsequences (Premises)
+export PMConstants.ResourceLedger (sterile_counted)
+export PMConstants.ScalarSector (higgsSq higgs_from_fermi lambda_insensitive)
 
 end PMConstants.Values

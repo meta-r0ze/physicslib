@@ -1,8 +1,6 @@
-import PMConstants.CurrentConstants
+import PMConstants.Values
 import PMHadrons.Values
 import PMSubstrate.Impedance
-import PMConstants.GravityAccounting
-import PMConstants.Depth
 import PMFlavor.Values
 import PMCosmology.Scaling
 import PMCosmology.SubstrateLoad
@@ -20,12 +18,8 @@ import PMHadrons.KaonWidth
 import PMHadrons.KaonPionRatio
 import PMHadrons.DecayInstantiation
 import PMElementaryParticles.Values
-import PMConstants.WMassTest
-import PMConstants.GaugeLedgers
-import PMConstants.ColourChannels
 import PMCosmology.Background
 import PMSubstrate.Readouts
-import PMConstants.PlanckReadout
 import E8PConstants.PMSubstrate.ExperimentalComparison
 import E8PConstants.PMAtoms.E8TickUnit
 import E8PConstants.PMFlavor.ExperimentalPulls
@@ -33,10 +27,6 @@ import E8PConstants.PMConstants.ScalarAccounting
 import E8PConstants.PMFlavor.FlavourPulls
 import E8PConstants.PMHadrons.CompositeMassPulls
 import E8PConstants.PMConstants.HyperScope
-import PMConstants.ElectroweakBounds
-import PMConstants.ElectroweakE8
-import PMConstants.JointConstants
-import PMConstants.FloorNeutrino
 import PMAtoms
 import E8PConstants
 
@@ -49,19 +39,19 @@ open E8PConstants
 
 def value : Key → ℝ
   | .inverseAlpha => PMSubstrate.geometricIndex
-  | .alpha => CurrentConstants.alpha
+  | .alpha => PMConstants.Values.alpha
   | .overhead => overhead
   | .footprint => footprint
-  | .weakFraction => CurrentConstants.weakFraction
-  | .scalar => CurrentConstants.scalar
+  | .weakFraction => PMConstants.Values.weakFraction
+  | .scalar => PMConstants.Values.scalar
   | .scalarToll => scalarToll
-  | .electronYukawa => CurrentConstants.electronYukawa
-  | .strong => CurrentConstants.strong
-  | .vevRatio => ElectroweakE8.vevRatio CertifiedConstants.α
-  | .electronMassInput => ElectroweakBounds.electronGeV
-  | .vev => ElectroweakE8.vev CertifiedConstants.α ElectroweakBounds.electronGeV
-  | .higgsMass => ElectroweakE8.higgsMass CertifiedConstants.α ElectroweakBounds.electronGeV
-  | .fermi => ElectroweakE8.fermi CertifiedConstants.α ElectroweakBounds.electronGeV
+  | .electronYukawa => PMConstants.Values.electronYukawa
+  | .strong => PMConstants.Values.strong
+  | .vevRatio => PMConstants.Values.vevRatio PMConstants.Values.alpha
+  | .electronMassInput => PMConstants.Values.electronGeV
+  | .vev => PMConstants.Values.vev PMConstants.Values.electronGeV
+  | .higgsMass => PMConstants.Values.higgsMass PMConstants.Values.electronGeV
+  | .fermi => PMConstants.Values.fermi PMConstants.Values.electronGeV
   | .jarlskog => PMFlavor.Values.jarlskog
   | .load => PMCosmology.loadFactor
   | .hubbleLate => (674 : ℝ) / 10 * PMCosmology.loadFactor
@@ -100,7 +90,7 @@ def value : Key → ℝ
   | .cabibbo => PMFlavor.Values.cabibbo
   | .nc => ((PMSubstrate.baseline.embeddingDimension - PMSubstrate.baseline.eulerCharacteristic : ℕ) : ℝ)
   | .weinbergGut => ((PMSubstrate.baseline.embeddingDimension - PMSubstrate.baseline.eulerCharacteristic : ℕ) : ℝ) / (2 * (PMSubstrate.baseline.dimension : ℝ))
-  | .alphaG => PMConstants.Depth.gravity PMConstants.CertifiedConstants.α
+  | .alphaG => PMConstants.Values.gravity PMConstants.Values.alpha
   | .boundaryStorage => (PMSubstrate.baseline.eulerCharacteristic : ℝ) / ((PMSubstrate.baseline.embeddingDimension : ℝ) - PMSubstrate.baseline.eulerCharacteristic)
   | .beta0 => PMConstants.beta0 3
   | .pmnsE11 => PMFlavor.Values.pmnsEntry 0 0
@@ -129,23 +119,23 @@ def value : Key → ℝ
   | .fPiMeV => PMHadrons.Values.pionDecayConstantE8 * PMHadrons.CompositeMasses.me
   | .fKMeV => PMHadrons.Values.kaonDecayConstantE8 * PMHadrons.CompositeMasses.me
   | .wRatio => Real.sqrt (1 - PMConstants.clockRatio)
-  | .gaugeHyper => PMConstants.GaugeLedgers.ledger PMConstants.GaugeLedgers.reqY
-  | .gaugeColour => PMConstants.ColourChannels.colourLedger
+  | .gaugeHyper => PMConstants.Values.ledger PMConstants.Values.reqY
+  | .gaugeColour => PMConstants.Values.colourLedger
   | .zEq => 1075 * Real.pi
   | .darkRaw => PMCosmology.darkRatio
   | .cLight => PMSubstrate.speedOfLight
   | .vonKlitzing => PMSubstrate.vonKlitzing
   | .planckChargeAtt => PMSubstrate.planckChargeAttenuation
   | .planckChargeRatio => PMSubstrate.planckChargeRatio
-  | .planckMass => PMConstants.PlanckReadout.planckMass
+  | .planckMass => PMConstants.Values.planckMass
   | .ckmS13 => PMFlavor.Values.ckmS13
   | .ckmS23 => PMFlavor.Values.ckmS23
   | .ckmVcb => PMFlavor.Values.vcb
-  | .wMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.wMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
-  | .zMassUnc => Real.sqrt (PMConstants.GaugeSpectrum.zMassSquared PMConstants.CertifiedConstants.α PMConstants.ElectroweakBounds.electronGeV)
-  | .gWeak => Real.sqrt (PMConstants.ElectroweakE8.weakSquared PMConstants.CertifiedConstants.α)
-  | .gPrime => Real.sqrt (PMConstants.ElectroweakE8.hyperchargeSquared PMConstants.CertifiedConstants.α)
-  | .electronClosure => PMConstants.JointConstants.electronClosureRatio
+  | .wMassUnc => Real.sqrt (PMConstants.Values.wMassSquared PMConstants.Values.alpha PMConstants.Values.electronGeV)
+  | .zMassUnc => Real.sqrt (PMConstants.Values.zMassSquared PMConstants.Values.alpha PMConstants.Values.electronGeV)
+  | .gWeak => Real.sqrt PMConstants.Values.weakSquared
+  | .gPrime => Real.sqrt PMConstants.Values.hyperchargeSquared
+  | .electronClosure => PMConstants.Values.electronClosureRatio
   | .vud => PMFlavor.Values.vud
   | .vudDressed => PMFlavor.Values.vudDressed
   | .tauLifetimeFs => PMElementaryParticles.Values.tauLifetimeCorrectedFs
@@ -169,8 +159,8 @@ def value : Key → ℝ
   | .pionFiniteLifetimeSeconds => PMHadrons.pionFiniteLifetimeSeconds
   | .kaonFiniteLifetimeSeconds => PMHadrons.kaonFiniteLifetimeSeconds
   | .neutralPionFiniteLifetimeSeconds => PMHadrons.Values.neutralPionFiniteLifetimeSeconds
-  | .bRes => PMConstants.residual PMConstants.CertifiedConstants.α
-  | .neutrinoFloor => PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α PMConstants.FloorNeutrino.meEV
+  | .bRes => PMConstants.residual PMConstants.Values.alpha
+  | .neutrinoFloor => PMConstants.Values.floorMass PMConstants.Values.alpha PMConstants.Values.meEV
   | .rydbergEV => PMAtoms.rydbergEV
   | .bohrRadius => PMAtoms.bohrRadiusAngstrom
   | .shell4 => PMAtoms.shellCapacity 4
@@ -184,31 +174,31 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | alpha =>
-    have h := CertifiedConstants.alpha_bounds
+    have h := PMConstants.Values.alpha_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | electronYukawa =>
-    have h := CurrentConstants.electron_bounds
+    have h := PMConstants.Values.electron_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | strong =>
-    have h := CurrentConstants.strong_bounds
+    have h := PMConstants.Values.strong_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | vevRatio =>
-    have h := JointConstants.vev_ratio_bounds
+    have h := PMConstants.Values.vev_ratio_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | vev =>
-    have h := ElectroweakBounds.vev_bounds
+    have h := PMConstants.Values.vev_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | higgsMass =>
-    have h := ElectroweakBounds.higgs_bounds
+    have h := PMConstants.Values.higgs_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | fermi =>
-    have h := ElectroweakBounds.fermi_bounds
+    have h := PMConstants.Values.fermi_bounds
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | jarlskog =>
@@ -466,31 +456,31 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | bRes =>
-    have h := PMConstants.GravityAccounting.residual_tight_bounds
+    have h := PMConstants.Values.residual_tight_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutrinoFloor =>
-    have h := PMConstants.FloorNeutrino.floor_bounds
+    have h := PMConstants.Values.floor_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | wMassUnc =>
-    have h := PMConstants.ElectroweakBounds.w_mass_bounds
+    have h := PMConstants.Values.w_mass_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | zMassUnc =>
-    have h := PMConstants.ElectroweakBounds.z_mass_bounds
+    have h := PMConstants.Values.z_mass_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | gWeak =>
-    have h := PMConstants.ElectroweakBounds.coupling_bounds
+    have h := PMConstants.Values.coupling_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.1.le, h.1.2.le⟩
   | gPrime =>
-    have h := PMConstants.ElectroweakBounds.coupling_bounds
+    have h := PMConstants.Values.coupling_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.2.1.1.le, h.2.1.2.le⟩
   | electronClosure =>
-    have h := PMConstants.JointConstants.electron_closure_bounds
+    have h := PMConstants.Values.electron_closure_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | cLight => norm_num [bounds, value, PMSubstrate.speedOfLight]
@@ -507,7 +497,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | planckMass =>
-    have h := PMConstants.PlanckReadout.planckMass_bounds
+    have h := PMConstants.Values.planckMass_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | ckmS13 =>
@@ -523,11 +513,11 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | gaugeHyper =>
-    have h : PMConstants.GaugeLedgers.ledger PMConstants.GaugeLedgers.reqY = 6446/43 := by
-      rw [PMConstants.GaugeLedgers.hyper_value]; norm_num [PMConstants.overhead]
+    have h : PMConstants.Values.ledger PMConstants.Values.reqY = 6446/43 := by
+      rw [PMConstants.Values.hyper_value]; norm_num [PMConstants.overhead]
     simp only [value]; rw [h]; norm_num [bounds]
   | gaugeColour =>
-    simp [bounds, value, PMConstants.ColourChannels.colour_ledger]
+    simp [bounds, value, PMConstants.Values.colour_ledger]
   | zEq =>
     have h := PMCosmology.Background.z_eq_bounds
     norm_num [bounds, value] at h ⊢
@@ -554,7 +544,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | wRatio =>
-    have h := PMConstants.WMassTest.ratio_bounds
+    have h := PMConstants.Values.ratio_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | tauRatio => norm_num [bounds, value, PMElementaryParticles.Values.tau_value]
@@ -587,7 +577,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value, PMFlavor.PMNSIntervals.lower, PMFlavor.PMNSIntervals.upper] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | alphaG =>
-    have h := PMConstants.GravityAccounting.channels_as_frame
+    have h := PMConstants.Values.channels_as_frame
     norm_num [bounds, value] at ⊢
     constructor <;> linarith [h.1, h.2]
   | hubbleSigma => norm_num [bounds, value, PMCosmology.loadFactor]
@@ -596,8 +586,8 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
   | hubbleLate => norm_num [bounds, value, PMCosmology.loadFactor]
   | clusteringLate => norm_num [bounds, value, PMCosmology.loadFactor]
   | overhead | footprint | weakFraction | scalar | scalarToll | electronMassInput =>
-    norm_num [bounds, value, CurrentConstants.weakFraction, CurrentConstants.scalar,
-      overhead, footprint, clockRatio, selfCoupling, scalarToll, ElectroweakBounds.electronGeV, PMSubstrate.SIUnits.electronMassGeV]
+    norm_num [bounds, value, PMConstants.Values.weakFraction, PMConstants.Values.scalar,
+      overhead, footprint, clockRatio, selfCoupling, scalarToll, PMConstants.Values.electronGeV_eq, PMSubstrate.SIUnits.electronMassGeV]
 
 theorem keys_complete (k : Key) : k ∈ keys := by cases k <;> simp [keys]
 set_option maxRecDepth 8000 in
