@@ -1,6 +1,7 @@
 import PMAction.WireShiftedSpectrum
 import PMAction.CarrierRateFromAdmittance
 import PMConstants.CertifiedConstants
+import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
 # A geometric bound for the bare wire benchmark
@@ -89,8 +90,8 @@ theorem sqrt_half_alpha_bounds :
 /-- **Enclosure of the rate reading.** -/
 theorem kRate_bounds : (0.03845 : ℝ) < kRate ∧ kRate < 0.03849 := by
   have hy := sqrt_half_alpha_bounds
-  have hplo := Real.pi_gt_3141592
-  have hphi := Real.pi_lt_3141593
+  have hplo := Real.pi_gt_d20
+  have hphi := Real.pi_lt_d20
   have hlo : (0.060404 : ℝ) < Real.arcsin (Real.sqrt (α / 2)) :=
     hy.1.trans (PMAction.CarrierRateFromAdmittance.lt_arcsin
       (by linarith [hy.1]) (by linarith [hy.2]))
@@ -100,8 +101,8 @@ theorem kRate_bounds : (0.03845 : ℝ) < kRate ∧ kRate < 0.03849 := by
   rw [kRate, PMAction.CarrierRateFromAdmittance.restoringRate,
     PMAction.CarrierRateFromAdmittance.area]
   constructor
-  · rw [lt_div_iff₀ (by linarith)]; nlinarith
-  · rw [div_lt_iff₀ (by linarith)]; nlinarith
+  · rw [lt_div_iff₀ (by linarith)]; linarith
+  · rw [div_lt_iff₀ (by linarith)]; linarith
 
 /-- **The bare wire at the rate reading.** The middle-to-heavy ratio is near `0.0471`, ten and a
 half times the admittance reading's `0.0045`. -/
