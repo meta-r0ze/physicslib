@@ -47,10 +47,14 @@ class-independent crossing the three masses differ only by those amplitudes
 
 - **Carrier amplitude per class.** On the wire, the reference's class and stationarity distinguish
   the direct insertion from the two restoring insertions (`PMKAutomaton.Machine.ReferenceClassHop`).
-  `ReferenceNode` derives `α/2` for a conserving two-leg node. `CertainTransferRate` derives
-  principal pulse areas and their rate ratio for supplied weights and durations. The open input is
-  the admitted pulse for each insertion, its retained output, and its duration and normalization
-  in the same clock units as the gapped crossing. `AlternatingReferenceNode` also derives a
+  `ReferenceNode` derives `α/2` for a conserving two-leg node, but against an **admittance**
+  (`NodeAmplitude`'s `K = 1`), while the wire's row is in rates. `CarrierRateFromAdmittance` fixes
+  the conversion: the common-duration reading is `(2/π) arcsin √(α/2) ≈ 0.0385`, ten and a half
+  times `α/2`, and otherwise a duration ratio stands in front of it (`rate_ratio`). With that, the
+  measured `m_μ/m_τ` inverts to a required `τ_certain/τ_restoring ≈ 1.26`
+  (`E8PConstants.WireMass`), so the open input is now one number: the duration of one carrier
+  event, with the admitted pulse for each insertion, its retained output, and its normalization in
+  the same clock units as the gapped crossing. `AlternatingReferenceNode` also derives a
   current per two-visit cycle for fresh incoherent input and a retained center.
 - **Split the suppressed pair.** The two node-crossing classes share one amplitude, so
   `CompositeMass.diag_class_independent` makes them degenerate. A further effect must split them

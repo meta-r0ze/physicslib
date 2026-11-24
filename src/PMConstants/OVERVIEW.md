@@ -20,11 +20,16 @@ dependencies are in [`TODO.md`](TODO.md).
 - `SectorObligations`: the reference/update contract (exact refresh, weak ownership, colour reads).
 - `ReadScale`, `OnShell`: the matching scales from persistence and frame independence.
 - `VevEntry`: how the vacuum value enters the fermion masses (law A).
-- `WireMassBounds.bare_middle_heavy_bounds`: the normalized bare-wire ratio at `k = α/2`
-  lies between `0.0044` and `0.0045`, using the geometric enclosure of `α`. The assignment
-  of this admittance to the normalized Hamiltonian coefficient is a benchmark input.
-  `shifted_middle_heavy_bound` keeps that benchmark below `0.00730` for every normalized
-  static offset in `(0,1)`, with all three ordered masses positive.
+- `WireMassBounds`: two readings of `ReferenceNode`'s `α/2` for the wire, both enclosures from the
+  geometric `α` with no measured input.
+  * The **admittance reading** puts the probability straight into the Hamiltonian coefficient:
+    `bare_middle_heavy_bounds` gives `0.0044` to `0.0045`, and `shifted_middle_heavy_bound` keeps
+    it below `0.00730` for every normalized static offset in `(0,1)`, with all three ordered
+    masses positive. `PMAction.CarrierRateFromAdmittance` shows this is a category error.
+  * The **rate reading** is the one the wire wants: `kRate = (2/π) arcsin √(α/2)`, the
+    common-duration area ratio against the certain in-cycle crossing. `kRate_bounds` encloses it
+    between `0.03845` and `0.03849`, ten and a half times the admittance value, and
+    `rate_middle_heavy_bounds` puts the bare ratio between `0.0470` and `0.0472`.
 - `GenerationEncoding`: exhaustive three-pair classification, the distinction between
   pair types and independent physical generations, and exact retained-label storage.
 - `GenerationHistory`: an actual companion-carrier encoding, its coherent isometry,

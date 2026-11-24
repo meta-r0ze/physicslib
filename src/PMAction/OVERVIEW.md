@@ -242,6 +242,15 @@ shows closed injective updates cannot finitely prepare a stationary state.
   so a certain event of duration `τ` has `tτ ≥ π/2` (`certain_min`) and flip at least `rπ/(4τ)`
   (`flip_lower`). Admittance (`NodeAmplitude`'s `K = 1`) fixes the carrier's rate only with the event's
   duration.
+- `CarrierRateFromAdmittance`: so a rate from an admittance needs the event's duration. A transfer
+  probability fixes the principal pulse area (`area`, `area_of_transfer`; a certain transfer has
+  area `π/2`, `area_one`), and a rate is an area over a duration, so the rate ratio of two
+  insertions is their area ratio times the inverse of their duration ratio (`rate_ratio`). A
+  common duration cancels (`rate_ratio_common_duration`), leaving the area ratio: against the
+  certain in-cycle crossing that is `(2/π) arcsin √w` (`restoringRate`, `restoringRate_one`).
+  `lt_arcsin` and `arcsin_lt` enclose the area for numbers downstream
+  (`PMConstants.WireMassBounds.kRate`). The wire of `WireResonanceSpectrum` wants this reading,
+  not `ReferenceNode`'s `α/2` put straight into the rate slot.
 - `WireMass`: the wire's light mass as one definition, `mass δ κ_R κ_O = diag κ_R (δ + cyc (shift κ_O))`,
   with the other wall's carriers placed by glue arithmetic on single-wall modes (`single_wall_class`:
   the move between generations `h`, `h + 1` has class `e h`; `shift κ_O h = κ_O h`, `shift_entry`; the
