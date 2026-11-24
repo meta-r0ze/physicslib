@@ -70,7 +70,9 @@ theorem shifted_middle_heavy_bound (s : ℝ) (hs : 0 < s) (hs₁ : s < 1) :
   have hk₁ : k < 1 := by dsimp [k]; linarith [alpha_bounds.2]
   obtain ⟨m₁, m₂, m₃, h₁, h₂, h₃, hratio, hspec⟩ :=
     PMAction.WireShiftedSpectrum.ordered_mass_spectrum k s hk hk₁ hs hs₁
-  refine ⟨m₁, m₂, m₃, h₁, h₂, h₃, hratio.trans ?_, hspec⟩
+  have hsqrt : Real.sqrt (3 / 2) < 2 := (Real.sqrt_lt' (by norm_num)).2 (by norm_num)
+  have hrate := hratio.trans (mul_lt_mul_of_pos_right hsqrt hk)
+  refine ⟨m₁, m₂, m₃, h₁, h₂, h₃, hrate.trans ?_, hspec⟩
   dsimp [k]
   linarith [alpha_bounds.2]
 
@@ -126,5 +128,23 @@ theorem rate_middle_heavy_bounds :
   · apply (sq_lt_sq₀ (by positivity) (by positivity)).mp
     rw [mul_pow, hnum, hden]
     nlinarith only [hkloSq, hkhiSq]
+
+/-- At the common-duration rate, every offset in `(0,1)` gives three ordered
+positive Schur masses and leaves their middle-to-heavy ratio below 0.0472. -/
+theorem shifted_rate_middle_heavy_bound (s : ℝ) (hs : 0 < s) (hs₁ : s < 1) :
+    ∃ m₁ m₂ m₃ : ℝ, 0 < m₁ ∧ m₁ < m₂ ∧ m₂ < m₃ ∧ m₂ / m₃ < 0.0472 ∧
+      ∀ m : ℝ, 0 ≤ m →
+        (m ^ 2 ∈ spectrum ℝ (PMAction.WireResonanceSpectrum.gram kRate s) ↔
+          m = m₁ ∨ m = m₂ ∨ m = m₃) := by
+  have hk := kRate_bounds
+  have hk₀ : 0 < kRate := by linarith
+  obtain ⟨m₁, m₂, m₃, h₁, h₂, h₃, hratio, hspec⟩ :=
+    PMAction.WireShiftedSpectrum.ordered_mass_spectrum kRate s hk₀ (by linarith) hs hs₁
+  have hbound : Real.sqrt (3 / 2) * (0.03849 : ℝ) < 0.0472 := by
+    apply (sq_lt_sq₀ (by positivity) (by norm_num)).mp
+    rw [mul_pow, Real.sq_sqrt (by norm_num)]
+    norm_num
+  have hmul := mul_le_mul_of_nonneg_left hk.2.le (Real.sqrt_nonneg (3 / 2))
+  exact ⟨m₁, m₂, m₃, h₁, h₂, h₃, hratio.trans (hmul.trans_lt hbound), hspec⟩
 
 end PMConstants.WireMassBounds

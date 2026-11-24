@@ -8,6 +8,7 @@ import PMKAutomaton.ClockedRootTrials
 import PMKAutomaton.Interface
 import PMKAutomaton.Values
 import PMKAutomaton.LocalController
+import PMKAutomaton.RestoringMarkerTrace
 import PMKAutomaton.RingReceiver
 import PMKAutomaton.BoundaryErasure
 import PMKAutomaton.Components

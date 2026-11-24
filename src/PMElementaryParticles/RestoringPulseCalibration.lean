@@ -1,5 +1,7 @@
 import PMElementaryParticles.RestoringWallShift
 import PMAction.AlternatingReferenceNode
+import PMAction.CarrierRateFromAdmittance
+import PMAction.WireResonanceSpectrum
 
 /-!
 # Calibrating the restoring output
@@ -208,5 +210,90 @@ theorem shifted_steady_ne_staged (ψ θ φ : ℝ) (g : Fin 3) (a : Fin 8)
       Complex.normSq (stagedPulse θ φ 2 0) := by
   rw [(shifted_weight_iff_steady_current ψ g a).mp hCurrent]
   exact (staged_geometric_weight θ φ hθ hφ).2
+
+/-! ## Durations from booked placements -/
+
+open WireSchedule PMAction.ReferenceNodeBoundary PMAction.CarrierRateFromAdmittance
+
+/-- Elapsed ticks from the start of node entry to completion of node exit,
+including any time spent waiting between them. -/
+def bookedNodeTicks {ticks : ℕ} (p : Premises ticks) (s : Schedule ticks) : ℕ :=
+  match s.2 .nodeEnter, s.2 .nodeLeave with
+  | some x, some y => y.1.val + duration p .nodeLeave - x.1.val
+  | _, _ => 0
+
+theorem bookedNodeTicks_pos {ticks : ℕ} {p : Premises ticks} {s : Schedule ticks}
+    (hs : s ∈ family p) (ha : p.address ≠ 0) : 0 < bookedNodeTicks p s := by
+  obtain ⟨x, hx, hxpos, _, _⟩ := required_placement hs (e := .nodeEnter)
+    (by simp [required, ha])
+  obtain ⟨y, hy, hypos, _, hp⟩ := required_placement hs (e := .nodeLeave)
+    (by simp [required, ha])
+  have h := hp .nodeEnter (by simp [predecessors])
+  simp only [endsBefore, hx, hy, decide_eq_true_eq] at h
+  simp only [bookedNodeTicks, hx, hy]
+  omega
+
+/-- Relative Hamiltonian coefficient in the steady-current model with
+equal area-to-coefficient conversions. The direct pulse occupies its
+booked flip. The restoring readout covers the booked node interval. -/
+theorem steady_rate_from_schedule {nd nm : ℕ}
+    {pd : Premises nd} {pm : Premises nm} {sd : Schedule nd} {sm : Schedule nm}
+    (hds : sd ∈ family pd) (hms : sm ∈ family pm) (hdaddr : pd.address = 0)
+    (hmaddr : pm.address ≠ 0) (a : Fin 8)
+    {θ direct tick : ℝ} (htick : 0 < tick)
+    (hθ : 0 ≤ θ) (hθp : θ ≤ Real.pi / 2)
+    (hd : 0 ≤ direct) (hdp : direct ≤ Real.pi / 2) (hcertain : Real.sin direct ^ 2 = 1)
+    (hCurrent : ∀ l r : ℝ, shiftedOutflow θ pm.address a l r - l =
+      PMSubstrate.causalCoupling * (r - center PMSubstrate.causalCoupling PMSubstrate.causalCoupling r l)) :
+    let d := (duration pd .referenceFlip : ℝ)
+    let m := (bookedNodeTicks pm sm : ℝ)
+    (θ / (m * tick)) / (direct / (d * tick)) =
+      restoringRate (PMSubstrate.causalCoupling / 2) * (d / m) := by
+  intro d m
+  obtain ⟨_, _, hdn, _, _⟩ := required_placement hds (e := .referenceFlip)
+    (by simp [required, hdaddr])
+  have hmn := bookedNodeTicks_pos hms hmaddr
+  have hd₀ : 0 < d := by dsimp only [d]; exact_mod_cast hdn
+  have hm₀ : 0 < m := by dsimp only [m]; exact_mod_cast hmn
+  have h := steady_rate_ratio pm.address a hθ hθp hd hdp
+    (mul_pos hm₀ htick) (mul_pos hd₀ htick) hCurrent hcertain
+  have hclock : (d * tick) / (m * tick) = d / m := by
+    exact mul_div_mul_right _ _ htick.ne'
+  rw [h, hclock, restoringRate_eq]
+  ring
+
+/-- The normalized resonant Schur operator built from the three booked
+insertion schedules. The restoring addresses have independent elapsed
+times. The steady current match and the static offset are model inputs. -/
+def scheduledSteadyMass {ticks : ℕ} (p : Fin 3 → Premises ticks)
+    (s : Fin 3 → Schedule ticks) (offset : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+  let directTicks := (duration (p 0) .referenceFlip : ℝ)
+  let k (g : Fin 3) :=
+    restoringRate (PMSubstrate.causalCoupling / 2) *
+      (directTicks / (bookedNodeTicks (p g) (s g) : ℝ))
+  PMAction.WireResonanceSpectrum.massWithRates (k 1) (k 2) offset
+
+/-- With the pulse readouts attached to the booked intervals, the wall
+matrix uses the two restoring rates individually on the common clock. -/
+theorem mass_from_scheduled_steady_pulses {ticks : ℕ} (p : Fin 3 → Premises ticks)
+    (s : Fin 3 → Schedule ticks) (offset tick : ℝ) (a : Fin 8) (θ : Fin 3 → ℝ)
+    (hs : ∀ g, s g ∈ family (p g)) (ha : ∀ g, (p g).address = g)
+    (htick : 0 < tick) (hθ : ∀ g, 0 ≤ θ g ∧ θ g ≤ Real.pi / 2)
+    (hd : Real.sin (θ 0) ^ 2 = 1)
+    (hCurrent : ∀ g : Fin 3, g ≠ 0 → ∀ l r : ℝ, shiftedOutflow (θ g) g a l r - l =
+      PMSubstrate.causalCoupling *
+        (r - center PMSubstrate.causalCoupling PMSubstrate.causalCoupling r l)) :
+    let direct := θ 0 / ((duration (p 0) .referenceFlip : ℝ) * tick)
+    let move (g : Fin 3) := θ g / ((bookedNodeTicks (p g) (s g) : ℝ) * tick)
+    PMAction.WireResonanceSpectrum.massWithRates (move 1 / direct) (move 2 / direct) offset =
+      scheduledSteadyMass p s offset := by
+  intro direct move
+  have calibrated (g : Fin 3) (hg : g ≠ 0) :
+      move g / direct = restoringRate (PMSubstrate.causalCoupling / 2) *
+        ((duration (p 0) .referenceFlip : ℝ) / (bookedNodeTicks (p g) (s g) : ℝ)) :=
+    steady_rate_from_schedule (hs 0) (hs g) (ha 0) (by rwa [ha]) a htick
+      (hθ g).1 (hθ g).2 (hθ 0).1 (hθ 0).2 hd (by simpa only [ha] using hCurrent g hg)
+  rw [calibrated 1 (by decide), calibrated 2 (by decide)]
+  rfl
 
 end PMElementaryParticles.RestoringPulseCalibration

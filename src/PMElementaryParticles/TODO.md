@@ -151,7 +151,10 @@ This file is the open list only.
   gives the rate under a steady floating-node current match and gives both
   insertion-to-crossing rate ratios for a supplied alternating cycle with a
   retained center. The isolated geometric exchange pair gives its own exit
-  weight. Identify which physical schedule supplies the mass-slot readout. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  weight. `LocalController.restoring_marker_live` gives the native joint guard event
+  for an isolated marker. `mass_from_scheduled_steady_pulses` carries both booked
+  restoring durations into separate Schur rows. Select and weight the recurring
+  native histories, and derive their pulse readout and the static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use

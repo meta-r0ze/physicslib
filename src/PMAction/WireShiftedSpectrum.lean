@@ -26,7 +26,7 @@ private theorem char_signs (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
     (hs : 0 < s) (hs₁ : s < 1) :
     let p := (gram k s).charpoly
     p.eval 0 < 0 ∧ 0 < p.eval (k ^ 2) ∧ p.eval (3 * k ^ 2) < 0 ∧
-      p.eval (max 1 (3 * k ^ 2)) < 0 ∧ 0 < p.eval 4 := by
+      p.eval (max 2 (3 * k ^ 2)) < 0 ∧ 0 < p.eval 4 := by
   intro p
   have hk2 : 0 < k ^ 2 := by positivity
   have hk2₁ : k ^ 2 < 1 := by nlinarith [mul_pos hk (sub_pos.mpr hk₁)]
@@ -57,15 +57,21 @@ private theorem char_signs (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
       s * (2 - s) * k ^ 2 * k ^ 2 * (k ^ 2 - (1 + 2 * k ^ 2)) - k ^ 4 * s ^ 2 =
         k ^ 4 * (4 - 2 * s - s * (2 - s) * k ^ 2) by ring]
     exact mul_pos (by positivity) (by linarith)
-  · rcases le_total 1 (3 * k ^ 2) with h | h
+  · rcases le_total 2 (3 * k ^ 2) with h | h
     · rwa [max_eq_right h]
     · rw [max_eq_left h, hshift]
-      have hbase : 1 * (1 - 3 * k ^ 2) * (1 - (2 + k ^ 2)) ≤ 0 :=
-        mul_nonpos_of_nonneg_of_nonpos (by linarith) (by linarith)
-      have hterm : s * (2 - s) * k ^ 2 * 1 * (1 - (1 + 2 * k ^ 2)) ≤ 0 :=
-        mul_nonpos_of_nonneg_of_nonpos (by positivity) (by linarith)
-      have hsub : 0 < k ^ 4 * s ^ 2 := by positivity
-      linarith
+      have hneg : 0 < k ^ 4 * s ^ 2 := by positivity
+      rw [show (2 : ℝ) - (2 + k ^ 2) = -k ^ 2 by ring,
+        show (2 : ℝ) - (1 + 2 * k ^ 2) = 1 - 2 * k ^ 2 by ring]
+      by_cases hterm : 0 ≤ 1 - 2 * k ^ 2
+      · have hbound := mul_le_mul_of_nonneg_right hδ₁
+          (show 0 ≤ k ^ 2 * 2 * (1 - 2 * k ^ 2) by positivity)
+        have hgap : 0 < (2 * k ^ 2) * (1 - k ^ 2) := mul_pos (by positivity) (by linarith)
+        nlinarith only [hbound, hgap, hneg]
+      · have hbase : 0 ≤ 2 * (2 - 3 * k ^ 2) * k ^ 2 := by positivity
+        have hpert : s * (2 - s) * k ^ 2 * 2 * (1 - 2 * k ^ 2) ≤ 0 :=
+          mul_nonpos_of_nonneg_of_nonpos (by positivity) (le_of_not_ge hterm)
+        linarith
   · rw [hshift]
     have hterm : 0 ≤ s * (2 - s) * k ^ 2 * 4 * (4 - (1 + 2 * k ^ 2)) :=
       mul_nonneg (by positivity) (by linarith)
@@ -85,7 +91,7 @@ private theorem char_signs (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
 theorem squared_spectrum (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
     (hs : 0 < s) (hs₁ : s < 1) :
     ∃ x y z : ℝ, x ∈ Set.Ioo 0 (k ^ 2) ∧ y ∈ Set.Ioo (k ^ 2) (3 * k ^ 2) ∧
-      z ∈ Set.Ioo (max 1 (3 * k ^ 2)) 4 ∧
+      z ∈ Set.Ioo (max 2 (3 * k ^ 2)) 4 ∧
       ∀ t : ℝ, t ∈ spectrum ℝ (gram k s) ↔ t = x ∨ t = y ∨ t = z := by
   classical
   let p := (gram k s).charpoly
@@ -98,7 +104,7 @@ theorem squared_spectrum (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
     (by simpa using h1) (by simpa using h3)
   have hy0' : p.eval y = 0 := by simpa using hy0
   obtain ⟨z, hz, hz0⟩ := root_between p (max_lt (by norm_num) (by linarith)) hmax h4
-  have h3z := (le_max_right (1 : ℝ) (3 * k ^ 2)).trans_lt hz.1
+  have h3z := (le_max_right (2 : ℝ) (3 * k ^ 2)).trans_lt hz.1
   refine ⟨x, y, z, hx, hy, hz, fun t => ?_⟩
   rw [Matrix.mem_spectrum_iff_isRoot_charpoly, Polynomial.IsRoot]
   change p.eval t = 0 ↔ _
@@ -123,22 +129,20 @@ theorem squared_spectrum (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
 middle-to-heavy ratio is uniformly bounded over the whole insertion interval. -/
 theorem ordered_mass_spectrum (k s : ℝ) (hk : 0 < k) (hk₁ : k < 1)
     (hs : 0 < s) (hs₁ : s < 1) :
-    ∃ m₁ m₂ m₃ : ℝ, 0 < m₁ ∧ m₁ < m₂ ∧ m₂ < m₃ ∧ m₂ / m₃ < 2 * k ∧
+    ∃ m₁ m₂ m₃ : ℝ, 0 < m₁ ∧ m₁ < m₂ ∧ m₂ < m₃ ∧ m₂ / m₃ < Real.sqrt (3 / 2) * k ∧
       ∀ m : ℝ, 0 ≤ m → (m ^ 2 ∈ spectrum ℝ (gram k s) ↔
         m = m₁ ∨ m = m₂ ∨ m = m₃) := by
   obtain ⟨x, y, z, hx, hy, hz, hspec⟩ := squared_spectrum k s hk hk₁ hs hs₁
   have hxy := hx.2.trans hy.1
-  have hyz := hy.2.trans ((le_max_right (1 : ℝ) (3 * k ^ 2)).trans_lt hz.1)
-  have hz₁ : 1 < z := (le_max_left _ _).trans_lt hz.1
-  have hzroot : 1 < Real.sqrt z := by
-    simpa using (Real.sqrt_lt_sqrt (by norm_num : (0 : ℝ) ≤ 1) hz₁)
-  have hym : Real.sqrt y < 2 * k := by
+  have hyz := hy.2.trans ((le_max_right (2 : ℝ) (3 * k ^ 2)).trans_lt hz.1)
+  have hz₂ : 2 < z := (le_max_left _ _).trans_lt hz.1
+  have hratio : Real.sqrt y / Real.sqrt z < Real.sqrt (3 / 2) * k := by
+    rw [div_lt_iff₀ (Real.sqrt_pos.2 (by linarith : 0 < z))]
     apply (sq_lt_sq₀ (Real.sqrt_nonneg _) (by positivity)).mp
-    rw [Real.sq_sqrt (hx.1.trans hxy).le]
-    nlinarith [hy.2, sq_pos_of_pos hk]
-  have hratio : Real.sqrt y / Real.sqrt z < 2 * k := by
-    rw [div_lt_iff₀ (by linarith : 0 < Real.sqrt z)]
-    exact hym.trans (lt_mul_of_one_lt_right (by positivity) hzroot)
+    rw [Real.sq_sqrt (hx.1.trans hxy).le, mul_pow, mul_pow, Real.sq_sqrt (by norm_num),
+      Real.sq_sqrt (by linarith : 0 ≤ z)]
+    have hgap := mul_lt_mul_of_pos_left hz₂ (show 0 < (3 / 2) * k ^ 2 by positivity)
+    linarith [hy.2]
   have root_eq (m u : ℝ) (hm : 0 ≤ m) (hu : 0 ≤ u) :
       m ^ 2 = u ↔ m = Real.sqrt u := by
     conv_lhs => rhs; rw [← Real.sq_sqrt hu]

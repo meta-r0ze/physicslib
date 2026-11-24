@@ -1169,7 +1169,12 @@ incoherent arrivals with the center retained yields a per-cycle coefficient
 `alternating_crossing_rate_ratios` converts the direct and shifted areas to
 crossing-relative rates on one common tick. It uses the entire restoring
 cycle duration and the supplied crossing area and coefficient conversions.
-The native selection of the schedule and readout remains open.
+The native two-tick output for a single live marker is the joint entry and
+exit swap event (`LocalController.restoring_marker_live`). Under the steady
+current match, `mass_from_scheduled_steady_pulses` uses one direct flip window
+and each restoring interval from entry start through exit completion in the
+normalized Schur operator. The two restoring durations can differ.
+The native selection of the recurring history and its pulse readout remains open.
 
 ### Where the readings agree
 

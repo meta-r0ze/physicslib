@@ -400,6 +400,14 @@ gives the current per complete cycle. The shifted port matches it at weight
 Selecting this regime requires a native source of repeated inputs and the
 retained-center readout.
 
+The native single-marker trace reduces the live exit to the joint entry
+and exit guards at their actual phases (`LocalController.restoring_marker_live`).
+A transfer weight for this event requires weights on joint histories. In the
+steady-current model, `bookedNodeTicks` measures the node interval from
+entry start through exit completion, including any wait. Under that event
+identification, `mass_from_scheduled_steady_pulses` places the independently
+timed restoring insertions in the two Schur rows.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.

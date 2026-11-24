@@ -16,10 +16,13 @@ namespace PMAction.WireResonanceSpectrum
 
 open Matrix
 
-/-- Real matrix of the normalized stationary-reference wire, with a shift
-in the other-wall detuning at address 2. -/
-def mass (k offset : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
-  !![-1, 0, 1; k, -k, 0; 0, k, k * (offset - 1)]
+/-- The normalized direct row and two separately calibrated restoring rows,
+with a static insertion at address 2. -/
+def massWithRates (k₁ k₂ offset : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+  !![-1, 0, 1; k₁, -k₁, 0; 0, k₂, k₂ * (offset - 1)]
+
+/-- Equal restoring coefficients recover the symmetric benchmark. -/
+def mass (k offset : ℝ) : Matrix (Fin 3) (Fin 3) ℝ := massWithRates k k offset
 
 theorem mass_eq (k offset : ℝ) :
     (mass k offset).map (fun x : ℝ => (x : ℂ)) =
@@ -27,31 +30,45 @@ theorem mass_eq (k offset : ℝ) :
         diagonal ![0, 0, ((k * offset : ℝ) : ℂ)] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [mass, WireMass.mass, WireMass.shift, ReferenceWallRotation.X, CyclicSeesaw.cyc,
+    simp [mass, massWithRates, WireMass.mass, WireMass.shift, ReferenceWallRotation.X, CyclicSeesaw.cyc,
       diagonal_mul]
   ring
 
-/-- Squared mass operator of the real wire. -/
-def gram (k offset : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
-  mass k offset * (mass k offset)ᵀ
+/-- Squared mass operator with independent restoring coefficients. -/
+def gramWithRates (k₁ k₂ offset : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
+  massWithRates k₁ k₂ offset * (massWithRates k₁ k₂ offset)ᵀ
 
-private theorem gram_entries (k offset : ℝ) :
-    gram k offset =
-      !![2, -k, k * (offset - 1);
-        -k, 2 * k ^ 2, -k ^ 2;
-        k * (offset - 1), -k ^ 2, k ^ 2 * (1 + (offset - 1) ^ 2)] := by
+/-- Squared mass operator at the common restoring coefficient. -/
+def gram (k offset : ℝ) : Matrix (Fin 3) (Fin 3) ℝ := gramWithRates k k offset
+
+private theorem gram_entries (k₁ k₂ offset : ℝ) :
+    gramWithRates k₁ k₂ offset =
+      !![2, -k₁, k₂ * (offset - 1);
+        -k₁, 2 * k₁ ^ 2, -k₁ * k₂;
+        k₂ * (offset - 1), -k₁ * k₂, k₂ ^ 2 * (1 + (offset - 1) ^ 2)] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [gram, mass, Matrix.mul_apply, Fin.sum_univ_three, Matrix.transpose_apply] <;> ring
+    simp [gramWithRates, massWithRates, Matrix.mul_apply, Fin.sum_univ_three,
+      Matrix.transpose_apply] <;> ring
 
-/-- Characteristic polynomial evaluated at a trial squared mass. -/
+/-- The secular cubic retains the two restoring coefficients separately. -/
+theorem char_eval_with_rates (k₁ k₂ offset t : ℝ) :
+    (gramWithRates k₁ k₂ offset).charpoly.eval t =
+      t ^ 3 - (2 + 2 * k₁ ^ 2 + k₂ ^ 2 * (1 + (offset - 1) ^ 2)) * t ^ 2 +
+        (3 * k₁ ^ 2 + k₂ ^ 2 * (2 + (offset - 1) ^ 2) +
+          k₁ ^ 2 * k₂ ^ 2 * (1 + 2 * (offset - 1) ^ 2)) * t -
+        k₁ ^ 2 * k₂ ^ 2 * offset ^ 2 := by
+  rw [Matrix.eval_charpoly, gram_entries, Matrix.det_fin_three]
+  simp [Matrix.scalar_apply, Matrix.sub_apply]
+  ring
+
+/-- Characteristic polynomial for the common-rate benchmark. -/
 theorem char_eval (k offset t : ℝ) :
     (gram k offset).charpoly.eval t =
       t ^ 3 - (2 + k ^ 2 * (3 + (offset - 1) ^ 2)) * t ^ 2 +
         (k ^ 2 * (5 + (offset - 1) ^ 2) + k ^ 4 * (1 + 2 * (offset - 1) ^ 2)) * t -
         k ^ 4 * offset ^ 2 := by
-  rw [Matrix.eval_charpoly, gram_entries, Matrix.det_fin_three]
-  simp [Matrix.scalar_apply, Matrix.sub_apply]
+  rw [gram, char_eval_with_rates]
   ring
 
 /-- At resonance, the squared singular values are exactly `0`, `3k²`,
@@ -76,5 +93,27 @@ theorem bare_mass_spectrum (k m : ℝ) (hm : 0 ≤ m) :
     exact sq_eq_sq₀ hm (Real.sqrt_nonneg _)
   rw [bare_spectrum, pow_eq_zero_iff two_ne_zero, eq_root _ (by positivity),
     eq_root _ (by positivity)]
+
+/-- For the bare resonant wire, the exact square of the middle-to-heavy ratio
+can be expressed without square roots. -/
+theorem bare_ratio_sq (k : ℝ) :
+    (Real.sqrt (3 * k ^ 2) / Real.sqrt (2 + k ^ 2)) ^ 2 =
+      3 * k ^ 2 / (2 + k ^ 2) := by
+  rw [div_pow, Real.sq_sqrt (by positivity), Real.sq_sqrt (by positivity)]
+
+/-- Invert the normalized bare Schur ratio for a pulse whose common-duration
+coefficient is `rate` and whose direct/restoring duration ratio is `d`. -/
+theorem bare_duration_ratio_sq {r rate d : ℝ} (hRate : rate ≠ 0)
+    (hRatio : r = Real.sqrt (3 * (rate * d) ^ 2) / Real.sqrt (2 + (rate * d) ^ 2)) :
+    d ^ 2 = 2 * r ^ 2 / ((3 - r ^ 2) * rate ^ 2) := by
+  have hsq := congrArg (fun x : ℝ => x ^ 2) hRatio
+  rw [bare_ratio_sq, eq_div_iff (by positivity : 2 + (rate * d) ^ 2 ≠ 0)] at hsq
+  have hthree : 3 - r ^ 2 ≠ 0 := by
+    intro he
+    have hr : r ^ 2 = 3 := by linarith only [he]
+    rw [hr] at hsq
+    nlinarith only [hsq]
+  apply (eq_div_iff (mul_ne_zero hthree (pow_ne_zero _ hRate))).2
+  linear_combination -hsq
 
 end PMAction.WireResonanceSpectrum

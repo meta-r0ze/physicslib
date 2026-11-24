@@ -30,6 +30,8 @@ dependencies are in [`TODO.md`](TODO.md).
     common-duration area ratio against the certain in-cycle crossing. `kRate_bounds` encloses it
     between `0.03845` and `0.03849`, ten and a half times the admittance value, and
     `rate_middle_heavy_bounds` puts the bare ratio between `0.0470` and `0.0472`.
+    `shifted_rate_middle_heavy_bound` keeps the ratio below `0.0472` for every normalized
+    static offset in `(0,1)`.
 - `GenerationEncoding`: exhaustive three-pair classification, the distinction between
   pair types and independent physical generations, and exact retained-label storage.
 - `GenerationHistory`: an actual companion-carrier encoding, its coherent isometry,
