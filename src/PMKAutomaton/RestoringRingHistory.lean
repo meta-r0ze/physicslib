@@ -142,6 +142,14 @@ private theorem exit_arrivals (either : Bool) (q : History) :
     (applyGuard (fun _ => exchange either q.1) (true, false)).2) = _
   cases exchange either q.1 <;> simp [applyGuard]
 
+/-- A successful restoration receives the marker on the live stream at
+entry and on the record stream at exit. -/
+theorem successful_arrivals (either : Bool) (q : History) (h : liveExit either q = true) :
+    arrivals (seed q).2.2.2 0 = (true, false) ∧
+      arrivals (tick Delta either (seed q)).2.2.2 (42 : Fin Delta) = (false, true) := by
+  rw [live_exit, Bool.and_eq_true] at h
+  exact ⟨rfl, (exit_arrivals either q).trans (congrArg (fun b => (false, b)) h.1)⟩
+
 /-- The comparison flags on the entry visit and its downstream exit visit.
 A successful return records two mismatches. An exit with no marker
 contributes zero even if the exit controller calls for a swap. -/

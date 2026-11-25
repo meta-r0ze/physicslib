@@ -48,10 +48,15 @@ has the direct insertion. Addresses 1 and 2 have the restoring route.
   typed bank comparisons and the class word under their supplied
   capacity prices. The direct and gapped words also have exact per-lane
   unit and double root counts.
-- Derive the capacity readout from the native occupied state and its
-  reference. At address 2 a matched typed pair forces zero excess for
-  any readout on that pair. An account requiring a distinction there
-  must specify which additional occupancy or record the machine retains.
+- `RetainedReceiverCapacity` keeps the receiver's existing marker beside
+  the typed carrier. At address 2 the marker distinguishes even equal
+  carrier pairs. It arrives live at entry, on the record stream at exit,
+  and remains on the extracted bank value. Counting occupied slots gives
+  one unit at each comparison at both restoring addresses. Derive the
+  physical placement and primitive capacity assigned to that marked
+  slot in the complete E8 program. The occupied-slot count gives equal
+  receiver contributions, so any separation in this count comes from
+  other visits.
 - `DirectWriterRenewal` sums the short decoder's return pulses and the
   inverse electric exposures on the actual returned charged-lepton
   bank. With one comparison per decoder pulse and completed electric

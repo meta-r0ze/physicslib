@@ -101,7 +101,10 @@ two-stream payload and preserves its stored total across ticks and bank
 exchanges. The registered capacity sums over actual mismatch flags in
 consecutive windows. A successful restoring seed with one value `c`
 and zero reference capacity bills `43c` in the retained first period
-or `2c` for the banked receiver portion. Decide the native capacity
+or `2c` for the banked receiver portion. Its two comparisons read the
+occupation marker first from the live stream and then from the record
+stream. EP tracks the same marker alongside the typed payload through
+extraction. Decide the native capacity
 readout for occupied values and the full set of register, bank, reset and
 renewal visits required by a persisting program. Use one recurring
 execution to define its sum, with state and time at shared visits explicit.

@@ -1224,6 +1224,15 @@ gapped reflection ledgers count unit and double steps on each signed lane
 without a population average. The complete recurrent visit list and local
 capacity readouts supply the eventual mass comparison.
 
+`RetainedReceiverCapacity.occupied_visits` keeps the occupied marker with
+its typed carrier through both comparisons and bank extraction. Even when
+the address-2 carrier coordinates match the reference, the arriving live
+marker at entry and record marker at exit distinguish the two values.
+The ring comparator reads that bit on its orthogonal basis. Counting
+occupied slots gives one per visit and two over the receiver itinerary at
+both addresses. This fixes the slot count on the encoded execution.
+The physical E8 placement and common capacity unit remain open.
+
 At the direct address, `DirectWriterRenewal` identifies the booked inverse
 decoder with the adjoints of the forward pulses run in reverse order.
 On a returned charged-lepton port 2, the inverse decoder registers

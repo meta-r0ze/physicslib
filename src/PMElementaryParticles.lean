@@ -104,6 +104,7 @@ import PMElementaryParticles.RestoringBankClock
 import PMElementaryParticles.ProgramExecutionCounts
 import PMElementaryParticles.OccupiedBankedRestoring
 import PMElementaryParticles.ProgramCapacity
+import PMElementaryParticles.RetainedReceiverCapacity
 import PMElementaryParticles.DirectWriterRenewal
 import PMElementaryParticles.WireReferenceCost
 import PMElementaryParticles.FinalChannels
