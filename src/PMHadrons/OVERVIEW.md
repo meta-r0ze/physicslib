@@ -25,10 +25,10 @@ every persistent placement holds at least `n`, and a placement below `n` has now
 rearranges (`minOccupancy_le`, `not_persistent_of_card_lt`). A colour-neutral composite needs at
 least two carriers, hence at least `χ = 2` cells (`occupancy_ge_two_of_colourNeutral`).
 
-Both bases are **pillar counts**: a meson holds `χ + σ·ℓ` cells — the Map base `χ` plus the
-Protocol interaction-direction count `σ` per line-tier carrier (`StrangeCarrier`) — and the
-nucleon base `Δ²` is Margin's causal cone of one cycle (`NucleonBase`). The persistence predicate
-and the premise "a line-tier carrier spans the `σ` directions" remain inputs.
+A meson holds `χ + σ·ℓ` whole cells. This is the Map base `χ` plus the Protocol direction
+count `σ` per line-tier carrier (`StrangeCarrier`). A nucleon holds the `Δ²` clock events of
+the causal cone at unit price (`NucleonBase`). The persistence predicate and the premise
+"a line-tier carrier spans the `σ` directions" remain inputs.
 
 Standard-Model names (proton, neutron, pion, kaon) are **comparison labels** throughout this
 file; a measured value or a `σ` in a column is a comparison, not an input.
@@ -57,25 +57,11 @@ nucleons' `Z_TOL` and `Z_MAR` (`tollTerm_eq_zTol`, `marginTerm_eq_zMar`). So **t
 the mesons all carry the six pillars including TOL/MAR**, in two forms: the nucleons as a `Δ²`
 base minus pillar costs, the mesons as `n` whole cell budgets plus a residual. The **occupancy**
 `n` (how many cells the persistent configuration holds) and the residuals are the model inputs
-under study. The leptons and quarks still use separate E8 formulas (`η`, integer counts); that
-is elementary-particle work.
+under study. The lepton and quark ledgers use the same footprint cost. Their tier assignments remain open.
 
 ## Occupancy footprints
 
-The cell prices come from `OccupancyCost`. For charged mesons,
-`L = α(σ−χ)/χ`. The conditional meson counts use the specified placement or
-direction register. The proton and neutron reuse the causal cone for their
-shared base. Their `πD` link term has the Map assignment also used in
-`PMAtoms.LinkWeights`.
-
-| Particle | Tier | Leading count | Pillar terms in the cost | Residual | Count proved | Premise |
-| --- | --- | --- | --- | --- | --- | --- |
-| π⁰ | Two point carriers | χ full cells | χ times all six baseline prices | −σχ + 1/(ν−χ) | Colour-neutral placement has a conditional lower bound of 2 | The occupied configuration attains χ cells |
-| π⁺ | Two point carriers | χ full cells | χ times all six baseline prices | −σχ + 1/(ν−χ) + σ + D − L | Same lower bound | The occupied configuration attains χ cells |
-| K⁰ | One line carrier | χ+σ full cells | (χ+σ) times all six baseline prices | −σ + Dσ − 2π/(ν−χ) | The specified direction register has σ addresses | The physical pair holds the whole register in addition to the χ cells |
-| K⁺ | One line carrier | χ+σ full cells | (χ+σ) times all six baseline prices | −σ + Dπ − 1/√2 − L | Same register count | The physical pair holds the whole register in addition to the χ cells |
-| Proton | Area base | Δ² | Margin Δ² − Z_MAR/χ, Map −πD, Toll σZ_TOL | −1/D − α(D+1/D) | Δ² causal cone | Map correction, Toll/Margin weights and residual |
-| Neutron | Area base | Δ² | Margin Δ² − Z_MAR, Map −πD, Toll (σ−χ)Z_TOL | −1/D + σ/2 | Δ² causal cone | Map correction, Toll/Margin weights and residual |
+See the [whole-count occupancy table](../PMSubstrate/OVERVIEW.md#occupancy-footprints) for the counts, residuals and their shares.
 
 ## Modules
 
@@ -94,7 +80,7 @@ comparison.
 | `MesonMasses` | `π⁺` tier ledger (`pionPlus_ledger`, `pionPlus_value`, `pionPlus_mev_value`); `α⁻¹` = six-pillar `cellBudget` (`cellBudget_pillars`; Toll/Margin = `Z_TOL`/`Z_MAR`); every meson = `n·cellBudget + residual` (`*_cells`); `π⁺`, `K⁺`, proton heavier than their current quarks (`*_gt_constituents`) | cell counts `n = χ, σ+χ`; residual terms |
 | `Occupancy` | minimum-room principle (`minOccupancy_le`, `not_persistent_of_card_lt`); meson ledgers as the occupancy form `occupancyMass` (`pionPlus_eq_occupancyMass`, `kaonPlus_eq_occupancyMass`); colour neutrality ⇒ ≥ `χ = 2` carriers (`two_le_length_of_colourNeutral`, `occupancy_ge_two_of_colourNeutral`); derived-or-tied (`tied_minimal_of_moved`) | the persistence predicate; the kaon's extra `σ` |
 | `StrangeCarrier` | the kaon's extra `σ` identified as the **Protocol** interaction-direction / embedding-address count: `lineFootprint_eq` (a line carrier holds `σ` addresses), `lineFootprint_compl` (`residual_card`), `occupied_add_residual` (`σ + (R_M−σ) = R_M`), `residual_eq` (`R_M−σ = 167`), the **direction register** (`directionRegister`, `directionRegister_card`, `line_register_card`), `mesonOccupancy` / `mesonOccupancy_eq_register` (`pion_occupancy = χ`, `kaon_occupancy = χ+σ`), `meson_ledgers` | — (dir register: a line carrier holds the whole `σ` direction register, as a boundary holds its orientations) |
-| `NucleonBase` | the nucleon base `Δ²` is **Margin's causal cone**: `causalCone_eq_sq` (`causal_cone_card`), `causalCone_eq = 1849`, `base_eq_causalCone`, `proton_eq_causalCone` | — (a pillar count, derived) |
+| `NucleonBase` | the nucleon base `Δ²` charges the causal cone as whole events: `causalCone_eq_sq` (`causal_cone_card`), `causalCone_eq = 1849`, `base_eq_causalCone`, `proton_eq_causalCone` | — (a pillar count, derived) |
 | `AxialCount` | `g_A` step 1, the nucleon's spin-flip count on the 64 three-carrier states: vector `1` (`vector_count`), axial `5/3` (`axial_count`, `axial_ratio`), `5/3 = σ/(σ−χ)` (`axial_ratio_eq_invariants`); the measured `1.2754` is `0.765` of it | step 2, the reduction from confined motion |
 | `SpinFlavour` | the SU(6) spin-flavour algebra on three quarks with literal vectors: `sumG2` (`ΣG²`), `sumG2_proton = 57/16`, `sumG2_delta = 33/16`, `neutron_margin_pos`, `pion_margin_pos`; the double-commutator checks are in `tools/slow/SpinFlavourDC.lean` (outside the build) | the nucleon/Δ split used by `PILLARS.md` |
 | `CubeScales` | the lepton cube (neutron final state, units `m_e`) and the carrier cube (confined carrier, units `ħc/a`) cannot share one spacing: `single_unit_rms_bound`, `two_units` (the carrier unit exceeds the lepton unit by more than `300`) | the carrier rms radius `ρ = 1.354` (numerical) |

@@ -16,9 +16,9 @@ roles are not tuned to the numbers.
   boundary (`χ`); Protocol = the ordering; Governor = the level spacing; Toll = emission;
   Margin = the reference cone.
 * **Composite level, already in the library:** Map base `χ` cells and Protocol's `σ` direction
-  register for mesons (`MesonMasses`, `StrangeCarrier`); Margin's causal cone `Δ²` as the
-  nucleon base (`NucleonBase`, proved); Toll = the emission boundary with weight `tollTerm` and
-  Governor = per-slot persistence `χ/Δ` (`TollGovernor`).
+  register for mesons (`MesonMasses`, `StrangeCarrier`). The nucleon base counts the `Δ²`
+  clock events of Margin's causal cone at unit price (`NucleonBase`). Toll is the emission
+  boundary with weight `tollTerm`. Governor is per-slot persistence `χ/Δ` (`TollGovernor`).
 * **The carrier cube** (`PMAction` REVIEW A, Nov 2026): hard wall (no link out), three carriers in
   one ground orbital, `Sym³(4) = N (4) + Δ (16)` at `3E₀`, colour singlet.
 

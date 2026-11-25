@@ -999,23 +999,7 @@ its own packet. The firing pattern is joint, and Toll adds over packets
 
 ## Occupancy footprints
 
-The leading count and its multiplier come from the declared tier ledger.
-The pillar terms below are amounts after multiplication by the fixed price.
-The Lean footprints express those amounts in baseline price units.
-`η = 171/172`. The causal-cone theorem counts the region itself. Its
-identification with a species' occupied area is still a premise.
-
-| Particle | Tier | Leading count | Pillar terms in the cost | Residual | Count proved | Premise |
-| --- | --- | --- | --- | --- | --- | --- |
-| Electron | 0 | One mass unit | Physical counts open | 1 in the tower unit entry | — | Electron unit and point assignment |
-| Muon | 1 | σΔ | Protocol σΔ, Map −χ | −2π + (χ+σ)α/(1−α) | — | Line region, σ directions and cost assignments |
-| Tau | 2 | χΔ² | Map χΔ²−χ, Protocol −σΔ | −D | Δ² for the causal cone | Tau occupies the area, holds χ orientations and pays the stated corrections |
-| Up | 0 | D · Δ⁰, priced with 1/η | Capacity D/η | 0 | — | Point region, anchor multiplicity and overhead |
-| Down | 0 | D · Δ⁰, priced with 1/η | Capacity D/η, Protocol σ/η | 0 | — | Point region, anchor, directions and overhead |
-| Strange | 1 | DΔ, priced with 1/η | Capacity DΔ/η, Protocol χσ/η | 0 | — | Line region, anchor, direction drag and overhead |
-| Charm | 2 | DΔ², priced with 1/[η(σ−χ)] | Capacity DΔ²/[η(σ−χ)] | 0 | Δ² for the causal cone | Charm occupies the area, and the ledger applies colour dilution and overhead |
-| Bottom | 2 | DΔ², priced with 1/η | Capacity DΔ²/η | Δ²χ/(ησ) | Δ² for the causal cone | Bottom occupies the area, and the ledger assigns the anchor, overhead and latency leak |
-| Top | 3 | DΔ³ | Capacity DΔ³ + Δ³/D | 0 | — | Volume region, anchor and capacity leak |
+See the [whole-count occupancy table](../PMSubstrate/OVERVIEW.md#occupancy-footprints) for the counts, residuals and their shares.
 
 ## Mass readings in the tree
 

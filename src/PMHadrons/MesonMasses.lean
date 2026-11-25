@@ -107,14 +107,17 @@ def kaonPlusResidual : ℝ :=
   -(sigma : ℝ) + (D : ℝ) * Real.pi - 1 / Real.sqrt 2 - chargeLoad
 
 /-- The pion holds the declared Map base of whole substrate cells. -/
-def pion0Footprint : Footprint := cells pionCells pion0Residual
+def pion0Footprint : Footprint :=
+  { cells := chi, map := -(sigma : ℤ), residual := pionLeak }
 
-def pionPlusFootprint : Footprint := cells pionCells pionPlusResidual
+def pionPlusFootprint : Footprint :=
+  { cells := chi, map := -(sigma : ℤ)
+    residual := pionLeak + pionSymmetry + pionAnchor - chargeLoad }
 
 /-- The kaon holds the Map base and the declared Protocol direction register. -/
-def kaon0Footprint : Footprint := cells kaonCells kaon0Residual
+def kaon0Footprint : Footprint := cells (sigma + chi) kaon0Residual
 
-def kaonPlusFootprint : Footprint := cells kaonCells kaonPlusResidual
+def kaonPlusFootprint : Footprint := cells (sigma + chi) kaonPlusResidual
 
 /-- Charged-pion mass in `m_e` units. -/
 abbrev pionPlus : ℝ := cost pionPlusFootprint
@@ -129,8 +132,11 @@ theorem pion0_cells :
     PMSubstrate.E8Values.nu_eq, Nat.cast_ofNat]
   ring
 
-theorem pionPlus_cells : pionPlus = pionCells * cellBudget + pionPlusResidual :=
-  cost_cells _ _
+theorem pionPlus_cells : pionPlus = pionCells * cellBudget + pionPlusResidual := by
+  simp [pionPlus, pionPlusFootprint, cost, pionCells, cellBudget, pionPlusResidual,
+    pion0Residual, pionLeak, pionSymmetry, pionAnchor, PMSubstrate.mapTerm,
+    PMSubstrate.baseline, chi_eq]
+  ring
 
 theorem kaon0_cells :
     PMHadrons.CompositeMasses.kaon0 = kaonCells * cellBudget + kaon0Residual := by
@@ -149,13 +155,18 @@ theorem kaonPlus_cells :
   ring
 
 theorem pion0_eq_cost : PMHadrons.CompositeMasses.pion0 = cost pion0Footprint := by
-  rw [pion0_cells, pion0Footprint, cost_cells, cellBudget]
+  rw [pion0_cells]
+  simp [pion0Footprint, cost, pionCells, cellBudget, pion0Residual, pionLeak,
+    PMSubstrate.mapTerm, PMSubstrate.baseline, chi_eq]
+  ring
 
 theorem kaon0_eq_cost : PMHadrons.CompositeMasses.kaon0 = cost kaon0Footprint := by
   rw [kaon0_cells, kaon0Footprint, cost_cells, cellBudget]
+  norm_num [kaonCells]
 
 theorem kaonPlus_eq_cost : PMHadrons.CompositeMasses.kaonPlus = cost kaonPlusFootprint := by
   rw [kaonPlus_cells, kaonPlusFootprint, cost_cells, cellBudget]
+  norm_num [kaonCells]
 
 /-- The pion is exactly the sum of its named costs. -/
 theorem pionPlus_ledger :

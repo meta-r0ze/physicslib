@@ -73,30 +73,41 @@ def capLeak : ℝ := 1 / (D : ℝ)
 /-- Volumetric capacity leak `Δ³/D`. -/
 def capLeakTerm : ℝ := (Delta : ℝ) ^ 3 * capLeak
 
-/-! The spacetime anchors use the Capacity price units. These declared
-counts preserve the old ledger. Selection of the clock region and of the
-multipliers is open. -/
+/-! The event field is the whole part of the leading term after overhead
+and, for charm, colour dilution. The residual keeps its fractional part
+and the remaining ledger charges. For top, take the whole part of
+`Δ³(D + 1/D)`, its full leading term. These splits preserve the declared
+formulas. The occupied regions still need to be derived. -/
 
 def upFootprint : Footprint :=
-  { capacity := capacityCount (anchorPoint / η) }
+  let leading := anchorPoint / η
+  let whole := ⌊leading⌋₊
+  { events := whole, residual := leading - whole }
 
 def downFootprint : Footprint :=
-  { capacity := capacityCount (anchorPoint / η)
-    protocol := protocolCount (symWeight / η) }
+  let leading := anchorPoint / η
+  let whole := ⌊leading⌋₊
+  { events := whole, residual := leading - whole + symWeight / η }
 
 def strangeFootprint : Footprint :=
-  { capacity := capacityCount (anchorLine / η)
-    protocol := protocolCount (dragSym / η) }
+  let leading := anchorLine / η
+  let whole := ⌊leading⌋₊
+  { events := whole, residual := leading - whole + dragSym / η }
 
 def charmFootprint : Footprint :=
-  { capacity := capacityCount (anchorArea / (η * colourDim)) }
+  let leading := anchorArea / (η * colourDim)
+  let whole := ⌊leading⌋₊
+  { events := whole, residual := leading - whole }
 
 def bottomFootprint : Footprint :=
-  { capacity := capacityCount (anchorArea / η)
-    residual := latencyTerm / η }
+  let leading := anchorArea / η
+  let whole := ⌊leading⌋₊
+  { events := whole, residual := leading - whole + latencyTerm / η }
 
 def topFootprint : Footprint :=
-  { capacity := capacityCount (anchorVolume + capLeakTerm) }
+  let leading := anchorVolume + capLeakTerm
+  let whole := ⌊leading⌋₊
+  { events := whole, residual := leading - whole }
 
 abbrev up : ℝ := cost upFootprint
 abbrev down : ℝ := cost downFootprint
@@ -112,11 +123,13 @@ theorem up_ledger : up = anchorPoint / η := by
 /-- The down quark carries the manifold anchor plus the internal symmetry weight. -/
 theorem down_ledger : down = (anchorPoint + symWeight) / η := by
   simp [down, downFootprint, cost, add_div]
+  ring
 
 /-- The strange quark is a linear anchor plus the additive double-symmetry drag
 `χσ = 2σ`. -/
 theorem strange_ledger : strange = (anchorLine + dragSym) / η := by
   simp [strange, strangeFootprint, cost, add_div]
+  ring
 
 /-- The charm quark is an areal anchor diluted by the `σ − χ` colour dimensions. -/
 theorem charm_ledger : charm = anchorArea / (η * colourDim) := by
@@ -125,6 +138,7 @@ theorem charm_ledger : charm = anchorArea / (η * colourDim) := by
 /-- The bottom quark is an areal anchor plus the boundary-to-symmetry latency leak. -/
 theorem bottom_ledger : bottom = (anchorArea + latencyTerm) / η := by
   simp [bottom, bottomFootprint, cost, add_div]
+  ring
 
 /-- The top quark is a volumetric anchor plus the reciprocal capacity leak
 `Δ³/D`. -/

@@ -12,13 +12,12 @@ The two composite bases are both **pillar counts**, not fitted numbers:
   carrier, the Protocol interaction-direction count `σ` (`StrangeCarrier`);
 * nucleons: the base `Δ²` is **Margin's causal cone of one cycle** — the events reachable from an
   origin in one clock period at speed one, `{(t, x) : t < Δ, |x| ≤ t}`, which number exactly `Δ²`
-  (`PMSubstrate.PersistencePremises.causal_cone_card`), the count Margin prices.
+  (`PMSubstrate.PersistencePremises.causal_cone_card`). Each held event has unit price.
 
 `causal_cone_card` is the substrate theorem; here it is connected to the nucleon ledger
 `CompositeMasses.base = Δ² − πD − 1/D`, so the leading `Δ²` is the cone, not an independent
 integer. This is the pillar-consistent answer to "why the nucleons and the mesons use different
-bases": they are pricing different pillars (Margin's cone vs Map's cells plus Protocol's
-directions).
+bases". Nucleons count the cone events. Mesons count whole cells.
 -/
 
 noncomputable section
@@ -59,29 +58,29 @@ theorem proton_eq_causalCone :
   unfold PMHadrons.CompositeMasses.proton
   rw [base_eq_causalCone]
 
-/-- The shared base uses the proved causal cone and the declared Map correction. -/
+/-- The shared base counts cone events. The two corrections remain in the residual. -/
 def baseFootprint : Footprint :=
-  { margin := marginCount causalCone
-    map := mapCount (-Real.pi * (D : ℝ))
-    residual := -1 / (D : ℝ) }
+  { events := causalCone
+    residual := -Real.pi * (D : ℝ) - 1 / (D : ℝ) }
 
 theorem base_eq_cost : PMHadrons.CompositeMasses.base = cost baseFootprint := by
   rw [base_eq_causalCone]
-  unfold cost baseFootprint
-  simp only [zero_mul, zero_add, add_zero, mapCount_price, marginCount_price]
+  have event_cost (n : ℕ) (r : ℝ) : cost { events := n, residual := r } = (n : ℝ) + r := by
+    simp [cost]
+  rw [baseFootprint, event_cost]
   ring
 
-/-- Add the proton Toll and Margin entries to the shared base. -/
+/-- Add the whole proton Toll charge. The fractional Margin term stays in the residual. -/
 def protonFootprint : Footprint :=
   baseFootprint.add
     { toll := sigma
-      margin := -1 / (chi : ℝ)
-      residual := -PMHadrons.CompositeMasses.αe * ((D : ℝ) + 1 / (D : ℝ)) }
+      residual := -PMHadrons.CompositeMasses.zMar / (chi : ℝ) -
+        PMHadrons.CompositeMasses.αe * ((D : ℝ) + 1 / (D : ℝ)) }
 
 /-- Add the neutron Toll, Margin, and boundary entries to the shared base. -/
 def neutronFootprint : Footprint :=
   baseFootprint.add
-    { toll := (sigma : ℝ) - (chi : ℝ)
+    { toll := (sigma : ℤ) - (chi : ℤ)
       margin := -1
       residual := (sigma : ℝ) / 2 }
 

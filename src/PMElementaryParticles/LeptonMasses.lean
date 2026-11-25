@@ -68,10 +68,10 @@ def muonSpinLag : ℝ := 2 * Real.pi
 /-- Muon: vacuum feedback load `(χ+σ)·α/(1−α)`. -/
 def muonFeedback : ℝ := ((chi + sigma : ℕ) : ℝ) * αe / (1 - αe)
 
-/-- The declared line footprint. The sweep uses the Protocol price units. -/
+/-- The declared line footprint holds `σΔ` clock events. -/
 def muonFootprint : Footprint :=
-  { protocol := protocolCount muonSweep
-    map := mapCount (-muonAnchor)
+  { events := sigma * Delta
+    map := -1
     residual := -muonSpinLag + muonFeedback }
 
 /-- [Premise] Muon mass in `m_e` units in the declared species ledger. -/
@@ -81,7 +81,8 @@ abbrev muon : ℝ := cost muonFootprint
 theorem muon_ledger :
     muon = (Delta : ℝ) * (sigma : ℝ) - (chi : ℝ) - 2 * Real.pi +
       ((chi + sigma : ℕ) : ℝ) * αe / (1 - αe) := by
-  simp [muon, muonFootprint, cost, muonSweep, muonAnchor, muonSpinLag, muonFeedback]
+  norm_num [muon, muonFootprint, cost, muonSpinLag, muonFeedback,
+    PMSubstrate.mapTerm, PMSubstrate.baseline, chi_eq]
   ring
 
 /-- **The feedback load is the recursive loop's fixed point.** The total load of the
@@ -100,20 +101,29 @@ def tauCoreLatency : ℝ := (sigma : ℝ) * (Delta : ℝ)
 /-- Tau: spacetime anchors. -/
 def tauAnchors : ℝ := (D : ℝ) + (chi : ℝ)
 
-/-- The declared area footprint. The boundary and the orientation anchor use Map. -/
+/-- The area footprint holds `χΔ² − σΔ` clock events and deducts one Map charge. -/
 def tauFootprint : Footprint :=
-  { map := mapCount (tauBoundary - (chi : ℝ))
-    protocol := protocolCount (-tauCoreLatency)
+  { events := chi * Delta ^ 2 - sigma * Delta
+    map := -1
     residual := -(D : ℝ) }
 
 /-- [Premise] Tau mass in `m_e` units in the declared species ledger. -/
-abbrev tau : ℝ := cost tauFootprint
+def tau : ℝ := cost tauFootprint
 
 /-- The tau is exactly the sum of its named tier costs. -/
 theorem tau_ledger :
     tau = (chi : ℝ) * (Delta : ℝ) ^ 2 - (sigma : ℝ) * (Delta : ℝ) -
       ((D : ℝ) + (chi : ℝ)) := by
-  simp [tau, tauFootprint, cost, tauBoundary, tauCoreLatency]
+  have count_cost (n : ℕ) :
+      cost { events := n, map := -1, residual := -(D : ℝ) } =
+        (n : ℝ) - (chi : ℝ) - (D : ℝ) := by
+    have hm : PMSubstrate.mapTerm PMSubstrate.baseline = (chi : ℝ) := rfl
+    simp [cost, hm, sub_eq_add_neg]
+  have h : sigma * Delta ≤ chi * Delta ^ 2 := by
+    rw [sigma_eq, Delta_eq, chi_eq]
+    omega
+  unfold tau tauFootprint
+  rw [count_cost, Nat.cast_sub h, Nat.cast_mul, Nat.cast_mul, Nat.cast_pow]
   ring
 
 /-! ## E8-only enclosures -/

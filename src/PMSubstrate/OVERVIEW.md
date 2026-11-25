@@ -64,17 +64,38 @@ Postulate I). See [`TODO.md`](TODO.md) for the missing implications.
 
 ## Occupancy footprints
 
-`OccupancyCost.cost` adds the six signed baseline charges and a residual. One
-cell costs `impedance baseline`. The cost adds over disjoint accounts and over
-the levels of a tower. The electron normalization enters through
-`OccupancyCost.ElectronUnit`. The particle ledgers are in the
-[EP table](../PMElementaryParticles/OVERVIEW.md#occupancy-footprints) and the
-[hadron table](../PMHadrons/OVERVIEW.md#occupancy-footprints).
+`OccupancyCost.cost` prices whole clock events at one and full cells at the
+baseline impedance. Extra pillar charges are signed integers. A fixed
+residual gives only countably many possible costs
+(`countable_costs_at_residual`, `exists_not_cost_at_residual`).
 
-| Particle | Tier | Leading count | Pillar terms in the cost | Residual | Count proved | Premise |
-| --- | --- | --- | --- | --- | --- | --- |
-| Electron | Declared point unit | Physical counts open | Price all six counts at `baseline` | Unit entry 1 in the atom ledger | — | Physical electron footprint costs 1 mₑ. |
-| Proton and neutron | Area base | Δ² | Margin counts the one-period causal cone | See the hadron table | `PersistencePremises.causal_cone_card` | Use this region in the nucleon ledger. |
+The table records the declared species ledgers. Quark events are the whole
+part of the overhead-adjusted leading term, with colour dilution for charm.
+The top uses the whole part of its full volume term. The remaining charges
+stay in the residual. The causal cone has `Δ² = 1849` events. Using that cone
+for an occupied nucleon is the ledger assignment.
+
+The intervals are rounded outwards. They use exact rational arithmetic,
+Mathlib's 20-decimal π bounds and rational bounds on √2 from squaring.
+The share is signed and is given as a percent. A zero entry is exact.
+
+| Particle | Events | Cells | Extra pillar counts | Residual enclosure (mₑ) | Residual / total |
+| --- | ---: | ---: | --- | ---: | ---: |
+| Electron | 1 | 0 | — | 0 | 0% |
+| Muon | 215 | 0 | Map −1 | [−6.231729, −6.231728] | [−3.013871, −3.013870]% |
+| Tau | 3483 | 0 | Map −1 | −4 | [−0.115042, −0.115041]% |
+| Up | 4 | 0 | — | [0.023391, 0.023392] | [0.581395, 0.581396]% |
+| Down | 4 | 0 | — | [5.052631, 5.052632] | [55.813953, 55.813954]% |
+| Strange | 173 | 0 | — | [10.064327, 10.064328] | [5.497699, 5.497700]% |
+| Charm | 2479 | 0 | — | [0.750487, 0.750488] | [0.030264, 0.030265]% |
+| Bottom | 7439 | 0 | — | [744.176608, 744.176609] | [9.093982, 9.093983]% |
+| Top | 337904 | 0 | — | 0.750000 | [0.000221, 0.000222]% |
+| π⁰ | 0 | 2 | Map −5 | [0.071428, 0.071429] | [0.027041, 0.027042]% |
+| π⁺ | 0 | 2 | Map −5 | [9.060482, 9.060483] | [3.317248, 3.317249]% |
+| K⁰ | 0 | 7 | — | [14.551201, 14.551202] | [1.494265, 1.494266]% |
+| K⁺ | 0 | 7 | — | [6.848317, 6.848318] | [0.708861, 0.708862]% |
+| Proton | 1849 | 0 | Toll 5 | [−12.847386, −12.847385] | [−0.699691, −0.699690]% |
+| Neutron | 1849 | 0 | Toll 3, Margin −1 | [−10.316371, −10.316370] | [−0.561074, −0.561073]% |
 
 ## Layout
 

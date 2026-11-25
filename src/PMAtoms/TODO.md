@@ -2,7 +2,7 @@
 
 Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
 
-- Derive the nucleus and atom footprint counts and shared-link residuals from actual level configurations (`LevelBudget.footprint`).
+- Derive whole Toll and Margin counts and the shared-link residual from the nucleus and atom configurations (`LevelBudget.footprint`).
 
 **Open.** The bulk: with both isospin terms present the stable-line masses are `≈ 110 m_e`
 heavy on average, because `certifiedMass`'s bulk terms (and the alpha-cluster binding) already

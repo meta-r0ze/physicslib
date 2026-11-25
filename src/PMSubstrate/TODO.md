@@ -19,7 +19,7 @@ measured coupling.
 
 ## Occupancy cost
 
-- Connect the counts of occupied clock regions to physical footprints. The electron unit is the named premise `OccupancyCost.ElectronUnit`.
+- Connect the counts of occupied clock regions to physical footprints. The physical event unit is in [SCOPE](../../SCOPE.md#named-premises).
 
 ## Current priority
 

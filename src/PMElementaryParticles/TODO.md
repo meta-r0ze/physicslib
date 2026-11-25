@@ -6,7 +6,7 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 - Derive each tier from the dimension of the clock region that its persistent program holds in one period. Use `PersistencePremises.causal_cone_card` as the counting template.
 - Check the derived counts against `TierLedger.tiersFor` across every protocol before comparing any mass.
-- Derive the electron point footprint. Use the normalized unit premise in `OccupancyCost.ElectronUnit`.
+- Derive the electron point footprint. The physical event unit is in [SCOPE](../../SCOPE.md#named-premises).
 - Derive the muon line count σΔ, the Map anchor and the spin and feedback residuals (`LeptonMasses.muonFootprint`).
 - Derive the tau area attachment, χ multiplicity, inherited σΔ charge and D residual (`LeptonMasses.tauFootprint`).
 - Derive the up point count, D anchor and overhead (`QuarkMasses.upFootprint`).

@@ -37,10 +37,10 @@ comparison, not a derivation.
   whole number of substrate cells (`n·α⁻¹ + residual`), or the `Δ²`-based nucleon account. The
   E8 value is derived; the measured mass is only the comparison. `Occupancy` formalizes the
   **minimum-room principle** (a persistent placement holds at least `n` cells; below `n` it
-  rearranges) and derives the pion's lower bound `≥ χ` from colour neutrality. Both bases are
-  **pillar counts**: a meson holds `χ + σ·ℓ` cells (Map base + Protocol direction count per
-  line-tier carrier, `StrangeCarrier`) and the nucleon base `Δ²` is Margin's causal cone
-  (`NucleonBase`).
+  rearranges) and derives the pion's lower bound `≥ χ` from colour neutrality. A meson holds
+  `χ + σ·ℓ` cells (Map base + Protocol direction count per line-tier carrier,
+  `StrangeCarrier`). A nucleon holds the `Δ²` clock events of the causal cone at unit
+  price (`NucleonBase`).
 - **Rearrangement and emission.** `Particle` (what persists, what rearranges),
   `ParticleChannels` (the channel inventory), `CompositeTransition`,
   `HadronicMatrixElement` / `BoundStateOverlap` (the missing emission overlap made explicit),

@@ -42,9 +42,8 @@ structure LevelBudget where
 def LevelBudget.contribution (b : LevelBudget) : ℝ :=
   b.toll + b.margin + b.sharedLinks
 
-/-- The declared electron unit in the legacy lattice sum. The physical
-electron footprint must satisfy `ElectronUnit`. -/
-def electronEntry : Footprint := { residual := 1 }
+/-- The electron has one event in the declared lattice sum. -/
+def electronEntry : Footprint := { events := 1 }
 
 def freeFootprint (z n : ℕ) : Footprint :=
   tower [NucleonBase.protonFootprint.scale z, NucleonBase.neutronFootprint.scale n,
@@ -55,20 +54,17 @@ abbrev latticeSum (z n : ℕ) : ℝ := cost (freeFootprint z n)
 
 theorem latticeSum_eq_ledger (z n : ℕ) :
     latticeSum z n = (z : ℝ) * proton + (n : ℝ) * neutron + (z : ℝ) * 1 := by
-  have he : cost electronEntry = 1 := by simp [electronEntry, cost]
+  have he : cost electronEntry = 1 := cost_oneEvent
   simp [latticeSum, freeFootprint, cost_tower, ← NucleonBase.proton_eq_cost,
     ← NucleonBase.neutron_eq_cost, he, add_assoc]
 
-/-- The level's binding correction uses the Toll and Margin price units.
-The shared-link term remains in the residual. -/
+/-- The supplied binding amounts have no whole-count witnesses.
+Keep them in the residual. -/
 def LevelBudget.footprint (b : LevelBudget) : Footprint :=
-  { toll := tollCount (-b.toll)
-    margin := marginCount (-b.margin)
-    residual := -b.sharedLinks }
+  { residual := -b.contribution }
 
 theorem LevelBudget.cost_footprint (b : LevelBudget) : cost b.footprint = -b.contribution := by
-  simp [LevelBudget.footprint, LevelBudget.contribution, cost]
-  ring
+  simp [LevelBudget.footprint, cost]
 
 def boundFootprint (z n : ℕ) (nucleusBudget atomBudget : LevelBudget) : Footprint :=
   tower [freeFootprint z n, nucleusBudget.footprint, atomBudget.footprint]
