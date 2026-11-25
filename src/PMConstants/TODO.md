@@ -5,33 +5,6 @@ Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premise
 Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 [`Values`](Values.lean) alone; add a name there rather than importing an internal module.
 
-## The Fermi window in the VEV subsystem
-
-`e8p` owns comparisons; this library owns derived forms. Everywhere else in PMConstants that rule
-now holds. One subsystem does not, and it is a restructuring rather than a cleanup.
-
-Done, for the record: the fermion mass law, the strong ledger and the VEV's linear correction form
-each have a substrate derivation here with the measured comparison in `e8p`
-(`FermionLawPulls`, `StrongLedgerPulls`, `VevFormPulls`).
-
-What is left is that nine results state their conclusion **against the measured Fermi window**
-`(246.21957, 246.21971)` rather than deriving a form, and the library leans on them:
-
-| Result | In | Used by |
-| --- | --- | --- |
-| `divisor_window` | `VevCorrections` | `NoiseShare.selected_divisor`, `VevReadout.total_excluded`, `vev_from_readout` |
-| `dimension_window`, `boundary_unique` | `VevCorrections` | `VevBoundary.boundary_excluded` and every sibling exclusion |
-| `Fits` and seven exclusions | `VevBoundary` | the module is built on it |
-| `compound_excluded`, `total_excluded`, `vev_from_readout` | `VevReadout` | nothing |
-| `chi_over_k`, `payload_weighted_excluded` | `BoundaryStorage` | nothing |
-
-So the move is one pass over `VevCorrections`, `VevReadout`, `VevBoundary`, `NoiseShare` and
-`BoundaryStorage`: keep the substrate objects and derived forms here (`withDivisor`,
-`withDimension`, `parallelClosures`, `VevNoise.noise_share`, `VevReadout.normalized_share`), and
-put every statement that names the window in `e8p`. The derivations the window statements confirm
-all exist already, so nothing is lost. It needs a compiler in the loop, because `Fits` and
-`divisor_window` are load-bearing and the five modules are interlocked.
-
 ## Premises to name or derive
 
 - **The weak `SU(2)` on the sign pair.** Two thirds of the old subgroup premise are now derived in

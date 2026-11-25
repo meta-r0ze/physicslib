@@ -4,9 +4,8 @@ import PMConstants.WeakConfinement
 /-!
 # The VEV's noise divisor is the three spatial axes
 
-`VevCorrections.divisor_window`: the Fermi window allows the noise divisor `3` or `4`, and the
-paper reads `3` as "the noise lands on the axes orthogonal to the reference". That reading is now
-constrained.
+The paper reads the divisor `3` as the number of axes orthogonal to the reference.
+Here exact repair and spatial symmetry give their shares.
 
 The margin noise `Y` (Paper I's margin, `ElectroweakE8.bareYukawa`) is spread over the four axes by
 a share `s : Fin 4 → ℝ`.

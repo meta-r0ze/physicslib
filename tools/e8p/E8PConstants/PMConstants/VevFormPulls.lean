@@ -1,4 +1,4 @@
-import PMConstants.Values
+import E8PConstants.PMConstants.VevWindow
 
 /-!
 # VEV correction-form measured comparisons (moved from the PMConstants leaf)
@@ -16,7 +16,7 @@ The Fermi window agrees, and that agreement is a comparison, so it lives here.
 
 * `exp_excluded`: `exp x` in place of `1 + x` puts `v` above `246.22001` GeV, outside the window
   `(246.21957, 246.21971)` that the measured Fermi constant fixes
-  (`PMConstants.VevAccounting.fermi_window`).
+  (`E8PConstants.VevWindow.fermi_window`).
 * `geometric_excluded`: `1/(1 − x)`, the sum `Σ xᵏ`, puts `v` above `246.22038` GeV.
 
 Three further exclusions that no library result rests on, moved here for the same reason:
@@ -26,9 +26,7 @@ Three further exclusions that no library result rests on, moved here for the sam
   boundary term itself is built in `PMConstants.VevBoundary`.
 * `qed_like_excluded`: a QED-like `3α/(4π)` puts `v` below `246.2167` GeV.
 
-The window statements the library still rests on (`PMConstants.VevCorrections.divisor_window`,
-`dimension_window`, `boundary_unique`, and `VevReadout`'s and `VevBoundary`'s results built on
-them) stay there for now; see that library's `TODO`.
+The remaining measured-window checks are in `E8PConstants.VevWindow`.
 -/
 
 noncomputable section

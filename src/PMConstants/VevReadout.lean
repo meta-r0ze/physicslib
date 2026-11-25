@@ -4,38 +4,16 @@ import PMConstants.RepairBudget
 /-!
 # The VEV corrections as one exact repair, read out once
 
-`VevCorrections` pinned the VEV's two correction factors with the Fermi window, `(1 + x)` with
-`x = α/D_eff` and `(1 − Y/3)`, and left two persistence readings as premises: the linear form is
-"one repair", and the noise divisor is the share of one axis. This module derives both from what is
-now proved about exact repair and normalized readout, and shows the data exclude the alternatives
-each reading rules out.
+Returning each displacement exactly gives the linear factor `1 + x`.
+If a repair instead leaves a residual fraction `r`, the geometric sum
+of repairs is `1 + x/(1 − r)`. Equal partial repairs satisfy the lower
+bound in `compound_lower`.
 
-**The linear form.**
-* `exact_net_is_identity`: a repair that returns every displacement exactly has net correction
-  equal to the displacement, `d ↦ d`, linear with no higher-order terms. One exact repair of a
-  relative displacement `x` gives the factor `1 + x`.
-* `residual_series`: if each repair left a residual fraction `r` that was repaired again, the
-  factor would be `1 + x/(1 − r)`. Exactness is `r = 0`, giving `1 + x`; `r = x` gives `1/(1 − x)`,
-  the geometric form (window comparison: `E8PConstants.VevFormPulls.geometric_excluded`).
-* `compound_lower`, `compound_excluded`: replacing the one repair by `n ≥ 2` equal partial repairs
-  gives `(1 + x/n)ⁿ ≥ 1 + x + x²/4`, which the Fermi window excludes for every `n ≥ 2`; `n → ∞` is
-  `eˣ` (window comparison: `E8PConstants.VevFormPulls.exp_excluded`). Only `n = 1`, which is
-  `PersistenceClosures.one_repair`, fits.
-
-**One axis's share.**
-* `normalized_share`: with the noise shares fixed by exact repair (`NoiseShare.share_spatial`:
-  `0` on the reference's time axis, `Y/3` on each spatial axis), *any* normalized readout law on the
-  spatial axes reads `Y/3`. The readout does not have to pick one axis; equal shares make every
-  normalized spatial law read one axis's share.
-* `time_weight`: a normalized law putting weight `w₀` on the time axis reads `(1 − w₀) Y/3`; the
-  uniform law over all four axes reads `Y/4` (`uniform_four`). Both `3` and `4` fit the window, so
-  this is the one place the premise matters: the VEV readout is a link comparison, and link hops are
-  spatial.
-* `total_excluded`: an unnormalized total over the three axes reads `Y` (divisor `1`), which the
-  window excludes.
-
-Premises: the topological factor is one exact repair of the relative displacement `x`; the VEV is a
-normalized readout taken along link (spatial) hops.
+Exact repair clears the reference's time axis, and symmetry makes the
+three spatial shares equal (`NoiseShare.share_spatial`). Every normalized
+spatial readout therefore gives `Y/3`. Adding time-axis weight `w₀` gives
+`(1 − w₀)Y/3`, including `Y/4` for uniform weights over all four axes.
+The link-hop readout uses spatial weights.
 -/
 
 noncomputable section
@@ -89,15 +67,6 @@ theorem compound_lower (x : ℝ) (hx : 0 ≤ x) (n : ℕ) (hn : 2 ≤ n) :
     rw [div_le_div_iff₀ (by norm_num) (by positivity)]; nlinarith
   nlinarith [mul_le_mul_of_nonneg_right e3 (sq_nonneg x)]
 
-/-- **Partial repairs are excluded by the Fermi window.** -/
-theorem compound_excluded (n : ℕ) (hn : 2 ≤ n) : 246.21971 < V * (1 + x / n) ^ n / (1 + x) := by
-  have hv := V_bounds
-  have hx := x_bounds
-  have hc := compound_lower x (by linarith) n hn
-  have hpos : 0 < 1 + x := by linarith
-  rw [lt_div_iff₀ hpos]
-  nlinarith [mul_le_mul_of_nonneg_left hc (by linarith : (0:ℝ) ≤ V)]
-
 /-- **Any normalized readout on the spatial axes reads one axis's share.** -/
 theorem normalized_share (share : Fin 4 → ℝ) (Yn : ℝ) (hexact : share 0 = 0)
     (h12 : share 1 = share 2) (h13 : share 1 = share 3) (hsum : ∑ i, share i = Yn)
@@ -124,14 +93,5 @@ theorem uniform_four (share : Fin 4 → ℝ) (Yn : ℝ) (hexact : share 0 = 0)
     (h12 : share 1 = share 2) (h13 : share 1 = share 3) (hsum : ∑ i, share i = Yn) :
     ∑ i, (1/4 : ℝ) * share i = Yn / 4 := by
   rw [time_weight share Yn hexact h12 h13 hsum (fun _ => 1/4) (by norm_num [Fin.sum_univ_four])]; ring
-
-/-- **An unnormalized total reads `Y`: divisor `1`, excluded.** -/
-theorem total_excluded : ¬ (246.21957 < withDivisor (1 : ℕ) ∧ withDivisor (1 : ℕ) < 246.21971) := by
-  rw [divisor_window 1 (by norm_num)]; omega
-
-/-- **The VEV with both readings.** -/
-theorem vev_from_readout :
-    246.21957 < withDivisor (3 : ℕ) ∧ withDivisor (3 : ℕ) < 246.21971 :=
-  (divisor_window 3 (by norm_num)).mpr (Or.inl rfl)
 
 end PMConstants.VevReadout

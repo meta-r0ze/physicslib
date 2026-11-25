@@ -1,3 +1,4 @@
+import E8PConstants.PMConstants.VevWindow
 import PMConstants.Values
 
 /-!
@@ -57,7 +58,7 @@ theorem payload_pull {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5) :
 here from `PMConstants.ScalarSector`. -/
 theorem higgs_pull {GF : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.1663794e-5) :
     0.5 < (Real.sqrt (higgsSq GF) - 125.20) / 0.11 ∧ (Real.sqrt (higgsSq GF) - 125.20) / 0.11 < 0.75 := by
-  have hm := higgs_from_fermi h
+  have hm := E8PConstants.VevWindow.higgs_from_fermi h
   constructor
   · rw [lt_div_iff₀ (by norm_num)]; linarith
   · rw [div_lt_iff₀ (by norm_num)]; linarith

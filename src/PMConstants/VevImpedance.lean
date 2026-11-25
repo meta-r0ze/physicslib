@@ -6,9 +6,7 @@ import PMSubstrate.ProtocolToll
 
 The VEV formula is `v = S α⁻¹ (1 + α/D_eff)(1 − Y/(σ − χ)) m_e` with slot count
 `S = χΔ² − (ν + DΔ)` and `D_eff = D + χ/(Dπ)` (`ElectroweakE8.vevRatio`). `VevReadout` derives the
-linear form `1 + x` from exact repair; `VevCorrections` holds what the Fermi window says about the
-remaining factors. This module rewrites the
-factor with the Ohmic conventions the library already uses (`PMSubstrate.ProtocolToll`: parallel
+linear form `1 + x` from exact repair. This module rewrites the factor with the Ohmic conventions the library already uses (`PMSubstrate.ProtocolToll`: parallel
 admittances add, a unit admittance is one open channel; series impedances add).
 
 * `series`: `(S/α)(1 + α/E) = S (α⁻¹ + 1/E)`. Each slot's impedance is the node's `α⁻¹ = Z_geo`
@@ -21,12 +19,11 @@ admittances add, a unit admittance is one open channel; series impedances add).
 Reading: the slot's handoff is the node's impedance `α⁻¹` (one repair of the footprint over the
 full solid angle, `VevPremises.handoff_is_footprint_repair`) followed by one repair, the
 electron's single event (`RootRepairRule.electron_one_event`), delivered through the `D` axes and
-the boundary in parallel. Series addition is exactly first order, which is why the compounded
-forms `exp x` and `1/(1 − x)` fail; the window comparisons that agree are in
-`tools/e8p/E8PConstants/PMConstants/VevFormPulls.lean`.
+the boundary in parallel. Series addition is exactly first order. The measured comparisons of correction
+forms are in `E8PConstants.VevFormPulls` and `E8PConstants.VevWindow`.
 
 The boundary admittance `χ/(Dπ)` is built in `VevBoundary` (`χ` closures in parallel around a
-width-`D` boundary; every sibling fails the Fermi window). The margin factor's one-axis share is derived
+width-`D` boundary). The margin factor's one-axis share is derived
 (`VevEvent.vev_reads_spatial_share`).
 -/
 

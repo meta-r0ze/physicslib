@@ -24,6 +24,9 @@ import PMConstants.StrongLedgerTest
 import PMConstants.Partition
 import PMConstants.VevEntry
 import PMConstants.VevCorrections
+import PMConstants.VevBoundary
+import PMConstants.VevReadout
+import PMConstants.BoundaryStorage
 import PMConstants.WireMassBounds
 
 /-!
@@ -130,7 +133,7 @@ export PMConstants.ReadoutAccounting (rawWMass selectedWeights)
 export PMConstants.SharedReference (quarkWMass ReferenceLayout)
 export PMConstants.TableConsequences (Premises)
 export PMConstants.ResourceLedger (sterile_counted)
-export PMConstants.ScalarSector (higgsSq higgs_from_fermi lambda_insensitive)
+export PMConstants.ScalarSector (higgsSq lambda_insensitive)
 export PMConstants.FermionMassLaw (kappa_cost_light kappa_amp_light massA_event_priced)
 export PMConstants (footprint overhead)
 export PMConstants.CertifiedConstants (α)

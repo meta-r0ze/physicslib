@@ -376,9 +376,9 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `ScalarVevLink` | `zPhiCalibrated`, `vsubOfVev`, `canonicalVev_vsubOfVev`, `w_mass_from_vev`, `z_mass_from_vev`; the substrate amplitude is recovered from the VEV once the scalar normalization is calibrated. |
 | `VevDownstream` | `vev_downstream`: positivity, `G_F=1/(√2v²)`, `m_H²=2λv²`, exact electron closure; `w_mass_from_canonical_vev` conditional on `vev = canonicalVev`. |
 | `VevClosure` | `VevFactor`, `VevStatus`, `factorStatus`, `factorProduct`, `vev_closure`, `slotCount_closed`, `noiseAxes_closed`, `boundary_closed`, `oneRepair_closed`; composed VEV closure ledger. |
-| `VevCorrections` | What the Fermi window says about the VEV corrections |
+| `VevCorrections` | Substrate VEV forms with a variable noise divisor or effective dimension. Measured-window checks live in `E8PConstants.VevWindow` and `E8PConstants.VevFormPulls`. |
 | `VevNoise` | The VEV's noise divisor is the three spatial axes |
-| `VevBoundary` | The boundary admittance `χ/(Dπ)` as `χ` closures in parallel around a width-`D` boundary (Barbier, Descartes, Ohm); every sibling construction fails the Fermi window |
+| `VevBoundary` | The boundary admittance `χ/(Dπ)` as `χ` closures in parallel around a width-`D` boundary (Barbier, Descartes, Ohm) |
 | `VevImpedance` | The VEV's topological factor as a series impedance: node `α⁻¹` then the `D` axes in parallel with the boundary admittance `χ/(Dπ)` |
 | `NeutralCurrent` | The photon and Z couplings from the reference's mass form |
 | `RepairBudget` | The scalar budget from one exact repair of the reference |
@@ -387,7 +387,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `TangentResponse` | The real drift family's response totals 3 |
 | `WalkTrials` | The finite walk protocol read against the scalar ledger |
 | `GaugeWalkBudget` | The scalar's repair with the weak doublet on its own payload index |
-| `NoiseShare` | Why the VEV's noise divisor is `3`, not `4` |
+| `NoiseShare` | Exact repair clears the reference axis, and symmetry shares the residual equally across the three spatial axes. |
 | `VacuumModulus` | θ = 0 is unique under the modulus too, once the trivial sector counts |
 | `WindingWeights` | The winding-sector weights are positive: what `θ = 0` still needs |
 | `ThetaBarSelection` | The selected vacuum has `θ̄ = 0` for any quark mass phase |
