@@ -431,6 +431,20 @@ extraction and again for reload gives `q ≤ 3` (`serial_axis_block_iff`).
 Both budgets leave the spatial staging and physical admission open.
 The closed-ring parity check applies to packets that remain in that ring.
 
+For the occupied charged-lepton route, the bank input is the active
+charged-lepton channel after the equal-class crossing. Its class-shifted
+output is kept while a fresh copy of the post-crossing input reloads
+the receiver. The extraction and reload compare the same two typed
+values in opposite order. At address 1 their classes differ. At
+address 2 their class is zero, and the comparisons are silent when
+the reference indices match both payload indices. The four booked
+class reflections include two unit jumps at address 1, and either
+three (axis 1) or one (other axes) at address 2. These are typed pair
+comparisons and root-step counts. A two-phase bank-root trial uses
+one probe as it evolves across both phases. Replaying the two receiver
+guard decisions on that probe leaves its endpoint unchanged
+(`restoring_guard_replay_returns`).
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.

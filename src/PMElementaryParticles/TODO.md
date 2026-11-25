@@ -175,10 +175,15 @@ This file is the open list only.
   exits, and feeding the same request to both root phases always returns the
   input. A successful closed marker saturates the 43-registration Margin
   threshold on a differing record ring. The banked receiver gets two flags
-  in that period. Construct the full banked execution for the occupied
-  charged-lepton class, include bank and class operations in the program
-  account, and enumerate its actual root-trial opportunities and changed
-  endpoints before normalizing a weight.
+  in that period. `OccupiedBankedRestoring` now attaches the typed
+  extraction, class shift and fresh reload to the occupied charged-lepton
+  channels for a successful booked history. The bank pair comparisons
+  distinguish the restoring addresses, and the class word has an exact
+  unit-step ledger by axis. Replaying the successful receiver guards gives
+  a returning bank-root trial on a single probe. Determine the physical
+  reference and fresh banks, stage both glued coordinates and derive the
+  schedule's bank-root trial opportunities with separately retained phase
+  controls. Read those endpoints before normalizing a weight.
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use

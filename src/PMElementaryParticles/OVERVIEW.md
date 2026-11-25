@@ -1192,15 +1192,27 @@ doublet half-pulse for extraction and reload. `banked_windows_iff` checks
 serial overlap on their common clock and the separately booked class word.
 The eight signed modes need at least four doublets (`bank_doublet_capacity`).
 The existing signed-axis reindexing is faithful, and a common staged pulse
-on each supplied axis preserves it. Physical staging, the retained axis and
-the root trial remain open.
+on each supplied axis preserves it.
+
 A successful two-switch marker registers 43 times in the first period on
 the closed ring. With that start and request field on a differing record bit,
 it violates the existing program Margin. Tick-two extraction gives two
 receiver registrations in the same period. This meets the numerical receiver
 bounds for Toll and Margin on the booked itinerary
 (`ProgramExecutionCounts.retained_restoring_fails_margin`,
-`banked_receiver_period_margin`). The bank and class word have their own bill.
+`banked_receiver_period_margin`).
+
+`OccupiedBankedRestoring.occupied_bank_cycle` attaches the banked route to the occupied active charged-lepton channel (visible class 3),
+following the crossing from the static charged-lepton channel (class 5).
+It retains the shifted output and reloads the post-crossing input from a
+separate fresh bank. The two scheduled bank swaps both change their typed
+arriving pair at address 1. At address 2, both swaps are silent exactly
+when the prepared vector-class reference matches the label and amplitude
+indices of the payload. The class ledger records two unit steps at
+address 1. At address 2 it records three on axis 1 and one on each other
+axis. Replaying the two successful receiver guard decisions on the same
+bank-root probe returns it to its input. The physical staging, reference
+preparation and bank-root trial opportunities still need to be derived.
 
 ### Where the readings agree
 
