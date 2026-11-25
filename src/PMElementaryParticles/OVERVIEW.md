@@ -1467,6 +1467,11 @@ The table covers physical mass and rate candidates and the event and capacity ac
 | `PMConstants.ElectroweakE8.higgsMass` | Scalar mass from gain and VEV | Coupling and electron scale | PM gain arithmetic. Scope VEV structure. | Yes, through PMConstants.Values | VevDownstream.vev_downstream. |
 | `PMConstants.ScalarSector.higgsSq` | Scalar squared mass at a supplied Fermi coupling | Fermi coupling | PM self-coupling; experimental coupling in e8p. | Yes, ScalarAccounting | E8PConstants.VevWindow.higgs_from_fermi bounds its square root. |
 
+| `NeutrinoContext.mRest` | The bulk floor at the E8 coupling and electron unit. | E8 constants and the free-streaming mass identification. | PM floor arithmetic. Supplied identification. The measured splitting appears in the legacy comparison theorems. | Indirect. e8p uses the upstream floor. | It is a specialization of `Bulk.floorMass`. |
+| `PMConstants.WMassTest.wMass` | W mass at a supplied Z scale. | Z mass and clock ratio. | PM clock ratio. Supplied Z scale and mass-angle identification. | Comparison | Conditional W/Z mass reading. |
+| `PMConstants.ReadoutAccounting.rawWMass` | Occupancy-weighted W mass diagnostic. | Z mass and raw weak-angle count. | PM count. Supplied Z scale and occupancy identification. | Comparison | Conditional W/Z mass reading. |
+| `PMConstants.SharedReference.quarkWMass` | Coloured-reference W mass diagnostic. | Z mass and quark-reference ratio. | PM count. Supplied Z scale and selected reference. | Comparison | Conditional W/Z mass reading. |
+
 ### Tier and species ledgers
 
 | Lean name | What it computes | Inputs it takes | Input status | e8p reads it | Relation to another row |
@@ -1522,11 +1527,21 @@ The table covers physical mass and rate candidates and the event and capacity ac
 | `ElectricPrimitiveToll.forwardToll` | Short writer flag sum | Channel and booked primitive comparison rule | PM decoder and flag calculation. Scope physical admission. | No | DirectWriterRenewal.writer_claim and ElectricPrimitiveToll.forward_tolls. |
 | `ElectricChiralKick.swapToll` | Shared-current swap flag | Channel and prepared carrier | PM flag for supplied state. Scope physical preparation. | No | Part of ElectricChiralKick.totalToll. |
 | `ElectricChiralKick.totalToll` | Shared-current writer flags | Channel and prepared bank | PM path arithmetic. Scope physical current and booking. | No | DirectWriterRenewal.shared_writer_flag_sum includes the reverse path. |
+| `HeavyFlipRecords.pairedToll` | Sum of active and static heavy-record flags. | Two carrier labels. | PM comparison under the supplied record. | No | `paired_tolls`. |
+| `HeavyFlipRecords.orbitRecordToll` | Per-label heavy record flag count. | Carrier label and reference rule. | PM flag count. Scope heavy record contract. | No | `orbit_record_tolls`. |
+| `ElectricFourPortRecord.exposureToll` | Two electric comparison flags. | Label on the four-port writer. | PM flags. Scope writer admission. | No | `exposure_tolls`. |
+| `ElectricFourPortRecord.decodeToll` | Decoder flag subtotal for one port. | Port and decoder circuit. | PM circuit flags. Scope decoder admission. | No | Used by `ElectricFourPortRecord.forwardToll`. |
+| `ElectricFourPortRecord.forwardToll` | Four-port exposure and decoder flag subtotal. | Label and canonicalization choice. | PM circuit flags. Scope writer admission. | No | `ElectricFourPortRecord.forward_tolls`. |
+| `ProtocolToll.eventToll` | Sum of gate prices along a word. | Gate word, initial label and prices. | PM recursion. Scope tariff and physical word. | No | `eventToll_weak_partners`. |
+| `ProtocolToll.survivalToll` | Two weighted selector tests. | Two weights and label. | PM flags. Scope tariff and test admission. | No | `survivalToll_differences`, `selector_half_flag_weight_iff`. |
+| `WireSchedule.bitToll` | Two output flags for one writer reference. | Polarity and channel. | PM record arithmetic. Scope writer reference. | No | Used by `WireSchedule.polarityCost`. |
+| `WireReferenceCost.factorFlagToll` | Two measured factor flags for the scheduled record. | Polarity and label. | PM flag arithmetic. Scope record reference. | No | `factorFlagToll_eq` relates it to `WireSchedule.bitToll`. |
+| `WireSchedule.knownToll` | Subtotal of proved flags on paid visits. | Schedule, label and setup choice. | PM known flags. Scope booking. | No | `WireSchedule.fullToll` adds a supplied remainder. |
 | `WireSchedule.fullToll` | Booked writer and remaining route cost | Schedule, setup and unpriced-visit functional | Scope admissibility and tariff. PM accounting. | No | WireSchedule.best_survival_iff relates minimizing cost to survival. |
 | `WireSchedule.polarityCost` | Writer record cost by polarity | Address, species traffic and other cost | Scope population and lifecycle prices. PM book comparison. | No | polarity_cost_difference. |
 | `TransportCandidates.allBookedMixedRate` | Mixed fixture rate at full booking | AND/OR candidate | PM on fixture. Scope physical booking. | No | allBookedMixedRate_eq. |
 | `TransportCandidates.uniformTraceRegistrations` | Flags from uniform requests through the chosen trace | Rule, state and uniform request | PM count. Scope physical traffic. | No | uniformTraceRegistrations_zero. |
-| `PMKAutomaton.Machine.RootTransferAccounting.gibbsRate` | Gibbs-selected trial probability per opportunity | Hazard and charged trial cost | Scope work and tariff. Supplied Gibbs selection for physical trials. | No | actual_rate_freedom leaves the physical trial rate open. |
+| `PMAction.RootTransferAccounting.gibbsRate` | Gibbs-selected trial probability per opportunity | Hazard and charged trial cost | Scope work and tariff. Supplied Gibbs selection for physical trials. | No | actual_rate_freedom leaves the physical trial rate open. |
 
 ### Decay widths and rates
 
@@ -1604,7 +1619,7 @@ choice and the first layer that needs it.
 | Carrier | `CompositeMass`, `WallSeesawAccuracy` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
 | Carrier | SCOPE · `ClockRing`, `Dispersion` | Named spectral mass identification. The band offset is a PM theorem. |
 | Carrier | SCOPE · `ChargedInsertion`, `ResonanceLift` | Named offset and matched-port admission. Persistence of the calibration channel is open. |
-| Carrier | `FermionMassLaw.massA`, `FermionMassLaw.massB` | Supplied alternatives for matching `yv) to detuning. The `κ_τ` measurement is an e8p comparison. |
+| Carrier | `FermionMassLaw.massA`, `FermionMassLaw.massB` | Supplied alternatives for matching `yv` to detuning. The `κ_τ` measurement is an e8p comparison. |
 | Protocol | SCOPE · `WireSchedule.Premises` | Named serial route and admitted bookings. |
 | Protocol | SCOPE · `WireReferenceCost`, `PMKAutomaton.Values` | Named population and reset contract. The threshold arithmetic is proved. |
 | Protocol | `DirectWriterRenewal.writerClaim` | Encoded flag counts are proved. Preparation, renewal and continuation prices are supplied. |
@@ -1626,6 +1641,45 @@ choice and the first layer that needs it.
 | Protocol | `TauLifetime.tauLife`, `TauE8.tauLifetimeE8` | Experimental muon lifetime and branching fraction for the first. Experimental branching fraction for the second. |
 | Protocol | `TauLifetimeCorrected.qedTau` | SM radiative formula with supplied `α(m_τ)⁻¹ = 133.3`. |
 | Protocol | `TauLifetimeCorrected.wRatio` | SM finite-propagator correction applied with the E8 W mass. |
+
+## Lean modules changed since 37e9cce
+
+This list starts with the 28 Lean modules changed through `9c4369b`. It also includes the four additional Lean modules whose docstrings changed in this audit.
+
+| Lean module | What it certifies | Supplied input before a physical number |
+| --- | --- | --- |
+| `PMAction.AlternatingReferenceNode` | Fixed current of alternating arrivals is w/(2−w). | Physical transfer weight and retained-centre traffic. |
+| `PMAction.CarrierRateFromAdmittance` | Principal transfer area and rate are related exactly. | Physical weight, selected branch and elapsed time. |
+| `PMAction.CommonResponse` | Adds capacity times flag over disjoint booked visits. | Complete visit set and physical capacity and flag values. |
+| `PMAction.WireResonanceSpectrum` | Gives the bare spectrum and the Gram polynomial for two independent restoring rates. | Both normalized rates and the charged offset. |
+| `PMAction.WireShiftedSpectrum` | Isolates and orders three positive Schur masses in the proved parameter region. | Both physical rates, offset and absolute scale. |
+| `PMElementaryParticles.DirectWriterRenewal` | Checks the inverse writer, its flags, claims and decoder duration. | Physical prices, seed source, companion/flip and payload return. |
+| `PMElementaryParticles.EPLabelGen` | Reindexes each wall by generation and attaches invariant labels to the spine. | Physical occupied execution and its prices. |
+| `PMElementaryParticles.ElectricCoordinateDecoder` | Certifies the short unitary writer and reversible coordinate preparation. | Admitted root pulses, elapsed ticks and occupied input bank. |
+| `PMElementaryParticles.GenerationMasses` | Identifies the glue label and direct address (key (0,1)). | Physical wall coefficients and crossing gap. |
+| `PMElementaryParticles.MassInsertionTrace` | Composes the occupied direct port, reversible bank and adjacent restoring trace. | Occupied source, prepared reference, admitted continuation and clocks. |
+| `PMElementaryParticles.OccupiedBankedRestoring` | Attaches extraction, class shift and reload to the charged routes. Proves fresh-supply obligations. | Physical vacuum, fresh bank, retained export and paid visits. |
+| `PMElementaryParticles.ProgramCapacity` | Counts payload excess, bank flags and signed root steps. | Local capacity map and unit/double-step prices. |
+| `PMElementaryParticles.ProgramExecutionCounts` | Counts 15 separately billed witness runs, and compares retained and banked records. | Complete recurring charged itinerary and physical Toll prices. |
+| `PMElementaryParticles.RestoringBankClock` | Checks clock windows and four-doublet staging for the bank and class word. | Physical root quarter-time, staging and parallel admission. |
+| `PMElementaryParticles.RestoringBankedShift` | Shows the banked payload reaches the signed class-shift endpoint. | Admitted physical extraction, pulse time and prices. |
+| `PMElementaryParticles.RestoringHistoryCalibration` | Converts a matched history current to a principal rate and transports the brackets. | Physical seed prior, current match and durations. |
+| `PMElementaryParticles.RestoringOccupiedHistory` | Lifts the closed marker history to the occupied charged receiver. | Prepared vacuum and supplied two-phase requests. |
+| `PMElementaryParticles.RestoringPulseCalibration` | Links steady, alternating and isolated transfers to timed pulse readouts. | Selected current, retained ports, delays and static offset. |
+| `PMElementaryParticles.RestoringWallShift` | Checks the four-reflection word and its signed endpoint. | Physical firing and clock placement. |
+| `PMElementaryParticles.RetainedReceiverCapacity` | Tracks the retained marker and counts two occupied-slot claims at either address. | Physical slot placement, common capacity unit and other visits. |
+| `PMElementaryParticles.WireSchedule` | Checks serial route placement, conditional Toll and minimum-cost selection. | Physical admission, fresh supply, reset, traffic and tariffs. |
+| `PMKAutomaton.BankReceiverPulse` | Gives the staged doublet exchange and quarter-time compatibility tests. | Staged occupied pair, physical pulse calibration and booking. |
+| `PMKAutomaton.ReceiverCapacity` | Proves capacity conservation and registered sums, including a bank exchange. | Physical valued ports, valuation function and event list. |
+| `PMKAutomaton.RestoringExtraction` | Proves reversible typed extraction and reloading and the retained-output supply constraint. | Fresh supply, the physical bank and a live request history. |
+| `PMKAutomaton.RestoringMarkerTrace` | Characterizes a live exit by the two exchange guards. | Physical controller requests and retained phase. |
+| `PMKAutomaton.RestoringRingHistory` | Proves 86-tick recurrence and flags for the successful two-site seed. | Selected request history, seed and prior. |
+| `PMKAutomaton.RestoringRingToll` | Counts the closed trace and bounds weighted exit shares. | Physical prior, hazard and identification with a pulse. |
+| `PMKAutomaton.RingReceiver` | Realizes the reversible receiver and the restored comparison probe. | Physical rule, requests, initial traffic and booking. |
+| `PMElementaryParticles.KoideSplit` | Proves the norm-split form of the Koide ratio. | Physical generation record and Fourier phase. |
+| `PMElementaryParticles.LeptonMasses` | Evaluates the declared lepton cost ledgers and muon feedback fixed point. | Physical derivation of the named ledger costs. The formulas already evaluate. |
+| `PMElementaryParticles.PolarMeasure` | Constructs the radial and energy-shell phase-space measure. | Physical choice of scale, support, contact channel and masses. |
+| `PMElementaryParticles.TierLedger` | Checks the declared three tiers for each base protocol. | Physical address-to-tier map and per-tier price. |
 
 ## Verification
 
