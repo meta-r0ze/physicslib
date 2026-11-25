@@ -22,7 +22,7 @@ the packet's site and keep its generation and its label. The six pillars
 (`ProgramWitness.Pillars`, each linked to its requirement) select the
 programs: the substrate's observables leave six label classes, Map removes the
 one invisible class, and every remaining class runs in every generation at the
-least Toll: fifteen programs (`EPLabelGen.spine_generations`). What remains is
+least Toll for fifteen generation-by-class indices (`EPLabelGen.spine_generations`). What remains is
 the readout (masses and widths from the programs), the vacuum and composite
 placement, and multi-protocol composition. Legacy species, tier and
 heavy-label ledgers are retained below with their audited status.
@@ -53,6 +53,13 @@ heavy-label ledgers are retained below with their audited status.
 
 ### Program classes (the EP end state)
 
+`EPSpine.programs_card` counts 15 witness indices from three generations
+and five visible classes. `ProgramClasses.visible_channels_card` counts
+15 visible channel labels. Indexing every channel label in every
+generation would give 45 label indices. The certified aggregate runs
+one representative per class and generation, for 15 billed runs
+(`ProgramExecutionCounts.counted_witness_toll`).
+
 EP's target is a classification: up to the substrate's symmetries, the
 programs that meet the six pillars form a finite set of classes, each with a
 witness program and a readout. The label part is in `ProgramClasses`:
@@ -61,7 +68,7 @@ witness program and a readout. The label part is in `ProgramClasses`:
 |---|---|---|
 | Classes | Weak and colour actions split the 16 channels into 6 orbits. | `classOf`, `classOf_flipWeak`, `classOf_permuteColour`, `classOf_surjective`, `class_transitive` |
 | Invisible class | Exactly one class is fixed by every action and has zero wall charge (the carrier charge, `CarrierChannels.hyper`): the positive lepton-axis carrier on the wall without the reference. | `unmoved_iff`, `charge_zero_iff`, `invisible_iff` |
-| Map | Read with the substrate's observables, Map removes that class. Five classes (15 channels) remain. With three glue cosets: fifteen programs. | `visible_class_iff`, `visibleClasses_card` |
+| Map | Read with the substrate's observables, Map removes that class. Five classes remain across 15 visible channel labels. Each class has one representative per glue generation, for 15 witness indices. | `visible_class_iff`, `visibleClasses_card` |
 | Generation-blind ring | A ring step is a spacetime clock-axis root (glue key `0`), so it never changes a packet's coset; `n` steps keep the coset and move the receiver site `n` places, forward or back. | `EPSpine.clockAxis_key`, `step_keeps_generation`, `forward_walk`, `backward_walk` |
 | Program on the node machinery | `EPSpine.Program`: label, generation (one of 3 nonzero glue keys), reference, firing patterns on the 43-site ring, and an E8 packet root in the program's coset; the start site is the packet's clock reading. The packet stays in its coset and tracks the ring. | `Program`, `generation_card`, `program_walk` |
 | Spine | Every generation and every visible class has a program meeting all six pillars; the singlet has none; `3 × 5 = 15`. | `EPSpine.spine`, `singlet_no_program`, `programs_card` |
@@ -1249,7 +1256,16 @@ root quarter-times for write and uncompute or 79 with fresh preparation.
 The coordinate return of the companion and the return of the payload are
 separate booked operations.
 
-### Where the readings agree
+### Shared addresses and the Schur comparison
+
+The two reported Schur cases fall below the measured `m_μ/m_τ` interval.
+The bare admittance ratio is `0.0044–0.0045`. The shifted admittance ratio
+is below `0.00730`. The common-duration principal-rate case is
+`0.0470–0.0472`. The reference ratio is about `0.0595`.
+`E8PConstants.WireMass.reference_separation` proves the first two
+separations. `E8PConstants.WireMass.rate_reading_still_below` proves
+the third. The duration enclosures describe what a conditional match
+would require of the supplied clock. They give no admitted duration.
 
 The glue and wire readings share the three addresses: one direct and two
 restoring routes. The ledger has three entries per protocol; its sorted entries
