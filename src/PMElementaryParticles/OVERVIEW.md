@@ -1214,6 +1214,16 @@ axis. Replaying the two successful receiver guard decisions on the same
 bank-root probe returns it to its input. The physical staging, reference
 preparation and bank-root trial opportunities still need to be derived.
 
+`ProgramCapacity.receiver_claim` evaluates the upstream registered capacity
+sum on this occupied receiver. It registers twice the carried value above
+the prepared reference. The typed bank changes and the class word extend
+that subtotal; their capacity units come from their respective bookings.
+At address 2 a reference matching both coordinates gives zero excess and
+zero bank changes, with the class word still contributing. The direct and
+gapped reflection ledgers count unit and double steps on each signed lane
+without a population average. The complete recurrent visit list and local
+capacity readouts supply the eventual mass comparison.
+
 ### Where the readings agree
 
 The glue and wire readings share the three addresses: one direct and two

@@ -37,11 +37,28 @@ This file is the open list only.
 
 ## Charged-lepton mass path
 
-First derive the two ratios in electron-mass units through the wire. The
-tier ledger and measured references are comparison inputs. The direct
-address is 0, the restoring addresses are 1 and 2, and the static
-charged insertion is booked on address 2. Address numbers label rows,
-while the three mass ranks come from the coupled spectrum.
+Derive the total capacity claims of one repeating occupied program at
+each charged-lepton address, and then compare the ratios in e8p. The
+tier ledger and measured references are comparison inputs. Address 0
+has the direct insertion. Addresses 1 and 2 have the restoring route.
+
+- `ProgramCapacity.receiver_claim` applies PMKAutomaton's sum to the
+  occupied charged-lepton receiver and counts twice the capacity carried
+  above the prepared reference. The restoring subtotals add the two
+  typed bank comparisons and the class word under their supplied
+  capacity prices. The direct and gapped words also have exact per-lane
+  unit and double root counts.
+- Derive the capacity readout from the native occupied state and its
+  reference. At address 2 a matched typed pair forces zero excess for
+  any readout on that pair. An account requiring a distinction there
+  must specify which additional occupancy or record the machine retains.
+- Close the full visit list, including the direct writer and renewal,
+  preparation and staging, and any selected static operation. Derive
+  their local costs and assign each booked visit once. The present
+  receiver, bank and root-word subtotals cover the stated operations.
+
+The following are the inputs of the conditional spectral model. Any use
+as the program's mass readout requires a derivation from the same execution.
 
 1. **Calibrate the common clock and the two kinds of operation
    (PMKAutomaton, then EP).** Start with an occupied direct flip and the

@@ -103,6 +103,7 @@ import PMElementaryParticles.RestoringBankedShift
 import PMElementaryParticles.RestoringBankClock
 import PMElementaryParticles.ProgramExecutionCounts
 import PMElementaryParticles.OccupiedBankedRestoring
+import PMElementaryParticles.ProgramCapacity
 import PMElementaryParticles.WireReferenceCost
 import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog

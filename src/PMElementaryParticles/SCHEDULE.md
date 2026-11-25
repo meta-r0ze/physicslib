@@ -445,6 +445,15 @@ one probe as it evolves across both phases. Replaying the two receiver
 guard decisions on that probe leaves its endpoint unchanged
 (`restoring_guard_replay_returns`).
 
+`ProgramCapacity` attaches the registered capacity sum to this itinerary.
+The receiver visits carry capacity relative to the prepared reference. The
+bank and class word are charged for their booked typed comparisons and root
+steps. If the address-2 prepared reference equals the carried pair, both
+receiver excess and typed bank changes give zero contribution; the class
+word still acts on the retained bank. The direct and gapped words have
+their own successive E8 root-step ledgers. Their visit placements and the
+remaining setup and renewal claims are needed for a complete cycle sum.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.
