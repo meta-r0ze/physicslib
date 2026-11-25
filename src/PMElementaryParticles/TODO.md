@@ -170,6 +170,15 @@ This file is the open list only.
   encoding. Supply the physical retained axis and stage the full glued
   carrier, derive the root trial and staging visits, and use the resulting
   rates and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  The fifteen indexed least-Toll witnesses give one flag each when run once
+  and billed separately. The two-site restoring projection gives no live
+  exits, and feeding the same request to both root phases always returns the
+  input. A successful closed marker saturates the 43-registration Margin
+  threshold on a differing record ring. The banked receiver gets two flags
+  in that period. Construct the full banked execution for the occupied
+  charged-lepton class, include bank and class operations in the program
+  account, and enumerate its actual root-trial opportunities and changed
+  endpoints before normalizing a weight.
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use

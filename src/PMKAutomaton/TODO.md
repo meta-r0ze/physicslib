@@ -72,6 +72,12 @@ The open admission parts and the smallest question for each:
 | Joint schedule and Hamiltonian update | Which visits, overlaps and controls the two walls can execute; with timing and coefficient readout this fixes the schedule, ratio `r` and split walk. | Which admitted chronological word acts on the wire and record together? |
 | Shared-register event ownership | Which charged-current and writer records each persisting label needs, and which are retained, reused or exported. | Which labels are present at each visit and which subsequent guard consumes each record? |
 
+For successful restoring histories, the retained marker gives 43 receiver
+flags in the first period and a tick-two extraction gives two. Book the
+bank operations and their controls to complete the account for a repeating
+execution. A root endpoint-change count also needs the actual two-phase
+requests and the number of eligible trial opportunities.
+
 ## Absolute timing
 
 This premise fixes elapsed tick counts, available windows, cadence on both

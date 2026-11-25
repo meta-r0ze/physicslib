@@ -101,6 +101,7 @@ import PMElementaryParticles.RestoringOccupiedHistory
 import PMElementaryParticles.RestoringHistoryCalibration
 import PMElementaryParticles.RestoringBankedShift
 import PMElementaryParticles.RestoringBankClock
+import PMElementaryParticles.ProgramExecutionCounts
 import PMElementaryParticles.WireReferenceCost
 import PMElementaryParticles.FinalChannels
 import PMElementaryParticles.MuonRadiativeLog

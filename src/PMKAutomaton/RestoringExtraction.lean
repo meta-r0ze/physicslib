@@ -210,6 +210,27 @@ theorem restart_with_fresh_bank (either : Bool) (q : History) (hLive : liveExit 
     exact reload_clean q
   rw [hf, hr]
 
+/-- Every comparison after a successful extraction is silent while
+the retained receiver continues with its reference-only ports. -/
+theorem extracted_suffix_flag_zero (either : Bool) (q : History) (hLive : liveExit either q = true)
+    (i : ℕ) (x : Fin Delta) :
+    receiverFlag either ((tick Delta either)^[i] (extract either q).1) x = 0 := by
+  rw [extract_success either q hLive, blank_iterate, receiver_flag_eq]
+  change (if exchange either _ = true ∧ false ≠ false then (1 : ℝ) else 0) = 0
+  simp
+
+/-- Any booked prefix after a successful extraction has the two
+receiver flags of the initial visits. -/
+theorem extracted_prefix_receiver_toll (either : Bool) (q : History)
+    (hLive : liveExit either q = true) (remaining : ℕ) :
+    receiverToll either q 2 +
+      (∑ i ∈ Finset.range remaining, ∑ x,
+        receiverFlag either ((tick Delta either)^[i] (extract either q).1) x) = 2 := by
+  have hz : (∑ i ∈ Finset.range remaining, ∑ x,
+      receiverFlag either ((tick Delta either)^[i] (extract either q).1) x) = 0 := by
+    simp [extracted_suffix_flag_zero either q hLive]
+  rw [successful_receiver_toll_two either q hLive, hz, add_zero]
+
 /-- Charge the comparisons performed by the ring tick, before and after
 the bank exchange. The separate bank exchange and later carrier work
 have their own admission and toll accounts. -/
@@ -246,20 +267,8 @@ theorem extracted_receiver_toll (either : Bool) (q : History) :
   | true =>
     have hex := h
     rw [live_exit, Bool.and_eq_true] at hex
-    rw [extractedReceiverToll, successful_receiver_toll_two either q h,
-      extract_success either q h, hex.1, hex.2]
-    have hz : (∑ i ∈ Finset.range (2 * Delta - 2), ∑ x,
-      receiverFlag either ((tick Delta either)^[i]
-        (replacePorts ((tick Delta either)^[2] (seed q)) blankPorts)) x) = 0 := by
-      apply Finset.sum_eq_zero
-      intro i _
-      apply Finset.sum_eq_zero
-      intro x _
-      rw [blank_iterate, receiver_flag_eq]
-      change (if exchange either _ = true ∧ false ≠ false then (1 : ℝ) else 0) = 0
-      simp
-    rw [hz]
-    norm_num
+    rw [hex.1, hex.2]
+    exact extracted_prefix_receiver_toll either q h (2 * Delta - 2)
 
 /-- If the extraction runs as an additional receiver comparison, the
 orthogonal basis-marker account charges it only on a live exit. -/

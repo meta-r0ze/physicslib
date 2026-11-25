@@ -125,6 +125,15 @@ theorem full_receiver_toll (either : Bool) (q : History) :
   rw [receiverToll, sum_flags either _ (seed q) _ (seed_single q), seed_firing, closed_count, live_exit]
   split <;> simp
 
+/-- The first full clock period of a successful seed with its marker
+retained registers on every tick. -/
+theorem successful_receiver_toll_period (either : Bool) (q : History)
+    (h : liveExit either q = true) : receiverToll either q Delta = Delta := by
+  rw [live_exit, Bool.and_eq_true] at h
+  rw [receiverToll, sum_flags either _ (seed q) _ (seed_single q), seed_firing, h.1, h.2]
+  have hn : flagCount (twoSwitches true true) Delta (42, false) = Delta := by decide +kernel
+  rw [hn]
+
 private theorem two_switch_slot_iterate (n : ℕ) :
     (portSource (twoSwitches true true))^[n] (42, false) =
       if n % 2 = 0 then (42, false) else (0, true) := by

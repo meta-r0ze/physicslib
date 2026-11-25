@@ -65,6 +65,7 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Generation-blind ring | A ring step is a spacetime clock-axis root (glue key `0`), so it never changes a packet's coset; `n` steps keep the coset and move the receiver site `n` places, forward or back. | `EPSpine.clockAxis_key`, `step_keeps_generation`, `forward_walk`, `backward_walk` |
 | Program on the node machinery | `EPSpine.Program`: label, generation (one of 3 nonzero glue keys), reference, firing patterns on the 43-site ring, and an E8 packet root in the program's coset; the start site is the packet's clock reading. The packet stays in its coset and tracks the ring. | `Program`, `generation_card`, `program_walk` |
 | Spine | Every generation and every visible class has a program meeting all six pillars; the singlet has none; `3 × 5 = 15`. | `EPSpine.spine`, `singlet_no_program`, `programs_card` |
+| Indexed witness runs | One separately billed run per generation and visible class gives one flag per entry and fifteen in total, with five entries per generation address. The existing witnesses use one firing site and yield zero live exits under the two-site restoring projection. Reusing a witness request at both root phases returns the trial to its input. | `ProgramExecutionCounts.representative_qualifies`, `entries_per_address`, `counted_witness_toll`, `counted_witness_restoring_exits`, `witness_trial_endpoint` |
 | Label on the packet | A labelled packet is a coset root plus the label's channel vector. Its state is site (clock reading), generation (glue key) and label (internal content: pairings with the internal simple roots). Channel vectors carry no glue key; ring steps have zero internal content; distinct labels have distinct internal content. So a ring walk moves only the site: generation and label are conserved and the label reads back at any time. | `EPLabel.channel_glueKey`, `clockAxis_internalContent`, `channel_internalContent_injective`, `walk_keeps_label`, `label_readout`, `labels_distinct`, `spine_labelled` |
 | Placement per generation | Generation `g`'s channel vectors are the certified internal triality applied `g` times to the reference placement. In every generation every channel sits in the class the library wall rule requires (`wallClass g (active c)`), carries no glue key, and the labels stay distinct. The spine holds per generation with each generation's own channel vectors. | `EPLabelGen.channelE8Gen`, `channelKeyGen_wallClass`, `channelGen_glueKey`, `channelGen_internalContent_injective`, `genIndex_bijective`, `spine_generations` |
 | Per-wall symmetry | The 16 channels are two walls of 8 carriers. Within one wall, colour exchange and the weak flip keep every lattice pairing of the placed vectors, in all three generations, and both moves keep a channel's wall. The transpositions generate the colour group, so this is group invariance. Pairings between the two walls are not substrate costs and no symmetry is claimed for them. | `EPLabelGen.colour_wall_invariant`, `weak_wall_invariant`, `colour_preserves_wall_pairs`, `weak_preserves_wall_pairs` |
@@ -1193,6 +1194,13 @@ The eight signed modes need at least four doublets (`bank_doublet_capacity`).
 The existing signed-axis reindexing is faithful, and a common staged pulse
 on each supplied axis preserves it. Physical staging, the retained axis and
 the root trial remain open.
+A successful two-switch marker registers 43 times in the first period on
+the closed ring. With that start and request field on a differing record bit,
+it violates the existing program Margin. Tick-two extraction gives two
+receiver registrations in the same period. This meets the numerical receiver
+bounds for Toll and Margin on the booked itinerary
+(`ProgramExecutionCounts.retained_restoring_fails_margin`,
+`banked_receiver_period_margin`). The bank and class word have their own bill.
 
 ### Where the readings agree
 
