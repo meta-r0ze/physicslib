@@ -201,5 +201,8 @@ bare ratio and the positive-offset bound to the quotient of the frozen
 muon/electron and tau/electron reference intervals. The report also inverts
 the bare ratio exactly to constrain the direct/restoring duration ratio and
 gives a necessary lower bound for offsets in `(0,1)`. These comparison
-constraints apply to the equal-rate benchmark family. The native rates and
+constraints apply to the equal-rate benchmark family. With a 24-tick
+direct flip the bare duration window allows only a 19-tick restoring span.
+A marker retained in the closed receiver is on the record side at tick 19.
+An earlier live extraction has a separate schedule. The native rates and
 full-wall spectrum remain open.

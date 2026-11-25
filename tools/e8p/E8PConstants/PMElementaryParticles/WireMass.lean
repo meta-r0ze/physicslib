@@ -1,5 +1,6 @@
 import E8PConstants.Format
 import PMConstants.Values
+import PMKAutomaton.RestoringRingToll
 
 /-!
 The frozen comparison for the normalized resonant Schur model. For a
@@ -195,6 +196,21 @@ theorem bare_short_clock (ticks : ℕ) (ht : 0 < ticks) :
   · rintro rfl
     norm_num [bareDurationBounds]
 
+open PMKAutomaton in
+/-- When the receiver keeps the marker for the entire bare-model restoring
+span, the required short-clock duration lands on the record side. -/
+theorem bare_short_retained_exit_excluded (either : Bool)
+    (q : RestoringRingHistory.History) (hLive : RestoringRingHistory.liveExit either q = true)
+    (ticks : ℕ) (ht : 0 < ticks)
+    (hWindow : (bareDurationBounds.1 : ℝ) < 24 / (ticks : ℝ) ∧
+      24 / (ticks : ℝ) < (bareDurationBounds.2 : ℝ)) :
+    RingReceiver.slotValue
+      (((RingReceiver.tick PMAction.Delta either)^[ticks] (RestoringRingHistory.seed q)).2.2.2)
+      (42, false) = false := by
+  rw [RestoringRingHistory.successful_live_slot_even either q hLive,
+    (bare_short_clock ticks ht).mp hWindow]
+  rfl
+
 def lines : List String :=
   ["Charged-lepton wire m_mu/m_tau (unscored Schur benchmark)",
    "  Normalization: common unit crossing, real resonance, steady two-leg current match.",
@@ -214,6 +230,7 @@ def lines : List String :=
       "  The common-duration model falls below the envelope throughout the displayed offset range.",
       s!"  Bare-model required duration ratio: ({ratDecimal bareDurationBounds.1 4}, {ratDecimal bareDurationBounds.2 4}).",
       "  A 24-tick direct flip requires a 19-tick restoring span in the bare model.",
+      "  The closed ring has no live exit at tick 19 when the marker stays on the ring.",
       s!"  Positive-offset necessary duration ratio: > {ratDecimal shiftedDurationLower 4}."]) ++
   ["  Duration ratios above are direct/restoring diagnostic constraints from the reference.",
    "  The native rates and the full-wall mass spectrum are open."]

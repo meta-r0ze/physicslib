@@ -314,6 +314,7 @@ def main():
     assert "Shifted (0 < static offset < 1): m_2/m_3 < 0.0472" in wire.stdout
     assert "Bare-model required duration ratio: (1.2620, 1.2635)" in wire.stdout
     assert "A 24-tick direct flip requires a 19-tick restoring span" in wire.stdout
+    assert "The closed ring has no live exit at tick 19" in wire.stdout
     assert "Positive-offset necessary duration ratio: > 1.2612" in wire.stdout
     assert run(binary, "--help").returncode == 0
     print(f"e8p reporter checks passed: {len(EXPECTED)} rows, five precisions, paper/only filters, audit, latex, CLI")
