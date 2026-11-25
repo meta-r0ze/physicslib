@@ -16,7 +16,7 @@ below, `k/K = α/2`; the spectator ports are free by Toll/Economy (`PersistenceS
 carriers are spinor class with one magnitude `k` on both walls (one leg weight on both walls,
 `PMConstants.HandoffAdmittance.closure_one_price`; the repair adds only a sign). This module fixes
 their node admittance ratio. Reading that ratio as Hamiltonian rates requires an event-duration
-and update law in the same clock units (`CertainTransferRate`, `WallGapCalibration`).
+and update law in the same clock units (`CertainTransferRate`).
 
 * The vector carrier is an in-cycle exchange (`ExchangeAxis.vector_free`): a gauge-repairable cycle
   event, which passes with certainty. Transmission is admittance normalized so a certain channel has

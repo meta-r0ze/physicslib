@@ -100,65 +100,6 @@ are filled. In particular, combining the trial table with each
 possible handoff branch by a Cartesian product would require a proof
 that the input controllers and ports admit those combinations.
 
-### Closed ring restoring histories
-
-`RestoringRingHistory` fixes one phase-zero live marker, with request pairs
-at the adjacent entry and exit sites and idle requests elsewhere. All 16
-seeded configurations return after two clock periods. The successful
-ones have first full return after 86 ticks. Their downstream live
-marker appears after two ticks and both receiver visits record a unit
-comparison flag. The full return includes the phase, ports and probe
-sides. The flags price those two comparisons, with no other cycle
-costs assigned.
-
-| Uniform sample of recurring seeds | AND live exit | OR live exit |
-| --- | ---: | ---: |
-| One seed per ordered pair of entry and exit requests | 1/16 | 9/16 |
-| One seed per shared request at both sites | 1/4 | 3/4 |
-
-Each value exceeds the steady two-leg weight `α/2`.
-`weighted_exit_ge` also bounds the exit for an arbitrary normalized
-history weighting by the sum of the two swap marginals minus one. With
-OR and both marginals at least three quarters, the exit weight is at
-least one half for every correlation. EP's existing isolated occupied
-encoding realizes this single-marker seed with supplied controller fields
-(`IsolatedExcitation.occupied_restoring_history`). The joint background
-still needs to select the physical request histories and their weights.
-
-The complete receiver account over the 86-tick block
-(`RestoringRingHistory.full_receiver_toll`) is zero with both switches
-idle, two with one enabled and 86 with both enabled. The successful marker
-alternates between live at the exit and record at the entry. Its live
-exit is occupied exactly at even ticks (`successful_live_slot_even`).
-A separate consumer that removes the marker ends this closed trace.
-`RestoringExtraction.exchangeBank` books a reversible exchange after
-tick two with a prepared reference bank. On success, the extracted
-payload stays in the bank and all ring ports carry the reference.
-A missed exit leaves both the ring and bank as they were at that tick.
-At the end of the 86-tick block the successful ring again has the
-phase, requests and probe sides of its original seed. `restart_with_fresh_bank`
-supplies the next occupied input from a separate bank and retains
-the previous output. This requires a supply of fresh inputs.
-
-The receiver flags in this booked trace total two when at least one
-switch is enabled and zero when both are idle (`extracted_receiver_toll`).
-The successful case has no further receiver flags after extraction.
-The two-switch successful history therefore has receiver-only survival
-odds against an idle history multiplied by `exp(-2 β)`
-(`extracted_live_idle_odds`). A separately charged extraction using
-the orthogonal basis comparator adds its own flag on a live exit
-(`bank_comparison_flag`). Preparing the banks, wiring the extraction
-to the native root, and charging any reload or later carrier work
-require the physical itinerary.
-
-For the earlier ring that keeps the marker, the two stated uniform seed
-priors at unit hazard give opposite inequalities against `α/2`. The
-initial-visit account gives a larger surviving exit weight. The full
-retained-ring account gives a smaller one. Under an arbitrary positive
-prior, the latter multiplies the success-to-idle odds by `exp(-86 β)`
-(`full_cycle_live_idle_odds`). This comparison uses the retained ring's
-trajectory throughout.
-
 ## Consequences for the wire
 
 | Question | Result of the reachability check |

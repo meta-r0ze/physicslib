@@ -64,7 +64,7 @@ Toll is derived and Margin is the open number. Fill in Margin, and Map follows.
 - **[OVERVIEW.md](OVERVIEW.md)** — the single map of what is proved and reusable
   (module-by-module) and what remains a physical input. **Start here to find a
   theorem you can use.**
-- **[OVERVIEW.md#generations-on-the-e8-wire](OVERVIEW.md#generations-on-the-e8-wire)** compares glue addresses, wire routes and tier assignments.
+- **[Occupancy cost](TODO.md#occupancy-cost)** tracks the EP mass derivation from a complete recurrent occupied program.
 - **[TODO.md](TODO.md)** — the remaining work, split into
   **mathematical proof gaps fillable in Lean** and **physical model inputs**.
 - The paper source is under `../../paper/`.

@@ -32,53 +32,9 @@ external calculation awaiting formal verification. Each current theorem states i
   operator and the spin-up rms radius in Lean. The existing exact subspace and radius calculations are
   in `tools/carrier_mode_exact.py` and `tools/carrier_rms_certificate.py`.
 
-## Generation masses
+## Occupied program accounting
 
-The direct node-program readout starts with the capacity claims of its
-booked visits. `CommonResponse.bookedCapacity` sums the local capacity
-times the registration weight and composes over disjoint bookings.
-The capacity value of each occupied native port and all the visits of
-one repeating program must come from the native execution. PMKAutomaton
-tracks its carried values and receiver registrations. The wall models below
-give conditional spectral readouts. Identifying any of them with the summed
-capacity requires a derivation from the same execution.
+`CommonResponse.bookedCapacity` adds capacity times registration weight over a supplied visit set. The physical resources, local valuations and visits still need to come from a complete recurring execution. The [EP occupancy-cost TODO](../PMElementaryParticles/TODO.md#occupancy-cost) tracks that construction.
 
-The generation-mass modules (`MassInsertion`, `GenerationMass`, `CompositeMass`, `CyclicSeesaw`,
-`GenerationParity`, `GenerationOrientation`) point here.
-
-Settled, so not open: where the mass sits. The crossing within one convention is one-directional,
-never Hermitian (`GenerationParity`), and the seesaw on the crossing alone gives three equal masses
-(`CyclicSeesaw.gram_equal`), so the crossing carries no hierarchy. The generation-diagonal mass is
-the single-wall carrier of the label class in the on-site chirality-flip slot, a correction to `δ`
-(`CompositeMass`): its diagonal is linear in the carrier amplitudes (`composite_diag`), and for a
-class-independent crossing the three masses differ only by those amplitudes
-(`diag_class_independent`).
-
-- **Carrier amplitude per class.** On the wire, the reference's class and stationarity distinguish
-  the direct insertion from the two restoring insertions (`PMKAutomaton.Machine.ReferenceClassHop`).
-  `ReferenceNode` derives `α/2` for a conserving two-leg node, but against an **admittance**
-  (`NodeAmplitude`'s `K = 1`), while the wire's row is in rates. `CarrierRateFromAdmittance` fixes
-  the conversion: the common-duration reading is `(2/π) arcsin √(α/2) ≈ 0.0385`, ten and a half
-  times `α/2`, and otherwise a duration ratio stands in front of it (`rate_ratio`). This rate
-  still requires the steady two-leg readout on the selected pulse. EP's booked intervals supply
-  durations for candidate schedules. The native selection must identify the retained outputs,
-  readout, and normalization on the same clock as the gapped crossing. `AlternatingReferenceNode` also derives a
-  current per two-visit cycle for fresh incoherent input and a retained center.
-- **Split the suppressed pair.** The two node-crossing classes share one amplitude, so
-  `CompositeMass.diag_class_independent` makes them degenerate. A further effect must split them
-  (`PMFlavor.ExchangeChirality`: the weak wall separates the two classes). Comparisons belong in
-  e8p; species names belong in `PMElementaryParticles`.
-- **Regime and the spectrum.** `WireResonanceSpectrum` certifies the bare masses and the cubic
-  with a real static offset. `WireShiftedSpectrum.ordered_mass_spectrum` isolates three
-  positive ordered Schur masses for `0 < k < 1` and a normalized static offset in `(0,1)`.
-  The middle-to-heavy ratio there is below `√(3/2) k`. The separate-rate cubic
-  `char_eval_with_rates` handles unequal booked restoring rates. For positive
-  rates with squares at most `2/3`, `WireShiftedSpectrum` also isolates the
-  three masses and bounds the middle-to-heavy ratio using the larger rate.
-  `WallSeesawAccuracy.full_energy_near_schur` controls the error for
-  each full light energy when the crossing is common and the two coupling norms are bounded.
-  The exact test `full_energy_iff` also gives a reduced determinant for root isolation.
-  Derive the coupling bounds from the admitted rates and match the light modes in order. Retain the
-  cyclic terms in the spectrum and use the resulting eigenvectors for the PMFlavor rotation.
 - **Single crossing at a fixed class.** Whether `GenerationOrientation.single_crossing_unequal`
   is a physical move.

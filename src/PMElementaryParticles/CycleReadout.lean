@@ -21,8 +21,7 @@ What persists over one tick is a stationary state of the cycle `U = R · W` (wir
   one), the cycle is `(−W_odd) ⊕ E`.
 * `cycle_charpoly`: its characteristic polynomial is `charpoly(−W_odd) · charpoly(E)`. So the
   odd sector's stationary states and phases are those of the wire step alone: the one-cycle
-  readout equals the direct readout of the wire's spectrum (up to the refresh sign), which
-  `PMAction.WireLightBound` and the numerical scans exclude for the up and lepton protocols.
+  readout gives the wire step's odd-sector spectrum up to the refresh sign.
 * `cycle_pow`: the same holds over any number of cycles.
 
 **Consequence.** Every native word commutes with the antipode

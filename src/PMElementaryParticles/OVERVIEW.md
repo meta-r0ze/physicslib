@@ -1,6 +1,8 @@
 # PMElementaryParticles — overview of checked results
 
-Read the route notes in [WireSchedule](WireSchedule.lean), [MassInsertionTrace](MassInsertionTrace.lean) and [OccupiedBankedRestoring](OccupiedBankedRestoring.lean), and the lattice-to-continuum note in [PolarMeasure](PolarMeasure.lean).
+Fermion masses: one reading, the occupancy cost (see [TODO](TODO.md#occupancy-cost)). The rest-gap, wire-Schur and restoring-capacity readings were retired on 2026-11-25; recover from git at `a4572b73420a60f95ca14b0376b5df3ba6c5e681`.
+
+See [WireSchedule](WireSchedule.lean) for conditional route scheduling and [PolarMeasure](PolarMeasure.lean) for the lattice-to-continuum note.
 
 The single map of what Paper V proves and what later work can reuse. Open work is
 in [`TODO.md`](TODO.md); build instructions are in
@@ -56,9 +58,7 @@ heavy-label ledgers are retained below with their audited status.
 `EPSpine.programs_card` counts 15 witness indices from three generations
 and five visible classes. `ProgramClasses.visible_channels_card` counts
 15 visible channel labels. Indexing every channel label in every
-generation would give 45 label indices. The certified aggregate runs
-one representative per class and generation, for 15 billed runs
-(`ProgramExecutionCounts.counted_witness_toll`).
+generation would give 45 label indices. The spine supplies one witness per class and generation. `EPSpine.witnessAt_registrations` checks its bit-ring visits.
 
 EP's target is a classification: up to the substrate's symmetries, the
 programs that meet the six pillars form a finite set of classes, each with a
@@ -72,11 +72,9 @@ witness program and a readout. The label part is in `ProgramClasses`:
 | Generation-blind ring | A ring step is a spacetime clock-axis root (glue key `0`), so it never changes a packet's coset; `n` steps keep the coset and move the receiver site `n` places, forward or back. | `EPSpine.clockAxis_key`, `step_keeps_generation`, `forward_walk`, `backward_walk` |
 | Program on the node machinery | `EPSpine.Program`: label, generation (one of 3 nonzero glue keys), reference, firing patterns on the 43-site ring, and an E8 packet root in the program's coset; the start site is the packet's clock reading. The packet stays in its coset and tracks the ring. | `Program`, `generation_card`, `program_walk` |
 | Spine | Every generation and every visible class has a program meeting all six pillars; the singlet has none; `3 × 5 = 15`. | `EPSpine.spine`, `singlet_no_program`, `programs_card` |
-| Indexed witness runs | One separately billed run per generation and visible class gives one flag per entry and fifteen in total, with five entries per generation address. The existing witnesses use one firing site and yield zero live exits under the two-site restoring projection. Reusing a witness request at both root phases returns the trial to its input. | `ProgramExecutionCounts.representative_qualifies`, `entries_per_address`, `counted_witness_toll`, `counted_witness_restoring_exits`, `witness_trial_endpoint` |
 | Label on the packet | A labelled packet is a coset root plus the label's channel vector. Its state is site (clock reading), generation (glue key) and label (internal content: pairings with the internal simple roots). Channel vectors carry no glue key; ring steps have zero internal content; distinct labels have distinct internal content. So a ring walk moves only the site: generation and label are conserved and the label reads back at any time. | `EPLabel.channel_glueKey`, `clockAxis_internalContent`, `channel_internalContent_injective`, `walk_keeps_label`, `label_readout`, `labels_distinct`, `spine_labelled` |
 | Placement per generation | Generation `g`'s channel vectors are the certified internal triality applied `g` times to the reference placement. In every generation every channel sits in the class the library wall rule requires (`wallClass g (active c)`), carries no glue key, and the labels stay distinct. The spine holds per generation with each generation's own channel vectors. | `EPLabelGen.channelE8Gen`, `channelKeyGen_wallClass`, `channelGen_glueKey`, `channelGen_internalContent_injective`, `genIndex_bijective`, `spine_generations` |
 | Per-wall symmetry | The 16 channels are two walls of 8 carriers. Within one wall, colour exchange and the weak flip keep every lattice pairing of the placed vectors, in all three generations, and both moves keep a channel's wall. The transpositions generate the colour group, so this is group invariance. Pairings between the two walls are not substrate costs and no symmetry is claimed for them. | `EPLabelGen.colour_wall_invariant`, `weak_wall_invariant`, `colour_preserves_wall_pairs`, `weak_preserves_wall_pairs` |
-| Generation masses | The generation label selects the direct reference-wall insertion at glue key `(0,1)`. The other two labels require reference restoration. PMAction gives the conditional composite mass and spectral readout. EP composes the short electric writer from an occupied seed through the charged-lepton port, reads the companion guard, and proves reversible bank renewal in coordinates. The open exchange trace tracks the restoring payload through the adjacent exit. The serial timing bounds are conditional on the schedule. The ledgers remain comparison premises. | `GenerationMasses.label_eq_key`, `heavy_key`, `MassInsertionTrace.charged_lepton_written_port`, `charged_lepton_port_fires`, `charged_lepton_bank_uncompute`, `restoring_native_two_ticks`, `occupied_arrival_writes`, `restoring_in_one_period` |
 | Witnesses | Every visible class has a 43-ring program meeting all six pillars: least-Toll reference (Hamming `1` for every label), one firing site per ring, exactly one registration per ring per period, at the least Toll. The invisible class has none. | `ProgramWitness.visible_class_has_program`, `leastRef_hamming`, `witness_pillars`, `witness_total`, `invisible_class_no_program` |
 
 The record-bit Map of the 3-ring `PillarPredicates` (PMChecks) does not see
@@ -108,8 +106,7 @@ the singlet.
 - References: lepton `+2e_0`; colour `{+2e_1,+2e_2,+2e_3}`, from
   `RecordCoordinates.labelRecord_eq_axis_sign` and
   `ChannelVectors.vectorCoord_eq_carrier`.
-- Missing: shared/composite background, multi-protocol composition, full-ring
-  spectrum and the step-to-cost rule.
+- Missing: shared/composite background, multi-protocol composition and the step-to-cost rule.
 - Legacy status: `ProtocolInventory`, `QuarkMasses`, `LeptonMasses`,
   `TierLedger` and `HeavyFlipRecords` carry the audited statuses in their
   module docs; tier sets, generation addresses, quark/lepton formulas and the
@@ -189,20 +186,7 @@ amplitudes are `(1 + e^{ix})/2` and `(1 - e^{ix})/2` (`converter_plus`,
 `x = π`, `exact_bit_flip` gives pass amplitude 0 and flip amplitude 1.
 `CoherentRing.ringShift` is the direction-dependent site shift and
 `CoherentRing.ringTick_unitary` proves the full-firing tick
-`(1 ⊗ encounter x) * shift` is unitary for every `n`. `Dispersion.planeWave`
-defines the plane wave and `Dispersion.planeWave_exp_period` proves its period
-`exp(i k n)=1`. The spectral block is now proved in Lean (`Dispersion`):
-
-| Result | Theorem |
-| --- | --- |
-| explicit encounter entries | `encounter_inl_inl` (`e^{ix/2} cos(x/2)`), `encounter_inl_inr` (`-i e^{ix/2} sin(x/2)`) |
-| momentum action | `ringTick_mulVec_planeWave`: `ringTick n x *ᵥ planeWave n m u = planeWave n m (M x (waveNumber n m) *ᵥ u)` |
-| trace and determinant | `M_trace`: `2 e^{ix/2} cos(x/2) cos k`; `M_det`: `e^{ix}` |
-| eigenvalue identity | `M_eigenvalue_plus`/`M_eigenvalue_minus`: `λ = e^{ix/2} e^{±iE}` satisfies `λ² − trace·λ + det = 0` when `cos E = cos(x/2) cos k` |
-| empty firing | `encounter_zero`, `M_zero`, `M_zero_eigenvalues`: `M 0 k = shiftDiag k` with eigenvalues `e^{∓ik}` |
-
-The zero-momentum gap offset is `E(0) = x/2` (`gap_offset`), the band gap is
-`x`. The mass reading remains a hypothesis, not a result.
+`(1 ⊗ encounter x) * shift` is unitary for every `n`.
 
 **Phase-to-record converter.** The certified comparator
 `CoherentComparisonRepair.compare (InterferenceReadout.phase x)` is unitary
@@ -381,44 +365,7 @@ The native firing of these phase gates and routing of the retained
 branch to the static light wall still require an update law. The
 construction projects the existing neutral-degenerate Hamiltonian.
 
-## Protocol readout
-
-Numerical, `tools/protocol_readout_scan.py`. On the derived wire (`PMAction.ReferenceClassHop`: reference wall `κ_R = (K, k, k)`; `PMAction.CarrierAdmittance`: other wall class-blind, `κ_O = (K, K, K)`; `K = 1`) the cycle resonance is `δ³ = −1` (`PMAction.OtherWallStationary`). At every cube root the bare wire has `m₁ = 0` and `m₂/m₃ = √3 k / √(2 + k²) ≈ √(3/2) k`: `0.0045` for `k = α/2`, `0.0089` for `k = α`, the same for every protocol. The data (`m_μ/m_τ = 0.0595`, `m_s/m_b ≈ 0.019–0.022`, `m_c/m_t ≈ 0.0036–0.0042`) then need a weight `s` on the heavy label (both walls) per protocol: `s_e : s_d : s_u ≈ 1 : 2.7–3.2 : 12–13.5` for `α/2` (`1 : 2.6–3.1 : 9.6–10.6` for `α`), ordered by charge; the heavy label's mass scales as `s²`. The lazy flip law squares the bare ratio (`2·10⁻⁵`), far below every protocol, so the data favour the coherent event. CKM on the derived wire (weights as fitted): same root `|V_us| ≈ 0.0001`, `|V_cb| ≈ 0.009`, `|V_ub| ≈ 0.008`; different roots `|V_us| = √3/2 ≈ 0.866`, `|V_cb| ≈ 0.010`, `|V_ub| ≈ 0.011` (data `0.225`, `0.041`, `0.0037`): the bare wire's rotation is not the CKM. Mixing tests on the derived wire (`tools/mixing_candidates_check.py`, masses held at data): `|V_us| = 0.225` is reached by a relative flip phase, a light-class asymmetry, or an other-wall cycle phase or asymmetry, so it does not discriminate; `|V_cb|` stays at `0.002–0.010` under every deformation tried (those, the weight on one or both walls, a joint fit, `k/K` from `α/4` to `10α`), with `|V_cb| ≈ |V_ub|`. So the wire's mass matrices cannot give `|V_cb|`; PMFlavor's transfer readout does (`PMFlavor.ReferenceRouting`). Charge-weight test: one `a` in `s ∝ e^{a Y_R}` gives down and up `0.82` and `0.77` (PDG mixed scales), `0.74` and `0.75` (`m_b`, `m_t` at their own scale), 2–11% apart across quark-mass choices (`k = α/2`; `7–18%` at `k = α`). Lightest masses: a real offset `δ = −1 + ε` off the resonance reproduces each `m₁/m₂` with `ε ≈ 0.038 (e), 0.14 (d), 0.0024 (u)`, keeping `m₂/m₃` within 2–7%; with those offsets the same-root CKM is `|V_us| ≈ 0.063`, `|V_cb| ≈ 0.007`, `|V_ub| ≈ 0.0065`.
-
-### Lifting the resonant zero
-
-`ResonanceLift` gives the other-wall determinant for three independent
-on-site detunings: `d₀d₁d₂ + κ₀κ₁κ₂`. Multiplying the bare resonant wire
-by dressing matrices preserves the zero determinant. At a fixed nonzero
-resonance, adding an offset `ε` to any single diagonal flip leg changes
-the other-wall determinant to `δ² ε`. In the two-wall Hamiltonian with
-invertible crossing and reference flip, the full zero mode survives
-exactly when `ε = 0` (`shifted_full_zero_iff`). The charged Schur mass
-determinant also includes the reference-to-crossing factor
-`det(R)/det(Y)` (`shifted_schur_det`).
-
-If a protocol can independently vary the common detuning, a fixed
-additive perturbation can be retuned to zero (`retuning_exists`). For a
-real single-leg offset and a positive cycle product, the retuned value
-can always be chosen strictly negative (`negative_retuning_exists`).
-Conversely, distinct single-leg offsets at a shared detuning and cycle
-product cannot both stay resonant. The physical calculation must derive
-both the register insertion and the constraint on the common detuning.
-
-The uniform-offset diagnostic above uses `δ + t` on all three legs.
-`det_shifted_eq_uniform_iff` matches its determinant with one insertion
-`ε = ((δ + t)³ − δ³)/δ²`, independent of the chosen leg or cycle.
-At `δ = −1` the formula is `3t − 3t² + t³`. For the recorded offsets
-the matching insertions are about `0.110` (e), `0.364` (d), and
-`0.00718` (u). In the unweighted wall, with `z = 1 − t`, the local
-insertion raises the sum of squared singular values by
-`(z² − 1)²(z² + 2)` (`det_matched_trace_gap`).
-The [weighted scan](../../tools/protocol_readout_scan.py) also changes
-the ratios on the static vector leg. For example, the down diagnostic
-changes `m₁/m₂` from `0.05034` to `0.04393` at equal determinant.
-These are comparisons using the earlier wire inputs.
-
-### Charged insertion on the static wall
+## Charged insertion on the static wall
 
 At the packet hypercharge step `3π/4`, the static vacancy and the electron,
 up and down channels have eigenphases `1, i, −1, −i`, respectively.
@@ -618,7 +565,7 @@ The balanced comparison reset keeps its own conditional thresholds.
 | `ElectricCompanionBank.triality_observed`, `prepares_companion_bank`, `glued_triality_step`, `guarded_companion_transport`, `companion_transport_observed`, `companion_transport_roots`, `written_port_ready_iff`, `setup_class_flag` | Triality prepares the bank from the predecessor seed. The guard transports it. Only the active neutral written port returns ready. The setup endpoint flags ½. | Occupied odd coordinate-zero seed in the proper class. |
 | `ElectricCompanionSetupToll.short_setup_on_seed_support`, `primitive_setup_flags`, `common_setup_on_seed_support`, `equal_slot_setup_sum` | One root suffices on the active seed and two on the static seed. The mean setup flag budget is 5/8. | The certified seed support and equal wall populations. |
 | `HeavyCrossingCost.activity_histogram`, `uniform_cost`, `sign_tie` | Six reflects per carrier give 27 idle, 20 unit and one double displacement across eight amplitudes. The mean charge is `(20 c₁ + c₂)/8`. | Uniform amplitudes for the mean, antipodal weights for the sign tie and supplied prices per displacement. |
-| `HeavyFlipNativeBoundary.no_closed_cleaning`, `tick_event_iff`, `idle_and_excursion_counts`, `cycle_closes`; `GappedGluedCrossing.equalClass_iff` | The untagged probe aliases addresses and closed universal cleaning is impossible. Both idle and two-toggle masks close. The gapped crossing shifts generation. | Address and ready record needed for the clocked endpoint. Separate Schur insertions still need their own firing law. |
+| `HeavyFlipNativeBoundary.no_closed_cleaning`, `tick_event_iff`, `idle_and_excursion_counts`, `cycle_closes`; `GappedGluedCrossing.equalClass_iff` | The untagged probe aliases addresses and closed universal cleaning is impossible. Both idle and two-toggle masks close. The gapped crossing shifts generation. | The clocked endpoint needs an address and a ready record. |
 
 [Persistence selection](WireSchedule.lean) enumerates a bounded serial family.
 [Packet reference cost](WireSchedule.lean)
@@ -785,27 +732,9 @@ independent of each regulator and tends to the kernel above as
 | `NeutrinoContext` | Contextual neutrino masses excluded by oscillation data (`weak_minus_rest_excluded`, `no_moderate_gap_ratio`) |
 | `TauLifetime` | `τ_τ = τ_μ (m_μ/m_τ)⁵ B_e` (`rate_ratio`, `tau_lifetime_tree`); measured pull in `tools/e8p/E8PConstants/PMElementaryParticles/TauLifetimePulls.lean` |
 
-## Species masses over the wire
+## Declared tier and species ledgers
 
-The wire is `PMFlavor`/`PMAction`'s generation sector: with no detuning on the reference's wall
-(`PMAction.ReferenceDetuning`) the light mass is `M = D_R (δ_O + cyc κ_O)`
-(`PMAction.ReferenceWallMass`): one generation with a vector-class carrier (in-cycle, `K = 1`), two
-with spinor-class carriers through the reference node (`k/K = α/2`, `PMAction.NodeAmplitude`), and
-the other wall's detuning `δ_O`, which must be nonzero (`PMAction.UndetunedWall`). The wire is blind
-to the species it carries in the bare model. Closure gives one crossing price in the absence of
-an internal signal distinction (`PMConstants.HandoffAdmittance.closure_one_price`), and the
-`D₄` geometry with the reference's axis cannot tell up from down
-(`PMElementaryParticles.DoubletReflection`). So the wire fixes the form; species are protocols over it, and what
-each protocol occupies is open (REVIEW). Earlier per-species scans fitted measured mass ratios and
-CKM magnitudes; they were removed as Standard-Model fitting, not substrate results (in git history:
-`tools/node_carrier_scan.py`, `tools/reference_wall_mixing_scan.py`, `tools/composite_mass_scan.py`).
-
-## Tier ledger and the wire
-
-The [generation comparison below](#generations-on-the-e8-wire) connects the three glue addresses
-to one direct and two node-mediated routes. It distinguishes address from
-mass rank and compares the shared heavy-to-middle power with the declared
-tiers. The bare wire's lightest mode is zero at resonance.
+`TierLedger` lists declared tiers. `LeptonMasses` and `QuarkMasses` evaluate declared formulas used by existing comparisons and decay calculations. The occupancy readout still needs a complete recurring program and a capacity value for each occupied resource.
 
 ## Final channels of a charged-current event
 
@@ -863,29 +792,13 @@ parent flux. Its integrated weight `massiveContactWidth` is a one-dimensional
 integral over the physical daughter-energy interval and vanishes for a closed
 channel. The two-massless-spectator limit agrees exactly with the earlier
 integrated width. The native amplitude and physical state assignment
-are still needed to apply these contact weights. At exact resonance,
-`PMAction.WallGapCalibration.stationary_charged_fraction` realizes every
-normalized charged fraction in the one-leg stationary family.
+are still needed to apply these contact weights.
 `PMAction.NativeWallOffset.rest_offset_breaks_chirality` shows that a retained
 one-wall lazy offset breaks the chiral anticommutation even after a common
 energy shift. In that case the off-diagonal model's paired-window factor
 requires rechecking against the new spectrum.
 
-**Daughter channels (closed item).** The parent is the wire's light mass
-eigenstate: a persisting state is on shell
-(`ExternalStates.persistent_on_shell`). The daughters are the light modes.
-The gapped modes are closed channels by the spectrum's order alone. A
-light parent at rest releases less energy than its own mass, which is at
-most the light band's top. Every gapped mode lies above the gap, which is
-above that top (the light band is defined by the gap;
-`PMAction.LightLeakage.leakage_bound`). So no gapped daughter is
-kinematically open in any decay of a light parent, and current weight on
-gapped modes is lost. On the bare derived wire (`s = 1`, `k = α/2`) the
-gap is `4–47` times the light band's top for `1/2 ≥ r ≥ 1/8`
-(`tools/wall_gap_check.py`). The contact weights above apply to the light
-modes alone. Experimental comparisons belong to the e8p report.
-The physical schedule and readout remain open. The native current on these states is
-PMFlavor's.
+**Daughter channels.** The contact-width results apply with supplied physical states and their masses. `ExternalStates.persistent_on_shell` gives the on-shell relation. The admitted current, state assignment and open channels are needed for a decay calculation.
 
 ## Protocols and the 16-channel inventory
 
@@ -1082,381 +995,26 @@ its own packet. The firing pattern is joint, and Toll adds over packets
 
 ## Generations on the E8 wire
 
-| Reading | What fixes it | Count, order and heavy state | Protocol dependence |
-| --- | --- | --- | --- |
-| Glue address | `GenerationWalls.one_class_per_wall`, `GenerationOrientation.type_label`, `ControlledGluedRegister.wallClass` | The three nontrivial D4 glue classes label three pairs. Each pair omits its own class. The glue structure gives a cyclic action and leaves mass ordering open. | Each address carries the same 16-channel inventory. |
-| Wire route | `ReferenceClassHop.stationary_iff`, `touches_reference_class`, `HeavyFlipControl.direct_iff`, `ReferenceNode.restoring_series` | One address has a direct insertion and two need the reference node. The direct address is `g = 0`, the unsuppressed row in the normalized bare mass matrix. The two restoring addresses have equal link weight. The middle and lightest masses are modes of the coupled matrix. | The route test uses the wall classes for every label. The bare mass matrix is shared. |
-| E8 vector-class attachment | `ChannelVectors.vectorCoord`, `vectorCoord_norm4`, `vectorCoord_glueClass`, `vectorCoord_injective_on_activeFalse`; `ChannelPlacement.channelE8` | `ChannelVectors.channelCoord` sends active-false `labelIndex = 2*axis+sign` to `sign·2e_axis` in its D4 vector class and active-true to the certified triality image `c ↦ c+1`. `ChannelPlacement.channelE8` maps these coordinates into the aligned internal D4 and proves injectivity. The class/generation assignment is now read from the internal key table. | Per label; the step-to-cost rule remains open. |
-| Packet channels in the substrate channel set | `ChannelPlacement.packetChannel`, `packetChannel_injective`, `packetChannel_mem`; `packet_preparation_uniform_channelCoord`, `uniform_if_inherited_channelCoord` | `packetChannel c = (true, channelCoord c)` places the 16 packet channels in the internal (`true`) sector of `ChannelSymmetry.channels`; it is injective and lies in the substrate's 32 channels. The placement-free uniform laws (`PMConstants.PreparationSelection.packet_preparation_uniform`, `WireReferenceCost.uniform_if_inherited`) instantiate at it, so the packet preparation is uniform without a chosen `chanTable` entry. | The internal sector `true` is the second block of `AlignedSectors.alignedSectorBasis`. |
-| Clock signature | `PMKAutomaton.ClockAlignment`: `a_mem` … `beta_mem`, `internalRoots_length`, `spacetimeRoots_length`, `sliceRoots_silent`, `clockAxisRoots_counts`, `vectorRoots_counts`, `spinorRoots_counts`, `conjugateSpinorRoots_counts`, `cu_key`, `neg_cu_key`, `plus_total`, `minus_total`, `silent_total`; `PMKAutomaton.WallCrossing`: `wall_crossing_filter`, `generation_vector_crossing`, `generation_spinor_crossing`, `generation_conjugateSpinor_crossing` | The aligned clock breaks triality. For one certified aligned placement the signatures are vector `(7,7,2)`, spinor `(4,4,0)`, conjugate spinor `(4,4,8)`. Each coset is exactly the wall-crossing steps of the generation whose two walls are the other classes. The vector coset contains `±cu`. The internal placement fixes `g = 0` as the vector coset, `g = 1` as the conjugate-spinor coset and `g = 2` as the spinor coset. | The ten-placement robustness is numerical; the step-to-cost rule is open. |
-| Clock-plane projection | `PMKAutomaton.ClockPlaneProjection`: `spacetimeStep`, `cospinor_plus`, `cospinor_silent`, `spinor_plus`, `spinor_no_silent`, `vector_plus`, `vector_silent`, `cospinor_lap`, `spinor_lap`, `vector_self_closing`, `self_closing_iff` | With `p(r) = (⟨r,cu⟩,⟨r,cv⟩)`, every spacetime `+1` clock-axis root projects to `stepS = (1,0)`. Conjugate spinor (`g = 1`): `+1` roots project to `stepS`, silent roots to `(0,0)`. Spinor (`g = 2`): `+1` roots project to `stepS - p(cu)`, no silent roots. Vector (`g = 0`): `+1` roots project to `stepS - p(cu)`, silent roots exactly `±cu` (transverse). Per lap with net reading `43` the drift is `0` for `g = 1`, `-43·p(cu)` for `g = 2`, and `g = 0` closes with `43` copies of `cu`. Only `g = 0` is (transversely) self-closing. | The ten-placement robustness is numerical. |
-| Tier ledger | `TierLedger.tiersFor` and the four length lemmas, `QuarkMasses`, `LeptonMasses` | Each protocol lists three tiers in ascending order. The highest occupied tier is 3 for up and 2 for down, electron and neutrino. Neutrino masses remain open. | Up uses `{0,2,3}`; down, electron and neutrino use `{0,1,2}`. The assignments are a named premise. Their formulas use `Δ = 43`. |
-
-**Internal placement and library indices.** `ChannelPlacement` proves the
-channel embedding, its internal class key and the matching glue cosets. With
-`wallClass g b = if b then g - 1 else g + 1` and `active` as the wall bit, the
-generation's own class is the third key `(1,0)`; `wallClass 0 false = 1` and
-`wallClass 0 true = 2`.
-
-| Library class index | Internal key | Matching `glueKey` coset | Coset signature |
-| --- | --- | --- | --- |
-| `0` | `(1,0)` | `(0,1)` vector, carries `±cu` | `(7,7,2)` |
-| `1` | `(1,1)` | `(1,0)` conjugate spinor | `(4,4,8)` |
-| `2` | `(0,1)` | `(1,1)` spinor | `(4,4,0)` |
-
-Library class `0` is the clock's vector coset (`referenceClass_eq_clock`), so
-the identification "reference class = coset carrying the clock" follows from
-the library's own conventions. The orientation is fixed: `g = 1` is the
-`(4,4,8)` conjugate-spinor coset and `g = 2` is the `(4,4,0)` spinor coset.
-
-The physical route, heavy writer and lightest-offset branch depend on the
-[conditional KAutomaton interface](../../src/PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
-[Absolute timing](../../src/PMKAutomaton/TODO.md#absolute-timing) and the
-[Registration tariff](../../src/PMKAutomaton/TODO.md#registration-tariff)
-supply the elapsed and paid costs of that trace.
-
-### From glue address to route
-
-In the glued register T is static and F is active. In
-`ControlledGluedRegister.wallClass` the Boolean is the activity flag, so T uses
-`false` and F uses `true`. Class indices are vector `0`, spinor `1`, conjugate
-spinor `2`.
-
-| Glue address | Static T, `g + 1` | Active F, `g − 1` | Reference-wall insertion |
-| --- | --- | --- | --- |
-| 0 | 1 | 2 | Direct |
-| 1 | 2 | 0 | Through the node |
-| 2 | 0 | 1 | Through the node |
-
-The direct condition is that neither endpoint class is reference class `0`
-(`HeavyFlipControl.direct`); `ReferenceClassHop.touches_reference_class` proves
-the pair contains `0` exactly when `g ≠ 0`. The reference breaks triality by
-occupying a chosen class. In the conserving Hermitian exchange model its
-stationarity excludes the direct exchange on the light chirality when that
-exchange touches its class.
-
-In the conserving node model each restoring move uses two equal legs with
-admittance `α`; one node passage gives `k/K = α/2`
-(`ReferenceNode.restoring_series`, `NodeAmplitude.node_series`). Free spectator
-ports preserve this value. The direct route has zero node passages and is
-normalized to `K = 1`. Reading admittance as a Hamiltonian rate needs the event
-law in `NodeAmplitude`.
-
-A wall step preserves glue class (`GluedRegister.wallStep_class`). The
-same-generation endpoint exchange changes glue class and has a certified
-six-reflection word (`crossing_word_glued`,
-`ControlledGluedRegister.runCrossing_encode`). The equal-class gapped crossing
-shifts the address by `+2` from T to F and preserves the signed label; its word
-uses four swap reflections and two parity reflections
-(`GappedGluedCrossing.equalClass_iff`, `runGappedCrossing_encode`,
-`forward_entry`). The three- and one-reflection counts in
-`tools/event_clock_check.py` concern single-carrier endpoints, not word lengths
-or lower bounds for the glued register. These crossings and the on-wall node
-insertion count different operations.
-
-The encoded restoring endpoint needs a same-wall class shift after the
-equal-class crossing. `RestoringWallShift.cross_then_class_shift` checks a
-four-reflection forward-triality word on both factors. The crossing lands on
-active address `g + 2`; the word returns it to `g` while retaining the signed
-label and the crossing's parity action. This gives `2 → 0` at address 1 and
-`0 → 1` at address 2. The open exchange trace can feed the unchanged gapped
-payload to the word. For coherent calibration, `classPulse_weight` locates the
-transfer at the shifted signed slot, and `classPulse_rate_ratio` takes its
-weight and elapsed time as inputs.
-
-The shifted port's weighted output population is now explicit
-(`RestoringPulseCalibration.shiftedOutflow_eq`). Matching its current to a
-floating steady two-leg node fixes the shifted weight to `α/2` and gives its
-principal rate formula with supplied event durations (`steady_rate_ratio`).
-The isolated entry and exit exchanges give the product of their two exchange
-amplitudes on the live output (`stagedPulse_amplitude`). When each local
-unexchanged through weight is `α`, this gives `(1−α)²` on the
-exchange-exchange exit (`staged_geometric_weight`). Alternating fresh
-incoherent arrivals with the center retained yields a per-cycle coefficient
-`w/(2-w)` for local transfer weight `w` (`AlternatingReferenceNode.fixed_current`).
-`alternating_crossing_rate_ratios` converts the direct and shifted areas to
-crossing-relative rates on one common tick. It uses the entire restoring
-cycle duration and the supplied crossing area and coefficient conversions.
-The native two-tick output for a single live marker is the joint entry and
-exit swap event (`LocalController.restoring_marker_live`). Under the steady
-current match, `mass_from_scheduled_steady_pulses` uses one direct flip window
-and each restoring interval from entry start through exit completion in the
-normalized Schur operator. The two restoring durations can differ.
-The existing occupied receiver encoding now realizes the recurring ring seed
-with the supplied request and probe fields (`IsolatedExcitation.occupied_restoring_history`).
-It preserves one packet, puts the marker in the live exit exactly on the joint guard event,
-and returns the encoded fields after 86 ticks. Under either specified uniform seed
-prior, the unit-hazard two-visit and full-return accounts bound the steady-node weight
-from opposite sides. For supplied shifted-current matches,
-`independent_history_area_bracket` transports this comparison to the principal areas,
-and `rate_ratio_of_history_current` uses the individual pulse durations.
-The booked bank exchange at tick two receives the typed gapped payload and
-leaves the prepared reference throughout the receiver. The class-shift word
-acts on that bank and produces the same-address signed-carrier endpoint
-(`banked_exit_then_class_shift`). The receiver can reload from a separate
-fresh bank at phase zero. `BankReceiverPulse` gives the exact staged native
-doublet half-pulse for extraction and reload. `banked_windows_iff` checks
-serial overlap on their common clock and the separately booked class word.
-The eight signed modes need at least four doublets (`bank_doublet_capacity`).
-The existing signed-axis reindexing is faithful, and a common staged pulse
-on each supplied axis preserves it.
-
-A successful two-switch marker registers 43 times in the first period on
-the closed ring. With that start and request field on a differing record bit,
-it violates the existing program Margin. Tick-two extraction gives two
-receiver registrations in the same period. This meets the numerical receiver
-bounds for Toll and Margin on the booked itinerary
-(`ProgramExecutionCounts.retained_restoring_fails_margin`,
-`banked_receiver_period_margin`).
-
-`OccupiedBankedRestoring.occupied_bank_cycle` attaches the banked route to the occupied active charged-lepton channel (visible class 3),
-following the crossing from the static charged-lepton channel (class 5).
-It retains the shifted output and reloads the post-crossing input from a
-separate fresh bank. The two scheduled bank swaps both change their typed
-arriving pair at address 1. At address 2, both swaps are silent exactly
-when the prepared vector-class reference matches the label and amplitude
-indices of the payload. The class ledger records two unit steps at
-address 1. At address 2 it records three on axis 1 and one on each other
-axis. Replaying the two successful receiver guard decisions on the same
-bank-root probe returns it to its input. The physical staging, reference
-preparation and bank-root trial opportunities still need to be derived.
-
-`ProgramCapacity.receiver_claim` evaluates the upstream registered capacity
-sum on this occupied receiver. It registers twice the carried value above
-the prepared reference. The typed bank changes and the class word extend
-that subtotal; their capacity units come from their respective bookings.
-At address 2 a reference matching both coordinates gives zero excess and
-zero bank changes, with the class word still contributing. The direct and
-gapped reflection ledgers count unit and double steps on each signed lane
-without a population average. The complete recurrent visit list and local
-capacity readouts supply the eventual mass comparison.
-
-`RetainedReceiverCapacity.occupied_visits` keeps the occupied marker with
-its typed carrier through both comparisons and bank extraction. Even when
-the address-2 carrier coordinates match the reference, the arriving live
-marker at entry and record marker at exit distinguish the two values.
-The ring comparator reads that bit on its orthogonal basis. Counting
-occupied slots gives one per visit and two over the receiver itinerary at
-both addresses. This fixes the slot count on the encoded execution.
-The physical E8 placement and common capacity unit remain open.
-
-A retained bank output and a restarted ring require separate occupied
-supply at that boundary. The [complete-program pillar obligations](TODO.md#complete-charged-lepton-program)
-track the remaining recurrence and pricing proofs.
-
-At the direct address, `DirectWriterRenewal` identifies the booked inverse
-decoder with the adjoints of the forward pulses run in reverse order.
-On a returned charged-lepton port 2, the inverse decoder registers
-`9/4` and the inverse completed electric kicks register `3/4`.
-Their total equals the short writer's three flags from a balanced bank;
-fresh clean-seed preparation adds one. In the shared-current realization the
-intervening swap and its inverse raise the balanced-bank subtotal from
-six to `13/2` flags. The decoder parts alone take 52
-root quarter-times for write and uncompute or 79 with fresh preparation.
-The coordinate return of the companion and the return of the payload are
-separate booked operations.
-
-### Shared addresses and the Schur comparison
-
-The two reported Schur cases fall below the measured `m_μ/m_τ` interval.
-The bare admittance ratio is `0.0044–0.0045`. The shifted admittance ratio
-is below `0.00730`. The common-duration principal-rate case is
-`0.0470–0.0472`. The reference ratio is about `0.0595`.
-`E8PConstants.WireMass.reference_separation` proves the first two
-separations. `E8PConstants.WireMass.rate_reading_still_below` proves
-the third. The duration enclosures describe what a conditional match
-would require of the supplied clock. They give no admitted duration.
-
-The glue and wire readings share the three addresses: one direct and two
-restoring routes. The ledger has three entries per protocol; its sorted entries
-can be compared with the sorted wire masses, with no derived assignment of the
-two restoring addresses to the two light mass ranks.
-
-For the normalized bare Schur mass, take the other-wall cycle to have unit
-weights and resonance `δ = −1`. With the direct row first,
-`M = D(−I + P)`, `D = diag(1,k,k)`, `P` the three-cycle. Then
-`MM† = D(3I − J)D`, with `J` all ones. The Gram matrix has a zero eigenvalue;
-`(0,1,−1)` has eigenvalue `3k²`; the trace gives `2 + k²`. For `0 < k < 1` the
-sorted singular values are `0, √3 k, √(2 + k²)`; the leading heavy-to-middle
-factor is `√(3/2) k`, and the exact ratio is `√3 k/√(2 + k²)`.
-
-In the substrate impedance model `Z = πΔ + O(1)` at fixed other parameters
-(`PMSubstrate.Impedance.capacityTerm`, `impedance`), so one node passage gives
-one leading inverse power of `Δ`. The ledger's highest two tiers are also one
-power apart for each protocol; this is a leading-power agreement. The bare wire
-has an exact lightest zero at resonance, while the ledger assigns a nonzero
-lightest charged mass and puts the lowest two tiers two powers apart for up and
-one apart for down and electron. At `Δ = 43` one value cannot distinguish a
-first-order law with a small coefficient from a second-order law with a larger
-one.
-
-### Down protocol
-
-The tier set is a premise: `DownProtocol.down_declared_tiers` checks `{0,1,2}`, but a
-physical address-to-tier assignment is an input. Heavy-flip record Tolls are
-colour `(2,1,0,1)` and lepton `(1,2,1,0)` in the specified two-bit comparisons
-(`HeavyFlipRecords.orbit_record_tolls`,
-`ElectricHeavyRecord.lepton_reference_toll`). The geometric mean
-`DownProtocol.down_colour_geometric_mean` gives `s_d² = s_e·s_u` for a common bit
-price in the colour-reference account; any common amplitude factor preserves
-it. Unequal additional label costs need a separate check. The eight witnesses
-choose no heavy-writer reference. Down still needs G, O, U and W for that
-write, T and D for placement and booking, K and B for its paid lifecycle, and
-Q/J/H/L where supply, sharing, averaging or successive transport enters.
-
-### The charged lift
-
-The existing candidate acts on the static wall. `vector_static_leg` places it
-at `g = 2`, where T carries the vector class; this is an insertion address, and
-the zero mode belongs to the whole wire. `ChargedInsertion.select_static` uses
-two phase-matched comparisons for each charged protocol. The target is `i` for
-electron, `−1` for up and `−i` for down. Every matching channel is retained
-with amplitude one, including every colour of the matching quark protocol.
-`joint_selector` restricts this readout to the static vector leg. For electron,
-up and down the static address is `2`, the selector has two comparisons, and
-the on-site model adds zero node passages and zero wall crossings. The last
-count is only the support of the added diagonal term: its endpoints are on T at
-the same address, and the reference node belongs to the F insertion. The Schur
-response still uses the gapped crossing link and reference-side factor: a term
-in the Schur product uses one inverse gapped link, with the reverse support of
-the certified six-reflection crossing for every signed label. The reference
-factor contains the same zero- and one-passage routes for all three protocols.
-These are counts in the given circuit and factorization; primitive
-comparisons, pulse admission and timing still need a native schedule before a
-shortest native route or reflection count can be claimed.
-
-At fixed nonzero bare resonance, `ChargedInsertion.det_flip_at_resonance` gives
-exactly `δ² ε` on every selected static channel.
-`ResonanceLift.shifted_full_zero_iff` and
-`ChargedInsertion.full_zero_iff_unselected` give an exact lift for any nonzero
-supplied offset when the crossing and reference flip are invertible. With a
-positive cycle product, `calibrated_detuning` pins a shared real detuning if an
-unmodified calibration channel stays stationary; if the detuning varies
-independently, the wall can retune to zero
-(`ResonanceLift.negative_retuning_exists`). `det_shifted_eq_uniform_iff`
-matches a uniform shift by `ε = 3t + 3t²/δ + t³/δ²`; its first-order
-coefficient is the same for every address and protocol. The matching concerns
-the determinant; the spectra can differ (`det_matched_trace_gap`).
-
-In the normalized bare Schur model the lifted determinant has magnitude
-`k² |ε|`. Since the other two singular values tend to `√3 k` and `√(2 + k²)`
-at fixed positive `k`, their product with the lightest singular value gives
-`m₁/m₂ = |ε| / (3 √(2 + k²)) + o(|ε|)`. All three charged sectors respond at
-first order in their offset; the two factors of `k` come from separate rows of
-the common reference factor and cancel from the leading light-to-middle ratio.
-If an insertion law supplies one or two inverse powers of `Δ` in `ε`, the ratio
-inherits that order. The selector and route supply no such power for the
-offset.
-
-This excludes the bare route counts as the source of the ledger's
-protocol-dependent lightest step. In this candidate that difference must enter
-through the label-sensitive pulse or other protocol-dependent dynamics, such
-as maintained detuning. A native selection and firing law, the offset's
-scaling, and the existence of shared calibration are not supplied. Three
-addresses, two route classes and three ledger entries describe different
-features of the model; no result identifies a generation with a protocol's
-number of `Δ` steps.
-
-### Phase, handoff and Toll
-
-At `t = 3π/4` the static hypercharge tags give angles
-`0, −3π/2, π, −π/2` for vacancy, electron, up and down; their eigenphases are
-`1, i, −1, −i`. Shortest angular distances from phase one are `0,1,2,1`
-quarter-turns. For the electron this discards a full turn of the signed
-difference between `−3π/2` and `π/2`.
-
-At this parameter the transport is diagonal
-(`VacancyProjection.hypercharge_eq_diagonal`). It multiplies each label by its
-phase in one packet-operator application and keeps the label's position. The
-relative phase labels a channel and specifies the correction on the transported
-comparison branch. The packet has no handoff edge for each quarter-turn. In the
-existing pulse implementation the same branch rotations appear for any
-controlled transport (`BranchPulseContract.program_correct`). Continuous branch
-rotation, controlled transport and conditioned flip still need native admission
-and pricing.
-
-| Static label | Shortest angular distance (quarter-turns) | Vacancy-relative flag at `t` | At `2t` | Flags when matched target |
-| --- | --- | --- | --- | --- |
-| Vacancy | 0 | 0 | 0 | 0, 0 |
-| Electron | 1 | ½ | 1 | 0, 0 |
-| Up | 2 | 1 | 0 | 0, 0 |
-| Down | 1 | ½ | 1 | 0, 0 |
-
-The vacancy-relative columns follow `ProtocolToll.selector_step_flags`,
-`flags_three_quarter` and the vacancy flag lemma. They are expectations from
-one test, not successful-handoff counts. An equal-price schedule charging both
-uncorrected flags separately would score electron, up and down as `3/2, 1,
-3/2`. The actual selector uses the two matched comparisons:
-`ChargedInsertion.matched_flags_zero` proves their selected flags vanish, and
-`select_static` gives unit retained amplitude. The cost of carrying out the
-comparison and maintaining its controller is not supplied.
-
-In the spatial handoff model `HandoffAdmittance.handoff_from_conductance`
-identifies `α` as the through probability. The unique all-pass history of `q`
-timed layers has probability `α^q` under independent through weights
-(`direct_crossing`, `direct_crossing_prob`); its coherent amplitude magnitude,
-if that history carries the insertion, is `α^(q/2)`. Taking the angular count as
-a layer count would give orders `Δ⁻¹` for up and `Δ⁻¹ᐟ²` for electron and down.
-The `α/2` of a two-leg conserving node is a different calculation, an effective
-series admittance (`NodeAmplitude.node_series`).
-
-For a scheduled unflagged wire the survival model gives amplitude `exp(−T/2)`
-for Toll `T` in expected registrations (`TollAmplitude.wireAmplitude`). If a
-schedule charges the single uncorrected comparison with weight `w` and a common
-baseline, relative amplitudes are `exp(−w/4)` for electron and down and
-`exp(−w/2)` for up, a square relation. A fixed weight gives constant relative
-factors as `Δ` varies. An `α, α²` pair requires `w = 4 log(1/α)` for exact
-equality (`ProtocolToll.selector_half_flag_weight_iff`). For leading powers the
-weight needs that logarithmic growth up to a bounded term, plus the common
-insertion scale. The flag calculation supplies neither schedule nor weight.
-
-Amplitudes multiply along a specified coherent history; a probability product
-and survival amplitude describe the same attenuation if the effective negative
-log of that probability is used. Identifying that log with expected-registration
-Toll needs a physical derivation. The insertion channel and its offset's
-inverse-period order are not supplied.
-
-A common source for the heavy weight and light lift would need a native
-record-and-fire schedule with both placements. The conditional two-bit heavy
-record has flag budgets `2, 0, 1` for electron, up and down
-(`HeavyFlipRecords.orbit_record_tolls`); with a positive price per flag it makes
-up the least attenuated, whereas the single vacancy-relative flag makes up the
-most attenuated. The shared auxiliary hypercharge readout on the two walls
-cannot write the heavy record's quark bit exactly
-(`HeavyFlipRecords.no_exact_quark_record`).
-
-### Comparison only — declared ledger ratios
-
-With the substrate `α`, the bare wire gives `m₂/m₃ ≈ 0.192/Δ`. The declared
-formulas give about `0.316/Δ` for up, `0.962/Δ` for down and `2.557/Δ` for
-electron. For `m₁/m₂` they give exactly `3/Δ²` for up, about `2.126/Δ` for down
-and about `0.208/Δ = 8.94/Δ²` for electron at the stated period. See
-`tools/tier_route_check.py`.
+`EPLabelGen` places the labels on each wall for the three glue generations. `ControlledGluedRegister` gives the typed carrier routes. The glue address identifies a channel of transport. The occupancy-cost reading requires the occupied resources of a full recurring program at each address.
 
 ## Mass readings in the tree
 
 PM means the calculation is proved from the stated PM model. Scope refers to the named premises in [SCOPE](../../SCOPE.md#named-premises). Supplied means that the definition or its physical interpretation still takes an input. An indirect e8p read uses the result in another reported value.
 
-The table covers physical mass and rate candidates and the event and capacity accounts used to construct them. It includes named theorems when the name is the public readout.
+This table includes the accounting used for occupancy cost. It also records retained operators, declared ledger values and decay formulas required by other consumers. The occupancy cost is the EP derivation under development.
 
-### Carrier and spectral readings
+### Retained carrier operators and constants
 
 | Lean name | What it computes | Inputs it takes | Input status | e8p reads it | Relation to another row |
 | --- | --- | --- | --- | --- | --- |
-| `Dispersion.gap_offset` | Zero-momentum band offset, x/2 | Principal band, dispersion relation, k = 0 | PM offset theorem. Species identification is Scope. | No | No species mass equality. |
 | `PMAction.WireMass.mass` | Complex weighted generation-wire matrix | Detuning and transfers on both walls | Supplied carrier parameters. | No direct read | WireMass.det_mass gives its determinant. |
 | `PMAction.CompositeMass.effective_mass_general` | Zero-energy light blocks, D₂Y⁻¹D₁† and adjoint | Crossing matrix Y and flips on both walls | Supplied blocks. Invertibility is needed for the physical Schur reduction. | No | WallSeesaw.effective_mass is the equal-scalar-flip case. GappedGluedCrossing.occupied_light_mass specializes by label. |
-| `PMAction.WallSeesaw.light` | Light Dirac matrix δ²Y⁻¹ | Detuning δ and gapped link Y | Supplied carrier parameters. | No | WallSeesaw.effective_mass and seesaw; WallSeesawAccuracy.full_energy_near_schur bounds the full-mode error. |
+| `PMAction.WallSeesaw.light` | Light Dirac matrix δ²Y⁻¹ | Detuning δ and gapped link Y | Supplied carrier parameters. | No | `WallSeesaw.effective_mass` and `WallSeesaw.seesaw`. |
 | `PMAction.WallDispersion.massSqP` | Heavy squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_masses and two_dirac_particles. |
 | `PMAction.WallDispersion.massSqM` | Light squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_masses and two_dirac_particles. |
 | `PMAction.DetuningMass.lightMass` | Light mass at unit link gap | δ | Supplied detuning. PM diagonalization. | Yes, via fermion-law checks | FermionMassLaw.massA_detuning and massB_detuning. |
 | `PMConstants.FermionMassLaw.massA` | Unit-gap mass with δ² = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massA_detuning. |
 | `PMConstants.FermionMassLaw.massB` | Unit-gap mass with δ = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massB_detuning. |
-| `PMAction.WireResonanceSpectrum.massWithRates` | Real normalized Schur matrix with two restoring rates | Two rates and static offset | Supplied rates. Scope offset and admitted ports. | Yes, shifted wire bounds | RestoringPulseCalibration.mass_from_scheduled_steady_pulses. |
-| `PMAction.WireResonanceSpectrum.mass` | Equal-restoring-rate Schur matrix | Common rate and offset | Supplied rate. Scope offset. | Yes, wire bounds | Equal-rate case of massWithRates by definition. |
-| `PMAction.WireResonanceSpectrum.gramWithRates` | Squared masses through the Gram spectrum | The massWithRates inputs | Same as massWithRates. | Yes, wire bounds | WireShiftedSpectrum.ordered_mass_spectrum_with_rates. |
-| `PMAction.WireResonanceSpectrum.gram` | Equal-rate squared masses through the Gram spectrum | Common rate and offset | Same as mass. | Yes, wire bounds | WireResonanceSpectrum.bare_mass_spectrum; WireShiftedSpectrum.ordered_mass_spectrum. |
-| `RestoringPulseCalibration.scheduledSteadyMass` | Two timed restoring rows in one Schur matrix | Three schedules and offset. The calibration theorem also takes principal pulses and a steady-current match. | Scope schedules and offset. Supplied physical current match. | No | mass_from_scheduled_steady_pulses. |
 | `CarrierSpecies.CarrierSpecies.mass` | Electron and massless neutrino values in electron units | Species tag | Scope physical species mapping. Supplied massless approximation. | No | electron_mass and neutrino_mass evaluate the map. |
 | `SubstrateBridge.normMass` | Half the E8 norm squared | Lattice vector z | PM lattice form. Species readout supplied. | No | Used by SubstrateBridge.widthCandidate. |
 | `PMSubstrate.SIUnits.electronMassMeV` | Electron unit in MeV | SI units and E8 calibration | PM calibration formula. External SI unit convention and anchors. | Yes, through SharedUnits.me | QuarkMasses value enclosures use this unit. |
@@ -1505,28 +1063,12 @@ The table covers physical mass and rate candidates and the event and capacity ac
 | `PMAction.EventAccounting.cost` | Weighted event cost on a finite frame | Events, weights and unit Toll | Scope booked traffic and tariff. PM sum rule. | No | weighted_linear. |
 | `PMAction.CommonResponse.responseCost` | Flag-weighted cost of repeated work | Unit price, work count and flag | Scope work and tariff. PM product rule. | No | common_normalization. |
 | `PMAction.CommonResponse.bookedCapacity` | Sum of capacity times flag at booked visits | Visits, capacity and flags | Scope booking and tariff. PM sum rule. | No | booked_capacity_union and booked_capacity_const. |
-| `PMAction.CarrierRateFromAdmittance.rate` | Principal pulse area per elapsed time | Transfer weight and positive duration | PM principal area identity. Supplied physical weight and duration. | Indirect via wire-rate specialization | rate_ratio and CertainTransferRate.principal_transfer_rate_ratio. |
-| `PMAction.CarrierRateFromAdmittance.restoringRate` | Rate relative to certain transfer at equal duration | Restoring transfer weight | PM normalization. Supplied admissible transfer and equal times. | Yes, wire comparison | rate_ratio_common_duration; PMConstants.WireMassBounds.kRate specializes it. |
-| `PMConstants.WireMassBounds.kRate` | Equal-duration rate for α/2 | α and selected steady weight | PM α and normalization. Supplied steady-current timing model. | Yes, wire comparison | RestoringPulseCalibration.steady_rate_from_schedule multiplies by the time ratio. |
 | `PMKAutomaton.Values.mixedReceiverRate` | Booked mixed flags divided by 43 | AND/OR choice and booked slots | PM flags and period. Scope booking/pricing. | No | mixedReceiverRate_and, mixedReceiverRate_or and TransportCandidates.allBookedMixedRate_eq. |
 | `PMKAutomaton.Values.equal_normalization_rate` | Serial rate ratio 1/2 or 3/8 | Common area, conversion, tick and quarter-time. Short or long path. | PM duration arithmetic. Scope common normalization and serial admission. | No | CertainTransferRate.common_tick_rate_ratio. |
-| `PMKAutomaton.ReceiverCapacity.registeredTick` | Incoming capacity on registered receiver pairs | Rule, state and port values | PM receiver flag. Scope physical valuation and admission. | No | registered_tick_lift. |
-| `PMKAutomaton.ReceiverCapacity.registeredTrace` | Sum of registered capacity through any duration | Rule, initial state, valued ports and ticks | PM trace. Scope physical ports and tariff. | No | registered_trace_add, registered_cycle_phase_invariant and banked_restoring_receiver. |
-| `PMKAutomaton.RestoringRingToll.receiverToll` | Flags on a closed restoring trace | Rule, history and tick count | PM conditional trace. Scope physical requests. | No direct read | successful_receiver_toll_period and successful_receiver_toll_two. |
-| `PMKAutomaton.RestoringRingToll.visitToll` | Two booked visit flags | Rule and two requests | PM flags. Scope physical request history. | No | steady_lt_visit_share compares the survival readout. |
-| `ProgramWitness.registrations` | One bit-ring's registrations per frame | Program, reference, start and bit | PM ring flags. Scope physical program identification. | No | ProgramWitness.witness_total; ProgramExecutionCounts.counted_witness_toll. |
-| `ProgramCapacity.excessCapacity` | Difference between payload and reference capacity | Typed payload, reference and valuation | Scope reference and pricing. PM subtraction. | No | receiver_claim gives twice this difference. |
-| `ProgramCapacity.receiverClaim` | Two visits priced by payload excess over reference | Occupied successful history, typed reference, valuation | PM visit arithmetic. Scope physical route and tariff. | No | receiver_claim uses ReceiverCapacity.banked_restoring_receiver. |
-| `ProgramCapacity.bankClaim` | Price for one differing typed pair | Payload, reference and unit | PM comparison. Scope physical reference and tariff. | No | Used in restoringSubtotal. |
-| `ProgramCapacity.rootClaim` | Price for unit and double root steps | Ledger and both prices | PM word counts. Scope tariff. | No | Used in restoringSubtotal; direct_ledger_counts and gapped_ledger_counts give ledgers. |
-| `ProgramCapacity.restoringSubtotal` | Receiver, bank and class-word claims | Prepared history and three local valuations | PM counts. Scope bookings and tariff. | No | address_one_subtotal, address_two_subtotal and address_two_matched_subtotal. |
-| `RetainedReceiverCapacity.occupiedSlots` | Unit count for a marked occupied slot | Typed port with marker | PM bit readout. Scope physical slot placement and price. | No | occupied_receiver_claim gives two on either route. |
-| `RetainedReceiverCapacity.tag_receiver_claim` | Capacity from any common occupation-only valuation | Successful history, typed reference and valuation | PM visits. Scope physical route and valuation. | No | ReceiverCapacity.banked_restoring_receiver. |
-| `RetainedReceiverCapacity.occupied_receiver_claim` | Total of two occupied slots | Successful history and typed reference | PM count. Scope physical tariff unit. | No | Specializes tag_receiver_claim. |
-| `DirectWriterRenewal.writerClaim` | Write, uncompute and optional preparation claim | Fresh-seed choice and three prices | PM flags. Scope preparation, pricing and admission. | No | writer_claim and writer_claim_uniform use CommonResponse.bookedCapacity. |
-| `ElectricPrimitiveToll.forwardToll` | Short writer flag sum | Channel and booked primitive comparison rule | PM decoder and flag calculation. Scope physical admission. | No | DirectWriterRenewal.writer_claim and ElectricPrimitiveToll.forward_tolls. |
+| `ProgramWitness.registrations` | One bit-ring's registrations per frame | Program, reference, start and bit | PM ring flags. Scope physical program identification. | No | `ProgramWitness.witness_total` and `EPSpine.witnessAt_registrations`. |
+| `ElectricPrimitiveToll.forwardToll` | Short writer flag sum | Channel and booked primitive comparison rule | PM decoder and flag calculation. Scope physical admission. | No | `ElectricPrimitiveToll.forward_tolls`. |
 | `ElectricChiralKick.swapToll` | Shared-current swap flag | Channel and prepared carrier | PM flag for supplied state. Scope physical preparation. | No | Part of ElectricChiralKick.totalToll. |
-| `ElectricChiralKick.totalToll` | Shared-current writer flags | Channel and prepared bank | PM path arithmetic. Scope physical current and booking. | No | DirectWriterRenewal.shared_writer_flag_sum includes the reverse path. |
+| `ElectricChiralKick.totalToll` | Shared-current writer flags | Channel and prepared bank | PM path arithmetic. Scope physical current and booking. | No | `ElectricChiralKick.total_tolls`. |
 | `HeavyFlipRecords.pairedToll` | Sum of active and static heavy-record flags. | Two carrier labels. | PM comparison under the supplied record. | No | `paired_tolls`. |
 | `HeavyFlipRecords.orbitRecordToll` | Per-label heavy record flag count. | Carrier label and reference rule. | PM flag count. Scope heavy record contract. | No | `orbit_record_tolls`. |
 | `ElectricFourPortRecord.exposureToll` | Two electric comparison flags. | Label on the four-port writer. | PM flags. Scope writer admission. | No | `exposure_tolls`. |
@@ -1599,11 +1141,7 @@ choice and the first layer that needs it.
 | Node | SCOPE · `ClockSites`, `RingReceiver.tick` | Named tick-to-root identification. The finite clock and ring movement are checked. |
 | Node | SCOPE · `ClockTickWeights`, `Machine.SliceHop` | Named closure premise. The discrete orbits are checked. |
 | Node | SCOPE · `PMKAutomaton.Interface` | Named admission, geometry, resources, booking, traffic and tariff inputs. See the [upstream closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout). |
-| Node | `RestoringRingHistory.liveExit` | The filter on two requests is proved. The physical requests and their seed supply are supplied. |
-| Node | `RestoringRingToll.exitShare` | Supplied seed prior and hazard. The weighted readout is proved for these inputs. |
-| Node | `RestoringExtraction.retains_output_and_restarts_iff` | The supply obligation is proved. A replenishing physical boundary is open. |
-| Node | `CommonResponse.bookedCapacity`, `ReceiverCapacity.registeredTrace` | PM sum rules. Local capacity values, distinct paid events and their common unit are supplied under SCOPE's machine-input row. |
-| Node | `RestoringBankClock.banked_windows_iff` | The clock window is proved for booked root quarters. Physical quarter duration, concurrency and staged axes are supplied. |
+| Node | `CommonResponse.bookedCapacity` | PM sum rules. Local capacity values, distinct paid events and their common unit are supplied under SCOPE's machine-input row. |
 | Carrier | SCOPE · `CarrierRepresentation`, triality to vector | Named carrier premise. |
 | Carrier | SCOPE · `CarrierRepresentation`, sign index | Named carrier premise. |
 | Carrier | SCOPE · `CarrierRepresentation`, reserved lepton axis | Named carrier premise. |
@@ -1614,17 +1152,12 @@ choice and the first layer that needs it.
 | Carrier | SCOPE · `LinkMass` | Named transport form. The link charge is derived. |
 | Carrier | SCOPE · `HeavyFlipControl`, `ElectricCompanionBank`, `ElectricChiralKick` | Named heavy record and occupied companion contract. The typed guard action is proved. |
 | Carrier | `VacuumLabel`, `refRecord`, `SharedReference`, `ColourReference` | Physical vacuum, sector and readout choice are open. |
-| Carrier | `MassInsertionTrace`, `WallGapCalibration` | Occupied principal flip/crossing areas, duration and coefficient conversion are supplied. |
-| Carrier | `RestoringPulseCalibration.scheduledSteadyMass` | Steady-current match is supplied. The isolated and alternating weights have separate theorems. |
-| Carrier | `CompositeMass`, `WallSeesawAccuracy` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
-| Carrier | SCOPE · `ClockRing`, `Dispersion` | Named spectral mass identification. The band offset is a PM theorem. |
+| Carrier | `CompositeMass` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
 | Carrier | SCOPE · `ChargedInsertion`, `ResonanceLift` | Named offset and matched-port admission. Persistence of the calibration channel is open. |
 | Carrier | `FermionMassLaw.massA`, `FermionMassLaw.massB` | Supplied alternatives for matching `yv` to detuning. The `κ_τ` measurement is an e8p comparison. |
 | Protocol | SCOPE · `WireSchedule.Premises` | Named serial route and admitted bookings. |
 | Protocol | SCOPE · `WireReferenceCost`, `PMKAutomaton.Values` | Named population and reset contract. The threshold arithmetic is proved. |
-| Protocol | `DirectWriterRenewal.writerClaim` | Encoded flag counts are proved. Preparation, renewal and continuation prices are supplied. |
-| Protocol | `RetainedReceiverCapacity.occupied_receiver_claim` | Both encoded slot counts are proved. The physical slot valuation and placement are open. |
-| Protocol | `EPSpine.spine`, `ProgramExecutionCounts.counted_witness_toll` | Proved for class witnesses. Closure of a complete occupied program is open. |
+| Protocol | `EPSpine.spine`, `EPSpine.witnessAt_registrations` | Proved for class witnesses. Closure of a complete occupied program is open. |
 | Protocol | SCOPE · `TierLedger.tiersFor` | Named tier lists. The wire address assignment remains an explicit input. |
 | Protocol | `LeptonMasses.muon`, `LeptonMasses.tau` | Declared geometric cost formulas. The invariant values and arithmetic follow from PM. |
 | Protocol | `QuarkMasses.up` through `QuarkMasses.top` | Declared species cost formulas. The invariant values and arithmetic follow from PM. |
@@ -1644,37 +1177,14 @@ choice and the first layer that needs it.
 
 ## Lean modules changed since 37e9cce
 
-This list starts with the 28 Lean modules changed through `9c4369b`. It also includes the four additional Lean modules whose docstrings changed in this audit.
+The table lists the modules from the earlier audit that remain in the tree.
 
 | Lean module | What it certifies | Supplied input before a physical number |
 | --- | --- | --- |
-| `PMAction.AlternatingReferenceNode` | Fixed current of alternating arrivals is w/(2−w). | Physical transfer weight and retained-centre traffic. |
-| `PMAction.CarrierRateFromAdmittance` | Principal transfer area and rate are related exactly. | Physical weight, selected branch and elapsed time. |
 | `PMAction.CommonResponse` | Adds capacity times flag over disjoint booked visits. | Complete visit set and physical capacity and flag values. |
-| `PMAction.WireResonanceSpectrum` | Gives the bare spectrum and the Gram polynomial for two independent restoring rates. | Both normalized rates and the charged offset. |
-| `PMAction.WireShiftedSpectrum` | Isolates and orders three positive Schur masses in the proved parameter region. | Both physical rates, offset and absolute scale. |
-| `PMElementaryParticles.DirectWriterRenewal` | Checks the inverse writer, its flags, claims and decoder duration. | Physical prices, seed source, companion/flip and payload return. |
 | `PMElementaryParticles.EPLabelGen` | Reindexes each wall by generation and attaches invariant labels to the spine. | Physical occupied execution and its prices. |
 | `PMElementaryParticles.ElectricCoordinateDecoder` | Certifies the short unitary writer and reversible coordinate preparation. | Admitted root pulses, elapsed ticks and occupied input bank. |
-| `PMElementaryParticles.GenerationMasses` | Identifies the glue label and direct address (key (0,1)). | Physical wall coefficients and crossing gap. |
-| `PMElementaryParticles.MassInsertionTrace` | Composes the occupied direct port, reversible bank and adjacent restoring trace. | Occupied source, prepared reference, admitted continuation and clocks. |
-| `PMElementaryParticles.OccupiedBankedRestoring` | Attaches extraction, class shift and reload to the charged routes. Proves fresh-supply obligations. | Physical vacuum, fresh bank, retained export and paid visits. |
-| `PMElementaryParticles.ProgramCapacity` | Counts payload excess, bank flags and signed root steps. | Local capacity map and unit/double-step prices. |
-| `PMElementaryParticles.ProgramExecutionCounts` | Counts 15 separately billed witness runs, and compares retained and banked records. | Complete recurring charged itinerary and physical Toll prices. |
-| `PMElementaryParticles.RestoringBankClock` | Checks clock windows and four-doublet staging for the bank and class word. | Physical root quarter-time, staging and parallel admission. |
-| `PMElementaryParticles.RestoringBankedShift` | Shows the banked payload reaches the signed class-shift endpoint. | Admitted physical extraction, pulse time and prices. |
-| `PMElementaryParticles.RestoringHistoryCalibration` | Converts a matched history current to a principal rate and transports the brackets. | Physical seed prior, current match and durations. |
-| `PMElementaryParticles.RestoringOccupiedHistory` | Lifts the closed marker history to the occupied charged receiver. | Prepared vacuum and supplied two-phase requests. |
-| `PMElementaryParticles.RestoringPulseCalibration` | Links steady, alternating and isolated transfers to timed pulse readouts. | Selected current, retained ports, delays and static offset. |
-| `PMElementaryParticles.RestoringWallShift` | Checks the four-reflection word and its signed endpoint. | Physical firing and clock placement. |
-| `PMElementaryParticles.RetainedReceiverCapacity` | Tracks the retained marker and counts two occupied-slot claims at either address. | Physical slot placement, common capacity unit and other visits. |
 | `PMElementaryParticles.WireSchedule` | Checks serial route placement, conditional Toll and minimum-cost selection. | Physical admission, fresh supply, reset, traffic and tariffs. |
-| `PMKAutomaton.BankReceiverPulse` | Gives the staged doublet exchange and quarter-time compatibility tests. | Staged occupied pair, physical pulse calibration and booking. |
-| `PMKAutomaton.ReceiverCapacity` | Proves capacity conservation and registered sums, including a bank exchange. | Physical valued ports, valuation function and event list. |
-| `PMKAutomaton.RestoringExtraction` | Proves reversible typed extraction and reloading and the retained-output supply constraint. | Fresh supply, the physical bank and a live request history. |
-| `PMKAutomaton.RestoringMarkerTrace` | Characterizes a live exit by the two exchange guards. | Physical controller requests and retained phase. |
-| `PMKAutomaton.RestoringRingHistory` | Proves 86-tick recurrence and flags for the successful two-site seed. | Selected request history, seed and prior. |
-| `PMKAutomaton.RestoringRingToll` | Counts the closed trace and bounds weighted exit shares. | Physical prior, hazard and identification with a pulse. |
 | `PMKAutomaton.RingReceiver` | Realizes the reversible receiver and the restored comparison probe. | Physical rule, requests, initial traffic and booking. |
 | `PMElementaryParticles.KoideSplit` | Proves the norm-split form of the Koide ratio. | Physical generation record and Fourier phase. |
 | `PMElementaryParticles.LeptonMasses` | Evaluates the declared lepton cost ledgers and muon feedback fixed point. | Physical derivation of the named ledger costs. The formulas already evaluate. |
@@ -1706,9 +1216,6 @@ and the mean life is its inverse.
 
 ## Results of the 2026-11-16 review
 
-- **The protocols cannot read the wire's spectrum directly** (`PMAction.WireLightBound`; numerical scans
-  over each protocol's `δ_O` and cycle phase): up and leptons fail with the linear readout, all three
-  with the squared one. The readout is the open item (REVIEW).
 - **Doublet structure** (Lean): weak partners are antipodes and native words commute with the antipode (`DoubletSign`); on the wire the antipode is a global sign, so partners are not wire modes (see "Protocols are not wire modes").
 - **Map and gate** (Lean): `RefreshMap` (clean active rows are the requirement; clock mask changes
   close over a cycle, `clockRoute_closes`); `CoherentGate` (a full position bit per event for overlapping

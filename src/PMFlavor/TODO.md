@@ -67,8 +67,6 @@ external modes and current.
    crossing and flip schedule in common time units. Check whether the actual
    generator has the off-diagonal rest form used for chiral pairing. The
    native one-wall lazy offset breaks that grading symmetry about any common energy.
-   Glued support and stationarity still admit every positive ratio
-   (`WallGapCalibration.arbitrary_cyclic_ratio`).
    [Clock work](../PMKAutomaton/TODO.md#absolute-timing)
 2. **PMFlavor.** Build the native label-change event `J` on these states.
    `InCycleEvent` gives the geometric light-pair word and its wall-record
@@ -89,6 +87,6 @@ external modes and current.
 - Mixing tracks mass ratios: small CKM angles with hierarchical quark masses, large PMNS angles with
   mildly hierarchical neutrino masses.
 - `|V_us| ≈ √(m_d/m_s)` (GST, `0.5σ`) and `|V_td/V_ts| ≈ 0.21`. With the derived placement the wire no
-  longer gives this (`LightPairTexture` is the algebra of the withdrawn placement).
+  longer gives this.
 - `|V_cb| = 0.041` is below `√(m_s/m_b)` and `√(m_c/m_t)`; `|V_ub/V_cb| ≈ 0.093`.
 - No charged-lepton square-root relation; the large PMNS angles point to the neutrino protocol.

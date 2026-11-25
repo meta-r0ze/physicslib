@@ -560,8 +560,7 @@ EP can use the rate and amplitude laws on a specified trace. The
 booked mixed comparison uses `mixed_and_survives_iff`. A balanced
 reference-reset threshold can be used for a boundary erasure
 account only under `erasure_reset_matches_balanced_iff`.
-Neither a physical tier identification nor a selected receiver
-is exported. The [ranked ledger](#remaining-free-inputs-by-reach)
+The [EP occupancy-cost task](../PMElementaryParticles/TODO.md#occupancy-cost) needs a physical recurring trace and a capacity unit. The interface supplies the conditional rate and accounting laws for that trace. The [ranked ledger](#remaining-free-inputs-by-reach)
 retains all 12 entries.
 
 ### Bare-line stabilizer

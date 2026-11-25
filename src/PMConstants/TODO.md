@@ -32,14 +32,6 @@ Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
   single risk: it carries every charge in the tower and the colour subgroup, and nothing else
   would catch it being wrong.
 
-## New work this layer owes the mass chain
-
-- **The carrier amplitude of a node-restoring displacement.** `WireMassBounds` bounds the bare
-  ratio with `k = α/2` as a benchmark, both at zero static offset and uniformly for offsets
-  in `(0,1)`. The conserving two-leg node supplies an admittance. The
-  packet interface owns the admission, pulse readout and timing needed to turn it into a wall
-  coefficient. The full wire eigenvalues then come from the coupled mass matrix.
-
 ## Carried over
 
 - **Physical constant selection.** Derive the VEV correction factors, the gravitational-handoff

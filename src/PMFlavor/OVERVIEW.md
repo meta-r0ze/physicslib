@@ -422,8 +422,7 @@ refers to in brackets):
 `FlavourInvariants` only removes the literal-numeral duplication. The `515/516` Cabibbo dressing is
 derived (`DressingEvent`, `DressingInheritance`) under one premise, that carrier space and the
 lattice share axis labels (not that a carrier label change is a site move). The absolute wall-mass
-scale is an input: ratios are E8 (`PMAction.WallMassRatio`), but no cost functional fixes the
-magnitudes, and the scale is an external unit like `m_e`. Link
+scale and physical link strengths are supplied. Link
 eigenvalues are not the physical energy scale, so the `π/43` chord bound is about
 energies. The V−A projector is forced on the zero kernel by reference persistence
 (PM-2 `ChiralityConvention.projector_unique_on_kernel`); attaching it to the weak representation

@@ -34,7 +34,7 @@ lemma sq_expand (α : Fin 3 → A) (β : A) (p : Fin 3 → ℝ) (m : ℝ) :
   simp only [H, add_mul, mul_add, smul_mul_smul_comm, smul_add]
   module
 
-/-- **Dispersion ⇔ Clifford.** -/
+/-- **Relativistic dispersion ⇔ Clifford.** -/
 theorem dispersion_iff_clifford (α : Fin 3 → A) (β : A) :
     (∀ (p : Fin 3 → ℝ) (m : ℝ), H α β p m * H α β p m = (p 0 ^ 2 + p 1 ^ 2 + p 2 ^ 2 + m ^ 2) • (1 : A))
       ↔ Clifford α β := by

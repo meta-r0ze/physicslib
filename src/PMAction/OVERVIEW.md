@@ -39,29 +39,16 @@ points, not exhaustive lists. Lean source is the ground truth.
   give the support of `WallExchange.back` and preserve the transported signed
   label. The directed link has zero direct light-to-light block. See the EP
   overview for the vacancy projection and the induced Schur mass.
-- `WallGapCalibration` tests the supplied wall family with a fixed other-wall flip and undetuned reference wall. `native_cyclic_family`, `native_reference` and `cyclic_gap_square` preserve the native realization, the same nonzero stationary reference and the cyclic glue support while varying the bare crossing gap. `arbitrary_cyclic_ratio` admits every positive flip-to-gap ratio under these conditions. The scalar one-leg diagnostic has total gapped fraction `u²/(y²+u²)` (`diagnostic_loss`); its current weights are separately identified by `signal_weights`. `stationary_charged_fraction` realizes every normalized charged fraction in `[0,1]` in that stationary one-leg family. The ratio and the preparation still need substrate selection. A microscopic gate/clock law relating crossing and flips remains to derive.
-- Cross-folder calibration checks: `WallMassRatio` assumes its capacity-to-mass identification in an equal-detuning dispersion model. Applying it to the reference-conditioned wire requires a separate derivation. `PMConstants.FlavourDressing` and `PMFlavor.DressingEvent` concern reference-outlet dressing under their event/readout premises; identifying that loss with wall leakage is an additional construction. `AmplitudeTrace` already supplies the spin-sum/trace algebra and `WeakVertex` the supplied vertex's contact limit and kernel bases; connecting native external modes and their measured current to these objects remains upstream work.
+- Cross-folder calibration checks: `PMConstants.FlavourDressing` and `PMFlavor.DressingEvent` concern reference-outlet dressing under their event/readout premises; identifying that loss with wall leakage is an additional construction. `AmplitudeTrace` already supplies the spin-sum/trace algebra and `WeakVertex` the supplied vertex's contact limit and kernel bases; connecting native external modes and their measured current to these objects remains upstream work.
 - `NativeWallOffset.generator_split` embeds the existing lazy-event generator on one wall and retains the exact scalar offset `gap(p)/2` on that wall. On nonempty walls a nonzero offset is unequal to every global scalar shift (`global_shift_iff`). It commutes with an arbitrary Hermitian coupled block exactly when the offset coefficient or crossing link vanishes (`offset_commutes_iff`). With `p < 1/2` and `p ≠ 0`, adding the lazy generator differs from adding only its flip part by every possible global energy shift (`coupled_generators_differ`). These are generator statements; a wall-dependent time-dependent frame would also transform the crossing. The remaining physical event identification is tracked under other-wall detuning.
 - `CompletionSelection.agreement_iff` characterizes full-operator agreement for an ambient update with the prescribed encoded action: it must fix the invisible complement pointwise.
 - `SplitClockBoundary.update_pi` shows that the supplied vacuum-preserving split is momentum-independent at tick `π`. At momentum `(π/2,0,0)` it fails to commute with the Wilson wall Hamiltonian (`noncommuting`), so it equals no exponential `exp(z H)` for any complex scalar `z` (`no_hamiltonian_time`). Universal identification of the split with an exponential of that Hamiltonian is excluded. The diagnostic tick is in generator units. Physical clock calibration and restriction to light modes remain open.
 - `CarrierGateCompletion.lookup_admission_iff` and `lookup_table` classify identity completion for all six supplied Weyl words. The admissible word indices are `{1,3,5}` in class 0, `{0,5}` in class 1 and `{2,5}` in class 2. The coordinate embedding distinguishes all carriers, so another permutation word cannot repair a failed case. A single involution pulse fixes the even modes at a phase return or when it preserves every antipodal pair. For a non-returning β pulse this holds exactly in class 1 (`beta_pulse`). These tests exclude single-pulse realizations; `PairedRootFlip` constructs a completed coherent beta circuit. Prices and native spatial/wall controls remain open.
 - `EvenRootPhase` supplies a nonzero antipode-even carrier mode in every class and proves its coordinate readout vanishes (`mode_invisible`). The actual four-orthogonal-root circuit gives this mode the square of its visible-sector phase (`circuit_mode`); the library's `phaseI` gate therefore changes its sign (`phaseI_mode`). `no_independent_i_completion` rules out identity completion of `i · 1` by this four-root family even with independent pulse times and attempt parameters; the visible action forces all four root phases to `i` (`equal_phases_forced`). `no_i_completion` specializes this to a common clock. This is a full-label completion obstruction. Completion of the whole split update, compensation between gate factors and microscopic prices remain open.
-- `AlternatingReferenceNode` retains the center between right and left visits supplied by fresh
-  incoherent terminal populations. The fixed cycle has current coefficient `w/(2-w)` per cycle
-  and multiplies deviation from its fixed center by `(1-w)²` per cycle. The native admission
-  and complete cycle duration remain inputs.
 - `CommonResponse.bookedCapacity` sums each booked visit's carried capacity
   times its registration weight using the unit-length local response law.
   The sum adds over disjoint visits and factors out a common capacity.
   The native route and the booked visits specify the inputs.
-- `WireShiftedSpectrum` isolates all three squared Schur masses in disjoint positive intervals
-  for normalized restoring coefficient and static offset in `(0,1)`. It proves the sorted
-  middle-to-heavy ratio is below `√(3/2) k` throughout that offset interval.
-  For two independent positive restoring rates with squares at most `2/3`,
-  `squared_spectrum_with_rates` isolates the three squared masses and
-  `ordered_mass_spectrum_with_rates` bounds the middle-to-heavy ratio by
-  `√(3/2) · max(k₁,k₂)`. `WireResonanceSpectrum.char_eval_with_rates` supplies
-  the exact cubic. `bare_duration_ratio_sq` inverts the equal-rate bare case.
 - `PairedRootFlip` gives a constructive identity completion of a coherent beta rotation for **all three carrier classes**, using scheduled phases of actual D4 root reflections. `compression_certificate` / `generator_compressed` certify the full-label paired generator; `block_exponential` cancels the primitive scalar terms exactly. The spinor class needs a four-root phase conjugation, with its inverse also an explicit root-phase program. `flip_completed` gives exactly the completed `LocalUnitary.rotation beta (gap(p)*t)`, `flip_unitary` proves full unitarity, and `flip_fixes_even` / `even_record_readout` preserve every even-sector state and observable at the end of the pulse. No auxiliary bank or supplied odd-only i-phase is used. `inverse_forward` replaces inverse parameters by the remaining forward phase period; its duration is nonnegative on the stated principal interval. This is a class-indexed family; `ClassBlindFlip` supplies the common class-blind alternative below. These results enlarge the mathematical circuit family and do not contradict the single-pulse or four-root common-i obstructions. Intermediate even-mode motion, full schedule prices, rate matching, integer clock calibration and selection of the complete event remain open. The parameter t controls the output angle; it is not the total circuit duration.
 - `ClassBlindFlip` removes the need for a class-controlled schedule for beta. Its fixed signed four-root `block` has beta action in every odd sector; `SpinorEvenFrame` gives a complete even basis of the actual second-class carriers, without allocating a register. `echo_generator` certifies that the existing common odd i-phase reverses the unwanted even generator while retaining beta, and `echo_commutes` makes the refocusing exact at finite times. `pulse_completed`, `pulse_unitary` and `pulse_fixes_even` give the completed rotation using the same program in all three classes. The nonidentity even action of the i-phase is used and undone, consistent with `EvenRootPhase`'s obstruction. `forwardPulse_eq` replaces all inverse parameters by forward root phases. On `0 ≤ t ≤ 8*quarterTime p`, its sixteen serial pulse parameters are nonnegative (`forwardTimes_nonnegative`) and sum to `32*quarterTime p` (`forwardTimes_total`); this is the explicit chosen schedule, not an optimal duration or a hop-time calibration. Common rates, coherent phase admission, intermediate Margin, primitive prices, clock calibration and selection of the physical event law remain inputs.
 - `ClassBlindFlip.certain_tick_duration_lower` and
@@ -208,8 +195,7 @@ shows closed injective updates cannot finitely prepare a stationary state.
   multi-flavour seesaw, parity-combined covariance. `WallRanks`: eigenspace ranks from the trace
   certificates. Candidate wall-mass models (moved from PMFlavor): `WallEnergy` (the energy
   `√(p² + m²)` of a wall branch), `WallMassModel` (the branch-energy impedance at momentum `p`),
-  `WallImpedanceChoice` (zero-momentum mass ratio versus energy ratio), `WallMassRatio` (the wall
-  couplings if the mass ratio is the capacity ratio `16/21`). `Y` is the chirality-flipping (mass) term;
+  `WallImpedanceChoice` (zero-momentum mass ratio versus energy ratio). `Y` is the chirality-flipping (mass) term;
   whether it also carries generation mixing is open (`WallSeesaw` docstring).
 - `WallHopPhase`: on one chirality the Wilson term drops out (`sandwich_beta`) and an in-wall hop
   is a quarter turn times a Hermitian matrix (`chiral_hop`); two such legs give a real reduced
@@ -251,35 +237,14 @@ shows closed injective updates cannot finitely prepare a stationary state.
   so a certain event of duration `τ` has `tτ ≥ π/2` (`certain_min`) and flip at least `rπ/(4τ)`
   (`flip_lower`). Admittance (`NodeAmplitude`'s `K = 1`) fixes the carrier's rate only with the event's
   duration.
-- `CarrierRateFromAdmittance`: so a rate from an admittance needs the event's duration. A transfer
-  probability fixes the principal pulse area (`area`, `area_of_transfer`; a certain transfer has
-  area `π/2`, `area_one`), and a rate is an area over a duration, so the rate ratio of two
-  insertions is their area ratio times the inverse of their duration ratio (`rate_ratio`). A
-  common duration cancels (`rate_ratio_common_duration`), leaving the area ratio: against the
-  certain in-cycle crossing that is `(2/π) arcsin √w` (`restoringRate`, `restoringRate_one`).
-  `lt_arcsin` and `arcsin_lt` enclose the area for numbers downstream
-  (`PMConstants.WireMassBounds.kRate`). The wire of `WireResonanceSpectrum` wants this reading,
-  not `ReferenceNode`'s `α/2` put straight into the rate slot.
 - `WireMass`: the wire's light mass as one definition, `mass δ κ_R κ_O = diag κ_R (δ + cyc (shift κ_O))`,
   with the other wall's carriers placed by glue arithmetic on single-wall modes (`single_wall_class`:
   the move between generations `h`, `h + 1` has class `e h`; `shift κ_O h = κ_O h`, `shift_entry`; the
   vector carrier joins the heavy label to label `1`, `vector_on_heavy_edge`). `undetuned`: at `δ = 0` it
   is `UndetunedWall.undetuned_masses`; `det_mass`: `κ_R 0 κ_R 1 κ_R 2 (δ³ + κ_O 0 κ_O 1 κ_O 2)`.
-- `WireResonanceSpectrum` computes the cubic for the normalized real wire with a supplied static
-  offset on address 2 (`char_eval`). At zero offset the nonnegative masses are
-  `0`, `√(3k²)` and `√(2+k²)` (`bare_mass_spectrum`).
-- `WireLightBound`: for the derived wire with `K = 1`, carriers `(1, k, k)`, real `δ ≥ 0` and
-  `0 < k ≤ 1/10`, the eigenvalues `a ≤ b` of `M Mᵀ` (Mathlib's Hermitian eigenvalues; `vieta`,
-  `eig_nonneg`) satisfy `k² b ≤ 2a` (`eigen_ratio_bound`): lightest-to-middle mass ratio `≥ k/√2`. Steps:
-  `vieta_ratio` (`3e₂² a ≥ e₁e₃ b` for ordered positive roots), `gram`, `e1_eq`, `e2_eq`, `e3_eq`, `poly_bound`
-  (an explicit sum-of-nonnegative-terms certificate); `M_eq` ties `M` to `WireMass.mass`.
 - `SignFlip`: a sign flip `x ↦ −x` on a wall is a trivial-class glue move (`neg_class`,
   `flip_move_trivial`), keeps every generation state and its label (`flip_keeps_state`), and is no
   label change (`flip_not_label_change`).
-- `LightPairTexture` (not the wire's placement; kept as the algebra of a vector carrier on the light
-  pair): the light block is `k [[δ, 0], [K, δ]]`; its Gram matrix
-  (`gram`) has light states `(t, 1)`, `(1, −t)` with masses `δ/t`, `δ t` when `δ(1 − t²) = t`
-  (`light_vectors`, `ratio`): `tan θ₁₂ = √(m₁/m₂)` at leading order.
 - `NativeDetuning`: the on-site detuning is the rate of a native `β` event (`generator_split`,
   `gap_zero_iff`); `β` swaps carrier axes `0 ↔ 2`, `1 ↔ 3` (`beta_swaps_axes`) and moves `4` of `8`
   vector carriers across the reference axis, no spinor carrier (`beta_crossings`).
@@ -288,11 +253,6 @@ shows closed injective updates cannot finitely prepare a stationary state.
 - `LightLeakage`: for a symmetric gapped block with `G² = g²` (`norm_map_of_sq`), `G − E` is coercive
   (`coercive`), so a light eigenstate's gapped part is at most `v/(|g| − |E|)` (`leakage_bound`). For
   the wire: allowed leakage `L` holds once the largest flip is `≤ √(L/(1−L)) (|y| − |E|)`.
-- `WallSeesawAccuracy.full_energy_near_schur` bounds the distance from each in-gap full rest
-  energy `E` to the zero-energy Schur spectrum by `|E|vw/(|g|(|g|−|E|))`. Here `g` is the common
-  cyclic crossing and `v,w` bound the two coupling directions in Euclidean norm. The proof uses
-  `LightLeakage.schur_residual_bound` and `eigenvalue_near_residual`. The exact test
-  `full_energy_iff` keeps the energy in the reduced determinant.
 - `FiniteVertex`, `PolarizationContact`: the finite-`q` current vertex of the link Laplacian. The
   Ward identity is exact (`ward`, `leg_ward`): the conserved vertex is the midpoint vertex with each
   root weighted by `sinc(a r·q/2)`; the midpoint vertex alone misses it by `O(a²|k||q|³)`
@@ -507,17 +467,13 @@ Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; per
   move between generations `h`, `h + 1` changes the class by `e h` (`WireMass.single_wall_class`). This
   fixes the placement (`WireMass.shift`). A 2026-11 "correction" that used `GenerationCurrent`'s carrier
   `e (h − 1)` (a two-wall label change with a glue move on both walls) mixed two state spaces and was
-  withdrawn, with what was built on it (`LightPairTexture` as the wire's block, the GST relation, the
-  margins and second-ratio fits). `LightPairTexture` keeps the algebra of that placement.
+  withdrawn along with the light-pair placement, GST relation, margins and second-ratio fits.
 - **The weak refresh keeps the label** (`SignFlip`; `PMFlavor.RefreshLabel`).
 - **The wire's inputs, tested by persistence.** (a) One `δ_O` per wall: forced in size (one `β` event
   per wall; `β` is an involution on every class). Per class `β` fixes `0`, `4`, `0` of the `8` carriers
   (classes `0`, `1`, `2`), so the eigenbasis differs by class, not the magnitude. (b) `|κ(s)| = |κ(c)|`:
   forced by native intertwining (`CarrierWeyl.intertwining`; `ReferenceLegSymmetry.flag_conj` excludes a
-  reference-readout leg asymmetry). (c) The other wall's vector amplitude: a choice; no value fits down
-  and leptons together (numerical). (d) `k/K` as a rate (`0.0385`): worse than `α/2` (numerical).
-- **Light-ratio bound** (`WireLightBound.eigen_ratio_bound`): for `δ_O ≥ 0` the lightest-to-middle mass
-  ratio is at least `k/√2`. For `δ_O < 0` or a cycle phase, `det = k²(δ³ + κ₀κ₁κ₂)` can vanish.
+  reference-readout leg asymmetry). (c) The other wall's vector amplitude: a choice; a physical value is supplied by the carrier model.
 - **Why the wire is odd** (`FullCarrierIdentification`): carrier permutations fix the even uniform mode,
   and anticommuting generators cannot share a fixed mode, so the Dirac structure lives on the odd
   sector. The odd modes are the wire's spinor components, so protocol identity (and the doublet sign) is a

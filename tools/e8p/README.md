@@ -191,21 +191,3 @@ classes (the total singlet is invisible), 15 visible channels per generation, an
 Each program meets the six pillars on the 43-site ring (`spine_generations`). Masses are open.
 The generation count has a catalog row, `light_generations`, compared with `N_ν` from the Z
 invisible width.
-
-## Charged-lepton wire benchmark
-
-Run `e8p --lepton-wire` for the unscored, normalized resonant Schur comparison.
-The report shows the historical coefficient `α/2` and the common-duration
-principal-pulse rate based on the steady two-leg current. It compares the
-bare ratio and the positive-offset bound to the quotient of the frozen
-muon/electron and tau/electron reference intervals. The report also inverts
-the bare ratio exactly to constrain the direct/restoring duration ratio and
-gives a necessary lower bound for offsets in `(0,1)`. The bare inversion
-uses the equal-rate family. For separate positive restoring rates with
-squares at most `2/3`, the positive-offset result requires at least one
-direct/restoring duration ratio above the same bound under the steady
-principal-pulse model. With a 24-tick
-direct flip the bare duration window allows only a 19-tick restoring span.
-A marker retained in the closed receiver is on the record side at tick 19.
-An earlier live extraction has a separate schedule. The native rates and
-full-wall spectrum remain open.

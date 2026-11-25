@@ -10,7 +10,6 @@ import PMElementaryParticles.TauLifetimeCorrected
 import PMElementaryParticles.TauLifetime
 import PMElementaryParticles.LeptonLifetime
 import PMElementaryParticles.EPLabelGen
-import PMElementaryParticles.GenerationMasses
 
 /-!
 # PMElementaryParticles canonical values
@@ -39,10 +38,6 @@ Single import for the units, couplings, masses and lifetimes that later librarie
   `programs_card` (15), `singlet_no_program`, and `spine_generations` (each generation and
   visible class has a program that meets all six pillars and keeps its generation and label on
   the ring).
-* Generation masses (`GenerationMasses`): EP's generation is the upstream glue label
-  (`label_eq_key`); the heavy generation, the one with the reference's label, is the glue key
-  `(0,1)` (`heavy_iff`, `heavy_key`). No mass values yet (open upstream in `PMAction`).
-
 This module only names results. Computation lives in its own modules (for example
 `TransportCandidates`).
 -/
@@ -87,6 +82,5 @@ export PMElementaryParticles.ProgramClasses
 export PMElementaryParticles.EPSpine
   (Generation generation_card Program programs_card singlet_no_program)
 export PMElementaryParticles.EPLabelGen (spine_generations)
-export PMElementaryParticles.GenerationMasses (label_eq_key heavy_iff heavy_key)
 
 end PMElementaryParticles.Values

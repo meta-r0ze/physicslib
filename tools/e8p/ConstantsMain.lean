@@ -4,7 +4,6 @@ import E8PConstants.PMAtoms.Nuclear
 import E8PConstants.PMAtoms.Certified
 import E8PConstants.PMAtoms.Shells
 import E8PConstants.Summary
-import E8PConstants.PMElementaryParticles.WireMass
 import PMElementaryParticles.Values
 
 open E8PConstants
@@ -23,7 +22,6 @@ private def usage : String :=
   "  --nuclear       typed nuclear-graph diagnostic (H-3/He-3/He-4)\n" ++
   "  --shells        E8 Nilsson single-particle ladder, gaps and closures vs the magic numbers\n" ++
   "  --ep-spine    EP program spine: generations, visible classes, programs (exact counts)\n" ++
-  "  --lepton-wire  charged-lepton Schur benchmark vs the frozen muon/tau reference\n" ++
   "  --summary       one Markdown page: scoreboard, every comparison by agreeing digits, tensions\n" ++
   "  --masses        E8 nuclear ledger masses vs measured: residual and z in ledger-scatter units\n" ++
   "  --masses=Z,N    one nucleus, with what each number is (--certified[=Z,N] is an alias)\n" ++
@@ -217,10 +215,6 @@ def main (args : List String) : IO UInt32 := do
       return ← derivation ((a.drop 13).toString :: args.tail)
   if args == ["--ep-spine"] then
     printEPSpine
-    return 0
-  if args == ["--lepton-wire"] then
-    let out ← IO.getStdout
-    for line in WireMass.lines do out.putStrLn line
     return 0
   if args == ["--help"] || args == ["-h"] then
     (← IO.getStdout).putStr usage

@@ -21,18 +21,7 @@ named machine inputs.
 
 ## Stopping point
 
-The closed marker test now supplies recurring histories and exact exit
-counts for two specified ensembles. Successful seeds require two clock
-periods for full closure. The isolated occupied EP encoding realizes this
-seed with supplied controller fields. The full closed receiver return and
-the two initial visits have different flag accounts and yield different
-surviving exit weights. A booked bank exchange at tick two gives a reversible
-exit with an exact receiver toll and a restart from a supplied fresh bank.
-The staged native doublet exchange takes a principal half-pulse. Its
-whole-tick duration is fixed by the corresponding two-trial observable.
-The joint background still needs to select that observable, stage the
-banks, admit the gate windows, and identify the full EP payload encoding. See [Admission](ADMISSION.md) and the
-[export contract](COMPONENTS.md#what-propagates-downstream).
+The interface checks reversible updates on supplied ports and histories. The physical joint update still needs reachable occupied inputs, booked outputs and a clocked recurrence. See [Admission](ADMISSION.md) and the [export contract](COMPONENTS.md#what-propagates-downstream).
 
 ## Admission
 
@@ -68,22 +57,16 @@ The open admission parts and the smallest question for each:
 | Heavy branch and record reference | Whether either electric writer and the guarded companion crossing are admitted; paid output flags with separate balanced resets bound the remaining cost at 3/4, 27/32 or 9/10 per input for full-probe, idle-vacancy or occupied-only uniform sampling. | What jointly admits the supplied seed, polarity, record write and guarded use on both walls? Which output record is retained? |
 | Lightest-offset branch | Whether the retained matched plus branch and static vector-class test drive the charged offset; its firing law also affects PMFlavor's in-cycle wall record. | Can the joint selector fire the static insertion using an occupied, retained record and preserve the calibration? |
 | Label-sensitive and successive handoffs | Which crossings occur for a retained label and whether successive through probabilities multiply. | What is the through law conditional on the preceding history and its record? |
-| Trial histories and phase controls | The two clocked trials preserve the initial request pair. The closed restoring ring realizes 16 recurring spatial request pairs and gives different exit weights under different seeded ensembles. | Which initial request fibres are reachable from the occupied EP background, and what gives their physical weights? |
+| Trial histories and phase controls | The two clocked trials preserve the initial request pair. | Which initial request fibres are reachable from the occupied EP background, and what gives their physical weights? |
 | Joint schedule and Hamiltonian update | Which visits, overlaps and controls the two walls can execute; with timing and coefficient readout this fixes the schedule, ratio `r` and split walk. | Which admitted chronological word acts on the wire and record together? |
 | Shared-register event ownership | Which charged-current and writer records each persisting label needs, and which are retained, reused or exported. | Which labels are present at each visit and which subsequent guard consumes each record? |
-
-For successful restoring histories, the retained marker gives 43 receiver
-flags in the first period and a tick-two extraction gives two. Book the
-bank operations and their controls to complete the account for a repeating
-execution. A root endpoint-change count also needs the actual two-phase
-requests and the number of eligible trial opportunities.
 
 ## Absolute timing
 
 This premise fixes elapsed tick counts, available windows, cadence on both
 walls and the physical wall rates. With Admission and the pulse-area and
 coefficient normalization it fixes `r = K_f/|y|` and the inputs to
-`LightLeakage` and `WallGapCalibration`.
+`LightLeakage`.
 
 **Smallest question.** How many substrate ticks does each admitted operation
 occupy, and what phase area and Hamiltonian coefficient does it realize on the
@@ -95,23 +78,6 @@ The admitted port, principal branch, duration and conversion into the wall coeff
 still need to be established.
 
 ## Registration tariff
-
-`ReceiverCapacity` now routes a supplied capacity readout with the
-two-stream payload and preserves its stored total across ticks and bank
-exchanges. The registered capacity sums over actual mismatch flags in
-consecutive windows. A successful restoring seed with one value `c`
-and zero reference capacity bills `43c` in the retained first period
-or `2c` for the banked receiver portion. Its two comparisons read the
-occupation marker first from the live stream and then from the record
-stream. EP tracks the same marker alongside the typed payload through
-extraction. The banked block restores the receiver and leaves an occupied
-output exactly when both visits exchange and a separate occupied reload
-input is available. Taking the input from the output bank consumes that
-output. Prove the renewal or recirculation obligation for a complete
-program with bounded bank stock. Decide the native capacity
-readout for occupied values and the full set of register, bank, reset and
-renewal visits required by a persisting program. Use one recurring
-execution to define its sum, with state and time at shared visits explicit.
 
 This premise converts comparison flags and unmatched preparation,
 polarity-control, export, reset, renewal and maintenance jobs into paid

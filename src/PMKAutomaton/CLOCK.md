@@ -75,20 +75,7 @@ the actual controller background.
 `ClassBlindFlip`, `RootCliffordCompletion`, `CompletedCarrierPhase`
 and `SelectiveCarrierRouting` give candidate controls and endpoints for
 the calibrated word. A physical common clock would feed
-`LightLeakage`, `WallGapCalibration` and `SplitClockBoundary`.
-
-### Clocking the staged bank exchange
-
-If the live and bank doublets are already at the receiver, the native
-receiver root gives the exact swap after a principal half-pulse
-(`BankReceiverPulse.staged_exchange_in_ticks`). On the two-tick
-statistical-pair convention, a quarter-time of `q` whole substrate ticks
-corresponds to two-trial changed-label weight
-`(1 - exp(-π/q))/2` for that root. The same staged pulse applies to
-extraction and reload. Matching the trial observable to the geometric
-handoff `α` would make one half-pulse longer than 86 ticks
-(`geometric_trial_exceeds_block`). The physical trial and the spatial
-work that stages the two inputs have separate admission conditions.
+`LightLeakage` and `SplitClockBoundary`.
 
 ## Slot requirements for a wire cycle
 
