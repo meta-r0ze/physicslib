@@ -5,6 +5,13 @@ Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premise
 Results are in [OVERVIEW](OVERVIEW.md); the pillar calculations and their log are in
 [PILLARS.md](PILLARS.md).
 
+## Occupancy counts
+
+- Derive the persistent pion placement that attains the χ-cell lower bound and price its neutral and charged residuals (`MesonMasses.pion0Footprint`, `pionPlusFootprint`).
+- Derive why the kaon holds χ cells plus the full σ-direction register and price its neutral and charged residuals (`MesonMasses.kaon0Footprint`, `kaonPlusFootprint`).
+- Attach the proved cone to the occupied proton and derive its Map, Toll, Margin and residual charges (`NucleonBase.protonFootprint`).
+- Attach the proved cone to the occupied neutron and derive its Map, Toll, Margin and boundary charges (`NucleonBase.neutronFootprint`).
+
 ## Weak widths and meson emission (first)
 
 In order: the normalization decision comes first because every rate below uses it.

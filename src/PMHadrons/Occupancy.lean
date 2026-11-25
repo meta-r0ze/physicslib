@@ -29,7 +29,7 @@ Standard-Model objects do not appear here.
 
 namespace PMHadrons.Occupancy
 
-open Finset
+open Finset PMSubstrate.OccupancyCost
 
 /-- A placement of a carrier cohort: the finite set of substrate cells it holds. -/
 abbrev Placement (Cell : Type*) := Finset Cell
@@ -68,14 +68,18 @@ theorem not_persistent_of_card_lt {P : Placement Cell → Prop} (h : ∃ p, P p)
 /-! ## The meson ledgers are the occupancy form -/
 
 /-- The E8 mass of a composite of occupancy `n`: `n` six-pillar cell budgets plus the residual. -/
-noncomputable def occupancyMass (n : ℕ) (residual : ℝ) : ℝ :=
-  (n : ℝ) * PMHadrons.MesonMasses.cellBudget + residual
+noncomputable abbrev occupancyMass (n : ℕ) (residual : ℝ) : ℝ :=
+  cost (cells n residual)
+
+theorem occupancyMass_eq_cost (n : ℕ) (residual : ℝ) :
+    occupancyMass n residual = cost (cells n residual) := rfl
 
 /-- The pion ledger is the occupancy form with `n = χ = 2`. -/
 theorem pionPlus_eq_occupancyMass :
     PMHadrons.MesonMasses.pionPlus = occupancyMass 2 PMHadrons.MesonMasses.pionPlusResidual := by
   rw [PMHadrons.MesonMasses.pionPlus_cells]
-  unfold occupancyMass PMHadrons.MesonMasses.pionCells
+  rw [occupancyMass_eq_cost, cost_cells, ← PMHadrons.MesonMasses.cellBudget]
+  unfold PMHadrons.MesonMasses.pionCells
   rw [PMSubstrate.E8Values.chi_eq]
 
 /-- The kaon ledger is the occupancy form with `n = σ + χ = 7`. -/
@@ -83,7 +87,8 @@ theorem kaonPlus_eq_occupancyMass :
     PMHadrons.CompositeMasses.kaonPlus =
       occupancyMass 7 PMHadrons.MesonMasses.kaonPlusResidual := by
   rw [PMHadrons.MesonMasses.kaonPlus_cells]
-  unfold occupancyMass PMHadrons.MesonMasses.kaonCells
+  rw [occupancyMass_eq_cost, cost_cells, ← PMHadrons.MesonMasses.cellBudget]
+  unfold PMHadrons.MesonMasses.kaonCells
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
   norm_num
 
@@ -91,14 +96,16 @@ theorem kaonPlus_eq_occupancyMass :
 theorem pion0_eq_occupancyMass :
     PMHadrons.CompositeMasses.pion0 = occupancyMass 2 PMHadrons.MesonMasses.pion0Residual := by
   rw [PMHadrons.MesonMasses.pion0_cells]
-  unfold occupancyMass PMHadrons.MesonMasses.pionCells
+  rw [occupancyMass_eq_cost, cost_cells, ← PMHadrons.MesonMasses.cellBudget]
+  unfold PMHadrons.MesonMasses.pionCells
   rw [PMSubstrate.E8Values.chi_eq]
 
 /-- The neutral kaon ledger is the occupancy form with `n = σ + χ = 7`. -/
 theorem kaon0_eq_occupancyMass :
     PMHadrons.CompositeMasses.kaon0 = occupancyMass 7 PMHadrons.MesonMasses.kaon0Residual := by
   rw [PMHadrons.MesonMasses.kaon0_cells]
-  unfold occupancyMass PMHadrons.MesonMasses.kaonCells
+  rw [occupancyMass_eq_cost, cost_cells, ← PMHadrons.MesonMasses.cellBudget]
+  unfold PMHadrons.MesonMasses.kaonCells
   rw [PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
   norm_num
 

@@ -4,11 +4,18 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 ## Occupancy cost
 
-- Derive one recurrent occupied E8 program for each visible class and generation (`EPSpine.Program`).
-- Close its update and prove Capacity, Margin, Map, Protocol, Toll and Governor on the same execution (`ProgramWitness.Pillars`).
-- Identify occupied resources and their capacity values on the native clock (`PMKAutomaton.Interface`).
-- Sum the cost over one full recurrence in one capacity unit. Count each required resource once at each booked visit (`CommonResponse.bookedCapacity`).
-- Derive a physical mass unit and compare the resulting values in e8p only after the recurrence and its accounting are proved (`SharedUnits`).
+- Derive each tier from the dimension of the clock region that its persistent program holds in one period. Use `PersistencePremises.causal_cone_card` as the counting template.
+- Check the derived counts against `TierLedger.tiersFor` across every protocol before comparing any mass.
+- Derive the electron point footprint. Use the normalized unit premise in `OccupancyCost.ElectronUnit`.
+- Derive the muon line count σΔ, the Map anchor and the spin and feedback residuals (`LeptonMasses.muonFootprint`).
+- Derive the tau area attachment, χ multiplicity, inherited σΔ charge and D residual (`LeptonMasses.tauFootprint`).
+- Derive the up point count, D anchor and overhead (`QuarkMasses.upFootprint`).
+- Derive the down point count, D anchor and σ direction charge (`QuarkMasses.downFootprint`).
+- Derive the strange line count, D multiplier and χσ direction charge (`QuarkMasses.strangeFootprint`).
+- Derive the charm area attachment, D multiplier and colour dilution (`QuarkMasses.charmFootprint`).
+- Derive the bottom area attachment, D multiplier and latency residual (`QuarkMasses.bottomFootprint`).
+- Derive the top volume count, D multiplier and reciprocal Capacity correction (`QuarkMasses.topFootprint`).
+- Derive the occupied region of the visible neutrino class (`TierLedger.neutrinoTiers`).
 
 ## Placement and composition
 

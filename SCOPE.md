@@ -41,6 +41,7 @@ the text. Each appears once here; the owning TODO links back to this table.
 
 | Premise | Where it enters in Lean | What depends on it |
 | --- | --- | --- |
+| The physical electron footprint costs one electron mass unit | `PMSubstrate.OccupancyCost.ElectronUnit` | Normalizes the occupancy mass ledger in `mₑ` units. |
 | One receiver tick is one root event | `PMKAutomaton.ClockSites.site`, `arrivals_are_lattice_steps`; `PMKAutomaton.RingReceiver.tick` | EP line and ring traces, registration-count readings, particle-trace schedules |
 | Closure: a substrate-defined weight is invariant under the substrate symmetries that fix the clock | `PMKAutomaton.ClockTickWeights.forward_one_orbit`, `backward_one_orbit`; `PMKAutomaton.Machine.SliceHop.silent_words_eq_orbit`, `slice_uniform` | Equal weights of the six forward and six backward tick steps; tick-word costs |
 | The aligned spacetime `D4` has one clock-axis step equal to one E8 clock tick | `PMKAutomaton.ClockAlignment.a` … `beta`, `clockAxisRoots_counts`; explicit placement `PMKAutomaton.AlignedSectors.alignedSectorBasis`, `aligned_d4d4`, `alignedSectorBasis_eq`; `ClockEps.rootE8_clock`, `AxisHop.two_epsAxis_reads`, `SliceHop.clock_words_signs` | Replacing `sectorBasis`; clock-routed hop words; the aligned placement recheck |

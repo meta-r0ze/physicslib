@@ -1,3 +1,4 @@
+import PMSubstrate.OccupancyCost
 import PMElementaryParticles.SharedUnits
 import PMSubstrate.E8Values
 
@@ -54,7 +55,7 @@ baseline Toll to the muon residual (+0.18σ) is therefore withdrawn as a lead.
 noncomputable section
 namespace PMElementaryParticles.LeptonMasses
 open PMElementaryParticles.SharedUnits
-open PMSubstrate.E8Values
+open PMSubstrate.E8Values PMSubstrate.OccupancyCost
 
 /-! ## Tier ledgers -/
 
@@ -67,14 +68,21 @@ def muonSpinLag : ℝ := 2 * Real.pi
 /-- Muon: vacuum feedback load `(χ+σ)·α/(1−α)`. -/
 def muonFeedback : ℝ := ((chi + sigma : ℕ) : ℝ) * αe / (1 - αe)
 
+/-- The declared line footprint. The sweep uses the Protocol price units. -/
+def muonFootprint : Footprint :=
+  { protocol := protocolCount muonSweep
+    map := mapCount (-muonAnchor)
+    residual := -muonSpinLag + muonFeedback }
+
 /-- [Premise] Muon mass in `m_e` units in the declared species ledger. -/
-def muon : ℝ := muonSweep - muonAnchor - muonSpinLag + muonFeedback
+abbrev muon : ℝ := cost muonFootprint
 
 /-- The muon is exactly the sum of its named tier costs. -/
 theorem muon_ledger :
     muon = (Delta : ℝ) * (sigma : ℝ) - (chi : ℝ) - 2 * Real.pi +
       ((chi + sigma : ℕ) : ℝ) * αe / (1 - αe) := by
-  unfold muon muonSweep muonAnchor muonSpinLag muonFeedback; ring
+  simp [muon, muonFootprint, cost, muonSweep, muonAnchor, muonSpinLag, muonFeedback]
+  ring
 
 /-- **The feedback load is the recursive loop's fixed point.** The total load of the
 admittance ladder `x = (χ+σ)α + α·x` is `(χ+σ)α/(1−α)`. -/
@@ -92,14 +100,21 @@ def tauCoreLatency : ℝ := (sigma : ℝ) * (Delta : ℝ)
 /-- Tau: spacetime anchors. -/
 def tauAnchors : ℝ := (D : ℝ) + (chi : ℝ)
 
+/-- The declared area footprint. The boundary and the orientation anchor use Map. -/
+def tauFootprint : Footprint :=
+  { map := mapCount (tauBoundary - (chi : ℝ))
+    protocol := protocolCount (-tauCoreLatency)
+    residual := -(D : ℝ) }
+
 /-- [Premise] Tau mass in `m_e` units in the declared species ledger. -/
-def tau : ℝ := tauBoundary - tauCoreLatency - tauAnchors
+abbrev tau : ℝ := cost tauFootprint
 
 /-- The tau is exactly the sum of its named tier costs. -/
 theorem tau_ledger :
     tau = (chi : ℝ) * (Delta : ℝ) ^ 2 - (sigma : ℝ) * (Delta : ℝ) -
       ((D : ℝ) + (chi : ℝ)) := by
-  unfold tau tauBoundary tauCoreLatency tauAnchors; ring
+  simp [tau, tauFootprint, cost, tauBoundary, tauCoreLatency]
+  ring
 
 /-! ## E8-only enclosures -/
 

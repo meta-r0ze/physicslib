@@ -17,6 +17,10 @@ measured coupling.
 | E8 -> clock/sectors/costs | Derive the physical sector choice, clock interpretation, events, weights, signs, saturation and normalizations | Existence of these objects in E8 does not prove that the vacuum dynamics selects or uses them. |
 | Geometric index -> electromagnetic response | Compute the normalized infrared electromagnetic response from that same dynamics | Defining a reciprocal index or assuming the Maxwell matching coefficient does not compute the physical coupling. |
 
+## Occupancy cost
+
+- Connect the counts of occupied clock regions to physical footprints. The electron unit is the named premise `OccupancyCost.ElectronUnit`.
+
 ## Current priority
 
 Specify the microscopic vacuum state, update, probe and physical operator sectors without

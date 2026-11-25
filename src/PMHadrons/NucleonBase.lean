@@ -1,4 +1,4 @@
-import PMHadrons.CompositeMasses
+import PMHadrons.MesonMasses
 import PMSubstrate.PersistencePremises
 import Mathlib.Tactic
 
@@ -21,10 +21,12 @@ bases": they are pricing different pillars (Margin's cone vs Map's cells plus Pr
 directions).
 -/
 
+noncomputable section
+
 namespace PMHadrons.NucleonBase
 
 open Finset
-open PMSubstrate.E8Values
+open PMSubstrate.E8Values PMSubstrate.OccupancyCost
 
 /-- The number of causal-cone events in one cycle, `{(t, x) : t < Δ, |x| ≤ t}`. -/
 def causalCone : ℕ :=
@@ -56,5 +58,41 @@ theorem proton_eq_causalCone :
             PMHadrons.CompositeMasses.αe * ((D : ℝ) + 1 / (D : ℝ)) := by
   unfold PMHadrons.CompositeMasses.proton
   rw [base_eq_causalCone]
+
+/-- The shared base uses the proved causal cone and the declared Map correction. -/
+def baseFootprint : Footprint :=
+  { margin := marginCount causalCone
+    map := mapCount (-Real.pi * (D : ℝ))
+    residual := -1 / (D : ℝ) }
+
+theorem base_eq_cost : PMHadrons.CompositeMasses.base = cost baseFootprint := by
+  rw [base_eq_causalCone]
+  unfold cost baseFootprint
+  simp only [zero_mul, zero_add, add_zero, mapCount_price, marginCount_price]
+  ring
+
+/-- Add the proton Toll and Margin entries to the shared base. -/
+def protonFootprint : Footprint :=
+  baseFootprint.add
+    { toll := sigma
+      margin := -1 / (chi : ℝ)
+      residual := -PMHadrons.CompositeMasses.αe * ((D : ℝ) + 1 / (D : ℝ)) }
+
+/-- Add the neutron Toll, Margin, and boundary entries to the shared base. -/
+def neutronFootprint : Footprint :=
+  baseFootprint.add
+    { toll := (sigma : ℝ) - (chi : ℝ)
+      margin := -1
+      residual := (sigma : ℝ) / 2 }
+
+theorem proton_eq_cost : PMHadrons.CompositeMasses.proton = cost protonFootprint := by
+  rw [PMHadrons.CompositeMasses.proton, protonFootprint, cost_add, ← base_eq_cost]
+  simp [cost, PMHadrons.MesonMasses.tollTerm_eq_zTol, PMHadrons.MesonMasses.marginTerm_eq_zMar]
+  ring
+
+theorem neutron_eq_cost : PMHadrons.CompositeMasses.neutron = cost neutronFootprint := by
+  rw [PMHadrons.CompositeMasses.neutron, neutronFootprint, cost_add, ← base_eq_cost]
+  simp [cost, PMHadrons.MesonMasses.tollTerm_eq_zTol, PMHadrons.MesonMasses.marginTerm_eq_zMar]
+  ring
 
 end PMHadrons.NucleonBase

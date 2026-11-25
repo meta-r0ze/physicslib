@@ -1,3 +1,4 @@
+import PMSubstrate.OccupancyCost
 import PMElementaryParticles.SharedUnits
 import PMElementaryParticles.QuarkMasses
 import PMHadrons.CompositeMasses
@@ -43,7 +44,7 @@ cost functional selects them. The measured comparison lives in
 noncomputable section
 namespace PMHadrons.MesonMasses
 open PMElementaryParticles.SharedUnits
-open PMSubstrate.E8Values
+open PMSubstrate.E8Values PMSubstrate.OccupancyCost
 
 /-- Pion: the two unit charges' cell budget `2α⁻¹`. -/
 def pionCoulomb : ℝ := 2 * αinv
@@ -58,38 +59,12 @@ def pionAnchor : ℝ := (D : ℝ)
 /-- Pion: charge load `α(σ−χ)/χ`. -/
 def pionChargeLoad : ℝ := αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
 
-/-- Charged-pion mass in `m_e` units. -/
-def pionPlus : ℝ :=
-  pionCoulomb - pionTopological + pionLeak + pionSymmetry + pionAnchor - pionChargeLoad
-
-/-- The pion is exactly the sum of its named costs. -/
-theorem pionPlus_ledger :
-    pionPlus = 2 * αinv - (chi : ℝ) * (sigma : ℝ) + 1 / ((nu : ℝ) - (chi : ℝ)) +
-      (sigma : ℝ) + (D : ℝ) - αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ)) := by
-  unfold pionPlus pionCoulomb pionTopological pionLeak pionSymmetry pionAnchor pionChargeLoad
-  ring
-
-/-- A direct two-sided enclosure of the charged pion in `m_e` units. -/
-theorem pionPlus_value : (273.1 : ℝ) < pionPlus ∧ pionPlus < 273.2 := by
-  have hg := g_b; have ha := a_b
-  rw [pionPlus_ledger]
-  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
-    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
-  constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
-
-/-- The charged-pion mass in MeV, as an E8-only enclosure (no measured reference): `139.5704112…`. -/
-theorem pionPlus_mev_value : (139.570411 : ℝ) < pionPlus * me ∧ pionPlus * me < 139.570412 := by
-  have hg := g_b; have ha := a_b
-  rw [pionPlus_ledger]
-  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
-    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
-  unfold me PMSubstrate.SIUnits.electronMassMeV
-  constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
-
 /-! ## Six-pillar cell budget -/
 
 /-- One substrate cell's six-pillar budget, `PMSubstrate.impedance` at the E8 parameters. -/
 def cellBudget : ℝ := PMSubstrate.impedance PMSubstrate.baseline
+
+theorem cellBudget_eq_cost : cellBudget = cost oneCell := cost_oneCell.symm
 
 /-- `α⁻¹` is the cell budget, by definition. -/
 theorem αinv_eq_cellBudget : αinv = cellBudget := rfl
@@ -131,6 +106,19 @@ def kaon0Residual : ℝ :=
 def kaonPlusResidual : ℝ :=
   -(sigma : ℝ) + (D : ℝ) * Real.pi - 1 / Real.sqrt 2 - chargeLoad
 
+/-- The pion holds the declared Map base of whole substrate cells. -/
+def pion0Footprint : Footprint := cells pionCells pion0Residual
+
+def pionPlusFootprint : Footprint := cells pionCells pionPlusResidual
+
+/-- The kaon holds the Map base and the declared Protocol direction register. -/
+def kaon0Footprint : Footprint := cells kaonCells kaon0Residual
+
+def kaonPlusFootprint : Footprint := cells kaonCells kaonPlusResidual
+
+/-- Charged-pion mass in `m_e` units. -/
+abbrev pionPlus : ℝ := cost pionPlusFootprint
+
 theorem pionChargeLoad_eq : pionChargeLoad = chargeLoad := rfl
 
 theorem pion0_cells :
@@ -141,12 +129,8 @@ theorem pion0_cells :
     PMSubstrate.E8Values.nu_eq, Nat.cast_ofNat]
   ring
 
-theorem pionPlus_cells : pionPlus = pionCells * cellBudget + pionPlusResidual := by
-  rw [← αinv_eq_cellBudget]
-  unfold pionPlus pionCoulomb pionTopological pionLeak pionSymmetry pionAnchor pionChargeLoad
-    pionCells pionPlusResidual pion0Residual chargeLoad
-  simp only [PMSubstrate.E8Values.chi_eq, Nat.cast_ofNat]
-  ring
+theorem pionPlus_cells : pionPlus = pionCells * cellBudget + pionPlusResidual :=
+  cost_cells _ _
 
 theorem kaon0_cells :
     PMHadrons.CompositeMasses.kaon0 = kaonCells * cellBudget + kaon0Residual := by
@@ -163,6 +147,42 @@ theorem kaonPlus_cells :
   simp only [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
     PMSubstrate.E8Values.D_eq, Nat.cast_ofNat]
   ring
+
+theorem pion0_eq_cost : PMHadrons.CompositeMasses.pion0 = cost pion0Footprint := by
+  rw [pion0_cells, pion0Footprint, cost_cells, cellBudget]
+
+theorem kaon0_eq_cost : PMHadrons.CompositeMasses.kaon0 = cost kaon0Footprint := by
+  rw [kaon0_cells, kaon0Footprint, cost_cells, cellBudget]
+
+theorem kaonPlus_eq_cost : PMHadrons.CompositeMasses.kaonPlus = cost kaonPlusFootprint := by
+  rw [kaonPlus_cells, kaonPlusFootprint, cost_cells, cellBudget]
+
+/-- The pion is exactly the sum of its named costs. -/
+theorem pionPlus_ledger :
+    pionPlus = 2 * αinv - (chi : ℝ) * (sigma : ℝ) + 1 / ((nu : ℝ) - (chi : ℝ)) +
+      (sigma : ℝ) + (D : ℝ) - αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ)) := by
+  rw [pionPlus_cells, ← αinv_eq_cellBudget]
+  unfold pionCells pionPlusResidual pion0Residual chargeLoad
+  rw [chi_eq]
+  norm_num
+  ring
+
+/-- A direct two-sided enclosure of the charged pion in `m_e` units. -/
+theorem pionPlus_value : (273.1 : ℝ) < pionPlus ∧ pionPlus < 273.2 := by
+  have hg := g_b; have ha := a_b
+  rw [pionPlus_ledger]
+  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
+    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
+  constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
+
+/-- The charged-pion mass in MeV, as an E8-only enclosure (no measured reference): `139.5704112…`. -/
+theorem pionPlus_mev_value : (139.570411 : ℝ) < pionPlus * me ∧ pionPlus * me < 139.570412 := by
+  have hg := g_b; have ha := a_b
+  rw [pionPlus_ledger]
+  rw [PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.sigma_eq,
+    PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.D_eq]
+  unfold me PMSubstrate.SIUnits.electronMassMeV
+  constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
 
 /-! ## Hadrons are not constituents minus a binding budget -/
 

@@ -62,6 +62,20 @@ Uniform measures come from Closure (`ClosureSymmetry.invariant_measure_uniform`)
 restricts transitions, Protocol coordinates them; a vertex sees only local observations, which is
 Postulate I). See [`TODO.md`](TODO.md) for the missing implications.
 
+## Occupancy footprints
+
+`OccupancyCost.cost` adds the six signed baseline charges and a residual. One
+cell costs `impedance baseline`. The cost adds over disjoint accounts and over
+the levels of a tower. The electron normalization enters through
+`OccupancyCost.ElectronUnit`. The particle ledgers are in the
+[EP table](../PMElementaryParticles/OVERVIEW.md#occupancy-footprints) and the
+[hadron table](../PMHadrons/OVERVIEW.md#occupancy-footprints).
+
+| Particle | Tier | Leading count | Pillar terms in the cost | Residual | Count proved | Premise |
+| --- | --- | --- | --- | --- | --- | --- |
+| Electron | Declared point unit | Physical counts open | Price all six counts at `baseline` | Unit entry 1 in the atom ledger | — | Physical electron footprint costs 1 mₑ. |
+| Proton and neutron | Area base | Δ² | Margin counts the one-period causal cone | See the hadron table | `PersistencePremises.causal_cone_card` | Use this region in the nucleon ledger. |
+
 ## Layout
 
 | Path | Contents |

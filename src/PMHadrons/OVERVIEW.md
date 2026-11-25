@@ -60,6 +60,23 @@ base minus pillar costs, the mesons as `n` whole cell budgets plus a residual. T
 under study. The leptons and quarks still use separate E8 formulas (`η`, integer counts); that
 is elementary-particle work.
 
+## Occupancy footprints
+
+The cell prices come from `OccupancyCost`. For charged mesons,
+`L = α(σ−χ)/χ`. The conditional meson counts use the specified placement or
+direction register. The proton and neutron reuse the causal cone for their
+shared base. Their `πD` link term has the Map assignment also used in
+`PMAtoms.LinkWeights`.
+
+| Particle | Tier | Leading count | Pillar terms in the cost | Residual | Count proved | Premise |
+| --- | --- | --- | --- | --- | --- | --- |
+| π⁰ | Two point carriers | χ full cells | χ times all six baseline prices | −σχ + 1/(ν−χ) | Colour-neutral placement has a conditional lower bound of 2 | The occupied configuration attains χ cells |
+| π⁺ | Two point carriers | χ full cells | χ times all six baseline prices | −σχ + 1/(ν−χ) + σ + D − L | Same lower bound | The occupied configuration attains χ cells |
+| K⁰ | One line carrier | χ+σ full cells | (χ+σ) times all six baseline prices | −σ + Dσ − 2π/(ν−χ) | The specified direction register has σ addresses | The physical pair holds the whole register in addition to the χ cells |
+| K⁺ | One line carrier | χ+σ full cells | (χ+σ) times all six baseline prices | −σ + Dπ − 1/√2 − L | Same register count | The physical pair holds the whole register in addition to the χ cells |
+| Proton | Area base | Δ² | Margin Δ² − Z_MAR/χ, Map −πD, Toll σZ_TOL | −1/D − α(D+1/D) | Δ² causal cone | Map correction, Toll/Margin weights and residual |
+| Neutron | Area base | Δ² | Margin Δ² − Z_MAR, Map −πD, Toll (σ−χ)Z_TOL | −1/D + σ/2 | Δ² causal cone | Map correction, Toll/Margin weights and residual |
+
 ## Modules
 
 Grouped by topic. `MinimalCube` moved to `PMAction.MinimalCube` (Nov 2026). Several decay modules are
