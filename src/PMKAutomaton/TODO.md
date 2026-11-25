@@ -24,8 +24,10 @@ named machine inputs.
 The closed marker test now supplies recurring histories and exact exit
 counts for two specified ensembles. Successful seeds require two clock
 periods for full closure. The isolated occupied EP encoding realizes this
-seed with supplied controller fields. The joint background's selection of
-those fields and the physical weights on the histories remain open. See [Admission](ADMISSION.md) and the
+seed with supplied controller fields. The full closed receiver return and
+the two initial visits have different flag accounts and yield different
+surviving exit weights. The joint background still needs to select the
+controller fields, history prior and the visits charged to the mass event. See [Admission](ADMISSION.md) and the
 [export contract](COMPONENTS.md#what-propagates-downstream).
 
 ## Admission

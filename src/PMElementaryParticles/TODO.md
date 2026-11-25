@@ -155,11 +155,12 @@ This file is the open list only.
   for an isolated marker. `mass_from_scheduled_steady_pulses` carries both booked
   restoring durations into separate Schur rows. The closed marker ring
   (`RestoringRingHistory`) has exact 86-tick recurrence for successful histories.
-  Both checked uniform samplings exceed the steady two-leg weight.
   `IsolatedExcitation.occupied_restoring_history` makes this seed the existing
-  occupied EP receiver encoding with supplied requests. Derive those requests
-  and their weighting from the joint background, then attach the coherent
-  pulse readout and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  occupied EP receiver encoding with supplied requests. At unit hazard the initial
+  two visits and the full receiver cycle give opposite comparisons with the steady
+  two-leg coefficient under both tested seed priors. `rate_ratio_of_history_current`
+  turns a matched live-exit share into the principal area rate at supplied durations.
+  Derive the request law, paid visit window, coherent extraction and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use

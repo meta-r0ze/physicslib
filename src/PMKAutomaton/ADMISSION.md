@@ -125,6 +125,22 @@ encoding realizes this single-marker seed with supplied controller fields
 (`IsolatedExcitation.occupied_restoring_history`). The joint background
 still needs to select the physical request histories and their weights.
 
+The complete receiver account over the 86-tick block
+(`RestoringRingHistory.full_receiver_toll`) is zero with both switches
+idle, two with one enabled and 86 with both enabled. The successful marker
+alternates between live at the exit and record at the entry. Its live
+exit is occupied exactly at even ticks (`successful_live_slot_even`).
+A separate consumer that removes the marker would end this closed trace.
+
+At unit hazard under the two stated uniform seed priors, conditioning on
+survival gives opposite inequalities against `α/2`. Charging only the
+initial entry and exit comparisons gives a larger weight.
+Charging every receiver comparison through the full return gives a
+smaller one. For an arbitrary positive prior, the full receiver account
+multiplies the odds of any successful history against an idle one by
+`exp(-86 β)` (`full_cycle_live_idle_odds`). The paid comparison window
+and any carrier or record work following extraction still need admission.
+
 ## Consequences for the wire
 
 | Question | Result of the reachability check |

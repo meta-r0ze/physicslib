@@ -1177,8 +1177,12 @@ normalized Schur operator. The two restoring durations can differ.
 The existing occupied receiver encoding now realizes the recurring ring seed
 with the supplied request and probe fields (`IsolatedExcitation.occupied_restoring_history`).
 It preserves one packet, puts the marker in the live exit exactly on the joint guard event,
-and returns the encoded fields after 86 ticks. This calculation leaves the joint
-background's request law, the coherent carrier readout and its elapsed pulse time open.
+and returns the encoded fields after 86 ticks. Under either specified uniform seed
+prior, the unit-hazard two-visit and full-return accounts bound the steady-node weight
+from opposite sides. For supplied shifted-current matches,
+`independent_history_area_bracket` transports this comparison to the principal areas,
+and `rate_ratio_of_history_current` uses the individual pulse durations.
+The joint background's request law, paid visits and coherent carrier readout remain open.
 
 ### Where the readings agree
 
