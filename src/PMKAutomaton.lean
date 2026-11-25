@@ -10,6 +10,7 @@ import PMKAutomaton.Values
 import PMKAutomaton.LocalController
 import PMKAutomaton.RestoringMarkerTrace
 import PMKAutomaton.RingReceiver
+import PMKAutomaton.RestoringRingHistory
 import PMKAutomaton.BoundaryErasure
 import PMKAutomaton.Components
 import PMKAutomaton.ClockRing

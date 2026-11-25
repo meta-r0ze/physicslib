@@ -102,6 +102,19 @@ def portSource {n : ℕ} (switches : Fin n → Bool) (p : Slot n) : Slot n :=
   let record := p.2 != switches p.1
   if record then (finRotate n p.1, true) else ((finRotate n).symm p.1, false)
 
+/-- The retained switches permute the slots: the input direction first
+determines the destination site, and the switch there recovers the output side. -/
+theorem portSource_injective {n : ℕ} (switches : Fin n → Bool) :
+    Function.Injective (portSource switches) := by
+  let destination (p : Slot n) :=
+    if p.2 then (finRotate n).symm p.1 else finRotate n p.1
+  let forward (p : Slot n) : Slot n :=
+    (destination p, p.2 != switches (destination p))
+  have h : Function.LeftInverse forward (portSource switches) := by
+    rintro ⟨x, bit⟩
+    cases bit <;> cases hs : switches x <;> simp [forward, destination, portSource, hs, -finRotate_apply, -finRotate_symm_apply]
+  exact h.injective
+
 def slotValue {n : ℕ} (ports : PortField n) (p : Slot n) : Bool :=
   if p.2 then (ports p.1).2 else (ports p.1).1
 
@@ -116,7 +129,9 @@ theorem port_step_source {n : ℕ} (either : Bool) (q : RequestsField n)
     simp [scatter, applyGuard, arrivals, OpenReferenceFlow.streamShift, portSource,
       slotValue, hx]
 
-private theorem port_iterate_source {n : ℕ} (either : Bool) (q : RequestsField n)
+/-- A single output slot follows one backward path through the retained
+exchange pattern, independent of the other slot values. -/
+theorem port_iterate_source {n : ℕ} (either : Bool) (q : RequestsField n)
     (ports : PortField n) (p : Slot n) (k : ℕ) :
     slotValue ((portStep either q)^[k] ports) p =
       slotValue ports ((portSource (exchange either ∘ q))^[k] p) := by
@@ -188,10 +203,11 @@ private theorem probe_iterate {n : ℕ} (either : Bool) (s : State n) (x : Fin n
     rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ← ih]
     rfl
 
-/-- Combine any common slot period with the two-clock probe period. -/
-theorem ring_return {n k t : ℕ} (either : Bool) (s : State n) (hs : s.1 = 0)
-    (hslot : ∀ p : Slot n, (portSource (exchange either ∘ s.2.1))^[k] p = p)
-    (hk : k ∣ t) (hc : 2 * Delta ∣ t) : (tick n either)^[t] s = s := by
+/-- Complete a return of the port field on a multiple of the two-clock
+probe period. The requests, phase and probe sides return as well. -/
+theorem ring_return_of_ports {n t : ℕ} (either : Bool) (s : State n) (hs : s.1 = 0)
+    (hp : (portStep either s.2.1)^[t] s.2.2.2 = s.2.2.2)
+    (hc : 2 * Delta ∣ t) : (tick n either)^[t] s = s := by
   let u := (tick n either)^[t] s
   have hphase : Function.IsPeriodicPt (finRotate Delta) Delta s.1 :=
     CarrierReferenceCycle.clock_closes s.1
@@ -203,17 +219,24 @@ theorem ring_return {n k t : ℕ} (either : Bool) (s : State n) (hs : s.1 = 0)
   have hprobes (x : Fin n) : (u.1, (u.2.1 x, u.2.2.1 x)) =
       (s.1, (s.2.1 x, s.2.2.1 x)) :=
     (probe_iterate either s x t).trans ((hprobe x).trans_dvd hc).eq
-  have hp (p : Slot n) : slotValue u.2.2.2 p = slotValue s.2.2.2 p := by
-    have h : Function.IsPeriodicPt (portSource (exchange either ∘ s.2.1)) k p := hslot p
-    change slotValue ((tick n either)^[t] s).2.2.2 p = _
-    rw [ports_iterate, port_iterate_source, (h.trans_dvd hk).eq]
   change u = s
   refine Prod.ext ((phase_iterate either s t).trans hphase') (Prod.ext (requests_iterate either s t) ?_)
   apply Prod.ext
   · funext x
     exact congrArg (fun p : Phase × (Requests × Bool) => p.2.2) (hprobes x)
-  · funext x
-    exact Prod.ext (hp (x, false)) (hp (x, true))
+  · exact (ports_iterate either s t).trans hp
+
+/-- Combine any common slot period with the two-clock probe period. -/
+theorem ring_return {n k t : ℕ} (either : Bool) (s : State n) (hs : s.1 = 0)
+    (hslot : ∀ p : Slot n, (portSource (exchange either ∘ s.2.1))^[k] p = p)
+    (hk : k ∣ t) (hc : 2 * Delta ∣ t) : (tick n either)^[t] s = s := by
+  apply ring_return_of_ports either s hs _ hc
+  have hp (p : Slot n) : slotValue ((portStep either s.2.1)^[t] s.2.2.2) p =
+      slotValue s.2.2.2 p := by
+    have h : Function.IsPeriodicPt (portSource (exchange either ∘ s.2.1)) k p := hslot p
+    rw [port_iterate_source, (h.trans_dvd hk).eq]
+  funext x
+  exact Prod.ext (hp (x, false)) (hp (x, true))
 
 theorem ring_return_three (either : Bool) (s : State 3) (hs : s.1 = 0) :
     (tick 3 either)^[516] s = s :=

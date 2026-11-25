@@ -100,6 +100,31 @@ are filled. In particular, combining the trial table with each
 possible handoff branch by a Cartesian product would require a proof
 that the input controllers and ports admit those combinations.
 
+### Closed ring restoring histories
+
+`RestoringRingHistory` fixes one phase-zero live marker, with request pairs
+at the adjacent entry and exit sites and idle requests elsewhere. All 16
+seeded configurations return after two clock periods. The successful
+ones have first full return after 86 ticks. Their downstream live
+marker appears after two ticks and both receiver visits record a unit
+comparison flag. The full return includes the phase, ports and probe
+sides. The flags price those two comparisons, with no other cycle
+costs assigned.
+
+| Uniform sample of recurring seeds | AND live exit | OR live exit |
+| --- | ---: | ---: |
+| One seed per ordered pair of entry and exit requests | 1/16 | 9/16 |
+| One seed per shared request at both sites | 1/4 | 3/4 |
+
+Each value exceeds the steady two-leg weight `α/2`.
+`weighted_exit_ge` also bounds the exit for an arbitrary normalized
+history weighting by the sum of the two swap marginals minus one. With
+OR and both marginals at least three quarters, the exit weight is at
+least one half for every correlation. EP's existing isolated occupied
+encoding realizes this single-marker seed with supplied controller fields
+(`IsolatedExcitation.occupied_restoring_history`). The joint background
+still needs to select the physical request histories and their weights.
+
 ## Consequences for the wire
 
 | Question | Result of the reachability check |

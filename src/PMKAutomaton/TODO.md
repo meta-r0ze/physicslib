@@ -21,9 +21,11 @@ named machine inputs.
 
 ## Stopping point
 
-The admission chain is paused at the mixed receiver readout required by a
-downstream trace. The certified EP formulae take no such receiver trace as an
-input. See [Admission](ADMISSION.md) and the
+The closed marker test now supplies recurring histories and exact exit
+counts for two specified ensembles. Successful seeds require two clock
+periods for full closure. The isolated occupied EP encoding realizes this
+seed with supplied controller fields. The joint background's selection of
+those fields and the physical weights on the histories remain open. See [Admission](ADMISSION.md) and the
 [export contract](COMPONENTS.md#what-propagates-downstream).
 
 ## Admission
@@ -60,7 +62,7 @@ The open admission parts and the smallest question for each:
 | Heavy branch and record reference | Whether either electric writer and the guarded companion crossing are admitted; paid output flags with separate balanced resets bound the remaining cost at 3/4, 27/32 or 9/10 per input for full-probe, idle-vacancy or occupied-only uniform sampling. | What jointly admits the supplied seed, polarity, record write and guarded use on both walls? Which output record is retained? |
 | Lightest-offset branch | Whether the retained matched plus branch and static vector-class test drive the charged offset; its firing law also affects PMFlavor's in-cycle wall record. | Can the joint selector fire the static insertion using an occupied, retained record and preserve the calibration? |
 | Label-sensitive and successive handoffs | Which crossings occur for a retained label and whether successive through probabilities multiply. | What is the through law conditional on the preceding history and its record? |
-| Trial histories and phase controls | Whether the physical controller realizes the four retained two-request histories with equal prior counts, or whether a principal-range calibration is used. | What are the initial request fibres, and which clocked comparison uses them? |
+| Trial histories and phase controls | The two clocked trials preserve the initial request pair. The closed restoring ring realizes 16 recurring spatial request pairs and gives different exit weights under different seeded ensembles. | Which initial request fibres are reachable from the occupied EP background, and what gives their physical weights? |
 | Joint schedule and Hamiltonian update | Which visits, overlaps and controls the two walls can execute; with timing and coefficient readout this fixes the schedule, ratio `r` and split walk. | Which admitted chronological word acts on the wire and record together? |
 | Shared-register event ownership | Which charged-current and writer records each persisting label needs, and which are retained, reused or exported. | Which labels are present at each visit and which subsequent guard consumes each record? |
 

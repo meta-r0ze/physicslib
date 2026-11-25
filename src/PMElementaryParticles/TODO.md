@@ -153,8 +153,13 @@ This file is the open list only.
   retained center. The isolated geometric exchange pair gives its own exit
   weight. `LocalController.restoring_marker_live` gives the native joint guard event
   for an isolated marker. `mass_from_scheduled_steady_pulses` carries both booked
-  restoring durations into separate Schur rows. Select and weight the recurring
-  native histories, and derive their pulse readout and the static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  restoring durations into separate Schur rows. The closed marker ring
+  (`RestoringRingHistory`) has exact 86-tick recurrence for successful histories.
+  Both checked uniform samplings exceed the steady two-leg weight.
+  `IsolatedExcitation.occupied_restoring_history` makes this seed the existing
+  occupied EP receiver encoding with supplied requests. Derive those requests
+  and their weighting from the joint background, then attach the coherent
+  pulse readout and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use

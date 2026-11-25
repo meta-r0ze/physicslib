@@ -1174,7 +1174,11 @@ exit swap event (`LocalController.restoring_marker_live`). Under the steady
 current match, `mass_from_scheduled_steady_pulses` uses one direct flip window
 and each restoring interval from entry start through exit completion in the
 normalized Schur operator. The two restoring durations can differ.
-The native selection of the recurring history and its pulse readout remains open.
+The existing occupied receiver encoding now realizes the recurring ring seed
+with the supplied request and probe fields (`IsolatedExcitation.occupied_restoring_history`).
+It preserves one packet, puts the marker in the live exit exactly on the joint guard event,
+and returns the encoded fields after 86 ticks. This calculation leaves the joint
+background's request law, the coherent carrier readout and its elapsed pulse time open.
 
 ### Where the readings agree
 
