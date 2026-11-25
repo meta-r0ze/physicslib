@@ -1551,6 +1551,66 @@ The table covers physical mass and rate candidates and the event and capacity ac
 | `TauE8.tauLifetimeE8` | Tree tau lifetime from E8-input muon rate | Tree muon lifetime, ledger masses and Bₑ | PM tree and mass arithmetic. Declared ledgers and experimental Bₑ. | Yes, EP Values | tauLifetimeE8_relation. |
 | `TauLifetimeCorrected.tauLifeCorrected` | Tau lifetime with phase, W propagator and QED corrections | Tree benchmark, E8 W mass and electron and tau running α | PM phase and E8 W mass. Supplied SM corrections, α(mτ) and experimental tree inputs. | Yes, Values.tauLifetimeCorrectedFs | tau_lifetime_corrected. |
 
+## EP premise ledger
+
+Read the shared statements in [SCOPE, Named premises](../../SCOPE.md#named-premises).
+The names in this table identify the rows by the Lean module in SCOPE's
+“Where it enters in Lean” column. Local inputs below give the remaining
+choice and the first layer that needs it.
+
+| Layer | Lean location or SCOPE row | Status |
+| --- | --- | --- |
+| Substrate | SCOPE · `ClockAlignment` | Named placement premise. `alignedSectorBasis_eq` checks the explicit placement. |
+| Substrate | SCOPE · Lorentzian signature and complex amplitudes | Named model premises. Root moments through degree four are PM theorems. |
+| Substrate | `ChannelPlacement.channelE8`, `referenceClass_eq_clock` | Proved from PM. |
+| Substrate | `SharedUnits.αe`, `SharedUnits.fermiME` | PM coupling and conversion formulas. The Fermi value inherits the SCOPE VEV structure. |
+| Substrate | `SharedUnits.me`, `PhysicalUnits.electronTime` | PM conversion at the external SI unit anchors. |
+| Node | SCOPE · `ClockSites`, `RingReceiver.tick` | Named tick-to-root identification. The finite clock and ring movement are checked. |
+| Node | SCOPE · `ClockTickWeights`, `Machine.SliceHop` | Named closure premise. The discrete orbits are checked. |
+| Node | SCOPE · `PMKAutomaton.Interface` | Named admission, geometry, resources, booking, traffic and tariff inputs. See the [upstream closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout). |
+| Node | `RestoringRingHistory.liveExit` | The filter on two requests is proved. The physical requests and their seed supply are supplied. |
+| Node | `RestoringRingToll.exitShare` | Supplied seed prior and hazard. The weighted readout is proved for these inputs. |
+| Node | `RestoringExtraction.retains_output_and_restarts_iff` | The supply obligation is proved. A replenishing physical boundary is open. |
+| Node | `CommonResponse.bookedCapacity`, `ReceiverCapacity.registeredTrace` | PM sum rules. Local capacity values, distinct paid events and their common unit are supplied under SCOPE's machine-input row. |
+| Node | `RestoringBankClock.banked_windows_iff` | The clock window is proved for booked root quarters. Physical quarter duration, concurrency and staged axes are supplied. |
+| Carrier | SCOPE · `CarrierRepresentation`, triality to vector | Named carrier premise. |
+| Carrier | SCOPE · `CarrierRepresentation`, sign index | Named carrier premise. |
+| Carrier | SCOPE · `CarrierRepresentation`, reserved lepton axis | Named carrier premise. |
+| Carrier | SCOPE · `Hypercharge`, `RequirementTable` | Named representation inventory with a sterile singlet. |
+| Carrier | `CarrierRepresentation.carrierCharges_eq_standard` | Charge equality follows in Lean from the three carrier premises. The standard table is a comparison target for this result. |
+| Carrier | SCOPE · `PacketGaugeActions` | Named weak `SU(2)` action on the sign pair. Colour and the hypercharge direction follow from PM under the carrier premises. |
+| Carrier | SCOPE · `GeneratorNormalization` | Named stiffness normalization, inherited through the weak couplings. |
+| Carrier | SCOPE · `LinkMass` | Named transport form. The link charge is derived. |
+| Carrier | SCOPE · `HeavyFlipControl`, `ElectricCompanionBank`, `ElectricChiralKick` | Named heavy record and occupied companion contract. The typed guard action is proved. |
+| Carrier | `VacuumLabel`, `refRecord`, `SharedReference`, `ColourReference` | Physical vacuum, sector and readout choice are open. |
+| Carrier | `MassInsertionTrace`, `WallGapCalibration` | Occupied principal flip/crossing areas, duration and coefficient conversion are supplied. |
+| Carrier | `RestoringPulseCalibration.scheduledSteadyMass` | Steady-current match is supplied. The isolated and alternating weights have separate theorems. |
+| Carrier | `CompositeMass`, `WallSeesawAccuracy` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
+| Carrier | SCOPE · `ClockRing`, `Dispersion` | Named spectral mass identification. The band offset is a PM theorem. |
+| Carrier | SCOPE · `ChargedInsertion`, `ResonanceLift` | Named offset and matched-port admission. Persistence of the calibration channel is open. |
+| Carrier | `FermionMassLaw.massA`, `FermionMassLaw.massB` | Supplied alternatives for matching `yv) to detuning. The `κ_τ` measurement is an e8p comparison. |
+| Protocol | SCOPE · `WireSchedule.Premises` | Named serial route and admitted bookings. |
+| Protocol | SCOPE · `WireReferenceCost`, `PMKAutomaton.Values` | Named population and reset contract. The threshold arithmetic is proved. |
+| Protocol | `DirectWriterRenewal.writerClaim` | Encoded flag counts are proved. Preparation, renewal and continuation prices are supplied. |
+| Protocol | `RetainedReceiverCapacity.occupied_receiver_claim` | Both encoded slot counts are proved. The physical slot valuation and placement are open. |
+| Protocol | `EPSpine.spine`, `ProgramExecutionCounts.counted_witness_toll` | Proved for class witnesses. Closure of a complete occupied program is open. |
+| Protocol | SCOPE · `TierLedger.tiersFor` | Named tier lists. The wire address assignment remains an explicit input. |
+| Protocol | `LeptonMasses.muon`, `LeptonMasses.tau` | Declared geometric cost formulas. The invariant values and arithmetic follow from PM. |
+| Protocol | `QuarkMasses.up` through `QuarkMasses.top` | Declared species cost formulas. The invariant values and arithmetic follow from PM. |
+| Protocol | `KoideSelection.generationLaw` | Named local generation-record premise. Koide follows with selection on that law. |
+| Protocol | `KoideSplit.circulant_koide` | The split is proved for supplied amplitudes. Phase and relation to an occupied trace are open. |
+| Protocol | SCOPE · `ExternalStates`, `NativeExternal` | Named physical species and decay/current readout. |
+| Protocol | `CarrierAmplitude`, `CarrierTransitionOperator` | Supplied coupling assignment and link from the operator to physical external states. |
+| Protocol | `ProtocolDynamics`, `RateModel` | Decay relation and finite accounting are proved. Physical histories and their event rates are supplied. |
+| Protocol | `MuonRate.parentFlux`, `WExchangeRate` | Supplied relativistic flux and physical V−A/weak contact identification. The kinematic and zero-transfer formulas are proved. |
+| Protocol | `PolarMeasure`, `PairSphere`, `LeptonLattice` | Measures and finite counting are proved. The support and scale choice for the physical final state are supplied. |
+| Protocol | SCOPE · `HazardForm`, `MeanLife` | Named persistence-law inputs. |
+| Protocol | SCOPE · Born rule and `InclusiveMixing` | Named probability interpretation where amplitude-derived channel weights are used. |
+| Protocol | `MuonLifetimeCorrected`, `MuonQEDLoops` | SM QED coefficients and correction expansion supplied. |
+| Protocol | `TauLifetime.tauLife`, `TauE8.tauLifetimeE8` | Experimental muon lifetime and branching fraction for the first. Experimental branching fraction for the second. |
+| Protocol | `TauLifetimeCorrected.qedTau` | SM radiative formula with supplied `α(m_τ)⁻¹ = 133.3`. |
+| Protocol | `TauLifetimeCorrected.wRatio` | SM finite-propagator correction applied with the E8 W mass. |
+
 ## Verification
 
 Run `./build.sh PMElementaryParticles` for current counts. The sibling `PMAtoms` library is documented
