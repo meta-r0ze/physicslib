@@ -34,6 +34,15 @@ external calculation awaiting formal verification. Each current theorem states i
 
 ## Generation masses
 
+The direct node-program readout starts with the capacity claims of its
+booked visits. `CommonResponse.bookedCapacity` sums the local capacity
+times the registration weight and composes over disjoint bookings.
+The capacity value of each occupied native port and all the visits of
+one repeating program must come from the native execution. PMKAutomaton
+tracks its carried values and receiver registrations. The wall models below
+give conditional spectral readouts. Identifying any of them with the summed
+capacity requires a derivation from the same execution.
+
 The generation-mass modules (`MassInsertion`, `GenerationMass`, `CompositeMass`, `CyclicSeesaw`,
 `GenerationParity`, `GenerationOrientation`) point here.
 

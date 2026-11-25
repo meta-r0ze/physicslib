@@ -50,6 +50,10 @@ points, not exhaustive lists. Lean source is the ground truth.
   incoherent terminal populations. The fixed cycle has current coefficient `w/(2-w)` per cycle
   and multiplies deviation from its fixed center by `(1-w)²` per cycle. The native admission
   and complete cycle duration remain inputs.
+- `CommonResponse.bookedCapacity` sums each booked visit's carried capacity
+  times its registration weight using the unit-length local response law.
+  The sum adds over disjoint visits and factors out a common capacity.
+  The native route and the booked visits specify the inputs.
 - `WireShiftedSpectrum` isolates all three squared Schur masses in disjoint positive intervals
   for normalized restoring coefficient and static offset in `(0,1)`. It proves the sorted
   middle-to-heavy ratio is below `√(3/2) k` throughout that offset interval.

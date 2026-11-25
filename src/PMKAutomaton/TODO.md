@@ -96,6 +96,16 @@ still need to be established.
 
 ## Registration tariff
 
+`ReceiverCapacity` now routes a supplied capacity readout with the
+two-stream payload and preserves its stored total across ticks and bank
+exchanges. The registered capacity sums over actual mismatch flags in
+consecutive windows. A successful restoring seed with one value `c`
+and zero reference capacity bills `43c` in the retained first period
+or `2c` for the banked receiver portion. Decide the native capacity
+readout for occupied values and the full set of register, bank, reset and
+renewal visits required by a persisting program. Use one recurring
+execution to define its sum, with state and time at shared visits explicit.
+
 This premise converts comparison flags and unmatched preparation,
 polarity-control, export, reset, renewal and maintenance jobs into paid
 registrations. It decides the signed remainder in the reference comparison and

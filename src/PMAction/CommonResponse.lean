@@ -96,6 +96,29 @@ theorem gauge_case (θ : ℝ) : stateFlag (phase θ) (fun _ => 1) = (1 - Real.co
 this one function for every sector is what makes the normalization common. -/
 def responseCost (toll : ℝ) (m : ℕ) (q : ℝ) : ℝ := toll * m * q
 
+/-- Sum the capacity claimed by each booked registration. The index names
+a visit, so separate uses of the same transported value have separate indices. -/
+def bookedCapacity {ι : Type*} (visits : Finset ι) (capacity flag : ι → ℝ) : ℝ :=
+  ∑ i ∈ visits, responseCost (capacity i) 1 (flag i)
+
+theorem booked_capacity_eq {ι : Type*} (visits : Finset ι) (capacity flag : ι → ℝ) :
+    bookedCapacity visits capacity flag = ∑ i ∈ visits, capacity i * flag i := by
+  simp [bookedCapacity, responseCost]
+
+/-- A disjoint booking can be charged in parts or in one sum. -/
+theorem booked_capacity_union {ι : Type*} [DecidableEq ι] {left right : Finset ι}
+    (h : Disjoint left right) (capacity flag : ι → ℝ) :
+    bookedCapacity (left ∪ right) capacity flag =
+      bookedCapacity left capacity flag + bookedCapacity right capacity flag :=
+  Finset.sum_union h
+
+/-- If a single carried value is used at every registered visit, its total
+claim is that value times the sum of the flags. -/
+theorem booked_capacity_const {ι : Type*} (visits : Finset ι) (capacity : ℝ)
+    (flag : ι → ℝ) :
+    bookedCapacity visits (fun _ => capacity) flag = capacity * ∑ i ∈ visits, flag i := by
+  rw [booked_capacity_eq, Finset.mul_sum]
+
 theorem common_normalization (toll : ℝ) (m : ℕ) (θ : ℝ) {κ : Type*} [Fintype κ] [DecidableEq κ]
     (U : Matrix κ κ ℂ) (φ φ' : κ → ℂ) :
     responseCost toll m (stateFlag (phase θ) (fun _ => 1)) =
