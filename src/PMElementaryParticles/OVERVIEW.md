@@ -1417,6 +1417,140 @@ electron. For `m₁/m₂` they give exactly `3/Δ²` for up, about `2.126/Δ` fo
 and about `0.208/Δ = 8.94/Δ²` for electron at the stated period. See
 `tools/tier_route_check.py`.
 
+## Mass readings in the tree
+
+PM means the calculation is proved from the stated PM model. Scope refers to the named premises in [SCOPE](../../SCOPE.md#named-premises). Supplied means that the definition or its physical interpretation still takes an input. An indirect e8p read uses the result in another reported value.
+
+The table covers physical mass and rate candidates and the event and capacity accounts used to construct them. It includes named theorems when the name is the public readout.
+
+### Carrier and spectral readings
+
+| Lean name | What it computes | Inputs it takes | Input status | e8p reads it | Relation to another row |
+| --- | --- | --- | --- | --- | --- |
+| `Dispersion.gap_offset` | Zero-momentum band offset, x/2 | Principal band, dispersion relation, k = 0 | PM offset theorem. Species identification is Scope. | No | No species mass equality. |
+| `PMAction.WireMass.mass` | Complex weighted generation-wire matrix | Detuning and transfers on both walls | Supplied carrier parameters. | No direct read | WireMass.det_mass gives its determinant. |
+| `PMAction.CompositeMass.effective_mass_general` | Zero-energy light blocks, D₂Y⁻¹D₁† and adjoint | Crossing matrix Y and flips on both walls | Supplied blocks. Invertibility is needed for the physical Schur reduction. | No | WallSeesaw.effective_mass is the equal-scalar-flip case. GappedGluedCrossing.occupied_light_mass specializes by label. |
+| `PMAction.WallSeesaw.light` | Light Dirac matrix δ²Y⁻¹ | Detuning δ and gapped link Y | Supplied carrier parameters. | No | WallSeesaw.effective_mass and seesaw; WallSeesawAccuracy.full_energy_near_schur bounds the full-mode error. |
+| `PMAction.WallDispersion.massSqP` | Heavy squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_masses and two_dirac_particles. |
+| `PMAction.WallDispersion.massSqM` | Light squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_masses and two_dirac_particles. |
+| `PMAction.DetuningMass.lightMass` | Light mass at unit link gap | δ | Supplied detuning. PM diagonalization. | Yes, via fermion-law checks | FermionMassLaw.massA_detuning and massB_detuning. |
+| `PMConstants.FermionMassLaw.massA` | Unit-gap mass with δ² = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massA_detuning. |
+| `PMConstants.FermionMassLaw.massB` | Unit-gap mass with δ = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massB_detuning. |
+| `PMAction.WireResonanceSpectrum.massWithRates` | Real normalized Schur matrix with two restoring rates | Two rates and static offset | Supplied rates. Scope offset and admitted ports. | Yes, shifted wire bounds | RestoringPulseCalibration.mass_from_scheduled_steady_pulses. |
+| `PMAction.WireResonanceSpectrum.mass` | Equal-restoring-rate Schur matrix | Common rate and offset | Supplied rate. Scope offset. | Yes, wire bounds | Equal-rate case of massWithRates by definition. |
+| `PMAction.WireResonanceSpectrum.gramWithRates` | Squared masses through the Gram spectrum | The massWithRates inputs | Same as massWithRates. | Yes, wire bounds | WireShiftedSpectrum.ordered_mass_spectrum_with_rates. |
+| `PMAction.WireResonanceSpectrum.gram` | Equal-rate squared masses through the Gram spectrum | Common rate and offset | Same as mass. | Yes, wire bounds | WireResonanceSpectrum.bare_mass_spectrum; WireShiftedSpectrum.ordered_mass_spectrum. |
+| `RestoringPulseCalibration.scheduledSteadyMass` | Two timed restoring rows in one Schur matrix | Three schedules and offset. The calibration theorem also takes principal pulses and a steady-current match. | Scope schedules and offset. Supplied physical current match. | No | mass_from_scheduled_steady_pulses. |
+| `CarrierSpecies.CarrierSpecies.mass` | Electron and massless neutrino values in electron units | Species tag | Scope physical species mapping. Supplied massless approximation. | No | electron_mass and neutrino_mass evaluate the map. |
+| `SubstrateBridge.normMass` | Half the E8 norm squared | Lattice vector z | PM lattice form. Species readout supplied. | No | Used by SubstrateBridge.widthCandidate. |
+| `PMSubstrate.SIUnits.electronMassMeV` | Electron unit in MeV | SI units and E8 calibration | PM calibration formula. External SI unit convention and anchors. | Yes, through SharedUnits.me | QuarkMasses value enclosures use this unit. |
+| `PMConstants.Bulk.floorMass` | Neutrino mass floor candidate | Coupling and electron unit | PM bulk index. Supplied particle interpretation. | Yes, floor comparison | FloorNeutrino.floor_bounds. |
+| `PMConstants.FloorNeutrino.towerMass` | Inverse-period neutrino mass candidate | Base, scale and tier | PM Δ. Supplied base, scale and tier interpretation. | No | no_moderate_gap_ratio. |
+| `PMConstants.GaugeSpectrum.wMassSquared` | Charged vector-boson squared mass | Coupling; substrate scalar and gauge inputs | PM arithmetic. Scope link transport and current normalization. | Yes | Used in TauLifetimeCorrected.wSq. |
+| `PMConstants.GaugeSpectrum.zMassSquared` | Neutral vector-boson squared mass | Coupling; substrate scalar and gauge inputs | PM arithmetic. Scope link transport and current normalization. | Yes | GaugeSpectrum gives the neutral spectrum. |
+| `PMConstants.ElectroweakE8.higgsMass` | Scalar mass from gain and VEV | Coupling and electron scale | PM gain arithmetic. Scope VEV structure. | Yes, through PMConstants.Values | VevDownstream.vev_downstream. |
+| `PMConstants.ScalarSector.higgsSq` | Scalar squared mass at a supplied Fermi coupling | Fermi coupling | PM self-coupling; experimental coupling in e8p. | Yes, ScalarAccounting | E8PConstants.VevWindow.higgs_from_fermi bounds its square root. |
+
+### Tier and species ledgers
+
+| Lean name | What it computes | Inputs it takes | Input status | e8p reads it | Relation to another row |
+| --- | --- | --- | --- | --- | --- |
+| `TierLedger.upTiers` | Up tier list 0, 2, 3 | Declared order | Scope tier sets. | No | tiersFor .up by definition. |
+| `TierLedger.downTiers` | Down tier list 0, 1, 2 | Declared order | Scope tier sets. | No | tiersFor .down by definition. |
+| `TierLedger.electronTiers` | Electron tier list 0, 1, 2 | Declared order | Scope tier sets. | No | Electron branch of tiersFor. |
+| `TierLedger.neutrinoTiers` | Neutrino tier list 0, 1, 2 | Declared order | Scope tier sets. | No | Neutrino branch of tiersFor. |
+| `TierLedger.tiersFor` | Tier list by base protocol | Protocol tag | Scope tier sets. | No | List length lemmas give three entries. |
+| `TierLedger.wireTier` | Tier at a protocol and a wire address | Address-to-tier map | Supplied map. Scope tier sets do not fix it. | No | Used in TransportCandidates.tier. |
+| `LeptonMasses.muonFeedback` | Muon's geometric feedback term | E8 χ, σ and α | PM inputs. Supplied choice of term. | Indirect via muon | muonFeedback_fixpoint. |
+| `LeptonMasses.muon` | Muon ledger mass / mₑ | E8 invariants, α and chosen ledger costs | PM invariants. Scope tiers and declared costs. | Yes, EP Values | muon_ledger; used by muonWidth and declaredMass. |
+| `LeptonMasses.tau` | Tau ledger mass / mₑ | E8 invariants and chosen ledger costs | PM invariants. Scope tiers and declared costs. | Yes, EP Values | tau_ledger; tau_value = 3477. |
+| `QuarkMasses.up` | Point-tier up mass / mₑ | D and overhead η | PM constants. Scope assignment and declared formula. | Yes, EP Values | up_ledger. |
+| `QuarkMasses.down` | Point-tier down mass / mₑ | D, σ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | down_ledger. |
+| `QuarkMasses.strange` | Line-tier strange mass / mₑ | D, Δ, χ, σ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | strange_ledger. |
+| `QuarkMasses.charm` | Area-tier charm mass / mₑ | D, Δ, σ, χ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | threshold_match equates it to StrongRunning.mCharm. |
+| `QuarkMasses.bottom` | Area-tier bottom mass / mₑ | D, Δ, χ, σ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | threshold_match equates it to StrongRunning.mBottom. |
+| `QuarkMasses.top` | Volume-tier top mass / mₑ | D and Δ | PM constants. Scope assignment and declared formula. | Yes, EP Values | top_ledger. |
+| `PMConstants.StrongRunning.mCharm` | Charm threshold in electron units | E8 area-tier constants | PM arithmetic. Declared species formula. | Indirect via strong running | QuarkMasses.threshold_match. |
+| `PMConstants.StrongRunning.mBottom` | Bottom threshold in electron units | E8 area-tier constants | PM arithmetic. Declared species formula. | Indirect via strong running | QuarkMasses.threshold_match. |
+| `PMConstants.StrongRunning.mTau` | Tau threshold in electron units | E8 area-tier constants | PM arithmetic. Declared species formula. | Indirect via strong running | Same arithmetic as LeptonMasses.tau. No named equality found. |
+| `PMConstants.StrongRunning.mZ` | Z reference scale in electron units | 91,187.6 MeV and electron unit | Experimental Z input in running model. | Indirect via strong running | Separate from GaugeSpectrum.zMassSquared. |
+| `TransportCandidates.declaredMass` | Optional table mass at a protocol and tier | Protocol, tier and ledger masses | Scope tiers and declared formulas. | No | Uses LeptonMasses and QuarkMasses by definition. |
+| `TransportCandidates.mass` | Optional ledger mass at a wire address | Candidate and address-to-tier map | Supplied map and declared ledger mass. | No | Composes declaredMass with tier by definition. |
+
+### Trial rates and capacity claims
+
+| Lean name | What it computes | Inputs it takes | Input status | e8p reads it | Relation to another row |
+| --- | --- | --- | --- | --- | --- |
+| `PMAction.EventAccounting.cost` | Weighted event cost on a finite frame | Events, weights and unit Toll | Scope booked traffic and tariff. PM sum rule. | No | weighted_linear. |
+| `PMAction.CommonResponse.responseCost` | Flag-weighted cost of repeated work | Unit price, work count and flag | Scope work and tariff. PM product rule. | No | common_normalization. |
+| `PMAction.CommonResponse.bookedCapacity` | Sum of capacity times flag at booked visits | Visits, capacity and flags | Scope booking and tariff. PM sum rule. | No | booked_capacity_union and booked_capacity_const. |
+| `PMAction.CarrierRateFromAdmittance.rate` | Principal pulse area per elapsed time | Transfer weight and positive duration | PM principal area identity. Supplied physical weight and duration. | Indirect via wire-rate specialization | rate_ratio and CertainTransferRate.principal_transfer_rate_ratio. |
+| `PMAction.CarrierRateFromAdmittance.restoringRate` | Rate relative to certain transfer at equal duration | Restoring transfer weight | PM normalization. Supplied admissible transfer and equal times. | Yes, wire comparison | rate_ratio_common_duration; PMConstants.WireMassBounds.kRate specializes it. |
+| `PMConstants.WireMassBounds.kRate` | Equal-duration rate for α/2 | α and selected steady weight | PM α and normalization. Supplied steady-current timing model. | Yes, wire comparison | RestoringPulseCalibration.steady_rate_from_schedule multiplies by the time ratio. |
+| `PMKAutomaton.Values.mixedReceiverRate` | Booked mixed flags divided by 43 | AND/OR choice and booked slots | PM flags and period. Scope booking/pricing. | No | mixedReceiverRate_and, mixedReceiverRate_or and TransportCandidates.allBookedMixedRate_eq. |
+| `PMKAutomaton.Values.equal_normalization_rate` | Serial rate ratio 1/2 or 3/8 | Common area, conversion, tick and quarter-time. Short or long path. | PM duration arithmetic. Scope common normalization and serial admission. | No | CertainTransferRate.common_tick_rate_ratio. |
+| `PMKAutomaton.ReceiverCapacity.registeredTick` | Incoming capacity on registered receiver pairs | Rule, state and port values | PM receiver flag. Scope physical valuation and admission. | No | registered_tick_lift. |
+| `PMKAutomaton.ReceiverCapacity.registeredTrace` | Sum of registered capacity through any duration | Rule, initial state, valued ports and ticks | PM trace. Scope physical ports and tariff. | No | registered_trace_add, registered_cycle_phase_invariant and banked_restoring_receiver. |
+| `PMKAutomaton.RestoringRingToll.receiverToll` | Flags on a closed restoring trace | Rule, history and tick count | PM conditional trace. Scope physical requests. | No direct read | successful_receiver_toll_period and successful_receiver_toll_two. |
+| `PMKAutomaton.RestoringRingToll.visitToll` | Two booked visit flags | Rule and two requests | PM flags. Scope physical request history. | No | steady_lt_visit_share compares the survival readout. |
+| `ProgramWitness.registrations` | One bit-ring's registrations per frame | Program, reference, start and bit | PM ring flags. Scope physical program identification. | No | ProgramWitness.witness_total; ProgramExecutionCounts.counted_witness_toll. |
+| `ProgramCapacity.excessCapacity` | Difference between payload and reference capacity | Typed payload, reference and valuation | Scope reference and pricing. PM subtraction. | No | receiver_claim gives twice this difference. |
+| `ProgramCapacity.receiverClaim` | Two visits priced by payload excess over reference | Occupied successful history, typed reference, valuation | PM visit arithmetic. Scope physical route and tariff. | No | receiver_claim uses ReceiverCapacity.banked_restoring_receiver. |
+| `ProgramCapacity.bankClaim` | Price for one differing typed pair | Payload, reference and unit | PM comparison. Scope physical reference and tariff. | No | Used in restoringSubtotal. |
+| `ProgramCapacity.rootClaim` | Price for unit and double root steps | Ledger and both prices | PM word counts. Scope tariff. | No | Used in restoringSubtotal; direct_ledger_counts and gapped_ledger_counts give ledgers. |
+| `ProgramCapacity.restoringSubtotal` | Receiver, bank and class-word claims | Prepared history and three local valuations | PM counts. Scope bookings and tariff. | No | address_one_subtotal, address_two_subtotal and address_two_matched_subtotal. |
+| `RetainedReceiverCapacity.occupiedSlots` | Unit count for a marked occupied slot | Typed port with marker | PM bit readout. Scope physical slot placement and price. | No | occupied_receiver_claim gives two on either route. |
+| `RetainedReceiverCapacity.tag_receiver_claim` | Capacity from any common occupation-only valuation | Successful history, typed reference and valuation | PM visits. Scope physical route and valuation. | No | ReceiverCapacity.banked_restoring_receiver. |
+| `RetainedReceiverCapacity.occupied_receiver_claim` | Total of two occupied slots | Successful history and typed reference | PM count. Scope physical tariff unit. | No | Specializes tag_receiver_claim. |
+| `DirectWriterRenewal.writerClaim` | Write, uncompute and optional preparation claim | Fresh-seed choice and three prices | PM flags. Scope preparation, pricing and admission. | No | writer_claim and writer_claim_uniform use CommonResponse.bookedCapacity. |
+| `ElectricPrimitiveToll.forwardToll` | Short writer flag sum | Channel and booked primitive comparison rule | PM decoder and flag calculation. Scope physical admission. | No | DirectWriterRenewal.writer_claim and ElectricPrimitiveToll.forward_tolls. |
+| `ElectricChiralKick.swapToll` | Shared-current swap flag | Channel and prepared carrier | PM flag for supplied state. Scope physical preparation. | No | Part of ElectricChiralKick.totalToll. |
+| `ElectricChiralKick.totalToll` | Shared-current writer flags | Channel and prepared bank | PM path arithmetic. Scope physical current and booking. | No | DirectWriterRenewal.shared_writer_flag_sum includes the reverse path. |
+| `WireSchedule.fullToll` | Booked writer and remaining route cost | Schedule, setup and unpriced-visit functional | Scope admissibility and tariff. PM accounting. | No | WireSchedule.best_survival_iff relates minimizing cost to survival. |
+| `WireSchedule.polarityCost` | Writer record cost by polarity | Address, species traffic and other cost | Scope population and lifecycle prices. PM book comparison. | No | polarity_cost_difference. |
+| `TransportCandidates.allBookedMixedRate` | Mixed fixture rate at full booking | AND/OR candidate | PM on fixture. Scope physical booking. | No | allBookedMixedRate_eq. |
+| `TransportCandidates.uniformTraceRegistrations` | Flags from uniform requests through the chosen trace | Rule, state and uniform request | PM count. Scope physical traffic. | No | uniformTraceRegistrations_zero. |
+| `PMKAutomaton.Machine.RootTransferAccounting.gibbsRate` | Gibbs-selected trial probability per opportunity | Hazard and charged trial cost | Scope work and tariff. Supplied Gibbs selection for physical trials. | No | actual_rate_freedom leaves the physical trial rate open. |
+
+### Decay widths and rates
+
+| Lean name | What it computes | Inputs it takes | Input status | e8p reads it | Relation to another row |
+| --- | --- | --- | --- | --- | --- |
+| `RateModel.channelCost` | Expected per-frame event cost | Event family and unit Toll | Scope family and price. PM expected cost. | No | channelCost_eq. |
+| `RateModel.channelRate` | Hazard times channel cost | Event family, Toll and hazard | Scope physical channel and HazardForm inputs. PM formula. | No | channelRate_eq. |
+| `MeanLife.persistenceRate` | Hazard times cost rate | Hazard coefficient and cost rate | Scope HazardForm and physical cost. | No | meanLife_from_persistence and DecayLaw.rate_eq_pillars. |
+| `MeanLife.totalRate` | Sum of channel rates | Channel rate list | Supplied rates. PM additive rule. | No | MeanLife laws for total survival. |
+| `BetaLattice.betaLatticeCost` | Cost of selected finite modes | Mode counts and unit Toll | PM count formula. Scope physical modes and price. | No | betaLatticeRate uses this cost. |
+| `BetaLattice.betaLatticeRate` | Uniform-mode lattice rate | Active/total counts, hazard and Toll | PM formula. Scope physical active modes and hazard. | No | LeptonLattice reuses the finite channel. |
+| `BetaLattice.betaWeightedRate` | Weighted finite-mode rate | Weights, active modes, hazard and Toll | Scope physical weights, hazard and tariff. | No | betaWeightedRate_le. |
+| `BetaLattice.betaSpectralRate` | Exponential-weight finite cube rate | Cube, active modes, hazard and Toll | PM spectrum. Supplied weighting choice and Scope hazard. | No | Uses betaWeightedRate. |
+| `BetaLattice.betaSpectralRateCutoff` | Spectrum rate with an energy cutoff | Cube, cutoff, hazard and Toll | PM spectrum. Scope physical cutoff and hazard. | Indirect via finite muon | betaSpectralRateCutoff_eq_one_of_openModes_eq_univ. |
+| `LeptonLattice.leptonLatticeRate` | Finite lepton channel rate | Lepton channel, Toll and hazard | Scope physical channel and hazard. PM finite counting. | No | Reuses BetaLattice. |
+| `PMElementaryParticles.muonFiniteWidth` | Finite-channel multiplier times muon width | Minimal cube and ledger muon mass | PM all-modes-open check. Scope physical mode and mass assignments. | Yes, via finite lifetime | muonFiniteWidth_eq. |
+| `MuonRate.rate` | Massless-daughter differential rate | Contact strength, parent mass and daughter energy | PM integration. Scope V−A contact, flux and species readout. | Indirect via muon width | muon_rate; MassiveDaughterSpectrum.massless. |
+| `MassiveDaughterSpectrum.rate` | Massive charged-daughter differential rate | Contact strength, parent/daughter masses and energy | PM phase space. Scope contact and physical masses. | Indirect via corrected lifetime | massless. |
+| `MassiveDaughterSpectrum.width` | Integrated massive-daughter contact width | Contact strength and both masses | Same as its rate. | Indirect via corrected lifetime | massless_width and MassiveWidth.closed_width. |
+| `PairInvariantSpectrum.massiveContactRate` | Differential rate with three massive final states | Contact strength, masses and charged-daughter energy | PM kinematic contraction. Scope contact and physical masses. | No | massiveContactRate_massless_pair. |
+| `PairInvariantSpectrum.massiveContactWidth` | Integral of massiveContactRate | Contact strength and all masses | Same as its rate. | No | massiveContactWidth_massless_pair. |
+| `PairInvariantSpectrum.rate` | Rate in the pair invariant for a massless pair | Contact strength, parent/daughter masses and pair invariant | PM change of variables. Scope physical channel. | No | integrated_rate. |
+| `MassScaling.weakWidth` | Generic coefficient times G²m⁵ | Coefficient, coupling and mass | PM scaling under the dimension assumptions. Supplied coefficient and mass. | No | MassScaling.combined_scaling. |
+| `SubstrateBridge.widthCandidate` | Power of the lattice norm mass | Power and lattice vector | PM mass expression. Supplied power and species readout. | No | symmetry_and_reference_do_not_select_fifth. |
+| `ScalingObligations.width` | Parametric scaling of a decay width | Scaling exponents and normalization | Supplied scaling inputs; PM conditional exponent arithmetic. | No | Used in the scaling obligations. |
+| `Widths.referenceWidth` | Rescaled reference partial width | Base width, mass ratio, mixing, channels and phase | Supplied physical inputs. PM product rule. | No | reference_width_pos. |
+| `Widths.total` | Sum of channel widths | Finite channel widths | Supplied channels. PM sum. | No | identical_channels. |
+| `SubstrateTransition.partialWidth` | Squared channel amplitude times phase | Transition system and final state | Scope physical operator and phase. PM evaluation. | No | partialWidth_zero_of_not_decay. |
+| `SubstrateTransition.totalWidth` | Sum of allowed partial widths | Transition system and initial state | Scope physical final-state readout. | No | CarrierTransitionOperator.muonOperatorSystem_totalWidth and tauOperatorSystem_totalWidth. |
+| `TopTransition.topRate` | Squared top transition amplitude times phase | Top amplitude and supplied phase | PM channel operator. Scope phase and physical contact. | No | topRate_nonneg. |
+| `MuonLifetime.muonWidth` | Tree muon width in electron units | E8 Fermi coupling, ledger muon mass and contact model | PM integration and E8 constants. Scope VEV, mass ledger and contact. | Yes, via lifetime | muonWidth_eq_integral, muonWidth_eq_E8 and PMElementaryParticles.muonFiniteWidth_eq. |
+| `RadiativeCorrection.correctedRate` | Tree rate times radiative factor | Tree rate and correction | Supplied correction. SM when used for QED. | Indirect via lifetime where used | Correction factor is explicit. |
+| `MuonLifetime.muonLifetime` | Inverse tree muon width | Tree width | Inherits muonWidth. | Yes, as a natural unit | muonLifetime_eq and muonFiniteLifetime_eq_continuum. |
+| `PMElementaryParticles.muonFiniteLifetime` | Inverse finite-cube muon width | Finite width | Inherits muonFiniteWidth. | Yes, EP Values | muonFiniteLifetime_eq_continuum. |
+| `MuonLifetimeCorrected.muonLifetimeCorrected` | Muon lifetime with massive phase space and one-loop QED | Tree lifetime, phase factor and one-loop coefficient | PM phase factor. Supplied SM QED term. | Proof bounds available through EP Values | corrected_bounds. |
+| `MuonLifetimeHigherOrder.lifetime` | Muon lifetime with higher QED corrections | E8 tree rate and supplied QED series | PM tree formula. Supplied SM QED coefficients. | Yes, Values.muonLifetimeFull | lifetime_bounds. |
+| `TauLifetime.tauLife` | Tree tau lifetime from a muon reference | Ledger masses, measured muon lifetime and Bₑ | PM mass arithmetic. Declared ledgers and experimental values. | Yes, tau comparisons | TauE8.tauLifetimeE8_relation. |
+| `TauE8.tauLifetimeE8` | Tree tau lifetime from E8-input muon rate | Tree muon lifetime, ledger masses and Bₑ | PM tree and mass arithmetic. Declared ledgers and experimental Bₑ. | Yes, EP Values | tauLifetimeE8_relation. |
+| `TauLifetimeCorrected.tauLifeCorrected` | Tau lifetime with phase, W propagator and QED corrections | Tree benchmark, E8 W mass and electron and tau running α | PM phase and E8 W mass. Supplied SM corrections, α(mτ) and experimental tree inputs. | Yes, Values.tauLifetimeCorrectedFs | tau_lifetime_corrected. |
+
 ## Verification
 
 Run `./build.sh PMElementaryParticles` for current counts. The sibling `PMAtoms` library is documented
