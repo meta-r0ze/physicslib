@@ -160,7 +160,11 @@ This file is the open list only.
   two visits and the full receiver cycle give opposite comparisons with the steady
   two-leg coefficient under both tested seed priors. `rate_ratio_of_history_current`
   turns a matched live-exit share into the principal area rate at supplied durations.
-  Derive the request law, paid visit window, coherent extraction and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  The reversible tick-two bank swap retains the typed payload and feeds the
+  class-shift word (`banked_exit_then_class_shift`). The receiver comparisons are
+  counted exactly for this itinerary, and a fresh bank restores the phase-zero seed.
+  Attach the bank swap and reload to admitted root pulses, charge their visits,
+  then derive the weighted coherent readout, shared clock and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use

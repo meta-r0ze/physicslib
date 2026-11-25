@@ -408,6 +408,19 @@ entry start through exit completion, including any wait. Under that event
 identification, `mass_from_scheduled_steady_pulses` places the independently
 timed restoring insertions in the two Schur rows.
 
+### Booked live extraction
+
+`RestoringExtraction.extract_values` books a swap with a prepared reference
+bank at the first live exit, after two receiver ticks. The typed payload
+moves into the output bank, where `banked_exit_then_class_shift` sends it to
+the required address and signed carrier. The retained receiver field is
+uniform at the reference. Its clock and probes return at the end of the
+86-tick block, and a separately supplied fresh bank can load the next seed.
+The receiver comparison bill through the block is exactly two on a
+successful history. The bank exchange, any reload and the four-reflection
+word require their own admitted placement and timing. The previous
+closed-ring parity check applies to packets that remain in that ring.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.

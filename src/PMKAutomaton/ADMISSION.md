@@ -130,16 +130,34 @@ The complete receiver account over the 86-tick block
 idle, two with one enabled and 86 with both enabled. The successful marker
 alternates between live at the exit and record at the entry. Its live
 exit is occupied exactly at even ticks (`successful_live_slot_even`).
-A separate consumer that removes the marker would end this closed trace.
+A separate consumer that removes the marker ends this closed trace.
+`RestoringExtraction.exchangeBank` books a reversible exchange after
+tick two with a prepared reference bank. On success, the extracted
+payload stays in the bank and all ring ports carry the reference.
+A missed exit leaves both the ring and bank as they were at that tick.
+At the end of the 86-tick block the successful ring again has the
+phase, requests and probe sides of its original seed. `restart_with_fresh_bank`
+supplies the next occupied input from a separate bank and retains
+the previous output. This requires a supply of fresh inputs.
 
-At unit hazard under the two stated uniform seed priors, conditioning on
-survival gives opposite inequalities against `α/2`. Charging only the
-initial entry and exit comparisons gives a larger weight.
-Charging every receiver comparison through the full return gives a
-smaller one. For an arbitrary positive prior, the full receiver account
-multiplies the odds of any successful history against an idle one by
-`exp(-86 β)` (`full_cycle_live_idle_odds`). The paid comparison window
-and any carrier or record work following extraction still need admission.
+The receiver flags in this booked trace total two when at least one
+switch is enabled and zero when both are idle (`extracted_receiver_toll`).
+The successful case has no further receiver flags after extraction.
+The two-switch successful history therefore has receiver-only survival
+odds against an idle history multiplied by `exp(-2 β)`
+(`extracted_live_idle_odds`). A separately charged extraction using
+the orthogonal basis comparator adds its own flag on a live exit
+(`bank_comparison_flag`). Preparing the banks, wiring the extraction
+to the native root, and charging any reload or later carrier work
+require the physical itinerary.
+
+For the earlier ring that keeps the marker, the two stated uniform seed
+priors at unit hazard give opposite inequalities against `α/2`. The
+initial-visit account gives a larger surviving exit weight. The full
+retained-ring account gives a smaller one. Under an arbitrary positive
+prior, the latter multiplies the success-to-idle odds by `exp(-86 β)`
+(`full_cycle_live_idle_odds`). This comparison uses the retained ring's
+trajectory throughout.
 
 ## Consequences for the wire
 

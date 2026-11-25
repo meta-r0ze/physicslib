@@ -149,6 +149,38 @@ theorem successful_live_slot_even (either : Bool) (q : History) (h : liveExit ei
     seed_single, single_slot]
   split <;> simp_all
 
+/-- At every even tick the successful marker's entire port field has
+returned, so the live output can be exchanged without a second marker
+remaining on the ring. -/
+theorem successful_ports_even (either : Bool) (q : History) (h : liveExit either q = true)
+    (n : ℕ) (hn : n % 2 = 0) :
+    ((tick Delta either)^[n] (seed q)).2.2.2 = (seed q).2.2.2 := by
+  rw [live_exit, Bool.and_eq_true] at h
+  let route := portSource (twoSwitches true true)
+  have hfix : route^[n] (42, false) = (42, false) := by
+    dsimp only [route]
+    simp only [two_switch_slot_iterate, hn, ite_true]
+  have hslot (p : Slot Delta) :
+      slotValue (((tick Delta either)^[n] (seed q)).2.2.2) p =
+        slotValue (seed q).2.2.2 p := by
+    rw [ports_iterate, port_iterate_source, seed_firing, h.1, h.2, seed_single,
+      single_slot, single_slot]
+    change decide (route^[n] p = (42, false)) = decide (p = (42, false))
+    have hi : (route^[n] p = (42, false)) ↔ p = (42, false) := by
+      nth_rw 1 [← hfix]
+      exact ((portSource_injective _).iterate n).eq_iff
+    simp only [hi]
+  funext x
+  exact Prod.ext (hslot (x, false)) (hslot (x, true))
+
+/-- The first two ticks of a successful seed each contribute one
+receiver flag when summed over the entire ring. -/
+theorem successful_receiver_toll_two (either : Bool) (q : History)
+    (h : liveExit either q = true) : receiverToll either q 2 = 2 := by
+  rw [live_exit, Bool.and_eq_true] at h
+  rw [receiverToll, sum_flags either _ (seed q) _ (seed_single q), seed_firing, h.1, h.2]
+  rfl
+
 /-- With a supplied positive history prior, charging the entire return
 changes the odds of a successful history against an idle history by the
 survival factor of 86 receiver flags. -/

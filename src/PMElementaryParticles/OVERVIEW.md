@@ -1182,7 +1182,12 @@ prior, the unit-hazard two-visit and full-return accounts bound the steady-node 
 from opposite sides. For supplied shifted-current matches,
 `independent_history_area_bracket` transports this comparison to the principal areas,
 and `rate_ratio_of_history_current` uses the individual pulse durations.
-The joint background's request law, paid visits and coherent carrier readout remain open.
+The booked bank exchange at tick two receives the typed gapped payload and
+leaves the prepared reference throughout the receiver. The class-shift word
+acts on that bank and produces the same-address signed-carrier endpoint
+(`banked_exit_then_class_shift`). The receiver can reload from a separate
+fresh bank at phase zero. Admission of the bank wiring, its coherent pulse
+and duration, and the joint background's request law remain open.
 
 ### Where the readings agree
 

@@ -26,8 +26,10 @@ counts for two specified ensembles. Successful seeds require two clock
 periods for full closure. The isolated occupied EP encoding realizes this
 seed with supplied controller fields. The full closed receiver return and
 the two initial visits have different flag accounts and yield different
-surviving exit weights. The joint background still needs to select the
-controller fields, history prior and the visits charged to the mass event. See [Admission](ADMISSION.md) and the
+surviving exit weights. A booked bank exchange at tick two gives a reversible
+exit with an exact receiver toll and a restart from a supplied fresh bank.
+The joint background still needs to select the controller fields, prepare
+the banks, and fix the pulse time and paid visits of the mass event. See [Admission](ADMISSION.md) and the
 [export contract](COMPONENTS.md#what-propagates-downstream).
 
 ## Admission
