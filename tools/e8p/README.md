@@ -200,8 +200,11 @@ principal-pulse rate based on the steady two-leg current. It compares the
 bare ratio and the positive-offset bound to the quotient of the frozen
 muon/electron and tau/electron reference intervals. The report also inverts
 the bare ratio exactly to constrain the direct/restoring duration ratio and
-gives a necessary lower bound for offsets in `(0,1)`. These comparison
-constraints apply to the equal-rate benchmark family. With a 24-tick
+gives a necessary lower bound for offsets in `(0,1)`. The bare inversion
+uses the equal-rate family. For separate positive restoring rates with
+squares at most `2/3`, the positive-offset result requires at least one
+direct/restoring duration ratio above the same bound under the steady
+principal-pulse model. With a 24-tick
 direct flip the bare duration window allows only a 19-tick restoring span.
 A marker retained in the closed receiver is on the record side at tick 19.
 An earlier live extraction has a separate schedule. The native rates and

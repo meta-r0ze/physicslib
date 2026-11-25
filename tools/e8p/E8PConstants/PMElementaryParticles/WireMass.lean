@@ -178,6 +178,33 @@ theorem shifted_duration_lower {muon tau : ExpRef}
     exact hcast
   exact (hspectrum.trans_le (hbound.trans hlt.le)).not_ge hlo
 
+/-- The same necessary comparison applies to separately timed restoring
+rows. A fit requires at least one short restoring span, even when the
+other span is longer. The steady-current area is a model input. -/
+theorem shifted_independent_duration_lower {muon tau : ExpRef}
+    (hRef : firstReferences = some (muon, tau)) (d₁ d₂ s : ℝ)
+    (hd₁ : 0 < d₁) (hd₂ : 0 < d₂)
+    (hk₁ : (kRate * d₁) ^ 2 ≤ 2 / 3) (hk₂ : (kRate * d₂) ^ 2 ≤ 2 / 3)
+    (hs : 0 < s) (hs₁ : s < 1) :
+    ∃ m₁ m₂ m₃ : ℝ, 0 < m₁ ∧ m₁ < m₂ ∧ m₂ < m₃ ∧
+      (∀ m : ℝ, 0 ≤ m → (m ^ 2 ∈ spectrum ℝ
+        (PMAction.WireResonanceSpectrum.gramWithRates (kRate * d₁) (kRate * d₂) s) ↔
+        m = m₁ ∨ m = m₂ ∨ m = m₃)) ∧
+      (((referenceEnvelope muon tau).1 : ℝ) ≤ m₂ / m₃ →
+        (shiftedDurationLower : ℝ) < d₁ ∨ (shiftedDurationLower : ℝ) < d₂) := by
+  have hk : 0 < kRate :=
+    (show (0 : ℝ) < (areaRatioBounds.1 : ℝ) by norm_num [areaRatioBounds]).trans
+      area_ratio_bounds_valid.1
+  obtain ⟨m₁, m₂, m₃, hm₁, hm₁₂, hm₂₃, hratio, hmass⟩ :=
+    PMAction.WireShiftedSpectrum.ordered_mass_spectrum_with_rates
+      (kRate * d₁) (kRate * d₂) s (mul_pos hk hd₁) hk₁ (mul_pos hk hd₂) hk₂ hs hs₁
+  refine ⟨m₁, m₂, m₃, hm₁, hm₁₂, hm₂₃, hmass, fun hlo => ?_⟩
+  rcases le_total d₁ d₂ with h | h
+  · rw [max_eq_right (mul_le_mul_of_nonneg_left h hk.le)] at hratio
+    exact Or.inr (shifted_duration_lower hRef hlo hd₂ hratio)
+  · rw [max_eq_left (mul_le_mul_of_nonneg_left h hk.le)] at hratio
+    exact Or.inl (shifted_duration_lower hRef hlo hd₁ hratio)
+
 /-- The bare-model duration window has one integer restoring span
 at a 24-tick direct flip. This is a test of the booked span. -/
 theorem bare_short_clock (ticks : ℕ) (ht : 0 < ticks) :
@@ -231,7 +258,8 @@ def lines : List String :=
       s!"  Bare-model required duration ratio: ({ratDecimal bareDurationBounds.1 4}, {ratDecimal bareDurationBounds.2 4}).",
       "  A 24-tick direct flip requires a 19-tick restoring span in the bare model.",
       "  The closed ring has no live exit at tick 19 when the marker stays on the ring.",
-      s!"  Positive-offset necessary duration ratio: > {ratDecimal shiftedDurationLower 4}."]) ++
+      s!"  Positive-offset necessary duration ratio: > {ratDecimal shiftedDurationLower 4}.",
+      s!"  With separate restoring rates in the small-rate regime, at least one duration ratio must exceed {ratDecimal shiftedDurationLower 4}."]) ++
   ["  Duration ratios above are direct/restoring diagnostic constraints from the reference.",
    "  The native rates and the full-wall mass spectrum are open."]
 

@@ -35,6 +35,38 @@ This file is the open list only.
   on one 43-ring from the nested-paper rules. Alone/together closure cannot be
   decided until that joint state exists.
 
+## Charged-lepton mass path
+
+First derive the two ratios in electron-mass units through the wire. The
+tier ledger and measured references are comparison inputs. The direct
+address is 0, the restoring addresses are 1 and 2, and the static
+charged insertion is booked on address 2. Address numbers label rows,
+while the three mass ranks come from the coupled spectrum.
+
+1. **Calibrate the common clock and the two kinds of operation
+   (PMKAutomaton, then EP).** Start with an occupied direct flip and the
+   equal-class gapped crossing. Derive their retained ports, principal
+   pulse areas, elapsed ticks and coefficient conversions on the same
+   clock. This supplies the flip-to-gap ratio that PMAction's
+   `WallGapCalibration` leaves free. A completed permutation alone leaves
+   phase winding open. Use an independently justified principal pulse
+   or a native moving-probe trial with separately retained controls.
+2. **Fix the three insertion rows and the stationary calibration (EP).**
+   For each restoring address connect the selected output to an
+   observable on its complete interval. Test the steady-current,
+   alternating and isolated readouts against that interval. A booked
+   bank preserves a payload and gives a typed comparison count, with
+   native staging and controller admission still open. In parallel
+   with this calibration, derive the address-2 static pulse from the
+   matched selector and prove that a stationary calibration channel
+   maintains the common detuning after the charged insertion.
+3. **Read the spectrum and check the reduction (PMAction, then e8p).**
+   The ordered Schur spectrum now supports independent restoring rates
+   in the small-rate regime. Check the coherent generator and common
+   crossing used by the Schur calculation, then bound and match the
+   full rest modes using `WallSeesawAccuracy`. Compare the ordered
+   ratios with e8p after the input rates and offset have been derived.
+
 ## Generations and costs
 
 - **Identify the generation register's stay/move step with one tick of the

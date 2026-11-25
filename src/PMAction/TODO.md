@@ -63,7 +63,9 @@ class-independent crossing the three masses differ only by those amplitudes
   with a real static offset. `WireShiftedSpectrum.ordered_mass_spectrum` isolates three
   positive ordered Schur masses for `0 < k < 1` and a normalized static offset in `(0,1)`.
   The middle-to-heavy ratio there is below `√(3/2) k`. The separate-rate cubic
-  `char_eval_with_rates` handles unequal booked restoring rates.
+  `char_eval_with_rates` handles unequal booked restoring rates. For positive
+  rates with squares at most `2/3`, `WireShiftedSpectrum` also isolates the
+  three masses and bounds the middle-to-heavy ratio using the larger rate.
   `WallSeesawAccuracy.full_energy_near_schur` controls the error for
   each full light energy when the crossing is common and the two coupling norms are bounded.
   The exact test `full_energy_iff` also gives a reduced determinant for root isolation.
