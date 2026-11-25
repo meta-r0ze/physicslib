@@ -210,6 +210,90 @@ theorem restart_with_fresh_bank (either : Bool) (q : History) (hLive : liveExit 
     exact reload_clean q
   rw [hf, hr]
 
+/-- The output bank becomes occupied exactly when both visits perform
+the restoring exchange. -/
+theorem extracted_marker_iff (either : Bool) (q : History) :
+    (extract either q).2 = true ↔
+      exchange either q.1 = true ∧ exchange either q.2 = true := by
+  have h : (extract either q).2 = liveExit either q := by
+    cases hl : liveExit either q with
+    | false => rw [extract_miss either q hl]
+    | true => rw [extract_success either q hl]
+  rw [h, live_exit, Bool.and_eq_true]
+
+/-- At the block boundary, a reload restores the receiver exactly when
+its supplied bank is occupied. The reload bank is emptied in either case. -/
+theorem reload_at_boundary (either : Bool) (q : History) (hLive : liveExit either q = true)
+    (incoming : Bool) :
+    let finished := (tick Delta either)^[2 * Delta - 2] (extract either q).1
+    let restarted := exchangeBank exitSite (finished, incoming)
+    (restarted.1 = seed q ↔ incoming = true) ∧ restarted.2 = false := by
+  have hf := congrArg Prod.fst (finish_after_extraction either q hLive)
+  dsimp only at hf ⊢
+  rw [hf]
+  cases incoming
+  · have hblank : exchangeBank exitSite (replacePorts (seed q) blankPorts, false) =
+        (replacePorts (seed q) blankPorts, false) := by
+      refine Prod.ext (Prod.ext rfl (Prod.ext rfl (Prod.ext rfl ?_))) rfl
+      funext x
+      change ((if x = exitSite then false else false), false) = (false, false)
+      simp
+    rw [hblank]
+    have hne : replacePorts (seed q) blankPorts ≠ seed q := by
+      intro he
+      have hs := congrArg (fun s : RingReceiver.State Delta => (s.2.2.2 exitSite).1) he
+      change false = decide (exitSite = exitSite) at hs
+      simp at hs
+    simp [hne]
+  · rw [reload_clean]
+    simp
+
+/-- Keeping an occupied export in its own bank and reinstating the
+receiver is possible exactly with both restoring exchanges and an
+occupied input from the separate reload bank. -/
+theorem retains_output_and_restarts_iff (either : Bool) (q : History) (incoming : Bool) :
+    let extracted := extract either q
+    let finished := (tick Delta either)^[2 * Delta - 2] extracted.1
+    extracted.2 = true ∧ (exchangeBank exitSite (finished, incoming)).1 = seed q ↔
+      (exchange either q.1 = true ∧ exchange either q.2 = true) ∧ incoming = true := by
+  dsimp only
+  constructor
+  · intro ⟨houtput, hrestarts⟩
+    have visits := (extracted_marker_iff either q).mp houtput
+    have hLive : liveExit either q = true := by rwa [live_exit, Bool.and_eq_true]
+    exact ⟨visits, (reload_at_boundary either q hLive incoming).1.mp hrestarts⟩
+  · intro ⟨visits, hbank⟩
+    have hLive : liveExit either q = true := by rwa [live_exit, Bool.and_eq_true]
+    exact ⟨(extracted_marker_iff either q).mpr visits,
+      (reload_at_boundary either q hLive incoming).1.mpr hbank⟩
+
+/-- Reusing the output bank restarts the receiver by taking back the
+extracted marker. Keeping an occupied output calls for another source. -/
+theorem restart_from_output_bank (either : Bool) (q : History) (hLive : liveExit either q = true) :
+    let finished := ((tick Delta either)^[2 * Delta - 2] (extract either q).1, (extract either q).2)
+    exchangeBank exitSite finished = (seed q, false) := by
+  dsimp only
+  rw [finish_after_extraction either q hLive]
+  exact reload_clean q
+
+/-- If each completed restart uses an occupied bank from a finite
+unreplenished stock and keeps the output outside that stock, the number
+of restarts is bounded by the initial stock. The unit debit is the
+occupied input required by `reload_at_boundary`. -/
+theorem unreplenished_restarts_le_stock (stock : ℕ → ℕ) (rounds : ℕ)
+    (debit : ∀ k < rounds, stock (k + 1) + 1 ≤ stock k) : rounds ≤ stock 0 := by
+  have bound : ∀ k ≤ rounds, k + stock k ≤ stock 0 := by
+    intro k
+    induction k with
+    | zero => simp
+    | succ k ih =>
+      intro hk
+      have hprev := ih (by omega)
+      have hstep := debit k (by omega)
+      omega
+  have h := bound rounds le_rfl
+  omega
+
 /-- Every comparison after a successful extraction is silent while
 the retained receiver continues with its reference-only ports. -/
 theorem extracted_suffix_flag_zero (either : Bool) (q : History) (hLive : liveExit either q = true)

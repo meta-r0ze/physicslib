@@ -104,7 +104,11 @@ and zero reference capacity bills `43c` in the retained first period
 or `2c` for the banked receiver portion. Its two comparisons read the
 occupation marker first from the live stream and then from the record
 stream. EP tracks the same marker alongside the typed payload through
-extraction. Decide the native capacity
+extraction. The banked block restores the receiver and leaves an occupied
+output exactly when both visits exchange and a separate occupied reload
+input is available. Taking the input from the output bank consumes that
+output. Prove the renewal or recirculation obligation for a complete
+program with bounded bank stock. Decide the native capacity
 readout for occupied values and the full set of register, bank, reset and
 renewal visits required by a persisting program. Use one recurring
 execution to define its sum, with state and time at shared visits explicit.

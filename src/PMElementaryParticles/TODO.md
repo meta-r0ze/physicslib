@@ -35,6 +35,28 @@ This file is the open list only.
   on one 43-ring from the nested-paper rules. Alone/together closure cannot be
   decided until that joint state exists.
 
+## Six pillars on a complete charged-lepton program
+
+The existing `ProgramWitness.Pillars` theorem certifies the fifteen
+one-site witnesses. A recurrence certificate for the occupied routes
+needs the actual receiver, banks, controls and payload continuation.
+
+| Pillar | Certificate for the ring witness | Remaining complete-program proof |
+| --- | --- | --- |
+| Capacity | The two record rings have at most 86 registrations per period. | Fit all mutually exclusive visits and stores, including fresh inputs and retained outputs. |
+| Margin | Every differing record ring stays below 43 registrations per period. | Bound peak occupancy and usable slack during the joint execution. The banked receiver alone gives two flags. |
+| Map | The record differs from its reference, and the class is visible. | Read the required packet and record at the next consumer and preserve the distinctions needed for renewal. |
+| Protocol | The ring tick is reversible. | Prove closure of the joint update, with each bank back in its required state or explicitly handed off. |
+| Toll | Every differing ring registers at least once. | Derive which complete-program visits are required and the capacity they claim. |
+| Governor | At least one site does not fire. | Derive which guards and owning resources permit each complete-program transition. |
+
+The restoring boundary test already forces both exchanges and an
+occupied reload supply when the output stays in its own bank
+(`RestoringExtraction.retains_output_and_restarts_iff`). Reusing the
+output as that supply empties the output bank. Every repeat that keeps
+the export outside an unreplenished supply consumes one occupied input.
+This is a necessary finite-resource obligation on the banked route.
+
 ## Charged-lepton mass path
 
 Derive the total capacity claims of one repeating occupied program at

@@ -1233,6 +1233,10 @@ occupied slots gives one per visit and two over the receiver itinerary at
 both addresses. This fixes the slot count on the encoded execution.
 The physical E8 placement and common capacity unit remain open.
 
+A retained bank output and a restarted ring require separate occupied
+supply at that boundary. The [complete-program pillar obligations](TODO.md#six-pillars-on-a-complete-charged-lepton-program)
+track the remaining recurrence and pricing proofs.
+
 At the direct address, `DirectWriterRenewal` identifies the booked inverse
 decoder with the adjoints of the forward pulses run in reverse order.
 On a returned charged-lepton port 2, the inverse decoder registers
