@@ -163,8 +163,13 @@ This file is the open list only.
   The reversible tick-two bank swap retains the typed payload and feeds the
   class-shift word (`banked_exit_then_class_shift`). The receiver comparisons are
   counted exactly for this itinerary, and a fresh bank restores the phase-zero seed.
-  Attach the bank swap and reload to admitted root pulses, charge their visits,
-  then derive the weighted coherent readout, shared clock and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  The staged native doublet swap has an exact clocked half-pulse, and the serial
+  extraction, class-word and reload windows fit for quarter-times of at most
+  seven ticks with concurrent axis pulses, or three ticks with four serial
+  pulses per bank operation. The signed modes have a faithful four-doublet
+  encoding. Supply the physical retained axis and stage the full glued
+  carrier, derive the root trial and staging visits, and use the resulting
+  rates and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
 - **Cross-wall mass from the detuning law.** The mass is the information between the
   two walls. Derive the detuning a left–right pair puts across the boundary and read
   it through `PMAction.DetuningMass` and `FermionMassLaw` law A (`δ² = y v`). Do not use

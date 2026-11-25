@@ -417,9 +417,19 @@ the required address and signed carrier. The retained receiver field is
 uniform at the reference. Its clock and probes return at the end of the
 86-tick block, and a separately supplied fresh bank can load the next seed.
 The receiver comparison bill through the block is exactly two on a
-successful history. The bank exchange, any reload and the four-reflection
-word require their own admitted placement and timing. The previous
-closed-ring parity check applies to packets that remain in that ring.
+successful history. If the banks are already staged on the native doublets, extraction and
+reload each use a principal half-pulse. At `q` whole ticks per quarter-time,
+the earliest end of the separate class word is tick `2 + 10q`, and a
+reload finishing at tick 86 starts at `86 - 2q`. The serial windows fit
+exactly for `q ≤ 7` (`banked_windows_iff`). This comparison uses the two
+encoded receiver ticks as the prefix. The full eight signed modes require
+at least four doublets by `bank_doublet_capacity`; the existing signed-axis
+code is a faithful four-doublet reindexing with the axis retained. The
+bound `q ≤ 7` uses one half-pulse window per bank operation, with the four
+axis lanes pulsed together. Booking the four pulses separately for
+extraction and again for reload gives `q ≤ 3` (`serial_axis_block_iff`).
+Both budgets leave the spatial staging and physical admission open.
+The closed-ring parity check applies to packets that remain in that ring.
 
 ## Periods at a minimum
 

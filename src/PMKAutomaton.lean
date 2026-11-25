@@ -13,6 +13,7 @@ import PMKAutomaton.RingReceiver
 import PMKAutomaton.RestoringRingHistory
 import PMKAutomaton.RestoringRingToll
 import PMKAutomaton.RestoringExtraction
+import PMKAutomaton.BankReceiverPulse
 import PMKAutomaton.BoundaryErasure
 import PMKAutomaton.Components
 import PMKAutomaton.ClockRing

@@ -28,8 +28,10 @@ seed with supplied controller fields. The full closed receiver return and
 the two initial visits have different flag accounts and yield different
 surviving exit weights. A booked bank exchange at tick two gives a reversible
 exit with an exact receiver toll and a restart from a supplied fresh bank.
-The joint background still needs to select the controller fields, prepare
-the banks, and fix the pulse time and paid visits of the mass event. See [Admission](ADMISSION.md) and the
+The staged native doublet exchange takes a principal half-pulse. Its
+whole-tick duration is fixed by the corresponding two-trial observable.
+The joint background still needs to select that observable, stage the
+banks, admit the gate windows, and identify the full EP payload encoding. See [Admission](ADMISSION.md) and the
 [export contract](COMPONENTS.md#what-propagates-downstream).
 
 ## Admission

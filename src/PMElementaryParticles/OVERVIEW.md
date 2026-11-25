@@ -1186,8 +1186,13 @@ The booked bank exchange at tick two receives the typed gapped payload and
 leaves the prepared reference throughout the receiver. The class-shift word
 acts on that bank and produces the same-address signed-carrier endpoint
 (`banked_exit_then_class_shift`). The receiver can reload from a separate
-fresh bank at phase zero. Admission of the bank wiring, its coherent pulse
-and duration, and the joint background's request law remain open.
+fresh bank at phase zero. `BankReceiverPulse` gives the exact staged native
+doublet half-pulse for extraction and reload. `banked_windows_iff` checks
+serial overlap on their common clock and the separately booked class word.
+The eight signed modes need at least four doublets (`bank_doublet_capacity`).
+The existing signed-axis reindexing is faithful, and a common staged pulse
+on each supplied axis preserves it. Physical staging, the retained axis and
+the root trial remain open.
 
 ### Where the readings agree
 
