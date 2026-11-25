@@ -23,6 +23,19 @@ The isolated-excitation trace books a label Toll on a 43-tick receiver period.
 It carries no address-to-tier bit, so it does not replace this assignment.
 The tier sets stay premises; `wireTier` still takes the identification as an
 explicit input.
+
+## Step counts checked against the tier hierarchy
+
+The vector, spinor and conjugate-spinor signatures are `(7,7,2)`, `(4,4,0)` and `(4,4,8)`.
+Each triple counts forward, backward and silent crossings.
+
+The step statistics on one 43-ring cannot give the hierarchy. Every coset has forward = backward, so a uniform walk has no
+drift. Its period cost scales with `1/p_move` (`7/8`, `1`, `1/2`): ratios at
+most `2`. A no-backtrack period scales as `p_fwd^43`: ratios `(8/7)^43 ≈ 312`
+and `(7/4)^43 ≈ 2.8×10¹⁰`, not powers of `Δ`. The ledgers need the leading
+power `Δⁿ` (point, line, area, volume), so the rule must give each program a
+whole number `n`. It cannot depend on the generation only: lepton and down
+tiers are `{0,1,2}` but up tiers are `{0,2,3}` (`TierLedger.tiersFor`).
 -/
 
 noncomputable section

@@ -8,7 +8,7 @@ it: flavour is the label change of a charged-current event that changes protocol
 it needs the protocols first. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`).
 
 The [KAutomaton closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout)
-gives the upstream contract. The [EP review](TODO.md#everything-else-still-open)
+gives the upstream contract. The [EP open work](TODO.md)
 maps the admitted path, timing, readout and Toll inputs needed for
 a physical species claim.
 

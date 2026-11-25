@@ -10,6 +10,19 @@ actual label and root for an index. Count each indexed witness once
 before imposing any distribution over programs or over root trials.
 The existing one-site witness and the booked banked restoring execution
 use distinct receiver itineraries.
+
+## Scope of the witness count
+
+`EPSpine.programs_card` counts 15 generation-by-visible-class indices.
+`ProgramClasses.visible_channels_card` counts 15 visible channel labels.
+Taking each label in each generation gives 45 label indices. The ring
+registration theorem is parameterized by a channel. The separately billed
+aggregate here runs one representative per spine index.
+
+The least-Toll witnesses give one flag per run and zero live exits in the
+two-site restoring projection. Using the same request for both root phases
+returns the probe to its input. A retained successful closed marker gives
+43 flags on the differing record ring. The booked banked route gives two.
 -/
 
 namespace PMElementaryParticles.ProgramExecutionCounts

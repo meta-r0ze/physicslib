@@ -33,6 +33,22 @@ invariant pays which tier cost is the paper's proposed ledger — a declared mod
 input (`M`), not a cost-selected choice (there is no option family/cost
 functional over tier ledgers yet). The measured CODATA/PDG comparisons live in
 `tools/e8p/E8PConstants/PMElementaryParticles/LeptonMassPulls.lean`.
+
+## Feedback and pillar checks
+
+The muon ledger has a feedback term `(χ+σ)·α/(1−α)`;
+the tau ledger has none, and nothing derives either choice. The tau is low by
+`0.36(18) m_e` (−2.0σ). A feedback `k·α/(1−α)` brings it within 1σ for any
+`k` in `(24.5, 73.5)`, so `Δ`, `Δ+σ`, `Δ+χ+σ` all fit and the data cannot select one.
+The muon's own rule, applied to the tau (`χ+σ`, or all its non-`Δ` invariants),
+gives only −1.7σ to −1.5σ. The muon's remaining miss is `1.1×10⁻⁵ m_e ≈ 0.21 α²`,
+the size of a second-order term. Both residuals need a rule from the cost derivation.
+
+No common sign rule maps the ledger corrections to the `PMSubstrate.Impedance` pillars. With the `α⁻¹` signs,
+Capacity, Map and the regulator have the wrong sign. With all signs reversed they
+match, but Toll and Margin then give −5.6σ, and Protocol + Governor at `baseline`
+(`0.05250`) differ from the muon feedback (`0.05146`) by `+226σ`. The fit of
+baseline Toll to the muon residual (+0.18σ) is therefore withdrawn as a lead.
 -/
 
 noncomputable section

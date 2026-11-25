@@ -30,6 +30,15 @@ cyclic shift, and at `Q = 2/3` it is `3/8` (`shiftFlag_at_koide`). So the
 clock ledger's `1/2` does not by itself give Koide.
 
 This is linear algebra only: no premise and no data.
+
+## Rejected clock and wire identifications
+
+At Koide, the clock ledger shift flag is `3/8` (`shiftFlag_at_koide`).
+The clock-plane angle is `arccos(21/22) = 0.306` rad, against `0.222` rad.
+The local-root generation walk has stay count 26 and move counts 16/8/16.
+It gives `Q = 0.52`. The bare wire `diag(1,α/2,α/2)(P − I)` gives
+`Q = 0.883` and a zero lightest mass. The measured lepton comparison gives
+phase `δ ≈ 2/9 − 1.7×10⁻⁷` and excludes `δ = 2/9` exactly.
 -/
 
 noncomputable section
