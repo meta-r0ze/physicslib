@@ -52,10 +52,17 @@ has the direct insertion. Addresses 1 and 2 have the restoring route.
   reference. At address 2 a matched typed pair forces zero excess for
   any readout on that pair. An account requiring a distinction there
   must specify which additional occupancy or record the machine retains.
-- Close the full visit list, including the direct writer and renewal,
-  preparation and staging, and any selected static operation. Derive
-  their local costs and assign each booked visit once. The present
-  receiver, bank and root-word subtotals cover the stated operations.
+- `DirectWriterRenewal` sums the short decoder's return pulses and the
+  inverse electric exposures on the actual returned charged-lepton
+  bank. With one comparison per decoder pulse and completed electric
+  kick, writing and uncomputing give three flags each. Booking the
+  shared-current swaps raises the sum to `13/2`. A fresh clean seed adds
+  one preparation flag. Derive the capacity assigned to those
+  visits and admit the companion transport, the direct flip, and return
+  of the payload to its next input. The decoder alone takes 52 root
+  quarter-times for write and uncompute, or 79 with fresh preparation.
+- Close the full visit list, including staging and any selected static
+  operation. Derive the local claims and assign each booked visit once.
 
 The following are the inputs of the conditional spectral model. Any use
 as the program's mass readout requires a derivation from the same execution.

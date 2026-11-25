@@ -379,6 +379,17 @@ theorem undo_word_exact (c : Fin 3) (p : ℝ) (hp : 0 < p) (hp' : p < 1 / 2) :
   rw [← short_word_exact c p hp hp']
   exact h shortWord
 
+/-- Chronologically, renewal runs the adjoints of the decoder's
+individual pulses in reverse order. Each adjoint uses its forward-time
+root phase in the supplied schedule. -/
+theorem undo_execution (c : Fin 3) (p : ℝ) (hp : 0 < p) (hp' : p < 1 / 2) :
+    undoWord.reverse.map (runInstruction c p) =
+      (shortWord.reverse.map (runInstruction c p)).reverse.map Matrix.conjTranspose := by
+  simp only [undoWord, ← List.map_reverse, List.reverse_reverse, List.map_map]
+  apply List.map_congr_left
+  intro i _
+  exact (instruction_adjoint c p hp hp' i).symm
+
 theorem undo_duration : (undoWord.map quarters).sum = 27 := by decide +kernel
 
 /-- A one-frame serial schedule with fresh bank preparation cannot fit

@@ -1224,6 +1224,18 @@ gapped reflection ledgers count unit and double steps on each signed lane
 without a population average. The complete recurrent visit list and local
 capacity readouts supply the eventual mass comparison.
 
+At the direct address, `DirectWriterRenewal` identifies the booked inverse
+decoder with the adjoints of the forward pulses run in reverse order.
+On a returned charged-lepton port 2, the inverse decoder registers
+`9/4` and the inverse completed electric kicks register `3/4`.
+Their total equals the short writer's three flags from a balanced bank;
+fresh clean-seed preparation adds one. In the shared-current realization the
+intervening swap and its inverse raise the balanced-bank subtotal from
+six to `13/2` flags. The decoder parts alone take 52
+root quarter-times for write and uncompute or 79 with fresh preparation.
+The coordinate return of the companion and the return of the payload are
+separate booked operations.
+
 ### Where the readings agree
 
 The glue and wire readings share the three addresses: one direct and two

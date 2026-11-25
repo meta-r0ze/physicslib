@@ -454,6 +454,21 @@ word still acts on the retained bank. The direct and gapped words have
 their own successive E8 root-step ledgers. Their visit placements and the
 remaining setup and renewal claims are needed for a complete cycle sum.
 
+### Direct writer renewal
+
+Once the companion returns the occupied guard port to coordinate 2,
+the decoder's inverse visit word restores the incoming kicked bank
+and carries the same flag sum as the forward decoder on its actual path.
+The opposite-wall label supplies both inverse electric phases. Under a
+comparison per decoder pulse and per completed electric kick, the
+writer and uncompute require three flags each. The shared-current word
+books a swap in each direction, giving `13/2` flags in total. Starting
+from a fresh clean occupied seed adds one flag. The decoder alone takes 25 root
+quarter-times forward and 27 back, with another 27 for fresh
+preparation. At one or more substrate ticks per root quarter-time that
+requires more than one 43-tick frame. Place the companion return and
+payload continuation in the full schedule and include their own claims.
+
 ## Periods at a minimum
 
 `periodPhase` reads a booked start as a period and a phase.
