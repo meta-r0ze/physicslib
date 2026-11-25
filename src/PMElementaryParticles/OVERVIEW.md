@@ -1,6 +1,6 @@
 # PMElementaryParticles — overview of checked results
 
-Why continuum phase space is correct on a lattice substrate, and when it is not: [`CONTINUOUS.md`](CONTINUOUS.md).
+Read the route notes in [WireSchedule](WireSchedule.lean), [MassInsertionTrace](MassInsertionTrace.lean) and [OccupiedBankedRestoring](OccupiedBankedRestoring.lean), and the lattice-to-continuum note in [PolarMeasure](PolarMeasure.lean).
 
 The single map of what Paper V proves and what later work can reuse. Open work is
 in [`TODO.md`](TODO.md); build instructions are in
@@ -613,13 +613,13 @@ The balanced comparison reset keeps its own conditional thresholds.
 | `HeavyCrossingCost.activity_histogram`, `uniform_cost`, `sign_tie` | Six reflects per carrier give 27 idle, 20 unit and one double displacement across eight amplitudes. The mean charge is `(20 c₁ + c₂)/8`. | Uniform amplitudes for the mean, antipodal weights for the sign tie and supplied prices per displacement. |
 | `HeavyFlipNativeBoundary.no_closed_cleaning`, `tick_event_iff`, `idle_and_excursion_counts`, `cycle_closes`; `GappedGluedCrossing.equalClass_iff` | The untagged probe aliases addresses and closed universal cleaning is impossible. Both idle and two-toggle masks close. The gapped crossing shifts generation. | Address and ready record needed for the clocked endpoint. Separate Schur insertions still need their own firing law. |
 
-[Persistence selection](SCHEDULE.md) enumerates a bounded serial family.
-[Packet reference cost](SCHEDULE.md#which-population-is-charged)
+[Persistence selection](WireSchedule.lean) enumerates a bounded serial family.
+[Packet reference cost](WireSchedule.lean)
 derives uniform weights under the full-packet sampling premise and
 checks the vacancy contribution. The full-packet bit gap is `−1/2`
 per sampled input when the vacancy is probed. The smaller support
 and the idle-vacancy rule have separate thresholds. The
-[lifecycle comparison](SCHEDULE.md#record-reference-remains-undetermined)
+[lifecycle comparison](WireSchedule.lean)
 adds a conditional half flag for a written-bit reset with a fresh
 zero. Actual writer traffic and the difference in remaining paid
 work still decide the polarity.

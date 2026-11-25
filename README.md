@@ -81,7 +81,7 @@ OVERVIEW.md         what is checked, with theorem entry points
 TODO.md  what remains open from the paper conversion
 ```
 How a lattice gives continuum results, and when it does not, is explained in
-[`src/PMElementaryParticles/CONTINUOUS.md`](src/PMElementaryParticles/CONTINUOUS.md).
+[`src/PMElementaryParticles/PolarMeasure.lean`](src/PMElementaryParticles/PolarMeasure.lean).
 
 For a more English background, it is helpful to clone the following older draft repositories and place them where the AI can access them.
 https://github.com/meta-r0ze/Persistence-Mechanics

@@ -252,7 +252,7 @@ as the program's mass readout requires a derivation from the same execution.
   pulses per bank operation. The signed modes have a faithful four-doublet
   encoding. Supply the physical retained axis and stage the full glued
   carrier, derive the root trial and staging visits, and use the resulting
-  rates and static offset. See the [charged-lepton trace](SCHEDULE.md#charged-lepton-insertion-trace).
+  rates and static offset. See the [charged-lepton trace](MassInsertionTrace.lean).
   The fifteen indexed least-Toll witnesses give one flag each when run once
   and billed separately. The two-site restoring projection gives no live
   exits, and feeding the same request to both root phases always returns the

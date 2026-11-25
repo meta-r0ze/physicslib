@@ -62,7 +62,7 @@ is the through stream. The elapsed clock and wall-rate conversion are inputs.
 | Flags and registrations | `TwoSiteHandoff.hop_flag`, `exchange_flag` and `OpenHandoff.receiver_flag` give comparison flags. `DiagonalReadout.state_flag` gives the diagonal mixed-population formula. `NetCost.expected_count_linear` sums expected flags under the supplied sampling law. |
 | Pulse and reset accounts | `BranchPulseContract.comparison_mem` and `program_correct` certify the comparisons under the supplied control. `OpenHandoff.balanced_basis_repair_flag` prices a paid exact comparison of a balanced bit with fresh zero. |
 | Survival and selection | `TollAmplitude.wireAmplitude_eq` gives `exp(−T/2)`. `PersistenceSelection.within_family_iff_cheapest` compares the supplied family and costs. `RefreshSchedule.minimal_is_ledger` and `CoherentRefresh.minimum_once` characterize minimum refresh at supplied prices. |
-| Conditional reference thresholds | `Values.outputFlagThreshold_eq`, `balancedResetThreshold_eq` give the output-only and separately paid balanced-reset thresholds. `WireReferenceCost.packet_record_difference_eq_values`, `balanced_reset_gap_eq_values` connect them to the [packet account](../PMElementaryParticles/SCHEDULE.md#record-reference-remains-undetermined). |
+| Conditional reference thresholds | `Values.outputFlagThreshold_eq`, `balancedResetThreshold_eq` give the output-only and separately paid balanced-reset thresholds. `WireReferenceCost.packet_record_difference_eq_values`, `balanced_reset_gap_eq_values` connect them to the [packet account](../PMElementaryParticles/WireSchedule.lean). |
 
 <a id="calibrating-the-root-clock"></a>
 

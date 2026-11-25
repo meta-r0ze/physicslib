@@ -421,7 +421,7 @@ Field-confined overshoots `g_A` (`1.06–1.15`); source-confined gives `1.272–
 lattice-QCD `1.246(28)`, and a cloud share of the splitting (`27%`) like the cloudy bag's
 (about a third). Caution: the source-confined premise looks better *after* the numbers; the
 a-priori case for it is that the pion is a colour singlet, not a resource of the host's colour
-flux, so like the emitted electron (`PMElementaryParticles/CONTINUOUS.md`, rule 2) it is not
+flux, so like the emitted electron (`PMElementaryParticles/PolarMeasure.lean`, rule 2) it is not
 walled in; the case for field-confined is that its carriers are. Still to do: derive the source
 from the local axial variation of the two-slice update (the wall gives a surface term), recoil
 (non-static) corrections, and the magnetic null test.

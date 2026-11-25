@@ -10,6 +10,52 @@ typed lift retains its two carrier values until extraction. The output
 bank follows the class word, and a separate fresh bank renews the input.
 The booked operations, successful request history and prepared banks are
 inputs to this trace.
+
+## Booked live extraction
+
+`RestoringExtraction.extract_values` books a swap with a prepared reference
+bank at the first live exit, after two receiver ticks. The typed payload
+moves into the output bank, where `banked_exit_then_class_shift` sends it to
+the required address and signed carrier. The retained receiver field is
+uniform at the reference. Its clock and probes return at the end of the
+86-tick block, and a separately supplied fresh bank can load the next seed.
+The receiver comparison bill through the block is exactly two on a
+successful history. If the banks are already staged on the native doublets, extraction and
+reload each use a principal half-pulse. At `q` whole ticks per quarter-time,
+the earliest end of the separate class word is tick `2 + 10q`, and a
+reload finishing at tick 86 starts at `86 - 2q`. The serial windows fit
+exactly for `q ≤ 7` (`banked_windows_iff`). This comparison uses the two
+encoded receiver ticks as the prefix. The full eight signed modes require
+at least four doublets by `bank_doublet_capacity`; the existing signed-axis
+code is a faithful four-doublet reindexing with the axis retained. The
+bound `q ≤ 7` uses one half-pulse window per bank operation, with the four
+axis lanes pulsed together. Booking the four pulses separately for
+extraction and again for reload gives `q ≤ 3` (`serial_axis_block_iff`).
+Both budgets leave the spatial staging and physical admission open.
+The closed-ring parity check applies to packets that remain in that ring.
+
+For the occupied charged-lepton route, the bank input is the active
+charged-lepton channel after the equal-class crossing. Its class-shifted
+output is kept while a fresh copy of the post-crossing input reloads
+the receiver. The extraction and reload compare the same two typed
+values in opposite order. At address 1 their classes differ. At
+address 2 their class is zero, and the comparisons are silent when
+the reference indices match both payload indices. The four booked
+class reflections include two unit jumps at address 1, and either
+three (axis 1) or one (other axes) at address 2. These are typed pair
+comparisons and root-step counts. A two-phase bank-root trial uses
+one probe as it evolves across both phases. Replaying the two receiver
+guard decisions on that probe leaves its endpoint unchanged
+(`restoring_guard_replay_returns`).
+
+`ProgramCapacity` attaches the registered capacity sum to this itinerary.
+The receiver visits carry capacity relative to the prepared reference. The
+bank and class word are charged for their booked typed comparisons and root
+steps. If the address-2 prepared reference equals the carried pair, both
+receiver excess and typed bank changes give zero contribution; the class
+word still acts on the retained bank. The direct and gapped words have
+their own successive E8 root-step ledgers. Their visit placements and the
+remaining setup and renewal claims are needed for a complete cycle sum.
 -/
 
 namespace PMElementaryParticles.OccupiedBankedRestoring

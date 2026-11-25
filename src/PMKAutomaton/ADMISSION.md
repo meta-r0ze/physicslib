@@ -180,7 +180,7 @@ difference in remaining paid work, in the same units. Its sign
 selects colour when negative, ties at zero and selects lepton when
 positive, provided both schedules are admitted.
 
-The [three reset-inclusive thresholds](../PMElementaryParticles/SCHEDULE.md#record-reference-remains-undetermined)
+The [three reset-inclusive thresholds](../PMElementaryParticles/WireSchedule.lean)
 are conditional cases of this account. The decisive missing inputs
 are the booked traffic and polarity traces from **Background occupancy
 and boundary supply** and the **Joint clocked controller**, followed
@@ -294,7 +294,7 @@ not give those inputs.
 The tie applies to the stated account and family. The full wire
 still needs its occupied state family, controller and paid work. The record reference remains
 undetermined. The reset-inclusive bounds `3/4`, `27/32` and `9/10`
-from the [writer schedule](../PMElementaryParticles/SCHEDULE.md#record-reference-remains-undetermined)
+from the [writer schedule](../PMElementaryParticles/WireSchedule.lean)
 still require the actual booked population, admitted writer polarities,
 separate balanced resets and the signed remaining price.
 

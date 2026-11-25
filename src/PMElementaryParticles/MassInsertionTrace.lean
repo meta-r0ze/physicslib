@@ -12,6 +12,98 @@ tracks a supplied live payload from the restoring exchange to its
 downstream record arrival. A separate receiver test follows a marker
 already on the record stream. The serial timing bounds use the existing
 schedule with its supplied admission test.
+
+## Charged-lepton insertion trace
+
+| Route | Retained datum and consumer | What still needs admission |
+| --- | --- | --- |
+| Direct, address 0 | With the short electric writer, an occupied neutral coordinate seed is prepared, kicked at `3π/2` and `3π`, and decoded to port 2. The port reads `(true, true)` and supplies the companion guard (`charged_lepton_written_port`, `charged_lepton_port_fires`). The open receiver can feed the writer from a specified occupied live arrival through a downstream record slot (`occupied_arrival_writes`). | Select the occupied source, bank supply and the writer slots of this implementation. The transported port requires renewal. The inverse bank circuit rebalances it using the opposite-wall label (`charged_lepton_bank_uncompute`). Admit and time that return separately. |
+| Restoring, addresses 1 and 2 | When the payload arrives live and the reference arrives on the record stream, exchange restores the live reference and passes the same payload through the downstream record stream (`restored_live_and_payload_iff`, `restoring_payload_trace`). At an adjacent exit, one further tick and another exchange deliver it live and retain the other arrival (`restoring_entry_exit`). The same ports are realized by two native ticks of an open-compatible controller with both requests set at entry and exit and idle requests at the intermediate live source (`restoring_native_two_ticks`). For a marker already arriving on the record stream, the mixed bypass witness carries it through (`mixed_throughArrival`). | Identify the incoming streams at each native visit on each address. Attach the coherent pulse, its phase and its duration to the selected ports and certify the exit consumer. |
+
+The short writer is a concrete candidate with its own two kicks and
+decoding word. With inverse-short bank preparation, the preparation
+and decoder consume 27 and 25 root quarter-times, respectively. The kicks,
+companion control, and independent bank return have additional scheduling inputs.
+
+The schedule proves elapsed lower bounds for the supplied serial word
+template. The direct route cannot fit a 43-tick period. A restoring route
+within one period requires the short word at one tick per quarter-time,
+with at most seven ticks for its two node visits combined. Tests, waiting
+and other booked work can further reduce the available time.
+`MassInsertionTrace.direct_elapsed` and `restoring_elapsed` give the
+unrounded bounds for general horizons. The individual elapsed times of
+the admitted pulses are the inputs to PMAction's rate conversion.
+
+### Restoring class change and its clock cost
+
+The two adjacent exchanges carry the gapped payload unchanged. Its glue
+class differs from that of the required endpoint
+(`RestoringWallShift.gapped_payload_ne_endpoint`). The four-reflection
+`classShiftWord` advances both carrier factors in place. Composing it after
+the gapped crossing and the open delivery gives the encoded endpoint
+(`restoring_exit_then_class_shift`). For address 1 the class changes from
+`2` to `0`; for address 2 it changes from `0` to `1`.
+
+At two root quarter-times per reflection this word needs eight quarter-times.
+Booking that work serially inside the two node visits exceeds their seven-tick
+combined budget in a one-period restoring schedule
+(`no_single_period_with_serial_class_shift`). An overlapping or integrated
+implementation would need its own timing and admission proof. The unitary
+two-port pulse candidate labels the transferred port with the shifted address
+and preserves the signed index. Its weight and pulse duration still need a
+native readout in crossing-clock units.
+
+### Which weight belongs to the shifted pulse
+
+The shifted port receives the cross-branch contribution from one input and
+the stay-branch contribution from the other. `shiftedOutflow_eq` gives the
+population law on those two incoherent inputs. If the resulting net current
+equals the steady current of the two equal legs with a floating node, the
+shifted weight is exactly `α/2`. A principal pulse then has area
+`arcsin(√(α/2))`. Its rate relative to the direct pulse also uses both
+durations (`steady_rate_ratio`).
+
+For the isolated three-port coherent execution, entry-live to exit-live
+goes through the intermediate record port. The exit amplitude is
+`−sin(θ) sin(φ)` and the weight is the product of the two exchange weights.
+If both local unexchanged through weights are `α`, the output of this
+particular exchange-exchange route is `(1−α)² > α/2`. To establish the
+steady calibration, identify the physical output with the balanced
+floating-node readout and account for any extra histories and renewal
+visits. To use an isolated pulse sequence, calibrate the weights, relative
+phase and duration of that sequence on the admitted ports.
+
+If fresh incoherent inputs visit right then left and the center is retained
+between visits and across cycles, `AlternatingReferenceNode.fixed_current`
+gives the current per complete cycle. The shifted port matches it at weight
+`w/(2-w)`, where `w` is transfer to the center. The common-tick conversion
+`alternating_crossing_rate_ratios` uses the complete cycle's tick count.
+Selecting this regime requires a native source of repeated inputs and the
+retained-center readout.
+
+The native single-marker trace reduces the live exit to the joint entry
+and exit guards at their actual phases (`LocalController.restoring_marker_live`).
+A transfer weight for this event requires weights on joint histories. In the
+steady-current model, `bookedNodeTicks` measures the node interval from
+entry start through exit completion, including any wait. Under that event
+identification, `mass_from_scheduled_steady_pulses` places the independently
+timed restoring insertions in the two Schur rows.
+
+
+### Direct writer renewal
+
+Once the companion returns the occupied guard port to coordinate 2,
+the decoder's inverse visit word restores the incoming kicked bank
+and carries the same flag sum as the forward decoder on its actual path.
+The opposite-wall label supplies both inverse electric phases. Under a
+comparison per decoder pulse and per completed electric kick, the
+writer and uncompute require three flags each. The shared-current word
+books a swap in each direction, giving `13/2` flags in total. Starting
+from a fresh clean occupied seed adds one flag. The decoder alone takes 25 root
+quarter-times forward and 27 back, with another 27 for fresh
+preparation. At one or more substrate ticks per root quarter-time that
+requires more than one 43-tick frame. Place the companion return and
+payload continuation in the full schedule and include their own claims.
 -/
 
 namespace PMElementaryParticles.MassInsertionTrace
