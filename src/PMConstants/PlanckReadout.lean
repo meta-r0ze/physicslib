@@ -22,18 +22,18 @@ open PMConstants.CertifiedConstants
 def electronMassGeV : ℝ := PMSubstrate.SIUnits.electronMassGeV
 
 /-- Planck mass in GeV read out from the certified `α_G`. -/
-def planckMass : ℝ := PMConstants.Depth.planck electronMassGeV (PMConstants.Depth.gravity α)
+def planckMass : ℝ := PMConstants.Depth.planck electronMassGeV (PMConstants.Depth.gravity PMSubstrate.causalCoupling)
 
 theorem planckMass_bounds :
     (1.22089354e19 : ℝ) < planckMass ∧ planckMass < 1.22089358e19 := by
   have hg := PMConstants.GravityAccounting.channels_as_frame
-  have hs1 : (4.1854503939e-23 : ℝ) < Real.sqrt (PMConstants.Depth.gravity α) := by
+  have hs1 : (4.1854503939e-23 : ℝ) < Real.sqrt (PMConstants.Depth.gravity PMSubstrate.causalCoupling) := by
     rw [Real.lt_sqrt (by norm_num)]
     linarith [hg.1]
-  have hs2 : Real.sqrt (PMConstants.Depth.gravity α) < (4.1854505134e-23 : ℝ) := by
+  have hs2 : Real.sqrt (PMConstants.Depth.gravity PMSubstrate.causalCoupling) < (4.1854505134e-23 : ℝ) := by
     rw [Real.sqrt_lt' (by norm_num)]
     linarith [hg.2]
-  have hpos : 0 < Real.sqrt (PMConstants.Depth.gravity α) := by linarith
+  have hpos : 0 < Real.sqrt (PMConstants.Depth.gravity PMSubstrate.causalCoupling) := by linarith
   unfold planckMass PMConstants.Depth.planck electronMassGeV PMSubstrate.SIUnits.electronMassGeV
   constructor
   · rw [lt_div_iff₀ hpos]

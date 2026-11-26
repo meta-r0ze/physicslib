@@ -75,8 +75,4 @@ theorem label_count : Fintype.card Label = 16 + 5 + 2 ∧ Fintype.card Label = 2
 
 theorem joint_count : Fintype.card Hop = 160 := by simp
 
-theorem joint_excluded :
-    ¬ ((0.1286 : ℚ) < (3 - 1/43) / (160 : ℕ) ∧ (3 - 1/43) / (160 : ℕ) < (0.1300 : ℚ)) := by
-  rw [RegulatoryMaximin.count_unique]; norm_num
-
 end PMConstants.RegulatoryLabels

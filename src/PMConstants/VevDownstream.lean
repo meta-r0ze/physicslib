@@ -24,15 +24,15 @@ open PMConstants.ChainCouplings
 
 /-- The electroweak outputs conditional on the VEV ledger at the certified `α`. -/
 theorem vev_downstream {me : ℝ} (hme : 0 < me) :
-    0 < vev CertifiedConstants.α me ∧
-      fermi CertifiedConstants.α me * Real.sqrt 2 * (vev CertifiedConstants.α me) ^ 2 = 1 ∧
-      (higgsMass CertifiedConstants.α me) ^ 2 =
-        2 * selfCoupling * (vev CertifiedConstants.α me) ^ 2 ∧
-      ScaleConsistency.closureYukawa * vev CertifiedConstants.α me / Real.sqrt 2 = me := by
-  have hα : 0 < CertifiedConstants.α := by
+    0 < vev PMSubstrate.causalCoupling me ∧
+      fermi PMSubstrate.causalCoupling me * Real.sqrt 2 * (vev PMSubstrate.causalCoupling me) ^ 2 = 1 ∧
+      (higgsMass PMSubstrate.causalCoupling me) ^ 2 =
+        2 * selfCoupling * (vev PMSubstrate.causalCoupling me) ^ 2 ∧
+      ScaleConsistency.closureYukawa * vev PMSubstrate.causalCoupling me / Real.sqrt 2 = me := by
+  have hα : 0 < PMSubstrate.causalCoupling := by
     linarith [CertifiedConstants.alpha_bounds.1]
   exact ⟨(constants_positive hα hme).2.1, fermi_normalization hα hme,
-    higgs_mass_squared CertifiedConstants.α me, ScaleConsistency.closure_exact hme.ne'⟩
+    higgs_mass_squared PMSubstrate.causalCoupling me, ScaleConsistency.closure_exact hme.ne'⟩
 /-- W mass in terms of the canonical VEV once the VEV identification is supplied. -/
 theorem w_mass_from_canonical_vev {toll : ℝ} {m : ℕ} {vsub α me : ℝ}
     (ht : 0 < toll) (hm : 0 < m)

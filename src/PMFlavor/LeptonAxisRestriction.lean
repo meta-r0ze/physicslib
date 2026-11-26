@@ -486,7 +486,7 @@ theorem colour_pair_stays (E : Equiv.Perm Packet) (r : V4) (hr0 : r 0 = 0)
   rw [sterile_pairing_preserved E r hr0 hE v w]
   unfold bl
   simp only [hv, hw]
-  norm_num
+  norm_num [PMConstants.CarrierRepresentation.blAxis]
 
 /-- **Word version on the declared six-root alphabet**: every admitted word
 preserves each class-`0` carrier's `B - L` charge
@@ -640,8 +640,8 @@ theorem dirac_survival_active_majana_unreachable
     (hE : ∀ v : Carrier 0, vector (carried (E (Sum.inl v))) = PMSubstrate.ChannelSymmetry.refl r (vector v))
     (v w : Carrier 0) (hv : onLepton v = true) (hw : onLepton w = true) :
     bl (carried (E (Sum.inl v))) + bl (carried (E (Sum.inl w))) = -2 := by
-  have hl : bl v = -1 := by simp [bl, hv]
-  have hr : bl w = -1 := by simp [bl, hw]
+  have hl : bl v = -1 := by simp [bl, PMConstants.CarrierRepresentation.blAxis, hv]
+  have hr : bl w = -1 := by simp [bl, PMConstants.CarrierRepresentation.blAxis, hw]
   have hl' : bl (carried (E (Sum.inl v))) = bl v := event_bl_left E r hr0 hE v
   have hr' : bl (carried (E (Sum.inl w))) = bl w := event_bl_left E r hr0 hE w
   rw [hl', hl, hr', hr]

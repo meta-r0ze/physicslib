@@ -18,7 +18,7 @@ lemma trace_block (A B : Matrix Q Q ℂ) (C D : Matrix (Fin 2) (Fin 2) ℂ) :
 /-- Lie generators are linear maps: inactive blocks are zero, not identity. -/
 def weakGen (A : Matrix (Fin 2) (Fin 2) ℂ) : M := block (1 ⊗ₖ A) 0 A 0
 def colourGen (B : Matrix (Fin 3) (Fin 3) ℂ) : M := block (B ⊗ₖ 1) (B ⊗ₖ 1) 0 0
-def hyperGen : M := (1/2 : ℂ) • charge
+def hyperGen : M := (1/2 : ℂ) • hyperchargeOperator
 
 theorem weak_trace_product (A A' : Matrix (Fin 2) (Fin 2) ℂ) :
     (weakGen A*weakGen A').trace=4*(A*A').trace := by
@@ -36,17 +36,17 @@ theorem weak_colour_trace (A : Matrix (Fin 2) (Fin 2) ℂ) (B : Matrix (Fin 3) (
 
 theorem weak_hyper_trace (A : Matrix (Fin 2) (Fin 2) ℂ) :
     (weakGen A*hyperGen).trace=0 := by
-  simp [weakGen,hyperGen,charge,block_mul,trace_block,
+  simp [weakGen,hyperGen,hyperchargeOperator_blocks,block_mul,trace_block,
     trace_smul,trace_kronecker,trace_one]
 
 theorem colour_hyper_trace (B : Matrix (Fin 3) (Fin 3) ℂ) :
     (colourGen B*hyperGen).trace=(2/3 : ℂ)*B.trace := by
-  simp [colourGen,hyperGen,charge,block_mul,trace_block,
+  simp [colourGen,hyperGen,hyperchargeOperator_blocks,block_mul,trace_block,
     ← mul_kronecker_mul,trace_smul,trace_kronecker,trace_one,trace_diagonal,Fin.sum_univ_succ]
   ring
 
 theorem hyper_trace_square : (hyperGen*hyperGen).trace=(10/3 : ℂ) := by
-  norm_num [hyperGen,charge,Matrix.mul_smul,Matrix.smul_mul,block_mul,trace_block,
+  norm_num [hyperGen,hyperchargeOperator_blocks,Matrix.mul_smul,Matrix.smul_mul,block_mul,trace_block,
     ← mul_kronecker_mul,trace_smul,trace_kronecker,trace_one,trace_diagonal,
     diagonal_mul_diagonal,Fin.sum_univ_succ]
 

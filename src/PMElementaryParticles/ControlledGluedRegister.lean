@@ -69,17 +69,17 @@ theorem eq_opposite_iff (c d : Channels) :
 /-- The crossing convention preserves electric charge. Each static-to-active
 pair differs by one unit of hypercharge (three units in the packet tag). -/
 theorem opposite_hypercharge_step : ∀ c : Channels, active c = false →
-    (PMConstants.ChannelOccupancy.tag c).2.2 -
-      (PMConstants.ChannelOccupancy.tag (opposite c)).2.2 =
+    PMConstants.ChannelOccupancy.hyperchargeThirds c -
+      PMConstants.ChannelOccupancy.hyperchargeThirds (opposite c) =
         if (labelIndex c).val % 2 = 0 then (3 : ℤ) else -3 := by
   decide +kernel
 
 /-- The glued endpoint charge difference matches the existing Paper III
 scalar link or its conjugate, including the neutral pair. -/
 theorem opposite_scalar_link (c : Channels) (hc : active c = false)
-    (h : ℚ) (hlink : PMConstants.SectorLinks.OneLink PMConstants.Hypercharge.standard h) :
-    ((PMConstants.ChannelOccupancy.tag c).2.2 : ℚ) / 3 -
-      ((PMConstants.ChannelOccupancy.tag (opposite c)).2.2 : ℚ) / 3 =
+    (h : ℚ) (hlink : PMConstants.SectorLinks.OneLink PMConstants.CarrierRepresentation.carrierStandard h) :
+    (PMConstants.ChannelOccupancy.hyperchargeThirds c : ℚ) / 3 -
+      (PMConstants.ChannelOccupancy.hyperchargeThirds (opposite c) : ℚ) / 3 =
         if (labelIndex c).val % 2 = 0 then h else -h := by
   have hh : h = 1 := by
     have hstd := PMConstants.SectorLinks.standard_links
@@ -89,13 +89,13 @@ theorem opposite_scalar_link (c : Channels) (hc : active c = false)
   have hd := opposite_hypercharge_step c hc
   by_cases he : (labelIndex c).val % 2 = 0
   · rw [ite_eq_left he] at hd ⊢
-    have hr : ((PMConstants.ChannelOccupancy.tag c).2.2 : ℚ) -
-        ((PMConstants.ChannelOccupancy.tag (opposite c)).2.2 : ℚ) = 3 := by
+    have hr : (PMConstants.ChannelOccupancy.hyperchargeThirds c : ℚ) -
+        (PMConstants.ChannelOccupancy.hyperchargeThirds (opposite c) : ℚ) = 3 := by
       exact_mod_cast hd
     linarith
   · rw [ite_eq_right he] at hd ⊢
-    have hr : ((PMConstants.ChannelOccupancy.tag c).2.2 : ℚ) -
-        ((PMConstants.ChannelOccupancy.tag (opposite c)).2.2 : ℚ) = -3 := by
+    have hr : (PMConstants.ChannelOccupancy.hyperchargeThirds c : ℚ) -
+        (PMConstants.ChannelOccupancy.hyperchargeThirds (opposite c) : ℚ) = -3 := by
       exact_mod_cast hd
     linarith
 

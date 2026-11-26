@@ -82,14 +82,4 @@ theorem colour_ledger_rule :
 def footprint15 : ℝ := (PMSubstrate.E8Values.RM : ℝ) +
   ((PMSubstrate.E8Values.nu : ℝ) - 1) * overhead + (PMSubstrate.E8Values.sigma : ℝ)
 
-theorem sterile_counted {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
-    mZ * Real.sqrt (1 - 43/footprint15) < 80.3268 ∧
-      (mZ * Real.sqrt (1 - 43/footprint15) - 80.3692) / 0.0133 < -3.1 := by
-  have hr : Real.sqrt (1 - 43/footprint15) < 0.8808755 := by
-    rw [Real.sqrt_lt' (by norm_num)]; norm_num [footprint15, overhead]
-  have hp : 0 ≤ Real.sqrt (1 - 43/footprint15) := Real.sqrt_nonneg _
-  have h1 : mZ * Real.sqrt (1 - 43/footprint15) < 80.3268 := by nlinarith [h.1, h.2]
-  refine ⟨h1, ?_⟩
-  rw [div_lt_iff₀ (by norm_num)]; linarith
-
 end PMConstants.ResourceLedger

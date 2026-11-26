@@ -21,13 +21,13 @@ open PMConstants
 
 /-- `Δr` for a constant effective spectral weight. -/
 def deltaRWeight (N : ℕ) : ℝ :=
-  (CertifiedConstants.α * N) / (1 + CertifiedConstants.α * N)
+  (PMSubstrate.causalCoupling * N) / (1 + PMSubstrate.causalCoupling * N)
 
 theorem weight_five_in_window :
     0.0349 < deltaRWeight 5 ∧ deltaRWeight 5 < 0.0353 := by
   have ha := CertifiedConstants.alpha_bounds
-  have hα : (0 : ℝ) < CertifiedConstants.α := by linarith [ha.1]
-  have hK : (0 : ℝ) < 1 + CertifiedConstants.α * 5 := by positivity
+  have hα : (0 : ℝ) < PMSubstrate.causalCoupling := by linarith [ha.1]
+  have hK : (0 : ℝ) < 1 + PMSubstrate.causalCoupling * 5 := by positivity
   norm_num [deltaRWeight]
   constructor
   · rw [lt_div_iff₀ hK]
@@ -39,14 +39,14 @@ theorem weight_five_in_window :
 theorem weight_window (N : ℕ) :
     (0.0349 < deltaRWeight N ∧ deltaRWeight N < 0.0353) ↔ N = 5 := by
   have ha := CertifiedConstants.alpha_bounds
-  have hα : (0 : ℝ) < CertifiedConstants.α := by linarith [ha.1]
+  have hα : (0 : ℝ) < PMSubstrate.causalCoupling := by linarith [ha.1]
   constructor
   · rintro ⟨h1, h2⟩
-    have hK : (0 : ℝ) < 1 + CertifiedConstants.α * N := by positivity
-    have h1' : 0.0349 * (1 + CertifiedConstants.α * N) < CertifiedConstants.α * N := by
+    have hK : (0 : ℝ) < 1 + PMSubstrate.causalCoupling * N := by positivity
+    have h1' : 0.0349 * (1 + PMSubstrate.causalCoupling * N) < PMSubstrate.causalCoupling * N := by
       unfold deltaRWeight at h1
       rwa [lt_div_iff₀ hK] at h1
-    have h2' : CertifiedConstants.α * N < 0.0353 * (1 + CertifiedConstants.α * N) := by
+    have h2' : PMSubstrate.causalCoupling * N < 0.0353 * (1 + PMSubstrate.causalCoupling * N) := by
       unfold deltaRWeight at h2
       rwa [div_lt_iff₀ hK] at h2
     have hN1 : (4.9 : ℝ) < N := by nlinarith [ha.1, h1']
@@ -59,16 +59,16 @@ theorem weight_window (N : ℕ) :
 
 theorem weight_four_low : deltaRWeight 4 < 0.0349 := by
   have ha := CertifiedConstants.alpha_bounds
-  have hα : (0 : ℝ) < CertifiedConstants.α := by linarith [ha.1]
-  have hK : (0 : ℝ) < 1 + CertifiedConstants.α * 4 := by positivity
+  have hα : (0 : ℝ) < PMSubstrate.causalCoupling := by linarith [ha.1]
+  have hK : (0 : ℝ) < 1 + PMSubstrate.causalCoupling * 4 := by positivity
   norm_num [deltaRWeight]
   rw [div_lt_iff₀ hK]
   nlinarith [ha.2]
 
 theorem weight_six_high : 0.0353 < deltaRWeight 6 := by
   have ha := CertifiedConstants.alpha_bounds
-  have hα : (0 : ℝ) < CertifiedConstants.α := by linarith [ha.1]
-  have hK : (0 : ℝ) < 1 + CertifiedConstants.α * 6 := by positivity
+  have hα : (0 : ℝ) < PMSubstrate.causalCoupling := by linarith [ha.1]
+  have hK : (0 : ℝ) < 1 + PMSubstrate.causalCoupling * 6 := by positivity
   norm_num [deltaRWeight]
   rw [lt_div_iff₀ hK]
   nlinarith [ha.1]

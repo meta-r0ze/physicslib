@@ -55,8 +55,8 @@ theorem dimension_window {Dp : ℝ} (hD : 0 < Dp)
   unfold withDimension at h
   rw [lt_div_iff₀ h1x, div_lt_iff₀ h1x] at h
   obtain ⟨h1, h2⟩ := h
-  have hq1 : 0.00175425 < α / Dp := by nlinarith
-  have hq2 : α / Dp < 0.00175483 := by nlinarith
+  have hq1 : 0.00175425 < PMSubstrate.causalCoupling / Dp := by nlinarith
+  have hq2 : PMSubstrate.causalCoupling / Dp < 0.00175483 := by nlinarith
   rw [lt_div_iff₀ hD] at hq1
   rw [div_lt_iff₀ hD] at hq2
   constructor <;> nlinarith
@@ -95,7 +95,7 @@ theorem boundary_unique (a b : ℕ) (hb : 0 < b) (hb2 : b ≤ 200) :
       norm_num
     unfold withDimension
     rw [hab', ← hdim]
-    have : α / effectiveDimension = x := rfl
+    have : PMSubstrate.causalCoupling / effectiveDimension = x := rfl
     rw [this, mul_div_assoc, div_self (by linarith), mul_one]
     constructor <;> linarith
 
@@ -163,22 +163,22 @@ theorem noise_divisor :
     rw [VevCorrections.Y_val]; norm_num⟩
 
 theorem storage_window {s : ℝ}
-    (h : 1.751770e-45 < (16 - s - α) * α ^ ((43 : ℝ) / 2) ∧
-      (16 - s - α) * α ^ ((43 : ℝ) / 2) < 1.751849e-45) :
+    (h : 1.751770e-45 < (16 - s - PMSubstrate.causalCoupling) * PMSubstrate.causalCoupling ^ ((43 : ℝ) / 2) ∧
+      (16 - s - PMSubstrate.causalCoupling) * PMSubstrate.causalCoupling ^ ((43 : ℝ) / 2) < 1.751849e-45) :
     0.6662 < s ∧ s < 0.6670 := by
   have ha := alpha_bounds
   have hA := attenuation_bounds
-  have hApos : 0 < α ^ ((43 : ℝ) / 2) := by linarith [hA.1]
+  have hApos : 0 < PMSubstrate.causalCoupling ^ ((43 : ℝ) / 2) := by linarith [hA.1]
   constructor
   · by_contra hc; push Not at hc
-    have : (16 - s - α) * α ^ ((43 : ℝ) / 2) ≥ (16 - 0.6662 - 0.007297352563) * 1.143021965e-46 := by
-      have h1 : 16 - s - α ≥ 16 - 0.6662 - 0.007297352563 := by linarith [ha.2]
+    have : (16 - s - PMSubstrate.causalCoupling) * PMSubstrate.causalCoupling ^ ((43 : ℝ) / 2) ≥ (16 - 0.6662 - 0.007297352563) * 1.143021965e-46 := by
+      have h1 : 16 - s - PMSubstrate.causalCoupling ≥ 16 - 0.6662 - 0.007297352563 := by linarith [ha.2]
       nlinarith [hA.1]
     norm_num at this; linarith [h.2]
   · by_contra hc; push Not at hc
-    have : (16 - s - α) * α ^ ((43 : ℝ) / 2) ≤ (16 - 0.6670 - 0.007297352562) * 1.143021969e-46 := by
-      have h1 : 16 - s - α ≤ 16 - 0.6670 - 0.007297352562 := by linarith [ha.1]
-      have h0 : 0 ≤ 16 - s - α ∨ 16 - s - α < 0 := le_or_gt 0 _
+    have : (16 - s - PMSubstrate.causalCoupling) * PMSubstrate.causalCoupling ^ ((43 : ℝ) / 2) ≤ (16 - 0.6670 - 0.007297352562) * 1.143021969e-46 := by
+      have h1 : 16 - s - PMSubstrate.causalCoupling ≤ 16 - 0.6670 - 0.007297352562 := by linarith [ha.1]
+      have h0 : 0 ≤ 16 - s - PMSubstrate.causalCoupling ∨ 16 - s - PMSubstrate.causalCoupling < 0 := le_or_gt 0 _
       rcases h0 with h0 | h0
       · nlinarith [hA.2]
       · nlinarith [hA.2]
@@ -238,13 +238,13 @@ theorem wire_share_excluded {GF s : ℝ} (h : 1.1663782e-5 < GF ∧ GF < 1.16637
     vevWith (188 + 5 * s) < Real.sqrt (1 / (Real.sqrt 2 * GF)) - 0.00008 := by
   have hw := fermi_window h
   have hv := vev_bounds
-  have hpos : 0 < vev α electronGeV := by linarith [hv.1]
+  have hpos : 0 < vev PMSubstrate.causalCoupling electronGeV := by linarith [hv.1]
   unfold vevWith
   have e : (2 * 43^2 - (188 + 5 * s)) / 3510 = 1 - s / 702 := by ring
   rw [e]
-  have : vev α electronGeV * (1 - s / 702) ≤ vev α electronGeV * (1 - (1/1000) / 702) := by
+  have : vev PMSubstrate.causalCoupling electronGeV * (1 - s / 702) ≤ vev PMSubstrate.causalCoupling electronGeV * (1 - (1/1000) / 702) := by
     apply mul_le_mul_of_nonneg_left _ hpos.le; linarith
-  have h2 : vev α electronGeV * (1 - (1/1000) / 702) < 246.2196382 * (1 - (1/1000) / 702) := by
+  have h2 : vev PMSubstrate.causalCoupling electronGeV * (1 - (1/1000) / 702) < 246.2196382 * (1 - (1/1000) / 702) := by
     apply mul_lt_mul_of_pos_right hv.2; norm_num
   linarith [hw.1]
 

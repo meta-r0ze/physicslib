@@ -18,7 +18,7 @@ index on those states, `T_i = Σ_states (generator)²`. Stiffness `β_i = c W_i`
 * `clock_ledger_parity`: the clock ledger enters as `T₂ W_W = 2W_W`, which is never `43`.
   So the paper's `s = Δ/N_sys` holds with equal normalization only if its ledger counts
   channel-weighted cost; read as integer refresh counts, the clock contributes `2Δ`.
-* `strong_from_ledger`: in channel-cost units the uniform rule gives `α_s = α N_sys/L₃`.
+* `strong_from_ledger`: in channel-cost units the uniform rule gives `α_s  = α N_sys/L₃`.
   The paper's formula is the non-integer `L₃ = N_sys/(16η + 1/4) ∈ (11, 12)`; the integer
   ledgers give `α_s ∈ (0.1279, 0.1280)` for `L₃ = 11` and `(0.11730, 0.11732)` for `L₃ = 12`.
   Which ledger the strong sector carries is the remaining derivation.
@@ -42,7 +42,8 @@ theorem strong_index : strongIndex = 2 := by norm_num [strongIndex]
 theorem hyper_index_forced (Y : Charges) (hf : Flux Y) (hy : Yukawa Y 1) (hn : Y.n = 0) :
     hyperIndex Y = 10/3 ∧ hyperIndex Y / weakIndex = 5/3 := by
   rw [charges_forced Y hf hy hn]
-  norm_num [hyperIndex, standard, weakIndex]
+  norm_num [hyperIndex, CarrierRepresentation.carrierStandard,
+    CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis, weakIndex]
 
 def gsqI (c T W : ℝ) : ℝ := 1 / (2 * c * T * W)
 
@@ -55,8 +56,8 @@ theorem clock_ledger_parity (W : ℕ) : 2 * W ≠ 43 := by omega
 
 open CertifiedConstants in
 theorem strong_from_ledger :
-    (0.1279 : ℝ) < α * footprint / 11 ∧ α * footprint / 11 < 0.1280 ∧
-    (0.11730 : ℝ) < α * footprint / 12 ∧ α * footprint / 12 < 0.11732 := by
+    (0.1279 : ℝ) < PMSubstrate.causalCoupling * footprint / 11 ∧ PMSubstrate.causalCoupling * footprint / 11 < 0.1280 ∧
+    (0.11730 : ℝ) < PMSubstrate.causalCoupling * footprint / 12 ∧ PMSubstrate.causalCoupling * footprint / 12 < 0.11732 := by
   have h := alpha_bounds
   norm_num [footprint, overhead]
   refine ⟨?_, ?_, ?_, ?_⟩ <;> nlinarith [h.1, h.2]

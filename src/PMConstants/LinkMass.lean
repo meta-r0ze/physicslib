@@ -14,7 +14,7 @@ fixed length the cost `|(1 − U)φ|²` is, to second order, `|θ φ|²`.
 * The link's hypercharge is `Y = 1`, and that is derived, not inserted (`link_charge_one`,
   `thetaY_one`). The right wall differs from the left by the link's own charge
   (`CarrierRepresentation.carrierCharges_yukawa`), and the carrier table with axis tracelessness
-  and the forced lepton charge is `Hypercharge.standard`
+  and the forced lepton charge is `CarrierRepresentation.carrierStandard`
   (`CarrierRepresentation.carrierCharges_eq_standard`), every one of whose four hops carries
   `|ΔY| = 1` (`SectorLinks.standard_links`).
 
@@ -38,11 +38,8 @@ open Matrix
 -/
 
 /-- **The inter-sector link carries one unit of hypercharge.** -/
-theorem link_charge_one : SectorLinks.OneLink Hypercharge.standard 1 := by
-  have h : CarrierRepresentation.carrierCharges (1/3) (-1) 1 = Hypercharge.standard :=
-    CarrierRepresentation.carrierCharges_eq_standard (1/3) (-1) (by norm_num) (by norm_num)
-  rw [SectorLinks.links_iff_yukawa, ← h]
-  exact CarrierRepresentation.carrierCharges_yukawa (1/3) (-1) 1
+theorem link_charge_one : SectorLinks.OneLink CarrierRepresentation.carrierStandard 1 :=
+  (SectorLinks.links_iff_yukawa _ _).mpr (CarrierRepresentation.carrierCharges_yukawa _ _ _)
 
 /-- The transport generator with the link's hypercharge `Y` left free. -/
 def thetaY (g gp Y W₁ W₂ W₃ B : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=

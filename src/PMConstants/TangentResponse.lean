@@ -32,15 +32,11 @@ test. This is a net-response readout; it is not a primitive event ledger
 
 noncomputable section
 namespace PMConstants.TangentResponse
+open PMConstants.ReferenceDirections (RepairDisplacement)
+open PMConstants.ReferenceDirections.DoubletChart
 open Matrix PMAction CommonResponse
 
-abbrev D := ℝ × ℂ
-abbrev Doublet := Fin 2 → ℂ
-
-def reference : Doublet := ![1, 0]
-def tangent (d : D) : Doublet := ![Complex.I * (d.1 : ℂ), Complex.I * d.2]
-
-theorem tangent_nsq (d : D) : nsq (tangent d) = d.1 ^ 2 + Complex.normSq d.2 := by
+theorem tangent_nsq (d : RepairDisplacement) : nsq (tangent d) = d.1 ^ 2 + Complex.normSq d.2 := by
   unfold nsq tangent
   simp [dotProduct, Fin.sum_univ_two, Complex.normSq_apply, Complex.mul_re, Complex.mul_im]
   ring
@@ -48,15 +44,15 @@ theorem tangent_nsq (d : D) : nsq (tangent d) = d.1 ^ 2 + Complex.normSq d.2 := 
 local notation "X" => BranchMixerSynthesis.exchange (n := Fin 2)
 
 /-- **Every unit drift responds the same.** -/
-theorem drift_response (d : D) :
-    stateFlag X (Sum.elim (reference + tangent d) reference) = (d.1 ^ 2 + Complex.normSq d.2) / 2 := by
-  rw [RestorationResponse.prepared_exchange_response, add_sub_cancel_left, tangent_nsq]
+theorem drift_response (d : RepairDisplacement) :
+    stateFlag X (Sum.elim (input d) referenceDoublet) = (d.1 ^ 2 + Complex.normSq d.2) / 2 := by
+  rw [input, RestorationResponse.prepared_exchange_response, add_sub_cancel_left, tangent_nsq]
 
 /-- **The real drift family totals three directions' response.** -/
 theorem real_family_total :
-    stateFlag X (Sum.elim (reference + tangent (1, 0)) reference) +
-      stateFlag X (Sum.elim (reference + tangent (0, 1)) reference) +
-      stateFlag X (Sum.elim (reference + tangent (0, Complex.I)) reference) = 3 * (1 / 2) := by
+    stateFlag X (Sum.elim (input (1, 0)) referenceDoublet) +
+      stateFlag X (Sum.elim (input (0, 1)) referenceDoublet) +
+      stateFlag X (Sum.elim (input (0, Complex.I)) referenceDoublet) = 3 * (1 / 2) := by
   rw [drift_response, drift_response, drift_response]
   simp [Complex.normSq_apply]; norm_num
 
@@ -68,10 +64,5 @@ theorem complex_basis_total :
     RestorationResponse.exchange_resets, RestorationResponse.reset_gain X
     RestorationResponse.exchange_resets]
   simp
-
-/-- **The count λ keeps is the real family's.** -/
-theorem count_by_lambda :
-    ¬ ((0.1286 : ℝ) < (2 - 1/43) / 23) ∧ (0.1286 : ℝ) < (3 - 1/43) / 23 ∧ (3 - 1/43 : ℝ) / 23 < 0.1300 := by
-  refine ⟨by norm_num, by norm_num, by norm_num⟩
 
 end PMConstants.TangentResponse

@@ -104,7 +104,8 @@ theorem charge_eq_channels (n : Nucleon) :
 /-- **Three colour slots give baryon number one**: each colour axis carries `1/3`. -/
 theorem baryon_from_three_colours :
     (∑ i : Fin 3, PMConstants.BaryonNumber.axisB (Fin.succ i)) = 1 := by
-  simp [PMConstants.BaryonNumber.axisB, Fin.succ_ne_zero]
+  simp [PMConstants.BaryonNumber.axisB, PMConstants.CarrierRepresentation.blAxis,
+    Fin.succ_ne_zero]
 
 theorem colour_singlet_slots : (Finset.univ : Finset (Fin 3)).card = 3 := rfl
 

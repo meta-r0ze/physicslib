@@ -19,7 +19,7 @@ dependencies are in [`TODO.md`](TODO.md).
 - `ChainCouplings.chain_couplings`: all three couplings from Paper II's D₄ gauge action.
 - `SectorObligations`: the reference/update contract (exact refresh, weak ownership, colour reads).
 - `ReadScale`, `OnShell`: the matching scales from persistence and frame independence.
-- `VevEntry`: how the vacuum value enters the fermion masses (law A).
+- `VevEntry`: how the vacuum value enters the wall-gap law (law A).
 - `GenerationEncoding`: exhaustive three-pair classification, the distinction between
   pair types and independent physical generations, and exact retained-label storage.
 - `GenerationHistory`: an actual companion-carrier encoding, its coherent isometry,
@@ -36,6 +36,24 @@ dependencies are in [`TODO.md`](TODO.md).
   with unitary evolution and exact all-state readout.
 - `CarrierRegisterChirality`: tests of packet/wall/chirality matching against the
   full vacuum, and the agreement of the matching rules on its zero kernel.
+
+## Shared definitions
+
+| Quantity | Definition | How PMConstants uses it |
+| --- | --- | --- |
+| Electric charge | `CarrierRepresentation.electric` | Read B − L from the axis and isospin from the sign. Add half the axis value to the isospin. |
+| Packet hypercharge | `RequirementTable.packetHypercharge` with `CarrierRepresentation.carrierStandard` | The left wall reads the axis. The right wall adds the signed link charge. `PacketGaugeActions.hyperchargeOperator` and `ChannelOccupancy.hyperchargeThirds` use the same table. |
+| Conjugate hypercharge | `Hypercharge.conjugate` | Reverse the sign of the entries and exchange the labels in the right-wall pairs. |
+| Wall gap | `LinkGapLaw.gapA`, `gapB` | Read a detuning gap in cutoff units. The occupancy-cost bridge is open. |
+| Running thresholds | `PMSubstrate.SpeciesFootprints`, `StrongRunning.mZ` | Read the charm, tau and bottom occupancy costs. Read the uncorrected E8 Z spectrum in electron units. |
+| Scalar stiffness cost | `PMConstants.scalarStiffnessCost` | The partition gives twice the scalar coupling. `ScalarLedger.twice_scalarGain_eq_stiffnessCost` relates it to the scalar gain. |
+| Doublet repair chart | `ReferenceDirections.RepairDisplacement`, `ReferenceDirections.DoubletChart` | Use one reference doublet and one chart for the coherent and gauge repairs. |
+| Fine-structure constant | `Values.alpha` | Read `PMSubstrate.causalCoupling`. |
+| Fermi constant | `Values.fermi` | `fermi_electronUnit` converts the GeV reading to inverse squared electron units. |
+
+The experimental reference values are in
+[e8p Experimental](../../tools/e8p/E8PConstants/Experimental.lean). The gauge and scalar
+comparison proofs are in [ScaleComparisons](../../tools/e8p/E8PConstants/PMConstants/ScaleComparisons.lean).
 
 ## Next physical dependency for flavour
 
@@ -288,7 +306,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `OnShell` | Why an executing mode is read at its mass |
 | `LinkFromEvents` | The W/Z mass form is the leading event-law link response |
 | `ScalarSector` | The scalar sector against data without the predicted VEV |
-| `FermionMassLaw` | How the link sets fermion masses: the Higgs couplings decide |
+| `LinkGapLaw` | Link laws for the wall gap in cutoff units, with their Higgs coupling modifiers. |
 | `VevAccounting` | Which subtraction the VEV formula can persist with |
 | `VevPremises` | The VEV's two structural premises, made sharp |
 | `DepthEvents` | The gravitational attenuation from the event law: why `α`, and why `α^{43/2}` |
@@ -300,8 +318,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `BetaUniversality` | The rank rule for the beta coefficient fails its own universality test |
 | `GravityAccounting` | Which channel count the gravitational coupling can persist with |
 | scalar accounting (measured G_F/m_H selection) | moved to the e8p comparison layer (`E8PConstants.ScalarAccounting`) |
-| `ScalarLedger` | `scalarBudget = σ−χ = 3`, `scalarLabels = ν+σ+χ = 23`, `scalarGain`, `scalarGain_eq`, `scalarTollLedger_eq`, `scalarMassSq_eq`, `scalarBudget_eq_movedCount`; factorised scalar ledger. |
-| `ScalarBudget` | The scalar ledger's budget is the integer 3 |
+| `ScalarLedger` | `scalarBudget = σ−χ = 3`, `scalarLabels = ν+σ+χ = 23`, `scalarGain`, `scalarGain_eq`, `twice_scalarGain_eq_stiffnessCost`, `scalarMassSq_eq`, `scalarBudget_eq_movedCount`; factorised scalar ledger. |
 | `BoundaryStorage` | The gravity residual's boundary-storage term |
 | `CarrierActions` | Actual finite carrier operations behind two representation columns. |
 | `CarrierImplementation` | A finite register realization of the carrier actions. This is a local |
@@ -347,7 +364,6 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `MatterRunning` | Paper II's dynamics applied to Paper III's derived content |
 | hypercharge scope (measured W-mass selection) | moved to the e8p comparison layer (`E8PConstants.HyperScope`) |
 | `PreparationSelection` | The uniform preparation as an instance of law selection; `packet_preparation_uniform` is placement-free (any injective placement of the packet channels into the 32 substrate channels), with the placement supplied by EP (`ChannelPlacement.packetChannel`) |
-| `ScalePairing` | Which electric coupling the colour formula pairs with `α_s(M_Z)` |
 | `StableReadout` | Why the colour formula pairs `α(0)` with `α_s(M_Z)` |
 | `RegulatoryLabels` | The 23 regulatory labels are the coordinates of a link hop |
 | `GenerationParity` | Within one convention the equal-class crossing sits at (wall-`true` generation, wall-`false` generation) `= (h + 1, h)` (`crossing_entry`), never at a transposed position (`transpose_disjoint`), so the link is Hermitian only if zero (`hermitian_only_if_zero`): the wall-parity exchange symmetry is broken by the vacuum's convention. |
@@ -360,7 +376,7 @@ Generated from `PMConstants.lean`'s imports (in import order) and each module's 
 | `InterfaceGeometry` | uses `PMSubstrate.Derived.configDim` for the five modes, `activeResponseModes_eq_sigma`, `uniform_five_weights` from `PersistenceMaximin`, `geometric_weight_in_window`; no duplicate spatial/boundary definitions. |
 | `InterfaceWeightWindow` | `deltaRWeight`, `weight_window`: the Z-anchor window selects effective spectral weight `N=5`; `weight_four_low`, `weight_six_high`, `effective_weight_eq_sigma`. |
 | `InterfaceSpectralCandidate` | simplest isotropic D₄ root sum `Σ=24/(q²+2)`, `Ksub=1+αΣ`, `deltaRsub`; `simple_root_sum_excluded` shows `Δr(0)>0.08`, outside the Z-anchor window. |
-| `InterfaceCorrection` | `deltaR = 1 − 1/k`, `deltaR_window`, `deltaR_decomposition`, `deltaR_remainder`; names the W/Z interface correction and its leading/remainder split. |
+| `InterfaceCorrection` | Defines the W/Z correction `deltaR = 1 − 1/k` and proves its decomposition. |
 | `ScalarVevLink` | `zPhiCalibrated`, `vsubOfVev`, `canonicalVev_vsubOfVev`, `w_mass_from_vev`, `z_mass_from_vev`; the substrate amplitude is recovered from the VEV once the scalar normalization is calibrated. |
 | `VevDownstream` | `vev_downstream`: positivity, `G_F=1/(√2v²)`, `m_H²=2λv²`, exact electron closure; `w_mass_from_canonical_vev` conditional on `vev = canonicalVev`. |
 | `VevClosure` | `VevFactor`, `VevStatus`, `factorStatus`, `factorProduct`, `vev_closure`, `slotCount_closed`, `noiseAxes_closed`, `boundary_closed`, `oneRepair_closed`; composed VEV closure ledger. |

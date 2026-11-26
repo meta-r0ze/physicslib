@@ -39,26 +39,6 @@ theorem maintained_exactly (R : ℕ) (s : State (Fin (R+1))) (reference : WalkRe
       (((advance 0 (finRotate (R+1)))^[R+2] s) 0).1 ≠ reference :=
   ⟨fun t h0 h1 => ring_restores R t h0 h1 s reference hr, finite_horizon R s reference hold⟩
 
-/-- **Uniform instruction counts do not fit as the budget.** -/
-theorem instruction_ledgers_excluded :
-    (WalkReferenceProtocol.program.map (WalkReferenceProtocol.price 1 1 1 1)).sum = 4 ∧
-      ¬ ((0.1286 : ℝ) < (4 - 1/43) / 23 ∧ (4 - 1/43 : ℝ) / 23 < 0.1300) ∧
-      ¬ ((0.1286 : ℝ) < (1 - 1/43) / 23) ∧
-      ((0.1286 : ℝ) < (3 - 1/43) / 23 ∧ (3 - 1/43 : ℝ) / 23 < 0.1300) := by
-  refine ⟨by rw [WalkReferenceProtocol.step_price]; norm_num, by norm_num, by norm_num, by norm_num,
-    by norm_num⟩
-
-/-- **Renewal at the preparation price is not excluded.** -/
-theorem preparation_renewal_allowed :
-    let c := (1 - Real.cos (Real.pi / 4)) / 43
-    (0.1286 : ℝ) < (3 - 1/43 - c) / 23 ∧ (3 - 1/43 - c) / 23 < 0.1300 := by
-  intro c
-  have hc : Real.cos (Real.pi / 4) = Real.sqrt 2 / 2 := Real.cos_pi_div_four
-  have s1 : (1.414 : ℝ) < Real.sqrt 2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have s2 : Real.sqrt 2 < (1.415 : ℝ) := by rw [Real.sqrt_lt' (by norm_num)]; norm_num
-  simp only [c, hc]
-  constructor <;> nlinarith
-
 /-- The preparation price in units of one direction's response. -/
 theorem preparation_in_direction_units :
     PMAction.CommonResponse.stateFlag WalkReferenceCoupling.preparation WalkReferenceCoupling.seed /

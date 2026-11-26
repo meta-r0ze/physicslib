@@ -34,48 +34,41 @@ module does not relate them to `B`.
 
 noncomputable section
 namespace PMConstants.RepairBudget
+open PMConstants.ReferenceDirections (RepairDisplacement)
 open Filter Topology PMConstants ReferenceDirections
 
-abbrev D := ℝ × ℂ
-
 /-- Every displacement is realized by an electroweak drift with `b = 0`. -/
-theorem drift_covers_neighborhood (d : D) : displacement d.1 d.2 0 = d := by
+theorem drift_covers_neighborhood (d : RepairDisplacement) : displacement d.1 d.2 0 = d := by
   simp [displacement]
 
 /-- A complete repair of the reference: prepare a displacement into an internal state (records,
 clock), run, and observe the remaining displacement. -/
 structure ExactRepair where
   T : Type
-  prepare : D → T
+  prepare : RepairDisplacement → T
   run : T → T
-  observe : T → D
-  K : D →L[ℝ] D
-  exact_small : ∀ᶠ d in 𝓝 (0 : D), observe (run (prepare d)) = 0
+  observe : T → RepairDisplacement
+  K : RepairDisplacement →L[ℝ] RepairDisplacement
+  exact_small : ∀ᶠ d in 𝓝 (0 : RepairDisplacement), observe (run (prepare d)) = 0
   net_derivative : HasFDerivAt (fun d => d - observe (run (prepare d))) K 0
 
 /-- **One exact repair has total gain three.** -/
-theorem repair_gain (R : ExactRepair) : LinearMap.trace ℝ D R.K.toLinearMap = 3 := by
+theorem repair_gain (R : ExactRepair) : LinearMap.trace ℝ RepairDisplacement R.K.toLinearMap = 3 := by
   have h := PMAction.DifferentialRestoration.net_gain_trace R.prepare R.run R.observe R.K
     R.exact_small R.net_derivative
   rw [h, displacement_dim]; norm_num
 
-/-- **The budget from one exact repair.** -/
-theorem budget_from_repair (R : ExactRepair) (B : ℝ)
-    (hB : B = LinearMap.trace ℝ D R.K.toLinearMap) :
-    B = 3 ∧ ((0.1286 : ℚ) < (3 - 1/43) / (23 : ℕ) ∧ (3 - 1/43) / (23 : ℕ) < (0.1300 : ℚ)) := by
-  refine ⟨by rw [hB, repair_gain], (RegulatoryMaximin.count_unique 23).mpr rfl⟩
-
 /-- The premises are satisfiable: a reset to the reference. -/
 def witness : ExactRepair where
-  T := D
+  T := RepairDisplacement
   prepare := id
   run := fun _ => 0
   observe := id
-  K := ContinuousLinearMap.id ℝ D
+  K := ContinuousLinearMap.id ℝ RepairDisplacement
   exact_small := Filter.Eventually.of_forall fun _ => rfl
   net_derivative := by
-    have h : (fun d : D => d - id ((fun _ : D => (0 : D)) (id d))) = id := by
+    have h : (fun d : RepairDisplacement => d - id ((fun _ : RepairDisplacement => (0 : RepairDisplacement)) (id d))) = id := by
       funext d; simp
-    rw [h]; exact hasFDerivAt_id (0 : D)
+    rw [h]; exact hasFDerivAt_id (0 : RepairDisplacement)
 
 end PMConstants.RepairBudget

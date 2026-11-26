@@ -18,14 +18,16 @@ rows are treated as the address frame with weight `1` in these formulas.
   - the intensive values are `ColourChannels.strong_from_channels` (and the measured
     `w_window`, now living in `tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`).
 * The summed squared-pull comparison (`intensive_preferred`) lives in
-  `tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`: against the direct `m_W` average `80.3692 ± 0.0133`
-  and `α_s = 0.1180 ± 0.0009`, the summed squared pulls are below `1.70` for `w = η` and above
+  `tools/e8p/E8PConstants/PMConstants/ReadoutPulls.lean`: using the direct W-mass average
+  and the strong-coupling comparison, the summed squared pulls are below `1.70` for `w = η` and above
   `2.5` for `w = 1`. Both observables move the same way; the preference is mild (Δχ² ≈ 0.8).
 * `economy_selects_intensive` proves only the two numerical cost inequalities
   `16η < 16` and `12η < 12`. It does not prove that the contracts execute the same
   required work, or that either has a complete physically admissible schedule.
   Economy can select between them only after those obligations are established.
   The historical theorem name is retained for compatibility.
+
+The measured comparison proofs are in `tools/e8p/E8PConstants/PMConstants/ScaleComparisons.lean`.
 -/
 
 noncomputable section
@@ -43,17 +45,8 @@ theorem ledgers_share_weight :
     rw [PMSubstrate.E8Values.RM_eq, PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.sigma_eq]
   · unfold colourW ColourChannels.colourLedger; ring
 
-theorem extensive_w_mass {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
-    80.3882 < mZ * Real.sqrt (1 - 43 / footprintW 1) ∧
-      mZ * Real.sqrt (1 - 43 / footprintW 1) < 80.3926 := by
-  have h1 : (0.881590 : ℝ) < Real.sqrt (1 - 43 / footprintW 1) := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num [footprintW]
-  have h2 : Real.sqrt (1 - 43 / footprintW 1) < 0.881592 := by
-    rw [Real.sqrt_lt' (by norm_num)]; norm_num [footprintW]
-  constructor <;> nlinarith [h.1, h.2]
-
 theorem extensive_strong :
-    (0.11736 : ℝ) < α * footprintW 1 / colourW 1 ∧ α * footprintW 1 / colourW 1 < 0.11737 := by
+    (0.11736 : ℝ) < PMSubstrate.causalCoupling * footprintW 1 / colourW 1 ∧ PMSubstrate.causalCoupling * footprintW 1 / colourW 1 < 0.11737 := by
   have h := alpha_bounds
   norm_num [footprintW, colourW]
   constructor <;> nlinarith [h.1, h.2]

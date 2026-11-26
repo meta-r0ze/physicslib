@@ -76,7 +76,7 @@ import PMConstants.ReadScale
 import PMConstants.OnShell
 import PMConstants.LinkFromEvents
 import PMConstants.ScalarSector
-import PMConstants.FermionMassLaw
+import PMConstants.LinkGapLaw
 import PMConstants.VevAccounting
 import PMConstants.VevPremises
 import PMConstants.DepthEvents
@@ -85,7 +85,6 @@ import PMConstants.BaryonNumber
 import PMConstants.FloorNeutrino
 import PMConstants.BetaUniversality
 import PMConstants.GravityAccounting
-import PMConstants.ScalarBudget
 import PMConstants.ScalarLedger
 import PMConstants.BoundaryStorage
 
@@ -136,7 +135,6 @@ import PMConstants.ReadoutScales
 import PMConstants.RunningLinks
 import PMConstants.MatterRunning
 import PMConstants.PreparationSelection
-import PMConstants.ScalePairing
 import PMConstants.StableReadout
 import PMConstants.RegulatoryLabels
 import PMConstants.VevCorrections

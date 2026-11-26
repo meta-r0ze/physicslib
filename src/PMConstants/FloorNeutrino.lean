@@ -26,24 +26,24 @@ open PMConstants CertifiedConstants
 
 def meEV : ℝ := PMSubstrate.SIUnits.electronMassEV
 
-theorem floor_bounds : 0.009208 < Bulk.floorMass α meEV ∧ Bulk.floorMass α meEV < 0.009210 := by
+theorem floor_bounds : 0.009208 < Bulk.floorMass PMSubstrate.causalCoupling meEV ∧ Bulk.floorMass PMSubstrate.causalCoupling meEV < 0.009210 := by
   have ha := alpha_bounds
   have hp1 := Real.pi_gt_d6; have hp2 := Real.pi_lt_d6
   unfold Bulk.floorMass Bulk.floorRatio meEV PMSubstrate.SIUnits.electronMassEV
   rw [PMSubstrate.E8Values.nu_eq, PMSubstrate.E8Values.Delta_eq]
-  constructor <;> nlinarith [mul_pos (by linarith : (0:ℝ) < Real.pi) (by linarith : (0:ℝ) < α)]
+  constructor <;> nlinarith [mul_pos (by linarith : (0:ℝ) < Real.pi) (by linarith : (0:ℝ) < PMSubstrate.causalCoupling)]
 
 theorem tower_sum :
-    Bulk.floorMass α meEV + Bulk.floorMass α meEV / 43 + Bulk.floorMass α meEV / 43^2 < 0.0095 := by
+    Bulk.floorMass PMSubstrate.causalCoupling meEV + Bulk.floorMass PMSubstrate.causalCoupling meEV / 43 + Bulk.floorMass PMSubstrate.causalCoupling meEV / 43^2 < 0.0095 := by
   have h := floor_bounds; nlinarith [h.2]
 
 theorem oscillation_excludes (n : ℕ) :
-    (Bulk.floorMass α meEV / 43^n)^2 < 0.000085 ∧ (0.000085 : ℝ) < 0.0024 := by
+    (Bulk.floorMass PMSubstrate.causalCoupling meEV / 43^n)^2 < 0.000085 ∧ (0.000085 : ℝ) < 0.0024 := by
   have h := floor_bounds
-  have hpos : 0 < Bulk.floorMass α meEV := by linarith [h.1]
-  have hle : Bulk.floorMass α meEV / 43^n ≤ Bulk.floorMass α meEV :=
+  have hpos : 0 < Bulk.floorMass PMSubstrate.causalCoupling meEV := by linarith [h.1]
+  have hle : Bulk.floorMass PMSubstrate.causalCoupling meEV / 43^n ≤ Bulk.floorMass PMSubstrate.causalCoupling meEV :=
     div_le_self hpos.le (one_le_pow₀ (by norm_num))
-  have hnn : 0 ≤ Bulk.floorMass α meEV / 43^n := by positivity
+  have hnn : 0 ≤ Bulk.floorMass PMSubstrate.causalCoupling meEV / 43^n := by positivity
   refine ⟨?_, by norm_num⟩
   nlinarith [h.2]
 
@@ -100,18 +100,18 @@ theorem no_moderate_gap_ratio (base scale : ℝ) (h : scale*base ≠ 0) (i j : F
 
 /-- The proposed factor-six response is tested separately from the bare floor. -/
 theorem factor_six_windows :
-    0.00000164 < smallGap (Bulk.floorMass α meEV) 6 ∧
-    smallGap (Bulk.floorMass α meEV) 6 < 0.00000166 ∧
-    0.00304 < largeGap (Bulk.floorMass α meEV) 6 ∧
-    largeGap (Bulk.floorMass α meEV) 6 < 0.00306 := by
+    0.00000164 < smallGap (Bulk.floorMass PMSubstrate.causalCoupling meEV) 6 ∧
+    smallGap (Bulk.floorMass PMSubstrate.causalCoupling meEV) 6 < 0.00000166 ∧
+    0.00304 < largeGap (Bulk.floorMass PMSubstrate.causalCoupling meEV) 6 ∧
+    largeGap (Bulk.floorMass PMSubstrate.causalCoupling meEV) 6 < 0.00306 := by
   have hf := floor_bounds
-  have hlo : (0.009208 : ℝ)^2 < (Bulk.floorMass α meEV)^2 := by
-    have hp := mul_pos (by linarith [hf.1] : 0 < Bulk.floorMass α meEV-0.009208)
-      (by linarith [hf.1] : 0 < Bulk.floorMass α meEV+0.009208)
+  have hlo : (0.009208 : ℝ)^2 < (Bulk.floorMass PMSubstrate.causalCoupling meEV)^2 := by
+    have hp := mul_pos (by linarith [hf.1] : 0 < Bulk.floorMass PMSubstrate.causalCoupling meEV-0.009208)
+      (by linarith [hf.1] : 0 < Bulk.floorMass PMSubstrate.causalCoupling meEV+0.009208)
     nlinarith
-  have hhi : (Bulk.floorMass α meEV)^2 < (0.009210 : ℝ)^2 := by
-    have hp := mul_pos (by linarith [hf.2] : 0 < 0.009210-Bulk.floorMass α meEV)
-      (by linarith [hf.1] : 0 < 0.009210+Bulk.floorMass α meEV)
+  have hhi : (Bulk.floorMass PMSubstrate.causalCoupling meEV)^2 < (0.009210 : ℝ)^2 := by
+    have hp := mul_pos (by linarith [hf.2] : 0 < 0.009210-Bulk.floorMass PMSubstrate.causalCoupling meEV)
+      (by linarith [hf.1] : 0 < 0.009210+Bulk.floorMass PMSubstrate.causalCoupling meEV)
     nlinarith
   rw [small_gap_formula, large_gap_formula]
   constructor

@@ -28,13 +28,13 @@ theorem rootSpectralResponse_eq (q2 : ℝ) :
 
 /-- Candidate interface factor `K = 1 + α·Σ`. -/
 def Ksub (q2 : ℝ) : ℝ :=
-  1 + PMConstants.CertifiedConstants.α * rootSpectralResponse q2
+  1 + PMSubstrate.causalCoupling * rootSpectralResponse q2
 
 /-- Candidate on-shell correction. -/
 def deltaRsub (q2 : ℝ) : ℝ :=
   1 - 1 / Ksub q2
 
-theorem Ksub_zero : Ksub 0 = 1 + 12 * PMConstants.CertifiedConstants.α := by
+theorem Ksub_zero : Ksub 0 = 1 + 12 * PMSubstrate.causalCoupling := by
   unfold Ksub
   rw [rootSpectralResponse_eq]
   norm_num

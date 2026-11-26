@@ -47,7 +47,7 @@ def value : Key → ℝ
   | .footprint => footprint
   | .weakFraction => PMConstants.Values.weakFraction
   | .scalar => PMConstants.Values.scalar
-  | .scalarToll => scalarToll
+  | .scalarToll => scalarStiffnessCost
   | .electronYukawa => PMConstants.Values.electronYukawa
   | .strong => PMConstants.Values.strong
   | .vevRatio => PMConstants.Values.vevRatio PMConstants.Values.alpha
@@ -590,7 +590,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
   | clusteringLate => norm_num [bounds, value, PMCosmology.loadFactor]
   | overhead | footprint | weakFraction | scalar | scalarToll | electronMassInput =>
     norm_num [bounds, value, PMConstants.Values.weakFraction, PMConstants.Values.scalar,
-      overhead, footprint, clockRatio, selfCoupling, scalarToll, PMConstants.Values.electronGeV_eq, PMSubstrate.SIUnits.electronMassGeV]
+      overhead, footprint, clockRatio, selfCoupling, scalarStiffnessCost, PMConstants.Values.electronGeV_eq, PMSubstrate.SIUnits.electronMassGeV]
 
 theorem keys_complete (k : Key) : k ∈ keys := by cases k <;> simp [keys]
 set_option maxRecDepth 8000 in

@@ -1,4 +1,5 @@
 import PMConstants.Values
+import E8PConstants.PMConstants.ScaleComparisons
 import E8PConstants.PMConstants.WeakMassPulls
 
 /-!
@@ -79,7 +80,7 @@ theorem intensive_preferred {mZ : ℝ} (h : 91.1855 < mZ ∧ mZ < 91.1897) :
           PMConstants.Values.colourW 1) := by
   have hw := WeakMassPulls.w_window h
   have hs := PMConstants.Values.strong_from_channels
-  have ew := PMConstants.Values.extensive_w_mass h
+  have ew := PMConstants.ContentWeight.extensive_w_mass h
   have es := PMConstants.Values.extensive_strong
   unfold PMConstants.Values.chi
   constructor

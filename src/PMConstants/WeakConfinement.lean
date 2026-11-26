@@ -65,8 +65,8 @@ theorem weak_fraction (f : Res → EW) (hclock : f .clock = .weak)
     (hcap : ∀ r, f r = .weak → WeakReach r) :
     (∀ r, (f r = .weak ↔ r ∈ reqSU2) ∧ (f r = .hyper ↔ r ∈ reqY)) ∧
       ledger reqSU2 / (ledger reqSU2 + ledger reqY) = 1849 / 8295 ∧
-      ((0.11799 : ℝ) < CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour ∧
-        CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour < 0.11800) ∧
+      ((0.11799 : ℝ) < PMSubstrate.causalCoupling * (ledger reqSU2 + ledger reqY) / ledger reqColour ∧
+        PMSubstrate.causalCoupling * (ledger reqSU2 + ledger reqY) / ledger reqColour < 0.11800) ∧
       f (.payload 15) = .hyper :=
   TableConsequences.end_to_end (premises_from_reach f hclock hcap)
 

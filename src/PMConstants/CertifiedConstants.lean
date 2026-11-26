@@ -10,10 +10,8 @@ exact rationals. Matching these constants to physical observables is separate.
 noncomputable section
 namespace PMConstants.CertifiedConstants
 
-abbrev α : ℝ := PMSubstrate.causalCoupling
-
 theorem alpha_bounds :
-    (0.007297352562 : ℝ) < α ∧ α < 0.007297352563 := by
+    (0.007297352562 : ℝ) < PMSubstrate.causalCoupling ∧ PMSubstrate.causalCoupling < 0.007297352563 := by
   have hz : 0 < PMSubstrate.geometricIndex := by
     linarith [PMSubstrate.geometricIndex_gt_one]
   change (0.007297352562 : ℝ) < 1/PMSubstrate.geometricIndex ∧
@@ -25,7 +23,7 @@ theorem alpha_bounds :
     nlinarith [PMSubstrate.geometricIndex_bounds.1]
 
 theorem strong_bounds :
-    (0.1179031556 : ℝ) < strongCoupling α ∧ strongCoupling α < 0.1179031557 := by
+    (0.1179031556 : ℝ) < strongCoupling PMSubstrate.causalCoupling ∧ strongCoupling PMSubstrate.causalCoupling < 0.1179031557 := by
   obtain ⟨hl, hu⟩ := alpha_bounds
   norm_num [strongCoupling, overhead]
   constructor <;> linarith
@@ -39,8 +37,8 @@ theorem scalar_bounds :
   norm_num [selfCoupling]
 
 theorem electron_yukawa_bounds :
-    (0.000002934226843 : ℝ) < ElectroweakE8.electronYukawa α ∧
-      ElectroweakE8.electronYukawa α < 0.000002934226844 := by
+    (0.000002934226843 : ℝ) < ElectroweakE8.electronYukawa PMSubstrate.causalCoupling ∧
+      ElectroweakE8.electronYukawa PMSubstrate.causalCoupling < 0.000002934226844 := by
   obtain ⟨hl, hu⟩ := alpha_bounds
   norm_num [ElectroweakE8.electronYukawa, ElectroweakE8.bareYukawa]
   constructor <;> linarith
@@ -49,11 +47,11 @@ theorem electron_yukawa_bounds :
 fermion charges additionally require the specified invariant scalar couplings
 and sterile neutrality. Persistence is not substituted for these hypotheses. -/
 theorem constants_selected (v : Allocation.Values) (Y : Hypercharge.Charges)
-    (halloc : Allocation.Compatible α v) (hflux : Hypercharge.Flux Y)
+    (halloc : Allocation.Compatible PMSubstrate.causalCoupling v) (hflux : Hypercharge.Flux Y)
     (hyuk : Hypercharge.Yukawa Y 1) (hneutral : Y.n = 0) :
-    v.η = overhead ∧ v.strong = strongCoupling α ∧ v.weak = clockRatio ∧
-      v.scalar = selfCoupling ∧ Y = Hypercharge.standard := by
-  obtain ⟨ho, hs, hw, hl⟩ := Allocation.allocation_forced α v halloc
+    v.η = overhead ∧ v.strong = strongCoupling PMSubstrate.causalCoupling ∧ v.weak = clockRatio ∧
+      v.scalar = selfCoupling ∧ Y = CarrierRepresentation.carrierStandard := by
+  obtain ⟨ho, hs, hw, hl⟩ := Allocation.allocation_forced PMSubstrate.causalCoupling v halloc
   exact ⟨ho, hs, hw, hl, Hypercharge.charges_forced Y hflux hyuk hneutral⟩
 
 end PMConstants.CertifiedConstants

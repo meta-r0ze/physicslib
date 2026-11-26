@@ -15,7 +15,7 @@ open PMConstants.BaryonNumber
 
 /-- The reference axis is the unique axis with baryon weight zero. -/
 theorem lepton_axis_unique (i : Fin 4) : axisB i = 0 ↔ i = 0 := by
-  fin_cases i <;> simp [axisB]
+  fin_cases i <;> simp [axisB, PMConstants.CarrierRepresentation.blAxis]
 
 /-- Exactly one reference axis. -/
 theorem reference_axis_card :
@@ -31,7 +31,7 @@ theorem colour_axis_card :
     ((Finset.univ.filter (fun i : Fin 4 => axisB i = 1/3)).card) = 3 := by
   have h : (Finset.univ.filter (fun i : Fin 4 => axisB i = 1/3)) = {1, 2, 3} := by
     ext i
-    fin_cases i <;> simp [axisB]
+    fin_cases i <;> simp [axisB, PMConstants.CarrierRepresentation.blAxis]
   rw [h]
   simp
 
@@ -40,7 +40,7 @@ theorem axis_split :
     (Finset.univ.filter (fun i : Fin 4 => axisB i = 0)) ∪
       (Finset.univ.filter (fun i : Fin 4 => axisB i = 1/3)) = Finset.univ := by
   ext i
-  fin_cases i <;> simp [axisB]
+  fin_cases i <;> simp [axisB, PMConstants.CarrierRepresentation.blAxis]
 
 /-- `3 + 1 = 4` from the two axis sets. -/
 theorem three_plus_one_axes :

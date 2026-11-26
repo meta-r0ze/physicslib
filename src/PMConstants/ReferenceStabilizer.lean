@@ -34,7 +34,7 @@ def Fixes (G : PacketGaugeActions.M) (v : PacketGaugeActions.Channels) : Prop :=
 lemma hyper_lepton (s t : Fin 2) :
     hyperGen (lepton s) (lepton t) = if s = t then -1/2 else 0 := by
   fin_cases s <;> fin_cases t <;>
-    norm_num [hyperGen, lepton, PacketGaugeActions.charge, PacketGaugeActions.block]
+    norm_num [hyperGen, lepton, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block]
 
 lemma weak_lepton (A : Matrix (Fin 2) (Fin 2) ℂ) (s t : Fin 2) :
     weakGen A (lepton s) (lepton t) = A s t := by
@@ -48,12 +48,12 @@ lemma weakGen_smul (r : ℂ) (A : Matrix (Fin 2) (Fin 2) ℂ) : weakGen (r • A
 lemma charge_fixes_neutral : Fixes (t3 + hyperGen) (lepton 0) := by
   intro c
   rcases c with q | q | s | s
-  · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.charge, PacketGaugeActions.block]
-  · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.charge, PacketGaugeActions.block]
+  · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block]
+  · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block]
   · fin_cases s
     · exact reference_charges.1
-    · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.charge, PacketGaugeActions.block]
-  · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.charge, PacketGaugeActions.block]
+    · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block]
+  · simp [t3, hyperGen, lepton, weakGen, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block]
 
 /-- **The reference leaves exactly the electric charge unbroken.** -/
 theorem electroweak_stabilizer (A : Matrix (Fin 2) (Fin 2) ℂ) (hA : Aᴴ = A) (htr : A.trace = 0)

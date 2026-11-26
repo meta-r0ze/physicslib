@@ -74,12 +74,6 @@ until the LaTeX pipeline is pointed at `e8p --latex`.
   charge energies as text citing their theorems; print them from `src/` values if a computable
   form is added there.
 - Add `--particle <spec>`: accept `6 7` aka carbon 13 v.s. the more stable carbon 12, print `Z/N/A`, configuration, shell counts, `2S+1`, E8 nuclear mass (`certifiedMass`), tabulated isotopic mass and half-life/decay. This is a lookup/display feature over frozen isotope data, not a new model value.
-- **Electron-mass inputs.** `ElectroweakBounds.electronGeV`, `FloorNeutrino.meEV` and
-  `StrongRunning.mZ` use `0.51099895` (CODATA truncated by `1.35×10⁻⁹`); `SharedUnits.me` and
-  `Hydrogen.electronMassEV` use the full `0.51099895069`. Negligible at those rows' precision;
-  unify on `SharedUnits.me` when their proofs are next touched. `SharedUnits.hbarc = 197.3269804`
-  is likewise truncated (`2×10⁻¹⁰`).
-
 - `E8TickUnit` is the SI comparison conversion; `AlphaClockComparison` now lives in `src/PMAtoms/`. `ledgerScatterME` is computed from the 26 stable-line residuals.
 - **Candidate scalar rows from `src/`**: `K_ℓ3` at leading order (`PMHadrons.KaonSemileptonic`),
   the shell spacing coefficient `χ·m_p/Δ`, the O-17 spin–orbit splitting. Each needs a theorem

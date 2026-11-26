@@ -1,5 +1,5 @@
 import PMAction.RunningCoefficients
-import PMConstants.ScalePairing
+import PMConstants.ReadoutScales
 import PMConstants.NeutralCurrent
 
 /-!
@@ -79,15 +79,6 @@ theorem colour_never_stationary (nf : ℕ) : b0 3 nf 0 ≠ 0 := by
   have h2 : ((2 * nf : ℕ) : ℚ) = 33 := by push_cast; linarith
   have : 2 * nf = 33 := by exact_mod_cast h2
   omega
-
-/-- **The pairing.** The electric side has a scale-free plateau below the lightest charged carrier;
-colour has none at any flavour number; the same-scale reading misses the data. -/
-theorem pairing :
-    bContent 0 0 0 = 0 ∧ (∀ nf : ℕ, b0 3 nf 0 ≠ 0) ∧
-      ∀ {aZ : ℝ}, (1 / 127.96 < aZ ∧ aZ < 1 / 127.94) →
-        9 < (aZ * footprint / ColourChannels.colourLedger - 0.1180) / 0.0009 :=
-  ⟨(abelian_stationary_iff 0 0 le_rfl le_rfl).mpr ⟨rfl, rfl⟩, colour_never_stationary,
-    fun h => (ScalePairing.same_scale_excluded h).2⟩
 
 /-- **Colour's anchor is the `Z`.** Colour has no plateau; the `Q`-commuting broken directions are
 exactly the `Z` line; its scale is the neutral form's trace (the photon direction being null). -/

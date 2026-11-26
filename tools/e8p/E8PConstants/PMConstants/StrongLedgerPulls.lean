@@ -30,14 +30,14 @@ open PMConstants.Values
 theorem integer_ledger_unique (L : ℕ) (hL : 0 < L) :
     |ledgerCoupling L - 0.1180| < 3 * 0.0009 ↔ L = 12 := by
   have h := alpha_footprint_bounds
-  have hpos : (0 : ℝ) < PMConstants.Values.α * PMConstants.Values.footprint := by linarith [h.1]
+  have hpos : (0 : ℝ) < PMConstants.Values.alpha * PMConstants.Values.footprint := by linarith [h.1]
   constructor
   · intro habs
     rcases lt_trichotomy L 12 with hl | hl | hl
     · exfalso
       have hL11 : (L : ℝ) ≤ 11 := by exact_mod_cast (by omega : L ≤ 11)
       have hL1 : (1 : ℝ) ≤ L := by exact_mod_cast hL
-      have hge : PMConstants.Values.α * PMConstants.Values.footprint / 11 ≤ ledgerCoupling L := by
+      have hge : PMConstants.Values.alpha * PMConstants.Values.footprint / 11 ≤ ledgerCoupling L := by
         unfold ledgerCoupling
         exact div_le_div_of_nonneg_left hpos.le (by linarith) hL11
       have := (abs_lt.mp habs).2
@@ -45,7 +45,7 @@ theorem integer_ledger_unique (L : ℕ) (hL : 0 < L) :
     · exact hl
     · exfalso
       have hL13 : (13 : ℝ) ≤ L := by exact_mod_cast (by omega : 13 ≤ L)
-      have hle : ledgerCoupling L ≤ PMConstants.Values.α * PMConstants.Values.footprint / 13 := by
+      have hle : ledgerCoupling L ≤ PMConstants.Values.alpha * PMConstants.Values.footprint / 13 := by
         unfold ledgerCoupling
         exact div_le_div_of_nonneg_left hpos.le (by norm_num) hL13
       have := (abs_lt.mp habs).1
@@ -57,24 +57,24 @@ theorem integer_ledger_unique (L : ℕ) (hL : 0 < L) :
 
 /-- The measured window read as a band on the ledger. -/
 theorem ledger_window {L : ℝ} (hL : 0 < L)
-    (h : |PMConstants.Values.α * PMConstants.Values.footprint / L - 0.1180| < 3 * 0.0009) :
+    (h : |PMConstants.Values.alpha * PMConstants.Values.footprint / L - 0.1180| < 3 * 0.0009) :
     11.66 < L ∧ L < 12.21 := by
   have hb := alpha_footprint_bounds
   rw [abs_lt] at h
   obtain ⟨h1, h2⟩ := h
   constructor
   · by_contra hc; push Not at hc
-    have : PMConstants.Values.α * PMConstants.Values.footprint / 11.66 ≤
-        PMConstants.Values.α * PMConstants.Values.footprint / L :=
+    have : PMConstants.Values.alpha * PMConstants.Values.footprint / 11.66 ≤
+        PMConstants.Values.alpha * PMConstants.Values.footprint / L :=
       div_le_div_of_nonneg_left (by linarith [hb.1]) hL hc
-    have h3 : (0.1207 : ℝ) < PMConstants.Values.α * PMConstants.Values.footprint / 11.66 := by
+    have h3 : (0.1207 : ℝ) < PMConstants.Values.alpha * PMConstants.Values.footprint / 11.66 := by
       rw [lt_div_iff₀ (by norm_num)]; linarith [hb.1]
     linarith
   · by_contra hc; push Not at hc
-    have : PMConstants.Values.α * PMConstants.Values.footprint / L ≤
-        PMConstants.Values.α * PMConstants.Values.footprint / 12.21 :=
+    have : PMConstants.Values.alpha * PMConstants.Values.footprint / L ≤
+        PMConstants.Values.alpha * PMConstants.Values.footprint / 12.21 :=
       div_le_div_of_nonneg_left (by linarith [hb.1]) (by norm_num) hc
-    have h3 : PMConstants.Values.α * PMConstants.Values.footprint / 12.21 < (0.1153 : ℝ) := by
+    have h3 : PMConstants.Values.alpha * PMConstants.Values.footprint / 12.21 < (0.1153 : ℝ) := by
       rw [div_lt_iff₀ (by norm_num)]; linarith [hb.2]
     linarith
 

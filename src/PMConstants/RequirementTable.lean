@@ -37,7 +37,7 @@ def ty (i : Fin 16) : Ty :=
 def colourDim : Ty → ℕ | .Q => 3 | .u => 3 | .d => 3 | _ => 1
 def isoDim : Ty → ℕ | .Q => 2 | .L => 2 | _ => 1
 
-def hyper (Y : Charges) : Ty → ℚ
+def packetHypercharge (Y : Charges) : Ty → ℚ
   | .Q => Y.q | .u => Y.u | .d => Y.d | .L => Y.l | .e => Y.e | .n => Y.n
 
 theorem colour_column (i : Fin 16) :
@@ -58,9 +58,9 @@ theorem multiplicities :
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> decide
 
 theorem hyper_column (Y : Charges) (hf : Flux Y) (hl : SectorLinks.OneLink Y 1) (hn : Y.n = 0)
-    (i : Fin 16) : hyper Y (ty i) ≠ 0 ↔ i.val ≠ 15 := by
+    (i : Fin 16) : packetHypercharge Y (ty i) ≠ 0 ↔ i.val ≠ 15 := by
   have hY := SectorLinks.forced_by_links Y hf hl hn
   subst hY
-  fin_cases i <;> simp [ty, hyper, standard]
+  fin_cases i <;> norm_num [ty, packetHypercharge, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 end PMConstants.RequirementTable

@@ -62,7 +62,7 @@ theorem colour_generator_exists :
   ⟨ReferenceAxis.bl, by
     intro h
     have e := congrFun (congrFun h 0) 0
-    simp [ReferenceAxis.bl] at e,
+    norm_num [ReferenceAxis.bl, CarrierRepresentation.blAxis] at e,
    ReferenceAxis.bl_traceless⟩
 
 /-! ## Charge grading -/

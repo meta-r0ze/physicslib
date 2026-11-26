@@ -32,7 +32,7 @@ namespace PMElementaryParticles.HeavyFlipRecords
 open PMAction PMConstants.ChannelOccupancy EventRequirements ProtocolToll Real
 
 /-- The charge used by the diagonal packet transport. -/
-abbrev charge (c : PMConstants.PacketGaugeActions.Channels) : ℝ := ((tag c).2.2 : ℝ) / 3
+abbrev charge (c : PMConstants.PacketGaugeActions.Channels) : ℝ := (hyperchargeThirds c : ℝ) / 3
 
 /-- The probability of any auxiliary outcome of a charge-only readout on a massive label.
 For fixed slot charge, `accept` can include the entire schedule and its auxiliary decoder. -/
@@ -45,7 +45,8 @@ theorem quark_auxiliary_gap (accept : ℝ → ℝ) (h : ∀ q, 0 ≤ accept q �
     (a : Fin 3) (i j : Fin 2) :
     |auxiliaryAcceptance accept (quarkActive a i) (downStatic a) -
       auxiliaryAcceptance accept (quarkActive a j) (upStatic a)| ≤ 1 / 2 := by
-  have hq : charge (quarkActive a i) = charge (quarkActive a j) := rfl
+  have hq : charge (quarkActive a i) = charge (quarkActive a j) := by
+    simp [charge, quarkActive, hyperchargeThirds_apply]
   simp only [auxiliaryAcceptance, hq]
   exact abs_le.mpr ⟨by linarith [(h (charge (downStatic a))).1, (h (charge (upStatic a))).2],
     by linarith [(h (charge (downStatic a))).2, (h (charge (upStatic a))).1]⟩
@@ -84,11 +85,11 @@ theorem electron_down_overlap (a : Fin 3) (i j : Fin 2) :
     phaseOverlapSq (3 * π / 2) qa ra = 1 ∧ phaseOverlapSq (3 * π / 2) qs rs = 1 ∧
       phaseOverlapSq (π / 2) qa ra = 1 / 4 ∧ phaseOverlapSq (π / 2) qs rs = 1 / 4 := by
   have activeGap : charge (leptonActive i) - charge (quarkActive a j) = -(4 / 3) := by
-    norm_num [charge, tag, leptonActive, quarkActive]
+    norm_num [charge, hyperchargeThirds_apply, leptonActive, quarkActive]
   have staticGap : charge electronStatic - charge (downStatic a) = -(4 / 3) := by
-    change ((tag (.inr (.inr (.inr 1)))).2.2 : ℝ) / 3 -
-      ((tag (.inr (.inl (a, 1)))).2.2 : ℝ) / 3 = _
-    norm_num [tag]
+    change (hyperchargeThirds (.inr (.inr (.inr 1))) : ℝ) / 3 -
+      (hyperchargeThirds (.inr (.inl (a, 1))) : ℝ) / 3 = _
+    norm_num [hyperchargeThirds_apply]
   have hc : cos (2 * (π / 3)) = -1 / 2 := by rw [cos_two_mul, cos_pi_div_three]; norm_num
   dsimp only
   simp only [phaseOverlapSq, activeGap, staticGap, DiagonalReadout.flag,
@@ -100,7 +101,7 @@ theorem electron_down_overlap (a : Fin 3) (i j : Fin 2) :
 theorem active_quarter (a : Fin 3) (i j : Fin 2) :
     hyperchargeFlag (π / 2) (quarkActive a i) = (2 - √3) / 4 ∧
       hyperchargeFlag (π / 2) (leptonActive j) = 1 / 2 := by
-  simp only [hyperchargeFlag_eq_cos, tag, quarkActive, leptonActive]
+  simp only [hyperchargeFlag_eq_cos, hyperchargeThirds_apply, quarkActive, leptonActive]
   push_cast
   constructor
   · rw [show π / 2 * 1 / 3 = π / 6 by ring, cos_pi_div_six]; ring
@@ -128,8 +129,8 @@ theorem comparisonPrice_nonneg (cA cS : PMConstants.PacketGaugeActions.Channels)
     0 ≤ comparisonPrice cA cS b := by
   unfold comparisonPrice massiveFlag
   rw [hyperchargeFlag_eq_cos, hyperchargeFlag_eq_cos]
-  linarith [cos_le_one ((if b then π / 2 else 3 * π / 2) * ((tag cA).2.2 : ℝ) / 3),
-    cos_le_one ((if b then π / 2 else 3 * π / 2) * ((tag cS).2.2 : ℝ) / 3)]
+  linarith [cos_le_one ((if b then π / 2 else 3 * π / 2) * (hyperchargeThirds cA : ℝ) / 3),
+    cos_le_one ((if b then π / 2 else 3 * π / 2) * (hyperchargeThirds cS : ℝ) / 3)]
 
 /-- When only the shared static doublet comparison is required, once suffices under Economy. -/
 theorem full_only_minimum (cA cS : PMConstants.PacketGaugeActions.Channels) :

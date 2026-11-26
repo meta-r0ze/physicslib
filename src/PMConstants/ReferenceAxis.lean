@@ -85,15 +85,16 @@ theorem ext_trace (C : Matrix (Fin 3) (Fin 3) ℂ) : (ext C).trace = C.trace := 
   simp [Matrix.trace, Fin.sum_univ_succ, ext]
 
 /-- `B - L` on the four axes. -/
-def bl : Matrix (Fin 4) (Fin 4) ℂ := diagonal ![-1, 1/3, 1/3, 1/3]
+def bl : Matrix (Fin 4) (Fin 4) ℂ :=
+  diagonal (fun i => (CarrierRepresentation.blAxis (decide (i = 0)) : ℂ))
 
 theorem bl_traceless : bl.trace = 0 := by
-  simp [bl, Matrix.trace, Fin.sum_univ_succ]; norm_num
+  norm_num [bl, CarrierRepresentation.blAxis, Matrix.trace, Fin.sum_univ_four]
 
 theorem bl_broken : ¬ FixesAxis bl := by
   intro h
   have := h 0
-  simp [bl] at this
+  norm_num [bl, CarrierRepresentation.blAxis] at this
 
 /-! ## The axis charge colour leaves alone
 
@@ -137,6 +138,9 @@ theorem bl_unique {f : Fin 4 → ℂ}
     · rw [← h12]; simpa using h1
     · rw [← h13]; simpa using h1
   rw [hf, bl]
+  congr 1
+  funext i
+  fin_cases i <;> norm_num [CarrierRepresentation.blAxis]
 
 /-- **Skipped maintenance does not persist.** -/
 theorem skipped_maintenance_fails (d tol : ℝ) (hd : 0 < d) : ∃ n : ℕ, tol < n * d := by

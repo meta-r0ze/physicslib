@@ -25,13 +25,15 @@ the readings this principle suggests, not derived matching rules.
 **Test against the alternatives.** If the colour formula `0.11799 < A < 0.11800`
 (`ColourReference.strong_from_payload`) is `α_s(μ)`, one-loop running with five flavours
 (`b₀ = 23/3`) gives the implied `α_s(M_Z) = 1/(1/A - (b₀/2π) log(μ/M_Z))`, compared with
-`0.1180 ± 0.0009`:
+the e8p strong-coupling reference:
 * `at_Z`: `μ = M_Z` gives `A` itself, within `0.012σ`;
 * `at_W`: `μ = M_W` implies `α_s(M_Z) < 0.1162`, more than `2σ` low;
 * `at_H`: `μ = m_H` implies `> 0.1227`, more than `5σ` high;
 * `at_v`: `μ = v` implies `> 0.1296`, more than `12σ` high.
 Among the scales the reference generates, only the `Z` fits. One-loop, five-flavour running is a
 stated approximation (the top threshold matters only for `v`, where the exclusion is large).
+
+The measured comparison proofs are in `tools/e8p/E8PConstants/PMConstants/ScaleComparisons.lean`.
 -/
 
 noncomputable section
@@ -79,74 +81,10 @@ theorem neutral_broken_iff (a : ℝ) (z : ℂ) (b : ℝ) :
     exact ⟨rfl, Or.inl fun e => h (by linarith)⟩
 
 /-- The `α_s(M_Z)` implied if the colour value `A` is read at `μ` (one loop, five flavours). -/
-def implied (A μ : ℝ) : ℝ := 1 / (1 / A - 23 / (6 * Real.pi) * Real.log (μ / 91.1876))
+def implied (zAnchor A μ : ℝ) : ℝ := 1 / (1 / A - 23 / (6 * Real.pi) * Real.log (μ / zAnchor))
 
 lemma b_bounds : 23 / (6 * 3.15) < 23 / (6 * Real.pi) ∧ 23 / (6 * Real.pi) < 23 / (6 * 3.14) := by
   have h1 := Real.pi_gt_d2; have h2 := Real.pi_lt_d2
   constructor <;> apply div_lt_div_of_pos_left (by norm_num) (by positivity) (by linarith)
-
-theorem at_Z {A : ℝ} (hA : 0.11799 < A ∧ A < 0.11800) :
-    implied A 91.1876 = A ∧ |(A - 0.1180) / 0.0009| < 0.012 := by
-  have hA0 : 0 < A := by linarith
-  refine ⟨by simp [implied], ?_⟩
-  rw [abs_lt]; constructor
-  · rw [lt_div_iff₀ (by norm_num)]; linarith
-  · rw [div_lt_iff₀ (by norm_num)]; linarith
-
-theorem at_W {A : ℝ} (hA : 0.11799 < A ∧ A < 0.11800) : implied A 80.3692 < 0.1162 := by
-  have hA0 : 0 < A := by linarith
-  have hL : Real.log (80.3692 / 91.1876) ≤ 80.3692 / 91.1876 - 1 :=
-    Real.log_le_sub_one_of_pos (by norm_num)
-  have hb := b_bounds
-  have hinv : 1 / 0.118 < 1 / A := one_div_lt_one_div_of_lt hA0 (by linarith [hA.2] : A < 0.118)
-  have hD : 8.61 < 1 / A - 23 / (6 * Real.pi) * Real.log (80.3692 / 91.1876) := by
-    have hneg : 0.1186 ≤ -Real.log (80.3692 / 91.1876) := by
-      have : (80.3692 : ℝ) / 91.1876 - 1 ≤ -0.1186 := by norm_num
-      linarith
-    have : (23 / (6 * 3.15)) * 0.1186 ≤ 23 / (6 * Real.pi) * -Real.log (80.3692 / 91.1876) :=
-      mul_le_mul hb.1.le hneg (by norm_num) (by linarith)
-    have h1 : (8.47 : ℝ) < 1 / 0.118 := by norm_num
-    have h2 : (8.47 : ℝ) + 23 / (6 * 3.15) * 0.1186 > 8.61 := by norm_num
-    nlinarith
-  unfold implied
-  rw [div_lt_iff₀ (by linarith)]
-  nlinarith
-
-lemma above_bound {A μ L0 c : ℝ} (hA : 0.11799 < A ∧ A < 0.11800) (hμ : 0 < μ)
-    (hL : L0 ≤ Real.log (μ / 91.1876)) (hL0 : 0 ≤ L0)
-    (hc : 1 / 0.11799 - 23 / (6 * 3.15) * L0 < c)
-    (hU : 23 / (6 * 3.14) * (μ / 91.1876 - 1) < 1 / 0.118) :
-    1 / c < implied A μ := by
-  have hA0 : 0 < A := by linarith
-  have hb := b_bounds
-  have hinv : 1 / A < 1 / 0.11799 := one_div_lt_one_div_of_lt (by norm_num) hA.1
-  have hprod : 23 / (6 * 3.15) * L0 ≤ 23 / (6 * Real.pi) * Real.log (μ / 91.1876) :=
-    mul_le_mul hb.1.le hL hL0 (by linarith)
-  have hD : 1 / A - 23 / (6 * Real.pi) * Real.log (μ / 91.1876) < c := by linarith
-  have hDpos : 0 < 1 / A - 23 / (6 * Real.pi) * Real.log (μ / 91.1876) ∨
-      1 / A - 23 / (6 * Real.pi) * Real.log (μ / 91.1876) ≤ 0 := lt_or_ge _ _
-  rcases hDpos with hp | hn
-  · unfold implied; exact one_div_lt_one_div_of_lt hp hD
-  · exfalso
-    have hl : Real.log (μ / 91.1876) ≤ μ / 91.1876 - 1 := Real.log_le_sub_one_of_pos (by positivity)
-    have hinv2 : 1 / 0.118 < 1 / A := one_div_lt_one_div_of_lt hA0 (by linarith [hA.2] : A < 0.118)
-    have hlpos : 0 ≤ Real.log (μ / 91.1876) := hL0.trans hL
-    have : 23 / (6 * Real.pi) * Real.log (μ / 91.1876) ≤ 23 / (6 * 3.14) * (μ / 91.1876 - 1) :=
-      mul_le_mul hb.2.le hl hlpos (by norm_num)
-    linarith
-
-theorem at_H {A : ℝ} (hA : 0.11799 < A ∧ A < 0.11800) : 0.1227 < implied A 125.20 := by
-  have hL : 1 - (125.20 / 91.1876)⁻¹ ≤ Real.log (125.20 / 91.1876) :=
-    Real.one_sub_inv_le_log_of_pos (by norm_num)
-  have := above_bound (L0 := 0.2716) (c := 1 / 0.1227) hA (by norm_num)
-    (le_trans (by norm_num) hL) (by norm_num) (by norm_num) (by norm_num)
-  simpa using this
-
-theorem at_v {A : ℝ} (hA : 0.11799 < A ∧ A < 0.11800) : 0.1296 < implied A 246.22 := by
-  have hL : 1 - (246.22 / 91.1876)⁻¹ ≤ Real.log (246.22 / 91.1876) :=
-    Real.one_sub_inv_le_log_of_pos (by norm_num)
-  have := above_bound (L0 := 0.6296) (c := 1 / 0.1296) hA (by norm_num)
-    (le_trans (by norm_num) hL) (by norm_num) (by norm_num) (by norm_num)
-  simpa using this
 
 end PMConstants.ReadoutScales

@@ -80,7 +80,7 @@ theorem invariant_iff (a b : ℝ) :
 /-- **Covariance gives the link charge and the neutral sterile channel.** -/
 theorem link_from_covariance (Y : Hypercharge.Charges) (hf : Hypercharge.Flux Y) (h : ℚ)
     (hl : SectorLinks.OneLink Y h) (hcov : h = -Y.l) (hunit : h = 1) :
-    Y = Hypercharge.standard ∧ Y.n = 0 := by
+    Y = CarrierRepresentation.carrierStandard ∧ Y.n = 0 := by
   subst hunit
   exact ReferenceLink.neutral_from_reference Y hf hl (by linarith)
 

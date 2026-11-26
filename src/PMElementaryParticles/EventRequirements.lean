@@ -108,7 +108,7 @@ theorem massive_flag (t : ℝ) (cA cS : PMConstants.PacketGaugeActions.Channels)
     rw [← Complex.ofReal_inv, Complex.normSq_ofReal, ← sq, inv_pow,
       Real.sq_sqrt (by norm_num)]; norm_num
   set F := fun c : PMConstants.PacketGaugeActions.Channels =>
-    PMAction.DiagonalReadout.flag (t * (((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3))
+    PMAction.DiagonalReadout.flag (t * ((PMConstants.ChannelOccupancy.hyperchargeThirds c : ℝ) / 3))
   have hpt : ∀ c, Complex.normSq (if c = cA ∨ c = cS then ((Real.sqrt 2)⁻¹ : ℂ) else 0) * F c =
       (if cA = c then F c / 2 else 0) + (if cS = c then F c / 2 else 0) := by
     intro c
@@ -126,7 +126,7 @@ theorem massive_flag (t : ℝ) (cA cS : PMConstants.PacketGaugeActions.Channels)
 theorem active_full (a : Fin 3) (i j : Fin 2) :
     hyperchargeFlag (3 * Real.pi / 2) (quarkActive a i) = 1 / 2 ∧
       hyperchargeFlag (3 * Real.pi / 2) (leptonActive j) = 1 / 2 := by
-  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, quarkActive, leptonActive]
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply, quarkActive, leptonActive]
   push_cast
   constructor
   · rw [show 3 * Real.pi / 2 * 1 / 3 = Real.pi / 2 by ring, Real.cos_pi_div_two]; norm_num

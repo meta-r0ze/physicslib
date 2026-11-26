@@ -4,7 +4,7 @@ import PMConstants.GaugeStiffness
 /-!
 # What fixes the colour ledger: an exploration
 
-`StrongLedgerTest` reads the strong coupling as `α_s = α N_sys / L₃`, in the same channel-weighted
+`StrongLedgerTest` reads the strong coupling as `α_s  = α N_sys / L₃`, in the same channel-weighted
 units that give `s = Δ/N_sys`. This module records which substrate counts can supply `L₃`. None of
 them is derived from a colour refresh rule here; `ColourChannels` derives the one that persists.
 

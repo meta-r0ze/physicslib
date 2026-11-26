@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Run the ledger alpha_s from the Z down to the carrier cube's scale (comparison tool).
 
-Inputs, all already in the library:
+Running inputs:
   * alpha_s(m_Z) = 0.1179952 (PMConstants strong coupling, read at the Z: ReadScale.colour_exact_read)
   * one-loop b0 = 11/3 N - 2/3 nf (PMAction.RunningCoefficients.b0, derived)
-  * flavour thresholds at the E8 masses m_c, m_b (PMConstants.StrongRunning.mCharm/mBottom)
+  * flavour thresholds from PMSubstrate.SpeciesFootprints.Quark.charm and .bottom
+  * measured Z anchor for this comparison
   * carrier cube scale 1/a = 317.5 MeV (PMHadrons.CubeScales: a = (4/m_p)/rho, rho = 1.354 sites)
 Two-loop b1 = 102 - 38 nf/3 is the standard continuum value (not derived here); shown only to
 test whether the one-loop number is stable.

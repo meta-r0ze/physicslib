@@ -21,7 +21,7 @@ Each (wall, carrier) is exactly one channel (`carrier_exists`, `channel_carrier`
 carriers: `bl` by axis and `t3` by sign (`CarrierRepresentation`). The wall charge is `bl` on the
 reference wall and `bl + 2 t3` on the other (`hyper_from_carriers`). The electric charge is
 `bl/2 + t3` on both walls (`electric`). `packet_charge_eq` shows the packet's charge table
-(`PacketGaugeActions.charge`) is this carrier charge.
+(`PacketGaugeActions.hyperchargeOperator`) is this carrier charge.
 -/
 
 noncomputable section
@@ -94,11 +94,12 @@ theorem hyper_from_carriers :
   decide +kernel
 
 /-- The electric charge: `bl/2 + t3` on both walls. -/
-def electric (c : Channels) : ℚ := blAxis (axis c) / 2 + t3Sign (positiveSign c)
+def electric (c : Channels) : ℚ :=
+  CarrierRepresentation.electric (decide (axis c = 0)) (positiveSign c)
 
 /-- The packet's charge table is the carrier charge. -/
-theorem packet_charge_eq (c : Channels) : charge c c = (hyper c : ℂ) := by
-  fin_cases c <;> norm_num [charge, block, channelIndex, Matrix.kroneckerMap_apply, hyper, wall,
+theorem packet_charge_eq (c : Channels) : hyperchargeOperator c c = (hyper c : ℂ) := by
+  fin_cases c <;> norm_num [hyperchargeOperator_blocks, block, channelIndex, Matrix.kroneckerMap_apply, hyper, wall,
     axis, positiveSign, blAxis, t3Sign]
 
 end PMElementaryParticles.CarrierChannels

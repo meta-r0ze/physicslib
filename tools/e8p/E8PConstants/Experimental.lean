@@ -39,6 +39,32 @@ namespace DecayReferences
  def muonicWidthRatio : Rat := pionMuonPartialLifetime / kaonMuonPartialLifetime
 end DecayReferences
 
+namespace GaugeReferences
+
+universe u
+
+-- Reuse the exact decimal in the rational report and in real-valued comparison proofs.
+abbrev zMassGeV {R : Type u} [OfScientific R] : R := 91.1876
+abbrev zMassLoGeV {R : Type u} [OfScientific R] : R := 91.1855
+abbrev zMassHiGeV {R : Type u} [OfScientific R] : R := 91.1897
+abbrev wMassGeV {R : Type u} [OfScientific R] : R := 80.3692
+abbrev wMassSigmaGeV {R : Type u} [OfScientific R] : R := 0.0133
+abbrev higgsMassGeV {R : Type u} [OfScientific R] : R := 125.20
+abbrev vevRoundedGeV {R : Type u} [OfScientific R] : R := 246.22
+abbrev strongComparison {R : Type u} [OfScientific R] : R := 0.1180
+abbrev strongSigma {R : Type u} [OfScientific R] : R := 0.0009
+abbrev strongWindowHi {R : Type u} [OfScientific R] : R := 0.1189
+abbrev inverseZAlphaLo {R : Type u} [OfScientific R] : R := 127.94
+abbrev inverseZAlphaHi {R : Type u} [OfScientific R] : R := 127.96
+abbrev topLoGeV {R : Type u} [OfScientific R] : R := 172.28
+abbrev topHiGeV {R : Type u} [OfScientific R] : R := 172.86
+abbrev screeningLo {R : Type u} [OfScientific R] : R := 0.0589
+abbrev screeningHi {R : Type u} [OfScientific R] : R := 0.0591
+abbrev scalarLo {R : Type u} [OfScientific R] : R := 0.1286
+abbrev scalarHi {R : Type u} [OfScientific R] : R := 0.1300
+
+end GaugeReferences
+
 /-- All experimental references recorded for a key (frozen comparison data). -/
 def expRefs : Key → List ExpRef
   | .inverseAlpha => [
@@ -48,7 +74,7 @@ def expRefs : Key → List ExpRef
       ⟨137.035999166, 0.000000015, "fan_measurement_2023"⟩]
   | .alpha => [⟨0.0072973525643, 0.0000000000011, "mohr_codata_2025"⟩]
   | .strong => [⟨0.1179, 0.0009, "navas_review_2024"⟩]
-  | .higgsMass => [⟨125.20, 0.11, "navas_review_2024"⟩]
+  | .higgsMass => [⟨GaugeReferences.higgsMassGeV, 0.11, "navas_review_2024"⟩]
   | .fermi => [⟨0.000011663788, 0.000000000006, "navas_review_2024"⟩]
   | .vev => [⟨246.21965, 0.00006, "navas_review_2024"⟩]
   | .electronYukawa => [⟨0.000002935, 0.000000001, "navas_review_2024"⟩]
@@ -124,9 +150,9 @@ def expRefs : Key → List ExpRef
   | .baryonPm3J => [⟨6.12e-10, 4.0e-12, "planck_2018"⟩]
   | .alphaG => [⟨(1752 : Rat) / (10 : Rat)^48, (1 : Rat) / (10 : Rat)^48, "mohr_codata_2025"⟩]
   | .wMassUnc => [
-      ⟨80.3692, 0.0133, "pdg_2024_world"⟩,
+      ⟨GaugeReferences.wMassGeV, GaugeReferences.wMassSigmaGeV, "pdg_2024_world"⟩,
       ⟨80.4335, 0.0094, "cdf_2022"⟩]
-  | .zMassUnc => [⟨91.1876, 0.0021, "pdg_2024"⟩]
+  | .zMassUnc => [⟨GaugeReferences.zMassGeV, 0.0021, "pdg_2024"⟩]
   | _ => []
 
 /-- Comparison-error provenance; tau already includes its supplied branching-input error. -/

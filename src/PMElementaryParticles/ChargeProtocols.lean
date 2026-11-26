@@ -35,7 +35,7 @@ lemma Q_eval (c : PacketGaugeActions.Channels) :
       | .inr (.inr (.inr s)) => if s = 0 then 0 else -1 := by
   rcases c with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> fin_cases s <;>
     simp [Q, CarrierChannels.electric, CarrierChannels.axis, CarrierChannels.positiveSign,
-      CarrierChannels.blAxis, CarrierChannels.t3Sign] <;> norm_num
+      CarrierRepresentation.electric, CarrierRepresentation.blAxis, CarrierRepresentation.t3Sign] <;> norm_num
 
 theorem charge_values (c : PacketGaugeActions.Channels) :
     Q c = 2/3 ∨ Q c = -1/3 ∨ Q c = 0 ∨ Q c = -1 := by

@@ -32,9 +32,7 @@ The alternative routes and necessity tests are in `PMSubstrate/Research/`.
 
 ## Downstream constants to repoint
 
-- Repoint α aliases to `causalCoupling` in `CertifiedConstants.α`,
-  `CurrentConstants.alpha`, `PMConstants.Values.alpha`,
-  `SharedUnits.αe`, `CarrierAmplitude.alpha` and `MuonLifetimeCorrected.α`.
+- Repoint α aliases to `causalCoupling` in `SharedUnits.αe`, `CarrierAmplitude.alpha` and `MuonLifetimeCorrected.α`.
 - Repoint reciprocal aliases to `geometricIndex` in `SharedUnits.αinv`
   and `CKM.αinv`. Keep the separate cell-price reading and its equality.
 - Repoint Δ aliases to `E8Values.Delta` in `PMAction.Delta`

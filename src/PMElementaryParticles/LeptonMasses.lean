@@ -1,6 +1,5 @@
-import PMSubstrate.OccupancyCost
+import PMSubstrate.SpeciesFootprints
 import PMElementaryParticles.SharedUnits
-import PMSubstrate.E8Values
 
 /-!
 
@@ -54,77 +53,11 @@ baseline Toll to the muon residual (+0.18σ) is therefore withdrawn as a lead.
 
 noncomputable section
 namespace PMElementaryParticles.LeptonMasses
-open PMElementaryParticles.SharedUnits
-open PMSubstrate.E8Values PMSubstrate.OccupancyCost
+open PMElementaryParticles.SharedUnits PMSubstrate.E8Values
 
-/-! ## Tier ledgers -/
-
-/-- Muon (Tier 1, line): sweep through the internal symmetry. -/
-def muonSweep : ℝ := (Delta : ℝ) * (sigma : ℝ)
-/-- Muon: topological anchor. -/
-def muonAnchor : ℝ := (chi : ℝ)
-/-- Muon: double-cover spin phase lag. -/
-def muonSpinLag : ℝ := 2 * Real.pi
-/-- Muon: vacuum feedback load `(χ+σ)·α/(1−α)`. -/
-def muonFeedback : ℝ := ((chi + sigma : ℕ) : ℝ) * αe / (1 - αe)
-
-/-- The declared line footprint holds `σΔ` clock events. -/
-def muonFootprint : Footprint :=
-  { events := sigma * Delta
-    map := -1
-    residual := -muonSpinLag + muonFeedback }
-
-/-- [Premise] Muon mass in `m_e` units in the declared species ledger. -/
-abbrev muon : ℝ := cost muonFootprint
-
-/-- The muon is exactly the sum of its named tier costs. -/
-theorem muon_ledger :
-    muon = (Delta : ℝ) * (sigma : ℝ) - (chi : ℝ) - 2 * Real.pi +
-      ((chi + sigma : ℕ) : ℝ) * αe / (1 - αe) := by
-  norm_num [muon, muonFootprint, cost, muonSpinLag, muonFeedback,
-    PMSubstrate.mapTerm, PMSubstrate.baseline, chi_eq]
-  ring
-
-/-- **The feedback load is the recursive loop's fixed point.** The total load of the
-admittance ladder `x = (χ+σ)α + α·x` is `(χ+σ)α/(1−α)`. -/
-theorem muonFeedback_fixpoint (hα : αe ≠ 1) :
-    muonFeedback = ((chi + sigma : ℕ) : ℝ) * αe + αe * muonFeedback := by
-  have h : 1 - αe ≠ 0 := sub_ne_zero.mpr (Ne.symm hα)
-  unfold muonFeedback
-  field_simp
-  ring
-
-/-- Tau (Tier 2, area): boundary cost over the causal area. -/
-def tauBoundary : ℝ := (chi : ℝ) * (Delta : ℝ) ^ 2
-/-- Tau: inherited linear core latency. -/
-def tauCoreLatency : ℝ := (sigma : ℝ) * (Delta : ℝ)
-/-- Tau: spacetime anchors. -/
-def tauAnchors : ℝ := (D : ℝ) + (chi : ℝ)
-
-/-- The area footprint holds `χΔ² − σΔ` clock events and deducts one Map charge. -/
-def tauFootprint : Footprint :=
-  { events := chi * Delta ^ 2 - sigma * Delta
-    map := -1
-    residual := -(D : ℝ) }
-
-/-- [Premise] Tau mass in `m_e` units in the declared species ledger. -/
-def tau : ℝ := cost tauFootprint
-
-/-- The tau is exactly the sum of its named tier costs. -/
-theorem tau_ledger :
-    tau = (chi : ℝ) * (Delta : ℝ) ^ 2 - (sigma : ℝ) * (Delta : ℝ) -
-      ((D : ℝ) + (chi : ℝ)) := by
-  have count_cost (n : ℕ) :
-      cost { events := n, map := -1, residual := -(D : ℝ) } =
-        (n : ℝ) - (chi : ℝ) - (D : ℝ) := by
-    have hm : PMSubstrate.mapTerm PMSubstrate.baseline = (chi : ℝ) := rfl
-    simp [cost, hm, sub_eq_add_neg]
-  have h : sigma * Delta ≤ chi * Delta ^ 2 := by
-    rw [sigma_eq, Delta_eq, chi_eq]
-    omega
-  unfold tau tauFootprint
-  rw [count_cost, Nat.cast_sub h, Nat.cast_mul, Nat.cast_mul, Nat.cast_pow]
-  ring
+export PMSubstrate.SpeciesFootprints.Lepton
+  (muonSweep muonAnchor muonSpinLag muonFeedback muonFootprint muon muon_ledger
+  muonFeedback_fixpoint tauBoundary tauCoreLatency tauAnchors tauFootprint tau tau_ledger)
 
 /-! ## E8-only enclosures -/
 
@@ -140,6 +73,7 @@ theorem muon_value : 206.7682716 < muon ∧ muon < 206.7682718 := by
     rw [PMSubstrate.E8Values.Delta_eq, PMSubstrate.E8Values.sigma_eq,
       PMSubstrate.E8Values.chi_eq]
     norm_num
+    rw [show αe = PMSubstrate.causalCoupling from rfl]
     ring
   rw [hm]; constructor <;> nlinarith [hp.1, hp.2]
 

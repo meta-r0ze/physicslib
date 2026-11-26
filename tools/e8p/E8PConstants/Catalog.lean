@@ -524,7 +524,7 @@ def Key.formula : Key → String
   | .overhead => "\\frac{D\\Delta-1}{D\\Delta}"
   | .weakFraction => "\\frac{\\Delta}{D\\Delta+\\nu+\\sigma}"
   | .strong => "\\frac{\\nu\\cdot\\eta+1/D}{\\alpha^{-1}}"
-  | .electronYukawa => "PM_{geo}\\left(1+\\frac{\\sigma}{D}\\alpha\\right)"
+  | .electronYukawa => "\\sqrt{2}/(v/m_e)"
   | .vev => "v_{geo}\\left(1+\\frac{\\alpha}{D+\\chi/4\\pi}\\right)"
   | .higgsMass => "\\sqrt{2\\lambda}\\,v"
   | .jarlskog => "\\phi^2\\cdot T_{geo}"
@@ -660,6 +660,7 @@ def Key.decayInfo : Key → Option DecayInfo
 def Key.caveat : Key → String
   | .wMassUnc => "uncorrected (tree-level); not scored, compare w_ratio"
   | .zMassUnc => "uncorrected (tree-level); not scored, compare w_ratio"
+  | .electronClosure => "gap/Yukawa reading in electron units, using the geometry-repaired Yukawa"
   | .darkRaw => "raw ratio before correction; not scored, compare omega_ratio"
   | .baryonPmJ => "Paper IV J; disagrees with Paper III (papers_disagree); not scored, compare baryon_pm3J"
   | .hubbleLate => "late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored"

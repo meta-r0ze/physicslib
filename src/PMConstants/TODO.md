@@ -7,6 +7,8 @@ Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 
 ## Premises to name or derive
 
+- Derive the bridge from the cutoff-unit wall gap (`LinkGapLaw.gapA`) to the particle occupancy cost (`PMSubstrate.OccupancyCost.cost`).
+
 - **The weak `SU(2)` on the sign pair.** Two thirds of the old subgroup premise are now derived in
   `ReferenceAxis`: colour is the stabilizer of the reference axis (`axis_stabilizer`, already
   there), and `bl` is the only axis charge that commutes with colour, is traceless and reads `−1`
@@ -26,7 +28,7 @@ Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
   normalization, and it belongs next to `PMAction.CommonResponse`/`LinkFromEvents`.
 - **The carrier premises.** `CarrierRepresentation` rests on three: both sectors carried to the
   vector class by triality, the sign as the doublet index, and the reserved (lepton) axis. They
-  are the only inputs to the charge table (`carrierCharges_eq_standard`) and, through
+  are the inputs to the derived table (`carrierStandard`, checked by `carrierCharges_eq_standard`) and, through
   `ReferenceAxis`, to the colour subgroup and hypercharge generator of the packet action as well.
   Named in SCOPE. The concentration of load on the reserved-axis premise is now this layer's main
   single risk: it carries every charge in the tower and the colour subgroup, and nothing else

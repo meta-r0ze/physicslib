@@ -57,7 +57,7 @@ theorem noise_needed : 246.21987 < V / (1 - Y / 3) := by
   norm_num [Y_val]; nlinarith [hv.1]
 
 /-- The bare dimension, with no boundary term, leaves the window. -/
-theorem bare_dimension_excluded : 246.2366 < V * (1 + α / 4) / (1 + x) := by
+theorem bare_dimension_excluded : 246.2366 < V * (1 + alpha / 4) / (1 + x) := by
   have hv := V_bounds
   have hx := x_bounds
   have ha := alpha_bounds
@@ -65,15 +65,15 @@ theorem bare_dimension_excluded : 246.2366 < V * (1 + α / 4) / (1 + x) := by
   nlinarith
 
 /-- A QED-like correction leaves the window on the other side. -/
-theorem qed_like_excluded : V * (1 + 3 * α / (4 * Real.pi)) / (1 + x) < 246.2167 := by
+theorem qed_like_excluded : V * (1 + 3 * alpha / (4 * Real.pi)) / (1 + x) < 246.2167 := by
   have hv := V_bounds
   have hx := x_bounds
   have ha := alpha_bounds
   have hp := pi_bounds
-  have hq : 3 * α / (4 * Real.pi) < 0.0017422 := by
+  have hq : 3 * alpha / (4 * Real.pi) < 0.0017422 := by
     rw [div_lt_iff₀ (by linarith)]; nlinarith
   rw [div_lt_iff₀ (by linarith)]
-  have h1 : V * (3 * α / (4 * Real.pi)) < V * 0.0017422 := mul_lt_mul_of_pos_left hq (by linarith)
+  have h1 : V * (3 * alpha / (4 * Real.pi)) < V * 0.0017422 := mul_lt_mul_of_pos_left hq (by linarith)
   nlinarith
 
 end E8PConstants.VevFormPulls

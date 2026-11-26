@@ -158,7 +158,9 @@ the boundary-storage ratio. Paper 1: `alpha_inv`, `alpha`, and the six α⁻¹ p
 `cap, map, protocol, governor, toll, margin`, plus `c_light`, `von_klitzing`,
 the Planck-charge readouts and `planck_mass`. Paper 3: the partition/electroweak
 constants, `alpha_G`, `beta_0`, `w_ratio`, the uncorrected W/Z masses, `g_weak`/`g_prime`
-and `electron_closure`. Paper 4: CKM Jarlskog + geometric Jarlskog,
+and `electron_closure`. The closure row tests the geometry-repaired Yukawa against the
+VEV ratio in electron units. Its gap/Yukawa reading is about 0.99973. The
+`electron_yukawa` row gives the Yukawa fixed by exact closure. Paper 4: CKM Jarlskog + geometric Jarlskog,
 Cabibbo, the CKM `s13/s23/vcb`, Wolfenstein λ/A/ρ̄/η̄, three PMNS sines and
 leptonic Jarlskog. Paper 5:
 proton/neutron/muon/tau mass ratios, proton radius, pion and kaon masses, the six

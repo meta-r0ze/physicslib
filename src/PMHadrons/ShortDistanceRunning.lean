@@ -36,7 +36,7 @@ open Real
 
 /-- E8 tree-level `m_Z` in GeV. -/
 def mZ : ℝ :=
-  Real.sqrt (PMConstants.GaugeSpectrum.zMassSquared PMConstants.CertifiedConstants.α
+  Real.sqrt (PMConstants.GaugeSpectrum.zMassSquared PMSubstrate.causalCoupling
     PMConstants.ElectroweakBounds.electronGeV)
 
 /-- E8 proton mass in GeV. -/

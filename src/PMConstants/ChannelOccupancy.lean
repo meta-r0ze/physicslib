@@ -6,9 +6,9 @@ import PMConstants.PacketGaugeActions
 Paper III's structural audit lists "no supersymmetric partners (`ν = 16`)" and says a proof needs
 the explicit map from channels to representations. The packet (`PacketGaugeActions`) supplies it:
 `Channels = Q ⊕ (Q ⊕ (Fin 2 ⊕ Fin 2))`, with weak acting on the first `Q` and the first `Fin 2`,
-colour on both `Q`s, and the hypercharge `charge = 2Y` on the diagonal.
+colour on both `Q`s, and the hypercharge `hyperchargeOperator = 2Y` on the diagonal.
 
-* `charge_entries`: the diagonal of `charge` is `2Y = 6Y/3` = `1/3` on the quark doublets, `4/3` and
+* `charge_entries`: the diagonal of `hyperchargeOperator` is `2Y = 6Y/3` = `1/3` on the quark doublets, `4/3` and
   `−2/3` on the right quarks, `−1` on the lepton doublet, `0` and `−2` on the right leptons.
 * `occupancy`: tagging each channel by (colour dimension, weak dimension, `6Y`), the channels
   are exactly one generation with a right-handed neutrino: `(3,2,1)` six times, `(3,1,4)` and
@@ -27,29 +27,51 @@ noncomputable section
 namespace PMConstants.ChannelOccupancy
 open PMConstants PacketGaugeActions Matrix
 
-/-- (colour dimension, weak dimension, `6Y`) of each channel. -/
-def tag : Channels → ℕ × ℕ × ℤ
-  | .inl _ => (3, 2, 1)
-  | .inr (.inl (_, s)) => if s = 0 then (3, 1, 4) else (3, 1, -2)
-  | .inr (.inr (.inl _)) => (1, 2, -3)
-  | .inr (.inr (.inr s)) => if s = 0 then (1, 1, 0) else (1, 1, -6)
+/-- Hypercharge expressed in thirds of the carrier link charge. -/
+def hyperchargeThirds (c : Channels) : ℤ :=
+  (3 * RequirementTable.packetHypercharge CarrierRepresentation.carrierStandard
+    (RequirementTable.ty (channelIndex c))).num
 
-/-- **The hypercharge diagonal is the tag's `2Y`.** -/
-theorem charge_entries (c : Channels) : charge c c = ((tag c).2.2 : ℂ) / 3 := by
+/-- The evaluated entries of the carrier rule in channel order. -/
+theorem hyperchargeThirds_apply :
+    hyperchargeThirds = fun c =>
+      match c with
+      | .inl _ => 1
+      | .inr (.inl (_, s)) => if s = 0 then 4 else -2
+      | .inr (.inr (.inl _)) => -3
+      | .inr (.inr (.inr s)) => if s = 0 then 0 else -6 := by
+  funext c
+  revert c
+  decide +kernel
+
+structure ChannelTag where
+  colourMultiplicity : ℕ
+  weakMultiplicity : ℕ
+  hyperchargeInThirds : ℤ
+  deriving DecidableEq
+
+/-- Colour and weak dimensions, with the signed hypercharge in thirds. -/
+def tag (c : Channels) : ChannelTag :=
+  let t := RequirementTable.ty (channelIndex c)
+  ⟨RequirementTable.colourDim t, RequirementTable.isoDim t, hyperchargeThirds c⟩
+
+theorem charge_entries (c : Channels) :
+    hyperchargeOperator c c = (hyperchargeThirds c : ℂ) / 3 := by
   rcases c with ⟨i, s⟩ | ⟨i, s⟩ | s | s <;> fin_cases s <;>
-    simp [charge, block, tag, kroneckerMap_apply, one_apply, diagonal]
+    simp [hyperchargeOperator_blocks, block, hyperchargeThirds_apply, kroneckerMap_apply,
+      one_apply, diagonal]
   all_goals norm_num
 
 /-- **The channels are one generation with `ν_R`.** -/
 theorem occupancy :
-    (Finset.univ.filter (fun c => tag c = (3, 2, 1))).card = 6 ∧
-    (Finset.univ.filter (fun c => tag c = (3, 1, 4))).card = 3 ∧
-    (Finset.univ.filter (fun c => tag c = (3, 1, -2))).card = 3 ∧
-    (Finset.univ.filter (fun c => tag c = (1, 2, -3))).card = 2 ∧
-    (Finset.univ.filter (fun c => tag c = (1, 1, -6))).card = 1 ∧
-    (Finset.univ.filter (fun c => tag c = (1, 1, 0))).card = 1 ∧
+    (Finset.univ.filter (fun c => tag c = ⟨3, 2, 1⟩)).card = 6 ∧
+    (Finset.univ.filter (fun c => tag c = ⟨3, 1, 4⟩)).card = 3 ∧
+    (Finset.univ.filter (fun c => tag c = ⟨3, 1, -2⟩)).card = 3 ∧
+    (Finset.univ.filter (fun c => tag c = ⟨1, 2, -3⟩)).card = 2 ∧
+    (Finset.univ.filter (fun c => tag c = ⟨1, 1, -6⟩)).card = 1 ∧
+    (Finset.univ.filter (fun c => tag c = ⟨1, 1, 0⟩)).card = 1 ∧
     Fintype.card Channels = 16 := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, by simp [Channels, Q]⟩ <;> decide
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, by simp [Channels, Q]⟩ <;> decide +kernel
 
 /-- **No channel is left for an extra state.** -/
 theorem no_spare_channel (d : ℕ) (f : Channels ⊕ Fin d → Channels) (hf : Function.Injective f) :

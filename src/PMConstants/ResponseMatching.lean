@@ -59,7 +59,7 @@ theorem matching_frontier_iff (toll : ℝ) (m : ℕ) (W : ℝ)
   · intro h; rw [h]; ring
 
 /-- The substrate's per-cycle admittance `κ = 1/Z_geo`. The constants layer *defines* the
-fine-structure constant as this (`PMConstants.CertifiedConstants.α := PMSubstrate.causalCoupling`,
+fine-structure constant as this (`PMSubstrate.causalCoupling := PMSubstrate.causalCoupling`,
 with `1/α = geometricIndex` proved in `JointConstants`/`ScaleResponse`). So the matching
 equation `α⁻¹ = Z_geo` is a theorem, not an extra physical input. -/
 theorem admittance_eq_inv_index :

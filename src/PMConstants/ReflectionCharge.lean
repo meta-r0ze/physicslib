@@ -41,7 +41,7 @@ theorem reflected_response {ι : Type*} [Fintype ι] [DecidableEq ι] (U : Matri
   rw [RestorationResponse.response_smul, Complex.normSq_ofReal, Real.mul_self_sqrt hR]
 
 /-- **The charge rate is the complete repair's readout, `3`.** -/
-theorem charge_rate (Rep : RepairBudget.ExactRepair) (f : Module.End ℝ BudgetReadout.D →ₗ[ℝ] ℝ)
+theorem charge_rate (Rep : RepairBudget.ExactRepair) (f : Module.End ℝ ReferenceDirections.RepairDisplacement →ₗ[ℝ] ℝ)
     (hf : BudgetReadout.FrameIndependent f) (hone : f BudgetReadout.P₁ = 1) (R : ℝ) :
     R * f Rep.K.toLinearMap = 3 * R := by
   rw [BudgetReadout.budget_readout Rep f hf hone]; ring

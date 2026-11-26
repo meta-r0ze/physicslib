@@ -70,24 +70,6 @@ theorem maximin_forces_equal (hn : 0 < n) (g : Fin n → ℝ) {s B : ℝ} (hb : 
   rw [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_div_cancel₀ _ hn'.ne'] at this
   linarith
 
-/-- **The measured coupling pins the count to 23.** -/
-theorem count_unique (N : ℕ) :
-    ((0.1286 : ℚ) < (3 - 1/43) / N ∧ (3 - 1/43) / N < (0.1300 : ℚ)) ↔ N = 23 := by
-  constructor
-  · rintro ⟨h1, h2⟩
-    have hN : (0 : ℚ) < N := by
-      by_contra h; push Not at h
-      have : (N : ℚ) = 0 := le_antisymm h (Nat.cast_nonneg N)
-      rw [this] at h1; norm_num at h1
-    rw [lt_div_iff₀ hN] at h1
-    rw [div_lt_iff₀ hN] at h2
-    have a : (22 : ℚ) < N := by linarith
-    have b : (N : ℚ) < 24 := by linarith
-    have : 22 < N := by exact_mod_cast a
-    have : N < 24 := by exact_mod_cast b
-    omega
-  · rintro rfl; norm_num
-
 /-- **One unit per moved direction is the trace of full restoration.** A restoring map on the
 displacement space that returns every displacement in one step is the identity, and its total
 gain (trace) is the number of moved directions. -/
@@ -95,8 +77,5 @@ theorem full_restore_trace (K : (ℝ × ℂ) →ₗ[ℝ] (ℝ × ℂ)) (hK : ∀
     LinearMap.trace ℝ (ℝ × ℂ) K = 3 := by
   have : K = LinearMap.id := LinearMap.ext hK
   rw [this, LinearMap.trace_id, ReferenceDirections.displacement_dim]; norm_num
-
-theorem pair_not_pinned :
-    (0.1286 : ℚ) < (7 - 1/43) / 54 ∧ (7 - 1/43) / 54 < (0.1300 : ℚ) := by norm_num
 
 end PMConstants.RegulatoryMaximin

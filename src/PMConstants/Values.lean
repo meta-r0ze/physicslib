@@ -19,7 +19,7 @@ import PMConstants.SharedReference
 import PMConstants.TableConsequences
 import PMConstants.ResourceLedger
 import PMConstants.ScalarSector
-import PMConstants.FermionMassLaw
+import PMConstants.LinkGapLaw
 import PMConstants.StrongLedgerTest
 import PMConstants.Partition
 import PMConstants.VevEntry
@@ -60,7 +60,7 @@ namespace PMConstants.Values
 open PMConstants
 
 /-- Current fine-structure constant `α`. -/
-abbrev alpha : ℝ := CurrentConstants.alpha
+abbrev alpha : ℝ := PMSubstrate.causalCoupling
 /-- Current strong coupling `α_s`. -/
 abbrev strong : ℝ := CurrentConstants.strong
 /-- Current on-shell weak fraction `sin²θ_W`. -/
@@ -82,6 +82,16 @@ abbrev vev (me : ℝ) : ℝ := ElectroweakE8.vev alpha me
 abbrev higgsMass (me : ℝ) : ℝ := ElectroweakE8.higgsMass alpha me
 /-- Fermi constant from the canonical `alpha`. -/
 abbrev fermi (me : ℝ) : ℝ := ElectroweakE8.fermi alpha me
+
+/-- Convert the GeV reading of the Fermi constant to inverse squared electron units. -/
+theorem fermi_electronUnit : fermi electronGeV * electronGeV ^ 2 = fermi 1 := by
+  have hme : electronGeV ≠ 0 := by
+    norm_num [electronGeV_eq, PMSubstrate.SIUnits.electronMassGeV,
+      PMSubstrate.SIUnits.electronMassMeV]
+  change ElectroweakE8.fermi alpha electronGeV * electronGeV ^ 2 = ElectroweakE8.fermi alpha 1
+  simp only [ElectroweakE8.fermi, ElectroweakE8.vev, mul_one, mul_pow]
+  rw [← mul_assoc, div_mul_eq_mul_div]
+  exact mul_div_mul_right _ _ (pow_ne_zero _ hme)
 /-- Weak squared coupling `g_W²`. -/
 abbrev weakSquared : ℝ := ElectroweakE8.weakSquared alpha
 /-- Hypercharge squared coupling `g_Y²`. -/
@@ -127,15 +137,13 @@ export PMConstants.Bulk (floorMass)
 export PMConstants.ColourChannels (colourLedger colour_ledger strong_from_channels)
 export PMConstants.ColourCount (root_count positive_roots link_triangles)
 export PMConstants.GaugeStiffness (strongWorkload)
-export PMConstants.ContentWeight (chi footprintW colourW extensive_w_mass extensive_strong)
+export PMConstants.ContentWeight (chi footprintW colourW extensive_strong)
 export PMConstants.ReadoutAccounting (rawWMass selectedWeights)
 export PMConstants.SharedReference (quarkWMass ReferenceLayout)
 export PMConstants.TableConsequences (Premises)
-export PMConstants.ResourceLedger (sterile_counted)
 export PMConstants.ScalarSector (higgsSq lambda_insensitive)
-export PMConstants.FermionMassLaw (kappa_cost_light kappa_amp_light massA_event_priced)
+export PMConstants.LinkGapLaw (kappa_cost_light kappa_amp_light gapA_event_priced)
 export PMConstants (footprint overhead)
-export PMConstants.CertifiedConstants (α)
 export PMConstants.StrongLedgerTest (ledgerCoupling alpha_footprint_bounds ledger_twelve ledger_separation)
 export PMAction.WallDispersion (lightGapSq rr)
 export PMConstants.VevEntry (link_kappa_neg economy_law_A)

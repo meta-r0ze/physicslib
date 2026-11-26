@@ -192,19 +192,19 @@ theorem gen_column (a : ℝ) (z : ℂ) (b : ℝ) (c : PacketGaugeActions.Channel
     gen a z b c (ReferenceAnchor.lepton 0) = refCol (displacement a z b) c := by
   rcases c with q | q | t | t
   · simp [gen, PacketTraceForm.weakGen, PacketTraceForm.hyperGen, PacketGaugeActions.block,
-      PacketGaugeActions.charge, ReferenceAnchor.lepton, refCol]
+      PacketGaugeActions.hyperchargeOperator_blocks, ReferenceAnchor.lepton, refCol]
   · simp [gen, PacketTraceForm.weakGen, PacketTraceForm.hyperGen, PacketGaugeActions.block,
-      PacketGaugeActions.charge, ReferenceAnchor.lepton, refCol]
+      PacketGaugeActions.hyperchargeOperator_blocks, ReferenceAnchor.lepton, refCol]
   · fin_cases t
     · simp [gen, PacketTraceForm.weakGen, PacketTraceForm.hyperGen,
-        PacketGaugeActions.block, PacketGaugeActions.charge, ReferenceAnchor.lepton, refCol,
+        PacketGaugeActions.block, PacketGaugeActions.hyperchargeOperator_blocks, ReferenceAnchor.lepton, refCol,
         displacement]
       ring
     · simp [gen, PacketTraceForm.weakGen, PacketTraceForm.hyperGen,
-        PacketGaugeActions.block, PacketGaugeActions.charge, ReferenceAnchor.lepton, refCol,
+        PacketGaugeActions.block, PacketGaugeActions.hyperchargeOperator_blocks, ReferenceAnchor.lepton, refCol,
         displacement]
   · simp [gen, PacketTraceForm.weakGen, PacketTraceForm.hyperGen, PacketGaugeActions.block,
-      PacketGaugeActions.charge, ReferenceAnchor.lepton, refCol]
+      PacketGaugeActions.hyperchargeOperator_blocks, ReferenceAnchor.lepton, refCol]
 
 /-- **Colour adds nothing to the reference column**, for every colour generator. -/
 theorem full_column (a : ℝ) (z : ℂ) (b : ℝ) (B : Matrix (Fin 3) (Fin 3) ℂ) :

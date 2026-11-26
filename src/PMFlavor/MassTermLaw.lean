@@ -11,7 +11,7 @@ An earlier review item asked for exclusions from an actual mass-term law. Paper 
 is hypercharge neutral after `a` doublet and `b` conjugate insertions, and each insertion is one
 priced read of the vacuum (`VevEntry.economy_one_insertion`). Paper II derives Economy and positive
 prices from persistence (`PersistenceSelection`). Charges are the supplied Paper III
-representation (`Hypercharge.standard`, doubled convention): `Y_L = −1`, `Y_ν = 0`,
+representation (`CarrierRepresentation.carrierStandard`, doubled convention): `Y_L = −1`, `Y_ν = 0`,
 `Y_e = −2`, so `Y_H = 1`. `PMConstants.Hypercharge` is explicit that the
 representation content and charge normalization are hypotheses, not rank-derived.
 Upstream `PMConstants.ReferenceLink.standard_or_conjugate` shows the sign of `Y_L` is
@@ -56,11 +56,12 @@ open PMConstants
 /-- Hypercharge balance with `a` doublet and `b` conjugate insertions (`Y_H = 1`). -/
 def Balanced (Yt : ℚ) (a b : ℕ) : Prop := Yt + ((a : ℚ) - b) = 0
 
-def YL : ℚ := Hypercharge.standard.l
-def Yn : ℚ := Hypercharge.standard.n
+def YL : ℚ := CarrierRepresentation.carrierStandard.l
+def Yn : ℚ := CarrierRepresentation.carrierStandard.n
 
-theorem charges : YL = -1 ∧ Yn = 0 ∧ Hypercharge.standard.e - YL = -1 := by
-  norm_num [YL, Yn, Hypercharge.standard]
+theorem charges : YL = -1 ∧ Yn = 0 ∧ CarrierRepresentation.carrierStandard.e - YL = -1 := by
+  norm_num [YL, Yn, CarrierRepresentation.carrierStandard,
+    CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 /-- Total hypercharges of the three neutrino bilinears. -/
 def dirac : ℚ := -YL + Yn
@@ -68,7 +69,8 @@ def weinberg : ℚ := YL + YL
 def sterile : ℚ := Yn + Yn
 
 theorem totals : dirac = 1 ∧ weinberg = -2 ∧ sterile = 0 := by
-  norm_num [dirac, weinberg, sterile, YL, Yn, Hypercharge.standard]
+  norm_num [dirac, weinberg, sterile, YL, Yn, CarrierRepresentation.carrierStandard,
+    CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 theorem dirac_one : Balanced dirac 0 1 ∧ ∀ a b, Balanced dirac a b → 1 ≤ a + b := by
   rw [totals.1]
@@ -106,7 +108,7 @@ theorem sterile_free : Balanced sterile 0 0 := by rw [totals.2.2]; norm_num [Bal
 /-- `B − L` of the lepton-axis carriers, as both the left doublet and `ν_R` carry it. -/
 theorem lepton_bl (v : CarrierRepresentation.V) (h : CarrierRepresentation.onLepton v = true) :
     CarrierRepresentation.bl v = -1 := by
-  simp [CarrierRepresentation.bl, h]
+  simp [CarrierRepresentation.bl, CarrierRepresentation.blAxis, h]
 
 /-- **Majorana terms change `B − L` by `−2`; the Dirac term by `0`.** For lepton-axis carriers
 `v, w`: Dirac `L̄ ν_R` is `−bl v + bl w`; Majorana is `bl v + bl w`. -/

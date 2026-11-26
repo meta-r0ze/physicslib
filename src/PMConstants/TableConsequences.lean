@@ -44,8 +44,8 @@ theorem weak_mixing (_P : Premises) :
   rw [mixing_from_rule]; norm_num [clockRatio, footprint, overhead]
 
 theorem strong_coupling (_P : Premises) :
-    (0.11799 : ℝ) < CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour ∧
-      CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour < 0.11800 := by
+    (0.11799 : ℝ) < PMSubstrate.causalCoupling * (ledger reqSU2 + ledger reqY) / ledger reqColour ∧
+      PMSubstrate.causalCoupling * (ledger reqSU2 + ledger reqY) / ledger reqColour < 0.11800 := by
   rw [strong_from_rule]; exact ColourReference.strong_from_payload
 
 theorem sterile_included (P : Premises) : P.f (.payload 15) = .hyper := by
@@ -71,8 +71,8 @@ mixing, the strong coupling and the sterile payload in hypercharge. -/
 theorem end_to_end (P : Premises) :
     (∀ r, (P.f r = .weak ↔ r ∈ reqSU2) ∧ (P.f r = .hyper ↔ r ∈ reqY)) ∧
       ledger reqSU2 / (ledger reqSU2 + ledger reqY) = 1849 / 8295 ∧
-      ((0.11799 : ℝ) < CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour ∧
-        CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour < 0.11800) ∧
+      ((0.11799 : ℝ) < PMSubstrate.causalCoupling * (ledger reqSU2 + ledger reqY) / ledger reqColour ∧
+        PMSubstrate.causalCoupling * (ledger reqSU2 + ledger reqY) / ledger reqColour < 0.11800) ∧
       P.f (.payload 15) = .hyper :=
   ⟨assignment P, weak_mixing P, strong_coupling P, sterile_included P⟩
 

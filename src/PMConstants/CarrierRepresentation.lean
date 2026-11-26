@@ -89,15 +89,15 @@ theorem multiplicities_from_carriers :
 theorem bl_traceless (a b : ℚ) (htr : 3 * a + b = 0) (hl : b = -1) : a = 1/3 ∧ b = -3 * a := by
   constructor <;> linarith
 
-/-- Lepton number minus baryon number per axis, and the right-sector isospin. -/
-def bl (v : V) : ℚ := if onLepton v then -1 else 1/3
-def t3 (v : V) : ℚ := if positive v then 1/2 else -1/2
+/-- Baryon number minus lepton number per axis, and the right-sector isospin. -/
+def bl (v : V) : ℚ := blAxis (onLepton v)
+def t3 (v : V) : ℚ := t3Sign (positive v)
 
 open RequirementTable Hypercharge in
 theorem charges_from_carriers (v : V) :
-    bl v = hyper standard (leftType v) ∧ bl v + 2 * t3 v = hyper standard (rightType v) := by
+    bl v = packetHypercharge carrierStandard (leftType v) ∧ bl v + 2 * t3 v = packetHypercharge carrierStandard (rightType v) := by
   unfold bl t3 leftType rightType
-  cases onLepton v <;> cases positive v <;> simp [hyper, standard] <;> norm_num
+  cases onLepton v <;> cases positive v <;> simp [packetHypercharge, carrierStandard, carrierCharges, blAxis, t3Sign] <;> norm_num
 
 /-! ## The charge table from the carriers
 
@@ -109,19 +109,15 @@ the table follows from the carrier geometry, the forced lepton charge and the un
 (`carrierCharges_eq_standard`).
 -/
 
-/-- The charge table read from the carriers: lepton-number value `b` on the reserved axis, `a` on
-each colour axis, and the right wall shifted by `2 t3` for a link of charge `h`. -/
-def carrierCharges (a b h : ℚ) : Hypercharge.Charges := ⟨a, a + h, a - h, b, b - h, b + h⟩
-
 /-- **The table in terms of `bl` and `t3`.** The left wall carries the axis value; the right wall
 adds `2 h t3`, the insertion of a link of charge `h`. -/
 theorem carrier_table (a b h : ℚ) (v : V) :
-    RequirementTable.hyper (carrierCharges a b h) (leftType v) = (if onLepton v then b else a) ∧
-      RequirementTable.hyper (carrierCharges a b h) (rightType v) =
+    RequirementTable.packetHypercharge (carrierCharges a b h) (leftType v) = (if onLepton v then b else a) ∧
+      RequirementTable.packetHypercharge (carrierCharges a b h) (rightType v) =
         (if onLepton v then b else a) + 2 * h * t3 v := by
   unfold carrierCharges leftType rightType t3
   cases onLepton v <;> cases positive v <;>
-    simp [RequirementTable.hyper] <;> ring
+    simp [RequirementTable.packetHypercharge, t3Sign] <;> ring
 
 /-- **Flux conservation is axis tracelessness.** The two further flux conditions hold for every
 `a`, `b`, `h`. -/
@@ -147,9 +143,8 @@ theorem carrierCharges_eq_standard (a b : ℚ) (htr : 3 * a + b = 0) (hl : b = -
 
 /-- The carriers' own values are that table: `bl` on the left wall, `bl + 2 t3` on the right. -/
 theorem charges_eq_carrier_table (v : V) :
-    bl v = RequirementTable.hyper (carrierCharges (1/3) (-1) 1) (leftType v) ∧
-      bl v + 2 * t3 v = RequirementTable.hyper (carrierCharges (1/3) (-1) 1) (rightType v) := by
-  rw [carrierCharges_eq_standard (1/3) (-1) (by norm_num) rfl]
+    bl v = RequirementTable.packetHypercharge (carrierCharges (1/3) (-1) 1) (leftType v) ∧
+      bl v + 2 * t3 v = RequirementTable.packetHypercharge (carrierCharges (1/3) (-1) 1) (rightType v) := by
   exact charges_from_carriers v
 
 end PMConstants.CarrierRepresentation

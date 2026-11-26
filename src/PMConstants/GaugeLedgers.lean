@@ -78,8 +78,8 @@ theorem mixing_from_rule : ledger reqSU2 / (ledger reqSU2 + ledger reqY) = clock
   rw [footprint_from_rule, su2_value]; rfl
 
 theorem strong_from_rule :
-    CertifiedConstants.α * (ledger reqSU2 + ledger reqY) / ledger reqColour =
-      CertifiedConstants.α * footprint / ColourChannels.colourLedger := by
+    PMSubstrate.causalCoupling * (ledger reqSU2 + ledger reqY) / ledger reqColour =
+      PMSubstrate.causalCoupling * footprint / ColourChannels.colourLedger := by
   rw [footprint_from_rule, colour_value]
 
 end PMConstants.GaugeLedgers

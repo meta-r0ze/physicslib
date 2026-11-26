@@ -5,7 +5,7 @@ import Mathlib.LinearAlgebra.Matrix.Reindex
 import Mathlib.Data.Matrix.Block
 
 /-! Common unitary weak and colour actions on the actual packet, with the hypercharge
-assignment of `Hypercharge.standard`, which the carriers derive
+assignment of `CarrierRepresentation.carrierStandard`, which the carriers derive
 (`CarrierRepresentation.carrierCharges_eq_standard`). The axis and chirality readings are derived
 upstream: the reference singles out one axis (`ReferenceAxis`,
 `CarrierRepresentation.one_axis`), and "left" names the wall that carries the reference, because
@@ -146,23 +146,31 @@ theorem colour_unitary (V : Matrix (Fin 3) (Fin 3) ℂ) (hv : V ∈ unitary _) :
   block_unitary _ _ _ _ (tensor_unitary V _ hv (one_mem _))
     (tensor_unitary V _ hv (one_mem _)) (one_mem _) (one_mem _)
 
-/-- Existing Y charges, with right order (u,d) and (neutral,electron). -/
-def charge : M := block ((1/3 : ℂ) • 1) (1 ⊗ₖ diagonal ![4/3,-2/3])
-  ((-1 : ℂ) • 1) (diagonal ![0,-2])
+/-- Hypercharge in carrier units, with right order (u,d) and (neutral,electron). -/
+def hyperchargeOperator : M :=
+  let y := CarrierRepresentation.carrierStandard
+  block ((y.q : ℂ) • 1) (1 ⊗ₖ diagonal ![(y.u : ℂ), (y.d : ℂ)])
+    ((y.l : ℂ) • 1) (diagonal ![(y.n : ℂ), (y.e : ℂ)])
 
-theorem weak_charge (U : Matrix (Fin 2) (Fin 2) ℂ) : weak U*charge=charge*weak U := by
-  simp [weak,charge,block_mul]
+/-- Evaluate the derived charges for calculations in the block chart. -/
+theorem hyperchargeOperator_blocks :
+    hyperchargeOperator = block ((1/3 : ℂ) • 1) (1 ⊗ₖ diagonal ![4/3,-2/3])
+      ((-1 : ℂ) • 1) (diagonal ![0,-2]) := by
+  norm_num [hyperchargeOperator, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
-theorem colour_charge (V : Matrix (Fin 3) (Fin 3) ℂ) : colour V*charge=charge*colour V := by
-  simp [colour,charge,block_mul,← mul_kronecker_mul]
+theorem weak_charge (U : Matrix (Fin 2) (Fin 2) ℂ) : weak U*hyperchargeOperator=hyperchargeOperator*weak U := by
+  simp [weak,hyperchargeOperator_blocks,block_mul]
 
-theorem charge_hermitian : charge.IsHermitian := by
+theorem colour_charge (V : Matrix (Fin 3) (Fin 3) ℂ) : colour V*hyperchargeOperator=hyperchargeOperator*colour V := by
+  simp [colour,hyperchargeOperator_blocks,block_mul,← mul_kronecker_mul]
+
+theorem charge_hermitian : hyperchargeOperator.IsHermitian := by
   have hd : star (![4/3,-2/3] : Fin 2 → ℂ)=![4/3,-2/3] := by
     funext i; fin_cases i <;> norm_num
   have he : star (![0,-2] : Fin 2 → ℂ)=![0,-2] := by
     funext i; fin_cases i <;> norm_num
-  change chargeᴴ=charge
-  simp [charge,block_star,conjTranspose_kronecker,diagonal_conjTranspose,hd,he]
+  change hyperchargeOperatorᴴ=hyperchargeOperator
+  simp [hyperchargeOperator_blocks,block_star,conjTranspose_kronecker,diagonal_conjTranspose,hd,he]
 
 def weakRepresentation : unitary (Matrix (Fin 2) (Fin 2) ℂ) →* unitary M where
   toFun U := ⟨weak U,weak_unitary U U.prop⟩
@@ -186,7 +194,7 @@ theorem weak_hypercharge (U : Matrix (Fin 2) (Fin 2) ℂ) (t : ℝ) :
     weak U*hypercharge t=hypercharge t*weak U := by
   unfold hypercharge
   rw [LinkEvolution.transport_eq_exp]
-  have hc : Commute (weak U) charge := weak_charge U
+  have hc : Commute (weak U) hyperchargeOperator := weak_charge U
   exact (hc.smul_right ((t : ℂ)*Complex.I)).exp_right
 
 open scoped Matrix.Norms.Operator in
@@ -194,15 +202,15 @@ theorem colour_hypercharge (V : Matrix (Fin 3) (Fin 3) ℂ) (t : ℝ) :
     colour V*hypercharge t=hypercharge t*colour V := by
   unfold hypercharge
   rw [LinkEvolution.transport_eq_exp]
-  have hc : Commute (colour V) charge := colour_charge V
+  have hc : Commute (colour V) hyperchargeOperator := colour_charge V
   exact (hc.smul_right ((t : ℂ)*Complex.I)).exp_right
 
 /-- The block charges agree with the original indexed representation table. -/
-theorem charge_table : ∀ c : Channels, charge c c=
-    (RequirementTable.hyper Hypercharge.standard (RequirementTable.ty (channelIndex c)) : ℂ) := by
+theorem charge_table : ∀ c : Channels, hyperchargeOperator c c=
+    (RequirementTable.packetHypercharge CarrierRepresentation.carrierStandard (RequirementTable.ty (channelIndex c)) : ℂ) := by
   intro c
-  fin_cases c <;> norm_num [charge,block,channelIndex,RequirementTable.hyper,
-    Hypercharge.standard,RequirementTable.ty,Matrix.kroneckerMap_apply]
+  fin_cases c <;> norm_num [hyperchargeOperator_blocks,block,channelIndex,RequirementTable.packetHypercharge,
+    CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis, RequirementTable.ty,Matrix.kroneckerMap_apply]
 
 /-- Reindexing by the actual carrier bijection preserves the algebra. -/
 def onPacket : M ≃ₐ[ℂ] Matrix CarrierActions.Packet CarrierActions.Packet ℂ :=

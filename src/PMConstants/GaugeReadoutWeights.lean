@@ -89,7 +89,7 @@ theorem colour_square (w : Ty → ℝ) (B : Matrix (Fin 3) (Fin 3) ℂ) :
 set_option maxHeartbeats 800000 in
 theorem hyper_square (w : Ty → ℝ) : wtrace w (hyperGen*hyperGen)=
     ((w .Q/6+4*w .u/3+w .d/3+w .L/2+w .e : ℝ) : ℂ) := by
-  norm_num [hyperGen,charge,Matrix.mul_smul,Matrix.smul_mul,block_mul,
+  norm_num [hyperGen,hyperchargeOperator_blocks,Matrix.mul_smul,Matrix.smul_mul,block_mul,
     wtrace,block,channelType,Fintype.sum_sum_type,Fintype.sum_prod_type,
     Fin.sum_univ_succ,kronecker_apply,Matrix.mul_apply]
   norm_num [Matrix.one_apply,Matrix.zero_apply]
@@ -107,7 +107,7 @@ lemma weak_colour_cross (w : Ty → ℝ) (A : Matrix (Fin 2) (Fin 2) ℂ)
 set_option maxHeartbeats 800000 in
 lemma weak_hyper_cross (w : Ty → ℝ) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     wtrace w (weakGen A*hyperGen)=((w .Q-w .L : ℝ) : ℂ)/2*A.trace := by
-  simp [weakGen,hyperGen,charge,wtrace,block,channelType,Fintype.sum_sum_type,
+  simp [weakGen,hyperGen,hyperchargeOperator_blocks,wtrace,block,channelType,Fintype.sum_sum_type,
     Fintype.sum_prod_type,Fin.sum_univ_succ,Matrix.trace,Matrix.diag,Matrix.mul_apply]
   norm_num [Matrix.one_apply,Matrix.zero_apply]
   ring
@@ -115,7 +115,7 @@ lemma weak_hyper_cross (w : Ty → ℝ) (A : Matrix (Fin 2) (Fin 2) ℂ) :
 set_option maxHeartbeats 800000 in
 lemma colour_hyper_cross (w : Ty → ℝ) (B : Matrix (Fin 3) (Fin 3) ℂ) :
     wtrace w (colourGen B*hyperGen)=((w .Q+2*w .u-w .d : ℝ) : ℂ)/3*B.trace := by
-  simp [colourGen,hyperGen,charge,wtrace,block,channelType,Fintype.sum_sum_type,
+  simp [colourGen,hyperGen,hyperchargeOperator_blocks,wtrace,block,channelType,Fintype.sum_sum_type,
     Fintype.sum_prod_type,Fin.sum_univ_succ,Matrix.trace,Matrix.diag,Matrix.mul_apply]
   norm_num [Matrix.one_apply,Matrix.zero_apply]
   ring
@@ -126,11 +126,11 @@ lemma weak_colour_commute (A : Matrix (Fin 2) (Fin 2) ℂ)
 
 lemma weak_hyper_commute (A : Matrix (Fin 2) (Fin 2) ℂ) :
     weakGen A*hyperGen=hyperGen*weakGen A := by
-  simp [weakGen,hyperGen,charge,block_mul]
+  simp [weakGen,hyperGen,hyperchargeOperator_blocks,block_mul]
 
 lemma colour_hyper_commute (B : Matrix (Fin 3) (Fin 3) ℂ) :
     colourGen B*hyperGen=hyperGen*colourGen B := by
-  simp [colourGen,hyperGen,charge,block_mul,
+  simp [colourGen,hyperGen,hyperchargeOperator_blocks,block_mul,
     ← mul_kronecker_mul]
 
 /-- Type-invariant preparation retains the joint gauge quadratic form.

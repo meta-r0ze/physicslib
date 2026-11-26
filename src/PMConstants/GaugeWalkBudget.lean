@@ -31,16 +31,10 @@ stream's source and the pulses' prices.
 
 noncomputable section
 namespace PMConstants.GaugeWalkBudget
+open PMConstants.ReferenceDirections (RepairDisplacement)
+open PMConstants.ReferenceDirections.DoubletChart
 open Matrix PMAction ConcreteFermion GaugeRecordEmbedding
 open scoped Kronecker
-
-abbrev D := ℝ × ℂ
-abbrev Doublet := Fin 2 → ℂ
-
-def reference : Doublet := ![1, 0]
-def tangent (d : D) : Doublet := ![Complex.I * (d.1 : ℂ), Complex.I * d.2]
-def input (d : D) : Doublet := reference + tangent d
-def displacement (ψ : Doublet) : D := ((ψ 0).im, -Complex.I * ψ 1)
 
 /-- Control `0` is live, control `1` is the record (as in `referenceInput`). -/
 def packet (live record : Doublet) : Fin 2 × Fin 2 → ℂ := fun p => if p.1 = 0 then live p.2 else record p.2
@@ -53,10 +47,10 @@ theorem swap_controls (live record : Doublet) :
     simp [packet, GaugeRecordEmbedding.exchange, mulVec, dotProduct,
       Fintype.sum_prod_type, Fin.sum_univ_two, one_apply]
 
-def prepare (d : D) : Fin 4 × Fin 2 → ℂ := embedding *ᵥ packet (input d) reference
+def prepare (d : RepairDisplacement) : Fin 4 × Fin 2 → ℂ := embedding *ᵥ packet (input d) referenceDoublet
 def run (v : Fin 4 × Fin 2 → ℂ) : Fin 4 × Fin 2 → ℂ := (gamma ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *ᵥ v
 def liveOf (v : Fin 4 × Fin 2 → ℂ) : Doublet := fun j => ((embedding (n := Fin 2))ᴴ *ᵥ v) (0, j)
-def observe (v : Fin 4 × Fin 2 → ℂ) : D := displacement (liveOf v)
+def observe (v : Fin 4 × Fin 2 → ℂ) : RepairDisplacement := displacement (liveOf v)
 
 theorem run_embedded (live record : Doublet) :
     run (embedding *ᵥ packet live record) = embedding *ᵥ packet record live := by
@@ -68,10 +62,10 @@ theorem liveOf_embedded (live record : Doublet) : liveOf (embedding *ᵥ packet 
   simp only [liveOf, mulVec_mulVec, embedding_isometry, one_mulVec]
   simp [packet]
 
-theorem exact (d : D) : observe (run (prepare d)) = 0 := by
+theorem exact (d : RepairDisplacement) : observe (run (prepare d)) = 0 := by
   unfold observe prepare
   rw [run_embedded, liveOf_embedded]
-  simp [displacement, reference]
+  simp [displacement, referenceDoublet]
 
 /-- **The gauge-compatible walk repair is exact.** -/
 def gauge_repair : RepairBudget.ExactRepair where
@@ -79,16 +73,12 @@ def gauge_repair : RepairBudget.ExactRepair where
   prepare := prepare
   run := run
   observe := observe
-  K := ContinuousLinearMap.id ℝ D
+  K := ContinuousLinearMap.id ℝ RepairDisplacement
   exact_small := Filter.Eventually.of_forall exact
   net_derivative := by
-    have h : (fun d : D => d - observe (run (prepare d))) = id := by
+    have h : (fun d : RepairDisplacement => d - observe (run (prepare d))) = id := by
       funext d; rw [exact]; simp
-    rw [h]; exact hasFDerivAt_id (0 : D)
-
-theorem gauge_budget (B : ℝ) (hB : B = LinearMap.trace ℝ D gauge_repair.K.toLinearMap) :
-    B = 3 ∧ ((0.1286 : ℚ) < (3 - 1/43) / (23 : ℕ) ∧ (3 - 1/43) / (23 : ℕ) < (0.1300 : ℚ)) :=
-  RepairBudget.budget_from_repair gauge_repair B hB
+    rw [h]; exact hasFDerivAt_id (0 : RepairDisplacement)
 
 /-- **The repair commutes with every payload gauge action.** -/
 theorem repair_covariant (G : Matrix (Fin 2) (Fin 2) ℂ) (v : Fin 4 × Fin 2 → ℂ) :

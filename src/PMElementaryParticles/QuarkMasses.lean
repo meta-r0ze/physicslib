@@ -1,6 +1,5 @@
-import PMSubstrate.OccupancyCost
+import PMSubstrate.SpeciesFootprints
 import PMElementaryParticles.SharedUnits
-import PMConstants.StrongRunning
 
 /-!
 
@@ -36,114 +35,19 @@ input (`M`), not cost-selected (there is no option family/cost functional over
 tier ledgers). The measured PDG 2024 pulls live in
 `tools/e8p/E8PConstants/PMElementaryParticles/QuarkMassPulls.lean`.
 
-These are the formulas Paper III's `StrongRunning` uses for the flavour thresholds
-(`m_c`, `m_b`, `threshold_match`).
+`PMConstants.StrongRunning` reads the quark thresholds from these same footprints.
 -/
 
 noncomputable section
 namespace PMElementaryParticles.QuarkMasses
-open PMElementaryParticles.SharedUnits
-open PMSubstrate.E8Values PMSubstrate.OccupancyCost
+open PMElementaryParticles.SharedUnits PMSubstrate.E8Values
 
-/-- Per-cell overhead `η = 171/172`. -/
-def η : ℝ := overhead
-
-/-! ## Named tier costs (the paper's protocol ledger) -/
-
-/-- Point anchor `D`. -/
-def anchorPoint : ℝ := (D : ℝ)
-/-- Internal-symmetry weight `σ`. -/
-def symWeight : ℝ := (sigma : ℝ)
-/-- Linear anchor `DΔ`. -/
-def anchorLine : ℝ := (D : ℝ) * (Delta : ℝ)
-/-- Additive double-symmetry drag `χσ = 2σ`. -/
-def dragSym : ℝ := (chi : ℝ) * (sigma : ℝ)
-/-- Areal anchor `DΔ²`. -/
-def anchorArea : ℝ := (D : ℝ) * (Delta : ℝ) ^ 2
-/-- Colour dilution `σ − χ`. -/
-def colourDim : ℝ := (sigma : ℝ) - (chi : ℝ)
-/-- Boundary-to-symmetry latency ratio `χ/σ`. -/
-def latencyRatio : ℝ := (chi : ℝ) / (sigma : ℝ)
-/-- Areal latency leak `Δ²χ/σ`. -/
-def latencyTerm : ℝ := (Delta : ℝ) ^ 2 * latencyRatio
-/-- Volumetric anchor `DΔ³`. -/
-def anchorVolume : ℝ := (D : ℝ) * (Delta : ℝ) ^ 3
-/-- Reciprocal capacity leak `1/D`. -/
-def capLeak : ℝ := 1 / (D : ℝ)
-/-- Volumetric capacity leak `Δ³/D`. -/
-def capLeakTerm : ℝ := (Delta : ℝ) ^ 3 * capLeak
-
-/-! The event field is the whole part of the leading term after overhead
-and, for charm, colour dilution. The residual keeps its fractional part
-and the remaining ledger charges. For top, take the whole part of
-`Δ³(D + 1/D)`, its full leading term. These splits preserve the declared
-formulas. The occupied regions still need to be derived. -/
-
-def upFootprint : Footprint :=
-  let leading := anchorPoint / η
-  let whole := ⌊leading⌋₊
-  { events := whole, residual := leading - whole }
-
-def downFootprint : Footprint :=
-  let leading := anchorPoint / η
-  let whole := ⌊leading⌋₊
-  { events := whole, residual := leading - whole + symWeight / η }
-
-def strangeFootprint : Footprint :=
-  let leading := anchorLine / η
-  let whole := ⌊leading⌋₊
-  { events := whole, residual := leading - whole + dragSym / η }
-
-def charmFootprint : Footprint :=
-  let leading := anchorArea / (η * colourDim)
-  let whole := ⌊leading⌋₊
-  { events := whole, residual := leading - whole }
-
-def bottomFootprint : Footprint :=
-  let leading := anchorArea / η
-  let whole := ⌊leading⌋₊
-  { events := whole, residual := leading - whole + latencyTerm / η }
-
-def topFootprint : Footprint :=
-  let leading := anchorVolume + capLeakTerm
-  let whole := ⌊leading⌋₊
-  { events := whole, residual := leading - whole }
-
-abbrev up : ℝ := cost upFootprint
-abbrev down : ℝ := cost downFootprint
-abbrev strange : ℝ := cost strangeFootprint
-abbrev charm : ℝ := cost charmFootprint
-abbrev bottom : ℝ := cost bottomFootprint
-abbrev top : ℝ := cost topFootprint
-
-/-- The up quark is anchored to the spacetime manifold alone. -/
-theorem up_ledger : up = anchorPoint / η := by
-  simp [up, upFootprint, cost]
-
-/-- The down quark carries the manifold anchor plus the internal symmetry weight. -/
-theorem down_ledger : down = (anchorPoint + symWeight) / η := by
-  simp [down, downFootprint, cost, add_div]
-  ring
-
-/-- The strange quark is a linear anchor plus the additive double-symmetry drag
-`χσ = 2σ`. -/
-theorem strange_ledger : strange = (anchorLine + dragSym) / η := by
-  simp [strange, strangeFootprint, cost, add_div]
-  ring
-
-/-- The charm quark is an areal anchor diluted by the `σ − χ` colour dimensions. -/
-theorem charm_ledger : charm = anchorArea / (η * colourDim) := by
-  simp [charm, charmFootprint, cost]
-
-/-- The bottom quark is an areal anchor plus the boundary-to-symmetry latency leak. -/
-theorem bottom_ledger : bottom = (anchorArea + latencyTerm) / η := by
-  simp [bottom, bottomFootprint, cost, add_div]
-  ring
-
-/-- The top quark is a volumetric anchor plus the reciprocal capacity leak
-`Δ³/D`. -/
-theorem top_ledger : top = anchorVolume + capLeakTerm := by
-  simp [top, topFootprint, cost]
+export PMSubstrate.SpeciesFootprints.Quark
+  (η anchorPoint symWeight anchorLine dragSym anchorArea colourDim
+  latencyRatio latencyTerm anchorVolume capLeak capLeakTerm upFootprint downFootprint
+  strangeFootprint charmFootprint bottomFootprint topFootprint up down strange
+  charm bottom top up_ledger down_ledger strange_ledger charm_ledger
+  bottom_ledger top_ledger)
 
 /-! ## E8-only enclosures (no measured reference) -/
 
@@ -191,15 +95,5 @@ theorem top_value : (172657 : ℝ) < top * me ∧ top * me < (172686 : ℝ) := b
   unfold anchorVolume capLeakTerm capLeak
   rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq]
   norm_num [me, PMSubstrate.SIUnits.electronMassMeV]
-
-/-- The thresholds Paper III orders are these formulas. -/
-theorem threshold_match : charm = PMConstants.StrongRunning.mCharm ∧ bottom = PMConstants.StrongRunning.mBottom := by
-  rw [charm_ledger, bottom_ledger]
-  unfold anchorArea colourDim latencyTerm latencyRatio η PMConstants.StrongRunning.mCharm
-    PMConstants.StrongRunning.mBottom PMConstants.overhead
-  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
-    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq,
-    PMSubstrate.E8Values.overhead_eq]
-  constructor <;> ring
 
 end PMElementaryParticles.QuarkMasses

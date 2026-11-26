@@ -5,7 +5,7 @@ import PMConstants.Partition
 # Only one integer strong ledger survives
 
 `StiffnessIndices` puts the strong readout, in the channel-weighted units that give the weak
-mixing `s = Δ/N_sys`, at `α_s = α N_sys / L₃`. The paper's own formula needs a non-integer
+mixing `s = Δ/N_sys`, at `α_s  = α N_sys / L₃`. The paper's own formula needs a non-integer
 `L₃ ∈ (11, 12)`. If the strong ledger is a count, as the weak ledger `Δ = 43` is, then:
 
 * `alpha_footprint_bounds`: `1.40771 < α N_sys < 1.40772`.
@@ -27,9 +27,9 @@ noncomputable section
 namespace PMConstants.StrongLedgerTest
 open PMConstants CertifiedConstants
 
-def ledgerCoupling (L : ℕ) : ℝ := α * footprint / L
+def ledgerCoupling (L : ℕ) : ℝ := PMSubstrate.causalCoupling * footprint / L
 
-theorem alpha_footprint_bounds : (1.40771 : ℝ) < α * footprint ∧ α * footprint < 1.40772 := by
+theorem alpha_footprint_bounds : (1.40771 : ℝ) < PMSubstrate.causalCoupling * footprint ∧ PMSubstrate.causalCoupling * footprint < 1.40772 := by
   have h := alpha_bounds
   norm_num [footprint, overhead]
   constructor <;> nlinarith [h.1, h.2]
@@ -46,7 +46,7 @@ sharp against a comparison of that precision. No measured value enters. -/
 theorem ledger_separation (L : ℕ) (hL : 0 < L) (hL13 : L ≤ 12) :
     0.0088 < ledgerCoupling L - ledgerCoupling (L + 1) := by
   have h := alpha_footprint_bounds
-  have hpos : (0 : ℝ) < α * footprint := by linarith [h.1]
+  have hpos : (0 : ℝ) < PMSubstrate.causalCoupling * footprint := by linarith [h.1]
   have hL1 : (1 : ℝ) ≤ (L : ℝ) := by exact_mod_cast hL
   have hLu : (L : ℝ) ≤ 12 := by exact_mod_cast hL13
   have hLp : (0 : ℝ) < (L : ℝ) := by linarith

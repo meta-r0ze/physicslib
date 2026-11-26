@@ -42,7 +42,7 @@ def axisOf : Channels → Fin 4
   | .inr (.inr (.inr _)) => 0
 
 /-- Baryon weight per axis: `0` on the lepton axis, `1/3` on the colour axes. -/
-def axisB (i : Fin 4) : ℚ := if i = 0 then 0 else 1/3
+def axisB (i : Fin 4) : ℚ := if i = 0 then 0 else CarrierRepresentation.blAxis false
 
 /-- Lepton weight per axis: `1` on the lepton axis, `0` on the colour axes. -/
 def axisL (i : Fin 4) : ℚ := if i = 0 then 1 else 0
@@ -62,13 +62,13 @@ theorem bl_eq :
       Matrix.diagonal (fun i : Fin 4 => ((axisB i - axisL i : ℚ) : ℂ)) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [ReferenceAxis.bl, axisB, axisL, Matrix.diagonal]
+    norm_num [ReferenceAxis.bl, axisB, axisL, CarrierRepresentation.blAxis, Matrix.diagonal]
 
 /-- `B − L` per channel is the paper's value: `1/3` on colour, `−1` on the lepton
 axis. -/
 theorem baryon_sub_lepton (c : Channels) :
     axisB (axisOf c) - axisL (axisOf c) = if axisOf c = 0 then -1 else 1/3 := by
-  by_cases h : axisOf c = 0 <;> simp [axisB, axisL, h]
+  by_cases h : axisOf c = 0 <;> simp [axisB, axisL, CarrierRepresentation.blAxis, h]
 
 /-- **The doublet flip preserves baryon** (it only swaps the doublet index). -/
 theorem baryon_flipWeak (c : Channels) : baryon (flipWeak c) = baryon c := by

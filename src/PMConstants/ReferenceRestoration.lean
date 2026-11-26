@@ -45,7 +45,8 @@ lemma t3_isDiag : Matrix.IsDiag t3 := by
   exact (isDiag_one.kronecker hA).fromBlocks (isDiag_zero.fromBlocks (hA.fromBlocks isDiag_zero))
 
 lemma hyper_isDiag : Matrix.IsDiag hyperGen := by
-  unfold hyperGen PacketGaugeActions.charge PacketGaugeActions.block
+  rw [hyperGen, PacketGaugeActions.hyperchargeOperator_blocks]
+  unfold PacketGaugeActions.block
   refine IsDiag.smul _ ?_
   exact (isDiag_one.smul _).fromBlocks ((isDiag_one.kronecker (isDiag_diagonal _)).fromBlocks
     ((isDiag_one.smul _).fromBlocks (isDiag_diagonal _)))

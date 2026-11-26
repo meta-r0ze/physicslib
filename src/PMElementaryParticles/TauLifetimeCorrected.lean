@@ -34,7 +34,7 @@ def xTau : ℝ := 1 / tau ^ 2
 
 def phaseTau : ℝ := MassiveWidth.phase xTau
 
-def wSq : ℝ := PMConstants.GaugeSpectrum.wMassSquared PMConstants.CertifiedConstants.α
+def wSq : ℝ := PMConstants.GaugeSpectrum.wMassSquared PMSubstrate.causalCoupling
   PMConstants.ElectroweakBounds.electronGeV
 
 def eG : ℝ := PMConstants.ElectroweakBounds.electronGeV

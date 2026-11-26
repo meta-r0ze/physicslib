@@ -102,14 +102,14 @@ theorem colour_acts_on_axis :
 /-- **The rule is one event per displaced factor**, with the derived hypercharges. -/
 theorem repairs_from_factors (t : Ty) :
     repairs t = max ((if colourDim t = 3 then 1 else 0) + (if isoDim t = 2 then 1 else 0))
-      (if hyper Hypercharge.standard t ≠ 0 then 1 else 0) := by
-  cases t <;> norm_num [repairs, nonAbelian, colourDim, isoDim, hyper, Hypercharge.standard]
+      (if packetHypercharge CarrierRepresentation.carrierStandard t ≠ 0 then 1 else 0) := by
+  cases t <;> norm_num [repairs, nonAbelian, colourDim, isoDim, packetHypercharge, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 /-- **The least repair of a displaced carrier has `repairs t` events.** -/
 theorem repairs_least {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
     [DecidableEq Gc] [DecidableEq Gw] [DecidableEq P] (t : Ty) (g : Gc × Gw × P)
     (hc : g.1 ≠ 1 ↔ colourDim t = 3) (hw : g.2.1 ≠ 1 ↔ isoDim t = 2)
-    (hp : g.2.2 ≠ 1 ↔ hyper Hypercharge.standard t ≠ 0) :
+    (hp : g.2.2 ≠ 1 ↔ packetHypercharge CarrierRepresentation.carrierStandard t ≠ 0) :
     IsLeast {n | ∃ L : List (Gc × Gw × P), (∀ e ∈ L, PMAction.FactorRepair.IsEvent e) ∧
       L.prod = g ∧ L.length = n} (repairs t) := by
   have h : PMAction.FactorRepair.need g = repairs t := by
@@ -137,7 +137,7 @@ theorem repairs_cover {Gc Gw P : Type*} [Group Gc] [Group Gw] [CommGroup P]
     IsLeast {n | PMAction.FactorRepair.Covers
       (PMAction.FactorRepair.Admissible (Gc := Gc) (Gw := Gw) (P := P)
         (colourDim t = 3) (isoDim t = 2)
-        (hyper Hypercharge.standard t ≠ 0)) n} (repairs t) := by
+        (packetHypercharge CarrierRepresentation.carrierStandard t ≠ 0)) n} (repairs t) := by
   rw [repairs_from_factors t]
   exact PMAction.FactorRepair.covering_least _ _ _ c₀ hc₀ w₀ hw₀ p₀ hp₀
 

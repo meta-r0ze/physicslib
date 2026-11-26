@@ -19,8 +19,6 @@ open Matrix PMConstants.PacketGaugeActions PMConstants.ChannelOccupancy
 open PMElementaryParticles.ProtocolInventory PMAction.CoherentComparisonRepair
 open scoped Matrix.Norms.Operator
 
-private def chargeIndex (c : Channels) : ℤ := (tag c).2.2
-
 private def fifthPhase (n : ℤ) : ℂ :=
   Complex.exp ((2 * (Real.pi : ℂ) / 5 * (n : ℂ)) * Complex.I)
 
@@ -48,7 +46,7 @@ private theorem fifthPhase_one_iff (n : ℤ) : fifthPhase n = 1 ↔ 5 ∣ n := b
     ring
 
 private theorem fifthPhase_channel (c : Channels) :
-    fifthPhase (chargeIndex c) = 1 ↔ baseProtocol c = none := by
+    fifthPhase (hyperchargeThirds c) = 1 ↔ baseProtocol c = none := by
   rw [fifthPhase_one_iff]
   revert c
   decide +kernel
@@ -58,13 +56,13 @@ def phaseStep : ℝ := 6 * Real.pi / 5
 
 private theorem transport_diagonal (j : ℕ) :
     hypercharge ((j : ℝ) * phaseStep) =
-      diagonal (fun c => fifthPhase (chargeIndex c) ^ j) := by
+      diagonal (fun c => fifthPhase (hyperchargeThirds c) ^ j) := by
   rw [VacancyProjection.hypercharge_eq_diagonal]
   congr 1
   funext c
   rw [fifthPhase, ← Complex.exp_nat_mul]
   congr 1
-  simp [phaseStep, chargeIndex]
+  simp [phaseStep, hyperchargeThirds]
   ring
 
 private theorem fifth_product (z : ℂ) (hz : z ^ 5 = 1) (hne : z ≠ 1) :
@@ -86,7 +84,7 @@ def filter : M :=
 
 private theorem minus_diagonal (j : ℕ) :
     minus (hypercharge ((j : ℝ) * phaseStep)) =
-      diagonal (fun c => (1 / 2 : ℂ) * (1 - fifthPhase (chargeIndex c) ^ j)) := by
+      diagonal (fun c => (1 / 2 : ℂ) * (1 - fifthPhase (hyperchargeThirds c) ^ j)) := by
   rw [transport_diagonal, minus, ← diagonal_one, diagonal_sub, ← diagonal_smul]
   rfl
 
@@ -103,7 +101,7 @@ theorem filter_eq_projector : filter = (5 / 16 : ℂ) • VacancyProjection.occu
   simp only [diagonal_mul_diagonal]
   congr 1
   funext c
-  let z := fifthPhase (chargeIndex c)
+  let z := fifthPhase (hyperchargeThirds c)
   change (1/2 * (1-z)) * (1/2 * (1-z^2)) * (1/2 * (1-z^3)) * (1/2 * (1-z^4)) =
     (5/16 : ℂ) * (if baseProtocol c = none then 0 else 1)
   by_cases hc : baseProtocol c = none

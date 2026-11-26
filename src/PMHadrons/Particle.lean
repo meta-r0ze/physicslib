@@ -361,7 +361,7 @@ theorem antineutrino_stable_massive (mν : ℝ) (h0 : 0 ≤ mν) (h1 : mν ≤ 1
 
 /-- The E8 floor mass in `m_e` units (`≈ 1.8×10⁻⁸`). -/
 noncomputable def floorMassME : ℝ :=
-  PMConstants.Bulk.floorMass PMConstants.CertifiedConstants.α PMConstants.FloorNeutrino.meEV /
+  PMConstants.Bulk.floorMass PMSubstrate.causalCoupling PMConstants.FloorNeutrino.meEV /
     PMConstants.FloorNeutrino.meEV
 
 theorem floorMassME_bounds : 0 ≤ floorMassME ∧ floorMassME ≤ 1 := by

@@ -37,7 +37,7 @@ private theorem phaseIndex_inj (c : Channels) (s : Option BaseProtocol)
 
 private theorem transport_diagonal :
     hypercharge (3 * Real.pi / 4) = diagonal
-      (fun c => Complex.exp (((Real.pi : ℂ) * ((tag c).2.2 : ℂ) / 4) * Complex.I)) := by
+      (fun c => Complex.exp (((Real.pi : ℂ) * (hyperchargeThirds c : ℂ) / 4) * Complex.I)) := by
   rw [VacancyProjection.hypercharge_eq_diagonal]
   congr 1
   funext c
@@ -46,22 +46,22 @@ private theorem transport_diagonal :
   ring
 
 private theorem static_phase (c : Channels) (hc : active c = false) :
-    Complex.exp (((Real.pi : ℂ) * ((tag c).2.2 : ℂ) / 4) * Complex.I) =
+    Complex.exp (((Real.pi : ℂ) * (hyperchargeThirds c : ℂ) / 4) * Complex.I) =
       Complex.I ^ (phaseIndex (baseProtocol c)).val := by
   have hi : Complex.exp ((Real.pi : ℂ) / 2 * Complex.I) = Complex.I :=
     Complex.exp_pi_div_two_mul_I
   rcases c with ⟨a, s⟩ | ⟨a, s⟩ | s | s
   · simp [active] at hc
   · fin_cases s
-    · norm_num [tag, baseProtocol, phaseIndex, Complex.exp_pi_mul_I, Complex.I_sq]
-    · norm_num [tag, baseProtocol, phaseIndex]
+    · norm_num [hyperchargeThirds_apply, baseProtocol, phaseIndex, Complex.exp_pi_mul_I, Complex.I_sq]
+    · norm_num [hyperchargeThirds_apply, baseProtocol, phaseIndex]
       rw [show -((Real.pi : ℂ) * 2) / 4 * Complex.I = -((Real.pi : ℂ) / 2 * Complex.I) by ring,
         Complex.exp_neg, hi]
       simp [Complex.inv_I]
   · simp [active] at hc
   · fin_cases s
-    · norm_num [tag, baseProtocol, phaseIndex]
-    · norm_num [tag, baseProtocol, phaseIndex]
+    · norm_num [hyperchargeThirds_apply, baseProtocol, phaseIndex]
+    · norm_num [hyperchargeThirds_apply, baseProtocol, phaseIndex]
       rw [show -((Real.pi : ℂ) * 6) / 4 * Complex.I =
         (Real.pi : ℂ) / 2 * Complex.I - (2 * Real.pi : ℂ) * Complex.I by ring,
         Complex.exp_sub, hi, Complex.exp_two_pi_mul_I, div_one]

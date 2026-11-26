@@ -1,3 +1,4 @@
+import PMSubstrate.SpeciesFootprints
 import PMElementaryParticles.SharedUnits
 import PMElementaryParticles.PhysicalUnits
 import PMElementaryParticles.LeptonMasses
@@ -67,10 +68,11 @@ theorem tauLifetimeCorrectedFs_bounds :
     (291.03 : ℝ) < tauLifetimeCorrectedFs ∧ tauLifetimeCorrectedFs < 291.06 :=
   PMElementaryParticles.TauLifetimeCorrected.tau_lifetime_corrected
 
-export PMElementaryParticles.LeptonMasses (muon tau muon_value tau_value)
+export PMSubstrate.SpeciesFootprints.Lepton (muon tau)
+export PMSubstrate.SpeciesFootprints.Quark (up down strange charm bottom top)
+export PMElementaryParticles.LeptonMasses (muon_value tau_value)
 export PMElementaryParticles.QuarkMasses
-  (up down strange charm bottom top up_value down_value strange_value charm_value bottom_value
-    top_value)
+  (up_value down_value strange_value charm_value bottom_value top_value)
 export PMElementaryParticles.TauLifetime (tauLife tau_lifetime_tree)
 export PMElementaryParticles (muonFiniteLifetime muonFiniteLifetime_bounds)
 export PMElementaryParticles.TauE8 (tauLifetimeE8_bounds)

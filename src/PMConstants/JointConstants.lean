@@ -59,11 +59,11 @@ theorem vev_reduced {a : ℝ} (ha : a ≠ 0) :
  
 
 theorem vev_ratio_bounds :
-    (481839.81165 : ℝ) < vevRatio α ∧ vevRatio α < 481839.81166 := by
+    (481839.81165 : ℝ) < vevRatio PMSubstrate.causalCoupling ∧ vevRatio PMSubstrate.causalCoupling < 481839.81166 := by
   have ha := PMSubstrate.causalCoupling_bounds.1
   have hz := PMSubstrate.geometricIndex_bounds
   have hd := inverse_dimension_bounds
-  have hi : 1/α = PMSubstrate.geometricIndex := by simp [α, PMSubstrate.causalCoupling]
+  have hi : 1/PMSubstrate.causalCoupling = PMSubstrate.geometricIndex := by simp [PMSubstrate.causalCoupling, PMSubstrate.causalCoupling]
   rw [vev_reduced ha.ne', hi]
   norm_num [one_div] at hd
   norm_num [bareYukawa]
@@ -76,15 +76,15 @@ theorem sqrt_two_bounds :
   constructor <;> nlinarith
 
 theorem electron_vev_product_bounds :
-    (1.41382730 : ℝ) < electronYukawa α * vevRatio α ∧
-      electronYukawa α * vevRatio α < 1.41382732 := by
+    (1.41382730 : ℝ) < electronYukawa PMSubstrate.causalCoupling * vevRatio PMSubstrate.causalCoupling ∧
+      electronYukawa PMSubstrate.causalCoupling * vevRatio PMSubstrate.causalCoupling < 1.41382732 := by
   have h := product_bounds (by norm_num) (by norm_num)
     electron_yukawa_bounds vev_ratio_bounds
   constructor <;> nlinarith [h.1, h.2]
 
 /-- The electron mass predicted by the two stipulated formulas, divided by
 the same electron input used to normalize the VEV. -/
-def electronClosureRatio : ℝ := electronYukawa α * vevRatio α / Real.sqrt 2
+def electronClosureRatio : ℝ := electronYukawa PMSubstrate.causalCoupling * vevRatio PMSubstrate.causalCoupling / Real.sqrt 2
 
 theorem electron_closure_bounds :
     (0.99972687 : ℝ) < electronClosureRatio ∧ electronClosureRatio < 0.99972689 := by
@@ -106,7 +106,7 @@ theorem electron_deficit_bounds :
 /-- The formulas cannot both close the exact electron mass law merely by
 changing the overall mass unit. Higher-order/response corrections need deriving. -/
 theorem no_exact_electron_closure {me : ℝ} (hme : me ≠ 0) :
-    electronYukawa α * vev α me / Real.sqrt 2 ≠ me := by
+    electronYukawa PMSubstrate.causalCoupling * vev PMSubstrate.causalCoupling me / Real.sqrt 2 ≠ me := by
   intro he
   have h := (electron_mass_closure hme).mp he
   have hr : electronClosureRatio = 1 := by

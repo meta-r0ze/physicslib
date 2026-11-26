@@ -39,7 +39,7 @@ namespace PMConstants.ReferenceLink
 open PMConstants Matrix Hypercharge GeneratorNormalization PacketTraceForm ReferenceStabilizer
 
 theorem neutral_from_reference (Y : Charges) (hf : Flux Y) (hl : SectorLinks.OneLink Y 1)
-    (hr : Y.l = -1) : Y = standard ∧ Y.n = 0 := by
+    (hr : Y.l = -1) : Y = CarrierRepresentation.carrierStandard ∧ Y.n = 0 := by
   have hy := (SectorLinks.links_iff_yukawa Y 1).mp hl
   have hn : Y.n = 0 := by have := hy.2.2.2; linarith
   exact ⟨charges_forced Y hf hy hn, hn⟩
@@ -53,7 +53,7 @@ theorem conjugate_or_same (Y : Charges) (hl : SectorLinks.OneLink Y 1)
 
 /-- The opposite sign of the reference hypercharge. It is the charge-conjugate
 assignment with the electron, rather than the neutrino, as the neutral singlet. -/
-def conjugateStandard : Charges := ⟨-1/3, 2/3, -4/3, 1, 0, 2⟩
+def conjugateStandard : Charges := Hypercharge.conjugate CarrierRepresentation.carrierStandard
 
 /-- **The hypercharge sign is a labeling convention, not a physical choice.** With
 flux conservation, one unit link and `|Y_L| = 1`, the charges are either the
@@ -61,22 +61,22 @@ standard ones (ν neutral) or their conjugate (e neutral). No other assignment i
 admissible. -/
 theorem standard_or_conjugate (Y : Charges) (hf : Flux Y) (hl : SectorLinks.OneLink Y 1)
     (h : Y.l = -1 ∨ Y.l = 1) :
-    (Y = standard ∧ Y.n = 0) ∨ (Y = conjugateStandard ∧ Y.e = 0) := by
+    (Y = CarrierRepresentation.carrierStandard ∧ Y.n = 0) ∨ (Y = conjugateStandard ∧ Y.e = 0) := by
   rcases h with h | h
   · obtain ⟨hstd, hn⟩ := neutral_from_reference Y hf hl h
     exact Or.inl ⟨hstd, hn⟩
   · have hy := (SectorLinks.links_iff_yukawa Y 1).mp hl
-    have hq : Y.q = -1/3 := by linarith [hf.1, h]
+    have hq : Y.q = -(1/3) := by linarith [hf.1, h]
     have hu : Y.u = 2/3 := by linarith [hy.1, hq]
-    have hd : Y.d = -4/3 := by linarith [hy.2.1, hq]
+    have hd : Y.d = -(4/3) := by linarith [hy.2.1, hq]
     have he : Y.e = 0 := by linarith [hy.2.2.1, h]
     have hn : Y.n = 2 := by linarith [hy.2.2.2, h]
     refine Or.inr ⟨?_, he⟩
     cases Y
-    simp only [conjugateStandard, Charges.mk.injEq]
+    norm_num [conjugateStandard, conjugate, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis, Charges.mk.injEq]
     exact ⟨hq, hu, hd, h, he, hn⟩
 
-theorem unmatched_link_fails : (family 0 1).l = 0 := by norm_num [family]
+theorem unmatched_link_fails : (family 0 1).l = 0 := by norm_num [family, CarrierRepresentation.carrierCharges]
 
 /-- The right-handed sterile carrier. -/
 def nuR : PacketGaugeActions.Channels := .inr (.inr (.inr 0))
@@ -84,7 +84,7 @@ def nuR : PacketGaugeActions.Channels := .inr (.inr (.inr 0))
 theorem sterile_singlet (A : Matrix (Fin 2) (Fin 2) ℂ) (B : Matrix (Fin 3) (Fin 3) ℂ) :
     Fixes (weakGen A) nuR ∧ Fixes (colourGen B) nuR ∧ Fixes hyperGen nuR := by
   refine ⟨?_, ?_, ?_⟩ <;> intro c <;> rcases c with q | q | s | s <;>
-    simp [weakGen, colourGen, hyperGen, PacketGaugeActions.charge, PacketGaugeActions.block, nuR]
+    simp [weakGen, colourGen, hyperGen, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block, nuR]
   fin_cases s <;> simp
 
 lemma fixes_diag {G : PacketGaugeActions.M} {c} (h : Fixes G c) : G c c = 0 := h c
@@ -103,7 +103,7 @@ theorem sterile_unique (c : PacketGaugeActions.Channels)
   · simp [weakGen, PacketGaugeActions.block] at hw'
   · fin_cases s
     · rfl
-    · norm_num [hyperGen, PacketGaugeActions.charge, PacketGaugeActions.block] at hy'
+    · norm_num [hyperGen, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block] at hy'
 
 theorem asymptotic_trace_free (k : ℝ) (hk0 : 0 < k) (hk2 : k < 2) :
     let K : (ℝ × ℂ) →ₗ[ℝ] (ℝ × ℂ) := k • LinearMap.id

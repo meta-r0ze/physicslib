@@ -1,5 +1,4 @@
 import PMConstants.ReferenceStabilizer
-import PMConstants.ScalarBudget
 
 /-!
 # How many directions the electroweak actions can move the reference
@@ -30,6 +29,24 @@ direction.
 noncomputable section
 namespace PMConstants.ReferenceDirections
 open PMConstants Matrix GeneratorNormalization PacketTraceForm ReferenceAnchor ReferenceStabilizer
+
+/-- The three real coordinates of a repair in the reference doublet. -/
+abbrev RepairDisplacement := ℝ × ℂ
+
+namespace DoubletChart
+
+abbrev Doublet := Fin 2 → ℂ
+
+def referenceDoublet : Doublet := ![1, 0]
+
+def tangent (d : RepairDisplacement) : Doublet :=
+  ![Complex.I * (d.1 : ℂ), Complex.I * d.2]
+
+def input (d : RepairDisplacement) : Doublet := referenceDoublet + tangent d
+
+def displacement (ψ : Doublet) : RepairDisplacement := ((ψ 0).im, -Complex.I * ψ 1)
+
+end DoubletChart
 
 def gen (a : ℝ) (z : ℂ) (b : ℝ) : PacketGaugeActions.M :=
   weakGen !![(a : ℂ), star z; z, -(a : ℂ)] + (b : ℂ) • hyperGen
@@ -79,11 +96,5 @@ theorem displacement_dim : Module.finrank ℝ (ℝ × ℂ) = 3 := by
 /-- The four real electroweak directions. -/
 theorem generator_dim : Module.finrank ℝ (ℝ × ℂ × ℝ) = 4 := by
   rw [Module.finrank_prod, Module.finrank_prod, Module.finrank_self, Complex.finrank_real_complex]
-
-/-- **The scalar budget is the number of directions that move the reference.** -/
-theorem budget_is_moved_count (B : ℕ) :
-    ((0.1286 : ℚ) < ((B : ℚ) - 1/43) / 23 ∧ ((B : ℚ) - 1/43) / 23 < 0.1300) ↔
-      B = Module.finrank ℝ (ℝ × ℂ) := by
-  rw [displacement_dim]; exact ScalarBudget.budget_unique B
 
 end PMConstants.ReferenceDirections

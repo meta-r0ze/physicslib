@@ -1,14 +1,14 @@
 import PMAction.PersistenceSelection
 import PMAction.WallDispersion
-import PMConstants.FermionMassLaw
+import PMConstants.LinkGapLaw
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 
 /-!
 # How the VEV enters the wall masses: the inter-wall link is excluded
 
-`FermionMassLaw` compares two ways the link vacuum value `v` could set the light fermion's mass,
+`LinkGapLaw` compares two ways the link vacuum value `v` could set the light fermion's mass,
 through the detuning. Law A is the cost `δ² ∝ v`, and law B is the amplitude `δ ∝ v`. The event
-law selects A with no measured input (`FermionMassLaw.massA_event_priced`), and so does Economy
+law selects A with no measured input (`LinkGapLaw.gapA_event_priced`), and so does Economy
 here (`economy_law_A`). A third possibility is that `v` sets the *inter-wall link* `y`, which joins the two
 chiral walls, as a Yukawa coupling joins left and right fermions. Paper II's exact two-wall
 spectrum (`WallDispersion`) decides it.
@@ -95,9 +95,9 @@ lemma mPow_nonneg (c q v : ℝ) (h : 0 ≤ c * v ^ q) : 0 ≤ mPow c q v := by
     rw [show (1 / 4 : ℝ) = (1 / 2) ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]]
   exact Real.sqrt_le_sqrt (by linarith)
 
-/-- Law A (`q = 1`) is `FermionMassLaw.massA`. -/
-theorem mPow_one (c v : ℝ) : mPow c 1 v = FermionMassLaw.massA c v := by
-  simp [mPow, FermionMassLaw.massA]
+/-- Law A (`q = 1`) is `LinkGapLaw.gapA`. -/
+theorem mPow_one (c v : ℝ) : mPow c 1 v = LinkGapLaw.gapA c v := by
+  simp [mPow, LinkGapLaw.gapA]
 
 /-- The derivative of the light mass in the vacuum value. -/
 theorem mPow_deriv (c q v : ℝ) (hv : 0 < v) (hc : 0 < c) :
@@ -213,7 +213,7 @@ theorem persistent_one_insertion (YL YR YH β c₀ p : ℝ) (hYH : YH ≠ 0) (h�
 /-- **Law A from Economy.** With one insertion the mass term has degree `q = 1` in `v`, and the
 power law at `q = 1` is law A. -/
 theorem economy_law_A (c v : ℝ) (q : ℕ) (hq : q = 1) :
-    mPow c q v = FermionMassLaw.massA c v := by
+    mPow c q v = LinkGapLaw.gapA c v := by
   subst hq; simpa using mPow_one c v
 
 end PMConstants.VevEntry

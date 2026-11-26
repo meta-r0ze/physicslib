@@ -104,7 +104,7 @@ theorem colour_carrier_task_minimum :
 
 /-- Rational charges from the same table used by the actual diagonal matrix. -/
 def Y (c : PacketGaugeActions.Channels) : ℚ :=
-  RequirementTable.hyper Hypercharge.standard (RequirementTable.ty (PacketGaugeActions.channelIndex c))
+  RequirementTable.packetHypercharge CarrierRepresentation.carrierStandard (RequirementTable.ty (PacketGaugeActions.channelIndex c))
 
 def reference : PacketGaugeActions.Channels := ReferenceAnchor.lepton 0
 
@@ -115,7 +115,7 @@ def relativePhaseSupport : Finset PacketGaugeActions.Channels := univ.filter fun
 
 theorem reference_charge : Y reference = -1 := by
   norm_num [Y, reference, ReferenceAnchor.lepton, PacketGaugeActions.channelIndex,
-    RequirementTable.ty, RequirementTable.hyper, Hypercharge.standard]
+    RequirementTable.ty, RequirementTable.packetHypercharge, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 /-- Relative phase removes the common reference phase, not all charged phases. -/
 theorem relative_phase_counts : absolutePhaseSupport.card = 15 ∧ relativePhaseSupport.card = 14 := by
@@ -140,13 +140,13 @@ theorem sterile_has_relative_phase :
     Y ReferenceLink.nuR = 0 ∧ relativeY ReferenceLink.nuR = 1 := by
   rw [relativeY, reference_charge]
   norm_num [Y, ReferenceLink.nuR,
-    PacketGaugeActions.channelIndex, RequirementTable.ty, RequirementTable.hyper, Hypercharge.standard]
+    PacketGaugeActions.channelIndex, RequirementTable.ty, RequirementTable.packetHypercharge, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 theorem lepton_doublet_relative_phase_zero (s : Fin 2) :
     relativeY (ReferenceAnchor.lepton s) = 0 := by
   rw [relativeY, reference_charge]
   fin_cases s <;> norm_num [Y, ReferenceAnchor.lepton,
-    PacketGaugeActions.channelIndex, RequirementTable.ty, RequirementTable.hyper, Hypercharge.standard]
+    PacketGaugeActions.channelIndex, RequirementTable.ty, RequirementTable.packetHypercharge, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 /-- The rational phase difference is exactly twice the difference of the actual
 Y/2 generator's diagonal entries. No new charge assignment is introduced. -/

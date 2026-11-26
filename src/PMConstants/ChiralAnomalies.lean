@@ -39,6 +39,6 @@ theorem forced_anomaly_free (Y : Charges) (hf : Flux Y) (hl : SectorLinks.OneLin
   have hs := SectorLinks.forced_by_links Y hf hl hn
   obtain ⟨a, b, c⟩ := (flux_is_linear_anomalies Y).mp hf
   refine ⟨a, b, c, ?_⟩
-  rw [hs]; norm_num [cubic, standard]
+  rw [hs]; norm_num [cubic, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 end PMConstants.ChiralAnomalies

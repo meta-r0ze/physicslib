@@ -163,14 +163,14 @@ def hyperchargeFlag (t : ℝ) (c : Channels) : ℝ :=
 
 theorem hyperchargeFlag_eq_cos (t : ℝ) (c : Channels) :
     hyperchargeFlag t c =
-      (1 - Real.cos (t * ((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3)) / 2 := by
+      (1 - Real.cos (t * (PMConstants.ChannelOccupancy.hyperchargeThirds c : ℝ) / 3)) / 2 := by
   rw [hyperchargeFlag, VacancyProjection.hypercharge_flag, PMAction.DiagonalReadout.flag, mul_div_assoc]
 
 /-- The vacancy's static hypercharge makes it invisible to this flag. -/
 @[simp]
 theorem hyperchargeFlag_static_neutral (t : ℝ) :
     hyperchargeFlag t (opposite neutrino) = 0 := by
-  norm_num [hyperchargeFlag_eq_cos, neutrino, opposite, PMConstants.ChannelOccupancy.tag]
+  norm_num [hyperchargeFlag_eq_cos, neutrino, opposite, PMConstants.ChannelOccupancy.hyperchargeThirds_apply]
 
 /-- Up and down static hypercharges have absolute ratio two, so their
 flag responses obey the same identity at every phase and every colour. -/
@@ -178,7 +178,7 @@ theorem hyperchargeFlag_quark_pair (t : ℝ) (a : Fin 3) :
     let d := hyperchargeFlag t (.inr (.inl (a, 1)))
     hyperchargeFlag t (.inr (.inl (a, 0))) = 4 * d * (1 - d) := by
   dsimp only
-  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag]
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply]
   push_cast
   norm_num
   rw [show -(t * 2) / 3 = -(t * 2 / 3) by ring, Real.cos_neg,
@@ -193,7 +193,7 @@ theorem hyperchargeFlag_static_gap (t : ℝ) (a : Fin 3) :
       2 * hyperchargeFlag t (.inr (.inl (a, 0))) = 4 * d * (1 - 2 * d) ^ 2 := by
   dsimp only
   rw [hyperchargeFlag_quark_pair]
-  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag,
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply,
     electron, neutrino, flipWeak, opposite]
   push_cast
   norm_num
@@ -271,7 +271,7 @@ theorem flags_quarter (a : Fin 3) :
     hyperchargeFlag (π / 2) (opposite electron) = 1 ∧
     hyperchargeFlag (π / 2) (downStatic a) = 1 / 4 ∧
     hyperchargeFlag (π / 2) (upStatic a) = 3 / 4 := by
-  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag,
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply,
     electron, neutrino, flipWeak, opposite]
   push_cast
   refine ⟨?_, ?_, ?_⟩
@@ -284,7 +284,7 @@ theorem flags_three_quarter (a : Fin 3) :
     hyperchargeFlag (3 * π / 2) (opposite electron) = 1 ∧
     hyperchargeFlag (3 * π / 2) (downStatic a) = 1 ∧
     hyperchargeFlag (3 * π / 2) (upStatic a) = 0 := by
-  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag,
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply,
     electron, neutrino, flipWeak, opposite]
   push_cast
   refine ⟨?_, ?_, ?_⟩
@@ -340,9 +340,7 @@ but electron below down (`vacancy_step`). A step with `d < ½` is still to be fo
 theorem down_flag_bounds (t : ℝ) (a : Fin 3) :
     0 ≤ hyperchargeFlag t (downStatic a) ∧ hyperchargeFlag t (downStatic a) ≤ 1 := by
   rw [hyperchargeFlag_eq_cos]
-  constructor <;> linarith [Real.cos_le_one (t * ((PMConstants.ChannelOccupancy.tag
-    (downStatic a)).2.2 : ℝ) / 3), Real.neg_one_le_cos (t * ((PMConstants.ChannelOccupancy.tag
-    (downStatic a)).2.2 : ℝ) / 3)]
+  constructor <;> linarith [Real.cos_le_one (t * (PMConstants.ChannelOccupancy.hyperchargeThirds (downStatic a) : ℝ) / 3), Real.neg_one_le_cos (t * (PMConstants.ChannelOccupancy.hyperchargeThirds (downStatic a) : ℝ) / 3)]
 
 /-- **Each step's Toll differences depend only on its down flag.** -/
 theorem step_differences (t : ℝ) (a : Fin 3) :
@@ -411,7 +409,7 @@ theorem single_step_no_order (t : ℝ) (a : Fin 3) :
 
 /-- The charged selector's step `3π/4` has down flag `½`. -/
 theorem selector_step (a : Fin 3) : hyperchargeFlag (3 * π / 4) (downStatic a) = 1 / 2 := by
-  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, downStatic]
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply, downStatic]
   push_cast
   rw [show 3 * π / 4 * -2 / 3 = -(π / 2) by ring, Real.cos_neg, Real.cos_pi_div_two]
   norm_num
@@ -444,7 +442,7 @@ theorem vacancy_step (a : Fin 3) :
     hyperchargeFlag (6 * π / 5) (downStatic a) = (5 + √5) / 8 ∧
       3 / 4 < hyperchargeFlag (6 * π / 5) (downStatic a) := by
   have h : hyperchargeFlag (6 * π / 5) (downStatic a) = (5 + √5) / 8 := by
-    simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, downStatic]
+    simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply, downStatic]
     push_cast
     rw [show 6 * π / 5 * -2 / 3 = -(π - π / 5) by ring, Real.cos_neg, Real.cos_pi_sub,
       Real.cos_pi_div_five]
@@ -525,7 +523,7 @@ theorem fifth_root_steps (a : Fin 3) :
     hyperchargeFlag (2 * (6 * π / 5)) (downStatic a) = dLow ∧
     hyperchargeFlag (3 * (6 * π / 5)) (downStatic a) = dLow ∧
     hyperchargeFlag (4 * (6 * π / 5)) (downStatic a) = dHigh := by
-  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.tag, downStatic, dLow, dHigh]
+  simp only [hyperchargeFlag_eq_cos, PMConstants.ChannelOccupancy.hyperchargeThirds_apply, downStatic, dLow, dHigh]
   push_cast
   refine ⟨?_, ?_, ?_, ?_⟩
   · rw [show 6 * π / 5 * -2 / 3 = -(π - π / 5) by ring, Real.cos_neg, Real.cos_pi_sub,

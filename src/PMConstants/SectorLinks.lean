@@ -36,13 +36,13 @@ theorem links_iff_yukawa (Y : Charges) (h : ℚ) : OneLink Y h ↔ Yukawa Y h :=
     simp only [Prod.mk.injEq]
     refine ⟨by linarith, by linarith, by linarith, by linarith⟩
 
-theorem standard_links : hops standard = (1, -1, -1, 1) := by
-  norm_num [hops, standard]
+theorem standard_links : hops CarrierRepresentation.carrierStandard = (1, -1, -1, 1) := by
+  norm_num [hops, CarrierRepresentation.carrierStandard, CarrierRepresentation.carrierCharges, CarrierRepresentation.blAxis]
 
 /-- With flux conservation, one unit-charge link and a neutral sterile channel, the charges are
 forced (Paper III's `charges_forced`), now read as a domain-wall statement. -/
 theorem forced_by_links (Y : Charges) (hf : Flux Y) (hl : OneLink Y 1) (hn : Y.n = 0) :
-    Y = standard :=
+    Y = CarrierRepresentation.carrierStandard :=
   charges_forced Y hf ((links_iff_yukawa Y 1).mp hl) hn
 
 end PMConstants.SectorLinks

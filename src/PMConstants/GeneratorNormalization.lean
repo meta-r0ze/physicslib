@@ -110,11 +110,11 @@ def qL : PacketGaugeActions.Channels := .inl (0, 0)
 lemma t3_eR : t3 eR eR = 0 := by
   simp [t3, eR, weakGen, PacketGaugeActions.block]
 lemma hyper_eR : hyperGen eR eR = -1 := by
-  simp [hyperGen, PacketGaugeActions.charge, eR, PacketGaugeActions.block]
+  simp [hyperGen, PacketGaugeActions.hyperchargeOperator_blocks, eR, PacketGaugeActions.block]
 lemma t3_qL : t3 qL qL = 1 / 2 := by
   simp [t3, qL, weakGen, PacketGaugeActions.block]
 lemma hyper_qL : hyperGen qL qL = 1 / 6 := by
-  simp [hyperGen, PacketGaugeActions.charge, qL, PacketGaugeActions.block]; norm_num
+  simp [hyperGen, PacketGaugeActions.hyperchargeOperator_blocks, qL, PacketGaugeActions.block]; norm_num
 
 /-- The electron has charge `−1` under `Q = T₃ + Y/2`. -/
 theorem electron_charge : (t3 + hyperGen) eR eR = -1 := by

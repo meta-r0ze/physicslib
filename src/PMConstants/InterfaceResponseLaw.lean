@@ -37,13 +37,13 @@ theorem interfaceFactor_eq (perMode : ℝ) :
 
 /-- With the substrate admittance as the per-mode repair, `K = 1 + 5α`. -/
 theorem interfaceFactor_alpha :
-    interfaceFactor CertifiedConstants.α = 1 + 5 * CertifiedConstants.α :=
+    interfaceFactor PMSubstrate.causalCoupling = 1 + 5 * PMSubstrate.causalCoupling :=
   interfaceFactor_eq _
 
 /-- The geometric factor is the same as `1 + α·σ`. -/
 theorem interfaceFactor_sigma :
-    interfaceFactor CertifiedConstants.α =
-      1 + CertifiedConstants.α * PMSubstrate.E8Values.sigma := by
+    interfaceFactor PMSubstrate.causalCoupling =
+      1 + PMSubstrate.causalCoupling * PMSubstrate.E8Values.sigma := by
   rw [interfaceFactor_alpha, PMSubstrate.E8Values.sigma_eq]
   ring
 
@@ -61,14 +61,14 @@ modes `InterfaceGeometry.activeResponseModes_eq_sigma`, maximin uniform weight, 
 excluded (`InterfaceSpectralCandidate.simple_root_sum_excluded`), so this is the substrate value,
 compared to the window only afterwards. -/
 theorem substrate_deltaR_in_window :
-    0.0349 < InterfaceCorrection.deltaR (interfaceFactor CertifiedConstants.α) ∧
-      InterfaceCorrection.deltaR (interfaceFactor CertifiedConstants.α) < 0.0353 := by
-  have hval : InterfaceCorrection.deltaR (interfaceFactor CertifiedConstants.α) =
+    0.0349 < InterfaceCorrection.deltaR (interfaceFactor PMSubstrate.causalCoupling) ∧
+      InterfaceCorrection.deltaR (interfaceFactor PMSubstrate.causalCoupling) < 0.0353 := by
+  have hval : InterfaceCorrection.deltaR (interfaceFactor PMSubstrate.causalCoupling) =
       InterfaceWeightWindow.deltaRWeight 5 := by
     rw [interfaceFactor_sigma, PMSubstrate.E8Values.sigma_eq]
     unfold InterfaceCorrection.deltaR InterfaceWeightWindow.deltaRWeight
-    have hd : (1 : ℝ) + CertifiedConstants.α * ((5 : ℕ) : ℝ) ≠ 0 := by
-      have hα : (0 : ℝ) < CertifiedConstants.α :=
+    have hd : (1 : ℝ) + PMSubstrate.causalCoupling * ((5 : ℕ) : ℝ) ≠ 0 := by
+      have hα : (0 : ℝ) < PMSubstrate.causalCoupling :=
         lt_trans (by norm_num) CertifiedConstants.alpha_bounds.1
       positivity
     field_simp

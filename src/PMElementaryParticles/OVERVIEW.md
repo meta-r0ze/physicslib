@@ -1016,9 +1016,9 @@ This table includes the accounting used for occupancy cost. It also records reta
 | `PMAction.WallSeesaw.light` | Light Dirac matrix δ²Y⁻¹ | Detuning δ and gapped link Y | Supplied carrier parameters. | No | `WallSeesaw.effective_light_block` and `WallSeesaw.seesaw`. |
 | `PMAction.WallDispersion.heavyGapSq` | Heavy squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_gap_squares and two_dirac_particles. |
 | `PMAction.WallDispersion.lightGapSq` | Light squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_gap_squares and two_dirac_particles. |
-| `PMAction.DetuningGap.lightGap` | Light spectral gap at unit link gap | δ | Supplied detuning. PM diagonalization. | Yes, via fermion-law checks | FermionMassLaw.massA_detuning and massB_detuning. |
-| `PMConstants.FermionMassLaw.massA` | Unit-gap mass with δ² = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massA_detuning. |
-| `PMConstants.FermionMassLaw.massB` | Unit-gap mass with δ = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massB_detuning. |
+| `PMAction.DetuningGap.lightGap` | Light spectral gap at unit link gap | δ | Supplied detuning. PM diagonalization. | Yes, via fermion-law checks | LinkGapLaw.gapA_detuning and gapB_detuning. |
+| `PMConstants.LinkGapLaw.gapA` | Unit-gap mass with δ² = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | gapA_detuning. |
+| `PMConstants.LinkGapLaw.gapB` | Unit-gap mass with δ = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | gapB_detuning. |
 | `CarrierSpecies.CarrierSpecies.mass` | Electron and massless neutrino values in electron units | Species tag | Scope physical species mapping. Supplied massless approximation. | No | electron_mass and neutrino_mass evaluate the map. |
 | `SubstrateBridge.normMass` | Half the E8 norm squared | Lattice vector z | PM lattice form. Species readout supplied. | No | Used by SubstrateBridge.widthCandidate. |
 | `PMSubstrate.SIUnits.electronMassMeV` | Electron unit in MeV | SI units and E8 calibration | PM calibration formula. External SI unit convention and anchors. | Yes, through SharedUnits.me | QuarkMasses value enclosures use this unit. |
@@ -1050,13 +1050,9 @@ This table includes the accounting used for occupancy cost. It also records reta
 | `QuarkMasses.up` | Point-tier up mass / mₑ | D and overhead η | PM constants. Scope assignment and declared formula. | Yes, EP Values | up_ledger. |
 | `QuarkMasses.down` | Point-tier down mass / mₑ | D, σ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | down_ledger. |
 | `QuarkMasses.strange` | Line-tier strange mass / mₑ | D, Δ, χ, σ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | strange_ledger. |
-| `QuarkMasses.charm` | Area-tier charm mass / mₑ | D, Δ, σ, χ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | threshold_match equates it to StrongRunning.mCharm. |
-| `QuarkMasses.bottom` | Area-tier bottom mass / mₑ | D, Δ, χ, σ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | threshold_match equates it to StrongRunning.mBottom. |
+| `QuarkMasses.charm` | Area-tier charm mass / mₑ | D, Δ, σ, χ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | StrongRunning uses the same footprint. |
+| `QuarkMasses.bottom` | Area-tier bottom mass / mₑ | D, Δ, χ, σ and η | PM constants. Scope assignment and declared formula. | Yes, EP Values | StrongRunning uses the same footprint. |
 | `QuarkMasses.top` | Volume-tier top mass / mₑ | D and Δ | PM constants. Scope assignment and declared formula. | Yes, EP Values | top_ledger. |
-| `PMConstants.StrongRunning.mCharm` | Charm threshold in electron units | E8 area-tier constants | PM arithmetic. Declared species formula. | Indirect via strong running | QuarkMasses.threshold_match. |
-| `PMConstants.StrongRunning.mBottom` | Bottom threshold in electron units | E8 area-tier constants | PM arithmetic. Declared species formula. | Indirect via strong running | QuarkMasses.threshold_match. |
-| `PMConstants.StrongRunning.mTau` | Tau threshold in electron units | E8 area-tier constants | PM arithmetic. Declared species formula. | Indirect via strong running | Same arithmetic as LeptonMasses.tau. No named equality found. |
-| `PMConstants.StrongRunning.mZ` | Z reference scale in electron units | 91,187.6 MeV and electron unit | Experimental Z input in running model. | Indirect via strong running | Separate from GaugeSpectrum.zMassSquared. |
 | `TransportCandidates.declaredMass` | Optional table mass at a protocol and tier | Protocol, tier and ledger masses | Scope tiers and declared formulas. | No | Uses LeptonMasses and QuarkMasses by definition. |
 | `TransportCandidates.mass` | Optional ledger mass at a wire address | Candidate and address-to-tier map | Supplied map and declared ledger mass. | No | Composes declaredMass with tier by definition. |
 
@@ -1158,7 +1154,7 @@ choice and the first layer that needs it.
 | Carrier | `VacuumLabel`, `refRecord`, `SharedReference`, `ColourReference` | Physical vacuum, sector and readout choice are open. |
 | Carrier | `CompositeSchur` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
 | Carrier | SCOPE · `ChargedInsertion`, `ResonanceLift` | Named offset and matched-port admission. Persistence of the calibration channel is open. |
-| Carrier | `FermionMassLaw.massA`, `FermionMassLaw.massB` | Supplied alternatives for matching `yv` to detuning. The `κ_τ` measurement is an e8p comparison. |
+| Carrier | `LinkGapLaw.gapA`, `LinkGapLaw.gapB` | Supplied alternatives for matching `yv` to detuning. The `κ_τ` measurement is an e8p comparison. |
 | Protocol | SCOPE · `WireSchedule.Premises` | Named serial route and admitted bookings. |
 | Protocol | SCOPE · `WireReferenceCost`, `PMKAutomaton.Values` | Named population and reset contract. The threshold arithmetic is proved. |
 | Protocol | `EPSpine.spine`, `EPSpine.witnessAt_registrations` | Proved for class witnesses. Closure of a complete occupied program is open. |

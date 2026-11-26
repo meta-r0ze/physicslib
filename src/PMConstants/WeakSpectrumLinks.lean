@@ -1,5 +1,5 @@
 import PMConstants.MatterRunning
-import PMConstants.FermionMassLaw
+import PMConstants.LinkGapLaw
 import PMAction.WeakVertex
 import PMAction.WallDispersion
 
@@ -12,7 +12,7 @@ import PMAction.WallDispersion
   contact amplitude with `G_F = 1/(√2 v²)`.
 * `light_branch`, `heavy_branch`: at unit link (`y = 1`), the exact eight-component wall spectrum
   (`WallDispersion.two_dirac_particles`) has masses `m₋ = lightGap δ` and `m₊ = lightGap δ + 1`.
-  These are `FermionMassLaw`'s light fermion (`DetuningGap.gap_relation`) and its heavy partner,
+  These are `LinkGapLaw`'s light fermion (`DetuningGap.gap_relation`) and its heavy partner,
   each now a complete Dirac particle with two spin states of each energy sign.
 -/
 
@@ -52,7 +52,7 @@ lemma rr_one (δ : ℝ) : WallDispersion.rr δ 1 = 2 * Real.sqrt (δ ^ 2 + 1 / 4
   rw [WallDispersion.rr, show (1 : ℝ) ^ 4 + 4 * 1 ^ 2 * δ ^ 2 = 2 ^ 2 * (δ ^ 2 + 1 / 4) by ring,
     Real.sqrt_mul (by norm_num), Real.sqrt_sq (by norm_num)]
 
-/-- The light branch at unit link is `FermionMassLaw`'s light fermion. -/
+/-- The light branch at unit link is `LinkGapLaw`'s light fermion. -/
 theorem light_branch (δ : ℝ) :
     WallDispersion.lightGapSq δ 1 = DetuningGap.lightGap δ ^ 2 := by
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ δ ^ 2 + 1 / 4 by positivity)

@@ -10,13 +10,15 @@ on `α`. This module asks what kind of response can supply it.
   ratios (homogeneity in scale: each factor of scale contributes the same) and continuous,
   it is `κ · log` of the scale ratio. One coefficient per species is the whole freedom.
 * `zpole_screening_overshoots`: the calculator's Z-pole coupling
-  `α⁻¹(1 − Δα) − η`, with the comparison input `0.0589 < Δα < 0.0591`, gives `k > 1.07`.
+  `α⁻¹(1 − Δα) − η`, with the comparison input from e8p, gives `k > 1.07`.
   Pure screening at the Z pole is therefore not the interface coupling.
 * `antiscreening_required`: writing `1/k = 1 − Δα + X`, the same inputs force
   `0.0236 < X < 0.0242`. A positive term of opposite sign to screening is required.
 
 `Δα` is a labelled comparison input, not a derived number. Deriving the screening
 coefficient and the opposite-sign term from the substrate is the remaining obligation.
+
+The measured comparison proofs are in `tools/e8p/E8PConstants/PMConstants/ScaleComparisons.lean`.
 -/
 
 noncomputable section
@@ -49,46 +51,14 @@ theorem scale_homogeneous_log (f : ℝ → ℝ)
 
 /-! ## The Z-pole coupling is not the interface coupling -/
 
-def zpoleInverse (dα : ℝ) : ℝ := (1/α) * (1 - dα) - overhead
-def zpoleFactor (dα : ℝ) : ℝ := (1/α) / zpoleInverse dα
+def zpoleInverse (dα : ℝ) : ℝ := (1/PMSubstrate.causalCoupling) * (1 - dα) - overhead
+def zpoleFactor (dα : ℝ) : ℝ := (1/PMSubstrate.causalCoupling) / zpoleInverse dα
 
-lemma inv_alpha_bounds : (137.0359992 : ℝ) < 1/α ∧ 1/α < 137.0359993 := by
+lemma inv_alpha_bounds : (137.0359992 : ℝ) < 1/PMSubstrate.causalCoupling ∧ 1/PMSubstrate.causalCoupling < 137.0359993 := by
   have h := PMSubstrate.geometricIndex_bounds
-  have hi : 1/α = PMSubstrate.geometricIndex := by simp [α, PMSubstrate.causalCoupling]
+  have hi : 1/PMSubstrate.causalCoupling = PMSubstrate.geometricIndex := by simp [PMSubstrate.causalCoupling]
   rw [hi]; constructor <;> linarith [h.1, h.2]
 
-theorem zpole_screening_overshoots {dα : ℝ} (h : 0.0589 < dα ∧ dα < 0.0591) :
-    1.07 < zpoleFactor dα := by
-  have ha := inv_alpha_bounds
-  rw [one_div] at ha
-  have hz : 0 < zpoleInverse dα := by
-    unfold zpoleInverse; norm_num [overhead]; nlinarith [ha.1, h.2]
-  unfold zpoleFactor
-  rw [lt_div_iff₀ hz]
-  unfold zpoleInverse; norm_num [overhead]
-  nlinarith [ha.1, ha.2, h.1, h.2]
-
-theorem zpole_not_interface {dα k : ℝ} (h : 0.0589 < dα ∧ dα < 0.0591) (hk : 0 < k)
-    (hz : k * GaugeSpectrum.zMassSquared α ElectroweakBounds.electronGeV =
-      ScaleConsistency.zAnchor^2) : k ≠ zpoleFactor dα := by
-  have h1 := (ScaleConsistency.z_needs_factor hk hz).2
-  have h2 := zpole_screening_overshoots h
-  intro he; rw [he] at h1; linarith
-
 /-! ## An opposite-sign term is required -/
-
-theorem antiscreening_required {dα k X : ℝ} (h : 0.0589 < dα ∧ dα < 0.0591) (hk : 0 < k)
-    (hz : k * GaugeSpectrum.zMassSquared α ElectroweakBounds.electronGeV =
-      ScaleConsistency.zAnchor^2)
-    (hdec : 1/k = 1 - dα + X) : 0.0236 < X ∧ X < 0.0242 := by
-  have hb := ScaleConsistency.z_needs_factor hk hz
-  have hk0 : 0 < k := hk
-  have hX : X = 1/k - 1 + dα := by linarith
-  have hlo : 1/1.0365 < 1/k := one_div_lt_one_div_of_lt hk0 hb.2
-  have hhi : 1/k < 1/1.0362 := one_div_lt_one_div_of_lt (by norm_num) hb.1
-  rw [hX]
-  constructor
-  · norm_num at hlo ⊢; linarith [h.1]
-  · norm_num at hhi ⊢; linarith [h.2]
 
 end PMConstants.ScaleResponse

@@ -1,5 +1,6 @@
 import PMConstants.ScaleResponse
-import PMSubstrate.SIUnits
+import PMConstants.ElectroweakBounds
+import PMSubstrate.SpeciesFootprints
 
 /-!
 # The strong-coupling running test to the tau mass
@@ -28,21 +29,30 @@ open PMConstants CertifiedConstants
 
 /-! ## Flavour thresholds from Paper V's masses (units of `m_e`) -/
 
-def mCharm : ℝ := (PMSubstrate.E8Values.D : ℝ) * (PMSubstrate.E8Values.Delta : ℝ)^2 /
-  (overhead * ((PMSubstrate.E8Values.sigma : ℝ) - (PMSubstrate.E8Values.chi : ℝ)))
-def mTau : ℝ := -(PMSubstrate.E8Values.D : ℝ) +
-  (PMSubstrate.E8Values.Delta : ℝ)^2 * (PMSubstrate.E8Values.chi : ℝ) -
-    (PMSubstrate.E8Values.Delta : ℝ) * (PMSubstrate.E8Values.sigma : ℝ) -
-      (PMSubstrate.E8Values.chi : ℝ)
-def mBottom : ℝ := (PMSubstrate.E8Values.Delta : ℝ)^2 *
-  ((PMSubstrate.E8Values.D : ℝ) +
-    (PMSubstrate.E8Values.chi : ℝ) / (PMSubstrate.E8Values.sigma : ℝ)) / overhead
-def mZ : ℝ := 91187.6 / PMSubstrate.SIUnits.electronMassMeV
+open PMSubstrate.SpeciesFootprints
 
-theorem flavour_order : mCharm < mTau ∧ mTau < mBottom ∧ mBottom < mZ := by
-  norm_num [mCharm, mTau, mBottom, mZ, PMSubstrate.SIUnits.electronMassMeV, overhead,
-    PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
-    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq]
+/-- Uncorrected E8 neutral heavy-branch gap in electron units. -/
+def mZ : ℝ :=
+  Real.sqrt (GaugeSpectrum.zMassSquared PMSubstrate.causalCoupling ElectroweakBounds.electronGeV) /
+    ElectroweakBounds.electronGeV
+
+theorem flavour_order : Quark.charm < Lepton.tau ∧ Lepton.tau < Quark.bottom ∧
+    Quark.bottom < mZ := by
+  rw [Quark.charm_ledger, Lepton.tau_ledger, Quark.bottom_ledger]
+  unfold Quark.anchorArea Quark.η Quark.colourDim Quark.latencyTerm Quark.latencyRatio
+  rw [PMSubstrate.E8Values.D_eq, PMSubstrate.E8Values.Delta_eq,
+    PMSubstrate.E8Values.sigma_eq, PMSubstrate.E8Values.chi_eq, PMSubstrate.E8Values.overhead_eq]
+  have he : ElectroweakBounds.electronGeV ≠ 0 := by
+    norm_num [ElectroweakBounds.electronGeV, PMSubstrate.SIUnits.electronMassGeV,
+      PMSubstrate.SIUnits.electronMassMeV]
+  have hz : 89.57 < mZ * ElectroweakBounds.electronGeV := by
+    unfold mZ
+    rw [div_mul_cancel₀ _ he]
+    exact ElectroweakBounds.z_mass_bounds.1
+  norm_num [ElectroweakBounds.electronGeV, PMSubstrate.SIUnits.electronMassGeV] at hz
+  refine ⟨by norm_num, by norm_num, ?_⟩
+  norm_num
+  linarith
 
 /-! ## One-loop inverse coupling over two intervals -/
 
@@ -70,7 +80,7 @@ theorem three_flavours_inflate {a L₁ L₂ : ℝ} (h1 : 0 < L₁) (h2 : 0 < L�
 theorem uniform_factor_scale_free (a : ℝ) (ha : a ≠ 0) :
     (a - (15/16) * a) / a = 1/16 := by field_simp; ring
 
-theorem factor_at_z : (15/16) * strongCoupling α < 0.1106 := by
+theorem factor_at_z : (15/16) * strongCoupling PMSubstrate.causalCoupling < 0.1106 := by
   have := strong_bounds; nlinarith [this.2]
 
 /-! ## Normalization does not lock a share -/

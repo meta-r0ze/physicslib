@@ -26,20 +26,20 @@ open scoped Kronecker
 def wallCharge : M := diagonal fun c => (CarrierChannels.hyper c : ℂ)
 
 /-- The packet charge generator has no off-diagonal entries. -/
-theorem charge_offDiag {i j : Channels} (h : i ≠ j) : charge i j = 0 := by
+theorem charge_offDiag {i j : Channels} (h : i ≠ j) : hyperchargeOperator i j = 0 := by
   rcases i with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> rcases j with ⟨b, t⟩ | ⟨b, t⟩ | t | t <;>
-    simp_all [charge, block, Matrix.kroneckerMap_apply, Matrix.one_apply, Matrix.diagonal_apply,
+    simp_all [hyperchargeOperator_blocks, block, Matrix.kroneckerMap_apply, Matrix.one_apply, Matrix.diagonal_apply,
       Prod.ext_iff]
   tauto
 
-theorem charge_eq_diag : charge = diagonal (fun c => charge c c) := by
+theorem charge_eq_diag : hyperchargeOperator = diagonal (fun c => hyperchargeOperator c c) := by
   ext i j
   by_cases h : i = j
   · subst j; simp
   · rw [Matrix.diagonal_apply_ne _ h, charge_offDiag h]
 
 /-- **The packet charge generator is the carrier wall charge.** -/
-theorem charge_eq_wall : charge = wallCharge := by
+theorem charge_eq_wall : hyperchargeOperator = wallCharge := by
   rw [charge_eq_diag, wallCharge]
   congr 1
   funext c
@@ -47,7 +47,7 @@ theorem charge_eq_wall : charge = wallCharge := by
 
 /-- The full hypercharge transport generator in the channel basis. -/
 theorem charge_diagonal :
-    charge = diagonal (fun c => ((PMConstants.ChannelOccupancy.tag c).2.2 : ℂ) / 3) := by
+    hyperchargeOperator = diagonal (fun c => (PMConstants.ChannelOccupancy.hyperchargeThirds c : ℂ) / 3) := by
   rw [charge_eq_diag]
   congr 1
   funext c
@@ -55,7 +55,7 @@ theorem charge_diagonal :
 
 /-- The packet hypercharge as real channel charges `tag/3`. -/
 theorem charge_real :
-    charge = diagonal (fun c => ((((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3 : ℝ) : ℂ)) := by
+    hyperchargeOperator = diagonal (fun c => (((PMConstants.ChannelOccupancy.hyperchargeThirds c : ℝ) / 3 : ℝ) : ℂ)) := by
   rw [charge_diagonal]
   congr 1
   funext c
@@ -66,14 +66,14 @@ theorem charge_real :
 (`PMAction.DiagonalReadout.transport_eq_diagonal`). -/
 theorem hypercharge_eq_diagonal (t : ℝ) :
     hypercharge t = diagonal (fun c => Complex.exp
-      (((t * (((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3) : ℝ) : ℂ) * Complex.I)) :=
+      (((t * ((PMConstants.ChannelOccupancy.hyperchargeThirds c : ℝ) / 3) : ℝ) : ℂ) * Complex.I)) :=
   PMAction.DiagonalReadout.transport_eq_diagonal charge_hermitian _ charge_real t
 
 /-- The flag of the packet hypercharge transport on one channel
 (`PMAction.DiagonalReadout.transport_flag`). -/
 theorem hypercharge_flag (t : ℝ) (c : Channels) :
     PMAction.InterferenceReadout.flagProbability (hypercharge t) c =
-      PMAction.DiagonalReadout.flag (t * (((PMConstants.ChannelOccupancy.tag c).2.2 : ℝ) / 3)) :=
+      PMAction.DiagonalReadout.flag (t * ((PMConstants.ChannelOccupancy.hyperchargeThirds c : ℝ) / 3)) :=
   PMAction.DiagonalReadout.transport_flag charge_hermitian _ charge_real t c
 
 /-- The wall charge vanishes exactly on the inventory vacancy. -/

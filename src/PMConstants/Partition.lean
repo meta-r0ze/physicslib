@@ -19,7 +19,7 @@ def clockRatio : ℝ := (Delta : ℝ)/footprint
 def selfCoupling : ℝ := (((sigma : ℝ) - (chi : ℝ)) - 1/(Delta : ℝ)) /
   ((nu : ℝ) + (sigma : ℝ) + (chi : ℝ))
 
-def scalarToll : ℝ := 2*selfCoupling
+def scalarStiffnessCost : ℝ := 2*selfCoupling
 
 def beta0 (nf : ℕ) : ℝ := ((D : ℝ) + (sigma : ℝ) + (chi : ℝ)) -
   ((chi : ℝ)/((sigma : ℝ) - (chi : ℝ)))*nf
@@ -28,8 +28,8 @@ def residual (α : ℝ) : ℝ := (nu : ℝ) - (chi : ℝ)/((sigma : ℝ) - (chi 
 
 theorem exact_partition_values :
     overhead = 171/172 ∧ footprint = 8295/43 ∧ clockRatio = 1849/8295 ∧
-    selfCoupling = 128/989 ∧ scalarToll = 256/989 := by
-  norm_num [overhead, footprint, clockRatio, selfCoupling, scalarToll]
+    selfCoupling = 128/989 ∧ scalarStiffnessCost = 256/989 := by
+  norm_num [overhead, footprint, clockRatio, selfCoupling, scalarStiffnessCost]
 
 theorem overhead_bounds : 0 < overhead ∧ overhead < 1 := by norm_num [overhead]
 
@@ -73,8 +73,8 @@ theorem inherited_toll :
 
 /-- With equal per-degree costs, the scalar mass relation is an algebraic identity. -/
 theorem scalar_mass_consistency (v : ℝ) :
-    (scalarToll/2)*v^2 = selfCoupling*v^2 := by
-  unfold scalarToll
+    (scalarStiffnessCost/2)*v^2 = selfCoupling*v^2 := by
+  unfold scalarStiffnessCost
   ring
 
 end PMConstants

@@ -20,13 +20,15 @@ This module identifies the structure of that term with the inter-sector link of 
 * `leading_bounds`, `remainder_required`: with the one-loop normalization
   `Δρ = 3 G_F F/(8√2π²)` for a coloured doublet with one light member (`F → m_t²`), the
   leading term `(c²/s²)Δρ` with the paper's `s = 1849/8295`, Paper III's own `G_F`, and the
-  comparison input `172.28 < m_t < 172.86` GeV lies in `(0.0324, 0.0327)`. It overshoots the
+  comparison input for the top mass in e8p lies in `(0.0324, 0.0327)`. It overshoots the
   required `X`, so a remainder `R` with `X = (c²/s²)Δρ − R` must satisfy `0.0082 < R < 0.0091`.
 
 Premises, labelled: the one-loop normalization `3/(8√2π²)` and the top mass are imported
 comparison inputs, not substrate derivations, exactly as `Δα` is in `ScaleResponse`. What is
 derived here is the tree-level custodial relation, the sign of the splitting term, and the
 numerical size the non-leading remainder must have.
+
+The measured comparison proofs are in `tools/e8p/E8PConstants/PMConstants/ScaleComparisons.lean`.
 -/
 
 noncomputable section
@@ -34,15 +36,6 @@ namespace PMConstants.LinkCustodial
 open PMConstants ElectroweakE8 CertifiedConstants JointConstants GaugeSpectrum ElectroweakBounds
 
 /-! ## `k` is the on-shell `Δr` -/
-
-theorem delta_r_window {k : ℝ} (hk : 0 < k)
-    (hz : k * zMassSquared α electronGeV = ScaleConsistency.zAnchor^2) :
-    0.0349 < 1 - 1/k ∧ 1 - 1/k < 0.0353 := by
-  have hb := ScaleConsistency.z_needs_factor hk hz
-  have hlo : 1/1.0365 < 1/k := one_div_lt_one_div_of_lt hk hb.2
-  have hhi : 1/k < 1/1.0362 := one_div_lt_one_div_of_lt (by norm_num) hb.1
-  norm_num at hlo hhi ⊢
-  constructor <;> linarith
 
 /-! ## Tree level: the doublet link is custodial -/
 
@@ -124,42 +117,5 @@ theorem veltman_pos {a b : ℝ} (ha : 0 < a) (hb : 0 < b) : 0 < veltman a b ↔ 
 /-- `(c²/s²) · 3 G_F m² / (8√2π²)`: the leading custodial term for a coloured doublet with
 one light member. -/
 def leadingTerm (s GF m : ℝ) : ℝ := (1 - s)/s * (3 * GF * m^2) / (8 * Real.sqrt 2 * Real.pi^2)
-
-theorem leading_bounds {mt : ℝ} (h : 172.28 < mt ∧ mt < 172.86) :
-    0.0324 < leadingTerm clockRatio (fermi α electronGeV) mt ∧
-      leadingTerm clockRatio (fermi α electronGeV) mt < 0.0327 := by
-  have hs : (1 - clockRatio)/clockRatio = 6446/1849 := by
-    norm_num [clockRatio, footprint, overhead]
-  have hg := fermi_bounds
-  have hs2 := sqrt_two_bounds
-  have hpi := pi_bounds
-  have hp2lo : (9.8696044 : ℝ) < Real.pi^2 := by nlinarith [hpi.1]
-  have hp2hi : Real.pi^2 < (9.8696045 : ℝ) := by nlinarith [hpi.1, hpi.2]
-  have hDlo' := mul_lt_mul'' hs2.1 hp2lo (by norm_num) (by norm_num)
-  have hDhi' := mul_lt_mul'' hs2.2 hp2hi (Real.sqrt_nonneg 2) (by positivity)
-  have hD : 8 * Real.sqrt 2 * Real.pi^2 = 8 * (Real.sqrt 2 * Real.pi^2) := by ring
-  have hDlo : (111.66 : ℝ) < 8 * Real.sqrt 2 * Real.pi^2 := by rw [hD]; linarith
-  have hDhi : 8 * Real.sqrt 2 * Real.pi^2 < (111.67 : ℝ) := by rw [hD]; linarith
-  have hm2lo : (29680.39 : ℝ) < mt^2 := by nlinarith [h.1]
-  have hm2hi : mt^2 < (29880.59 : ℝ) := by nlinarith [h.1, h.2]
-  have hNlo' := mul_lt_mul'' hg.1 hm2lo (by norm_num) (by norm_num)
-  have hNhi' := mul_lt_mul'' hg.2 hm2hi (by linarith [hg.1]) (by positivity)
-  have hDpos : 0 < 8 * Real.sqrt 2 * Real.pi^2 := by linarith
-  unfold leadingTerm
-  rw [hs]
-  constructor
-  · rw [lt_div_iff₀ hDpos]; nlinarith
-  · rw [div_lt_iff₀ hDpos]; nlinarith
-
-/-- The leading splitting term overshoots the required opposite-sign term; the non-leading
-remainder must lie in `(0.0082, 0.0091)`. -/
-theorem remainder_required {dα k X mt R : ℝ} (h : 0.0589 < dα ∧ dα < 0.0591) (hk : 0 < k)
-    (hz : k * zMassSquared α electronGeV = ScaleConsistency.zAnchor^2)
-    (hdec : 1/k = 1 - dα + X) (hmt : 172.28 < mt ∧ mt < 172.86)
-    (hX : X = leadingTerm clockRatio (fermi α electronGeV) mt - R) :
-    0.0082 < R ∧ R < 0.0091 := by
-  have hx := ScaleResponse.antiscreening_required h hk hz hdec
-  have hl := leading_bounds hmt
-  constructor <;> linarith [hx.1, hx.2, hl.1, hl.2]
 
 end PMConstants.LinkCustodial

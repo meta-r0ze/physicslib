@@ -16,7 +16,7 @@ SU(2) from the clock row. This module asks what colour links act on.
 * `strong_from_channels`: the readout is `0.11799 < α N_sys/(12η) < 0.11800`. The comparison with
   the measured coupling, and the width of the window it sits in, are in
   `tools/e8p/E8PConstants/PMConstants/StrongLedgerPulls.lean`.
-* `close_to_paper`: the paper's `(16η + 1/4)α` differs from the ledger value by less than
+* `close_to_paper`: the paper's `(16η + 1/4)PMSubstrate.causalCoupling` differs from the ledger value by less than
   `0.0001`, so the ledger form replaces it without moving the comparison.
 * `weak_not_per_channel`: the same per-channel rule for SU(2) (eight left-handed channels, `8η`)
   would give a mixing below `0.042`. SU(2)'s ledger is the clock row, not its channels.
@@ -45,7 +45,7 @@ def colourLedger : ℝ := 12 * overhead
 theorem colour_ledger : colourLedger = 513/43 := by norm_num [colourLedger, overhead]
 
 theorem strong_from_channels :
-    (0.11799 : ℝ) < α * footprint / colourLedger ∧ α * footprint / colourLedger < 0.11800 := by
+    (0.11799 : ℝ) < PMSubstrate.causalCoupling * footprint / colourLedger ∧ PMSubstrate.causalCoupling * footprint / colourLedger < 0.11800 := by
   have h := alpha_footprint_bounds
   rw [colour_ledger]
   constructor
@@ -53,13 +53,13 @@ theorem strong_from_channels :
   · rw [div_lt_iff₀ (by norm_num)]; linarith [h.2]
 
 theorem close_to_paper :
-    |α * footprint / colourLedger - (16 * overhead + 1/4) * α| < 0.0001 := by
+    |PMSubstrate.causalCoupling * footprint / colourLedger - (16 * overhead + 1/4) * PMSubstrate.causalCoupling| < 0.0001 := by
   have h := alpha_footprint_bounds
   have ha := alpha_bounds
   have hs := strong_from_channels
-  have hp1 : (0.11790 : ℝ) < (16 * overhead + 1/4) * α := by
+  have hp1 : (0.11790 : ℝ) < (16 * overhead + 1/4) * PMSubstrate.causalCoupling := by
     norm_num [overhead]; nlinarith [ha.1]
-  have hp2 : (16 * overhead + 1/4) * α < (0.11791 : ℝ) := by
+  have hp2 : (16 * overhead + 1/4) * PMSubstrate.causalCoupling < (0.11791 : ℝ) := by
     norm_num [overhead]; nlinarith [ha.2]
   rw [abs_lt]; constructor <;> linarith [hs.1, hs.2]
 

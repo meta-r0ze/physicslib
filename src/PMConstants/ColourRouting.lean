@@ -38,7 +38,8 @@ theorem colour_changes_only_address (a b : Fin 3) (v : Packet) :
   simp [fibre, boundary_invariant]
 
 /-- This internal motion also preserves the assigned boundary flux and channel type. -/
-def electric (v : Packet) : ℚ := bl (carried v)/2+t3 (carried v)
+def electric (v : Packet) : ℚ :=
+  CarrierRepresentation.electric (onLepton (carried v)) (positive (carried v))
 
 theorem electric_invariant : ∀ (a b : Fin 3) (v : Packet),
     electric (colour a b v)=electric v := by decide +kernel

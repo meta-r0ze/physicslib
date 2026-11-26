@@ -80,8 +80,8 @@ theorem colour_ledger_minimal (C : ColourLayout) :
 
 /-- The strong coupling read on the coloured payload. -/
 theorem strong_from_payload :
-    (0.11799 : ℝ) < CertifiedConstants.α * footprint / ColourChannels.colourLedger ∧
-      CertifiedConstants.α * footprint / ColourChannels.colourLedger < 0.11800 :=
+    (0.11799 : ℝ) < PMSubstrate.causalCoupling * footprint / ColourChannels.colourLedger ∧
+      PMSubstrate.causalCoupling * footprint / ColourChannels.colourLedger < 0.11800 :=
   ColourChannels.strong_from_channels
 
 /-- The premises are satisfiable: the `SharedReference` witness with a quark colour reference. -/

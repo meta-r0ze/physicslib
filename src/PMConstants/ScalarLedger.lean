@@ -1,4 +1,3 @@
-import PMConstants.ScalarBudget
 import PMConstants.ScalarSector
 import PMConstants.ReferenceDirections
 
@@ -48,10 +47,9 @@ theorem scalarGain_eq : scalarGain = selfCoupling := by
   norm_num
 
 /-- Ledger toll `T = 2λ`. -/
-def scalarTollLedger : ℝ := 2 * scalarGain
-
-theorem scalarTollLedger_eq : scalarTollLedger = scalarToll := by
-  rw [scalarTollLedger, scalarGain_eq]
+theorem twice_scalarGain_eq_stiffnessCost :
+    2 * scalarGain = scalarStiffnessCost := by
+  rw [scalarGain_eq]
   rfl
 
 /-- Ledger mass term `μ² = λv²`. -/

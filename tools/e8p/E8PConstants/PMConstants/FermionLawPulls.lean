@@ -5,7 +5,7 @@ import PMConstants.Values
 
 The substrate selects law A (the vacuum value sets the detuning **cost** `δ² ∝ v`) with no
 measured input, twice over: the event law prices a displacement by its square
-(`PMConstants.FermionMassLaw.massA_event_priced`), and Economy admits exactly one doublet
+(`PMConstants.LinkGapLaw.gapA_event_priced`), and Economy admits exactly one doublet
 insertion (`PMConstants.VevEntry.economy_law_A`). The measured comparisons live here.
 
 The coupling modifier is `κ = (v/m) dm/dv`; the Standard Model value is `1`. CMS (2022) measures

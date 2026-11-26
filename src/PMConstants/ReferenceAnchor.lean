@@ -46,7 +46,7 @@ theorem lepton_type (s : Fin 2) : channelType (lepton s) = .L := rfl
 theorem reference_charges :
     (t3 + hyperGen) (lepton 0) (lepton 0) = 0 ∧ (t3 + hyperGen) (lepton 1) (lepton 1) = -1 := by
   constructor <;>
-    norm_num [t3, hyperGen, lepton, weakGen, PacketGaugeActions.charge, PacketGaugeActions.block,
+    norm_num [t3, hyperGen, lepton, weakGen, PacketGaugeActions.hyperchargeOperator_blocks, PacketGaugeActions.block,
       Matrix.add_apply]
 
 /-- **Exactly one reference carrier is read by the unbroken charge: the electron.** -/

@@ -104,7 +104,8 @@ binding.** `AtomSystem.massME` sums free nucleons + electrons + cloud correction
 `System.mass (.atom a)` uses the certified (bound) ledger, so the gap is `binding`. -/
 theorem atomSystem_massME_eq (a : AtomSystem) :
     AtomSystem.massME a = mass (.atom a) + binding a.nucleus := by
-  unfold AtomSystem.massME mass binding latticeSum
+  unfold AtomSystem.massME mass binding
+  rw [latticeSum_eq_ledger]
   ring
 
 /-- A neutral atom has zero net charge. -/

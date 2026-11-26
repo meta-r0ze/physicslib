@@ -16,7 +16,7 @@ with measurement. They are the single source for these conversions; other module
 * `cFmPerSecond`: `c`, exact in the SI.
 * `*_eq`: the unit forms agree.
 
-`ElectroweakBounds.electronGeV`, `FloorNeutrino.meEV` and `StrongRunning.mZ` were on CODATA 2018
+`ElectroweakBounds.electronGeV`, `FloorNeutrino.meEV` were on CODATA 2018
 (`0.51099895000` MeV) and now point here; the VEV window moved from `(246.2196378, 246.2196379)`
 to `(246.2196381, 246.2196382)` GeV and the Higgs window to `(125.2692638, 125.2692640)` GeV.
 -/
