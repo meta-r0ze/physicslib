@@ -54,6 +54,38 @@ An empty typed-compatible pair family does not mean a zero physical footprint.
 See [GluedExcursions](GluedExcursions.lean) for the 21 class/species rows, ordered-pair
 histograms and the admission boundary. No count is identified with `Footprint.events`.
 
+## Generation orbits
+
+The existing Closure applications use the twelve slice-root reflections.
+`GenerationOrbits.sliceGroup` packages exactly these generators. The two
+`SliceHop` swaps are restrictions of them. This is not a classification of
+all E8 automorphisms that fix the clock.
+
+| Visible class | Species from CarrierChannels | Generation orbits | Declared tiers (`TierLedger.tiersFor`) |
+| --- | --- | --- | --- |
+| 0 | up | {0}, {1}, {2} | {0,2,3} |
+| 0 | down | {0}, {1}, {2} | {0,1,2} |
+| 1 | up | {0}, {1}, {2} | {0,2,3} |
+| 2 | down | {0}, {1}, {2} | {0,1,2} |
+| 3 | electron | {0}, {1}, {2} | {0,1,2} |
+| 3 | neutrino | {0}, {1}, {2} | {0,1,2} |
+| 5 | electron | {0}, {1}, {2} | {0,1,2} |
+
+| Test | Checked result | Entry point in `GenerationOrbits` |
+| --- | --- | --- |
+| Key action | Every generator and group element keeps every glue key. The induced permutation group is the identity. | `group_preserves_key`, `generationAction_unique`, `generationAction_range` |
+| Class restriction | Every generation's channel placement is fixed pointwise. Each class-respecting subgroup is the full cited group. | `group_fixes_channels`, `classGroup_eq_top`, `finite_orbit_table` |
+| Program cost | An invariant cost is equal along a program orbit. No such orbit joins distinct generations. A real invariant function can separate them. | `invariant_cost_equal`, `sameProgramOrbit_generation`, `invariant_can_separate` |
+| Excursions | Same-orbit 33-displacement sets have the identity image witness. Only index 0 has clock readings ±2. Every group element fixes that index. | `orbit_displacements_image`, `two_tick_generation`, `two_tick_generation_fixed` |
+
+Indices use `EPLabelGen.genIndex`: 0 = (0,1), 1 = (1,0), 2 = (1,1).
+No derived map assigns these indices to tier entries or to light/heavy species.
+This group forces no cross-generation tie, so there is no forced tie to break.
+The orbit structures do not explain the up-type tier difference.
+SCOPE's prose Closure premise does not define an exhaustive clock stabilizer
+or its action on programs. A claim about a larger group needs that definition
+and a proof that it respects the existing labels. No new premise is added here.
+
 ## Charges
 
 The canonical rule is `PMConstants.Hypercharge.electric`: `blAxis / 2 + t3Sign`.

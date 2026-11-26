@@ -4,6 +4,7 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 ## Occupancy cost
 
+- Specify the exhaustive clock-fixing program action before extending Closure beyond the cited slice generators (`GenerationOrbits.sliceGroup`, `classGroup_eq_top`).
 - Specify transient-state admission at glue key zero before using same-starting-key excursions (`GluedExcursions.no_typed_intermediate`).
 - Derive a held-event functional and its label dependence beyond common preserving-root reachability (`FootprintNoGo.footprint_functional_independent`).
 - Derive the generation-to-tier map; raw pair spans and clock histograms do not select it (`GluedExcursions.restoring_counts`, `TierLedger.wireTier`).
