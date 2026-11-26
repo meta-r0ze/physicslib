@@ -4,6 +4,9 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 ## Occupancy cost
 
+- Specify transient-state admission at glue key zero before using same-starting-key excursions (`GluedExcursions.no_typed_intermediate`).
+- Derive a held-event functional and its label dependence beyond common preserving-root reachability (`FootprintNoGo.footprint_functional_independent`).
+- Derive the generation-to-tier map; raw pair spans and clock histograms do not select it (`GluedExcursions.restoring_counts`, `TierLedger.wireTier`).
 - Derive each tier from the dimension of the clock region that its persistent program holds in one period. Use `PersistencePremises.causal_cone_card` as the counting template.
 - Check the derived counts against `TierLedger.tiersFor` across every protocol before comparing any mass.
 - Derive the electron point footprint. The physical event unit is in [SCOPE](../../SCOPE.md#named-premises).

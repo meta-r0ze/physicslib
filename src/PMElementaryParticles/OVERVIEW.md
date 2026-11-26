@@ -29,6 +29,31 @@ it is not the program count. Full occupied-program closure remains open.
 | Toll | Each differing ring registers at least once per period. | `Toll` |
 | Margin | Each registering ring stays below 43 registrations. | `Margin` |
 
+## Footprint: what the generation can change
+
+| Family or test | Checked result | Lean entry point |
+| --- | --- | --- |
+| One preserving root step | Zero glue key keeps generation. A nonzero key changes it. Preserving both generation and internal content selects exactly the same 24 spacetime D4 roots for all labels and generations. | `FootprintNoGo.generation_preserved_iff`, `step_preserves_both_iff` |
+| Common reachable-set functional | A common functional of relative displacements within a fixed step budget cannot distinguish generations or labels. Other program inputs are not removed. | `FootprintNoGo.footprint_functional_independent`, `event_footprint_functional_independent` |
+| Requested two-root intermediate | A first hop with the starting glue key sends it to zero. That state cannot be a `Program`. EPLabel has no separate transient admission predicate. | `GluedExcursions.no_typed_intermediate`, `programCompatible_empty` |
+| Raw label-restoring pairs | Before admission, every channel has 512 ordered pairs and 33 distinct spacetime displacements. Real span dimension is 4; spatial span dimension is 3. The full displacement sets differ across generations. | `restoring_counts`, `spacetime_span_dimension`, `spatial_span_dimension`, `displacement_sets_distinct` |
+| Charge-conserving partner pairs | A nontrivial weak flip changes electric charge. Distinct charge-conserving colour partners have no two-root increment in the current doubled label code. | `weak_partner_charge_changes`, `partner_increments_disjoint`, `relabelPairs_empty` |
+
+The table below concerns raw algebraic displacements. It asserts no admitted
+execution. Zero displacement is separate from clock-only and spatial-only motion.
+The spatial split is orthogonal to the existing clock covector in the aligned D4 metric.
+
+| `genIndex` | Glue key | Distinct clock readings: count | Zero / clock-only / spatial-only / mixed |
+| --- | --- | --- | --- |
+| 0 | (0,1) | -2:1, -1:6, 0:19, +1:6, +2:1 | 1 / 2 / 18 / 12 |
+| 1 | (1,0) | -1:10, 0:13, +1:10 | 1 / 0 / 12 / 20 |
+| 2 | (1,1) | -1:10, 0:13, +1:10 | 1 / 0 / 12 / 20 |
+
+No column gives the declared tier sets. There is no derived generation-to-tier map.
+An empty typed-compatible pair family does not mean a zero physical footprint.
+See [GluedExcursions](GluedExcursions.lean) for the 21 class/species rows, ordered-pair
+histograms and the admission boundary. No count is identified with `Footprint.events`.
+
 ## Charges
 
 The canonical rule is `PMConstants.Hypercharge.electric`: `blAxis / 2 + t3Sign`.
