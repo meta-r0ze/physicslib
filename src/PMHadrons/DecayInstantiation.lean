@@ -104,11 +104,22 @@ def neutronChannel (governor : ℝ) : DecayChannel :=
     margin := 1
     action := 0 }
 
+private theorem neutronChannel_rate_pos {governor : ℝ} (h : 0 < governor) :
+    0 < rate 1 (neutronChannel governor) := by
+  have hf : 0 < neutronSpectralFractionExact := by
+    rw [neutronSpectralFractionExact_eq]
+    exact neutronSpectralFraction_pos
+  unfold rate neutronChannel
+  dsimp only
+  simp only [one_mul, mul_one, neg_zero, Real.exp_zero]
+  exact mul_pos (mul_pos betaHazardE8_pos hf) h
+
 /-- **With the Governor at `41/43`, the lifetime is the uncorrected one divided by `41/43`.** -/
 theorem neutronChannel_lifetime :
-    lifetime 1 (neutronChannel PMSubstrate.E8Margin.phaseMargin) =
+    lifetime 1 (neutronChannel PMSubstrate.E8Margin.phaseMargin)
+        (neutronChannel_rate_pos PMSubstrate.E8Margin.phaseMargin_pos) =
       neutronLifetimeExactCutoff / PMSubstrate.E8Margin.phaseMargin := by
-  unfold lifetime rate neutronChannel neutronLifetimeExactCutoff betaLifetimeFromFraction
+  unfold lifetime PersistenceMechanics.Rates.meanLife rate neutronChannel neutronLifetimeExactCutoff betaLifetimeFromFraction
   dsimp only
   simp only [neg_zero, Real.exp_zero]
   ring
@@ -207,10 +218,15 @@ theorem neutronChannelCKM_rate :
   simp only [neg_zero, Real.exp_zero]
   linear_combination (betaHazardE8 * neutronSpectralFractionExact) * key
 
+private theorem neutronChannelCKM_rate_pos : 0 < rate 1 neutronChannelCKM := by
+  rw [neutronChannelCKM_rate, neutronSpectralFractionExact_eq]
+  exact mul_pos (mul_pos betaHazardE8_pos neutronSpectralFraction_pos)
+    PMSubstrate.E8Margin.pionMargin_pos
+
 theorem neutronChannelCKM_lifetime :
-    lifetime 1 neutronChannelCKM =
+    lifetime 1 neutronChannelCKM neutronChannelCKM_rate_pos =
       neutronLifetimeExactCutoff / PMSubstrate.E8Margin.pionMargin := by
-  unfold lifetime
+  unfold lifetime PersistenceMechanics.Rates.meanLife
   rw [neutronChannelCKM_rate]
   unfold neutronLifetimeExactCutoff betaLifetimeFromFraction
   ring

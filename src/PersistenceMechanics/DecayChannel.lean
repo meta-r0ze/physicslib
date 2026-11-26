@@ -1,4 +1,4 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
+import PersistenceMechanics.Rates
 import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
@@ -38,8 +38,8 @@ def rate (β : ℝ) (c : DecayChannel) : ℝ :=
   β * c.toll * c.capacity * c.map * c.protocol * c.governor * c.margin *
     Real.exp (-c.action)
 
-def lifetime (β : ℝ) (c : DecayChannel) : ℝ :=
-  1 / rate β c
+def lifetime (β : ℝ) (c : DecayChannel) (h : 0 < rate β c) : ℝ :=
+  Rates.meanLife (rate β c) h
 
 theorem rate_pos (β : ℝ) (c : DecayChannel)
     (hβ : 0 < β) (hcap : 0 < c.capacity) (hmap : 0 < c.map)
@@ -53,21 +53,22 @@ theorem lifetime_pos (β : ℝ) (c : DecayChannel)
     (hβ : 0 < β) (hcap : 0 < c.capacity) (hmap : 0 < c.map)
     (hpro : 0 < c.protocol) (hgov : 0 < c.governor)
     (htoll : 0 < c.toll) (hmar : 0 < c.margin) :
-    0 < lifetime β c := by
-  unfold lifetime
-  exact one_div_pos.mpr (rate_pos β c hβ hcap hmap hpro hgov htoll hmar)
+    0 < lifetime β c (rate_pos β c hβ hcap hmap hpro hgov htoll hmar) :=
+  Rates.meanLife_pos (rate_pos β c hβ hcap hmap hpro hgov htoll hmar)
 
 def totalRate (β : ℝ) (channels : List DecayChannel) : ℝ :=
-  List.sum (channels.map (fun c => rate β c))
+  Rates.parallelRate (channels.map (rate β))
 
-def familyLifetime (β : ℝ) (channels : List DecayChannel) : ℝ :=
-  1 / totalRate β channels
+def familyLifetime (β : ℝ) (channels : List DecayChannel)
+    (h : 0 < totalRate β channels) : ℝ :=
+  Rates.meanLife (totalRate β channels) h
 
 /-- Physical lifetime from a tick duration and a per-tick rate. -/
-def physicalLifetime (tick β : ℝ) (c : DecayChannel) : ℝ :=
-  tick / rate β c
+def physicalLifetime (tick β : ℝ) (c : DecayChannel) (h : 0 < rate β c) : ℝ :=
+  tick * lifetime β c h
 
-theorem physicalLifetime_eq (tick β : ℝ) (c : DecayChannel) :
-    physicalLifetime tick β c = tick / rate β c := rfl
+theorem physicalLifetime_eq (tick β : ℝ) (c : DecayChannel) (h : 0 < rate β c) :
+    physicalLifetime tick β c h = tick / rate β c := by
+  simp [physicalLifetime, lifetime, Rates.meanLife, div_eq_mul_inv]
 
 end PersistenceMechanics.Decay

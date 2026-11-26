@@ -142,7 +142,7 @@ cannot give α for any sharp outgoing event: every event has weight k/8. -/
 theorem reflected_event_ne_alpha (c : Fin 3) (outgoing : Finset (PMAction.CarrierEvents.Carrier c)) :
     PMSubstrate.NetCost.prob (outgoing.map (PMAction.CarrierEvents.reflect c).symm.toEmbedding) ≠
       PMSubstrate.causalCoupling := by
-  rw [PMSubstrate.NetCost.prob, Finset.card_map, PMAction.CarrierEvents.carrier_card]
+  rw [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, Finset.card_map, PMAction.CarrierEvents.carrier_card]
   have h := CertifiedConstants.alpha_bounds
   change _ < PMSubstrate.causalCoupling ∧ PMSubstrate.causalCoupling < _ at h
   by_cases he : outgoing.card = 0

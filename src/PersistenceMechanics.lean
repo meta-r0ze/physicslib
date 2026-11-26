@@ -1,4 +1,5 @@
 import PersistenceMechanics.ExponentialFilter
+import PersistenceMechanics.Rates
 import PersistenceMechanics.HazardForm
 import PersistenceMechanics.Selection
 import PersistenceMechanics.Gibbs

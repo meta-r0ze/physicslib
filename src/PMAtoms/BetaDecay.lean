@@ -1,7 +1,7 @@
 import PMAtoms.NuclearLedger
 import PMAtoms.CollectiveRegime
 import PMAtoms.Nucleus
-import PMElementaryParticles.MeanLife
+import PersistenceMechanics.Rates
 import PMAtoms.FermiFunction
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
@@ -83,11 +83,13 @@ theorem betaWidth_pos (G Vud M f : ℝ)
   exact div_pos (mul_pos (mul_pos hGV hM2) hf) hden
 
 /-- Nuclear beta mean life from the width. -/
-def betaLifetime (G Vud M f : ℝ) : ℝ :=
-  MeanLife (betaWidth G Vud M f)
+def betaLifetime (G Vud M f : ℝ)
+    (h : 0 < betaWidth G Vud M f) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (betaWidth G Vud M f) h
 
-theorem betaLifetime_eq (G Vud M f : ℝ) :
-    betaLifetime G Vud M f = 1 / betaWidth G Vud M f := rfl
+theorem betaLifetime_eq (G Vud M f : ℝ)
+    (h : 0 < betaWidth G Vud M f) :
+    betaLifetime G Vud M f h = 1 / betaWidth G Vud M f := rfl
 
 
 /-- Electron total-energy endpoint for a beta `Q` value in `m_e` units. -/
@@ -153,11 +155,13 @@ theorem betaWidthRecoil_pos (G Vud M F R q : ℝ)
     (betaPhaseSpace_pos hq)) hden
 
 /-- Recoil/radiative-corrected beta mean life. -/
-def betaLifetimeRecoil (G Vud M F R q : ℝ) : ℝ :=
-  MeanLife (betaWidthRecoil G Vud M F R q)
+def betaLifetimeRecoil (G Vud M F R q : ℝ)
+    (h : 0 < betaWidthRecoil G Vud M F R q) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (betaWidthRecoil G Vud M F R q) h
 
-theorem betaLifetimeRecoil_eq (G Vud M F R q : ℝ) :
-    betaLifetimeRecoil G Vud M F R q =
+theorem betaLifetimeRecoil_eq (G Vud M F R q : ℝ)
+    (h : 0 < betaWidthRecoil G Vud M F R q) :
+    betaLifetimeRecoil G Vud M F R q h =
       1 / betaWidthRecoil G Vud M F R q := rfl
 
 

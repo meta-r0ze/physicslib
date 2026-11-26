@@ -37,10 +37,12 @@ theorem nuclearExitDecayChannel_rate (β c0 : ℝ) (p f1 f2 : Nuclide) :
       collectiveFiniteRate β c0 (nuclearExitBarrier p f1 f2) Finset.univ :=
   collectiveDecayChannel_rate β c0 _ _
 
-theorem nuclearExitDecayChannel_lifetime (β c0 : ℝ) (p f1 f2 : Nuclide) :
-    Decay.lifetime β (nuclearExitDecayChannel c0 p f1 f2) =
-      collectiveLifetime β c0 (nuclearExitBarrier p f1 f2) Finset.univ :=
-  collectiveDecayChannel_lifetime β c0 _ _
+theorem nuclearExitDecayChannel_lifetime (β c0 : ℝ) (p f1 f2 : Nuclide)
+    (h : 0 < collectiveFiniteRate β c0 (nuclearExitBarrier p f1 f2) Finset.univ) :
+    Decay.lifetime β (nuclearExitDecayChannel c0 p f1 f2)
+        (by rwa [nuclearExitDecayChannel_rate]) =
+      collectiveLifetime β c0 (nuclearExitBarrier p f1 f2) Finset.univ h :=
+  collectiveDecayChannel_lifetime β c0 _ _ h
 
 /-- Phase-loss channel for the standard exit table. -/
 def nuclearExitDecoherenceChannel (p f1 f2 : Nuclide) : SpectralDecoherenceChannel :=

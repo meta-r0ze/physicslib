@@ -37,13 +37,14 @@ theorem nuclearExitRateSystem_totalRate (p f1 f2 : Nuclide) :
 table is never empty, so the empty-channel case cannot occur). -/
 theorem nuclearPersistsOn_iff (p f1 f2 : Nuclide) (T : ℝ) :
     PersistsOn T (nuclearExitChannels p f1 f2) ↔
-      T ≤ collectiveMeanLife (nuclearExitChannels p f1 f2) := by
+      T ≤ collectiveMeanLife (nuclearExitChannels p f1 f2)
+        (nuclearExitChannels_ne_nil p f1 f2) := by
   unfold PersistsOn
   constructor
-  · rintro (h | h)
+  · rintro (h | ⟨_, h⟩)
     · exact absurd h (nuclearExitChannels_ne_nil p f1 f2)
     · exact h
-  · exact Or.inr
+  · exact fun h => Or.inr ⟨nuclearExitChannels_ne_nil p f1 f2, h⟩
 
 /-- **The persistence-selected nuclide is the least-total-hazard one** (`PersistenceRate`). -/
 theorem selectedNuclide_min (systems : Finset RateSystem) (h : systems.Nonempty) :
@@ -55,11 +56,13 @@ So the selection is a persistence selection, not a mass one: a lower-mass neighb
 exit hazard is not selected (`CollectiveRate.not_collectivePersists_of_lower`). -/
 theorem selectedNuclide_meanLife_max (systems : Finset RateSystem) (h : systems.Nonempty)
     (hpos : ∀ s ∈ systems, 0 < s.totalRate) :
-    ∀ s ∈ systems, s.meanLife ≤ (selectedSystem systems h).meanLife := by
+    ∀ s (hs : s ∈ systems), s.meanLife (hpos s hs) ≤
+      (selectedSystem systems h).meanLife
+        (hpos _ (selectedSystem_mem systems h)) := by
   intro s hs
   have hmin := selectedSystem_min systems h s hs
   have hbest := hpos (selectedSystem systems h) (selectedSystem_mem systems h)
-  simp only [RateSystem.meanLife, PMElementaryParticles.MeanLife]
+  simp only [RateSystem.meanLife, PersistenceMechanics.Rates.meanLife]
   exact one_div_le_one_div_of_le hbest hmin
 
 end PMAtoms.PersistenceSelection

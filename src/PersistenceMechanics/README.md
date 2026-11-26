@@ -22,3 +22,8 @@ lake exe cache get
 - **EffectiveAction.** The physics `S−iΓt/2` amplitude form with PM operational cost, normalized so `|A|² = exp(−βS_cost)`.
 
 - **InformationTransfer.** The three general transfer modes: boundary conduction, capacity promotion, coordinate jump, with a shared phase/cost channel.
+
+- **Rates.** Use ExponentialFilter for survival under a time-dependent hazard.
+  Use Rates for constant hazards, parallel rate sums and finite mean life.
+  A finite mean life needs a positive rate. HazardForm derives the common
+  cost-proportional hazard, and Decay.rate computes the six-pillar channel rate.

@@ -20,7 +20,7 @@ elementary protocols (PMElementaryParticles)
       Atom / Shells     (2n² capacities, hydrogen readouts)
         │  hazards / channels
         ▼
-     MeanLife           (τ = 1/λ from the persistence survival)
+     Rates.meanLife     (τ = 1/λ for positive λ)
 ```
 
 ## Modules
@@ -103,7 +103,7 @@ elementary protocols (PMElementaryParticles)
 | `ProtocolCandidates` | finite set cohorts (`candidateCohorts`), weak-partner filter (`candidateCohortsWeak`), least-cost selection | set version (multiplicity lost) |
 | `ListCohorts` | multiplicity-preserving list cohorts; `charge3`/`listCharge3`, odd fermion parity, weak partner; `muon_list_mem`, `electron_list_not`, `electron_neutrino_list_not` | nuclear candidate set and E8 rates |
 | `TransitionSelection` | `TransitionFamily`, `familyCost`; every nonempty candidate set has a least-cost family (`exists_least_cost`); `selectedFamily_min` and `selectedRate_le`; `selected_is_persistence_optimum` | the candidate set of substrate families |
-| `PersistenceRate` | `RateSystem`, `totalRate`, `Persists` = total hazard zero, `not_persists_of_pos`, `MeanLife = 1/totalRate`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | E8 channel rates |
+| `PersistenceRate` | `RateSystem`, `totalRate`, `Persists` = total hazard zero, `not_persists_of_pos`, `Rates.meanLife` for positive total rate; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | E8 channel rates |
 
 ## Model identifications
 

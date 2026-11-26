@@ -17,7 +17,7 @@ composite-level role:
   transition**: the exposed leg takes one of `χ = 2` orientations (`PMSubstrate.Orientation`), the
   target address must avoid the composite's own `σ` embedded addresses
   (`(R_M − σ)/R_M = 167/172`), and the channels and interaction direction are filtered. The
-  composite's **emission boundary** is exactly the Toll event `PMSubstrate.ValidToll`, with weight
+  composite's **emission boundary** is exactly the Toll event `PMSubstrate.TollBoundaryWitness`, with weight
   `tollTerm` (`PMSubstrate.uniform_toll`). This is the boundary factor of a decay — the object the
   SM comparison calls `fπ`/`fK` (`TODO.md` item 2).
 
@@ -38,10 +38,10 @@ open PMSubstrate.E8Values
 
 /-- The composite's emission boundary: `χ = 2` orientations of the exposed leg times
 `R_M − σ = 167` target addresses that avoid its own `σ` embedded addresses. It is the Toll event. -/
-abbrev EmissionBoundary := PMSubstrate.ValidToll
+abbrev EmissionBoundary := PMSubstrate.TollBoundaryWitness
 
 theorem emissionBoundary_card : Fintype.card EmissionBoundary = 334 := by
-  simp [EmissionBoundary, PMSubstrate.ValidToll]
+  simp [EmissionBoundary, PMSubstrate.TollBoundaryWitness]
 
 /-- The composite's emission boundary weight: the Toll term. -/
 noncomputable def emissionWeight : ℝ := PMSubstrate.tollTerm PMSubstrate.baseline
@@ -57,7 +57,7 @@ theorem emissionWeight_pos : 0 < emissionWeight := by
 
 /-- **The emission boundary weight is the Toll term** (`PMSubstrate.uniform_toll`). -/
 theorem emissionBoundary_weight :
-    (PMSubstrate.tollEvent.card : ℝ) / Fintype.card PMSubstrate.TollSpace =
+    (PMSubstrate.tollBoundaryEvent.card : ℝ) / Fintype.card PMSubstrate.TollSampleSpace =
       PMSubstrate.tollTerm PMSubstrate.baseline :=
   PMSubstrate.uniform_toll
 

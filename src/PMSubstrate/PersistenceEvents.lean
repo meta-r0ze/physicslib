@@ -112,22 +112,22 @@ end PMSubstrate.Orientation
 
 namespace PMSubstrate.PersistenceEvents
 
-/-- Uniform mass of an event `E ⊆ Ω`. -/
-noncomputable def mass {Ω : Type*} [Fintype Ω] (E : Finset Ω) : ℝ := E.card / Fintype.card Ω
+/-- Uniform probability of an event `E ⊆ Ω`. -/
+noncomputable def uniformEventProbability {Ω : Type*} [Fintype Ω] (E : Finset Ω) : ℝ := E.card / Fintype.card Ω
 
 /-- **The four correction terms are probabilities of persistence events** under the uniform
 measure forced by Closure, with the forced baseline integers. -/
 theorem corrections_as_probabilities :
-    mass ({0} : Finset (Fin 167)) = 1 / 167 ∧
-    mass (Finset.univ.filter fun i : Fin 43 => (i : ℕ) < 2) = 2 / 43 ∧
-    mass ({0} : Finset (Fin 31 × Fin 6 × Fin 43 × Fin 43)) = 1 / (31 * 6 * 43 ^ 2) ∧
+    uniformEventProbability ({0} : Finset (Fin 167)) = 1 / 167 ∧
+    uniformEventProbability (Finset.univ.filter fun i : Fin 43 => (i : ℕ) < 2) = 2 / 43 ∧
+    uniformEventProbability ({0} : Finset (Fin 31 × Fin 6 × Fin 43 × Fin 43)) = 1 / (31 * 6 * 43 ^ 2) ∧
     -protocolTerm baseline = 1 / 167 ∧ -governorTerm baseline = 2 / 43 ∧
     marginTerm baseline = 1 / (31 * 6 * 43 ^ 2) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
-  · simp [mass]
-  · simp only [mass, Fintype.card_fin]
+  · simp [uniformEventProbability]
+  · simp only [uniformEventProbability, Fintype.card_fin]
     rw [show (Finset.univ.filter fun i : Fin 43 => (i : ℕ) < 2).card = 2 by decide]; norm_num
-  · simp [mass, Fintype.card_prod]; norm_num
+  · simp [uniformEventProbability, Fintype.card_prod]; norm_num
   · norm_num [protocolTerm, baseline, Parameters.resolution]
   · norm_num [governorTerm, baseline]
   · norm_num [marginTerm, baseline, Parameters.embeddingLoad, Parameters.intrinsicLoad]
@@ -159,11 +159,11 @@ theorem toll_persistence :
 the 167 residual addresses without an external pointer succeeds with the uniform probability of
 that single address, `2^(−I)` with `I = log₂ 167` the information needed to name it. -/
 theorem protocol_persistence {X : Type*} (f : X → Fin 167) (x : X) :
-    ({f x} : Finset (Fin 167)).card = 1 ∧ -protocolTerm baseline = mass ({f x} : Finset (Fin 167)) ∧
-      mass ({f x} : Finset (Fin 167)) = (2 : ℝ) ^ (-Real.logb 2 167) := by
+    ({f x} : Finset (Fin 167)).card = 1 ∧ -protocolTerm baseline = uniformEventProbability ({f x} : Finset (Fin 167)) ∧
+      uniformEventProbability ({f x} : Finset (Fin 167)) = (2 : ℝ) ^ (-Real.logb 2 167) := by
   refine ⟨Finset.card_singleton _, ?_, ?_⟩
-  · simp [mass]; norm_num [protocolTerm, baseline, Parameters.resolution]
+  · simp [uniformEventProbability]; norm_num [protocolTerm, baseline, Parameters.resolution]
   · rw [Real.rpow_neg (by norm_num), Real.rpow_logb (by norm_num) (by norm_num) (by norm_num)]
-    simp [mass]
+    simp [uniformEventProbability]
 
 end PMSubstrate.PersistenceEvents

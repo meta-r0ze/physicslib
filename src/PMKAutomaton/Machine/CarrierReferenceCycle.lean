@@ -199,7 +199,7 @@ theorem carrier_cost_for_mask (c : Fin 3) (mask : Fin Delta → Bool) (toll : �
   have hp (t : Fin Delta) : PMSubstrate.NetCost.prob (carrierEvents c mask t) =
       if t ∈ boundaries mask then (1/2 : ℝ) else 0 := by
     by_cases ht : t ∈ boundaries mask <;>
-      norm_num [carrierEvents, ht, PMSubstrate.NetCost.prob, active_card, carrier_card]
+      norm_num [carrierEvents, ht, PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, active_card, carrier_card]
   simp_rw [hp]
   rw [← Finset.sum_filter]
   have hs : univ.filter (fun t => t ∈ boundaries mask) = boundaries mask := by
@@ -282,7 +282,7 @@ theorem clock_cycle_cost (c : Fin 3) (clockToll : ℝ) :
       Delta * clockToll := by
   rw [PMSubstrate.NetCost.expected_count_linear]
   have hn : Fintype.card (Carrier c) ≠ 0 := by rw [carrier_card]; decide
-  simp [PMSubstrate.NetCost.prob, hn]
+  simp [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, hn]
   ring
 
 end PMAction.CarrierReferenceCycle

@@ -20,7 +20,7 @@ abbrev Sample := Fin 172
 def available : Finset Sample := univ.erase 0
 
 theorem available_probability : PMSubstrate.NetCost.prob available = overhead := by
-  norm_num [PMSubstrate.NetCost.prob, available, overhead]
+  norm_num [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, available, overhead]
 
 /-- An always-occurring macro operation with m primitive transitions. -/
 def macroCost (c : ℝ) (m : ℕ) : ℝ :=
@@ -32,7 +32,7 @@ def gatedCost (c : ℝ) (m : ℕ) : ℝ :=
 
 theorem macro_cost (c : ℝ) (m : ℕ) : macroCost c m = c*m := by
   rw [macroCost, PMSubstrate.NetCost.expected_count_linear]
-  simp [PMSubstrate.NetCost.prob]
+  simp [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability]
 
 theorem gated_cost (c : ℝ) (m : ℕ) : gatedCost c m = c*m*overhead := by
   rw [gatedCost, PMSubstrate.NetCost.expected_count_linear]

@@ -51,15 +51,15 @@ theorem collectiveDecayChannel_rate (β c0 : ℝ) {k : Nat}
 
 /-- Collective population lifetime. -/
 def collectiveLifetime (β c0 : ℝ) {k : Nat}
-    (barriers : Fin k → ℝ) (S : Finset (Fin k)) : ℝ :=
-  1 / collectiveFiniteRate β c0 barriers S
+    (barriers : Fin k → ℝ) (S : Finset (Fin k)) (h : 0 < collectiveFiniteRate β c0 barriers S) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (collectiveFiniteRate β c0 barriers S) h
 
 theorem collectiveDecayChannel_lifetime (β c0 : ℝ) {k : Nat}
-    (barriers : Fin k → ℝ) (S : Finset (Fin k)) :
-    Decay.lifetime β (collectiveDecayChannel c0 barriers S) =
-      collectiveLifetime β c0 barriers S := by
-  unfold Decay.lifetime collectiveLifetime
-  rw [collectiveDecayChannel_rate]
+    (barriers : Fin k → ℝ) (S : Finset (Fin k)) (h : 0 < collectiveFiniteRate β c0 barriers S) :
+    Decay.lifetime β (collectiveDecayChannel c0 barriers S)
+        (by rwa [collectiveDecayChannel_rate]) =
+      collectiveLifetime β c0 barriers S h :=
+  congrArg (fun r : ℝ => 1 / r) (collectiveDecayChannel_rate β c0 barriers S)
 
 /-- Collective rate as an `EffectiveAction` population width. -/
 theorem collectiveFiniteRate_eq_effectiveWidth (β c0 : ℝ) {k : Nat}

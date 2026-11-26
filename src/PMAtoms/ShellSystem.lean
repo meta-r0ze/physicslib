@@ -26,7 +26,7 @@ is **derived** from what is still a model input.
 | Map `χ` | the **closure boundary**: `mapTerm = eulerCharacteristic = χ = 2` (two-sided edge) |
 | Protocol `−1/167` | the **successor map** — the orbital ladder order (`protocol_deterministic`) |
 | Governor `−χ/Δ` | the level **spacing** `ℏω(A) = χ·m_p/(Δ·A^{1/3})`. As a spin–orbit strength `χ/Δ` orders the levels and gives the closures `2, 8, 20, 40, 70`; `1/ν` with `μ = χ/σ` gives `2, 8, 20, 28, 50, 82, 126` (`ShellGaps`) |
-| Toll | **emission** (de-excitation): the boundary `ValidToll`, weight `tollTerm` |
+| Toll | **emission** (de-excitation): the boundary `TollBoundaryWitness`, weight `tollTerm` |
 | Margin | the **reference cone** (smooth background): `marginTerm = 1/(L_embed(σ+1)Δ²)` |
 
 **The textbook order list.** `SingleParticle.nuclearOrbitals126` is one textbook fine order of

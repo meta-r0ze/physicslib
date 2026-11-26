@@ -90,7 +90,7 @@ theorem active_card (c : Fin 3) : (active c).card=4 := by
   fin_cases c <;> decide +kernel
 
 theorem uniform_activation (c : Fin 3) : PMSubstrate.NetCost.prob (active c)=1/2 := by
-  rw [PMSubstrate.NetCost.prob, active_card, carrier_card]
+  rw [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, active_card, carrier_card]
   norm_num
 
 /-- Cost of one explicitly identified primitive reflection event under uniform input. -/

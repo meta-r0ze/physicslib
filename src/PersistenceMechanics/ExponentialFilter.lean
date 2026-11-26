@@ -22,6 +22,12 @@ namespace PersistenceMechanics.ExponentialFilter
 /-- Survival to time `T` under a hazard `h`. -/
 noncomputable def survival (h : ℝ → ℝ) (T : ℝ) : ℝ := exp (-∫ t in (0)..T, h t)
 
+/-- The general filter at a constant hazard. -/
+theorem survival_const (r t : ℝ) : survival (fun _ => r) t = exp (-r * t) := by
+  rw [survival, intervalIntegral.integral_const]
+  simp
+  ring
+
 theorem survival_zero (h : ℝ → ℝ) : survival h 0 = 1 := by simp [survival]
 
 theorem survival_pos (h : ℝ → ℝ) (T : ℝ) : 0 < survival h T := exp_pos _

@@ -2,4 +2,5 @@
 
 Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premises).
 
-No outstanding framework proof is identified within the scope of the premises in [the overview](OVERVIEW.md).
+The [rate API](OVERVIEW.md) leaves the physical hazard coefficient and channel
+factors to the applications. Use the open model inputs in the owning libraries.

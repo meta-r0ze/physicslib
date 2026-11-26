@@ -59,14 +59,15 @@ theorem spectralDecayChannel_rate (β c0 : ℝ) (n : Nat)
 
 /-- The population lifetime in the generic channel language. -/
 def spectralLifetime (β c0 : ℝ) (n : Nat)
-    (S : Finset (Fin n × (Fin n × Fin n))) : ℝ :=
-  1 / betaSpectralRate β c0 n S
+    (S : Finset (Fin n × (Fin n × Fin n))) (h : 0 < betaSpectralRate β c0 n S) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (betaSpectralRate β c0 n S) h
 
 theorem spectralDecayChannel_lifetime (β c0 : ℝ) (n : Nat)
-    (S : Finset (Fin n × (Fin n × Fin n))) :
-    Decay.lifetime β (spectralDecayChannel c0 n S) = spectralLifetime β c0 n S := by
-  unfold Decay.lifetime spectralLifetime
-  rw [spectralDecayChannel_rate]
+    (S : Finset (Fin n × (Fin n × Fin n))) (h : 0 < betaSpectralRate β c0 n S) :
+    Decay.lifetime β (spectralDecayChannel c0 n S)
+        (by rwa [spectralDecayChannel_rate]) =
+      spectralLifetime β c0 n S h :=
+  congrArg (fun r : ℝ => 1 / r) (spectralDecayChannel_rate β c0 n S)
 
 /-- The spectral rate as an `EffectiveAction` population width. -/
 theorem betaSpectralRate_eq_effectiveWidth (β c0 : ℝ) (n : Nat)

@@ -9,10 +9,10 @@ The substrate supplies one raw tick `Δ = 43`.  This module records three
 distinct ways a system can compose that tick:
 
 * nested gating: `period = k₁ · k₂ · … · Δ`
-* parallel channels: `rate = Σ rateᵢ`
+* parallel channels: use `PersistenceMechanics.Rates.parallelRate` to sum rates
 * serial waits: `lifetime = Σ lifetimeᵢ`
 
-They are not interchangeable.  The module only records the algebra; the E8
+They are not interchangeable.  The clock formulas give the algebra. The E8
 composition rule remains a model question.
 -/
 
@@ -58,14 +58,6 @@ theorem nestedFlux_eq (factors : List Nat) :
 theorem nestedFlux_pos {factors : List Nat}
     (h : ∀ k ∈ factors, 0 < k) : 0 < nestedFlux factors :=
   one_div_pos.mpr (nestedPeriod_pos h)
-
-/-- Parallel channel rate: rates add. -/
-def parallelRate (rates : List ℝ) : ℝ := rates.sum
-
-theorem parallelRate_nil : parallelRate [] = 0 := rfl
-
-theorem parallelRate_cons (r : ℝ) (rs : List ℝ) :
-    parallelRate (r :: rs) = r + parallelRate rs := rfl
 
 /-- Serial independent waits: lifetimes add. -/
 def serialLifetime (lifetimes : List ℝ) : ℝ := lifetimes.sum

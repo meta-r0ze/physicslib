@@ -62,14 +62,14 @@ theorem placement_injective {N σ R χ : ℕ} (hN : 0 < N) (hσ : 0 < σ)
     dsimp [placement] at h2
     omega
 
-def event {N σ R χ : ℕ} (hN : 0 < N) (hσ : 0 < σ)
+def protocolTollSuccessEvent {N σ R χ : ℕ} (hN : 0 < N) (hσ : 0 < σ)
     (hχ : χ ≤ N) (hR : σ ≤ R) : Finset (Trial N σ R) :=
   univ.image (placement hN hσ hχ hR)
 
 theorem event_count {N σ R χ : ℕ} (hN : 0 < N) (hσ : 0 < σ)
     (hχ : χ ≤ N) (hR : σ ≤ R) :
-    (event hN hσ hχ hR).card = χ * (R - σ) := by
-  rw [event, card_image_of_injective _ (placement_injective hN hσ hχ hR)]
+    (protocolTollSuccessEvent hN hσ hχ hR).card = χ * (R - σ) := by
+  rw [protocolTollSuccessEvent, card_image_of_injective _ (placement_injective hN hσ hχ hR)]
   simp
 
 theorem trial_count (N σ R : ℕ) : Fintype.card (Trial N σ R) = N^3 * σ * R := by
@@ -78,7 +78,7 @@ theorem trial_count (N σ R : ℕ) : Fintype.card (Trial N σ R) = N^3 * σ * R 
 
 theorem uniform_event_mass {N σ R χ : ℕ} (hN : 0 < N) (hσ : 0 < σ)
     (hχ : χ ≤ N) (hR : σ ≤ R) :
-    ((event hN hσ hχ hR).card : ℝ) / Fintype.card (Trial N σ R) =
+    ((protocolTollSuccessEvent hN hσ hχ hR).card : ℝ) / Fintype.card (Trial N σ R) =
       χ * ((R : ℝ) - σ) / ((N : ℝ)^3 * σ * R) := by
   rw [event_count, trial_count]
   push_cast [Nat.cast_sub hR]
@@ -94,7 +94,7 @@ theorem toll_factorization (N σ R χ : ℝ) :
 /-- General Toll formula, including the side condition omitted by baseline-only counting. -/
 theorem toll_from_sampling (p : Parameters) (hp : p.Admissible)
     (hχ : p.eulerCharacteristic ≤ p.nodeCapacity) :
-    ((event hp.2.1 hp.2.2.1 hχ (Nat.le_of_lt hp.2.2.2.1)).card : ℝ) /
+    ((protocolTollSuccessEvent hp.2.1 hp.2.2.1 hχ (Nat.le_of_lt hp.2.2.2.1)).card : ℝ) /
       Fintype.card (Trial p.nodeCapacity p.embeddingDimension p.resolution) = tollTerm p := by
   exact uniform_event_mass hp.2.1 hp.2.2.1 hχ (Nat.le_of_lt hp.2.2.2.1)
 

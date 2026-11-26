@@ -6,7 +6,6 @@ import PMElementaryParticles.BetaLattice
 import PMElementaryParticles.LeptonLattice
 import PMElementaryParticles.LeptonLifetime
 import PMElementaryParticles.Routing
-import PMElementaryParticles.Survival
 import PMElementaryParticles.Widths
 import PMElementaryParticles.MassScaling
 

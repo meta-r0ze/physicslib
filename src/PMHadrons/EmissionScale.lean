@@ -27,7 +27,7 @@ is a **separate** structure from the occupancy — the one remaining constructio
 denominators are `|Ω_π| = Δ² + Δ − χ = 1890` and `|Ω_K| = Δ² − ν² = 1593`.
 
 **Readings tested and failed (do not re-try).** GMOR on the derived masses gives `fK/fπ ≈ 1.08`;
-the occupancy gives `2/7`; the boundary-event space (`ValidToll`, size `334`) over-scales `fπ`.
+the occupancy gives `2/7`; the boundary-event space (`TollBoundaryWitness`, size `334`) over-scales `fπ`.
 Both assigned counts are perturbations of the one-cycle causal cone (`Δ²`), so a cone-derived
 mode space is the strongest lead; but since `fπ = v/(Δ²+Δ−χ)` is assigned, the count may be a
 coincidence.

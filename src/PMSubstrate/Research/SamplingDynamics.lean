@@ -122,7 +122,7 @@ abbrev TollSample := PMSubstrate.ProtocolToll.Trial 32 5 172
 abbrev MarginSample := Fin 31 × Fin 6 × Fin 43 × Fin 43
 
 def selectedTollEvent : Finset TollSample :=
-  PMSubstrate.ProtocolToll.event (N := 32) (σ := 5) (R := 172) (χ := 2)
+  PMSubstrate.ProtocolToll.protocolTollSuccessEvent (N := 32) (σ := 5) (R := 172) (χ := 2)
     (by decide) (by decide) (by decide) (by decide)
 
 theorem selected_sample_sizes :

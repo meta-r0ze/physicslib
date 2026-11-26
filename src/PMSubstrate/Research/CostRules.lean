@@ -48,7 +48,7 @@ theorem governor_rule [NeZero p.period] (f : ZMod p.period → ℝ) (hshift : �
 
 /-- **Toll.** Uniform mass of the specified transition event. -/
 theorem toll_rule (hp : p.Admissible) (hχ : p.eulerCharacteristic ≤ p.nodeCapacity) :
-    ((ProtocolToll.event hp.2.1 hp.2.2.1 hχ (Nat.le_of_lt hp.2.2.2.1)).card : ℝ) /
+    ((ProtocolToll.protocolTollSuccessEvent hp.2.1 hp.2.2.1 hχ (Nat.le_of_lt hp.2.2.2.1)).card : ℝ) /
       Fintype.card (ProtocolToll.Trial p.nodeCapacity p.embeddingDimension p.resolution) =
       tollTerm p :=
   ProtocolToll.toll_from_sampling p hp hχ
@@ -75,7 +75,7 @@ theorem impedance_from_rules [NeZero p.period] (hp : p.Admissible)
       2 * Real.pi * ((p.period : ℝ) / 2) + 1 * p.eulerCharacteristic +
       ProtocolToll.protocolCredit (fun _ : Fin (p.resolution - p.embeddingDimension) => (1 : ℝ)) +
       -f 0 +
-      ((ProtocolToll.event hp.2.1 hp.2.2.1 hχ (Nat.le_of_lt hp.2.2.2.1)).card : ℝ) /
+      ((ProtocolToll.protocolTollSuccessEvent hp.2.1 hp.2.2.1 hχ (Nat.le_of_lt hp.2.2.2.1)).card : ℝ) /
         Fintype.card (ProtocolToll.Trial p.nodeCapacity p.embeddingDimension p.resolution) +
       (1 : ℝ) / Fintype.card (Fin p.embeddingLoad × Fin V × Fin p.period × Fin p.period) := by
   rw [capacity_rule, map_rule, protocol_rule p hp.2.2.2.1, governor_rule p f hshift htot,

@@ -76,7 +76,7 @@ PM specifies channels/persistence, not a per-channel time scale.
 | `HundRule` | Hund's first rule from the persistence filter (same-spin pairs maximized); ground multiplicities `Z = 1–54` match except the Aufbau exceptions Cr, Nb, Mo, Pd | the fill order |
 | `Shells` | `orbitalCapacity l = 2(2l+1)`, `shellCapacity n = 2n²`, first shells `2,8,18,32` |
 | `Hydrogen` | Rydberg energy and Bohr radius from the certified `α`; `E_n = E_1/n²`; ground state lowest |
-| `PersistenceRate` | dynamical persistence: `Persists` = total hazard zero, else `MeanLife = 1/λ`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | the E8 channel rates |
+| `PersistenceRate` | dynamical persistence: `Persists` = total hazard zero, else `Rates.meanLife λ h = 1/λ`; least-hazard selection (`exists_least_totalRate`, `selectedSystem_min`) | the E8 channel rates |
 | `ProtocolCandidates` | finite set cohorts (`candidateCohorts`); weak-partner filter (`candidateCohortsWeak`) | set version, for reference |
 | `ListCohorts` | multiplicity-preserving list cohorts: `e ν ν̄` is length 3; charge in thirds, odd fermion parity, weak partner; `muon_list_mem`, `electron_list_not`, `electron_neutrino_list_not` | nuclear candidate set with the same rule |
 | `TransitionSelection` | a channel fixes the payload; persistence selects a least-cost transition family (`exists_least_cost`, `selectedFamily_min`, `selectedRate_le`) | the candidate set of substrate families |
@@ -84,7 +84,7 @@ PM specifies channels/persistence, not a per-channel time scale.
 ## The rule
 
 Lifetimes must come from **E8/persistence**, not from an inserted measured rate.
-`MeanLife` therefore takes the hazard `λ = β · (operational cost rate)`: `β` is
+`Rates.meanLife` therefore takes the hazard `λ = β · (operational cost rate)`: `β` is
 the common coefficient derived in `PersistenceMechanics.HazardForm`, and the cost rate is
 the substrate/persistence ledger's quantity. A concrete nuclear rate is still an
 open E8 derivation; the library fixes the `rate → lifetime` step and proves the

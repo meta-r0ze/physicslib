@@ -99,34 +99,34 @@ theorem exponential_weight_action (p : Parameters) :
 
 /-- Counts for an explicit uniform three-leg trial sample space. Selecting
 this sample space and event is a modeling choice, not a consequence of triality. -/
-abbrev TollSpace := Fin 32 × Fin 32 × Fin 32 × Fin 5 × Fin 172
-abbrev ValidToll := Fin 2 × Fin 167
+abbrev TollSampleSpace := Fin 32 × Fin 32 × Fin 32 × Fin 5 × Fin 172
+abbrev TollBoundaryWitness := Fin 2 × Fin 167
 
-def validPlacement (v : ValidToll) : TollSpace :=
+def embedTollBoundary (v : TollBoundaryWitness) : TollSampleSpace :=
   (0, 0, ⟨v.1.val, by omega⟩, 0, ⟨v.2.val + 5, by omega⟩)
 
-theorem validPlacement_injective : Function.Injective validPlacement := by
+theorem embedTollBoundary_injective : Function.Injective embedTollBoundary := by
   intro a b h
-  have h1 := congrArg (fun x : TollSpace => x.2.2.1.val) h
-  have h2 := congrArg (fun x : TollSpace => x.2.2.2.2.val) h
+  have h1 := congrArg (fun x : TollSampleSpace => x.2.2.1.val) h
+  have h2 := congrArg (fun x : TollSampleSpace => x.2.2.2.2.val) h
   apply Prod.ext
   · apply Fin.ext
     exact h1
   · apply Fin.ext
-    dsimp [validPlacement] at h2
+    dsimp [embedTollBoundary] at h2
     omega
 
-def tollEvent : Finset TollSpace := Finset.univ.image validPlacement
+def tollBoundaryEvent : Finset TollSampleSpace := Finset.univ.image embedTollBoundary
 
-theorem toll_event_card : tollEvent.card = 334 := by
-  rw [tollEvent, Finset.card_image_of_injective _ validPlacement_injective]
+theorem toll_event_card : tollBoundaryEvent.card = 334 := by
+  rw [tollBoundaryEvent, Finset.card_image_of_injective _ embedTollBoundary_injective]
   simp
 
 /-- Uniform mass of the specified event equals the baseline Toll term. -/
 theorem uniform_toll :
-    (tollEvent.card : ℝ) / Fintype.card TollSpace = tollTerm baseline := by
+    (tollBoundaryEvent.card : ℝ) / Fintype.card TollSampleSpace = tollTerm baseline := by
   rw [toll_event_card]
-  norm_num [TollSpace, tollTerm, baseline, Parameters.nodeCapacity, Parameters.resolution]
+  norm_num [TollSampleSpace, tollTerm, baseline, Parameters.nodeCapacity, Parameters.resolution]
 
 abbrev MarginSpace := Fin 31 × Fin 6 × Fin 43 × Fin 43
 

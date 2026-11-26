@@ -25,23 +25,50 @@ noncomputable section
 namespace PMSubstrate.SIUnits
 
 /-- Electron rest energy in MeV (CODATA 2022). -/
-def electronMassMeV : ℝ := 0.51099895069
+abbrev electronMassMeVRat : ℚ := 51099895069 / 10^11
+
 /-- Electron mass in atomic mass units (CODATA 2022). -/
 def electronMassU : ℚ := 548579909065 / 10^15
-/-- Exact rational companion of `electronMassMeV` for display arithmetic. -/
-def electronMassMeVRat : ℚ := 51099895069 / 10^11
-/-- Electron rest energy in eV (CODATA 2022). -/
-def electronMassEV : ℝ := 510998.95069
-/-- Electron rest energy in GeV (CODATA 2022). -/
-def electronMassGeV : ℝ := 0.00051099895069
 
-/-- `ħc` in MeV·fm (exact in the SI; 19 digits). -/
-def hbarcMeVFm : ℝ := 197.3269804593024659
-/-- `ħc` in eV·Å (exact in the SI; 19 digits). -/
-def hbarcEVAngstrom : ℝ := 1973.269804593024659
+-- Materialize the rational sources as real numerals. Arithmetic tactics can
+-- then use the coefficients without a separate rational-cast rewrite.
+def electronMassMeV : ℝ :=
+  OfScientific.ofScientific
+    (eval% electronMassMeVRat.num.natAbs) true (eval% Nat.log 10 electronMassMeVRat.den)
 
-/-- `c` in fm/s (exact in the SI). -/
-def cFmPerSecond : ℝ := 2.99792458e23
+def electronMassEV : ℝ :=
+  OfScientific.ofScientific
+    (eval% electronMassMeVRat.num.natAbs) true (eval% Nat.log 10 electronMassMeVRat.den - 6)
+
+def electronMassGeV : ℝ :=
+  OfScientific.ofScientific
+    (eval% electronMassMeVRat.num.natAbs) true (eval% Nat.log 10 electronMassMeVRat.den + 3)
+
+/-- The retained SI precision for ħc in MeV·fm. -/
+abbrev hbarcMeVFmRat : ℚ := 1973269804593024659 / 10^16
+
+def hbarcMeVFm : ℝ :=
+  OfScientific.ofScientific
+    (eval% hbarcMeVFmRat.num.natAbs) true (eval% Nat.log 10 hbarcMeVFmRat.den)
+
+def hbarcEVAngstrom : ℝ :=
+  OfScientific.ofScientific
+    (eval% hbarcMeVFmRat.num.natAbs) true (eval% Nat.log 10 hbarcMeVFmRat.den - 1)
+
+/-- Exact speed of light in fm/s. -/
+abbrev cFmPerSecondRat : ℚ := 299792458 * 10 ^ 15
+
+def cFmPerSecond : ℝ :=
+  (eval% cFmPerSecondRat.num.natAbs : ℕ)
+
+theorem electronMassMeVRat_cast : (electronMassMeVRat : ℝ) = electronMassMeV := by
+  norm_num [electronMassMeVRat, electronMassMeV]
+
+theorem hbarcMeVFmRat_cast : (hbarcMeVFmRat : ℝ) = hbarcMeVFm := by
+  norm_num [hbarcMeVFmRat, hbarcMeVFm]
+
+theorem cFmPerSecondRat_cast : (cFmPerSecondRat : ℝ) = cFmPerSecond := by
+  norm_num [cFmPerSecondRat, cFmPerSecond]
 
 theorem electronMassEV_eq : electronMassEV = electronMassMeV * 10 ^ 6 := by
   norm_num [electronMassEV, electronMassMeV]

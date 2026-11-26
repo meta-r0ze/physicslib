@@ -27,7 +27,7 @@ theorem uniform_slot_weights :
     prob (univ.filter fun c : Channels => baseProtocol c = some .neutrino) = 1 / 16 ∧
     prob (univ.filter fun c : Channels => baseProtocol c = none) = 1 / 16 := by
   obtain ⟨hu, hd, he, hn, hv⟩ := inventory_split
-  simp [prob, he, hd, hu, hn, hv]
+  simp [prob, PMSubstrate.PersistenceEvents.uniformEventProbability, he, hd, hu, hn, hv]
 
 /-- A protocol's copies on one wall. The quark copies are the `Fin 3`
 colour coordinates of the two sum types. -/
@@ -206,7 +206,9 @@ theorem packet_record_cost (full probeVacancy pol : Bool) :
       (8 + (if pol then if full && probeVacancy then 4 else 3 else 12)) /
         (if full then 16 else 15) := by
   obtain ⟨hpos, hsec⟩ := record_event_counts full probeVacancy pol
-  rw [expected_count_linear, one_mul, Fin.sum_univ_two, prob, prob, hpos, hsec, sample_card]
+  rw [expected_count_linear, one_mul, Fin.sum_univ_two]
+  unfold prob PMSubstrate.PersistenceEvents.uniformEventProbability
+  rw [hpos, hsec, sample_card]
   cases full <;> cases probeVacancy <;> cases pol <;> norm_num
 
 theorem packet_record_difference (full probeVacancy : Bool) :

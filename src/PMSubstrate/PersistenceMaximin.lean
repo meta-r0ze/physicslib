@@ -91,9 +91,9 @@ theorem maximin_exists : Maximin (uniform (Ω := Ω)) := (maximin_iff _).mpr fun
 
 /-- Under the maximin law an event's probability is its counting measure. -/
 theorem maximin_event {p : Ω → ℝ} (hp : Maximin p) (E : Finset Ω) :
-    ∑ ω ∈ E, p ω = PersistenceEvents.mass E := by
+    ∑ ω ∈ E, p ω = PersistenceEvents.uniformEventProbability E := by
   rw [sum_congr rfl fun ω _ => (maximin_iff p).mp hp ω, sum_const, nsmul_eq_mul,
-    PersistenceEvents.mass]
+    PersistenceEvents.uniformEventProbability]
   ring
 
 /-- **Independence is derived.** On a product of label sets the maximin law is the product of
@@ -129,7 +129,7 @@ theorem toll_maximin {p : Fin 32 × Fin 32 × Fin 32 × Fin 5 → ℝ} (hp : Max
   rw [maximin_event hp, maximin_event hq, PersistenceEvents.toll_persistence]
   congr 1
   have := TollFilters.nonaliasing_prob e he
-  rw [PersistenceEvents.mass, this]; norm_num
+  rw [PersistenceEvents.uniformEventProbability, this]; norm_num
 
 /-- **Protocol.** Under the maximin law on the residual addresses, the one successor is reached
 with the Protocol probability. -/

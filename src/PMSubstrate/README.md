@@ -18,3 +18,9 @@ lake exe cache get
 `./build.sh audit` (strict axioms, readable/import checks, class-number audit).
 
 - **E8Margin.** Substrate phase margin `(Δ−χ)/Δ = 41/43` and its application to channel weights.
+
+- **Event probability and Toll.** PersistenceEvents defines uniform event
+  probability. NetCost uses it for expected cost. Use the Toll boundary names
+  for the sample and `tollTerm` for the price.
+- **Units.** SIUnits derives the real conversion factors from exact rational
+  inputs. Electron time stays in the EP lifetime conversion.

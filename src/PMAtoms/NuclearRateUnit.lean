@@ -67,12 +67,14 @@ theorem governorCollectiveRate_pos (channels : List CollectiveChannel) (h : chan
   mul_pos attemptFrequency_pos (collectiveRate_pos channels h)
 
 /-- The Governor-pinned collective mean life, in E8 ticks. -/
-noncomputable def governorCollectiveMeanLife (channels : List CollectiveChannel) : ℝ :=
-  PMElementaryParticles.MeanLife (governorCollectiveRate channels)
+noncomputable def governorCollectiveMeanLife (channels : List CollectiveChannel)
+    (h : channels ≠ []) : ℝ :=
+  PersistenceMechanics.Rates.meanLife
+    (governorCollectiveRate channels) (governorCollectiveRate_pos channels h)
 
 theorem governorCollectiveMeanLife_pos (channels : List CollectiveChannel) (h : channels ≠ []) :
-    0 < governorCollectiveMeanLife channels :=
-  PMElementaryParticles.MeanLife_pos (governorCollectiveRate_pos channels h)
+    0 < governorCollectiveMeanLife channels h :=
+  PersistenceMechanics.Rates.meanLife_pos (governorCollectiveRate_pos channels h)
 
 /-! ## The standard exit table with the Governor
 

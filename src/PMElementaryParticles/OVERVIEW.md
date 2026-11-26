@@ -835,7 +835,7 @@ Proved: `decay_charge` (charge conservation), `decay_tier_lt`, `no_infinite_chai
 (finite descent, matching "at most `L(s₀)` steps"), `tier_zero_terminal`, and the
 muon example `muon_decay` (`e+ν+ν̄`, charge `−1 = −1+0+0`). Partial-width addition
 and branching normalization are in `Widths` (`branching_normalized`, `total`,
-`identical_channels`); competing hazards are in `Survival.competing_hazards`.
+`identical_channels`); competing hazards are in `PersistenceMechanics.Rates.competing_hazards`.
 **Routing caveats (`ProtocolCaveats`).** The paper states that routing alone does
 not force stability or reachability; both are proved as countermodels:
 `lower_latency_not_reachable` (a strictly lower-latency, same-label state that is
@@ -1095,8 +1095,8 @@ This table includes the accounting used for occupancy cost. It also records reta
 | --- | --- | --- | --- | --- | --- |
 | `RateModel.channelCost` | Expected per-frame event cost | Event family and unit Toll | Scope family and price. PM expected cost. | No | channelCost_eq. |
 | `RateModel.channelRate` | Hazard times channel cost | Event family, Toll and hazard | Scope physical channel and HazardForm inputs. PM formula. | No | channelRate_eq. |
-| `MeanLife.persistenceRate` | Hazard times cost rate | Hazard coefficient and cost rate | Scope HazardForm and physical cost. | No | meanLife_from_persistence and DecayLaw.rate_eq_pillars. |
-| `MeanLife.totalRate` | Sum of channel rates | Channel rate list | Supplied rates. PM additive rule. | No | MeanLife laws for total survival. |
+| `PMElementaryParticles.persistenceRate` | Hazard times cost rate | Hazard coefficient and cost rate | Scope HazardForm and physical cost. | No | survival_from_persistence and DecayLaw.rate_eq_pillars. |
+| `PersistenceMechanics.Rates.parallelRate` | Sum of channel rates | Channel rate list | Supplied rates. PM additive rule. | No | MeanLife laws for total survival. |
 | `BetaLattice.betaLatticeCost` | Cost of selected finite modes | Mode counts and unit Toll | PM count formula. Scope physical modes and price. | No | betaLatticeRate uses this cost. |
 | `BetaLattice.betaLatticeRate` | Uniform-mode lattice rate | Active/total counts, hazard and Toll | PM formula. Scope physical active modes and hazard. | No | LeptonLattice reuses the finite channel. |
 | `BetaLattice.betaWeightedRate` | Weighted finite-mode rate | Weights, active modes, hazard and Toll | Scope physical weights, hazard and tariff. | No | betaWeightedRate_le. |
@@ -1212,8 +1212,8 @@ and the mean life is its inverse.
 | Module | Checked result | Retained inputs |
 | --- | --- | --- |
 | `LatticeSpectral` | Dirichlet eigenvalues of the finite cubic lattice used by the spectral channels | |
-| `MeanLife` | `MeanLife lam = 1/lam`; `MeanLife_eq_integral` (integral of `exp(−lam T)`); `MeanLife_eq_survival_integral` (same with `ExponentialFilter.survival`); `persistenceRate = β·costRate`; `meanLife_from_persistence` | the three persistence premises of `HazardForm`; the cost rate and `β` |
-| `RateModel` | `channelCost = expectedCost c0 E`; `channelRate_eq : rate = β·c0·Σ prob`; `channelMeanLife = MeanLife (channelRate …)`; zero-probability channels have zero rate | the event family per channel, and the toll/hazard coefficients |
+| `MeanLife` | `Rates.meanLife rate h` is the positive-rate reciprocal and survival integral; `persistenceRate = β·costRate`; `survival_from_persistence` | the three persistence premises of `HazardForm`; the cost rate and `β` |
+| `RateModel` | `channelCost = expectedCost c0 E`; `channelRate_eq : rate = β·c0·Σ prob`; `channelMeanLife` uses `Rates.meanLife` at positive rate; zero-probability channels have zero rate | the event family per channel, and the toll/hazard coefficients |
 | `BetaLattice` | `BetaLatticeChannel` (`modes`, `active`), `event`, `family`; `betaLatticeRate = β·c0·active/(modes+1)`, `betaLatticeLifetime`, positivity; `betaSpectralWeight = exp(−λ)`, `betaWeightedRate`, `betaSpectralRate`; `betaOpenModes`, `betaSpectralRateCutoff`, positivity, `betaWeightedRate_le`, `betaSpectralRateCutoff_le` (`rate ≤ β·c0`); general gap lemmas `dirichletEigenvalue_mono`, `dirichletEigenvalue_ge_next`, `betaOpenModes_eq_univ_of_twelve_le`, `betaOpenModes_eq_singleton_of_gap`, `betaSpectralRateCutoff_eq_one_of_openModes_eq_univ` | numerical spectral sum / neutron benchmark |
 | `LeptonLattice` | finite lepton channel reusing `BetaLattice`; `leptonLatticeRate`, `leptonLatticeLifetime`, positivity | lepton eigenvalue input |
 | `LeptonLifetime` | `muonSpectralFraction`, `muonFiniteWidth`, `muonFiniteLifetime`; minimal-cube lepton channel | mass/phase-space coefficient still continuum |

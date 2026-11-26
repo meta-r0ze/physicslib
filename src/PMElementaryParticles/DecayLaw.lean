@@ -1,4 +1,4 @@
-import PMElementaryParticles.Survival
+import PersistenceMechanics.Rates
 import PMSubstrate.NetCost
 import PMSubstrate.E8Values
 import PersistenceMechanics.DecayChannel
@@ -8,17 +8,17 @@ import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 # The exponential decay law from Paper I's survival law
 
 `TODO` item 3 asks for the decay law from the dynamics, distinguishing exact finite
-updates from a continuum limit. `Survival` proves consequences of a supplied exponential law.
+updates from a continuum limit. `Rates` proves consequences of a supplied exponential law.
 
 **Exact on the tick lattice.** Paper I prices persistence per cycle: surviving a cycle of net cost
 `c` has probability `exp(−β c)`, and survival factorizes over pillars and cycles
 (`PMSubstrate.NetCost.survival_factorizes`).
 
 * `ticks_exact`: with the same per-tick cost `c` on every tick (a time-homogeneous update),
-  survival after `n` ticks is exactly `exp(−β c n)`. This is `Survival.survive Γ (n τ)` with
+  survival after `n` ticks is exactly `exp(−β c n)`. This is `PersistenceMechanics.Rates.survive Γ (n τ)` with
   `Γ = β c / τ` (`ticks_are_survive`). No limit is taken.
 * `hazard_pos_iff`: the hazard is nonzero exactly when the open decay channel has positive cost
-  (`c > 0`). A cost-free channel never decays, as in `Survival.deterministic_state_can_remain`.
+  (`c > 0`). A cost-free channel never decays, as in `deterministic_state_can_remain`.
 
 **Continuum limit.** If instead a per-tick decay probability `Γ t / n` is compounded over `n`
 ticks of total time `t`, survival tends to `exp(−Γ t)` as the tick shrinks (`compounded_limit`).
@@ -41,10 +41,10 @@ theorem ticks_exact (β c : ℝ) (n : ℕ) :
   rw [h]
   ring_nf
 
-/-- The same survival as `Survival.survive` with rate `β c / τ` at time `n τ`. -/
+/-- The same survival as `PersistenceMechanics.Rates.survive` with rate `β c / τ` at time `n τ`. -/
 theorem ticks_are_survive (β c τ : ℝ) (hτ : τ ≠ 0) (n : ℕ) :
-    ∏ _i : Fin n, Real.exp (-β * c) = Survival.survive (β * c / τ) (n * τ) := by
-  rw [ticks_exact, Survival.survive]
+    ∏ _i : Fin n, Real.exp (-β * c) = PersistenceMechanics.Rates.survive (β * c / τ) (n * τ) := by
+  rw [ticks_exact, PersistenceMechanics.Rates.survive_eq]
   congr 1
   field_simp
 
@@ -60,9 +60,9 @@ theorem hazard_pos_iff (β c τ : ℝ) (hβ : 0 < β) (hτ : 0 < τ) :
 
 /-- **The continuum limit of compounded per-tick decay.** -/
 theorem compounded_limit (Γ t : ℝ) :
-    Tendsto (fun n : ℕ => (1 - Γ * t / n) ^ n) atTop (𝓝 (Survival.survive Γ t)) := by
+    Tendsto (fun n : ℕ => (1 - Γ * t / n) ^ n) atTop (𝓝 (PersistenceMechanics.Rates.survive Γ t)) := by
   have h := Real.tendsto_one_add_div_pow_exp (-Γ * t)
-  rw [Survival.survive]
+  rw [PersistenceMechanics.Rates.survive_eq]
   convert h using 2 with n
   ring
 
@@ -85,10 +85,17 @@ not a separate input; seconds enter only through the unit anchor `ħ/(m_e c²)`.
 its survival after `n` ticks is the exponential law at time `n Δ`. -/
 theorem substrate_ticks (Γ : ℝ) (n : ℕ) :
     ∏ _i : Fin n, Real.exp (-1 * (Γ * (PMSubstrate.E8Values.Delta : ℝ))) =
-      Survival.survive Γ (n * (PMSubstrate.E8Values.Delta : ℝ)) := by
-  rw [ticks_exact, Survival.survive]
+      PersistenceMechanics.Rates.survive Γ (n * (PMSubstrate.E8Values.Delta : ℝ)) := by
+  rw [ticks_exact, PersistenceMechanics.Rates.survive_eq]
   congr 1
   ring
+
+/-- Determinism of an update alone does not give a nonzero decay hazard. -/
+theorem deterministic_state_can_remain :
+    ∃ update : Bool → Bool, (∀ x, update x = x) ∧ ∀ n, update^[n] true = true := by
+  refine ⟨id, fun _ => rfl, ?_⟩
+  intro n
+  simp
 
 /-- The per-slot hazard is exactly the six-pillar channel rate. -/
 theorem rate_eq_pillars (β : ℝ) (c : PersistenceMechanics.Decay.DecayChannel) :
@@ -98,10 +105,9 @@ theorem rate_eq_pillars (β : ℝ) (c : PersistenceMechanics.Decay.DecayChannel)
 
 /-- **The physical lifetime is the tick times the per-slot lifetime `1/rate`.** -/
 theorem physicalLifetime_eq_tick_mul (tick β : ℝ)
-    (c : PersistenceMechanics.Decay.DecayChannel) :
-    PersistenceMechanics.Decay.physicalLifetime tick β c =
-      tick * PersistenceMechanics.Decay.lifetime β c := by
-  unfold PersistenceMechanics.Decay.physicalLifetime PersistenceMechanics.Decay.lifetime
-  ring
+    (c : PersistenceMechanics.Decay.DecayChannel)
+    (h : 0 < PersistenceMechanics.Decay.rate β c) :
+    PersistenceMechanics.Decay.physicalLifetime tick β c h =
+      tick * PersistenceMechanics.Decay.lifetime β c h := rfl
 
 end PMElementaryParticles.DecayLaw

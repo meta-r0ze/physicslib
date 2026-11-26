@@ -81,7 +81,7 @@ theorem changed_probability [Nonempty ι] (e : Equiv.Perm ι) :
     simpa [fixed, changed] using card_filter_add_card_filter_not (s := (univ : Finset ι)) (fun x => e x=x)
   have hr : ((fixed e).card : ℝ)+((changed e).card : ℝ)=Fintype.card ι := by exact_mod_cast hc
   have hn : (Fintype.card ι : ℝ) ≠ 0 := by exact_mod_cast (Fintype.card_ne_zero : Fintype.card ι ≠ 0)
-  rw [PMSubstrate.NetCost.prob, trace_fixed]
+  rw [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, trace_fixed]
   simp only [Complex.natCast_re]
   field_simp
   linarith

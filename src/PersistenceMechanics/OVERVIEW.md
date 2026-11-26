@@ -3,6 +3,7 @@
 | Module | Paper | Content |
 |---|---|---|
 | `ExponentialFilter` | §4.1 | `P(T) = exp(−∫h)` solves the hazard equation `P' = −hP`; cost-proportional hazard gives `exp(−βS)`; survival over consecutive intervals multiplies; the discrete filter `q^N = exp(−βS)` with `β = −ln q / c₀`. |
+| `Rates` | §4.1 | `survive` specializes the general filter to a constant hazard. `survival_const` gives the exponential formula. `parallelRate` sums channel hazards. `meanLife` is the positive-rate survival integral. `zero_rate` gives survival one at all times. |
 | `HazardForm` | §4.1 | The cost-proportional hazard with a common `β` is derived: if survival depends on a history only through its accumulated cost (one function `F` for all histories), survival over consecutive stretches multiplies, and more cost never raises survival, then `F(S) = exp(−βS)` for one `β ≥ 0` and the hazard is `βZ`. For integer (transition-count) cost the first two suffice. |
 | `Selection` | §4.2–4.4 | Distribution conditional on survival, relative odds, **Proposition (Selection by Operational Action)** with `S_i(T) = s_i T + o(T)`, selection timescale `1/(βΔs)`. |
 | `Gibbs` | §4.2 | Finite survival weights `exp(−βS)` at equal priors: positivity, ratios, ordering, a finite penalty never deletes a history; the β → ∞ limit concentrates uniformly on the minimum-cost histories. Moved from Paper II (`Survival`, `Concentration`). |
@@ -11,7 +12,7 @@
 | `InformationTransfer` | `TransferMode` (`inCycle`, `referenceWall`, `otherWall`), `TransferChannel`, amplitude/rate, admissibility; Paper IV transfer classification. |
 | `EffectiveAction` | `amplitude = exp(iφ − (β/2)S_cost)`, `amplitude_normSq = exp(−βS_cost)`, `width = β·cost/time`, `decoherenceRate`; physics `S−iΓt/2` form. |
 | `CoherentAction` | `phaseWeight = exp(iφ)`, `costWeight = exp(−βC)`, `combinedWeight`; phase has unit modulus, cost carries attenuation; `qualityFactor`. |
-| `DecayChannel` | Shared six-pillar channel algebra: `capacity`, `map`, `protocol`, `governor`, `toll`, `margin`, plus `action`; `rate = β·toll·capacity·map·protocol·governor·margin·exp(−action)`; `lifetime`, `physicalLifetime`, `totalRate`, `familyLifetime`. |
+| `DecayChannel` | Shared six-pillar channel algebra: `capacity`, `map`, `protocol`, `governor`, `toll`, `margin`, plus `action`; `rate = β·toll·capacity·map·protocol·governor·margin·exp(−action)`; `totalRate` uses the shared sum. `lifetime`, `physicalLifetime` and `familyLifetime` require positive rates. |
 | `LawSelection` | application | Candidate event laws on a finite label set: the uniform law uniquely minimizes the average return cost `−(1/|Ω|)Σ log p` and the worst-case cost `−log min p`, so it is the law that survives selection. Used by Paper I (`PersistenceMaximin`). |
 | `SelectionSymmetry` | selection | A cost can only select its fixed points: `unique_minimizer_fixed` (an invariant cost with a unique minimizer fixes it) and `exists_tied_of_moved` (a moved point is tied). Framework shape for every open "model choice": a **discrete** symmetry with a uniqueness-forcing cost resolves a choice (`SectorExchange`); a **continuous** symmetry ties and needs a symmetry-breaking input (`ReferenceSelection`, the CP sign). |
 

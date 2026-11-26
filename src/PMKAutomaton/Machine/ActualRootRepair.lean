@@ -118,7 +118,7 @@ theorem classical_event_price (toll : ℝ) :
   have he : Finset.univ.filter (fun j : Ports => root (label j) ≠ label j) = Finset.univ := by
     ext j; simp [label_moves]
   rw [he, PMSubstrate.NetCost.expected_count_linear]
-  norm_num [PMSubstrate.NetCost.prob, Fintype.card_sum]
+  norm_num [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, Fintype.card_sum]
 
 /-- A coherently equal live/reference pair is fixed by the very same root operator. -/
 theorem reference_response (reference : Fin 2 → ℂ) :

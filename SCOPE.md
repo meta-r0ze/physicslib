@@ -52,7 +52,7 @@ the text. Each appears once here; the owning TODO links back to this table.
 | The booked writer population and reset account | `PMAction.WireReferenceCost`, `PMKAutomaton.Values` thresholds | Reference thresholds, erasure versus balanced-reset accounts |
 | The charged static offset and admitted matched ports | `PMElementaryParticles.ChargedInsertion.det_flip_at_resonance`, `ResonanceLift` | Conditional wall-operator lift and selector comparison counts |
 | The physical species association for decay and current readout | EP decay theorems, `ExternalStates`; `PMAction.NativeExternal` | Particle identification, decay channels and external-state readout |
-| The three persistence premises of `HazardForm` | `PersistenceMechanics.HazardForm`; `PMElementaryParticles.MeanLife` | Mean life, survival weights, lifetime comparisons |
+| The three persistence premises of `HazardForm` | `PersistenceMechanics.HazardForm`; `PersistenceMechanics.Rates` | Mean life, survival weights, lifetime comparisons |
 | Strong-CP and VEV structural premises | `PMConstants.VevPremises`, `StrongLedgerBounds`; `UnitTransferWitness` | Constant normalization, strong-CP selection, unit-transfer comparison |
 | The machine inputs `T,L,B,D,J,Q` and the tariff unit | `PMKAutomaton.Interface` conditional exports | Physical admission, booked work, detector support, supply and acceptance |
 | The cosmological load/response/continuity premises | `PMCosmology.Hypotheses.CosmoModel` | `H_late`, `S8_late`, background and composition comparisons |

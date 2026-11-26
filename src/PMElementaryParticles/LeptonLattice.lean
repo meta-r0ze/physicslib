@@ -25,12 +25,14 @@ theorem leptonLatticeRate_eq (β c0 : ℝ) (c : LeptonLatticeChannel) :
       β * c0 * (c.active : ℝ) / (c.size : ℝ) :=
   betaLatticeRate_eq β c0 c
 
-def leptonLatticeLifetime (β c0 : ℝ) (c : LeptonLatticeChannel) : ℝ :=
-  betaLatticeLifetime β c0 c
+def leptonLatticeLifetime (β c0 : ℝ) (c : LeptonLatticeChannel)
+    (h : 0 < leptonLatticeRate β c0 c) : ℝ :=
+  betaLatticeLifetime β c0 c h
 
-theorem leptonLatticeLifetime_eq (β c0 : ℝ) (c : LeptonLatticeChannel) :
-    leptonLatticeLifetime β c0 c = 1 / leptonLatticeRate β c0 c :=
-  betaLatticeLifetime_eq β c0 c
+theorem leptonLatticeLifetime_eq (β c0 : ℝ) (c : LeptonLatticeChannel)
+    (h : 0 < leptonLatticeRate β c0 c) :
+    leptonLatticeLifetime β c0 c h = 1 / leptonLatticeRate β c0 c :=
+  betaLatticeLifetime_eq β c0 c h
 
 theorem leptonLatticeRate_pos (β c0 : ℝ) (c : LeptonLatticeChannel)
     (hβ : 0 < β) (hc0 : 0 < c0) (hactive : 0 < c.active) :

@@ -1,6 +1,6 @@
 import PMAtoms.CollectiveRegime
 import PMAtoms.NuclearShells
-import PMElementaryParticles.MeanLife
+import PersistenceMechanics.Rates
 import PMAtoms.E8Tick
 import Mathlib.Tactic
 
@@ -224,11 +224,11 @@ theorem alphaWidthE8_pos (attempt : ℝ) (p : Nuclide) (h : 0 < attempt) :
     (Real.exp_pos _)
 
 /-- Mean life from the E8 alpha width. -/
-noncomputable def alphaMeanLifeE8 (attempt : ℝ) (p : Nuclide) : ℝ :=
-  MeanLife (alphaWidthE8 attempt p)
+noncomputable def alphaMeanLifeE8 (attempt : ℝ) (p : Nuclide) (h : 0 < attempt) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (alphaWidthE8 attempt p) (alphaWidthE8_pos attempt p h)
 
-theorem alphaMeanLifeE8_eq (attempt : ℝ) (p : Nuclide) :
-    alphaMeanLifeE8 attempt p = 1 / alphaWidthE8 attempt p := rfl
+theorem alphaMeanLifeE8_eq (attempt : ℝ) (p : Nuclide) (h : 0 < attempt) :
+    alphaMeanLifeE8 attempt p h = 1 / alphaWidthE8 attempt p := rfl
 
 /-- Relative mean life including the E8 phase-space factor. -/
 noncomputable def alphaRelativeLifetimeE8 (p ref : Nuclide) : ℝ :=

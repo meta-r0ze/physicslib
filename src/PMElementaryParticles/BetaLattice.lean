@@ -1,5 +1,4 @@
 import PMElementaryParticles.RateModel
-import PMElementaryParticles.MeanLife
 import PMElementaryParticles.LatticeSpectral
 import Mathlib.Tactic
 
@@ -41,7 +40,7 @@ theorem event_card (c : BetaLatticeChannel) : c.event.card = c.active := by
 
 theorem prob_event (c : BetaLatticeChannel) :
     PMSubstrate.NetCost.prob c.event = (c.active : ℝ) / (c.size : ℝ) := by
-  unfold PMSubstrate.NetCost.prob
+  unfold PMSubstrate.NetCost.prob PMSubstrate.PersistenceEvents.uniformEventProbability
   rw [event_card]
   have hsize : (Fintype.card (Fin c.size) : ℝ) = (c.modes + 1 : ℝ) := by
     rw [BetaLatticeChannel.size, Fintype.card_fin]
@@ -75,11 +74,13 @@ theorem betaLatticeCost_eq (c0 : ℝ) (c : BetaLatticeChannel) :
   ring
 
 /-- Lifetime from the finite E8 cost rate. -/
-def betaLatticeLifetime (β c0 : ℝ) (c : BetaLatticeChannel) : ℝ :=
-  channelMeanLife β c0 c.family
+def betaLatticeLifetime (β c0 : ℝ) (c : BetaLatticeChannel)
+    (h : 0 < betaLatticeRate β c0 c) : ℝ :=
+  channelMeanLife β c0 c.family h
 
-theorem betaLatticeLifetime_eq (β c0 : ℝ) (c : BetaLatticeChannel) :
-    betaLatticeLifetime β c0 c = 1 / betaLatticeRate β c0 c := rfl
+theorem betaLatticeLifetime_eq (β c0 : ℝ) (c : BetaLatticeChannel)
+    (h : 0 < betaLatticeRate β c0 c) :
+    betaLatticeLifetime β c0 c h = 1 / betaLatticeRate β c0 c := rfl
 
 theorem betaLatticeRate_pos (β c0 : ℝ) (c : BetaLatticeChannel)
     (hβ : 0 < β) (hc0 : 0 < c0) (hactive : 0 < c.active) :
@@ -93,10 +94,8 @@ theorem betaLatticeRate_pos (β c0 : ℝ) (c : BetaLatticeChannel)
 
 theorem betaLatticeLifetime_pos (β c0 : ℝ) (c : BetaLatticeChannel)
     (hβ : 0 < β) (hc0 : 0 < c0) (hactive : 0 < c.active) :
-    0 < betaLatticeLifetime β c0 c := by
-  unfold betaLatticeLifetime channelMeanLife MeanLife
-  change 0 < 1 / betaLatticeRate β c0 c
-  exact one_div_pos.mpr (betaLatticeRate_pos β c0 c hβ hc0 hactive)
+    0 < betaLatticeLifetime β c0 c (betaLatticeRate_pos β c0 c hβ hc0 hactive) :=
+  PersistenceMechanics.Rates.meanLife_pos (betaLatticeRate_pos β c0 c hβ hc0 hactive)
 
 /-- Boltzmann weight of a Dirichlet mode: `exp(−λ)`. -/
 noncomputable def betaSpectralWeight (n a b c : Nat) : ℝ :=

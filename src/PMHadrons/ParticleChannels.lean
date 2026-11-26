@@ -38,26 +38,25 @@ structure ParticleChannel where
 
 /-- Sum of the listed rates, including any placeholders. -/
 def totalRate (channels : List ParticleChannel) : ℝ :=
-  List.sum (channels.map (fun c => c.rate))
+  PersistenceMechanics.Rates.parallelRate (channels.map ParticleChannel.rate)
 
 /-- A channel's fraction of the listed rate sum. -/
 def branching (channels : List ParticleChannel) (c : ParticleChannel) : ℝ :=
   c.rate / totalRate channels
 
 /-- Reciprocal of the listed rate sum, in electron time units. -/
-def totalLifetime (channels : List ParticleChannel) : ℝ :=
-  1 / totalRate channels
+def totalLifetime (channels : List ParticleChannel) (h : 0 < totalRate channels) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (totalRate channels) h
 
 theorem totalLifetime_pos (channels : List ParticleChannel)
-    (h : 0 < totalRate channels) : 0 < totalLifetime channels := by
-  unfold totalLifetime
-  exact one_div_pos.mpr h
+    (h : 0 < totalRate channels) : 0 < totalLifetime channels h :=
+  PersistenceMechanics.Rates.meanLife_pos h
 
 /-- The modeled lifetime when every listed channel has a supplied or derived
 rate and the sum is positive. -/
 def modeledLifetime (channels : List ParticleChannel) : Option ℝ :=
   if channels.any (fun c => decide (c.status = .blocked)) then none
-  else if 0 < totalRate channels then some (totalLifetime channels) else none
+  else if h : 0 < totalRate channels then some (totalLifetime channels h) else none
 
 /-- Recover a natural-unit width from an inverse width in seconds. -/
 def rateFromSeconds (seconds : ℝ) : ℝ := PhysicalUnits.electronTime / seconds

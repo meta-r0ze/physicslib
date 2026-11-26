@@ -119,7 +119,7 @@ theorem different_costs : expectedPrimitiveCost aligned = 0 ∧ expectedPrimitiv
   rw [event_cost, event_cost]
   have ha : (event aligned).card = 0 := by decide +kernel
   have ho : (event opposed).card = 2 := by decide +kernel
-  simp [PMSubstrate.NetCost.prob, ha, ho]
+  simp [PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability, ha, ho]
 
 /-! The ambiguity need not be attributed to different total particle counts.
 Two pairs suffice to fix the total population while retaining correlation freedom.
@@ -167,7 +167,7 @@ theorem fixed_population_different_costs :
   have ho : ∀ i : Fin 2,
       (univ.filter fun b => if i = 0 then (opposedFour b).1.1 ≠ (opposedFour b).1.2
         else (opposedFour b).2.1 ≠ (opposedFour b).2.2).card = 4 := by decide +kernel
-  simp only [fourExpectedCost, PMSubstrate.NetCost.expected_count_linear, PMSubstrate.NetCost.prob,
+  simp only [fourExpectedCost, PMSubstrate.NetCost.expected_count_linear, PMSubstrate.NetCost.prob, PMSubstrate.PersistenceEvents.uniformEventProbability,
     ha, ho, Nat.cast_zero, Fintype.card_prod, Fintype.card_bool, one_mul]
   norm_num
 

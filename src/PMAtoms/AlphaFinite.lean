@@ -34,15 +34,15 @@ theorem alphaFiniteRate_pos (attempt : ℝ) (p : Nuclide) (h : 0 < attempt) :
   exact mul_pos h (alphaWidthE8_pos 1 p (by norm_num))
 
 /-- Finite alpha mean life. -/
-noncomputable def alphaFiniteLifetime (attempt : ℝ) (p : Nuclide) : ℝ :=
-  MeanLife (alphaFiniteRate attempt p)
+noncomputable def alphaFiniteLifetime (attempt : ℝ) (p : Nuclide) (h : 0 < attempt) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (alphaFiniteRate attempt p) (alphaFiniteRate_pos attempt p h)
 
-theorem alphaFiniteLifetime_eq (attempt : ℝ) (p : Nuclide) :
-    alphaFiniteLifetime attempt p = 1 / alphaFiniteRate attempt p := rfl
+theorem alphaFiniteLifetime_eq (attempt : ℝ) (p : Nuclide) (h : 0 < attempt) :
+    alphaFiniteLifetime attempt p h = 1 / alphaFiniteRate attempt p := rfl
 
 theorem alphaFiniteLifetime_pos (attempt : ℝ) (p : Nuclide) (h : 0 < attempt) :
-    0 < alphaFiniteLifetime attempt p :=
-  MeanLife_pos (alphaFiniteRate_pos attempt p h)
+    0 < alphaFiniteLifetime attempt p h :=
+  PersistenceMechanics.Rates.meanLife_pos (alphaFiniteRate_pos attempt p h)
 
 /-- Representative alpha emitters. -/
 def u238 : Nuclide := ⟨92, 146⟩
@@ -65,16 +65,16 @@ theorem alphaWidthE8_eq_phase_barrier (p : Nuclide) :
 
 /-- Relative finite alpha lifetime: the attempt frequency cancels. -/
 theorem alphaFiniteLifetime_ratio (attempt : ℝ) (p ref : Nuclide)
-    (h : attempt ≠ 0) :
-    alphaFiniteLifetime attempt p / alphaFiniteLifetime attempt ref =
+    (h : 0 < attempt) :
+    alphaFiniteLifetime attempt p h / alphaFiniteLifetime attempt ref h =
       alphaRelativeLifetimeE8 p ref := by
-  unfold alphaFiniteLifetime alphaFiniteRate alphaRelativeLifetimeE8 MeanLife
+  unfold alphaFiniteLifetime alphaFiniteRate alphaRelativeLifetimeE8 PersistenceMechanics.Rates.meanLife
   rw [alphaWidthE8_eq_phase_barrier p, alphaWidthE8_eq_phase_barrier ref]
   have hFp : alphaPhaseSpace p ≠ 0 := ne_of_gt (alphaPhaseSpace_pos p)
   have hFr : alphaPhaseSpace ref ≠ 0 := ne_of_gt (alphaPhaseSpace_pos ref)
   have hBp : Real.exp (-(alphaBarrierShellPreformed p)) ≠ 0 := Real.exp_ne_zero _
   have hBr : Real.exp (-(alphaBarrierShellPreformed ref)) ≠ 0 := Real.exp_ne_zero _
-  field_simp [h, hFp, hFr, hBp, hBr]
+  field_simp [h.ne', hFp, hFr, hBp, hBr]
   rw [← Real.exp_add]
   ring_nf
 
@@ -117,11 +117,11 @@ theorem alphaFiniteRateE8_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
   alphaFiniteRate_pos (alphaAttempt p) p (alphaAttempt_pos hZ hN)
 
 /-- Alpha lifetime from the E8 `cKf` ledger. -/
-noncomputable def alphaFiniteLifetimeE8 (p : Nuclide) : ℝ :=
-  alphaFiniteLifetime (alphaAttempt p) p
+noncomputable def alphaFiniteLifetimeE8 (p : Nuclide) (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) : ℝ :=
+  alphaFiniteLifetime (alphaAttempt p) p (alphaAttempt_pos hZ hN)
 
 theorem alphaFiniteLifetimeE8_pos {p : Nuclide} (hZ : 2 ≤ p.Z) (hN : 2 ≤ p.N) :
-    0 < alphaFiniteLifetimeE8 p :=
+    0 < alphaFiniteLifetimeE8 p hZ hN :=
   alphaFiniteLifetime_pos (alphaAttempt p) p (alphaAttempt_pos hZ hN)
 
 /-- Leading E8 collective cost scale `Δ²/(ν+σ)`. -/

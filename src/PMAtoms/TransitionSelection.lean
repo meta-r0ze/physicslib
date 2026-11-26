@@ -44,7 +44,7 @@ def familyCost (c0 : ℝ) (F : TransitionFamily Ω) : ℝ :=
 theorem familyCost_nonneg (c0 : ℝ) (F : TransitionFamily Ω) (hc0 : 0 ≤ c0) :
     0 ≤ familyCost c0 F := by
   unfold familyCost
-  exact Finset.sum_nonneg (fun E _ => mul_nonneg hc0 (by unfold PMSubstrate.NetCost.prob; positivity))
+  exact Finset.sum_nonneg (fun E _ => mul_nonneg hc0 (by unfold PMSubstrate.NetCost.prob PMSubstrate.PersistenceEvents.uniformEventProbability; positivity))
 
 /-- **Persistence selects a least-cost family.** -/
 theorem exists_least_cost (c0 : ℝ) (cands : Finset (TransitionFamily Ω))
@@ -80,8 +80,8 @@ theorem selectedRate_le (β c0 : ℝ) (cands : Finset (TransitionFamily Ω))
 
 /-- Mean life of the persistence-selected family. -/
 def selectedMeanLife (β c0 : ℝ) (cands : Finset (TransitionFamily Ω))
-    (h : cands.Nonempty) : ℝ :=
-  MeanLife (selectedRate β c0 cands h)
+    (h : cands.Nonempty) (hpos : 0 < selectedRate β c0 cands h) : ℝ :=
+  PersistenceMechanics.Rates.meanLife (selectedRate β c0 cands h) hpos
 
 /-- **A least-cost family is the persistence optimum**: no candidate has a
 smaller ledger cost. This is the static form of the selection rule; the

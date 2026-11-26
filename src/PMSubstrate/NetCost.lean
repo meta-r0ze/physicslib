@@ -1,4 +1,4 @@
-import PMSubstrate.Impedance
+import PMSubstrate.PersistenceEvents
 import Mathlib.Analysis.SpecialFunctions.Exp
 
 /-!
@@ -28,7 +28,7 @@ open Finset
 variable {Ω : Type*} [Fintype Ω] [DecidableEq Ω]
 
 /-- Probability of an event under the uniform measure on a cycle's label space. -/
-def prob (E : Finset Ω) : ℝ := E.card / Fintype.card Ω
+def prob (E : Finset Ω) : ℝ := PersistenceEvents.uniformEventProbability E
 
 /-- Expected number of transitions in a cycle, each event contributing one transition of toll
 `c₀` when it occurs. -/
@@ -40,7 +40,7 @@ theorem expected_count_linear (c₀ : ℝ) {k : ℕ} (E : Fin k → Finset Ω) :
     expectedCost c₀ E = c₀ * ∑ i, prob (E i) := by
   have hcount : ∀ i, (∑ ω, if ω ∈ E i then (1 : ℝ) else 0) = (E i).card := by
     intro i; rw [Finset.sum_boole]; simp
-  unfold expectedCost prob
+  unfold expectedCost prob PersistenceEvents.uniformEventProbability
   simp_rw [← Finset.mul_sum]
   rw [Finset.sum_comm, Finset.sum_congr rfl (fun i _ => hcount i), Finset.mul_sum, Finset.mul_sum,
     Finset.sum_div]
@@ -51,7 +51,7 @@ theorem expected_count_linear (c₀ : ℝ) {k : ℕ} (E : Fin k → Finset Ω) :
 baseline transitions `B`, the realized count drops by exactly the probability of `A`. -/
 theorem removal_subtracts (A B : Finset Ω) (h : A ⊆ B) :
     prob (B \ A) = prob B - prob A := by
-  unfold prob
+  unfold prob PersistenceEvents.uniformEventProbability
   rw [Finset.card_sdiff_of_subset h, Nat.cast_sub (Finset.card_le_card h), sub_div]
 
 /-- **Survival factorizes** over pillars, so the cost inside the exponential is the plain sum. -/

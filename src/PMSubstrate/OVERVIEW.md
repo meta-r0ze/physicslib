@@ -19,6 +19,19 @@ Fine-Structure Constant*.
 satisfies every postulate, so the set is consistent. Comparison with measured α is separate
 (`PMSubstrate.alpha_deviations`) and is not part of the theorem.
 
+## Canonical constants and units
+
+| Quantity | Canonical Lean name | Source |
+| --- | --- | --- |
+| α | `PMSubstrate.causalCoupling` | Reciprocal of the baseline index. |
+| α⁻¹ | `PMSubstrate.geometricIndex` | Impedance at the baseline parameters. |
+| Δ | `PMSubstrate.E8Values.Delta` | Baseline clock period. |
+| Uniform event probability | `PMSubstrate.PersistenceEvents.uniformEventProbability` | Event cardinality divided by the sample-space cardinality. `NetCost.prob` delegates to it. |
+| Toll price | `PMSubstrate.tollTerm` | Parametric impedance term. |
+| Toll boundary | `TollSampleSpace`, `TollBoundaryWitness`, `embedTollBoundary`, `tollBoundaryEvent` | Baseline sample, witness, embedding and event. `uniform_toll` proves the baseline probability equals the price. |
+| General Toll event | `ProtocolToll.protocolTollSuccessEvent` | Parametric finite sample. |
+| SI conversions | `SIUnits` | One rational source for each family. `electronMassMeVRat_cast` relates the two MeV types. The EP lifetime module computes electron time from these units. |
+
 ## Postulates
 
 | Postulate | PM requirement | Lean | Consequence |
