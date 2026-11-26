@@ -8,6 +8,14 @@ points, not exhaustive lists. Lean source is the ground truth.
 
 ## Scope
 
+PMAction defines no particle mass, and `PMSubstrate.OccupancyCost.cost` is the scalar mass reading.
+
+- `EventAccounting.eventWeight` totals a supplied finite law. `uniform_eventWeight`
+  gives the substrate probability at uniform sampling. `binaryPMF` is the two-outcome law.
+- `TollAmplitude.weightedFlagCost` adds the floor and weighted flags.
+  `DiagonalReadout.diagonalPhaseFlagCost` specializes it to diagonal phases.
+  The amplitude and survival use `EffectiveAction.attenuationWeight` and `Gibbs.weight`.
+
 - `ReferenceSelection.readPair_run` projects each native port pair onto the live/record stream at every tick. `native_reference_forever` gives exact maintenance on a moving homogeneous lattice routing when the indicated record bank is uniform. Physical bank allocation is tracked in the [transport review](../PMKAutomaton/TODO.md).
 - `PolarizationContact.finite_routing_cancel` gives exact longitudinal cancellation on a finite grid when the probe shift permutes grid points, the vertex and propagator respect wrapping, and denominators are nonzero.
 - `FinitePolarization` constructs the full coordinate momentum torus `Fin 4 → ZMod N` for every nonzero `N`, using the D₄ symbol, line-averaged current and contact vertex. Integer winding identities prove the propagator and vertex wrap laws (`symbol_wrap`, `leg_wrap`). Adding a positive momentum-independent regulator to both inverse propagators preserves the Ward cancellation with every grid point retained (`finite_cancel`). Removing that regulator after the full longitudinal sum gives zero (`zero_regulator_limit`). The construction uses the periodic coordinate torus. Physical volume normalization and the transverse-continuum comparison remain open.
@@ -19,7 +27,7 @@ points, not exhaustive lists. Lean source is the ground truth.
 - `NativeDetuning.colour_invariant_flip_zero` excludes a nonzero four-axis matrix that anticommutes with the fixed chirality and is invariant under simultaneous colour-axis permutations of its rows and columns. This applies to an averaged operator as well. For an independent payload index, `WallExchange.payload_symmetry_iff` shows exactly when the full two-detuning Hamiltonian preserves a payload operation: both directed links commute with it. `NativeFlavourWall.native_payload_symmetry` verifies sufficiency on the native carrier registers. Downstream, `PMConstants.ColourWallCrossing` checks the packet colour blocks on a generation-only link and gives a native vector-carrier witness excluding faithful simultaneous realization of the original β and colour swap as commuting operations.
 - `CyclicSeesaw.crossing_isometry_iff` characterizes a common crossing weight of unit norm by the isometry of its cyclic link.
 - `CrossingScale` separates the crossing's map norm from its Hamiltonian rate. The actual gapped block `WallSeesaw.G Y` is Hermitian and has unitary coherent evolution for every link `Y`, including a cyclic link of weight 2 that fails `YᴴY = 1`. Evolution unitarity therefore supplies no unit-norm constraint on the Hamiltonian coupling. A common nonzero real rate can be absorbed into the isolated crossing's time parameter (`rate_time`, `normalize_rate`). A standalone isometric crossing contract, ratios to the other Hamiltonian terms, and a clock calibration require their own premises.
-- `OtherWallStationary`: the wire has a massless mode exactly when the other wall's flip solves `δ³ = −κ_O0κ_O1κ_O2` (`massless_iff`, `det_factor`); then `(1, −κ_O0/δ, κ_O0κ_O1/δ²)` is a stationary light state on the other wall (`null_vector`, `light_zero_mode`) occupying every label (`null_all_labels`), and `δ ≠ 0` (`flip_nonzero`). Economy selects it: with the flip and a light state as the option and any price zero exactly on stationary states (`energyPrice`), the most persistent options are exactly the stationary light states (`economy_selects`), so the flip is a root (`selected_flip`, `root_exists`): `|δ_O| = (K k²)^{1/3}`.
+- `OtherWallStationary`: the wire has a nontrivial kernel exactly when the other wall's flip solves `δ³ = −κ_O0κ_O1κ_O2` (`nontrivial_kernel_iff`, `det_factor`); then `(1, −κ_O0/δ, κ_O0κ_O1/δ²)` is a stationary light state on the other wall (`null_vector`, `light_zero_mode`) occupying every label (`null_all_labels`), and `δ ≠ 0` (`flip_nonzero`). Economy selects it: with the flip and a light state as the option and any price zero exactly on stationary states (`energyPrice`), the most persistent options are exactly the stationary light states (`economy_selects`), so the flip is a root (`selected_flip`, `root_exists`): `|δ_O| = (K k²)^{1/3}`.
 - `OtherWallFlipEvent`: as the library's lazy `β` event (`δ = −gap(p)/2`, real and `≤ 0`), the selected flip is the real root `−(κ_O0κ_O1κ_O2)^{1/3}` (`real_root_unique`, `lazy_root`) for every protocol, realized by attempt probability `p = (1 − e^{−d})/2 ∈ (0, 1/2)` (`attempt_probability`, `attempt_realizes`, `attempt_range`). The lazy event's wall-local offset keeps a zero mode exactly when `M` is singular, on the reference wall's side (`offset_zero_mode`, `offset_zero_mode_iff`), so the selection is unchanged.
 - `ColourRegister`: the wall's Dirac generators `β`, `αⱼ` have only scalar commutant on the four carrier axes (`commutant_scalar`), so an internal colour action that commutes with them cannot act on the axes (`colour_not_on_axes`). With colour a separate factor, flavour/wall operators `A ⊗ 1` commute with colour `1 ⊗ C` (`factor_commutes`) and flavour readouts do not see the colour state (`readout_colour_free`).
 - `NativeExternal` connects the native wall to `AmplitudeTrace`. `VATrace.g` is the gamma set rebuilt from the wall Hamiltonian's own matrices (`g_eq`; `γ⁵ = Γ` by `WallChiralCurrent.gammaFive_eq`). One wall's block at lattice momentum `k` and detuning `δ` is the Dirac Hamiltonian at `p⃗ = sin k`, mass `δ` (`wall_block`), and `u ∈ ker(p̸ − m)` exactly when `u` is its eigenmode of energy `p₀` (`kernel_iff_eigen`): the external spinors are native eigenmodes. The native current operators are the density and the velocities `αⱼ` (`J`, `J_eq`: `γ⁰γ^μ`), and between any two modes `u† J^μ P_L w = ū γ^μ P_L w` (`native_current`), the vertex bilinear. The `√(2p₀)` state normalization pairs with the invariant measure `d³p/(2p₀)`. Which protocol channels are the final states is PMElementaryParticles work.
@@ -115,7 +123,7 @@ Hermitian `H`, unitary transport of a normalized `φ`, with two-branch response
 | Conservation → continuity | `Continuity` | A conserved comoving charge gives density `N/a³` and `matter_continuity` (`aρ'+3ρ=0`); `matter_w`/`radiation_w`/`vacuum_w` (`w=0,1/3,−1`). | Which per-particle scaling holds; the expansion `a` |
 | History and transfer | `Survival`, `SelectedSampling`, `Reconstruction`, `PersistenceSelection` | Conditional history selection and transfer reconstruction; `exp(−β cost)`, `β>0` makes greatest survival equivalent to minimum cost. Cost functional and admissible choices remain inputs. |
 | Toll to amplitude | `TollAmplitude` | A label with Toll `T` (expected registrations) keeps wire amplitude `exp(−T/2)`. Form from Paper I (`NetCost`, `HazardForm`, `EffectiveAction`); scale `β c₀ = 1` from the rare-registration limit `(1 − T/N)^N → exp(−T)` for the unflagged branch (`rare_registration_limit`, `scale_of_limit`, `unflagged_scale`). Floors cancel (`amplitude_ratio`); a ratio `r` is a Toll difference `2 log r` (`ratio_ge_iff`); not affine (`no_affine_form`); a single retained port keeps `1 − f < exp(−f)` (`retained_below_survival`). | Premise: the wire amplitude is the unflagged branch's. The schedule is not selected. |
-| Diagonal readouts | `DiagonalReadout` | For Hermitian `H = diag(q)`: transport `diag(exp(i t q_c))` (`transport_eq_diagonal`), flag `flag(t q_c) = sin²(t q_c/2)` (`transport_flag`, `flag_eq_sin_sq`); flag at `n x` is the Chebyshev polynomial `(1 − T_n(1 − 2f))/2` (`flag_mul`; `flag_two`, `flag_three`); schedule Toll `floor + Σ wᵢ flag(tᵢ q)` with floor-free differences and amplitude ratios `exp(−ΔT/2)` (`toll_sub`, `amplitude_ratio`). Used by `PMElementaryParticles.VacancyProjection.hypercharge_eq_diagonal`, `hypercharge_flag` (and through them `ProtocolToll`, `ChargedInsertion`, `VacancyPreparation`). | — |
+| Diagonal readouts | `DiagonalReadout` | For Hermitian `H = diag(q)`: transport `diag(exp(i t q_c))` (`transport_eq_diagonal`), flag `flag(t q_c) = sin²(t q_c/2)` (`transport_flag`, `flag_eq_sin_sq`); flag at `n x` is the Chebyshev polynomial `(1 − T_n(1 − 2f))/2` (`flag_mul`; `flag_two`, `flag_three`); schedule Toll `floor + Σ wᵢ flag(tᵢ q)` with floor-free differences and amplitude ratios `exp(−ΔT/2)` (`diagonalPhaseFlagCost_sub`, `amplitude_ratio`). Used by `PMElementaryParticles.VacancyProjection.hypercharge_eq_diagonal`, `hypercharge_flag` (and through them `ProtocolToll`, `ChargedInsertion`, `VacancyPreparation`). | — |
 | Spinor vertex | `SpinorVertex` | Gauged wall hop: `H(k + q) − H(k) = Σⱼ 2 sin(qⱼ/2) cos(kⱼ + qⱼ/2) αⱼ` (`ward`); vertex is `qⱼ αⱼ` up to `|qⱼ|³/24 + |qⱼ|wⱼ²/2` (`coeff_gap`, `ward_gap`); propagator Ward–Takahashi identity at finite `q` (`propagator_ward`) and contact identity (`contact_ward`), so `Z₁ = Z₂` holds on the substrate. | Cutoff-region size of finite parts: the library-wide lattice-to-continuum limit. |
 | Action response | `Operators`, `CommonResponse`, `HermitianTransport`, `LinkExpansion`, `LinkEvolution`, `MainTheorem` | Hermitian evolution, comparison response and controlled quadratic expansion for the supplied generator/readout. |
 | Comparison implementation | `ComparisonFactorization`, `BranchGateBoundary`, `BranchMixerSynthesis`, `BranchPulseContract`, `ControllerHamiltonian` | Exact Hadamard-test factorization and conditional pulse construction; permutations and diagonal phases alone cannot synthesize the branch mixer. Admission, locality and prices are separate. |
@@ -127,7 +135,7 @@ Hermitian `H`, unitary transport of a normalized `φ`, with two-branch response
 | Continuing record supply | `RecordSupply`, `HomogeneousRouting`, `OpenReferenceFlow`, `PrimitiveRecordBoundary` | Disturbances exported into records; for the specified routing/clean-record contract, exact maintenance forever iff the backward orbit is open; finite substrates return. Homogeneous routings are translations **under an explicit homogeneity hypothesis**. |
 | Intrinsic vacuum representation | `CarrierParity`, `CarrierWeyl`, `SubstrateWeylRoots`, `OrthogonalRootPhase`, `OddCarrierPhase`, `CarrierClifford`, `CarrierVacuumSector`, `CarrierVacuumEvolution`, `RectangularEvolution`, `CarrierReadoutQuotient` | Coordinate-odd carrier representation, native generators, full Hamiltonian and exponential intertwining. Physical observations, admitted phases, class/wall allocation and cross-sector coupling remain choices. |
 | Full-label observation and locality | `StateIdentification`, `LocalIsometricDynamics`, `ExponentialLocality`, `NativeLocalityBoundary` | Exact observation and two full-label completions. The directional-exponential choice has tails; the on-site isometric/identity-complement choice is unitary with the original finite stencil, all-state readout and no added labels. Primitive admission/prices remain open. |
-| Fermion spectrum and split | `Dirac`, `DomainWall`, `DetuningMass`, `DomainWallSpectrum`, `ConfinedCarrier`, `ConfinedWalk`, `ConcreteFermion`, `ConcreteSpectrum`, `SignedSpectrum`, `EnergyCounts`, `WallDispersion`, `DiracEnergy`, `WallSeesaw`, `WallExchange` | Supplied two-wall Hamiltonian, signed branches, positive-state existence, link-dependent seesaw and parity-combined covariance. Representation, link and occupied branches are not selected by these spectrum modules; statistics is a separate premise (`CarrierStatistics`: exchange sign under the exchange-as-relative-turn reading). |
+| Fermion spectrum and split | `Dirac`, `DomainWall`, `DetuningGap`, `DomainWallSpectrum`, `ConfinedCarrier`, `ConfinedWalk`, `ConcreteFermion`, `ConcreteSpectrum`, `SignedSpectrum`, `EnergyCounts`, `WallDispersion`, `DiracEnergy`, `WallSeesaw`, `WallExchange` | Supplied two-wall Hamiltonian, signed branches, positive-state existence, link-dependent seesaw and parity-combined covariance. Representation, link and occupied branches are not selected by these spectrum modules; statistics is a separate premise (`CarrierStatistics`: exchange sign under the exchange-as-relative-turn reading). |
 | Controlled propagation | `LocalUnitary`, `SplitUpdate`, `PropagationBounds`, `WilsonSplit`, `VacuumSplit`, `VacuumGenerator`, `VacuumUniform`, `GlobalTickInterval`, `VacuumIteration`, `VacuumErrorRate`, `RealSpaceFourier`, `SpatialContinuum`, `ProjectedEvolution`, `JointSpaceTime`, `SplitCovariance`, `ReferenceWalkParity` | Corrected local unitary split, global safe-tick existence, uniform time-refinement bound, torus Fourier/spectrum identification, branch dispersion and joint fixed-momentum vacuum-sector evolution. Physical refinement/clock and full field/interacting limits remain open. |
 | Chiral anomaly on the substrate | `FermionFlip`, `WallTransfer`, `InertiaStability` | Fermion statistics make the many-flavour flip amplitude `det M` (`flip_amplitude`); chirality changes only by transfer between the walls and a flavour-blind background transfers equally (`chirality_change`, `flavour_blind_transfer`), so a winding-`n` history carries `(det M)ⁿ`; the negative-mode count of an invertible Hermitian family is locally constant (`negCount_locallyConstant`, Sylvester's inertia), giving an integer charge without Lüscher. |
 | Gauge and scalar transport | `D4Gauge`, `GaugeContinuum`, `VaryingFields`, `LinkConsistency`, `GaugeTransport`, `ReferenceSampling`, `SummedReference`, `ReadoutAdditivity`, `ScalarTransport`, `CompactTransport` | Pointwise D₄ density limits, cubic-consistent link robustness, link extraction from a supplied linear hop, reference readout and scalar kinetic normalization. `CompactTransport.compact_transport_premises`: transports of a compactly supported C² connection are cubically consistent with it and it is `C^{1,1}`, so those two premises reduce to "the links are transports". |
@@ -194,7 +202,7 @@ shows closed injective updates cannot finitely prepare a stationary state.
   exact nonzero-link masses `m₊²+m₋²=y²+2δ²`, `m₊²m₋²=δ⁴`, positive eigenstates,
   multi-flavour seesaw, parity-combined covariance. `WallRanks`: eigenspace ranks from the trace
   certificates. Candidate wall-mass models (moved from PMFlavor): `WallEnergy` (the energy
-  `√(p² + m²)` of a wall branch), `WallMassModel` (the branch-energy impedance at momentum `p`),
+  `√(p² + m²)` of a wall branch), `WallImpedanceModel` (the branch-energy impedance at momentum `p`),
   `WallImpedanceChoice` (zero-momentum mass ratio versus energy ratio). `Y` is the chirality-flipping (mass) term;
   whether it also carries generation mixing is open (`WallSeesaw` docstring).
 - `WallHopPhase`: on one chirality the Wilson term drops out (`sandwich_beta`) and an in-wall hop
@@ -206,7 +214,7 @@ shows closed injective updates cannot finitely prepare a stationary state.
   reversing the orientation (between the two conventions, not within one). Generation changes need a single-wall `D₄*`
   carrier equal to the other wall's class (`shift_keeps_iff`, `shift2_keeps_iff`).
   Built on it (generation-sector plan, done): `PMAction.GenerationOrientation` (the two encodings
-  agree; `GenerationWalls`' index is the label with the orientation frozen), `GenerationMass` (the
+  agree; `GenerationWalls`' index is the label with the orientation frozen), `GenerationDiagonal` (the
   diagonal mass is a composite: equal-class crossing plus a carrier of the label class),
   `GenerationCurrent` and `GenerationWeak` (generation changes are a carrier plus a glue move; the
   weak vector carrier makes only the light-pair change), `GenerationParity` (within one convention
@@ -216,7 +224,7 @@ shows closed injective updates cannot finitely prepare a stationary state.
 - `CarrierFlip`: an in-wall hop `−(i αⱼ + r β)/2` is a kinetic part `−(i/2) αⱼ`, which commutes
   with `Γ` (keeps chirality, no mass), plus a Wilson part `−(r/2) β`, which anticommutes with `Γ` and
   is the on-site mass operator (`hop_split`, `keep_commutes`, `flip_anticommutes`). So a carrier hop
-  of amplitude `t` puts `−r t/2` in the slot of `δβ`: the premise of `PMAction.CompositeMass`, for a
+  of amplitude `t` puts `−r t/2` in the slot of `δβ`: the premise of `PMAction.CompositeSchur`, for a
   carrier of this Wilson form. At `r = 1` the composite mass ratios are the carrier amplitude ratios.
 - `ReferenceDetuning`: with a separate on-site detuning per wall, `Hw δ₁ δ₂` (`Hw_equal`: equal
   values give `hamiltonian 0 δ`), the second-wall reference background `(0, 0, a, b)` is sent to
@@ -225,7 +233,7 @@ shows closed injective updates cannot finitely prepare a stationary state.
   zero mode of the update the flavour fermions see, the on-site chirality flip lives only on the
   wall without the reference: the maximal wall asymmetry `PMAction.LightSplit` needs, from a
   structural source.
-- `ReferenceWallRotation`: with `M = D_R (δ_O + cyc κ_O)` (`ReferenceWallMass`), the reference-wall
+- `ReferenceWallRotation`: with `M = D_R (δ_O + cyc κ_O)` (`ReferenceWallFactorization`), the reference-wall
   Gram matrix is `D_R (X Xᴴ) D_Rᴴ` (`left_gram`); `cyc κ (cyc κ)ᴴ` is diagonal (`cyc_gram_offdiag`), so
   each off-diagonal entry is `dᵢ (δ̄ (cyc κ)ᵢⱼ + δ conj (cyc κ)ⱼᵢ) d̄ⱼ` (`left_gram_entry`): first order
   in the carriers and scaled by `dᵢ d̄ⱼ`. The persistence rotation on the reference's wall is then about
@@ -237,11 +245,11 @@ shows closed injective updates cannot finitely prepare a stationary state.
   so a certain event of duration `τ` has `tτ ≥ π/2` (`certain_min`) and flip at least `rπ/(4τ)`
   (`flip_lower`). Admittance (`NodeAmplitude`'s `K = 1`) fixes the carrier's rate only with the event's
   duration.
-- `WireMass`: the wire's light mass as one definition, `mass δ κ_R κ_O = diag κ_R (δ + cyc (shift κ_O))`,
+- `DetunedWire`: the light-sector operator, `detunedWireOperator δ κ_R κ_O = diag κ_R (δ + cyc (shift κ_O))`,
   with the other wall's carriers placed by glue arithmetic on single-wall modes (`single_wall_class`:
   the move between generations `h`, `h + 1` has class `e h`; `shift κ_O h = κ_O h`, `shift_entry`; the
   vector carrier joins the heavy label to label `1`, `vector_on_heavy_edge`). `undetuned`: at `δ = 0` it
-  is `UndetunedWall.undetuned_masses`; `det_mass`: `κ_R 0 κ_R 1 κ_R 2 (δ³ + κ_O 0 κ_O 1 κ_O 2)`.
+  is `UndetunedWall.undetuned_operator`; `det_detunedWireOperator`: `κ_R 0 κ_R 1 κ_R 2 (δ³ + κ_O 0 κ_O 1 κ_O 2)`.
 - `SignFlip`: a sign flip `x ↦ −x` on a wall is a trivial-class glue move (`neg_class`,
   `flip_move_trivial`), keeps every generation state and its label (`flip_keeps_state`), and is no
   label change (`flip_not_label_change`).
@@ -353,7 +361,7 @@ supersolution gives Euclidean clustering (`SlabClustering`), and the spectral as
 sector of `T²` the top eigenvalue `Λ` is simple and every other eigenvalue is `≤ μ² Λ`,
 uniformly in volume; with `μ = √q` the bound is `≤ q Λ` (`SlabGap.slab_gap_explicit`, degree
 bound proved in `SlabDegree`); on a cubic box with `q = e^{−β}` the mass is `≥ β/2` per tick
-(`CubicBox.box_mass_gap`). Scope: this is the distinction substrate. The gauge layer is a separate
+(`CubicBox.box_transfer_gap`). Scope: this is the distinction substrate. The gauge layer is a separate
 continuous field (`NativePacketRouting.pure_permutation_refinement_trivial`; Wilson cost, group and
 `β` not derived), so its gap is the quantum Yang–Mills problem in the scope note below.
 
@@ -387,7 +395,7 @@ controls/admission premises and the selection of group, representation and β.
   `quotientInnerProductSpace`), `QuotientClosure.gibbs_quotient_invariant`; per-step maintenance in
   PM-4 (the removed `PerStepContract` candidate is no longer current).
 - **Gap:** `DefectGap`, `GapStability`, and the substrate gap `MassGap.SlabGap.slab_gap_explicit`
-  (mass `≥ β/2` per tick, `CubicBox.box_mass_gap`). The gauge layer is a separate continuous field
+  (mass `≥ β/2` per tick, `CubicBox.box_transfer_gap`). The gauge layer is a separate continuous field
   (`NativePacketRouting.pure_permutation_refinement_trivial`); its gap is the quantum Yang–Mills
   problem (out of scope, below).
 - **Limits:** `JointSpaceTime`, `UniformGaugeAction`, `IntegratedGaugeAction`,
@@ -464,8 +472,8 @@ Run `./build.sh PMAction` and `./build.sh audit`. No Paper III–VI imports; per
 ## Results of the 2026-11-16 review (the wire)
 
 - **Carrier placement.** The light mass's right factor acts on the other wall's single-wall modes; the
-  move between generations `h`, `h + 1` changes the class by `e h` (`WireMass.single_wall_class`). This
-  fixes the placement (`WireMass.shift`). A 2026-11 "correction" that used `GenerationCurrent`'s carrier
+  move between generations `h`, `h + 1` changes the class by `e h` (`DetunedWire.single_wall_class`). This
+  fixes the placement (`DetunedWire.shift`). A 2026-11 "correction" that used `GenerationCurrent`'s carrier
   `e (h − 1)` (a two-wall label change with a glue move on both walls) mixed two state spaces and was
   withdrawn along with the light-pair placement, GST relation, margins and second-ratio fits.
 - **The weak refresh keeps the label** (`SignFlip`; `PMFlavor.RefreshLabel`).

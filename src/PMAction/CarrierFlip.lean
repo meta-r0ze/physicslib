@@ -3,7 +3,7 @@ import PMAction.ConcreteFermion
 /-!
 # The chirality-flip part of an in-wall hop is the on-site mass operator
 
-`PMAction.CompositeMass` places the composite mass in the on-site chirality-flip slot `δβ`, under
+`PMAction.CompositeSchur` places the composite mass in the on-site chirality-flip slot `δβ`, under
 the premise that a single-wall carrier flips chirality. This module checks that premise against the
 hop's own Dirac structure.
 
@@ -18,7 +18,7 @@ An in-wall hop along direction `j` is the Wilson form `−(i αⱼ + r β)/2` (`
 So the premise holds for the Wilson part: a carrier hop of amplitude `t` puts `−r t/2` in the
 chirality-flip slot, and its kinetic part keeps chirality and gives no mass. At the Wilson point
 `r = 1` that is `κ = −t/2` for every class, so the ratios of the composite masses
-(`CompositeMass.composite_expansion`) are the ratios of the carrier hop amplitudes. `NodeAmplitude` supplies the class admittance ratio. Identifying it with a Hamiltonian-rate
+(`CompositeSchur.composite_expansion`) are the ratios of the carrier hop amplitudes. `NodeAmplitude` supplies the class admittance ratio. Identifying it with a Hamiltonian-rate
 ratio requires the native event duration and update law, and the crossing-to-flip rate remains open.
 
 Premise kept: the class carrier is an in-wall hop of this Wilson form. A carrier with another Dirac

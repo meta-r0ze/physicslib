@@ -1,4 +1,4 @@
-import PMAction.DetuningMass
+import PMAction.DetuningGap
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Pow
@@ -7,7 +7,7 @@ import Mathlib.Analysis.Calculus.Deriv.Pow
 # How the link sets fermion masses: the Higgs couplings decide
 
 Paper II's detuned domain wall gives a light fermion of mass `m` with `m(m + 1) = δ²`
-(`PMAction.DetuningMass.mass_relation`), in units of the lattice cutoff. The link vacuum value
+(`PMAction.DetuningGap.gap_relation`), in units of the lattice cutoff. The link vacuum value
 `v` must set the detuning. Two laws are possible, and the Higgs couplings to fermions decide
 between them. The coupling modifier is `κ = (v/m)·dm/dv`; the Standard Model value is `1`.
 
@@ -21,8 +21,8 @@ between them. The coupling modifier is `κ = (v/m)·dm/dv`; the Standard Model v
 priced by its square: the link cost is `(toll·m/4)‖φ̂ − U_εφ̂‖²` (`PMAction.CommonResponse`,
 `PMConstants.LinkFromEvents`). The link's vacuum value is therefore a cost, so it is proportional
 to the *square* of the detuning it induces, `v = c δ²`. At such a link law A returns the wall's
-own mass, `PMAction.DetuningMass.lightMass δ` (`massA_event_priced`), while law B returns
-`lightMass (δ²)` (`massB_event_priced`); the two agree only at `δ = 0` and `δ = 1`
+own mass, `PMAction.DetuningGap.lightGap δ` (`massA_event_priced`), while law B returns
+`lightGap (δ²)` (`massB_event_priced`); the two agree only at `δ = 0` and `δ = 1`
 (`laws_agree_iff`). So the detuning cost, not its amplitude, is linear in the link. `VevEntry`
 selects the same law independently, from Economy: hypercharge balance forces an odd number of
 doublet insertions and Economy admits exactly one, so the mass is linear in `v`
@@ -41,10 +41,10 @@ def massA (y v : ℝ) : ℝ := Real.sqrt (y * v + 1/4) - 1/2
 def massB (y v : ℝ) : ℝ := Real.sqrt ((y * v)^2 + 1/4) - 1/2
 
 theorem massA_detuning {y v : ℝ} (h : 0 ≤ y * v) :
-    massA y v = PMAction.DetuningMass.lightMass (Real.sqrt (y * v)) := by
-  unfold massA PMAction.DetuningMass.lightMass; rw [Real.sq_sqrt h]
+    massA y v = PMAction.DetuningGap.lightGap (Real.sqrt (y * v)) := by
+  unfold massA PMAction.DetuningGap.lightGap; rw [Real.sq_sqrt h]
 
-theorem massB_detuning (y v : ℝ) : massB y v = PMAction.DetuningMass.lightMass (y * v) := rfl
+theorem massB_detuning (y v : ℝ) : massB y v = PMAction.DetuningGap.lightGap (y * v) := rfl
 
 lemma deriv_A {y v : ℝ} (h : 0 < y * v + 1/4) :
     HasDerivAt (massA y) (y / (2 * Real.sqrt (y * v + 1/4))) v := by
@@ -120,14 +120,14 @@ returns the wall's own mass at that link is law A. -/
 
 /-- **Law A at an event-priced link is the wall's mass.** -/
 theorem massA_event_priced {c δ : ℝ} (hc : 0 < c) (hδ : 0 ≤ δ) :
-    massA c⁻¹ (c * δ ^ 2) = PMAction.DetuningMass.lightMass δ := by
+    massA c⁻¹ (c * δ ^ 2) = PMAction.DetuningGap.lightGap δ := by
   rw [massA_detuning (by positivity)]
   congr 1
   rw [inv_mul_eq_div, mul_comm, mul_div_assoc, div_self hc.ne', mul_one, Real.sqrt_sq hδ]
 
 /-- **Law B at the same link is not.** It returns the mass of a wall detuned by `δ²`. -/
 theorem massB_event_priced {c δ : ℝ} (hc : 0 < c) :
-    massB c⁻¹ (c * δ ^ 2) = PMAction.DetuningMass.lightMass (δ ^ 2) := by
+    massB c⁻¹ (c * δ ^ 2) = PMAction.DetuningGap.lightGap (δ ^ 2) := by
   rw [massB_detuning]
   congr 1
   rw [inv_mul_eq_div, mul_comm, mul_div_assoc, div_self hc.ne', mul_one]
@@ -137,7 +137,7 @@ distinguishes them, with no measured input. -/
 theorem laws_agree_iff {c δ : ℝ} (hc : 0 < c) (hδ : 0 ≤ δ) :
     massA c⁻¹ (c * δ ^ 2) = massB c⁻¹ (c * δ ^ 2) ↔ δ = 0 ∨ δ = 1 := by
   rw [massA_event_priced hc hδ, massB_event_priced hc]
-  unfold PMAction.DetuningMass.lightMass
+  unfold PMAction.DetuningGap.lightGap
   constructor
   · intro h
     have hs : Real.sqrt (δ ^ 2 + 1/4) = Real.sqrt ((δ ^ 2) ^ 2 + 1/4) := by linarith

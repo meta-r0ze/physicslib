@@ -31,7 +31,7 @@ theorem tau_pull {m : ℝ} (h0 : 0 ≤ m) (h1 : m ≤ 1/100) :
 
 /-- The inter-wall-link reading against the measured `κ_τ`. -/
 theorem link_pull (δ y : ℝ) (hy : 0 < y) (hδ : δ ≠ 0) :
-    11 < |y / (2 * massSqM δ y) * (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) - 0.92| / 0.08 := by
+    11 < |y / (2 * lightGapSq δ y) * (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) - 0.92| / 0.08 := by
   have h := link_kappa_neg δ y hy hδ
   rw [abs_of_neg (by linarith), lt_div_iff₀ (by norm_num)]
   linarith

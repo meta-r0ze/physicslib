@@ -83,10 +83,10 @@ lemma square_charpoly_identity {n : Type*} [Fintype n] [DecidableEq n]
 /-- Exact signed characteristic polynomial, including the zero-energy case. -/
 theorem signed_charpoly (k : Fin 3 → ℝ) (δ : ℝ) :
     (hamiltonian k δ).charpoly =
-      (X^2-C ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ))^2 *
-      (X^2-C ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ))^2 := by
-  let a : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ)
-  let b : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ)
+      (X^2-C ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ))^2 *
+      (X^2-C ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ))^2 := by
+  let a : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ)
+  let b : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ)
   let q : ℂ[X] := (X^2-C a)^2*(X^2-C b)^2
   have hq : q.Monic := ((monic_X_pow_sub_C a (by decide : 2 ≠ 0)).pow 2).mul
     ((monic_X_pow_sub_C b (by decide : 2 ≠ 0)).pow 2)
@@ -121,22 +121,22 @@ lemma quadratic_multiplicity (a b e : ℂ) (he : e^2=a) (hne : e ≠ 0) (hab : a
   rw [hz]
 
 def lightEnergy (k : Fin 3 → ℝ) (δ : ℝ) : ℝ :=
-  Real.sqrt (DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2)
+  Real.sqrt (DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2)
 def heavyEnergy (k : Fin 3 → ℝ) (δ : ℝ) : ℝ :=
-  Real.sqrt (DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2)
+  Real.sqrt (DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2)
 
 lemma kinetic_nonneg (k : Fin 3 → ℝ) : 0 ≤ DomainWallSpectrum.kineticNorm k := by
   exact Finset.sum_nonneg (fun _ _ => sq_nonneg _)
 
 /-- Positive and negative energies on either nonzero branch each occur twice. -/
 theorem signed_multiplicity (k : Fin 3 → ℝ) (δ e : ℝ) (he : e ≠ 0)
-    (hbranch : e^2=DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 ∨
-      e^2=DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2) :
+    (hbranch : e^2=DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 ∨
+      e^2=DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2) :
     (hamiltonian k δ).charpoly.rootMultiplicity (e : ℂ) = 2 := by
   rw [signed_charpoly]
   have hd := ne_of_lt (ConcreteSpectrum.branches_distinct (DomainWallSpectrum.kineticNorm k) δ)
-  have hdc : ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ) ≠
-      ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ) :=
+  have hdc : ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ) ≠
+      ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ) :=
     fun h => hd (Complex.ofReal_injective h)
   have hec : (e : ℂ) ≠ 0 := by exact_mod_cast he
   rcases hbranch with h | h
@@ -154,7 +154,7 @@ theorem energy_order (k : Fin 3 → ℝ) (δ : ℝ) :
 /-- At the origin there are four zero roots, two +1 roots and two -1 roots. -/
 theorem origin_charpoly : (hamiltonian 0 0).charpoly = X^4*(X-1)^2*(X+1)^2 := by
   rw [signed_charpoly]
-  simp [DomainWallSpectrum.kineticNorm, DetuningMass.light_mass_zero]
+  simp [DomainWallSpectrum.kineticNorm, DetuningGap.light_gap_zero]
   ring
 
 end PMAction.SignedSpectrum

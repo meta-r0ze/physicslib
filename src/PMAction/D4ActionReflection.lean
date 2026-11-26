@@ -215,13 +215,13 @@ lemma gibbs_integral {Ω : Type*} [MeasurableSpace Ω] (ν : Measure Ω) (β : �
   rw [LatticeGibbs.gibbs,integral_smul_measure]
   congr 1
   have hw : Measurable (LatticeGibbs.weight β S) := by
-    unfold LatticeGibbs.weight
+    unfold LatticeGibbs.weight PersistenceMechanics.Gibbs.weight
     fun_prop
   rw [integral_withDensity_eq_integral_toReal_smul hw
     (Filter.Eventually.of_forall fun ω => ENNReal.ofReal_lt_top) f]
   apply integral_congr_ae
   exact Filter.Eventually.of_forall fun ω => by
-    simp [LatticeGibbs.weight,Complex.real_smul,Real.exp_nonneg,mul_comm]
+    simp [LatticeGibbs.weight, PersistenceMechanics.Gibbs.weight,Complex.real_smul,Real.exp_nonneg,mul_comm]
 
 variable {n : ℕ} {X : Finset Vertex}
 

@@ -6,6 +6,11 @@ event accounting and action-response mathematics** to the later papers. In this
 repository it builds on `PersistenceMechanics` and `PMSubstrate` and **rejects
 imports from Papers III–VI**.
 
+The spectral modules expose operators and gaps. See the scalar mass reading
+in [PMSubstrate](../PMSubstrate/OVERVIEW.md#occupancy-footprints). For accounting,
+use `EventAccounting.eventWeight` and `TollAmplitude.weightedFlagCost`.
+The diagonal schedule uses the same sum.
+
 ## Main result
 
 `PMAction.Main.hermitian_action_response` (`PMAction/MainTheorem.lean`) packages a

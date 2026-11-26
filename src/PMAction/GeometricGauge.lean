@@ -98,10 +98,10 @@ lemma gibbs_preserving_of_invariant {Ω : Type*} [MeasurableSpace Ω] {μ : Meas
     (hS : Measurable S) (hinv : ∀ x, S (f x)=S x) (β : ℝ) :
     MeasurePreserving f (LatticeGibbs.gibbs μ β S) (LatticeGibbs.gibbs μ β S) := by
   have hw : Measurable (LatticeGibbs.weight β S) := by
-    unfold LatticeGibbs.weight
+    unfold LatticeGibbs.weight PersistenceMechanics.Gibbs.weight
     fun_prop
   have hp := weighted_preserving hf (LatticeGibbs.weight β S) hw
-    (fun ω => by simp only [LatticeGibbs.weight,hinv])
+    (fun ω => by simp only [LatticeGibbs.weight, hinv])
   refine ⟨hp.measurable,?_⟩
   unfold LatticeGibbs.gibbs
   rw [Measure.map_smul _ hp.measurable.aemeasurable,hp.map_eq]

@@ -504,7 +504,7 @@ lemma small_of_beta {D : ℕ} {β : ℝ} (hβ : 2 * Real.log (16 * ((D : ℝ) + 
 
 /-- **The mass gap is at least `β/2` per tick.** If `β ≥ 2 log(16 (D+1)²)`, every flip-even
 eigenvalue `λ > 0` of `T²` other than the simple top `Λ` satisfies `log(Λ/λ) / 2 ≥ β/2`. -/
-theorem slab_mass_gap (hconnG : G.Connected) (hplaqE : ∀ P ∈ plaqG, P ⊆ G.edgeFinset)
+theorem slab_transfer_gap (hconnG : G.Connected) (hplaqE : ∀ P ∈ plaqG, P ⊆ G.edgeFinset)
     (hplaqP : ∀ P ∈ plaqG, IsPlaquette G P) (hgenG : PlaquettesGenerate G plaqG)
     {k m Δ : ℕ} (hk : ∀ P ∈ plaqG, P.card ≤ k) (hm : ∀ e0, (plaqG.filter (e0 ∈ ·)).card ≤ m)
     (hΔ : ∀ v, G.degree v ≤ Δ) {β : ℝ}

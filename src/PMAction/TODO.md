@@ -10,6 +10,10 @@ external calculation awaiting formal verification. Each current theorem states i
 
 ## Scope premises
 
+- **Wall and wire inputs.** Derive the detuning, carrier transfers and paid
+  flag schedule that enter `DetunedWire.detunedWireOperator` and
+  `TollAmplitude.weightedFlagCost` for a specific persistent configuration.
+
 - **Spacetime and amplitude structure.** Derive the Lorentzian signature and complex amplitude from
   substrate persistence instead of entering them as modelling premises; the finite gauge measure has
   site-reflection positivity. Blocker: no selection principle fixes the signature or complex structure,

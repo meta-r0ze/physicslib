@@ -186,7 +186,7 @@ theorem supported_label_price (toll : ℝ) (μ : Ports → ℝ) (hμ : ∑ j, μ
   have he : Finset.univ.filter (fun j : Ports => root (label j) ≠ label j) = Finset.univ := by
     ext j; simp [label_moves]
   rw [he, EventAccounting.weighted_linear]
-  simp [EventAccounting.eventMass, hμ]
+  simp [EventAccounting.eventWeight, hμ]
 
 /-- A substrate record is not automatically clean: correct restoration at this
 interface is equivalent to its arriving in the required reference state. -/

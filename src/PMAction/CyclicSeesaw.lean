@@ -17,7 +17,7 @@ crossing amplitude `y h` per class.
   (`PMConstants.GenerationWeak`), so it sees only one of the two labels.
 * `gram_equal`: a class-independent crossing (`DomainWall`'s one hop) gives `Yᴴ Y = |a|² · 1`, so
   the three seesaw masses are equal. The seesaw does not carry the hierarchy; the generation-diagonal
-  composite of `PMAction.GenerationMass` must.
+  composite of `PMAction.GenerationDiagonal` must.
 * `det_cyc`: `det Y = y 0 · y 1 · y 2`, with sign `+` (the 3-cycle is even).
   `det_cyc_real`, `light_det_real`: for real amplitudes `det Y` and `det M` are real, so
   `arg det M ∈ {0, π}`. This bears only on the older Hermitian-mass route to `θ̄ = 0`

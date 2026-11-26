@@ -1,10 +1,10 @@
-import PMAction.CompositeMass
+import PMAction.CompositeSchur
 import Mathlib.Tactic.Module
 
 /-!
 # The light-pair split needs two wall asymmetries
 
-When do the two light generations' composite masses of `CompositeMass` differ?
+When do the two light generations' composite masses of `CompositeSchur` differ?
 `ExchangeChirality`: the class swap fixing `v` combined with the wall exchange is a symmetry of the
 incidence (`swap_with_exchange`), and only the weak current, on one wall, breaks it.
 
@@ -12,7 +12,7 @@ incidence (`swap_with_exchange`), and only the weak current, on one wall, breaks
   carriers `κ` (wall `false`) and `κ'` (wall `true`) with the crossing's support,
   `M = δ_F δ_T Y⁻¹ + δ_F · diag(κ'/y) + δ_T · diag(κ/y) + (second order, cyclic)`. Generation `g`'s
   diagonal entry is `δ_T κ_F(e g) + δ_F κ_T(e g)` (over `y`): one term from each order of
-  `PMAction.GenerationMass`, each with the label class `e g`.
+  `PMAction.GenerationDiagonal`, each with the label class `e g`.
 * `light_split`: if the carrier amplitudes keep the swap × exchange symmetry
   (`κ_F(s) = κ_T(c)`, `κ_T(s) = κ_F(c)`), the difference of the two light diagonal entries is
   `(δ_T − δ_F) · (κ_F(s) − κ_T(s))`.
@@ -41,7 +41,7 @@ reference's stationarity), and `light_split` concerns the diagonal entries only:
 `D_R (δ_O + cyc κ_O)` splits the light pair's singular values through the off-diagonal carrier terms
 when `δ_O` is a few spinor flips (numerical; absolute event clock, PMAction REVIEW extensions).
 
-`WallSeesaw` and `CompositeMass` take one `δ` for both walls; with that the light pair stays
+`WallSeesaw` and `CompositeSchur` take one `δ` for both walls; with that the light pair stays
 degenerate at this order whatever the carriers do. So the light-pair split needs a source for
 `δ_T ≠ δ_F`, a wall-dependent on-site chirality flip, which the library does not yet have
 (`PMAction.ZeroModeCoupling` places the residual on-site mass at `r ≠ 1`, but the same on both
@@ -53,7 +53,7 @@ sector, a test.
 
 noncomputable section
 namespace PMAction.LightSplit
-open Matrix PMAction.CyclicSeesaw PMAction.CompositeMass
+open Matrix PMAction.CyclicSeesaw PMAction.CompositeSchur
 
 /-- **The light mass with wall-dependent on-site flips and carriers.** -/
 theorem composite_expansion2 (y κ κ' : Fin 3 → ℂ) (δF δT : ℂ) (hy : ∀ j, y j ≠ 0) :

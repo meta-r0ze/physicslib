@@ -1,5 +1,6 @@
 import PMAction.LinkConsistency
 import PMAction.PersistenceSelection
+import PersistenceMechanics.Gibbs
 import Mathlib.MeasureTheory.Measure.WithDensity
 
 /-!
@@ -76,7 +77,7 @@ theorem action_bounds (X : Finset V4) (U : V4 → V4 → ℝ → Matrix (Fin N) 
 variable {Ω : Type*} [MeasurableSpace Ω]
 
 /-- The survival weight as a density. -/
-def weight (β : ℝ) (S : Ω → ℝ) (ω : Ω) : ℝ≥0∞ := ENNReal.ofReal (Real.exp (-β * S ω))
+def weight (β : ℝ) (S : Ω → ℝ) (ω : Ω) : ℝ≥0∞ := ENNReal.ofReal (PersistenceMechanics.Gibbs.weight β (S ω))
 
 /-- The partition function. -/
 def Z (ν : Measure Ω) (β : ℝ) (S : Ω → ℝ) : ℝ≥0∞ := ∫⁻ ω, weight β S ω ∂ν
@@ -94,7 +95,7 @@ theorem Z_bounds (ν : Measure Ω) [IsProbabilityMeasure ν] {β M : ℝ} (hβ :
       _ ≤ Z ν β S := lintegral_mono fun ω => ENNReal.ofReal_le_ofReal
           (Real.exp_le_exp.mpr (by nlinarith [(hS ω).2]))
   · calc Z ν β S ≤ ∫⁻ _ω, (1 : ℝ≥0∞) ∂ν := lintegral_mono fun ω => by
-          unfold weight
+          unfold weight PersistenceMechanics.Gibbs.weight
           rw [ENNReal.ofReal_le_one]
           exact Real.exp_le_one_iff.mpr (by nlinarith [(hS ω).1])
       _ = 1 := by simp
@@ -115,7 +116,7 @@ omit [MeasurableSpace Ω] in
 /-- **Relative weights are survival ratios.** -/
 theorem gibbs_ratio (β : ℝ) (S : Ω → ℝ) (ω ω' : Ω) :
     weight β S ω = ENNReal.ofReal (Real.exp (-β * (S ω - S ω'))) * weight β S ω' := by
-  unfold weight
+  unfold weight PersistenceMechanics.Gibbs.weight
   rw [← ENNReal.ofReal_mul (Real.exp_pos _).le, ← Real.exp_add]
   congr 2
   ring

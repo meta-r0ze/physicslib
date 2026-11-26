@@ -1011,12 +1011,12 @@ This table includes the accounting used for occupancy cost. It also records reta
 
 | Lean name | What it computes | Inputs it takes | Input status | e8p reads it | Relation to another row |
 | --- | --- | --- | --- | --- | --- |
-| `PMAction.WireMass.mass` | Complex weighted generation-wire matrix | Detuning and transfers on both walls | Supplied carrier parameters. | No direct read | WireMass.det_mass gives its determinant. |
-| `PMAction.CompositeMass.effective_mass_general` | Zero-energy light blocks, D₂Y⁻¹D₁† and adjoint | Crossing matrix Y and flips on both walls | Supplied blocks. Invertibility is needed for the physical Schur reduction. | No | WallSeesaw.effective_mass is the equal-scalar-flip case. GappedGluedCrossing.occupied_light_mass specializes by label. |
-| `PMAction.WallSeesaw.light` | Light Dirac matrix δ²Y⁻¹ | Detuning δ and gapped link Y | Supplied carrier parameters. | No | `WallSeesaw.effective_mass` and `WallSeesaw.seesaw`. |
-| `PMAction.WallDispersion.massSqP` | Heavy squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_masses and two_dirac_particles. |
-| `PMAction.WallDispersion.massSqM` | Light squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_masses and two_dirac_particles. |
-| `PMAction.DetuningMass.lightMass` | Light mass at unit link gap | δ | Supplied detuning. PM diagonalization. | Yes, via fermion-law checks | FermionMassLaw.massA_detuning and massB_detuning. |
+| `PMAction.DetunedWire.detunedWireOperator` | Complex weighted generation-wire matrix | Detuning and transfers on both walls | Supplied carrier parameters. | No direct read | DetunedWire.det_detunedWireOperator gives its determinant. |
+| `PMAction.CompositeSchur.composite_schur_blocks` | Zero-energy light blocks, D₂Y⁻¹D₁† and adjoint | Crossing matrix Y and flips on both walls | Supplied blocks. Invertibility is needed for the physical Schur reduction. | No | WallSeesaw.effective_light_block is the equal-scalar-flip case. GappedGluedCrossing.occupied_light_mass specializes by label. |
+| `PMAction.WallSeesaw.light` | Light Dirac matrix δ²Y⁻¹ | Detuning δ and gapped link Y | Supplied carrier parameters. | No | `WallSeesaw.effective_light_block` and `WallSeesaw.seesaw`. |
+| `PMAction.WallDispersion.heavyGapSq` | Heavy squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_gap_squares and two_dirac_particles. |
+| `PMAction.WallDispersion.lightGapSq` | Light squared rest mass of the one-flavour model | δ and y | Supplied carrier parameters. | No | WallDispersion.branch_gap_squares and two_dirac_particles. |
+| `PMAction.DetuningGap.lightGap` | Light spectral gap at unit link gap | δ | Supplied detuning. PM diagonalization. | Yes, via fermion-law checks | FermionMassLaw.massA_detuning and massB_detuning. |
 | `PMConstants.FermionMassLaw.massA` | Unit-gap mass with δ² = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massA_detuning. |
 | `PMConstants.FermionMassLaw.massB` | Unit-gap mass with δ = yv | y and v | Scope VEV structure. Supplied mass identification. | Yes, FermionLawPulls | massB_detuning. |
 | `CarrierSpecies.CarrierSpecies.mass` | Electron and massless neutrino values in electron units | Species tag | Scope physical species mapping. Supplied massless approximation. | No | electron_mass and neutrino_mass evaluate the map. |
@@ -1156,7 +1156,7 @@ choice and the first layer that needs it.
 | Carrier | SCOPE · `LinkMass` | Named transport form. The link charge is derived. |
 | Carrier | SCOPE · `HeavyFlipControl`, `ElectricCompanionBank`, `ElectricChiralKick` | Named heavy record and occupied companion contract. The typed guard action is proved. |
 | Carrier | `VacuumLabel`, `refRecord`, `SharedReference`, `ColourReference` | Physical vacuum, sector and readout choice are open. |
-| Carrier | `CompositeMass` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
+| Carrier | `CompositeSchur` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
 | Carrier | SCOPE · `ChargedInsertion`, `ResonanceLift` | Named offset and matched-port admission. Persistence of the calibration channel is open. |
 | Carrier | `FermionMassLaw.massA`, `FermionMassLaw.massB` | Supplied alternatives for matching `yv` to detuning. The `κ_τ` measurement is an e8p comparison. |
 | Protocol | SCOPE · `WireSchedule.Premises` | Named serial route and admitted bookings. |

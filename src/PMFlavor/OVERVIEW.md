@@ -40,7 +40,7 @@ wall record, `selected_encode` isolates the light pair and `selected_twice`
 verifies reversal on the encoded states. `companion_decodes` recovers
 both the wall bit and generation from the live and other-wall classes in
 the existing oriented encoding. Native preparation and use of this record, the directed firing law, and the transition amplitude remain
-open (REVIEW item 2). **Names.** With the carriers placed by glue arithmetic (`PMAction.WireMass`) the wire's
+open (REVIEW item 2). **Names.** With the carriers placed by glue arithmetic (`PMAction.DetunedWire`) the wire's
 masses give label `2` the lightest, `1` the middle, `0` the heavy: the naming used here. Completion: `A = N − Nᴴ` (`N` the off-diagonal part of `J`)
 is skew-Hermitian (`A_skew`), carries `κ c` forward and `−κ̄ c` in reverse (`forward_entry`,
 `reverse_entry`), and `1 + A` is unitary to second order (`first_order_unitary`). At second order
@@ -105,7 +105,7 @@ status table in REVIEW. `FlavourInvariants` restates them in derived invariants;
 `TransferFlavor`, the oscillation/propagation readout (`Oscillation*`, `CPAsymmetry`, `CPObservables`,
 `Propagation*`, `NativeFlavourObservables`, `SymmetricMass`), and the modules that picked integers by
 fit (`MixingTests`, `NodePassage`). Moved to PMAction (the wire): the label-state chain, the light-mass
-form (`CyclicSeesaw` … `UndetunedWall`, `MassInsertion`, `InterWallDiagonal`, `GenerationLabel`), the
+form (`CyclicSeesaw` … `UndetunedWall`, `LabelInsertion`, `InterWallDiagonal`, `GenerationLabel`), the
 multi-flavour wall operator (`FlavourWallReduction`, `NativeFlavourWall`, `WallSpectrumLink`,
 `WallLatticeSpectrum`, `RelativisticPhase`) and `FlavourEvolution`. Library order changed to
 PMElementaryParticles → PMFlavor: `DoubletReflection` moved to PMElementaryParticles,
@@ -236,12 +236,12 @@ seesaw on that link (`CyclicSeesaw`): `Yᴴ Y` is diagonal (`gram_cyc`), so one 
 with mass `δ²/|y_h|`, pairing generation `h` on one wall with `h + 1` on the other; the crossing is
 `DomainWall`'s one hop, the same for every class, so the three seesaw masses are equal
 (`gram_equal`). The hierarchy must come from the composite diagonal term
-(`PMAction.GenerationMass`). `det Y = y₀y₁y₂` (`det_cyc`), real for real amplitudes
+(`PMAction.GenerationDiagonal`). `det Y = y₀y₁y₂` (`det_cyc`), real for real amplitudes
 (`light_det_real`). That matters only to the older Hermitian-mass route to `θ̄ = 0`; the current
 route (`PMConstants.ThetaBarSelection`) holds for any invertible mass.
 
-**Where the composite enters.** `CompositeMass`: with generation-structured on-site chirality flips
-`D₁`, `D₂` the light mass is `M = D₂ Y⁻¹ D₁ᴴ` (`effective_mass_general`). `Y⁻¹` is the reverse shift
+**Where the composite enters.** `CompositeSchur`: with generation-structured on-site chirality flips
+`D₁`, `D₂` the light mass is `M = D₂ Y⁻¹ D₁ᴴ` (`composite_schur_blocks`). `Y⁻¹` is the reverse shift
 (`inv_cyc`), and a carrier with the crossing's support on either side of it is diagonal
 (`cyc_mul_cycInv`, `cycInv_mul_cyc`). So with `D = δ + carrier`,
 `M = δ² Y⁻¹ + δ · diag(κ/y) + δ · diag(κ'/y) + (second order, cyclic)` (`composite_expansion`): the
@@ -251,7 +251,7 @@ hop (`PMAction.CarrierFlip`, `κ = −r t/2`), given that the class carrier is a
 
 **The light split needs two wall asymmetries.** `LightSplit`: with on-site flips `δ_F`, `δ_T` and
 carriers on both walls, generation `g`'s composite entry is `δ_T κ_F(e g) + δ_F κ_T(e g)` (one term
-per order of `GenerationMass`; `composite_expansion2`). If the carriers keep the class-swap ×
+per order of `GenerationDiagonal`; `composite_expansion2`). If the carriers keep the class-swap ×
 wall-exchange symmetry of `ExchangeChirality`, the light pair's difference is
 `(δ_T − δ_F)(κ_F(s) − κ_T(s))` (`light_split`), zero unless both the on-site flip and the carrier
 differ between the walls (`split_needs_both`). With one `δ` for both walls, as in `WallSeesaw`, the
@@ -261,7 +261,7 @@ maximal, which a perturbative source cannot give.
 
 **No detuning on the reference's wall.** `PMAction.ReferenceDetuning.stationary_iff`: the reference
 background is a stationary zero mode exactly when its wall's on-site detuning vanishes. That wall is
-the `D₂` slot, so `δ_F = 0`, and `ReferenceWallMass.reference_wall_mass` factors the light mass as
+the `D₂` slot, so `δ_F = 0`, and `ReferenceWallFactorization.reference_wall_factorization` factors the light mass as
 `M = D_R (δ_O + cyc κ_O)`, `D_R = diag(κ_R/y)`: the hierarchy is the reference-wall carriers of each
 generation's label class, the other factor rotates. The seesaw term `δ_F δ_T Y⁻¹` is gone.
 Node passage acts on both walls (`LeptonAxisRestriction.cycle_root_axis_zero` constrains the event
@@ -276,18 +276,18 @@ lead boundary; the CKM transfer adds the `1/π` boundary (`KronSeries.vub_from_k
 
 **The other wall must be detuned.** `UndetunedWall`: at `δ_O = 0` the light mass `D_R cyc κ_O` is a
 cyclic shift with entries `a_{h+1} c_h` (`diag_cyc`, `undetuned_gram`), which with the symmetry are
-`(kK, k², kK)` (`undetuned_masses`, `PMAction.WireMass.undetuned`): two heavy, one light, the reverse of every charged sector.
+`(kK, k², kK)` (`undetuned_operator`, `PMAction.DetunedWire.undetuned`): two heavy, one light, the reverse of every charged sector.
 
 **The wire's charged-current couplings.** The two `K_cc` edges at the label-`v` generation are both
 spinor-class through the node (`PMConstants.GenerationWeak`), with one leg weight and the `s ↔ c`
 swap, so `K₁₃ = K₂₃`.
 
-**Species masses are protocol work.** The wire above (`ReferenceWallMass`) fixes the form of the
+**Species masses are protocol work.** The wire above (`ReferenceWallFactorization`) fixes the form of the
 light mass and is blind to the species it carries (`PMConstants.HandoffAdmittance.closure_one_price`,
 `PMElementaryParticles.DoubletReflection`). Species are protocols over it
 ([PMElementaryParticles](../PMElementaryParticles/OVERVIEW.md), "Species masses over the wire").
 
-**What a diagonal mass needs.** `MassInsertion`: a two-wall bilinear has class gap `b + c`
+**What a diagonal mass needs.** `LabelInsertion`: a two-wall bilinear has class gap `b + c`
 (`bilinear_gap`), so a generation's own mass needs an insertion of its label class. Only the
 generation labelled by the reference's class `v` has a vector-class insertion, which can stay
 in-cycle (`label_is_reference_iff`); and it is the only generation whose two mixings both cross the
@@ -462,7 +462,7 @@ closed forms `ρ̄ = c₁₂s₁₃(P cos δ + R)/(s₂₃D)`, `η̄ = c₁₂s�
   sector (`refresh_is_sign`), keeps every carrier's class and axis (`refresh_keeps_class`,
   `refresh_same_axis`) and the label (`refresh_keeps_label`, via `PMAction.SignFlip`). It is the doublet
   exchange, the protocol change of an event, and does not make `J`'s in-cycle change.
-- **Generation names.** With the carriers placed by single-wall glue arithmetic (`PMAction.WireMass`),
+- **Generation names.** With the carriers placed by single-wall glue arithmetic (`PMAction.DetunedWire`),
   the wire's masses give label `2` the lightest, `1` the middle, `0` the heavy: the names `TransferGraph`
   and `Values` use. (A reverse naming read from the withdrawn `GenerationCurrent` placement was retired.)
 - **Completion and `U = 1` tests (recorded, conditional on `U`).** At `U = 1`, `κ₁ = jump`: Stewart's relation

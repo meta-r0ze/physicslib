@@ -1,3 +1,4 @@
+import PersistenceMechanics.Gibbs
 import PMSubstrate.NetCost
 import PMSubstrate.Impedance
 
@@ -31,7 +32,7 @@ exactly the cheapest. -/
 theorem most_persistent_iff_cheapest {ι : Type*} (β : ℝ) (hβ : 0 < β) (C : ι → ℝ) (i : ι) :
     (∀ j, Real.exp (-β * C j) ≤ Real.exp (-β * C i)) ↔ ∀ j, C i ≤ C j := by
   refine forall_congr' fun j => ?_
-  exact (survival_strictAnti β hβ).le_iff_ge
+  exact PersistenceMechanics.Gibbs.weight_order hβ
 
 /-- Survival selection within the actual admissible family, retaining a common
 baseline price. Neither family membership nor a lower-cost accessible witness

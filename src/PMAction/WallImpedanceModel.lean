@@ -3,7 +3,7 @@ import Mathlib.Tactic
 
 /-! **Experimental/candidate module.**
 
-# Wall mass/momentum model
+# Wall impedance at supplied gaps and momentum
 
 At momentum `p`, the branch impedance is
 
@@ -17,11 +17,11 @@ gap exceeds `π/43`.
 -/
 
 noncomputable section
-namespace PMAction.WallMassModel
+namespace PMAction.WallImpedanceModel
 
 open PMAction.WallEnergy
 
 def wallImpedanceAt (p m0 m2 : ℝ) : ℝ :=
   Real.sqrt (wallEnergy p m0 / wallEnergy p m2)
 
-end PMAction.WallMassModel
+end PMAction.WallImpedanceModel

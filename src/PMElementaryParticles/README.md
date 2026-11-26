@@ -51,7 +51,7 @@ Conservation gives Map and Protocol, Causality gives Toll and Governor):
 |---|---|---|
 | Capacity | the three label states; the node's conductance | `PMAction.GenerationSector`, `KronSeries` |
 | Margin | the other wall's detuning `δ_O` (a wall with no detuning is PM's "no margin, fragility": `PMAction.UndetunedWall`) | open: its size per protocol |
-| Map | label states → the protocol's persisting states: the rotation `U` | open: derived per protocol from Margin (`PMAction.WireMass`) |
+| Map | label states → the protocol's persisting states: the rotation `U` | open: derived per protocol from Margin (`PMAction.DetunedWire`) |
 | Protocol | up, down, `e`, `ν` as information over the wire | `PMConstants.CarrierRepresentation` |
 | Toll | node passage `α`; the three transfers are PM's three modes (`PersistenceMechanics.InformationTransfer`) | `NodeAmplitude`, `TransferAmplitude` |
 | Governor | the stationary reference (`δ_R = 0`) and the weak refresh | `PMAction.ReferenceDetuning`, `CarrierActions` |

@@ -129,11 +129,11 @@ theorem forward_entry (y : Fin 3 → ℂ) (g h : Fin 3) (a b : Fin 8) (i j : Fin
       wrap g]
 
 private theorem gapLink_left_inverse (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0) :
-    (CompositeMass.cycInv y ⊗ₖ (1 : Matrix (Fin 8) (Fin 8) ℂ)) * gapLink y = 1 := by
-  simp [gapLink, ← mul_kronecker_mul, CompositeMass.cycInv_mul _ hy]
+    (CompositeSchur.cycInv y ⊗ₖ (1 : Matrix (Fin 8) (Fin 8) ℂ)) * gapLink y = 1 := by
+  simp [gapLink, ← mul_kronecker_mul, CompositeSchur.cycInv_mul _ hy]
 
 theorem gapLink_inv (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0) :
-    (gapLink y)⁻¹ = CompositeMass.cycInv y ⊗ₖ (1 : Matrix (Fin 8) (Fin 8) ℂ) :=
+    (gapLink y)⁻¹ = CompositeSchur.cycInv y ⊗ₖ (1 : Matrix (Fin 8) (Fin 8) ℂ) :=
   inv_eq_left_inv (gapLink_left_inverse y hy)
 
 /-- The static light input has seven occupied labels; label zero is the vacancy. -/
@@ -157,7 +157,7 @@ independent in each signed label, including the neutral pair. -/
 theorem paired_light_mass (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
     (A B : Fin 8 → Matrix (Fin 3) (Fin 3) ℂ) :
     blockDiagonal B * (gapLink y)⁻¹ * (blockDiagonal A)ᴴ =
-      blockDiagonal (fun a => B a * CompositeMass.cycInv y * (A a)ᴴ) := by
+      blockDiagonal (fun a => B a * CompositeSchur.cycInv y * (A a)ᴴ) := by
   rw [gapLink_inv y hy, repeat_link, blockDiagonal_conjTranspose, ← blockDiagonal_mul,
     ← blockDiagonal_mul]
 
@@ -166,7 +166,7 @@ the exact zero-energy Schur pairing to the active neutrino. -/
 theorem neutral_paired_mass_entry (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
     (A B : Fin 8 → Matrix (Fin 3) (Fin 3) ℂ) (g h : Fin 3) :
     (blockDiagonal B * (gapLink y)⁻¹ * (blockDiagonal A)ᴴ) (g, 0) (h, 0) =
-      (B 0 * CompositeMass.cycInv y * (A 0)ᴴ) g h := by
+      (B 0 * CompositeSchur.cycInv y * (A 0)ᴴ) g h := by
   rw [paired_light_mass y hy]
   simp [blockDiagonal]
 
@@ -177,16 +177,16 @@ def neutralCycleWeight (y a b : Fin 3 → ℂ) (g : Fin 3) : ℂ :=
 
 /-- Diagonal neutral flips leave one Schur entry per generation and column. -/
 theorem diagonal_neutral_mass_entry (y a b : Fin 3 → ℂ) (g h : Fin 3) :
-    (diagonal b * CompositeMass.cycInv y * (diagonal a)ᴴ) g h =
+    (diagonal b * CompositeSchur.cycInv y * (diagonal a)ᴴ) g h =
       if h = g + 1 then neutralCycleWeight y a b g else 0 := by
   rw [diagonal_conjTranspose, mul_diagonal, diagonal_mul]
   fin_cases g <;> fin_cases h <;>
-    simp [neutralCycleWeight, CompositeMass.cycInv, Pi.star_apply]
+    simp [neutralCycleWeight, CompositeSchur.cycInv, Pi.star_apply]
 
 /-- The squared Schur singular values are the squared moduli of the three
 cycle weights, with the active basis already diagonalizing the Gram matrix. -/
 theorem diagonal_neutral_gram (y a b : Fin 3 → ℂ) :
-    let M := diagonal b * CompositeMass.cycInv y * (diagonal a)ᴴ
+    let M := diagonal b * CompositeSchur.cycInv y * (diagonal a)ᴴ
     M * Mᴴ = diagonal (fun g =>
       neutralCycleWeight y a b g * star (neutralCycleWeight y a b g)) := by
   intro M
@@ -201,7 +201,7 @@ spectrum regardless of the phases or the chosen common magnitudes. -/
 theorem diagonal_neutral_gram_uniform (y a b : Fin 3 → ℂ)
     (ρY ρA ρB : ℝ) (hy : ∀ g, ‖y g‖ = ρY)
     (ha : ∀ g, ‖a g‖ = ρA) (hb : ∀ g, ‖b g‖ = ρB) :
-    let M := diagonal b * CompositeMass.cycInv y * (diagonal a)ᴴ
+    let M := diagonal b * CompositeSchur.cycInv y * (diagonal a)ᴴ
     M * Mᴴ = ((ρB * ρY⁻¹ * ρA) ^ 2 : ℝ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
   dsimp only
   rw [diagonal_neutral_gram, ← diagonal_one, ← diagonal_smul]
@@ -218,7 +218,7 @@ own two generation-space flip matrices. -/
 theorem occupied_light_mass (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
     (A B : Fin 8 → Matrix (Fin 3) (Fin 3) ℂ) :
     blockDiagonal B * (gapLink y)⁻¹ * (blockDiagonal (staticFlip A))ᴴ =
-      blockDiagonal (fun a => if a = 0 then 0 else B a * CompositeMass.cycInv y * (A a)ᴴ) := by
+      blockDiagonal (fun a => if a = 0 then 0 else B a * CompositeSchur.cycInv y * (A a)ᴴ) := by
   rw [paired_light_mass y hy]
   congr 1
   funext a
@@ -241,7 +241,7 @@ theorem neutral_exact_zero (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
   let Y := gapLink y
   let D₁ := blockDiagonal (staticFlip A)
   let D₂ := blockDiagonal B
-  let V := CompositeMass.V2 D₁ D₂
+  let V := CompositeSchur.V2 D₁ D₂
   let ν : Payload → ℂ := Pi.single (g, 0) 1
   let x : Payload ⊕ Payload → ℂ := Sum.elim 0 ν
   let z := -(WallSeesaw.Ginv Y *ᵥ (Vᴴ *ᵥ x))
@@ -256,8 +256,8 @@ theorem neutral_exact_zero (y : Fin 3 → ℂ) (hy : ∀ g, y g ≠ 0)
       (g, 0) p) = 0
     rw [neutral_light_row y hy A B, star_zero]
   have hx : -(V * WallSeesaw.Ginv Y * Vᴴ) *ᵥ x = 0 := by
-    change -(CompositeMass.V2 D₁ D₂ * WallSeesaw.Ginv Y * (CompositeMass.V2 D₁ D₂)ᴴ) *ᵥ x = 0
-    rw [CompositeMass.effective_mass_general]
+    change -(CompositeSchur.V2 D₁ D₂ * WallSeesaw.Ginv Y * (CompositeSchur.V2 D₁ D₂)ᴴ) *ᵥ x = 0
+    rw [CompositeSchur.composite_schur_blocks]
     dsimp only [x]
     rw [fromBlocks_mulVec]
     simp [hdual]

@@ -1,4 +1,5 @@
 import PersistenceMechanics.EffectiveAction
+import PersistenceMechanics.Gibbs
 import PMSubstrate.NetCost
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 
@@ -26,8 +27,8 @@ longer the unflagged wire amplitude, so `q = 0` and `k = 1` (`unflagged_scale`).
 `c₀ = 1` this sets `β c₀ = 1`: the Toll is counted in expected registrations and needs no further
 unit.
 
-* `wireAmplitude T = exp(−T/2)`, `wireAmplitude_eq`: it is Paper I's attenuation weight at
-  `β = 1`; `wireAmplitude_sq`: its square is the survival weight `exp(−T)`.
+* At unit scale, use `EffectiveAction.attenuationWeight 1 T` and `Gibbs.weight 1 T`.
+  `wireAmplitude_sq` relates the amplitude to the survival weight.
 * `amplitude_ratio`: a common floor cancels; only Toll differences set amplitude ratios.
 * `ratio_ge_iff`: `s_x ≥ r s_y` exactly when `T_y − T_x ≥ 2 log r`. A factor of two between two
   labels is a Toll difference of `2 log 2`, not a structural bound.
@@ -47,6 +48,7 @@ here: the schedule (which comparisons, steps and counts act on which labels).
 noncomputable section
 namespace PMAction.TollAmplitude
 open Real Filter Topology
+open PersistenceMechanics.EffectiveAction (attenuationWeight)
 
 /-- **Rare registrations.** `N` independent sub-comparisons with total expected count `T`, each
 registration survived with probability `q`: the survival `(1 − (1 − q)T/N)^N` tends to
@@ -76,54 +78,44 @@ theorem unflagged_scale {k T : ℝ} (hT : T ≠ 0)
     k = 1 := by
   simpa using scale_of_limit (q := 0) hT h
 
-/-- Survival weight of a label with Toll `T` (expected registrations, `β c₀ = 1`). -/
-def wireWeight (T : ℝ) : ℝ := exp (-T)
-
-/-- Wire amplitude of a label with Toll `T`. -/
-def wireAmplitude (T : ℝ) : ℝ := exp (-T / 2)
-
-/-- It is Paper I's attenuation weight at unit scale. -/
-theorem wireAmplitude_eq (T : ℝ) :
-    wireAmplitude T = PersistenceMechanics.EffectiveAction.attenuationWeight 1 T := by
-  simp [wireAmplitude, PersistenceMechanics.EffectiveAction.attenuationWeight]
-
-theorem wireAmplitude_pos (T : ℝ) : 0 < wireAmplitude T := exp_pos _
+/-- The unit-scale attenuation remains positive at every Toll. -/
+theorem wireAmplitude_pos (T : ℝ) : 0 < attenuationWeight 1 T := exp_pos _
 
 /-- The amplitude squared is the survival weight. -/
-theorem wireAmplitude_sq (T : ℝ) : wireAmplitude T ^ 2 = wireWeight T := by
-  rw [wireAmplitude, wireWeight, sq, ← exp_add]
+theorem wireAmplitude_sq (T : ℝ) : attenuationWeight 1 T ^ 2 = PersistenceMechanics.Gibbs.weight 1 T := by
+  rw [attenuationWeight, PersistenceMechanics.Gibbs.weight, sq, ← exp_add]
   ring_nf
 
 /-- Lower Toll, larger amplitude. -/
-theorem wireAmplitude_lt_iff {a b : ℝ} : wireAmplitude a < wireAmplitude b ↔ b < a := by
-  unfold wireAmplitude
+theorem wireAmplitude_lt_iff {a b : ℝ} : attenuationWeight 1 a < attenuationWeight 1 b ↔ b < a := by
+  unfold attenuationWeight
   rw [exp_lt_exp]
   constructor <;> intro h <;> linarith
 
 /-- **A common floor cancels.** -/
 theorem amplitude_ratio (floor Tx Ty : ℝ) :
-    wireAmplitude (floor + Tx) / wireAmplitude (floor + Ty) = exp (-(Tx - Ty) / 2) := by
-  unfold wireAmplitude
+    attenuationWeight 1 (floor + Tx) / attenuationWeight 1 (floor + Ty) = exp (-(Tx - Ty) / 2) := by
+  unfold attenuationWeight
   rw [← exp_sub]
   ring_nf
 
 /-- **Ratios are Toll differences.** For `r > 0`, `s_x ≥ r s_y` exactly when
 `T_y − T_x ≥ 2 log r`. -/
 theorem ratio_ge_iff {r Tx Ty : ℝ} (hr : 0 < r) :
-    r * wireAmplitude Ty ≤ wireAmplitude Tx ↔ 2 * log r ≤ Ty - Tx := by
-  unfold wireAmplitude
+    r * attenuationWeight 1 Ty ≤ attenuationWeight 1 Tx ↔ 2 * log r ≤ Ty - Tx := by
+  unfold attenuationWeight
   rw [← exp_log hr, ← exp_add, exp_le_exp, exp_log hr]
   constructor <;> intro h <;> linarith
 
 /-- A schedule's Toll: a floor plus weighted flag probabilities. -/
-def scheduleToll {ι : Type*} [Fintype ι] (floor : ℝ) (w f : ι → ℝ) : ℝ :=
+def weightedFlagCost {ι : Type*} [Fintype ι] (floor : ℝ) (w f : ι → ℝ) : ℝ :=
   floor + ∑ i, w i * f i
 
 /-- **The amplitude factorizes over the schedule.** -/
 theorem schedule_factorizes {ι : Type*} [Fintype ι] (floor : ℝ) (w f : ι → ℝ) :
-    wireAmplitude (scheduleToll floor w f) =
-      wireAmplitude floor * ∏ i, wireAmplitude (w i * f i) := by
-  unfold wireAmplitude scheduleToll
+    attenuationWeight 1 (weightedFlagCost floor w f) =
+      attenuationWeight 1 floor * ∏ i, attenuationWeight 1 (w i * f i) := by
+  simp only [attenuationWeight, weightedFlagCost, one_mul]
   rw [← exp_sum, ← exp_add]
   congr 1
   have h : (∑ i, -(w i * f i) / 2) = -(∑ i, w i * f i) / 2 := by
@@ -133,8 +125,8 @@ theorem schedule_factorizes {ι : Type*} [Fintype ι] (floor : ℝ) (w f : ι �
 
 /-- **Not affine.** The midpoint of two Tolls has a smaller amplitude than the mean of their
 amplitudes: `2 e^{−1/2} < 1 + e⁻¹`. -/
-theorem not_affine : 2 * wireAmplitude 1 < wireAmplitude 0 + wireAmplitude 2 := by
-  unfold wireAmplitude
+theorem not_affine : 2 * attenuationWeight 1 1 < attenuationWeight 1 0 + attenuationWeight 1 2 := by
+  unfold attenuationWeight
   have h : (0 : ℝ) < (1 - exp (-1 / 2)) ^ 2 := by
     have hlt : exp (-1 / 2) < 1 := by
       have := exp_lt_exp.mpr (show (-1 / 2 : ℝ) < 0 by norm_num)
@@ -145,7 +137,7 @@ theorem not_affine : 2 * wireAmplitude 1 < wireAmplitude 0 + wireAmplitude 2 := 
   nlinarith [hsq]
 
 /-- No affine map of the Toll equals the wire amplitude. -/
-theorem no_affine_form : ¬ ∃ A B : ℝ, ∀ T, wireAmplitude T = A + B * T := by
+theorem no_affine_form : ¬ ∃ A B : ℝ, ∀ T, attenuationWeight 1 T = A + B * T := by
   rintro ⟨A, B, h⟩
   have := not_affine
   rw [h 0, h 1, h 2] at this
@@ -153,9 +145,9 @@ theorem no_affine_form : ¬ ∃ A B : ℝ, ∀ T, wireAmplitude T = A + B * T :=
 
 /-- **The retained port lies below survival.** One retained no-flag port keeps `1 − f`, and
 `1 − f < exp(−f)` for `f ≠ 0`. -/
-theorem retained_below_survival {f : ℝ} (hf : f ≠ 0) : 1 - f < wireWeight f := by
+theorem retained_below_survival {f : ℝ} (hf : f ≠ 0) : 1 - f < PersistenceMechanics.Gibbs.weight 1 f := by
   have := add_one_lt_exp (neg_ne_zero.mpr hf)
-  unfold wireWeight
+  simp only [PersistenceMechanics.Gibbs.weight, neg_mul, one_mul]
   linarith
 
 end PMAction.TollAmplitude

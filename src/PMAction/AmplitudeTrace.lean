@@ -16,7 +16,7 @@ and its spin sum is derived, not assumed.
    `g0_L_g0`: `γ⁰ L γ⁰ γ^ν = γ^ν L`. Together, `reduce`:
    `Tr (γ⁰γ^μL · Xγ⁰ · (γ⁰γ^νL)ᴴ · Yγ⁰) = Tr (Y γ^μ L X γ^ν L)`. This fixes the order and
    conjugation: the outgoing spinor's spin sum `Y` comes first, and the incoming one `X` sits between
-   the projectors, which is `VATrace.W`/`MassiveVATrace.Wmass` exactly.
+   the projectors, which is `VATrace.W`/`MassiveVATrace.vaTraceWithMassParameter` exactly.
 3. `amp_sum`: `Σ_spins M conj M = (G²/2) Σ_{μν} η_μ η_ν (Σ J^μ conj J^ν)(Σ J'^μ conj J'^ν)`, with
    `|G/√2|² = G²/2` explicit (`coupling_sq`). `current_trace`: each current sum is the trace of
    step 1.
@@ -207,10 +207,10 @@ theorem spin_averaged (G m mb : ℝ) (pk pp pe pb : Fin 4 → ℝ)
       = W (cp pe) (cp pb) μ ν := by
     intro μ ν
     have := MassiveVATrace.mass_cancels (cp pe) (cp pb) ((-mb : ℝ) : ℂ) μ ν
-    simpa [MassiveVATrace.Wmass, P] using this
+    simpa [MassiveVATrace.vaTraceWithMassParameter, P] using this
   have hWm : ∀ μ ν, ((P pk + ((0:ℝ):ℂ) • 1) * g μ * L * (P pp + (m : ℂ) • 1) * g ν * L).trace
-      = MassiveVATrace.Wmass (cp pk) (cp pp) m μ ν := by
-    intro μ ν; simp [MassiveVATrace.Wmass, P]
+      = MassiveVATrace.vaTraceWithMassParameter (cp pk) (cp pp) m μ ν := by
+    intro μ ν; simp [MassiveVATrace.vaTraceWithMassParameter, P]
   simp only [hW, hWm]
   have := MassiveVATrace.muon_trace (G : ℂ) (m : ℂ) (cp pp) (cp pe) (cp pk) (cp pb)
   rw [← this]

@@ -228,7 +228,7 @@ theorem static_vacancy_component_zero (y : Fin 3 → ℂ)
         (.inl (.inl (g, 0))) = 0 := by
   rw [ExactZeroMode.H, fromBlocks_mulVec]
   simp only [zero_mulVec, zero_add, Sum.elim_inl]
-  rw [CompositeMass.V2, fromBlocks_mulVec]
+  rw [CompositeSchur.V2, fromBlocks_mulVec]
   simp only [zero_mulVec, add_zero, Sum.elim_inl]
   rw [Matrix.mulVec, dotProduct]
   apply Finset.sum_eq_zero

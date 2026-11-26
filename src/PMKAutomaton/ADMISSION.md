@@ -208,7 +208,7 @@ compares its arriving values with flag `‖L − R‖²/2`
 Bypass contributes zero to this receiver account. The visit weights
 come from the paid sampling law. `NetCost.expected_count_linear`
 justifies adding expected registrations. The resulting amplitude
-with total Toll `T` is `exp(−T/2)` (`TollAmplitude.wireAmplitude`).
+with total Toll `T` is `exp(−T/2)` (`EffectiveAction.attenuationWeight` at unit scale).
 
 **Outcome (b), tie in the certified flag account.** On the supplied
 uniform reference fields, every table keeps the ports equal and all

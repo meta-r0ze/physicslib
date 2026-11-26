@@ -28,20 +28,20 @@ lemma mean_bounds [Nonempty ι] (U : Matrix ι ι ℂ) (hu : U ∈ unitary (Matr
 
 /-- The finite binary law is valid, rather than merely an assigned score. -/
 theorem readout_law [Nonempty ι] (U : Matrix ι ι ℂ) (hu : U ∈ unitary (Matrix ι ι ℂ)) :
-    (∑ b, EventAccounting.binaryMass (meanFlag U) b)=1 ∧
-      ∀ b, 0 ≤ EventAccounting.binaryMass (meanFlag U) b :=
+    (∑ b, EventAccounting.binaryPMF (meanFlag U) b)=1 ∧
+      ∀ b, 0 ≤ EventAccounting.binaryPMF (meanFlag U) b :=
   ⟨EventAccounting.binary_normalized _,
     EventAccounting.binary_nonnegative (mean_bounds U hu).1 (mean_bounds U hu).2⟩
 
 /-- m primitive repair events share the same flag; no independence is required. -/
 def repairCost (toll : ℝ) (m : ℕ) (U : Matrix ι ι ℂ) : ℝ :=
-  EventAccounting.cost toll (EventAccounting.binaryMass (meanFlag U))
+  EventAccounting.cost toll (EventAccounting.binaryPMF (meanFlag U))
     (fun _ : Fin m => ({true} : Finset Bool))
 
 lemma repair_cost (toll : ℝ) (m : ℕ) (U : Matrix ι ι ℂ) :
     repairCost toll m U=toll*m*meanFlag U := by
   rw [repairCost, EventAccounting.weighted_linear]
-  simp only [EventAccounting.eventMass, sum_singleton, EventAccounting.binaryMass,
+  simp only [EventAccounting.eventWeight, sum_singleton, EventAccounting.binaryPMF,
     ite_true, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
   ring
 

@@ -28,7 +28,7 @@ suppressed, and one class is the cheapest such support.
   zero on the reference wall's whole `−Γ` sector, where that wall's light modes live. With the
   exchange Hermitian (`X b 0 = (X 0 b)ᴴ`), the same holds into class `0`.
 
-**For the light mass.** `GenerationMass`: generation `g`'s carrier on a wall moves class `g + 1` to
+**For the light mass.** `GenerationDiagonal`: generation `g`'s carrier on a wall moves class `g + 1` to
 `g − 1`, a change by its label `g`. On the reference wall this involves class `0` exactly when
 `g ≠ 0` (`touches_reference_class`). So the reference's stationarity forbids the direct
 insertion for the two generations labelled `s`, `c`, and allows it for the generation labelled `v`:

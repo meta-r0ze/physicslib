@@ -161,7 +161,7 @@ theorem paired_tolls (a : Fin 3) (i j k l : Fin 2) :
 
 /-- The two-visit flag budget has the charged ladder if placed on the heavy flip. -/
 theorem paired_ladder (a : Fin 3) (i j k : Fin 2) :
-    let s cA cS := TollAmplitude.wireAmplitude (pairedToll cA cS)
+    let s cA cS := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (pairedToll cA cS)
     s (leptonActive i) electronStatic < s (quarkActive a j) (downStatic a) ∧
       s (quarkActive a j) (downStatic a) < s (quarkActive a k) (upStatic a) := by
   obtain ⟨he, hd, hu, -⟩ := paired_tolls a i j k 0
@@ -228,7 +228,7 @@ theorem orbit_record_tolls (a : Fin 3) :
   norm_num
 
 theorem orbit_record_ladder (a : Fin 3) :
-    let s c := TollAmplitude.wireAmplitude (orbitRecordToll c)
+    let s c := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (orbitRecordToll c)
     s electronStatic < s (downStatic a) ∧ s (downStatic a) < s (upStatic a) := by
   obtain ⟨he, hd, hu, -⟩ := orbit_record_tolls a
   dsimp only
@@ -239,12 +239,12 @@ theorem orbit_record_ladder (a : Fin 3) :
 record gives `s_d² = s_e · s_u`: down shares one bit with the electron and none with up, so its
 Toll is the mean of theirs. This holds with no free parameter, before any tariff is fixed. -/
 theorem down_geometric_mean (lam : ℝ) (a : Fin 3) :
-    let s c := TollAmplitude.wireAmplitude (lam * orbitRecordToll c)
+    let s c := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (lam * orbitRecordToll c)
     s (downStatic a) ^ 2 = s electronStatic * s (upStatic a) := by
   obtain ⟨he, hd, hu, -⟩ := orbit_record_tolls a
   dsimp only
   rw [he, hd, hu]
-  unfold TollAmplitude.wireAmplitude
+  simp only [PersistenceMechanics.EffectiveAction.attenuationWeight, one_mul]
   rw [sq, ← Real.exp_add, ← Real.exp_add]
   ring_nf
 

@@ -15,7 +15,7 @@ class, the class of the weak carriers (`CarrierRepresentation.V = Carrier 0`,
 * `weak_edge_true`, `weak_edge_false`: a vector-class carrier makes exactly one generation change on
   each wall: `1 → 2` on wall `true`, `2 → 1` on wall `false`. Both join generations `1` and `2`.
 * `heavy_edges_spinor`: every change into or out of generation `0` (the label-`v` generation, the
-  heavy one of `GenerationMass`) uses a spinor-class carrier (index `1` or `2`), on either wall.
+  heavy one of `GenerationDiagonal`) uses a spinor-class carrier (index `1` or `2`), on either wall.
 
 So the charged current's own carrier (vector class) makes only the change between the two light
 generations, the Cabibbo transition. The changes involving the heavy generation need a spinor

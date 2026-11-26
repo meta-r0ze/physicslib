@@ -157,7 +157,7 @@ theorem expected_read_undo_cost {Ω : Type*} [Fintype Ω] [DecidableEq Ω]
     (sample : Ω → Lattice) (hn : ∀ ω, pairing (sample ω) (sample ω) = 2)
     (hz : ∀ ω, record (sample ω) = false) (mass : Ω → ℝ) (toll : ℝ) :
     EventAccounting.cost toll mass (events sample) =
-      2 * toll * EventAccounting.eventMass mass
+      2 * toll * EventAccounting.eventWeight mass
         (Finset.univ.filter fun ω => MatchedLatticeProbe.outcome root (sample ω) = true) := by
   rw [EventAccounting.weighted_linear]
   simp_rw [events_are_observed_bit sample hn hz]

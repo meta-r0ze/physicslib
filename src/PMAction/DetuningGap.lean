@@ -2,7 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
 
 /-!
-# Fermion mass from detuning the inter-sector link
+# Spectral gap from detuning the inter-sector link
 
 In the two-sector domain wall, detuning the on-site mass away from the Wilson point by `δ`
 adds `δβ` on both sectors. With `P± = (1 ± Γ)/2` the hops are `h = −β P₊` and `h̄ = −β P₋`.
@@ -10,17 +10,17 @@ adds `δβ` on both sectors. With `P± = (1 ± Γ)/2` the hops are `h = −β P�
 * `hop_products`: `h h̄ = P₋`, `h̄ h = P₊` and `β h + h β = −1`, from `β² = Γ² = 1` and
   `βΓ = −Γβ` alone. Hence the squared Hamiltonian splits into two-by-two blocks
   `[[δ², −δ], [−δ, δ² + 1]]` acting on the chirality components.
-* `light_mass`: the candidate light-mass root is `m = √(δ² + 1/4) − 1/2`. Equivalently
-  `m (m + 1) = δ²` (`mass_relation`), and `m²` is the small root of the block
-  (`mass_squared_root`). Connecting this block and its multiplicities to the full
+* `lightGap`: the light spectral root is `m = √(δ² + 1/4) − 1/2`. Equivalently
+  `m (m + 1) = δ²` (`gap_relation`), and `m²` is the small root of the block
+  (`gap_squared_root`). Connecting this block and its multiplicities to the full
   momentum-dependent Hamiltonian is a separate spectral obligation.
-* `mass_le`: `0 ≤ m ≤ δ²`. The mass is quadratic in the detuning: a link detuned by `δ`
+* `gap_le`: `0 ≤ m ≤ δ²`. The mass is quadratic in the detuning: a link detuned by `δ`
   gives a fermion lighter than `δ` by a factor of about `δ`.
 * `twin_gap`: the corner twins are the same formula at detuning `2n`, so every twin has mass
   above `1.56`.
 -/
 
-namespace PMAction.DetuningMass
+namespace PMAction.DetuningGap
 
 section Algebra
 variable {𝕜 A : Type*} [Field 𝕜] [CharZero 𝕜] [Ring A] [Algebra 𝕜 A]
@@ -77,47 +77,47 @@ theorem hop_products {A : Type*} [Ring A] [Algebra ℚ A]
   hop_products_over (𝕜 := ℚ) β Γ hβ hΓ hac
 
 
-/-- The light mass as a function of the detuning. -/
-noncomputable def lightMass (δ : ℝ) : ℝ := Real.sqrt (δ^2 + 1/4) - 1/2
+/-- The light spectral gap as a function of the detuning. -/
+noncomputable def lightGap (δ : ℝ) : ℝ := Real.sqrt (δ^2 + 1/4) - 1/2
 
-theorem mass_relation (δ : ℝ) : lightMass δ * (lightMass δ + 1) = δ^2 := by
-  unfold lightMass
+theorem gap_relation (δ : ℝ) : lightGap δ * (lightGap δ + 1) = δ^2 := by
+  unfold lightGap
   have h := Real.sq_sqrt (show (0:ℝ) ≤ δ^2 + 1/4 by positivity)
   nlinarith [h]
 
 /-- `m²` is the smaller eigenvalue of `[[δ², −δ], [−δ, δ² + 1]]`. -/
-theorem mass_squared_root (δ : ℝ) :
-    let m := lightMass δ
+theorem gap_squared_root (δ : ℝ) :
+    let m := lightGap δ
     (m^2 - δ^2) * (m^2 - δ^2 - 1) = δ^2 := by
   intro m
-  have hr := mass_relation δ
+  have hr := gap_relation δ
   have : m^2 - δ^2 = -m := by simp only [m] at hr ⊢; nlinarith [hr]
   rw [this]; nlinarith [hr]
 
-theorem mass_le (δ : ℝ) : 0 ≤ lightMass δ ∧ lightMass δ ≤ δ^2 := by
+theorem gap_le (δ : ℝ) : 0 ≤ lightGap δ ∧ lightGap δ ≤ δ^2 := by
   have hs := Real.sqrt_nonneg (δ^2 + 1/4)
   have hsq := Real.sq_sqrt (show (0:ℝ) ≤ δ^2 + 1/4 by positivity)
-  have h0 : 0 ≤ lightMass δ := by
-    unfold lightMass
+  have h0 : 0 ≤ lightGap δ := by
+    unfold lightGap
     have : (1/2 : ℝ) ≤ Real.sqrt (δ^2 + 1/4) := by
       rw [show (1/2 : ℝ) = Real.sqrt (1/4) by
         rw [show (1/4 : ℝ) = (1/2)^2 by norm_num, Real.sqrt_sq (by norm_num)]]
       exact Real.sqrt_le_sqrt (by nlinarith [sq_nonneg δ])
     linarith
   refine ⟨h0, ?_⟩
-  have hr := mass_relation δ
+  have hr := gap_relation δ
   nlinarith [hr, h0]
 
-theorem light_mass_zero : lightMass 0 = 0 := by
-  unfold lightMass; simp
+theorem light_gap_zero : lightGap 0 = 0 := by
+  unfold lightGap; simp
   rw [show (4:ℝ) = 2^2 by norm_num, Real.sqrt_sq (by norm_num)]; norm_num
 
 /-- Twins are maximally detuned modes. At a corner of the momentum cell with `n` components
 equal to `π` the momentum term vanishes and the Wilson term acts as a detuning `2n` (at
-`r = 1`), so the lightest mode there has mass `lightMass (2n)`. For `n ≥ 1` this exceeds
+`r = 1`), so the lightest mode there has mass `lightGap (2n)`. For `n ≥ 1` this exceeds
 `1.56`, matching the numerical corner gaps (1.562, 3.531, 5.521). -/
-theorem twin_gap {n : ℕ} (hn : 1 ≤ n) : (1.56 : ℝ) < lightMass (2 * n) := by
-  unfold lightMass
+theorem twin_gap {n : ℕ} (hn : 1 ≤ n) : (1.56 : ℝ) < lightGap (2 * n) := by
+  unfold lightGap
   have hn' : (1 : ℝ) ≤ n := by exact_mod_cast hn
   have h1 : (2.06 : ℝ) < Real.sqrt ((2 * n)^2 + 1/4) := by
     rw [show (2.06 : ℝ) = Real.sqrt (2.06^2) by rw [Real.sqrt_sq (by norm_num)]]
@@ -125,4 +125,4 @@ theorem twin_gap {n : ℕ} (hn : 1 ≤ n) : (1.56 : ℝ) < lightMass (2 * n) := 
     nlinarith
   linarith
 
-end PMAction.DetuningMass
+end PMAction.DetuningGap

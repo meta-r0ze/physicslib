@@ -1,7 +1,7 @@
 import PMAction.GenerationOrientation
 
 /-!
-# A generation-diagonal mass from allowed moves: a crossing and a label-class carrier
+# A generation-diagonal coupling from a crossing and a label-class carrier
 
 Step 3 of the generation sector (`PMAction/TODO.md`). Within one orientation convention
 (`GenerationWalls.side`: generation `g` carries class `g + 1` on wall `true`, `g − 1` on wall
@@ -21,7 +21,7 @@ Step 3 of the generation sector (`PMAction/TODO.md`). Within one orientation con
 * `composite_shift_then_cross`: shift wall `true` from `g + 1` to `g − 1` (landing in generation
   `g + 1`), then cross class `g − 1`; again generation `g` on wall `false`.
 * `composite_carrier_is_label`: in both orders the carrier's class change is
-  `e (g + 1) + e (g − 1) = e g`, the generation's own label, the insertion `PMAction.MassInsertion`
+  `e (g + 1) + e (g − 1) = e g`, the generation's own label, the insertion `PMAction.LabelInsertion`
   requires (`bilinear_gap`). The intermediate is another generation, so the composite is second
   order.
 
@@ -32,14 +32,14 @@ displacements avoid the reference axis (in-cycle), every spinor-class displaceme
 node crossing). So `m_g ∝ y · κ_{label g}`, with `κ` unsuppressed for the label-`v` generation and
 node-suppressed for the two others: one heavy generation and two light ones, the heavy one being the
 generation whose two mixings both cross the node (`PMAction.GenerationSector`,
-`PMAction.MassInsertion`). That is the observed pattern (one heavy, weakly mixed generation). Not
+`PMAction.LabelInsertion`). That is the observed pattern (one heavy, weakly mixed generation). Not
 fixed here: the size of the node factor (the leg rule gives `α⁻¹` or `α^{−1/2}` and does not match
 the measured heavy/middle ratios, `PMFlavor/TODO.md`), and the split of the two light
 generations, which are degenerate at this order (their insertions are the two spinor classes; the
 weak wall distinguishes them, `PMFlavor.ExchangeChirality`).
 -/
 
-namespace PMAction.GenerationMass
+namespace PMAction.GenerationDiagonal
 open PMAction.GenerationSector GenerationOrientation GenerationWalls
 
 /-- **A generation's two wall classes differ.** -/
@@ -64,4 +64,4 @@ theorem composite_carrier_is_label : ∀ e : Fin 3 → Glue, Good e → ∀ g : 
     e (g + 1) + e (g - 1) = e g := by
   decide +kernel
 
-end PMAction.GenerationMass
+end PMAction.GenerationDiagonal

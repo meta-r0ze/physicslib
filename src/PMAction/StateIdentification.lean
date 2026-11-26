@@ -384,8 +384,8 @@ heavy branch of the vacuum model. -/
 theorem odd_branches (hp : 0 < p) (hp1 : p < 1/2) (k : Fin 3 → ℝ) (δ E : ℝ)
     (v : CarrierVacuumSector.Labels c → ℂ) (hodd : CarrierVacuumSector.parity c *ᵥ v = -v) (hv : v ≠ 0)
     (he : nativeHamiltonian c p k δ *ᵥ v = E • v) :
-    E ^ 2 = kineticNorm k + (DetuningMass.lightMass δ) ^ 2 ∨
-      E ^ 2 = kineticNorm k + (DetuningMass.lightMass δ + 1) ^ 2 := by
+    E ^ 2 = kineticNorm k + (DetuningGap.lightGap δ) ^ 2 ∨
+      E ^ 2 = kineticNorm k + (DetuningGap.lightGap δ + 1) ^ 2 := by
   set w := CarrierReadoutQuotient.readout c *ᵥ v
   have hw : w ≠ 0 := by
     intro h0

@@ -6,11 +6,11 @@ namespace PMAction.SignedSpectrum
 open Matrix Polynomial ConcreteFermion
 
 lemma light_energy_square (k : Fin 3 → ℝ) (δ : ℝ) :
-    (lightEnergy k δ)^2=DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 :=
+    (lightEnergy k δ)^2=DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 :=
   Real.sq_sqrt (add_nonneg (kinetic_nonneg k) (sq_nonneg _))
 
 lemma heavy_energy_square (k : Fin 3 → ℝ) (δ : ℝ) :
-    (heavyEnergy k δ)^2=DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2 :=
+    (heavyEnergy k δ)^2=DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2 :=
   Real.sq_sqrt (add_nonneg (kinetic_nonneg k) (sq_nonneg _))
 
 theorem heavy_pair_multiplicity (k : Fin 3 → ℝ) (δ : ℝ) :
@@ -38,14 +38,14 @@ theorem light_zero_iff (k : Fin 3 → ℝ) (δ : ℝ) :
   · intro h
     have hs := light_energy_square k δ
     rw [h] at hs
-    have hm := (DetuningMass.mass_le δ).1
+    have hm := (DetuningGap.gap_le δ).1
     have hk := kinetic_nonneg k
-    have hz : DetuningMass.lightMass δ=0 := by nlinarith [sq_nonneg (DetuningMass.lightMass δ)]
-    have hd := DetuningMass.mass_relation δ
+    have hz : DetuningGap.lightGap δ=0 := by nlinarith [sq_nonneg (DetuningGap.lightGap δ)]
+    have hd := DetuningGap.gap_relation δ
     rw [hz] at hd
     constructor <;> nlinarith
   · rintro ⟨hs,rfl⟩
-    simp [lightEnergy, hs, DetuningMass.light_mass_zero]
+    simp [lightEnergy, hs, DetuningGap.light_gap_zero]
 
 theorem origin_zero_multiplicity : (hamiltonian 0 0).charpoly.rootMultiplicity 0=4 := by
   rw [origin_charpoly]

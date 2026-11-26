@@ -11,8 +11,8 @@ import PMAction.WallDispersion
   four-fermion amplitude, not only its coefficient, tends at zero momentum transfer to the V−A
   contact amplitude with `G_F = 1/(√2 v²)`.
 * `light_branch`, `heavy_branch`: at unit link (`y = 1`), the exact eight-component wall spectrum
-  (`WallDispersion.two_dirac_particles`) has masses `m₋ = lightMass δ` and `m₊ = lightMass δ + 1`.
-  These are `FermionMassLaw`'s light fermion (`DetuningMass.mass_relation`) and its heavy partner,
+  (`WallDispersion.two_dirac_particles`) has masses `m₋ = lightGap δ` and `m₊ = lightGap δ + 1`.
+  These are `FermionMassLaw`'s light fermion (`DetuningGap.gap_relation`) and its heavy partner,
   each now a complete Dirac particle with two spin states of each energy sign.
 -/
 
@@ -54,16 +54,16 @@ lemma rr_one (δ : ℝ) : WallDispersion.rr δ 1 = 2 * Real.sqrt (δ ^ 2 + 1 / 4
 
 /-- The light branch at unit link is `FermionMassLaw`'s light fermion. -/
 theorem light_branch (δ : ℝ) :
-    WallDispersion.massSqM δ 1 = DetuningMass.lightMass δ ^ 2 := by
+    WallDispersion.lightGapSq δ 1 = DetuningGap.lightGap δ ^ 2 := by
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ δ ^ 2 + 1 / 4 by positivity)
-  simp only [WallDispersion.massSqM, WallDispersion.rhoM, rr_one, DetuningMass.lightMass]
+  simp only [WallDispersion.lightGapSq, WallDispersion.rhoM, rr_one, DetuningGap.lightGap]
   linear_combination -hs
 
 /-- The heavy branch at unit link is its partner, of mass `m + 1`. -/
 theorem heavy_branch (δ : ℝ) :
-    WallDispersion.massSqP δ 1 = (DetuningMass.lightMass δ + 1) ^ 2 := by
+    WallDispersion.heavyGapSq δ 1 = (DetuningGap.lightGap δ + 1) ^ 2 := by
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ δ ^ 2 + 1 / 4 by positivity)
-  simp only [WallDispersion.massSqP, WallDispersion.rhoP, rr_one, DetuningMass.lightMass]
+  simp only [WallDispersion.heavyGapSq, WallDispersion.rhoP, rr_one, DetuningGap.lightGap]
   linear_combination -hs
 
 end PMConstants.WeakSpectrumLinks

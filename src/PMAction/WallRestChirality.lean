@@ -73,7 +73,7 @@ private theorem chiral_equations_iff {Y D₁ D₂ : Matrix n n ℂ} {ψ : WallMo
     PMAction.ExactZeroMode.H Y D₁ D₂ *ᵥ ψ = z • ψ ↔
       B *ᵥ chargedPart ψ = z • positivePart ψ ∧
         Bᴴ *ᵥ positivePart ψ = z • chargedPart ψ := by
-  simp only [PMAction.ExactZeroMode.H, PMAction.CompositeMass.V2, PMAction.WallSeesaw.G,
+  simp only [PMAction.ExactZeroMode.H, PMAction.CompositeSchur.V2, PMAction.WallSeesaw.G,
     fromBlocks_conjTranspose, conjTranspose_zero, fromBlocks_mulVec, zero_mulVec, zero_add]
   constructor
   · intro h

@@ -42,7 +42,7 @@ This is a gap for the diagonal (classical) PM cost operator. It is volume-unifor
 cost is integer-valued and the vacuum is unique; that is the PM content. `GapStability` states
 how much off-diagonal perturbation it survives by form bounds. For the distinction substrate the
 off-diagonal part (flips between ticks) is handled in full by the cluster expansion:
-`SlabGap.slab_gap_explicit`, `CubicBox.box_mass_gap`.
+`SlabGap.slab_gap_explicit`, `CubicBox.box_transfer_gap`.
 
 It is **not** the Clay statement, which asks for a gap in a continuum quantum Yang–Mills theory
 on `ℝ⁴`. In PM the gauge field is a separate continuous layer

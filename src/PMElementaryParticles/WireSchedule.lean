@@ -62,7 +62,7 @@ No remainder is assigned. Comparison-output flags and primitive-factor
 flags can describe different accounts of the same visit. The template
 uses the former for the writer and does not also charge the full factor
 ledger for that writer. The registration policy must justify any extra
-primitive charge. `amplitude` applies `TollAmplitude.wireAmplitude`
+primitive charge. `amplitude` applies `PersistenceMechanics.EffectiveAction.attenuationWeight 1`
 to the full Toll for the persisting unflagged readout.
 
 ## Which population is charged
@@ -628,7 +628,7 @@ def fullToll {ticks : ℕ} (companionSetup : Bool) (unpriced : Channels → Sche
 
 def amplitude {ticks : ℕ} (companionSetup : Bool) (unpriced : Channels → Schedule ticks → ℝ)
     (c : Channels) (s : Schedule ticks) : ℝ :=
-  wireAmplitude (fullToll companionSetup unpriced c s)
+  PersistenceMechanics.EffectiveAction.attenuationWeight 1 (fullToll companionSetup unpriced c s)
 
 theorem matched_flag_account (b pol : Bool) (c : Channels) (hc : active c = false) :
     visitFlag b pol c .matchFirst = some 0 ∧ visitFlag b pol c .matchSecond = some 0 := by

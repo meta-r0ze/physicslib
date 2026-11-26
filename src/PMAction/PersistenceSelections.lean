@@ -24,7 +24,7 @@ state by the squared energy of a term, as for the reference background and the o
 resonance (`OtherWallStationary.energyPrice`) and the even complement (`EvenComplement`),
 `offset_price_pos`: the offset has positive price on every state with weight on its wall, while the
 coherent realization has none. So the coherent event is the cheaper realization of the same flip,
-and the light masses are the singular values of the wire's mass (`WireMass`, `ReferenceWallMass`),
+and the light masses are the singular values of the wire's mass (`DetunedWire`, `ReferenceWallFactorization`),
 not their squares (`WallOffset`).
 
 **3. The reference occupies one class (Margin, then Economy).**

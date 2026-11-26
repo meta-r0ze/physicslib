@@ -1,4 +1,4 @@
-import PMAction.WallMassModel
+import PMAction.WallImpedanceModel
 
 /-! **Experimental/candidate module.**
 
@@ -12,7 +12,7 @@ need not agree at the preparation momentum.
 noncomputable section
 namespace PMAction.WallImpedanceChoice
 
-open PMAction.WallMassModel
+open PMAction.WallImpedanceModel
 
 inductive ImpedanceConvention
   | zeroMomentumMassRatio

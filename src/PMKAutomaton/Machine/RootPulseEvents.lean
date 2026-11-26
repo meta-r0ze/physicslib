@@ -118,7 +118,7 @@ theorem actual_mean_flag (c : Fin 3) (p t : ℝ) :
 /-- A single flagged endpoint event is priced by its own law, not the comparison law. -/
 theorem label_price (p t toll : ℝ) :
     EventAccounting.cost toll
-      (EventAccounting.binaryMass ((1-Real.cos (RootTransferPhase.gap p*t))/4))
+      (EventAccounting.binaryPMF ((1-Real.cos (RootTransferPhase.gap p*t))/4))
       (fun _ : Fin 1 => ({true} : Finset Bool)) =
       toll*(1-Real.cos (RootTransferPhase.gap p*t))/4 := by
   rw [EventAccounting.binary_flag_cost]
@@ -135,8 +135,8 @@ theorem price_ratio (c : Fin 3) (p t toll : ℝ) :
 
 /-- The endpoint label readout is a normalized binary law. -/
 theorem label_law (p t : ℝ) :
-    (∑ b, EventAccounting.binaryMass ((1-Real.cos (RootTransferPhase.gap p*t))/4) b) = 1 ∧
-      ∀ b, 0 ≤ EventAccounting.binaryMass ((1-Real.cos (RootTransferPhase.gap p*t))/4) b := by
+    (∑ b, EventAccounting.binaryPMF ((1-Real.cos (RootTransferPhase.gap p*t))/4) b) = 1 ∧
+      ∀ b, 0 ≤ EventAccounting.binaryPMF ((1-Real.cos (RootTransferPhase.gap p*t))/4) b := by
   constructor
   · exact EventAccounting.binary_normalized _
   · apply EventAccounting.binary_nonnegative

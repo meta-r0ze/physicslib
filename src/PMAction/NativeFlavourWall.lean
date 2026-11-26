@@ -224,10 +224,10 @@ theorem encoded_eigenstate (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
 theorem light_state_realized (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
     (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ) (hY : Y.IsHermitian) (j : f)
     (hj : hY.eigenvalues j ≠ 0)
-    (hM : 0 < WallDispersion.msq3 (momentum k) + WallDispersion.massSqM δ (hY.eigenvalues j))
+    (hM : 0 < WallDispersion.msq3 (momentum k) + WallDispersion.lightGapSq δ (hY.eigenvalues j))
     (ρ : r → ℂ) (hρ : ρ ≠ 0) :
     ∃ v : Config (f := f) (r := r) c → ℂ, v ≠ 0 ∧ generator c p k δ Y *ᵥ v =
-      (Real.sqrt (WallDispersion.msq3 (momentum k) + WallDispersion.massSqM δ (hY.eigenvalues j)) : ℂ) • v := by
+      (Real.sqrt (WallDispersion.msq3 (momentum k) + WallDispersion.lightGapSq δ (hY.eigenvalues j)) : ℂ) • v := by
   obtain ⟨ψ,hψ,he⟩ := FlavourWallReduction.hermitian_light_state (momentum k) δ Y hY j hj hM
   exact ⟨encode c ψ ρ, encode_ne_zero c ψ hψ ρ hρ,
     encoded_eigenstate c p hp hp1 k δ Y _ ψ ρ he⟩

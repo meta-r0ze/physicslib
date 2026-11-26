@@ -161,7 +161,7 @@ namespace PMElementaryParticles.DownProtocol
 
 open ProtocolToll in
 theorem down_colour_geometric_mean (price : ℝ) (a : Fin 3) :
-    let s c := PMAction.TollAmplitude.wireAmplitude (price * WireSchedule.bitToll true c)
+    let s c := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (price * WireSchedule.bitToll true c)
     s (downStatic a) ^ 2 = s electronStatic * s (upStatic a) := by
   simpa only [WireSchedule.bitToll, ElectricHeavyRecord.colour_reference_toll] using
     HeavyFlipRecords.down_geometric_mean price a

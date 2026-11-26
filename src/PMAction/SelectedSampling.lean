@@ -31,10 +31,10 @@ instance (c : Fin 3) : Nonempty (CarrierEvents.Carrier c) :=
   Fintype.card_pos_iff.mp (by rw [CarrierEvents.carrier_card]; norm_num)
 
 theorem selected_activation (c : Fin 3) :
-    EventAccounting.eventMass uniform (CarrierEvents.active c) = 1 / 2 := by
-  simp only [EventAccounting.eventMass, uniform, sum_const, CarrierEvents.active_card,
-    CarrierEvents.carrier_card, nsmul_eq_mul]
-  norm_num
+    EventAccounting.eventWeight uniform (CarrierEvents.active c) = 1 / 2 := by
+  calc
+    _ = PMSubstrate.NetCost.prob (CarrierEvents.active c) := EventAccounting.uniform_eventWeight _
+    _ = 1 / 2 := CarrierEvents.uniform_activation c
 
 theorem selected_primitive_cost (c : Fin 3) (toll : ℝ) :
     EventAccounting.cost toll uniform (fun _ : Fin 1 => CarrierEvents.active c) = toll / 2 := by

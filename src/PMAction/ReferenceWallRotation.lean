@@ -1,9 +1,9 @@
-import PMAction.ReferenceWallMass
+import PMAction.ReferenceWallFactorization
 
 /-!
 # On the reference's wall the persistence rotation is suppressed by the hierarchy
 
-`ReferenceWallMass`: the light mass is `M = D_R X`, `D_R = diag(d)` (the reference-wall carriers of
+`ReferenceWallFactorization`: the light mass is `M = D_R X`, `D_R = diag(d)` (the reference-wall carriers of
 each label class over `y`) and `X = δ_O · 1 + cyc κ_O` (the other wall's detuning and carriers). The
 rows of `M` are the reference's wall (wall `false`, the wall the charged current acts on), so the
 persistence states on that wall are the eigenvectors of `M Mᴴ`.
@@ -29,8 +29,8 @@ comparable `|dᵢ|` there is no suppression.
   (`PMFlavor.EventTransfer.cycle_invariant`); with `δ` real, its phase relative to `δ³` is the only
   complex number the wall factor's determinant can carry.
 
-**The charged current reads this side.** `CompositeMass.effective_mass_general`: the light Dirac
-mass `D₂ Y⁻¹ D₁ᴴ` is the block whose rows are the `D₂` sector; `ReferenceWallMass` identifies `D₂`
+**The charged current reads this side.** `CompositeSchur.composite_schur_blocks`: the light Dirac
+mass `D₂ Y⁻¹ D₁ᴴ` is the block whose rows are the `D₂` sector; `ReferenceWallFactorization` identifies `D₂`
 with wall `false`, the reference's wall; `WallChiralCurrent`: the chiral projector `(1 − Γ)/2` selects
 the second, negative-`Γ` wall, the reference's. So the states the charged current couples to are the
 rows of `M`, and their persisting combinations are the eigenvectors of `M Mᴴ`. The one step taken by

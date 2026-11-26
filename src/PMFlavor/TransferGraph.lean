@@ -36,15 +36,15 @@ is the other-wall change. Derived part: `mode_continuous_iff` with `inCycle_iff`
 exactly the transfer that stays in the cycle. Premise (not derived): a hop of a class on the
 reference's wall starts inside the node's refresh (adjacent), while a hop on the other wall must
 enter and leave the node (non-adjacent). `refWall` is the reference's wall, `false`, the wall of the
-reference background in `PMAction.ReferenceDetuning` and `PMAction.ReferenceWallMass`.
+reference background in `PMAction.ReferenceDetuning` and `PMAction.ReferenceWallFactorization`.
 
 **Which label states each joins.** `mode_ends`: the in-cycle change joins label states `1` and `2`, the
 promotion `0` and `1`, the other-wall change `0` and `2`; label state `0` is the label-`v` label state, the one whose
-two transfers both cross the node (`PMAction.MassInsertion.label_v_mixings_cross`). The readout as
+two transfers both cross the node (`PMAction.LabelInsertion.label_v_mixings_cross`). The readout as
 matrix elements (e8p prints the in-cycle change as `s₁₂`, the reference-wall change as `|V_cb|`, the other-wall change as `|V_ub|`)
 names label state `1` the second and `2` the first, the wall-naming convention
 (`GenerationWalls.balanced_classification`; the wire's masses with the derived carrier placement,
-`PMAction.WireMass`, give the same names, REVIEW item 0); which protocols read which transfers is
+`PMAction.DetunedWire`, give the same names, REVIEW item 0); which protocols read which transfers is
 PMElementaryParticles.
 -/
 

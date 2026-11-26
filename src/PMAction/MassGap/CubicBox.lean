@@ -9,7 +9,7 @@ data along (`slab_generate`, `slabPlaq_isPlaquette`) and the local bounds
 (`SlabDegree.card_slabPlaq_le`, `spatial_through`, `squares_through`):
 plaquettes have `≤ 4` edges, at most `8 d²` pass through an edge, and the degree is `2d`.
 
-`box_mass_gap`: on the slab over the `d`-box (spacetime of dimension `d + 1`; `d = 3` is
+`box_transfer_gap`: on the slab over the `d`-box (spacetime of dimension `d + 1`; `d = 3` is
 Euclidean 4D), if `β ≥ 2 log(16 (32 d² + 64 d + 1)²)`, every flip-even excited state of `T²` has
 mass at least `β/2` per tick, uniformly in the side `n` (and in the slab length). For `d = 3` the
 condition is `β ≥ 2 log(16 · 481²) ≈ 30.2`.
@@ -144,7 +144,7 @@ lemma box_bounds (n : ℕ) : ∀ d : ℕ,
       rw [h3]; ring
 
 /-- **The mass gap on a cubic box.** -/
-theorem box_mass_gap (d n : ℕ) {β : ℝ}
+theorem box_transfer_gap (d n : ℕ) {β : ℝ}
     (hβ : 2 * Real.log (16 * (((32 * d * d + 64 * d : ℕ) : ℝ) + 1) ^ 2) ≤ β) :
     ∃ Λ : ℝ, 0 < Λ ∧
       (∀ (ψ : ((box d n).V → Bool) → ℝ) (lam : ℝ), ψ ≠ 0 → SlabGap.Even' ψ →
@@ -157,7 +157,7 @@ theorem box_mass_gap (d n : ℕ) {β : ℝ}
     simp only [max_self]; ring
   have hβ' : 2 * Real.log (16 * (((max 4 4 * (8 * d * d + 8 * (2 * d)) : ℕ) : ℝ) + 1) ^ 2) ≤ β := by
     rw [hD]; exact hβ
-  exact SlabGap.slab_mass_gap (box d n).conn (box d n).plaqE (box d n).plaqP (box d n).gen
+  exact SlabGap.slab_transfer_gap (box d n).conn (box d n).plaqE (box d n).plaqP (box d n).gen
     (fun P hP => ((box d n).hk P hP).trans hk) (fun e => ((box d n).hm e).trans hm)
     (fun v => ((box d n).hΔ v).trans hΔ.le) hβ'
 

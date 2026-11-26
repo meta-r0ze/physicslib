@@ -11,7 +11,7 @@ squared branches, but not that both occur or with what multiplicity.
 * `S_anticomm`, `S_sq`: `S = [[0, βΓ], [βΓ, 0]]` anticommutes with `H_y` and `S² = −1`. So the
   spectrum is symmetric under `E ↦ −E`.
 * `H_sq`, `X_quadratic`: `X = H² − (|k|² + δ²)` satisfies `X² = y² X + y²δ²`.
-* `branch_masses`: the two roots give masses `m±² = δ² + (y² ± r)/2` with `r = √(y⁴ + 4y²δ²)`.
+* `branch_gap_squares`: the two roots give masses `m±² = δ² + (y² ± r)/2` with `r = √(y⁴ + 4y²δ²)`.
   Their product is `δ⁴` (the seesaw) and their sum is `y² + 2δ²`.
 * `spectral_decomposition`: four mutually orthogonal idempotents `R (b, σ)`, for branch `b` and
   sign `σ`, sum to `1`. Each satisfies `H R = σ √(|k|² + m_b²) R` and has trace `2`. So the eight
@@ -189,8 +189,8 @@ def rhoP : ℝ := (y ^ 2 + rr δ y) / 2
 def rhoM : ℝ := (y ^ 2 - rr δ y) / 2
 
 /-- Squared masses of the two branches. -/
-def massSqP : ℝ := δ ^ 2 + rhoP δ y
-def massSqM : ℝ := δ ^ 2 + rhoM δ y
+def heavyGapSq : ℝ := δ ^ 2 + rhoP δ y
+def lightGapSq : ℝ := δ ^ 2 + rhoM δ y
 
 lemma rr_pos (hy : y ≠ 0) : 0 < rr δ y := by
   unfold rr; apply Real.sqrt_pos.mpr; positivity
@@ -199,19 +199,19 @@ lemma rr_sq : rr δ y ^ 2 = y ^ 4 + 4 * y ^ 2 * δ ^ 2 := by
   unfold rr; rw [Real.sq_sqrt (by positivity)]
 
 /-- **Masses of the two branches**: product `δ⁴` (seesaw), sum `y² + 2δ²`, both nonnegative. -/
-theorem branch_masses (hy : y ≠ 0) :
-    massSqP δ y * massSqM δ y = δ ^ 4 ∧ massSqP δ y + massSqM δ y = y ^ 2 + 2 * δ ^ 2 ∧
-      0 < massSqP δ y ∧ 0 ≤ massSqM δ y := by
+theorem branch_gap_squares (hy : y ≠ 0) :
+    heavyGapSq δ y * lightGapSq δ y = δ ^ 4 ∧ heavyGapSq δ y + lightGapSq δ y = y ^ 2 + 2 * δ ^ 2 ∧
+      0 < heavyGapSq δ y ∧ 0 ≤ lightGapSq δ y := by
   have h2 := rr_sq δ y
   have hr := rr_pos δ y hy
   have hle : rr δ y ≤ y ^ 2 + 2 * δ ^ 2 := by
     rw [← Real.sqrt_sq (show 0 ≤ y ^ 2 + 2 * δ ^ 2 by positivity), rr]
     exact Real.sqrt_le_sqrt (by nlinarith [sq_nonneg (δ ^ 2)])
   refine ⟨?_, ?_, ?_, ?_⟩
-  · simp only [massSqP, massSqM, rhoP, rhoM]; nlinarith
-  · simp only [massSqP, massSqM, rhoP, rhoM]; ring
-  · simp only [massSqP, rhoP]; positivity
-  · simp only [massSqM, rhoM]; linarith
+  · simp only [heavyGapSq, lightGapSq, rhoP, rhoM]; nlinarith
+  · simp only [heavyGapSq, lightGapSq, rhoP, rhoM]; ring
+  · simp only [heavyGapSq, rhoP]; positivity
+  · simp only [lightGapSq, rhoM]; linarith
 
 lemma X_roots :
     X k δ y * X k δ y = (((rhoP δ y : ℝ) : ℂ) + ((rhoM δ y : ℝ) : ℂ)) • X k δ y -
@@ -342,26 +342,26 @@ theorem complete (hy : y ≠ 0) :
 
 /-- **Two massive Dirac particles.** For `y ≠ 0` and `|k|² + m₋² > 0`, the eight components split
 into four rank-two eigenprojectors with energies `±√(|k|² + m₊²)` and `±√(|k|² + m₋²)`. -/
-theorem two_dirac_particles (hy : y ≠ 0) (hM : 0 < msq3 k + massSqM δ y) :
+theorem two_dirac_particles (hy : y ≠ 0) (hM : 0 < msq3 k + lightGapSq δ y) :
     (∀ σ : ℂ, σ * σ = 1 →
       Hy k δ y * R k δ y (rhoP δ y) (rhoM δ y) σ =
-          (σ * (Real.sqrt (msq3 k + massSqP δ y) : ℂ)) • R k δ y (rhoP δ y) (rhoM δ y) σ ∧
+          (σ * (Real.sqrt (msq3 k + heavyGapSq δ y) : ℂ)) • R k δ y (rhoP δ y) (rhoM δ y) σ ∧
         (R k δ y (rhoP δ y) (rhoM δ y) σ).trace = 2) ∧
     (∀ σ : ℂ, σ * σ = 1 →
       Hy k δ y * R k δ y (rhoM δ y) (rhoP δ y) σ =
-          (σ * (Real.sqrt (msq3 k + massSqM δ y) : ℂ)) • R k δ y (rhoM δ y) (rhoP δ y) σ ∧
+          (σ * (Real.sqrt (msq3 k + lightGapSq δ y) : ℂ)) • R k δ y (rhoM δ y) (rhoP δ y) σ ∧
         (R k δ y (rhoM δ y) (rhoP δ y) σ).trace = 2) := by
   have hP : 0 < msq3 k + δ ^ 2 + rhoP δ y := by
-    have := (branch_masses δ y hy).2.2.1
+    have := (branch_gap_squares δ y hy).2.2.1
     have h0 : 0 ≤ msq3 k := by unfold msq3; positivity
-    simp only [massSqP] at this; linarith
-  have hM' : 0 < msq3 k + δ ^ 2 + rhoM δ y := by simp only [massSqM] at hM; linarith
+    simp only [heavyGapSq] at this; linarith
+  have hM' : 0 < msq3 k + δ ^ 2 + rhoM δ y := by simp only [lightGapSq] at hM; linarith
   refine ⟨fun σ hσ => ?_, fun σ hσ => ?_⟩
   · obtain ⟨h1, -, h3⟩ := branch_projector k δ y _ _ (roots_PM k δ y hy) hP σ hσ
-    refine ⟨by simpa [Eb, massSqP, add_assoc] using h1, ?_⟩
+    refine ⟨by simpa [Eb, heavyGapSq, add_assoc] using h1, ?_⟩
     rw [h3, trace_QP k δ y hy]; norm_num
   · obtain ⟨h1, -, h3⟩ := branch_projector k δ y _ _ (roots_MP k δ y hy) hM' σ hσ
-    refine ⟨by simpa [Eb, massSqM, add_assoc] using h1, ?_⟩
+    refine ⟨by simpa [Eb, lightGapSq, add_assoc] using h1, ?_⟩
     rw [h3, trace_QM k δ y hy]; norm_num
 
 /-- A nonzero projector has a nonzero eigen-column. -/

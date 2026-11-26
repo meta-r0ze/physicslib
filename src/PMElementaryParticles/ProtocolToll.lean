@@ -308,17 +308,17 @@ theorem survivalToll_differences (w₁ w₂ : ℝ) (a : Fin 3) :
 
 /-- **The charged order.** -/
 theorem survival_ladder {w₁ w₂ : ℝ} (h₁ : 0 < w₁) (h₂ : w₁ / 2 < w₂) (a : Fin 3) :
-    wireAmplitude (survivalToll w₁ w₂ (opposite electron)) <
-      wireAmplitude (survivalToll w₁ w₂ (downStatic a)) ∧
-    wireAmplitude (survivalToll w₁ w₂ (downStatic a)) <
-      wireAmplitude (survivalToll w₁ w₂ (upStatic a)) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (opposite electron)) <
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (downStatic a)) ∧
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (downStatic a)) <
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (upStatic a)) := by
   obtain ⟨hed, hdu⟩ := survivalToll_differences w₁ w₂ a
   constructor <;> rw [wireAmplitude_lt_iff] <;> linarith
 
 /-- **Doubling is a schedule condition.** -/
 theorem doubling_iff (w₁ w₂ : ℝ) (a : Fin 3) :
-    2 * wireAmplitude (survivalToll w₁ w₂ (downStatic a)) ≤
-      wireAmplitude (survivalToll w₁ w₂ (upStatic a)) ↔ 2 * log 2 ≤ w₂ - w₁ / 2 := by
+    2 * PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (downStatic a)) ≤
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (upStatic a)) ↔ 2 * log 2 ≤ w₂ - w₁ / 2 := by
   rw [ratio_ge_iff (by norm_num : (0 : ℝ) < 2), (survivalToll_differences w₁ w₂ a).2]
 
 /-! ### One comparison step
@@ -431,10 +431,10 @@ theorem selector_step_flags (a : Fin 3) :
 /-- With a supplied price for the single uncompensated comparison, the
 relative amplitude for a half flag is `α` exactly at this price. -/
 theorem selector_half_flag_weight_iff (α w : ℝ) (hα : 0 < α) :
-    wireAmplitude (w / 2) = α ↔ w = 4 * log (1 / α) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (w / 2) = α ↔ w = 4 * log (1 / α) := by
   calc
-    wireAmplitude (w / 2) = α ↔ exp (-(w / 2) / 2) = exp (log α) := by
-      rw [exp_log hα, wireAmplitude]
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (w / 2) = α ↔ exp (-(w / 2) / 2) = exp (log α) := by
+      rw [exp_log hα, PersistenceMechanics.EffectiveAction.attenuationWeight, one_mul]
     _ ↔ w = 4 * log (1 / α) := by
       rw [exp_eq_exp, log_div one_ne_zero hα.ne', log_one]
       constructor <;> intro h <;> linarith

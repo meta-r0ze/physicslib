@@ -35,7 +35,7 @@ Conservation gives Map and Protocol, Causality gives Toll and Governor):
 |---|---|---|
 | Capacity | the three label states; the node's conductance | `PMAction.GenerationSector`, `KronSeries` |
 | Margin | the other wall's detuning `δ_O` (a wall with no detuning is PM's "no margin, fragility": `PMAction.UndetunedWall`) | open: its size per protocol |
-| Map | label states → the protocol's persisting states: the rotation `U` | open: derived per protocol from Margin (`PMAction.WireMass`) |
+| Map | label states → the protocol's persisting states: the rotation `U` | open: derived per protocol from Margin (`PMAction.DetunedWire`) |
 | Protocol | up, down, `e`, `ν` as information over the wire | `PMConstants.CarrierRepresentation` |
 | Toll | node passage `α`; the three transfers are PM's three modes (`PersistenceMechanics.InformationTransfer`) | `NodeAmplitude`, `TransferAmplitude` |
 | Governor | the stationary reference (`δ_R = 0`) and the weak refresh | `PMAction.ReferenceDetuning`, `CarrierActions` |
@@ -47,7 +47,7 @@ Toll is derived and Margin is the open number. Fill in Margin, and Map follows.
 
 | Term | Meaning | Where |
 |---|---|---|
-| wire | the two-wall operator, its label states, its light-mass form | PMAction (`GenerationWalls`, `ReferenceWallMass`, `NativeFlavourWall`) |
+| wire | the two-wall operator, its label states, its light-mass form | PMAction (`GenerationWalls`, `ReferenceWallFactorization`, `NativeFlavourWall`) |
 | label state | the glue class a two-wall state omits (`Fin 3`); class `0` is the reference's (vector) class | `PMAction.GenerationLabel`, `GenerationWalls` |
 | protocol | the type of information on the wire | `PMElementaryParticles.ProtocolInventory` |
 | event | a charged-current event: the weak refresh on the reference's wall | `PMConstants.CarrierActions.weak`, `PMAction.WallChiralCurrent` |
@@ -55,7 +55,7 @@ Toll is derived and Margin is the open number. Fill in Margin, and Map follows.
 | `J` | label-change matrix of one event | `EventTransfer.J` |
 | in-cycle / node change | the change uses the weak carrier's own class (stays in the cycle) / a spinor class (through the reference node) | `TransferGraph.inCycle_iff` |
 | on / off the reference axis | where a carrier sits relative to axis `0`; fixes the readout (one leg, probability / two legs, amplitude) | `CarrierRepresentation.lepton_axis_split`, `NodeElimination` |
-| `U` | persistence rotation of a protocol: persisting states versus label states | PMAction (`ReferenceWallMass`), PMElementaryParticles |
+| `U` | persistence rotation of a protocol: persisting states versus label states | PMAction (`ReferenceWallFactorization`), PMElementaryParticles |
 
 The three label changes (`EventTransfer.entry_of_class`, `TransferGraph`):
 
@@ -66,7 +66,7 @@ The three label changes (`EventTransfer.entry_of_class`, `TransferGraph`):
 | `1` (spinor) | `0 → 2` | node, class on the other wall in label `0` | `\|V_ub\| = s₁₃` / `sin²θ₁₃` |
 
 Naming label `1` the second and `2` the first is the wall-naming convention; the wire's masses, with
-the carriers placed by glue arithmetic (`PMAction.WireMass`), give the same names. The names conduction,
+the carriers placed by glue arithmetic (`PMAction.DetunedWire`), give the same names. The names conduction,
 promotion and jump (`TransferGraph.mode`) are a candidate reading; they rest on one premise (the
 reference-wall crossing is one step). Older modules and parts of the OVERVIEW say "generation" for a
 label state.

@@ -1,5 +1,5 @@
 import PMAction.ConcreteFermion
-import PMAction.DetuningMass
+import PMAction.DetuningGap
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 
 /-!
@@ -27,8 +27,8 @@ open Matrix ConcreteFermion DomainWallSpectrum
 /-- **Every energy is on the light or the heavy branch** (the actual sine-momentum Hamiltonian). -/
 theorem branches (k : Fin 3 → ℝ) (E : ℝ) (v : Sites → ℂ) (hv : v ≠ 0)
     (he : hamiltonian k (wilson k) *ᵥ v = E • v) :
-    E ^ 2 = kineticNorm k + (DetuningMass.lightMass (wilson k)) ^ 2 ∨
-      E ^ 2 = kineticNorm k + (DetuningMass.lightMass (wilson k) + 1) ^ 2 := by
+    E ^ 2 = kineticNorm k + (DetuningGap.lightGap (wilson k)) ^ 2 ∨
+      E ^ 2 = kineticNorm k + (DetuningGap.lightGap (wilson k) + 1) ^ 2 := by
   have hk := kinetic_relations alpha beta gamma k clifford alpha_gamma
   exact energy_branches (momentum alpha k) beta gamma (wilson k) (kineticNorm k) E
     beta_square gamma_square beta_gamma hk.1 hk.2.1 hk.2.2 v hv he
@@ -76,18 +76,18 @@ with `|a pⱼ| ≤ 1`, a light-branch energy satisfies
 `|E²/a² − |p|²| ≤ (3/4) a² Σ pⱼ⁴ + a⁶ |p|⁸ / 16`. -/
 theorem light_continuum (p : Fin 3 → ℝ) (a : ℝ) (ha : 0 < a) (hsmall : ∀ j, |a * p j| ≤ 1)
     (E : ℝ) (hlight : E ^ 2 = kineticNorm (fun j => a * p j) +
-      (DetuningMass.lightMass (wilson (fun j => a * p j))) ^ 2) :
+      (DetuningGap.lightGap (wilson (fun j => a * p j))) ^ 2) :
     |E ^ 2 / a ^ 2 - psq p| ≤ 3 / 4 * a ^ 2 * ∑ j, p j ^ 4 + a ^ 6 * psq p ^ 4 / 16 := by
   set k : Fin 3 → ℝ := fun j => a * p j
   set w := wilson k
-  set lm := DetuningMass.lightMass w
+  set lm := DetuningGap.lightGap w
   have ha2 : 0 < a ^ 2 := by positivity
   have hw0 : 0 ≤ w := (wilson_bounds k).1
   have hwle : w ≤ a ^ 2 * psq p / 2 := by
     have := wilson_le k
     simp only [k, mul_pow, ← Finset.mul_sum] at this
     simpa [psq] using this
-  have hlm := DetuningMass.mass_le w
+  have hlm := DetuningGap.gap_le w
   have hlm2 : lm ^ 2 ≤ (a ^ 2 * psq p / 2) ^ 4 := by
     have h1 : lm ^ 2 ≤ (w ^ 2) ^ 2 := by nlinarith [hlm.1, hlm.2]
     have h2 : (w ^ 2) ^ 2 ≤ (a ^ 2 * psq p / 2) ^ 4 := by
@@ -118,9 +118,9 @@ theorem light_continuum (p : Fin 3 → ℝ) (a : ℝ) (ha : 0 < a) (hsmall : ∀
 
 /-- **The heavy branch decouples**: its energies satisfy `E²/a² ≥ 1/a²`. -/
 theorem heavy_decouples (k : Fin 3 → ℝ) (a : ℝ) (ha : 0 < a) (E : ℝ)
-    (hheavy : E ^ 2 = kineticNorm k + (DetuningMass.lightMass (wilson k) + 1) ^ 2) :
+    (hheavy : E ^ 2 = kineticNorm k + (DetuningGap.lightGap (wilson k) + 1) ^ 2) :
     1 / a ^ 2 ≤ E ^ 2 / a ^ 2 := by
-  have h0 := (DetuningMass.mass_le (wilson k)).1
+  have h0 := (DetuningGap.gap_le (wilson k)).1
   have hk := kinetic_nonnegative k
   apply div_le_div_of_nonneg_right _ (by positivity)
   nlinarith
@@ -129,7 +129,7 @@ theorem heavy_decouples (k : Fin 3 → ℝ) (a : ℝ) (ha : 0 < a) (E : ℝ)
 light-branch energies at lattice momentum `a p` satisfies `E(a)²/a² → |p|²` as `a → 0⁺`. -/
 theorem light_tendsto (p : Fin 3 → ℝ) (E : ℝ → ℝ)
     (hE : ∀ a : ℝ, 0 < a → E a ^ 2 = kineticNorm (fun j => a * p j) +
-      (DetuningMass.lightMass (wilson (fun j => a * p j))) ^ 2) :
+      (DetuningGap.lightGap (wilson (fun j => a * p j))) ^ 2) :
     Filter.Tendsto (fun a => E a ^ 2 / a ^ 2) (nhdsWithin 0 (Set.Ioi 0)) (nhds (psq p)) := by
   set P := ∑ j, |p j| + 1
   have hP : 0 < P := by positivity

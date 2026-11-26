@@ -52,14 +52,14 @@ lemma gibbs_residual (β cost : ℝ) :
 
 /-- Attempt choice and sampled carrier are independent in this specified model. -/
 def mass (c : Fin 3) (p : ℝ) : Bool × CarrierEvents.Carrier c → ℝ :=
-  fun ω => EventAccounting.binaryMass p ω.1 * uniform ω.2
+  fun ω => EventAccounting.binaryPMF p ω.1 * uniform ω.2
 
 def event (c : Fin 3) : Finset (Bool × CarrierEvents.Carrier c) :=
   univ.filter (fun ω => ω.1 = true ∧ ω.2 ∈ CarrierEvents.active c)
 
 lemma mass_normalized (c : Fin 3) (p : ℝ) : (∑ ω, mass c p ω) = 1 := by
   simp [mass, uniform, Fintype.sum_prod_type, CarrierEvents.carrier_card,
-    EventAccounting.binaryMass]
+    EventAccounting.binaryPMF]
   ring
 
 lemma mass_nonnegative (c : Fin 3) (p : ℝ) (h0 : 0 ≤ p) (h1 : p ≤ 1) :
@@ -74,9 +74,9 @@ theorem expected_root_cost (c : Fin 3) (p toll : ℝ) :
     EventAccounting.cost toll (mass c p) (fun _ : Fin 1 => event c) = p * toll / 2 := by
   rw [EventAccounting.weighted_linear]
   simp only [Fin.sum_univ_one]
-  have hm : EventAccounting.eventMass (mass c p) (event c) = p/2 := by
-    simp only [EventAccounting.eventMass, event, Finset.sum_filter, Fintype.sum_prod_type]
-    simp [mass, uniform, EventAccounting.binaryMass, ← Finset.sum_filter,
+  have hm : EventAccounting.eventWeight (mass c p) (event c) = p/2 := by
+    simp only [EventAccounting.eventWeight, event, Finset.sum_filter, Fintype.sum_prod_type]
+    simp [mass, uniform, EventAccounting.binaryPMF, ← Finset.sum_filter,
       CarrierEvents.active_card, CarrierEvents.carrier_card]
     ring
   rw [hm]

@@ -2,15 +2,15 @@ import PMAction.LightSplit
 import PMAction.ReferenceDetuning
 
 /-!
-# The light mass with no detuning on the reference's wall
+# Factorization of the light block with no reference-wall detuning
 
 `PMAction.ReferenceDetuning.stationary_iff`: the reference background, on the second wall, is a
 stationary zero mode exactly when that wall's on-site detuning vanishes. The second wall is the
-`D₂` slot of `CompositeMass` (wall `false`; `Y` maps it to wall `true`). So `δ_F = 0`, and the
+`D₂` slot of `CompositeSchur` (wall `false`; `Y` maps it to wall `true`). So `δ_F = 0`, and the
 light mass of `LightSplit.composite_expansion2` factors:
 
-* `reference_wall_mass`: `M = cyc κ_R · Y⁻¹ · (δ_O + cyc κ_O) = D_R · (δ_O + cyc κ_O)`,
-  `D_R = diag(κ_R/y)` (shifted to the generation index as in `CompositeMass.cyc_mul_cycInv`).
+* `reference_wall_factorization`: `M = cyc κ_R · Y⁻¹ · (δ_O + cyc κ_O) = D_R · (δ_O + cyc κ_O)`,
+  `D_R = diag(κ_R/y)` (shifted to the generation index as in `CompositeSchur.cyc_mul_cycInv`).
 
 So the hierarchy is the reference-wall carriers `κ_R(e g)` of each generation's label class. The
 right factor `δ_O + cyc κ_O` carries the other wall's detuning and carriers. It is close to
@@ -23,13 +23,13 @@ off the reference's wall.
 -/
 
 noncomputable section
-namespace PMAction.ReferenceWallMass
-open Matrix PMAction.CyclicSeesaw PMAction.CompositeMass
+namespace PMAction.ReferenceWallFactorization
+open Matrix PMAction.CyclicSeesaw PMAction.CompositeSchur
 
-/-- **With no detuning on the reference's wall the light mass factors as `D_R (δ_O + cyc κ_O)`.** -/
-theorem reference_wall_mass (y κ κ' : Fin 3 → ℂ) (δT : ℂ) (hy : ∀ j, y j ≠ 0) :
+/-- **With no detuning on the reference wall the light block factors as `D_R (δ_O + cyc κ_O)`.** -/
+theorem reference_wall_factorization (y κ κ' : Fin 3 → ℂ) (δT : ℂ) (hy : ∀ j, y j ≠ 0) :
     ((0 : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) + cyc κ) * (cyc y)⁻¹ * (δT • 1 + cyc κ') =
       diagonal ![κ 2 * (y 2)⁻¹, κ 0 * (y 0)⁻¹, κ 1 * (y 1)⁻¹] * (δT • 1 + cyc κ') := by
   rw [zero_smul, zero_add, inv_cyc y hy, cyc_mul_cycInv]
 
-end PMAction.ReferenceWallMass
+end PMAction.ReferenceWallFactorization

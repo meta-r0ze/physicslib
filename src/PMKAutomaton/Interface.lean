@@ -136,8 +136,8 @@ namespace Cost
 
 export PMSubstrate.NetCost (prob expectedCost expected_count_linear)
 export PMAction.DiagonalReadout (flag flag_bounds transport_eq_diagonal transport_flag state_flag)
-export PMAction.TollAmplitude (scheduleToll rare_registration_limit unflagged_scale wireWeight
-  wireAmplitude wireAmplitude_eq wireAmplitude_sq wireAmplitude_lt_iff amplitude_ratio
+export PMAction.TollAmplitude (weightedFlagCost rare_registration_limit unflagged_scale
+  wireAmplitude_sq wireAmplitude_lt_iff amplitude_ratio
   ratio_ge_iff schedule_factorizes)
 export PMAction.PersistenceSelection (most_persistent_iff_cheapest within_family_iff_cheapest
   survival_strictAnti event_price_pos)

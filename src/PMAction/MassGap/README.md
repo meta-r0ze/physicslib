@@ -37,10 +37,10 @@ The chain, one file per step:
 6. The regime is not empty, and the degree bound is proved: `SlabGap.regime_numerics`
    (`μ = √q`), `SlabDegree.slab_degree_le`.
 
-Concrete form (`CubicBox.box_mass_gap`): space is the `d`-dimensional box of any side, so spacetime
+Concrete form (`CubicBox.box_transfer_gap`): space is the `d`-dimensional box of any side, so spacetime
 is `(d+1)`-dimensional (`d = 3` gives Euclidean 4D). With `q = e^{−β}`, if
 `β ≥ 2 log(16 (32d² + 64d + 1)²)` (`≈ 30.2` for `d = 3`), every flip-even excited state has mass
-`≥ β/2` per tick, uniformly in the box size (`SlabGap.slab_mass_gap`: gap = coupling, as in
+`≥ β/2` per tick, uniformly in the box size (`SlabGap.slab_transfer_gap`: gap = coupling, as in
 `DefectGap.gap_eq_coupling`). The constant is crude, not optimized.
 
 Check it: `lake build PMAction.MassGap`, then
@@ -83,7 +83,7 @@ the continuum `SU(N)` (Clay) problem.
 | `Walsh` | Walsh expansion; flip-even functions have only even characters. |
 | `SpectralBounds` | Spectral sum; **visible top** `κΛᴸ ≤ ⟨v, (T²)ᴸ v⟩ ≤ KΛᴸ`; `rate_le`. |
 | `SlabDegree` | Plaquette-graph degree of the slab `≤ max(k,4)·(m+8Δ)`, independent of `L`. |
-| `CubicBox` | `d`-dimensional boxes built by iterating the slab step; explicit bounds (`k ≤ 4`, `m ≤ 8d²`, `Δ = 2d`); **`box_mass_gap`**. |
+| `CubicBox` | `d`-dimensional boxes built by iterating the slab step; explicit bounds (`k ≤ 4`, `m ≤ 8d²`, `Δ = 2d`); **`box_transfer_gap`**. |
 | `SlabGap` | **The gap**: in the flip-even sector of `T²`, every eigenvalue is `≤ μ²Λ` or equals the top `Λ` (eigenvector seen by `v₀`); the even top is simple. Uniform in volume and slab length. |
 
 ## Status
@@ -133,7 +133,7 @@ This branch cannot reach that, for structural reasons rather than lack of effort
 
 **Goal.** A self-contained, formally verified claim that an outside expert can check without
 accepting PM: a volume-uniform mass gap for the ℤ/2 lattice with distinction cost
-(`SlabGap.slab_gap_explicit`, `CubicBox.box_mass_gap`), proved by Peierls contours, Dobrushin's
+(`SlabGap.slab_gap_explicit`, `CubicBox.box_transfer_gap`), proved by Peierls contours, Dobrushin's
 criterion, a supersolution clustering bound and transfer-matrix spectral bounds. The PM reading
 (this lattice *is* PM's distinction substrate, `PMSubstrate.Distinctions.only_distinctions_cost`)
 is an interpretation layered on top.

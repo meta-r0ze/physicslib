@@ -27,7 +27,7 @@ e8p reads PMFlavor only through this module and compares these values with measu
 
 **Readout names.** `vub = s₁₃` is the jump, the other-wall node crossing, and `vcb` the reference-wall
 entry: `TransferGraph`'s naming, which the wire's masses with the derived carrier placement
-(`PMAction.WireMass`) also give (lightest label `2`, middle `1`, heavy `0`; REVIEW item 0).
+(`PMAction.DetunedWire`) also give (lightest label `2`, middle `1`, heavy `0`; REVIEW item 0).
 -/
 
 noncomputable section

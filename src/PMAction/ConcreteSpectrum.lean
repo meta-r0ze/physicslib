@@ -50,28 +50,28 @@ lemma blockDiagonal_charpoly (B : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ) :
 /-- Both blocks have the same characteristic polynomial. -/
 theorem block_polynomial (s δ : ℝ) (i : Fin 4) :
     (block s δ i).charpoly =
-      (X-C ((s+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ))*
-      (X-C ((s+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ)) := by
-  have hd : δ^2=(DetuningMass.lightMass δ)^2+DetuningMass.lightMass δ := by
-    nlinarith [DetuningMass.mass_relation δ]
+      (X-C ((s+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ))*
+      (X-C ((s+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ)) := by
+  have hd : δ^2=(DetuningGap.lightGap δ)^2+DetuningGap.lightGap δ := by
+    nlinarith [DetuningGap.gap_relation δ]
   rw [charpoly_fin_two]
-  have ht : (block s δ i).trace = ((s+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ)+
-      ((s+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ) := by
+  have ht : (block s δ i).trace = ((s+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ)+
+      ((s+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ) := by
     have hreal₁ : s+δ^2+(s+δ^2+1) =
-        (s+(DetuningMass.lightMass δ)^2)+(s+(DetuningMass.lightMass δ+1)^2) := by
-      nlinarith [DetuningMass.mass_relation δ]
+        (s+(DetuningGap.lightGap δ)^2)+(s+(DetuningGap.lightGap δ+1)^2) := by
+      nlinarith [DetuningGap.gap_relation δ]
     have hreal₂ : s+δ^2+1+(s+δ^2) =
-        (s+(DetuningMass.lightMass δ)^2)+(s+(DetuningMass.lightMass δ+1)^2) := by
-      nlinarith [DetuningMass.mass_relation δ]
+        (s+(DetuningGap.lightGap δ)^2)+(s+(DetuningGap.lightGap δ+1)^2) := by
+      nlinarith [DetuningGap.gap_relation δ]
     unfold block
     split_ifs <;> simp [trace, Fin.sum_univ_two]
     · exact_mod_cast hreal₁
     · exact_mod_cast hreal₂
   have hdet : (block s δ i).det =
-      ((s+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ)*
-      ((s+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ) := by
+      ((s+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ)*
+      ((s+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ) := by
     have hreal : (s+δ^2)*(s+δ^2+1)-δ*δ =
-        (s+(DetuningMass.lightMass δ)^2)*(s+(DetuningMass.lightMass δ+1)^2) := by
+        (s+(DetuningGap.lightGap δ)^2)*(s+(DetuningGap.lightGap δ+1)^2) := by
       calc
         _ = (s+δ^2)*(s+δ^2+1)-δ^2 := by ring
         _ = _ := by rw [hd]; ring
@@ -80,32 +80,32 @@ theorem block_polynomial (s δ : ℝ) (i : Fin 4) :
     · exact_mod_cast hreal
     · exact_mod_cast (by nlinarith [hreal] :
         (s+δ^2+1)*(s+δ^2)-δ*δ =
-        (s+(DetuningMass.lightMass δ)^2)*(s+(DetuningMass.lightMass δ+1)^2))
+        (s+(DetuningGap.lightGap δ)^2)*(s+(DetuningGap.lightGap δ+1)^2))
   rw [ht,hdet,map_add,map_mul]
   ring
 
 /-- Both squared-energy branches occur, each with algebraic multiplicity four. -/
 theorem square_charpoly (k : Fin 3 → ℝ) (δ : ℝ) :
     (hamiltonian k δ*hamiltonian k δ).charpoly =
-      (X-C ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ))^4 *
-      (X-C ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ))^4 := by
+      (X-C ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ))^4 *
+      (X-C ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ))^4 := by
   rw [← charpoly_reindex pairIndex, square_blocks, blockDiagonal_charpoly]
   simp_rw [block_polynomial]
   simp [mul_pow]
 
 theorem branches_distinct (s δ : ℝ) :
-    (s+(DetuningMass.lightMass δ)^2 : ℝ) < s+(DetuningMass.lightMass δ+1)^2 := by
-  have hm := (DetuningMass.mass_le δ).1
+    (s+(DetuningGap.lightGap δ)^2 : ℝ) < s+(DetuningGap.lightGap δ+1)^2 := by
+  have hm := (DetuningGap.gap_le δ).1
   nlinarith
 
 /-- Root multiplicity here is the algebraic multiplicity of H², not signed H. -/
 theorem square_branch_multiplicities (k : Fin 3 → ℝ) (δ : ℝ) :
     (hamiltonian k δ*hamiltonian k δ).charpoly.rootMultiplicity
-      ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ) = 4 ∧
+      ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ) = 4 ∧
     (hamiltonian k δ*hamiltonian k δ).charpoly.rootMultiplicity
-      ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ) = 4 := by
-  let a : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ)^2 : ℝ) : ℂ)
-  let b : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningMass.lightMass δ+1)^2 : ℝ) : ℂ)
+      ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ) = 4 := by
+  let a : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ)^2 : ℝ) : ℂ)
+  let b : ℂ := ((DomainWallSpectrum.kineticNorm k+(DetuningGap.lightGap δ+1)^2 : ℝ) : ℂ)
   have hab : a ≠ b := by
     intro h
     have hr := Complex.ofReal_injective h

@@ -137,7 +137,7 @@ export PMConstants.FermionMassLaw (kappa_cost_light kappa_amp_light massA_event_
 export PMConstants (footprint overhead)
 export PMConstants.CertifiedConstants (α)
 export PMConstants.StrongLedgerTest (ledgerCoupling alpha_footprint_bounds ledger_twelve ledger_separation)
-export PMAction.WallDispersion (massSqM rr)
+export PMAction.WallDispersion (lightGapSq rr)
 export PMConstants.VevEntry (link_kappa_neg economy_law_A)
 export PMConstants.VevCorrections (V Y x V_bounds Y_val x_bounds)
 

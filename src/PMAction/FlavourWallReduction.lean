@@ -212,9 +212,9 @@ theorem hermitian_energy_iff (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ)
 realized in the full Hamiltonian; it is not merely a formal dispersion root. -/
 theorem hermitian_light_state (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix f f ℂ)
     (hY : Y.IsHermitian) (j : f) (hj : hY.eigenvalues j ≠ 0)
-    (hM : 0<WallDispersion.msq3 k+WallDispersion.massSqM δ (hY.eigenvalues j)) :
+    (hM : 0<WallDispersion.msq3 k+WallDispersion.lightGapSq δ (hY.eigenvalues j)) :
     ∃ w : Ix f → ℂ, w ≠ 0 ∧ WallExchange.H k δ Y *ᵥ w=
-      (Real.sqrt (WallDispersion.msq3 k+WallDispersion.massSqM δ (hY.eigenvalues j)) : ℂ) • w := by
+      (Real.sqrt (WallDispersion.msq3 k+WallDispersion.lightGapSq δ (hY.eigenvalues j)) : ℂ) • w := by
   apply (hermitian_energy_iff k δ Y hY _).mpr
   have h:= (WallDispersion.two_dirac_particles k δ (hY.eigenvalues j) hj hM).2 1 (by norm_num)
   have he := h.1

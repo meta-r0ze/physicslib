@@ -1,12 +1,12 @@
-import PMAction.CompositeMass
+import PMAction.CompositeSchur
 
 /-!
 # The resonance zero mode is exact on the full two-wall Hamiltonian
 
 `OtherWallStationary`: economy puts the other wall's flip on the cycle resonance, where the light
-mass `M = D₂ Y⁻¹ D₁ᴴ` has a null vector (`massless_iff`), for any reference-wall carriers and any
+mass `M = D₂ Y⁻¹ D₁ᴴ` has a null vector when the light operator is singular, for any reference-wall carriers and any
 protocol weight on the heavy label. `M` is the zero-energy Schur complement of the full Hamiltonian
-`H = [[0, V], [Vᴴ, G]]` (light modes, gapped modes; `CompositeMass.effective_mass_general`), so its
+`H = [[0, V], [Vᴴ, G]]` (light modes, gapped modes; `CompositeSchur.composite_schur_blocks`), so its
 null vector is not only a leading-order statement:
 
 * `exact_zero_mode`: if `M v = 0` with `v ≠ 0` and the crossing link `Y` invertible, then
@@ -20,7 +20,7 @@ excludes, or a term from the protocol register (PMElementaryParticles REVIEW, "L
 
 noncomputable section
 namespace PMAction.ExactZeroMode
-open Matrix PMAction.WallSeesaw PMAction.CompositeMass
+open Matrix PMAction.WallSeesaw PMAction.CompositeSchur
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
@@ -42,7 +42,7 @@ theorem exact_zero_mode (Y D₁ D₂ : Matrix n n ℂ) (hY : IsUnit Y.det) (v : 
     have := congrFun h (Sum.inl (Sum.inl i))
     simpa [hx] using this
   · have heff : -(V2 D₁ D₂ * Ginv Y * (V2 D₁ D₂)ᴴ) *ᵥ x = 0 := by
-      rw [effective_mass_general, hx]
+      rw [composite_schur_blocks, hx]
       ext i; rcases i with i | i
       · simp [fromBlocks_mulVec]
       · simpa [fromBlocks_mulVec] using congrFun hM i

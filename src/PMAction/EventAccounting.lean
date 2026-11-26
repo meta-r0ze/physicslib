@@ -8,16 +8,16 @@ namespace PMAction.EventAccounting
 open Finset
 variable {Ω : Type*} [Fintype Ω] [DecidableEq Ω]
 
-def eventMass (mass : Ω → ℝ) (E : Finset Ω) : ℝ := ∑ ω ∈ E, mass ω
+def eventWeight (law : Ω → ℝ) (E : Finset Ω) : ℝ := ∑ ω ∈ E, law ω
 
-def cost (toll : ℝ) (mass : Ω → ℝ) {n : ℕ} (E : Fin n → Finset Ω) : ℝ :=
-  ∑ ω, mass ω*(toll*∑ i, if ω ∈ E i then (1 : ℝ) else 0)
+def cost (toll : ℝ) (law : Ω → ℝ) {n : ℕ} (E : Fin n → Finset Ω) : ℝ :=
+  ∑ ω, law ω*(toll*∑ i, if ω ∈ E i then (1 : ℝ) else 0)
 
 /-- One common primitive toll, with each event counted exactly once. -/
-theorem weighted_linear (toll : ℝ) (mass : Ω → ℝ) {n : ℕ} (E : Fin n → Finset Ω) :
-    cost toll mass E=toll*∑ i, eventMass mass (E i) := by
+theorem weighted_linear (toll : ℝ) (law : Ω → ℝ) {n : ℕ} (E : Fin n → Finset Ω) :
+    cost toll law E=toll*∑ i, eventWeight law (E i) := by
   calc
-    cost toll mass E = ∑ i, toll*∑ ω, if ω ∈ E i then mass ω else 0 := by
+    cost toll law E = ∑ i, toll*∑ ω, if ω ∈ E i then law ω else 0 := by
       unfold cost
       simp_rw [mul_sum]
       rw [sum_comm]
@@ -26,35 +26,39 @@ theorem weighted_linear (toll : ℝ) (mass : Ω → ℝ) {n : ℕ} (E : Fin n �
       apply sum_congr rfl
       intro ω _
       split_ifs <;> simp_all; ring
-    _ = ∑ i, toll*eventMass mass (E i) := by
+    _ = ∑ i, toll*eventWeight law (E i) := by
       apply sum_congr rfl
       intro i _
       congr 1
       rw [← sum_filter]
-      simp [eventMass]
-    _ = toll*∑ i, eventMass mass (E i) := (mul_sum _ _ _).symm
+      simp [eventWeight]
+    _ = toll*∑ i, eventWeight law (E i) := (mul_sum _ _ _).symm
 
-/-- The old uniform counting theorem is a special case of the same event accounting. -/
+omit [DecidableEq Ω] in
+/-- The weight of a uniformly sampled event is the substrate probability. -/
+theorem uniform_eventWeight (E : Finset Ω) :
+    eventWeight (fun _ => 1 / (Fintype.card Ω : ℝ)) E = PMSubstrate.NetCost.prob E := by
+  simp [eventWeight, PMSubstrate.NetCost.prob,
+    PMSubstrate.PersistenceEvents.uniformEventProbability, nsmul_eq_mul, div_eq_mul_inv]
+
+/-- Uniform sampling specializes the weighted account to the substrate cost. -/
 theorem uniform_recovers_netCost (toll : ℝ) {n : ℕ} (E : Fin n → Finset Ω) :
     cost toll (fun _ => 1/(Fintype.card Ω : ℝ)) E=PMSubstrate.NetCost.expectedCost toll E := by
-  unfold cost PMSubstrate.NetCost.expectedCost
-  rw [sum_div]
-  apply sum_congr rfl
-  intro ω _
-  ring
+  rw [weighted_linear, PMSubstrate.NetCost.expected_count_linear]
+  simp only [uniform_eventWeight]
 
-def binaryMass (p : ℝ) (b : Bool) : ℝ := if b then p else 1-p
+def binaryPMF (p : ℝ) (b : Bool) : ℝ := if b then p else 1-p
 
-theorem binary_normalized (p : ℝ) : (∑ b, binaryMass p b)=1 := by
-  simp [binaryMass]
+theorem binary_normalized (p : ℝ) : (∑ b, binaryPMF p b)=1 := by
+  simp [binaryPMF]
 
-theorem binary_nonnegative {p : ℝ} (h0 : 0 ≤ p) (h1 : p ≤ 1) : ∀ b, 0 ≤ binaryMass p b := by
-  intro b; cases b <;> simp [binaryMass] <;> linarith
+theorem binary_nonnegative {p : ℝ} (h0 : 0 ≤ p) (h1 : p ≤ 1) : ∀ b, 0 ≤ binaryPMF p b := by
+  intro b; cases b <;> simp [binaryPMF] <;> linarith
 
 /-- An explicit binary event, not a cost defined directly as a curvature score. -/
 theorem binary_flag_cost (toll p : ℝ) :
-    cost toll (binaryMass p) (fun _ : Fin 1 => ({true} : Finset Bool))=toll*p := by
+    cost toll (binaryPMF p) (fun _ : Fin 1 => ({true} : Finset Bool))=toll*p := by
   rw [weighted_linear]
-  simp [eventMass, binaryMass]
+  simp [eventWeight, binaryPMF]
 
 end PMAction.EventAccounting

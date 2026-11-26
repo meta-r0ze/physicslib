@@ -18,7 +18,7 @@ is gapped by `Y`.
 
 * `gapped_inverse`: for invertible `Y`, the gapped block `G = [[0, −Y], [−Yᴴ, 0]]` has inverse
   `[[0, −(Yᴴ)⁻¹], [−Y⁻¹, 0]]`.
-* `effective_mass`: the zero-energy Schur complement onto the zero modes, `−V G⁻¹ Vᴴ`, is
+* `effective_light_block`: the zero-energy Schur complement onto the zero modes, `−V G⁻¹ Vᴴ`, is
   `[[0, δ² (Yᴴ)⁻¹], [δ² Y⁻¹, 0]]`. The light chiral modes acquire the Dirac mass `M = δ² Y⁻¹`
   coupling wall 1's right-handed mode to wall 2's left-handed mode.
 * `seesaw`: `M Mᴴ = δ⁴ (Yᴴ Y)⁻¹`: the light masses are `δ²/σᵢ(Y)`, inversely proportional to the
@@ -48,7 +48,7 @@ and if `Y` is the equal-class crossing the E₈ gluing allows (the flavour secto
 diagonal is zero. If it is also Hermitian (the exchange symmetry of `WallExchange`), it cannot carry
 a charged hierarchy through this formula (`PMAction.InterWallDiagonal`), and with flavour-dependent
 on-site insertions the reduction `D Y⁻¹ D` leaves the two light generations degenerate at leading
-order (`PMAction.MassInsertion`); the flavour sector then needs a term joining the two zero modes
+order (`PMAction.LabelInsertion`); the flavour sector then needs a term joining the two zero modes
 directly, which this Hamiltonian does not contain. The crossing itself is directional (a weighted
 cyclic shift); without the exchange symmetry these exclusions do not apply, and this formula gives one
 Dirac pair per class with mass `δ²/|y_c|`. These are statements about this Hamiltonian; the physical
@@ -105,7 +105,7 @@ theorem gapped_inverse (Y : Matrix n n ℂ) (hY : IsUnit Y.det) :
 def light (δ : ℝ) (Y : Matrix n n ℂ) : Matrix n n ℂ := (δ ^ 2 : ℝ) • Y⁻¹
 
 /-- **The light Dirac mass from the zero-energy Schur complement.** -/
-theorem effective_mass (Y : Matrix n n ℂ) (δ : ℝ) :
+theorem effective_light_block (Y : Matrix n n ℂ) (δ : ℝ) :
     -(V δ * Ginv Y * (V δ)ᴴ) = fromBlocks 0 (light δ Yᴴ) (light δ Y) (0 : Matrix n n ℂ) := by
   rw [V, Ginv, fromBlocks_conjTranspose, fromBlocks_multiply, fromBlocks_multiply, light, light]
   simp [smul_smul, pow_two, fromBlocks_neg]

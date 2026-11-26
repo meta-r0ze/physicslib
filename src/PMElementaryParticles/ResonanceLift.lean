@@ -155,10 +155,10 @@ theorem full_zero_iff (Y R A : Matrix n n ℂ) (hY : IsUnit Y.det) (hR : IsUnit 
   constructor
   · rintro ⟨w, hw, hz⟩
     by_contra hA
-    let V := CompositeMass.V2 Aᴴ R
+    let V := CompositeSchur.V2 Aᴴ R
     have hV : IsUnit V.det := by
-      change IsUnit (CompositeMass.V2 Aᴴ R).det
-      rw [CompositeMass.V2, det_fromBlocks_zero₂₁, det_conjTranspose]
+      change IsUnit (CompositeSchur.V2 Aᴴ R).det
+      rw [CompositeSchur.V2, det_fromBlocks_zero₂₁, det_conjTranspose]
       exact (isUnit_iff_ne_zero.mpr hA).star.mul hR
     have hVh : IsUnit Vᴴ.det := by rw [det_conjTranspose]; exact hV.star
     let x := w ∘ Sum.inl

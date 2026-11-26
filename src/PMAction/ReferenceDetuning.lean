@@ -3,7 +3,7 @@ import PMAction.ChiralityConvention
 /-!
 # The reference wall carries no on-site detuning
 
-`DetuningMass` adds the on-site detuning `δβ` on both sectors equally; nothing fixes the value per
+`DetuningGap` adds the on-site detuning `δβ` on both sectors equally; nothing fixes the value per
 wall. `ChiralityConvention.physicalBackground` places Paper II's stationary reference background on
 the second wall, components `(0, 0, a, b)`. Allow a separate detuning on each wall:
 `Hw δ₁ δ₂ = [[δ₁β, hop], [back, δ₂β]]` at `k = 0` (`Hw_equal`: `Hw δ δ = hamiltonian 0 δ`).

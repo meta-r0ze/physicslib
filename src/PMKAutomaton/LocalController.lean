@@ -545,7 +545,7 @@ theorem receiver_dual_flag_counterexample :
     their weights. The shift, root trial and other accounts are separate. -/
 noncomputable def traceExchangeToll (rule : Rule) (s : State) (x : ℤ)
     (value : Bool → Fin 2 → ℂ) {N : ℕ} (weights : Fin N → ℝ) : ℝ :=
-  TollAmplitude.scheduleToll 0 weights fun j =>
+  TollAmplitude.weightedFlagCost 0 weights fun j =>
     let state := (rawTick rule)^[j.val] s
     exchangeFlag (rule state.1 (state.2.1 x).1)
       (OpenReferenceFlow.streamShift OpenReferenceFlow.line state.2.2 x) value
@@ -554,7 +554,7 @@ theorem uniform_trace_exchange_toll (rule : Rule) (s : State) (x : ℤ) (v : Boo
     (hs : ∀ i, s.2.2 i = (v, v)) (value : Bool → Fin 2 → ℂ)
     {N : ℕ} (weights : Fin N → ℝ) :
     traceExchangeToll rule s x value weights = 0 := by
-  unfold traceExchangeToll TollAmplitude.scheduleToll
+  unfold traceExchangeToll TollAmplitude.weightedFlagCost
   simp only [zero_add]
   apply Finset.sum_eq_zero
   intro j _
@@ -571,22 +571,22 @@ theorem uniform_flag_persistence_tie (F : Set Rule) (i : Rule) (hi : i ∈ F)
     (s : State) (x : ℤ) (v : Bool) (hs : ∀ j, s.2.2 j = (v, v))
     (value : Bool → Fin 2 → ℂ) {N : ℕ} (weights : Fin N → ℝ) (baseline : ℝ) :
     ∀ j ∈ F,
-      TollAmplitude.wireAmplitude (baseline + traceExchangeToll j s x value weights) ≤
-      TollAmplitude.wireAmplitude (baseline + traceExchangeToll i s x value weights) := by
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (baseline + traceExchangeToll j s x value weights) ≤
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (baseline + traceExchangeToll i s x value weights) := by
   let cost := fun rule => traceExchangeToll rule s x value weights
   have h := (PersistenceSelection.within_family_iff_cheapest (1 / 2) (by norm_num)
     cost F baseline i).mpr ⟨hi, fun j _ => by
       simp only [cost, uniform_trace_exchange_toll _ s x v hs value weights, le_refl]⟩
   intro j hj
-  simpa [TollAmplitude.wireAmplitude, cost, div_eq_mul_inv, mul_comm] using h.2 j hj
+  simpa [PersistenceMechanics.EffectiveAction.attenuationWeight, one_mul, cost, div_eq_mul_inv, mul_comm] using h.2 j hj
 
 /-- On these inputs a strict preference requires a difference in the
     remaining paid work. The certified exchange flags cancel. -/
 theorem uniform_remaining_cost_iff (a b : Rule) (s : State) (x : ℤ) (v : Bool)
     (hs : ∀ j, s.2.2 j = (v, v)) (value : Bool → Fin 2 → ℂ)
     {N : ℕ} (weights : Fin N → ℝ) (remaining : Rule → ℝ) :
-    TollAmplitude.wireAmplitude (traceExchangeToll b s x value weights + remaining b) <
-        TollAmplitude.wireAmplitude (traceExchangeToll a s x value weights + remaining a) ↔
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (traceExchangeToll b s x value weights + remaining b) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (traceExchangeToll a s x value weights + remaining a) ↔
       remaining a < remaining b := by
   rw [TollAmplitude.wireAmplitude_lt_iff,
     uniform_trace_exchange_toll a s x v hs value weights,

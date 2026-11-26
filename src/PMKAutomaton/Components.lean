@@ -231,7 +231,7 @@ structure Readout (n : Type*) [Fintype n] [DecidableEq n]
   protocol : ∀ U : Matrix n n ℂ,
     (BranchPulseContract.program.map (BranchPulseContract.decode U)).prod =
       CoherentComparisonRepair.compare U
-  toll : (∀ T : ℝ, TollAmplitude.wireAmplitude T ^ 2 = TollAmplitude.wireWeight T) ∧
+  toll : (∀ T : ℝ, PersistenceMechanics.EffectiveAction.attenuationWeight 1 T ^ 2 = PersistenceMechanics.Gibbs.weight 1 T) ∧
     flagBooking
   governor : detectorWiring
 

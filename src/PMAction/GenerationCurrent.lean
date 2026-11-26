@@ -1,4 +1,4 @@
-import PMAction.GenerationMass
+import PMAction.GenerationDiagonal
 
 /-!
 # Generation changes within one convention: a carrier and a glue move, a directed cycle per wall
@@ -26,7 +26,7 @@ one edge whose carrier is the reference's class `v` joins the two generations ot
 one, and both edges at the label-`v` generation use spinor carriers. With `PMFlavor.ExchangeAxis`
 (vector displacements mostly in-cycle, spinor ones through the node), the edge between the two light
 generations is unsuppressed and both edges at the heavy generation are node-suppressed: the coarse
-CKM pattern (`|V_us|` large, `|V_ub|`, `|V_cb|` small). The mass composite (`GenerationMass`) and the
+CKM pattern (`|V_us|` large, `|V_ub|`, `|V_cb|` small). The mass composite (`GenerationDiagonal`) and the
 generation change share the single-wall carrier, so masses and mixings share its amplitudes.
 -/
 

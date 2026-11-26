@@ -54,14 +54,14 @@ private theorem columns_isometry (v : Fin 3 → WallDispersion.Ix → ℂ)
 
 theorem light_frame_exists (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix (Fin 3) (Fin 3) ℂ)
     (hY : Y.IsHermitian) (hy : ∀ j, hY.eigenvalues j ≠ 0)
-    (hM : ∀ j, 0 < WallDispersion.msq3 k + WallDispersion.massSqM δ (hY.eigenvalues j)) :
+    (hM : ∀ j, 0 < WallDispersion.msq3 k + WallDispersion.lightGapSq δ (hY.eigenvalues j)) :
     ∃ Ψ : Matrix (Ix (Fin 3)) (Fin 3) ℂ, Ψᴴ * Ψ = 1 ∧
       ∀ j, WallExchange.H k δ Y *ᵥ (fun x => Ψ x j) =
-        (Real.sqrt (WallDispersion.msq3 k + WallDispersion.massSqM δ (hY.eigenvalues j)) : ℂ) •
+        (Real.sqrt (WallDispersion.msq3 k + WallDispersion.lightGapSq δ (hY.eigenvalues j)) : ℂ) •
           (fun x => Ψ x j) := by
   have hex (j : Fin 3) : ∃ v : WallDispersion.Ix → ℂ, v ≠ 0 ∧
       WallDispersion.Hy k δ (hY.eigenvalues j) *ᵥ v =
-        (Real.sqrt (WallDispersion.msq3 k + WallDispersion.massSqM δ (hY.eigenvalues j)) : ℂ) • v := by
+        (Real.sqrt (WallDispersion.msq3 k + WallDispersion.lightGapSq δ (hY.eigenvalues j)) : ℂ) • v := by
     have hh := (WallDispersion.two_dirac_particles k δ (hY.eigenvalues j) (hy j) (hM j)).2 1 (by norm_num)
     have he := hh.1
     simp only [one_mul] at he
@@ -75,9 +75,9 @@ theorem light_frame_exists (k : Fin 3 → ℝ) (δ : ℝ) (Y : Matrix (Fin 3) (F
   have he (j) := (Classical.choose_spec (hex j)).2
   let w := fun j => normalized (v j)
   have hw (j) : WallDispersion.Hy k δ (hY.eigenvalues j) *ᵥ w j =
-      (Real.sqrt (WallDispersion.msq3 k + WallDispersion.massSqM δ (hY.eigenvalues j)) : ℂ) • w j := by
+      (Real.sqrt (WallDispersion.msq3 k + WallDispersion.lightGapSq δ (hY.eigenvalues j)) : ℂ) • w j := by
     have he' : WallDispersion.Hy k δ (hY.eigenvalues j) *ᵥ v j =
-        (Real.sqrt (WallDispersion.msq3 k + WallDispersion.massSqM δ (hY.eigenvalues j)) : ℂ) • v j := he j
+        (Real.sqrt (WallDispersion.msq3 k + WallDispersion.lightGapSq δ (hY.eigenvalues j)) : ℂ) • v j := he j
     simp only [w, normalized, Matrix.mulVec_smul, he', smul_smul]
     congr 1
     ring
@@ -104,7 +104,7 @@ theorem native_light_propagation_exists {r : Type*} [Fintype r] [DecidableEq r]
     (Y : Matrix (Fin 3) (Fin 3) ℂ) (hY : Y.IsHermitian)
     (hy : ∀ j, hY.eigenvalues j ≠ 0)
     (hM : ∀ j, 0 < WallDispersion.msq3 (PMAction.NativeFlavourWall.momentum k) +
-      WallDispersion.massSqM δ (hY.eigenvalues j)) (ρ : r → ℂ)
+      WallDispersion.lightGapSq δ (hY.eigenvalues j)) (ρ : r → ℂ)
     (hρ : ∑ j, star (ρ j) * ρ j = 1) :
     ∃ Ψ : Matrix (Ix (Fin 3)) (Fin 3) ℂ, Ψᴴ * Ψ = 1 ∧
       ∀ (U : FlavourCurrent.M), U * Uᴴ = 1 → ∀ t : ℝ,
@@ -113,7 +113,7 @@ theorem native_light_propagation_exists {r : Type*} [Fintype r] [DecidableEq r]
         NativeFlavourPropagation.frame c Ψ ρ U =
       PMAction.FlavourEvolution.evolution U
         (fun j => Real.sqrt (WallDispersion.msq3 (PMAction.NativeFlavourWall.momentum k) +
-          WallDispersion.massSqM δ (hY.eigenvalues j))) t := by
+          WallDispersion.lightGapSq δ (hY.eigenvalues j))) t := by
   obtain ⟨Ψ,hΨ,he⟩ := light_frame_exists (PMAction.NativeFlavourWall.momentum k) δ Y hY hy hM
   refine ⟨Ψ,hΨ,?_⟩
   intro U hU t

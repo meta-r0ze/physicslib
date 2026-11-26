@@ -25,7 +25,7 @@ invariant under exchanging the sectors. Exchange maps the inter-sector link matr
 
 * `det_real_of_hermitian`: a Hermitian mass matrix has real determinant.
 * `arg_det_zero`: if its eigenvalues (the physical masses, positive by Paper II's
-  `DetuningMass`) are positive, `arg det M = 0`.
+  `DetuningGap`) are positive, `arg det M = 0`.
 * `thetaBar_eq_theta`: with Hermitian, positive `M_u` and `M_d`, `θ̄ = θ`. Combined with
   `CPPhases.real_weights_iff`, `θ̄ ∈ πℤ`.
 * `cp_with_hermitian`: Hermitian mass matrices still violate CP. For explicit Hermitian

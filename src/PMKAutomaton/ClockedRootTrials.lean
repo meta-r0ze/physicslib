@@ -202,7 +202,7 @@ def historyMass (β cost : ℝ) (z : SubstrateReflection.Lattice) (requests : Bo
   probability β (historyAction cost z) requests
 
 private theorem single_attempt_mass (β cost : ℝ) (b : Bool) :
-    probability β (attemptAction cost) b = EventAccounting.binaryMass (gibbsRate β cost) b := by
+    probability β (attemptAction cost) b = EventAccounting.binaryPMF (gibbsRate β cost) b := by
   cases b
   · have h := probabilities_sum_one β (attemptAction cost)
     simp only [Fintype.sum_bool] at h
@@ -216,8 +216,8 @@ pricing local movement produces the product law on a moving root orbit. -/
 theorem history_mass_factorizes (β cost : ℝ) (z : SubstrateReflection.Lattice)
     (hmoves : SubstrateReflection.reflect z ≠ z) (requests : Bool × Bool) :
     historyMass β cost z requests =
-      EventAccounting.binaryMass (gibbsRate β cost) requests.1 *
-        EventAccounting.binaryMass (gibbsRate β cost) requests.2 := by
+      EventAccounting.binaryPMF (gibbsRate β cost) requests.1 *
+        EventAccounting.binaryPMF (gibbsRate β cost) requests.2 := by
   have hw (r : Bool × Bool) : weight β (historyAction cost z r) =
       weight β (attemptAction cost r.1) * weight β (attemptAction cost r.2) := by
     rw [history_action_additive cost z hmoves, weight_add]
@@ -232,7 +232,7 @@ theorem expected_history_action (β cost : ℝ) (z : SubstrateReflection.Lattice
       2 * cost * gibbsRate β cost := by
   simp only [history_mass_factorizes β cost z hmoves, history_action_additive cost z hmoves,
     Fintype.sum_prod_type, Fintype.sum_bool]
-  simp [attemptAction, EventAccounting.binaryMass]
+  simp [attemptAction, EventAccounting.binaryPMF]
   ring
 
 def changedWeight (mass : Bool × Bool → ℝ) : ℝ :=
@@ -264,10 +264,10 @@ theorem matches_independent_trial_weight (mass : Bool × Bool → ℝ) (p : ℝ)
 
 include he moves in
 theorem independent_trial_weight (p : ℝ) :
-    changedWeight (fun b => EventAccounting.binaryMass p b.1 *
-      EventAccounting.binaryMass p b.2) = RootClockCalibration.trialWeight e a p := by
+    changedWeight (fun b => EventAccounting.binaryPMF p b.1 *
+      EventAccounting.binaryPMF p b.2) = RootClockCalibration.trialWeight e a p := by
   rw [RootClockCalibration.trial_weight e he a moves]
-  simp [changedWeight, EventAccounting.binaryMass, RootTransferPhase.residual]
+  simp [changedWeight, EventAccounting.binaryPMF, RootTransferPhase.residual]
   ring
 
 include he moves in

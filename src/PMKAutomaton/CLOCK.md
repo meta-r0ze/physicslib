@@ -112,7 +112,7 @@ prepared in a prior period if their persistence is proved. If the Schur
 factorization is implemented literally as `R Y⁻¹ A` on a column, its
 block order is T, inverse gapped crossing, F. The factorization itself
 provides no chronological constraint. At the level of endpoint classes,
-`GenerationMass.composite_cross_then_shift` and
+`GenerationDiagonal.composite_cross_then_shift` and
 `composite_shift_then_cross` exhibit both orderings of a class shift and
 a fixed-class crossing. They do not implement a timed scheduler. To
 allow simultaneous intervals, supply the independently usable registers,
@@ -207,7 +207,7 @@ The flag budgets below count the stated visits. A flag becomes a paid
 registration only with the stated tariff and branch accounting.
 Boundary erasure needs an exported bit booked for reset. A paid
 unflagged schedule keeps amplitude `exp(−T/2)` under
-`TollAmplitude.wireAmplitude`.
+`EffectiveAction.attenuationWeight` at unit scale.
 
 | Conditional accounting | Electron | Up | Down | Consequence |
 | --- | --- | --- | --- | --- |

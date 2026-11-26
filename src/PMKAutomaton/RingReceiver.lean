@@ -350,10 +350,10 @@ theorem mixed_ring_flags :
 /-- The amplitude difference when that one paid receiver comparison
     supplies the entire specified Toll. -/
 theorem mixed_ring_flag_amplitudes :
-    TollAmplitude.wireAmplitude (receiverFlag false mixedBasisRing 0) = 1 ∧
-      TollAmplitude.wireAmplitude (receiverFlag true mixedBasisRing 0) = Real.exp (-(1 : ℝ) / 2) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (receiverFlag false mixedBasisRing 0) = 1 ∧
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (receiverFlag true mixedBasisRing 0) = Real.exp (-(1 : ℝ) / 2) := by
   rw [mixed_ring_flags.1, mixed_ring_flags.2]
-  simp [TollAmplitude.wireAmplitude]
+  simp [PersistenceMechanics.EffectiveAction.attenuationWeight]
 
 /-- Expected receiver registrations per tick on an orbit. The sum may
     cover one receiver or all of them. -/

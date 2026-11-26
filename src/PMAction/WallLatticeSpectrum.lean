@@ -37,15 +37,15 @@ theorem concrete_hamiltonian (k : Fin 3 → ℝ) (δ : ℝ) :
 /-- The exact one-flavour theorem applies at every lattice momentum for
 which the light energy is positive. Its cardinality is a projector trace. -/
 theorem lattice_branches (k : Fin 3 → ℝ) (δ y : ℝ) (hy : y ≠ 0)
-    (hM : 0<msq3 (latticeMomentum k)+massSqM δ y) :
+    (hM : 0<msq3 (latticeMomentum k)+lightGapSq δ y) :
     (∀ σ : ℂ, σ*σ=1 →
       Hy (latticeMomentum k) δ y * R (latticeMomentum k) δ y (rhoP δ y) (rhoM δ y) σ=
-        (σ*(Real.sqrt (msq3 (latticeMomentum k)+massSqP δ y) : ℂ)) •
+        (σ*(Real.sqrt (msq3 (latticeMomentum k)+heavyGapSq δ y) : ℂ)) •
           R (latticeMomentum k) δ y (rhoP δ y) (rhoM δ y) σ ∧
       (R (latticeMomentum k) δ y (rhoP δ y) (rhoM δ y) σ).trace=2) ∧
     (∀ σ : ℂ, σ*σ=1 →
       Hy (latticeMomentum k) δ y * R (latticeMomentum k) δ y (rhoM δ y) (rhoP δ y) σ=
-        (σ*(Real.sqrt (msq3 (latticeMomentum k)+massSqM δ y) : ℂ)) •
+        (σ*(Real.sqrt (msq3 (latticeMomentum k)+lightGapSq δ y) : ℂ)) •
           R (latticeMomentum k) δ y (rhoM δ y) (rhoP δ y) σ ∧
       (R (latticeMomentum k) δ y (rhoM δ y) (rhoP δ y) σ).trace=2) :=
   two_dirac_particles (latticeMomentum k) δ y hy hM
@@ -55,14 +55,14 @@ uses sin(p), not p. The domain sin(p)>0 is explicit. -/
 theorem lattice_half_phase_error (p δ yi yj t : ℝ) (hi : yi ≠ 0) (hj : yj ≠ 0)
     (hp : 0<Real.sin p) :
     |t*(Eb ![Real.sin p,0,0] δ (rhoM δ yi)-Eb ![Real.sin p,0,0] δ (rhoM δ yj))/2-
-      t*(massSqM δ yi-massSqM δ yj)/(4*Real.sin p)| ≤
-      |t| *(massSqM δ yi^2+massSqM δ yj^2)/(16*(Real.sin p)^3) := by
+      t*(lightGapSq δ yi-lightGapSq δ yj)/(4*Real.sin p)| ≤
+      |t| *(lightGapSq δ yi^2+lightGapSq δ yj^2)/(16*(Real.sin p)^3) := by
   rw [(WallSpectrumLink.wall_energies (Real.sin p) δ yi hi).2,
     (WallSpectrumLink.wall_energies (Real.sin p) δ yj hj).2]
-  have hmi := (branch_masses δ yi hi).2.2.2
-  have hmj := (branch_masses δ yj hj).2.2.2
+  have hmi := (branch_gap_squares δ yi hi).2.2.2
+  have hmj := (branch_gap_squares δ yj hj).2.2.2
   convert RelativisticPhase.half_phase_error (Real.sin p)
-    (Real.sqrt (massSqM δ yi)) (Real.sqrt (massSqM δ yj)) t hp using 1 <;>
+    (Real.sqrt (lightGapSq δ yi)) (Real.sqrt (lightGapSq δ yj)) t hp using 1 <;>
     simp only [show (4:ℕ)=2*2 by decide,pow_mul,Real.sq_sqrt hmi,Real.sq_sqrt hmj]
 
 end PMAction.WallLatticeSpectrum

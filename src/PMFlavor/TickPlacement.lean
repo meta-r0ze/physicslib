@@ -1,5 +1,5 @@
 import PMFlavor.ExchangeAxis
-import PMAction.MassInsertion
+import PMAction.LabelInsertion
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 
 /-!
@@ -9,7 +9,7 @@ carrier facts.
 
 # Where in the tick an insertion sits does not change its light-mode element
 
-`MassInsertion` needs class-dependent diagonal masses; `PMAction.ZeroModeCoupling` locates a direct
+`LabelInsertion` needs class-dependent diagonal masses; `PMAction.ZeroModeCoupling` locates a direct
 light-mode coupling as the off-Wilson part of the inter-wall hop. This module asks whether the
 discrete-time update makes the classes differ.
 

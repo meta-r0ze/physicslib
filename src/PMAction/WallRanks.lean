@@ -23,11 +23,11 @@ theorem rank_two_of_trace (P : Matrix n n ℂ) (hP : P*P=P) (ht : P.trace=2) : P
 
 /-- Both energy signs on both nondegenerate branches have rank two. -/
 theorem branch_ranks (k : Fin 3 → ℝ) (δ y : ℝ) (hy : y ≠ 0)
-    (hM : 0<msq3 k+massSqM δ y) (σ : ℂ) (hσ : σ*σ=1) :
+    (hM : 0<msq3 k+lightGapSq δ y) (σ : ℂ) (hσ : σ*σ=1) :
     (R k δ y (rhoP δ y) (rhoM δ y) σ).rank=2 ∧
     (R k δ y (rhoM δ y) (rhoP δ y) σ).rank=2 := by
   have hP : 0<msq3 k+δ^2+rhoP δ y := by
-    have hm := (branch_masses δ y hy).2.2.1
+    have hm := (branch_gap_squares δ y hy).2.2.1
     have hk : 0 ≤ msq3 k := by unfold msq3; positivity
     change 0<δ^2+rhoP δ y at hm
     linarith

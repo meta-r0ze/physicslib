@@ -1,20 +1,20 @@
 import PMAction.CyclicSeesaw
 
 /-!
-# Where the composite mass enters the two-wall Hamiltonian
+# The composite light block of the two-wall Schur reduction
 
-`PMAction.GenerationMass`: within one convention a generation-diagonal mass is a composite, an
+`PMAction.GenerationDiagonal`: within one convention a generation-diagonal mass is a composite, an
 equal-class crossing and a single-wall carrier of the generation's label class. `CyclicSeesaw`: the
 crossing alone gives three equal seesaw masses. This module places the carrier in `WallSeesaw`.
 
-* `effective_mass_general`: if the on-site chirality flips carry generation structure (`D₁` on wall
+* `composite_schur_blocks`: if the on-site chirality flips carry generation structure (`D₁` on wall
   1, `D₂` on wall 2, in place of `δ · 1`), the zero-energy Schur complement gives the light Dirac
-  mass `M = D₂ Y⁻¹ D₁ᴴ`. `WallSeesaw.effective_mass` is the case `D₁ = D₂ = δ`.
+  mass `M = D₂ Y⁻¹ D₁ᴴ`. `WallSeesaw.effective_light_block` is the case `D₁ = D₂ = δ`.
 * `inv_cyc`: the crossing link `cyc y` inverts to `cycInv y`, the reverse cyclic shift with entries
   `1 / y h`.
 * `cyc_mul_cycInv`, `cycInv_mul_cyc`: a carrier with the crossing's own support `(h + 1, h)`,
   placed on either side of `Y⁻¹`, gives a diagonal matrix, entries `κ / y`. That support is the
-  wall-`false` shift of `GenerationMass.composite_cross_then_shift` (`h → h + 1`).
+  wall-`false` shift of `GenerationDiagonal.composite_cross_then_shift` (`h → h + 1`).
 * `composite_expansion`: with `D₂ = δ + cyc κ` and `D₁ᴴ = δ + cyc κ'`,
   `M = δ² Y⁻¹ + δ · diag(κ'/y) + δ · diag(κ/y) + diag(κ/y) · cyc κ'` (the last is
   `cyc κ · Y⁻¹ · cyc κ'`).
@@ -24,7 +24,7 @@ crossing alone gives three equal seesaw masses. This module places the carrier i
 So the composite is a correction to `δ`, not a separate direct term: item (2) of PMAction's "Mass
 terms". `composite_diag` makes that exact: the two cyclic terms have no diagonal, so the diagonal
 mass is linear in `κ`, and the generation with the largest carrier amplitude is the heaviest. That
-agrees with the direction `MassInsertion` says the data choose. `diag_class_independent`: for a
+agrees with the direction `LabelInsertion` says the data choose. `diag_class_independent`: for a
 class-independent crossing (`DomainWall`'s one hop) the three diagonal masses differ only by their
 carrier amplitudes, so equal amplitudes give equal masses.
 
@@ -39,7 +39,7 @@ to equal, which the data exclude.
 -/
 
 noncomputable section
-namespace PMAction.CompositeMass
+namespace PMAction.CompositeSchur
 open Matrix PMAction.CyclicSeesaw PMAction.WallSeesaw
 
 section General
@@ -49,7 +49,7 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 def V2 (D₁ D₂ : Matrix n n ℂ) : Matrix (n ⊕ n) (n ⊕ n) ℂ := fromBlocks D₁ 0 0 D₂
 
 /-- **The light Dirac mass is `D₂ Y⁻¹ D₁ᴴ`.** -/
-theorem effective_mass_general (Y D₁ D₂ : Matrix n n ℂ) :
+theorem composite_schur_blocks (Y D₁ D₂ : Matrix n n ℂ) :
     -(V2 D₁ D₂ * Ginv Y * (V2 D₁ D₂)ᴴ) =
       fromBlocks 0 (D₁ * (Yᴴ)⁻¹ * D₂ᴴ) (D₂ * Y⁻¹ * D₁ᴴ) (0 : Matrix n n ℂ) := by
   rw [V2, Ginv, fromBlocks_conjTranspose, fromBlocks_multiply, fromBlocks_multiply]
@@ -109,7 +109,7 @@ theorem cycInv_diag_zero (y : Fin 3 → ℂ) : ∀ j : Fin 3, cycInv y j j = 0 :
 /-- **The composite mass is diagonal and linear in the carrier amplitudes.** The two cyclic terms
 of `composite_expansion` (`δ² Y⁻¹` and `diag(κ/y) · cyc κ'`) have no diagonal, so generation `j`
 keeps only the two terms linear in a carrier. The carrier on the wall-`false` side enters at the
-shifted index, the support of `GenerationMass.composite_cross_then_shift`. -/
+shifted index, the support of `GenerationDiagonal.composite_cross_then_shift`. -/
 theorem composite_diag (y κ κ' : Fin 3 → ℂ) (δ : ℂ) (hy : ∀ j, y j ≠ 0) :
     (fun j : Fin 3 =>
         ((δ • (1 : Matrix (Fin 3) (Fin 3) ℂ) + cyc κ) * (cyc y)⁻¹ * (δ • 1 + cyc κ')) j j) =
@@ -136,4 +136,4 @@ theorem diag_class_independent (a δ : ℂ) (κ κ' : Fin 3 → ℂ) (ha : a ≠
   rw [congrFun h j]
   fin_cases j <;> simp <;> ring
 
-end PMAction.CompositeMass
+end PMAction.CompositeSchur

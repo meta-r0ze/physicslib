@@ -1,6 +1,6 @@
 import PMAction.Dirac
 import PMAction.DomainWall
-import PMAction.DetuningMass
+import PMAction.DetuningGap
 import Mathlib.Data.Matrix.Block
 import Mathlib.Analysis.Real.Pi.Bounds
 
@@ -26,7 +26,7 @@ lemma hop_relations (β Γ : Spin) (hβ : β*β=1) (hΓ : Γ*Γ=1)
     (hac : β*Γ = -(Γ*β)) :
     hop β Γ*back β Γ = minus Γ ∧ back β Γ*hop β Γ = plus Γ ∧
       β*hop β Γ+hop β Γ*β = -1 := by
-  exact DetuningMass.hop_products_over (𝕜 := ℝ) β Γ hβ hΓ hac
+  exact DetuningGap.hop_products_over (𝕜 := ℝ) β Γ hβ hΓ hac
 
 omit [Fintype n] in
 lemma plus_add_minus (Γ : Spin) : plus Γ+minus Γ = 1 := by
@@ -165,14 +165,14 @@ theorem energy_branches (K β Γ : Spin) (δ s E : ℝ)
     (hβ : β*β=1) (hΓ : Γ*Γ=1) (hac : β*Γ = -(Γ*β))
     (hK : K*K=s • 1) (hb : K*β = -(β*K)) (hg : K*Γ=Γ*K)
     (v : (n ⊕ n) → ℂ) (hv : v ≠ 0) (he : H K β Γ δ *ᵥ v = E • v) :
-    E^2=s+(DetuningMass.lightMass δ)^2 ∨
-      E^2=s+(DetuningMass.lightMass δ+1)^2 := by
+    E^2=s+(DetuningGap.lightGap δ)^2 ∨
+      E^2=s+(DetuningGap.lightGap δ+1)^2 := by
   have hp := energy_constraint K β Γ δ s E hβ hΓ hac hK hb hg v hv he
-  have hm := DetuningMass.mass_relation δ
-  have hd : δ^2=(DetuningMass.lightMass δ)^2+DetuningMass.lightMass δ := by nlinarith
+  have hm := DetuningGap.gap_relation δ
+  have hd : δ^2=(DetuningGap.lightGap δ)^2+DetuningGap.lightGap δ := by nlinarith
   rw [hd] at hp
-  have hf : (E^2-s-(DetuningMass.lightMass δ)^2)*
-      (E^2-s-(DetuningMass.lightMass δ+1)^2)=0 := by linear_combination hp
+  have hf : (E^2-s-(DetuningGap.lightGap δ)^2)*
+      (E^2-s-(DetuningGap.lightGap δ+1)^2)=0 := by linear_combination hp
   rcases mul_eq_zero.mp hf with h | h
   · left; linarith
   · right; linarith
@@ -276,13 +276,13 @@ theorem energy_bandwidth (α : Fin 3 → Spin) (β Γ : Spin) (k : Fin 3 → ℝ
   have hbranch := energy_branches (momentum α k) β Γ (wilson k) (kineticNorm k) E
     hc.2.1 hΓ hac hk.1 hk.2.1 hk.2.2 v hv he
   have hw := wilson_bounds k
-  have hms := DetuningMass.mass_relation (wilson k)
-  have hm0 := (DetuningMass.mass_le (wilson k)).1
+  have hms := DetuningGap.gap_relation (wilson k)
+  have hm0 := (DetuningGap.gap_le (wilson k)).1
   have hw2 : (wilson k)^2 ≤ 36 := by
     nlinarith [mul_nonneg hw.1 (sub_nonneg.mpr hw.2)]
-  have hm6 : DetuningMass.lightMass (wilson k) ≤ 6 := by
-    nlinarith [sq_nonneg (DetuningMass.lightMass (wilson k)-6)]
-  have hm2 : (DetuningMass.lightMass (wilson k))^2 ≤ 36 := by
+  have hm6 : DetuningGap.lightGap (wilson k) ≤ 6 := by
+    nlinarith [sq_nonneg (DetuningGap.lightGap (wilson k)-6)]
+  have hm2 : (DetuningGap.lightGap (wilson k))^2 ≤ 36 := by
     nlinarith [mul_nonneg hm0 (sub_nonneg.mpr hm6)]
   have he2 : E^2<64 := by
     rcases hbranch with h | h <;> nlinarith [kinetic_upper k]

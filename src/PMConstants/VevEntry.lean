@@ -38,11 +38,11 @@ namespace PMConstants.VevEntry
 open PMAction.WallDispersion
 
 lemma massSqM_eq (δ y : ℝ) :
-    massSqM δ y = δ ^ 2 + (y ^ 2 - Real.sqrt (y ^ 4 + 4 * y ^ 2 * δ ^ 2)) / 2 := by
-  simp only [massSqM, rhoM, rr]
+    lightGapSq δ y = δ ^ 2 + (y ^ 2 - Real.sqrt (y ^ 4 + 4 * y ^ 2 * δ ^ 2)) / 2 := by
+  simp only [lightGapSq, rhoM, rr]
 
 lemma hasDeriv_massSqM (δ y : ℝ) (hy : y ≠ 0) :
-    HasDerivAt (fun y => massSqM δ y) (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) y := by
+    HasDerivAt (fun y => lightGapSq δ y) (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) y := by
   have hg : HasDerivAt (fun y : ℝ => y ^ 4 + 4 * y ^ 2 * δ ^ 2) (4 * y ^ 3 + 8 * y * δ ^ 2) y := by
     have := ((hasDerivAt_pow 4 y).add (((hasDerivAt_pow 2 y).const_mul 4).mul_const (δ ^ 2)))
     convert this using 1; push_cast; ring
@@ -57,16 +57,16 @@ lemma hasDeriv_massSqM (δ y : ℝ) (hy : y ≠ 0) :
 
 /-- **The link's coupling modifier is negative.** -/
 theorem link_kappa (δ y : ℝ) (hy : 0 < y) (hδ : δ ≠ 0) :
-    y / (2 * massSqM δ y) * (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) = -(y ^ 2 / rr δ y) := by
+    y / (2 * lightGapSq δ y) * (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) = -(y ^ 2 / rr δ y) := by
   have hr := rr_pos δ y hy.ne'
   have h2 := rr_sq δ y
-  have hm : massSqM δ y ≠ 0 := by
+  have hm : lightGapSq δ y ≠ 0 := by
     intro h0
-    have hprod := (branch_masses δ y hy.ne').1
+    have hprod := (branch_gap_squares δ y hy.ne').1
     rw [h0, mul_zero] at hprod
     exact hδ (pow_eq_zero_iff (by norm_num) |>.mp hprod.symm)
-  have hmeq : 2 * massSqM δ y = 2 * δ ^ 2 + y ^ 2 - rr δ y := by
-    simp only [massSqM, rhoM]; ring
+  have hmeq : 2 * lightGapSq δ y = 2 * δ ^ 2 + y ^ 2 - rr δ y := by
+    simp only [lightGapSq, rhoM]; ring
   have hm' : 2 * δ ^ 2 + y ^ 2 - rr δ y ≠ 0 := by
     rw [← hmeq]; exact mul_ne_zero two_ne_zero hm
   rw [hmeq]
@@ -74,7 +74,7 @@ theorem link_kappa (δ y : ℝ) (hy : 0 < y) (hδ : δ ≠ 0) :
   ring
 
 theorem link_kappa_neg (δ y : ℝ) (hy : 0 < y) (hδ : δ ≠ 0) :
-    y / (2 * massSqM δ y) * (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) < 0 := by
+    y / (2 * lightGapSq δ y) * (y - y * (y ^ 2 + 2 * δ ^ 2) / rr δ y) < 0 := by
   rw [link_kappa δ y hy hδ]
   have := rr_pos δ y hy.ne'
   have : 0 < y ^ 2 / rr δ y := by positivity

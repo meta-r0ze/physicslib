@@ -302,8 +302,8 @@ theorem forward_tolls (a : Fin 3) (b : Bool) :
 /-- Charging the actual decoder factors reverses the required electron/down
 order. Adopting bit-reversed output addresses leaves that exclusion intact. -/
 theorem forward_no_ladder (a : Fin 3) (b : Bool) :
-    TollAmplitude.wireAmplitude (forwardToll b (ProtocolToll.downStatic a)) <
-      TollAmplitude.wireAmplitude (forwardToll b ProtocolToll.electronStatic) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll b (ProtocolToll.downStatic a)) <
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll b ProtocolToll.electronStatic) := by
   obtain ⟨he, hd, -, -⟩ := forward_tolls a b
   rw [TollAmplitude.wireAmplitude_lt_iff, he, hd]
   have h : 1 < √2 := by

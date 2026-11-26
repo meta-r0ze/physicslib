@@ -1,5 +1,5 @@
 import PMAction.KronReduction
-import PMAction.ReferenceWallMass
+import PMAction.ReferenceWallFactorization
 
 /-!
 **Status (2026-11).** The in-cycle/node split used below (`ExchangeAxis.vector_free`, `spinor_touch`)
@@ -12,7 +12,7 @@ below, `k/K = α/2`; the spectator ports are free by Toll/Economy (`PersistenceS
 
 # The node amplitude: a spinor-class carrier is `α/2` of the vector edge
 
-`ReferenceWallMass`: every charged sector's light mass is `D_R (δ_O + cyc κ_O)`, and the light
+`ReferenceWallFactorization`: every charged sector's light mass is `D_R (δ_O + cyc κ_O)`, and the light
 carriers are spinor class with one magnitude `k` on both walls (one leg weight on both walls,
 `PMConstants.HandoffAdmittance.closure_one_price`; the repair adds only a sign). This module fixes
 their node admittance ratio. Reading that ratio as Hamiltonian rates requires an event-duration

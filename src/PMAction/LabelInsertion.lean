@@ -2,7 +2,7 @@ import PMAction.GenerationLabel
 import PMAction.InterWallDiagonal
 
 /-!
-# A generation's diagonal mass needs an insertion of its own label class
+# A generation-diagonal coupling needs an insertion of its own label class
 
 `InterWallDiagonal`: the E₈ gluing pairs equal classes, so an equal-class crossing never keeps the
 generation and cannot give a diagonal mass. This module asks what a diagonal mass needs, in the
@@ -50,24 +50,24 @@ complement of `Y⁻¹` is the inverse of `Y`'s light block). Three levels, kept 
 For the directional (non-Hermitian) crossing of `InterWallDiagonal` the light pair is not degenerate
 (sampled ratios up to `10⁶`), so this exclusion holds only in the Hermitian case. There, the light
 masses do not come from inverting the link (`δ²Y⁻¹` or `D Y⁻¹ D`). What is left is the insertion of the label class, so the mass matrix is
-generation-diagonal with entries set by the insertions. `PMAction.CompositeMass` places it in the
+generation-diagonal with entries set by the insertions. `PMAction.CompositeSchur` places it in the
 Hamiltonian: the single-wall carrier sits in the on-site chirality-flip slot
 (`PMAction.CarrierFlip`), so it is a correction to `δ` and not a separate direct term.
-`CompositeMass.composite_diag`: the two cyclic terms have no diagonal, so the diagonal mass is
-linear in the carrier amplitudes. `CompositeMass.diag_class_independent`: with a class-independent
+`CompositeSchur.composite_diag`: the two cyclic terms have no diagonal, so the diagonal mass is
+linear in the carrier amplitudes. `CompositeSchur.diag_class_independent`: with a class-independent
 crossing the three masses differ only by their carrier amplitudes. What stays open is the
 amplitudes themselves, and the size of the generation-off-diagonal cyclic terms
 (`PMAction/TODO.md`).
 
 What this does not give: the size of the node suppression of the two light generations' masses.
 It also makes their degeneracy structural at this order: they share one node amplitude, so
-`CompositeMass.diag_class_independent` gives them equal masses, and splitting them needs a further
+`CompositeSchur.diag_class_independent` gives them equal masses, and splitting them needs a further
 effect (the `s`/`c` asymmetry, `ExchangeChirality`). For leptons the third
 generation is not weakly mixed (PMNS), so the lepton side needs its own reading (`NodeElimination`:
 lepton-axis states mix by one leg).
 -/
 
-namespace PMAction.MassInsertion
+namespace PMAction.LabelInsertion
 open GenerationLabel
 
 /-- **The class gap of a two-wall bilinear is the class sum**, zero exactly for equal classes. -/
@@ -99,4 +99,4 @@ theorem light_pair_degenerate (δs δc : ℝ) (x : ℂ) :
     ‖((δs * δc : ℝ) : ℂ) * (1 / (starRingEnd ℂ) x)‖ = ‖((δs * δc : ℝ) : ℂ) * (1 / x)‖ := by
   simp
 
-end PMAction.MassInsertion
+end PMAction.LabelInsertion

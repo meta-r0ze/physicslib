@@ -325,10 +325,10 @@ theorem total_tolls (a : Fin 3) :
 open ProtocolToll in
 /-- The extra swap changes the two gaps to one half and one quarter. -/
 theorem total_ladder (a : Fin 3) :
-    TollAmplitude.wireAmplitude (totalToll electronStatic) <
-        TollAmplitude.wireAmplitude (totalToll (downStatic a)) ∧
-      TollAmplitude.wireAmplitude (totalToll (downStatic a)) <
-        TollAmplitude.wireAmplitude (totalToll (upStatic a)) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll electronStatic) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll (downStatic a)) ∧
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll (downStatic a)) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll (upStatic a)) := by
   obtain ⟨he, hd, hu, -⟩ := total_tolls a
   rw [TollAmplitude.wireAmplitude_lt_iff, TollAmplitude.wireAmplitude_lt_iff, he, hd, hu]
   norm_num

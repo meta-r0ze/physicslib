@@ -1,3 +1,4 @@
+import PersistenceMechanics.Gibbs
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.Complex.Basic
@@ -33,7 +34,7 @@ open MeasureTheory Complex
 variable {P Q : Type*} [MeasurableSpace P] [MeasurableSpace Q]
 
 /-- The weighted upper-half observable. -/
-def half (F : P × Q → ℂ) (A : P × Q → ℝ) (x : P × Q) : ℂ := F x * (Real.exp (-A x) : ℂ)
+def half (F : P × Q → ℂ) (A : P × Q → ℝ) (x : P × Q) : ℂ := F x * (PersistenceMechanics.Gibbs.weight 1 (A x) : ℂ)
 
 /-- Its integral over the upper links, at fixed plane links. -/
 def G (μQ : Measure Q) (F : P × Q → ℂ) (A : P × Q → ℝ) (p : P) : ℂ :=
@@ -47,7 +48,7 @@ def integrand (F : P × Q → ℂ) (A : P × Q → ℝ) (ω : P × (Q × Q)) : �
 omit [MeasurableSpace P] [MeasurableSpace Q] in
 lemma integrand_eq (F : P × Q → ℂ) (A : P × Q → ℝ) (ω : P × (Q × Q)) :
     integrand F A ω = half F A (ω.1, ω.2.1) * starRingEnd ℂ (half F A (ω.1, ω.2.2)) := by
-  simp only [integrand, half, map_mul, Complex.conj_ofReal, neg_add, Real.exp_add,
+  simp only [integrand, half, PersistenceMechanics.Gibbs.weight, neg_mul, one_mul, map_mul, Complex.conj_ofReal, neg_add, Real.exp_add,
     Complex.ofReal_mul]
   ring
 
@@ -126,7 +127,7 @@ theorem os_inner_product (μP : Measure P) (μQ : Measure Q) [IsProbabilityMeasu
   have e : ∀ ud : Q × Q, pairing F F' A (p, ud) =
       half F A (p, ud.1) * starRingEnd ℂ (half F' A (p, ud.2)) := by
     intro ud
-    simp only [pairing, half, map_mul, Complex.conj_ofReal, neg_add, Real.exp_add,
+    simp only [pairing, half, PersistenceMechanics.Gibbs.weight, neg_mul, one_mul, map_mul, Complex.conj_ofReal, neg_add, Real.exp_add,
       Complex.ofReal_mul]
     ring
   simp only [e]

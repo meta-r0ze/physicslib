@@ -6,7 +6,7 @@ import Mathlib.LinearAlgebra.Matrix.Hermitian
 
 Step 5 of the generation sector (`PMAction/TODO.md`). `PMAction.WallExchange`: the
 inter-wall link `Y` is Hermitian exactly when the update is symmetric under the wall-parity
-exchange. `PMAction.InterWallDiagonal` and `MassInsertion` split on whether it is. This module
+exchange. `PMAction.InterWallDiagonal` and `LabelInsertion` split on whether it is. This module
 settles it for the equal-class crossing within one orientation convention.
 
 `Y` is the wall-`false`-to-wall-`true` block (`hop ⊗ Y`). An equal-class crossing at class `c` takes
@@ -23,7 +23,7 @@ exchange symmetry is broken by the vacuum's choice of convention (`GenerationWal
 `balanced_classification`), as chirality is. For `PMFlavor` this is the directional case of
 `InterWallDiagonal`: `WallSeesaw` gives one Dirac pair per class, `δ²/|y_c|`, pairing generation `h`
 on one wall with `h + 1` on the other; with a class-independent crossing (`DomainWall`'s hop is one
-fixed matrix) those three are equal, so the hierarchy comes from the composite of `GenerationMass`.
+fixed matrix) those three are equal, so the hierarchy comes from the composite of `GenerationDiagonal`.
 
 Strong CP: the older route `PMConstants.HermitianMass.thetaBar_eq_theta` assumes a Hermitian link,
 which this excludes. The current route, `ThetaBarSelection`, gives `θ̄ = 0` for any invertible mass

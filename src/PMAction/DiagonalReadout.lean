@@ -21,7 +21,7 @@ calculation once.
 * `flag_mul`: the flag at `n x` is the Chebyshev polynomial `(1 − T_n(1 − 2f))/2` of the flag
   `f` at `x`, for every integer `n`. So on charges that are integer multiples of one unit, one
   flag fixes every other. `flag_two`: `4f(1 − f)`; `flag_three`: `f(3 − 4f)²`.
-* `toll`, `toll_sub`: a schedule of steps `tᵢ` with counts `wᵢ` charges a channel of charge
+* `diagonalPhaseFlagCost`, `diagonalPhaseFlagCost_sub`: a schedule of steps `tᵢ` with counts `wᵢ` charges a channel of charge
   `q` the Toll `floor + Σᵢ wᵢ flag(tᵢ q)`; differences between channels do not depend on the
   floor. `amplitude_ratio`: the amplitude ratio is `exp(−ΔT/2)`
   (`TollAmplitude.amplitude_ratio`).
@@ -30,6 +30,7 @@ calculation once.
 noncomputable section
 namespace PMAction.DiagonalReadout
 open Real Matrix
+open PersistenceMechanics.EffectiveAction (attenuationWeight)
 
 /-- The flag of a phase `x`. -/
 def flag (x : ℝ) : ℝ := (1 - cos x) / 2
@@ -112,20 +113,23 @@ theorem flag_two (x : ℝ) : flag (2 * x) = 4 * flag x * (1 - flag x) := by
 theorem flag_three (x : ℝ) : flag (3 * x) = flag x * (3 - 4 * flag x) ^ 2 := by
   unfold flag; rw [cos_three_mul]; ring
 
-/-- A schedule's Toll on a channel of charge `q`. -/
-def toll {κ : Type*} [Fintype κ] (floor : ℝ) (w t : κ → ℝ) (q : ℝ) : ℝ :=
-  floor + ∑ i, w i * flag (t i * q)
+/-- The generic weighted flag cost evaluated at a channel's diagonal phase. -/
+def diagonalPhaseFlagCost {κ : Type*} [Fintype κ] (floor : ℝ) (w t : κ → ℝ) (q : ℝ) : ℝ :=
+  TollAmplitude.weightedFlagCost floor w (fun i => flag (t i * q))
 
 /-- Toll differences do not depend on the floor. -/
-theorem toll_sub {κ : Type*} [Fintype κ] (floor : ℝ) (w t : κ → ℝ) (q q' : ℝ) :
-    toll floor w t q - toll floor w t q' = ∑ i, w i * (flag (t i * q) - flag (t i * q')) := by
-  simp only [toll, mul_sub, Finset.sum_sub_distrib]; ring
+theorem diagonalPhaseFlagCost_sub {κ : Type*} [Fintype κ] (floor : ℝ) (w t : κ → ℝ) (q q' : ℝ) :
+    diagonalPhaseFlagCost floor w t q - diagonalPhaseFlagCost floor w t q' = ∑ i, w i * (flag (t i * q) - flag (t i * q')) := by
+  simp only [diagonalPhaseFlagCost, TollAmplitude.weightedFlagCost, mul_sub, Finset.sum_sub_distrib]; ring
 
 /-- **Amplitude ratios** of two channels under one schedule. -/
 theorem amplitude_ratio {κ : Type*} [Fintype κ] (floor : ℝ) (w t : κ → ℝ) (q q' : ℝ) :
-    TollAmplitude.wireAmplitude (toll floor w t q) / TollAmplitude.wireAmplitude (toll floor w t q')
+    attenuationWeight 1 (diagonalPhaseFlagCost floor w t q) / attenuationWeight 1 (diagonalPhaseFlagCost floor w t q')
       = exp (-(∑ i, w i * (flag (t i * q) - flag (t i * q'))) / 2) := by
-  rw [toll, toll, TollAmplitude.amplitude_ratio, ← toll_sub floor w t q q', toll, toll]
-  congr 1; ring
+  rw [← diagonalPhaseFlagCost_sub floor w t q q']
+  simp only [diagonalPhaseFlagCost, TollAmplitude.weightedFlagCost]
+  rw [TollAmplitude.amplitude_ratio]
+  congr 1
+  ring
 
 end PMAction.DiagonalReadout

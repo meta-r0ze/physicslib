@@ -164,8 +164,8 @@ refresh weight per coloured channel, `PMConstants.ColourReference.colour_ledger_
 is never heavier than the electron: `s_d ≤ s_e`. The recorded order needs the opposite, so a
 colour contribution to the heavy label must lower the coloured labels' Toll. -/
 theorem colour_cost_wrong_way (n c : ℝ) (hc : 0 ≤ c) :
-    PMAction.TollAmplitude.wireAmplitude (n * (3 / 4) + c) ≤
-      PMAction.TollAmplitude.wireAmplitude (n * (3 / 4)) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (n * (3 / 4) + c) ≤
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (n * (3 / 4)) := by
   rcases eq_or_lt_of_le hc with h | h
   · rw [← h, add_zero]
   · exact le_of_lt (PMAction.TollAmplitude.wireAmplitude_lt_iff.mpr (by linarith))
@@ -173,7 +173,7 @@ theorem colour_cost_wrong_way (n c : ℝ) (hc : 0 ≤ c) :
 /-! ### Which flips a Toll reaches
 
 The wire's light mass is `M = diag(s, k, k) · X · diag(s, 1, 1)`
-(`tools/protocol_readout_scan.py`; `PMAction.ReferenceWallMass`). A Toll paid equally by all
+(`tools/protocol_readout_scan.py`; `PMAction.ReferenceWallFactorization`). A Toll paid equally by all
 three generations' flips scales both diagonal factors by one number, so `M` changes by an
 overall factor and every mass ratio is unchanged (`uniform_weight_cancels`). Protocol upkeep
 that does not depend on the generation (the colour refresh, the doublet readouts as computed

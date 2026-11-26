@@ -28,13 +28,13 @@ theorem wall_energy_collinear (p δ : ℝ) (b : ℝ) (hb : 0 ≤ δ ^ 2 + b) :
   congr 1; simp; ring
 
 theorem wall_energies (p δ y : ℝ) (hy : y ≠ 0) :
-    Eb ![p, 0, 0] δ (rhoP δ y) = RelativisticPhase.energy p (Real.sqrt (massSqP δ y)) ∧
-      Eb ![p, 0, 0] δ (rhoM δ y) = RelativisticPhase.energy p (Real.sqrt (massSqM δ y)) := by
-  obtain ⟨-, -, hP, hM⟩ := branch_masses δ y hy
+    Eb ![p, 0, 0] δ (rhoP δ y) = RelativisticPhase.energy p (Real.sqrt (heavyGapSq δ y)) ∧
+      Eb ![p, 0, 0] δ (rhoM δ y) = RelativisticPhase.energy p (Real.sqrt (lightGapSq δ y)) := by
+  obtain ⟨-, -, hP, hM⟩ := branch_gap_squares δ y hy
   exact ⟨wall_energy_collinear p δ _ hP.le, wall_energy_collinear p δ _ hM⟩
 
-theorem wall_seesaw (δ y : ℝ) (hy : y ≠ 0) : massSqM δ y = δ ^ 4 / massSqP δ y := by
-  obtain ⟨h, -, hP, -⟩ := branch_masses δ y hy
+theorem wall_seesaw (δ y : ℝ) (hy : y ≠ 0) : lightGapSq δ y = δ ^ 4 / heavyGapSq δ y := by
+  obtain ⟨h, -, hP, -⟩ := branch_gap_squares δ y hy
   rw [eq_div_iff hP.ne', mul_comm, h]
 
 end PMAction.WallSpectrumLink

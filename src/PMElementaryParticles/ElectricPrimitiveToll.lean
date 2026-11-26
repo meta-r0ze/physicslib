@@ -226,10 +226,10 @@ theorem forward_tolls (a : Fin 3) :
 open ProtocolToll in
 /-- The bit-reversed circuit has both required strict gaps under this tariff. -/
 theorem charged_ladder (a : Fin 3) :
-    TollAmplitude.wireAmplitude (forwardToll electronStatic) <
-        TollAmplitude.wireAmplitude (forwardToll (downStatic a)) ∧
-      TollAmplitude.wireAmplitude (forwardToll (downStatic a)) <
-        TollAmplitude.wireAmplitude (forwardToll (upStatic a)) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll electronStatic) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll (downStatic a)) ∧
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll (downStatic a)) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll (upStatic a)) := by
   obtain ⟨he, hd, hu, -⟩ := forward_tolls a
   rw [TollAmplitude.wireAmplitude_lt_iff, TollAmplitude.wireAmplitude_lt_iff, he, hd, hu]
   norm_num
