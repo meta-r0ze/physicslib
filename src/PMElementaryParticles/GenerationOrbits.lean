@@ -45,8 +45,11 @@ selected. An arbitrary cost on Program need not factor through class and
 generation; equality of those two fields alone does not imply equal cost.
 
 These statements concern the generators used by ClockTickWeights and SliceHop.
-They do not classify every automorphism of E8 that fixes a clock. SCOPE's prose
-Closure premise supplies no such complete group or its action on EP programs.
+The full sector-preserving clock-root stabilizers are now classified in
+PMKAutomaton.ClockSymmetry and ClockSymmetryGenerators. Their label restrictions
+and typed program action are in FullGenerationOrbits. The slice report above
+is not the full-group Closure conclusion. The root cu and the 43-state reading
+using cv still impose different symmetry conditions.
 -/
 
 noncomputable section
@@ -302,12 +305,12 @@ theorem programAction_pillars (s : sliceGroup) (p : Program) :
 def SameProgramOrbit (k : Fin 6) (p q : Program) : Prop :=
   classOf p.label = k ∧ ∃ s : classGroup k, q = programAction s.val p
 
-/-- Closure instantiated as invariance gives equality along each program orbit.
-No minimizer hypothesis or selected cost formula is needed. -/
-theorem invariant_cost_equal {A : Type*} (k : Fin 6) (cost : Program → A)
-    (hinvariant : ∀ (s : classGroup k) (p : Program), cost (programAction s.val p) = cost p)
-    (p q : Program) (h : SameProgramOrbit k p q) : cost q = cost p := by
-  obtain ⟨_, s, rfl⟩ := h
+/-- Invariance gives equality along an orbit of any supplied action. This
+shared form applies to both the slice and full stabilizer actions. -/
+theorem invariant_cost_equal {H U A : Type*} (act : H → U → U) (cost : U → A)
+    (hinvariant : ∀ (s : H) (p : U), cost (act s p) = cost p)
+    (p q : U) (h : ∃ s : H, q = act s p) : cost q = cost p := by
+  obtain ⟨s, rfl⟩ := h
   exact hinvariant s p
 
 /-- In particular, no program orbit connects distinct generations. -/

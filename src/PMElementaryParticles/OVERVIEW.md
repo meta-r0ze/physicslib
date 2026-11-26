@@ -56,35 +56,49 @@ histograms and the admission boundary. No count is identified with `Footprint.ev
 
 ## Generation orbits
 
-The existing Closure applications use the twelve slice-root reflections.
-`GenerationOrbits.sliceGroup` packages exactly these generators. The two
-`SliceHop` swaps are restrictions of them. This is not a classification of
-all E8 automorphisms that fix the clock.
+`PMKAutomaton.ClockSymmetry.Gplus` is the full subgroup of W(E8) that keeps
+both aligned D4 factors and fixes `ClockPlane.cu`. `Gpm` permits its negative.
+The root-reflection words generate these intrinsic groups. This does not
+replace the 43-state clock reading, which also uses `cv`.
 
-| Visible class | Species from CarrierChannels | Generation orbits | Declared tiers (`TierLedger.tiersFor`) |
+| Group before label restriction | Image on generation keys | Generation orbits | Entry point |
 | --- | --- | --- | --- |
-| 0 | up | {0}, {1}, {2} | {0,2,3} |
-| 0 | down | {0}, {1}, {2} | {0,1,2} |
-| 1 | up | {0}, {1}, {2} | {0,2,3} |
-| 2 | down | {0}, {1}, {2} | {0,1,2} |
-| 3 | electron | {0}, {1}, {2} | {0,1,2} |
-| 3 | neutrino | {0}, {1}, {2} | {0,1,2} |
-| 5 | electron | {0}, {1}, {2} | {0,1,2} |
+| G₊: `cu` fixed | Identity and the swap 1↔2. Key (0,1) is fixed. | {0}, {1,2} | `ClockSymmetry.full_generation_image`, `positive_generators_exhaustive` |
+| G±: `cu` fixed up to sign | The same two permutations. | {0}, {1,2} | `full_generation_image`, `line_generators_exhaustive` |
+| Both factor discriminants | The same permutation acts on both. Fixing `cu` fixes its vector class. | No third permutation occurs. | `sector_annihilator`, `keyAction_descent`, `diagonal_glue`, `fixes_clock_key` |
 
-| Test | Checked result | Entry point in `GenerationOrbits` |
+The existing placement supplies more structure. Each class lies on one wall.
+Its generation cycle is oriented. A glue transposition reverses that cycle
+and exchanges the wall classes. It cannot preserve any one visible class.
+The result holds for every element of the full groups, not just one witness.
+
+| Visible class | Carrier species | Label-respecting G₊ orbits | Label-respecting G± orbits | Raw swap and its label obstruction | Declared tiers |
+| --- | --- | --- | --- | --- | --- |
+| 0 | up | {0}, {1}, {2} | {0}, {1}, {2} | Spatial-axis flip + internal clock-adapted axis flip; changes wall class. | {0,2,3} |
+| 0 | down | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
+| 1 | up | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,2,3} |
+| 2 | down | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
+| 3 | electron | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
+| 3 | neutrino | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
+| 5 | electron | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
+
+| Test | Checked result | Lean entry point |
 | --- | --- | --- |
-| Key action | Every generator and group element keeps every glue key. The induced permutation group is the identity. | `group_preserves_key`, `generationAction_unique`, `generationAction_range` |
-| Class restriction | Every generation's channel placement is fixed pointwise. Each class-respecting subgroup is the full cited group. | `group_fixes_channels`, `classGroup_eq_top`, `finite_orbit_table` |
-| Program cost | An invariant cost is equal along a program orbit. No such orbit joins distinct generations. A real invariant function can separate them. | `invariant_cost_equal`, `sameProgramOrbit_generation`, `invariant_can_separate` |
-| Excursions | Same-orbit 33-displacement sets have the identity image witness. Only index 0 has clock readings ±2. Every group element fixes that index. | `orbit_displacements_image`, `two_tick_generation`, `two_tick_generation_fixed` |
+| Class and species | No class-respecting element swaps generations. A species refinement cannot restore a rejected element. | `FullGenerationOrbits.classGroup_generation_identity`, `sameOrbit_iff`, `species_generation_identity` |
+| Program cost | The typed class-program action obeys the group laws. An invariant cost is equal along its orbits. An invariant real function may separate distinct generations. | `programAction_one`, `programAction_mul`, `invariant_cost_equal`, `invariant_can_separate` |
+| Spatial orientation | The raw swap has representatives with spatial determinant -1 and +1. Thus the glue swap is not a test of chirality. | `ClockSymmetry.swap_orientations`, `swap_generation_check`, `even_swap_generation` |
+| Carrier axis | Flipping the original lepton axis or any original colour axis fails to fix the internal clock projection, even up to sign. The adapted swap is not a carrier doublet-index flip. | `FullGenerationOrbits.carrier_axis_clock_checks`, `no_single_carrier_axis` |
+| Excursions | The fixed key is index 0, the key with raw ±2 excursions. | `fixed_excursion_key` |
+| Clock boundary | The explicit swap changes the full 43-state reading. Its use as a symmetry of an execution cost remains conditional. | `ClockSymmetry.swap_changes_clockReading` |
 
 Indices use `EPLabelGen.genIndex`: 0 = (0,1), 1 = (1,0), 2 = (1,1).
 No derived map assigns these indices to tier entries or to light/heavy species.
-This group forces no cross-generation tie, so there is no forced tie to break.
-The orbit structures do not explain the up-type tier difference.
-SCOPE's prose Closure premise does not define an exhaustive clock stabilizer
-or its action on programs. A claim about a larger group needs that definition
-and a proof that it respects the existing labels. No new premise is added here.
+There is no forced cross-generation cost tie after the existing class placement.
+A light-generation splitting is not forced to use a parity-odd structure.
+Lepton-axis versus colour-axis flips do not explain the up-type tier difference.
+No parity-odd named premise follows from this computation. Physical selection
+of the oriented placement and the clock data of an execution remain open.
+See [FullGenerationOrbits](FullGenerationOrbits.lean) for the scope of the cost action.
 
 ## Charges
 

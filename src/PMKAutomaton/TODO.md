@@ -11,6 +11,8 @@ See the [named premises](../../SCOPE.md#named-premises) and the [checked results
 
 ## Clock and accounting
 
+- Identify the clock data retained by physical execution before imposing the full root-stabilizer invariance (`ClockSymmetry.swap_changes_clockReading`).
+
 - Calibrate the root pulse on the substrate tick and select its principal branch (`RootClockCalibration.phase_alias_iff`).
 - Specify allowed pulse overlaps and common-clock capacity for the admitted word (`Values.shortSerialTicks`).
 - Supply detector support, booked visits and their price in common units (`LocalController.traceExchangeFlagCost`).

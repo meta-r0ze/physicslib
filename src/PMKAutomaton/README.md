@@ -11,7 +11,9 @@ Run `./build.sh lean PMKAutomaton.Interface PMKAutomaton.Values PMKAutomaton.Com
 targeted check. The library build is `./build.sh PMKAutomaton`.
 
 The [overview](OVERVIEW.md) lists the results and links to the module notes.
-The [clock section](OVERVIEW.md#clock) gives the pulse constraints. The [open list](TODO.md) lists the
+The [clock section](OVERVIEW.md#clock) gives the pulse constraints.
+`ClockSymmetryGenerators` certifies the full aligned clock-root stabilizers;
+the [symmetry table](OVERVIEW.md#full-clock-root-symmetries) states their scope. The [open list](TODO.md) lists the
 remaining physical inputs.
 
 ## The system

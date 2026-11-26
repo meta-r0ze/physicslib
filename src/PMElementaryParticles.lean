@@ -109,3 +109,4 @@ import PMElementaryParticles.RingSurvivors
 import PMElementaryParticles.FootprintNoGo
 import PMElementaryParticles.GluedExcursions
 import PMElementaryParticles.GenerationOrbits
+import PMElementaryParticles.FullGenerationOrbits

@@ -108,6 +108,28 @@ rate ratios. The [interface notes](Interface.lean) give the supplied clock place
 
 <a id="heavy-label-application"></a>
 
+## Full clock-root symmetries
+
+The clock root is `ClockPlane.cu`. The full 43-state reading also uses `cv`.
+Do not apply a root-stabilizer invariance statement to that reading without
+checking the second clock vector.
+
+| Object | Definition or result | Lean entry point |
+| --- | --- | --- |
+| Ambient group | All products of E8 root reflections act as integral lattice isometries. | `ClockSymmetry.Weyl`, `rootReflection`, `weyl_norm` |
+| Full G₊ | Keep both aligned D4 factors and fix `cu`. Sector preservation is commutation with twice the orthogonal projector. | `Gplus`, `projector_sectors`, `maps_spacetime`, `maps_internal` |
+| Full G± | Keep both factors and fix `cu` up to sign. | `Gpm` |
+| Quotient | D4 plus D4 has index four. Both factor discriminants receive the same permutation. | `sector_annihilator`, `keyAction_descent`, `diagonal_glue` |
+| Glue image | Both full groups induce exactly identity and the spinor-key swap. The clock key (0,1) is fixed. | `full_generation_image` |
+| Generators | Six D3 reflections and a two-root glued word generate G₊. An eight-root negation word extends it to G±. | `ClockSymmetryGenerators`, `positive_generators_exhaustive`, `line_generators_exhaustive` |
+| Normal form | Each factor permutes and signs its three transverse axes. The two outer signs agree. | `ClockSymmetryNormalForm`, `ClockSymmetryFrames`; `spatial_frames`, `integral_sign_parity` |
+| Orientation | The same nontrivial glue swap has spatial determinants -1 and +1. | `swap_orientations` |
+| Clock limit | The displayed swap does not preserve the reading that uses `cv`. | `swap_changes_clockReading` |
+
+The [EP generation table](../PMElementaryParticles/OVERVIEW.md#generation-orbits)
+adds the existing generation-specific channel placement. This is a separate
+restriction from the bare clock root and the two factors.
+
 ## Route
 
 | Check | What it gives | Lean names |
