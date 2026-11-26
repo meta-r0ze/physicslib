@@ -1,4 +1,4 @@
-import PMKAutomaton.ClockRing
+import PMKAutomaton.Machine.ClockRing
 
 /-!
 # An aligned D4 and the clock signatures of the E8 glue cosets
@@ -55,16 +55,16 @@ theorem b_mem : b ∈ rootList := by decide +kernel
 theorem c_mem : c ∈ rootList := by decide +kernel
 theorem beta_mem : beta ∈ rootList := by decide +kernel
 
-theorem pair_a_b : pair a b = -1 := by decide +kernel
-theorem pair_b_c : pair b c = -1 := by decide +kernel
-theorem pair_b_beta : pair b beta = -1 := by decide +kernel
-theorem pair_a_c : pair a c = 0 := by decide +kernel
-theorem pair_a_beta : pair a beta = 0 := by decide +kernel
-theorem pair_c_beta : pair c beta = 0 := by decide +kernel
+theorem pair_a_b : PMSubstrate.Lattices.pairing a b = -1 := by decide +kernel
+theorem pair_b_c : PMSubstrate.Lattices.pairing b c = -1 := by decide +kernel
+theorem pair_b_beta : PMSubstrate.Lattices.pairing b beta = -1 := by decide +kernel
+theorem pair_a_c : PMSubstrate.Lattices.pairing a c = 0 := by decide +kernel
+theorem pair_a_beta : PMSubstrate.Lattices.pairing a beta = 0 := by decide +kernel
+theorem pair_c_beta : PMSubstrate.Lattices.pairing c beta = 0 := by decide +kernel
 
 /-- The property of being orthogonal to the four aligned simple roots. -/
 def internalProp (r : V) : Prop :=
-  pair r a = 0 ∧ pair r b = 0 ∧ pair r c = 0 ∧ pair r beta = 0
+  PMSubstrate.Lattices.pairing r a = 0 ∧ PMSubstrate.Lattices.pairing r b = 0 ∧ PMSubstrate.Lattices.pairing r c = 0 ∧ PMSubstrate.Lattices.pairing r beta = 0
 
 instance (r : V) : Decidable (internalProp r) := by
   unfold internalProp
@@ -82,8 +82,8 @@ theorem internalRoots_not_silent : ∀ r ∈ internalRoots, clockReading r ≠ 0
 
 /-- The `D4` glue key: the two parity invariants of the four-root system. -/
 def glueKey (r : V) : ZMod 2 × ZMod 2 :=
-  (((pair r a + pair r c : ℤ) : ZMod 2),
-    ((pair r a + pair r beta : ℤ) : ZMod 2))
+  (((PMSubstrate.Lattices.pairing r a + PMSubstrate.Lattices.pairing r c : ℤ) : ZMod 2),
+    ((PMSubstrate.Lattices.pairing r a + PMSubstrate.Lattices.pairing r beta : ℤ) : ZMod 2))
 
 /-- The glue key is additive. -/
 theorem glueKey_add (r s : V) :
@@ -105,7 +105,7 @@ theorem spacetimeRoots_length : spacetimeRoots.length = 24 := by decide +kernel
 /-- The slice roots are the spacetime roots orthogonal to the clock plane. -/
 def sliceRoots : List V :=
   spacetimeRoots.filter fun r =>
-    pair r ClockPlane.cu = 0 ∧ pair r ClockPlane.cv = 0
+    PMSubstrate.Lattices.pairing r ClockPlane.cu = 0 ∧ PMSubstrate.Lattices.pairing r ClockPlane.cv = 0
 
 theorem sliceRoots_length : sliceRoots.length = 12 := by decide +kernel
 
@@ -120,7 +120,7 @@ theorem sliceRoots_silent_count :
 /-- The other twelve spacetime roots are the clock-axis roots. -/
 def clockAxisRoots : List V :=
   spacetimeRoots.filter fun r =>
-    ¬ (pair r ClockPlane.cu = 0 ∧ pair r ClockPlane.cv = 0)
+    ¬ (PMSubstrate.Lattices.pairing r ClockPlane.cu = 0 ∧ PMSubstrate.Lattices.pairing r ClockPlane.cv = 0)
 
 theorem clockAxisRoots_length : clockAxisRoots.length = 12 := by decide +kernel
 

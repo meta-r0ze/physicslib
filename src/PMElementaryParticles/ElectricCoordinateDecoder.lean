@@ -395,7 +395,7 @@ theorem undo_duration : (undoWord.map quarters).sum = 27 := by decide +kernel
 /-- A one-frame serial schedule with fresh bank preparation cannot fit
 when every root quarter-time is at least one substrate tick. -/
 theorem fresh_bank_serial_exceeds_clock (p : ℝ) (h : 1 ≤ RootTransferPhase.quarterTime p) :
-    (Delta : ℝ) < (((undoWord.map quarters).sum + (shortWord.map quarters).sum : ℕ) : ℝ) *
+    (PMSubstrate.E8Values.Delta : ℝ) < (((undoWord.map quarters).sum + (shortWord.map quarters).sum : ℕ) : ℝ) *
       RootTransferPhase.quarterTime p := by
   rw [undo_duration, short_duration]
   change (43 : ℝ) < 52 * RootTransferPhase.quarterTime p

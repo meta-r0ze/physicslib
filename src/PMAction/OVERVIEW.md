@@ -144,7 +144,7 @@ Hermitian `H`, unitary transport of a normalized `φ`, with two-branch response
 
 ## Shared state/controller and register layer
 
-The native machine files are in [PMKAutomaton/Machine](../PMKAutomaton/Machine/OVERVIEW.md).
+The native machine files are in [PMKAutomaton/Machine](../PMKAutomaton/OVERVIEW.md#native-machine).
 They share the PMAction build layer. The downstream
 [transport library](../PMKAutomaton/OVERVIEW.md) owns the node handoff and its
 record lifecycle.
@@ -388,7 +388,7 @@ controls/admission premises and the selection of group, representation and β.
   unboundedness from persistence (`HomogeneousRouting.forever_iff_open`, `forever_needs_infinite`);
   boundary results `ReferenceSourceBoundary`, `PrimitiveRecordBoundary.cannot_prepare`;
   `ReferenceSelection` (the reference is selected, not prepared; per-tick ledger).
-- **Clock:** `RegisterSplit` (four-phase schedule), `ClockDynamics`, `ClockPeriod` (period `Δ`).
+- **Clock:** `RegisterSplit` (four-phase schedule), `ClockDynamics`, `PMSubstrate.E8Values` (period `Δ`).
 - **Gauge transport and OS:** `CompositionalTransport`, `NativePacketUpdate`, `GeometricGauge`,
   `ReciprocalReflection`, `OsterwalderSchrader` (OS semi-inner-product, `os_cauchy_schwarz`), the
   assembled OS quotient (`osCore_normSq_eq`, `mem_osNullSubmodule_iff`, `quotientForm`,

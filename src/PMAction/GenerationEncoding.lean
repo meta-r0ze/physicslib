@@ -24,8 +24,8 @@ open PMAction.CarrierEvents PMAction.CarrierCost
 /-- All actual minimal carriers in the three nontrivial glue classes. -/
 abbrev Native := Σ c : Fin 3, Carrier c
 
-/-- A generation is labelled by the class it omits; its occupied classes differ from it. -/
-abbrev Generation (g : Fin 3) := Σ c : {c : Fin 3 // c ≠ g}, Carrier c.val
+/-- Carrier labels in the packet that omits glue class g. -/
+abbrev PacketCarriers (g : Fin 3) := Σ c : {c : Fin 3 // c ≠ g}, Carrier c.val
 
 /-- A native carrier, together with which of its two compatible packets it belongs to. -/
 abbrev Mode := Σ u : Native, {g : Fin 3 // g ≠ u.1}
@@ -67,14 +67,14 @@ theorem native_vector_injective : Function.Injective nativeVector := by
 theorem native_card : Fintype.card Native = 24 := by
   simp [Native, Fintype.card_sigma, carrier_card]
 
-theorem generation_card (g : Fin 3) : Fintype.card (Generation g) = 16 := by
+theorem carriers_per_packet_card (g : Fin 3) : Fintype.card (PacketCarriers g) = 16 := by
   have hc : Fintype.card {c : Fin 3 // c ≠ g} = 2 := by
     exact (Fintype.card_congr (finSuccAboveEquiv g)).symm
-  simp [Generation, Fintype.card_sigma, carrier_card, hc]
+  simp [PacketCarriers, Fintype.card_sigma, carrier_card, hc]
 
 /-- The modes are exactly the disjoint union of the three packet possibilities,
 when their generation distinctions are retained. -/
-def bundle : (Σ g : Fin 3, Generation g) ≃ Mode where
+def bundle : (Σ g : Fin 3, PacketCarriers g) ≃ Mode where
   toFun m := ⟨⟨m.2.1.val, m.2.2⟩, ⟨m.1, Ne.symm m.2.1.property⟩⟩
   invFun m := ⟨m.2.val, ⟨⟨m.1.1, Ne.symm m.2.property⟩, m.1.2⟩⟩
   left_inv m := by rcases m with ⟨g, ⟨⟨c, h⟩, v⟩⟩; rfl

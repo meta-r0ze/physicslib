@@ -163,7 +163,7 @@ theorem actual_quarter_events (c : Fin 3) (p : ℝ) (hp : 0 < p) (hp1 : p < 1/2)
 label-test price: even those supplied event laws disagree for every admissible p. -/
 theorem one_attempt_price_lt_quarter_label (c : Fin 3) (p toll : ℝ)
     (hp : p < 1/2) (ht : 0 < toll) :
-    EventAccounting.cost toll (RootTransferAccounting.mass c p)
+    EventAccounting.cost toll (RootTransferAccounting.rootAttemptPMF c p)
       (fun _ : Fin 1 => RootTransferAccounting.event c) < toll/4 := by
   rw [RootTransferAccounting.expected_root_cost]
   nlinarith

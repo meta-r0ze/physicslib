@@ -39,24 +39,21 @@ open Matrix PMSubstrate
 
 abbrev V := Fin 8 → ℤ
 
-/-- The E₈ pairing in the simple-root basis. -/
-def pair (a b : V) : ℤ := a ⬝ᵥ (Lattices.gram *ᵥ b)
-
 /-- The clock reading of a lattice vector: its class in the clock's
 discriminant group `ℤ/43` (`ClockPlane.clock_glue`). -/
 def clockReading (z : V) : ZMod 43 :=
-  ((pair z ClockPlane.cu - 2 * pair z ClockPlane.cv : ℤ) : ZMod 43)
+  ((PMSubstrate.Lattices.pairing z ClockPlane.cu - 2 * PMSubstrate.Lattices.pairing z ClockPlane.cv : ℤ) : ZMod 43)
 
 /-- The reading is `clock_glue`'s map applied to the plane projection. -/
 theorem clockReading_eq_glue (z : V) :
-    clockReading z = (((pair z ClockPlane.cu, pair z ClockPlane.cv).1 -
-      2 * (pair z ClockPlane.cu, pair z ClockPlane.cv).2 : ℤ) : ZMod 43) := rfl
+    clockReading z = (((PMSubstrate.Lattices.pairing z ClockPlane.cu, PMSubstrate.Lattices.pairing z ClockPlane.cv).1 -
+      2 * (PMSubstrate.Lattices.pairing z ClockPlane.cu, PMSubstrate.Lattices.pairing z ClockPlane.cv).2 : ℤ) : ZMod 43) := rfl
 
-theorem pair_add_left (a b c : V) : pair (a + b) c = pair a c + pair b c := by
-  simp [pair, add_dotProduct]
+theorem pair_add_left (a b c : V) : PMSubstrate.Lattices.pairing (a + b) c = PMSubstrate.Lattices.pairing a c + PMSubstrate.Lattices.pairing b c := by
+  simp [PMSubstrate.Lattices.pairing, add_dotProduct]
 
-theorem pair_neg_left (a c : V) : pair (-a) c = -pair a c := by
-  simp [pair, neg_dotProduct]
+theorem pair_neg_left (a c : V) : PMSubstrate.Lattices.pairing (-a) c = -PMSubstrate.Lattices.pairing a c := by
+  simp [PMSubstrate.Lattices.pairing, neg_dotProduct]
 
 theorem clockReading_add (a b : V) :
     clockReading (a + b) = clockReading a + clockReading b := by
@@ -72,7 +69,7 @@ theorem clockReading_neg (a : V) : clockReading (-a) = -clockReading a := by
   ring
 
 theorem clockReading_zero : clockReading 0 = 0 := by
-  simp [clockReading, pair]
+  simp [clockReading, PMSubstrate.Lattices.pairing]
 
 /-- A coordinate vector from its code: base-13 digits, each offset by 6
 (coordinates lie in `[-6, 6]`). -/
@@ -117,24 +114,24 @@ def rootCodes : List ℕ := [
 /-- The 240 roots as vectors. -/
 def rootList : List V := rootCodes.map ofCode
 
-theorem rootList_roots : ∀ z ∈ rootList, pair z z = 2 := by decide +kernel
+theorem rootList_roots : ∀ z ∈ rootList, PMSubstrate.Lattices.pairing z z = 2 := by decide +kernel
 
 theorem rootList_nodup : rootList.Nodup := by decide +kernel
 
 theorem rootList_length : rootList.length = 240 := by decide +kernel
 
 /-- **The list is complete.** Every vector of norm 2 is in it. -/
-theorem rootList_complete (z : V) (hz : pair z z = 2) : z ∈ rootList := by
+theorem rootList_complete (z : V) (hz : PMSubstrate.Lattices.pairing z z = 2) : z ∈ rootList := by
   classical
-  have hR : Nat.card {x : V // pair x x = 2} = 240 := ThetaE8.e8_card_roots
-  have : Finite {x : V // pair x x = 2} :=
+  have hR : Nat.card {x : V // PMSubstrate.Lattices.pairing x x = 2} = 240 := ThetaE8.e8_card_roots
+  have : Finite {x : V // PMSubstrate.Lattices.pairing x x = 2} :=
     Nat.finite_of_card_ne_zero (by rw [hR]; decide)
-  let f : {x // x ∈ rootList.toFinset} → {x : V // pair x x = 2} :=
+  let f : {x // x ∈ rootList.toFinset} → {x : V // PMSubstrate.Lattices.pairing x x = 2} :=
     fun x => ⟨x.1, rootList_roots x.1 (List.mem_toFinset.mp x.2)⟩
   have hf : Function.Injective f := fun a b h => by
-    have hv := congrArg (fun y : {x : V // pair x x = 2} => y.val) h
+    have hv := congrArg (fun y : {x : V // PMSubstrate.Lattices.pairing x x = 2} => y.val) h
     exact Subtype.ext hv
-  have hcard : Nat.card {x // x ∈ rootList.toFinset} = Nat.card {x : V // pair x x = 2} := by
+  have hcard : Nat.card {x // x ∈ rootList.toFinset} = Nat.card {x : V // PMSubstrate.Lattices.pairing x x = 2} := by
     rw [hR, Nat.card_eq_fintype_card, Fintype.card_coe,
       List.toFinset_card_of_nodup rootList_nodup, rootList_length]
   obtain ⟨⟨y, hy⟩, hyz⟩ := (hf.bijective_of_nat_card_le hcard.ge).2 ⟨z, hz⟩
@@ -163,16 +160,16 @@ theorem minus_iff_neg_plus (r : V) : clockReading (-r) = -1 ↔ clockReading r =
 
 /-- Every `+1` root projects onto the clock plane as `(1,0)` or `(−1,−1)`. -/
 theorem plus_projection : ∀ r ∈ rootList, clockReading r = 1 →
-    (pair r ClockPlane.cu = 1 ∧ pair r ClockPlane.cv = 0) ∨
-      (pair r ClockPlane.cu = -1 ∧ pair r ClockPlane.cv = -1) := by
+    (PMSubstrate.Lattices.pairing r ClockPlane.cu = 1 ∧ PMSubstrate.Lattices.pairing r ClockPlane.cv = 0) ∨
+      (PMSubstrate.Lattices.pairing r ClockPlane.cu = -1 ∧ PMSubstrate.Lattices.pairing r ClockPlane.cv = -1) := by
   decide +kernel
 
 /-- Eleven `+1` roots of each projection class. -/
 theorem plus_split :
     (rootList.filter fun r => clockReading r = 1 ∧
-        pair r ClockPlane.cu = 1 ∧ pair r ClockPlane.cv = 0).length = 11 ∧
+        PMSubstrate.Lattices.pairing r ClockPlane.cu = 1 ∧ PMSubstrate.Lattices.pairing r ClockPlane.cv = 0).length = 11 ∧
       (rootList.filter fun r => clockReading r = 1 ∧
-        pair r ClockPlane.cu = -1 ∧ pair r ClockPlane.cv = -1).length = 11 := by
+        PMSubstrate.Lattices.pairing r ClockPlane.cu = -1 ∧ PMSubstrate.Lattices.pairing r ClockPlane.cv = -1).length = 11 := by
   decide +kernel
 
 theorem clockReading_sum : ∀ steps : List V,

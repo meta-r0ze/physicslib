@@ -42,12 +42,12 @@ theorem q_mem : q ∈ internalRoots := by decide +kernel
 theorem r_mem : r ∈ internalRoots := by decide +kernel
 theorem s_mem : s ∈ internalRoots := by decide +kernel
 
-theorem pair_p_q : pair p q = -1 := by decide +kernel
-theorem pair_q_r : pair q r = -1 := by decide +kernel
-theorem pair_q_s : pair q s = -1 := by decide +kernel
-theorem pair_p_r : pair p r = 0 := by decide +kernel
-theorem pair_p_s : pair p s = 0 := by decide +kernel
-theorem pair_r_s : pair r s = 0 := by decide +kernel
+theorem pair_p_q : PMSubstrate.Lattices.pairing p q = -1 := by decide +kernel
+theorem pair_q_r : PMSubstrate.Lattices.pairing q r = -1 := by decide +kernel
+theorem pair_q_s : PMSubstrate.Lattices.pairing q s = -1 := by decide +kernel
+theorem pair_p_r : PMSubstrate.Lattices.pairing p r = 0 := by decide +kernel
+theorem pair_p_s : PMSubstrate.Lattices.pairing p s = 0 := by decide +kernel
+theorem pair_r_s : PMSubstrate.Lattices.pairing r s = 0 := by decide +kernel
 
 /-- The eight aligned simple roots, first the spacetime D4 and then the
 internal D4. -/
@@ -77,7 +77,7 @@ theorem beta_mem_spacetime : beta ∈ spacetimeRoots := by decide +kernel
 
 /-- **Sector 0's slice roots are clock-silent.** -/
 theorem sector0_slice_silent (z : V) (hz : z ∈ spacetimeRoots)
-    (hcu : pair z ClockPlane.cu = 0) (hcv : pair z ClockPlane.cv = 0) :
+    (hcu : PMSubstrate.Lattices.pairing z ClockPlane.cu = 0) (hcv : PMSubstrate.Lattices.pairing z ClockPlane.cv = 0) :
     clockReading z = 0 := by
   apply sliceRoots_silent
   rw [sliceRoots]
@@ -93,13 +93,13 @@ spacetime slice roots and clock-axis roots of reading `±1`. This stays in
 `PMKAutomaton` because `PMSubstrate.Vacuum` cannot import downstream modules. -/
 theorem aligned_sectors_clock_witness :
     alignedSectorBasis.transpose * Lattices.gram * alignedSectorBasis = Channels.d4d4 ∧
-      (∀ z ∈ sliceRoots, pair z ClockPlane.cu = 0 ∧ pair z ClockPlane.cv = 0 ∧
+      (∀ z ∈ sliceRoots, PMSubstrate.Lattices.pairing z ClockPlane.cu = 0 ∧ PMSubstrate.Lattices.pairing z ClockPlane.cv = 0 ∧
         clockReading z = 0) ∧
       (∀ z ∈ clockAxisRoots, clockReading z = 1 ∨ clockReading z = -1) := by
   refine ⟨aligned_d4d4, ?_, ?_⟩
   · intro z hz
     have hz' := List.mem_filter.mp hz
-    have hpair : pair z ClockPlane.cu = 0 ∧ pair z ClockPlane.cv = 0 :=
+    have hpair : PMSubstrate.Lattices.pairing z ClockPlane.cu = 0 ∧ PMSubstrate.Lattices.pairing z ClockPlane.cv = 0 :=
       of_decide_eq_true hz'.2
     exact ⟨hpair.1, hpair.2, sliceRoots_silent z hz⟩
   · decide +kernel

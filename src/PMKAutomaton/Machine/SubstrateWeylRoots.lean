@@ -9,8 +9,11 @@ abbrev Lattice := Fin 8 → ℤ
 
 def index (s : Bool) (j : Fin 4) : Fin 8 := if s then ⟨4+j.val, by omega⟩ else ⟨j.val, by omega⟩
 def root (s : Bool) (j : Fin 4) : Lattice := fun i => d4Embedding i (index s j)
+/-- Reflect an integral lattice vector in a supplied norm-two direction. -/
+def reflectIn (r z : Lattice) : Lattice := z - pairing z r • r
+
 def reflect (s : Bool) (j : Fin 4) (z : Lattice) : Lattice :=
-  z - pairing z (root s j) • root s j
+  reflectIn (root s j) z
 
 theorem root_norm : ∀ s j, pairing (root s j) (root s j)=2 := by decide +kernel
 
@@ -26,7 +29,7 @@ set_option maxHeartbeats 4000000 in
 theorem embedding_intertwines (s : Bool) (j : Fin 4) (w : Lattice) :
     reflect s j (d4Embedding *ᵥ w) = d4Embedding *ᵥ coordinates s j w := by
   cases s <;> fin_cases j <;> ext i <;> fin_cases i <;>
-    norm_num [reflect, root, index, coordinates, Function.update_apply, pairing, gram, d4Embedding,
+    norm_num [reflect, reflectIn, root, index, coordinates, Function.update_apply, pairing, gram, d4Embedding,
       PMSubstrate.Channels.d4Gram, mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
 
 set_option maxHeartbeats 2000000 in
@@ -45,7 +48,7 @@ set_option maxHeartbeats 4000000 in
 theorem preserves_norm (s : Bool) (j : Fin 4) (z : Lattice) :
     pairing (reflect s j z) (reflect s j z)=pairing z z := by
   cases s <;> fin_cases j <;>
-    norm_num [reflect, root, index, pairing, gram, d4Embedding, mulVec, dotProduct,
+    norm_num [reflect, reflectIn, root, index, pairing, gram, d4Embedding, mulVec, dotProduct,
       Fin.sum_univ_succ] <;> ring
 
 lemma root_glue_zero : ∀ s j, (root s j 0 : ZMod 2)=0 ∧ (root s j 5 : ZMod 2)=0 := by

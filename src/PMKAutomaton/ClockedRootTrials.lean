@@ -11,6 +11,52 @@ opportunities to apply the same E8 reflection. The update retains both
 request controls. Their joint law controls whether the carrier moves after
 the pair. In the two-tick statistical model the logarithmic generator is
 normalized to the pair.
+
+## Interface, clock and admission notes
+
+### Exhaustive trial histories and conditional counts
+
+For a fixed supplied initial lattice carrier `z`, write `Rz` for its
+reflection. The trial state keeps both request bits at every tick.
+There is no export or consumption operation in this trial. After the
+second request the lattice component stays at its endpoint through
+tick 43. The table enumerates every encoded trace from phase zero.
+
+| Retained pair | Guard fires at | After tick 1 | After tick 2 through 43 | One state per pair | One state per shared request |
+| --- | --- | --- | --- | ---: | ---: |
+| false, false | Neither phase | z | z | 1 | 1 |
+| false, true | Phase 1 | z | Rz | 1 | 0 |
+| true, false | Phase 0 | Rz | Rz | 1 | 0 |
+| true, true | Both phases | Rz | z | 1 | 1 |
+
+The first two tick equations and `trial_period_endpoint` give the
+carrier columns. `all_pairs_history_count` and
+`shared_request_history_count` check the finite counts. Even when
+`Rz = z`, the retained requests distinguish these histories in the
+trial state. If the initial controller microstates differ in other
+fields, the count of a history is the size of its initial request
+fibre (`history_count_pos_iff`). This disallows inferring equal
+physical counts from reversibility or from the two clock slots. The
+two columns are conditional enumerations of specified initial control
+encodings.
+
+For the open handoff, `receiver_trace` and `export_trace` describe
+the live, ready and displaced values for every supplied arrival and
+every visit within the horizon. There is no enumeration of joint
+wire traces from the persisting background until the two gaps above
+are filled. In particular, combining the trial table with each
+possible handoff branch by a Cartesian product would require a proof
+that the input controllers and ports admit those combinations.
+
+### Prior over accessible histories
+
+Paper I weights each history by its initial mass and its survival
+probability. If a rule labels a class of histories, its surviving
+share is the sum of those weighted probabilities. The prior choice
+is whether to count each orbit once or each accessible state once.
+An initial rule prior, if supplied separately, must also be specified
+before weighting the histories. The two counting conventions give
+different results even on the same closed ring at the same hazard.
 -/
 
 noncomputable section
@@ -19,7 +65,7 @@ namespace PMKAutomaton.ClockedRootTrials
 open Matrix PMSubstrate.Lattices PMAction
 open scoped Matrix.Norms.Operator
 
-def fire (requests : Bool × Bool) (t : Fin Delta) : Bool :=
+def fire (requests : Bool × Bool) (t : Fin PMSubstrate.E8Values.Delta) : Bool :=
   if t = 0 then requests.1 else if t = 1 then requests.2 else false
 
 /-- A substrate clock tick controlled by two retained requests. -/
@@ -31,14 +77,14 @@ theorem ticks_zero_one (requests : Bool × Bool) (z : SubstrateReflection.Lattic
     tick (requests, (z, 0)) =
       (requests, (if requests.1 then SubstrateReflection.reflect z else z, 1)) := by
   change (requests, (if fire requests 0 then SubstrateReflection.reflect z else z,
-    finRotate Delta 0)) = _
+    finRotate PMSubstrate.E8Values.Delta 0)) = _
   simp [fire]
 
 theorem ticks_one_two (requests : Bool × Bool) (z : SubstrateReflection.Lattice) :
     tick (requests, (z, 1)) =
       (requests, (if requests.2 then SubstrateReflection.reflect z else z, 2)) := by
   change (requests, (if fire requests 1 then SubstrateReflection.reflect z else z,
-    finRotate Delta 1)) = _
+    finRotate PMSubstrate.E8Values.Delta 1)) = _
   simp [fire]
 
 theorem pair_endpoint (a b : Bool) (z : SubstrateReflection.Lattice) :
@@ -52,32 +98,32 @@ theorem pair_endpoint (a b : Bool) (z : SubstrateReflection.Lattice) :
 theorem iterate_controls (requests : Bool × Bool) (z : SubstrateReflection.Lattice)
     (n : ℕ) :
     ((tick^[n]) (requests, (z, 0))).1 = requests ∧
-      ((tick^[n]) (requests, (z, 0))).2.2 = (finRotate Delta)^[n] 0 := by
+      ((tick^[n]) (requests, (z, 0))).2.2 = (finRotate PMSubstrate.E8Values.Delta)^[n] 0 := by
   induction n with
   | zero => exact ⟨rfl, rfl⟩
   | succ n ih =>
     rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
-    exact ⟨ih.1, congrArg (finRotate Delta) ih.2⟩
+    exact ⟨ih.1, congrArg (finRotate PMSubstrate.E8Values.Delta) ih.2⟩
 
 /-- After the trial pair, the remaining ticks in its period act only on
     the clock. This is a statement about this specified trial update. -/
 theorem quiet_trial_tick (requests : Bool × Bool) (z : SubstrateReflection.Lattice)
-    {n : ℕ} (hfirst : 2 ≤ n) (hlast : n < Delta) :
+    {n : ℕ} (hfirst : 2 ≤ n) (hlast : n < PMSubstrate.E8Values.Delta) :
     ((tick^[n + 1]) (requests, (z, 0))).2.1 =
       ((tick^[n]) (requests, (z, 0))).2.1 := by
   have hphase := (iterate_controls requests z n).2
-  rw [show n = (⟨n, hlast⟩ : Fin Delta).val from rfl,
+  rw [show n = (⟨n, hlast⟩ : Fin PMSubstrate.E8Values.Delta).val from rfl,
     CarrierReferenceCycle.clock_visits] at hphase
   rw [Function.iterate_succ_apply']
   change (if fire ((tick^[n]) (requests, (z, 0))).1
     ((tick^[n]) (requests, (z, 0))).2.2 then _ else _) = _
   rw [hphase]
-  have h0 : (⟨n, hlast⟩ : Fin Delta) ≠ 0 := by
+  have h0 : (⟨n, hlast⟩ : Fin PMSubstrate.E8Values.Delta) ≠ 0 := by
     intro h
     have hn := congrArg Fin.val h
     change n = 0 at hn
     omega
-  have h1 : (⟨n, hlast⟩ : Fin Delta) ≠ 1 := by
+  have h1 : (⟨n, hlast⟩ : Fin PMSubstrate.E8Values.Delta) ≠ 1 := by
     intro h
     have hn := congrArg Fin.val h
     change n = 1 at hn
@@ -86,7 +132,7 @@ theorem quiet_trial_tick (requests : Bool × Bool) (z : SubstrateReflection.Latt
 
 /-- The two-slot endpoint persists to the end of this trial period. -/
 theorem trial_period_endpoint (a b : Bool) (z : SubstrateReflection.Lattice)
-    {n : ℕ} (hfirst : 2 ≤ n) (hlast : n ≤ Delta) :
+    {n : ℕ} (hfirst : 2 ≤ n) (hlast : n ≤ PMSubstrate.E8Values.Delta) :
     ((tick^[n]) ((a, b), (z, 0))).2.1 =
       if a ≠ b then SubstrateReflection.reflect z else z := by
   induction n with
@@ -100,7 +146,7 @@ theorem trial_period_endpoint (a b : Bool) (z : SubstrateReflection.Lattice)
       exact congrArg (fun s => s.2.1) (pair_endpoint a b z)
 
 /-- A single retained request drives both boundaries of the original excursion. -/
-theorem shared_fire (b : Bool) (t : Fin Delta) :
+theorem shared_fire (b : Bool) (t : Fin PMSubstrate.E8Values.Delta) :
     fire (b, b) t = (b && ClockControlledRoot.fire CarrierReferenceCycle.excursionMask t) := by
   revert t
   cases b <;> decide +kernel
@@ -198,10 +244,10 @@ theorem no_endpoint_action (cost : ℝ) (z : SubstrateReflection.Lattice)
   exact hcost (by linarith)
 
 /-- Apply the equal-count Gibbs law to the four retained request histories. -/
-def historyMass (β cost : ℝ) (z : SubstrateReflection.Lattice) (requests : Bool × Bool) : ℝ :=
+def historyPMF (β cost : ℝ) (z : SubstrateReflection.Lattice) (requests : Bool × Bool) : ℝ :=
   probability β (historyAction cost z) requests
 
-private theorem single_attempt_mass (β cost : ℝ) (b : Bool) :
+private theorem single_attempt_pmf (β cost : ℝ) (b : Bool) :
     probability β (attemptAction cost) b = EventAccounting.binaryPMF (gibbsRate β cost) b := by
   cases b
   · have h := probabilities_sum_one β (attemptAction cost)
@@ -213,9 +259,9 @@ private theorem single_attempt_mass (β cost : ℝ) (b : Bool) :
 
 /-- With all four histories equally counted before survival filtering,
 pricing local movement produces the product law on a moving root orbit. -/
-theorem history_mass_factorizes (β cost : ℝ) (z : SubstrateReflection.Lattice)
+theorem history_pmf_factorizes (β cost : ℝ) (z : SubstrateReflection.Lattice)
     (hmoves : SubstrateReflection.reflect z ≠ z) (requests : Bool × Bool) :
-    historyMass β cost z requests =
+    historyPMF β cost z requests =
       EventAccounting.binaryPMF (gibbsRate β cost) requests.1 *
         EventAccounting.binaryPMF (gibbsRate β cost) requests.2 := by
   have hw (r : Bool × Bool) : weight β (historyAction cost z r) =
@@ -223,20 +269,20 @@ theorem history_mass_factorizes (β cost : ℝ) (z : SubstrateReflection.Lattice
     rw [history_action_additive cost z hmoves, weight_add]
   have hpart : partition β (historyAction cost z) = partition β (attemptAction cost) ^ 2 := by
     simp only [partition, Fintype.sum_prod_type, hw, ← Finset.mul_sum, ← Finset.sum_mul, pow_two]
-  rw [← single_attempt_mass, ← single_attempt_mass]
-  simp only [historyMass, probability, hw, hpart, pow_two, mul_div_mul_comm]
+  rw [← single_attempt_pmf, ← single_attempt_pmf]
+  simp only [historyPMF, probability, hw, hpart, pow_two, mul_div_mul_comm]
 
 theorem expected_history_action (β cost : ℝ) (z : SubstrateReflection.Lattice)
     (hmoves : SubstrateReflection.reflect z ≠ z) :
-    (∑ requests, historyMass β cost z requests * historyAction cost z requests) =
+    (∑ requests, historyPMF β cost z requests * historyAction cost z requests) =
       2 * cost * gibbsRate β cost := by
-  simp only [history_mass_factorizes β cost z hmoves, history_action_additive cost z hmoves,
+  simp only [history_pmf_factorizes β cost z hmoves, history_action_additive cost z hmoves,
     Fintype.sum_prod_type, Fintype.sum_bool]
   simp [attemptAction, EventAccounting.binaryPMF]
   ring
 
-def changedWeight (mass : Bool × Bool → ℝ) : ℝ :=
-  mass (true, false) + mass (false, true)
+def changedWeight (law : Bool × Bool → ℝ) : ℝ :=
+  EventAccounting.eventWeight law {(true, false), (false, true)}
 
 /-- With equal Bernoulli marginals, the parity statistic detects the
 joint true-true weight. A common request has joint weight p and cancels. -/
@@ -244,7 +290,7 @@ theorem changed_weight (mass : Bool × Bool → ℝ) (p : ℝ)
     (first : mass (true, false) + mass (true, true) = p)
     (second : mass (false, true) + mass (true, true) = p) :
     changedWeight mass = 2 * (p - mass (true, true)) := by
-  unfold changedWeight
+  simp [changedWeight, EventAccounting.eventWeight]
   linarith
 
 open RootTransferPhase
@@ -267,14 +313,14 @@ theorem independent_trial_weight (p : ℝ) :
     changedWeight (fun b => EventAccounting.binaryPMF p b.1 *
       EventAccounting.binaryPMF p b.2) = RootClockCalibration.trialWeight e a p := by
   rw [RootClockCalibration.trial_weight e he a moves]
-  simp [changedWeight, EventAccounting.binaryPMF, RootTransferPhase.residual]
+  simp [changedWeight, EventAccounting.eventWeight, EventAccounting.binaryPMF, RootTransferPhase.residual]
   ring
 
 include he moves in
 theorem history_endpoint_weight (β cost : ℝ) (z : SubstrateReflection.Lattice)
     (hmoves : SubstrateReflection.reflect z ≠ z) :
-    changedWeight (historyMass β cost z) = RootClockCalibration.trialWeight e a (gibbsRate β cost) := by
-  have hmass := funext (history_mass_factorizes β cost z hmoves)
+    changedWeight (historyPMF β cost z) = RootClockCalibration.trialWeight e a (gibbsRate β cost) := by
+  have hmass := funext (history_pmf_factorizes β cost z hmoves)
   rw [hmass]
   exact independent_trial_weight e he a moves (gibbsRate β cost)
 

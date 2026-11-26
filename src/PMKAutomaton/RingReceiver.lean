@@ -7,6 +7,97 @@ import Mathlib.Dynamics.PeriodicPts.Defs
 A periodic identification closes the encoded root line. It supplies a
 finite state space with internal arrivals. The retained requests still
 belong to that state. The test keeps every initial request and port field.
+
+## Interface, clock and admission notes
+
+### AND and OR are different dynamics
+
+`LocalController.complemented_guard` proves De Morgan duality.
+On the same incoming pair, OR with both requests complemented gives
+the AND output with its ports swapped (`complemented_output`).
+`HandoffAdmittance.repair_receiver_after_exchange` realizes a swap at
+the receiver as an extra maintenance operation. It links two
+one-visit outputs.
+
+Complementing requests and swapping each port pair defines a local
+involution. It commutes with the bare phase advance and preserves
+the sum of the two port populations at each site
+(`receiver_dual_involutive`, `receiver_dual_local`,
+`receiver_dual_bare_clock`, `receiver_dual_population`).
+It fails to carry an AND tick to an OR tick
+(`receiver_dual_not_conjugate`). The live and record streams go to
+opposite neighbours. The maintenance swap changes which stream
+carries the incoming value. See `OpenReferenceFlow.exchange_reflects`
+and `bypass_transmits`.
+
+The certified root probe also distinguishes the updates. At phase
+zero the idle pair leaves the probe unchanged. Its complemented
+pair fires the reflection even with equal receiver ports
+(`receiver_dual_probe_counterexample`). More generally, no injective
+relabeling that keeps the clock phase and complements both request
+bits everywhere can carry one update to the other
+(`no_request_complement_conjugacy`). From phase zero, every OR state
+with both requests set everywhere returns after two periods. Under
+AND with both requests clear, a localized live value shifts out of
+its original site.
+
+The mismatch flag registers on the exchange visit. On the same
+arrivals `complemented_exchange_flags` puts the mismatch contribution
+on exactly one of the two accounts. For an orthogonal pair of unit
+basis values, the AND bypass accounts for zero receiver flags and the
+complemented OR exchange accounts for one, even with the port values
+swapped (`receiver_dual_flag_counterexample`). Equal arrivals hide
+this difference.
+
+The closed-ring test computes stationary traffic on three, four and five sites The receiver-flag minima tie and the
+historical Gibbs comparison depends on the prior. With the boundary
+account below the [open admission contract](TODO.md#admission-and-ports)
+at the use of a mixed receiver output by an admitted downstream trace.
+The electric reference choice still requires its writer trace
+and prices. Choosing colour or lepton complements the electric
+sector bit and keeps the position bit
+(`ElectricHeavyRecord.reference_flags_from_orbit_bits`).
+The receiver result gives no identification with this sector bit.
+
+### Fan-out at a receiver
+
+`Components.ring_observations_local` puts the two output values and
+the comparison flag in the same read neighbourhood. Each depends
+on the local requests and the two adjacent arrivals. The guard
+determines outgoing stream identity at that event. Following a stream
+to another node requires its next shift. Local determination provides
+no clock slot or input port to an EP consumer. It does exclude
+reconstructing arbitrary later arrivals from the same initial local
+stencil (`OpenHandoff.neighbours_do_not_determine_second_visit`).
+
+| Possible attachment at the visit | Locally determined datum | Downstream consequence if attached |
+| --- | --- | --- |
+| X → E | Routed value plus live/record destination. The destination on the next link follows the outgoing stream. | Producer of the writer's payload and therefore its input distribution and slot counts. The mixed witness can route to different ports. |
+| F → E | Occupied retained record at a supplied local or arriving slot. A later export is a different visit. | Supplies the writer polarity, readiness or insertion guard when the physical encoding makes the record such an input. |
+| D → E | Executed comparison and its mismatch result on that input. | May furnish a registration and the Toll in `exp(−T/2)`. A zero flag can accompany an executed exchange. |
+
+All three are cases of W. The clock permits reasoning about when the
+core values are available. The EP read event, its position relative
+to that tick and its attachment still require W/T/U. No case follows
+as the sole physical attachment.
+
+### Least cost on certified traces
+
+The [selection theorem](Interface.lean) minimizes the cost within
+a supplied admitted family. Compare equal observation windows and
+use the same rate units.
+
+| Trace or booking | Certified differential | Consequence |
+| --- | --- | --- |
+| Tagged open trace with common reader and disposal | Same booked core comparisons and tagged exports. `tagged_trace_observable_eq` and `tagged_rule_exports`. In the all-erase account, each pays one per tick (`open_cycle_erase_all`). | **S** on the tagged read and erasure account. Equal remaining work is needed for equality of the complete Toll. |
+| Retained ring without a comparison reader | No comparison registration and no exported erasure. `ring_cycle_erasure`. | The certified subtotal is zero for either guard and either bank placement. Distinguishable outputs still exist. A zero subtotal is a cost tie, not a machine symmetry. |
+| Site zero on the occupied mixed ring with the same booked comparisons | `Values.mixedReceiverRate_and` gives zero for AND. `mixedReceiverRate_or` gives the booked fraction of the period for OR. Booking all 43 gives a unit difference per tick. | AND is cheaper in this comparison when its extra remaining rate is smaller than that fraction (`mixed_and_cheaper_iff`). With equal other work and a positive booked fraction it has greater survival. |
+| Mixed export or paid FIFO and hold visits | The boundary charges its booked erased bits. The joint lift does not book a comparison, pick the exported port, or price a FIFO write. | The difference needs the existing W/D/B/K inputs. Arbitrary trace averaging also needs O/H. |
+
+Least Toll does not select a physical member from these data.
+The identity of the physical comparison and its remaining costs
+come before the comparison. A common partial cost does not imply
+that the packet, destination or flag factors through a quotient.
 -/
 
 namespace PMKAutomaton.RingReceiver
@@ -57,7 +148,7 @@ def tick (n : ℕ) (either : Bool) : Equiv.Perm (State n) :=
   (Equiv.prodCongrRight fun phase =>
     Equiv.prodCongrRight fun requests =>
       Equiv.prodCongr ((probe_twice phase requests).toPerm _) (portStep either requests)).trans
-    (Equiv.prodCongr (finRotate Delta) (Equiv.refl _))
+    (Equiv.prodCongr (finRotate PMSubstrate.E8Values.Delta) (Equiv.refl _))
 
 theorem tick_bijective (n : ℕ) (either : Bool) : Function.Bijective (tick n either) :=
   (tick n either).bijective
@@ -155,25 +246,25 @@ theorem slot_period_five :
   decide +kernel
 
 private def probeClock (u : Phase × (Requests × Bool)) : Phase × (Requests × Bool) :=
-  (finRotate Delta u.1, advanceProbe u.1 u.2)
+  (finRotate PMSubstrate.E8Values.Delta u.1, advanceProbe u.1 u.2)
 
 private theorem probe_return :
-    ∀ c : Requests, ∀ b : Bool, (probeClock^[2 * Delta]) (0, (c, b)) = (0, (c, b)) := by
+    ∀ c : Requests, ∀ b : Bool, (probeClock^[2 * PMSubstrate.E8Values.Delta]) (0, (c, b)) = (0, (c, b)) := by
   decide +kernel
 
 /-- One phase-zero block flips the probe side exactly for mixed requests. -/
 theorem probe_one_period :
-    ∀ c : Requests, ∀ b : Bool, (probeClock^[Delta]) (0, (c, b)) =
+    ∀ c : Requests, ∀ b : Bool, (probeClock^[PMSubstrate.E8Values.Delta]) (0, (c, b)) =
       (0, (c, if c.1 = c.2 then b else !b)) := by
   decide +kernel
 
 theorem phase_iterate {n : ℕ} (either : Bool) (s : State n) (k : ℕ) :
-    ((tick n either)^[k] s).1 = (finRotate Delta)^[k] s.1 := by
+    ((tick n either)^[k] s).1 = (finRotate PMSubstrate.E8Values.Delta)^[k] s.1 := by
   induction k with
   | zero => rfl
   | succ k ih =>
     rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
-    exact congrArg (finRotate Delta) ih
+    exact congrArg (finRotate PMSubstrate.E8Values.Delta) ih
 
 theorem requests_iterate {n : ℕ} (either : Bool) (s : State n) (k : ℕ) :
     ((tick n either)^[k] s).2.1 = s.2.1 := by
@@ -207,13 +298,13 @@ private theorem probe_iterate {n : ℕ} (either : Bool) (s : State n) (x : Fin n
 probe period. The requests, phase and probe sides return as well. -/
 theorem ring_return_of_ports {n t : ℕ} (either : Bool) (s : State n) (hs : s.1 = 0)
     (hp : (portStep either s.2.1)^[t] s.2.2.2 = s.2.2.2)
-    (hc : 2 * Delta ∣ t) : (tick n either)^[t] s = s := by
+    (hc : 2 * PMSubstrate.E8Values.Delta ∣ t) : (tick n either)^[t] s = s := by
   let u := (tick n either)^[t] s
-  have hphase : Function.IsPeriodicPt (finRotate Delta) Delta s.1 :=
+  have hphase : Function.IsPeriodicPt (finRotate PMSubstrate.E8Values.Delta) PMSubstrate.E8Values.Delta s.1 :=
     CarrierReferenceCycle.clock_closes s.1
-  have hphase' := (hphase.trans_dvd (dvd_trans (dvd_mul_left Delta 2) hc)).eq
+  have hphase' := (hphase.trans_dvd (dvd_trans (dvd_mul_left PMSubstrate.E8Values.Delta 2) hc)).eq
   have hprobe (x : Fin n) :
-      Function.IsPeriodicPt probeClock (2 * Delta) (s.1, (s.2.1 x, s.2.2.1 x)) := by
+      Function.IsPeriodicPt probeClock (2 * PMSubstrate.E8Values.Delta) (s.1, (s.2.1 x, s.2.2.1 x)) := by
     rw [hs]
     exact probe_return (s.2.1 x) (s.2.2.1 x)
   have hprobes (x : Fin n) : (u.1, (u.2.1 x, u.2.2.1 x)) =
@@ -229,7 +320,7 @@ theorem ring_return_of_ports {n t : ℕ} (either : Bool) (s : State n) (hs : s.1
 /-- Combine any common slot period with the two-clock probe period. -/
 theorem ring_return {n k t : ℕ} (either : Bool) (s : State n) (hs : s.1 = 0)
     (hslot : ∀ p : Slot n, (portSource (exchange either ∘ s.2.1))^[k] p = p)
-    (hk : k ∣ t) (hc : 2 * Delta ∣ t) : (tick n either)^[t] s = s := by
+    (hk : k ∣ t) (hc : 2 * PMSubstrate.E8Values.Delta ∣ t) : (tick n either)^[t] s = s := by
   apply ring_return_of_ports either s hs _ hc
   have hp (p : Slot n) : slotValue ((portStep either s.2.1)^[t] s.2.2.2) p =
       slotValue s.2.2.2 p := by
@@ -254,9 +345,9 @@ theorem ring_return_five (either : Bool) (s : State 5) (hs : s.1 = 0) :
 theorem phase_zero_seed {n : ℕ} (either : Bool) (s : State n) :
     ∃ fields : Fields n, (tick n either)^[s.1.val] (0, fields) = s := by
   obtain ⟨u, hu⟩ := ((tick n either).surjective.iterate s.1.val) s
-  have hp : (finRotate Delta)^[s.1.val] u.1 = s.1 := by
+  have hp : (finRotate PMSubstrate.E8Values.Delta)^[s.1.val] u.1 = s.1 := by
     rw [← phase_iterate either u s.1.val, hu]
-  have h0 := ((finRotate Delta).injective.iterate s.1.val)
+  have h0 := ((finRotate PMSubstrate.E8Values.Delta).injective.iterate s.1.val)
     (hp.trans (CarrierReferenceCycle.clock_visits s.1).symm)
   exact ⟨u.2, (congrArg (fun y : Phase => (tick n either)^[s.1.val] (y, u.2))
     h0.symm).trans hu⟩
@@ -357,7 +448,7 @@ theorem mixed_ring_flag_amplitudes :
 
 /-- Expected receiver registrations per tick on an orbit. The sum may
     cover one receiver or all of them. -/
-noncomputable def orbitToll {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
+noncomputable def orbitRegistrationRate {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
     (orbit : Finset (State n)) : ℝ :=
   orbitAverage orbit fun s => ∑ x ∈ receivers, receiverFlag either s x
 
@@ -386,8 +477,8 @@ theorem mixed_ring_iterate_flag (either : Bool) (n : ℕ) (x : Fin 3) :
   rw [receiver_flag_eq, requests_iterate, hp]
   cases either <;> simp [mixedBasisRing, arrivals, OpenReferenceFlow.streamShift, exchange, hneq]
 
-theorem mixed_ring_orbit_toll (either : Bool) :
-    orbitToll either {0} (orbitWithin either 516 mixedBasisRing) = if either then 1 else 0 := by
+theorem mixed_ring_registration_rate (either : Bool) :
+    orbitRegistrationRate either {0} (orbitWithin either 516 mixedBasisRing) = if either then 1 else 0 := by
   let orbit := orbitWithin either 516 mixedBasisRing
   have hzero : mixedBasisRing ∈ orbit :=
     Finset.mem_image.mpr ⟨0, Finset.mem_range.mpr (by decide +kernel), rfl⟩
@@ -402,8 +493,8 @@ theorem mixed_ring_orbit_toll (either : Bool) :
   rw [hsum, Finset.sum_const, nsmul_eq_mul]
   exact mul_div_cancel_left₀ _ hcard
 
-private theorem orbit_toll_nonneg {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
-    (orbit : Finset (State n)) : 0 ≤ orbitToll either receivers orbit := by
+private theorem orbit_registration_rate_nonneg {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
+    (orbit : Finset (State n)) : 0 ≤ orbitRegistrationRate either receivers orbit := by
   apply div_nonneg _ (by positivity)
   apply Finset.sum_nonneg
   intro s _
@@ -421,16 +512,16 @@ private theorem equal_ports_fixed {n : ℕ} (either : Bool) (q : RequestsField n
 
 /-- A uniform occupied port field yields zero on both rules, including
     with mixed requests. Every other orbit has nonnegative Toll. -/
-theorem minimum_orbit_toll (n bound : ℕ) (either : Bool) (receivers : Finset (Fin n)) :
-    ∃ o ∈ enumerateOrbits n either bound, orbitToll either receivers o = 0 ∧
-      ∀ p ∈ enumerateOrbits n either bound, 0 ≤ orbitToll either receivers p := by
+theorem minimum_orbit_registration_rate (n bound : ℕ) (either : Bool) (receivers : Finset (Fin n)) :
+    ∃ o ∈ enumerateOrbits n either bound, orbitRegistrationRate either receivers o = 0 ∧
+      ∀ p ∈ enumerateOrbits n either bound, 0 ≤ orbitRegistrationRate either receivers p := by
   let fields : Fields n := (fun _ => (true, false), fun _ => false, fun _ => (false, false))
   let o := orbitWithin either bound (0, fields)
   have ho : o ∈ enumerateOrbits n either bound := by
     unfold enumerateOrbits
     exact Finset.mem_image.mpr ⟨fields, Finset.mem_univ _, rfl⟩
-  refine ⟨o, ho, ?_, fun p _ => orbit_toll_nonneg either receivers p⟩
-  unfold orbitToll orbitAverage
+  refine ⟨o, ho, ?_, fun p _ => orbit_registration_rate_nonneg either receivers p⟩
+  unfold orbitRegistrationRate orbitAverage
   have hsum : ∑ s ∈ o, ∑ x ∈ receivers, receiverFlag either s x = 0 := by
     apply Finset.sum_eq_zero
     intro s hs
@@ -450,19 +541,19 @@ theorem minimum_orbit_toll (n bound : ℕ) (either : Bool) (receivers : Finset (
     The common minimum is zero at any positive hazard. -/
 theorem both_rules_attain_best_survival (n bound : ℕ) (either : Bool)
     (receivers : Finset (Fin n)) (β : ℝ) (hβ : 0 < β) :
-    ∃ o ∈ enumerateOrbits n either bound, orbitToll either receivers o = 0 ∧
+    ∃ o ∈ enumerateOrbits n either bound, orbitRegistrationRate either receivers o = 0 ∧
       ∀ other, ∀ p ∈ enumerateOrbits n other bound,
-        PersistenceMechanics.Gibbs.weight β (orbitToll other receivers p) ≤
-          PersistenceMechanics.Gibbs.weight β (orbitToll either receivers o) := by
-  obtain ⟨o, ho, hz, _⟩ := minimum_orbit_toll n bound either receivers
+        PersistenceMechanics.Gibbs.weight β (orbitRegistrationRate other receivers p) ≤
+          PersistenceMechanics.Gibbs.weight β (orbitRegistrationRate either receivers o) := by
+  obtain ⟨o, ho, hz, _⟩ := minimum_orbit_registration_rate n bound either receivers
   let family : Set (Bool × Finset (State n)) :=
     {i | i.2 ∈ enumerateOrbits n i.1 bound}
-  let cost : Bool × Finset (State n) → ℝ := fun i => orbitToll i.1 receivers i.2
+  let cost : Bool × Finset (State n) → ℝ := fun i => orbitRegistrationRate i.1 receivers i.2
   have hbest := (PersistenceSelection.within_family_iff_cheapest β hβ cost family 0
     (either, o)).mpr ⟨ho, fun j _ => by
-      change orbitToll either receivers o ≤ orbitToll j.1 receivers j.2
+      change orbitRegistrationRate either receivers o ≤ orbitRegistrationRate j.1 receivers j.2
       rw [hz]
-      exact orbit_toll_nonneg j.1 receivers j.2⟩
+      exact orbit_registration_rate_nonneg j.1 receivers j.2⟩
   refine ⟨o, ho, hz, ?_⟩
   intro other p hp
   simpa [PersistenceMechanics.Gibbs.weight, cost] using hbest.2 (other, p) hp
@@ -482,7 +573,7 @@ theorem survivor_mass_of_subset {ι : Type*} [Fintype ι] (members : Finset ι)
     This is a statistic of the supplied family at the given hazard. -/
 noncomputable def gibbsOrbitMean {n : ℕ} (either : Bool) (receivers : Finset (Fin n))
     (family : Finset (Finset (State n))) (β : ℝ) : ℝ :=
-  let cost : ↥family → ℝ := fun o => orbitToll either receivers o.val
+  let cost : ↥family → ℝ := fun o => orbitRegistrationRate either receivers o.val
   ∑ o : ↥family, PersistenceMechanics.Gibbs.probability β cost o * cost o
 
 end PMKAutomaton.RingReceiver

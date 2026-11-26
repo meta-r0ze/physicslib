@@ -44,3 +44,5 @@ Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 - **Dressing outlets** (premise of `FlavourDressing`, `515/516`). The open question, whether the
   CKM loss realizes `PMFlavor.DressingEvent.event_law_spatial`, is owned by
   [PMFlavor](../PMFlavor/TODO.md); nothing to do here until it closes.
+
+- Absolute W and Z masses: the E8 values are uncorrected (z_mass_uncorrected −768σ); StrongRunning.mZ uses the uncorrected value.

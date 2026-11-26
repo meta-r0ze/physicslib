@@ -1,5 +1,5 @@
 import PMKAutomaton.Machine.ClockControlledRoot
-import PMKAutomaton.Machine.ClockPeriod
+import PMSubstrate.E8Values
 import PMSubstrate.SelfReadable
 
 /-! A reversible register realization of the exact modulo-two pairing used
@@ -11,7 +11,7 @@ namespace PMAction.MatchedLatticeProbe
 open Matrix PMSubstrate.Lattices SubstrateReflection
 
 /-- Input lattice state, retained substrate probe state, writable phase register. -/
-abbrev State := Lattice × (Lattice × Fin Delta)
+abbrev State := Lattice × (Lattice × Fin PMSubstrate.E8Values.Delta)
 
 def outcome (y x : Lattice) : Bool := decide (¬ (2 : ℤ) ∣ pairing x y)
 
@@ -20,8 +20,8 @@ theorem same_resolution (y x : Lattice) : outcome y x = false ↔
     (2 : ℤ) ∣ x ⬝ᵥ (gram *ᵥ y) := by simp [outcome, pairing]
 
 def probe : Equiv.Perm State where
-  toFun s := (s.1, s.2.1, if outcome s.2.1 s.1 then finRotate Delta s.2.2 else s.2.2)
-  invFun s := (s.1, s.2.1, if outcome s.2.1 s.1 then (finRotate Delta).symm s.2.2 else s.2.2)
+  toFun s := (s.1, s.2.1, if outcome s.2.1 s.1 then finRotate PMSubstrate.E8Values.Delta s.2.2 else s.2.2)
+  invFun s := (s.1, s.2.1, if outcome s.2.1 s.1 then (finRotate PMSubstrate.E8Values.Delta).symm s.2.2 else s.2.2)
   left_inv s := by cases h : outcome s.2.1 s.1 <;> simp [h]
   right_inv s := by cases h : outcome s.2.1 s.1 <;> simp [h]
 
@@ -30,7 +30,7 @@ def ReadsPairing (y : Lattice) (F : State → State) : Prop :=
 
 theorem probe_reads (y : Lattice) : ReadsPairing y probe := by
   intro x
-  change (if outcome y x then finRotate Delta 0 else 0) = _
+  change (if outcome y x then finRotate PMSubstrate.E8Values.Delta 0 else 0) = _
   simp
 
 theorem input_preserved (s : State) : (probe s).1 = s.1 := rfl
@@ -72,7 +72,7 @@ theorem root_resolution (x : Lattice) :
 /-- Any implementation reading this actual lattice pairing must couple the
 input to the probe output. This is a task theorem, not a vacuum schedule. -/
 theorem root_readout_requires_coupling (F : State → State) (hread : ReadsPairing root F) :
-    ¬ ∀ (x : Lattice) (t : Fin Delta), (F (x,root,t)).2.2 = (F (0,root,t)).2.2 := by
+    ¬ ∀ (x : Lattice) (t : Fin PMSubstrate.E8Values.Delta), (F (x,root,t)).2.2 = (F (0,root,t)).2.2 := by
   intro h
   have hh := h (Pi.single 0 1) 0
   rw [hread (Pi.single 0 1), hread 0, root_example.2.2.1, root_example.2.2.2] at hh

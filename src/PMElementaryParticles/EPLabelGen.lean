@@ -61,10 +61,10 @@ def channelE8Gen (g : Fin 3) (c : Channels) : V :=
 
 /-- The halved internal pairings: the channel's internal class. -/
 def channelKeyGen (g : Fin 3) (c : Channels) : Key :=
-  ((((pair (channelE8Gen g c) PMKAutomaton.AlignedSectors.p +
-      pair (channelE8Gen g c) t) / 2 : ℤ) : ZMod 2),
-   (((pair (channelE8Gen g c) PMKAutomaton.AlignedSectors.p +
-      pair (channelE8Gen g c) PMKAutomaton.AlignedSectors.s) / 2 : ℤ) : ZMod 2))
+  ((((PMSubstrate.Lattices.pairing (channelE8Gen g c) PMKAutomaton.AlignedSectors.p +
+      PMSubstrate.Lattices.pairing (channelE8Gen g c) t) / 2 : ℤ) : ZMod 2),
+   (((PMSubstrate.Lattices.pairing (channelE8Gen g c) PMKAutomaton.AlignedSectors.p +
+      PMSubstrate.Lattices.pairing (channelE8Gen g c) PMKAutomaton.AlignedSectors.s) / 2 : ℤ) : ZMod 2))
 
 /-- Generation `0` is the reference placement. -/
 theorem channelE8Gen_zero (c : Channels) : channelE8Gen 0 c = channelE8 c := rfl
@@ -140,15 +140,15 @@ the lattice pairing of their placed vectors is unchanged, in every generation. T
 transpositions generate the colour group, so this is invariance under the group. -/
 theorem colour_preserves_wall_pairs : ∀ (g : Fin 3) (a b : Fin 3) (c c' : Channels),
     CarrierChannels.wall c = CarrierChannels.wall c' →
-      pair (channelE8Gen g (permuteColour a b c)) (channelE8Gen g (permuteColour a b c'))
-        = pair (channelE8Gen g c) (channelE8Gen g c') := by
+      PMSubstrate.Lattices.pairing (channelE8Gen g (permuteColour a b c)) (channelE8Gen g (permuteColour a b c'))
+        = PMSubstrate.Lattices.pairing (channelE8Gen g c) (channelE8Gen g c') := by
   decide +kernel
 
 /-- **The weak flip is an exact symmetry within a wall.** -/
 theorem weak_preserves_wall_pairs : ∀ (g : Fin 3) (c c' : Channels),
     CarrierChannels.wall c = CarrierChannels.wall c' →
-      pair (channelE8Gen g (flipWeak c)) (channelE8Gen g (flipWeak c'))
-        = pair (channelE8Gen g c) (channelE8Gen g c') := by
+      PMSubstrate.Lattices.pairing (channelE8Gen g (flipWeak c)) (channelE8Gen g (flipWeak c'))
+        = PMSubstrate.Lattices.pairing (channelE8Gen g c) (channelE8Gen g c') := by
   decide +kernel
 
 end PMElementaryParticles.EPLabelGen

@@ -12,6 +12,66 @@ second observable, the two-trial probability of changing the root label.
 That probability fixes the gap on the admissible lazy-transfer interval.
 The resulting clock test concerns a supplied pair of trials and a supplied
 coherent pulse. Their physical admission and time calibration are inputs.
+
+## Interface, clock and admission notes
+
+### Root calibration
+
+A moving label reads the full complex phase of the reconstructed pulse.
+Gaps π and 3π give the same coherent history at integer ticks, including
+a reflection on the first tick. See `phase_alias_iff`,
+`integer_samples_agree` and `ambiguous_exchange_clock`.
+
+A two-trial test can instead read the probability on the two record-port
+labels of the prepared vector-class odd live seed
+(`RootClockCalibration.odd_seed_trial_weight`). In statistical-pair time,
+a reflection at elapsed time `N` requires `−N log(1−2w) = π + 2πk`. The
+principal calibration gives `w = (1 − exp(−π/N))/2` and can also use a
+coherent flag on the principal range (`exchange_tick_iff`,
+`principal_trial_weight`, `principal_flag_inj`).
+
+The reference excursion retains the request bits and advances to phase
+2. A moved input changes exactly when the bits differ
+(`ClockedRootTrials.pair_endpoint`, `shared_fire`). With the same
+statistical pair occupying two substrate ticks, the coherent reflection
+test becomes `−N log(1−2w)/2 = π + 2πk`. Its principal weight is
+`(1 − exp(−2π/N))/2` (`exchange_in_ticks_iff`, `principal_weight_in_ticks`).
+
+On a moving input, the action that charges each change in the two-tick
+trace at the same supplied price `c` takes the values `0, c, c, 2c` on
+the four retained histories. The idle and double-fire histories have the
+same endpoint and different actions for nonzero `c`. The equal-prior
+Gibbs law for these four histories factorizes, with each slot's rate
+`p = exp(−βc)/(1 + exp(−βc))`. The expected action is `2cp`, and the
+endpoint-change weight is `2p(1−p)` (`history_action_additive`,
+`no_endpoint_action`, `history_pmf_factorizes`,
+`expected_history_action`, `history_endpoint_weight`).
+
+The physical protocol still needs to admit the four equally counted
+histories, identify and price the two local registrations, and place its
+coherent pulse on the same clock.
+
+The isolated trial's requests persist unchanged. Its carrier is idle
+in phases 2–42 (`iterate_controls`, `quiet_trial_tick`,
+`trial_period_endpoint`). The [admission check](OVERVIEW.md#admission)
+enumerates the four retained pairs. The shared-request preparation
+has only the two equal-bit histories. Physical prior counts require
+the actual controller background.
+
+### Clock placement
+
+Spatial stabilizers fix the scalar phase. This alone places no
+operation. The prescribed trial has its own phases 0 and 1. In
+the wider closed root-excursion family the one-phase mask at
+phase 2 fires at phases 1 and 2
+(`Components.shifted_excursion_boundaries`). The period and the
+non-idle minimum are the same as for the prescribed excursion
+(`ClockControlledRoot.cycle_closes`,
+`Components.shifted_excursion_same_cost`,
+`CarrierReferenceCycle.minimum_nonidle_carrier_cost`). Fixing
+physical pulse or exchange slots still needs the joint placement
+and timing T/G. The shift example concerns the excursion family.
+It does not move a prescribed trial slot.
 -/
 
 noncomputable section

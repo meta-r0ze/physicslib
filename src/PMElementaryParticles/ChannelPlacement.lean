@@ -55,8 +55,8 @@ def t : V := PMKAutomaton.AlignedSectors.r
 /-- The internal D4 class key: the two parity pairings with the internal
 simple system. -/
 def internalKey (z : V) : Key :=
-  (((pair z p + pair z t : ℤ) : ZMod 2),
-    ((pair z p + pair z s : ℤ) : ZMod 2))
+  (((PMSubstrate.Lattices.pairing z p + PMSubstrate.Lattices.pairing z t : ℤ) : ZMod 2),
+    ((PMSubstrate.Lattices.pairing z p + PMSubstrate.Lattices.pairing z s : ℤ) : ZMod 2))
 
 theorem internalKey_add (z w : V) :
     internalKey (z + w) = internalKey z + internalKey w := by
@@ -127,8 +127,8 @@ def channelE8 (c : PMConstants.PacketGaugeActions.Channels) : V :=
 
 /-- The halved internal pairings define the channel's internal class. -/
 def channelKey (c : PMConstants.PacketGaugeActions.Channels) : Key :=
-  ((((pair (channelE8 c) p + pair (channelE8 c) t) / 2 : ℤ) : ZMod 2),
-   (((pair (channelE8 c) p + pair (channelE8 c) s) / 2 : ℤ) : ZMod 2))
+  ((((PMSubstrate.Lattices.pairing (channelE8 c) p + PMSubstrate.Lattices.pairing (channelE8 c) t) / 2 : ℤ) : ZMod 2),
+   (((PMSubstrate.Lattices.pairing (channelE8 c) p + PMSubstrate.Lattices.pairing (channelE8 c) s) / 2 : ℤ) : ZMod 2))
 
 theorem channelE8_injective : Function.Injective channelE8 := by
   decide +kernel

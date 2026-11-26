@@ -47,7 +47,7 @@ theorem candidates_complete : ∀ c : Candidate, c ∈ candidates := by
 theorem candidates_count : candidates.length = 8 ∧ candidates.Nodup := by
   decide +kernel
 
-def phases (c : Candidate) : Fin PMKAutomaton.Values.Delta × Fin PMKAutomaton.Values.Delta :=
+def phases (c : Candidate) : Fin PMSubstrate.E8Values.Delta × Fin PMSubstrate.E8Values.Delta :=
   PMKAutomaton.Values.excursionSlots c.2.2
 
 /-- Unit comparison registrations per tick at site zero if the mixed

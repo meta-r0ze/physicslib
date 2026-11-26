@@ -7,7 +7,7 @@ decay rates. It builds on PMSubstrate, PMAction and PMConstants. PMFlavor comes 
 it: flavour is the label change of a charged-current event that changes protocol, so
 it needs the protocols first. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`).
 
-The [KAutomaton closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout)
+The [KAutomaton closeout](../PMKAutomaton/OVERVIEW.md#kautomaton-closeout)
 gives the upstream contract. The [EP open work](TODO.md)
 maps the admitted path, timing, readout and Toll inputs needed for
 a physical species claim.

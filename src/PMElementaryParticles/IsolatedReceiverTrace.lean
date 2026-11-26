@@ -45,7 +45,7 @@ abbrev IsolatedPorts := LocalController.Ports
 out of the packet.  `wall` and `record` index the certified vacuum family from
 `vacuum_nonunique`; both are carried, not selected. -/
 structure ReceiverFields where
-  phase : Fin Delta
+  phase : Fin PMSubstrate.E8Values.Delta
   requests : IsolatedSite → IsolatedRequests
   probe : IsolatedSite → Bool
   wall : Bool
@@ -153,7 +153,7 @@ theorem uniform_AND_OR_tie (c : Fin 3) (vacuum : VacuumLabel c) (packet : Packet
 /-- Uniform control field: its 43-tick receiver sum is zero. -/
 theorem uniform_period_registrations_zero (either : Bool) (c : Fin 3)
     (vacuum : VacuumLabel c) (packet : PacketLabel) (fields : ReceiverFields) :
-    (∑ t : Fin Delta, ∑ x : IsolatedSite,
+    (∑ t : Fin PMSubstrate.E8Values.Delta, ∑ x : IsolatedSite,
       receiverFlag either ((tick 3 either)^[t.val]
         (embed c vacuum packet fields)) x) = 0 := by
   apply Finset.sum_eq_zero
@@ -515,7 +515,7 @@ theorem localized_inactive_flag_zero (either : Bool) (c : Fin 3)
 
 theorem localizedSum43_inactive_zero (either : Bool) (c : Fin 3)
     (vacuum : VacuumLabel c) (x0 : IsolatedSite) (fields : ReceiverFields) :
-    (∑ t : Fin Delta, ∑ x : IsolatedSite,
+    (∑ t : Fin PMSubstrate.E8Values.Delta, ∑ x : IsolatedSite,
       receiverFlag either ((tick 3 either)^[t.val]
         (localizedEmbed c vacuum inactivePacket x0 fields)) x) = 0 := by
   apply Finset.sum_eq_zero
@@ -1048,7 +1048,7 @@ are exposed as separate columns and are not added.
 /-- Uniform control-field receiver registrations per 43-tick period. -/
 noncomputable def uniformReceiverColumn (either : Bool) (c : Fin 3)
     (vacuum : VacuumLabel c) (packet : PacketLabel) (fields : ReceiverFields) : ℝ :=
-  ∑ t : Fin Delta, ∑ x : IsolatedSite,
+  ∑ t : Fin PMSubstrate.E8Values.Delta, ∑ x : IsolatedSite,
     receiverFlag either ((tick 3 either)^[t.val] (embed c vacuum packet fields)) x
 
 theorem uniformReceiverColumn_eq_zero (either : Bool) (c : Fin 3)

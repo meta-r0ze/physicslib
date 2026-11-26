@@ -21,7 +21,7 @@ def residual (p : ℝ) : ℝ := 1-2*p
 def gap (p : ℝ) : ℝ := -2 * Real.log (residual p)
 
 def transfer (e : Equiv.Perm n) (p : ℝ) : Matrix n n ℂ :=
-  ((1-p : ℝ) : ℂ) • 1 + (p : ℂ) • e.permMatrix ℂ
+  fun i j => (RootTransfer.transfer e p i j : ℂ)
 
 lemma permutation_square (e : Equiv.Perm n) (he : Function.Involutive e) :
     e.permMatrix ℂ * e.permMatrix ℂ = 1 := by
@@ -37,7 +37,13 @@ lemma permutation_hermitian (e : Equiv.Perm n) (he : Function.Involutive e) :
 omit [Fintype n] in
 /-- The complex operator is the entrywise complexification of the real transfer. -/
 lemma complexification (e : Equiv.Perm n) (p : ℝ) (i j : n) :
-    transfer e p i j = (RootTransfer.transfer e p i j : ℂ) := by
+    transfer e p i j = (RootTransfer.transfer e p i j : ℂ) := rfl
+
+omit [Fintype n] in
+/-- The complex form of the lazy transfer, for operator calculations. -/
+lemma transfer_eq_sum (e : Equiv.Perm n) (p : ℝ) :
+    transfer e p = ((1-p : ℝ) : ℂ) • 1 + (p : ℂ) • e.permMatrix ℂ := by
+  ext i j
   simp [transfer, RootTransfer.transfer, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply,
     Matrix.one_apply]
   split_ifs <;> simp
@@ -45,7 +51,8 @@ lemma complexification (e : Equiv.Perm n) (p : ℝ) (i j : n) :
 omit [Fintype n] in
 lemma sectors (e : Equiv.Perm n) (p : ℝ) :
     transfer e p = plus (e.permMatrix ℂ) + (residual p : ℂ) • minus (e.permMatrix ℂ) := by
-  unfold transfer plus minus residual
+  rw [transfer_eq_sum]
+  unfold plus minus residual
   push_cast
   module
 

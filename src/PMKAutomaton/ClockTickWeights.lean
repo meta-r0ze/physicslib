@@ -1,4 +1,5 @@
 import PMKAutomaton.ClockAlignment
+import PMKAutomaton.Machine.SubstrateWeylRoots
 
 /-!
 # Equal tick weights from the aligned slice symmetries
@@ -31,20 +32,19 @@ open PMKAutomaton.ClockRing
 open PMKAutomaton.ClockAlignment
 open PMSubstrate
 
-/-- Reflection in a root, in the simple-root basis. -/
-def reflect (v alpha : V) : V := v - (pair v alpha) • alpha
+open PMAction.SubstrateWeylRoots (reflectIn)
 
 /-- The pairing is linear in its first argument under integer scaling. -/
 theorem pair_smul_left (k : ℤ) (x y : V) :
-    pair (k • x) y = k * pair x y := by
-  simp only [pair]
+    PMSubstrate.Lattices.pairing (k • x) y = k * PMSubstrate.Lattices.pairing x y := by
+  simp only [PMSubstrate.Lattices.pairing]
   rw [smul_dotProduct, smul_eq_mul]
 
 /-- Reflecting a root in itself gives its negative. -/
-theorem pair_reflect_self (alpha : V) (h : pair alpha alpha = 2) :
-    reflect alpha alpha = -alpha := by
+theorem pair_reflect_self (alpha : V) (h : PMSubstrate.Lattices.pairing alpha alpha = 2) :
+    reflectIn alpha alpha = -alpha := by
   funext i
-  simp [reflect, Pi.neg_apply, h]
+  simp [reflectIn, Pi.neg_apply, h]
   ring
 
 /-- The clock reading is linear under integer scaling. -/
@@ -58,8 +58,8 @@ theorem clockReading_smul (k : ℤ) (x : V) :
 /-- **A slice reflection fixes the clock reading.** The slice root is
 clock-silent, so subtracting its integer multiple leaves the reading unchanged. -/
 theorem clockReading_reflect (v alpha : V) (h : clockReading alpha = 0) :
-    clockReading (reflect v alpha) = clockReading v := by
-  unfold reflect
+    clockReading (reflectIn alpha v) = clockReading v := by
+  unfold reflectIn
   rw [sub_eq_add_neg, clockReading_add, clockReading_neg, clockReading_smul, h,
     mul_zero, neg_zero, add_zero]
 
@@ -74,12 +74,12 @@ theorem backwardRoots_length : backwardRoots.length = 6 := by decide +kernel
 
 /-- **The forward tick set is closed under slice reflections.** -/
 theorem forward_closed :
-    ∀ alpha ∈ sliceRoots, ∀ f ∈ forwardRoots, reflect f alpha ∈ forwardRoots := by
+    ∀ alpha ∈ sliceRoots, ∀ f ∈ forwardRoots, reflectIn alpha f ∈ forwardRoots := by
   decide +kernel
 
 /-- **The backward tick set is closed under slice reflections.** -/
 theorem backward_closed :
-    ∀ alpha ∈ sliceRoots, ∀ f ∈ backwardRoots, reflect f alpha ∈ backwardRoots := by
+    ∀ alpha ∈ sliceRoots, ∀ f ∈ backwardRoots, reflectIn alpha f ∈ backwardRoots := by
   decide +kernel
 
 /-- The first forward tick root. -/
@@ -94,12 +94,12 @@ theorem b0_mem : b0 ∈ backwardRoots := by decide +kernel
 /-- The finite check that two slice reflections carry `f0` to each forward root. -/
 def forwardHit (f : V) : Bool :=
   sliceRoots.any fun alpha =>
-    sliceRoots.any fun beta => decide (reflect (reflect f0 alpha) beta = f)
+    sliceRoots.any fun beta => decide (reflectIn beta (reflectIn alpha f0) = f)
 
 /-- The finite check that two slice reflections carry `b0` to each backward root. -/
 def backwardHit (f : V) : Bool :=
   sliceRoots.any fun alpha =>
-    sliceRoots.any fun beta => decide (reflect (reflect b0 alpha) beta = f)
+    sliceRoots.any fun beta => decide (reflectIn beta (reflectIn alpha b0) = f)
 
 theorem forward_hits_by_two :
     ∀ f ∈ forwardRoots, forwardHit f = true := by
@@ -113,7 +113,7 @@ theorem backward_hits_by_two :
 from `f0`. The two reflections may include a reflection that fixes the root. -/
 theorem forward_one_orbit (f : V) (hf : f ∈ forwardRoots) :
     ∃ alpha ∈ sliceRoots, ∃ beta ∈ sliceRoots,
-      reflect (reflect f0 alpha) beta = f := by
+      reflectIn beta (reflectIn alpha f0) = f := by
   have h := List.any_eq_true.mp (forward_hits_by_two f hf)
   obtain ⟨alpha, ha, h2⟩ := h
   rw [List.any_eq_true] at h2
@@ -124,7 +124,7 @@ theorem forward_one_orbit (f : V) (hf : f ∈ forwardRoots) :
 from `b0`. -/
 theorem backward_one_orbit (f : V) (hf : f ∈ backwardRoots) :
     ∃ alpha ∈ sliceRoots, ∃ beta ∈ sliceRoots,
-      reflect (reflect b0 alpha) beta = f := by
+      reflectIn beta (reflectIn alpha b0) = f := by
   have h := List.any_eq_true.mp (backward_hits_by_two f hf)
   obtain ⟨alpha, ha, h2⟩ := h
   rw [List.any_eq_true] at h2

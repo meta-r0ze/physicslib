@@ -11,7 +11,7 @@ Theorem names are entry points, not exhaustive lists; the Lean source is ground
 truth. Library order: PMSubstrate → PMAction → PMConstants → PMKAutomaton → PMElementaryParticles → PMFlavor → PMHadrons → PMAtoms → PMCosmology (`AuditDependencies`). This folder imports nothing from PMFlavor.
 
 For the remaining physical inputs, see the [EP open list](TODO.md).
-The transport laws are exposed by the [conditional interface](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout).
+The transport laws are exposed by the [conditional interface](../PMKAutomaton/OVERVIEW.md#kautomaton-closeout).
 
 ## Narrative
 
@@ -243,7 +243,7 @@ The record Toll is
 a separate column. The heavy
 reference, the static offset, and the wire-to-tier map remain explicit inputs.
 See
-[the e8p report](../../tools/e8p/README.md#ep-uniform-control).
+[the uniform-control witness](TransportCandidates.lean).
 
 ## Protocols are not wire modes
 
@@ -580,7 +580,7 @@ work still decide the polarity.
 
 Open premises.
 
-- Supply and renew the occupied seed, admit the joint current, controlled phases and crossing, and schedule the two wall insertions. Retain reset or export in the record trace. See the [clock ledger](../PMKAutomaton/CLOCK.md).
+- Supply and renew the occupied seed, admit the joint current, controlled phases and crossing, and schedule the two wall insertions. Retain reset or export in the record trace. See the [clock ledger](../PMKAutomaton/OVERVIEW.md#clock).
 - Derive the event and tariff. Choose which visits register, which polarity persists, and how the displacement and preparation prices enter. For a price on the node rather than the direct flip, use `node_toll_raises_heavy`.
 - The half-period and node-phase diagnostics suggest competing scores. Their selected cadence and paid visits remain open.
 
@@ -1140,7 +1140,7 @@ choice and the first layer that needs it.
 | Substrate | `SharedUnits.me`, `PhysicalUnits.electronTime` | PM conversion at the external SI unit anchors. |
 | Node | SCOPE · `ClockSites`, `RingReceiver.tick` | Named tick-to-root identification. The finite clock and ring movement are checked. |
 | Node | SCOPE · `ClockTickWeights`, `Machine.SliceHop` | Named closure premise. The discrete orbits are checked. |
-| Node | SCOPE · `PMKAutomaton.Interface` | Named admission, geometry, resources, booking, traffic and tariff inputs. See the [upstream closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout). |
+| Node | SCOPE · `PMKAutomaton.Interface` | Named admission, geometry, resources, booking, traffic and tariff inputs. See the [upstream closeout](../PMKAutomaton/OVERVIEW.md#kautomaton-closeout). |
 | Node | `CommonResponse.bookedCapacity` | PM sum rules. Local capacity values, distinct paid events and their common unit are supplied under SCOPE's machine-input row. |
 | Carrier | SCOPE · `CarrierRepresentation`, triality to vector | Named carrier premise. |
 | Carrier | SCOPE · `CarrierRepresentation`, sign index | Named carrier premise. |

@@ -11,7 +11,6 @@ import PMKAutomaton.LocalController
 import PMKAutomaton.RingReceiver
 import PMKAutomaton.BoundaryErasure
 import PMKAutomaton.Components
-import PMKAutomaton.ClockRing
 import PMKAutomaton.ClockAlignment
 import PMKAutomaton.ClockTickWeights
 import PMKAutomaton.ClockSites

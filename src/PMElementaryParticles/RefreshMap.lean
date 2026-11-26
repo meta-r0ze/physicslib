@@ -442,25 +442,25 @@ theorem gated_word_matches (b : Bool) (c : Channels) :
 
 /-- Candidate clock coupling: read the library's mask-change bit at each
 phase and use it to gate the complete active-bank word. -/
-def clockRoute (mask : Fin Delta → Bool) (t : Fin Delta) : ℕ → Channels → Channels
+def clockRoute (mask : Fin PMSubstrate.E8Values.Delta → Bool) (t : Fin PMSubstrate.E8Values.Delta) : ℕ → Channels → Channels
   | 0, c => c
-  | n+1, c => feedback (fun _ => ClockControlledRoot.fire mask ((finRotate Delta)^[n] t))
+  | n+1, c => feedback (fun _ => ClockControlledRoot.fire mask ((finRotate PMSubstrate.E8Values.Delta)^[n] t))
       (clockRoute mask t n c)
 
 /-- The cumulative toggle depends only on the initial and final mask values. -/
-theorem clockRoute_endpoints (mask : Fin Delta → Bool) (t : Fin Delta) (n : ℕ) (c : Channels) :
+theorem clockRoute_endpoints (mask : Fin PMSubstrate.E8Values.Delta → Bool) (t : Fin PMSubstrate.E8Values.Delta) (n : ℕ) (c : Channels) :
     clockRoute mask t n c =
-      feedback (fun _ => decide (mask ((finRotate Delta)^[n] t) ≠ mask t)) c := by
+      feedback (fun _ => decide (mask ((finRotate PMSubstrate.E8Values.Delta)^[n] t) ≠ mask t)) c := by
   induction n with
   | zero => simp [clockRoute, feedback]
   | succ n ih =>
     rw [clockRoute, ih, Function.iterate_succ_apply']
     unfold ClockControlledRoot.fire feedback
-    cases mask t <;> cases mask ((finRotate Delta)^[n] t) <;>
-      cases mask (finRotate Delta ((finRotate Delta)^[n] t)) <;> simp [two_ticks]
+    cases mask t <;> cases mask ((finRotate PMSubstrate.E8Values.Delta)^[n] t) <;>
+      cases mask (finRotate PMSubstrate.E8Values.Delta ((finRotate PMSubstrate.E8Values.Delta)^[n] t)) <;> simp [two_ticks]
 
-theorem clockRoute_closes (mask : Fin Delta → Bool) (t : Fin Delta) (c : Channels) :
-    clockRoute mask t Delta c = c := by
+theorem clockRoute_closes (mask : Fin PMSubstrate.E8Values.Delta → Bool) (t : Fin PMSubstrate.E8Values.Delta) (c : Channels) :
+    clockRoute mask t PMSubstrate.E8Values.Delta c = c := by
   rw [clockRoute_endpoints, CarrierReferenceCycle.clock_closes t]
   simp [feedback]
 
@@ -472,19 +472,19 @@ and clock. Sampling the record to gate the packet is the coupling premise. -/
 def sampledCycle (z : Lattice) (c : Channels) : ClockControlledRoot.State × Channels :=
   let tick := ClockControlledRoot.update CarrierReferenceCycle.excursionMask
   let atRead := tick (z, 0)
-  (tick^[Delta - 1] atRead, feedback (fun _ => InBandRootReadout.record atRead.1) c)
+  (tick^[PMSubstrate.E8Values.Delta - 1] atRead, feedback (fun _ => InBandRootReadout.record atRead.1) c)
 
 /-- After the cycle the probe and clock return exactly. A clean accumulator
 controls the packet by the parity of its substrate root pairing. -/
 theorem sampledCycle_result (z : Lattice) (hz : InBandRootReadout.record z = false)
     (c : Channels) :
     sampledCycle z c = ((z, 0), feedback (fun _ => MatchedLatticeProbe.outcome root z) c) := by
-  have hc : (ClockControlledRoot.update CarrierReferenceCycle.excursionMask)^[Delta - 1]
+  have hc : (ClockControlledRoot.update CarrierReferenceCycle.excursionMask)^[PMSubstrate.E8Values.Delta - 1]
       (ClockControlledRoot.update CarrierReferenceCycle.excursionMask (z, 0)) = (z, 0) := by
     rw [← Function.iterate_succ_apply,
-      show (Delta - 1).succ = Delta from Nat.sub_add_cancel (show (1 : ℕ) ≤ 43 by norm_num)]
+      show (PMSubstrate.E8Values.Delta - 1).succ = PMSubstrate.E8Values.Delta from Nat.sub_add_cancel (show (1 : ℕ) ≤ 43 by norm_num)]
     exact InBandRootReadout.schedule_closes (z, 0)
-  show ((ClockControlledRoot.update CarrierReferenceCycle.excursionMask)^[Delta - 1]
+  show ((ClockControlledRoot.update CarrierReferenceCycle.excursionMask)^[PMSubstrate.E8Values.Delta - 1]
       (ClockControlledRoot.update CarrierReferenceCycle.excursionMask (z, 0)),
       feedback (fun _ => InBandRootReadout.record
         (ClockControlledRoot.update CarrierReferenceCycle.excursionMask (z, 0)).1) c) = _

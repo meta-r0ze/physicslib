@@ -51,19 +51,19 @@ lemma gibbs_residual (β cost : ℝ) :
   ring
 
 /-- Attempt choice and sampled carrier are independent in this specified model. -/
-def mass (c : Fin 3) (p : ℝ) : Bool × CarrierEvents.Carrier c → ℝ :=
+def rootAttemptPMF (c : Fin 3) (p : ℝ) : Bool × CarrierEvents.Carrier c → ℝ :=
   fun ω => EventAccounting.binaryPMF p ω.1 * uniform ω.2
 
 def event (c : Fin 3) : Finset (Bool × CarrierEvents.Carrier c) :=
   univ.filter (fun ω => ω.1 = true ∧ ω.2 ∈ CarrierEvents.active c)
 
-lemma mass_normalized (c : Fin 3) (p : ℝ) : (∑ ω, mass c p ω) = 1 := by
-  simp [mass, uniform, Fintype.sum_prod_type, CarrierEvents.carrier_card,
+lemma root_attempt_pmf_normalized (c : Fin 3) (p : ℝ) : (∑ ω, rootAttemptPMF c p ω) = 1 := by
+  simp [rootAttemptPMF, uniform, Fintype.sum_prod_type, CarrierEvents.carrier_card,
     EventAccounting.binaryPMF]
   ring
 
-lemma mass_nonnegative (c : Fin 3) (p : ℝ) (h0 : 0 ≤ p) (h1 : p ≤ 1) :
-    ∀ ω, 0 ≤ mass c p ω := by
+lemma root_attempt_pmf_nonnegative (c : Fin 3) (p : ℝ) (h0 : 0 ≤ p) (h1 : p ≤ 1) :
+    ∀ ω, 0 ≤ rootAttemptPMF c p ω := by
   intro ω
   apply mul_nonneg (EventAccounting.binary_nonnegative h0 h1 ω.1)
   unfold uniform
@@ -71,12 +71,12 @@ lemma mass_nonnegative (c : Fin 3) (p : ℝ) (h0 : 0 ≤ p) (h1 : p ≤ 1) :
 
 /-- Both the actual root activation and the supplied attempt probability are counted. -/
 theorem expected_root_cost (c : Fin 3) (p toll : ℝ) :
-    EventAccounting.cost toll (mass c p) (fun _ : Fin 1 => event c) = p * toll / 2 := by
+    EventAccounting.cost toll (rootAttemptPMF c p) (fun _ : Fin 1 => event c) = p * toll / 2 := by
   rw [EventAccounting.weighted_linear]
   simp only [Fin.sum_univ_one]
-  have hm : EventAccounting.eventWeight (mass c p) (event c) = p/2 := by
+  have hm : EventAccounting.eventWeight (rootAttemptPMF c p) (event c) = p/2 := by
     simp only [EventAccounting.eventWeight, event, Finset.sum_filter, Fintype.sum_prod_type]
-    simp [mass, uniform, EventAccounting.binaryPMF, ← Finset.sum_filter,
+    simp [rootAttemptPMF, uniform, EventAccounting.binaryPMF, ← Finset.sum_filter,
       CarrierEvents.active_card, CarrierEvents.carrier_card]
     ring
   rw [hm]
@@ -137,7 +137,7 @@ lemma odd_population (e : Equiv.Perm n) (a : n) (ha : e a ≠ a) :
 lemma odd_transfer (e : Equiv.Perm n) (he : Function.Involutive e) (p : ℝ) (a : n) :
     RootTransferPhase.transfer e p *ᵥ oddVector e a =
       (RootTransferPhase.residual p : ℂ) • oddVector e a := by
-  rw [RootTransferPhase.transfer, add_mulVec, smul_mulVec, smul_mulVec, one_mulVec,
+  rw [RootTransferPhase.transfer_eq_sum, add_mulVec, smul_mulVec, smul_mulVec, one_mulVec,
     odd_eigenvector e he]
   ext x
   simp only [Pi.add_apply, Pi.smul_apply, Pi.neg_apply, smul_eq_mul, RootTransferPhase.residual]

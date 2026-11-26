@@ -44,8 +44,8 @@ open PMElementaryParticles.ProgramClasses PMElementaryParticles.EPSpine
 
 /-- Internal content: the pairings with the internal simple roots. -/
 def internalContent (z : V) : Fin 4 → ℤ :=
-  ![pair z PMKAutomaton.AlignedSectors.p, pair z PMKAutomaton.AlignedSectors.q,
-    pair z PMKAutomaton.AlignedSectors.r, pair z PMKAutomaton.AlignedSectors.s]
+  ![PMSubstrate.Lattices.pairing z PMKAutomaton.AlignedSectors.p, PMSubstrate.Lattices.pairing z PMKAutomaton.AlignedSectors.q,
+    PMSubstrate.Lattices.pairing z PMKAutomaton.AlignedSectors.r, PMSubstrate.Lattices.pairing z PMKAutomaton.AlignedSectors.s]
 
 theorem internalContent_add (z w : V) :
     internalContent (z + w) = internalContent z + internalContent w := by
@@ -56,7 +56,7 @@ theorem internalContent_nsmul (z : V) (n : ℕ) :
     internalContent (n • z) = n • internalContent z := by
   induction n with
   | zero =>
-    funext i; fin_cases i <;> simp [internalContent, pair]
+    funext i; fin_cases i <;> simp [internalContent, PMSubstrate.Lattices.pairing]
   | succ n ih => rw [succ_nsmul, internalContent_add, ih, succ_nsmul]
 
 /-- Ring steps have zero internal content. -/

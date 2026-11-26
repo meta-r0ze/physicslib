@@ -9,6 +9,151 @@ port values. A Boolean names either of two distinct supplied port values.
 A second Boolean names a point on a supplied moving root orbit. This is
 a finite test of the certified operations, with no physical preparation
 or writer encoding assumed.
+
+## Interface, clock and admission notes
+
+### Finite encoding
+
+The certified streaming step sends one input from each neighbour
+along the chosen root line. Its local output therefore needs the
+centre and the two adjacent sites. The bypass reads both neighbours,
+so a radius-zero encoding loses its arrivals. At the centre the
+trial probe reads the retained request pair and the shared phase.
+It applies the on-site root in phases 0 or 1 as specified by
+`ClockedRootTrials`. The phase advances in `Fin Δ`.
+
+`LocalController` uses two distinguishable port values, the two
+retained request bits and the two points on a moving root orbit.
+This is the smallest alphabet for testing order, all four requests,
+and both outcomes of a reflection. A rule gives one exchange or
+bypass decision per phase, request pair and arriving port pair.
+`radius_one`, `receiver_realisation` and `probe_realises_trial`
+check the local operations against their certified forms. The same
+table applies at every site. The three-site stencil is a finite
+encoding of one update, and the global rule acts on the open line.
+One stream shift per encoded tick is part of this model. The physical
+shift duration on the substrate clock remains open.
+
+This encoding restricts the guard to the arrivals and the local
+retained requests. In particular it keeps the probe and transport
+registers independent. Locality also allows other guards on the same
+neighbourhood. The library supplies no finite quotient of the full
+coherent wire that preserves its writer, branch records and costs.
+An enumeration here tests whether the stated constraints force a
+unique rule even within this restricted family.
+
+### Reversible rule family
+
+At each phase and for each retained request pair, there are 16
+Boolean tables. The unequal arrivals `01` and `10` must have the
+same guard decision. Different decisions send both inputs to the
+same output. On `00` and `11`, either decision gives the same port
+values and the table still records which operation ran.
+
+`LocalController.reversible_iff_rows` lifts this test to a global
+bijection on the open line with the shared clock. It uses the inverse
+stream shift, the involutive local switch and the inverse phase
+advance. `reversible_rows_count` checks all 16 rows in the kernel.
+`enumerated_rule_iff` enumerates precisely the reversible tables
+by independent choices of these rows. There are eight choices at
+each of four requests and 43 phases, hence `8^(4 × 43)` tables
+(`enumerated_rule_count`). Requiring the tagged receiver trace below
+fixes the two diagonal request rows in each phase. Each of the
+two mixed request rows still has eight choices. This counts literal guard tables and
+requires no quotient or symmetry assumption.
+
+### Reachability per rule
+
+| Input or question | Consequence of the enumerated rule |
+| --- | --- |
+| Uniform occupied field with equal live and record ports | Both values stay equal at every site, for every table and every tick (`uniform_ports_iterate`). This is the uniform port projection of the certified stationary reference fields. It supplies the same value on each stream but does not choose which physical reference occupies them. |
+| Trial probe on any supplied moving root orbit | `read_trial_iterate` reduces every projected trace to `ClockedRootTrials.tick`. All tables preserve the four initial request fibres. The counts are `(1,1,1,1)` for one state per pair or `(1,0,0,1)` for one per shared request in the order above. The accessible controller states determine which counts apply. |
+| Tagged open receiver | If the centre carries the double request and the rest of the line carries the idle pair, a table that exchanges and bypasses on those tags respectively realizes the open-line trace exactly (`tagged_open_iterate`). At visit `k` it reads the ready reference at `+k`, retains the live arrival at `−k`, and exports earlier records as in `receiver_trace` and `export_trace`. The initial tags and contents specify this conditional trace. The rule does not allocate them. |
+| Mixed requests and unequal arrivals | `two_open_compatible_rules` gives two reversible tables agreeing on the entire tagged receiver trace. One exchanges on two true bits, the other on either true bit. `mixed_requests_different_destinations` shows the different outputs for the same input with exactly one set request. |
+| Writer population and heavy and light branches | Neither the port alphabet nor the trial bit is a packet or companion record. The trace supplies the ordered port values, with no identification of the writer's port, vacancy guard, electric polarity, or retained heavy and light guards. The existing heavy and light candidate support remains as stated above. |
+
+A three-site stencil applies at each tick. To compute `N` open
+visits from initial data at a single centre requires the upstream
+ports through `±N` or a law supplying them. A single period tests
+the trial or the local rule at each phase. The direct and restoring
+serial lower bounds still govern any proposed longer physical wire.
+
+### Persistence selection
+
+`traceExchangeFlagCost` prices every table with the sum of its weighted
+exchange output flags over a supplied finite set of visits. An exchange
+compares its arriving values with flag `‖L − R‖²/2`
+(`TwoSiteHandoff.exchange_flag`, `exchange_flag_realisation`).
+Bypass contributes zero to this receiver account. The visit weights
+come from the paid sampling law. `NetCost.expected_count_linear`
+justifies adding expected registrations. The resulting amplitude
+with total Toll `T` is `exp(−T/2)` (`EffectiveAction.attenuationWeight` at unit scale).
+
+**Outcome (b), tie in the certified flag account.** On the supplied
+uniform reference fields, every table keeps the ports equal and all
+its exchange flags vanish (`uniform_trace_exchange_flag_cost`). The
+two-site hop flag also vanishes on the corresponding uniform inputs
+(`TwoSiteHandoff.hop_flag`). The root probe trace and its local-change
+action are common for a fixed initial probe family. With those accounts
+and a common baseline, `uniform_flag_persistence_tie` applies
+`PersistenceSelection.within_family_iff_cheapest`. Every table ties.
+The two example rules also agree on the tagged open receiver's
+branch at every visit, even with nonuniform arrivals.
+
+On the uniform trace a strict preference is equivalent to a strict
+difference in remaining paid work (`uniform_remaining_cost_iff`).
+The exact guard difference between the two witnesses is whether a
+single retained request triggers exchange. To distinguish their port
+traces, the accessible family must include a mixed request with two
+unequal arrivals. To distinguish their physical costs, supply the
+booked frequency and tariff for any visits where they differ, or a
+signed difference in control and other remaining paid work on the
+same traces. Reversibility and the listed primitive operations do
+not give those inputs.
+
+The tie applies to the stated account and family. The full wire
+still needs its occupied state family, controller and paid work. The record reference remains
+undetermined. The reset-inclusive bounds `3/4`, `27/32` and `9/10`
+from the [writer schedule](../PMElementaryParticles/WireSchedule.lean)
+still require the actual booked population, admitted writer polarities,
+separate balanced resets and the signed remaining price.
+
+### Admission recheck
+
+**S, tagged core only.** The joint lift projects to the original
+core at every tick. The common tagged open trace still gives the
+same observations under AND and OR
+(`LocalController.tagged_trace_observable_eq`). At a common initial
+packet bank, the same fibre action on both rules preserves equality
+of the full tagged lift (`Components.joint_tagged_ticks_equal`). This
+does not permit two different packet actions or reader attachments
+to be treated as one.
+
+**Derived distinction.** At the mixed witness the Boolean
+destinations still differ, and the computed basis flags are still
+0 and 1 (`LocalController.mixed_open_receiver_destinations`,
+`RingReceiver.mixed_ring_flags`). A pure core transition books
+neither flag. If a detector books exactly that comparison, its
+conditional unit gap survives. If a writer reads the routed value,
+the relevant difference is its destination, even without a flag
+registration. Neither attachment follows from the lift.
+
+**B and H remain.** `BoundaryErasure.tagged_rule_exports` ties the
+tagged export train with common disposal. `ring_cycle_erasure`
+gives zero for the retained ring. `ring_erasure_survivor_eq`
+therefore leaves the normalized supplied prior. A mixed boundary
+export still requires a source port and disposition. Its prior
+requires the accessible initial family and its masses. On the
+electric writers, a physical erasure-reset threshold still needs
+the difference of their booked bit counts.
+
+**Outcome.** No general AND/OR quotient and no selection follow.
+The remaining inputs are joint firing and placement (G/T),
+accessible starts and supply (O/Q), packet and writer realization
+(U), reader attachment and detector support (W/D), the tariff for
+remaining work (K), the export contract (B), and the prior over
+histories (H). J and L apply where contention, reuse or successive
+links affect that trace.
 -/
 
 namespace PMKAutomaton.LocalController
@@ -17,7 +162,7 @@ open PMAction
 
 abbrev Requests := Bool × Bool
 abbrev Ports := Bool × Bool
-abbrev Phase := Fin Delta
+abbrev Phase := Fin PMSubstrate.E8Values.Delta
 abbrev Guard := Ports → Bool
 abbrev Rule := Phase → Requests → Guard
 abbrev Registers := (ℤ → Requests × Bool) × OpenReferenceFlow.State ℤ Bool
@@ -39,10 +184,10 @@ theorem probe_realises_trial (phase : Phase) (c : Requests × Bool)
     (z : SubstrateReflection.Lattice) :
     ClockedRootTrials.tick (c.1, (orbitPoint z c.2, phase)) =
       ((advanceProbe phase c).1,
-        (orbitPoint z (advanceProbe phase c).2, finRotate Delta phase)) := by
+        (orbitPoint z (advanceProbe phase c).2, finRotate PMSubstrate.E8Values.Delta phase)) := by
   change (c.1, (if ClockedRootTrials.fire c.1 phase then
     SubstrateReflection.reflect (orbitPoint z c.2) else orbitPoint z c.2,
-    finRotate Delta phase)) = _
+    finRotate PMSubstrate.E8Values.Delta phase)) = _
   rcases c with ⟨requests, side⟩
   cases side <;> cases h : ClockedRootTrials.fire requests phase <;>
     simp [advanceProbe, orbitPoint, h, SubstrateReflection.involutive z]
@@ -54,7 +199,7 @@ def rawStep (rule : Rule) (phase : Phase) (s : Registers) : Registers :=
     applyGuard (rule phase (s.1 x).1) (OpenReferenceFlow.streamShift OpenReferenceFlow.line s.2 x))
 
 def rawTick (rule : Rule) (s : State) : State :=
-  (finRotate Delta s.1, rawStep rule s.1 s.2)
+  (finRotate PMSubstrate.E8Values.Delta s.1, rawStep rule s.1 s.2)
 
 theorem radius_one (rule : Rule) (phase : Phase) (s t : Registers) (x : ℤ)
     (hc : s.1 x = t.1 x) (hl : (s.2 (x - 1)).1 = (t.2 (x - 1)).1)
@@ -135,7 +280,7 @@ theorem reversible_iff_rows (rule : Rule) :
       (Equiv.prodCongr (Equiv.refl _) (OpenReferenceFlow.shiftEquiv OpenReferenceFlow.line)).trans
         ((scatter_involutive rule phase (h phase)).toPerm _)
     let full : Equiv.Perm State :=
-      (Equiv.prodCongrRight step).trans (Equiv.prodCongr (finRotate Delta) (Equiv.refl _))
+      (Equiv.prodCongrRight step).trans (Equiv.prodCongr (finRotate PMSubstrate.E8Values.Delta) (Equiv.refl _))
     exact full.bijective
 
 /-- Enumerate the 16 possible Boolean rows individually. No row is
@@ -271,7 +416,7 @@ theorem control_iterates_eq (a b : Rule) (s : State) (n : ℕ) :
   | succ n ih =>
     rw [Function.iterate_succ_apply', Function.iterate_succ_apply']
     exact congrArg (fun q : Phase × (ℤ → Requests × Bool) =>
-      (finRotate Delta q.1, advanceProbe q.1 ∘ q.2)) ih
+      (finRotate PMSubstrate.E8Values.Delta q.1, advanceProbe q.1 ∘ q.2)) ih
 
 /-- The tagged open route agrees as a full retained state at every tick,
     including the request and probe fields, from the same start. -/
@@ -382,8 +527,8 @@ theorem receiver_dual_local (s t : State) (x : ℤ)
 
 /-- Commutation with the bare clock is weaker than commutation with a tick. -/
 theorem receiver_dual_bare_clock (s : State) :
-    receiverDual (finRotate Delta s.1, s.2) =
-      (finRotate Delta (receiverDual s).1, (receiverDual s).2) := rfl
+    receiverDual (finRotate PMSubstrate.E8Values.Delta s.1, s.2) =
+      (finRotate PMSubstrate.E8Values.Delta (receiverDual s).1, (receiverDual s).2) := rfl
 
 theorem receiver_dual_population (s : State) (x : ℤ) (pop : Bool → ℝ) :
     pop ((receiverDual s).2.2 x).1 + pop ((receiverDual s).2.2 x).2 =
@@ -421,10 +566,10 @@ private theorem or_double_swap_ports (s : State)
   simp
 
 private def probeClock (u : Phase × (Requests × Bool)) : Phase × (Requests × Bool) :=
-  (finRotate Delta u.1, advanceProbe u.1 u.2)
+  (finRotate PMSubstrate.E8Values.Delta u.1, advanceProbe u.1 u.2)
 
 private theorem probe_return :
-    ∀ c : Requests, ∀ b : Bool, (probeClock^[2 * Delta]) (0, (c, b)) = (0, (c, b)) := by
+    ∀ c : Requests, ∀ b : Bool, (probeClock^[2 * PMSubstrate.E8Values.Delta]) (0, (c, b)) = (0, (c, b)) := by
   decide +kernel
 
 private theorem probeClock_trace (rule : Rule) (s : State) (x : ℤ) (n : ℕ) :
@@ -445,7 +590,7 @@ private theorem state_eq_of_observations {u s : State} (ports : u.2.2 = s.2.2)
 
 private theorem or_returns_after_two_periods (s : State) (hp : s.1 = 0)
     (h : ∀ x, (s.2.1 x).1 = (true, true)) :
-    (rawTick exchangeOnEither)^[2 * Delta] s = s := by
+    (rawTick exchangeOnEither)^[2 * PMSubstrate.E8Values.Delta] s = s := by
   have ports (n : ℕ) : (((rawTick exchangeOnEither)^[2 * n]) s).2.2 = s.2.2 := by
     induction n with
     | zero => rfl
@@ -453,15 +598,15 @@ private theorem or_returns_after_two_periods (s : State) (hp : s.1 = 0)
       rw [Nat.mul_succ, Nat.add_comm (2 * n) 2, Function.iterate_add_apply]
       exact (or_double_swap_ports _ (fun x =>
         (retained_request _ _ _ _).trans (h x))).trans ih
-  let u := (rawTick exchangeOnEither)^[2 * Delta] s
+  let u := (rawTick exchangeOnEither)^[2 * PMSubstrate.E8Values.Delta] s
   have probe (x : ℤ) : (u.1, u.2.1 x) = (s.1, s.2.1 x) := by
     calc
-      _ = (probeClock^[2 * Delta]) (s.1, s.2.1 x) :=
-        probeClock_trace exchangeOnEither s x (2 * Delta)
+      _ = (probeClock^[2 * PMSubstrate.E8Values.Delta]) (s.1, s.2.1 x) :=
+        probeClock_trace exchangeOnEither s x (2 * PMSubstrate.E8Values.Delta)
       _ = _ := by
         rw [hp]
         exact probe_return (s.2.1 x).1 (s.2.1 x).2
-  exact state_eq_of_observations (u := u) (s := s) (ports Delta) probe
+  exact state_eq_of_observations (u := u) (s := s) (ports PMSubstrate.E8Values.Delta) probe
 
 private theorem and_idle_live (s : State)
     (h : ∀ x, (s.2.1 x).1 = (false, false)) (n : ℕ) (x : ℤ) :
@@ -494,9 +639,9 @@ theorem no_request_complement_conjugacy (d : State → State) (hinj : Function.I
     | zero => rfl
     | succ n ih =>
       rw [Function.iterate_succ_apply', Function.iterate_succ_apply', h, ih]
-  have hr := hinj ((he (2 * Delta)).trans
+  have hr := hinj ((he (2 * PMSubstrate.E8Values.Delta)).trans
     (or_returns_after_two_periods (d s) (hp s) (fun x => hc s x)))
-  have hx := and_idle_live s (fun _ => rfl) (2 * Delta) 0
+  have hx := and_idle_live s (fun _ => rfl) (2 * PMSubstrate.E8Values.Delta) 0
   rw [hr] at hx
   change true = false at hx
   cases hx
@@ -543,18 +688,18 @@ theorem receiver_dual_flag_counterexample :
 /-- For a supplied weighted set of visits, sum the certified exchange
     output flags along a trace. The caller supplies the paid visits and
     their weights. The shift, root trial and other accounts are separate. -/
-noncomputable def traceExchangeToll (rule : Rule) (s : State) (x : ℤ)
+noncomputable def traceExchangeFlagCost (rule : Rule) (s : State) (x : ℤ)
     (value : Bool → Fin 2 → ℂ) {N : ℕ} (weights : Fin N → ℝ) : ℝ :=
   TollAmplitude.weightedFlagCost 0 weights fun j =>
     let state := (rawTick rule)^[j.val] s
     exchangeFlag (rule state.1 (state.2.1 x).1)
       (OpenReferenceFlow.streamShift OpenReferenceFlow.line state.2.2 x) value
 
-theorem uniform_trace_exchange_toll (rule : Rule) (s : State) (x : ℤ) (v : Bool)
+theorem uniform_trace_exchange_flag_cost (rule : Rule) (s : State) (x : ℤ) (v : Bool)
     (hs : ∀ i, s.2.2 i = (v, v)) (value : Bool → Fin 2 → ℂ)
     {N : ℕ} (weights : Fin N → ℝ) :
-    traceExchangeToll rule s x value weights = 0 := by
-  unfold traceExchangeToll TollAmplitude.weightedFlagCost
+    traceExchangeFlagCost rule s x value weights = 0 := by
+  unfold traceExchangeFlagCost TollAmplitude.weightedFlagCost
   simp only [zero_add]
   apply Finset.sum_eq_zero
   intro j _
@@ -571,12 +716,12 @@ theorem uniform_flag_persistence_tie (F : Set Rule) (i : Rule) (hi : i ∈ F)
     (s : State) (x : ℤ) (v : Bool) (hs : ∀ j, s.2.2 j = (v, v))
     (value : Bool → Fin 2 → ℂ) {N : ℕ} (weights : Fin N → ℝ) (baseline : ℝ) :
     ∀ j ∈ F,
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (baseline + traceExchangeToll j s x value weights) ≤
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (baseline + traceExchangeToll i s x value weights) := by
-  let cost := fun rule => traceExchangeToll rule s x value weights
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (baseline + traceExchangeFlagCost j s x value weights) ≤
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (baseline + traceExchangeFlagCost i s x value weights) := by
+  let cost := fun rule => traceExchangeFlagCost rule s x value weights
   have h := (PersistenceSelection.within_family_iff_cheapest (1 / 2) (by norm_num)
     cost F baseline i).mpr ⟨hi, fun j _ => by
-      simp only [cost, uniform_trace_exchange_toll _ s x v hs value weights, le_refl]⟩
+      simp only [cost, uniform_trace_exchange_flag_cost _ s x v hs value weights, le_refl]⟩
   intro j hj
   simpa [PersistenceMechanics.EffectiveAction.attenuationWeight, one_mul, cost, div_eq_mul_inv, mul_comm] using h.2 j hj
 
@@ -585,12 +730,12 @@ theorem uniform_flag_persistence_tie (F : Set Rule) (i : Rule) (hi : i ∈ F)
 theorem uniform_remaining_cost_iff (a b : Rule) (s : State) (x : ℤ) (v : Bool)
     (hs : ∀ j, s.2.2 j = (v, v)) (value : Bool → Fin 2 → ℂ)
     {N : ℕ} (weights : Fin N → ℝ) (remaining : Rule → ℝ) :
-    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (traceExchangeToll b s x value weights + remaining b) <
-        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (traceExchangeToll a s x value weights + remaining a) ↔
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (traceExchangeFlagCost b s x value weights + remaining b) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (traceExchangeFlagCost a s x value weights + remaining a) ↔
       remaining a < remaining b := by
   rw [TollAmplitude.wireAmplitude_lt_iff,
-    uniform_trace_exchange_toll a s x v hs value weights,
-    uniform_trace_exchange_toll b s x v hs value weights]
+    uniform_trace_exchange_flag_cost a s x v hs value weights,
+    uniform_trace_exchange_flag_cost b s x v hs value weights]
   simp
 
 end PMKAutomaton.LocalController

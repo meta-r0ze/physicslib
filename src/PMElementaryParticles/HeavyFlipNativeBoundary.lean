@@ -82,25 +82,25 @@ theorem no_closed_cleaning (reset : Equiv.Perm (Wire × Record)) :
 
 /-! ### Closure and firing for a supplied flip at mask boundaries -/
 
-abbrev State := (Wire × Record) × Fin Delta
+abbrev State := (Wire × Record) × Fin PMSubstrate.E8Values.Delta
 
 /-- The same clock rebase used for a native reflection, now on the
 mathematically admitted record-controlled endpoint permutation. -/
-def rebase (r : Record) (mask : Fin Delta → Bool) : Equiv.Perm State :=
+def rebase (r : Record) (mask : Fin PMSubstrate.E8Values.Delta → Bool) : Equiv.Perm State :=
   Equiv.prodCongrLeft fun t => if mask t then controlledFlip r else Equiv.refl _
 
-def tick (r : Record) (mask : Fin Delta → Bool) : Equiv.Perm State :=
-  (rebase r mask).symm.trans ((Equiv.prodCongr (Equiv.refl _) (finRotate Delta)).trans (rebase r mask))
+def tick (r : Record) (mask : Fin PMSubstrate.E8Values.Delta → Bool) : Equiv.Perm State :=
+  (rebase r mask).symm.trans ((Equiv.prodCongr (Equiv.refl _) (finRotate PMSubstrate.E8Values.Delta)).trans (rebase r mask))
 
-theorem tick_rebased (r : Record) (mask : Fin Delta → Bool) (w : Wire × Record) (t : Fin Delta) :
-    tick r mask (rebase r mask (w, t)) = rebase r mask (w, finRotate Delta t) := by
+theorem tick_rebased (r : Record) (mask : Fin PMSubstrate.E8Values.Delta → Bool) (w : Wire × Record) (t : Fin PMSubstrate.E8Values.Delta) :
+    tick r mask (rebase r mask (w, t)) = rebase r mask (w, finRotate PMSubstrate.E8Values.Delta t) := by
   simp [tick]
 
-theorem cycle_closes (r : Record) (mask : Fin Delta → Bool) (s : State) :
-    (tick r mask)^[Delta] s = s := by
-  have run (n : ℕ) (w : Wire × Record) (t : Fin Delta) :
+theorem cycle_closes (r : Record) (mask : Fin PMSubstrate.E8Values.Delta → Bool) (s : State) :
+    (tick r mask)^[PMSubstrate.E8Values.Delta] s = s := by
+  have run (n : ℕ) (w : Wire × Record) (t : Fin PMSubstrate.E8Values.Delta) :
       (tick r mask)^[n] (rebase r mask (w, t)) =
-        rebase r mask (w, (finRotate Delta)^[n] t) := by
+        rebase r mask (w, (finRotate PMSubstrate.E8Values.Delta)^[n] t) := by
     induction n with
     | zero => rfl
     | succ n ih =>
@@ -115,18 +115,18 @@ theorem boundary_flips (c : Channels) (a : Fin 8) :
       ((0, opposite c, a), labelRecord c) := by
   simp [controlledFlip, direct_iff]
 
-private theorem rebase_fst (r : Record) (mask : Fin Delta → Bool) (w : Wire × Record)
-    (t : Fin Delta) :
+private theorem rebase_fst (r : Record) (mask : Fin PMSubstrate.E8Values.Delta → Bool) (w : Wire × Record)
+    (t : Fin PMSubstrate.E8Values.Delta) :
     (rebase r mask (w, t)).1 = if mask t then controlledFlip r w else w := by
   rw [rebase, Equiv.prodCongrLeft_apply]
   cases mask t <;> rfl
 
-theorem tick_event_iff (r : Record) (mask : Fin Delta → Bool) (w : Wire × Record) (t : Fin Delta) :
+theorem tick_event_iff (r : Record) (mask : Fin PMSubstrate.E8Values.Delta → Bool) (w : Wire × Record) (t : Fin PMSubstrate.E8Values.Delta) :
     (tick r mask (rebase r mask (w, t))).1 ≠ (rebase r mask (w, t)).1 ↔
       t ∈ CarrierReferenceCycle.boundaries mask ∧ controlledFlip r w ≠ w := by
   rw [tick_rebased, rebase_fst, rebase_fst]
   simp only [CarrierReferenceCycle.boundaries, Finset.mem_filter, Finset.mem_univ, true_and]
-  cases mask t <;> cases mask (finRotate Delta t)
+  cases mask t <;> cases mask (finRotate PMSubstrate.E8Values.Delta t)
   · change w ≠ w ↔ false ≠ false ∧ controlledFlip r w ≠ w
     simp only [ne_eq, not_true_eq_false, false_and]
   · change controlledFlip r w ≠ w ↔ true ≠ false ∧ controlledFlip r w ≠ w
@@ -143,10 +143,10 @@ pointwise endpoint activity differs on every ready heavy wall input. -/
 theorem idle_and_excursion_counts (c : Channels) (a : Fin 8) :
     let r := labelRecord c
     let w : Wire × Record := ((0, c, a), r)
-    (Finset.univ.filter (fun t : Fin Delta =>
+    (Finset.univ.filter (fun t : Fin PMSubstrate.E8Values.Delta =>
       (tick r (fun _ => false) (rebase r (fun _ => false) (w, t))).1 ≠
         (rebase r (fun _ => false) (w, t)).1)).card = 0 ∧
-    (Finset.univ.filter (fun t : Fin Delta =>
+    (Finset.univ.filter (fun t : Fin PMSubstrate.E8Values.Delta =>
       (tick r CarrierReferenceCycle.excursionMask
         (rebase r CarrierReferenceCycle.excursionMask (w, t))).1 ≠
         (rebase r CarrierReferenceCycle.excursionMask (w, t)).1)).card = 2 := by
@@ -159,7 +159,7 @@ theorem idle_and_excursion_counts (c : Channels) (a : Fin 8) :
   simp_rw [tick_event_iff, boundary_flips]
   have hz : CarrierReferenceCycle.boundaries (fun _ => false) = ∅ := by
     simp [CarrierReferenceCycle.boundaries]
-  have filter_eq (m : Fin Delta → Bool) :
+  have filter_eq (m : Fin PMSubstrate.E8Values.Delta → Bool) :
       Finset.univ.filter (fun t =>
         t ∈ CarrierReferenceCycle.boundaries m ∧
           (((0 : Fin 3), opposite c, a), labelRecord c) ≠ (((0 : Fin 3), c, a), labelRecord c)) =

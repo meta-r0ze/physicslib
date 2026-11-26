@@ -4,14 +4,14 @@ PMKAutomaton describes state and record transfer between E8 nodes. It is an E8
 persistence automaton: a reversible cellular automaton on the E8 substrate.
 Import `PMKAutomaton.Interface` for the handoff, record, cost, clock and
 route and embedded symmetry theorems. Import `PMKAutomaton.Values` for the checked numbers and
-their conditions. Use [the component inventory](COMPONENTS.md) and
+their conditions. Use [the component inventory](OVERVIEW.md#component-contracts) and
 `PMKAutomaton.Components` to locate the open contracts.
 
 Run `./build.sh lean PMKAutomaton.Interface PMKAutomaton.Values PMKAutomaton.Components` for a
 targeted check. The library build is `./build.sh PMKAutomaton`.
 
-The [overview](OVERVIEW.md) lists the results. The [clock ledger](CLOCK.md)
-gives the pulse constraints. The [open list](TODO.md) lists the
+The [overview](OVERVIEW.md) lists the results and links to the module notes.
+The [clock section](OVERVIEW.md#clock) gives the pulse constraints. The [open list](TODO.md) lists the
 remaining physical inputs.
 
 ## The system
@@ -26,11 +26,11 @@ the carrier packet and retained controls remains open.
 | Registers | Live and record stream slots, plus retained controls | `TwoSiteHandoff`, `LocalController` |
 | Receiver | Exchange or bypass on two arrivals | `TwoSiteHandoff`, `OpenHandoff` |
 | Rule | Local guard and branch-dependent pulses | `LocalController`, `BranchPulseContract`, `RegisterControl` |
-| Clock | Shared phase with period `Δ = 43` in the certified clock models | `ClockPeriod`, `ClockedRootTrials` |
+| Clock | Shared phase with period `Δ = 43` in the certified clock models | `PMSubstrate.E8Values`, `ClockedRootTrials` |
 | Link and payload | Directed transfers and two-wall packet labels with 16 slots | `OpenReferenceFlow`, `GluedRegister`, `PacketGaugeActions` |
 | Boundary | Keep, recycle or erase a supplied export | `BoundaryErasure` |
 
-The [component inventory](COMPONENTS.md) gives the remaining parts and
+The [component inventory](OVERVIEW.md#component-contracts) gives the remaining parts and
 the scope of their connections.
 
 Inside a system, the update is reversible: Conservation keeps the
@@ -69,7 +69,7 @@ KAutomaton continues only while four things persist:
 A booked boundary erasure pays one unit per exported bit reset.
 A comparison supplies a flag probability. Its use as a paid
 registration is a separate accounting premise. See the
-[boundary account](ADMISSION.md#boundary-erasure), the
+[boundary account](OVERVIEW.md#reversibility-boundary), the
 [cost results](OVERVIEW.md#cost), and the
 [reversibility boundary](OVERVIEW.md#reversibility-boundary).
 
@@ -77,8 +77,7 @@ registration is a separate accounting premise. See the
 
 A generation is a glue address on the wire: it names the D₄ class omitted
 by its two walls. The reference choice and the direct and restoring route types
-are checked in the [route results](OVERVIEW.md#route). The label-sensitive firing
-law and its `Δ` scaling remain open; see the [open list](TODO.md). The transport
+are checked in the [route results](OVERVIEW.md#route). Joint firing and clock placement remain open. See the [open list](TODO.md). The transport
 address, its route and the declared ledger tiers are related in the
 [generation comparison](../PMElementaryParticles/OVERVIEW.md#generations-on-the-e8-wire).
 

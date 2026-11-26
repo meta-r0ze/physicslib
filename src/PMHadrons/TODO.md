@@ -63,3 +63,5 @@ In order: the normalization decision comes first because every rate below uses i
 
 - Recompute the cloud and intrinsic magnetic moments with the finely resolved, centre-of-mass-projected carrier as the source. Include recoil. The axial and pion source is the on-site spin `Σⱼ` on both walls (`PMAction.ConfinedAxialCurrent`); its value needs the carrier's size (PMAction's carrier level and radius certificate).
 - Determine the Toll rule for a virtual pion pair that leaves and returns, and the Governor constraint on the nonperturbative colour coupling at cube scale. Compare the resulting pillar values with `CompositeMasses` and `MesonMasses`. Calculation history and competing premises are in [PILLARS.md](PILLARS.md).
+
+- ShortDistanceRunning.mZ duplicates PMConstants.StrongRunning.mZ; repoint in the Hadrons sweep.

@@ -35,6 +35,5 @@ The alternative routes and necessity tests are in `PMSubstrate/Research/`.
 - Repoint α aliases to `causalCoupling` in `SharedUnits.αe`, `CarrierAmplitude.alpha` and `MuonLifetimeCorrected.α`.
 - Repoint reciprocal aliases to `geometricIndex` in `SharedUnits.αinv`
   and `CKM.αinv`. Keep the separate cell-price reading and its equality.
-- Repoint Δ aliases to `E8Values.Delta` in `PMAction.Delta`
-  (Machine.ClockPeriod), `PMKAutomaton.Values.Delta` and `PMAtoms.Invariants.Δ`.
+- Repoint the PMAtoms.Invariants.Δ alias to E8Values.Delta.
   Use it for the receiver clock size when the type expresses the baseline ring.

@@ -16,7 +16,7 @@ or a registration policy.
 
 ## Admissible candidates
 
-[Clock ledger](../PMKAutomaton/CLOCK.md) records the available words.
+[Clock ledger](../PMKAutomaton/OVERVIEW.md#clock) records the available words.
 [Generations](OVERVIEW.md#generations-on-the-e8-wire) records their address and label support.
 `WireSchedule.family` enumerates a bounded, serial, fresh-record
 template for one cycle at a supplied glue address. A candidate stores a
@@ -142,7 +142,7 @@ the live stream. It must say what counts as a writer visit and
 which ensemble of visits enters the cost. The reference supply
 law cannot replace it.
 
-The [KAutomaton closeout](../PMKAutomaton/COMPONENTS.md#kautomaton-closeout)
+The [KAutomaton closeout](../PMKAutomaton/OVERVIEW.md#kautomaton-closeout)
 identifies the scope of tagged symmetry, mixed-input differences
 and the conditional rates. O supplies the writer population and H
 its prior. G, U and W attach the writer to a clocked operation on
@@ -300,7 +300,7 @@ replacement threshold `B − (E_C − E_L)`, with output flag threshold
 `B` and booked erase counts per input `E_C` and `E_L`. Equal erase
 counts leave `B`. The tagged receiver train does not supply the
 difference between the two writer counts. See the
-[boundary stopping point](../PMKAutomaton/TODO.md#stopping-point).
+[boundary stopping point](../PMKAutomaton/TODO.md#admission-and-ports).
 
 | Common sampling policy | Output-bit gap `G` | Conditional reset contribution to `ΔR` | Colour wins with output flags and those resets if |
 | --- | ---: | ---: | ---: |
@@ -316,8 +316,8 @@ and `balanced_reset_gap_eq_values`. For any common booked population,
 `booked_balanced_reset_difference` gives
 `U + (3/2)(M_colourless − M_coloured)` under the separate balanced
 resets. See KAutomaton's
-[Admission](../PMKAutomaton/TODO.md#admission) and
-[Registration tariff](../PMKAutomaton/TODO.md#registration-tariff).
+[Admission](../PMKAutomaton/TODO.md#admission-and-ports) and
+[Registration tariff](../PMKAutomaton/TODO.md#clock-and-accounting).
 The factor-pulse ledger by itself
 has gap `G/2` (`factor_flag_difference`). If the two reset
 comparisons are additionally paid and distinct from the writer
@@ -360,7 +360,7 @@ There is no physically identified minimizer to evaluate.
 | Enter the reference class, address 1 | 36 ticks plus entry, exit and records. One period requires all added elapsed work to fit seven ticks. | At least 88 ticks before node and records, so at least three periods. |
 | Leave the reference class, address 2 | The same 36-tick subtotal. Add the node, records, two matched tests and the offset when running that candidate. | The same 88-tick subtotal and three-period lower bound, before the added events. |
 
-These are the conditional [clock bounds](../PMKAutomaton/CLOCK.md#periods-per-route).
+These are the conditional [clock bounds](../PMKAutomaton/OVERVIEW.md#clock).
 They assume one gapped word and one beta word on each beta-driven wall.
 A separate class-changing crossing adds twelve quarter-times. The
 logical record counts agree for electron, up and down in this template.

@@ -29,7 +29,7 @@ open PMKAutomaton.ClockAlignment
 open PMSubstrate
 
 /-- Clock-plane projection `p(r) = (⟨r,cu⟩, ⟨r,cv⟩)`. -/
-def proj (r : V) : ℤ × ℤ := (pair r ClockPlane.cu, pair r ClockPlane.cv)
+def proj (r : V) : ℤ × ℤ := (PMSubstrate.Lattices.pairing r ClockPlane.cu, PMSubstrate.Lattices.pairing r ClockPlane.cv)
 
 /-- The projection of the spacetime ring step (a spacetime `D₄` root reading `1`). -/
 def stepS : ℤ × ℤ := (1, 0)
