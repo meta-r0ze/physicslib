@@ -105,10 +105,10 @@ theorem converted_records_meet_unequal_condition :
     ∃ (r₀ r₁ : Unit ⊕ Unit → ℂ), r₀ ⬝ᵥ r₁ = 0 :=
   ⟨plusRecord, minusRecord, converted_records_orthogonal⟩
 
-/-- The EP bitToll row is the sum of the two converted expected flags. -/
-theorem bitToll_eq_expected_conversion (colourReference : Bool)
+/-- The EP writeFlagCount row is the sum of the two converted expected flags. -/
+theorem writeFlagCount_eq_expected_conversion (colourReference : Bool)
     (c : PMConstants.PacketGaugeActions.Channels) :
-    WireSchedule.bitToll colourReference c =
+    WireSchedule.writeFlagCount colourReference c =
       expectedReceiverFlag (3 * Real.pi * ElectricHeavyRecord.q c) +
         expectedReceiverFlag
           (3 * Real.pi / 2 * ElectricHeavyRecord.sectorDifference colourReference c) := by

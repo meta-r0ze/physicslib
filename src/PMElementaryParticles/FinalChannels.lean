@@ -9,7 +9,7 @@ a sign: axis `0` is the lepton axis, axes `1, 2, 3` are the colours (`TauBranchi
 sign is the doublet. The weak event acts on the label as its antipode, which keeps the axis and flips
 the sign (`GluedRegister.neg_class`, `neg_ne`); on the wire mode it acts as the native charged current
 (`PMAction.NativeExternal.native_current`). The label's charge is its base protocol's
-(`SubstrateFinalStates.baseCharge`).
+(`PMElementaryParticles.ProtocolInventory.BaseProtocol.charge`).
 
 * `flip_charge`: the weak flip changes the charge by exactly one unit on every label (`+1` from a
   down label, `−1` from an up label): the event carries one unit of charge, whatever the axis.
@@ -34,14 +34,14 @@ abbrev Label := Fin 4 × Bool
 def base (x : Label) : BaseProtocol :=
   if x.1 = 0 then (if x.2 then .neutrino else .electron) else (if x.2 then .up else .down)
 
-def charge (x : Label) : ℚ := baseCharge (base x)
+def charge (x : Label) : ℚ := PMElementaryParticles.ProtocolInventory.BaseProtocol.charge (base x)
 
 /-- The weak event on the label: the antipode, same axis, opposite sign. -/
 def flip (x : Label) : Label := (x.1, !x.2)
 
 theorem flip_charge : ∀ x : Label, charge x - charge (flip x) = if x.2 then 1 else -1 := by
   rintro ⟨a, s⟩
-  fin_cases a <;> cases s <;> norm_num [charge, base, flip, baseCharge]
+  fin_cases a <;> cases s <;> norm_num [charge, base, flip, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 theorem flip_flip (x : Label) : flip (flip x) = x := by simp [flip]
 
@@ -49,7 +49,7 @@ theorem flip_flip (x : Label) : flip (flip x) = x := by simp [flip]
 theorem pair_conserves_iff : ∀ x y : Label,
     charge (flip x) + (charge y - charge (flip y)) = charge x ↔ y.2 = x.2 := by
   rintro ⟨a, s⟩ ⟨b, t⟩
-  fin_cases a <;> fin_cases b <;> cases s <;> cases t <;> norm_num [charge, base, flip, baseCharge]
+  fin_cases a <;> fin_cases b <;> cases s <;> cases t <;> norm_num [charge, base, flip, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 /-- The emitted labels for a parent of sign `σ`. -/
 def pairs (σ : Bool) : Finset Label := Finset.univ.filter fun y => y.2 = σ

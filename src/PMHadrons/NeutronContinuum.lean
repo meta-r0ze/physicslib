@@ -147,24 +147,24 @@ def neutronCoulombLinear : ℝ := coulombLinear neutronCutoffExact
 
 /-- Lifetime in seconds for a phase-space factor `f`. -/
 def neutronContinuumSeconds (f : ℝ) : ℝ :=
-  33 * (PhysicalUnits.electronTime * Real.pi ^ 3) / (91 * (SharedUnits.fermiME ^ 2 * f))
+  33 * (PhysicalUnits.electronTime * Real.pi ^ 3) / (91 * ((PMConstants.Values.fermi 1) ^ 2 * f))
 
 /-- The E8 neutron lifetime on the continuum route, no Coulomb pull. -/
 def neutronLifetimeContinuumSeconds : ℝ := neutronContinuumSeconds neutronPhaseSpace
 
 /-- The same with the Fermi factor's leading term, `f + πα ∫E²(E₀−E)²`. -/
 def neutronLifetimeContinuumCoulombSeconds : ℝ :=
-  neutronContinuumSeconds (neutronPhaseSpace + Real.pi * SharedUnits.αe * neutronCoulombLinear)
+  neutronContinuumSeconds (neutronPhaseSpace + Real.pi * PMConstants.Values.alpha * neutronCoulombLinear)
 
 /-- **The rate is `G_F² |V_ud|² R (1+3g_A²) f/(2π³)`** with `|V_ud|² R` the shared factor and
 `g_A = σ/D`: `33/91 = 1/((32/33)(1 + 3(5/4)²))` with the `2` of `2π³`. -/
 theorem neutronContinuum_rate (f : ℝ) (hf : f ≠ 0) :
     neutronContinuumSeconds f = PhysicalUnits.electronTime /
-      (SharedUnits.fermiME ^ 2 * (PMFlavor.Values.vud ^ 2 * DecayInstantiation.sharedFactor) *
+      ((PMConstants.Values.fermi 1) ^ 2 * (PMFlavor.Values.vud ^ 2 * DecayInstantiation.sharedFactor) *
         (1 + 3 * NeutronRate.gA ^ 2) * f / (2 * Real.pi ^ 3)) := by
   rw [DecayInstantiation.vud_sq_mul_shared, PMSubstrate.E8Margin.pionMargin_eq,
     NeutronRate.gA_eq]
-  have hG : SharedUnits.fermiME ≠ 0 := PMElementaryParticles.Values.fermiME_pos.ne'
+  have hG : (PMConstants.Values.fermi 1) ≠ 0 := PMElementaryParticles.Values.fermiME_pos.ne'
   have hpi : Real.pi ≠ 0 := Real.pi_pos.ne'
   unfold neutronContinuumSeconds
   field_simp
@@ -291,16 +291,16 @@ private lemma seconds_bounds {f lo hi a b : ℝ} (hlo : lo < f) (hhi : f < hi) (
     pow_lt_pow_left₀ hpi.1 (by norm_num) (by norm_num)
   have hpi2 : Real.pi ^ 3 < (3.14159265358979323847 : ℝ) ^ 3 :=
     pow_lt_pow_left₀ hpi.2 Real.pi_pos.le (by norm_num)
-  have hG1 : (3.0456453e-12 : ℝ) ^ 2 < SharedUnits.fermiME ^ 2 :=
+  have hG1 : (3.0456453e-12 : ℝ) ^ 2 < (PMConstants.Values.fermi 1) ^ 2 :=
     pow_lt_pow_left₀ hG.1 (by norm_num) (by norm_num)
-  have hG2 : SharedUnits.fermiME ^ 2 < (3.0456507e-12 : ℝ) ^ 2 :=
+  have hG2 : (PMConstants.Values.fermi 1) ^ 2 < (3.0456507e-12 : ℝ) ^ 2 :=
     pow_lt_pow_left₀ hG.2 (by linarith) (by norm_num)
   have hA1 := mul_lt_mul'' he.1 hpi1 (by norm_num) (by norm_num)
   have hA2 := mul_lt_mul'' he.2 hpi2 (by linarith) (by positivity)
   have hB1 := mul_lt_mul'' hG1 hlo (by norm_num) hl.le
   have hB2 := mul_lt_mul'' hG2 hhi (by positivity) (by linarith)
-  have hB0 : 0 < 91 * (SharedUnits.fermiME ^ 2 * f) := by
-    have : 0 < SharedUnits.fermiME ^ 2 * f := lt_trans (by positivity) hB1
+  have hB0 : 0 < 91 * ((PMConstants.Values.fermi 1) ^ 2 * f) := by
+    have : 0 < (PMConstants.Values.fermi 1) ^ 2 * f := lt_trans (by positivity) hB1
     linarith
   have hka := mul_le_mul_of_nonneg_left hB2.le ha0
   have hkb := mul_le_mul_of_nonneg_left hB1.le hb0

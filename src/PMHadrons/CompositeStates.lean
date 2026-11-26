@@ -30,8 +30,8 @@ structure SignedState where
 /-- Charge of a signed constituent. -/
 def signedCharge (x : SignedState) : ℚ :=
   match x.sign with
-  | .particle => baseCharge x.state.1
-  | .antiparticle => -baseCharge x.state.1
+  | .particle => PMElementaryParticles.ProtocolInventory.BaseProtocol.charge x.state.1
+  | .antiparticle => -PMElementaryParticles.ProtocolInventory.BaseProtocol.charge x.state.1
 
 /-- A composite state is a finite signed cohort. -/
 structure CompositeState where
@@ -75,19 +75,19 @@ def neutron : CompositeState :=
   ⟨[up t0, down t0, down t0]⟩
 
 theorem pionPlus_charge : compositeCharge pionPlus = 1 := by
-  norm_num [compositeCharge, signedCharge, pionPlus, up, antiDown, baseCharge]
+  norm_num [compositeCharge, signedCharge, pionPlus, up, antiDown, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 theorem pionZero_charge : compositeCharge pionZero = 0 := by
-  norm_num [compositeCharge, signedCharge, pionZero, up, antiUp, baseCharge]
+  norm_num [compositeCharge, signedCharge, pionZero, up, antiUp, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 theorem kaonPlus_charge : compositeCharge kaonPlus = 1 := by
-  norm_num [compositeCharge, signedCharge, kaonPlus, up, antiDown, baseCharge]
+  norm_num [compositeCharge, signedCharge, kaonPlus, up, antiDown, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 theorem proton_charge : compositeCharge proton = 1 := by
-  norm_num [compositeCharge, signedCharge, proton, up, down, baseCharge]
+  norm_num [compositeCharge, signedCharge, proton, up, down, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 theorem neutron_charge : compositeCharge neutron = 0 := by
-  norm_num [compositeCharge, signedCharge, neutron, up, down, baseCharge]
+  norm_num [compositeCharge, signedCharge, neutron, up, down, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 theorem pionPlus_meson : pionPlus.isMeson = true := rfl
 theorem kaonPlus_meson : kaonPlus.isMeson = true := rfl

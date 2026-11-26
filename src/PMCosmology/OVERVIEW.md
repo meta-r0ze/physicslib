@@ -91,3 +91,6 @@ persistence can rank anything.
 ## Verification
 
 Run `./build.sh PMCosmology`. Permitted axioms `propext`, `Classical.choice`, `Quot.sound`.
+
+`NeutrinoCompatibility.small_sum_and_bad_splittings` takes a comparison center,
+positive uncertainty and exclusion-window hypothesis. Experimental inputs live in e8p.

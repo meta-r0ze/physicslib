@@ -161,4 +161,24 @@ theorem baseProtocol_carrier : ∀ c : Channels,
       else if CarrierChannels.wall c then some .neutrino else none := by
   decide
 
+/-- Axis and sign attached to each base protocol. -/
+def BaseProtocol.leptonAxis : BaseProtocol → Bool
+  | .electron | .neutrino => true
+  | .up | .down => false
+
+def BaseProtocol.positiveSign : BaseProtocol → Bool
+  | .up | .neutrino => true
+  | .electron | .down => false
+
+/-- Electric charge read from the shared carrier rule. -/
+def BaseProtocol.charge (b : BaseProtocol) : ℚ :=
+  PMConstants.Hypercharge.electric b.leptonAxis b.positiveSign
+
+@[simp] theorem base_charge_values :
+    BaseProtocol.charge .up = 2/3 ∧ BaseProtocol.charge .down = -1/3 ∧
+    BaseProtocol.charge .electron = -1 ∧ BaseProtocol.charge .neutrino = 0 := by
+  norm_num [BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, BaseProtocol.leptonAxis, BaseProtocol.positiveSign,
+    PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis,
+    PMConstants.CarrierRepresentation.t3Sign]
+
 end PMElementaryParticles.ProtocolInventory

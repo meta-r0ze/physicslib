@@ -6,7 +6,7 @@ import Mathlib.Analysis.Complex.ExponentialBounds
 /-!
 # The tau's electronic branching fraction: what EP derives and what is left
 
-`TauLifetime` and `TauE8` use `B(τ → eνν̄) = 0.1782` as a supplied input. Its parts:
+`TauLifetime` and `TauE8` use the electronic branching fraction as a supplied input. Its parts:
 
 * **Leptonic channels.** One `G_F` for every lepton (`WeakMatching.fermi_from_reference`), so
   `Γ(τ → μνν̄)/Γ(τ → eνν̄) = f(r)` with `r = (m_μ/m_τ)²` and the derived massive phase factor
@@ -20,7 +20,7 @@ import Mathlib.Analysis.Complex.ExponentialBounds
 So `B_e = 1/(1 + f(r) + N_c h)` (`branching`).
 
 * `parton_level`: with `h = 1`, `0.2010 < B_e < 0.2012`.
-* `supplied_needs`: the supplied `0.1782` is `B_e` at `1.2129 < h < 1.2132`.
+* `supplied_needs`: a supplied nonzero branch fixes the hadronic factor algebraically.
 
 So the leptonic part and the colour count are E8's; the remaining input is the hadronic factor
 `h ≈ 1.213`, the strong dressing of a quark pair at the tau mass. That belongs to PMHadrons
@@ -93,13 +93,18 @@ theorem parton_level : (0.2010 : ℝ) < branching 1 ∧ branching 1 < 0.2012 := 
   · rw [lt_div_iff₀ (by linarith [hf.1])]; nlinarith
   · rw [div_lt_iff₀ (by linarith [hf.1])]; nlinarith
 
-theorem supplied_needs (h : ℝ) (hb : branching h = 0.1782) : 1.2129 < h ∧ h < 1.2132 := by
-  have hf := phase_bounds
-  unfold branching at hb; rw [colours_eq] at hb
-  have hd : 1 + MassiveWidth.phase r + 3 * h ≠ 0 := by
-    intro h0; rw [h0, div_zero] at hb; norm_num at hb
-  have : 1 + MassiveWidth.phase r + 3 * h = 1 / 0.1782 := by
-    rw [← hb]; field_simp
-  constructor <;> nlinarith
+/-- Infer the hadronic factor from a supplied nonzero electronic branch. -/
+theorem supplied_needs (h electronicBranch : ℝ) (hb : branching h = electronicBranch)
+    (hne : electronicBranch ≠ 0) :
+    h = (1 / electronicBranch - 1 - MassiveWidth.phase r) / colours := by
+  unfold branching at hb
+  have hd : 1 + MassiveWidth.phase r + colours * h ≠ 0 := by
+    intro hz
+    rw [hz, div_zero] at hb
+    exact hne hb.symm
+  rw [← hb]
+  rw [one_div_one_div]
+  rw [colours_eq]
+  ring
 
 end PMElementaryParticles.TauBranching

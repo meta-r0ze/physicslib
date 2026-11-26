@@ -47,7 +47,7 @@ open PMElementaryParticles.SharedUnits
 open PMSubstrate.E8Values PMSubstrate.OccupancyCost
 
 /-- Pion: the two unit charges' cell budget `2α⁻¹`. -/
-def pionCoulomb : ℝ := 2 * αinv
+def pionCoulomb : ℝ := 2 * PMSubstrate.geometricIndex
 /-- Pion: topological/symmetry product. -/
 def pionTopological : ℝ := (chi : ℝ) * (sigma : ℝ)
 /-- Pion: chiral leak `1/(ν−χ)`. -/
@@ -57,7 +57,7 @@ def pionSymmetry : ℝ := (sigma : ℝ)
 /-- Pion: spacetime anchor. -/
 def pionAnchor : ℝ := (D : ℝ)
 /-- Pion: charge load `α(σ−χ)/χ`. -/
-def pionChargeLoad : ℝ := αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
+def pionChargeLoad : ℝ := PMConstants.Values.alpha * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
 
 /-! ## Six-pillar cell budget -/
 
@@ -67,7 +67,7 @@ def cellBudget : ℝ := PMSubstrate.impedance PMSubstrate.baseline
 theorem cellBudget_eq_cost : cellBudget = cost oneCell := cost_oneCell.symm
 
 /-- `α⁻¹` is the cell budget, by definition. -/
-theorem αinv_eq_cellBudget : αinv = cellBudget := rfl
+theorem αinv_eq_cellBudget : PMSubstrate.geometricIndex = cellBudget := rfl
 
 /-- The cell budget is the sum of the six pillar terms. -/
 theorem cellBudget_pillars : cellBudget =
@@ -93,7 +93,7 @@ def pionCells : ℝ := (chi : ℝ)
 def kaonCells : ℝ := (sigma : ℝ) + (chi : ℝ)
 
 /-- Charge load `α(σ−χ)/χ`, carried by both charged mesons. -/
-def chargeLoad : ℝ := αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
+def chargeLoad : ℝ := PMConstants.Values.alpha * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
 
 /-- `π⁰` residual: `−σχ + 1/(ν−χ)`. -/
 def pion0Residual : ℝ := -((sigma : ℝ) * (chi : ℝ)) + 1 / ((nu : ℝ) - (chi : ℝ))
@@ -170,8 +170,8 @@ theorem kaonPlus_eq_cost : PMHadrons.CompositeMasses.kaonPlus = cost kaonPlusFoo
 
 /-- The pion is exactly the sum of its named costs. -/
 theorem pionPlus_ledger :
-    pionPlus = 2 * αinv - (chi : ℝ) * (sigma : ℝ) + 1 / ((nu : ℝ) - (chi : ℝ)) +
-      (sigma : ℝ) + (D : ℝ) - αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ)) := by
+    pionPlus = 2 * PMSubstrate.geometricIndex - (chi : ℝ) * (sigma : ℝ) + 1 / ((nu : ℝ) - (chi : ℝ)) +
+      (sigma : ℝ) + (D : ℝ) - PMConstants.Values.alpha * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ)) := by
   rw [pionPlus_cells, ← αinv_eq_cellBudget]
   unfold pionCells pionPlusResidual pion0Residual chargeLoad
   rw [chi_eq]

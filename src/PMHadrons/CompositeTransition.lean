@@ -42,7 +42,7 @@ def kaonPionFinal : List CompositeState := [pionPlus, pionZero]
 theorem kaonPion_charge :
     compositeChargeList kaonPionFinal = compositeCharge kaonPlus := by
   norm_num [compositeChargeList, compositeCharge, kaonPionFinal, pionPlus, pionZero,
-    signedCharge, up, antiDown, antiUp, kaonPlus, kaonPionFinal, PMElementaryParticles.ProtocolDynamics.baseCharge]
+    signedCharge, up, antiDown, antiUp, kaonPlus, kaonPionFinal, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 theorem kaonPion_decay : CompositeDecay kaonPlus kaonPionFinal := by
   refine ⟨by simp [kaonPionFinal], ?_⟩

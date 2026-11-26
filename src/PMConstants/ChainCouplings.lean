@@ -49,16 +49,16 @@ lemma hf : (0 : ℝ) < footprint - 43 := by norm_num [footprint, overhead]
 lemma hfp : (0 : ℝ) < footprint := by norm_num [footprint, overhead]
 
 /-- Electric coupling of the two electroweak refreshes. -/
-def electric (toll : ℝ) (m : ℕ) : ℝ :=
+def electromagneticCouplingSquared (toll : ℝ) (m : ℕ) : ℝ :=
   chainCoupling (1 / 2) toll m 43 * chainCoupling (1 / 2) toll m (footprint - 43) /
     (chainCoupling (1 / 2) toll m 43 + chainCoupling (1 / 2) toll m (footprint - 43))
 
 theorem chain_electric {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
-    electric toll m = 2 / (toll * m * footprint) := by
+    electromagneticCouplingSquared toll m = 2 / (toll * m * footprint) := by
   have hm' : (0 : ℝ) < m := by exact_mod_cast hm
   have := hf
   have := hfp
-  simp only [electric, chainCoupling]
+  simp only [electromagneticCouplingSquared, chainCoupling]
   field_simp
   ring
 
@@ -75,7 +75,7 @@ theorem chain_mixing {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
   ring
 
 theorem chain_calibration {toll α : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) (hα : 0 < α)
-    (he : electric toll m = 4 * Real.pi * α) :
+    (he : electromagneticCouplingSquared toll m = 4 * Real.pi * α) :
     toll * m = 1 / (2 * Real.pi * α * footprint) := by
   have hm' : (0 : ℝ) < m := by exact_mod_cast hm
   have := hfp
@@ -107,9 +107,9 @@ theorem chain_couplings {toll α : ℝ} {m : ℕ} (hα : 0 < α)
 theorem hyper_ledger : footprint - 43 = 129 + 5 + 16 * overhead := by
   norm_num [footprint]; ring
 
-/-- **Strong-to-electric ratio from the chain:** `α_s/α = N_sys/(12η)`. -/
+/-- **Strong-to-electromagneticCouplingSquared ratio from the chain:** `α_s/α = N_sys/(12η)`. -/
 theorem chain_strong_ratio {toll : ℝ} {m : ℕ} (ht : 0 < toll) (hm : 0 < m) :
-    chainCoupling (1 / 2) toll m ColourChannels.colourLedger / electric toll m =
+    chainCoupling (1 / 2) toll m ColourChannels.colourLedger / electromagneticCouplingSquared toll m =
       footprint / ColourChannels.colourLedger := by
   have hm' : (0 : ℝ) < m := by exact_mod_cast hm
   have := hfp

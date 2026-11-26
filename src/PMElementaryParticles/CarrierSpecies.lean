@@ -46,11 +46,13 @@ theorem channelSpecies_some (c : PMConstants.PacketGaugeActions.Channels) (h : b
   | some b => exact ⟨ofBaseProtocol b, by simp [channelSpecies, hb]⟩
 
 /-- Charge of the external species label. -/
-def CarrierSpecies.charge : CarrierSpecies → ℚ
-  | .electron => -1
-  | .up => 2 / 3
-  | .down => -1 / 3
-  | .neutrino => 0
+def CarrierSpecies.baseProtocol : CarrierSpecies → BaseProtocol
+  | .electron => .electron
+  | .up => .up
+  | .down => .down
+  | .neutrino => .neutrino
+
+def CarrierSpecies.charge (s : CarrierSpecies) : ℚ := s.baseProtocol.charge
 
 /-- The carrier→species bridge respects the E8 charge grading. -/
 theorem channelSpecies_charge {c : PMConstants.PacketGaugeActions.Channels}
@@ -63,10 +65,10 @@ theorem channelSpecies_charge {c : PMConstants.PacketGaugeActions.Channels}
       simp [hb] at h
       rcases h with rfl
       cases b
-      · simpa [ofBaseProtocol, CarrierSpecies.charge] using baseProtocol_charge.2.2.1 c hb
-      · simpa [ofBaseProtocol, CarrierSpecies.charge] using baseProtocol_charge.1 c hb
-      · simpa [ofBaseProtocol, CarrierSpecies.charge] using baseProtocol_charge.2.1 c hb
-      · simpa [ofBaseProtocol, CarrierSpecies.charge] using baseProtocol_charge.2.2.2 c hb
+      · convert baseProtocol_charge.2.2.1 c hb using 1 <;> norm_num [ofBaseProtocol, CarrierSpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, CarrierSpecies.baseProtocol, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
+      · convert baseProtocol_charge.1 c hb using 1 <;> norm_num [ofBaseProtocol, CarrierSpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, CarrierSpecies.baseProtocol, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
+      · convert baseProtocol_charge.2.1 c hb using 1 <;> norm_num [ofBaseProtocol, CarrierSpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, CarrierSpecies.baseProtocol, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
+      · convert baseProtocol_charge.2.2.2 c hb using 1 <;> norm_num [ofBaseProtocol, CarrierSpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, CarrierSpecies.baseProtocol, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- Base-species mass in `m_e` units. -/
 def CarrierSpecies.mass : CarrierSpecies → ℝ

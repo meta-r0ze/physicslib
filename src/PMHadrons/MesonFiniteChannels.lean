@@ -252,13 +252,13 @@ theorem pionLifetimeCorrectedSeconds_bounds :
       pionLifetimeCorrectedSeconds < 2.60192e-8 := by
   have hS : pionLifetimeCorrectedSeconds =
       33 / 4 * Real.pi * PMElementaryParticles.PhysicalUnits.electronTime /
-        (PMElementaryParticles.SharedUnits.fermiME ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
+        ((PMConstants.Values.fermi 1) ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
           MesonMasses.pionPlus * PMElementaryParticles.LeptonMasses.muon ^ 2 *
           (1 - (PMElementaryParticles.LeptonMasses.muon / MesonMasses.pionPlus) ^ 2) ^ 2) := by
     unfold pionLifetimeCorrectedSeconds PMSubstrate.E8Margin.pionCorrectedLifetime
       PionWidth.pionLifetimeE8 PionWidth.pionLifetime PionWidth.pionWidth
     rw [PMSubstrate.E8Margin.pionMargin_eq]
-    generalize PMElementaryParticles.SharedUnits.fermiME ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
+    generalize (PMConstants.Values.fermi 1) ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
           MesonMasses.pionPlus * PMElementaryParticles.LeptonMasses.muon ^ 2 *
           (1 - (PMElementaryParticles.LeptonMasses.muon / MesonMasses.pionPlus) ^ 2) ^ 2 = N
     rw [one_div_div]
@@ -280,7 +280,7 @@ theorem pionLifetimeCorrectedSeconds_bounds :
     simp only [PMElementaryParticles.SharedUnits.me, PMSubstrate.SIUnits.electronMassMeV] at h
     constructor <;> linarith [h.1, h.2]
   have hm := PMElementaryParticles.LeptonMasses.muon_value
-  have hGpos : (0 : ℝ) < PMElementaryParticles.SharedUnits.fermiME := by linarith [hG.1]
+  have hGpos : (0 : ℝ) < (PMConstants.Values.fermi 1) := by linarith [hG.1]
   have hfpos : (0 : ℝ) < PionWidth.pionDecayConstantE8 := by linarith [hf.1]
   have hmppos : (0 : ℝ) < MesonMasses.pionPlus := by linarith [hmp.1]
   have hmupos : (0 : ℝ) < PMElementaryParticles.LeptonMasses.muon := by linarith [hm.1]
@@ -321,19 +321,19 @@ theorem pionLifetimeCorrectedSeconds_bounds :
   -- the product `N = G² f² m_π m_μ² F`
   have hNlo : (3.0456453e-12 : ℝ) ^ 2 * (254.9416992 : ℝ) ^ 2 * 273.13236 *
         (206.7682716 : ℝ) ^ 2 * 0.1822535 <
-      PMElementaryParticles.SharedUnits.fermiME ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
+      (PMConstants.Values.fermi 1) ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
         MesonMasses.pionPlus * PMElementaryParticles.LeptonMasses.muon ^ 2 *
         (1 - (PMElementaryParticles.LeptonMasses.muon / MesonMasses.pionPlus) ^ 2) ^ 2 := by
     gcongr <;> first | exact hG.1 | exact hf.1 | exact hmp.1 | exact hm.1
   have hNhi :
-      PMElementaryParticles.SharedUnits.fermiME ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
+      (PMConstants.Values.fermi 1) ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
         MesonMasses.pionPlus * PMElementaryParticles.LeptonMasses.muon ^ 2 *
         (1 - (PMElementaryParticles.LeptonMasses.muon / MesonMasses.pionPlus) ^ 2) ^ 2 <
       (3.0456507e-12 : ℝ) ^ 2 * (254.9416993 : ℝ) ^ 2 * 273.13251 *
         (206.7682718 : ℝ) ^ 2 * 0.1822544 := by
     gcongr <;> first | exact hG.2 | exact hf.2 | exact hmp.2 | exact hm.2
   have hNpos : (0 : ℝ) <
-      PMElementaryParticles.SharedUnits.fermiME ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
+      (PMConstants.Values.fermi 1) ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
         MesonMasses.pionPlus * PMElementaryParticles.LeptonMasses.muon ^ 2 *
         (1 - (PMElementaryParticles.LeptonMasses.muon / MesonMasses.pionPlus) ^ 2) ^ 2 :=
     lt_trans (by norm_num) hNlo

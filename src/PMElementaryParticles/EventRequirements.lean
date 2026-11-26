@@ -1,5 +1,5 @@
 import PMElementaryParticles.FinalChannels
-import PMElementaryParticles.ProtocolToll
+import PMElementaryParticles.ProtocolFlagCosts
 
 /-!
 # What a charged-current event must read
@@ -7,7 +7,7 @@ import PMElementaryParticles.ProtocolToll
 `PMAction.RefreshSchedule` and `PMAction.CoherentRefresh` show that Economy serves each
 required item exactly once; the requirement table is the remaining input. This module derives
 the table for one charged-current event (`FinalChannels`) and evaluates it on the static
-hypercharge readouts (`ProtocolToll`).
+hypercharge readouts (`ProtocolFlagCosts`).
 
 **What the event depends on.** The parent `x` goes to `flip x`, which ignores the sign
 (`FinalChannels.flip`). The emitted labels are `pairs x.2`: they depend on the parent's sign and
@@ -19,7 +19,7 @@ only the sign does. The event's requirement is one bit: the parent's doublet pos
 * the quark doublet bit (down flag `1`, up flag `0`) is read exactly by the full readout, down
   flag `1` (`quark_bit_iff`);
 * the lepton doublet bit (electron flag `1`; the vacancy flag is always `0`) is read by down flag
-  `1` or `¼` (`ProtocolToll.lepton_readout_iff`).
+  `1` or `¼` (`ProtocolFlagCosts.lepton_readout_iff`).
 
 **Own-event accounting ties the labels.** If each label pays only the flags of the readout its
 own event requires, then electron and down each pay `1` and up and the vacancy pay `0`
@@ -46,7 +46,7 @@ theorem axis_cannot_choose : ¬ ∃ g : Fin 4 → Finset Label, ∀ x : Label, g
   rw [h1] at h2
   exact absurd h2 (by decide)
 
-open ProtocolToll
+open ProtocolFlagCosts
 
 /-- **The quark doublet readout is the full readout.** A step reads the quark bit (down flag
 `1`, up flag `0`) exactly when its down flag is `1`. -/

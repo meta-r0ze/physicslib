@@ -1,3 +1,5 @@
+import Mathlib.Basic.Real.Basic
+import Mathlib.Tactic.NormNum
 import E8PConstants.Catalog
 
 /-!
@@ -16,6 +18,30 @@ ordering, both NuFIT 6.0 analyses (IC19 without SK-atm; IC24 with SK-atm), since
 differs between them.
 -/
 namespace E8PConstants
+
+namespace TauInputs
+abbrev muonTimeFs : ℝ := 2.1969811e9
+abbrev electronicBranch : ℝ := 0.1782
+/-- Singleton enclosures select the central prediction; reference uncertainty stays in expRefs. -/
+theorem muonTime_point_interval : muonTimeFs ≤ muonTimeFs ∧ muonTimeFs ≤ muonTimeFs :=
+  ⟨le_rfl, le_rfl⟩
+theorem branch_point_interval : electronicBranch ≤ electronicBranch ∧ electronicBranch ≤ electronicBranch :=
+  ⟨le_rfl, le_rfl⟩
+abbrev muonTimeLoFs : ℝ := 2.1969789e9
+abbrev muonTimeHiFs : ℝ := 2.1969833e9
+abbrev branchLo : ℝ := 0.1778
+abbrev branchHi : ℝ := 0.1786
+
+theorem muonTime_interval : muonTimeLoFs ≤ muonTimeFs ∧ muonTimeFs ≤ muonTimeHiFs := by
+  norm_num [muonTimeLoFs, muonTimeHiFs, muonTimeFs]
+theorem branch_interval : branchLo ≤ electronicBranch ∧ electronicBranch ≤ branchHi := by
+  norm_num [branchLo, branchHi, electronicBranch]
+end TauInputs
+
+namespace OscillationInputs
+abbrev atmospheric {R : Type u} [OfScientific R] : R := 0.002534
+abbrev atmosphericSigma {R : Type u} [OfScientific R] : R := 0.000025
+end OscillationInputs
 
 structure ExpRef where
   value : Rat

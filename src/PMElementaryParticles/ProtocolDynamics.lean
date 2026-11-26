@@ -10,7 +10,7 @@ strictly lower resonant tier. This module makes that model concrete on the
 for it.
 
 * `Tier = Fin 4` — the resonant tier labels `Δ⁰…Δ³` used by the mass ledger.
-* `baseCharge` — the charge class of each base protocol (`up=2/3, down=-1/3,
+* `BaseProtocol.charge` — the charge class of each base protocol (`up=2/3, down=-1/3,
   electron=-1, neutrino=0`), matching the inventory.
 * `Decay p ds` — `p` exits into a **nonempty** cohort `ds` with total charge equal
   to `p`'s and every daughter in a strictly lower tier.
@@ -39,27 +39,21 @@ abbrev Tier := Fin 4
 
 theorem tier_card : Fintype.card Tier = 4 := by decide
 
-/-- Charge class of a base protocol, matching `ProtocolInventory`. -/
-def baseCharge : BaseProtocol → ℚ
-  | .up => 2/3
-  | .down => -1/3
-  | .electron => -1
-  | .neutrino => 0
 
 /-- A protocol state is a base protocol at a resonant tier. -/
 abbrev State := BaseProtocol × Tier
 
 /-- Total charge of an exit cohort. -/
-def cohortCharge (ds : List State) : ℚ := (ds.map fun d => baseCharge d.1).sum
+def cohortCharge (ds : List State) : ℚ := (ds.map fun d => BaseProtocol.charge d.1).sum
 
 /-- **Decay as a routing change.** A parent exits into a nonempty daughter cohort
 with the same total charge, every daughter in a strictly lower tier. -/
 def Decay (p : State) (ds : List State) : Prop :=
-  ds ≠ [] ∧ cohortCharge ds = baseCharge p.1 ∧ ∀ d ∈ ds, d.2 < p.2
+  ds ≠ [] ∧ cohortCharge ds = BaseProtocol.charge p.1 ∧ ∀ d ∈ ds, d.2 < p.2
 
 /-- Charge is conserved along a decay. -/
 theorem decay_charge {p : State} {ds : List State} (h : Decay p ds) :
-    cohortCharge ds = baseCharge p.1 := h.2.1
+    cohortCharge ds = BaseProtocol.charge p.1 := h.2.1
 
 /-- Every daughter is strictly lower-tier. -/
 theorem decay_tier_lt {p : State} {ds : List State} (h : Decay p ds) :
@@ -102,7 +96,7 @@ theorem muon_decay :
       [(.electron, ⟨0, by decide⟩), (.neutrino, ⟨0, by decide⟩),
        (.neutrino, ⟨0, by decide⟩)] := by
   refine ⟨by simp, ?_, ?_⟩
-  · norm_num [cohortCharge, baseCharge]
+  · norm_num [cohortCharge, BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
   · intro d hd
     simp only [List.mem_cons, List.not_mem_nil, or_false] at hd
     rcases hd with rfl | rfl | rfl <;> decide
@@ -110,7 +104,7 @@ theorem muon_decay :
 /-- The electron cohort of the muon decay is exactly the conserved-charge content. -/
 theorem muon_decay_charge :
     cohortCharge [(.electron, ⟨0, by decide⟩), (.neutrino, ⟨0, by decide⟩),
-       (.neutrino, ⟨0, by decide⟩)] = baseCharge .electron := by
-  norm_num [cohortCharge, baseCharge]
+       (.neutrino, ⟨0, by decide⟩)] = BaseProtocol.charge .electron := by
+  norm_num [cohortCharge, BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 end PMElementaryParticles.ProtocolDynamics

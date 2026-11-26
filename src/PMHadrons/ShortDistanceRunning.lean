@@ -47,7 +47,7 @@ def chargeAverage : ℝ := ((2 / 3 : ℝ) + (-1 / 3)) / 2
 
 /-- The one-loop running of the charged-current contact from `m_Z` to `m_p`. -/
 def runningFactor : ℝ :=
-  1 + 3 * PMElementaryParticles.SharedUnits.αe / (4 * π) * (1 + 2 * chargeAverage) *
+  1 + 3 * PMConstants.Values.alpha / (4 * π) * (1 + 2 * chargeAverage) *
     (2 * Real.log (mZ / mpGeV))
 
 /-- The coefficient is `PMAction.ContactRunning`'s: twice the contact's amplitude coefficient
@@ -55,13 +55,13 @@ def runningFactor : ℝ :=
 `(α/4π)·ln(m_Z²/m_p²)`. -/
 theorem runningFactor_from_contact :
     runningFactor = 1 + 2 * PMAction.ContactRunning.contactCoefficient (2 / 3) (-1 / 3) (-1) 0 *
-      (PMElementaryParticles.SharedUnits.αe / (4 * π)) * (2 * Real.log (mZ / mpGeV)) := by
+      (PMConstants.Values.alpha / (4 * π)) * (2 * Real.log (mZ / mpGeV)) := by
   rw [PMAction.ContactRunning.contact_neutron]
   unfold runningFactor chargeAverage
   ring
 
 theorem runningFactor_eq :
-    runningFactor = 1 + 2 * PMElementaryParticles.SharedUnits.αe / π * Real.log (mZ / mpGeV) := by
+    runningFactor = 1 + 2 * PMConstants.Values.alpha / π * Real.log (mZ / mpGeV) := by
   unfold runningFactor chargeAverage
   ring
 
@@ -123,11 +123,11 @@ theorem runningFactor_bounds : (1.021178 : ℝ) < runningFactor ∧ runningFacto
   have hp1 : (3.14159265358979 : ℝ) < π := by linarith [Real.pi_gt_d20]
   have hp2 : π < (3.1415926535898 : ℝ) := by linarith [Real.pi_lt_d20]
   obtain ⟨l1, l2⟩ := log_bounds
-  have hq1 : (2 * 0.007297352562 / 3.1415926535898 : ℝ) < 2 * PMElementaryParticles.SharedUnits.αe / π := by
+  have hq1 : (2 * 0.007297352562 / 3.1415926535898 : ℝ) < 2 * PMConstants.Values.alpha / π := by
     rw [div_lt_div_iff₀ (by norm_num) Real.pi_pos]; nlinarith [ha.1]
-  have hq2 : 2 * PMElementaryParticles.SharedUnits.αe / π < (2 * 0.007297352563 / 3.14159265358979 : ℝ) := by
+  have hq2 : 2 * PMConstants.Values.alpha / π < (2 * 0.007297352563 / 3.14159265358979 : ℝ) := by
     rw [div_lt_div_iff₀ Real.pi_pos (by norm_num)]; nlinarith [ha.2]
-  have hqpos : 0 < 2 * PMElementaryParticles.SharedUnits.αe / π := lt_trans (by norm_num) hq1
+  have hqpos : 0 < 2 * PMConstants.Values.alpha / π := lt_trans (by norm_num) hq1
   constructor
   · have := mul_lt_mul'' hq1 l1 (by norm_num) (by norm_num)
     have hn : (1.021178 : ℝ) < 1 + 2 * 0.007297352562 / 3.1415926535898 * 4.5587 := by norm_num

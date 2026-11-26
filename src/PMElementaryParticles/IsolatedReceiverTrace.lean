@@ -1059,7 +1059,7 @@ theorem uniformReceiverColumn_eq_zero (either : Bool) (c : Fin 3)
 
 /-- Record bit visits per label, a separate column with its own unit. -/
 noncomputable def isolatedRecordColumn (reference : Bool) (label : Channels) : ℝ :=
-  WireSchedule.bitToll reference label
+  WireSchedule.writeFlagCount reference label
 
 /-! ## The packet lifts
 

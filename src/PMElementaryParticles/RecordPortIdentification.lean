@@ -43,18 +43,18 @@ def refRecord (colourReference : Bool) : Record :=
   if colourReference then (false, false) else (true, false)
 
 /-- Task H Step 1: the reference records reproduce both EP rows. -/
-theorem bitToll_eq_hamming :
+theorem writeFlagCount_eq_hamming :
     ∀ (colourReference : Bool) (c : Channels),
-      WireSchedule.bitToll colourReference c =
+      WireSchedule.writeFlagCount colourReference c =
         (hamming (labelRecord c) (refRecord colourReference) : ℝ) := by
   intro colourReference c
   cases colourReference
-  · rw [WireSchedule.bitToll, ElectricHeavyRecord.phase_position,
+  · rw [WireSchedule.writeFlagCount, ElectricHeavyRecord.phase_position,
       ElectricHeavyRecord.phase_sector_lepton_reference]
     unfold hamming refRecord
     rcases h : labelRecord c with ⟨s, p⟩
     cases s <;> cases p <;> norm_num
-  · rw [WireSchedule.bitToll, ElectricHeavyRecord.phase_position,
+  · rw [WireSchedule.writeFlagCount, ElectricHeavyRecord.phase_position,
       ElectricHeavyRecord.phase_sector]
     unfold hamming refRecord
     rcases h : labelRecord c with ⟨s, p⟩
@@ -62,9 +62,9 @@ theorem bitToll_eq_hamming :
 
 /-- The colour row is exactly the true-bit count of `labelRecord`. -/
 theorem colour_hamming (c : Channels) :
-    (hamming (labelRecord c) (refRecord true) : ℝ) = HeavyFlipRecords.orbitRecordToll c := by
-  rw [← bitToll_eq_hamming true c]
-  simpa [WireSchedule.bitToll] using ElectricHeavyRecord.colour_reference_toll c
+    (hamming (labelRecord c) (refRecord true) : ℝ) = HeavyFlipRecords.orbitWriterFlagSum c := by
+  rw [← writeFlagCount_eq_hamming true c]
+  simpa [WireSchedule.writeFlagCount] using ElectricHeavyRecord.colour_reference_toll c
 
 def bitOf (p : Record) (b : Fin 2) : Bool :=
   if b = 0 then p.1 else p.2
@@ -276,9 +276,9 @@ theorem bitRingTotal43_eq (c : Channels) (colourReference : Bool) (either : Bool
 theorem bitRingTotal43_shared (c : Channels) (colourReference : Bool) (either : Bool)
     (r : IsolatedSite → IsolatedRequests) (x0 : IsolatedSite) :
     bitRingTotal43 c colourReference either (fun _ => r) x0 =
-      WireSchedule.bitToll colourReference c *
+      WireSchedule.writeFlagCount colourReference c *
         (patternSum (firingPattern either r) x0 : ℝ) := by
-  rw [bitRingTotal43_eq, Fin.sum_univ_two, bitToll_eq_hamming]
+  rw [bitRingTotal43_eq, Fin.sum_univ_two, writeFlagCount_eq_hamming]
   unfold hamming bitOf refRecord
   rcases h : labelRecord c with ⟨s, p⟩
   cases colourReference <;> cases s <;> cases p <;>

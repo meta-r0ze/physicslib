@@ -1,3 +1,5 @@
+import E8PConstants.PMElementaryParticles.NeutrinoInputs
+import E8PConstants.PMElementaryParticles.TauInputs
 import PMConstants.Values
 import PMHadrons.Values
 import PMSubstrate.Impedance
@@ -141,12 +143,12 @@ def value : Key → ℝ
   | .electronClosure => PMConstants.Values.electronClosureRatio
   | .vud => PMFlavor.Values.vud
   | .vudDressed => PMFlavor.Values.vudDressed
-  | .tauLifetimeFs => PMElementaryParticles.Values.tauLifetimeCorrectedFs
+  | .tauLifetimeFs => E8PConstants.TauValues.tauLifeCorrected
   | .muonLifetimeFinite => PMElementaryParticles.Values.muonFiniteLifetime
-  | .tauLifetimeE8Natural => PMElementaryParticles.Values.tauLifetimeE8
+  | .tauLifetimeE8Natural => E8PConstants.TauValues.tauLifetimeE8
   | .neutronSpectralFraction => PMHadrons.neutronSpectralFraction
   | .neutronLifetimeE8 => PMHadrons.neutronLifetimeE8
-  | .muonLifetimeSeconds => PMElementaryParticles.Values.muonLifetimeFull
+  | .muonLifetimeSeconds => PMElementaryParticles.Values.lifetime
   | .neutronLifetimeSeconds => PMHadrons.neutronLifetimeSeconds
   | .neutronLifetimePredicted => PMHadrons.Values.neutronLifetimeContinuumCoulombSeconds
   | .pionLifetimePredicted => PMHadrons.Values.pionMuLifetimeSeconds
@@ -375,7 +377,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | tauLifetimeFs =>
-    have h := PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds
+    have h := E8PConstants.TauValues.tau_lifetime_corrected
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | muonLifetimeFinite =>
@@ -383,7 +385,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | tauLifetimeE8Natural =>
-    have h := PMElementaryParticles.Values.tauLifetimeE8_bounds
+    have h := E8PConstants.TauValues.tauLifetimeE8_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronSpectralFraction =>
@@ -395,7 +397,7 @@ theorem catalog_sound (k : Key) : ((bounds k).1 : ℝ) ≤ value k ∧ value k �
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | muonLifetimeSeconds =>
-    have h := PMElementaryParticles.Values.muonLifetimeFull_bounds
+    have h := PMElementaryParticles.Values.lifetime_bounds
     norm_num [bounds, value] at h ⊢
     exact ⟨h.1.le, h.2.le⟩
   | neutronLifetimeSeconds =>

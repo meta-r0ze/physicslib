@@ -6,7 +6,7 @@ import PMElementaryParticles.MuonQEDLoops
 `τ_μ = τ_tree / (1 + Δq⁽⁰⁾ + Δq⁽¹⁾ + Δq⁽²⁾)` with the E8 tree lifetime
 (`PhysicalUnits.muonLifetimeSeconds`: E8 `G_F` and `m_μ`) and the loop terms of `MuonQEDLoops`.
 
-* `lifetime_bounds`: `2.196974 µs < τ_μ < 2.196984 µs` (measured `2.1969811(22)`; the one-loop
+* `lifetime_bounds`: `2.196974 µs < τ_μ < 2.196984 µs` (the one-loop
   `MuonLifetimeCorrected` row is `2.196987–2.196998`).
 -/
 

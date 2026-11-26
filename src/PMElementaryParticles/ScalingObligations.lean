@@ -47,13 +47,10 @@ theorem dispersion (k : Fin 3 → ℝ) :
     simp [WallExchange.K, alpha, Fin.sum_univ_three, mul_apply, Fin.sum_univ_four, one_apply] <;>
     ring_nf <;> simp only [Complex.I_sq] <;> ring
 
-/-- `G_F` as a function of the VEV. -/
-def fermi (v : ℝ) : ℝ := 1 / (Real.sqrt 2 * v ^ 2)
-
 /-- **The vertex coupling has scaling degree `−2`.** -/
-theorem fermi_scaling (r v : ℝ) (hr : r ≠ 0) (hv : v ≠ 0) : fermi (r * v) = r ^ (-2 : ℤ) * fermi v := by
+theorem fermi_scaling (r v : ℝ) (hr : r ≠ 0) (hv : v ≠ 0) : 1 / (Real.sqrt 2 * (r * v) ^ 2) = r ^ (-2 : ℤ) * (1 / (Real.sqrt 2 * v ^ 2)) := by
   have h2 : Real.sqrt 2 ≠ 0 := by positivity
-  simp only [fermi, _root_.zpow_neg, zpow_ofNat]
+  simp only [_root_.zpow_neg, zpow_ofNat]
   field_simp
 
 /-- The derived width. -/

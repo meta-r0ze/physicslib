@@ -29,7 +29,7 @@ open PMHadrons.CompositeMasses
 open PMHadrons.NeutronRate
 
 def kaonWidth (fK : ℝ) : ℝ :=
-  fermiME ^ 2 * fK ^ 2 * kaonPlus * muon ^ 2 *
+  (PMConstants.Values.fermi 1) ^ 2 * fK ^ 2 * kaonPlus * muon ^ 2 *
     (1 - (muon / kaonPlus) ^ 2) ^ 2 / (8 * Real.pi)
 
 def kaonLifetime (fK : ℝ) : ℝ :=
@@ -115,15 +115,15 @@ theorem kaonWidthE8_bounds :
   have hfac := kaonPhaseSpaceFactor_bounds
   have hpi1 := Real.pi_gt_d20
   have hpi2 := Real.pi_lt_d20
-  have hFpos : (0 : ℝ) < fermiME := lt_trans (by norm_num) hF.1
+  have hFpos : (0 : ℝ) < (PMConstants.Values.fermi 1) := lt_trans (by norm_num) hF.1
   have hfpos : (0 : ℝ) < kaonDecayConstantE8 := lt_trans (by norm_num) hf.1
   have hmpos : (0 : ℝ) < muon := lt_trans (by norm_num) hm.1
   have hppos : (0 : ℝ) < kaonPlus := lt_trans (by norm_num) hp.1
   have hVpos : (0 : ℝ) < vusE8 := lt_trans (by norm_num) hV.1
   have hfacpos : (0 : ℝ) < (1 - (muon / kaonPlus) ^ 2) ^ 2 :=
     lt_trans (by norm_num) hfac.1
-  have hF2lo : (3.04e-12 : ℝ) ^ 2 < fermiME ^ 2 := by nlinarith [hF.1, hF.2]
-  have hF2hi : fermiME ^ 2 < (3.05e-12 : ℝ) ^ 2 := by nlinarith [hF.1, hF.2]
+  have hF2lo : (3.04e-12 : ℝ) ^ 2 < (PMConstants.Values.fermi 1) ^ 2 := by nlinarith [hF.1, hF.2]
+  have hF2hi : (PMConstants.Values.fermi 1) ^ 2 < (3.05e-12 : ℝ) ^ 2 := by nlinarith [hF.1, hF.2]
   have hf2lo : (302.47 : ℝ) ^ 2 < kaonDecayConstantE8 ^ 2 := by nlinarith [hf.1, hf.2]
   have hf2hi : kaonDecayConstantE8 ^ 2 < (302.48 : ℝ) ^ 2 := by nlinarith [hf.1, hf.2]
   have hm2lo : (206.7682716 : ℝ) ^ 2 < muon ^ 2 := by nlinarith [hm.1, hm.2]
@@ -133,13 +133,13 @@ theorem kaonWidthE8_bounds :
   have hprodlo :
       (3.04e-12 : ℝ)^2 * (302.47:ℝ)^2 * 966 * (206.7682716:ℝ)^2 * 0.910 *
           (0.2242:ℝ)^2 <
-        fermiME^2 * kaonDecayConstantE8^2 * kaonPlus * muon^2 *
+        (PMConstants.Values.fermi 1)^2 * kaonDecayConstantE8^2 * kaonPlus * muon^2 *
           (1 - (muon / kaonPlus)^2)^2 * vusE8^2 := by
     gcongr <;> first
       | exact hF2lo | exact hf2lo | exact hp.1 | exact hm2lo | exact hfac.1 | exact hV2lo
       | exact hFpos | exact hfpos | exact hmpos | exact hppos | exact hfacpos | exact hVpos
   have hprodhi :
-      fermiME^2 * kaonDecayConstantE8^2 * kaonPlus * muon^2 *
+      (PMConstants.Values.fermi 1)^2 * kaonDecayConstantE8^2 * kaonPlus * muon^2 *
           (1 - (muon / kaonPlus)^2)^2 * vusE8^2 <
         (3.05e-12 : ℝ)^2 * (302.48:ℝ)^2 * 967 * (206.7682718:ℝ)^2 * 0.911 *
           (0.2245:ℝ)^2 := by

@@ -27,18 +27,18 @@ structure CarrierAmplitude where
   weak : ℝ
   strong : ℝ
 
-def alpha : ℝ := PMConstants.Values.alpha
-def weakCoupling : ℝ := PMConstants.Values.fermi 1
 def strongCoupling : ℝ := Real.sqrt PMConstants.Values.strong
 
 /-- E8 amplitude assignment for each base species. -/
-def amplitude : CarrierSpecies → CarrierAmplitude
-  | .electron => ⟨Real.sqrt alpha, weakCoupling, 0⟩
-  | .neutrino => ⟨0, weakCoupling, 0⟩
-  | .up => ⟨(2 / 3 : ℝ) * Real.sqrt alpha, weakCoupling, strongCoupling⟩
-  | .down => ⟨(-1 / 3 : ℝ) * Real.sqrt alpha, weakCoupling, strongCoupling⟩
+def amplitude (species : CarrierSpecies) : CarrierAmplitude :=
+  ⟨(species.charge : ℝ) * Real.sqrt PMConstants.Values.alpha, (PMConstants.Values.fermi 1),
+    match species with | .up | .down => strongCoupling | _ => 0⟩
 
-theorem neutrino_em_zero : (amplitude .neutrino).em = 0 := rfl
+theorem neutrino_em_zero : (amplitude .neutrino).em = 0 := by
+  norm_num [amplitude, CarrierSpecies.charge, CarrierSpecies.baseProtocol,
+    ProtocolInventory.BaseProtocol.charge, ProtocolInventory.BaseProtocol.leptonAxis,
+    ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric,
+    PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 /-- A two-species transition amplitude ledger. -/
 structure CarrierTransition where
@@ -61,9 +61,9 @@ def CarrierTransition.weight (t : CarrierTransition) : ℝ :=
 /-- The weak carrier coupling equals the W-exchange Fermi coupling. -/
 theorem weakCoupling_eq_fermi (g v : ℝ) (hg : g ≠ 0) (hv : v ≠ 0)
     (hvev : v = PMConstants.Values.vev 1) :
-    weakCoupling = Real.sqrt 2 * (g ^ 2 / (8 * PMConstants.MatterRunning.mWsq g v)) := by
+    (PMConstants.Values.fermi 1) = Real.sqrt 2 * (g ^ 2 / (8 * PMConstants.MatterRunning.mWsq g v)) := by
   rw [PMConstants.MatterRunning.fermi_from_reference g v hg hv]
-  unfold weakCoupling PMConstants.Values.fermi
+  unfold PMConstants.Values.fermi
   rw [hvev]
   rfl
 

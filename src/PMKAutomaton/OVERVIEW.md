@@ -114,7 +114,7 @@ rate ratios. The [interface notes](Interface.lean) give the supplied clock place
 | --- | --- | --- |
 | Wall pairs | The omitted class labels the packet. A crossing word acts on the two walls. | `GenerationWalls.one_class_per_wall`, `GenerationEncoding.carriers_per_packet_card`, `GluedRegister.crossing_word_glued` |
 | Stationary reference | The stated node model gives the direct and two-leg routes. A stationary reference and the route admission remain inputs. | `ReferenceClassHop.stationary_iff`, `ReferenceNode.restoring_two_classes`, `direct_three_classes`, `restoring_series` |
-| Heavy label | A supplied companion seed permits a guarded crossing. The setup has conditional flag sums on the active and static sides. | `ElectricCompanionBank.guarded_companion_transport`, `ElectricCompanionSetupToll.primitive_setup_sum` |
+| Heavy label | A supplied companion seed permits a guarded crossing. The setup has conditional flag sums on the active and static sides. | `ElectricCompanionBank.guarded_companion_transport`, `ElectricCompanionSetupFlagCosts.primitive_setup_sum` |
 
 ### Implementation imports
 

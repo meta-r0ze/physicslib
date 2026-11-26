@@ -99,7 +99,7 @@ theorem kaonPionWidthRatio_eq :
   have hPne : MesonMasses.pionPlus ≠ 0 := by intro h; rw [h] at p1; norm_num at p1
   have hmune : LeptonMasses.muon ≠ 0 := by
     have := LeptonMasses.muon_value.1; intro h; rw [h] at this; norm_num at this
-  have hGne : PMElementaryParticles.SharedUnits.fermiME ≠ 0 :=
+  have hGne : (PMConstants.Values.fermi 1) ≠ 0 :=
     PMElementaryParticles.SharedUnits.fermiME_pos.ne'
   have hc12 : PMFlavor.CKM.c12 ≠ 0 := PMFlavor.Values.c12_pos.ne'
   have hc13 : PMFlavor.CKM.c13 ≠ 0 := PMFlavor.Values.c13_pos.ne'

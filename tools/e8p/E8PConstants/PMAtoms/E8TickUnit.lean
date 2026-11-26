@@ -1,3 +1,4 @@
+import E8PConstants.PMElementaryParticles.TauInputs
 import PMAtoms.Values
 import PMElementaryParticles.Values
 import PMHadrons.Values
@@ -47,7 +48,7 @@ noncomputable def kaonLifetimeTicks : ℝ :=
 
 /-- Tau lifetime in E8 ticks. -/
 noncomputable def tauLifetimeTicks : ℝ :=
-  PMAtoms.Values.lifetimeTicks PMElementaryParticles.Values.tauLifetimeE8
+  PMAtoms.Values.lifetimeTicks E8PConstants.TauValues.tauLifetimeE8
 
 /-- Neutral-pion lifetime in E8 ticks. -/
 noncomputable def neutralPionLifetimeTicks : ℝ :=

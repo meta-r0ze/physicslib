@@ -2,26 +2,12 @@ import PMElementaryParticles.LeptonMasses
 import PMElementaryParticles.MuonRate
 
 /-!
-# The tau lifetime from the muon's, with the derived lepton masses
+# Conditional tau lifetime
 
-`MuonRate` gives `Γ(ℓ → e ν ν̄) = G_F² m_ℓ⁵/(192π³)` with one `G_F` for every lepton (the shared
-reference, `WeakMatching.fermi_from_reference`). Dividing the tau's leptonic width by the muon's
-cancels `G_F` and `192π³`:
-
-  `τ_τ = τ_μ · (m_μ/m_τ)⁵ · B(τ → eνν̄)`.
-
-* `rate_ratio`: the `m⁵` law makes the width ratio `(m_τ/m_μ)⁵` (from `MuonRate.muon_rate`).
-* `tau_lifetime_tree`: with Paper V's `m_μ` and `m_τ` (`LeptonMasses`), the measured
-  `τ_μ = 2.1969811 μs` and `B_e = 17.82 %`, `291.15 < τ_τ < 291.17` fs.
-
-The measured-lifetime pull (`tau_lifetime_pull`, against PDG `290.3 ± 0.5` fs) lives
-in `tools/e8p/E8PConstants/PMElementaryParticles/TauLifetimePulls.lean`.
-
-So the tau lifetime is consistent with the derived masses. It does not resolve the `−2σ` tau-mass
-tension: that tension moves `τ_τ` by only about `0.15` fs, below the lifetime's precision.
-The corrections factor is standard physics stated as a premise, not derived here. `B_e` is
-analysed in `TauBranching`: its leptonic part and colour count are derived; the hadronic factor
-`h ≈ 1.213` it needs is PMHadrons' open item.
+The contact-width ratio cancels the shared Fermi coupling.
+The result takes a muon lifetime and an electronic branching fraction as inputs.
+`tau_lifetime_tree` transports their intervals. The reporter supplies measurements.
+The QED correction is supplied theory; `TauBranching` records the open hadronic factor.
 -/
 
 noncomputable section
@@ -36,22 +22,23 @@ theorem rate_ratio (G mμ mτ : ℝ) (hG : G ≠ 0) (hμ : mμ ≠ 0) :
   have : Real.pi ≠ 0 := Real.pi_ne_zero
   field_simp
 
-/-- Predicted tau lifetime in femtoseconds (tree level). -/
-def tauLife : ℝ := 2.1969811e9 * 0.1782 * (muon / tau) ^ 5
+/-- Tau lifetime in the same time unit as the supplied muon lifetime. -/
+def tauLife (muonTime electronicBranch : ℝ) : ℝ :=
+  muonTime * electronicBranch * (muon / tau) ^ 5
 
-theorem tau_lifetime_tree : 291.15 < tauLife ∧ tauLife < 291.17 := by
-  have hm := muon_value
-  have ht := tau_value
-  unfold tauLife
-  rw [ht]
-  have hr1 : (206.7682716 / 3477 : ℝ) < muon / 3477 := by
-    apply div_lt_div_of_pos_right hm.1 (by norm_num)
-  have hr2 : muon / 3477 < (206.7682718 / 3477 : ℝ) := by
-    apply div_lt_div_of_pos_right hm.2 (by norm_num)
-  have p1 : (206.7682716 / 3477 : ℝ) ^ 5 < (muon / 3477) ^ 5 :=
-    pow_lt_pow_left₀ hr1 (by norm_num) (by norm_num)
-  have p2 : (muon / 3477) ^ 5 < (206.7682718 / 3477 : ℝ) ^ 5 :=
-    pow_lt_pow_left₀ hr2 (by positivity) (by norm_num)
-  constructor <;> nlinarith [p1, p2]
+/-- Transport supplied input intervals through the positive mass ratio. -/
+theorem tau_lifetime_tree {muonTime electronicBranch lo hi blo bhi : ℝ}
+    (hm : lo ≤ muonTime ∧ muonTime ≤ hi)
+    (hb : blo ≤ electronicBranch ∧ electronicBranch ≤ bhi)
+    (hlo : 0 ≤ lo) (hblo : 0 ≤ blo) :
+    lo * blo * (muon / tau) ^ 5 ≤ tauLife muonTime electronicBranch ∧
+      tauLife muonTime electronicBranch ≤ hi * bhi * (muon / tau) ^ 5 := by
+  have hp : 0 ≤ (muon / tau) ^ 5 := by
+    have hmu : 0 < muon := lt_trans (by norm_num) muon_value.1
+    have ht : 0 < tau := by rw [tau_value]; norm_num
+    positivity
+  exact ⟨mul_le_mul_of_nonneg_right (mul_le_mul hm.1 hb.1 hblo (hlo.trans hm.1)) hp,
+    mul_le_mul_of_nonneg_right (mul_le_mul hm.2 hb.2 (hblo.trans hb.1)
+      (hlo.trans (hm.1.trans hm.2))) hp⟩
 
 end PMElementaryParticles.TauLifetime

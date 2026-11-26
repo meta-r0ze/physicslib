@@ -103,14 +103,14 @@ theorem phase_opposite (t : ℝ) (c : Channels) :
 
 /-- Separate factor flags on the balanced bank cost half the corresponding
 standalone diagonal flag. Their sum uses precisely these two fixed kicks. -/
-def exposureToll (c : Channels) : ℝ :=
+def exposureFlagSum (c : Channels) : ℝ :=
   (DiagonalReadout.flag (3 * π / 2 * q c) + DiagonalReadout.flag (3 * π * q c)) / 2
 
-open ProtocolToll in
+open ProtocolFlagCosts in
 theorem exposure_tolls (a : Fin 3) :
-    exposureToll electronStatic = 3 / 4 ∧
-      exposureToll (downStatic a) = 3 / 4 ∧
-      exposureToll (upStatic a) = 1 / 2 ∧ exposureToll neutrinoStatic = 0 := by
+    exposureFlagSum electronStatic = 3 / 4 ∧
+      exposureFlagSum (downStatic a) = 3 / 4 ∧
+      exposureFlagSum (upStatic a) = 1 / 2 ∧ exposureFlagSum neutrinoStatic = 0 := by
   obtain ⟨he, hd, hu, hn⟩ := static_record_codes a
   change labelRecord electronStatic = (true, true) at he
   change labelRecord neutrinoStatic = (true, false) at hn
@@ -120,7 +120,7 @@ theorem exposure_tolls (a : Fin 3) :
     have h := congrArg Complex.re (phase_codes c)
     simp only [phase, Complex.exp_ofReal_mul_I_re] at h
     rw [DiagonalReadout.flag, h]
-  simp only [exposureToll, eval, phase_position, he, hd, hu, hn]
+  simp only [exposureFlagSum, eval, phase_position, he, hd, hu, hn]
   norm_num [address, roots]
 
 /-! The decoder factorization keeps the joint operation inside the record bank. -/
@@ -170,12 +170,12 @@ private theorem exposure_flags (x y : ℂ) (hx : Complex.normSq x = 1) :
 theorem exposure_eq_flags (c : Channels) :
     CommonResponse.stateFlag (kick false (phase (3 * π / 2) c)) (bank 1 1) +
       CommonResponse.stateFlag (kick true (phase (3 * π) c))
-        (kick false (phase (3 * π / 2) c) *ᵥ bank 1 1) = exposureToll c := by
+        (kick false (phase (3 * π / 2) c) *ᵥ bank 1 1) = exposureFlagSum c := by
   have hx : Complex.normSq (phase (3 * π / 2) c) = 1 := by
     rw [phase, Complex.normSq_eq_norm_sq, Complex.norm_exp_ofReal_mul_I, one_pow]
   rw [kick_low]
   obtain ⟨hl, hh⟩ := exposure_flags _ _ hx
-  rw [hl, hh, exposureToll, phase, phase,
+  rw [hl, hh, exposureFlagSum, phase, phase,
     DiagonalReadout.normSq_one_sub_exp, DiagonalReadout.normSq_one_sub_exp]
   ring
 
@@ -253,14 +253,14 @@ theorem read_reversed (c : Channels) :
   rw [kick_bank, hdouble, phase_codes, high_step, quarter_step, low_step]
 
 /-- State-flag cost of the three decoding steps before the optional swap. -/
-def decodeToll (j : Fin 4) : ℝ :=
+def fourPortDecodeFlagCost (j : Fin 4) : ℝ :=
   CommonResponse.stateFlag highMixer (bank (roots j) (roots j ^ 2)) +
     CommonResponse.stateFlag quarterGate (highOutput j) +
     CommonResponse.stateFlag lowMixer (quarterOutput j)
 
 private theorem decode_tolls (j : Fin 4) :
-    decodeToll j = ![1 - halfMix, 5 / 4, 1, 5 / 4 + halfMix] j := by
-  unfold decodeToll CommonResponse.stateFlag
+    fourPortDecodeFlagCost j = ![1 - halfMix, 5 / 4, 1, 5 / 4 + halfMix] j := by
+  unfold fourPortDecodeFlagCost CommonResponse.stateFlag
   rw [high_step, quarter_step, low_step]
   fin_cases j <;>
     norm_num [LinkExpansion.nsq_eq, Fin.sum_univ_four, bank, roots,
@@ -280,30 +280,30 @@ private theorem swap_tolls (j : Fin 4) :
 
 /-- Flag ledger of the forward reader from a balanced bank. `canonical`
 charges the final bit swap when a canonical output order is required. -/
-def forwardToll (canonical : Bool) (c : Channels) : ℝ :=
+def fourPortForwardFlagCost (canonical : Bool) (c : Channels) : ℝ :=
   let j := address (labelRecord c)
-  exposureToll c + decodeToll j +
+  exposureFlagSum c + fourPortDecodeFlagCost j +
     if canonical then CommonResponse.stateFlag swapBits (Pi.single (reversedAddress j) 1) else 0
 
-open ProtocolToll in
+open ProtocolFlagCosts in
 theorem forward_tolls (a : Fin 3) (b : Bool) :
-    forwardToll b electronStatic = (if b then 5 / 2 else 2) ∧
-      forwardToll b (downStatic a) = 2 + halfMix ∧
-      forwardToll b (upStatic a) = (if b then 2 else 3 / 2) ∧
-      forwardToll b neutrinoStatic = 1 - halfMix := by
+    fourPortForwardFlagCost b electronStatic = (if b then 5 / 2 else 2) ∧
+      fourPortForwardFlagCost b (downStatic a) = 2 + halfMix ∧
+      fourPortForwardFlagCost b (upStatic a) = (if b then 2 else 3 / 2) ∧
+      fourPortForwardFlagCost b neutrinoStatic = 1 - halfMix := by
   obtain ⟨he, hd, hu, hn⟩ := static_record_codes a
   obtain ⟨te, td, tu, tn⟩ := exposure_tolls a
   change labelRecord electronStatic = (true, true) at he
   change labelRecord neutrinoStatic = (true, false) at hn
   cases b <;>
-    norm_num [forwardToll, decode_tolls, swap_tolls, address, he, hd, hu, hn, te, td, tu, tn] <;>
+    norm_num [fourPortForwardFlagCost, decode_tolls, swap_tolls, address, he, hd, hu, hn, te, td, tu, tn] <;>
     ring
 
 /-- Charging the actual decoder factors reverses the required electron/down
 order. Adopting bit-reversed output addresses leaves that exclusion intact. -/
 theorem forward_no_ladder (a : Fin 3) (b : Bool) :
-    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll b (ProtocolToll.downStatic a)) <
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll b ProtocolToll.electronStatic) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (fourPortForwardFlagCost b (ProtocolFlagCosts.downStatic a)) <
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (fourPortForwardFlagCost b ProtocolFlagCosts.electronStatic) := by
   obtain ⟨he, hd, -, -⟩ := forward_tolls a b
   rw [TollAmplitude.wireAmplitude_lt_iff, he, hd]
   have h : 1 < √2 := by

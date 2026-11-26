@@ -75,45 +75,38 @@ theorem muon_channel_seconds :
   simpa [totalRate, muonChannels] using seconds_of_rateFromSeconds
     (lt_trans (by norm_num) MuonLifetimeHigherOrder.lifetime_bounds.1)
 
-/-- Tau total rate from the E8-input lifetime. -/
-noncomputable def tauTotalRate : ℝ :=
-  1 / PMElementaryParticles.TauE8.tauLifetimeE8
+/-! Tau channels are conditional on the supplied electronic branching fraction. -/
+section Tau
+variable (electronicBranch : ℝ)
 
-/-- Supplied electronic branching fraction, also used by `TauE8`. -/
-def tauBe : ℝ := 0.1782
+noncomputable def tauTotalRate : ℝ := 1 / TauE8.tauLifetimeE8 electronicBranch
 
-/-- Muonic fraction from the leading leptonic width ratio. -/
-def tauBmu : ℝ := tauBe * MassiveWidth.phase TauBranching.r
-
-/-- Residual hadronic fraction in the conditional inventory. -/
-def tauBhad : ℝ := 1 - tauBe - tauBmu
-
-def tauElectronChannel : ParticleChannel := ⟨"e ν ν̄", tauTotalRate * tauBe, .calibrated⟩
-
-def tauMuonChannel : ParticleChannel := ⟨"μ ν ν̄", tauTotalRate * tauBmu, .calibrated⟩
-
-/-- The tau inventory conditions on the electronic fraction and uses a residual
-hadronic rate. -/
+def tauBmu : ℝ := electronicBranch * MassiveWidth.phase TauBranching.r
+def tauBhad : ℝ := 1 - electronicBranch - tauBmu electronicBranch
+def tauElectronChannel : ParticleChannel := ⟨"e ν ν̄", tauTotalRate electronicBranch * electronicBranch, .calibrated⟩
+def tauMuonChannel : ParticleChannel := ⟨"μ ν ν̄", tauTotalRate electronicBranch * tauBmu electronicBranch, .calibrated⟩
 def tauChannels : List ParticleChannel :=
-  [tauElectronChannel
-  , tauMuonChannel
-  , ⟨"hadrons", tauTotalRate * tauBhad, .modelInput⟩
-  ]
+  [tauElectronChannel electronicBranch, tauMuonChannel electronicBranch,
+    ⟨"hadrons", tauTotalRate electronicBranch * tauBhad electronicBranch, .modelInput⟩]
 
-theorem tau_channel_sum : totalRate tauChannels = tauTotalRate := by
+theorem tau_channel_sum : totalRate (tauChannels electronicBranch) = tauTotalRate electronicBranch := by
   simp [totalRate, tauChannels, tauElectronChannel, tauMuonChannel, tauBhad]
   ring
 
-theorem tau_leptonic_ratio :
-    tauMuonChannel.rate / tauElectronChannel.rate = MassiveWidth.phase TauBranching.r := by
-  have ht : tauTotalRate ≠ 0 := ne_of_gt (one_div_pos.mpr TauE8.tauLifetimeE8_pos)
-  have he : tauBe ≠ 0 := by norm_num [tauBe]
+theorem tau_leptonic_ratio (hb : 0 < electronicBranch) :
+    (tauMuonChannel electronicBranch).rate / (tauElectronChannel electronicBranch).rate =
+      MassiveWidth.phase TauBranching.r := by
+  have ht : tauTotalRate electronicBranch ≠ 0 :=
+    (one_div_pos.mpr (TauE8.tauLifetimeE8_pos hb)).ne'
   simp only [tauMuonChannel, tauElectronChannel, tauBmu]
-  field_simp [ht, he]
+  field_simp [ht, hb.ne']
 
-theorem tau_hadronic_fraction_pos : 0 < tauBhad := by
-  unfold tauBhad tauBmu tauBe
-  linarith [TauBranching.phase_bounds.2]
+theorem tau_hadronic_fraction_pos (hb : 0 ≤ electronicBranch)
+    (hsmall : electronicBranch < 1 / 2) : 0 < tauBhad electronicBranch := by
+  unfold tauBhad tauBmu
+  nlinarith [mul_le_mul_of_nonneg_left TauBranching.phase_bounds.2.le hb]
+
+end Tau
 
 def pionMuonChannel : ParticleChannel :=
   ⟨"μ⁺ ν [γ]", rateFromSeconds ChargedCurrentRate.pionMuLifetimeSeconds, .modelInput⟩

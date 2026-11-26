@@ -34,7 +34,7 @@ unit.
   labels is a Toll difference of `2 log 2`, not a structural bound.
 * `schedule_factorizes`: the amplitude of a schedule is the product of per-comparison factors.
 * `not_affine`: the conversion is not affine in the Toll (`1 + e⁻¹ > 2e^{−1/2}`). So bounds
-  proved for affine conversions (`PMElementaryParticles.ProtocolToll.hyperchargeFlag_schedule_bound`)
+  proved for affine conversions (`PMElementaryParticles.ProtocolFlagCosts.hyperchargeFlag_schedule_bound`)
   do not constrain it.
 * `retained_below_survival`: a single retained no-flag port keeps weight `1 − f`, strictly below
   `exp(−f)` for `f ≠ 0`. The port product counts `−log(1 − f)` per comparison, not `f`; it agrees

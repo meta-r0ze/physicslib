@@ -42,6 +42,14 @@ why every up/down source tried so far failed.
 The partner (up/down, `ν`/`e`) difference must come from the protocol register: a coupling that
 depends on its charges (the right-handed hypercharge, PMElementaryParticles REVIEW) or on how a
 protocol reads the wire.
+
+## Readout audit notes
+
+## Protocols are not wire modes
+
+The odd carrier modes of a class are the wire's Dirac components, four axes × two walls (`PMAction.CarrierVacuumSector`), and colour cannot act on them while commuting with `β` and the `αⱼ` (`PMAction.ColourRegister`). So protocol identity (lepton or quark, colour, weak partner) is a separate register; the 16-carrier packet is its count and gauge actions. Earlier readings that put the lepton pair on axis `0` and the up/down pair of colour `i` on axis `i` of the wire are withdrawn: `BetaReference` and `UpDownWire` (modules removed), `DoubletSign`'s wire-mode count, `ProtocolReadout`'s carrier-state reading, `CycleReadout`'s weak-pair reading, and the reference-hold test (module removed). Their theorems remain as carrier and matrix facts; the partner difference has to come from the protocol register.
+
+
 -/
 
 namespace PMElementaryParticles.DoubletSign

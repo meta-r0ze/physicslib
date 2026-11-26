@@ -247,7 +247,7 @@ def bounds : Key → Rat × Rat
   | .vudDressed => (0.97354, 0.97357)
   | .bRes => (15.3260359807, 15.3260359808)
   | .neutrinoFloor => (0.009208, 0.00921)
-  | .tauLifetimeFs => (291.03, 291.06)
+  | .tauLifetimeFs => (291.01, 291.04)
   | .muonLifetimeFinite => (1.25e15, 2.5e15)
   | .tauLifetimeE8Natural => (1.6e8, 3.4e8)
   | .neutronSpectralFraction => (0.45, 1)
@@ -304,6 +304,7 @@ def Key.inputs : Key → List String
   | .upMeV | .downMeV | .strangeMeV | .charmMeV | .bottomMeV | .topMeV => ["electron_mass_input"]
   | .protonRadius => ["electron_mass_input"]
   | .tauLifetimeFs => ["measured_muon_lifetime", "B_e"]
+  | .tauLifetimeE8Natural => ["B_e"]
   | .kaonMuLifetimeSeconds => ["electron_mass_input", "delta_K"]
   | .vonKlitzing => ["c_light"]
   | .hubbleLate => ["h0_anchor"]
@@ -392,12 +393,12 @@ def Key.theoremName : Key → String
   | .vud => "PMFlavor.Values.vud_bounds"
   | .vudDressed => "PMFlavor.Values.vudDressed_bounds"
   | .bRes => "PMConstants.GravityAccounting.residual_tight_bounds"
-  | .tauLifetimeFs => "PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds"
+  | .tauLifetimeFs => "E8PConstants.TauValues.tau_lifetime_corrected"
   | .muonLifetimeFinite => "PMElementaryParticles.muonFiniteLifetime_bounds"
-  | .tauLifetimeE8Natural => "PMElementaryParticles.TauE8.tauLifetimeE8_bounds"
+  | .tauLifetimeE8Natural => "E8PConstants.TauValues.tauLifetimeE8_bounds"
   | .neutronSpectralFraction => "PMHadrons.neutronSpectralFraction_bounds"
   | .neutronLifetimeE8 => "PMHadrons.neutronLifetimeE8_bounds"
-  | .muonLifetimeSeconds => "PMElementaryParticles.Values.muonLifetimeFull_bounds"
+  | .muonLifetimeSeconds => "PMElementaryParticles.Values.lifetime_bounds"
   | .neutronLifetimeSeconds => "PMHadrons.neutronLifetimeSeconds_bounds"
   | .neutronLifetimePredicted => "PMHadrons.NeutronContinuum.neutronLifetimeContinuumCoulombSeconds_bounds"
   | .pionLifetimePredicted => "PMHadrons.ChargedCurrentRate.pionMuLifetimeSeconds_bounds"
@@ -672,7 +673,7 @@ def Key.caveat : Key → String
   | .strangeMeV | .bottomMeV | .topMeV => "tier ledger (paper assignment, declared input; not yet read from the wire)"
   | .fKMeV => "FLAG 2024 lattice ~3.8σ low; assigned fK formula"
   | .fPiMeV => "FLAG 2024 lattice agrees"
-  | .tauLifetimeFs => "uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (alpha(m_tau)^-1 = 133.3 supplied)"
+  | .tauLifetimeFs => "uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (the same supplied leptonic running law at the tau scale)"
   | .muonLifetimeFinite => "finite 3x3x3 channel; all modes open; broad natural-unit interval"
   | .tauLifetimeE8Natural => "E8 muon input; broad natural-unit interval"
   | .neutronSpectralFraction => "finite 3x3x3 channel; only lowest mode open; crude bounds"

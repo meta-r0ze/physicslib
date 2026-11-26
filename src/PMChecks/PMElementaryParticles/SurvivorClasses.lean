@@ -54,13 +54,13 @@ def firingCountR (r : Reduced) (b : Fin 2) : ℕ :=
 
 def totalFiringCountR (r : Reduced) : ℕ := ∑ b : Fin 2, firingCountR r b
 
-def tollCountR (r : Reduced) : ℕ :=
+def registrationCountR (r : Reduced) : ℕ :=
   ∑ b : Fin 2,
     if r.phase b then
       if bitDiffersR r b then patternSum (r.firing b) r.x0 else 0
     else 0
 
-def capacityR (r : Reduced) : Bool := decide (tollCountR r ≤ 2 * 43)
+def capacityR (r : Reduced) : Bool := decide (registrationCountR r ≤ 2 * 43)
 
 def marginBoolR (v : Variant) (r : Reduced) : Bool :=
   if v.marginPerRing then
@@ -71,13 +71,13 @@ def mapBoolR (v : Variant) (r : Reduced) : Bool :=
   if v.mapBoth then decide (hamming r.record (refRecord r.reference) = 2)
   else decide (1 ≤ hamming r.record (refRecord r.reference))
 
-def bitTollBoolR (r : Reduced) (b : Fin 2) : Bool :=
+def hasBitRegistrationR (r : Reduced) (b : Fin 2) : Bool :=
   if r.phase b then decide (1 ≤ patternSum (r.firing b) r.x0) else false
 
-def tollBoolR (v : Variant) (r : Reduced) : Bool :=
-  if v.tollPerRing then
-    (!bitDiffersR r 0 || bitTollBoolR r 0) && (!bitDiffersR r 1 || bitTollBoolR r 1)
-  else decide (1 ≤ tollCountR r)
+def hasRegistrationBoolR (v : Variant) (r : Reduced) : Bool :=
+  if v.hasRegistrationPerRing then
+    (!bitDiffersR r 0 || hasBitRegistrationR r 0) && (!bitDiffersR r 1 || hasBitRegistrationR r 1)
+  else decide (1 ≤ registrationCountR r)
 
 def allFiringR (r : Reduced) : Bool :=
   r.firing 0 0 && r.firing 0 1 && r.firing 0 2 &&
@@ -86,7 +86,7 @@ def allFiringR (r : Reduced) : Bool :=
 def governorBoolR (r : Reduced) : Bool := !allFiringR r
 
 def satisfiesBoolR (v : Variant) (r : Reduced) : Bool :=
-  capacityR r && marginBoolR v r && mapBoolR v r && true && tollBoolR v r &&
+  capacityR r && marginBoolR v r && mapBoolR v r && true && hasRegistrationBoolR v r &&
     governorBoolR r
 
 def SurvivorsR (v : Variant) : Finset Reduced :=
@@ -96,8 +96,8 @@ theorem satisfiesBool_eq (v : Variant) (p : Protocol) :
     satisfiesBool v p = satisfiesBoolR v (ofProtocol p) := by
   rfl
 
-theorem tollCount_eq (p : Protocol) :
-    tollCount p = tollCountR (ofProtocol p) := rfl
+theorem registrationCount_eq (p : Protocol) :
+    registrationCount p = registrationCountR (ofProtocol p) := rfl
 
 def labelMultiplicity (rec : Record) : ℕ :=
   (Finset.univ.filter fun c : PMConstants.PacketGaugeActions.Channels => labelRecord c = rec).card
@@ -181,12 +181,12 @@ def marginUtilBoolR (r : Reduced) : Bool :=
   (!bitDiffersR r 0 || !r.phase 0 || decide (patternSum (r.firing 0) r.x0 < 43)) &&
   (!bitDiffersR r 1 || !r.phase 1 || decide (patternSum (r.firing 1) r.x0 < 43))
 
-def satisfiesUtilBool (tollPerRing : Bool) (r : Reduced) : Bool :=
-  capacityR r && marginUtilBoolR r && mapBoolR ⟨false, false, tollPerRing⟩ r &&
-    true && tollBoolR ⟨false, false, tollPerRing⟩ r && governorBoolR r
+def satisfiesUtilBool (hasRegistrationPerRing : Bool) (r : Reduced) : Bool :=
+  capacityR r && marginUtilBoolR r && mapBoolR ⟨false, false, hasRegistrationPerRing⟩ r &&
+    true && hasRegistrationBoolR ⟨false, false, hasRegistrationPerRing⟩ r && governorBoolR r
 
-def SurvivorsU (tollPerRing : Bool) : Finset Reduced :=
-  Finset.univ.filter (fun r => satisfiesUtilBool tollPerRing r)
+def SurvivorsU (hasRegistrationPerRing : Bool) : Finset Reduced :=
+  Finset.univ.filter (fun r => satisfiesUtilBool hasRegistrationPerRing r)
 
 def RobustCoreU : Finset Reduced :=
   SurvivorsU false ∩ SurvivorsU true
@@ -216,8 +216,8 @@ theorem robustCoreU_eq : RobustCoreU = SurvivorsU true := by
 theorem robustCoreU_card : RobustCoreU.card = 1110 := by
   rw [robustCoreU_eq, survivorsU_cards.2]
 
-noncomputable def minToll (rec : Record) (reference : Bool) : WithTop ℕ :=
+noncomputable def minRegistrationCount (rec : Record) (reference : Bool) : WithTop ℕ :=
   ((RobustCoreU.filter fun r => r.record = rec ∧ r.reference = reference).image
-    (fun r => tollCountR r)).min
+    (fun r => registrationCountR r)).min
 
 end PMElementaryParticles.SurvivorClasses

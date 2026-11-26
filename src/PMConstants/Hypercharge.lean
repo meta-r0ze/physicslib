@@ -54,9 +54,6 @@ def blAxis (lepton : Bool) : ℚ := if lepton then -1 else 1/3
 /-- The isospin of the positive or negative carrier. -/
 def t3Sign (positive : Bool) : ℚ := if positive then 1/2 else -1/2
 
-/-- Electric charge in units of the positive elementary charge. -/
-def electric (lepton positive : Bool) : ℚ := blAxis lepton / 2 + t3Sign positive
-
 /-- The left wall reads the axis. The right wall adds the signed link charge. -/
 def carrierCharges (a b h : ℚ) : Hypercharge.Charges := ⟨a, a + h, a - h, b, b - h, b + h⟩
 
@@ -67,6 +64,9 @@ end PMConstants.CarrierRepresentation
 
 namespace PMConstants.Hypercharge
 open CarrierRepresentation
+
+/-- Electric charge from the carrier axis and sign, in elementary-charge units. -/
+def electric (lepton positive : Bool) : ℚ := blAxis lepton / 2 + t3Sign positive
 
 def family (q h : ℚ) : Charges :=
   carrierCharges q (-3*q) h

@@ -21,10 +21,140 @@ hypothesis and use no fitted masses or weights.
 The last section evaluates the static hypercharge flags under the derived
 Toll-to-amplitude conversion (`PMAction.TollAmplitude`), which the affine
 bound does not cover.
+
+## Readout audit notes
+
+### Protocol Toll constraints
+
+`ProtocolFlagCosts` derives four colour orbits on the active packet from its finite
+relabelings. Any reversible colour-equivariant map on the labels preserves
+the coloured and colourless sectors. A fixed word of weak and colour
+relabelings charges weak partners equally when each operation charges its own
+price on a changed label (`changedGateCost_weak_partners`). The proof uses the
+commutation of the relabelings with the weak involution. An even reading also
+ties the partners. For the comparison order `ν < e < d < u`, Lean excludes
+every monotone function of a single odd scalar reading and every positive
+sector factor times a sign factor.
+
+The product of two linear overlaps with fixed references is even under the
+weak toggle. Both transported labels change sign
+(`overlap_product_weak_partners`). Keeping the full signed pair of overlaps
+with the fixed vector `+2e₀` still gives a collision between the neutrino
+and one up colour and between the electron and the corresponding down
+colour on the heavy generation's two walls
+(`heavy_reference_overlap_collisions`). Those inputs cannot give a strict
+four-species ladder under any scalar postprocessing.
+
+The proposed label-only chain uses a coloured-to-colourless transition, so a
+reversible colour-equivariant update on the labels cannot realize it. The
+unrestricted forward root-displacement graph in the vector frame also has
+shortcuts (`forward_shortcuts`): every active down or electron label can
+reach an up label in one displacement, and every up label can reach the
+active neutrino in one. Here forward means nonnegative component on the
+reference axis. These exclusions use the substrate operations and the
+comparison order, with no mass values in the proof.
+
+Comparison diagnostics are in `tools/toll_forms_check.py` and
+`tools/readout_placement_check.py`. In the wire fit with `k = α/2`, the
+four inferred weights are about `0.030, 0.087, 0.26, 1.14` for `ν, e, d, u`.
+The neutrino target assumes a neutral mass mechanism. The fitted ladder
+has a typical step factor `3.2–3.4` and also appears when only the
+reference wall is weighted. Weighting only the other wall or scaling the
+detuning reaches the up comparison alone in the scans. A passive node load
+lowers the bare coupling (`PMAction.ReferenceNodeBoundary`), while the
+charged-lepton and down comparisons need a larger effective coupling.
+These are targets for a future substrate calculation of the flip coefficients.
+
+The static hypercharge comparison gives another exact test. Take the
+unchanged reference branch in `PMAction.CommonResponse` and use the
+packet hypercharge transport for the other branch. The vacancy has zero
+flag probability. The absolute hypercharges of down, up and electron
+are in the ratio `1:2:3`. Their flag probabilities obey
+`P_e + 3P_d − 2P_u = 4P_d(1 − 2P_d)² ≥ 0` at every phase
+(`ProtocolFlagCosts.hyperchargeFlag_static_gap`). Every finite nonnegative
+weighted sum of those flags with a common baseline therefore satisfies
+`2(T_u − T_ν) ≤ (T_e − T_ν) + 3(T_d − T_ν)`
+(`hyperchargeFlag_schedule_bound`).
+
+For a common positive affine map from that Toll to the wire amplitude,
+the same bound holds for the amplitudes. With a nonnegative baseline
+and `s_e < s_d` it requires `s_u < 2s_d`. The nominal charged
+comparison has `s_u/s_d ≈ 4.38`. An affine map to squared amplitude
+likewise requires `s_u² < 2s_d²`. These tests use the charged order and
+do not require a neutrino mass prediction.
+
+The generic comparison, repair cost, and conversion from a scheduled
+pulse to its wire coupling belong to PMAction. The evaluation on the
+E8 protocol packet, and the test against the heavy-weight readout,
+belong here. This bound covers common per-flag pricing against an
+unchanged reference. A label-conditioned repair length or a joint
+reference response requires its own derivation.
+
+The conversion itself is derived in `PMAction.TollAmplitude`: a label with
+Toll `T` keeps amplitude `exp(−T/2)`, which is not affine. Under it the
+static flags are not bounded this way. At the steps `π/2` and `3π/2` the
+electron, down and up flags are `(1, ¼, ¾)` and `(1, 1, 0)`
+(`flags_quarter`, `flags_three_quarter`). Counts `w₁, w₂` give
+`T_e − T_d = ¾w₁` and `T_d − T_u = w₂ − ½w₁` (`twoPhaseHyperchargeFlagCost_differences`),
+the strict order `s_e < s_d < s_u` for `w₁ > 0`, `w₂ > ½w₁`
+(`survival_ladder`), and `2s_d ≤ s_u` exactly when `w₂ − ½w₁ ≥ 2 log 2`
+(`doubling_iff`). The steps are a witness, not a derived schedule.
+
+One step at a time: a static step is fixed by its down flag `d`. The up
+flag is `4d(1 − d)` and the electron flag `d(3 − 4d)²`, so the step adds
+`8d(1 − d)(1 − 2d)` to `T_e − T_d` (positive only for `d < ½`) and
+`d(4d − 3)` to `T_d − T_u` (positive only for `d > ¾`)
+(`step_differences`, `step_orders_lepton`, `step_orders_quark`). No
+single step orders the charged labels (`single_step_no_order`). Their
+sum `16d(d − d₋)(d − d₊)`, `d∓ = (5 ∓ √5)/8`, is not positive inside
+`[d₋, d₊]` (`step_charged_span`, `window_no_span`), so a schedule inside
+that window gives `T_e ≤ T_u` (`window_no_ladder`). The vacancy
+preparation's steps `k · 6π/5` sit exactly on the window's ends
+(`fifth_root_steps`), and the charged selector's step `3π/4` has `d = ½`
+(`selector_step`, `selector_in_window`).
+
+Doublet-position readouts. A weak gate that treats the partners
+differently must export the doublet position
+(`RefreshMap.asymmetric_gate_records`). A static step with down flag `1`
+flags down and the electron fully and up and the vacancy not at all: it
+reads that bit on every static label (`full_readout`; step `3π/2`). It
+adds only to `T_d − T_u`. The electron flag is `1` exactly when the down
+flag is `1` or `¼` (`lepton_readout_iff`); the second is the lepton-only
+readout at `π/2`, below the window (`quarter_below_window`), adding `¾`
+to `T_e − T_d` and `−½` to `T_d − T_u`. These are exactly the witness
+steps of `survival_ladder`.
+
+What one charged-current event requires (`EventRequirements`). The
+emitted labels depend on the parent's sign alone (`pairs_of_sign`,
+`pairs_disjoint`), and no axis-only rule can choose them
+(`axis_cannot_choose`): the event requires exactly the parent's doublet
+bit. The quark bit is read only by the full readout (`quark_bit_iff`).
+If each label pays only its own event's readout, electron and down pay
+`1` and up and the vacancy `0` (`own_event_tolls`): own-event accounting
+ties `e` with `d` and `u` with `ν`. An ordering needs flags a label
+receives in other labels' events.
+
+A persisting massive label is on both walls with equal weight
+(`PMAction.WallRestChirality.charged_weight_half`), so its flag is the
+mean of its active and static slots (`massive_flag`; the readout does not
+interfere channels, `PMAction.DiagonalReadout.state_flag`). The active
+doublet slot cannot read the doublet bit. The full readout `3π/2` reads
+both the lepton and the quark bit (`full_reads_both`) and gives massive
+flags `¾` (electron, down) and `¼` (up, vacancy) (`full_massive`). So
+the doublet readouts, with Economy and both walls, separate up from down
+and never the electron from down. These Tolls are generation-blind, and a
+generation-blind Toll scales the wire mass by one factor and cancels from
+every ratio (`uniform_weight_cancels`); only a Toll that reaches some
+generations' flips matters. The light generations pass through the
+reference node and the heavy one does not (`PMAction.ReferenceClassHop`);
+a Toll on the node legs raises the effective heavy weight by `exp(T/2)`
+(`node_toll_raises_heavy`).
+
+
 -/
 
 noncomputable section
-namespace PMElementaryParticles.ProtocolToll
+namespace PMElementaryParticles.ProtocolFlagCosts
 
 open PMConstants.PacketGaugeActions ProtocolInventory
 open ControlledGluedRegister GluedRegister
@@ -71,19 +201,19 @@ private theorem step_weak (gate : Gate) (c : Channels) :
     decide +kernel
 
 /-- Charge a primitive when it changes the incoming label. -/
-def eventToll (price : Gate → ℝ) : List Gate → Channels → ℝ
+def changedGateCost (price : Gate → ℝ) : List Gate → Channels → ℝ
   | [], _ => 0
   | gate :: rest, c =>
-    (if gate.step c = c then 0 else price gate) + eventToll price rest (gate.step c)
+    (if gate.step c = c then 0 else price gate) + changedGateCost price rest (gate.step c)
 
-theorem eventToll_weak_partners (price : Gate → ℝ) (word : List Gate) (c : Channels) :
-    eventToll price word (flipWeak c) = eventToll price word c := by
+theorem changedGateCost_weak_partners (price : Gate → ℝ) (word : List Gate) (c : Channels) :
+    changedGateCost price word (flipWeak c) = changedGateCost price word c := by
   induction word generalizing c with
   | nil => rfl
   | cons gate rest ih =>
     have hinj : Function.Injective flipWeak :=
       (show Function.Involutive flipWeak from RefreshMap.two_ticks).injective
-    simp [eventToll, step_weak, hinj.eq_iff, ih]
+    simp [changedGateCost, step_weak, hinj.eq_iff, ih]
 
 /-- A candidate displacement in the reference frame, with nonnegative clock component. -/
 def ForwardShift (c d : Channels) : Prop :=
@@ -232,7 +362,7 @@ theorem hyperchargeFlag_schedule_bound {ι : Type*} [Fintype ι]
 /-!
 # The static hypercharge Toll under the survival conversion
 
-`ProtocolToll.hyperchargeFlag_schedule_bound` bounds every nonnegative schedule of static
+`ProtocolFlagCosts.hyperchargeFlag_schedule_bound` bounds every nonnegative schedule of static
 hypercharge flags. With a common positive *affine* conversion to the wire amplitude that bound
 forces `s_u < 2 s_d`. `PMAction.TollAmplitude` derives the conversion instead: a label with Toll
 `T` keeps amplitude `exp(−T/2)`, which is not affine (`TollAmplitude.no_affine_form`). This
@@ -240,8 +370,8 @@ section evaluates the static flags under that conversion.
 
 * `flags_quarter`, `flags_three_quarter`: at the hypercharge steps `π/2` and `3π/2` the static
   electron, down and up flags are `(1, ¼, ¾)` and `(1, 1, 0)`. The vacancy flag is zero at
-  every step (`ProtocolToll.hyperchargeFlag_static_neutral`).
-* `survivalToll_differences`: with counts `w₁, w₂` at those steps,
+  every step (`ProtocolFlagCosts.hyperchargeFlag_static_neutral`).
+* `twoPhaseHyperchargeFlagCost_differences`: with counts `w₁, w₂` at those steps,
   `T_e − T_d = ¾ w₁` and `T_d − T_u = w₂ − ½ w₁`.
 * `survival_ladder`: for `w₁ > 0` and `w₂ > ½ w₁` the amplitudes are strictly ordered,
   `s_e < s_d < s_u`, in every colour.
@@ -294,32 +424,32 @@ theorem flags_three_quarter (a : Fin 3) :
   · rw [show 3 * π / 2 * 4 / 3 = 2 * π by ring, cos_two_pi]; norm_num
 
 /-- The Toll of a channel under `w₁` comparisons at `π/2` and `w₂` at `3π/2`. -/
-def survivalToll (w₁ w₂ : ℝ) (c : Channels) : ℝ :=
+def twoPhaseHyperchargeFlagCost (w₁ w₂ : ℝ) (c : Channels) : ℝ :=
   w₁ * hyperchargeFlag (π / 2) c + w₂ * hyperchargeFlag (3 * π / 2) c
 
 /-- **The Toll differences.** -/
-theorem survivalToll_differences (w₁ w₂ : ℝ) (a : Fin 3) :
-    survivalToll w₁ w₂ (opposite electron) - survivalToll w₁ w₂ (downStatic a) = 3 / 4 * w₁ ∧
-    survivalToll w₁ w₂ (downStatic a) - survivalToll w₁ w₂ (upStatic a) = w₂ - w₁ / 2 := by
+theorem twoPhaseHyperchargeFlagCost_differences (w₁ w₂ : ℝ) (a : Fin 3) :
+    twoPhaseHyperchargeFlagCost w₁ w₂ (opposite electron) - twoPhaseHyperchargeFlagCost w₁ w₂ (downStatic a) = 3 / 4 * w₁ ∧
+    twoPhaseHyperchargeFlagCost w₁ w₂ (downStatic a) - twoPhaseHyperchargeFlagCost w₁ w₂ (upStatic a) = w₂ - w₁ / 2 := by
   obtain ⟨e1, d1, u1⟩ := flags_quarter a
   obtain ⟨e2, d2, u2⟩ := flags_three_quarter a
-  simp only [survivalToll, e1, d1, u1, e2, d2, u2]
+  simp only [twoPhaseHyperchargeFlagCost, e1, d1, u1, e2, d2, u2]
   constructor <;> ring
 
 /-- **The charged order.** -/
 theorem survival_ladder {w₁ w₂ : ℝ} (h₁ : 0 < w₁) (h₂ : w₁ / 2 < w₂) (a : Fin 3) :
-    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (opposite electron)) <
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (downStatic a)) ∧
-    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (downStatic a)) <
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (upStatic a)) := by
-  obtain ⟨hed, hdu⟩ := survivalToll_differences w₁ w₂ a
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (twoPhaseHyperchargeFlagCost w₁ w₂ (opposite electron)) <
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (twoPhaseHyperchargeFlagCost w₁ w₂ (downStatic a)) ∧
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (twoPhaseHyperchargeFlagCost w₁ w₂ (downStatic a)) <
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (twoPhaseHyperchargeFlagCost w₁ w₂ (upStatic a)) := by
+  obtain ⟨hed, hdu⟩ := twoPhaseHyperchargeFlagCost_differences w₁ w₂ a
   constructor <;> rw [wireAmplitude_lt_iff] <;> linarith
 
 /-- **Doubling is a schedule condition.** -/
 theorem doubling_iff (w₁ w₂ : ℝ) (a : Fin 3) :
-    2 * PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (downStatic a)) ≤
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (survivalToll w₁ w₂ (upStatic a)) ↔ 2 * log 2 ≤ w₂ - w₁ / 2 := by
-  rw [ratio_ge_iff (by norm_num : (0 : ℝ) < 2), (survivalToll_differences w₁ w₂ a).2]
+    2 * PersistenceMechanics.EffectiveAction.attenuationWeight 1 (twoPhaseHyperchargeFlagCost w₁ w₂ (downStatic a)) ≤
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (twoPhaseHyperchargeFlagCost w₁ w₂ (upStatic a)) ↔ 2 * log 2 ≤ w₂ - w₁ / 2 := by
+  rw [ratio_ge_iff (by norm_num : (0 : ℝ) < 2), (twoPhaseHyperchargeFlagCost_differences w₁ w₂ a).2]
 
 /-! ### One comparison step
 
@@ -553,7 +683,7 @@ nothing to `T_e − T_d`. A step that reads the lepton bit alone (electron flag 
 fifth-root window (`quarter_below_window`) and adds `¾` to `T_e − T_d` and `−½` to
 `T_d − T_u`. So the two doublet readouts are exactly the steps of the witness schedule:
 `n_L` lepton readouts and `n_Q` full readouts give `T_e − T_d = ¾ n_L` and
-`T_d − T_u = n_Q − ½ n_L` (`survivalToll_differences`). The counts are not derived.
+`T_d − T_u = n_Q − ½ n_L` (`twoPhaseHyperchargeFlagCost_differences`). The counts are not derived.
 -/
 
 /-- **The full doublet readout.** A step with down flag `1` flags down and the electron fully
@@ -590,4 +720,4 @@ theorem quarter_below_window : (1 : ℝ) / 4 < dLow := by
 
 end Survival
 
-end PMElementaryParticles.ProtocolToll
+end PMElementaryParticles.ProtocolFlagCosts

@@ -27,3 +27,6 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 - Attach the carrier current to the physical contact vertex and final states (`CarrierTransitionOperator.substrateOperator`).
 - Assemble the second-stage radiative diagram kernel (`MuonQEDLoops`).
+
+- Derive the inclusive hadronic factor instead of supplying the electronic branch (`TauBranching.branching`).
+- Derive radiative coefficients and threshold running rather than supplying the QED expansion (`MuonQEDLoops.runningAlpha`).

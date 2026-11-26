@@ -11,7 +11,7 @@ charge, with weight one half. This applies to arbitrary comparison schedules sha
 the same record preparation and interacting only through packet hypercharge.
 
 **Legacy audit status.** The record Toll rows are derived as exact flag
-comparisons for the candidate reference record (`bitToll_eq_hamming`), but the
+comparisons for the candidate reference record (`writeFlagCount_eq_hamming`), but the
 reference choice and the heavy-label weight remain premises/undetermined. The
 down geometric mean is conditional on the colour reference and a common bit
 price; it is not a persistence-derived mass. The P3 least-Toll reference is
@@ -24,12 +24,73 @@ as universal.
 The full and lepton-only comparison costs can still be evaluated as expected flag
 counts. Their minimum additive cost for a prescribed independent requirement table is
 separate from the ability of those comparisons to write a reversible control record.
+
+## Readout audit notes
+
+### Heavy flip and record certificates
+
+`WireReferenceCost.reference_threshold_with_erasure` shifts the
+output-flag threshold by the difference in booked writer erasures.
+The balanced comparison reset keeps its own conditional thresholds.
+
+<a id="finite-control-of-the-direct-heavy-flip"></a>
+<a id="record-comparisons-and-heavy-flip-toll"></a>
+<a id="an-electric-charge-record-on-both-walls"></a>
+<a id="four-port-electric-record-with-fixed-kicks"></a>
+<a id="electric-decoder-on-the-odd-coordinate-bank"></a>
+<a id="short-root-decoder-and-serial-frame-bound"></a>
+<a id="primitive-flags-of-the-short-electric-decoder"></a>
+<a id="electric-kicks-from-the-chiral-register-current"></a>
+<a id="triality-preparation-on-the-companion"></a>
+<a id="primitive-crossing-activity-and-clock-limits"></a>
+<a id="other-heavy-weight-diagnostics"></a>
+
+| Theorem or module | What it proves | Conditions |
+| --- | --- | --- |
+| `HeavyFlipControl.direct_iff`, `ReferenceClassHop.touches_reference_class`, `no_root_only_direct_address`, `flip_encoded`, `flip_light` | The direct address is zero. Untagged roots alias other addresses. The addressed crossing fixes light inputs. | Chosen reference class and supplied generation address. The reverse uses the inverse word. |
+| `record_colour`, `record_opposite`, `write_clean`, `registered_word`, `registered_phase_unitary` (`IndependentRegisters`, `RegisterControl`) | Two bits are preserved across walls and colours. The clean write and guarded exchange are reversible. The phase has coefficient `(1−z)/2` on exchanged endpoints. | Occupied banks, clean record and supplied joint control. |
+| `CompanionHeavyFlip.ready_pack`, `run_pack`, `run_twice_pack`; `CoherentGate.tensor_dot`, `unequal_needs_orthogonal` | Ordered companion classes recover the heavy address. The update transfers the companion class and returns after two runs. Overlapping weak outputs need orthogonal records. | Packed companion and retained record. |
+| `HeavyFlipRecords.quark_auxiliary_gap`, `no_exact_quark_record`, `electron_down_overlap` | Auxiliary outcome gaps for up and down are at most ½. Electron/down squared overlaps at `3π/2` and `π/2` are 1 and ¼. | Shared auxiliary-only hypercharge control with the massive slots left in place. |
+| `full_only_minimum`, `quarter_massive`, `paired_minimum`, `paired_tolls`, `paired_ladder`, `paired_gap_ratio` | Full and lepton-only flag ledgers in order e,d,u,ν are `(¾,¾,¼,¼)` and `(¾,(3−√3)/8,(5−√3)/8,¼)`. Their sum gives the charged ladder and gap ratio `2/(3+√3)`. | The relevant visits are independently required and each state flag is charged. These comparisons do not supply the exact record. |
+| `orbit_bit_price`, `orbit_record_minimum`, `orbit_record_tolls`, `orbit_record_ladder`, `down_geometric_mean`, `PMAction.TollAmplitude` | The two exact bit visits cost `(2,1,0,1)` in the stated polarity. Down's amplitude is the geometric mean for any common price per bit registration. | Admitted signed-axis phases, clean branch and a separate requirement for each bit. |
+| `ElectricHeavyRecord.electric_generator`, `charge_from_bits`, `position_time_minimal`, `sector_time_minimal`, `same_wall_pair`, `packet_kick_phases`, `root_writer` | The electric charge gives the same record on either wall. The principal phase parameters are `3π` and `3π/2`. A quarter preparation, signed kick and three-quarter inverse write the basis record. | Matching-position reference, moving root orbit and supplied joint coupling. |
+| `colour_reference_toll`, `lepton_reference_toll`, `reference_flags_from_orbit_bits`, `embedded_step_flag`, `pulse_flags`, `two_bit_factor_toll` | The electric references share the position flag and complement the sector flag. Their two-bit totals are `(2,1,0,1)` and `(1,2,1,0)`. The exhibited writer's three factor flags give `1 + T_bits/2` for two writes. | Choose either comparison-output flags or the exhibited factor flags as paid registrations. These are distinct ledgers. |
+| `ElectricFourPortRecord.phase_codes`, `read_exact`, `decoder_word`, `exposure_eq_flags`, `exposure_tolls`, `forward_tolls`, `forward_no_ladder` | Fixed kicks and a decoder write four orthogonal records. Exposures tie electron and down. The forward logical-factor ledgers put down below electron in amplitude. | Prepared balanced bank and one registration per indicated flag. |
+| `ElectricDecoderBoundary.phase_word_not_quarter`, `phase_word_not_decoder`; `ElectricCoordinateDecoder.decoder_unitary`, `decoder_observed`, `decoder_reads`, `prepare_balanced`, `encoded_flag` | Uniform-line permutation phases cannot supply the literal decoder. Odd coordinates realize it and expose the primitive state flags. | Coherent root-phase contract, common rate and supplied seed. |
+| `short_observed`, `short_reads`, `record_at_short_port`, `short_unitary`, `short_word_exact`, `short_duration`, `undo_word_exact`, `short_prepares`, `undo_duration`, `fresh_bank_serial_exceeds_clock` | The short decoder writes bit-reversed records. Decode and fresh preparation take 25 and 27 quarter-times. | In serial, a fresh bank exceeds one frame when a quarter-time takes at least one tick. |
+| `ElectricPrimitiveFlagCosts.primitive_decoder_flags`, `ledger_observed`, `forward_tolls`, `charged_ladder`, `canonical_tie`, `preparation_flags` | Short decoder plus exposures give `(3,5/2,2,1)`. The canonicalizing swap ties down and up. Inverse preparation adds one flag. | One registration per executed state flag and an occupied clean seed. |
+| `ElectricChiralKick.high_observed`, `low_observed`, `kick_on_summand`, `high_unitary`, `high_preserves_occupation`, `two_kicks_from_one_current`, `swapped_exposure_toll`, `total_tolls`, `total_ladder`, `total_toll_wall_pair`, `clean_first_seed_at_rest`, `balanced_bank_leaves_rest` | `PMAction.RegisterInteraction.current` and the swap give the two kicks. Forward Tolls are `(13/4,11/4,5/2,1)`. A balanced bank needs a gapped coordinate and separate carrier. | Supplied current and one registration per executed state flag. |
+| `ElectricCompanionBank.triality_observed`, `prepares_companion_bank`, `glued_triality_step`, `guarded_companion_transport`, `companion_transport_observed`, `companion_transport_roots`, `written_port_ready_iff`, `setup_class_flag` | Triality prepares the bank from the predecessor seed. The guard transports it. Only the active neutral written port returns ready. The setup endpoint flags ½. | Occupied odd coordinate-zero seed in the proper class. |
+| `ElectricCompanionSetupFlagCosts.short_setup_on_seed_support`, `primitive_setup_flags`, `common_setup_on_seed_support`, `equal_slot_setup_sum` | One root suffices on the active seed and two on the static seed. The mean setup flag budget is 5/8. | The certified seed support and equal wall populations. |
+| `HeavyCrossingCost.activity_histogram`, `uniform_cost`, `sign_tie` | Six reflects per carrier give 27 idle, 20 unit and one double displacement across eight amplitudes. The mean charge is `(20 c₁ + c₂)/8`. | Uniform amplitudes for the mean, antipodal weights for the sign tie and supplied prices per displacement. |
+| `HeavyFlipNativeBoundary.no_closed_cleaning`, `tick_event_iff`, `idle_and_excursion_counts`, `cycle_closes`; `GappedGluedCrossing.equalClass_iff` | The untagged probe aliases addresses and closed universal cleaning is impossible. Both idle and two-toggle masks close. The gapped crossing shifts generation. | The clocked endpoint needs an address and a ready record. |
+
+[Persistence selection](WireSchedule.lean) enumerates a bounded serial family.
+[Packet reference cost](WireSchedule.lean)
+derives uniform weights under the full-packet sampling premise and
+checks the vacancy contribution. The full-packet bit gap is `−1/2`
+per sampled input when the vacancy is probed. The smaller support
+and the idle-vacancy rule have separate thresholds. The
+[lifecycle comparison](WireSchedule.lean)
+adds a conditional half flag for a written-bit reset with a fresh
+zero. Actual writer traffic and the difference in remaining paid
+work still decide the polarity.
+
+Open premises.
+
+- Supply and renew the occupied seed, admit the joint current, controlled phases and crossing, and schedule the two wall insertions. Retain reset or export in the record trace. See the [clock ledger](../PMKAutomaton/OVERVIEW.md#clock).
+- Derive the event and tariff. Choose which visits register, which polarity persists, and how the displacement and preparation prices enter. For a price on the node rather than the direct flip, use `node_toll_raises_heavy`.
+- The half-period and node-phase diagnostics suggest competing scores. Their selected cadence and paid visits remain open.
+
+Comparison only. The [down mean diagnostic](../../tools/down_mean_check.py) gives `s_d/√(s_e s_u) ≈ 0.96` and inferred prices `2.04` and `2.13` in the ledger convention. The [heavy Toll diagnostic](../../tools/heavy_toll_targets.py) compares the charged gap ratios, including 1 for the short decoder and ½ for the chiral-current candidate. The [bare detuning scan](../../tools/detuning_bound_check.py) tests the `√(3/2) k` bound. These comparisons supply no scheduling inputs.
+
+
 -/
 
 noncomputable section
 namespace PMElementaryParticles.HeavyFlipRecords
 
-open PMAction PMConstants.ChannelOccupancy EventRequirements ProtocolToll Real
+open PMAction PMConstants.ChannelOccupancy EventRequirements ProtocolFlagCosts Real
 
 /-- The charge used by the diagonal packet transport. -/
 abbrev charge (c : PMConstants.PacketGaugeActions.Channels) : ℝ := (hyperchargeThirds c : ℝ) / 3
@@ -148,21 +209,21 @@ theorem paired_minimum (cA cS : PMConstants.PacketGaugeActions.Channels) :
   simpa [comparisonPrice, Fintype.sum_bool, add_comm] using
     CoherentRefresh.minimum_cost _ (comparisonPrice_nonneg cA cS)
 
-def pairedToll (cA cS : PMConstants.PacketGaugeActions.Channels) : ℝ :=
+def pairedWallFlagSum (cA cS : PMConstants.PacketGaugeActions.Channels) : ℝ :=
   massiveFlag (3 * π / 2) cA cS + massiveFlag (π / 2) cA cS
 
 theorem paired_tolls (a : Fin 3) (i j k l : Fin 2) :
-    pairedToll (leptonActive i) electronStatic = 3 / 2 ∧
-      pairedToll (quarkActive a j) (downStatic a) = (9 - √3) / 8 ∧
-      pairedToll (quarkActive a k) (upStatic a) = (7 - √3) / 8 ∧
-      pairedToll (leptonActive l) neutrinoStatic = 1 / 2 := by
+    pairedWallFlagSum (leptonActive i) electronStatic = 3 / 2 ∧
+      pairedWallFlagSum (quarkActive a j) (downStatic a) = (9 - √3) / 8 ∧
+      pairedWallFlagSum (quarkActive a k) (upStatic a) = (7 - √3) / 8 ∧
+      pairedWallFlagSum (leptonActive l) neutrinoStatic = 1 / 2 := by
   obtain ⟨he, hd, hu, hn⟩ := full_massive a i j k l
   obtain ⟨he', hd', hu', hn'⟩ := quarter_massive a i j k l
-  refine ⟨?_, ?_, ?_, ?_⟩ <;> simp only [pairedToll, he, hd, hu, hn, he', hd', hu', hn'] <;> ring
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> simp only [pairedWallFlagSum, he, hd, hu, hn, he', hd', hu', hn'] <;> ring
 
 /-- The two-visit flag budget has the charged ladder if placed on the heavy flip. -/
 theorem paired_ladder (a : Fin 3) (i j k : Fin 2) :
-    let s cA cS := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (pairedToll cA cS)
+    let s cA cS := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (pairedWallFlagSum cA cS)
     s (leptonActive i) electronStatic < s (quarkActive a j) (downStatic a) ∧
       s (quarkActive a j) (downStatic a) < s (quarkActive a k) (upStatic a) := by
   obtain ⟨he, hd, hu, -⟩ := paired_tolls a i j k 0
@@ -171,9 +232,9 @@ theorem paired_ladder (a : Fin 3) (i j k : Fin 2) :
   constructor <;> linarith [Real.sqrt_nonneg 3]
 
 theorem paired_gap_ratio (a : Fin 3) (i j k : Fin 2) :
-    let Te := pairedToll (leptonActive i) electronStatic
-    let Td := pairedToll (quarkActive a j) (downStatic a)
-    let Tu := pairedToll (quarkActive a k) (upStatic a)
+    let Te := pairedWallFlagSum (leptonActive i) electronStatic
+    let Td := pairedWallFlagSum (quarkActive a j) (downStatic a)
+    let Tu := pairedWallFlagSum (quarkActive a k) (upStatic a)
     (Td - Tu) / (Te - Td) = 2 / (3 + √3) := by
   obtain ⟨he, hd, hu, -⟩ := paired_tolls a i j k 0
   dsimp only
@@ -215,21 +276,21 @@ theorem orbit_record_minimum (c : PMConstants.PacketGaugeActions.Channels) :
     split <;> split <;> norm_num
   simpa [Fintype.sum_bool, add_comm] using CoherentRefresh.minimum_cost _ h
 
-def orbitRecordToll (c : PMConstants.PacketGaugeActions.Channels) : ℝ :=
+def orbitWriterFlagSum (c : PMConstants.PacketGaugeActions.Channels) : ℝ :=
   orbitBitPrice c false + orbitBitPrice c true
 
 theorem orbit_record_tolls (a : Fin 3) :
-    orbitRecordToll electronStatic = 2 ∧ orbitRecordToll (downStatic a) = 1 ∧
-      orbitRecordToll (upStatic a) = 0 ∧ orbitRecordToll neutrinoStatic = 1 := by
+    orbitWriterFlagSum electronStatic = 2 ∧ orbitWriterFlagSum (downStatic a) = 1 ∧
+      orbitWriterFlagSum (upStatic a) = 0 ∧ orbitWriterFlagSum neutrinoStatic = 1 := by
   obtain ⟨he, hd, hu, hn⟩ := HeavyFlipControl.static_record_codes a
   change HeavyFlipControl.labelRecord electronStatic = (true, true) at he
   change HeavyFlipControl.labelRecord neutrinoStatic = (true, false) at hn
-  simp [orbitRecordToll, orbit_bit_price, he, show HeavyFlipControl.labelRecord (downStatic a) = _ from hd,
+  simp [orbitWriterFlagSum, orbit_bit_price, he, show HeavyFlipControl.labelRecord (downStatic a) = _ from hd,
     show HeavyFlipControl.labelRecord (upStatic a) = _ from hu, hn]
   norm_num
 
 theorem orbit_record_ladder (a : Fin 3) :
-    let s c := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (orbitRecordToll c)
+    let s c := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (orbitWriterFlagSum c)
     s electronStatic < s (downStatic a) ∧ s (downStatic a) < s (upStatic a) := by
   obtain ⟨he, hd, hu, -⟩ := orbit_record_tolls a
   dsimp only
@@ -240,7 +301,7 @@ theorem orbit_record_ladder (a : Fin 3) :
 record gives `s_d² = s_e · s_u`: down shares one bit with the electron and none with up, so its
 Toll is the mean of theirs. This holds with no free parameter, before any tariff is fixed. -/
 theorem down_geometric_mean (lam : ℝ) (a : Fin 3) :
-    let s c := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (lam * orbitRecordToll c)
+    let s c := PersistenceMechanics.EffectiveAction.attenuationWeight 1 (lam * orbitWriterFlagSum c)
     s (downStatic a) ^ 2 = s electronStatic * s (upStatic a) := by
   obtain ⟨he, hd, hu, -⟩ := orbit_record_tolls a
   dsimp only

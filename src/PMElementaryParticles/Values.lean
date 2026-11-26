@@ -13,40 +13,38 @@ import PMElementaryParticles.LeptonLifetime
 import PMElementaryParticles.EPLabelGen
 
 /-!
-# PMElementaryParticles canonical values
+# Public EP exports
 
-Single import for the units, couplings, masses and lifetimes that later libraries
-(`PMHadrons`, `PMAtoms`, `e8p`) use, mirroring `PMSubstrate.E8Values`, `PMConstants.Values` and
-`PMFlavor.Values`. Use these names instead of re-proving a bound locally.
+This module exports these names, and defines no new physical reading.
 
-* Units (CODATA 2022 inputs): `me` (MeV), `hbarc` (MeV·fm), `electronTime` (s) with
-  `electronTime_tight`.
-* Couplings: `αe`, `αinv` with `a_b`, `g_b`; `fermiME` (`G_F` in `m_e⁻²`) with `fermiME_pos` and
-  `fermiME_tight` (`3.0456453–3.0456507 × 10⁻¹²`); `pi_b`.
-* Masses (`m_e` units): `muon`, `tau` with `muon_value`, `tau_value`; quarks `up … top` with
-  `up_value … top_value` (in MeV).
-* Lifetimes: `muonLifetimeSeconds` (tree level) with `muonLifetimeSeconds_tight`,
-  `muonLifetimeCorrected` (derived phase factor, supplied one-loop QED) with `corrected_bounds`,
-  `muonLifetimeFull` (the full Fermi-theory QED series of van Ritbergen–Stuart, supplied, at E8
-  inputs) with `muonLifetimeFull_bounds` (`2.196974–2.196984 µs`),
-  `tauLifetimeSeconds` with `tauLifetimeSeconds_bounds`; `tauLifetimeCorrectedFs` (the measured-`τ_μ`,
-  supplied-`B_e` tau lifetime with the corrected partial-width ratio) with
-  `tauLifetimeCorrectedFs_bounds` (`291.03–291.06` fs); `tauLife` with `tau_lifetime_tree`
-  (tree level, fs); `muonFiniteLifetime`, `tauLifetimeE8` (natural units) with their bounds.
-* Program spine: `Generation` with `generation_card` (3 glue cosets); `classOf` with
-  `visibleClasses_card` (5 visible classes), `visible_channels_card` (15 channels) and
-  `invisible_iff` (the total singlet is the one invisible class); `Program` with
-  `programs_card` (15), `singlet_no_program`, and `spine_generations` (each generation and
-  visible class has a program that meets all six pillars and keeps its generation and label on
-  the ring).
-This module only names results. Computation lives in its own modules (for example
-`TransportCandidates`).
+* SharedUnits: `me`, `hbarc`, `pi_b`, `a_b`, `g_b`, `fermiME_pos`, `fermiME_tight`.
+* PhysicalUnits: `electronTime`, `electronTime_pos`, `electronTime_tight`,
+  `muonLifetimeSeconds`, `muonLifetimeSeconds_tight`, `tauLifetimeSeconds`,
+  `tauLifetimeSeconds_bounds`.
+* MuonLifetime: `muonLifetime`, `muonLifetime_pos`.
+* MuonLifetimeCorrected: `muonLifetimeCorrected`, `corrected_bounds`.
+* MuonLifetimeHigherOrder: `lifetime`, `lifetime_bounds`.
+* TauLifetimeCorrected: `tauLifeCorrected`, `tau_lifetime_corrected`.
+* SpeciesFootprints.Lepton: `muon`, `tau`.
+* SpeciesFootprints.Quark: `up`, `down`, `strange`, `charm`, `bottom`, `top`.
+* LeptonMasses: `muon_value`, `tau_value`.
+* QuarkMasses: `up_value`, `down_value`, `strange_value`, `charm_value`, `bottom_value`, `top_value`.
+* TauLifetime: `tauLife`, `tau_lifetime_tree`.
+* LeptonLifetime: `muonFiniteLifetime`, `muonFiniteLifetime_bounds`.
+* TauE8: `tauLifetimeE8`, `tauLifetimeE8_bounds`.
+* ProgramClasses: `classOf`, `visibleClasses`, `visibleClasses_card`, `visibleChannels`,
+  `visible_channels_card`, `invisible_iff`.
+* EPSpine: `Generation`, `generation_card`, `Program`, `programs_card`, `singlet_no_program`.
+* EPLabelGen: `spine_generations`.
+
+Tau lifetime APIs take their electronic branch, and where required muon time,
+as arguments. Experimental instantiations live in e8p.
 -/
 
 namespace PMElementaryParticles.Values
 
 export PMElementaryParticles.SharedUnits
-  (me hbarc αe αinv fermiME pi_b a_b g_b fermiME_pos fermiME_tight)
+  (me hbarc pi_b a_b g_b fermiME_pos fermiME_tight)
 export PMElementaryParticles.PhysicalUnits
   (electronTime electronTime_pos electronTime_tight muonLifetimeSeconds muonLifetimeSeconds_tight
     tauLifetimeSeconds tauLifetimeSeconds_bounds)
@@ -54,19 +52,9 @@ export PMElementaryParticles.MuonLifetime (muonLifetime muonLifetime_pos)
 export PMElementaryParticles.TauE8 (tauLifetimeE8)
 export PMElementaryParticles.MuonLifetimeCorrected (muonLifetimeCorrected corrected_bounds)
 
-/-- The muon lifetime with the full Fermi-theory QED series. -/
-noncomputable abbrev muonLifetimeFull : ℝ := PMElementaryParticles.MuonLifetimeHigherOrder.lifetime
+export PMElementaryParticles.MuonLifetimeHigherOrder (lifetime lifetime_bounds)
 
-theorem muonLifetimeFull_bounds :
-    (2.196974e-6 : ℝ) < muonLifetimeFull ∧ muonLifetimeFull < (2.196984e-6 : ℝ) :=
-  PMElementaryParticles.MuonLifetimeHigherOrder.lifetime_bounds
-
-/-- The conditional tau lifetime (fs) with the corrected partial-width ratio. -/
-noncomputable abbrev tauLifetimeCorrectedFs : ℝ := PMElementaryParticles.TauLifetimeCorrected.tauLifeCorrected
-
-theorem tauLifetimeCorrectedFs_bounds :
-    (291.03 : ℝ) < tauLifetimeCorrectedFs ∧ tauLifetimeCorrectedFs < 291.06 :=
-  PMElementaryParticles.TauLifetimeCorrected.tau_lifetime_corrected
+export PMElementaryParticles.TauLifetimeCorrected (tauLifeCorrected tau_lifetime_corrected)
 
 export PMSubstrate.SpeciesFootprints.Lepton (muon tau)
 export PMSubstrate.SpeciesFootprints.Quark (up down strange charm bottom top)

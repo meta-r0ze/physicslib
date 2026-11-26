@@ -11,8 +11,8 @@ import Mathlib.Analysis.Complex.ExponentialBounds
 
 * the massive-daughter phase space, `f(r) = 1 − 8r + 8r³ − r⁴ − 12r² log r` with `r = (m_e/m_μ)²`, derived in
   this library (`MassiveWidth.closed_width`, `phase`), here at the E8 ratio `r = 1/muon²`;
-* the one-loop QED factor `Q = 1 − (α/2π)(π² − 25/4)` (Kinoshita–Sirlin, Berman). This factor is
-  **supplied**, not derived here; it is evaluated at the E8 `α = 1/geometricIndex`.
+* the one-loop QED factor `Q = 1 − (PMConstants.Values.alpha/2π)(π² − 25/4)` (Kinoshita–Sirlin, Berman). This factor is
+  **supplied**, not derived here; it is evaluated at the E8 `PMConstants.Values.alpha = 1/geometricIndex`.
 
 `muonLifetimeCorrected = muonLifetimeSeconds / (f · Q)`.
 
@@ -20,8 +20,8 @@ import Mathlib.Analysis.Complex.ExponentialBounds
 * `qed_bounds`: `0.99579615 < Q < 0.99579616`.
 * `corrected_bounds`: `2.196987 µs < τ < 2.196998 µs`.
 
-This is the one-loop stage at `α(0)`. The full series that defines the measured `G_F` (electron-mass
-terms, two loops, `α(m_μ)`) is `MuonLifetimeHigherOrder`, which e8p reports; the `fermi` row compares
+This is the one-loop stage at `PMConstants.Values.alpha(0)`. The full series that defines the measured `G_F` (electron-mass
+terms, two loops, `PMConstants.Values.alpha(m_μ)`) is `MuonLifetimeHigherOrder`, which e8p reports; the `fermi` row compares
 `G_F` itself.
 -/
 
@@ -36,11 +36,9 @@ def r : ℝ := 1 / LeptonMasses.muon ^ 2
 /-- The massive-daughter phase-space factor. -/
 def phaseFactor : ℝ := MassiveWidth.phase r
 
-/-- E8 fine-structure constant. -/
-def α : ℝ := 1 / PMSubstrate.geometricIndex
 
 /-- The one-loop QED factor (supplied). -/
-def qedFactor : ℝ := 1 - α / (2 * Real.pi) * (Real.pi ^ 2 - 25 / 4)
+def qedFactor : ℝ := 1 - PMConstants.Values.alpha / (2 * Real.pi) * (Real.pi ^ 2 - 25 / 4)
 
 /-- The corrected muon lifetime in seconds. -/
 def muonLifetimeCorrected : ℝ := PhysicalUnits.muonLifetimeSeconds / (phaseFactor * qedFactor)
@@ -108,10 +106,10 @@ theorem phase_bounds : (0.99981294 : ℝ) < phaseFactor ∧ phaseFactor < 0.9998
   unfold phaseFactor MassiveWidth.phase
   constructor <;> nlinarith [hr.1, hr.2]
 
-theorem alpha_bounds : (0.0072973525624 : ℝ) < α ∧ α < (0.0072973525625 : ℝ) := by
+theorem alpha_bounds : (0.0072973525624 : ℝ) < PMConstants.Values.alpha ∧ PMConstants.Values.alpha < (0.0072973525625 : ℝ) := by
   have h := PMSubstrate.geometricIndex_bounds
   have hpos : (0 : ℝ) < PMSubstrate.geometricIndex := by linarith [h.1]
-  unfold α
+  unfold PMConstants.Values.alpha PMSubstrate.causalCoupling
   constructor
   · rw [lt_div_iff₀ hpos]; nlinarith [h.2]
   · rw [div_lt_iff₀ hpos]; nlinarith [h.1]
@@ -122,7 +120,7 @@ theorem qed_bounds : (0.99579615 : ℝ) < qedFactor ∧ qedFactor < 0.99579616 :
   have hp2 : Real.pi < (3.14159265358980 : ℝ) := by linarith [Real.pi_lt_d20]
   have hppos : 0 < Real.pi := Real.pi_pos
   -- c = (π² − 25/4)/(2π) = π/2 − 25/(8π)
-  have hc : qedFactor = 1 - α * (Real.pi / 2 - 25 / (8 * Real.pi)) := by
+  have hc : qedFactor = 1 - PMConstants.Values.alpha * (Real.pi / 2 - 25 / (8 * Real.pi)) := by
     unfold qedFactor; field_simp; ring
   have hinv1 : (1 / 3.14159265358980 : ℝ) < 1 / Real.pi := one_div_lt_one_div_of_lt hppos hp2
   have hinv2 : 1 / Real.pi < (1 / 3.14159265358979 : ℝ) := one_div_lt_one_div_of_lt (by norm_num) hp1

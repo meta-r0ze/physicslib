@@ -36,15 +36,15 @@ def totalFiringCount (p : Protocol) : ℕ :=
   ∑ b : Fin 2, firingCount p b
 
 /-- Integer receiver Toll used by the finite enumeration. -/
-def tollCount (p : Protocol) : ℕ :=
+def registrationCount (p : Protocol) : ℕ :=
   ∑ b : Fin 2,
     if p.phase b then
       if bitDiffers p b then patternSum (p.firing b) p.x0 else 0
     else 0
 
-theorem receiverToll_eq_tollCount (p : Protocol) :
-    receiverToll p = (tollCount p : ℝ) := by
-  unfold receiverToll tollCount
+theorem receiverRegistrationCount_eq_registrationCount (p : Protocol) :
+    receiverRegistrationCount p = (registrationCount p : ℝ) := by
+  unfold receiverRegistrationCount registrationCount
   rw [Nat.cast_sum]
   apply Finset.sum_congr rfl
   intro b _
@@ -52,7 +52,7 @@ theorem receiverToll_eq_tollCount (p : Protocol) :
 
 /-- Capacity: the finite label set plus a period capacity bound. -/
 def capacity (p : Protocol) : Prop :=
-  tollCount p ≤ 2 * 43
+  registrationCount p ≤ 2 * 43
 
 theorem capacity_realizes_finiteness :
     PersistenceMechanics.Requirements.Pillar.requirement
@@ -111,11 +111,11 @@ theorem protocol_realizes_conservation :
       PersistenceMechanics.Requirements.Requirement.conservation := rfl
 
 /-- Toll variant: at least one registration in the period. -/
-def tollTotal (p : Protocol) : Prop :=
-  1 ≤ tollCount p
+def hasRegistration (p : Protocol) : Prop :=
+  1 ≤ registrationCount p
 
 /-- Toll variant: every differing bit ring registers at least once. -/
-def tollPerRing (p : Protocol) : Prop :=
+def hasRegistrationPerRing (p : Protocol) : Prop :=
   ∀ b : Fin 2, bitDiffers p b → 1 ≤
     (if p.phase b then patternSum (p.firing b) p.x0 else 0)
 
@@ -138,7 +138,7 @@ theorem governor_realizes_causality :
 structure Variant where
   marginPerRing : Bool
   mapBoth : Bool
-  tollPerRing : Bool
+  hasRegistrationPerRing : Bool
 
 def Variants : List Variant :=
   [false, true].flatMap fun m =>
@@ -151,10 +151,10 @@ def margin (v : Variant) (p : Protocol) : Prop :=
 def mapPredicate (v : Variant) (p : Protocol) : Prop :=
   if v.mapBoth then mapBoth p else mapAtLeastOne p
 
-def toll (v : Variant) (p : Protocol) : Prop :=
-  if v.tollPerRing then tollPerRing p else tollTotal p
+def registrationRequirement (v : Variant) (p : Protocol) : Prop :=
+  if v.hasRegistrationPerRing then hasRegistrationPerRing p else hasRegistration p
 
-def capacityBool (p : Protocol) : Bool := decide (tollCount p ≤ 2 * 43)
+def capacityBool (p : Protocol) : Bool := decide (registrationCount p ≤ 2 * 43)
 
 def marginBool (v : Variant) (p : Protocol) : Bool :=
   if v.marginPerRing then
@@ -165,13 +165,13 @@ def mapBool (v : Variant) (p : Protocol) : Bool :=
   if v.mapBoth then decide (hamming (labelRecord p.label) (refRecord p.reference) = 2)
   else decide (1 ≤ hamming (labelRecord p.label) (refRecord p.reference))
 
-def bitTollBool (p : Protocol) (b : Fin 2) : Bool :=
+def hasBitRegistration (p : Protocol) (b : Fin 2) : Bool :=
   if p.phase b then decide (1 ≤ patternSum (p.firing b) p.x0) else false
 
-def tollBool (v : Variant) (p : Protocol) : Bool :=
-  if v.tollPerRing then
-    (!bitDiffers p 0 || bitTollBool p 0) && (!bitDiffers p 1 || bitTollBool p 1)
-  else decide (1 ≤ tollCount p)
+def hasRegistrationBool (v : Variant) (p : Protocol) : Bool :=
+  if v.hasRegistrationPerRing then
+    (!bitDiffers p 0 || hasBitRegistration p 0) && (!bitDiffers p 1 || hasBitRegistration p 1)
+  else decide (1 ≤ registrationCount p)
 
 def allFiring (p : Protocol) : Bool :=
   p.firing 0 0 && p.firing 0 1 && p.firing 0 2 &&
@@ -180,7 +180,7 @@ def allFiring (p : Protocol) : Bool :=
 def governorBool (p : Protocol) : Bool := !allFiring p
 
 def satisfiesBool (v : Variant) (p : Protocol) : Bool :=
-  capacityBool p && marginBool v p && mapBool v p && true && tollBool v p &&
+  capacityBool p && marginBool v p && mapBool v p && true && hasRegistrationBool v p &&
     governorBool p
 
 def satisfies (v : Variant) (p : Protocol) : Prop :=

@@ -25,7 +25,7 @@ def baseProtocols : List PMElementaryParticles.ProtocolInventory.BaseProtocol :=
 def allStates : Finset State :=
   baseProtocols.toFinset.product (Finset.univ : Finset Tier)
 
-def cohortChargeF (C : Finset State) : ℚ := C.sum (fun s => baseCharge s.1)
+def cohortChargeF (C : Finset State) : ℚ := C.sum (fun s => PMElementaryParticles.ProtocolInventory.BaseProtocol.charge s.1)
 
 def lowerStates (p : State) : Finset State :=
   allStates.filter (fun s => decide (s.2 < p.2))
@@ -33,19 +33,19 @@ def lowerStates (p : State) : Finset State :=
 noncomputable def candidateCohorts (p : State) : Finset (Finset State) := by
   classical
   exact (lowerStates p).powerset.filter
-    (fun C => C.Nonempty ∧ cohortChargeF C = baseCharge p.1)
+    (fun C => C.Nonempty ∧ cohortChargeF C = PMElementaryParticles.ProtocolInventory.BaseProtocol.charge p.1)
 
 theorem muon_cohort_mem :
     ({(.electron, ⟨0, by decide⟩), (.neutrino, ⟨0, by decide⟩),
       (.neutrino, ⟨0, by decide⟩)} : Finset State)
       ∈ candidateCohorts (.electron, ⟨1, by decide⟩) := by
-  simp [candidateCohorts, lowerStates, allStates, baseProtocols, cohortChargeF, baseCharge]
-  decide
+  simp [candidateCohorts, lowerStates, allStates, baseProtocols, cohortChargeF, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
+  norm_num <;> decide
 
 theorem electron_singleton_mem :
     ({(.electron, ⟨0, by decide⟩)} : Finset State)
       ∈ candidateCohorts (.electron, ⟨1, by decide⟩) := by
-  simp [candidateCohorts, lowerStates, allStates, baseProtocols, cohortChargeF, baseCharge]
+  simp [candidateCohorts, lowerStates, allStates, baseProtocols, cohortChargeF, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 /-- Weak doublet partner: electron↔neutrino, up↔down. -/
 def weakPartner : PMElementaryParticles.ProtocolInventory.BaseProtocol → PMElementaryParticles.ProtocolInventory.BaseProtocol
@@ -66,8 +66,8 @@ theorem muon_cohort_weak :
       (.neutrino, ⟨0, by decide⟩)} : Finset State)
       ∈ candidateCohortsWeak (.electron, ⟨1, by decide⟩) := by
   simp [candidateCohortsWeak, hasWeakPartner, weakPartner, candidateCohorts, lowerStates,
-    allStates, baseProtocols, cohortChargeF, baseCharge]
-  decide
+    allStates, baseProtocols, cohortChargeF, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
+  norm_num <;> decide
 
 theorem electron_singleton_not_weak :
     ({(.electron, ⟨0, by decide⟩)} : Finset State)

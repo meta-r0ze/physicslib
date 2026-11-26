@@ -14,6 +14,48 @@ with unit retained amplitude. The vector glue class selects one static
 generation leg. The resulting selector can localize a supplied coherent
 flip; admission of the joint control and the common detuning and pulse
 areas are dynamical inputs.
+
+## Readout audit notes
+
+## Charged insertion on the static wall
+
+At the packet hypercharge step `3π/4`, the static vacancy and the electron,
+up and down channels have eigenphases `1, i, −1, −i`, respectively.
+`ChargedInsertion.select_static` gives the exact projection onto each
+static sector as two phase-matched plus-port comparisons, first with the
+target-corrected transport and then with its square. The matching channel
+has amplitude one. The projection is constant across the three colours.
+`joint_selector` combines this comparison with the glue-class test.
+The vector class occurs on the static wall at generation index `2`, so a
+conditional coherent flip there adds one diagonal leg to the selected
+protocol's generation matrix. The index is a coordinate of the glued
+encoding.
+
+With nonzero extra amplitude and a common bare resonant detuning,
+`full_zero_iff_unselected` removes the selected sector's exact zero mode
+in the full two-wall Hamiltonian, with invertible crossing and reference
+flip. If an unmodified calibration channel stays stationary under the
+same real detuning, `calibrated_detuning` pins it to the negative cube
+root of the positive cycle product. The channel selectors specify
+where a conditional pulse acts. The native law that admits and fires it,
+its pulse area, and the existence of a shared stationary calibration
+remain open.
+
+The [charged lift below](#the-charged-lift) counts the
+same selector and crossing support for every charged label.
+`det_flip_at_resonance` gives the same linear response to the supplied
+offset in each selected sector. Its order in `1/Δ` depends on the firing
+law for that offset.
+
+The [phase and handoff calculation](#phase-handoff-and-toll)
+separates the selector's phase distance from a spatial layer count.
+The uncompensated comparison gives flags `½, 1, ½` for electron, up and
+down. The selected label gives zero flags in both matched comparisons
+(`matched_flags_zero`). A through admittance is a transmission
+probability. A registration Toll supplies a survival amplitude.
+The pulse needs a native schedule before either law can assign its size.
+
+
 -/
 
 noncomputable section

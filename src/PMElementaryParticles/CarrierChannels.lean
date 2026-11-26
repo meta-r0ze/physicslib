@@ -1,3 +1,4 @@
+import PMConstants.ColourRouting
 import PMConstants.CarrierRepresentation
 import PMConstants.PacketGaugeActions
 
@@ -72,19 +73,13 @@ theorem channel_unique :
       c = c' := by
   decide
 
-/-- Lepton number minus baryon number by axis. -/
-def blAxis (a : Fin 4) : ℚ := if a = 0 then -1 else 1/3
-
-/-- Right-wall isospin by sign. -/
-def t3Sign (b : Bool) : ℚ := if b then 1/2 else -1/2
-
 theorem bl_t3_from_carriers :
-    ∀ v : CarrierRepresentation.V, bl v = blAxis (carrierAxis v) ∧ t3 v = t3Sign (positive v) := by
+    ∀ v : CarrierRepresentation.V, bl v = CarrierRepresentation.blAxis (decide (carrierAxis v = 0)) ∧ t3 v = t3Sign (positive v) := by
   decide +kernel
 
 /-- The wall charge (hypercharge) of a channel. -/
 def hyper (c : Channels) : ℚ :=
-  if wall c then blAxis (axis c) else blAxis (axis c) + 2 * t3Sign (positiveSign c)
+  if wall c then CarrierRepresentation.blAxis (decide (axis c = 0)) else CarrierRepresentation.blAxis (decide (axis c = 0)) + 2 * t3Sign (positiveSign c)
 
 /-- **The wall charge is the carrier charge of `CarrierRepresentation`.** -/
 theorem hyper_from_carriers :
@@ -95,11 +90,21 @@ theorem hyper_from_carriers :
 
 /-- The electric charge: `bl/2 + t3` on both walls. -/
 def electric (c : Channels) : ℚ :=
-  CarrierRepresentation.electric (decide (axis c = 0)) (positiveSign c)
+  Hypercharge.electric (decide (axis c = 0)) (positiveSign c)
 
 /-- The packet's charge table is the carrier charge. -/
 theorem packet_charge_eq (c : Channels) : hyperchargeOperator c c = (hyper c : ℂ) := by
   fin_cases c <;> norm_num [hyperchargeOperator_blocks, block, channelIndex, Matrix.kroneckerMap_apply, hyper, wall,
     axis, positiveSign, blAxis, t3Sign]
+
+/-- The packet encoding and the EP channel encoding read the same electric charge. -/
+theorem electric_transport (c : Channels) :
+    PMConstants.ColourRouting.electric (PMConstants.PacketGaugeActions.channelEquiv c) =
+      electric c := by
+  have h : ∀ (v : PMConstants.CarrierActions.Packet) (d : Channels),
+      PMConstants.CarrierActions.index v = channelIndex d →
+        PMConstants.ColourRouting.electric v = electric d := by
+    decide +kernel
+  exact h _ c (channelEquiv_index c)
 
 end PMElementaryParticles.CarrierChannels

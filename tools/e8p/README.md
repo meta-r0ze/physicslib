@@ -100,6 +100,11 @@ and [neutral-pion listing](https://pdg.lbl.gov/2024/listings/rpp2024-list-pi-zer
 The tau's existing `0.82 fs` comparison error already combines `0.5 fs` lifetime
 measurement error and approximately `0.65 fs` propagated from its supplied `B_e`.
 It is not an additional experimental lifetime uncertainty and is not added twice.
+`E8PConstants.TauInputs` in `Experimental.lean` stores the muon time and electronic branch. The tau
+certificates apply the parameterized EP interval theorems. The displayed central
+row uses singleton input enclosures; a separate certificate transports their
+measurement intervals. `MuonQEDLoops.runningAlpha` supplies the same leptonic
+running law at both E8 lepton scales. There is no measured tau coupling anchor.
 
 Small references, errors and residuals use scientific notation rather than printing
 as zero. Arithmetic enclosures certify the stated approximation, not theoretical
@@ -119,7 +124,7 @@ names), `Experimental` (measured references), `Format` (text/JSON/LaTeX).
 |---|---|---|
 | `PMSubstrate/` | `ExperimentalComparison` (α⁻¹ against CODATA/Parker/Morel/Fan) | `src/PMSubstrate` |
 | `PMConstants/` | `WeakMassPulls`, `ReadoutPulls`, `ScalarAccounting`, `HyperScope` | `src/PMConstants` |
-| `PMElementaryParticles/` | `LeptonMassPulls`, `QuarkMassPulls`, `TauLifetimePulls` | `src/PMElementaryParticles` |
+| `PMElementaryParticles/` | `LeptonMassPulls`, `QuarkMassPulls`, `TauLifetimePulls`, `TauInputs`, `NeutrinoInputs` | `src/PMElementaryParticles` |
 | `PMFlavor/` | `FlavourPulls`, `ExperimentalPulls` (values only from `PMFlavor.Values`); `CandidateTests` (candidate formulas against data, not reported values) | `src/PMFlavor` |
 | `PMHadrons/` | `CompositeMassPulls` | `src/PMHadrons` |
 | `PMAtoms/` | `Certified` (`--masses`), `Periodic` (`--periodic-table`), `Shells` (`--shells`), `Nuclear` (`--nuclear`), `E8TickUnit` | `src/PMAtoms`, `src/PMAtoms/Values.lean` |

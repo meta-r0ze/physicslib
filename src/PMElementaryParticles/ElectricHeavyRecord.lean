@@ -89,9 +89,9 @@ private theorem phase_at_least_pi {x : ℝ} (h0 : 0 ≤ x) (h : DiagonalReadout.
 
 /-- The down charge fixes the least nonnegative time for the first visit. -/
 theorem position_time_minimal (a : Fin 3) {t : ℝ} (h0 : 0 ≤ t)
-    (h : DiagonalReadout.flag (t * q (ProtocolToll.downStatic a)) = 1) : 3 * π ≤ t := by
-  have hd : q (ProtocolToll.downStatic a) = -(1 / 3) := by
-    norm_num [q, ProtocolToll.downStatic, ChargeProtocols.Q_eval]
+    (h : DiagonalReadout.flag (t * q (ProtocolFlagCosts.downStatic a)) = 1) : 3 * π ≤ t := by
+  have hd : q (ProtocolFlagCosts.downStatic a) = -(1 / 3) := by
+    norm_num [q, ProtocolFlagCosts.downStatic, ChargeProtocols.Q_eval]
   rw [hd, mul_neg, DiagonalReadout.flag_neg] at h
   have ht := phase_at_least_pi (by positivity) h
   linarith
@@ -99,9 +99,9 @@ theorem position_time_minimal (a : Fin 3) {t : ℝ} (h0 : 0 ≤ t)
 /-- The electron-to-down charge contrast fixes the least nonnegative time
 of the colour-referenced second visit. -/
 theorem sector_time_minimal {t : ℝ} (h0 : 0 ≤ t)
-    (h : DiagonalReadout.flag (t * sectorDifference true ProtocolToll.electronStatic) = 1) :
+    (h : DiagonalReadout.flag (t * sectorDifference true ProtocolFlagCosts.electronStatic) = 1) :
     3 * π / 2 ≤ t := by
-  have hd : sectorDifference true ProtocolToll.electronStatic = -(2 / 3) := by
+  have hd : sectorDifference true ProtocolFlagCosts.electronStatic = -(2 / 3) := by
     rw [colour_difference]
     change (if true then -(2 / 3 : ℝ) else 0) = _
     simp
@@ -119,8 +119,8 @@ theorem same_wall_pair (c : Channels) :
 theorem colour_reference_toll (c : Channels) :
     DiagonalReadout.flag (3 * π * q c) +
       DiagonalReadout.flag (3 * π / 2 * sectorDifference true c) =
-      HeavyFlipRecords.orbitRecordToll c := by
-  rw [phase_position, phase_sector, HeavyFlipRecords.orbitRecordToll,
+      HeavyFlipRecords.orbitWriterFlagSum c := by
+  rw [phase_position, phase_sector, HeavyFlipRecords.orbitWriterFlagSum,
     HeavyFlipRecords.orbit_bit_price, HeavyFlipRecords.orbit_bit_price]
   simp [add_comm]
 
@@ -141,15 +141,15 @@ and least phase duration coexist with an electron/down order reversal. -/
 theorem lepton_reference_toll (a : Fin 3) :
     let T c := DiagonalReadout.flag (3 * π * q c) +
       DiagonalReadout.flag (3 * π / 2 * sectorDifference false c)
-    T ProtocolToll.electronStatic = 1 ∧ T (ProtocolToll.downStatic a) = 2 ∧
-      T (ProtocolToll.upStatic a) = 1 ∧ T ProtocolToll.neutrinoStatic = 0 := by
+    T ProtocolFlagCosts.electronStatic = 1 ∧ T (ProtocolFlagCosts.downStatic a) = 2 ∧
+      T (ProtocolFlagCosts.upStatic a) = 1 ∧ T ProtocolFlagCosts.neutrinoStatic = 0 := by
   obtain ⟨he, hd, hu, hn⟩ := static_record_codes a
-  change labelRecord ProtocolToll.electronStatic = (true, true) at he
-  change labelRecord ProtocolToll.neutrinoStatic = (true, false) at hn
+  change labelRecord ProtocolFlagCosts.electronStatic = (true, true) at he
+  change labelRecord ProtocolFlagCosts.neutrinoStatic = (true, false) at hn
   dsimp only
   simp only [phase_position, phase_sector_lepton_reference, he, hn,
-    show labelRecord (ProtocolToll.downStatic a) = _ from hd,
-    show labelRecord (ProtocolToll.upStatic a) = _ from hu]
+    show labelRecord (ProtocolFlagCosts.downStatic a) = _ from hd,
+    show labelRecord (ProtocolFlagCosts.upStatic a) = _ from hu]
   norm_num
 
 /-- A quarter pulse prepares a balanced branch in every actual root orbit
@@ -305,8 +305,8 @@ before physical control, seed, synchronization and export costs. -/
 theorem two_bit_factor_toll (c : Channels) :
     (1 / 2 + (if (labelRecord c).1 then 1 / 2 else 0)) +
       (1 / 2 + (if (labelRecord c).2 then 1 / 2 else 0)) =
-      1 + HeavyFlipRecords.orbitRecordToll c / 2 := by
-  rw [HeavyFlipRecords.orbitRecordToll, HeavyFlipRecords.orbit_bit_price,
+      1 + HeavyFlipRecords.orbitWriterFlagSum c / 2 := by
+  rw [HeavyFlipRecords.orbitWriterFlagSum, HeavyFlipRecords.orbit_bit_price,
     HeavyFlipRecords.orbit_bit_price]
   rcases labelRecord c with ⟨sector, position⟩
   cases sector <;> cases position <;> norm_num

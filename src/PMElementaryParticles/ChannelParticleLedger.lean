@@ -19,9 +19,7 @@ open PMElementaryParticles.SubstrateFinalStates
 
 /-- Rational charge of a channel, read through its base protocol. -/
 def channelCharge (c : PMConstants.PacketGaugeActions.Channels) : ℚ :=
-  match baseProtocol c with
-  | some b => baseCharge b
-  | none => 0
+  CarrierChannels.electric c
 
 /-- One row of the channel/particle ledger. -/
 structure ChannelRow where
@@ -61,9 +59,7 @@ theorem active_channels_card :
 /-- The ledger charge is the substrate charge. -/
 theorem channelCharge_eq_Q (c : PMConstants.PacketGaugeActions.Channels) :
     (channelCharge c : ℂ) = PMElementaryParticles.ChargeProtocols.Q c := by
-  rw [PMElementaryParticles.ChargeProtocols.Q_eval]
-  rcases c with ⟨a, s⟩ | ⟨a, s⟩ | s | s <;> fin_cases s <;>
-    simp [channelCharge, baseProtocol, baseCharge]
+  rfl
 
 /-- The species field is `none` exactly on the sterile channel. -/
 theorem species_none_iff_sterile (c : PMConstants.PacketGaugeActions.Channels) :

@@ -41,7 +41,7 @@ dependencies are in [`TODO.md`](TODO.md).
 
 | Quantity | Definition | How PMConstants uses it |
 | --- | --- | --- |
-| Electric charge | `CarrierRepresentation.electric` | Read B − L from the axis and isospin from the sign. Add half the axis value to the isospin. |
+| Electric charge | `Hypercharge.electric` | Read B − L from the axis and isospin from the sign. Add half the axis value to the isospin. |
 | Packet hypercharge | `RequirementTable.packetHypercharge` with `CarrierRepresentation.carrierStandard` | The left wall reads the axis. The right wall adds the signed link charge. `PacketGaugeActions.hyperchargeOperator` and `ChannelOccupancy.hyperchargeThirds` use the same table. |
 | Conjugate hypercharge | `Hypercharge.conjugate` | Reverse the sign of the entries and exchange the labels in the right-wall pairs. |
 | Wall gap | `LinkGapLaw.gapA`, `gapB` | Read a detuning gap in cutoff units. The occupancy-cost bridge is open. |

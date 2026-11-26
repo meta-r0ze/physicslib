@@ -61,11 +61,11 @@ theorem l3PhaseSpace_pos : 0 < l3PhaseSpace := by
 
 /-- Leading-order `K_ℓ3` partial width in `m_e` units (form-factor free, `m_ℓ → 0`). -/
 noncomputable def kaonL3Width : ℝ :=
-  PMElementaryParticles.SharedUnits.fermiME ^ 2 * vusE8 ^ 2 * kaonPlus ^ 5 * (1 / 2) *
+  (PMConstants.Values.fermi 1) ^ 2 * vusE8 ^ 2 * kaonPlus ^ 5 * (1 / 2) *
     l3PhaseSpace / (192 * Real.pi ^ 3)
 
 theorem kaonL3Width_pos : 0 < kaonL3Width := by
-  have hF : 0 < PMElementaryParticles.SharedUnits.fermiME :=
+  have hF : 0 < (PMConstants.Values.fermi 1) :=
     PMElementaryParticles.SharedUnits.fermiME_pos
   have hv : 0 < vusE8 := lt_trans (by norm_num) vusE8_bounds.1
   have hk0 : 0 < kaonPlus := lt_trans (by norm_num) kaonPlus_value.1

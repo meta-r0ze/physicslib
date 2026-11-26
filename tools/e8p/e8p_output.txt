@@ -121,7 +121,7 @@ Constants
   scalar_toll  —  
     value   = [0.258847320525783619, 0.258847320525783620] dimensionless  (exact 256/989)
     theorem = PMConstants.exact_partition_values
-  electron_yukawa  —  PM_{geo}\left(1+\frac{\sigma}{D}\alpha\right)
+  electron_yukawa  —  \sqrt{2}/(v/m_e)
     value   = [0.000002935028450000, 0.000002935028470000] dimensionless
     theorem = PMConstants.CurrentConstants.electron_bounds
     exp  = 0.000002935000 ± 1.000000e-9  (navas_review_2024)
@@ -204,6 +204,7 @@ Constants
   electron_closure  —  y_e v/(\sqrt2\,m_e)
     value   = [0.999726870000000000, 0.999726890000000000] dimensionless
     theorem = PMConstants.JointConstants.electron_closure_bounds
+    note    = gap/Yukawa reading in electron units, using the geometry-repaired Yukawa
   b_res  —  B_{res}=\nu-\chi/(\sigma-\chi)-\alpha
     value   = [15.326035980700000000, 15.326035980800000000] dimensionless
     theorem = PMConstants.GravityAccounting.residual_tight_bounds
@@ -401,14 +402,14 @@ Elementary Particles
     value   = [0.009208000000000000, 0.009210000000000000] eV
     theorem = PMConstants.FloorNeutrino.floor_bounds
   tau_lifetime_fs  —  
-    value   = [291.030000000000000000, 291.060000000000000000] fs
-    theorem = PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds
+    value   = [291.010000000000000000, 291.040000000000000000] fs
+    theorem = E8PConstants.TauValues.tau_lifetime_corrected
     decay   = conditional total lifetime; tau, inferred from its electronic branch; m^5 scaling with the phase-space, W-propagator and one-loop QED partial-width ratio; measured muon lifetime and B_e; not an independent total-width prediction
-    note    = uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (alpha(m_tau)^-1 = 133.3 supplied)
+    note    = uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (the same supplied leptonic running law at the tau scale)
     comparison = combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error
     exp  = 290.300000000000 ± 0.820000000000  (pdg_2024)
-    diff = 0.745000000000
-    σ    = +0.90
+    diff = 0.725000000000
+    σ    = +0.88
   muon_lifetime_finite  —  
     value   = [1250000000000000.000000000000000000, 2500000000000000.000000000000000000] m_e^-1
     theorem = PMElementaryParticles.muonFiniteLifetime_bounds
@@ -416,12 +417,12 @@ Elementary Particles
     note    = finite 3x3x3 channel; all modes open; broad natural-unit interval
   tau_lifetime_e8_natural  —  
     value   = [160000000.000000000000000000, 340000000.000000000000000000] m_e^-1
-    theorem = PMElementaryParticles.TauE8.tauLifetimeE8_bounds
+    theorem = E8PConstants.TauValues.tauLifetimeE8_bounds
     decay   = conditional total lifetime; tau, inferred from its electronic branch; tree-level m^5 scaling; broad natural-unit enclosure; E8 tree muon lifetime; supplied B_e
     note    = E8 muon input; broad natural-unit interval
   muon_lifetime_s  —  \tau_\mu=192\pi^3/(G_F^2 m_\mu^5\,(1+\Delta q^{(0)}+\Delta q^{(1)}+\Delta q^{(2)}))
     value   = [0.000002196974000000, 0.000002196984000000] s
-    theorem = PMElementaryParticles.Values.muonLifetimeFull_bounds
+    theorem = PMElementaryParticles.Values.lifetime_bounds
     decay   = inclusive total lifetime; mu -> e nu nubar [gamma]; massive tree phase space plus the Fermi-theory QED series through two loops with electron-mass terms (van Ritbergen-Stuart); E8 G_F, alpha and m_mu/m_e; alpha(m_mu) from E8 alpha; supplied series coefficients
     note    = E8 G_F, m_mu/m_e and alpha; phase space f(r) derived (MassiveWidth.phase); the QED series 1 + dq0 + dq1 + dq2 of van Ritbergen-Stuart supplied (one-loop with electron-mass terms, two-loop 6.700, alpha(m_mu)^-1 = alpha^-1 - (2/3pi) ln(m_mu/m_e)); higher orders are below 1 ppm; G_F itself is scored in fermi_constant, so this reference is not scored
     exp  = 0.000002196981 ± 2.200000e-12  (pdg_2024)
@@ -691,7 +692,6 @@ Cosmology
     diff = -0.193333333334
     σ    = -3.87
 
-
 ==================== Audit (e8p --audit) ====================
 
 e8p audit — model value (proved enclosure) vs experimental reference (display σ is exact rational).
@@ -802,10 +802,10 @@ Elementary Particles
   ✓ top_mev: model [172657.000000000000000000, 172686.000000000000000000] MeV
       exp 172570.000000000000 ± 290.000000000000 (pdg_2024); diff 101.500000000000; σ +0.35
       note: tier ledger (paper assignment, declared input; not yet read from the wire)
-  ✓ tau_lifetime_fs: model [291.030000000000000000, 291.060000000000000000] fs
-      exp 290.300000000000 ± 0.820000000000 (pdg_2024); diff 0.745000000000; σ +0.90
+  ✓ tau_lifetime_fs: model [291.010000000000000000, 291.040000000000000000] fs
+      exp 290.300000000000 ± 0.820000000000 (pdg_2024); diff 0.725000000000; σ +0.88
       decay: conditional total lifetime; tau, inferred from its electronic branch; m^5 scaling with the phase-space, W-propagator and one-loop QED partial-width ratio; measured muon lifetime and B_e; not an independent total-width prediction
-      note: uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (alpha(m_tau)^-1 = 133.3 supplied)
+      note: uses measured muon lifetime and B_e; 0.82 fs comparison uncertainty already combines 0.5 fs measurement and about 0.65 fs from B_e; partial-width ratio includes phase space (derived), W propagator (E8 M_W) and one-loop QED at each lepton scale (the same supplied leptonic running law at the tau scale)
       comparison: combined comparison uncertainty: 0.5 fs measured lifetime and about 0.65 fs propagated B_e input, rounded to 0.82 fs; not a 0.82 fs experimental lifetime error
   · muon_lifetime_s: model [0.000002196974000000, 0.000002196984000000] s
       exp 0.000002196981 ± 2.200000e-12 (pdg_2024); diff -2.100000e-12; σ -0.96
@@ -922,9 +922,9 @@ Cosmology
   Paper 1: N = 7; χ² = 59.859; reduced χ² = 8.551
   Paper 3: N = 7; χ² = 2.031; reduced χ² = 0.290
   Paper 4: N = 18; χ² = 52.768; reduced χ² = 2.931
-  Paper 5: N = 25; χ² = 8808.336; reduced χ² = 352.333
+  Paper 5: N = 25; χ² = 8808.293; reduced χ² = 352.331
   Paper 6: N = 6; χ² = 1.973; reduced χ² = 0.328
-  All selected: N = 63; χ² = 8924.969; reduced χ² = 141.666
+  All selected: N = 63; χ² = 8924.925; reduced χ² = 141.665
 
 ==================== Summary (e8p --summary) ====================
 
@@ -1002,8 +1002,8 @@ arithmetic intervals do not include theory uncertainty from omitted channels or 
 | `z_eq` | 3377.2 | 3387.0 ± 21 | dimensionless | 2 | -0.47 | — | planck_2018 | `PMCosmology.Background.z_eq_bounds` |
 | `light_generations` | 3.0000 | 2.9963 ± 0.0074 | generations | 2 | +0.50 | — | janot_jadach_2020 | `PMElementaryParticles.EPSpine.generation_card` |
 | `neutral_pion_finite_lifetime_s` | 8.4600e-17 | 8.5304e-17 ± 1.3e-18 | s | 2 | -0.54 | — | pdg_2024_pi0_gamma_gamma_partial | `PMHadrons.neutralPionFiniteLifetimeSeconds_bounds` |
+| `tau_lifetime_fs` | 291.02 | 290.30 ± 0.82 | fs | 2 | +0.88 | measured_muon_lifetime, B_e | pdg_2024 | `E8PConstants.TauValues.tau_lifetime_corrected` |
 | `cabibbo` | 0.22439 | 0.22501 ± 6.8e-4 | dimensionless | 2 | -0.90 | — | navas_review_2024 | `PMFlavor.Values.cabibbo_bounds` |
-| `tau_lifetime_fs` | 291.04 | 290.30 ± 0.82 | fs | 2 | +0.90 | measured_muon_lifetime, B_e | pdg_2024 | `PMElementaryParticles.Values.tauLifetimeCorrectedFs_bounds` |
 | `baryon_pm3J` | 6.0750e-10 | 6.1200e-10 ± 4.0e-12 | dimensionless | 2 | -1.13 | — | planck_2018 | `PMCosmology.Primordial.baryon_windows` |
 | `charm_mev` | 1267.2 | 1273.0 ± 4.6 | MeV | 2 | -1.25 | — | pdg_2024 | `PMElementaryParticles.QuarkMasses.charm_value` |
 | `f_k_mev` | 154.56 | 155.70 ± 0.30 | MeV | 2 | -3.79 | — | flag_2024 | `PMHadrons.KaonWidth.kaonDecayConstantMeV_bounds` |

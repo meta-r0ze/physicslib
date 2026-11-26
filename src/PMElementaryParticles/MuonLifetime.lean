@@ -29,17 +29,17 @@ open PMElementaryParticles.Widths
 
 /-- Muon width in `m_e` units. -/
 def muonWidth : ℝ :=
-  fermiME ^ 2 * muon ^ 5 / (192 * Real.pi ^ 3)
+  (PMConstants.Values.fermi 1) ^ 2 * muon ^ 5 / (192 * Real.pi ^ 3)
 
 theorem muonWidth_eq_integral :
-    muonWidth = ∫ E in (0 : ℝ)..(muon / 2), MuonRate.rate fermiME muon E := by
+    muonWidth = ∫ E in (0 : ℝ)..(muon / 2), MuonRate.rate (PMConstants.Values.fermi 1) muon E := by
   unfold muonWidth
   rw [MuonRate.muon_rate]
 
 theorem muonWidth_pos : 0 < muonWidth := by
   unfold muonWidth
   have hm : 0 < muon := by linarith [muon_value.1]
-  have hnum : 0 < fermiME ^ 2 * muon ^ 5 :=
+  have hnum : 0 < (PMConstants.Values.fermi 1) ^ 2 * muon ^ 5 :=
     mul_pos (sq_pos_of_pos fermiME_pos) (pow_pos hm 5)
   have hden : 0 < 192 * Real.pi ^ 3 := by positivity
   exact div_pos hnum hden
@@ -65,19 +65,19 @@ theorem muonCoefficientE8_eq : muonCoefficientE8 = 192 := by
 /-- Muon width written with the E8 coefficient. -/
 theorem muonWidth_eq_E8 :
     muonWidth =
-      fermiME ^ 2 * muon ^ 5 / ((muonCoefficientE8 : ℝ) * Real.pi ^ 3) := by
+      (PMConstants.Values.fermi 1) ^ 2 * muon ^ 5 / ((muonCoefficientE8 : ℝ) * Real.pi ^ 3) := by
   unfold muonWidth
   rw [muonCoefficientE8_eq]
   norm_num
 
 
 /-- Broad enclosure of the Fermi constant in `m_e⁻²`. -/
-theorem fermiME_bounds : (2.9e-12 : ℝ) < fermiME ∧ fermiME < (3.2e-12 : ℝ) := by
+theorem fermiME_bounds : (2.9e-12 : ℝ) < (PMConstants.Values.fermi 1) ∧ (PMConstants.Values.fermi 1) < (3.2e-12 : ℝ) := by
   have h := PMConstants.Values.fermi_bounds
   have he : (2.6e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
       PMConstants.Values.electronGeV ^ 2 < (2.62e-7 : ℝ) := by
     unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV PMSubstrate.SIUnits.electronMassGeV; norm_num
-  unfold fermiME
+  rw [← PMConstants.Values.fermi_electronUnit]
   change (2.9e-12 : ℝ) <
     PMConstants.Values.fermi PMConstants.Values.electronGeV *
     PMConstants.Values.electronGeV ^ 2 ∧
@@ -86,12 +86,12 @@ theorem fermiME_bounds : (2.9e-12 : ℝ) < fermiME ∧ fermiME < (3.2e-12 : ℝ)
   constructor <;> nlinarith [h.1, h.2, he.1, he.2]
 
 /-- Tighter enclosure of the Fermi constant in `m_e⁻²`. -/
-theorem fermiME_bounds_tight : (3.04e-12 : ℝ) < fermiME ∧ fermiME < (3.05e-12 : ℝ) := by
+theorem fermiME_bounds_tight : (3.04e-12 : ℝ) < (PMConstants.Values.fermi 1) ∧ (PMConstants.Values.fermi 1) < (3.05e-12 : ℝ) := by
   have h := PMConstants.Values.fermi_bounds
   have he : (2.6111e-7 : ℝ) < PMConstants.Values.electronGeV ^ 2 ∧
       PMConstants.Values.electronGeV ^ 2 < (2.6113e-7 : ℝ) := by
     unfold PMConstants.Values.electronGeV PMConstants.ElectroweakBounds.electronGeV PMSubstrate.SIUnits.electronMassGeV; norm_num
-  unfold fermiME
+  rw [← PMConstants.Values.fermi_electronUnit]
   change (3.04e-12 : ℝ) <
     PMConstants.Values.fermi PMConstants.Values.electronGeV *
     PMConstants.Values.electronGeV ^ 2 ∧
@@ -106,8 +106,8 @@ theorem muonWidth_bounds : (4.0e-16 : ℝ) < muonWidth ∧ muonWidth < 8.0e-16 :
   have hm2 : muon < (210.0 : ℝ) := by linarith [muon_value.2]
   have hp1 : (3.14 : ℝ) < Real.pi := by linarith [Real.pi_gt_d20]
   have hp2 : Real.pi < (3.15 : ℝ) := by linarith [Real.pi_lt_d20]
-  have hf2lo : (8e-24 : ℝ) < fermiME ^ 2 := by nlinarith [hf.1]
-  have hf2hi : fermiME ^ 2 < (1.1e-23 : ℝ) := by nlinarith [hf.2]
+  have hf2lo : (8e-24 : ℝ) < (PMConstants.Values.fermi 1) ^ 2 := by nlinarith [hf.1]
+  have hf2hi : (PMConstants.Values.fermi 1) ^ 2 < (1.1e-23 : ℝ) := by nlinarith [hf.2]
   have hm5lo : (3.2e11 : ℝ) < muon ^ 5 := by
     have h := pow_lt_pow_left₀ hm1 (by linarith [hm1] : (0:ℝ) ≤ (200.0:ℝ))
       (by norm_num : (5:ℕ) ≠ 0)
@@ -124,11 +124,11 @@ theorem muonWidth_bounds : (4.0e-16 : ℝ) < muonWidth ∧ muonWidth < 8.0e-16 :
     have h := pow_lt_pow_left₀ hp2 (by linarith [hp1] : (0:ℝ) ≤ Real.pi)
       (by norm_num : (3:ℕ) ≠ 0)
     norm_num at h; linarith [h]
-  have hf2pos : (0 : ℝ) < fermiME ^ 2 := by positivity
+  have hf2pos : (0 : ℝ) < (PMConstants.Values.fermi 1) ^ 2 := by positivity
   have hm5pos : (0 : ℝ) < muon ^ 5 := by positivity
-  have hnumlo : (8e-24 : ℝ) * (3.2e11 : ℝ) < fermiME ^ 2 * muon ^ 5 :=
+  have hnumlo : (8e-24 : ℝ) * (3.2e11 : ℝ) < (PMConstants.Values.fermi 1) ^ 2 * muon ^ 5 :=
     mul_lt_mul hf2lo hm5lo.le (by norm_num) (le_of_lt hf2pos)
-  have hnumhi : fermiME ^ 2 * muon ^ 5 < (1.1e-23 : ℝ) * (4.1e11 : ℝ) :=
+  have hnumhi : (PMConstants.Values.fermi 1) ^ 2 * muon ^ 5 < (1.1e-23 : ℝ) * (4.1e11 : ℝ) :=
     mul_lt_mul hf2hi hm5hi.le hm5pos (by norm_num)
   have hden : (0 : ℝ) < 192 * Real.pi ^ 3 := by positivity
   unfold muonWidth

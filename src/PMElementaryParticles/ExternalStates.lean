@@ -19,6 +19,51 @@ support (`PMConstants.OnShell.persistent_single_frequency`, the beats argument).
 Still inputs: which sign is called the particle (positive energy is a convention once the sign is
 single), and the identification of the external particle with a persisting state of the
 substrate.
+
+### Charged density and wall leakage
+
+`PMAction.WallRestChirality.chargedPart_is_native_density` identifies the retained `(d, b)`
+coordinates of the two-wall model with the native chiral density projector.
+At rest, `ExactZeroMode.H` couples only opposite chiralities. Its two chiral
+eigenvalue equations force equal squared norms in the two sectors for every
+nonzero real eigenvalue. Thus a unit-normalized mode supplies exactly half its
+squared norm to the charged density (`PMAction.WallRestChirality.charged_weight_half`).
+
+For orthonormal daughter columns in the full wall space, `daughter_sum_eq_projection`
+gives the sum of squared density amplitudes as the squared norm projected onto
+their span. With an isometric generation rotation on the charged sector,
+`density_strength_eq_half_fraction` gives one half of the projected fraction.
+The common half cancels in a ratio of two such unweighted strengths (with
+nonzero calibration strength). These identities use no measured mixing entries
+or fitted wall weights. `paired_window_strength` proves that a window of
+complete nonzero-energy chiral pairs gives twice the unweighted density
+strength of its positive-energy subset. The factor cancels against the muon
+strength if both windows meet the same conditions. For the factorized contact
+model with two massless spectators, `contactWeight_open` supplies the exact
+integrated weight for a massive daughter. `contact_channel_pos_iff` gives a
+strictly positive contribution exactly for an open channel with nonzero
+amplitude (and nonzero contact coupling). For two spectator masses
+`m₁, m₂`, `PairInvariantSpectrum.massive_pair_window` proves the open
+pair-invariant interval `(m₁ + m₂)² < s < (m − μ)²`. Its interior exists
+exactly when `μ + m₁ + m₂ < m` (`massive_channel_open_iff`). The positive
+rest momentum of the pair exists at every energy above its threshold.
+`MassiveVolume.shell_density_at_energy` supplies the pair shell factor for
+all nonnegative spectator masses. `MassivePair.pair_contraction` transports
+and contracts the massive tensor. `PairInvariantSpectrum.massive_contact_density`
+then multiplies the angularly averaged V–A rate by the recoil measure and
+parent flux. Its integrated weight `massiveContactWidth` is a one-dimensional
+integral over the physical daughter-energy interval and vanishes for a closed
+channel. The two-massless-spectator limit agrees exactly with the earlier
+integrated width. The native amplitude and physical state assignment
+are still needed to apply these contact weights.
+`PMAction.NativeWallOffset.rest_offset_breaks_chirality` shows that a retained
+one-wall lazy offset breaks the chiral anticommutation even after a common
+energy shift. In that case the off-diagonal model's paired-window factor
+requires rechecking against the new spectrum.
+
+**Daughter channels.** The contact-width results apply with supplied physical states and their masses. `ExternalStates.persistent_on_shell` gives the on-shell relation. The admitted current, state assignment and open channels are needed for a decay calculation.
+
+
 -/
 
 noncomputable section

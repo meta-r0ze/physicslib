@@ -1,6 +1,6 @@
 import PMElementaryParticles.ElectricHeavyRecord
 import PMElementaryParticles.ChargedInsertion
-import PMElementaryParticles.ElectricCompanionSetupToll
+import PMElementaryParticles.ElectricCompanionSetupFlagCosts
 import PMKAutomaton.Interface
 
 /-!
@@ -47,15 +47,15 @@ identifies it with the full family of persistent E8 executions.
 sector visits. It uses `EventRequirements.massiveFlag` for a full
 doublet visit with equal wall populations, as justified by `massive_flag`.
 A separate vacancy probe has the uncompensated flags at `3π/4`
-(`ProtocolToll.selector_step_flags`). The two matched visits, evaluated
+(`ProtocolFlagCosts.selector_step_flags`). The two matched visits, evaluated
 on their selected static input, contribute zero by `matched_flag_account`.
 A setup placed on the certified equal-slot companion program uses its
-primitive flag account (`ElectricCompanionSetupToll.equal_slot_setup_sum`).
+primitive flag account (`ElectricCompanionSetupFlagCosts.equal_slot_setup_sum`).
 Other setup implementations have an unpriced account.
 
-`knownToll` adds the proved flags only where the schedule charges the
+`paidVisitFlagSubtotal` adds the proved flags only where the schedule charges the
 visit. `unpricedVisits` identifies marked visits without a flag
-certificate. `fullToll` also takes an explicit remainder for unpriced
+certificate. `scheduleCostWithRemainder` also takes an explicit remainder for unpriced
 primitive work, seed supply, export, restoration, renewal and controller
 work. These costs can matter even if the comparison's output flag is zero.
 No remainder is assigned. Comparison-output flags and primitive-factor
@@ -162,7 +162,7 @@ template does not assume removal of an optional visit preserves physical
 admission and the remaining costs.
 
 With both electric output flags paid and other work held out of the
-subtotal, `knownToll_recordOnly`, `colour_tolls` and `lepton_tolls`
+subtotal, `paidVisitFlagSubtotal_recordOnly`, `colour_tolls` and `lepton_tolls`
 give the following known budgets.
 
 | Sector reference | Electron | Up | Down | Survival amplitude order for the bit subtotal |
@@ -172,7 +172,7 @@ give the following known budgets.
 
 `polarity_tradeoff` proves that neither row minimizes the known Toll
 for every charged label. The position flag agrees across references.
-The sector flag reverses. `WireReferenceCost.bitToll_difference`
+The sector flag reverses. `WireReferenceCost.writeFlagCount_difference`
 gives `+1` for each colourless slot and `−1` for each coloured slot.
 For a normalized population that runs the reader on its support,
 `population_difference` gives the expected difference, colour minus
@@ -209,7 +209,7 @@ sums by `ReadoutAdditivity.additive_read`. That is a different
 execution claim from sampling a single incoming slot per cycle.
 The remainder must have the same units as the bit cost.
 
-`knownToll_eq_of_paid_eq` proves that changing slots or live branch
+`paidVisitFlagSubtotal_eq_of_paid_eq` proves that changing slots or live branch
 while retaining the same polarity and paid visits leaves the subtotal
 fixed. If both placements are admitted and their full costs are equal,
 `tied_minimum` carries optimality from one to the other. A selection
@@ -237,9 +237,9 @@ is one event. Later record shifts have their own price.
 
 | Stage | Colour-reference account | Lepton-reference account |
 | --- | --- | --- |
-| Seed loading and bank preparation | A supplied first-wall odd rest seed gives one unit of incoming reference population per visit (`OddReferenceSource.odd_seed_train_restores`). The companion setup gives active and static flag sums 1/2 and 3/4, with mean 5/8 at equal wall weights (`ElectricCompanionSetupToll.primitive_setup_sum`, `equal_slot_setup_sum`). | The same conditional budgets apply if this writer uses that seed and setup. Seed supply, loading admission, visits and which flags are paid remain open for both references. Population is a supply requirement. The inverse decoder's preparation instead gives one flag on its supplied seed (`ElectricPrimitiveToll.preparation_flags`). |
-| Writer pulse control | The exhibited two-bit root writer has factor budget `1 + T_colour/2` per visited input (`ElectricHeavyRecord.pulse_flags`, `two_bit_factor_toll`). | The complemented sector flag gives `1 + T_lepton/2` under the same writer contract (`WireReferenceCost.factorFlagToll_eq`). Use the factor ledger in place of the output-bit ledger. Joint coupling, scheduling and physical pricing of the visits remain open. |
-| Primitive decoder and current alternatives | `ElectricPrimitiveToll.primitive_decoder_flags` and `forward_tolls` account for the alternate short decoder. `ElectricChiralKick.swapped_exposure_toll` and `total_tolls` include its current kicks and intervening swap. | These are other writer circuits. They supply no marginal polarity price for the two-bit word. Both references still need a physical pulse tariff and actual allocation of the selected program. |
+| Seed loading and bank preparation | A supplied first-wall odd rest seed gives one unit of incoming reference population per visit (`OddReferenceSource.odd_seed_train_restores`). The companion setup gives active and static flag sums 1/2 and 3/4, with mean 5/8 at equal wall weights (`ElectricCompanionSetupFlagCosts.primitive_setup_sum`, `equal_slot_setup_sum`). | The same conditional budgets apply if this writer uses that seed and setup. Seed supply, loading admission, visits and which flags are paid remain open for both references. Population is a supply requirement. The inverse decoder's preparation instead gives one flag on its supplied seed (`ElectricPrimitiveFlagCosts.preparation_flags`). |
+| Writer pulse control | The exhibited two-bit root writer has factor budget `1 + T_colour/2` per visited input (`ElectricHeavyRecord.pulse_flags`, `two_bit_factor_toll`). | The complemented sector flag gives `1 + T_lepton/2` under the same writer contract (`WireReferenceCost.factorizedWriterFlagCost_eq`). Use the factor ledger in place of the output-bit ledger. Joint coupling, scheduling and physical pricing of the visits remain open. |
+| Primitive decoder and current alternatives | `ElectricPrimitiveFlagCosts.primitive_decoder_flags` and `forward_tolls` account for the alternate short decoder. `ElectricChiralKick.swapped_exposure_toll` and `total_tolls` include its current kicks and intervening swap. | These are other writer circuits. They supply no marginal polarity price for the two-bit word. Both references still need a physical pulse tariff and actual allocation of the selected program. |
 | Export | `OpenHandoff.export_trace` puts one displaced live value from each exchange in a distinct downstream record slot. `sum_exported` gives the same sum of populations at the export slots as on those incoming live states. | The same identity holds for lepton and any supplied record train. KAutomaton of unit-population inputs thus reserves one unit per routed value. It does not price the shift or identify the two-bit record with one or two open routes. Those encodings, visits and tariffs remain open. |
 | Reset and reuse | `OpenHandoff.balanced_basis_repair_flag` gives a flag of 0 for a clean zero and 1/2 for an orthogonal written one, with equal input populations and a fresh zero. It includes a unit phase on the marked port. | The same swap would price each independently encoded and separately paid bit at half its output flag for lepton. This would add `T_ref/2` for two such resets for either reference. The actual writer-to-receiver encoding, reference renewal, any inverse uncompute and any later reuse tariff remain open. |
 | Maintenance sharing | With L in the reserved cell, the colour refresh's reference sits in the payload (`ColourReference.colour_reference_in_payload`). Its twelve payload obligations have cost `12η` in the baseline allocation model (`colour_ledger_minimal`). | `SharedReference.shared` gives one reserved type for weak and hypercharge. `ReferenceEconomy.economy_selects_lepton` picks L under colour preservation and its allocation model. `reads_reserved` treats the reserved cell as paid. This is baseline sharing. Neither reference has a proof that the heavy writer uses the same paid jobs at its required state and time. |
@@ -585,7 +585,7 @@ theorem serial_three_le_finish {ticks : ℕ} (p : Premises ticks) (s : Schedule 
   omega
 
 noncomputable section
-open PMConstants.PacketGaugeActions ProtocolInventory ProtocolToll
+open PMConstants.PacketGaugeActions ProtocolInventory ProtocolFlagCosts
 open PMAction DiagonalReadout InterferenceReadout TollAmplitude
 open scoped BigOperators
 
@@ -603,8 +603,8 @@ def visitFlag (companionSetup colourReference : Bool) (c : Channels) : Event →
       some (flagProbability (U * U) c)
   | .vacancyProbe => some (hyperchargeFlag (3 * Real.pi / 4) c)
   | .bankSetup =>
-      if companionSetup then some (((∑ j, ElectricCompanionSetupToll.visitFlag true j) +
-        ∑ j, ElectricCompanionSetupToll.visitFlag false j) / 2) else none
+      if companionSetup then some (((∑ j, ElectricCompanionSetupFlagCosts.visitFlag true j) +
+        ∑ j, ElectricCompanionSetupFlagCosts.visitFlag false j) / 2) else none
   | _ => none
 
 def paid {ticks : ℕ} (s : Schedule ticks) (e : Event) : Bool :=
@@ -612,7 +612,7 @@ def paid {ticks : ℕ} (s : Schedule ticks) (e : Event) : Bool :=
 
 /-- This is a subtotal. A visit with no proved flag contributes only to the
 unpriced part of the account, even if the schedule marks it as paid. -/
-def knownToll {ticks : ℕ} (companionSetup : Bool) (c : Channels) (s : Schedule ticks) : ℝ :=
+def paidVisitFlagSubtotal {ticks : ℕ} (companionSetup : Bool) (c : Channels) (s : Schedule ticks) : ℝ :=
   ∑ e, if paid s e then (visitFlag companionSetup s.1 c e).getD 0 else 0
 
 def unpricedVisits {ticks : ℕ} (companionSetup : Bool) (c : Channels)
@@ -622,28 +622,28 @@ def unpricedVisits {ticks : ℕ} (companionSetup : Bool) (c : Channels)
 /-- The explicit remainder pays the unpriced visits and any additional
 preparation, primitive pulse, export, renewal and controller costs.
 It must be supplied by a physical account. -/
-def fullToll {ticks : ℕ} (companionSetup : Bool) (unpriced : Channels → Schedule ticks → ℝ)
+def scheduleCostWithRemainder {ticks : ℕ} (companionSetup : Bool) (unpriced : Channels → Schedule ticks → ℝ)
     (c : Channels) (s : Schedule ticks) : ℝ :=
-  knownToll companionSetup c s + unpriced c s
+  paidVisitFlagSubtotal companionSetup c s + unpriced c s
 
 def amplitude {ticks : ℕ} (companionSetup : Bool) (unpriced : Channels → Schedule ticks → ℝ)
     (c : Channels) (s : Schedule ticks) : ℝ :=
-  PersistenceMechanics.EffectiveAction.attenuationWeight 1 (fullToll companionSetup unpriced c s)
+  PersistenceMechanics.EffectiveAction.attenuationWeight 1 (scheduleCostWithRemainder companionSetup unpriced c s)
 
 theorem matched_flag_account (b pol : Bool) (c : Channels) (hc : active c = false) :
     visitFlag b pol c .matchFirst = some 0 ∧ visitFlag b pol c .matchSecond = some 0 := by
   obtain ⟨h₁, h₂⟩ := ChargedInsertion.matched_flags_zero (baseProtocol c) c hc rfl
   exact ⟨congrArg some h₁, congrArg some h₂⟩
 
-theorem knownToll_eq_of_paid_eq {ticks : ℕ} (b : Bool) (c : Channels)
+theorem paidVisitFlagSubtotal_eq_of_paid_eq {ticks : ℕ} (b : Bool) (c : Channels)
     {s t : Schedule ticks} (hp : s.1 = t.1) (h : ∀ e, paid s e = paid t e) :
-    knownToll b c s = knownToll b c t := by
-  simp [knownToll, hp, h]
+    paidVisitFlagSubtotal b c s = paidVisitFlagSubtotal b c t := by
+  simp [paidVisitFlagSubtotal, hp, h]
 
 end
 
 noncomputable section
-open PMConstants.PacketGaugeActions ProtocolToll
+open PMConstants.PacketGaugeActions ProtocolFlagCosts
 open PMAction DiagonalReadout TollAmplitude
 
 /-- Exact minima once the physical scalar cost is supplied. -/
@@ -679,17 +679,17 @@ theorem tied_minimum {ticks : ℕ} (p : Premises ticks) (cost : Schedule ticks �
     heq.trans_le (((mem_minima p cost s).1 hs).2 u hu)⟩
 
 /-- The observable two-visit subtotal when both electric record flags are paid. -/
-def bitToll (colourReference : Bool) (c : Channels) : ℝ :=
+def writeFlagCount (colourReference : Bool) (c : Channels) : ℝ :=
   flag (3 * Real.pi * ElectricHeavyRecord.q c) +
     flag (3 * Real.pi / 2 * ElectricHeavyRecord.sectorDifference colourReference c)
 
 /-- In the record-only account, the finite sum is exactly the two write flags. -/
-theorem knownToll_recordOnly {ticks : ℕ} (b : Bool) (c : Channels) (s : Schedule ticks)
+theorem paidVisitFlagSubtotal_recordOnly {ticks : ℕ} (b : Bool) (c : Channels) (s : Schedule ticks)
     (hp : paid s .position = true) (hs : paid s .sector = true)
     (ho : ∀ e, e ≠ .position → e ≠ .sector → paid s e = false) :
-    knownToll b c s = bitToll s.1 c := by
+    paidVisitFlagSubtotal b c s = writeFlagCount s.1 c := by
   classical
-  unfold knownToll bitToll
+  unfold paidVisitFlagSubtotal writeFlagCount
   rw [← Finset.sum_subset (Finset.subset_univ ({.position, .sector} : Finset Event)) ?_]
   · rw [Finset.sum_pair (show Event.position ≠ Event.sector by decide)]
     simp [hp, hs, visitFlag]
@@ -698,25 +698,25 @@ theorem knownToll_recordOnly {ticks : ℕ} (b : Bool) (c : Channels) (s : Schedu
     simp [ho e h.1 h.2]
 
 theorem colour_tolls (a : Fin 3) :
-    bitToll true electronStatic = 2 ∧ bitToll true (upStatic a) = 0 ∧
-      bitToll true (downStatic a) = 1 := by
+    writeFlagCount true electronStatic = 2 ∧ writeFlagCount true (upStatic a) = 0 ∧
+      writeFlagCount true (downStatic a) = 1 := by
   obtain ⟨he, hd, hu, -⟩ := HeavyFlipRecords.orbit_record_tolls a
-  simpa only [bitToll, ElectricHeavyRecord.colour_reference_toll] using
-    (show HeavyFlipRecords.orbitRecordToll electronStatic = 2 ∧
-        HeavyFlipRecords.orbitRecordToll (upStatic a) = 0 ∧
-        HeavyFlipRecords.orbitRecordToll (downStatic a) = 1 from ⟨he, hu, hd⟩)
+  simpa only [writeFlagCount, ElectricHeavyRecord.colour_reference_toll] using
+    (show HeavyFlipRecords.orbitWriterFlagSum electronStatic = 2 ∧
+        HeavyFlipRecords.orbitWriterFlagSum (upStatic a) = 0 ∧
+        HeavyFlipRecords.orbitWriterFlagSum (downStatic a) = 1 from ⟨he, hu, hd⟩)
 
 theorem lepton_tolls (a : Fin 3) :
-    bitToll false electronStatic = 1 ∧ bitToll false (upStatic a) = 1 ∧
-      bitToll false (downStatic a) = 2 := by
+    writeFlagCount false electronStatic = 1 ∧ writeFlagCount false (upStatic a) = 1 ∧
+      writeFlagCount false (downStatic a) = 2 := by
   obtain ⟨he, hd, hu, -⟩ := ElectricHeavyRecord.lepton_reference_toll a
   exact ⟨he, hu, hd⟩
 
 /-- Neither polarity weakly improves the known cost for every charged label. -/
 theorem polarity_tradeoff (a : Fin 3) :
-    bitToll false electronStatic < bitToll true electronStatic ∧
-      bitToll true (upStatic a) < bitToll false (upStatic a) ∧
-      bitToll true (downStatic a) < bitToll false (downStatic a) := by
+    writeFlagCount false electronStatic < writeFlagCount true electronStatic ∧
+      writeFlagCount true (upStatic a) < writeFlagCount false (upStatic a) ∧
+      writeFlagCount true (downStatic a) < writeFlagCount false (downStatic a) := by
   obtain ⟨he, hu, hd⟩ := colour_tolls a
   obtain ⟨he', hu', hd'⟩ := lepton_tolls a
   rw [he, hu, hd, he', hu', hd']
@@ -725,8 +725,8 @@ theorem polarity_tradeoff (a : Fin 3) :
 /-- For a common schedule, weights on the three charged labels must be supplied.
 The remainder here includes all other contributions to the scalar objective. -/
 def polarityCost (a : Fin 3) (we wu wd : ℝ) (remainder : Bool → ℝ) (pol : Bool) : ℝ :=
-  we * bitToll pol electronStatic + wu * bitToll pol (upStatic a) +
-    wd * bitToll pol (downStatic a) + remainder pol
+  we * writeFlagCount pol electronStatic + wu * writeFlagCount pol (upStatic a) +
+    wd * writeFlagCount pol (downStatic a) + remainder pol
 
 /-- Exact threshold when the only candidates differ by sector-reference polarity
 and the two output flags are charged in both. -/

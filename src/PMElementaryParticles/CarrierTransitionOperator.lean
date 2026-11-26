@@ -57,7 +57,7 @@ def tauInitial : State := (.electron, ⟨2, by decide⟩)
 
 theorem tau_decay : Decay tauInitial muonFinal := by
   refine ⟨by simp [muonFinal], ?_, ?_⟩
-  · norm_num [cohortCharge, baseCharge, muonFinal, tauInitial]
+  · norm_num [cohortCharge, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, muonFinal, tauInitial]
   · intro d hd
     simp only [muonFinal, List.mem_cons, List.not_mem_nil, or_false] at hd
     rcases hd with rfl | rfl | rfl <;> decide

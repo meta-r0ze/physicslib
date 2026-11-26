@@ -30,7 +30,7 @@ def betaMinus : FinalStateChannel where
   initial := .down
   final := [.up, .electron, .neutrino]
   charge_conserved := by
-    norm_num [chargeSum, CarrierSpecies.charge]
+    norm_num [chargeSum, CarrierSpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, CarrierSpecies.baseProtocol, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- Neutrino species change with no charge transfer. -/
 def neutrinoFinal : FinalStateChannel where
@@ -38,7 +38,7 @@ def neutrinoFinal : FinalStateChannel where
   initial := .neutrino
   final := [.neutrino]
   charge_conserved := by
-    norm_num [chargeSum, CarrierSpecies.charge]
+    norm_num [chargeSum, CarrierSpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, CarrierSpecies.baseProtocol, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- Every declared final-state channel conserves charge by construction. -/
 theorem finalState_charge_conserved (c : FinalStateChannel) :
@@ -67,18 +67,14 @@ inductive DecaySpecies
 
 /-- Electric charge in units of `e`. -/
 def DecaySpecies.charge : DecaySpecies → ℚ
-  | .electron => -1
-  | .positron => 1
-  | .muon => -1
-  | .antimuon => 1
-  | .tau => -1
-  | .antitau => 1
-  | .electronNeutrino => 0
-  | .muonNeutrino => 0
-  | .tauNeutrino => 0
-  | .pionPlus => 1
-  | .pionZero => 0
-  | .kaonPlus => 1
+  | .electron | .muon | .tau => PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .electron
+  | .positron | .antimuon | .antitau =>
+      -PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .electron
+  | .electronNeutrino | .muonNeutrino | .tauNeutrino | .pionZero =>
+      PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .neutrino
+  | .pionPlus | .kaonPlus =>
+      PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .up -
+        PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .down
 
 def decayChargeSum (l : List DecaySpecies) : ℚ :=
   (l.map DecaySpecies.charge).sum
@@ -94,42 +90,42 @@ def muonDecay : ParticleFinalStateChannel where
   name := "e ν ν̄"
   initial := .muon
   final := [.electron, .electronNeutrino, .muonNeutrino]
-  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge]
+  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- `τ⁻ → e⁻ ν̄_e ν_τ`. -/
 def tauElectron : ParticleFinalStateChannel where
   name := "e ν ν̄"
   initial := .tau
   final := [.electron, .electronNeutrino, .tauNeutrino]
-  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge]
+  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- `π⁺ → μ⁺ ν_μ`. -/
 def pionMuon : ParticleFinalStateChannel where
   name := "μ⁺ ν"
   initial := .pionPlus
   final := [.antimuon, .muonNeutrino]
-  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge]
+  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- `π⁺ → e⁺ ν_e`. -/
 def pionElectron : ParticleFinalStateChannel where
   name := "e⁺ ν"
   initial := .pionPlus
   final := [.positron, .electronNeutrino]
-  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge]
+  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- `K⁺ → μ⁺ ν_μ`. -/
 def kaonMuon : ParticleFinalStateChannel where
   name := "μ⁺ ν"
   initial := .kaonPlus
   final := [.antimuon, .muonNeutrino]
-  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge]
+  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- `K⁺ → π⁺ π⁰`. -/
 def kaonPiPi0 : ParticleFinalStateChannel where
   name := "π⁺ π⁰"
   initial := .kaonPlus
   final := [.pionPlus, .pionZero]
-  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge]
+  charge_conserved := by norm_num [decayChargeSum, DecaySpecies.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge]
 
 /-- The particle final-state inventory. -/
 def particleFinalStates : List ParticleFinalStateChannel :=

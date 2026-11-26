@@ -1,4 +1,4 @@
-import PMElementaryParticles.ElectricPrimitiveToll
+import PMElementaryParticles.ElectricPrimitiveFlagCosts
 import PMKAutomaton.Interface
 
 /-!
@@ -271,7 +271,7 @@ private theorem first_flag (z : ℂ) :
 /-- The extra physical swap between the two current pulses has an exact
 state flag. This prices the shared-current realization, in addition to
 the earlier direct-mask exposure ledger. -/
-def swapToll (label : Channels) : ℝ :=
+def interPulseSwapFlag (label : Channels) : ℝ :=
   DiagonalReadout.flag (3 * Real.pi / 2 * q label) / 2
 
 theorem swapped_exposure_toll (label : Channels) :
@@ -280,41 +280,41 @@ theorem swapped_exposure_toll (label : Channels) :
     CommonResponse.stateFlag (kick true x) (bank 1 1) +
       CommonResponse.stateFlag swapBits (kick true x *ᵥ bank 1 1) +
       CommonResponse.stateFlag (kick true y) (swapBits *ᵥ (kick true x *ᵥ bank 1 1)) =
-        exposureToll label + swapToll label := by
+        exposureFlagSum label + interPulseSwapFlag label := by
   dsimp only
   rw [first_flag, high_seed, swap_bank, bank_swap_flag]
   have he := exposure_eq_flags label
   rw [low_seed] at he
-  rw [← he, swapToll, phase, DiagonalReadout.normSq_one_sub_exp]
+  rw [← he, interPulseSwapFlag, phase, DiagonalReadout.normSq_one_sub_exp]
   ring
 
 /-- The forward record event using the single chiral-current interaction,
 its intervening swap, and the short decoder at bit-reversed ports. -/
-def totalToll (label : Channels) : ℝ :=
-  ElectricPrimitiveToll.forwardToll label + swapToll label
+def chiralForwardFlagCost (label : Channels) : ℝ :=
+  ElectricPrimitiveFlagCosts.primitiveForwardFlagCost label + interPulseSwapFlag label
 
 /-- The electric generator supplies identical phase histories to both
 packet wall slots. Their equal-superposition flag ledger has that same price. -/
 theorem total_toll_wall_pair (label : Channels) :
-    totalToll (ControlledGluedRegister.opposite label) = totalToll label := by
-  simp only [totalToll, ElectricPrimitiveToll.forwardToll, exposureToll, swapToll,
+    chiralForwardFlagCost (ControlledGluedRegister.opposite label) = chiralForwardFlagCost label := by
+  simp only [chiralForwardFlagCost, ElectricPrimitiveFlagCosts.primitiveForwardFlagCost, exposureFlagSum, interPulseSwapFlag,
     phase_opposite, (ElectricHeavyRecord.same_wall_pair label).1]
 
-open ProtocolToll in
+open ProtocolFlagCosts in
 theorem total_tolls (a : Fin 3) :
-    totalToll electronStatic = 13 / 4 ∧ totalToll (downStatic a) = 11 / 4 ∧
-      totalToll (upStatic a) = 5 / 2 ∧ totalToll neutrinoStatic = 1 := by
+    chiralForwardFlagCost electronStatic = 13 / 4 ∧ chiralForwardFlagCost (downStatic a) = 11 / 4 ∧
+      chiralForwardFlagCost (upStatic a) = 5 / 2 ∧ chiralForwardFlagCost neutrinoStatic = 1 := by
   obtain ⟨he, hd, hu, hn⟩ := HeavyFlipControl.static_record_codes a
-  obtain ⟨te, td, tu, tn⟩ := ElectricPrimitiveToll.forward_tolls a
+  obtain ⟨te, td, tu, tn⟩ := ElectricPrimitiveFlagCosts.forward_tolls a
   change HeavyFlipControl.labelRecord electronStatic = (true, true) at he
   change HeavyFlipControl.labelRecord (downStatic a) = (false, true) at hd
   change HeavyFlipControl.labelRecord (upStatic a) = (false, false) at hu
   change HeavyFlipControl.labelRecord neutrinoStatic = (true, false) at hn
-  have hs (label : Channels) : swapToll label =
+  have hs (label : Channels) : interPulseSwapFlag label =
       (1 - (phase (3 * Real.pi / 2) label).re) / 4 := by
-    rw [phase, Complex.exp_ofReal_mul_I_re, swapToll, DiagonalReadout.flag]
+    rw [phase, Complex.exp_ofReal_mul_I_re, interPulseSwapFlag, DiagonalReadout.flag]
     ring
-  simp only [totalToll, hs, te, td, tu, tn, phase_codes, address, he, hd, hu, hn,
+  simp only [chiralForwardFlagCost, hs, te, td, tu, tn, phase_codes, address, he, hd, hu, hn,
     Bool.false_eq_true, ite_true, ite_false]
   change (3 : ℝ) + (1 - Complex.I.re) / 4 = 13 / 4 ∧
     5 / 2 + (1 - (-Complex.I).re) / 4 = 11 / 4 ∧
@@ -322,13 +322,13 @@ theorem total_tolls (a : Fin 3) :
     1 + (1 - (1 : ℂ).re) / 4 = 1
   norm_num
 
-open ProtocolToll in
+open ProtocolFlagCosts in
 /-- The extra swap changes the two gaps to one half and one quarter. -/
 theorem total_ladder (a : Fin 3) :
-    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll electronStatic) <
-        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll (downStatic a)) ∧
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll (downStatic a)) <
-        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (totalToll (upStatic a)) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (chiralForwardFlagCost electronStatic) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (chiralForwardFlagCost (downStatic a)) ∧
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (chiralForwardFlagCost (downStatic a)) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (chiralForwardFlagCost (upStatic a)) := by
   obtain ⟨he, hd, hu, -⟩ := total_tolls a
   rw [TollAmplitude.wireAmplitude_lt_iff, TollAmplitude.wireAmplitude_lt_iff, he, hd, hu]
   norm_num

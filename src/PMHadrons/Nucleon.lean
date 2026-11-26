@@ -55,8 +55,8 @@ def toProtocol : Quark → PMElementaryParticles.ProtocolInventory.BaseProtocol
 
 /-- The quark charge is exactly Paper V's protocol charge. -/
 theorem charge_eq_protocol (q : Quark) :
-    charge q = PMElementaryParticles.ProtocolDynamics.baseCharge (toProtocol q) := by
-  cases q <;> norm_num [charge, toProtocol, PMElementaryParticles.ProtocolDynamics.baseCharge]
+    charge q = PMElementaryParticles.ProtocolInventory.BaseProtocol.charge (toProtocol q) := by
+  cases q <;> norm_num [charge, toProtocol, PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 end Quark
 

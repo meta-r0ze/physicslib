@@ -42,7 +42,7 @@ open PMElementaryParticles
 open PMHadrons.CompositeMasses
 open PMElementaryParticles.Widths
 open PMConstants
-export PMElementaryParticles.SharedUnits (fermiME fermiME_pos)
+export PMElementaryParticles.SharedUnits (fermiME_pos)
 
 /-- Electron endpoint `m_n − m_p` in `m_e` units. -/
 def endpoint : ℝ := neutron - proton
@@ -105,15 +105,15 @@ theorem axialFactor_pos : 0 < axialFactor := by
 
 /-- Neutron beta width for a supplied `Vud`. -/
 def neutronWidth (Vud : ℝ) : ℝ :=
-  (fermiME * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpace
+  ((PMConstants.Values.fermi 1) * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpace
 
 theorem neutronWidth_eq (Vud : ℝ) :
     neutronWidth Vud =
-      (fermiME * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpace := rfl
+      ((PMConstants.Values.fermi 1) * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpace := rfl
 
 theorem neutronWidth_pos (Vud : ℝ) (hV : Vud ≠ 0) : 0 < neutronWidth Vud := by
   have hV2 : 0 < Vud ^ 2 := sq_pos_of_ne_zero hV
-  have hG2 : 0 < (fermiME * Vud) ^ 2 := by
+  have hG2 : 0 < ((PMConstants.Values.fermi 1) * Vud) ^ 2 := by
     rw [mul_pow]
     exact mul_pos (sq_pos_of_pos fermiME_pos) hV2
   have hden : 0 < 2 * Real.pi ^ 3 := by positivity
@@ -226,16 +226,16 @@ theorem phaseSpaceRecoil_pos : 0 < phaseSpaceRecoil := by
 
 /-- Recoil-corrected neutron width; `R` is the supplied radiative correction. -/
 def neutronWidthRecoil (Vud R : ℝ) : ℝ :=
-  R * (fermiME * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpaceRecoil
+  R * ((PMConstants.Values.fermi 1) * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpaceRecoil
 
 theorem neutronWidthRecoil_eq (Vud R : ℝ) :
     neutronWidthRecoil Vud R =
-      R * (fermiME * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpaceRecoil := rfl
+      R * ((PMConstants.Values.fermi 1) * Vud) ^ 2 / (2 * Real.pi ^ 3) * axialFactor * phaseSpaceRecoil := rfl
 
 theorem neutronWidthRecoil_pos (Vud R : ℝ)
     (hV : Vud ≠ 0) (hR : 0 < R) : 0 < neutronWidthRecoil Vud R := by
   have hV2 : 0 < Vud ^ 2 := sq_pos_of_ne_zero hV
-  have hG2 : 0 < (fermiME * Vud) ^ 2 := by
+  have hG2 : 0 < ((PMConstants.Values.fermi 1) * Vud) ^ 2 := by
     rw [mul_pow]
     exact mul_pos (sq_pos_of_pos fermiME_pos) hV2
   have hden : 0 < 2 * Real.pi ^ 3 := by positivity

@@ -22,7 +22,8 @@ inductive Boson
   deriving DecidableEq, Repr
 
 def Boson.charge : Boson → ℚ
-  | .W => 1
+  | .W => PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .up -
+      PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .down
   | .Z => 0
   | .photon => 0
 
@@ -39,8 +40,8 @@ structure TopFinal where
 
 def topFinal : TopFinal := ⟨bottomFinal, .W⟩
 
-theorem top_charge_conserved : baseCharge .up = baseCharge .down + Boson.charge .W := by
-  norm_num [baseCharge, Boson.charge]
+theorem top_charge_conserved : PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .up = PMElementaryParticles.ProtocolInventory.BaseProtocol.charge .down + Boson.charge .W := by
+  norm_num [PMElementaryParticles.ProtocolInventory.BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign, Boson.charge]
 
 /-- Leading carrier-product top amplitude. -/
 def topT : ℂ := weakOf (CarrierBridge.ofBaseProtocol .up) * weakOf (CarrierBridge.ofBaseProtocol .down)

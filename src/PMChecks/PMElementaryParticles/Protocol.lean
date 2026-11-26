@@ -80,14 +80,14 @@ def bitDiffers (p : Protocol) (b : Fin 2) : Bool :=
 
 /-- Per-period receiver Toll: the two bit-ring sums, with the certified phase
 `π` acting as the full-flip weight and phase `0` as no registration. -/
-noncomputable def receiverToll (p : Protocol) : ℝ :=
+noncomputable def receiverRegistrationCount (p : Protocol) : ℝ :=
   ∑ b : Fin 2,
     if p.phase b then
       if bitDiffers p b then (patternSum (p.firing b) p.x0 : ℝ) else 0
     else 0
 
-theorem receiverToll_nonneg (p : Protocol) : 0 ≤ receiverToll p := by
-  unfold receiverToll
+theorem receiverRegistrationCount_nonneg (p : Protocol) : 0 ≤ receiverRegistrationCount p := by
+  unfold receiverRegistrationCount
   apply Finset.sum_nonneg
   intro b _
   by_cases hp : p.phase b
@@ -108,9 +108,9 @@ theorem patternSum_empty (x0 : Fin 3) :
     patternSum (fun _ => false) x0 = 0 := by
   fin_cases x0 <;> decide +kernel
 
-theorem emptyProtocol_toll_zero (label : Channels) (reference : Bool) (x0 : Fin 3) :
-    receiverToll (emptyProtocol label reference x0) = 0 := by
-  unfold receiverToll emptyProtocol
+theorem emptyProtocol_registration_zero (label : Channels) (reference : Bool) (x0 : Fin 3) :
+    receiverRegistrationCount (emptyProtocol label reference x0) = 0 := by
+  unfold receiverRegistrationCount emptyProtocol
   apply Finset.sum_eq_zero
   intro b _
   simp [patternSum_empty]

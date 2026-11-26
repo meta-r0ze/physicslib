@@ -48,6 +48,7 @@ the text. Each appears once here; the owning TODO links back to this table.
 | Tier assignments `{0,2,3}` for up and `{0,1,2}` for down, electron and neutrino | `PMElementaryParticles.TierLedger.tiersFor`, `QuarkMasses`, `LeptonMasses` | Species mass ledgers, tier descent, decay channel tiers |
 | Lorentzian signature `(+,−,−,−)` and complex amplitudes | `SCOPE` coverage; `PMAction` amplitude and continuum modules | Continuum limits, unitary amplitudes, comparison phases |
 | The EP protocol serial route and its admitted schedule | `PMElementaryParticles.WireSchedule.Premises` | Elapsed and paid route costs, writer traffic, scheduled readout |
+| The tau electronic branching fraction is a supplied input; the scaled-muon lifetime also takes the supplied muon lifetime | `PMElementaryParticles.TauLifetime`, `TauE8`, `TauLifetimeCorrected`; instantiated only in e8p from `Experimental.lean` | Tau lifetime rows; no measured branch or muon time is defined in src |
 | The heavy branch reads the supplied record and bank | `PMAction.HeavyFlipControl`, `ElectricCompanionBank`, `ElectricChiralKick` | Heavy label branch, writer population, companion crossing |
 | The booked writer population and reset account | `PMAction.WireReferenceCost`, `PMKAutomaton.Values` thresholds | Reference thresholds, erasure versus balanced-reset accounts |
 | The charged static offset and admitted matched ports | `PMElementaryParticles.ChargedInsertion.det_flip_at_resonance`, `ResonanceLift` | Conditional wall-operator lift and selector comparison counts |

@@ -9,7 +9,7 @@ Counting each factor once, the inclusive muonic width of a charged meson is
 
   `Γ(P → μν(γ)) = G_F² |q V|² f_P² m_P m_μ² (1 − m_μ²/m_P²)² / (8π) · (1 + δ_P)`,
 
-* `G_F` from muon decay (E8, `PMElementaryParticles.SharedUnits.fermiME`);
+* `G_F` from muon decay (E8, `(PMConstants.Values.fermi 1)`);
 * `q² = 515/516`, PMFlavor's dressing of colour-carrier transitions, which muon decay does not carry
   (`PMFlavor.DressingInheritance`, `PMFlavor.Values.q2`);
 * `|V|` the E8 CKM entry (`PMFlavor.Values.vud`; `KaonWidth.vusE8`, already inside `kaonWidthE8`);

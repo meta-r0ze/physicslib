@@ -43,7 +43,7 @@ protocol inputs owned by EP, not KAutomaton:
 * the retained request field and firing pattern G (`firingPattern`,
   `bitRingTotal43_eq`);
 * the excitation occupancy and reference-record choice O (`refRecord`,
-  `bitRingEmbed`, `bitToll_eq_hamming`);
+  `bitRingEmbed`, `writeFlagCount_eq_hamming`);
 * the label record, reference and comparison angle theta in the EP half of U;
   the certified phase set is `{0, π}` (`PhaseToRecord`);
 * which label record W reads;
@@ -169,9 +169,9 @@ and the available timing constraints. The block starts remain variables.
 | Equal-class gapped crossing | Four swap steps then two amplitude parity steps on T→F, or the reverse word on F→T. The forward endpoint has address `g+2`. | Start `s_Y`. With serial principal half-pulses, reflection `j` occupies `[s_Y+2jq,s_Y+2(j+1)q)` for `j=0,…,5`. See `runGappedCrossing_encode` and `half_pulse_word`. |
 | Class-changing glued crossing | The ordered six-glued-root word gives the same-address endpoint. The heavy guarded variant checks the generation and matching record before it runs. | Start `s_C`. The same serial half-pulse budget applies if admitted. A separate execution costs another `12q`. Which event uses this word in addition to the gapped crossing is open. The endpoints have different support. |
 | Reference node passage | For `g=1`, `2→0` enters the reference class. For `g=2`, `0→1` leaves it. In both cases the node has an entry leg followed by an exit leg. For `g=0` the `1→2` insertion is direct. | `ReferenceClassHop.touches_reference_class` and `ReferenceNode.restoring_two_classes` give the route and leg count. The admittance `α/2` fixes no ticks for entry, dwell, exit or renewal. |
-| Charged-current doublet record | One position bit per charged-current event. The quark test needs the full static comparison. For lepton it can use the full or lepton-only comparison. One common full visit can serve both requirements if it reaches both. | Record must be available before the event consumes it. See `EventRequirements.pairs_of_sign`, `quark_bit_iff`, `full_reads_both` and `ProtocolToll.lepton_readout_iff`. A full visit also reads the position bit needed by the heavy record at the level of its static truth table. Shared physical preparation, polarity, storage and reuse remain open. |
+| Charged-current doublet record | One position bit per charged-current event. The quark test needs the full static comparison. For lepton it can use the full or lepton-only comparison. One common full visit can serve both requirements if it reaches both. | Record must be available before the event consumes it. See `EventRequirements.pairs_of_sign`, `quark_bit_iff`, `full_reads_both` and `ProtocolFlagCosts.lepton_readout_iff`. A full visit also reads the position bit needed by the heavy record at the level of its static truth table. Shared physical preparation, polarity, storage and reuse remain open. |
 | Heavy-flip charge record | Two bits if this candidate is used. The electric protocol reads position at charge phase `3π`, then sector at `3π/2` against the matching-position reference. `position_time_minimal` and `sector_time_minimal` bound these parameters in the stated charge-generator units. | A fresh write precedes the selected heavy crossing. Its reuse can move the write to an earlier period. Charge-generator parameters have no proved conversion to this root clock. `HeavyFlipRecords.orbit_record_minimum` counts required logical visits under its premises. |
-| Heavy bank preparation, use and reuse | On a supplied seed the short companion setup takes one root on F and two on T. A common two-root setup also works. The fresh inverse-decoder/forward-decoder alternative budgets `27q+25q`. The current-based candidate uses two kicks and an intervening swap. | Prepare before the record write, then hold the record through the guarded event. The inverse decoder pair alone exceeds one period for `q≥1` if serial. The companion transition leaves charged records occupied. Select export, explicit restoration or reuse with a supplied ready record. See `ElectricCompanionSetupToll.short_setup_on_seed_support`, `ElectricCoordinateDecoder.fresh_bank_serial_exceeds_clock` and `ElectricCompanionBank.written_port_ready_iff`. |
+| Heavy bank preparation, use and reuse | On a supplied seed the short companion setup takes one root on F and two on T. A common two-root setup also works. The fresh inverse-decoder/forward-decoder alternative budgets `27q+25q`. The current-based candidate uses two kicks and an intervening swap. | Prepare before the record write, then hold the record through the guarded event. The inverse decoder pair alone exceeds one period for `q≥1` if serial. The companion transition leaves charged records occupied. Select export, explicit restoration or reuse with a supplied ready record. See `ElectricCompanionSetupFlagCosts.short_setup_on_seed_support`, `ElectricCoordinateDecoder.fresh_bank_serial_exceeds_clock` and `ElectricCompanionBank.written_port_ready_iff`. |
 | Lightest offset selector | Two matched comparisons on T for each charged target. The selected plus output of the first feeds the retained map of the second. The vector-class test is part of the joint guard. | Both tests precede use of the selected projector. Placement may share a prepared controller only after proving the corresponding joint control and reset. `ChargedInsertion.select_static`, `joint_selector` and `BranchPulseContract.program_correct` supply operators and conditional pulse words. |
 
 Within a beta word, consecutive offsets are the prefix sums of its pulse
@@ -309,7 +309,7 @@ is a certified unitary (`PhaseToRecord.converter_unitary`). Its minus output has
 probability `DiagonalReadout.flag x` (`minus_probability`), the expected receiver
 flag is `flag x` (`expected_receiver_flag`), and the converted branch records are
 orthogonal (`converted_records_orthogonal`, `converted_branch_records_unequal`).
-`bitToll_eq_expected_conversion` recovers the EP row. The factor-two normalization
+`writeFlagCount_eq_expected_conversion` recovers the EP row. The factor-two normalization
 is the phase encoding (`nsq/4`) versus orthogonal receiver encoding (`nsq/2`).
 Gap U's flag identification is closed for all phases; no new unitary was defined.
 The physical port wiring remains part of the admitted trace, not a new choice.
@@ -329,14 +329,14 @@ the receiver comparison is twice `CommonResponse.linkFlag` of the identity,
 while `CommonComparator.flag_eq_stateFlag` shows the electric flag is
 `CommonResponse.stateFlag` of the unit phase. The EP exact record bits are
 `DiagonalReadout.flag` values from `ElectricHeavyRecord` and
-`bitToll_eq_hamming`. This is a common parent, not an exact identification:
+`writeFlagCount_eq_hamming`. This is a common parent, not an exact identification:
 the factor-two normalization remains. Gap U is not closed.
 
 **Protocol inputs moved to EP.** EP owns the retained request field and firing
 pattern (G), the excitation occupancy and reference-record choice (O), the
 label record/reference/theta part of U, which label record W reads, and the
 label Toll/paid-event part of K, plus the history/prior family H. The certified
-label dependence is `bitToll_eq_hamming`, `refRecord`, `bitRingTotal43_eq` and
+label dependence is `writeFlagCount_eq_hamming`, `refRecord`, `bitRingTotal43_eq` and
 `firingPattern`; these are protocol data, not machine data.
 
 **Next priority (KAutomaton only).** Finish the common comparator behind the

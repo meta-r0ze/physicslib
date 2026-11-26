@@ -9,13 +9,14 @@ namespace PMCosmology.NeutrinoCompatibility
 open PMConstants.FloorNeutrino
 
 /-- A small mass sum alone is not a successful oscillation spectrum. -/
-theorem small_sum_and_bad_splittings :
+theorem small_sum_and_bad_splittings {center uncertainty : ℝ} (hs : 0 < uncertainty)
+    (hwindow : center + 17 * uncertainty ≤ 0.002967) :
     PMConstants.Bulk.floorMass PMConstants.Values.alpha meEV +
       PMConstants.Bulk.floorMass PMConstants.Values.alpha meEV/43 +
       PMConstants.Bulk.floorMass PMConstants.Values.alpha meEV/43^2 < 0.0095 ∧
     17 < ((6*PMElementaryParticles.NeutrinoContext.mRest)^2-PMElementaryParticles.NeutrinoContext.mRest^2-
-      0.002534)/0.000025 :=
-  ⟨tower_sum, PMElementaryParticles.NeutrinoContext.weak_minus_rest_excluded⟩
+      center)/uncertainty :=
+  ⟨tower_sum, PMElementaryParticles.NeutrinoContext.weak_minus_rest_excluded hs hwindow⟩
 
 /-- A common response factor, including six, cannot fit both fixed
 oscillation windows even when all possible pairwise gaps may be relabeled. -/

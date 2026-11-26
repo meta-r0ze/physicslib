@@ -11,7 +11,7 @@ the setup under one registration per primitive comparison flag.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.ElectricCompanionSetupToll
+namespace PMElementaryParticles.ElectricCompanionSetupFlagCosts
 
 open Matrix PMAction GluedRegister
 open ElectricCompanionBank
@@ -116,4 +116,4 @@ theorem equal_slot_setup_sum :
   rw [primitive_setup_sum, primitive_setup_sum]
   norm_num
 
-end PMElementaryParticles.ElectricCompanionSetupToll
+end PMElementaryParticles.ElectricCompanionSetupFlagCosts

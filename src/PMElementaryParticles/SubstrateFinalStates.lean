@@ -13,20 +13,14 @@ namespace PMElementaryParticles.SubstrateFinalStates
 
 open PMElementaryParticles.ProtocolInventory
 
-/-- Charge of a base protocol, from the substrate inventory. -/
-def baseCharge : BaseProtocol → ℚ
-  | .electron => -1
-  | .up => 2 / 3
-  | .down => -1 / 3
-  | .neutrino => 0
 
 /-- Total charge of a substrate final-state list. -/
 def finalCharge (l : List BaseProtocol) : ℚ :=
-  (l.map baseCharge).sum
+  (l.map BaseProtocol.charge).sum
 
 /-- Admissible substrate final state: charge is conserved. -/
 def AdmissibleFinalState (initial : BaseProtocol) (final : List BaseProtocol) : Prop :=
-  baseCharge initial = finalCharge final
+  BaseProtocol.charge initial = finalCharge final
 
 /-- The four base protocols available as substrate states. -/
 def baseStates : List BaseProtocol :=
@@ -35,12 +29,12 @@ def baseStates : List BaseProtocol :=
 /-- Substrate beta-minus final state: `down → up + electron + neutrino`. -/
 theorem betaMinus_admissible :
     AdmissibleFinalState .down [.up, .electron, .neutrino] := by
-  norm_num [AdmissibleFinalState, finalCharge, baseCharge]
+  norm_num [AdmissibleFinalState, finalCharge, BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 /-- A single base state is trivially admissible. -/
 theorem single_admissible (b : BaseProtocol) :
     AdmissibleFinalState b [b] := by
-  simp [AdmissibleFinalState, finalCharge, baseCharge]
+  simp [AdmissibleFinalState, finalCharge, BaseProtocol.charge, PMElementaryParticles.ProtocolInventory.BaseProtocol.leptonAxis, PMElementaryParticles.ProtocolInventory.BaseProtocol.positiveSign, PMConstants.Hypercharge.electric, PMConstants.CarrierRepresentation.blAxis, PMConstants.CarrierRepresentation.t3Sign]
 
 /-- The substrate inventory has exactly these four base states. -/
 theorem baseStates_card : baseStates.length = 4 := rfl

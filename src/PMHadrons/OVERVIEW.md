@@ -158,3 +158,6 @@ Values as e8p reports them (`tools/e8p/e8p_output.txt`); a `σ` is a comparison,
 | `Γ_K/Γ_π` | 1.309978–1.309980 (`kaonPionRatioRadiative_bounds`, with `(1+δ_K)/(1+δ_π)`) | 1.3367 ± 0.0032 (−2.0%) | `fK/fπ = 70/59` against FLAG `1.1934` |
 | π⁰ → γγ | 8.44–8.48×10⁻¹⁷ s (two-photon partial) | 8.530×10⁻¹⁷ s (τ/BR(γγ); −0.5σ) | E8 `fπ`; anomaly `A = 1` derived; triangle normalization supplied |
 | K⁺ → π⁰ ℓ⁺ν | leading order (`kaonL3Width`) with E8 `m_π⁰` | — | numerical check: the neutral-pion assignment raises the massless phase factor by about 3.7% relative to the previous charged-pion assignment |
+
+The tau channel inventory takes its electronic branching fraction as an argument.
+`ParticleChannels.tauTotalRate` passes that input to EP; it defines no measured branch.

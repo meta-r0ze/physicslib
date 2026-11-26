@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Toll-to-amplitude conversion check for the heavy-label weight (external, numerical).
 
-`ProtocolToll.hyperchargeFlag_schedule_bound` excludes the ladder s_e < s_d < s_u with
+`ProtocolFlagCosts.hyperchargeFlag_schedule_bound` excludes the ladder s_e < s_d < s_u with
 s_u >= 2 s_d for a common *affine* map from a static hypercharge Toll to the wire amplitude.
 This script asks what the same static flags allow under the two multiplicative conversions the
 library already uses elsewhere:

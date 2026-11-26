@@ -36,19 +36,9 @@ functional over tier ledgers yet). The measured CODATA/PDG comparisons live in
 
 ## Feedback and pillar checks
 
-The muon ledger has a feedback term `(χ+σ)·α/(1−α)`;
-the tau ledger has none, and nothing derives either choice. The tau is low by
-`0.36(18) m_e` (−2.0σ). A feedback `k·α/(1−α)` brings it within 1σ for any
-`k` in `(24.5, 73.5)`, so `Δ`, `Δ+σ`, `Δ+χ+σ` all fit and the data cannot select one.
-The muon's own rule, applied to the tau (`χ+σ`, or all its non-`Δ` invariants),
-gives only −1.7σ to −1.5σ. The muon's remaining miss is `1.1×10⁻⁵ m_e ≈ 0.21 α²`,
-the size of a second-order term. Both residuals need a rule from the cost derivation.
-
-No common sign rule maps the ledger corrections to the `PMSubstrate.Impedance` pillars. With the `α⁻¹` signs,
-Capacity, Map and the regulator have the wrong sign. With all signs reversed they
-match, but Toll and Margin then give −5.6σ, and Protocol + Governor at `baseline`
-(`0.05250`) differ from the muon feedback (`0.05146`) by `+226σ`. The fit of
-baseline Toll to the muon residual (+0.18σ) is therefore withdrawn as a lead.
+The feedback fixed point is certified for the supplied muon loop.
+No theorem derives the choice of that loop, the tau residual, or a common pillar sign rule.
+The measured residual audit is in the reporter's `LeptonMassPulls` docstring.
 -/
 
 noncomputable section
@@ -63,17 +53,17 @@ export PMSubstrate.SpeciesFootprints.Lepton
 
 theorem muon_value : 206.7682716 < muon ∧ muon < 206.7682718 := by
   have hp := pi_b; have ha := a_b
-  have h1 : 0 < 1 - αe := by linarith [ha.2]
-  have q1 : αe * 7 / (1 - αe) < 0.05145697 := by
+  have h1 : 0 < 1 - PMConstants.Values.alpha := by linarith [ha.2]
+  have q1 : PMConstants.Values.alpha * 7 / (1 - PMConstants.Values.alpha) < 0.05145697 := by
     rw [div_lt_iff₀ h1]; nlinarith [ha.1, ha.2]
-  have q2 : 0.05145696 < αe * 7 / (1 - αe) := by
+  have q2 : 0.05145696 < PMConstants.Values.alpha * 7 / (1 - PMConstants.Values.alpha) := by
     rw [lt_div_iff₀ h1]; nlinarith [ha.1, ha.2]
-  have hm : muon = 215 - 2 - 2 * Real.pi + αe * 7 / (1 - αe) := by
+  have hm : muon = 215 - 2 - 2 * Real.pi + PMConstants.Values.alpha * 7 / (1 - PMConstants.Values.alpha) := by
     rw [muon_ledger]
     rw [PMSubstrate.E8Values.Delta_eq, PMSubstrate.E8Values.sigma_eq,
       PMSubstrate.E8Values.chi_eq]
     norm_num
-    rw [show αe = PMSubstrate.causalCoupling from rfl]
+    rw [show PMConstants.Values.alpha = PMSubstrate.causalCoupling from rfl]
     ring
   rw [hm]; constructor <;> nlinarith [hp.1, hp.2]
 

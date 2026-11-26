@@ -54,7 +54,7 @@ theorem proton_eq_causalCone :
       (causalCone : ℝ) - Real.pi * (D : ℝ) - 1 / (D : ℝ) +
         (sigma : ℝ) * PMHadrons.CompositeMasses.zTol -
           PMHadrons.CompositeMasses.zMar / (chi : ℝ) -
-            PMHadrons.CompositeMasses.αe * ((D : ℝ) + 1 / (D : ℝ)) := by
+            PMConstants.Values.alpha * ((D : ℝ) + 1 / (D : ℝ)) := by
   unfold PMHadrons.CompositeMasses.proton
   rw [base_eq_causalCone]
 
@@ -75,7 +75,7 @@ def protonFootprint : Footprint :=
   baseFootprint.add
     { toll := sigma
       residual := -PMHadrons.CompositeMasses.zMar / (chi : ℝ) -
-        PMHadrons.CompositeMasses.αe * ((D : ℝ) + 1 / (D : ℝ)) }
+        PMConstants.Values.alpha * ((D : ℝ) + 1 / (D : ℝ)) }
 
 /-- Add the neutron Toll, Margin, and boundary entries to the shared base. -/
 def neutronFootprint : Footprint :=

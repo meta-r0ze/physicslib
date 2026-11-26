@@ -31,7 +31,7 @@ open PMHadrons.MesonMasses
 open PMHadrons.NeutronRate
 
 def pionWidth (fPi : ℝ) : ℝ :=
-  fermiME ^ 2 * fPi ^ 2 * pionPlus * muon ^ 2 *
+  (PMConstants.Values.fermi 1) ^ 2 * fPi ^ 2 * pionPlus * muon ^ 2 *
     (1 - (muon / pionPlus) ^ 2) ^ 2 / (8 * Real.pi)
 
 def pionLifetime (fPi : ℝ) : ℝ :=
@@ -96,27 +96,27 @@ theorem pionWidthE8_bounds :
   have hfac := pionPhaseSpaceFactor_bounds
   have hpi1 := Real.pi_gt_d20
   have hpi2 := Real.pi_lt_d20
-  have hFpos : (0 : ℝ) < fermiME := lt_trans (by norm_num) hF.1
+  have hFpos : (0 : ℝ) < (PMConstants.Values.fermi 1) := lt_trans (by norm_num) hF.1
   have hfpos : (0 : ℝ) < pionDecayConstantE8 := lt_trans (by norm_num) hf.1
   have hmpos : (0 : ℝ) < muon := lt_trans (by norm_num) hm.1
   have hppos : (0 : ℝ) < pionPlus := lt_trans (by norm_num) hp.1
   have hfacpos : (0 : ℝ) < (1 - (muon / pionPlus) ^ 2) ^ 2 :=
     lt_trans (by norm_num) hfac.1
-  have hF2lo : (3.04e-12 : ℝ) ^ 2 < fermiME ^ 2 := by nlinarith [hF.1, hF.2]
-  have hF2hi : fermiME ^ 2 < (3.05e-12 : ℝ) ^ 2 := by nlinarith [hF.1, hF.2]
+  have hF2lo : (3.04e-12 : ℝ) ^ 2 < (PMConstants.Values.fermi 1) ^ 2 := by nlinarith [hF.1, hF.2]
+  have hF2hi : (PMConstants.Values.fermi 1) ^ 2 < (3.05e-12 : ℝ) ^ 2 := by nlinarith [hF.1, hF.2]
   have hf2lo : (254.94 : ℝ) ^ 2 < pionDecayConstantE8 ^ 2 := by nlinarith [hf.1, hf.2]
   have hf2hi : pionDecayConstantE8 ^ 2 < (254.95 : ℝ) ^ 2 := by nlinarith [hf.1, hf.2]
   have hm2lo : (206.7682716 : ℝ) ^ 2 < muon ^ 2 := by nlinarith [hm.1, hm.2]
   have hm2hi : muon ^ 2 < (206.7682718 : ℝ) ^ 2 := by nlinarith [hm.1, hm.2]
   have hprodlo :
       (3.04e-12 : ℝ)^2 * (254.94:ℝ)^2 * 273.1 * (206.7682716:ℝ)^2 * 0.182 <
-        fermiME^2 * pionDecayConstantE8^2 * pionPlus * muon^2 *
+        (PMConstants.Values.fermi 1)^2 * pionDecayConstantE8^2 * pionPlus * muon^2 *
           (1 - (muon / pionPlus)^2)^2 := by
     gcongr <;> first
       | exact hF2lo | exact hf2lo | exact hp.1 | exact hm2lo | exact hfac.1
       | exact hFpos | exact hfpos | exact hmpos | exact hppos | exact hfacpos
   have hprodhi :
-      fermiME^2 * pionDecayConstantE8^2 * pionPlus * muon^2 *
+      (PMConstants.Values.fermi 1)^2 * pionDecayConstantE8^2 * pionPlus * muon^2 *
           (1 - (muon / pionPlus)^2)^2 <
         (3.05e-12 : ℝ)^2 * (254.95:ℝ)^2 * 273.2 * (206.7682718:ℝ)^2 * 0.1826 := by
     gcongr <;> first
@@ -147,7 +147,7 @@ theorem pionLifetimeE8_bounds :
 
 /-- Pion two-body width for a daughter of mass `ml` in `m_e` units. -/
 noncomputable def pionWidthTo (fPi ml : ℝ) : ℝ :=
-  fermiME ^ 2 * fPi ^ 2 * pionPlus * ml ^ 2 *
+  (PMConstants.Values.fermi 1) ^ 2 * fPi ^ 2 * pionPlus * ml ^ 2 *
     (1 - (ml / pionPlus) ^ 2) ^ 2 / (8 * Real.pi)
 
 /-- Pion electron width with E8 `fπ`; electron mass is `1` in `m_e` units. -/

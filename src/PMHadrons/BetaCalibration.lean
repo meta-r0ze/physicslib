@@ -34,7 +34,7 @@ open PMHadrons.NeutronRate
 open PMSubstrate
 
 /-- Squared weak contact amplitude, in `m_e⁻⁴`. -/
-def weakAmplitudeSquared : ℝ := fermiME ^ 2
+def weakAmplitudeSquared : ℝ := (PMConstants.Values.fermi 1) ^ 2
 
 theorem weakAmplitudeSquared_pos : 0 < weakAmplitudeSquared := by
   unfold weakAmplitudeSquared
@@ -57,7 +57,7 @@ theorem weakChannelCost_pos : 0 < weakChannelCost := by
 def betaHazardE8 : ℝ := weakAmplitudeSquared * weakChannelCost
 
 theorem betaHazardE8_eq :
-    betaHazardE8 = fermiME ^ 2 / 3 := by
+    betaHazardE8 = (PMConstants.Values.fermi 1) ^ 2 / 3 := by
   unfold betaHazardE8 weakAmplitudeSquared weakChannelCost
   norm_num [PMSubstrate.E8Values.sigma, PMSubstrate.E8Values.chi,
     PMSubstrate.baseline]
@@ -146,7 +146,7 @@ theorem weakTransitionHazard_pos (G : ℝ) (hG : G ≠ 0) :
   positivity
 
 /-- Instantiate the operator with the E8 weak amplitude. -/
-def weakHazardFromAmplitude : ℝ := weakTransitionHazard PMHadrons.NeutronRate.fermiME
+def weakHazardFromAmplitude : ℝ := weakTransitionHazard (PMConstants.Values.fermi 1)
 
 theorem weakHazardFromAmplitude_eq :
     weakHazardFromAmplitude = betaHazardE8 := by

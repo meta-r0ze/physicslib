@@ -65,7 +65,7 @@ def pionChannel : DecayChannel :=
     map := PionWidth.pionDecayConstantE8 ^ 2
     protocol := 1
     governor := 1
-    toll := PMElementaryParticles.SharedUnits.fermiME ^ 2
+    toll := (PMConstants.Values.fermi 1) ^ 2
     margin := PMSubstrate.E8Margin.pionMargin
     action := 0 }
 
@@ -84,7 +84,7 @@ def kaonChannel : DecayChannel :=
     map := KaonWidth.kaonDecayConstantE8 ^ 2 * KaonWidth.vusE8 ^ 2
     protocol := 1
     governor := 1
-    toll := PMElementaryParticles.SharedUnits.fermiME ^ 2
+    toll := (PMConstants.Values.fermi 1) ^ 2
     margin := 1
     action := 0 }
 
@@ -181,7 +181,7 @@ theorem pionChannelCKM_rate :
   dsimp only
   simp only [neg_zero, Real.exp_zero]
   linear_combination
-    (PMElementaryParticles.SharedUnits.fermiME ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
+    ((PMConstants.Values.fermi 1) ^ 2 * PionWidth.pionDecayConstantE8 ^ 2 *
       (MesonMasses.pionPlus * PMElementaryParticles.LeptonMasses.muon ^ 2 *
         (1 - (PMElementaryParticles.LeptonMasses.muon / MesonMasses.pionPlus) ^ 2) ^ 2 /
           (8 * Real.pi))) * key

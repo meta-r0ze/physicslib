@@ -44,7 +44,7 @@ namespace PMHadrons.CompositeMasses
 open PMElementaryParticles
 open PMSubstrate
 open PMSubstrate.E8Values
-export PMElementaryParticles.SharedUnits (αe αinv me hbarc pi_b a_b g_b)
+export PMElementaryParticles.SharedUnits (me hbarc pi_b a_b g_b)
 
 /-- Paper I's Toll `Z_TOL = χ(R_M − σ)/(N³ R_M σ)`. -/
 def zTol : ℝ := (chi : ℝ) * ((RM : ℝ) - (sigma : ℝ)) /
@@ -58,18 +58,18 @@ def base : ℝ := (Delta : ℝ) ^ 2 - Real.pi * (D : ℝ) - 1 / (D : ℝ)
 
 /-- Proton: base minus the pillar costs `σ Z_TOL`, `Z_MAR/χ`, `α(D + 1/D)`. -/
 def proton : ℝ := base + (sigma : ℝ) * zTol - zMar / (chi : ℝ) -
-  αe * ((D : ℝ) + 1 / (D : ℝ))
+  PMConstants.Values.alpha * ((D : ℝ) + 1 / (D : ℝ))
 
 /-- Neutron: proton's base with the `σ/2` symmetry share and `(σ−χ) Z_TOL`. -/
 def neutron : ℝ := base + (sigma : ℝ) / 2 + ((sigma : ℝ) - (chi : ℝ)) * zTol - zMar
 
-def pion0 : ℝ := 2 * αinv - (chi : ℝ) * (sigma : ℝ) + 1 / ((nu : ℝ) - (chi : ℝ))
+def pion0 : ℝ := 2 * PMSubstrate.geometricIndex - (chi : ℝ) * (sigma : ℝ) + 1 / ((nu : ℝ) - (chi : ℝ))
 
-def kaon0 : ℝ := ((sigma : ℝ) + (chi : ℝ)) * αinv - (sigma : ℝ) + (D : ℝ) * (sigma : ℝ) -
+def kaon0 : ℝ := ((sigma : ℝ) + (chi : ℝ)) * PMSubstrate.geometricIndex - (sigma : ℝ) + (D : ℝ) * (sigma : ℝ) -
   (chi : ℝ) * Real.pi / ((nu : ℝ) - (chi : ℝ))
 
-def kaonPlus : ℝ := ((sigma : ℝ) + (chi : ℝ)) * αinv - (sigma : ℝ) + (D : ℝ) * Real.pi -
-  1 / Real.sqrt 2 - αe * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
+def kaonPlus : ℝ := ((sigma : ℝ) + (chi : ℝ)) * PMSubstrate.geometricIndex - (sigma : ℝ) + (D : ℝ) * Real.pi -
+  1 / Real.sqrt 2 - PMConstants.Values.alpha * (((sigma : ℝ) - (chi : ℝ)) / (chi : ℝ))
 
 theorem pion0_pos : 0 < pion0 := by
   unfold pion0
@@ -138,7 +138,7 @@ theorem pion0_value : (264.1 : ℝ) < pion0 ∧ pion0 < (264.2 : ℝ) := by
   constructor <;> nlinarith [hg.1, hg.2, ha.1, ha.2]
 
 def protonWith (k j : ℕ) : ℝ := base + k * zTol - zMar / j -
-  αe * ((D : ℝ) + 1 / (D : ℝ))
+  PMConstants.Values.alpha * ((D : ℝ) + 1 / (D : ℝ))
 def neutronWith (k j : ℕ) : ℝ := base + (sigma : ℝ) / 2 + k * zTol - zMar / j
 
 lemma zTol_val : zTol = 167 / 14090240 := by

@@ -16,6 +16,126 @@ The zero-energy light readout below uses the inventory convention that
 the static vacancy is excluded from the light states while its signed
 index remains in the gapped register. The on-site couplings preserve the label, with an arbitrary generation
 matrix for each label.
+
+## Readout audit notes
+
+## Glued protocol register
+
+The diagonal glue in `E₈ = D₄ ⊕ D₄` supplies two carriers of the same class per
+glued root. Following `GenerationWalls`, wall T of generation `g` uses class
+`g + 1` and carries the amplitude in the first factor. Wall F uses class
+`g − 1` and exchanges the roles of the factors. `GluedRegister` verifies that
+triality followed by factor swap takes T to F, and certifies the six-reflection
+word on all 240 roots (`crossing_word_glued`, `crossing_word_pure`).
+
+`ControlledGluedRegister` checks this placement against the EP inventory. Fix a
+generation and use F as the active wall, consistent with the second-wall
+convention of `WallChiralCurrent.kernel_projector`. Activity and the
+signed-axis index identify all 16 channels bijectively. The positive lepton
+label means neutrino on F and vacancy on T. Each channel and amplitude index
+encodes into a distinct glued root. The weak relabeling applies the antipode
+only on F, and colour permutations use the vector-frame action transported
+by triality. A glue-class-controlled pure root reflection moves the amplitude
+while preserving the channel and fixing the other wall in that generation. In particular,
+`weak_active` shows that the weak toggle preserves the active bank.
+
+The swap-plus-triality word preserves the signed axis, colour permutations and
+electric charge. It changes the glue class to stay in the same generation.
+`eq_opposite_iff` identifies the unique opposite-bank partner from the
+signed label. `runCrossing_neutral` sends the static neutral slot to the
+active neutrino with the same amplitude index, giving the `ν_R → ν_L`
+channel pairing. The inventory still calls the static slot a vacancy for
+the light-state projection. For every forward pair the static-minus-active
+hypercharge is `+1` on even signed indices and `−1` on odd indices
+(`opposite_hypercharge_step`, in the packet's integer `3Y` tags).
+The magnitude and sign agree with the existing scalar link and its
+conjugate from `PMConstants.SectorLinks` (`opposite_scalar_link`).
+For the neutral Dirac bilinear the conjugate insertion balances the
+static-minus-active difference of `+1`. This fixes the charge budget for
+using the reference link on the glued pair.
+`no_protocol_preserving_wall_exchange` concerns the separate inventory
+names. `no_root_only_wall_readout` shows that a root can occur on opposite
+walls in different generations, so the class control uses the generation.
+
+At fixed generation, reversing the ordered live and companion classes
+exchanges the banks. The weak refresh instead changes the signed label on
+the active bank. Flavor proves the distinction for its tagged in-cycle word
+in `OrientationDoublet.selected_inCycle_preserves_orientation`.
+[Flavor overview](../PMFlavor/OVERVIEW.md#wall-orientation-and-weak-refresh)
+
+### Equal-class gapped crossing
+
+`GappedGluedCrossing` identifies the word with the support of the existing
+gapped hop. The forward leg keeps the glue class, takes T at generation `g`
+to F at `g + 2`, and preserves the signed label. Four glued roots swap
+factors, and two pure roots in the destination amplitude factor implement
+the spin-axis exchange `i → i + 2`. A bare factor swap has zero
+gapped-to-gapped restriction in the common frame. With parity the restriction
+is `WallExchange.back`; the upper-right adjoint link is
+`CyclicSeesaw.cyc y ⊗ I₈`. The direct light-to-light crossing is zero.
+
+For nonzero `y`, the zero-energy Schur mass factors into one generation-space
+matrix per signed label (`occupied_light_mass`). Excluding the static vacancy
+from the light input leaves every active-neutrino row zero while retaining
+its signed index in the gapped block. Each of the three active-neutrino
+light vectors lifts to an exact zero mode of the full zero-momentum
+Hamiltonian (`neutral_exact_zero`). Each occupied label has its own two
+generation-space flip matrices, with the same inverse link between them.
+The coherent control and the flip coefficients are tracked in REVIEW.
+The class-blind
+flip disturbs the other wall's labels uniformly and mixes lepton and colour
+labels in classes `v` and `c` (`tools/label_flip_check.py`).
+
+With both light banks included, `paired_light_mass` gives the full
+label-wise Schur mass at zero energy. Its neutral block is
+`B₀ · cycInv(y) · A₀ᴴ` (`neutral_paired_mass_entry`), where `A₀` and `B₀`
+are the static and active neutral flips. In the vacancy-truncated model
+`A₀` is set to zero. Admitting and deriving the neutral flips and their
+generation dependence is separate from identifying the crossing partner.
+
+For diagonal on-site flips `A₀ = diag(a)`, `B₀ = diag(b)`, the neutral
+block is a reverse cycle. Its only entry in row `g` is at column `g + 1`
+with weight `b_g · y_g⁻¹ · conj(a_{g+1})`. The Gram matrix is diagonal
+with the squared moduli of these weights
+(`diagonal_neutral_mass_entry`, `diagonal_neutral_gram`).
+With common magnitudes on each of the two flip families and on the
+crossing, the Gram matrix is scalar for every assignment of phases
+(`diagonal_neutral_gram_uniform`). The diagonal-flip Schur mechanism
+therefore needs unequal effective weight magnitudes to split the
+neutral masses.
+
+### Static vacancy and neutral light modes
+
+`VacancyProjection.invisible_line` identifies the kernel of the absolute
+packet hypercharge generator on arbitrary coherent superpositions. It is
+one line, the inventory's static sterile slot. Its orthogonal complement is
+the generator's range (`occupied_fixed_iff`), and the weak and colour
+updates preserve that sector (`gauge_updates_preserve`). This uses the
+existing packet representation. Relative phase to the reference is a
+different readout (`PMConstants.SectorCapabilities.sterile_has_relative_phase`).
+
+`staticLight_agrees` transports the occupied projection to the
+static wall in each generation. Applying it to the output of the
+label-preserving static flip gives precisely `staticFlip`
+(`projected_static_flip`). The pure static-vacancy light vectors are
+stationary and the rest generator has no source into them. The projection
+retains the signed label in the gapped block, and the three active
+neutrino light vectors still lift to exact zero modes when the crossing
+is invertible (`neutral_zero_after_projection`).
+
+`VacancyPreparation` constructs a finite preparation using the existing
+absolute packet hypercharge transport and two-port coherent comparison.
+At the supplied phase step `6π/5`, the sterile slot is fixed and every
+occupied slot has a nontrivial fifth-root phase. Retaining the minus branch
+at the first four positive multiples of that step gives exactly
+`(5/16) · occupied` (`filter_eq_projector`). Each comparison has a
+unitary dilation. The retained branch has the occupied sector as its
+range and carries `25/256` of the squared norm of the occupied input.
+The native firing of these phase gates and routing of the retained
+branch to the static light wall still require an update law. The
+construction projects the existing neutral-degenerate Hamiltonian.
+
+
 -/
 
 noncomputable section

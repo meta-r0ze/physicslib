@@ -12,7 +12,7 @@ Seed supply, the physical joint kicks, and export/reset remain separate.
 -/
 
 noncomputable section
-namespace PMElementaryParticles.ElectricPrimitiveToll
+namespace PMElementaryParticles.ElectricPrimitiveFlagCosts
 
 open Matrix PMAction ElectricCoordinateDecoder ElectricFourPortRecord
 open PMConstants.PacketGaugeActions
@@ -206,30 +206,30 @@ theorem preparation_flags (c : Fin 3) (p : ℝ) (hp : 0 < p) (hp' : p < 1 / 2) :
 
 /-- Electric exposures and the thirteen decoder pulses, with a
 bit-reversed receiver and one registration per state flag. -/
-def forwardToll (c : Channels) : ℝ :=
-  exposureToll c + flagLedger (shortWord.reverse.map readInstruction)
+def primitiveForwardFlagCost (c : Channels) : ℝ :=
+  exposureFlagSum c + flagLedger (shortWord.reverse.map readInstruction)
     (bank (phase (3 * Real.pi / 2) c) (phase (3 * Real.pi / 2) c ^ 2))
 
-open ProtocolToll in
+open ProtocolFlagCosts in
 theorem forward_tolls (a : Fin 3) :
-    forwardToll electronStatic = 3 ∧ forwardToll (downStatic a) = 5 / 2 ∧
-      forwardToll (upStatic a) = 2 ∧ forwardToll neutrinoStatic = 1 := by
+    primitiveForwardFlagCost electronStatic = 3 ∧ primitiveForwardFlagCost (downStatic a) = 5 / 2 ∧
+      primitiveForwardFlagCost (upStatic a) = 2 ∧ primitiveForwardFlagCost neutrinoStatic = 1 := by
   obtain ⟨he, hd, hu, hn⟩ := HeavyFlipControl.static_record_codes a
   obtain ⟨te, td, tu, tn⟩ := exposure_tolls a
   change HeavyFlipControl.labelRecord electronStatic = (true, true) at he
   change HeavyFlipControl.labelRecord neutrinoStatic = (true, false) at hn
   change HeavyFlipControl.labelRecord (downStatic a) = (false, true) at hd
   change HeavyFlipControl.labelRecord (upStatic a) = (false, false) at hu
-  simp only [forwardToll, primitive_decoder_flags, te, td, tu, tn, he, hd, hu, hn]
+  simp only [primitiveForwardFlagCost, primitive_decoder_flags, te, td, tu, tn, he, hd, hu, hn]
   norm_num [address]
 
-open ProtocolToll in
+open ProtocolFlagCosts in
 /-- The bit-reversed circuit has both required strict gaps under this tariff. -/
 theorem charged_ladder (a : Fin 3) :
-    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll electronStatic) <
-        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll (downStatic a)) ∧
-      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll (downStatic a)) <
-        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (forwardToll (upStatic a)) := by
+    PersistenceMechanics.EffectiveAction.attenuationWeight 1 (primitiveForwardFlagCost electronStatic) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (primitiveForwardFlagCost (downStatic a)) ∧
+      PersistenceMechanics.EffectiveAction.attenuationWeight 1 (primitiveForwardFlagCost (downStatic a)) <
+        PersistenceMechanics.EffectiveAction.attenuationWeight 1 (primitiveForwardFlagCost (upStatic a)) := by
   obtain ⟨he, hd, hu, -⟩ := forward_tolls a
   rw [TollAmplitude.wireAmplitude_lt_iff, TollAmplitude.wireAmplitude_lt_iff, he, hd, hu]
   norm_num
@@ -248,14 +248,14 @@ private theorem output_swap_flags (j : Fin 4) :
   fin_cases j <;> norm_num [LinkExpansion.nsq_eq, Fin.sum_univ_four, Matrix.col_apply,
     swapBits, Pi.sub_apply, Pi.single_apply, Matrix.vecHead, Matrix.vecTail, Function.comp_apply]
 
-open ProtocolToll in
+open ProtocolFlagCosts in
 /-- The canonicalizing half pulse adds half a registration to up and zero
 to down. The two become equal. -/
 theorem canonical_tie (a : Fin 3) :
-    forwardToll (downStatic a) + outputSwapFlag (address (HeavyFlipControl.labelRecord (downStatic a))) =
-      forwardToll (upStatic a) + outputSwapFlag (address (HeavyFlipControl.labelRecord (upStatic a))) := by
+    primitiveForwardFlagCost (downStatic a) + outputSwapFlag (address (HeavyFlipControl.labelRecord (downStatic a))) =
+      primitiveForwardFlagCost (upStatic a) + outputSwapFlag (address (HeavyFlipControl.labelRecord (upStatic a))) := by
   obtain ⟨-, hd, hu, -⟩ := HeavyFlipControl.static_record_codes a
   obtain ⟨-, td, tu, -⟩ := forward_tolls a
   norm_num [td, tu, output_swap_flags, address, hd, hu]
 
-end PMElementaryParticles.ElectricPrimitiveToll
+end PMElementaryParticles.ElectricPrimitiveFlagCosts

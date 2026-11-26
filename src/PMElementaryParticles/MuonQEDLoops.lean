@@ -32,8 +32,11 @@ open PMElementaryParticles MuonLifetimeCorrected
 
 def logMuon : ℝ := Real.log LeptonMasses.muon
 
-/-- `α_r = α(m_μ)` with `α = 1/geometricIndex`. -/
-def alphaR : ℝ := 1 / (PMSubstrate.geometricIndex - 2 / (3 * Real.pi) * logMuon)
+/-- Supplied one-loop leptonic running law at a positive scale in electron units. -/
+def runningAlpha (scale : ℝ) : ℝ :=
+  1 / (PMSubstrate.geometricIndex - 2 / (3 * Real.pi) * Real.log scale)
+
+def alphaR : ℝ := runningAlpha LeptonMasses.muon
 
 def dq0 : ℝ := phaseFactor - 1
 
@@ -113,7 +116,9 @@ theorem alphaR_div_pi_bounds :
   obtain ⟨d1, d2⟩ := den_bounds
   have hp1 := pi_lo; have hp2 := pi_hi
   have hdpos : (0 : ℝ) < PMSubstrate.geometricIndex - 2 / (3 * Real.pi) * logMuon := by linarith
-  unfold alphaR
+  unfold alphaR runningAlpha
+  change (0.0023421564 : ℝ) < 1 / (PMSubstrate.geometricIndex - 2 / (3 * Real.pi) * logMuon) / Real.pi ∧
+    1 / (PMSubstrate.geometricIndex - 2 / (3 * Real.pi) * logMuon) / Real.pi < 0.0023421573
   rw [div_div]
   have hpos : (0 : ℝ) < (PMSubstrate.geometricIndex - 2 / (3 * Real.pi) * logMuon) * Real.pi :=
     mul_pos hdpos Real.pi_pos

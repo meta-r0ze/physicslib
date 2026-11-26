@@ -70,8 +70,8 @@ theorem uniform_if_inherited
 eliminates cross terms even for coherent input; it assigns no populations. -/
 theorem packet_flag (t : ℝ) (φ : Channels → ℂ) :
     PMAction.CommonResponse.stateFlag (hypercharge t) φ =
-      ∑ c, Complex.normSq (φ c) * ProtocolToll.hyperchargeFlag t c := by
-  simp only [ProtocolToll.hyperchargeFlag, VacancyProjection.hypercharge_flag]
+      ∑ c, Complex.normSq (φ c) * ProtocolFlagCosts.hyperchargeFlag t c := by
+  simp only [ProtocolFlagCosts.hyperchargeFlag, VacancyProjection.hypercharge_flag]
   exact PMAction.DiagonalReadout.state_flag charge_hermitian _
     VacancyProjection.charge_real t φ
 
@@ -81,8 +81,8 @@ theorem massive_pair_flag (t : ℝ) (c : Channels) :
     PMAction.CommonResponse.stateFlag (hypercharge t)
       (fun d => if d = ControlledGluedRegister.opposite c ∨ d = c
         then ((Real.sqrt 2)⁻¹ : ℂ) else 0) =
-    (ProtocolToll.hyperchargeFlag t (ControlledGluedRegister.opposite c) +
-      ProtocolToll.hyperchargeFlag t c) / 2 := by
+    (ProtocolFlagCosts.hyperchargeFlag t (ControlledGluedRegister.opposite c) +
+      ProtocolFlagCosts.hyperchargeFlag t c) / 2 := by
   have h : ControlledGluedRegister.opposite c ≠ c := by
     intro h
     have hh := ControlledGluedRegister.opposite_active c
@@ -91,45 +91,45 @@ theorem massive_pair_flag (t : ℝ) (c : Channels) :
   exact EventRequirements.massive_flag t _ _ h
 
 
-open ProtocolToll ControlledGluedRegister HeavyFlipControl
+open ProtocolFlagCosts ControlledGluedRegister HeavyFlipControl
 open PMAction.DiagonalReadout
 
-theorem bitToll_opposite (pol : Bool) (c : Channels) :
-    WireSchedule.bitToll pol (opposite c) = WireSchedule.bitToll pol c := by
+theorem writeFlagCount_opposite (pol : Bool) (c : Channels) :
+    WireSchedule.writeFlagCount pol (opposite c) = WireSchedule.writeFlagCount pol c := by
   obtain ⟨hq, hs⟩ := ElectricHeavyRecord.same_wall_pair c
-  simp [WireSchedule.bitToll, hq, hs]
+  simp [WireSchedule.writeFlagCount, hq, hs]
 
 /-- A vacancy slot has no occupied payload. If its basis slot is probed
 by this particular reader, its two output flags are those of the neutral
 partner. This is a statement about the operator, not about admission. -/
 theorem neutral_slot_tolls :
-    WireSchedule.bitToll true neutrinoStatic = 1 ∧
-    WireSchedule.bitToll false neutrinoStatic = 0 ∧
-    WireSchedule.bitToll true (opposite neutrinoStatic) = 1 ∧
-    WireSchedule.bitToll false (opposite neutrinoStatic) = 0 := by
+    WireSchedule.writeFlagCount true neutrinoStatic = 1 ∧
+    WireSchedule.writeFlagCount false neutrinoStatic = 0 ∧
+    WireSchedule.writeFlagCount true (opposite neutrinoStatic) = 1 ∧
+    WireSchedule.writeFlagCount false (opposite neutrinoStatic) = 0 := by
   obtain ⟨_, _, _, hc⟩ := HeavyFlipRecords.orbit_record_tolls 0
   obtain ⟨_, _, _, hl⟩ := ElectricHeavyRecord.lepton_reference_toll 0
-  have h : WireSchedule.bitToll true neutrinoStatic = 1 := by
-    simpa only [WireSchedule.bitToll, ElectricHeavyRecord.colour_reference_toll] using hc
-  exact ⟨h, hl, (bitToll_opposite _ _).trans h, (bitToll_opposite _ _).trans hl⟩
+  have h : WireSchedule.writeFlagCount true neutrinoStatic = 1 := by
+    simpa only [WireSchedule.writeFlagCount, ElectricHeavyRecord.colour_reference_toll] using hc
+  exact ⟨h, hl, (writeFlagCount_opposite _ _).trans h, (writeFlagCount_opposite _ _).trans hl⟩
 
 theorem sector_bit (c : Channels) : (labelRecord c).1 = !colourBulk c := by
   revert c
   decide +kernel
 
 /-- The position flag cancels for every slot. The sector flag reverses. -/
-theorem bitToll_difference (c : Channels) :
-    WireSchedule.bitToll true c - WireSchedule.bitToll false c =
+theorem writeFlagCount_difference (c : Channels) :
+    WireSchedule.writeFlagCount true c - WireSchedule.writeFlagCount false c =
       if colourBulk c = true then -1 else 1 := by
-  rw [WireSchedule.bitToll, WireSchedule.bitToll, ElectricHeavyRecord.phase_sector,
+  rw [WireSchedule.writeFlagCount, WireSchedule.writeFlagCount, ElectricHeavyRecord.phase_sector,
     ElectricHeavyRecord.phase_sector_lepton_reference, sector_bit]
   cases colourBulk c <;> simp
 
 /-- A common booked population can omit idle slots. The gap depends only
 on the two sector masses among the inputs that actually run the writer. -/
 theorem booked_population_difference (p : Channels → ℝ) :
-    (∑ c, p c * WireSchedule.bitToll true c) -
-        (∑ c, p c * WireSchedule.bitToll false c) =
+    (∑ c, p c * WireSchedule.writeFlagCount true c) -
+        (∑ c, p c * WireSchedule.writeFlagCount false c) =
       2 * (∑ c ∈ univ.filter (fun c : Channels => colourBulk c = false), p c) -
         (∑ c, p c) := by
   rw [← sum_sub_distrib]
@@ -137,15 +137,15 @@ theorem booked_population_difference (p : Channels → ℝ) :
     _ = ∑ c, (2 * (if colourBulk c = false then p c else 0) - p c) := by
       apply sum_congr rfl
       intro c _
-      rw [← mul_sub, bitToll_difference]
+      rw [← mul_sub, writeFlagCount_difference]
       cases colourBulk c <;> simp [two_mul]
     _ = _ := by rw [sum_sub_distrib, ← mul_sum, sum_filter]
 
 /-- Cost difference for a common booked population if each bit also pays
 the separate balanced reset. The terms in `U` are still supplied. -/
 theorem booked_balanced_reset_difference (p : Channels → ℝ) (U : ℝ) :
-    let G := (∑ c, p c * WireSchedule.bitToll true c) -
-      (∑ c, p c * WireSchedule.bitToll false c)
+    let G := (∑ c, p c * WireSchedule.writeFlagCount true c) -
+      (∑ c, p c * WireSchedule.writeFlagCount false c)
     G + G / 2 + U =
       U + (3 / 2) * (2 * (∑ c ∈ univ.filter
         (fun c : Channels => colourBulk c = false), p c) - (∑ c, p c)) := by
@@ -155,8 +155,8 @@ theorem booked_balanced_reset_difference (p : Channels → ℝ) (U : ℝ) :
 
 /-- For normalized inputs that all run the writer, its total booked mass is one. -/
 theorem population_difference (p : Channels → ℝ) (hnorm : ∑ c, p c = 1) :
-    (∑ c, p c * WireSchedule.bitToll true c) -
-        (∑ c, p c * WireSchedule.bitToll false c) =
+    (∑ c, p c * WireSchedule.writeFlagCount true c) -
+        (∑ c, p c * WireSchedule.writeFlagCount false c) =
       2 * (∑ c ∈ univ.filter (fun c : Channels => colourBulk c = false), p c) - 1 := by
   rw [booked_population_difference, hnorm]
 
@@ -179,7 +179,7 @@ def recordEvents (full probeVacancy colourReference : Bool) (i : Fin 2) :
 theorem expectedRecordCost_eq_mean (full probeVacancy pol : Bool) :
     expectedCost 1 (recordEvents full probeVacancy pol) =
       (∑ c : Sample full, if probeVacancy = true ∨ baseProtocol c.val ≠ none
-        then WireSchedule.bitToll pol c.val else 0) / Fintype.card (Sample full) := by
+        then WireSchedule.writeFlagCount pol c.val else 0) / Fintype.card (Sample full) := by
   unfold expectedCost
   simp only [one_mul, Fin.sum_univ_two]
   congr 1
@@ -187,7 +187,7 @@ theorem expectedRecordCost_eq_mean (full probeVacancy pol : Bool) :
   intro c _
   cases pol <;> by_cases h : probeVacancy = true ∨ baseProtocol c.val ≠ none <;>
     cases ha : (labelRecord c.val).1 <;> cases hb : (labelRecord c.val).2 <;>
-    simp [recordEvents, h, ha, hb, WireSchedule.bitToll, ElectricHeavyRecord.phase_position,
+    simp [recordEvents, h, ha, hb, WireSchedule.writeFlagCount, ElectricHeavyRecord.phase_position,
       ElectricHeavyRecord.phase_sector, ElectricHeavyRecord.phase_sector_lepton_reference]
 
 theorem sample_card (full : Bool) :
@@ -239,21 +239,21 @@ theorem balanced_reset_gap_eq_values (full probeVacancy : Bool) (G : ℝ)
 /-- For the two principal root writers, each half-unit baseline is the
 two quarter flags from `ElectricHeavyRecord.pulse_flags`. Each signed kick
 contributes half of its marked output bit, for either polarity. -/
-def factorFlagToll (colourReference : Bool) (c : Channels) : ℝ :=
+def factorizedWriterFlagCost (colourReference : Bool) (c : Channels) : ℝ :=
   (1 / 2 + (if (labelRecord c).2 = true then 1 / 2 else 0)) +
     (1 / 2 + (if (labelRecord c).1 = colourReference then 1 / 2 else 0))
 
-theorem factorFlagToll_eq (pol : Bool) (c : Channels) :
-    factorFlagToll pol c = 1 + WireSchedule.bitToll pol c / 2 := by
+theorem factorizedWriterFlagCost_eq (pol : Bool) (c : Channels) :
+    factorizedWriterFlagCost pol c = 1 + WireSchedule.writeFlagCount pol c / 2 := by
   cases pol <;>
     cases hp : (labelRecord c).2 <;> cases hs : (labelRecord c).1 <;>
-    norm_num [factorFlagToll, WireSchedule.bitToll, ElectricHeavyRecord.phase_position,
+    norm_num [factorizedWriterFlagCost, WireSchedule.writeFlagCount, ElectricHeavyRecord.phase_position,
       ElectricHeavyRecord.phase_sector, ElectricHeavyRecord.phase_sector_lepton_reference, hp, hs]
 
 theorem factor_flag_difference (c : Channels) :
-    factorFlagToll true c - factorFlagToll false c =
-      (WireSchedule.bitToll true c - WireSchedule.bitToll false c) / 2 := by
-  rw [factorFlagToll_eq, factorFlagToll_eq]
+    factorizedWriterFlagCost true c - factorizedWriterFlagCost false c =
+      (WireSchedule.writeFlagCount true c - WireSchedule.writeFlagCount false c) / 2 := by
+  rw [factorizedWriterFlagCost_eq, factorizedWriterFlagCost_eq]
   ring
 
 /-- If the refresh family and the writer are served by the same catalog

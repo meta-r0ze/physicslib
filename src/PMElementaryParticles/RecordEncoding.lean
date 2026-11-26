@@ -13,7 +13,7 @@ alone is not reversible (`record_not_injective`).
   (`ControlledGluedRegister.channelCode`) is metadata that makes the encoding reversible.
   Rule 2 holds inside the packet; no external colour store is required.
 * `metadata_lower_bound`: any reversible metadata has at least six states (the colour fibres).
-* `bitToll_colour_blind`: the record comparator cannot see colour. Every record Toll is
+* `writeFlagCount_colour_blind`: the record comparator cannot see colour. Every record Toll is
   invariant under colour permutation (`HeavyFlipControl.record_colour`).
 
 **The colour reference is a single-site state.** The record comparison is bit-level
@@ -68,9 +68,9 @@ theorem metadata_lower_bound (M : Type*) [Fintype M] (m : Channels → M)
   exact hb
 
 /-- **The record comparator is colour-blind.** -/
-theorem bitToll_colour_blind (ref : Bool) (a b : Fin 3) (c : Channels) :
-    WireSchedule.bitToll ref (permuteColour a b c) = WireSchedule.bitToll ref c := by
-  rw [IsolatedExcitation.bitToll_eq_hamming, IsolatedExcitation.bitToll_eq_hamming,
+theorem writeFlagCount_colour_blind (ref : Bool) (a b : Fin 3) (c : Channels) :
+    WireSchedule.writeFlagCount ref (permuteColour a b c) = WireSchedule.writeFlagCount ref c := by
+  rw [IsolatedExcitation.writeFlagCount_eq_hamming, IsolatedExcitation.writeFlagCount_eq_hamming,
     record_colour]
 
 /-! ## The colour reference as one site state -/

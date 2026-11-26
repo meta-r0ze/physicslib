@@ -15,14 +15,12 @@ import PMConstants.ElectroweakBounds
 * `r_W(m) = 1 + 3m²/(5M_W²)`, the `W` propagator, with the E8 `M_W` (`PMConstants.ElectroweakBounds`;
   its offset from the measured `M_W` moves the lifetime by `10⁻⁵`);
 * `δ_γ(m) = 1 − (α(m)/π)(π²/2 − 25/8)`, the one-loop QED factor at each lepton's scale:
-  `α(m_μ)` from E8 `α` (`MuonQEDLoops.alphaR`), `α(m_τ)⁻¹ = 133.3` supplied (it includes
-  hadronic vacuum polarization).
+  `α(m_μ)` from E8 `α` (`MuonQEDLoops.alphaR`), `α(m_τ)` from the same supplied leptonic running law.
 
 `tauLifeCorrected = tauLife · [f(x_μ)/f(x_τ)] · [r_W(m_μ)/r_W(m_τ)] · [δ_γ(m_μ)/δ_γ(m_τ)]`.
 
 * `phase_tau_bounds`, `wRatio_bounds`, `qedRatio_bounds`.
-* `tau_lifetime_corrected`: `291.03 < τ_τ < 291.06` fs (measured `290.3 ± 0.5`; the tree row
-  `291.15–291.17`). Still conditional on the measured `τ_μ` and supplied `B_e`.
+* `tau_lifetime_corrected`: `291.01 < τ_τ < 291.04` fs (conditional on the tree enclosure). Still conditional on the measured `τ_μ` and supplied `B_e`.
 -/
 
 noncomputable section
@@ -43,9 +41,9 @@ def wRatio : ℝ := (1 + 3 * (muon * eG) ^ 2 / (5 * wSq)) / (1 + 3 * (tau * eG) 
 
 def qedMu : ℝ := 1 - MuonQEDLoops.alphaR / Real.pi * (Real.pi ^ 2 / 2 - 25 / 8)
 
-def qedTau : ℝ := 1 - (1 / 133.3) / Real.pi * (Real.pi ^ 2 / 2 - 25 / 8)
+def qedTau : ℝ := 1 - MuonQEDLoops.runningAlpha tau / Real.pi * (Real.pi ^ 2 / 2 - 25 / 8)
 
-def tauLifeCorrected : ℝ := TauLifetime.tauLife * (phaseFactor / phaseTau) * wRatio * (qedMu / qedTau)
+def tauLifeCorrected (muonTime electronicBranch : ℝ) : ℝ := TauLifetime.tauLife muonTime electronicBranch * (phaseFactor / phaseTau) * wRatio * (qedMu / qedTau)
 
 lemma xTau_eq : xTau = 1 / 3477 ^ 2 := by unfold xTau; rw [tau_value]
 
@@ -105,34 +103,58 @@ theorem wRatio_bounds : (0.9996973 : ℝ) < wRatio ∧ wRatio < 0.9996975 := by
   have hu : 0 < u := by positivity
   constructor <;> nlinarith [mul_lt_mul_of_pos_right hm2a hu, mul_lt_mul_of_pos_right hm2b hu]
 
-theorem qedRatio_bounds : (1.0000831 : ℝ) < qedMu / qedTau ∧ qedMu / qedTau < 1.0000833 := by
+theorem tau_running_div_pi_bounds :
+    (0.0023519 : ℝ) < MuonQEDLoops.runningAlpha tau / Real.pi ∧
+      MuonQEDLoops.runningAlpha tau / Real.pi < 0.0023540 := by
+  have hx := log_xTau_bounds
+  have htpos : 0 < tau := by rw [tau_value]; norm_num
+  have hlog : Real.log xTau = -2 * Real.log tau := by
+    simp [xTau, Real.log_div, Real.log_pow]
+  rw [hlog] at hx
+  have ha := PMSubstrate.geometricIndex_bounds
+  have hp := Real.pi_gt_d20
+  have hp' := Real.pi_lt_d20
+  have hdlo : (135.23 : ℝ) <
+      PMSubstrate.geometricIndex * Real.pi - 2 / 3 * Real.log tau := by
+    nlinarith [mul_lt_mul_of_pos_left ha.1 Real.pi_pos]
+  have hdhi : PMSubstrate.geometricIndex * Real.pi - 2 / 3 * Real.log tau <
+      (425.18 : ℝ) := by
+    nlinarith [mul_lt_mul'' ha.2 hp' (by linarith) Real.pi_pos.le]
+  have hdlo' : (424.84 : ℝ) <
+      PMSubstrate.geometricIndex * Real.pi - 2 / 3 * Real.log tau := by
+    nlinarith [mul_lt_mul'' ha.1 hp (by norm_num) (by norm_num)]
+  have heq : MuonQEDLoops.runningAlpha tau / Real.pi =
+      1 / (PMSubstrate.geometricIndex * Real.pi - 2 / 3 * Real.log tau) := by
+    unfold MuonQEDLoops.runningAlpha
+    field_simp
+  rw [heq]
+  constructor
+  · rw [lt_div_iff₀ (by linarith)]; nlinarith
+  · rw [div_lt_iff₀ (by linarith)]; nlinarith
+
+theorem qedRatio_bounds : (1.000017 : ℝ) < qedMu / qedTau ∧ qedMu / qedTau < 1.000023 := by
   obtain ⟨a1, a2⟩ := MuonQEDLoops.alphaR_div_pi_bounds
+  obtain ⟨b1, b2⟩ := tau_running_div_pi_bounds
   have hp1 := MuonQEDLoops.pi_lo
   have hp2 := MuonQEDLoops.pi_hi
   have hc1 : (1.80980220054 : ℝ) < Real.pi ^ 2 / 2 - 25 / 8 := by nlinarith
   have hc2 : Real.pi ^ 2 / 2 - 25 / 8 < (1.80980220055 : ℝ) := by nlinarith
-  have hb1 : (1 / 133.3 / 3.1415926535898 : ℝ) < 1 / 133.3 / Real.pi :=
-    div_lt_div_of_pos_left (by norm_num) Real.pi_pos hp2
-  have hb2 : 1 / 133.3 / Real.pi < (1 / 133.3 / 3.14159265358979 : ℝ) :=
-    div_lt_div_of_pos_left (by norm_num) (by norm_num) hp1
-  set c := Real.pi ^ 2 / 2 - 25 / 8
-  set A := MuonQEDLoops.alphaR / Real.pi
-  set B := 1 / 133.3 / Real.pi
-  have hmu1 : (1 - 0.0023421573 * 1.80980220055 : ℝ) < qedMu := by
-    unfold qedMu; change _ < 1 - A * c; nlinarith
-  have hmu2 : qedMu < (1 - 0.0023421564 * 1.80980220054 : ℝ) := by
-    unfold qedMu; change 1 - A * c < _; nlinarith
-  have ht1 : (1 - 1 / 133.3 / 3.14159265358979 * 1.80980220055 : ℝ) < qedTau := by
-    unfold qedTau; change _ < 1 - B * c; nlinarith
-  have ht2 : qedTau < (1 - 1 / 133.3 / 3.1415926535898 * 1.80980220054 : ℝ) := by
-    unfold qedTau; change 1 - B * c < _; nlinarith
-  have htpos : 0 < qedTau := lt_trans (by norm_num) ht1
+  have hm1 : 0.995761 < qedMu := by unfold qedMu; nlinarith
+  have hm2 : qedMu < 0.995762 := by unfold qedMu; nlinarith
+  have ht1 : 0.995739 < qedTau := by unfold qedTau; nlinarith
+  have ht2 : qedTau < 0.995744 := by unfold qedTau; nlinarith
+  unfold qedMu qedTau
+  have hd : 0 < 1 - MuonQEDLoops.runningAlpha tau / Real.pi * (Real.pi ^ 2 / 2 - 25 / 8) := lt_trans (by norm_num) ht1
   constructor
-  · rw [lt_div_iff₀ htpos]; nlinarith
-  · rw [div_lt_iff₀ htpos]; nlinarith
+  · rw [lt_div_iff₀ hd]; nlinarith
+  · rw [div_lt_iff₀ hd]; nlinarith
 
-theorem tau_lifetime_corrected : (291.03 : ℝ) < tauLifeCorrected ∧ tauLifeCorrected < 291.06 := by
-  obtain ⟨t1, t2⟩ := TauLifetime.tau_lifetime_tree
+theorem tau_lifetime_corrected (muonTime electronicBranch : ℝ)
+    (htree : 291.15 < TauLifetime.tauLife muonTime electronicBranch ∧
+      TauLifetime.tauLife muonTime electronicBranch < 291.17) :
+    (291.01 : ℝ) < tauLifeCorrected muonTime electronicBranch ∧
+      tauLifeCorrected muonTime electronicBranch < 291.04 := by
+  obtain ⟨t1, t2⟩ := htree
   obtain ⟨f1, f2⟩ := phase_bounds
   obtain ⟨g1, g2⟩ := phase_tau_bounds
   obtain ⟨w1, w2⟩ := wRatio_bounds
@@ -143,7 +165,7 @@ theorem tau_lifetime_corrected : (291.03 : ℝ) < tauLifeCorrected ∧ tauLifeCo
   have hP2 : phaseFactor / phaseTau < (0.99981367 : ℝ) := by
     rw [div_lt_iff₀ hgpos]; nlinarith
   unfold tauLifeCorrected
-  set T := TauLifetime.tauLife
+  set T := TauLifetime.tauLife muonTime electronicBranch
   set P := phaseFactor / phaseTau
   set W := wRatio
   set Q := qedMu / qedTau
@@ -153,14 +175,14 @@ theorem tau_lifetime_corrected : (291.03 : ℝ) < tauLifeCorrected ∧ tauLifeCo
     mul_lt_mul'' hTP1 w1 (by norm_num) (by norm_num)
   have hTPW2 : T * P * W < (291.17 : ℝ) * 0.99981367 * 0.9996975 :=
     mul_lt_mul'' hTP2 w2 (by nlinarith) (by linarith)
-  have h1 : (291.15 : ℝ) * 0.99981353 * 0.9996973 * 1.0000831 < T * P * W * Q :=
+  have h1 : (291.15 : ℝ) * 0.99981353 * 0.9996973 * 1.000017 < T * P * W * Q :=
     mul_lt_mul'' hTPW1 q1 (by norm_num) (by norm_num)
-  have h2 : T * P * W * Q < (291.17 : ℝ) * 0.99981367 * 0.9996975 * 1.0000833 :=
+  have h2 : T * P * W * Q < (291.17 : ℝ) * 0.99981367 * 0.9996975 * 1.000023 :=
     mul_lt_mul'' hTPW2 q2 (by nlinarith) (by linarith)
   constructor
-  · have : (291.03 : ℝ) < 291.15 * 0.99981353 * 0.9996973 * 1.0000831 := by norm_num
+  · have : (291.01 : ℝ) < 291.15 * 0.99981353 * 0.9996973 * 1.000017 := by norm_num
     linarith
-  · have : (291.17 : ℝ) * 0.99981367 * 0.9996975 * 1.0000833 < 291.06 := by norm_num
+  · have : (291.17 : ℝ) * 0.99981367 * 0.9996975 * 1.000023 < 291.04 := by norm_num
     linarith
 
 end PMElementaryParticles.TauLifetimeCorrected
