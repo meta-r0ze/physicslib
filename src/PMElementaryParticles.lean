@@ -110,3 +110,4 @@ import PMElementaryParticles.FootprintNoGo
 import PMElementaryParticles.GluedExcursions
 import PMElementaryParticles.GenerationOrbits
 import PMElementaryParticles.FullGenerationOrbits
+import PMElementaryParticles.ExcitationPersistence

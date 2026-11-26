@@ -22,6 +22,13 @@ Import `PMKAutomaton.Interface` for transport and `PMKAutomaton.Values` for the 
 | What reaches the reader? | [Interface](Interface.lean) and [RingReceiver](RingReceiver.lean). The receiver rule can change a port or a flag. |
 | What can the boundary erase? | [BoundaryErasure](BoundaryErasure.lean). The account counts only a supplied export. |
 
+The first [open item](TODO.md#reachable-occupied-background) blocks isolated
+excitation persistence. The clean backward reference stream is a supplied
+input. Its renewal by the occupied vacuum and its return within one period
+are not certified. EP's `ExcitationPersistence` records the exact missing
+joint execution and resource account. Zero retained-ring erasures and a
+reversible packet lift do not fill this contract.
+
 ## KAutomaton closeout
 
 The conditional joint update, port contract and least-cost rule are in

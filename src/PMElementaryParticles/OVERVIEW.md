@@ -29,6 +29,38 @@ it is not the program count. Full occupied-program closure remains open.
 | Toll | Each differing ring registers at least once per period. | `Toll` |
 | Margin | Each registering ring stays below 43 registrations. | `Margin` |
 
+## Persistence of an isolated excitation
+
+One-period persistence is blocked by the occupied-background renewal rule. There is no certified
+joint execution on which to state the requested closed `Persists` predicate.
+`ExcitationPersistence` records the blocker without assuming a new successor
+or a restoring budget. The existing stationary vacuum, occupied register
+encoding and Boolean receiver are separate constructions.
+
+| Part | What the tree proves | What is still needed | Entry point |
+| --- | --- | --- | --- |
+| Vacuum | Distinct rest modes are stationary for the vacuum Hamiltonian. | Their occupied interaction and return to the same certified family after one period. | `ExcitationPersistence.distinct_stationary_modes` |
+| Receiver | The localized port field preserves its Boolean occupancy. Its embedding ignores the vacuum label. | Derive requests and readiness from the reachable occupied background. | `localized_embedding_ignores_vacuum`, `IsolatedExcitation.localized_occupancy_preservedN` |
+| Joint step | Reversible lifts with different packet-bank outputs exist over the same core. | Identify the admitted local bank operation and its vacuum/reference action. | `core_projection_does_not_select_packet_lift`, `Components.jointTick` |
+| Restoring input | A clean upstream backward stream supplies reference values. Loaded rest seeds can feed that stream. | Produce and renew those records within the isolated execution; close the background after 43 ticks. | `RecordSupply.clean_supply`, `OddReferenceSource.odd_seed_train_restores` |
+| Capacity | Ring Capacity bounds registration traffic. Boundary erasure counts supplied exports and dispositions. | Identify actual writes and resets, their owners and restoring inputs; prove a nonnegative within-period resource balance. | `ProgramWitness.Capacity`, `protected_step_does_not_select_boundary_account` |
+| Finite supply | A retained stream returns a previously incoming disturbance after a circuit. | Renew the ready-reference inventory rather than only recirculate it. | `finite_supply_returns_disturbance` |
+| Least cost | One registration attains the ring subtotal lower bound. One event has unit price. | An admitted persistent execution and its held-event footprint; no equality between these two counts is proved. | `ProgramWitness.witness_total`, `OccupancyCost.cost_oneEvent` |
+
+No restoring-input instance is derived for any of the three generations or
+five visible classes. Coset-0 contacts, minimum events and uniqueness remain
+undetermined for every class/species row. This is not a zero footprint or a
+prediction of equal generation masses. Contact counts and minimization need the
+missing execution first. No ordering against
+`TierLedger.tiersFor` is inferred, and no one-event physical minimum is claimed.
+A zero-erasure closed ring does not certify reference renewal or zero write cost.
+The ring's full-state return can also require more than one clock period;
+`RingReceiver.ring_return_of_ports` requires its port return and two-clock condition.
+
+The [first machine TODO](../PMKAutomaton/TODO.md#reachable-occupied-background)
+states the required renewal contract. The triality-orientation question stays
+parked until a derived persistence minimum exhibits a generation tie.
+
 ## Footprint: what the generation can change
 
 | Family or test | Checked result | Lean entry point |

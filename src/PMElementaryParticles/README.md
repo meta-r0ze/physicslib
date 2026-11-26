@@ -6,6 +6,8 @@ It builds on PMSubstrate, PMAction, PMConstants and PMKAutomaton. PMFlavor follo
 The [overview](OVERVIEW.md) maps programs, pillars, charge, occupancy cost and decay.
 The [generation-orbit table](OVERVIEW.md#generation-orbits) separates the full
 clock-root groups from their label-respecting subgroups.
+The [isolated-persistence section](OVERVIEW.md#persistence-of-an-isolated-excitation)
+stops at the missing occupied-background renewal rule.
 The [open list](TODO.md) records the missing physical identifications.
 The [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 

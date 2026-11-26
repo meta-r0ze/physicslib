@@ -2,6 +2,12 @@
 
 See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
+## Persistence of an isolated excitation
+
+- Close an admitted vacuum ⊗ packet period with identified restoring inputs and a renewed stationary background; see the [machine blocker](../PMKAutomaton/TODO.md#reachable-occupied-background) (`ExcitationPersistence`).
+- Define `Persists` on that execution and connect its actual held events to `OccupancyCost.Footprint.events` before minimizing.
+- Revisit triality orientation only if a persistence-derived minimum ties generations 1 and 2 (`TierLedger.tiersFor`).
+
 ## Occupancy cost
 
 - Identify which clock data a physical cost preserves before using the cu-stabilizer (`ClockSymmetry.swap_changes_clockReading`).
@@ -25,7 +31,6 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 ## Placement and composition
 
 - Choose the physical vacuum, sector placement and map from `refRecord` to the D₄ reference (`SharedReference`, `ColourReference`).
-- Define the joint 43-ring state and prove alone/together closure (`RingSurvivors`, `ProgramWitness.Pillars`).
 - Characterize all 43-ring firing patterns at the Margin ceiling (`RingSurvivors`).
 
 ## Decay and current
