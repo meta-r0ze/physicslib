@@ -124,6 +124,7 @@ Constants
   electron_yukawa  —  \sqrt{2}/(v/m_e)
     value   = [0.000002935028450000, 0.000002935028470000] dimensionless
     theorem = PMConstants.CurrentConstants.electron_bounds
+    note    = closure value; repeats the vev comparison; no direct measurement of y_e exists
     exp  = 0.000002935000 ± 1.000000e-9  (navas_review_2024)
     diff = 2.846000e-11
     σ    = +0.02
@@ -204,7 +205,7 @@ Constants
   electron_closure  —  y_e v/(\sqrt2\,m_e)
     value   = [0.999726870000000000, 0.999726890000000000] dimensionless
     theorem = PMConstants.JointConstants.electron_closure_bounds
-    note    = gap/Yukawa reading in electron units, using the geometry-repaired Yukawa
+    note    = Standard Model tree relation m = y v/√2; scheme-dependent (running electron mass ≈ 7% between m_e and m_H), so a 2.7e-4 gap is not a test of either derivation
   b_res  —  B_{res}=\nu-\chi/(\sigma-\chi)-\alpha
     value   = [15.326035980700000000, 15.326035980800000000] dimensionless
     theorem = PMConstants.GravityAccounting.residual_tight_bounds
@@ -714,8 +715,9 @@ Substrate
       exp 12209100000000000000.000000000000 ± 100000000000000.000000000000 (mohr_codata_2025); diff -164400000000000.000000000000; σ -1.65
 
 Constants
-  ✓ electron_yukawa: model [0.000002935028450000, 0.000002935028470000] dimensionless
+  · electron_yukawa: model [0.000002935028450000, 0.000002935028470000] dimensionless
       exp 0.000002935000 ± 1.000000e-9 (navas_review_2024); diff 2.846000e-11; σ +0.02
+      note: closure value; repeats the vev comparison; no direct measurement of y_e exists
   ✓ alpha_s: model [0.117995203700000000, 0.117995203730000000] dimensionless
       exp 0.117900000000 ± 0.000900000000 (navas_review_2024); diff 0.000095203715; σ +0.10
   ✓ vev: model [246.219638100000000000, 246.219638200000000000] GeV
@@ -910,9 +912,9 @@ Cosmology
       exp 5.360000000000 ± 0.050000000000 (planck2018); diff -0.193333333334; σ -3.87
       note: raw ratio before correction; not scored, compare omega_ratio
 
-63 comparisons over 64 values:
-  |σ| ≤ 1: 40   |σ| ≤ 2: 54   |σ| ≤ 3: 56
-  12 context references not scored (·): uncorrected intermediates, the superseded Jarlskog proposal, CMB references for late-universe values.
+62 comparisons over 64 values:
+  |σ| ≤ 1: 39   |σ| ≤ 2: 53   |σ| ≤ 3: 55
+  13 context references not scored (·): uncorrected intermediates, the superseded Jarlskog proposal, CMB references for late-universe values.
   63 values have no experimental reference (proved intervals only).
 
 χ² diagnostic by deriving paper (scored references only):
@@ -920,11 +922,11 @@ Cosmology
   Correlated quantities and alternative measurements are counted separately; this is not an independent goodness-of-fit test.
   Paper 0: N = 0; χ² = 0.000; reduced χ² = n/a
   Paper 1: N = 7; χ² = 59.859; reduced χ² = 8.551
-  Paper 3: N = 7; χ² = 2.031; reduced χ² = 0.290
+  Paper 3: N = 6; χ² = 2.030; reduced χ² = 0.338
   Paper 4: N = 18; χ² = 52.768; reduced χ² = 2.931
   Paper 5: N = 25; χ² = 8808.293; reduced χ² = 352.331
   Paper 6: N = 6; χ² = 1.973; reduced χ² = 0.328
-  All selected: N = 63; χ² = 8924.925; reduced χ² = 141.665
+  All selected: N = 62; χ² = 8924.924; reduced χ² = 143.950
 
 ==================== Summary (e8p --summary) ====================
 
@@ -943,9 +945,9 @@ names it in the `measured inputs` column. The tau pull already combines its life
 ## Scoreboard
 
 - 127 values with proved enclosures; 64 have a measured reference.
-- 63 scored comparisons: |σ| ≤ 1: **40**, |σ| ≤ 2: **54**, |σ| ≤ 3: **56**.
-- Of these, 59 use no measured input beyond the units: |σ| ≤ 1: **36**, ≤ 2: **50**, ≤ 3: **52**. The rest name their measured anchor in the `measured inputs` column.
-- 12 references shown for context and not scored (see below).
+- 62 scored comparisons: |σ| ≤ 1: **39**, |σ| ≤ 2: **53**, |σ| ≤ 3: **55**.
+- Of these, 58 use no measured input beyond the units: |σ| ≤ 1: **35**, ≤ 2: **49**, ≤ 3: **51**. The rest name their measured anchor in the `measured inputs` column.
+- 13 references shown for context and not scored (see below).
 - Nuclear masses (`--masses`): 31 nuclei, |z| ≤ 1: 11, ≤ 2: 23, ≤ 3: 29 in units of the ledger's stable-line scatter (5.0 m_e).
 - Nuclear shell closures (`--shells`): [2, 8, 20, 28, 50, 82, 126]; measured magic numbers [2, 8, 20, 28, 50, 82, 126].
 - Atomic ground-state multiplicity, Hund's first rule (`--periodic-table`): 50 of 54 match.
@@ -972,7 +974,6 @@ arithmetic intervals do not include theory uncertainty from omitted channels or 
 | `muon_ratio` | 206.7682717 | 206.7682827 ± 4.6e-6 | dimensionless | 7 | -2.40 | — | mohr_codata_2025 | `PMElementaryParticles.LeptonMasses.muon_value` |
 | `pion_plus_mev` | 139.570411 | 139.570390 ± 1.8e-4 | MeV | 6 | +0.11 | — | pdg_2024 | `PMHadrons.MesonMasses.pionPlus_mev_value` |
 | `fermi_constant` | 1.16637900e-5 | 1.16637880e-5 ± 6.0e-12 | GeV^-2 | 6 | +0.33 | — | navas_review_2024 | `PMConstants.ElectroweakBounds.fermi_bounds` |
-| `electron_yukawa` | 2.9350284e-6 | 2.9350000e-6 ± 1.0e-9 | dimensionless | 5 | +0.02 | — | navas_review_2024 | `PMConstants.CurrentConstants.electron_bounds` |
 | `kaon_plus_mev` | 493.67624 | 493.67700 ± 0.016 | MeV | 5 | -0.05 | — | pdg_2024 | `PMHadrons.CompositeMasses.kaonPlus_mev_value` |
 | `kaon0_mev` | 497.61241 | 497.61100 ± 0.013 | MeV | 5 | +0.10 | — | pdg_2024 | `PMHadrons.CompositeMasses.kaon0_mev_value` |
 | `pion0_mev` | 134.97701 | 134.97680 ± 5.0e-4 | MeV | 5 | +0.42 | — | pdg_2024 | `PMHadrons.CompositeMasses.pion0_mev_value` |
@@ -1069,6 +1070,7 @@ Unknown correlations and omitted physical corrections are not supplied as fitted
 
 | quantity | E8 (proved, midpoint) | reference | why not scored |
 |---|---:|---|---|
+| `electron_yukawa` | 2.9350284e-6 | 2.9350000e-6 ± 1.0e-9 (navas_review_2024) | closure value; repeats the vev comparison; no direct measurement of y_e exists |
 | `hubble_late` | 73.032994 | 67.400000 ± 0.50 (planck_2018) | late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored |
 | `hubble_late` | 73.032994 | 67.400000 ± 1.2 (abbott_des_y1_2018) | late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored |
 | `clustering_late` | 0.76782830 | 0.83200000 ± 0.013 (planck_2018) | late-universe value; the CMB reference shows the S8 tension and is not scored |

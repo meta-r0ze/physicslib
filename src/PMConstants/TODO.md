@@ -5,6 +5,8 @@ Repo-wide named premises are listed once in [SCOPE](../../SCOPE.md#named-premise
 Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 [`Values`](Values.lean) alone; add a name there rather than importing an internal module.
 
+The electron Yukawa is a comparison label, not a premise, and is not scored.
+
 ## Premises to name or derive
 
 - Derive the bridge from the cutoff-unit wall gap (`LinkGapLaw.gapA`) to the particle occupancy cost (`PMSubstrate.OccupancyCost.cost`).

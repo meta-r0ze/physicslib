@@ -661,7 +661,8 @@ def Key.decayInfo : Key → Option DecayInfo
 def Key.caveat : Key → String
   | .wMassUnc => "uncorrected (tree-level); not scored, compare w_ratio"
   | .zMassUnc => "uncorrected (tree-level); not scored, compare w_ratio"
-  | .electronClosure => "gap/Yukawa reading in electron units, using the geometry-repaired Yukawa"
+  | .electronYukawa => "closure value; repeats the vev comparison; no direct measurement of y_e exists"
+  | .electronClosure => "Standard Model tree relation m = y v/√2; scheme-dependent (running electron mass ≈ 7% between m_e and m_H), so a 2.7e-4 gap is not a test of either derivation"
   | .darkRaw => "raw ratio before correction; not scored, compare omega_ratio"
   | .baryonPmJ => "Paper IV J; disagrees with Paper III (papers_disagree); not scored, compare baryon_pm3J"
   | .hubbleLate => "late-universe value; the CMB and BBN-calibrated DES references show the Hubble tension and are not scored"

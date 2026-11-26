@@ -4,6 +4,8 @@ The module map for Paper III's constants, sectors, running and gauge factors. Bu
 instructions are in [`README.md`](README.md); the constant-by-constant open
 dependencies are in [`TODO.md`](TODO.md).
 
+The electron Yukawa is a comparison label, not a premise, and is not scored.
+
 ## Entry points
 
 - `Values`: single canonical façade for downstream papers — the current

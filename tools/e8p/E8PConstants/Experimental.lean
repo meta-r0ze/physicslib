@@ -194,6 +194,8 @@ def comparisonNote (k : Key) : String :=
 
 /-- Whether a reference is **scored** in the audit summary. Unscored references are shown for
 context, with `·` instead of a glyph:
+* `electron_yukawa`: a closure value repeating the VEV comparison, not a direct measurement;
+* `electron_closure`: a scheme-dependent tree-relation diagnostic, not a scored test;
 * intermediate (tree-level / uncorrected) values, whose corrected counterparts are scored:
   `w_mass_uncorrected`, `z_mass_uncorrected` (→ `w_ratio`), `dark_raw` (→ `omega_ratio`);
 * `baryon_pmJ`, the Paper IV Jarlskog proposal that `PMFlavor.CKM.papers_disagree` sets against
@@ -210,6 +212,7 @@ context, with `·` instead of a glyph:
   through two loops; the `G_F` it tests is already scored in `fermi_constant`. -/
 def scoredRef (k : Key) (r : ExpRef) : Bool :=
   match k with
+  | .electronYukawa | .electronClosure
   | .wMassUnc | .zMassUnc | .darkRaw | .baryonPmJ | .muonLifetimeSeconds
   | .neutronLifetimeUnified | .kaonMuLifetimeSeconds | .kaonFiniteLifetimeSeconds => false
   | .hubbleLate | .clusteringLate => r.citation != "planck_2018" && r.citation != "abbott_des_y1_2018"
