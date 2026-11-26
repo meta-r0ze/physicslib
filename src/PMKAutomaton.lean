@@ -18,5 +18,6 @@ import PMKAutomaton.WallCrossing
 import PMKAutomaton.AlignedSectors
 import PMKAutomaton.ClockPlaneProjection
 import PMKAutomaton.ClockSymmetryGenerators
+import PMKAutomaton.JointSuccessorConstraints
 
 /-! Internal E8 node transport, packet handoff and booked boundary erasure. -/

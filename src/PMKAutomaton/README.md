@@ -22,6 +22,8 @@ PMKAutomaton studies a lattice of E8 nodes. In the encoded line and ring
 models the same local rule acts at every site with a common phase. The
 lattice view names the parts and ports. The complete joint update for
 the carrier packet and retained controls remains open.
+The [joint-successor audit](OVERVIEW.md#constraints-on-occupied-joint-successors)
+states the resource and primitive-event definitions needed before classifying it.
 
 | Part | Role at a node | In the library |
 | --- | --- | --- |

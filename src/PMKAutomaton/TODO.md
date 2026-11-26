@@ -4,6 +4,10 @@ See the [named premises](../../SCOPE.md#named-premises) and the [checked results
 
 ## Reachable occupied background
 
+- Identify the physical background/packet partition and its gross consumption, restoration and conserved-resource account; distinguish restored use from net background debit (`JointSuccessorConstraints.net_debit_independent`).
+- Define locality and primitive-root-event admission for arbitrary joint successors before forming the constraint set A (`RecordTransport.tick_local`, `ClockedRootTrials.quiet_trial_tick`).
+- Specify joint charge/label readouts, the joint symmetry action, the physical no-packet embedding and the clamped-background restriction (`Components.joint_lift_iff`, `ClockSymmetry.Gplus`).
+
 - Construct the admitted vacuum/reference ⊗ one-packet successor and derive its controller requests and packet-bank operation from the reachable state (`ClockedRootTrials.historyCount`, `Components.jointTick`).
 - Identify every executed record write, export and reset, its owner, and the restoring mode or input port; derive the ready supply instead of assuming a loaded train (`RecordSupply.clean_supply`, `OddReferenceSource.odd_seed_train_restores`).
 - Prove restoration within the same 43-tick period with no intermediate resource deficit, and return the background/reference inventory to the certified stationary family (`BoundaryErasure.cycleErased`, `OddReferenceSource.rest_stationary`).

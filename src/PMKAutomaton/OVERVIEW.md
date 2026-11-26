@@ -29,6 +29,35 @@ are not certified. EP's `ExcitationPersistence` records the exact missing
 joint execution and resource account. Zero retained-ring erasures and a
 reversible packet lift do not fill this contract.
 
+## Constraints on occupied joint successors
+
+`JointSuccessorConstraints` audits the admissibility contract before a joint
+successor is selected. The generic `Components` core has not been identified
+with a packet-free physical background. Its one-way projection does imply
+packet-independent core trajectories. It does not imply zero gross use of
+resources that can be replenished during the same period.
+
+| Question | Checked result or missing definition | Lean entry point |
+| --- | --- | --- |
+| One-way projection | Equal initial backgrounds have equal background endpoints for all packet banks and horizons. | `packet_independent_background` |
+| Resource debit | An identified net loss in a background-only reserve is packet-independent. A zero-bank baseline with zero net loss forces zero net loss for all banks. This is conditional on that account and baseline. | `net_debit_independent`, `zero_baseline_forces_zero_net_debit` |
+| Gross consumption | Positive matched consumption and intake can maintain a constant reserve. Capacity alone does not force zero gross consumption. | `positive_matched_flows`, `PMSubstrate.Pillars.capacity_sustains` |
+| Conservation and activity | A one-way FIFO preserves packet population, changes an occupied slot and returns the bank in 43 ticks with a fixed background. This algebraic example is not an admitted physical successor. | `one_way_reversible`, `fifo_population_conserved`, `fifo43_nontrivial`, `one_way43_return` |
+| Reversibility clause | `Equiv.Perm` supplies the required notion. | `Components.joint_bijective_iff` |
+| First missing clause of A | No locality/primitive-root-event predicate classifies arbitrary background × packet-bank permutations. The existing ticks certify their own operations and stencils. | `RecordTransport.tick_local`, `RingReceiver.tick`, `ClockedRootTrials.quiet_trial_tick` |
+| Joint charges and labels | Component readouts exist. The total readout on the proposed physical joint state is not identified. | `Components` component contracts |
+| Closure clause | Weight invariance is the SCOPE premise. Successor equivariance also needs a joint group action and its justification. G₊ fixes `cu` but need not fix the 43-state reading. | `ClockSymmetry.Gplus`, `swap_changes_clockReading` |
+| Empty and clamped cases | An algebraic zero bank exists. A physical no-packet embedding, stationary-family joint encoding and clamping operation remain unspecified. | `Components.PacketBank`, `OddReferenceSource.rest_stationary` |
+| Finite reduction | Finite cell/channel indices still give an infinite complex-valued packet state. No faithful finite admissible-successor implementation family is specified. | `packetBank_infinite` |
+
+The requested zero-gross-consumption no-go is not derived. Back-reaction can
+be required by a packet-dependent background-resource account, once that
+account and its no-packet baseline are identified. It does not follow from
+reversibility and period balance alone. The set A is not filled with placeholder
+predicates. It is not classified as empty, unique or a family. No selected
+successor, loaded-seed derivation or coset-0 contact count follows yet.
+The [first TODO](TODO.md#reachable-occupied-background) names the missing inputs.
+
 ## KAutomaton closeout
 
 The conditional joint update, port contract and least-cost rule are in
