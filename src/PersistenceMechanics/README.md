@@ -32,3 +32,7 @@ The three nested-system rules are upstream here: `CapacityPartitioning`,
 `ReversibleEncoding` and `ImpedanceMatching`. Applications must supply work,
 coarse descriptions, metadata, interface laws and reserves. The rules do not
 select a depth or a unique allocation. See [the rule map](OVERVIEW.md).
+
+The substrate-free `Accounting`, `Hierarchy`, `Service`, `TransferPersistence`
+and `WorkSelection` modules also live here. Constant-backlog balance has one
+proof in `CapacityPartitioning`; `Service` supplies repeating-cycle applications.

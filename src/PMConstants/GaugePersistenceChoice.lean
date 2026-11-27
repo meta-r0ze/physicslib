@@ -1,5 +1,5 @@
 import PMConstants.GaugeTraceNormalization
-import PMConstants.General.WorkSelection
+import PersistenceMechanics.WorkSelection
 import PMConstants.SelectedColourLoad
 
 /-! What persistence selects once work has an operational meaning.
@@ -9,7 +9,7 @@ claim that the two gauge sectors actually share this serial pool. Raw-work
 floors and throughput maximization are explicit additional hypotheses. -/
 noncomputable section
 namespace PMConstants.GaugePersistenceChoice
-open Finset General.WorkSelection GaugeTraceNormalization
+open Finset PersistenceMechanics.WorkSelection GaugeTraceNormalization
 
 /-- A positive common rescaling of the existing reference return-cost
 functional preserves its unique uniform minimizer. Reference-law selection

@@ -6,7 +6,7 @@ import Mathlib.Tactic.Ring
 /-! Ratios of aggregate work correspond to work-weighted individual ratios.
 The identity needs no probabilistic independence. It does not identify which
 observation is physical. -/
-namespace PMConstants.General.Accounting
+namespace PersistenceMechanics.Accounting
 open Finset
 
 theorem aggregate_is_work_weighted {I : Type*} [Fintype I]
@@ -20,4 +20,4 @@ theorem aggregate_is_work_weighted {I : Type*} [Fintype I]
   · simp [hs]
   · field_simp [hw i, hs]
 
-end PMConstants.General.Accounting
+end PersistenceMechanics.Accounting

@@ -1,9 +1,9 @@
-import PMConstants.General.Service
+import PersistenceMechanics.Service
 
 /-! Persistence constrains service for supplied work; throughput optimization
 then selects least work within the stated feasible family. Neither theorem
 invents a physical demand vector or its primitive lower bounds. -/
-namespace PMConstants.General.WorkSelection
+namespace PersistenceMechanics.WorkSelection
 open Finset
 variable {I : Type*} [Fintype I]
 
@@ -20,9 +20,9 @@ theorem capacity_bound {d : I → ℝ} {r : ℝ} (h : Feasible d r) :
   obtain ⟨_,s,q,C,_,hs,hstep,hbound⟩ := h
   have he : ∀ i, s i=r*d i := by
     intro i
-    have hz := Service.bounded_drift_zero (q i) (r*d i-s i) (C i)
-      (fun n => by rw [hstep]; ring) (hbound i)
-    linarith
+    exact CapacityPartitioning.service_balance (q i 0) r (d i) (s i) (C i)
+      (CapacityPartitioning.queue_absolute_bound (q i) (r*d i-s i) (C i)
+        (fun n => by rw [hstep]; ring) (hbound i))
   simpa only [he,← mul_sum] using hs
 
 /-- Conversely a supplied nonnegative workload admits constant bounded queues
@@ -49,4 +49,4 @@ theorem maximum_rate (d : I → ℝ) (hd : ∀ i, 0 ≤ d i)
   · intro r hr
     exact (le_div_iff₀ ht).mpr (capacity_bound hr)
 
-end PMConstants.General.WorkSelection
+end PersistenceMechanics.WorkSelection

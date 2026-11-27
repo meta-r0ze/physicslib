@@ -55,6 +55,12 @@ relabeling, idle-capacity and interface consequences now live with their upstrea
 The generic rules constrain feasibility; applications still supply work, periods,
 reference alphabets and reserve allocation. They do not infer higher-level work.
 
+`Accounting`, `Hierarchy`, `Service`, `TransferPersistence` and `WorkSelection`
+are now in PersistenceMechanics. `SteadyAllocation`, `PeriodicAllocation`,
+`ColourRefreshCadence`, `BalancedAvailability` and `GaugePersistenceChoice` use
+the upstream APIs. The nonnegative queue form and absolute-backlog form agree
+(`CapacityPartitioning.bounded_queue_iff`); the zero-drift proof is not copied.
+
 ## Shared definitions
 
 | Quantity | Definition | How PMConstants uses it |

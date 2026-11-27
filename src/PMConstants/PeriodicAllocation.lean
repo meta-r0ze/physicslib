@@ -1,5 +1,5 @@
 import PMConstants.BalancedAvailability
-import PMConstants.General.Service
+import PersistenceMechanics.Service
 
 /-! Allocation from cycle totals of the balanced collision model.
 This removes constant per-phase work and per-channel eta assumptions from the
@@ -28,7 +28,7 @@ theorem persistent_clock_share (tgt : Fin 16 → Grid) (hb : Balanced tgt) (o : 
     (hlink : ∀ i n, q i (n+1) 0 = q i n (Fin.last 43))
     (hbounded : ∀ i n, 0 ≤ q i n 0 ∧ q i n 0 ≤ C i) :
     (∑ t, service 0 t)/(∑ i, ∑ t, service i t) = clockRatio := by
-  rw [General.Service.normalized_cycle_share q (demand tgt o) service rate C hr
+  rw [PersistenceMechanics.Service.normalized_cycle_share q (demand tgt o) service rate C hr
     hstep hlink hbounded 0]
   simp_rw [cycle_demand tgt hb o]
   rw [← mul_sum]

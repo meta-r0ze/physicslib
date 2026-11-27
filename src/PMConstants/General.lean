@@ -1,11 +1,11 @@
 import PersistenceMechanics.CapacityPartitioning
 import PersistenceMechanics.ReversibleEncoding
 import PersistenceMechanics.ImpedanceMatching
-import PMConstants.General.Hierarchy
+import PersistenceMechanics.Hierarchy
 import PMConstants.General.ReferenceCapacity
 import PMConstants.General.GridEncoding
-import PMConstants.General.Accounting
-import PMConstants.General.Service
+import PersistenceMechanics.Accounting
+import PersistenceMechanics.Service
 
-import PMConstants.General.WorkSelection
-import PMConstants.General.TransferPersistence
+import PersistenceMechanics.WorkSelection
+import PersistenceMechanics.TransferPersistence

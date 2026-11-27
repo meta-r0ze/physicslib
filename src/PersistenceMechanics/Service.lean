@@ -1,35 +1,11 @@
-import Mathlib.Tactic
+import PersistenceMechanics.CapacityPartitioning
 
 /-! Bounded queues with repeatable finite-cycle demand and service.
 Work may vary within a cycle. Persistence forces equality of cycle totals,
 not pointwise service and not a uniform phase/direction measure.
 No substrate or constant is imported. -/
-namespace PMConstants.General.Service
+namespace PersistenceMechanics.Service
 open Finset
-
-theorem constant_drift_formula (q : ℕ → ℝ) (d : ℝ)
-    (hstep : ∀ n, q (n+1) = q n + d) (n : ℕ) : q n = q 0 + n*d := by
-  induction n with
-  | zero => simp
-  | succ n ih => rw [hstep, ih]; push_cast; ring
-
-/-- Finite-capacity persistence excludes a nonzero constant backlog drift. -/
-theorem bounded_drift_zero (q : ℕ → ℝ) (d C : ℝ)
-    (hstep : ∀ n, q (n+1) = q n + d)
-    (hbounded : ∀ n, 0 ≤ q n ∧ q n ≤ C) : d = 0 := by
-  rcases lt_trichotomy d 0 with hd | hd | hd
-  · obtain ⟨n, hn⟩ := exists_nat_gt (q 0 / (-d))
-    have h := (div_lt_iff₀ (by linarith : 0 < -d)).mp hn
-    have hq := (hbounded n).1
-    rw [constant_drift_formula q d hstep n] at hq
-    nlinarith
-  · exact hd
-  · obtain ⟨n, hn⟩ := exists_nat_gt ((C-q 0)/d)
-    have h := (div_lt_iff₀ hd).mp hn
-    have hq := (hbounded n).2
-    rw [constant_drift_formula q d hstep n] at hq
-    nlinarith
-
 
 /-- Finite telescoping of the queue differences within one cycle. -/
 theorem telescope {N : ℕ} (q : Fin (N+1) → ℝ) :
@@ -59,12 +35,12 @@ theorem persistent_cycle_service {N : ℕ} (q : ℕ → Fin (N+1) → ℝ)
     (hlink : ∀ n, q (n+1) 0 = q n (Fin.last N))
     (hbounded : ∀ n, 0 ≤ q n 0 ∧ q n 0 ≤ C) :
     (∑ t, service t) = rate*(∑ t, demand t) := by
-  have hz := bounded_drift_zero (fun n => q n 0)
+  apply CapacityPartitioning.service_balance (q 0 0) rate (∑ t, demand t) (∑ t, service t) C
+  apply CapacityPartitioning.queue_absolute_bound (fun n => q n 0)
     (rate*(∑ t, demand t)-(∑ t, service t)) C
     (fun n => by
       have h := cycle_balance (q n) demand service rate (hstep n)
       rw [hlink]; linarith) hbounded
-  linarith
 
 /-- With a common nonzero operation rate, cycle-total resource shares equal
 cycle-total demand shares. No choice of per-trial normalized readout is made. -/
@@ -84,4 +60,4 @@ theorem normalized_cycle_share {I : Type*} [Fintype I] {N : ℕ}
   rw [← mul_sum]
   exact mul_div_mul_left _ _ hr
 
-end PMConstants.General.Service
+end PersistenceMechanics.Service

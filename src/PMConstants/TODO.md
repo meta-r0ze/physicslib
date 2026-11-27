@@ -9,6 +9,8 @@ The electron Yukawa is a comparison label, not a premise, and is not scored.
 
 ## Nested-rule applications
 
+- Identify application workloads and causal schedules before applying the shared queue/rate bounds (`PersistenceMechanics.Service`, `WorkSelection`).
+
 - Derive the physical reference alphabet, update and resource price for the finite-frame model (`General.ReferenceCapacity.Encodable`, `period_reflection`).
 - Derive reserve allocation and reflected-load service rates for the scalar interface (`SurfaceBudget.admissible_if_margin_available`, `PersistentGain.Persistent`).
 

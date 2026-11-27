@@ -18,7 +18,7 @@ Premise: the work vector (demand per phase) is given. No physical identification
 of generation pairs with transfer directions is made here.
 -/
 noncomputable section
-namespace PMConstants.General.TransferPersistence
+namespace PersistenceMechanics.TransferPersistence
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
@@ -77,4 +77,4 @@ theorem persistence_selects_equal (d s : ι -> ℝ)
       _ = |(∑ j : ι, d j) - (∑ j : ι, s j)| * ↑n := by rw [h_abs_eq]
   linarith [h_gt, h_contra]
 
-end PMConstants.General.TransferPersistence
+end PersistenceMechanics.TransferPersistence

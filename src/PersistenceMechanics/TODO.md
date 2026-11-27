@@ -7,3 +7,6 @@ factors to the applications. Use the open model inputs in the owning libraries.
 
 The nested rules likewise leave work, physical metadata implementation and interface
 budgets to their applications. See the open inputs in the owning libraries.
+
+For queue and hierarchy applications, physical deadlines, work, branching and level
+resource floors remain the owning library's obligations (`Service`, `Hierarchy`).

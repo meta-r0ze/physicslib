@@ -50,8 +50,9 @@ theorem required_work_cannot_be_skipped (tgt : Fin 16 → Grid) (hb : Balanced t
   have hm := balanced_payload_mean tgt hb o
   norm_num [PMConstants.overhead] at hm
   have hs : (∑ k : Fin PMSubstrate.E8Values.Delta, executed tgt (gridTick^[k.val] o)) = 684 := by linarith
-  have hz := PMConstants.SteadyAllocation.bounded_drift_zero q 4 C
-    (fun n => by rw [hstep, hs]; ring) hbounded
+  have hz := PersistenceMechanics.CapacityPartitioning.bounded_backlog_zero_drift (q 0) 4 C
+    (PersistenceMechanics.CapacityPartitioning.queue_absolute_bound q 4 C
+      (fun n => by rw [hstep, hs]; ring) hbounded)
   norm_num at hz
 
 /-- A concrete balanced injection exists. This is a combinatorial witness,

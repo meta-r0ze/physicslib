@@ -72,6 +72,37 @@ theorem service_balance (q0 ρ Sd Ss B : ℝ) (h : ∀ n : ℕ, |q0 + n * (ρ * 
   have := bounded_backlog_zero_drift q0 _ B h
   linarith
 
+/-- Constant queue increments give the canonical affine backlog. -/
+theorem constant_drift_formula (q : ℕ → ℝ) (d : ℝ)
+    (hstep : ∀ n, q (n+1) = q n+d) (n : ℕ) : q n = q 0+n*d := by
+  induction n with
+  | zero => simp
+  | succ n ih => rw [hstep,ih]; push_cast; ring
+
+/-- Convert nonnegative finite queue bounds to the canonical absolute-backlog hypothesis. -/
+theorem queue_absolute_bound (q : ℕ → ℝ) (d C : ℝ)
+    (hstep : ∀ n, q (n+1) = q n+d)
+    (hbounded : ∀ n, 0 ≤ q n ∧ q n ≤ C) :
+    ∀ n : ℕ, |q 0+n*d| ≤ C := by
+  intro n
+  rw [← constant_drift_formula q d hstep n, abs_of_nonneg (hbounded n).1]
+  exact (hbounded n).2
+
+/-- The queue and absolute-backlog presentations are equivalent when the
+nonnegative initial queue from the queue hypotheses is retained. -/
+theorem bounded_queue_iff (q : ℕ → ℝ) (d : ℝ)
+    (hstep : ∀ n, q (n+1) = q n+d) :
+    (∃ C, ∀ n, 0 ≤ q n ∧ q n ≤ C) ↔
+      0 ≤ q 0 ∧ ∃ B, ∀ n : ℕ, |q 0+n*d| ≤ B := by
+  constructor
+  · rintro ⟨C,h⟩
+    exact ⟨(h 0).1,C,queue_absolute_bound q d C hstep h⟩
+  · rintro ⟨h0,B,h⟩
+    have hd := bounded_backlog_zero_drift (q 0) d B h
+    refine ⟨q 0,fun n => ?_⟩
+    rw [constant_drift_formula q d hstep n,hd]
+    simpa using And.intro h0 (le_refl (q 0))
+
 /-- The structure is exactly the conjunction form of the allocation rule. -/
 theorem feasible_iff (w : I → ℝ) (C h : J → ℝ) (s : I → J → ℝ) :
     Feasible w C h s ↔ (∀ i j, 0 ≤ s i j) ∧

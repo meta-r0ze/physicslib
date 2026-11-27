@@ -1,6 +1,6 @@
 import PMConstants.CarrierSwapSchedule
 import PMConstants.MinimalRefresh
-import PMConstants.General.Service
+import PersistenceMechanics.Service
 
 /-! Capability, requests and refresh cadence are distinct operational contracts.
 The gate menu is the actual carrier menu from CarrierSwapSchedule. Executability
@@ -180,7 +180,7 @@ theorem persistent_request_service (start : Fin 3)
     (hlink : ∀ n, q (n+1) 0=q n (Fin.last 3))
     (hb : ∀ n, 0 ≤ q n 0 ∧ q n 0 ≤ C) :
     (∑ t, service t)=rate*(24*overhead) := by
-  have h := General.Service.persistent_cycle_service q (demand start) service rate C hstep hlink hb
+  have h := PersistenceMechanics.Service.persistent_cycle_service q (demand start) service rate C hstep hlink hb
   simpa only [demand_cycle] using h
 
 /-- A zero-backlog, unit-rate service witness exists for this request contract. -/

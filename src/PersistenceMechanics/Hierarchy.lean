@@ -4,7 +4,7 @@ import Mathlib.Tactic
 per-level resource floor. Positivity of each individual real cost is insufficient.
 No finite-total-node conclusion is asserted without a branching/count assumption.
 -/
-namespace PMConstants.General.Hierarchy
+namespace PersistenceMechanics.Hierarchy
 open Finset
 
 theorem depth_bound (cost : ℕ → ℝ) (floor budget : ℝ) (n : ℕ)
@@ -50,4 +50,4 @@ theorem discrete_depth_bound (remaining : ℕ → ℕ) (n : ℕ)
     have hprev := ih (fun i hi => hstep i (by omega))
     omega
 
-end PMConstants.General.Hierarchy
+end PersistenceMechanics.Hierarchy

@@ -1,4 +1,4 @@
-import PMConstants.General.Service
+import PersistenceMechanics.Service
 import PMConstants.Allocation
 
 /-!
@@ -16,16 +16,6 @@ from the abstract existence of a persistent queue.
 namespace PMConstants.SteadyAllocation
 open Finset
 
-/-- Compatibility alias for the independent queue theorem. -/
-theorem constant_drift_formula (q : ℕ → ℝ) (d : ℝ)
-    (hstep : ∀ n, q (n+1) = q n + d) (n : ℕ) : q n = q 0 + n*d :=
-  General.Service.constant_drift_formula q d hstep n
-
-theorem bounded_drift_zero (q : ℕ → ℝ) (d C : ℝ)
-    (hstep : ∀ n, q (n+1) = q n + d)
-    (hbounded : ∀ n, 0 ≤ q n ∧ q n ≤ C) : d = 0 :=
-  General.Service.bounded_drift_zero q d C hstep hbounded
-
 variable {I : Type*} [Fintype I]
 
 omit [Fintype I] in
@@ -35,9 +25,10 @@ theorem persistent_service (demand service : I → ℝ) (rate : ℝ)
     (hbounded : ∀ i n, 0 ≤ q i n ∧ q i n ≤ C i) :
     ∀ i, service i = rate*demand i := by
   intro i
-  have h := bounded_drift_zero (q i) (rate*demand i-service i) (C i)
-    (fun n => by rw [hstep]; ring) (hbounded i)
-  linarith
+  exact PersistenceMechanics.CapacityPartitioning.service_balance (q i 0) rate
+    (demand i) (service i) (C i)
+    (PersistenceMechanics.CapacityPartitioning.queue_absolute_bound (q i)
+      (rate*demand i-service i) (C i) (fun n => by rw [hstep]; ring) (hbounded i))
 
 /-- With positive operation rate, the normalized service shares are forced
 even when there is idle capacity. -/

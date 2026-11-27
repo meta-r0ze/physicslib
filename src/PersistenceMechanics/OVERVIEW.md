@@ -67,3 +67,17 @@ clock-ring instance is `PMElementaryParticles.CapacityLedger`. (Compiled.)
 These are the only general definitions of these rules. PMConstants retains
 its concrete quotient/remainder, finite-frame, clock and substrate applications.
 EP's `NestedFermion` gives a conditional level-role map, not new rule definitions.
+
+## Substrate-free accounting and nesting
+
+| Module | Inputs | Result and limit |
+| --- | --- | --- |
+| `Accounting` | Supplied clock/work vectors and nonzero individual work | Aggregate ratios are work-weighted individual ratios; no physical readout is selected. |
+| `Hierarchy` | Uniform positive level-cost floor or discrete descent | Depth bound; positive real costs alone do not bound depth. |
+| `Service` | Supplied repeating demand/service and bounded queues | Cycle-total balance and normalized shares, using `CapacityPartitioning.service_balance`. |
+| `TransferPersistence` | Supplied transfer demand/service and bounded backlog | Starvation cannot persist; the physical work vector remains an input. |
+| `WorkSelection` | Supplied work and a fluid-queue feasible family | Capacity/rate bounds; no primitive workload is invented. |
+
+`CapacityPartitioning.bounded_queue_iff` proves equivalence of the queue and absolute
+backlog forms, retaining the nonnegative initial queue. `queue_absolute_bound` converts
+queue hypotheses for the canonical zero-drift and service-balance proofs.

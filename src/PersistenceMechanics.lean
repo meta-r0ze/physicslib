@@ -15,3 +15,8 @@ import PersistenceMechanics.Requirements
 import PersistenceMechanics.ImpedanceMatching
 import PersistenceMechanics.ReversibleEncoding
 import PersistenceMechanics.CapacityPartitioning
+import PersistenceMechanics.Accounting
+import PersistenceMechanics.Hierarchy
+import PersistenceMechanics.Service
+import PersistenceMechanics.TransferPersistence
+import PersistenceMechanics.WorkSelection
