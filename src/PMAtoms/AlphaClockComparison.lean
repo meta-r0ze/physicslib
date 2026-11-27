@@ -32,7 +32,8 @@ def capacityPeriod (workload : ℝ) : ℝ := e8Tick / workload
 def gatedPeriod (workload : ℝ) : ℝ := workload * e8Tick
 
 theorem alphaFlux_eq_inv_tick : alphaFlux = 1 / e8Tick := by
-  unfold alphaFlux e8Tick
+  unfold alphaFlux
+  rw [e8Tick_eq]
   norm_num [PMSubstrate.E8Values.Delta, PMSubstrate.baseline]
 
 /-- The current alpha attempt is the inverse capacity period. -/

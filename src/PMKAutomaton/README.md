@@ -98,3 +98,7 @@ therefore needs one of two moves:
 
 The first makes the native machine the base layer of the theory. The second
 keeps PMAction as the base. Either choice needs a full build.
+
+`AutonomousCensus` gives native cycle-rate proofs; `AutonomousCensus43` checks the
+rate-one static witness and its failed marker robustness. The finite cycle census is
+reproducible with `tools/autonomous_ring_census.py`; it is not a kernel certificate.

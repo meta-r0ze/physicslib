@@ -155,25 +155,43 @@ These results remain implementation constraints, not a flat minimization objecti
 execution and resource account for the parked renewal/decay work. Their module docstrings
 keep the detailed audit. Closed-ring zero erasure does not prove reference renewal.
 
-## Autonomous level-0 excitation cycles
+## Native cycle averages and the clock scale
 
-A particle candidate now needs a localized, robust native cycle with readable identity.
-The previous unit is one reversal in an observation window, not a proved particle orbit.
-`AutonomousCycleBoundary` connects that window account to the native direction-parity theorem.
+The corrected return test permits even R over T ticks, with average `43*R/T`.
+`AutonomousCensus` studies all 10 rules; its script exhausts all one-packet marker
+states at odd n=3..13. Numerical cycle covers are computation, not Lean certificates.
+Native all-n rate identities and the concrete n=43 witness are proved separately.
 
-| Test | Machine result | EP consequence |
-| --- | --- | --- |
-| Eight-state autonomous site rules | Exactly 10, with five one-packet behaviours (`AutonomousRingEnumeration`, upstream). | No external request trace is supplied. The Boolean model is not yet a labelled E8 excitation. |
-| Full cycle with exactly one reversal | Impossible for any rule or ring size (`closed_cycle_even`, `no_electron_cycle`). | Direction would not return. Localization/robustness impose further restrictions and cannot remove this contradiction. |
-| Rings 3,5,7,9 | Zero electron-hosting rules (`requested_ring_tests`). | No selected rules for the requested census. |
-| Census of selected rules at odd n = 3..13; n = 43 | Empty (`census_domain_empty`). | No family, period, mass ordering or comparison to 1/~207/~3477 follows. Other patterns of rejected rules remain unclassified. |
-| Old one-site unit | One reversal in n ticks, but no native return (`one_site_not_closed`, `ring43_unit_not_closed`). | It cannot supply the requested closed one-reversal electron. |
-| Existing program bound | At most 86 registrations on two bit rings in 43 ticks (`program_registration_bound`). | Not a bound on a variable-length autonomous cycle. A larger fixed-window count needs more simultaneous capacity. |
+| Rule kind (two variants each) | At-rest candidate / other family | Period; reversals | Per 43 updates | Robust / Margin |
+| --- | --- | --- | --- | --- |
+| 0 | Static reflector gap d; single mirror has d=n. | 2d; 2 | 43/d; single mirror gives 1 at n=43. | Fails marker robustness; `mirror43_not_robust` certifies n=43. Single-mirror orbit visits n sites. |
+| 1 | Circulating, no at-rest family found. | 2n; 0 | 0 | Marker-rate robust; not at rest. |
+| 2,3 | Circulating in the finite census; primitive periods vary. | T; T/2 | 43/2 | Marker-rate robust at all n; n=43 winding not yet classified. |
+| 4 | Two-site bounce at rest. | 4; 4 | 43 | Marker-rate robust, but saturated; `saturated_family_exceeds_margin`. |
 
-The physical common clock period, identity quotient (if any), autonomous labelled successor
-and its robustness remain open. No odd count is divided by two or called an electron.
-Isolated quark ledger entries are not colour-system persistence certificates; their physical
-costs belong to the composite-system work in PMHadrons.
+Full tables and support counts are upstream in [PMKAutomaton](../PMKAutomaton/OVERVIEW.md#autonomous-native-cycle-census).
+No stable unsaturated electron or charged-lepton family is selected. The old unit
+window remains distinct from native return (`one_site_not_closed`). The common-window
+average is ≤43 per one-packet ring (`native_average_bound`); two such accounts are ≤86,
+even for long cycles. This does not identify any family with the lepton ratios.
+AND/OR both reduce on ports to static kind 0 after retaining their scalar guard;
+the full two-request/probe/phase receiver is outside the eight-state model. In the
+fixed OR chart `(m,false)`, AND bypasses and is excluded; the AND chart is `(m,true)`.
+
+| Clock statement | Status / exact consequence |
+| --- | --- |
+| Delta = 43 root updates | Proved count; no physical duration follows. |
+| One root update takes kappa electron-time units | One shared supplied positive input, `ClockScale.TickDuration`; [SCOPE](../../SCOPE.md#named-premises). |
+| Old PMAtoms/e8p E8 tick = 43 electron-time units | Legacy kappa=1 WHOLE-PERIOD block; not one receiver update. Numeric values unchanged. |
+| Context rate=mass, unit electron rate, average one per Delta | Conditional `one_per_period_unit_rate` forces kappa=1/43; the context relation is not a PM premise. |
+| Context unit rate with legacy kappa=1 | Requires 43 reversals/43 updates; incompatible with the strict differing-ring Margin ceiling (`differing_ring_margin_excludes_unit_rate`). |
+
+No theorem fixes kappa. `electronTime` converts an electron time unit to SI seconds;
+it does not identify a root update with that unit. EP and PMAtoms use the same supplied
+clock API. No new physical calibration or e8p value is chosen.
+Marker-rate robustness does not imply the old differing-ring Margin predicate.
+Applying its ceiling to a physical dynamical-marker rule needs an identification proof.
+Quark footprints remain composite-system work, not isolated colour persistence certificates.
 
 ## Conditional record comparisons (not physical mass)
 

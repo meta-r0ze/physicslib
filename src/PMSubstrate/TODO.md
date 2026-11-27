@@ -35,3 +35,7 @@ The alternative routes and necessity tests are in `PMSubstrate/Research/`.
 - Repoint `PMFlavor.CKM.αinv` to `geometricIndex`. Keep the separate cell-price reading and its equality.
 - Repoint the PMAtoms.Invariants.Δ alias to E8Values.Delta.
   Use it for the receiver clock size when the type expresses the baseline ring.
+
+## Physical clock calibration
+
+- Derive or externally calibrate the physical root-update duration; Delta fixes a count, not kappa (`ClockScale.TickDuration`; [SCOPE](../../SCOPE.md#named-premises)).

@@ -1,3 +1,4 @@
+import PMSubstrate.ClockScale
 import PMElementaryParticles.SharedUnits
 import PMElementaryParticles.MuonLifetime
 import PMElementaryParticles.TauE8
@@ -33,6 +34,14 @@ theorem electronTime_tight :
     (1.28808866e-21 : ℝ) < electronTime ∧ electronTime < 1.28808867e-21 := by
   unfold electronTime PMSubstrate.SIUnits.cFmPerSecond hbarc PMSubstrate.SIUnits.hbarcMeVFm me PMSubstrate.SIUnits.electronMassMeV
   constructor <;> norm_num
+
+/-- Physical root-update duration for the single shared supplied clock calibration. -/
+def rootTickSeconds (clock : PMSubstrate.ClockScale.TickDuration) : ℝ :=
+  PMSubstrate.ClockScale.seconds clock electronTime
+
+/-- Physical duration of Delta root updates; the clock calibration remains supplied. -/
+def rootPeriodSeconds (clock : PMSubstrate.ClockScale.TickDuration) : ℝ :=
+  PMSubstrate.ClockScale.periodTime clock * electronTime
 
 /-- Muon lifetime in seconds. -/
 def muonLifetimeSeconds : ℝ :=

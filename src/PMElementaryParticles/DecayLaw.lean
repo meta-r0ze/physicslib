@@ -66,23 +66,23 @@ theorem compounded_limit (Γ t : ℝ) :
   convert h using 2 with n
   ring
 
-/-! ## The six-pillar channel and the physical tick
+/-! ## Six-pillar channel rates and the legacy whole-period conversion
 
-`PersistenceMechanics.Decay.DecayChannel` prices one open channel by the six pillars,
-`rate = β · toll · capacity · map · protocol · governor · margin · exp(−action)` — including the
-Governor (`χ/Δ` per slot, `PMSubstrate.ImpedanceTerms.governor_baseline`) and the Toll
-(`PMSubstrate.uniform_toll`). Its per-slot lifetime is `1/rate`; the physical lifetime is
-`tick · (1/rate)`. The only remaining input is the tick `Δ` — the E8 clock period `Δ = 43`
-(`PMAtoms.E8Tick.e8Tick_eq`) and its SI value (a unit anchor,
-`tools/e8p/E8PConstants/PMAtoms/E8TickUnit`).
+The channel rate prices a supplied per-slot model. Its physical lifetime is
+`tick * (1/rate)`, with a supplied physical slot duration. Delta=43 proves a
+count of root updates, not that this count is a duration in electron units.
+The theorem below is the unchanged exponential identity for steps of
+length Delta. Its use as a physical clock is the legacy kappa=1 candidate:
+a step in this formula is a WHOLE 43-update block. The tool E8TickUnit calls
+that block an E8 tick. It is not a single RingReceiver update.
 
-**Calibration.** A width `Γ` in `m_e` units (the Fermi widths of `MuonLifetime`, `TauE8`) fixes the
-per-tick cost: on the E8 tick `Δ = 43` the open channel costs `β c = Γ Δ` per tick, and survival
-after `n` ticks is exactly `exp(−Γ · nΔ)` (`substrate_ticks`). The tick is the substrate's own period,
-not a separate input; seconds enter only through the unit anchor `ħ/(m_e c²)`. -/
+The one positive tick-duration input is ClockScale.TickDuration in SCOPE.
+PhysicalUnits and PMAtoms.E8Tick use the same input. The SI electron time
+anchor does not derive it. No physical calibration follows from this
+exponential identity, and no existing numerical value is changed.
+-/
 
-/-- **Survival on the E8 clock.** A channel of width `Γ` (in `m_e` units) costs `Γ Δ` per tick, and
-its survival after `n` ticks is the exponential law at time `n Δ`. -/
+/-- Legacy whole-block survival identity; not a theorem fixing the physical root tick. -/
 theorem substrate_ticks (Γ : ℝ) (n : ℕ) :
     ∏ _i : Fin n, Real.exp (-1 * (Γ * (PMSubstrate.E8Values.Delta : ℝ))) =
       PersistenceMechanics.Rates.survive Γ (n * (PMSubstrate.E8Values.Delta : ℝ)) := by

@@ -38,3 +38,5 @@ stable, `NuclearRegime`/`PersistenceSelection`) is a comparison, not a result.
 - Keep continuum comparisons until each E8 replacement has a numerical counterpart. Mark
   candidate modules experimental and keep the measured residuals in `OVERVIEW.md` §Comparison.
 - Choose the alpha-attempt clock convention (capacity vs nested).
+
+- Calibrate the shared physical root-tick duration; the legacy E8Tick value counts whole 43-update blocks (`ClockScale.TickDuration`, `E8Tick`).

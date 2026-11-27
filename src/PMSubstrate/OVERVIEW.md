@@ -30,6 +30,7 @@ satisfies every postulate, so the set is consistent. Comparison with measured α
 | Toll price | `PMSubstrate.tollTerm` | Parametric impedance term. |
 | Toll boundary | `TollSampleSpace`, `TollBoundaryWitness`, `embedTollBoundary`, `tollBoundaryEvent` | Baseline sample, witness, embedding and event. `uniform_toll` proves the baseline probability equals the price. |
 | General Toll event | `ProtocolToll.protocolTollSuccessEvent` | Parametric finite sample. |
+| Physical root-tick duration | `ClockScale.TickDuration` | Supplied positive kappa; no calibration theorem. `legacyUnitTick` is the old candidate, not a selected physical scale. |
 | SI conversions | `SIUnits` | One rational source for each family. `electronMassMeVRat_cast` relates the two MeV types. The EP lifetime module computes electron time from these units. |
 
 ## Postulates

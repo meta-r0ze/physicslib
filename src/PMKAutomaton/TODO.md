@@ -4,10 +4,13 @@ See the [named premises](../../SCOPE.md#named-premises) and the [checked results
 
 ## Autonomous excitation cycles
 
-- Specify the common physical observation period or an explicitly justified cycle quotient; exact native cycles have even reversal counts (`AutonomousRing.closed_cycle_even`).
-- Identify the Boolean stream/marker model with a labelled E8 excitation and its stationary vacuum family before applying physical identity/pillar claims (`AutonomousRing.packetStep_realizes_tick`).
-- Derive the physical autonomous successor and its localization, native reference retention and marker robustness; the tested space does not select one (`AutonomousRing.Admissible`).
-- Distinguish kinematic clock-line reflection from inverse-time conjugacy when imposing physical reversal symmetry (`AutonomousRing.reflect_tick`).
+- Prove the general static-reflector gap classification, minimality and marker-robustness failure, beyond the concrete 43-site witness (`AutonomousRing.mirror43_not_robust`).
+- Classify primitive periods and lifted winding of kinds 2/3 at n=43; the all-n mean 43/2 is proved (`closed_half_rate_two/three`).
+- Turn the finite script cycle covers into kernel certificates if they enter a later physical theorem (`tools/autonomous_ring_census.py`).
+- Prove substrate localization, retained physical identity and an admitted native Margin for any proposed family; scalar-rate robustness is not self-correction (`RestingAtRate`, `MarkerRateRobust`).
+- Derive or calibrate the shared physical tick duration; no theorem selects kappa (`PMSubstrate.ClockScale.TickDuration`; [SCOPE](../../SCOPE.md#named-premises)).
+- Identify the Boolean model with a labelled E8 excitation and stationary vacuum, and derive its physical successor (`AutonomousRing.Admissible`).
+- Distinguish kinematic clock-line reflection from inverse-time conjugacy (`AutonomousRing.reflect_tick`).
 
 ## Reachable occupied background
 

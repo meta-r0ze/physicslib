@@ -11,7 +11,7 @@ import Mathlib.Tactic
 
 Two E8 barrier scales are used:
 
-* alpha: one clock period `Δ = 43 m_e`
+* alpha: legacy candidate clock period `Δ = 43` electron-time units (kappa=1, not derived)
 * fission: the shell weight `Δ/(D+χ) = 43/6 m_e`
 
 The absolute time unit / attempt frequency is still an open E8 input; these are
@@ -33,7 +33,7 @@ def fissionBarrier : ℝ := shellWeight
 theorem fissionBarrier_eq : fissionBarrier = 43 / 6 := by
   rw [fissionBarrier, shellWeight_eq]
 
-/-- One E8 clock period in `m_e` units. Alias of `e8Tick`. -/
+/-- Legacy whole-period duration in electron-time units; the tick calibration is supplied. -/
 def e8ClockPeriod : ℝ := e8Tick
 theorem e8ClockPeriod_eq : e8ClockPeriod = 43 := by
   unfold e8ClockPeriod

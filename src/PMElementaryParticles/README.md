@@ -13,7 +13,9 @@ the held-unit set and parent charges remain open.
 `LedgerPillars` tests the six-slot hypothesis without deriving charges from residuals.
 `ChannelRecord` certifies minimal channel encodings and conditional reference distances.
 `MapMaintenance` prices once-per-bit comparisons; physical encoding, reference and native
-readout remain open. It does not derive the whole correction budget.
+readout remain open. These encoding-dependent costs are excluded as physical masses.
+`AutonomousCensus` upstream uses native cycle averages; `ClockScaleBoundary` states the
+conditional clock conflict without choosing a physical tick duration.
 The [open list](TODO.md) starts with complete level-0 realizations and their open prices. The
 [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 

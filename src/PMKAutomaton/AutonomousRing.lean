@@ -30,7 +30,7 @@ that it conjugates the update to its inverse (dynamical time reversal).
 
 A full periodic one-packet state returns its stream direction. Its number
 of reversals is therefore even, for ANY update and ANY ring size. This
-already excludes the requested one-reversal electron cycle, regardless of
+excludes the earlier one-reversal-per-full-cycle test, regardless of
 localization and marker robustness. RingRates.one_site_exact counts an
 observation window, not a full-state period. No Hamming-code price is used.
 -/
@@ -215,7 +215,7 @@ theorem reflect_tick {n : ℕ} [NeZero n] (f : Rule) (h : Admissible f) (s : Sta
   change reflect (stream n (scatter n f s)) = stream n (scatter n f (reflect s))
   rw [reflect_stream,hs]
 
-/-! ## One-packet native dynamics and the empty electron-selected rule set -/
+/-! ## One-packet native dynamics and the one-reversal cycle exclusion -/
 
 def single (d m : Bool) : Site := (( !d,d),m)
 
@@ -333,20 +333,20 @@ theorem double_flip_unseen : ∀ k d m,
     explicitRule k false (single d m) = explicitRule k true (single d m) := by decide +kernel
 
 /-- Necessary cycle clauses only. Localization, identity and robustness can only restrict this set. -/
-def ElectronCycle (n : ℕ) (f : Rule) : Prop :=
+def OneReversalCycle (n : ℕ) (f : Rule) : Prop :=
   ∃ s : OnePacket n, ∃ t : ℕ, 0 < t ∧ (packetStep f)^[t] s = s ∧ nativeReversals f s t = 1
 
-theorem no_electron_cycle (n : ℕ) (f : Rule) : ¬ ElectronCycle n f := by
+theorem no_one_reversal_packet_cycle (n : ℕ) (f : Rule) : ¬ OneReversalCycle n f := by
   rintro ⟨s,t,_,hc,hr⟩
   exact no_one_reversal_cycle (packetStep f) (fun a => a.1.2) s t hc hr
 
 /-- Uniform certificate, stronger than individual tests on 3,5,7,9. -/
-theorem requested_ring_tests (f : Rule) :
-    ¬ ElectronCycle 3 f ∧ ¬ ElectronCycle 5 f ∧ ¬ ElectronCycle 7 f ∧ ¬ ElectronCycle 9 f :=
-  ⟨no_electron_cycle _ _,no_electron_cycle _ _,no_electron_cycle _ _,no_electron_cycle _ _⟩
+theorem one_reversal_ring_tests (f : Rule) :
+    ¬ OneReversalCycle 3 f ∧ ¬ OneReversalCycle 5 f ∧ ¬ OneReversalCycle 7 f ∧ ¬ OneReversalCycle 9 f :=
+  ⟨no_one_reversal_packet_cycle _ _,no_one_reversal_packet_cycle _ _,no_one_reversal_packet_cycle _ _,no_one_reversal_packet_cycle _ _⟩
 
-/-- The electron-selected census domain is empty, including every odd ring through 13 and 43. -/
-theorem census_domain_empty : {f : Rule | Admissible f ∧ ElectronCycle 3 f} = ∅ := by
-  ext f; simp [no_electron_cycle]
+/-- The old one-reversal-cycle domain is empty, including every odd ring through 13 and 43. -/
+theorem one_reversal_domain_empty : {f : Rule | Admissible f ∧ OneReversalCycle 3 f} = ∅ := by
+  ext f; simp [no_one_reversal_packet_cycle]
 
 end PMKAutomaton.AutonomousRing

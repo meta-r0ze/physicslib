@@ -22,5 +22,7 @@ import PMKAutomaton.JointSuccessorConstraints
 
 import PMKAutomaton.AutonomousRing
 import PMKAutomaton.AutonomousRingEnumeration
+import PMKAutomaton.AutonomousCensus
+import PMKAutomaton.AutonomousCensus43
 
 /-! Internal E8 node transport, packet handoff and booked boundary erasure. -/

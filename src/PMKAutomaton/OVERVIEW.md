@@ -3,44 +3,66 @@
 The results keep their stated hypotheses. Use [TODO](TODO.md) for the open work.
 Import `PMKAutomaton.Interface` for transport and `PMKAutomaton.Values` for the checked numbers.
 
-## Autonomous Boolean ring
+## Autonomous native cycle census
 
-`AutonomousRing` tests the requested eight-state alphabet: two native stream bits and
-one dynamical local marker. No time-dependent requests or Hamming-code price enter.
-This is a restricted machine model, not a selected E8 excitation or vacuum realization.
-The old receiver is already autonomous with retained requests as state. Initial data do
-not constitute a time-dependent external controller; autonomy alone does not select a rule.
+`AutonomousRing` has 10 admissible eight-state site rules. `AutonomousCensus` uses
+full stream/marker return and average `Delta*R/T`. The earlier one-reversal-per-return
+predicate is now named `OneReversalCycle`; its parity no-go does not exclude this test.
+The incoming/output port charts are conjugate. Reflection is the existing central
+negation element in Gpm, not an action of every Gpm element or inverse-time conjugacy.
 
-| Constraint | Existing source / exact implementation |
+Each kind has two double-occupancy marker options. They coincide on one packet
+(`double_flip_unseen`). Empty-site markers stay fixed. Finite data cover ALL positions,
+directions and marker words at odd n=3..13 via `tools/autonomous_ring_census.py`.
+These exhaustive computations are not kernel-certified cycle covers. General rate and
+return proofs, and the concrete 43-site witness, are separate Lean results.
+
+| Kind / rules | Family | Native period T; R | Average per 43 | Lifted displacement | Marker-rate robust? |
+| --- | --- | --- | --- | --- | --- |
+| 0 / both options | No marker; circulating packet | n; 0 | 0 | ±n | No |
+| 0 / both | Adjacent reflecting boundaries distance d; no internal reflector | 2d; 2, 1≤d<n | 43/d | 0 | No: remove a boundary. Finite census; general gap classification not yet a Lean theorem. |
+| 0 / both | Single mirror | 2n; 2 | 43/n | 0 | No; at n=43 kernel-certified by `mirror43_not_robust`. |
+| 1 / both | Pass and flip marker; circulating | 2n; 0 | 0 | ±2n | Yes for average; not at rest. Period formula structural, general rate/recurrence proved. |
+| 2,3 / four rules | Flipping scatterers | T below; R=T/2 | 43/2 | ±T/2 in finite census | Yes for average at all n (`recurrent_half_two/three`, `rate_robustness`). No at-rest cycle in tested sizes. |
+| 4 / both | Two-site bounce; marker flips | 4; 4 | 43 | 0 | Yes at all n; exceeds the old strict count ceiling (physical identification open). |
+
+| Odd n | Kind 2/3 primitive periods T (both directions) | R=T/2 |
+| --- | --- | --- |
+| 3 | 24 | 12 |
+| 5 | 80 | 40 |
+| 7 | 56,168 | 28,84 |
+| 9 | 288 | 144 |
+| 11 | 88,440 | 44,220 |
+| 13 | 208,624 | 104,312 |
+| 43 | Finite recurrence and average 43/2 proved; primitive periods/winding not classified. | T/2 |
+
+Support has two counts: visited sites and the union of all nonvacuum sites over the
+cycle, including spectator markers. The static gap visits d+1 sites; the single mirror
+and circulating families visit n; the saturated bounce visits 2. A finite ring alone
+is not a localization theorem on an infinite substrate. No support cutoff is imposed.
+If the 43-state clock phase is retained too, use lcm(T,43) and scale R accordingly;
+the average is unchanged. Lifted displacement counts signed steps, not position modulo n.
+
+| Lean result | What it certifies |
 | --- | --- |
-| Reversible and number-conserving | `Equiv.Perm`; `Admissible`, `tick_bijective`, `tick_conserves` |
-| Empty zero-marker vacuum | `vacuum_fixed`; every empty marked site is fixed too (`empty_fixed`). |
-| Reflection with stream exchange | `ClockSymmetry.reversingElement` in Gpm; `clock_line_reflection`, `reflect_tick` |
-| Unchanged-marker receiver | OR requests `(marker,false)`; `frozen_receiver_reduction` on ports. |
-| Update order | Map then stream uses the incoming-port chart. `incoming_output_conjugacy` relates it to stream then map; phase/probe are not in this alphabet. |
-| Local autonomy | `packetStep_uses_local_state`; the marker updates at the packet's site. |
-| Exact one-packet restriction | `packetStep_realizes_tick`, `embed_injective`, `packet_iterate_realizes`; valid at every ring size. |
+| `closed_half_rate_two/three` | Marker-population balance forces 2R=T on every closed cycle, all n. |
+| `packet_periodic`, `recurrent_passive/half_two/half_three/saturated` | Every finite one-packet state recurs with its stated rate. This is not attraction/self-correction. |
+| `saturated_four_return`, `saturated_four_displacement`, `saturated_resting` | Four-tick return, zero lifted displacement, average 43; all n. |
+| `AutonomousCensus43`: `mirror43_minimal`, `mirror43_resting`, `mirror43_not_robust` | Native minimal period 86, R=2, average 1, at rest; removing the marker gives average 0. |
+| `native_average_bound` | Every single-packet native average is ≤43, independent of cycle length. |
+| `and_or_marker_embeddings`, `static_receiver_collision` | AND/OR port dynamics both compress to kind 0 with the scalar guard retained. Full two-request states lie outside the eight-state alphabet. |
 
-`AutonomousRing.admissible_rules_count` in `AutonomousRingEnumeration`
-checks all site permutations by `decide +kernel`: exactly 10 pass.
-`explicit_rules_exhaustive` gives the complete table below. Each row has two versions:
-at a doubly occupied site the marker either stays or flips. Empty-site markers stay.
-`double_flip_unseen` certifies that this choice has no effect on one packet.
+In the fixed OR chart `(m,false)`, AND always bypasses and is outside the admissible
+space (`and_in_or_chart`, `fixed_or_chart_and_excluded`). The AND embedding `(m,true)`
+is a different chart, not an invertible reconstruction of the two original requests.
 
-| Kind | Marker at a single packet | Stream reversal condition | Rules | Electron hosts at n = 3,5,7,9 |
-| --- | --- | --- | --- | --- |
-| 0 | Stays | Marker 1 | 2 | 0 |
-| 1 | Flips | Never | 2 | 0 |
-| 2 | Flips | Marker 1 | 2 | 0 |
-| 3 | Flips | Marker 0 | 2 | 0 |
-| 4 | Flips | Always | 2 | 0 |
-
-`closed_cycle_even` and `native_closed_cycle_not_one` prove the obstruction for ALL
-ring sizes: full-state return restores stream direction, so reversals must be even.
-Localization, identity and robustness cannot rescue a one-reversal cycle. The
-selected-rule set is empty (`census_domain_empty`), so its census at odd n = 3..13
-and n = 43 is empty. Other periodic patterns of the rejected rules are not classified.
-Reflection here commutes with evolution; inverse-time conjugacy is a different condition.
+The lightest static at-rest count is 43/n (1 at n=43), but it is not marker-robust
+and visits the whole ring. The robust at-rest kind 4 count is 43, but it saturates
+43 updates. Thus no robust, unsaturated electron is selected in the tested sizes.
+At n=43 this statement is proved for the exhibited static witness and kind 4;
+kind 2/3 winding and general static minimality still need formal classification.
+`nonstatic_no_unit_average` excludes mean one for kinds 1–4 at ALL n, regardless
+of the unresolved winding.
 
 ## Component contracts
 

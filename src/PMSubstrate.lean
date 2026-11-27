@@ -72,3 +72,5 @@ import PMSubstrate.Research.SamplingDynamics
 import PMSubstrate.Research.CostRules
 import PMSubstrate.Readouts
 import PMSubstrate.SIUnits
+
+import PMSubstrate.ClockScale

@@ -10,10 +10,10 @@ account. one_site_exact has one reversal in an n-tick window, and that
 window cannot return the located packet state. This is not a failure of
 that theorem: its horizon was never a certified full native orbit period.
 
-The requested electron test adds exact full-state return AND one reversal
+The earlier electron test added exact full-state return AND one reversal
 in that period. Those conditions conflict before localization, identity,
-or single-marker robustness are tested. There is no electron-selected rule
-family to census. Changing to a quotient cycle or a fixed-window rate would
+or single-marker robustness are tested. That earlier test has an empty candidate set. AutonomousCensus now uses
+full-state return with an average per Delta updates instead. Changing to a quotient cycle or a fixed-window rate would
 require an explicit identity and clock-normalization construction, not an
 implicit division of the even reversal count by two.
 

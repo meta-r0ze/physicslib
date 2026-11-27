@@ -4,10 +4,11 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premises.
 
 ## Autonomous excitation cycles
 
-- Specify a common physical observation period or justified identity quotient before using the one-event window as an electron cycle (`AutonomousCycleBoundary.one_site_not_closed`).
-- Construct a labelled native autonomous excitation and prove localization, retained identity and marker robustness; none of the ten tested rules hosts an exact one-reversal cycle (`AutonomousRing.no_electron_cycle`).
+- Derive a localized, identity-keeping native electron with marker robustness and non-saturated Margin; the rate-one static witness is not robust and the robust bounce saturates (`mirror43_not_robust`, `saturated_family_exceeds_margin`).
+- Derive or calibrate the shared root-update duration; distinguish the context rate relation from a PM theorem (`ClockScaleBoundary`, `PMSubstrate.ClockScale.TickDuration`; [SCOPE](../../SCOPE.md#named-premises)).
+- Resolve kind 2/3 winding at n=43 before claiming a complete at-rest classification (`AutonomousRing.closed_half_rate_two/three`).
 - Derive mass counts from native dynamics; exclude encoding-dependent Hamming comparison costs (`ChannelRecord.encoding_changes_distance`).
-- Move isolated level-0 quark costs to colour composite systems in the PMHadrons sweep; standalone quark footprints are not persistent-system certificates (`LevelZeroFermions.unit_is_not_declared_quark_footprint`).
+- Move isolated level-0 quark costs to colour composite systems in the PMHadrons sweep; standalone footprints are not persistence certificates (`LevelZeroFermions.unit_is_not_declared_quark_footprint`).
 
 ## Retained-record implementation
 
