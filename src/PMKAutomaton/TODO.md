@@ -4,6 +4,10 @@ See the [named premises](../../SCOPE.md#named-premises) and the [checked results
 
 ## Reachable occupied background
 
+This joint-successor work is parked for decay and reference renewal. Mass counts held
+events; it does not count consumption or erasure. Closed-ring erasure is zero
+(`BoundaryErasure.cycleErased`).
+
 - Identify the physical background/packet partition and its gross consumption, restoration and conserved-resource account; distinguish restored use from net background debit (`JointSuccessorConstraints.net_debit_independent`).
 - Define locality and primitive-root-event admission for arbitrary joint successors before forming the constraint set A (`RecordTransport.tick_local`, `ClockedRootTrials.quiet_trial_tick`).
 - Specify joint charge/label readouts, the joint symmetry action, the physical no-packet embedding and the clamped-background restriction (`Components.joint_lift_iff`, `ClockSymmetry.Gplus`).

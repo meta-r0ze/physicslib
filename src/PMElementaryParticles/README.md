@@ -7,7 +7,9 @@ The [overview](OVERVIEW.md) maps programs, pillars, charge, occupancy cost and d
 The [generation-orbit table](OVERVIEW.md#generation-orbits) separates the full
 clock-root groups from their label-respecting subgroups.
 The [isolated-persistence section](OVERVIEW.md#persistence-of-an-isolated-excitation)
-stops at the missing occupied-background renewal rule.
+records the missing occupied-background renewal rule for decay. The
+[program-dimension section](OVERVIEW.md#program-dimension) separates held events,
+registration bounds and the geometric ring-embedding obstruction.
 The [open list](TODO.md) records the missing physical identifications.
 The [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 

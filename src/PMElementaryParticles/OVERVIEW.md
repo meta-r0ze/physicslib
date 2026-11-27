@@ -27,12 +27,67 @@ it is not the program count. Full occupied-program closure remains open.
 | Protocol | The tick is reversible. | `RingReceiver.tick_bijective` |
 | Governor | Some site does not fire. | `Governor` |
 | Toll | Each differing ring registers at least once per period. | `Toll` |
-| Margin | Each registering ring stays below 43 registrations. | `Margin` |
+| Margin | Each differing bit ring stays below 43 registrations. | `Margin` |
+
+## Program dimension
+
+Occupancy counts held events. Registration counts traffic through a receiver. Erasure
+counts discarded information. These counts are different. The joint-successor resource
+work is parked for decay. It does not select an occupancy footprint.
+
+| Question | Checked result | Entry point | Limit |
+| --- | --- | --- | --- |
+| Ring bound | Every program has at most 86 registrations in 43 ticks, even without the pillars. | `SpacetimeProgram.program_registration_bound` | A held-event bound needs the bridge in `footprint_bound`. |
+| Margin | Each differing bit ring has at most 42 registrations. A two-bit line has at most 84 relevant registrations. | `relevant_margin_bound`, `relevant_one_bit_bound` | The bound 42 per spatial line needs Hamming distance one. Margin does not constrain equal bit rings. |
+| Packing | If each line has bound c and the required total is R, at least ceiling(R/c) lines are needed. | `required_lines` | Use c = 84 generally, or 42 with the one-bit hypothesis. This is a lower bound, not an attainable packing. |
+| Ring family | Capacity sums over a finite family. Toll, Margin, Map and Governor hold per line. A singleton family is equivalent to the old program data. | `family_capacity`, `family_toll`, `family_margin`, `family_map_governor`, `singletonFamilyEquiv`, `singleton_pillars` | No spatial interaction or root execution is inferred from a family. Independent line ticks are reversible (`family_protocol`). |
+| Root execution | Each step is one of the 24 aligned spacetime roots. Every step changes space. | `RootExecution`, `execution_changes_space`, `no_fixed_spatial_root` | A fixed spatial clock line cannot contain even one such step. The requested geometric one-line reduction is therefore unavailable. |
+| Reachability | A finite recursion enumerates exact root-word endpoints. | `rootReachableFinset`, `mem_rootReachableFinset`, `directionRoots` | Reachable alternatives are not simultaneously held events. Event index and lattice clock coordinate must remain distinct. |
+| Required R | Every generation and visible channel has a pillar witness with one relevant registration. | `relevant_floor`, `one_relevant_in_every_generation` | There is no derived species-dependent requirement R. The two-bit record and excursions do not supply one. |
+
+These are the declared integer event fields in `SpeciesFootprints`, not scalar mass values.
+The arithmetic is certified by `SpacetimeProgram.declared_event_counts`.
+
+| Species | Declared leading term | Event field | Exceeds 86? |
+| --- | --- | ---: | --- |
+| Up | D / η | 4 | No |
+| Down | D / η; the σ term stays in the residual | 4 | No |
+| Muon | σΔ | 215 | Yes |
+| Strange | DΔ / η | 173 | Yes |
+| Tau | χΔ² − σΔ | 3483 | Yes |
+| Charm | DΔ² / (η(σ−χ)) | 2479 | Yes |
+| Bottom | DΔ² / η | 7439 | Yes |
+| Top | Δ³(D+1/D) | 337904 | Yes |
+
+The current single-program registration account cannot hold the six larger event fields.
+This statement uses registrations as the account. No theorem equates all physical held
+events with those registrations. The electron unit is separate; neutrinos have no declared
+footprint in `SpeciesFootprints`.
+
+| Spatial directions | Full speed-one box cone, 0 ≤ t < 43 | Envelope leading power | Declared leading powers to compare | Allowed roots within that subspace | Exact one-event endpoints |
+| ---: | ---: | --- | --- | ---: | ---: |
+| 0 | 43 | Δ | Muon σΔ; strange DΔ/η | 0 | 0 |
+| 1 | 1849 | Δ² | Tau χΔ²−σΔ; charm and bottom area terms | 4 | 4 |
+| 2 | 105995 | Δ³ | Top Δ³(D+1/D) | 12 | 12 |
+| 3 | 6835753 | Δ⁴ | No declared quartic species term | 24 | 24 |
+
+`box_one` reuses `PersistencePremises.causal_cone_card`; `box_counts` certifies the
+43-tick box sums. In several spatial directions this table uses the componentwise
+condition |x_i| ≤ t. It does not assume a Euclidean or taxi-distance cone.
+`direction_root_counts` certifies the first-step root counts. Already these differ from
+the box slices of sizes 3, 9 and 27: roots have two nonzero chart coordinates, and clock
+advance is not the root-word length. No 43-step root-region cardinal or minimum region
+is claimed here. Both need a precise ring-to-lattice encoding and an occupancy rule.
+A cone of possible continuations does not require that every continuation is held.
+A one-event point is also distinct from the full 43-event clock line. Matching leading
+powers in the table does not derive a region, its multiplicity or its species assignment.
+The declared Δ⁰, Δ¹, Δ², Δ³ tier ordering and its multipliers are not derived by these counts.
 
 ## Persistence of an isolated excitation
 
-One-period persistence is blocked by the occupied-background renewal rule. There is no certified
-joint execution on which to state the requested closed `Persists` predicate.
+The closed, resource-exchanging joint execution remains open for decay. It is not a
+prerequisite for the held-event occupancy question above. There is no certified
+joint execution on which to state that earlier closed `Persists` predicate.
 `ExcitationPersistence` records the blocker without assuming a new successor
 or a restoring budget. The existing stationary vacuum, occupied register
 encoding and Boolean receiver are separate constructions.

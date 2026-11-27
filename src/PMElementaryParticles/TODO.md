@@ -2,7 +2,7 @@
 
 See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
-## Persistence of an isolated excitation
+## Closed execution for decay
 
 - Supply the joint resource account and primitive-event admission predicate before classifying successors; see the [machine constraint audit](../PMKAutomaton/OVERVIEW.md#constraints-on-occupied-joint-successors) (`PMKAutomaton.JointSuccessorConstraints`).
 
@@ -11,6 +11,13 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 - Revisit triality orientation only if a persistence-derived minimum ties generations 1 and 2 (`TierLedger.tiersFor`).
 
 ## Occupancy cost
+
+- Derive the required relevant registrations R for each species; every generation and visible channel currently admits one (`SpacetimeProgram.one_relevant_in_every_generation`).
+- Define a held-event account and prove its relation to registrations before applying the 86 bound to physical occupancy (`SpacetimeProgram.footprint_bound`).
+- Supply a geometric ring encoding: no primitive spacetime root stays on a fixed spatial clock line (`SpacetimeProgram.execution_changes_space`).
+- Connect the indexed ring family to one admitted spatial execution; specify whether root events run in parallel per site (`SpacetimeProgram.RingFamily`, `RootExecution`).
+- Count the exact 43-event root regions for the specified clock convention; box-cone counts are envelopes (`SpacetimeProgram.mem_rootReachableFinset`).
+- Prove attainable minimum regions for a derived R; use 84 per two-bit line or justify the one-bit bound 42 (`SpacetimeProgram.required_lines`).
 
 - Identify which clock data a physical cost preserves before using the cu-stabilizer (`ClockSymmetry.swap_changes_clockReading`).
 - Derive the physical oriented wall placement instead of treating its cycle as an encoding choice (`FullGenerationOrbits.swap_rejects_placement`).
