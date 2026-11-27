@@ -20,10 +20,6 @@ between a derived cone count, a supplied residual and an open physical configura
 | 2: Reversible Encoding | `PersistenceMechanics.ReversibleEncoding` | States, coarse descriptions, retained metadata, injectivity or a decoder. | A storage price, update frequency or maintenance workload from alphabet cardinality. |
 | 3: Impedance Matching | `PersistenceMechanics.ImpedanceMatching` | The transfer law, incident load, source/load impedances and reserve. | Zero mismatch or a numerical tolerance without a reserve law. |
 
-Paper III supplies these conditional rules and their recursive use. It explicitly
-allows idle capacity and non-unique allocations. More loops must supply additional total
-capacity; dividing an insufficient unchanged budget cannot remove overload.
-
 | EP adapter | Actual objects | Per-level? | Status for this step |
 | --- | --- | --- | --- |
 | `CapacityLedger` | Tasks = protocols sharing one ring. Demands = registrations/period. Overhead = supplied comparisons. Capacity = 43, less a supplied reserve. | No level index, child tasks or workload generator. | Reusable conditional budget adapter. A proved reserve is needed to use 42. |
@@ -52,38 +48,12 @@ claimed proved merely by giving it a role. Sources are Paper III Rules 1–3,
 
 ## Muon
 
-The six roles are fixed before assigning costs. Premise B is named once in
-[SCOPE](../../SCOPE.md#named-premises); `Muon` records its meaning. It asserts existence,
-not a period, child count, source load or feedback law. The native level-1 persistence
-predicate remains an implementation obligation. No extra numerical premise is adopted.
-
-| Pillar | Level-1 role | Source | Open |
-| --- | --- | --- | --- |
-| Capacity | Hold unit child programs and service parent tasks. | Rule 1; `cost_tower`. | Held-unit set, ownership and parent period. |
-| Map | Retain the charged channel and generation; correct toward the reference. | Rule 2; `generation_metadata_cardinality`; `map_maintains`. | Parent encoder, reference and update schedule. |
-| Protocol | Coordinate child transitions reversibly. | `encode_injective_iff_decoder`; child `tick_bijective`. | Parent operation, timing and return. |
-| Governor | Restrict child combinations and contention. | `Pillar.governor`; `restriction_lowers`. | Allowed subset and actual savings. |
-| Toll | Account for executed child/interface reversals. | `registrations_eq_reversals`; `quiet_program_cost`. | Parent encounters and their count/price. |
-| Margin | Preserve robustness, spare service and reflected-load reserve. | `one_ring_margin_ceiling`; `margin_iff`; Rule 3. | Viable states, reserves and recovery law. |
-
-For an identified disjoint bank of n child units, `Muon.held_children_cost` proves
-cost n. With unresolved parent terms rho, `conditional_cost` gives n + rho.
-Neither n nor rho is determined. Zero is not assigned to any unresolved charge.
-This is no complete muon prediction and cannot be ranked against a measurement.
-
-| Ledger term | Supported derivation | Source | Match? |
-| --- | --- | --- | --- |
-| Sweep sigma*Delta | n unit accounts; n is open. | `held_children_cost`, `full_sweep_label_count`. | Product cardinality matches only if held units are identified with all direction/tick labels (`sweep_agrees_if_identified`). |
-| Anchor -chi | No anchor release or negative charge is derived. | `boundary_euler`, `negative_map_price`. | Arithmetic price identity only; no physical sign/operation. |
-| Spin lag -2*pi | No phase-to-occupancy charge is derived. | `phase_measure_not_event_count`. | Open residual; even its magnitude is not a whole event count. |
-| Feedback (chi+sigma)*alpha/(1-alpha) | No source load or return coefficient is derived. | `declared_feedback_unique` for the supplied recurrence. | Conditional algebra only; no selected physical recurrence. |
-
-Sigma counts chart-coordinate directions: D-1 spatial plus two surface directions
-(`Derived.configDim`), not a proved number of ring copies. `full_sweep_label_count`
-counts their product with clock labels; a tick sequence is not a bank of distinct
-held accounts. Chi is an Euler characteristic. Pi is a geometric measure.
-`declared_minus_conditional` records the full unresolved difference from the ledger
-without setting rho to cancel it. The existing reporter comparison remains read-only.
+`Muon` records the six level-1 roles, premise B ([SCOPE](../../SCOPE.md#named-premises)),
+and the term audit. `conditional_cost` prices an identified unit bank as n + rho;
+neither n nor rho is fixed. `sweep_agrees_if_identified` needs a physical held-unit
+bijection, not just the chart-label cardinality. Phase pricing and the supplied feedback
+recurrence remain open. `LevelZeroFermions` now identifies the base event kind; it does
+not fix that bank, its parent period or sigma multiplicity. No new muon proof is added.
 
 ## Declared ledger levels
 
@@ -107,8 +77,6 @@ primitive unit have not been proved.
 | Top | [up, increment(up, X), increment(X, charm), increment(charm, top)] | `declared_top_tower` | The same missing X remains a parameter. |
 
 `declared_lepton_costs`, `declared_down_costs` and `declared_up_costs` prove the cost sums.
-No floor, field, residual or reporter value changes. There is no selected neutrino footprint.
-A zero incremental pillar field does not prove that a higher level has no such role.
 
 | Family | Exact inheritance | Break in the pattern |
 | --- | --- | --- |
@@ -136,9 +104,8 @@ excludes a one-loop realization. It does not construct the larger schedule or it
 | Top | 3 | 0→1, 1→2, 2→3 | Declared volume ledger; unknown level X. |
 | Neutrino | Unassigned | All species-specific promotions. | Declared tier set only; no selected footprint. |
 
-No species-specific overload is proved. Occupancy event counts, metadata alphabet size
-and operational work per period are different quantities. None may replace another
-without a theorem. Work below the aggregate ceiling also does not construct a schedule.
+Occupancy, metadata size and service work are distinct.
+No species-specific overload is proved.
 
 ## Draft tier claims and generation orbits
 
@@ -194,6 +161,85 @@ These results remain implementation constraints, not a flat minimization objecti
 `ExcitationPersistence` and `JointSuccessorConstraints` state the missing admitted joint
 execution and resource account for the parked renewal/decay work. Their module docstrings
 keep the detailed audit. Closed-ring zero erasure does not prove reference renewal.
+
+## Level-0 fermions
+
+`LevelZeroFermions` fixes a held unit of the ring account: one reversal occurrence,
+tagged by bit ring and tick. `held_events_card` and `cost_counts_held_events` connect
+that finite set to the canonical footprint. `quiet_held_event_unique` proves a singleton.
+No generation is selected. The electron-labelled channels have axis 0 and charge -1;
+they are classes 3 and 5 (active doublet member and other-wall singlet). Up/down use
+three colour axes on both walls: active class 0, other-wall classes 1/2.
+
+| Pillar | Electron role | Up/down role | Certified / open price |
+| --- | --- | --- | --- |
+| Capacity | Hold/service the packet trace. | Hold/service the coloured packet. | Traffic bound proved; no quark D-unit footprint derived. |
+| Map | Retain channel/reference and generation. | Also retain colour and weak label. | Ring Map and packet encoding proved; native StrongMap reader/correction open. |
+| Protocol | Reversible ring tick. | Tick plus colour/weak label actions. | Reversibility proved; no additional cost coefficient derived. |
+| Governor | Leave a non-firing site. | The same admitted-operation restriction. | Restriction proved; no scalar saving derived. |
+| Toll | Register the differing bit. | The same registration rule. | One reversal at unit event price, not one baseline tollTerm charge. |
+| Margin | Differing ring remains unsaturated. | The same reserve condition. | At most 42 proved; separate robustness/reserve charge open. |
+
+| Particle | Slot / account | Derived term | Source | Ledger match? |
+| --- | --- | --- | --- | --- |
+| Electron | Toll operation / events | One tagged reversal; cost 1. | `labelled_unit`, `electron_channels`. | Matches the declared unit account; complete physical identification is open. |
+| Up | Toll operation / events | The same singleton, cost 1. | `labelled_unit`, `quark_classes`. | Not the declared footprint (`unit_is_not_declared_quark_footprint`). |
+| Down | Toll operation / events | The same singleton, cost 1. | `weak_flip_unit_account`. | Separately prepared witnesses agree; the fixed-reference weak cost is open. |
+| All three | Capacity, Map, Protocol, Governor, Margin | Zero extra fields in the defined account; physical charges open. | `unit_account_extra_fields`. | Physical extra charges stay in `unit_with_open_residual`; no zero theorem. |
+| Up/down | D, eta, sigma ingredients | D coordinate labels; one reserved address leaves RM-1 of RM. | `frame_address_count`, `reserved_address_fraction`. | No quark-only reciprocal price or D-event identification; down sigma is unpriced. |
+
+Constructed current-ring witnesses need no new existence premise. Full isolated return,
+native StrongMap and the cost-completeness identification remain open. The quark unit
+accounts are not complete physical mass predictions. The declared ledgers differ by
+sigma/eta (`declared_point_ledger_difference`). The equal unit witnesses reselect reference
+and firing fields per label; this does not price a fixed-reference weak transition.
+For fixed numerator x, a net electron correction delta gives x/(1+delta)
+(`reference_unit_change`); positive delta lowers the old muon ratio. Any changed
+child-unit cost must also propagate through every containing tower.
+
+## Pillar classification of existing ledgers
+
+This is arithmetic/label classification, not a derivation. C/M/P/G/T/R mean Capacity,
+Map, Protocol, Governor, Toll, Margin. E means unit-price events with no automatic pillar
+assignment. f marks a fractional price factor, not a whole count; role marks an explicit
+docstring role, not a derived operation. Counts are distinct sourced slots in this audit;
+"missing" means unassigned, not zero. No arbitrary residual is divided by a chosen price.
+Direct pi*length and chi*coefficient identities use `LedgerPillars.pi_length_price` and
+`boundary_factor_price`; cell expansion uses `MesonMasses.cellBudget_pillars`.
+
+| Ledger | Assigned terms | E / unassigned terms | Slots present / missing | Frozen e8p pull |
+| --- | --- | --- | --- | --- |
+| Electron | T(operation): one reversal, price 1 | No other physical charge derived | 1 / C M P G R | Unit; unscored |
+| Muon | M: -chi; C(f): -2*pi | E: sigma*Delta; feedback unassigned | 2 / P G T R | -2.40 sigma |
+| Tau | M: chi*Delta^2 and -chi | -sigma*Delta; -D unassigned | 1 / C P G T R | -2.00 sigma |
+| Up | None | D/eta | 0 / C M P G T R | -1.45 sigma |
+| Down | None | D/eta + sigma/eta | 0 / C M P G T R | -1.05 sigma |
+| Strange | M(f): chi*sigma/eta | D*Delta/eta | 1 / C P G T R | +0.05 sigma |
+| Charm | None | D*Delta^2/(eta*(sigma-chi)) | 0 / C M P G T R | -1.25 sigma |
+| Bottom | M(f): Delta^2*chi/(sigma*eta) | D*Delta^2/eta | 1 / C P G T R | -0.20 sigma |
+| Top | C(role): Delta^3/D capacity leak | D*Delta^3 anchor | 1 / M P G T R | +0.35 sigma |
+| Proton | R(role): Delta^2 cone; C(f): -pi*D; T: sigma*Z_TOL; R(f): -Z_MAR/chi | -1/D; -alpha*(D+1/D) | 3 / M P G | +0.57 sigma |
+| Neutron | R(role): Delta^2 cone; C(f): -pi*D; T: (sigma-chi)*Z_TOL; R: -Z_MAR | -1/D; sigma/2 | 3 / M P G | +0.06 sigma |
+| Pion 0 | All six via chi cells; extra M: -chi*sigma | 1/(nu-chi) | 6 / none | +0.42 sigma |
+| Pion + | All six via chi cells; extra M: -chi*sigma | 1/(nu-chi) + sigma + D - alpha*(sigma-chi)/chi | 6 / none | +0.11 sigma |
+| Kaon 0 | All six via (sigma+chi) cells; extra C(f): -chi*pi/(nu-chi) | -sigma + D*sigma | 6 / none | +0.10 sigma |
+| Kaon + | All six via (sigma+chi) cells; extra C(f): D*pi | -sigma - 1/sqrt(2) - alpha*(sigma-chi)/chi | 6 / none | -0.05 sigma |
+
+Pulls are the read-only reporter's signed midpoint pulls (2026-11-27); its interval widths
+also matter. Light-quark comparisons use the supplied MS-bar/2-GeV convention, not an
+isolated-particle mass measurement. No theorem matches occupancy cost to that scheme/scale.
+The other quark rows are the reporter's own frozen references, not all 2-GeV quantities.
+No selected neutrino footprint exists, so there is no neutrino row to classify.
+
+`LedgerPillars.explicitSlots` tests whole baseline coefficients after expanding cells:
+muon/tau have only Map, quarks and the event unit have none, a pure cell has all six.
+The broader table also records fractional identities and documented roles. Support is
+not determined by scalar value (`price_support_not_determined_by_value`). Current ring
+pillars do not force six nonzero prices (`ring_pillars_do_not_force_six_prices`). The old
+hadron-overview claim of six nucleon slots is not certified by six summands. The selected pulls are correlated diagnostics with different reference precision. They do
+not establish a universal six-term law. In particular no two missing muon corrections
+are identified: Toll/Margin have no named prices, but Protocol/Governor are unassigned too.
+The withdrawn flat baseline-Toll lead is recorded in the `LedgerPillars` docstring.
 
 ## Charges
 

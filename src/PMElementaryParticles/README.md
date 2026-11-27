@@ -9,7 +9,9 @@ capacity/encoding results. `LedgerLevels` proves exact tower identities for the 
 species footprints. It does not derive those ledgers or select physical level budgets.
 `Muon` audits one level-1 charged lepton: its unit-account price is proved, while
 the held-unit set and parent charges remain open.
-The [open list](TODO.md) starts with that system and its per-level operations. The
+`LevelZeroFermions` identifies the primitive held event and the labelled channels.
+`LedgerPillars` tests the six-slot hypothesis without deriving charges from residuals.
+The [open list](TODO.md) starts with complete level-0 realizations and their open prices. The
 [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 
 `PMElementaryParticles.Values` exports the public masses, unit conversions and lifetime APIs.
