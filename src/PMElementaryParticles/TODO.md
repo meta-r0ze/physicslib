@@ -2,6 +2,15 @@
 
 See [SCOPE](../../SCOPE.md#named-premises) for the shared premises.
 
+## Map maintenance cost
+
+- Realize the channel/key record at native comparator ports; include the packet's independently conserved internal content (`ChannelRecord.word_determines_internal`, `RetainedMap.reference`).
+- Derive the physical bit chart and comparison metric; equally minimal reversible charts have different costs (`ChannelRecord.encoding_changes_distance`).
+- Supply the full reference and its generation key; coarse records and type weights do not select a channel word (`ChannelRecord.coarse_reference_lifts`, `key_distances`).
+- Realize the once-per-period schedule from [SCOPE](../../SCOPE.md#named-premises), including preparation, dispatch and reference preservation (`MapMaintenance.ChecksOnce`).
+- Prove native StrongMap readout and correction, and disjoint ownership before adding comparison cost to the existing reversal account (`RetainedMap.StrongMap`, `MapMaintenance.coarse_comparison_cost`).
+- Derive any extra quark operations beyond the four-bit comparison bound and the reciprocal eta factor (`MapMaintenance.channel_check_bound`, `ChannelRecord.declared_overhead_gaps`).
+
 ## Level-0 fermions
 
 - Identify complete isolated level-0 executions with the labelled unit account; current ring pillars do not prove StrongMap or full-state return (`LevelZeroFermions.labelled_unit`, `RetainedMap`).

@@ -27,15 +27,9 @@ A capacity-leak label is a documented role, not a count theorem.
 | --- | --- |
 | SpeciesFootprints; Muon | Muon has the explicit negative Map charge. Its spin pi term has a fractional Capacity-price identity; its sweep is a declared event account, and the feedback loop has no derived pillar assignment. Tau's explicit chi boundary terms have Map-price identities; the negative line and D anchor are unassigned operations. |
 | Quark named terms | D-based anchors and eta normalization have no certified pillar operation. Strange chi*sigma and bottom Delta^2*chi/sigma have Map-price factors, with the overhead still supplied. Top capLeakTerm is named a capacity leak. Charm's colour dilution is supplied. |
-| NucleonBase.causalCone_eq_sq | Delta^2 is explicitly Margin's causal cone. It is an event count, not a whole marginTerm charge. This does not assign the other terms. |
-| CompositeMasses; MesonMasses | zTol and zMar are exactly baseline Toll and Margin prices. Sigma*zTol and -zMar/chi retain their own coefficients; the latter is fractional. The pi*D term has a fractional Capacity-price identity. No source assigns inverse D, charge feedback, or sigma/2 uniquely to the remaining pillars. |
-| MesonMasses.cellBudget_pillars; *_cells | Each full cell expands into six baseline prices. Pion -chi*sigma is an extra whole Map charge. Other residual terms stay labelled or unassigned individually; a six-price cell does not derive its residual. |
 
-The older PMHadrons overview's "all six" nucleon claim was based on its list
-of terms; it did not supply a one-to-one pillar map. Direct Toll/Margin prices
-and a causal-cone role do not certify six distinct slots. The neutral and
-charged mesons really have an explicit six-price expansion by definition of
-their cell budget. Counts of written summands are not counts of pillars.
+Composite systems (PMHadrons); not comparable with elementary ledgers.
+Their counts and budgets are not evidence for elementary structure.
 
 ## The six-slot hypothesis
 

@@ -7,6 +7,8 @@ Results are in [OVERVIEW](OVERVIEW.md); the pillar calculations and their log ar
 
 ## Occupancy counts
 
+- Hadron ledgers are not built from elementary footprints (`MesonMasses`: not constituents minus a budget); in E8 hadrons are systems of elementary protocols; reconcile in the Hadrons sweep.
+
 - Derive the persistent pion placement that attains the χ-cell lower bound and price its neutral and charged residuals (`MesonMasses.pion0Footprint`, `pionPlusFootprint`).
 - Derive why the kaon holds χ cells plus the full σ-direction register and price its neutral and charged residuals (`MesonMasses.kaon0Footprint`, `kaonPlusFootprint`).
 - Attach the proved cone to the occupied proton and derive its Map, Toll, Margin and residual charges (`NucleonBase.protonFootprint`).

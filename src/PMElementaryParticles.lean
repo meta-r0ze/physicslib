@@ -119,3 +119,6 @@ import PMElementaryParticles.GluedExcursions
 import PMElementaryParticles.GenerationOrbits
 import PMElementaryParticles.FullGenerationOrbits
 import PMElementaryParticles.ExcitationPersistence
+
+import PMElementaryParticles.ChannelRecord
+import PMElementaryParticles.MapMaintenance

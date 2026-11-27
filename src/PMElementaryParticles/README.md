@@ -11,6 +11,9 @@ species footprints. It does not derive those ledgers or select physical level bu
 the held-unit set and parent charges remain open.
 `LevelZeroFermions` identifies the primitive held event and the labelled channels.
 `LedgerPillars` tests the six-slot hypothesis without deriving charges from residuals.
+`ChannelRecord` certifies minimal channel encodings and conditional reference distances.
+`MapMaintenance` prices once-per-bit comparisons; physical encoding, reference and native
+readout remain open. It does not derive the whole correction budget.
 The [open list](TODO.md) starts with complete level-0 realizations and their open prices. The
 [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 

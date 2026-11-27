@@ -11,8 +11,7 @@ A proposed tier n has n nesting steps above the level-0 ring: levels 0 through n
 Every level must realize all six pillars. `NestedFermion` gives the role map and its
 sources. `LedgerLevels` supplies exact algebra for the declared ledgers, not a derivation
 of those roles from their coefficients. The downstream `PMAtoms.SystemTower` illustrates
-the additive form; EP does not import it. `PMHadrons.NucleonBase` illustrates the distinction
-between a derived cone count, a supplied residual and an open physical configuration.
+the additive form; EP does not import it.
 
 | Rule | Canonical Lean source | Required application data | Does not imply |
 | --- | --- | --- | --- |
@@ -48,21 +47,15 @@ claimed proved merely by giving it a role. Sources are Paper III Rules 1–3,
 
 ## Muon
 
-`Muon` records the six level-1 roles, premise B ([SCOPE](../../SCOPE.md#named-premises)),
-and the term audit. `conditional_cost` prices an identified unit bank as n + rho;
-neither n nor rho is fixed. `sweep_agrees_if_identified` needs a physical held-unit
-bijection, not just the chart-label cardinality. Phase pricing and the supplied feedback
-recurrence remain open. `LevelZeroFermions` now identifies the base event kind; it does
-not fix that bank, its parent period or sigma multiplicity. No new muon proof is added.
+`Muon.conditional_cost` gives n + rho under premise B ([SCOPE](../../SCOPE.md#named-premises)).
+The base event kind is known; the held-child bank, parent period, sigma multiplicity,
+anchor, phase price and feedback law remain open. See the six roles in its docstring.
 
 ## Declared ledger levels
 
-All identities in this group are [Premise] ledger facts. `increment A B` preserves whole
-natural counts when they are monotone, subtracts signed charges/residuals, and satisfies
-`A.add (increment A B) = B`. `cost_tower` then gives exactly the original scalar costs.
-This is a telescoping account, not a unique physical division into level budgets.
-Disjoint physical resource ownership and the relation of the quark point entries to the
-primitive unit have not been proved.
+These are [Premise] ledger identities. `increment A B` telescopes whole counts,
+signed charges and residuals; `cost_tower` recovers the old scalar costs.
+No physical division into level budgets or disjoint resource ownership is derived.
 
 | Species | Declared level tower | Exact theorem | Remaining structure |
 | --- | --- | --- | --- |
@@ -162,40 +155,63 @@ These results remain implementation constraints, not a flat minimization objecti
 execution and resource account for the parked renewal/decay work. Their module docstrings
 keep the detailed audit. Closed-ring zero erasure does not prove reference renewal.
 
-## Level-0 fermions
+## Level-0 fermions: Map maintenance cost
 
-`LevelZeroFermions` fixes a held unit of the ring account: one reversal occurrence,
-tagged by bit ring and tick. `held_events_card` and `cost_counts_held_events` connect
-that finite set to the canonical footprint. `quiet_held_event_unique` proves a singleton.
-No generation is selected. The electron-labelled channels have axis 0 and charge -1;
-they are classes 3 and 5 (active doublet member and other-wall singlet). Up/down use
-three colour axes on both walls: active class 0, other-wall classes 1/2.
+One held ring event is a tagged stream reversal (`LevelZeroFermions.held_events_card`).
+The separate unit witnesses cost 1 for electron, up and down. They do not prove complete
+isolated persistence or fix a shared reference. Physical charges outside that account remain open.
+`labelRecord` already separates electron/up/down; it merges colour axes, walls and generation.
 
-| Pillar | Electron role | Up/down role | Certified / open price |
+| Piece | Certificate | Limit |
+| --- | --- | --- |
+| Native Boolean mismatch = normalized receiver flag = registration/reversal | `MapMaintenance.native_boolean_flag`, `native_registration_is_reversal`; `ReversalEvents.registrations_eq_reversals` | Actual record preparation, dispatch and correction remain open. |
+| Once-only comparisons cost the full-record Hamming distance | `checks_once_events`, `checks_once_cost`, `cost_eq_native_flags` | Frequency is a [SCOPE premise](../../SCOPE.md#named-premises); record and reference are supplied. |
+| Four bits retain all 14 point channels and their class, axis, sign and channel-vector content | `ChannelRecord.word_injective`, `word_determines_semantics`, `word_determines_internal` | Independent packet internal content in `RetainedMap.reference` is not decoded. |
+| Four bits are necessary; dropping any one merges channels | `bit_length_minimal`, `every_bit_essential` | The requested class/axis/sign/internal tuple is redundant (`class_field_redundant`, `internal_field_redundant`). |
+| Equally minimal charts give different distances | `gray_injective`, `encoding_changes_distance` | Reversible Encoding does not select a physical metric. |
+
+The following distances use the ordinary binary expansion of the existing `channelCode`.
+L/C are the supplied two-bit lepton/colour records. L*/C* are sets of distances to ALL
+compatible basis completions, not costs of the coherent reference. Shared Q/L are likewise
+basis-support sets of the type weights. Anchors are exact `ReferenceAnchor.lepton` channels.
+The full `reference_table` also certifies SharedReference u/d/e/n supports; none selects one word.
+
+| Channel | Species | Class/wall | Coarse L/C | Full L* / C* | Shared Q / L | Anchor nuL/eL | Declared footprint |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| eL | electron | 3/1 | 1/2 | {1,2} / {2,3,4} | {1,2,3} / {0,1} | 1/0 | 1 |
+| eR | electron | 5/0 | 1/2 | {1,2} / {2,3,4} | {2,3,4} / {1,2} | 2/1 | 1 |
+| uL1 | up | 0/1 | 1/0 | {1,2} / {0,1,2,3} | {0,1,2,3} / {1,2} | 1/2 | D/eta |
+| dL1 | down | 0/1 | 2/1 | {2,3} / {1,2,3,4} | {0,1,2,3} / {1,2} | 2/1 | (D+sigma)/eta |
+| uR1 | up | 1/0 | 1/0 | {1,2} / {0,1,2,3} | {1,2,3,4} / {2,3} | 2/3 | D/eta |
+| dR1 | down | 2/0 | 2/1 | {2,3} / {1,2,3,4} | {1,2,3,4} / {2,3} | 3/2 | (D+sigma)/eta |
+| uL2 | up | 0/1 | 1/0 | {1,2} / {0,1,2,3} | {0,1,2,3} / {1,2} | 1/2 | D/eta |
+| dL2 | down | 0/1 | 2/1 | {2,3} / {1,2,3,4} | {0,1,2,3} / {1,2} | 2/1 | (D+sigma)/eta |
+| uR2 | up | 1/0 | 1/0 | {1,2} / {0,1,2,3} | {1,2,3,4} / {2,3} | 2/3 | D/eta |
+| dR2 | down | 2/0 | 2/1 | {2,3} / {1,2,3,4} | {1,2,3,4} / {2,3} | 3/2 | (D+sigma)/eta |
+| uL3 | up | 0/1 | 1/0 | {2,3} / {0,1,2} | {0,1,2} / {2,3} | 2/3 | D/eta |
+| dL3 | down | 0/1 | 2/1 | {3,4} / {1,2,3} | {0,1,2} / {2,3} | 3/2 | (D+sigma)/eta |
+| uR3 | up | 1/0 | 1/0 | {2,3} / {0,1,2} | {1,2,3} / {3,4} | 3/4 | D/eta |
+| dR3 | down | 2/0 | 2/1 | {3,4} / {1,2,3} | {1,2,3} / {3,4} | 4/3 | (D+sigma)/eta |
+
+With generation, add the following entry to each channel distance (`generated_distance`).
+No reference key is supplied. For completion sets, add the entry to every member.
+
+| Packet key / reference key | (0,1) | (1,0) | (1,1) |
 | --- | --- | --- | --- |
-| Capacity | Hold/service the packet trace. | Hold/service the coloured packet. | Traffic bound proved; no quark D-unit footprint derived. |
-| Map | Retain channel/reference and generation. | Also retain colour and weak label. | Ring Map and packet encoding proved; native StrongMap reader/correction open. |
-| Protocol | Reversible ring tick. | Tick plus colour/weak label actions. | Reversibility proved; no additional cost coefficient derived. |
-| Governor | Leave a non-firing site. | The same admitted-operation restriction. | Restriction proved; no scalar saving derived. |
-| Toll | Register the differing bit. | The same registration rule. | One reversal at unit event price, not one baseline tollTerm charge. |
-| Margin | Differing ring remains unsaturated. | The same reserve condition. | At most 42 proved; separate robustness/reserve charge open. |
+| (0,1) | 0 | 2 | 1 |
+| (1,0) | 2 | 0 | 1 |
+| (1,1) | 1 | 1 | 0 |
 
-| Particle | Slot / account | Derived term | Source | Ledger match? |
-| --- | --- | --- | --- | --- |
-| Electron | Toll operation / events | One tagged reversal; cost 1. | `labelled_unit`, `electron_channels`. | Matches the declared unit account; complete physical identification is open. |
-| Up | Toll operation / events | The same singleton, cost 1. | `labelled_unit`, `quark_classes`. | Not the declared footprint (`unit_is_not_declared_quark_footprint`). |
-| Down | Toll operation / events | The same singleton, cost 1. | `weak_flip_unit_account`. | Separately prepared witnesses agree; the fixed-reference weak cost is open. |
-| All three | Capacity, Map, Protocol, Governor, Margin | Zero extra fields in the defined account; physical charges open. | `unit_account_extra_fields`. | Physical extra charges stay in `unit_with_open_residual`; no zero theorem. |
-| Up/down | D, eta, sigma ingredients | D coordinate labels; one reserved address leaves RM-1 of RM. | `frame_address_count`, `reserved_address_fraction`. | No quark-only reciprocal price or D-event identification; down sigma is unpriced. |
-
-Constructed current-ring witnesses need no new existence premise. Full isolated return,
-native StrongMap and the cost-completeness identification remain open. The quark unit
-accounts are not complete physical mass predictions. The declared ledgers differ by
-sigma/eta (`declared_point_ledger_difference`). The equal unit witnesses reselect reference
-and firing fields per label; this does not price a fixed-reference weak transition.
-For fixed numerator x, a net electron correction delta gives x/(1+delta)
-(`reference_unit_change`); positive delta lowers the old muon ratio. Any changed
-child-unit cost must also propagate through every containing tower.
+`RecordEncoding.colourSymmetric` is not a channel word (`colour_symmetric_not_channel`).
+The doublet reference is a different chart with no supplied full-channel/key lift.
+The four-bit distance is at most 4; with the key it is at most 6, below D+sigma = 9.
+Thus no reference gives the requested 1/4/9 Map-only costs in this chart. Even eL/eR cannot
+both have distance 1 to one fixed word (`no_fixed_word_unit_for_both_walls`). These are not
+bounds on all physical realizations. Eta remains open: the ledger gaps above D and D+sigma
+are 4/171 and 9/171 (`declared_overhead_gaps`). No integer check count derives that normalization.
+The old unit already charges a coarse comparison (`coarse_comparison_cost`); adding another
+unit needs disjoint-event ownership. Correction and full native StrongMap are not yet proved.
+For fixed numerator x, an electron correction delta changes its ratio to x/(1+delta).
 
 ## Pillar classification of existing ledgers
 
@@ -205,7 +221,7 @@ assignment. f marks a fractional price factor, not a whole count; role marks an 
 docstring role, not a derived operation. Counts are distinct sourced slots in this audit;
 "missing" means unassigned, not zero. No arbitrary residual is divided by a chosen price.
 Direct pi*length and chi*coefficient identities use `LedgerPillars.pi_length_price` and
-`boundary_factor_price`; cell expansion uses `MesonMasses.cellBudget_pillars`.
+`boundary_factor_price`.
 
 | Ledger | Assigned terms | E / unassigned terms | Slots present / missing | Frozen e8p pull |
 | --- | --- | --- | --- | --- |
@@ -218,12 +234,6 @@ Direct pi*length and chi*coefficient identities use `LedgerPillars.pi_length_pri
 | Charm | None | D*Delta^2/(eta*(sigma-chi)) | 0 / C M P G T R | -1.25 sigma |
 | Bottom | M(f): Delta^2*chi/(sigma*eta) | D*Delta^2/eta | 1 / C P G T R | -0.20 sigma |
 | Top | C(role): Delta^3/D capacity leak | D*Delta^3 anchor | 1 / M P G T R | +0.35 sigma |
-| Proton | R(role): Delta^2 cone; C(f): -pi*D; T: sigma*Z_TOL; R(f): -Z_MAR/chi | -1/D; -alpha*(D+1/D) | 3 / M P G | +0.57 sigma |
-| Neutron | R(role): Delta^2 cone; C(f): -pi*D; T: (sigma-chi)*Z_TOL; R: -Z_MAR | -1/D; sigma/2 | 3 / M P G | +0.06 sigma |
-| Pion 0 | All six via chi cells; extra M: -chi*sigma | 1/(nu-chi) | 6 / none | +0.42 sigma |
-| Pion + | All six via chi cells; extra M: -chi*sigma | 1/(nu-chi) + sigma + D - alpha*(sigma-chi)/chi | 6 / none | +0.11 sigma |
-| Kaon 0 | All six via (sigma+chi) cells; extra C(f): -chi*pi/(nu-chi) | -sigma + D*sigma | 6 / none | +0.10 sigma |
-| Kaon + | All six via (sigma+chi) cells; extra C(f): D*pi | -sigma - 1/sqrt(2) - alpha*(sigma-chi)/chi | 6 / none | -0.05 sigma |
 
 Pulls are the read-only reporter's signed midpoint pulls (2026-11-27); its interval widths
 also matter. Light-quark comparisons use the supplied MS-bar/2-GeV convention, not an
@@ -235,11 +245,12 @@ No selected neutrino footprint exists, so there is no neutrino row to classify.
 muon/tau have only Map, quarks and the event unit have none, a pure cell has all six.
 The broader table also records fractional identities and documented roles. Support is
 not determined by scalar value (`price_support_not_determined_by_value`). Current ring
-pillars do not force six nonzero prices (`ring_pillars_do_not_force_six_prices`). The old
-hadron-overview claim of six nucleon slots is not certified by six summands. The selected pulls are correlated diagnostics with different reference precision. They do
+pillars do not force six nonzero prices (`ring_pillars_do_not_force_six_prices`). The selected pulls are correlated diagnostics with different reference precision. They do
 not establish a universal six-term law. In particular no two missing muon corrections
 are identified: Toll/Margin have no named prices, but Protocol/Governor are unassigned too.
 The withdrawn flat baseline-Toll lead is recorded in the `LedgerPillars` docstring.
+
+Composite systems (PMHadrons); not comparable with elementary ledgers.
 
 ## Charges
 
@@ -284,11 +295,8 @@ are labels for the declared leading powers. The nested proposal must derive the
 per-level work and architecture before checking `TierLedger.tiersFor`. The physical
 unit, one clock event costs one electron mass, is a named premise in SCOPE.
 
-### Generations on the E8 wire
-
-`KoideSplit` checks an algebraic norm split. `KoideSelection` uses a supplied
-generation record. Neither result derives a species footprint or a Fourier phase.
-See their module docstrings for excluded assignments and numerical checks.
+`KoideSplit` checks an algebraic norm split; `KoideSelection` uses a supplied generation
+record. Neither derives a footprint or Fourier phase. Working notes are in their docstrings.
 
 ## Record comparisons and heavy flip flag costs
 
@@ -343,10 +351,7 @@ The van Ritbergen–Stuart series is supplied theory, not a measurement or a PM 
 
 ## EP premise ledger
 
-Read the shared statements in [SCOPE, Named premises](../../SCOPE.md#named-premises).
-The names in this table identify the rows by the Lean module in SCOPE's
-“Where it enters in Lean” column. Local inputs below give the remaining
-choice and the first layer that needs it.
+[SCOPE](../../SCOPE.md#named-premises) supplies the named rows; local inputs enter at the layers below.
 
 | Layer | Lean location or SCOPE row | Status |
 | --- | --- | --- |
@@ -372,6 +377,7 @@ choice and the first layer that needs it.
 | Carrier | `CompositeSchur` | Gapped crossing and flip coefficients are supplied. A booked execution must realize the coherent blocks. |
 | Carrier | SCOPE · `ChargedInsertion`, `ResonanceLift` | Named offset and matched-port admission. Persistence of the calibration channel is open. |
 | Carrier | `LinkGapLaw.gapA`, `LinkGapLaw.gapB` | Supplied alternatives for matching `yv` to detuning. The `κ_τ` measurement is an e8p comparison. |
+| Protocol | SCOPE · `MapMaintenance.ChecksOnce` | Named check-frequency premise. Record, full reference, native readout and realized schedule remain open. |
 | Protocol | SCOPE · `WireSchedule.Premises` | Named serial route and admitted bookings. |
 | Protocol | SCOPE · `WireReferenceCost`, `PMKAutomaton.Values` | Named population and reset contract. The threshold arithmetic is proved. |
 | Protocol | `EPSpine.spine`, `EPSpine.witnessAt_registrations` | Proved for class witnesses. Closure of a complete occupied program is open. |
@@ -391,9 +397,3 @@ choice and the first layer that needs it.
 | Protocol | `TauLifetime.tauLife`, `TauE8.tauLifetimeE8` | Experimental muon lifetime and branching fraction for the first. Experimental branching fraction for the second. |
 | Protocol | `TauLifetimeCorrected.qedTau` | Supplied QED formula. `MuonQEDLoops.runningAlpha tau` uses the E8 baseline coupling. |
 | Protocol | `TauLifetimeCorrected.wRatio` | SM finite-propagator correction applied with the E8 W mass. |
-
-## Verification
-
-Use `./build.sh fast <module>` for changed artifacts, `./build.sh lean <module>`
-for typechecks, and `./build.sh audit` for axioms and dependency direction.
-Build reporter checks with `./build.sh e8p`. The three-site certificates live in PMChecks.
