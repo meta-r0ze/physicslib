@@ -1,4 +1,4 @@
-import PMConstants.General.Encoding
+import PersistenceMechanics.ReversibleEncoding
 import PMSubstrate.E8Values
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Logic.Equiv.Fin.Rotate

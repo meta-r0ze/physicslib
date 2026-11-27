@@ -20,6 +20,11 @@ source ~/.elan/env
 ./build.sh PMConstants
 ```
 
+The general nested rules are owned by `PersistenceMechanics.CapacityPartitioning`,
+`ReversibleEncoding` and `ImpedanceMatching`. `General.ReferenceCapacity` keeps
+its distinct finite-frame and clock applications. `Interface` keeps the concrete
+quotient/remainder instance. No compatibility copies of the generic rules remain.
+
 The dependency direction is Paper I → Paper II → Paper III. Run
 `./build.sh PMAction` before this one. Only `propext`, `Classical.choice` and
 `Quot.sound` are permitted;

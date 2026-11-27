@@ -42,7 +42,8 @@ metadata `m` is reversible exactly when `m` separates every fibre of `q`
 (`encode_injective_iff`). Then fibres have at most `|M|` states
 (`fiber_card_le`) and `|X| ≤ |Q|·|M|` (`card_le_mul`). For site data, the
 reference value with the differences from it is reversible
-(`relational_injective`), and dropping the reference merges exactly the global
+(`relational_injective`); `relativeEquiv` removes the redundant self-difference
+with a total inverse. `relative_restrict` proves agreement of the charts. Dropping the reference merges exactly the global
 shifts (`differences_eq_iff`). The protocol-record instance is
 `PMElementaryParticles.RecordEncoding`. (Compiled.)
 
@@ -54,3 +55,15 @@ equal capacity the subsystem count is at least `(∑ w + ∑ h)/C`
 (`count_lower_bound`). Over a repeating cycle, bounded backlog forces zero drift,
 so service balances demand (`bounded_backlog_zero_drift`, `service_balance`). The
 clock-ring instance is `PMElementaryParticles.CapacityLedger`. (Compiled.)
+
+## Shared nested-rule API
+
+| Rule | Canonical inputs | Additional checked consequences |
+| --- | --- | --- |
+| CapacityPartitioning | Finite tasks/workers, work, capacities, overhead, nonnegative complete service | `feasible_iff` relates structure and conjunction forms; `no_allocation_under_overload`; `feasible_family`; `feasible_with_idle_capacity`. |
+| ReversibleEncoding | A coarse description and retained metadata | `encode_injective_iff_decoder`; `fiber_card_eq` equates subtype and Finset fibre counts; `remainder_capacity`; `metadata_relabel`; `relativeEquiv` and its explicit inverse. |
+| ImpedanceMatching | A specified positive-real source/load law, incident load and reserve | `reflected`, `transmitted`, `Admissible`; `transmission_formula`, `transmission_bounds`, `zero_reserve_iff`, `mismatch_within_budget`. |
+
+These are the only general definitions of these rules. PMConstants retains
+its concrete quotient/remainder, finite-frame, clock and substrate applications.
+EP's `NestedFermion` gives a conditional level-role map, not new rule definitions.

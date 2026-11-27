@@ -39,6 +39,22 @@ The electron Yukawa is a comparison label, not a premise, and is not scored.
 - `CarrierRegisterChirality`: tests of packet/wall/chirality matching against the
   full vacuum, and the agreement of the matching rules on its zero kernel.
 
+## Nested rules and their applications
+
+| Concept | Canonical source | PMConstants application |
+| --- | --- | --- |
+| Divisible service allocation | `PersistenceMechanics.CapacityPartitioning.Feasible` | General rule imports; no private feasibility definition. |
+| Coarse description plus metadata | `PersistenceMechanics.ReversibleEncoding.encode` | `Interface.encode` applies it to quotient and remainder. |
+| Reference and relative coordinates | `PersistenceMechanics.ReversibleEncoding.relativeEquiv`, `relative_restrict` | The nonself chart has the same information as the full relative chart. |
+| Reflected-load budget | `PersistenceMechanics.ImpedanceMatching` | `SurfaceBudget` and `PersistentGain` use its reflection, transmission and admissibility. Values are unchanged. |
+| Finite reference frame | `General.ReferenceCapacity` | Static payload bounds, equivariant periods, rotating words and the E8 grid. These are distinct specializations, not duplicate generic rules. |
+
+Structure/conjunction feasibility, the two fibre cardinal presentations, and the
+relative charts were checked equivalent before removing the copies. Unique decoder,
+relabeling, idle-capacity and interface consequences now live with their upstream rule.
+The generic rules constrain feasibility; applications still supply work, periods,
+reference alphabets and reserve allocation. They do not infer higher-level work.
+
 ## Shared definitions
 
 | Quantity | Definition | How PMConstants uses it |

@@ -70,4 +70,60 @@ theorem realize (s : ℝ) : reflection (1 - s) (1 + s) = s := by
   unfold reflection
   ring
 
+theorem reflection_zero_iff {source load : ℝ} (hs : 0 < source) (hl : 0 < load) :
+    reflection source load = 0 ↔ load = source := by
+  simp [reflection, div_eq_zero_iff, ne_of_gt (add_pos hl hs), sub_eq_zero]
+
+theorem transmission_formula {source load : ℝ} (hs : 0 < source) (hl : 0 < load) :
+    transmission source load = 4*source*load/(load+source)^2 := by
+  have hn : load+source ≠ 0 := ne_of_gt (add_pos hl hs)
+  unfold transmission reflection
+  field_simp [hn]
+  ring
+
+theorem transmission_bounds {source load : ℝ} (hs : 0 < source) (hl : 0 < load) :
+    0 < transmission source load ∧ transmission source load ≤ 1 := by
+  constructor
+  · rw [transmission_formula hs hl]
+    positivity
+  · unfold transmission
+    nlinarith [sq_nonneg (reflection source load)]
+
+theorem perfect_matching_iff {source load : ℝ} (hs : 0 < source) (hl : 0 < load) :
+    transmission source load = 1 ↔ load = source := by
+  have h : transmission source load = 1 ↔ (reflection source load)^2 = 0 := by
+    unfold transmission
+    constructor <;> intro hx <;> linarith
+  rw [h, sq_eq_zero_iff, reflection_zero_iff hs hl]
+
+noncomputable def reflected (incident source load : ℝ) : ℝ := incident * (reflection source load)^2
+noncomputable def transmitted (incident source load : ℝ) : ℝ := incident * transmission source load
+def Admissible (incident reserve source load : ℝ) : Prop := reflected incident source load ≤ reserve
+
+
+theorem reflected_nonneg {incident source load : ℝ} (hp : 0 ≤ incident) :
+    0 ≤ reflected incident source load := mul_nonneg hp (sq_nonneg _)
+
+theorem zero_reflection_iff {incident source load : ℝ}
+    (hp : 0 < incident) (hs : 0 < source) (hl : 0 < load) :
+    reflected incident source load = 0 ↔ load = source := by
+  rw [reflected, mul_eq_zero, or_iff_right hp.ne', sq_eq_zero_iff,
+    reflection_zero_iff hs hl]
+
+/-- Zero reserve forces exact matching within this reflected-load model. -/
+theorem zero_reserve_iff {incident source load : ℝ}
+    (hp : 0 < incident) (hs : 0 < source) (hl : 0 < load) :
+    Admissible incident 0 source load ↔ load = source := by
+  unfold Admissible
+  rw [show reflected incident source load ≤ 0 ↔ reflected incident source load = 0 from
+    ⟨fun h => le_antisymm h (reflected_nonneg hp.le), fun h => h.le⟩]
+  exact zero_reflection_iff hp hs hl
+
+/-- A mismatch can have positive transmission and fit a positive reserve.
+This example supplies no numerical tolerance for the vacuum. -/
+theorem mismatch_within_budget :
+    Admissible 1 (1/8) 1 2 ∧ (1 : ℝ) ≠ 2 ∧
+      reflected 1 1 2 = 1/9 ∧ transmitted 1 1 2 = 8/9 := by
+  norm_num [Admissible, reflected, transmitted, reflection, transmission]
+
 end PersistenceMechanics.ImpedanceMatching

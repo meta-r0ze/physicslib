@@ -27,3 +27,8 @@ lake exe cache get
   Use Rates for constant hazards, parallel rate sums and finite mean life.
   A finite mean life needs a positive rate. HazardForm derives the common
   cost-proportional hazard, and Decay.rate computes the six-pillar channel rate.
+
+The three nested-system rules are upstream here: `CapacityPartitioning`,
+`ReversibleEncoding` and `ImpedanceMatching`. Applications must supply work,
+coarse descriptions, metadata, interface laws and reserves. The rules do not
+select a depth or a unique allocation. See [the rule map](OVERVIEW.md).

@@ -72,4 +72,38 @@ theorem service_balance (q0 ρ Sd Ss B : ℝ) (h : ∀ n : ℕ, |q0 + n * (ρ * 
   have := bounded_backlog_zero_drift q0 _ B h
   linarith
 
+/-- The structure is exactly the conjunction form of the allocation rule. -/
+theorem feasible_iff (w : I → ℝ) (C h : J → ℝ) (s : I → J → ℝ) :
+    Feasible w C h s ↔ (∀ i j, 0 ≤ s i j) ∧
+      (∀ i, ∑ j, s i j = w i) ∧ (∀ j, (∑ i, s i j)+h j ≤ C j) :=
+  ⟨fun hf => ⟨hf.nonneg, hf.serves, hf.fits⟩, fun h => ⟨h.1, h.2.1, h.2.2⟩⟩
+
+/-- Splitting an unchanged insufficient total budget cannot remove overload. -/
+theorem no_allocation_under_overload (demand : I → ℝ)
+    (capacity overhead : J → ℝ) (hcost : ∀ j, 0 ≤ overhead j)
+    (hover : (∑ j, capacity j) < ∑ i, demand i) :
+    ¬ ∃ service, Feasible demand capacity overhead service := by
+  rintro ⟨service, h⟩
+  have hb := global_budget h
+  have ho : 0 ≤ ∑ j, overhead j := sum_nonneg (fun j _ => hcost j)
+  linarith
+
+/-- A continuum of distinct divisions can obey the same capacity constraints. -/
+theorem feasible_family (p : ℝ) (h0 : 0 ≤ p) (h1 : p ≤ 1) :
+    Feasible (fun _ : Fin 1 => (1 : ℝ)) (fun _ : Fin 2 => (1 : ℝ))
+      (fun _ => 0) (fun _ j => if j = 0 then p else 1-p) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro i j; split_ifs <;> linarith
+  · intro i; norm_num [Fin.sum_univ_succ]
+  · intro j; fin_cases j <;> norm_num [Fin.sum_univ_succ] <;> linarith
+
+/-- Persistence feasibility does not imply full utilization of every worker. -/
+theorem feasible_with_idle_capacity :
+    Feasible (fun _ : Fin 1 => (1 : ℝ)) (fun _ : Fin 2 => (1 : ℝ))
+      (fun _ => 0) (fun _ j => if j = 0 then 1 else 0) ∧
+      (∑ _i : Fin 1, (1 : ℝ)) < ∑ _j : Fin 2, (1 : ℝ) := by
+  constructor
+  · simpa using feasible_family 1 (by norm_num) (by norm_num)
+  · norm_num
+
 end PersistenceMechanics.CapacityPartitioning

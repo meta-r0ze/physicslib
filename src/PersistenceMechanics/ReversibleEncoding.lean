@@ -85,4 +85,80 @@ theorem differences_eq_iff {ι G : Type*} [AddCommGroup G] (o : ι) (x y : ι �
     rw [hc i, hc o]
     abel
 
+/-- Reversibility is equivalent to an actual partial decoder on label/metadata
+pairs. Impossible codes can return `none`; every encoded state is recovered. -/
+theorem encode_injective_iff_decoder (coarse : X → Q) (metadata : X → M) :
+    Function.Injective (encode coarse metadata) ↔
+      ∃ decode : Q × M → Option X,
+        ∀ x, decode (encode coarse metadata x) = some x := by
+  classical
+  constructor
+  · intro h
+    refine ⟨fun code => if hc : ∃ x, encode coarse metadata x = code
+      then some hc.choose else none, ?_⟩
+    intro x
+    dsimp only
+    split_ifs with hc
+    · exact congrArg some (h hc.choose_spec)
+    · exact (hc ⟨x, rfl⟩).elim
+  · rintro ⟨decode, hd⟩ x y he
+    have h := congrArg decode he
+    rw [hd, hd] at h
+    exact Option.some.inj h
+
+
+/-- If a coarse label has k independent possible remainders, storing fewer
+than k metadata states cannot preserve all those states. -/
+theorem remainder_capacity (k : ℕ) [Fintype M] (q : Q)
+    (metadata : Q × Fin k → M)
+    (h : Function.Injective (encode Prod.fst metadata)) : k ≤ Fintype.card M := by
+  have hinj : Function.Injective (fun i : Fin k => metadata (q, i)) := by
+    intro i j he
+    have hpair := (encode_injective_iff Prod.fst metadata).mp h (q, i) (q, j) rfl he
+    exact congrArg Prod.snd hpair
+  simpa using Fintype.card_le_of_injective _ hinj
+
+/-- Renaming metadata preserves the information. A physical interpretation
+of that metadata requires additional structure beyond reversibility. -/
+theorem metadata_relabel {M' : Type*} (coarse : X → Q)
+    (metadata : X → M) (e : M ≃ M')
+    (h : Function.Injective (encode coarse metadata)) :
+    Function.Injective (encode coarse (e ∘ metadata)) := by
+  apply (encode_injective_iff _ _).mpr
+  intro x y hc hm
+  exact (encode_injective_iff _ _).mp h x y hc (e.injective hm)
+
+
+/-- Subtype and Finset presentations count the same coarse fibre. -/
+theorem fiber_card_eq [Fintype X] [DecidableEq Q] (q : X → Q) (a : Q) :
+    Nat.card {x : X // q x = a} = (Finset.univ.filter fun x => q x = a).card := by
+  classical
+  simp [Nat.card_eq_fintype_card, Fintype.card_subtype]
+
+/-- Nonself coordinates are a total chart: omit the redundant zero self-difference.
+Restriction of `relational` gives this chart; its inverse restores the reference. -/
+def relativeEquiv {I A : Type*} [AddGroup A] [DecidableEq I] (o : I) :
+    (I → A) ≃ A × ({i : I // i ≠ o} → A) where
+  toFun x := (x o, fun i => x i-x o)
+  invFun p i := if h : i = o then p.1 else p.2 ⟨i,h⟩+p.1
+  left_inv x := by
+    funext i
+    by_cases hi : i = o <;> simp [hi]
+  right_inv p := by
+    rcases p with ⟨r,d⟩
+    apply Prod.ext
+    · simp
+    · funext i; simp [i.property]
+
+theorem relative_restrict {I A : Type*} [AddGroup A] [DecidableEq I] (o : I) (x : I → A) :
+    relativeEquiv o x = ((relational o x).1, fun i : {i : I // i ≠ o} => (relational o x).2 i) := rfl
+
+theorem differences_without_reference_not_injective {I A : Type*} [AddGroup A]
+    [Nontrivial A] (o : I) :
+    ¬ Function.Injective (fun x : I → A => fun i : {i : I // i ≠ o} => x i-x o) := by
+  intro h
+  obtain ⟨a,b,hab⟩ := exists_pair_ne A
+  have he : (fun _ : I => a) = (fun _ : I => b) := h (by funext i; simp)
+  exact hab (congrFun he o)
+
 end PersistenceMechanics.ReversibleEncoding

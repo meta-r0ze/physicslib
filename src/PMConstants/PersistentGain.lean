@@ -1,3 +1,4 @@
+import PersistenceMechanics.ImpedanceMatching
 import PMConstants.MatchedRegulation
 import PMConstants.SurfaceBudget
 
@@ -29,11 +30,11 @@ namespace PMConstants.PersistentGain
 open PMConstants Matching MatchedRegulation
 
 def aperture : ℝ := 6*overhead
-def refl (g : ℝ) : ℝ := General.Matching.reflected 1 (regulator g) aperture
+def refl (g : ℝ) : ℝ := PersistenceMechanics.ImpedanceMatching.reflected 1 (regulator g) aperture
 def slack (g : ℝ) : ℝ := 3 - (23*g + 1/43)
 
 def Persistent (c g : ℝ) : Prop :=
-  0 < g ∧ 0 ≤ slack g ∧ General.Matching.Admissible c (slack g) (regulator g) aperture
+  0 < g ∧ 0 ≤ slack g ∧ PersistenceMechanics.ImpedanceMatching.Admissible c (slack g) (regulator g) aperture
 
 lemma aperture_pos : 0 < aperture := by norm_num [aperture, overhead]
 
@@ -42,14 +43,14 @@ lemma regulator_pos {g : ℝ} (hg : 0 < g) : 0 < regulator g :=
 
 lemma refl_eq (g : ℝ) :
     refl g = ((aperture - regulator g)/(aperture + regulator g))^2 := by
-  simp [refl, General.Matching.reflected, Interface.reflection]
+  simp [refl, PersistenceMechanics.ImpedanceMatching.reflected, PersistenceMechanics.ImpedanceMatching.reflection]
 
 lemma slack_eq (g : ℝ) : slack g = 23*(selfCoupling - g) := by
   unfold slack; norm_num [selfCoupling]; ring
 
 lemma admissible_iff (c g : ℝ) :
-    General.Matching.Admissible c (slack g) (regulator g) aperture ↔ c * refl g ≤ slack g := by
-  unfold General.Matching.Admissible General.Matching.reflected refl General.Matching.reflected
+    PersistenceMechanics.ImpedanceMatching.Admissible c (slack g) (regulator g) aperture ↔ c * refl g ≤ slack g := by
+  unfold PersistenceMechanics.ImpedanceMatching.Admissible PersistenceMechanics.ImpedanceMatching.reflected refl PersistenceMechanics.ImpedanceMatching.reflected
   simp
 
 theorem maximal_not_persistent {c : ℝ} (hc : 0 < c) : ¬ Persistent c selfCoupling := by

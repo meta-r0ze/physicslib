@@ -7,6 +7,11 @@ Checked results are in [OVERVIEW](OVERVIEW.md). `e8p` reads this library through
 
 The electron Yukawa is a comparison label, not a premise, and is not scored.
 
+## Nested-rule applications
+
+- Derive the physical reference alphabet, update and resource price for the finite-frame model (`General.ReferenceCapacity.Encodable`, `period_reflection`).
+- Derive reserve allocation and reflected-load service rates for the scalar interface (`SurfaceBudget.admissible_if_margin_available`, `PersistentGain.Persistent`).
+
 ## Premises to name or derive
 
 - Derive the bridge from the cutoff-unit wall gap (`LinkGapLaw.gapA`) to the particle occupancy cost (`PMSubstrate.OccupancyCost.cost`).
