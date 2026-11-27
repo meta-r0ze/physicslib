@@ -10,6 +10,9 @@ The [isolated-persistence section](OVERVIEW.md#persistence-of-an-isolated-excita
 records the missing occupied-background renewal rule for decay. The
 [program-dimension section](OVERVIEW.md#program-dimension) separates held events,
 registration bounds and the geometric ring-embedding obstruction.
+The [reversal section](OVERVIEW.md#mass-as-reversals-per-period) proves the
+registration/reversal identity and separates the reversal account from the
+open retained-reference decoding requirement.
 The [open list](TODO.md) records the missing physical identifications.
 The [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 

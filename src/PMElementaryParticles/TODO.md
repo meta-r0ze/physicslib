@@ -12,8 +12,13 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 ## Occupancy cost
 
+- Derive a physical record encoder and one shared decoder for generation, channel and conserved internal content; the current one-reversal histories collide across generations (`RetainedMap.no_uniform_quiet_decoder`).
+- Derive an admitted correction toward that retained reference; periodic decoding alone is not `PMSubstrate.map_maintains`.
+- Prove the minimum reversal count and line requirement under a fixed, faithful readable-reference contract (`RetainedMap.StrongMap`, `strong_floor`).
+- Prove full-state return for a claimed period; one total reversal changes the stream direction (`ReversalEvents.registration_iff_opposite_direction`).
+
 - Derive the required relevant registrations R for each species; every generation and visible channel currently admits one (`SpacetimeProgram.one_relevant_in_every_generation`).
-- Define a held-event account and prove its relation to registrations before applying the 86 bound to physical occupancy (`SpacetimeProgram.footprint_bound`).
+- Derive the physical held-event identification for the defined reversal footprint; its cost/count equality is an account theorem (`ReversalEvents.footprint_cost`).
 - Supply a geometric ring encoding: no primitive spacetime root stays on a fixed spatial clock line (`SpacetimeProgram.execution_changes_space`).
 - Connect the indexed ring family to one admitted spatial execution; specify whether root events run in parallel per site (`SpacetimeProgram.RingFamily`, `RootExecution`).
 - Count the exact 43-event root regions for the specified clock convention; box-cone counts are envelopes (`SpacetimeProgram.mem_rootReachableFinset`).

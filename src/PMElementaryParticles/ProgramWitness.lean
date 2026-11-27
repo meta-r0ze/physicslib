@@ -12,11 +12,18 @@ on the physical ring:
 | Pillar | Condition (`RingProgram`) |
 | --- | --- |
 | Capacity | total registrations per period at most `2·43` |
-| Margin | every registering ring stays below `43` per period |
+| Margin | every differing bit ring stays below `43` per period |
 | Map | the record differs from the reference (`MapRecord`), and the label's class is visible to the substrate's observables (`MapClass`, `ProgramClasses`) |
 | Protocol | the reversible tick (`RingReceiver.tick_bijective`); no condition on the data |
 | Toll | every differing ring registers at least once per period |
 | Governor | some site does not fire |
+
+MapRecord checks a two-bit label/reference difference. It does not decode the
+conserved generation or certify period-end record readability. See
+`PMElementaryParticles.RetainedMap` for that separate strengthened contract.
+The witness fires both bit rings. Its differing-bit subtotal is one, while
+its total registrations are two. `ReversalEvents.quietEqualRing` leaves the
+equal bit ring empty and attains one total reversal instead.
 
 The witness (`witness c`) takes the least-Toll reference (`leastRef`: lepton
 when the two record bits agree, colour when they differ; Hamming distance `1`

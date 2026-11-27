@@ -71,50 +71,105 @@ footprint in `SpeciesFootprints`.
 | 2 | 105995 | Δ³ | Top Δ³(D+1/D) | 12 | 12 |
 | 3 | 6835753 | Δ⁴ | No declared quartic species term | 24 | 24 |
 
-`box_one` reuses `PersistencePremises.causal_cone_card`; `box_counts` certifies the
-43-tick box sums. In several spatial directions this table uses the componentwise
-condition |x_i| ≤ t. It does not assume a Euclidean or taxi-distance cone.
-`direction_root_counts` certifies the first-step root counts. Already these differ from
-the box slices of sizes 3, 9 and 27: roots have two nonzero chart coordinates, and clock
-advance is not the root-word length. No 43-step root-region cardinal or minimum region
-is claimed here. Both need a precise ring-to-lattice encoding and an occupancy rule.
-A cone of possible continuations does not require that every continuation is held.
-A one-event point is also distinct from the full 43-event clock line. Matching leading
-powers in the table does not derive a region, its multiplicity or its species assignment.
-The declared Δ⁰, Δ¹, Δ², Δ³ tier ordering and its multipliers are not derived by these counts.
+`box_one` reuses `PersistencePremises.causal_cone_card`; `box_counts` checks the sums.
+With several spatial directions, the box uses componentwise |x_i| ≤ t. It is not a
+Euclidean or taxi-distance cone. `direction_root_counts` checks first-step roots.
+Their lattice clock coordinate differs from the root-word length. No exact 43-step
+root-region cardinal or minimum is claimed. A ring-to-lattice encoding and an occupancy
+rule are still needed. Reachable alternatives need not all be held. A one-event point
+also differs from a full clock line. Equal leading powers do not derive a species region,
+its multiplicity, its assignment or the declared `TierLedger.tiersFor` ordering.
+
+## Mass as reversals per period
+
+`ReversalEvents` proves the Boolean ring identity for arbitrary firing patterns and
+both guards. A registration swaps the occupied stream at arrival. The swap can be
+forward-to-backward or backward-to-forward. Direction stays fixed between registrations.
+This counts realized events. `PhaseToRecord.expected_receiver_flag` computes a coherent
+weight `DiagonalReadout.flag x`; it supplies no generation-to-phase encoding.
+
+| Result | Entry point | Scope |
+| --- | --- | --- |
+| Registrations equal reversals at every finite horizon. | `registrations_eq_reversals`, `registration_iff_opposite_direction`, `direction_between_registrations` | One localized packet on either stream. |
+| The reversal footprint has unit-price events and no extra terms. | `footprint`, `footprint_events`, `footprint_cost`, `footprint_ceiling` | A defined reading; identifying all physical held events with these reversals remains open. |
+| The old witness has two total reversals and one differing-bit subtotal. | `RetainedMap.old_witness_two`, `ProgramWitness.witness_total` | Equal-ring traffic cannot be dropped from the total. |
+| Keeping the equal bit ring quiet attains one total reversal in each generation and visible class. | `quietEqualRing`, `RetainedMap.current_minimum`, `quiet_program_cost` | Current pillars only. Its unit cost uses `OccupancyCost.cost_oneEvent`; it is not identified with the electron. |
+| Every ring-root word preserves generation and internal content; the placed label reads back unchanged. | `RetainedMap.program_identity_conserved`, `word_label_readout`, `word_label_unique` | Any choice of clock-axis roots, including direction changes. |
+| The label record cannot decode generation. | `label_record_cannot_decode_generation` | It still carries conserved label information. |
+| A shared reader must recover the retained identity at every positive period end. | `ReadableReference`, `StrongMap`, `readable_generation`, `readable_class_record`, `readable_internal` | Generation, channel and conserved internal content. All retained ring fields are available; no free carrier tag is appended. |
+| All generations have identical one-reversal Boolean histories for a common channel and site. | `quiet_observations_equal`, `no_uniform_quiet_decoder` | Even their complete ring states coincide. Other encodings are not excluded. |
+
+The stronger Map is a decoding specification. `PMSubstrate.map_maintains` supplies a
+correction theorem over a given reference, not this encoder or a decoder. Reading the
+E8 carrier's conserved glue key is already possible; copying it into the Boolean rings
+and correcting that record are different tasks. Choosing a new constant reader for each
+program is vacuous (`per_program_constant_decoder`). A fixed reader and its admitted
+encoding must be supplied or derived before minimizing under `StrongMap`.
+
+Historical context only: [Kac (1974)](https://www.cs.fsu.edu/~mascagni/Kac_1974_Rocky_Mountain_J_Math.pdf)
+studies the telegraph process. [Gaveau–Jacobson–Kac–Schulman (1984)](https://doi.org/10.1103/PhysRevLett.53.419)
+relate it to the Dirac equation by analytic continuation. The reversal-rate/mass analogy
+is not a premise here. No Dirac limit, conversion factor or stochastic rate is assumed.
+
+The table separates minima under the current pillars from the strengthened Map. The line
+column is current abstract ring lines / strengthened-Map lines. If an encoded family needs
+R relevant registrations, `SpacetimeProgram.family_spreading` gives ceiling(R/84) as a lower
+bound; 42 needs the one-bit hypothesis. Neither packing theorem supplies the encoder.
+
+| Generation index | Class | Species family | Reversals: current minimum | Reversals: strengthened Map | Lines | Declared leading family | Declared tiers |
+| ---: | ---: | --- | ---: | --- | --- | --- | --- |
+| 0 | 0 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
+| 0 | 0 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
+| 0 | 1 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
+| 0 | 2 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
+| 0 | 3 | neutrino | 1 | ≥1; minimum open | 1 / open | N | {0,1,2}; unmapped |
+| 0 | 3 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
+| 0 | 5 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
+| 1 | 0 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
+| 1 | 0 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
+| 1 | 1 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
+| 1 | 2 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
+| 1 | 3 | neutrino | 1 | ≥1; minimum open | 1 / open | N | {0,1,2}; unmapped |
+| 1 | 3 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
+| 1 | 5 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
+| 2 | 0 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
+| 2 | 0 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
+| 2 | 1 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
+| 2 | 2 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
+| 2 | 3 | neutrino | 1 | ≥1; minimum open | 1 / open | N | {0,1,2}; unmapped |
+| 2 | 3 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
+| 2 | 5 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
+
+| Leading family | Declared event fields (unit and SpeciesFootprints) | Leading powers |
+| --- | --- | --- |
+| U | floor(D/η); floor(DΔ²/(η(σ−χ))); floor(Δ³(D+1/D)) | 0, 2, 3 |
+| D | floor(D/η); floor(DΔ/η); floor(DΔ²/η) | 0, 1, 2 |
+| L | One-event unit; σΔ; χΔ²−σΔ | 0, 1, 2 |
+| N | No selected neutrino footprint. | Declared 0, 1, 2 |
+
+Generation indices follow `EPLabelGen.genIndex`: (0,1), (1,0), (1,1). No derived map assigns
+these keys to entries of `TierLedger.tiersFor` or to the ordered leading families above.
+The current reversal minima have no generation ordering and no powers of Δ. The minimum
+under a fixed faithful record encoding remains open; no larger value is inferred.
+A higher floor needs a derived Map/record obligation or a stronger Toll requirement.
 
 ## Persistence of an isolated excitation
 
-The closed, resource-exchanging joint execution remains open for decay. It is not a
-prerequisite for the held-event occupancy question above. There is no certified
-joint execution on which to state that earlier closed `Persists` predicate.
-`ExcitationPersistence` records the blocker without assuming a new successor
-or a restoring budget. The existing stationary vacuum, occupied register
-encoding and Boolean receiver are separate constructions.
+The closed resource-exchanging execution is parked for decay. It does not define the
+held-event mass reading. `ExcitationPersistence` and `JointSuccessorConstraints` state
+the missing contracts. Their module docstrings keep the detailed audit.
 
-| Part | What the tree proves | What is still needed | Entry point |
-| --- | --- | --- | --- |
-| Vacuum | Distinct rest modes are stationary for the vacuum Hamiltonian. | Their occupied interaction and return to the same certified family after one period. | `ExcitationPersistence.distinct_stationary_modes` |
-| Receiver | The localized port field preserves its Boolean occupancy. Its embedding ignores the vacuum label. | Derive requests and readiness from the reachable occupied background. | `localized_embedding_ignores_vacuum`, `IsolatedExcitation.localized_occupancy_preservedN` |
-| Joint step | Reversible lifts with different packet-bank outputs exist over the same core. | Identify the admitted local bank operation and its vacuum/reference action. | `core_projection_does_not_select_packet_lift`, `Components.jointTick` |
-| Restoring input | A clean upstream backward stream supplies reference values. Loaded rest seeds can feed that stream. | Produce and renew those records within the isolated execution; close the background after 43 ticks. | `RecordSupply.clean_supply`, `OddReferenceSource.odd_seed_train_restores` |
-| Capacity | Ring Capacity bounds registration traffic. Boundary erasure counts supplied exports and dispositions. | Identify actual writes and resets, their owners and restoring inputs; prove a nonnegative within-period resource balance. | `ProgramWitness.Capacity`, `protected_step_does_not_select_boundary_account` |
-| Finite supply | A retained stream returns a previously incoming disturbance after a circuit. | Renew the ready-reference inventory rather than only recirculate it. | `finite_supply_returns_disturbance` |
-| Least cost | One registration attains the ring subtotal lower bound. One event has unit price. | An admitted persistent execution and its held-event footprint; no equality between these two counts is proved. | `ProgramWitness.witness_total`, `OccupancyCost.cost_oneEvent` |
+| Part | Checked result | Open contract |
+| --- | --- | --- |
+| Vacuum | Distinct rest modes are stationary (`ExcitationPersistence.distinct_stationary_modes`). | Admit their occupied interaction and return. |
+| Receiver | Localized Boolean occupancy is conserved. The embedding ignores its vacuum argument. | Derive requests from the occupied background. |
+| Joint tick | Reversible packet lifts project to a supplied core. | Identify joint resources, locality and the admitted packet operation. |
+| Reference supply | Loaded seeds and a clean backward stream give conditional restoration. | Derive and renew that supply within the execution. |
+| Closed period | Zero erasure does not prove reference renewal. Ring return needs the stated port/two-clock hypotheses. | Close the admitted period; see `RingReceiver.ring_return_of_ports`. |
 
-No restoring-input instance is derived for any of the three generations or
-five visible classes. Coset-0 contacts, minimum events and uniqueness remain
-undetermined for every class/species row. This is not a zero footprint or a
-prediction of equal generation masses. Contact counts and minimization need the
-missing execution first. No ordering against
-`TierLedger.tiersFor` is inferred, and no one-event physical minimum is claimed.
-A zero-erasure closed ring does not certify reference renewal or zero write cost.
-The ring's full-state return can also require more than one clock period;
-`RingReceiver.ring_return_of_ports` requires its port return and two-clock condition.
-
-The [first machine TODO](../PMKAutomaton/TODO.md#reachable-occupied-background)
-states the required renewal contract. The triality-orientation question stays
-parked until a derived persistence minimum exhibits a generation tie.
+See the [machine TODO](../PMKAutomaton/TODO.md#reachable-occupied-background).
+Coset-0 contacts and full-state persistence remain open. A one-reversal count is not a
+full-state return theorem. No electron identification or mass comparison follows.
 
 ## Footprint: what the generation can change
 
