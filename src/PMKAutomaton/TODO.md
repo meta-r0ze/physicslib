@@ -2,6 +2,13 @@
 
 See the [named premises](../../SCOPE.md#named-premises) and the [checked results](OVERVIEW.md).
 
+## Autonomous excitation cycles
+
+- Specify the common physical observation period or an explicitly justified cycle quotient; exact native cycles have even reversal counts (`AutonomousRing.closed_cycle_even`).
+- Identify the Boolean stream/marker model with a labelled E8 excitation and its stationary vacuum family before applying physical identity/pillar claims (`AutonomousRing.packetStep_realizes_tick`).
+- Derive the physical autonomous successor and its localization, native reference retention and marker robustness; the tested space does not select one (`AutonomousRing.Admissible`).
+- Distinguish kinematic clock-line reflection from inverse-time conjugacy when imposing physical reversal symmetry (`AutonomousRing.reflect_tick`).
+
 ## Reachable occupied background
 
 This joint-successor work is parked for decay and reference renewal. Mass counts held

@@ -2,22 +2,22 @@
 
 See [SCOPE](../../SCOPE.md#named-premises) for the shared premises.
 
-## Map maintenance cost
+## Autonomous excitation cycles
 
-- Realize the channel/key record at native comparator ports; include the packet's independently conserved internal content (`ChannelRecord.word_determines_internal`, `RetainedMap.reference`).
-- Derive the physical bit chart and comparison metric; equally minimal reversible charts have different costs (`ChannelRecord.encoding_changes_distance`).
-- Supply the full reference and its generation key; coarse records and type weights do not select a channel word (`ChannelRecord.coarse_reference_lifts`, `key_distances`).
-- Realize the once-per-period schedule from [SCOPE](../../SCOPE.md#named-premises), including preparation, dispatch and reference preservation (`MapMaintenance.ChecksOnce`).
-- Prove native StrongMap readout and correction, and disjoint ownership before adding comparison cost to the existing reversal account (`RetainedMap.StrongMap`, `MapMaintenance.coarse_comparison_cost`).
-- Derive any extra quark operations beyond the four-bit comparison bound and the reciprocal eta factor (`MapMaintenance.channel_check_bound`, `ChannelRecord.declared_overhead_gaps`).
+- Specify a common physical observation period or justified identity quotient before using the one-event window as an electron cycle (`AutonomousCycleBoundary.one_site_not_closed`).
+- Construct a labelled native autonomous excitation and prove localization, retained identity and marker robustness; none of the ten tested rules hosts an exact one-reversal cycle (`AutonomousRing.no_electron_cycle`).
+- Derive mass counts from native dynamics; exclude encoding-dependent Hamming comparison costs (`ChannelRecord.encoding_changes_distance`).
+- Move isolated level-0 quark costs to colour composite systems in the PMHadrons sweep; standalone quark footprints are not persistent-system certificates (`LevelZeroFermions.unit_is_not_declared_quark_footprint`).
+
+## Retained-record implementation
+
+- Realize a native identity reader and correction toward its reference; an injective channel code is not a physical reader (`RetainedMap.StrongMap`).
+- Identify the complete retained reference, its generation key and actual checking schedule; comparison certificates do not supply them (`MapMaintenance.ChecksOnce`).
 
 ## Level-0 fermions
 
 - Identify complete isolated level-0 executions with the labelled unit account; current ring pillars do not prove StrongMap or full-state return (`LevelZeroFermions.labelled_unit`, `RetainedMap`).
 - Derive the physical charges of the five roles omitted by the primitive event account, rather than interpreting zero fields as physical zero (`unit_account_extra_fields`).
-- Derive any quark D-event footprint from its native colour/anchor operations (`unit_is_not_declared_quark_footprint`).
-- Prove an actual quark-only reserved-address mechanism and its reciprocal price; the frame fraction alone applies to all labels (`reserved_address_fraction`).
-- Derive the down sigma contribution with a physical shared reference; independently prepared unit witnesses agree and weak singlets are fixed (`weak_flip_unit_account`, `weak_singlets_fixed`).
 - Match the occupancy-cost quark readout to the comparison's renormalization scheme and scale (`QuarkMasses`, `SpeciesFootprints.Quark`).
 - Derive level-specific Toll/Margin operations and coefficients before pricing them; do not retry the withdrawn flat baseline-price fit (`LedgerPillars` docstring).
 - Prove a physical pillar assignment before inferring missing terms from summand counts (`LedgerPillars.ring_pillars_do_not_force_six_prices`).

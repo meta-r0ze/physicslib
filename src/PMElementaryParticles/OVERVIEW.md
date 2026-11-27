@@ -155,63 +155,34 @@ These results remain implementation constraints, not a flat minimization objecti
 execution and resource account for the parked renewal/decay work. Their module docstrings
 keep the detailed audit. Closed-ring zero erasure does not prove reference renewal.
 
-## Level-0 fermions: Map maintenance cost
+## Autonomous level-0 excitation cycles
 
-One held ring event is a tagged stream reversal (`LevelZeroFermions.held_events_card`).
-The separate unit witnesses cost 1 for electron, up and down. They do not prove complete
-isolated persistence or fix a shared reference. Physical charges outside that account remain open.
-`labelRecord` already separates electron/up/down; it merges colour axes, walls and generation.
+A particle candidate now needs a localized, robust native cycle with readable identity.
+The previous unit is one reversal in an observation window, not a proved particle orbit.
+`AutonomousCycleBoundary` connects that window account to the native direction-parity theorem.
 
-| Piece | Certificate | Limit |
+| Test | Machine result | EP consequence |
 | --- | --- | --- |
-| Native Boolean mismatch = normalized receiver flag = registration/reversal | `MapMaintenance.native_boolean_flag`, `native_registration_is_reversal`; `ReversalEvents.registrations_eq_reversals` | Actual record preparation, dispatch and correction remain open. |
-| Once-only comparisons cost the full-record Hamming distance | `checks_once_events`, `checks_once_cost`, `cost_eq_native_flags` | Frequency is a [SCOPE premise](../../SCOPE.md#named-premises); record and reference are supplied. |
-| Four bits retain all 14 point channels and their class, axis, sign and channel-vector content | `ChannelRecord.word_injective`, `word_determines_semantics`, `word_determines_internal` | Independent packet internal content in `RetainedMap.reference` is not decoded. |
-| Four bits are necessary; dropping any one merges channels | `bit_length_minimal`, `every_bit_essential` | The requested class/axis/sign/internal tuple is redundant (`class_field_redundant`, `internal_field_redundant`). |
-| Equally minimal charts give different distances | `gray_injective`, `encoding_changes_distance` | Reversible Encoding does not select a physical metric. |
+| Eight-state autonomous site rules | Exactly 10, with five one-packet behaviours (`AutonomousRingEnumeration`, upstream). | No external request trace is supplied. The Boolean model is not yet a labelled E8 excitation. |
+| Full cycle with exactly one reversal | Impossible for any rule or ring size (`closed_cycle_even`, `no_electron_cycle`). | Direction would not return. Localization/robustness impose further restrictions and cannot remove this contradiction. |
+| Rings 3,5,7,9 | Zero electron-hosting rules (`requested_ring_tests`). | No selected rules for the requested census. |
+| Census of selected rules at odd n = 3..13; n = 43 | Empty (`census_domain_empty`). | No family, period, mass ordering or comparison to 1/~207/~3477 follows. Other patterns of rejected rules remain unclassified. |
+| Old one-site unit | One reversal in n ticks, but no native return (`one_site_not_closed`, `ring43_unit_not_closed`). | It cannot supply the requested closed one-reversal electron. |
+| Existing program bound | At most 86 registrations on two bit rings in 43 ticks (`program_registration_bound`). | Not a bound on a variable-length autonomous cycle. A larger fixed-window count needs more simultaneous capacity. |
 
-The following distances use the ordinary binary expansion of the existing `channelCode`.
-L/C are the supplied two-bit lepton/colour records. L*/C* are sets of distances to ALL
-compatible basis completions, not costs of the coherent reference. Shared Q/L are likewise
-basis-support sets of the type weights. Anchors are exact `ReferenceAnchor.lepton` channels.
-The full `reference_table` also certifies SharedReference u/d/e/n supports; none selects one word.
+The physical common clock period, identity quotient (if any), autonomous labelled successor
+and its robustness remain open. No odd count is divided by two or called an electron.
+Isolated quark ledger entries are not colour-system persistence certificates; their physical
+costs belong to the composite-system work in PMHadrons.
 
-| Channel | Species | Class/wall | Coarse L/C | Full L* / C* | Shared Q / L | Anchor nuL/eL | Declared footprint |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| eL | electron | 3/1 | 1/2 | {1,2} / {2,3,4} | {1,2,3} / {0,1} | 1/0 | 1 |
-| eR | electron | 5/0 | 1/2 | {1,2} / {2,3,4} | {2,3,4} / {1,2} | 2/1 | 1 |
-| uL1 | up | 0/1 | 1/0 | {1,2} / {0,1,2,3} | {0,1,2,3} / {1,2} | 1/2 | D/eta |
-| dL1 | down | 0/1 | 2/1 | {2,3} / {1,2,3,4} | {0,1,2,3} / {1,2} | 2/1 | (D+sigma)/eta |
-| uR1 | up | 1/0 | 1/0 | {1,2} / {0,1,2,3} | {1,2,3,4} / {2,3} | 2/3 | D/eta |
-| dR1 | down | 2/0 | 2/1 | {2,3} / {1,2,3,4} | {1,2,3,4} / {2,3} | 3/2 | (D+sigma)/eta |
-| uL2 | up | 0/1 | 1/0 | {1,2} / {0,1,2,3} | {0,1,2,3} / {1,2} | 1/2 | D/eta |
-| dL2 | down | 0/1 | 2/1 | {2,3} / {1,2,3,4} | {0,1,2,3} / {1,2} | 2/1 | (D+sigma)/eta |
-| uR2 | up | 1/0 | 1/0 | {1,2} / {0,1,2,3} | {1,2,3,4} / {2,3} | 2/3 | D/eta |
-| dR2 | down | 2/0 | 2/1 | {2,3} / {1,2,3,4} | {1,2,3,4} / {2,3} | 3/2 | (D+sigma)/eta |
-| uL3 | up | 0/1 | 1/0 | {2,3} / {0,1,2} | {0,1,2} / {2,3} | 2/3 | D/eta |
-| dL3 | down | 0/1 | 2/1 | {3,4} / {1,2,3} | {0,1,2} / {2,3} | 3/2 | (D+sigma)/eta |
-| uR3 | up | 1/0 | 1/0 | {2,3} / {0,1,2} | {1,2,3} / {3,4} | 3/4 | D/eta |
-| dR3 | down | 2/0 | 2/1 | {3,4} / {1,2,3} | {1,2,3} / {3,4} | 4/3 | (D+sigma)/eta |
+## Conditional record comparisons (not physical mass)
 
-With generation, add the following entry to each channel distance (`generated_distance`).
-No reference key is supplied. For completion sets, add the entry to every member.
-
-| Packet key / reference key | (0,1) | (1,0) | (1,1) |
-| --- | --- | --- | --- |
-| (0,1) | 0 | 2 | 1 |
-| (1,0) | 2 | 0 | 1 |
-| (1,1) | 1 | 1 | 0 |
-
-`RecordEncoding.colourSymmetric` is not a channel word (`colour_symmetric_not_channel`).
-The doublet reference is a different chart with no supplied full-channel/key lift.
-The four-bit distance is at most 4; with the key it is at most 6, below D+sigma = 9.
-Thus no reference gives the requested 1/4/9 Map-only costs in this chart. Even eL/eR cannot
-both have distance 1 to one fixed word (`no_fixed_word_unit_for_both_walls`). These are not
-bounds on all physical realizations. Eta remains open: the ledger gaps above D and D+sigma
-are 4/171 and 9/171 (`declared_overhead_gaps`). No integer check count derives that normalization.
-The old unit already charges a coarse comparison (`coarse_comparison_cost`); adding another
-unit needs disjoint-event ownership. Correction and full native StrongMap are not yet proved.
-For fixed numerator x, an electron correction delta changes its ratio to x/(1+delta).
+`ChannelRecord` retains channel data in four bits; the coarse record already distinguishes
+electron/up/down. `MapMaintenance.checks_once_cost` prices a SUPPLIED binary comparison.
+An equally minimal Gray chart changes its Hamming cost (`encoding_changes_distance`).
+Thus these distances are excluded as physical mass costs. They do not select native firing.
+The exact reference-completion and generation-distance tables stay in the Lean certificates
+(`reference_table`, `key_distances`); no reference completion is selected.
 
 ## Pillar classification of existing ledgers
 

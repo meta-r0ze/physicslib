@@ -122,3 +122,4 @@ import PMElementaryParticles.ExcitationPersistence
 
 import PMElementaryParticles.ChannelRecord
 import PMElementaryParticles.MapMaintenance
+import PMElementaryParticles.AutonomousCycleBoundary

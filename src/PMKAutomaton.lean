@@ -20,4 +20,7 @@ import PMKAutomaton.ClockPlaneProjection
 import PMKAutomaton.ClockSymmetryGenerators
 import PMKAutomaton.JointSuccessorConstraints
 
+import PMKAutomaton.AutonomousRing
+import PMKAutomaton.AutonomousRingEnumeration
+
 /-! Internal E8 node transport, packet handoff and booked boundary erasure. -/

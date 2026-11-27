@@ -3,6 +3,45 @@
 The results keep their stated hypotheses. Use [TODO](TODO.md) for the open work.
 Import `PMKAutomaton.Interface` for transport and `PMKAutomaton.Values` for the checked numbers.
 
+## Autonomous Boolean ring
+
+`AutonomousRing` tests the requested eight-state alphabet: two native stream bits and
+one dynamical local marker. No time-dependent requests or Hamming-code price enter.
+This is a restricted machine model, not a selected E8 excitation or vacuum realization.
+The old receiver is already autonomous with retained requests as state. Initial data do
+not constitute a time-dependent external controller; autonomy alone does not select a rule.
+
+| Constraint | Existing source / exact implementation |
+| --- | --- |
+| Reversible and number-conserving | `Equiv.Perm`; `Admissible`, `tick_bijective`, `tick_conserves` |
+| Empty zero-marker vacuum | `vacuum_fixed`; every empty marked site is fixed too (`empty_fixed`). |
+| Reflection with stream exchange | `ClockSymmetry.reversingElement` in Gpm; `clock_line_reflection`, `reflect_tick` |
+| Unchanged-marker receiver | OR requests `(marker,false)`; `frozen_receiver_reduction` on ports. |
+| Update order | Map then stream uses the incoming-port chart. `incoming_output_conjugacy` relates it to stream then map; phase/probe are not in this alphabet. |
+| Local autonomy | `packetStep_uses_local_state`; the marker updates at the packet's site. |
+| Exact one-packet restriction | `packetStep_realizes_tick`, `embed_injective`, `packet_iterate_realizes`; valid at every ring size. |
+
+`AutonomousRing.admissible_rules_count` in `AutonomousRingEnumeration`
+checks all site permutations by `decide +kernel`: exactly 10 pass.
+`explicit_rules_exhaustive` gives the complete table below. Each row has two versions:
+at a doubly occupied site the marker either stays or flips. Empty-site markers stay.
+`double_flip_unseen` certifies that this choice has no effect on one packet.
+
+| Kind | Marker at a single packet | Stream reversal condition | Rules | Electron hosts at n = 3,5,7,9 |
+| --- | --- | --- | --- | --- |
+| 0 | Stays | Marker 1 | 2 | 0 |
+| 1 | Flips | Never | 2 | 0 |
+| 2 | Flips | Marker 1 | 2 | 0 |
+| 3 | Flips | Marker 0 | 2 | 0 |
+| 4 | Flips | Always | 2 | 0 |
+
+`closed_cycle_even` and `native_closed_cycle_not_one` prove the obstruction for ALL
+ring sizes: full-state return restores stream direction, so reversals must be even.
+Localization, identity and robustness cannot rescue a one-reversal cycle. The
+selected-rule set is empty (`census_domain_empty`), so its census at odd n = 3..13
+and n = 43 is empty. Other periodic patterns of the rejected rules are not classified.
+Reflection here commutes with evolution; inverse-time conjugacy is a different condition.
+
 ## Component contracts
 
 | Part | What to read | Module notes |
@@ -22,7 +61,7 @@ Import `PMKAutomaton.Interface` for transport and `PMKAutomaton.Values` for the 
 | What reaches the reader? | [Interface](Interface.lean) and [RingReceiver](RingReceiver.lean). The receiver rule can change a port or a flag. |
 | What can the boundary erase? | [BoundaryErasure](BoundaryErasure.lean). The account counts only a supplied export. |
 
-The first [open item](TODO.md#reachable-occupied-background) concerns the closed
+The parked [joint-successor work](TODO.md#reachable-occupied-background) concerns the closed
 resource-exchanging execution for decay. It does not define held-event mass. The clean backward reference stream is a supplied
 input. Its renewal by the occupied vacuum and its return within one period
 are not certified. EP's `ExcitationPersistence` records the exact missing
@@ -56,7 +95,7 @@ account and its no-packet baseline are identified. It does not follow from
 reversibility and period balance alone. The set A is not filled with placeholder
 predicates. It is not classified as empty, unique or a family. No selected
 successor, loaded-seed derivation or coset-0 contact count follows yet.
-The [first TODO](TODO.md#reachable-occupied-background) names the missing inputs.
+The [joint-successor TODO](TODO.md#reachable-occupied-background) names the missing inputs.
 
 ## KAutomaton closeout
 
