@@ -155,43 +155,44 @@ These results remain implementation constraints, not a flat minimization objecti
 execution and resource account for the parked renewal/decay work. Their module docstrings
 keep the detailed audit. Closed-ring zero erasure does not prove reference renewal.
 
-## Native cycle averages and the clock scale
+## Persistent targets: photon, electron, proton
 
-The corrected return test permits even R over T ticks, with average `43*R/T`.
-`AutonomousCensus` studies all 10 rules; its script exhausts all one-packet marker
-states at odd n=3..13. Numerical cycle covers are computation, not Lean certificates.
-Native all-n rate identities and the concrete n=43 witness are proved separately.
+Work proceeds in that order. A robust recurring native pattern is the target;
+encoding-dependent Hamming distances are not physical mass costs.
 
-| Rule kind (two variants each) | At-rest candidate / other family | Period; reversals | Per 43 updates | Robust / Margin |
-| --- | --- | --- | --- | --- |
-| 0 | Static reflector gap d; single mirror has d=n. | 2d; 2 | 43/d; single mirror gives 1 at n=43. | Fails marker robustness; `mirror43_not_robust` certifies n=43. Single-mirror orbit visits n sites. |
-| 1 | Circulating, no at-rest family found. | 2n; 0 | 0 | Marker-rate robust; not at rest. |
-| 2,3 | Circulating in the finite census; primitive periods vary. | T; T/2 | 43/2 | Marker-rate robust at all n; n=43 winding not yet classified. |
-| 4 | Two-site bounce at rest. | 4; 4 | 43 | Marker-rate robust, but saturated; `saturated_family_exceeds_margin`. |
+| Target | Native result | What is still open |
+| --- | --- | --- |
+| Photon first | Kind 1 is a robust zero-turn mover. | Electromagnetic identity and polarization are not proved. |
+| Electron next | `ClockGatedCycle.unit_cycle`: phase-zero gating at n=43 gives full return in 86 ticks, two reversals, zero drift, average 1. All marker and phase starts have the same average. `localization_bound` bounds unwrapped displacement by 43 for all time. | Admit the clock reference and identify a labelled excitation with physical Margin. This is a Boolean candidate, not an electron identification. |
+| Proton after that | `CollisionBoundary.no_confined_collision_only`: collision-only occupation rules cannot bind on the infinite cover, for any packet count or phase sequence. | Native collision routing/action and spatial interactions. Double occupancy does not specify named turns. |
 
-Full tables and support counts are upstream in [PMKAutomaton](../PMKAutomaton/OVERVIEW.md#autonomous-native-cycle-census).
-No stable unsaturated electron or charged-lepton family is selected. The old unit
-window remains distinct from native return (`one_site_not_closed`). The common-window
-average is ≤43 per one-packet ring (`native_average_bound`); two such accounts are ≤86,
-even for long cycles. This does not identify any family with the lepton ratios.
-AND/OR both reduce on ports to static kind 0 after retaining their scalar guard;
-the full two-request/probe/phase receiver is outside the eight-state model. In the
-fixed OR chart `(m,false)`, AND bypasses and is excluded; the AND chart is `(m,true)`.
-
-| Clock statement | Status / exact consequence |
+| Clock-timed census | Result and scope |
 | --- | --- |
-| Delta = 43 root updates | Proved count; no physical duration follows. |
-| One root update takes kappa electron-time units | One shared supplied positive input, `ClockScale.TickDuration`; [SCOPE](../../SCOPE.md#named-premises). |
-| Old PMAtoms/e8p E8 tick = 43 electron-time units | Legacy kappa=1 WHOLE-PERIOD block; not one receiver update. Numeric values unchanged. |
-| Context rate=mass, unit electron rate, average one per Delta | Conditional `one_per_period_unit_rate` forces kappa=1/43; the context relation is not a PM premise. |
-| Context unit rate with legacy kappa=1 | Requires 43 reversals/43 updates; incompatible with the strict differing-ring Margin ceiling (`differing_ring_margin_excludes_unit_rate`). |
+| Phase symmetry | Descending Gplus acts trivially; descending Gpm gives negation. The whole stabilizer does not descend, and its scalar invariance forces constancy. |
+| Invariant gate sets | {0} plus 21 negation pairs, in any union. All cardinalities 0..43 occur; {0} is the unique invariant singleton. |
+| Complete kind-1/kind-4 subclass census | All 2^22 gate sets at odd n=3..13 and n=43. Odd M gates: at rest, average M. Even M: moving, average M. Arbitrary phase tables are not classified. |
+| Unit gate | n=43: T=86, R=2 proved. Small tested rings: T=172, R=4 computed. Marker independence includes arbitrary backgrounds; full support also includes spectator markers. |
+| Time reversal | `PhaseTimedRing.reverse_tick` uses the native collision-dressed chart. Bare phase negation with stream exchange is not asserted to reverse the ordered tick. |
+| Two/three packets, collision-only | No localized bound state, for AA/AB/BB or AAA/AAB/ABB/BBB. Named turns need a routing definition: compatible lifts give different counts. General marker-mediated families remain unclassified. |
 
-No theorem fixes kappa. `electronTime` converts an electron time unit to SI seconds;
-it does not identify a root update with that unit. EP and PMAtoms use the same supplied
-clock API. No new physical calibration or e8p value is chosen.
-Marker-rate robustness does not imply the old differing-ring Margin predicate.
-Applying its ceiling to a physical dynamical-marker rule needs an identification proof.
-Quark footprints remain composite-system work, not isolated colour persistence certificates.
+See [PMKAutomaton](../PMKAutomaton/OVERVIEW.md#clock-timed-native-cycles) for formulas,
+support and proof/computation boundaries. The old static mirror fails marker robustness.
+No global least rule is selected by the subclass census. No comparison to mass values
+enters these proofs. At the ordering stage only: the unit-average candidate has no
+derived bound proton above it. Three unit-speed packets allow at most 129 turns per
+43 updates, below the proton comparison scale and the declared Delta-squared cone.
+That cone count is not a collision-binding derivation.
+
+| Clock statement | Status |
+| --- | --- |
+| Delta=43 updates | Proved count; no duration follows. |
+| Tick duration kappa in electron-time units | Shared supplied `ClockScale.TickDuration`; [SCOPE](../../SCOPE.md#named-premises). No theorem fixes kappa. |
+| Legacy PMAtoms/e8p E8 tick | kappa=1 whole-period block, not one receiver update; values unchanged. |
+| Context rate=mass and unit average | Conditional `ClockScaleBoundary` requires kappa=1/43; the Kac relation is context, not a PM premise. |
+
+Quark footprints belong to colour composite-system work; they are not isolated
+persistence certificates. Native recurrence and rate robustness alone do not prove
+retained identity or the old differing-ring Margin predicate.
 
 ## Conditional record comparisons (not physical mass)
 

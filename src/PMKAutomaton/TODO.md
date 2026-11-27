@@ -2,6 +2,15 @@
 
 See the [named premises](../../SCOPE.md#named-premises) and the [checked results](OVERVIEW.md).
 
+## Timed and interacting persistent targets
+
+- Admit the retained clock reference before using nonconstant native gates; full-root scalar invariance forces constancy (`ClockPhaseSymmetry.full_root_invariance_constant`).
+- Identify the robust unit-average Boolean cycle with a labelled charged excitation and its physical Margin (`ClockGatedCycle.unit_cycle`).
+- Classify the full inverse-paired phase-table space; the complete gate census covers only kinds 1/4 (`PhaseTimedRing.InversePaired`).
+- Define native per-packet collision routing/action before a 2/3-packet mass census; Boolean lifts disagree on turns (`CollisionBoundary.no_native_collision_turn_readout`).
+- Classify marker-mediated interacting families after routing is specified; collision-only free streams cannot bind (`CollisionBoundary.no_confined_collision_only`).
+- Prove the general gate-subclass cycle and minimal-period formulas beyond the singleton n=43 certificate (`tools/phase_gate_census.cpp`).
+
 ## Autonomous excitation cycles
 
 - Prove the general static-reflector gap classification, minimality and marker-robustness failure, beyond the concrete 43-site witness (`AutonomousRing.mirror43_not_robust`).

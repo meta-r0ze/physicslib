@@ -24,5 +24,9 @@ import PMKAutomaton.AutonomousRing
 import PMKAutomaton.AutonomousRingEnumeration
 import PMKAutomaton.AutonomousCensus
 import PMKAutomaton.AutonomousCensus43
+import PMKAutomaton.ClockPhaseSymmetry
+import PMKAutomaton.PhaseTimedRing
+import PMKAutomaton.ClockGatedCycle
+import PMKAutomaton.CollisionBoundary
 
 /-! Internal E8 node transport, packet handoff and booked boundary erasure. -/

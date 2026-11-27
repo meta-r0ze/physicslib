@@ -3,6 +3,63 @@
 The results keep their stated hypotheses. Use [TODO](TODO.md) for the open work.
 Import `PMKAutomaton.Interface` for transport and `PMKAutomaton.Values` for the checked numbers.
 
+## Clock-timed native cycles
+
+The global phase is native state. `PhaseTimedRing.tick` scatters, streams and
+advances it. Each phase uses an admissible site permutation. No external request
+sequence is supplied. The following census is complete only for the stated gate
+subclass: kind 1 outside S, kind 4 inside S. Both flip the occupied marker.
+
+| Phase symmetry | Proved result | Lean source |
+| --- | --- | --- |
+| Elements of Gplus whose action descends to the phase reading | Identity only. | `ClockPhaseSymmetry.positive_image` |
+| Elements of Gpm whose action descends | Identity and phase negation. | `ClockPhaseSymmetry.full_image` |
+| Whole root stabilizer | Does not descend. Its scalar invariance forces a phase-only function to be constant. | `swap_has_no_phase_action`, `full_root_invariance_constant` |
+| Negation-invariant gates | Unions of {0} and the 21 pairs {j,43-j}; 22 orbits, every size 0..43. The unique invariant singleton is {0}. | `phase_orbits_card`, `all_invariant_sizes`, `invariant_singleton` |
+| Reversal of an ordered scatter/stream tick | The collision-dressed stream exchange at negated phase reverses the tick for inverse-paired tables. Bare phase negation does not commute with phase advance. | `PhaseTimedRing.reverse_involutive`, `reverse_tick`, `negation_does_not_commute_with_advance` |
+
+Nonconstant gates need admission of the retained clock reference. They are not
+proved invariant under the whole root stabilizer. This is an open physical bridge.
+The reversing map includes the native collision chart; bare stream exchange alone
+is not asserted to reverse the ordered tick.
+
+| Gate family | Full-state cycle (ticks); reversals | Average per 43 | Displacement and support | Robustness |
+| --- | --- | --- | --- | --- |
+| S={0}, n=43 | 86; 2 | 1 | Zero drift; unwrapped displacement stays within 43 of the start. | All markers, positions, directions and phase starts; `ClockGatedCycle.unit_cycle`, `localization_bound`, `marker_phase_robust`. |
+| S={0}, odd n=3..13 | 172; 4 | 1 | Zero drift; visited core is n sites. | Same routing independence; computational census. |
+| Odd gate count M | 86 if n divides D, otherwise 172; (T/43)M | M | Zero drift; visited core min(n, range+1). | All marker/phase starts; computational census. |
+| Even gate count M | 86q; 2qM, q=n/gcd(n,abs(D)) | M | Nonzero drift 2qD, including massless M=0 mover; visits n sites. | All marker/phase starts; computational census. |
+
+Here D is signed displacement during the first 43 updates from phase zero and
+forward direction. Opposite direction negates D. The range is that first path's
+spatial range. `tools/phase_gate_census.cpp` enumerates all 2^22 invariant S at
+n=3,5,7,9,11,13,43. It computes 2,273 grouped rows. These cycle formulas and the
+complete subclass census are computation; the n=43 singleton result is proved in
+Lean. They do not classify arbitrary phase-dependent marker rules. Support includes
+spectator markers if present. Marker-rate robustness is not a proof of recovery of
+a labelled excitation, physical Margin, or a unique least rule in the full space.
+
+## Collision-only binding boundary
+
+| Question | Result | Lean source |
+| --- | --- | --- |
+| What differs at double occupancy? | Both variants output both ports occupied; only the marker differs. | `CollisionBoundary.double_variants_only_marker` |
+| How many named packets turn there? | Not encoded: two reversible labelled lifts give the same Boolean successor but 0 or 2 turns. | `lifts_same_native_rule`, `collision_lift_counts`, `no_native_collision_turn_readout` |
+| Can turns occur only at collisions and bind the occupation pattern? | No. Conservation plus passing single occupancy forces free stream ports. Every occupied stream escapes any fixed interval on the infinite cover, even for phase-dependent rules. | `collision_only_ports_identity`, `no_confined_collision_only` |
+| Can three packets at least have zero total drift without isolated turns? | No; their current is odd and nonzero. | `three_packet_current_nonzero`, `three_packets_not_at_rest` |
+
+| Packets | Label content | Localized collision-only bound state | Period / turns | Robust? |
+| --- | --- | --- | --- | --- |
+| 2 | AA, AB, BB | None on the infinite cover. Opposite streams can have zero total current on a finite ring. | No bound-state cycle. Named turns need routing. | No such state. |
+| 3 | AAA, AAB, ABB, BBB | None; odd current also excludes rest. | No bound-state cycle. Named turns need routing. | No such state. |
+
+The exclusion holds for all ring sizes when localization is tested on the infinite
+cover, and for any phase sequence. `CollisionOnlyAlong` requires passing only at
+isolated inputs actually encountered, not at every possible input of the rule. Relabelling the same
+free occupation flow does not change this conclusion. General marker-mediated
+2/3-packet families are not classified here. Their requested per-packet mass census
+needs a native routing/action definition; the Boolean variants do not supply it.
+
 ## Autonomous native cycle census
 
 `AutonomousRing` has 10 admissible eight-state site rules. `AutonomousCensus` uses

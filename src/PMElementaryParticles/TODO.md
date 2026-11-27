@@ -4,7 +4,8 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premises.
 
 ## Autonomous excitation cycles
 
-- Derive a localized, identity-keeping native electron with marker robustness and non-saturated Margin; the rate-one static witness is not robust and the robust bounce saturates (`mirror43_not_robust`, `saturated_family_exceeds_margin`).
+- Admit the retained clock reference and identify the robust timed unit-average candidate with the charged electron and physical Margin (`ClockGatedCycle.unit_cycle`, `ClockPhaseSymmetry.full_root_invariance_constant`).
+- Define native labelled collision routing/action and spatial interactions for the proton target; Boolean collision-only flow cannot bind (`CollisionBoundary.no_native_collision_turn_readout`, `no_confined_collision_only`).
 - Derive or calibrate the shared root-update duration; distinguish the context rate relation from a PM theorem (`ClockScaleBoundary`, `PMSubstrate.ClockScale.TickDuration`; [SCOPE](../../SCOPE.md#named-premises)).
 - Resolve kind 2/3 winding at n=43 before claiming a complete at-rest classification (`AutonomousRing.closed_half_rate_two/three`).
 - Derive mass counts from native dynamics; exclude encoding-dependent Hamming comparison costs (`ChannelRecord.encoding_changes_distance`).

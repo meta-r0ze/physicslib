@@ -102,3 +102,8 @@ keeps PMAction as the base. Either choice needs a full build.
 `AutonomousCensus` gives native cycle-rate proofs; `AutonomousCensus43` checks the
 rate-one static witness and its failed marker robustness. The finite cycle census is
 reproducible with `tools/autonomous_ring_census.py`; it is not a kernel certificate.
+
+`ClockPhaseSymmetry` checks which symmetries descend to the phase reading.
+`ClockGatedCycle` proves the timed unit-average Boolean candidate.
+`CollisionBoundary` proves the collision-only binding obstruction and the missing
+named-packet routing. See the [timed results](OVERVIEW.md#clock-timed-native-cycles).

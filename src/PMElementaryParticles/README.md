@@ -26,3 +26,6 @@ Measured tau inputs enter only in e8p. The physical mass reading is upstream
 Check a module with `./build.sh lean PMElementaryParticles.<module>`.
 Compile it with `./build.sh fast PMElementaryParticles.<module>`.
 Run `./build.sh audit` and `./build.sh e8p` for audits and reporter checks.
+
+Persistent targets are photon, electron, then proton. The timed Boolean electron
+candidate and the collision-only binding obstruction are [mapped in the overview](OVERVIEW.md#persistent-targets-photon-electron-proton).
