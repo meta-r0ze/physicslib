@@ -7,7 +7,9 @@ The [overview](OVERVIEW.md) maps programs, nested roles, declared ledgers, charg
 `NestedFermion` gives the proposed level-0 through level-3 pillar roles and conditional
 capacity/encoding results. `LedgerLevels` proves exact tower identities for the supplied
 species footprints. It does not derive those ledgers or select physical level budgets.
-The [open list](TODO.md) starts with per-level workloads and encodings. The
+`Muon` audits one level-1 charged lepton: its unit-account price is proved, while
+the held-unit set and parent charges remain open.
+The [open list](TODO.md) starts with that system and its per-level operations. The
 [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 
 `PMElementaryParticles.Values` exports the public masses, unit conversions and lifetime APIs.

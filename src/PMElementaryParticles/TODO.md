@@ -2,6 +2,17 @@
 
 See [SCOPE](../../SCOPE.md#named-premises) for the shared premises.
 
+## Muon
+
+- Construct the native level-1 charged-lepton execution and discharge premise B ([SCOPE](../../SCOPE.md#named-premises); `Muon` module docstring).
+- Identify the held child-unit set and parent period; prove or reject its equivalence with the full direction/tick product (`Muon.sweep_agrees_if_identified`).
+- Construct the parent reference/encoder and correction schedule (`NestedFermion.generation_metadata_cardinality`, `RecordEncoding.packet_encoding_injective`).
+- Derive the admitted parent transitions, coordination and Governor restriction (`PersistenceMechanics.ReversibleEncoding`, `PersistencePremises.restriction_lowers`).
+- Derive any anchor release and its signed price (`Muon.negative_map_price`).
+- Derive any phase-to-occupancy charge rather than assigning spin phase an event cost (`Muon.phase_measure_not_event_count`).
+- Derive interface operations, reserve and any feedback recurrence, including its source and coefficient (`Muon.declared_feedback_unique`).
+- Fix the unresolved account from physical operations before any new numerical comparison (`Muon.conditional_cost`, `declared_minus_conditional`).
+
 ## Nested fermions
 
 - Identify the tasks, service units, period and overhead at each proposed level (`NestedFermion.overload_needs_multiple_loops`).

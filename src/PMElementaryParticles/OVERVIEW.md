@@ -50,6 +50,41 @@ claimed proved merely by giving it a role. Sources are Paper III Rules 1–3,
 | Differing bit rings have at most 42 registrations in the base period. | `one_ring_margin_ceiling` | A higher-level loop needs an identified implementation, differing condition and service interval. |
 | Work plus overhead above 42 requires at least two such loops in any feasible realization. | `overload_needs_multiple_loops` | Fixed work/deadline and complete service are hypotheses. Calling extra capacity a new level needs the nested architecture. |
 
+## Muon
+
+The six roles are fixed before assigning costs. Premise B is named once in
+[SCOPE](../../SCOPE.md#named-premises); `Muon` records its meaning. It asserts existence,
+not a period, child count, source load or feedback law. The native level-1 persistence
+predicate remains an implementation obligation. No extra numerical premise is adopted.
+
+| Pillar | Level-1 role | Source | Open |
+| --- | --- | --- | --- |
+| Capacity | Hold unit child programs and service parent tasks. | Rule 1; `cost_tower`. | Held-unit set, ownership and parent period. |
+| Map | Retain the charged channel and generation; correct toward the reference. | Rule 2; `generation_metadata_cardinality`; `map_maintains`. | Parent encoder, reference and update schedule. |
+| Protocol | Coordinate child transitions reversibly. | `encode_injective_iff_decoder`; child `tick_bijective`. | Parent operation, timing and return. |
+| Governor | Restrict child combinations and contention. | `Pillar.governor`; `restriction_lowers`. | Allowed subset and actual savings. |
+| Toll | Account for executed child/interface reversals. | `registrations_eq_reversals`; `quiet_program_cost`. | Parent encounters and their count/price. |
+| Margin | Preserve robustness, spare service and reflected-load reserve. | `one_ring_margin_ceiling`; `margin_iff`; Rule 3. | Viable states, reserves and recovery law. |
+
+For an identified disjoint bank of n child units, `Muon.held_children_cost` proves
+cost n. With unresolved parent terms rho, `conditional_cost` gives n + rho.
+Neither n nor rho is determined. Zero is not assigned to any unresolved charge.
+This is no complete muon prediction and cannot be ranked against a measurement.
+
+| Ledger term | Supported derivation | Source | Match? |
+| --- | --- | --- | --- |
+| Sweep sigma*Delta | n unit accounts; n is open. | `held_children_cost`, `full_sweep_label_count`. | Product cardinality matches only if held units are identified with all direction/tick labels (`sweep_agrees_if_identified`). |
+| Anchor -chi | No anchor release or negative charge is derived. | `boundary_euler`, `negative_map_price`. | Arithmetic price identity only; no physical sign/operation. |
+| Spin lag -2*pi | No phase-to-occupancy charge is derived. | `phase_measure_not_event_count`. | Open residual; even its magnitude is not a whole event count. |
+| Feedback (chi+sigma)*alpha/(1-alpha) | No source load or return coefficient is derived. | `declared_feedback_unique` for the supplied recurrence. | Conditional algebra only; no selected physical recurrence. |
+
+Sigma counts chart-coordinate directions: D-1 spatial plus two surface directions
+(`Derived.configDim`), not a proved number of ring copies. `full_sweep_label_count`
+counts their product with clock labels; a tick sequence is not a bank of distinct
+held accounts. Chi is an Euler characteristic. Pi is a geometric measure.
+`declared_minus_conditional` records the full unresolved difference from the ledger
+without setting rho to cancel it. The existing reporter comparison remains read-only.
+
 ## Declared ledger levels
 
 All identities in this group are [Premise] ledger facts. `increment A B` preserves whole
