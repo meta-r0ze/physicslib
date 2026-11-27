@@ -12,7 +12,9 @@ records the missing occupied-background renewal rule for decay. The
 registration bounds and the geometric ring-embedding obstruction.
 The [reversal section](OVERVIEW.md#mass-as-reversals-per-period) proves the
 registration/reversal identity and separates the reversal account from the
-open retained-reference decoding requirement.
+open physical record-encoding requirement. The
+[contact audit](OVERVIEW.md#generation-readout-needs-vacuum-contact-audit) proves that
+readability alone does not force a new nonzero-key operation in each period.
 The [open list](TODO.md) records the missing physical identifications.
 The [scope ledger](../../SCOPE.md#named-premises) records shared premises.
 

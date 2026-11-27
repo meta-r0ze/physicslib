@@ -72,19 +72,14 @@ footprint in `SpeciesFootprints`.
 | 3 | 6835753 | Δ⁴ | No declared quartic species term | 24 | 24 |
 
 `box_one` reuses `PersistencePremises.causal_cone_card`; `box_counts` checks the sums.
-With several spatial directions, the box uses componentwise |x_i| ≤ t. It is not a
-Euclidean or taxi-distance cone. `direction_root_counts` checks first-step roots.
-Their lattice clock coordinate differs from the root-word length. No exact 43-step
-root-region cardinal or minimum is claimed. A ring-to-lattice encoding and an occupancy
-rule are still needed. Reachable alternatives need not all be held. A one-event point
-also differs from a full clock line. Equal leading powers do not derive a species region,
-its multiplicity, its assignment or the declared `TierLedger.tiersFor` ordering.
+The multidirectional box uses componentwise |x_i| ≤ t. Its tick index is not a root's
+lattice clock coordinate. No exact 43-step root-region minimum, occupied multiplicity
+or species assignment is inferred. See `SpacetimeProgram` for the finite root enumerator.
 
 ## Mass as reversals per period
 
-`ReversalEvents` proves the Boolean ring identity for arbitrary firing patterns and
-both guards. A registration swaps the occupied stream at arrival. The swap can be
-forward-to-backward or backward-to-forward. Direction stays fixed between registrations.
+`ReversalEvents` proves the Boolean ring identity for arbitrary patterns and both guards.
+A registration swaps streams in either direction. Direction stays fixed between registrations.
 This counts realized events. `PhaseToRecord.expected_receiver_flag` computes a coherent
 weight `DiagonalReadout.flag x`; it supplies no generation-to-phase encoding.
 
@@ -97,61 +92,66 @@ weight `DiagonalReadout.flag x`; it supplies no generation-to-phase encoding.
 | Every ring-root word preserves generation and internal content; the placed label reads back unchanged. | `RetainedMap.program_identity_conserved`, `word_label_readout`, `word_label_unique` | Any choice of clock-axis roots, including direction changes. |
 | The label record cannot decode generation. | `label_record_cannot_decode_generation` | It still carries conserved label information. |
 | A shared reader must recover the retained identity at every positive period end. | `ReadableReference`, `StrongMap`, `readable_generation`, `readable_class_record`, `readable_internal` | Generation, channel and conserved internal content. All retained ring fields are available; no free carrier tag is appended. |
-| All generations have identical one-reversal Boolean histories for a common channel and site. | `quiet_observations_equal`, `no_uniform_quiet_decoder` | Even their complete ring states coincide. Other encodings are not excluded. |
+| The quietProgram family has identical histories across generations for a common channel and site. | `quiet_observations_equal`, `no_uniform_quiet_decoder` | Even their complete ring states coincide. Other encodings are not excluded. |
 
-The stronger Map is a decoding specification. `PMSubstrate.map_maintains` supplies a
-correction theorem over a given reference, not this encoder or a decoder. Reading the
-E8 carrier's conserved glue key is already possible; copying it into the Boolean rings
-and correcting that record are different tasks. Choosing a new constant reader for each
-program is vacuous (`per_program_constant_decoder`). A fixed reader and its admitted
-encoding must be supplied or derived before minimizing under `StrongMap`.
+Map is a decoding specification. `GenerationReadoutContact.coded_strong` supplies a shared
+reader for preloaded requests as a countermodel; no physical preparation or coupling is inferred.
 
-Historical context only: [Kac (1974)](https://www.cs.fsu.edu/~mascagni/Kac_1974_Rocky_Mountain_J_Math.pdf)
-studies the telegraph process. [Gaveau–Jacobson–Kac–Schulman (1984)](https://doi.org/10.1103/PhysRevLett.53.419)
-relate it to the Dirac equation by analytic continuation. The reversal-rate/mass analogy
-is not a premise here. No Dirac limit, conversion factor or stochastic rate is assumed.
+Historical context only: [Kac (1974)](https://www.cs.fsu.edu/~mascagni/Kac_1974_Rocky_Mountain_J_Math.pdf) studies the telegraph process.
+[Gaveau–Jacobson–Kac–Schulman (1984)](https://doi.org/10.1103/PhysRevLett.53.419) relate it to the Dirac equation by analytic continuation.
+This analogy supplies no premise, Dirac limit, conversion factor or stochastic rate here.
 
-The table separates minima under the current pillars from the strengthened Map. The line
-column is current abstract ring lines / strengthened-Map lines. If an encoded family needs
-R relevant registrations, `SpacetimeProgram.family_spreading` gives ceiling(R/84) as a lower
-bound; 42 needs the one-bit hypothesis. Neither packing theorem supplies the encoder.
+## Generation readout needs vacuum contact: audit
 
-| Generation index | Class | Species family | Reversals: current minimum | Reversals: strengthened Map | Lines | Declared leading family | Declared tiers |
-| ---: | ---: | --- | ---: | --- | --- | --- | --- |
-| 0 | 0 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
-| 0 | 0 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
-| 0 | 1 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
-| 0 | 2 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
-| 0 | 3 | neutrino | 1 | ≥1; minimum open | 1 / open | N | {0,1,2}; unmapped |
-| 0 | 3 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
-| 0 | 5 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
-| 1 | 0 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
-| 1 | 0 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
-| 1 | 1 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
-| 1 | 2 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
-| 1 | 3 | neutrino | 1 | ≥1; minimum open | 1 / open | N | {0,1,2}; unmapped |
-| 1 | 3 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
-| 1 | 5 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
-| 2 | 0 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
-| 2 | 0 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
-| 2 | 1 | up-type | 1 | ≥1; minimum open | 1 / open | U | {0,2,3}; unmapped |
-| 2 | 2 | down-type | 1 | ≥1; minimum open | 1 / open | D | {0,1,2}; unmapped |
-| 2 | 3 | neutrino | 1 | ≥1; minimum open | 1 / open | N | {0,1,2}; unmapped |
-| 2 | 3 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
-| 2 | 5 | charged lepton | 1 | ≥1; minimum open | 1 / open | L | {0,1,2}; unmapped |
+The present predicates allow information to be preloaded and retained without changing the glue key. No physical code is selected.
 
-| Leading family | Declared event fields (unit and SpeciesFootprints) | Leading powers |
+| Test | Checked finding | Entry point in `GenerationReadoutContact` |
 | --- | --- | --- |
-| U | floor(D/η); floor(DΔ²/(η(σ−χ))); floor(Δ³(D+1/D)) | 0, 2, 3 |
-| D | floor(D/η); floor(DΔ/η); floor(DΔ²/η) | 0, 1, 2 |
-| L | One-event unit; σΔ; χΔ²−σΔ | 0, 1, 2 |
-| N | No selected neutrino footprint. | Declared 0, 1, 2 |
+| General no-reader theorem | Equal native initial states cannot decode different generations. Zero-key words alone do not imply equal initial states. | `no_reader_equal_initial_states`, `zero_key_word_preserves` |
+| Preloaded reader | A shared native-request reader meets StrongMap for all three generations, with one reversal. This is a countermodel, not a physical derivation. | `code_retained`, `preloaded_strong_family`, `coded_minimum`, `readable_with_zero_key_word` |
+| Nonzero roots | k→k+h→k avoids zero when nonzero h differs from k. The h=k choice in GluedExcursions is a restriction. | `other_key_avoids_zero`, `returning_pair_avoids_zero` |
+| Ring reversal | A one-tick stream turn has a compatible single zero-key clock-root position increment. No timed pair factorization follows. | `zero_key_turn_at_site`, `one_event_is_not_two` |
+| Intermediate | A cancelling first hop leaves the placed label vector. A zero-key vector is not a typed EP program; no native-vacuum identification is given. | `cancelling_first_hop`, `zero_key_not_a_program`, `native_admission_iff` |
 
-Generation indices follow `EPLabelGen.genIndex`: (0,1), (1,0), (1,1). No derived map assigns
-these keys to entries of `TierLedger.tiersFor` or to the ordered leading families above.
-The current reversal minima have no generation ordering and no powers of Δ. The minimum
-under a fixed faithful record encoding remains open; no larger value is inferred.
-A higher floor needs a derived Map/record obligation or a stronger Toll requirement.
+There are 512 raw label-restoring pairs and 33 displacements per generation, with no native reversal action.
+Typed-compatible pairs are empty. The clock histograms count ordered pairs, not displacements.
+
+| Glue key | Raw signed clock reading : ordered-pair count | Word length |
+| --- | --- | ---: |
+| (0,1) | −2:8, −1:96, 0:304, +1:96, +2:8 | 2 |
+| (1,0) | −1:128, 0:256, +1:128 | 2 |
+| (1,1) | −1:128, 0:256, +1:128 | 2 |
+
+`GluedExcursions.{restoring_counts,ordered_pair_clocks,programCompatible_empty}` certify these rows.
+Word length is two; the signed residue in ZMod 43 is not elapsed time. Native contact timing is not derived.
+
+| Glue key | Class | Species | Vacuum-contact reversal words | Ticks/contact | Least contact reversals/period | Declared tiers |
+| --- | ---: | --- | --- | --- | --- | --- |
+| (0,1) | 0 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
+| (0,1) | 0 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (0,1) | 1 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
+| (0,1) | 2 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (0,1) | 3 | neutrino | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (0,1) | 3 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (0,1) | 5 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,0) | 0 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
+| (1,0) | 0 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,0) | 1 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
+| (1,0) | 2 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,0) | 3 | neutrino | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,0) | 3 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,0) | 5 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,1) | 0 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
+| (1,1) | 0 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,1) | 1 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
+| (1,1) | 2 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,1) | 3 | neutrino | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,1) | 3 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+| (1,1) | 5 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
+
+Native admission recognizes a supplied label in each bank; it does not identify ClockRing.V with a stationary mode.
+The [first TODO](TODO.md#zero-key-intermediate-admission) is that missing operational admission/representation relation.
+Item 4 stops here. These rows cover all visible groups; no physical ordering or tier assignment follows.
 
 ## Persistence of an isolated excitation
 

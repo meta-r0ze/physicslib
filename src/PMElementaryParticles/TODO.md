@@ -2,6 +2,12 @@
 
 See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
+## Zero-key intermediate admission
+
+- Define the operational admission/representation relation for a zero-glue E8 intermediate
+  in the certified native vacuum ⊗ packet/ring state
+  (`GenerationReadoutContact.native_admission_iff`, `GluedExcursions.no_typed_intermediate`).
+
 ## Closed execution for decay
 
 - Supply the joint resource account and primitive-event admission predicate before classifying successors; see the [machine constraint audit](../PMKAutomaton/OVERVIEW.md#constraints-on-occupied-joint-successors) (`PMKAutomaton.JointSuccessorConstraints`).
@@ -12,7 +18,7 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 ## Occupancy cost
 
-- Derive a physical record encoder and one shared decoder for generation, channel and conserved internal content; the current one-reversal histories collide across generations (`RetainedMap.no_uniform_quiet_decoder`).
+- Derive the physical carrier-to-record coupling and its preparation/maintenance obligations; a preloaded request code already meets the abstract reader contract (`GenerationReadoutContact.coded_strong`).
 - Derive an admitted correction toward that retained reference; periodic decoding alone is not `PMSubstrate.map_maintains`.
 - Prove the minimum reversal count and line requirement under a fixed, faithful readable-reference contract (`RetainedMap.StrongMap`, `strong_floor`).
 - Prove full-state return for a claimed period; one total reversal changes the stream direction (`ReversalEvents.registration_iff_opposite_direction`).
@@ -26,7 +32,6 @@ See [SCOPE](../../SCOPE.md#named-premises) for the shared premise statements.
 
 - Identify which clock data a physical cost preserves before using the cu-stabilizer (`ClockSymmetry.swap_changes_clockReading`).
 - Derive the physical oriented wall placement instead of treating its cycle as an encoding choice (`FullGenerationOrbits.swap_rejects_placement`).
-- Specify transient-state admission at glue key zero before using same-starting-key excursions (`GluedExcursions.no_typed_intermediate`).
 - Derive a held-event functional and its label dependence beyond common preserving-root reachability (`FootprintNoGo.footprint_functional_independent`).
 - Derive the generation-to-tier map; raw pair spans and clock histograms do not select it (`GluedExcursions.restoring_counts`, `TierLedger.wireTier`).
 - Derive each tier from the dimension of the clock region that its persistent program holds in one period. Use `PersistencePremises.causal_cone_card` as the counting template.
