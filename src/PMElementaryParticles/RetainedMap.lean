@@ -15,7 +15,7 @@ carrier labels are used. The decoder must read the actual two-ring machine state
 It cannot read a free generation tag or root coordinates.
 The retained requests, probe, phase and both port streams are allowed.
 
-This is a specification, not a derived repair mechanism. PMSubstrate.map_maintains
+This is a specification, not a derived repair mechanism. PMSubstrate.Pillars.map_maintains
 proves bounded correction toward a supplied reference; it supplies neither a
 carrier encoder nor a record decoder. This module does not claim that PM requires
 all conserved observables to be copied into this particular Boolean record.

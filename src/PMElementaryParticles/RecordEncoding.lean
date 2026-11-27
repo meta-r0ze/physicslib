@@ -30,7 +30,7 @@ lepton axis, axes 1–3 the colour axes):
   enter the record Toll.
 
 So the colour reference does not force composites, and it does not supply a partial
-comparison angle. See `OVERVIEW.md#line-composition-and-the-clock`.
+comparison angle. See `OVERVIEW.md#record-comparisons-and-heavy-flip-flag-costs`.
 -/
 
 noncomputable section

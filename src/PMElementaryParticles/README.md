@@ -3,20 +3,12 @@
 EP classifies programs on the E8 node machine and checks conditional decay widths.
 It builds on PMSubstrate, PMAction, PMConstants and PMKAutomaton. PMFlavor follows EP.
 
-The [overview](OVERVIEW.md) maps programs, pillars, charge, occupancy cost and decay.
-The [generation-orbit table](OVERVIEW.md#generation-orbits) separates the full
-clock-root groups from their label-respecting subgroups.
-The [isolated-persistence section](OVERVIEW.md#persistence-of-an-isolated-excitation)
-records the missing occupied-background renewal rule for decay. The
-[program-dimension section](OVERVIEW.md#program-dimension) separates held events,
-registration bounds and the geometric ring-embedding obstruction.
-The [reversal section](OVERVIEW.md#mass-as-reversals-per-period) proves the
-registration/reversal identity and separates the reversal account from the
-open physical record-encoding requirement. The
-[contact audit](OVERVIEW.md#generation-readout-needs-vacuum-contact-audit) proves that
-readability alone does not force a new nonzero-key operation in each period.
-The [open list](TODO.md) records the missing physical identifications.
-The [scope ledger](../../SCOPE.md#named-premises) records shared premises.
+The [overview](OVERVIEW.md) maps programs, nested roles, declared ledgers, charges and decay.
+`NestedFermion` gives the proposed level-0 through level-3 pillar roles and conditional
+capacity/encoding results. `LedgerLevels` proves exact tower identities for the supplied
+species footprints. It does not derive those ledgers or select physical level budgets.
+The [open list](TODO.md) starts with per-level workloads and encodings. The
+[scope ledger](../../SCOPE.md#named-premises) records shared premises.
 
 `PMElementaryParticles.Values` exports the public masses, unit conversions and lifetime APIs.
 Measured tau inputs enter only in e8p. The physical mass reading is upstream

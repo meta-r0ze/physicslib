@@ -1,246 +1,164 @@
 # PMElementaryParticles — checked results
 
-EP uses the E8 node machine to classify persistent programs and read their outputs.
-It imports PMSubstrate, PMAction, PMConstants and PMKAutomaton. It does not import PMFlavor.
-See [README](README.md), [open work](TODO.md), and [SCOPE](../../SCOPE.md#named-premises).
+EP studies the elementary programs above the E8 node machine. It imports PMSubstrate,
+PMAction, PMConstants and PMKAutomaton. See [README](README.md), [TODO](TODO.md) and
+[SCOPE](../../SCOPE.md#named-premises). This step proposes a nested architecture;
+it derives no new species values, workloads, level budgets or generation-to-tier map.
+
+## Fermions as nested systems
+
+A proposed tier n has n nesting steps above the level-0 ring: levels 0 through n.
+Every level must realize all six pillars. `NestedFermion` gives the role map and its
+sources. `LedgerLevels` supplies exact algebra for the declared ledgers, not a derivation
+of those roles from their coefficients. The downstream `PMAtoms.SystemTower` illustrates
+the additive form; EP does not import it. `PMHadrons.NucleonBase` illustrates the distinction
+between a derived cone count, a supplied residual and an open physical configuration.
+
+| Rule | Canonical Lean source | Required application data | Does not imply |
+| --- | --- | --- | --- |
+| 1: Capacity Partitioning | `PersistenceMechanics.CapacityPartitioning` | Work per specified deadline, worker capacities, overhead, complete service. | A unique allocation, nesting depth or a feasible schedule from an aggregate bound. |
+| 2: Reversible Encoding | `PersistenceMechanics.ReversibleEncoding` | States, coarse descriptions, retained metadata, injectivity or a decoder. | A storage price, update frequency or maintenance workload from alphabet cardinality. |
+| 3: Impedance Matching | `PersistenceMechanics.ImpedanceMatching` | The transfer law, incident load, source/load impedances and reserve. | Zero mismatch or a numerical tolerance without a reserve law. |
+
+Paper III supplies these conditional rules and their recursive use. It explicitly
+allows idle capacity and non-unique allocations. More loops must supply additional total
+capacity; dividing an insufficient unchanged budget cannot remove overload.
+
+| EP adapter | Actual objects | Per-level? | Status for this step |
+| --- | --- | --- | --- |
+| `CapacityLedger` | Tasks = protocols sharing one ring. Demands = registrations/period. Overhead = supplied comparisons. Capacity = 43, less a supplied reserve. | No level index, child tasks or workload generator. | Reusable conditional budget adapter. A proved reserve is needed to use 42. |
+| `RecordEncoding` | States = Channels. Coarse data = labelRecord. Metadata = channelCode. Fibres have six or two states. | No generation coordinate or nested codec. | Reusable Rule-2 channel adapter; its colour-reference construction does not define a generation level. |
+| `ImpedanceLedger` | Encounters = supplied phases xs. Loads = expected pass/flag weights. Source/load = 1 minus/plus abs(sin(x/2)); reserve is supplied. | No levels, derived phases or per-level reserves. | Reusable interface algebra; legacy as a claim of an already derived level model. Expected reflected load is not a 42-slot service budget. |
+
+## Per-level pillar roles
+
+All rows above level 0 are architectural obligations. No operation, workload or cost is
+claimed proved merely by giving it a role. Sources are Paper III Rules 1–3,
+`PersistenceMechanics.Requirements.Pillar` and `PMSubstrate.Pillars`.
+
+| Level | Capacity | Map | Protocol | Governor | Toll | Margin |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0: ring | Registrations fit the period (`ProgramWitness.Capacity`). | Channel/reference distinction (`MapRecord`, `MapClass`); history merges generation. | Reversible ring tick (`tick_bijective`). | A non-firing site (`Governor`). | Quiet-equal-ring witness: one reversal, unit cost (`quiet_program_cost`). | At most 42 on a differing bit ring (`one_ring_margin_ceiling`). |
+| 1: maintain level 0 | Service actual child reference, metadata and coordination work (Rule 1); work open. | Retain a reference for lost distinctions, including generation (Rule 2), and supply correction (`map_maintains`). | Reversible cross-level encoding and coordinated service (Rules 1–2); schedule open. | Restrict allowed child operations and contention (`Pillar.governor`); update open. | Count executed child-interface work; encounter and tariff open. | Positive robustness (`margin_iff`), service reserve and reflected-load reserve (Rule 3); units/implementation open. |
+| 2: maintain level 1 | Service level-1 control and child interfaces (Rule 1); tasks open. | Derive the level-1 coarse description, retained metadata (Rule 2) and correction toward its reference. | Coordinate level-1 subsystems and preserve records; update and timing open. | Restrict admitted level-1 compositions; topology open. | Account for interface work without counting shared jobs twice. | Prove robustness (`margin_iff`), loop reserves and mismatch budgets. |
+| 3: maintain level 2 | Service level-2 maintenance (Rule 1); no volume workload assumed. | Supply the level-2 reference/metadata (Rule 2) and correction toward it. | Reversible level-2 composition and a causal schedule. | Restrict the admitted level-2 architecture. | Price actual boundary work, not a guessed Delta power. | Prove robustness, loop reserve and interface budget for that implementation. |
+
+| Structural result | Lean entry point | Limit |
+| --- | --- | --- |
+| Base histories coincide across generations for a fixed channel. Adding generation as metadata is injective. | `NestedFermion.base_history_merges_generations`, `generation_metadata_reversible` | This is a coarse-description instance, not a physical encoder. |
+| Sufficient generation metadata has at least three states. | `generation_metadata_cardinality` | Three states is not three reversals or a service rate. |
+| Differing bit rings have at most 42 registrations in the base period. | `one_ring_margin_ceiling` | A higher-level loop needs an identified implementation, differing condition and service interval. |
+| Work plus overhead above 42 requires at least two such loops in any feasible realization. | `overload_needs_multiple_loops` | Fixed work/deadline and complete service are hypotheses. Calling extra capacity a new level needs the nested architecture. |
+
+## Declared ledger levels
+
+All identities in this group are [Premise] ledger facts. `increment A B` preserves whole
+natural counts when they are monotone, subtracts signed charges/residuals, and satisfies
+`A.add (increment A B) = B`. `cost_tower` then gives exactly the original scalar costs.
+This is a telescoping account, not a unique physical division into level budgets.
+Disjoint physical resource ownership and the relation of the quark point entries to the
+primitive unit have not been proved.
+
+| Species | Declared level tower | Exact theorem | Remaining structure |
+| --- | --- | --- | --- |
+| Unit/electron entry | [unit] | `declared_electron_tower`, `declared_lepton_costs` | Physical point/species identification. |
+| Muon | [unit, increment(unit, muon)] | `declared_muon_tower` | Level-0 maintenance workload and the level-1 operations. |
+| Tau | [unit, increment(unit, muon), increment(muon, tau)] | `declared_tau_tower` | The increments cancel old residuals; no parent subsystem is derived. |
+| Down | [down] | `declared_down_tower` | Physical point role and overhead. |
+| Strange | [down, increment(down, strange)] | `declared_strange_tower` | Level-1 work and operations. |
+| Bottom | [down, increment(down, strange), increment(strange, bottom)] | `declared_bottom_tower` | Level-2 work and operations. |
+| Up | [up] | `declared_up_tower` | Physical point role and overhead. |
+| Charm | [up, increment(up, X), increment(X, charm)] | `declared_charm_tower` | X is the unknown cumulative footprint through level 1, with monotone event counts and zero cells. It is not set to zero. |
+| Top | [up, increment(up, X), increment(X, charm), increment(charm, top)] | `declared_top_tower` | The same missing X remains a parameter. |
+
+`declared_lepton_costs`, `declared_down_costs` and `declared_up_costs` prove the cost sums.
+No floor, field, residual or reporter value changes. There is no selected neutrino footprint.
+A zero incremental pillar field does not prove that a higher level has no such role.
+
+| Family | Exact inheritance | Break in the pattern |
+| --- | --- | --- |
+| Lepton | Muon leading term = sigma*Delta times unit cost. Tau core latency = muon leading term, with a negative sign in tau (`declared_tau_signed_inheritance`). | Multipliers change from sigma to chi. Tau does not inherit muon's spin/feedback terms. Its incremental residual cancels them (`declared_tau_increment_residual`). |
+| Down | Leading terms are D*Delta^n/eta for n=0,1,2 (`declared_down_leading_powers`). Full costs obey the corrected recurrence `declared_down_full_inheritance`. | Corrections are sigma, chi*sigma and Delta^2*chi/sigma, not one repeated series. |
+| Up | Charm leading = Delta^2 times up leading divided by sigma−chi (`declared_charm_inheritance`); volume anchor = Delta times area anchor. | No level-1 species entry. Top drops eta and adds Delta^3/D, so it is not Delta times the diluted charm leading term (`declared_top_breaks_charm_scaling`). |
+
+## What would force the next level?
+
+For each proposed promotion, identify a required workload w(s,n,i), overhead, fixed period
+and complete service. Prove that these jobs belong to the excitation and cannot be dropped,
+shared away or delayed beyond the deadline. Identify one worker with a differing ring so
+its service ceiling is 42 in that interval. If demand plus overhead exceeds 42, Rule 1
+excludes a one-loop realization. It does not construct the larger schedule or its depth.
+
+| Species | Declared target level | Promotions whose workload is missing | What is known |
+| --- | ---: | --- | --- |
+| Unit/electron | 0 | No promotion asserted. | One-reversal base account; no physical species identification. |
+| Muon | 1 | 0→1 | Declared footprint and exact tower identity. |
+| Tau | 2 | 0→1, 1→2 | Signed leading-term inheritance. |
+| Up, down | 0 | No promotion asserted. | Declared point ledgers. |
+| Strange | 1 | 0→1 | Geometric leading series only. |
+| Charm | 2 | 0→1, 1→2 | Unknown intermediate level X remains explicit. |
+| Bottom | 2 | 0→1, 1→2 | Declared two-step ledger tower. |
+| Top | 3 | 0→1, 1→2, 2→3 | Declared volume ledger; unknown level X. |
+| Neutrino | Unassigned | All species-specific promotions. | Declared tier set only; no selected footprint. |
+
+No species-specific overload is proved. Occupancy event counts, metadata alphabet size
+and operational work per period are different quantities. None may replace another
+without a theorem. Work below the aggregate ceiling also does not construct a schedule.
+
+## Draft tier claims and generation orbits
+
+Paper V's `2_ie_dynamics.tex` says linear/areal/volumetric quark generations. The current
+Lean ledger instead declares up tiers {0,2,3} and down tiers {0,1,2}. These statements are
+not reconciled here. `4_pmns_matrix.tex`'s lepton-axis 1+2 statement is a reference symmetry
+with stated premises. It does not prove nesting depth, maintenance rate or a tier map.
+
+The raw clock-root stabilizer has a singleton/pair key partition. The oriented channel
+placement can reject that swap (`ClockSymmetry`, `FullGenerationOrbits`). No distinguishing
+symmetry is sought in this step, and no generation key is assigned to a ledger entry.
 
 ## Programs and pillars
 
-`EPSpine.programs_card` counts 15 witness indices: three generations times five visible
-classes. `ProgramClasses.visible_channels_card` counts 15 channel labels. These are
-different index sets. Their unrestricted product with generations would have 45 elements;
-it is not the program count. Full occupied-program closure remains open.
-
-| Topic | Checked result | Lean entry point | Input still supplied |
-| --- | --- | --- | --- |
-| Machine | The ring step is reversible. The clock period is 43. | `PMKAutomaton.Interface`, `ClockRing` | Physical admission and timing; see the [machine contract](../PMKAutomaton/OVERVIEW.md#kautomaton-closeout). |
-| Classes | Six label classes; five are visible to the substrate observables. | `ProgramClasses.classOf`, `visibleClasses_card`, `invisible_iff` | Physical readout interpretation. |
-| Program | A program has a label, generation, reference, firing patterns and packet. | `EPSpine.Program`, `program_walk` | Its occupied region and execution. |
-| Witness | Each visible class has a one-registration witness in every generation. | `EPLabelGen.spine_generations`, `EPSpine.programs_card` | Joint closure and physical footprint. |
-| Label | Ring motion keeps label and generation. | `EPLabel.label_readout`, `EPLabel.spine_labelled` | Physical species assignment. |
-| Checks | The three-site toy ring has finite survivor certificates. | `PMChecks.PMElementaryParticles.{Protocol,PillarPredicates,SurvivorClasses}` | The toy ring is a separate finite model. |
-
-| Pillar | Condition on `ProgramWitness.RingProgram` | Entry point |
-| --- | --- | --- |
-| Capacity | At most two full rings of registrations per period. | `Capacity` |
-| Map | The record differs from the reference; the class is visible. | `MapRecord`, `MapClass` |
-| Protocol | The tick is reversible. | `RingReceiver.tick_bijective` |
-| Governor | Some site does not fire. | `Governor` |
-| Toll | Each differing ring registers at least once per period. | `Toll` |
-| Margin | Each differing bit ring stays below 43 registrations. | `Margin` |
-
-## Program dimension
-
-Occupancy counts held events. Registration counts traffic through a receiver. Erasure
-counts discarded information. These counts are different. The joint-successor resource
-work is parked for decay. It does not select an occupancy footprint.
-
-| Question | Checked result | Entry point | Limit |
-| --- | --- | --- | --- |
-| Ring bound | Every program has at most 86 registrations in 43 ticks, even without the pillars. | `SpacetimeProgram.program_registration_bound` | A held-event bound needs the bridge in `footprint_bound`. |
-| Margin | Each differing bit ring has at most 42 registrations. A two-bit line has at most 84 relevant registrations. | `relevant_margin_bound`, `relevant_one_bit_bound` | The bound 42 per spatial line needs Hamming distance one. Margin does not constrain equal bit rings. |
-| Packing | If each line has bound c and the required total is R, at least ceiling(R/c) lines are needed. | `required_lines` | Use c = 84 generally, or 42 with the one-bit hypothesis. This is a lower bound, not an attainable packing. |
-| Ring family | Capacity sums over a finite family. Toll, Margin, Map and Governor hold per line. A singleton family is equivalent to the old program data. | `family_capacity`, `family_toll`, `family_margin`, `family_map_governor`, `singletonFamilyEquiv`, `singleton_pillars` | No spatial interaction or root execution is inferred from a family. Independent line ticks are reversible (`family_protocol`). |
-| Root execution | Each step is one of the 24 aligned spacetime roots. Every step changes space. | `RootExecution`, `execution_changes_space`, `no_fixed_spatial_root` | A fixed spatial clock line cannot contain even one such step. The requested geometric one-line reduction is therefore unavailable. |
-| Reachability | A finite recursion enumerates exact root-word endpoints. | `rootReachableFinset`, `mem_rootReachableFinset`, `directionRoots` | Reachable alternatives are not simultaneously held events. Event index and lattice clock coordinate must remain distinct. |
-| Required R | Every generation and visible channel has a pillar witness with one relevant registration. | `relevant_floor`, `one_relevant_in_every_generation` | There is no derived species-dependent requirement R. The two-bit record and excursions do not supply one. |
-
-These are the declared integer event fields in `SpeciesFootprints`, not scalar mass values.
-The arithmetic is certified by `SpacetimeProgram.declared_event_counts`.
-
-| Species | Declared leading term | Event field | Exceeds 86? |
-| --- | --- | ---: | --- |
-| Up | D / η | 4 | No |
-| Down | D / η; the σ term stays in the residual | 4 | No |
-| Muon | σΔ | 215 | Yes |
-| Strange | DΔ / η | 173 | Yes |
-| Tau | χΔ² − σΔ | 3483 | Yes |
-| Charm | DΔ² / (η(σ−χ)) | 2479 | Yes |
-| Bottom | DΔ² / η | 7439 | Yes |
-| Top | Δ³(D+1/D) | 337904 | Yes |
-
-The current single-program registration account cannot hold the six larger event fields.
-This statement uses registrations as the account. No theorem equates all physical held
-events with those registrations. The electron unit is separate; neutrinos have no declared
-footprint in `SpeciesFootprints`.
-
-| Spatial directions | Full speed-one box cone, 0 ≤ t < 43 | Envelope leading power | Declared leading powers to compare | Allowed roots within that subspace | Exact one-event endpoints |
-| ---: | ---: | --- | --- | ---: | ---: |
-| 0 | 43 | Δ | Muon σΔ; strange DΔ/η | 0 | 0 |
-| 1 | 1849 | Δ² | Tau χΔ²−σΔ; charm and bottom area terms | 4 | 4 |
-| 2 | 105995 | Δ³ | Top Δ³(D+1/D) | 12 | 12 |
-| 3 | 6835753 | Δ⁴ | No declared quartic species term | 24 | 24 |
-
-`box_one` reuses `PersistencePremises.causal_cone_card`; `box_counts` checks the sums.
-The multidirectional box uses componentwise |x_i| ≤ t. Its tick index is not a root's
-lattice clock coordinate. No exact 43-step root-region minimum, occupied multiplicity
-or species assignment is inferred. See `SpacetimeProgram` for the finite root enumerator.
+`EPSpine.programs_card` counts three generations times five visible classes: 15 witness
+indices. Visible channel labels are a different 15-element set. The ring results are
+level-0 infrastructure, not a classification of complete nested fermions.
 
 ## Mass as reversals per period
 
-`ReversalEvents` proves the Boolean ring identity for arbitrary patterns and both guards.
-A registration swaps streams in either direction. Direction stays fixed between registrations.
-This counts realized events. `PhaseToRecord.expected_receiver_flag` computes a coherent
-weight `DiagonalReadout.flag x`; it supplies no generation-to-phase encoding.
+`ReversalEvents.registrations_eq_reversals` holds for arbitrary firing patterns. The old
+witness has two total reversals and one differing-bit subtotal. Keeping the equal ring
+quiet gives the unit-cost base account (`RetainedMap.quiet_program_cost`). This does not
+identify the electron or prove full joint-state return in one clock period.
 
-| Result | Entry point | Scope |
-| --- | --- | --- |
-| Registrations equal reversals at every finite horizon. | `registrations_eq_reversals`, `registration_iff_opposite_direction`, `direction_between_registrations` | One localized packet on either stream. |
-| The reversal footprint has unit-price events and no extra terms. | `footprint`, `footprint_events`, `footprint_cost`, `footprint_ceiling` | A defined reading; identifying all physical held events with these reversals remains open. |
-| The old witness has two total reversals and one differing-bit subtotal. | `RetainedMap.old_witness_two`, `ProgramWitness.witness_total` | Equal-ring traffic cannot be dropped from the total. |
-| Keeping the equal bit ring quiet attains one total reversal in each generation and visible class. | `quietEqualRing`, `RetainedMap.current_minimum`, `quiet_program_cost` | Current pillars only. Its unit cost uses `OccupancyCost.cost_oneEvent`; it is not identified with the electron. |
-| Every ring-root word preserves generation and internal content; the placed label reads back unchanged. | `RetainedMap.program_identity_conserved`, `word_label_readout`, `word_label_unique` | Any choice of clock-axis roots, including direction changes. |
-| The label record cannot decode generation. | `label_record_cannot_decode_generation` | It still carries conserved label information. |
-| A shared reader must recover the retained identity at every positive period end. | `ReadableReference`, `StrongMap`, `readable_generation`, `readable_class_record`, `readable_internal` | Generation, channel and conserved internal content. All retained ring fields are available; no free carrier tag is appended. |
-| The quietProgram family has identical histories across generations for a common channel and site. | `quiet_observations_equal`, `no_uniform_quiet_decoder` | Even their complete ring states coincide. Other encodings are not excluded. |
+## Program dimension
 
-Map is a decoding specification. `GenerationReadoutContact.coded_strong` supplies a shared
-reader for preloaded requests as a countermodel; no physical preparation or coupling is inferred.
-
-Historical context only: [Kac (1974)](https://www.cs.fsu.edu/~mascagni/Kac_1974_Rocky_Mountain_J_Math.pdf) studies the telegraph process.
-[Gaveau–Jacobson–Kac–Schulman (1984)](https://doi.org/10.1103/PhysRevLett.53.419) relate it to the Dirac equation by analytic continuation.
-This analogy supplies no premise, Dirac limit, conversion factor or stochastic rate here.
-
-## Generation readout needs vacuum contact: audit
-
-The present predicates allow information to be preloaded and retained without changing the glue key. No physical code is selected.
-
-| Test | Checked finding | Entry point in `GenerationReadoutContact` |
-| --- | --- | --- |
-| General no-reader theorem | Equal native initial states cannot decode different generations. Zero-key words alone do not imply equal initial states. | `no_reader_equal_initial_states`, `zero_key_word_preserves` |
-| Preloaded reader | A shared native-request reader meets StrongMap for all three generations, with one reversal. This is a countermodel, not a physical derivation. | `code_retained`, `preloaded_strong_family`, `coded_minimum`, `readable_with_zero_key_word` |
-| Nonzero roots | k→k+h→k avoids zero when nonzero h differs from k. The h=k choice in GluedExcursions is a restriction. | `other_key_avoids_zero`, `returning_pair_avoids_zero` |
-| Ring reversal | A one-tick stream turn has a compatible single zero-key clock-root position increment. No timed pair factorization follows. | `zero_key_turn_at_site`, `one_event_is_not_two` |
-| Intermediate | A cancelling first hop leaves the placed label vector. A zero-key vector is not a typed EP program; no native-vacuum identification is given. | `cancelling_first_hop`, `zero_key_not_a_program`, `native_admission_iff` |
-
-There are 512 raw label-restoring pairs and 33 displacements per generation, with no native reversal action.
-Typed-compatible pairs are empty. The clock histograms count ordered pairs, not displacements.
-
-| Glue key | Raw signed clock reading : ordered-pair count | Word length |
-| --- | --- | ---: |
-| (0,1) | −2:8, −1:96, 0:304, +1:96, +2:8 | 2 |
-| (1,0) | −1:128, 0:256, +1:128 | 2 |
-| (1,1) | −1:128, 0:256, +1:128 | 2 |
-
-`GluedExcursions.{restoring_counts,ordered_pair_clocks,programCompatible_empty}` certify these rows.
-Word length is two; the signed residue in ZMod 43 is not elapsed time. Native contact timing is not derived.
-
-| Glue key | Class | Species | Vacuum-contact reversal words | Ticks/contact | Least contact reversals/period | Declared tiers |
-| --- | ---: | --- | --- | --- | --- | --- |
-| (0,1) | 0 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
-| (0,1) | 0 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (0,1) | 1 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
-| (0,1) | 2 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (0,1) | 3 | neutrino | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (0,1) | 3 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (0,1) | 5 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,0) | 0 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
-| (1,0) | 0 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,0) | 1 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
-| (1,0) | 2 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,0) | 3 | neutrino | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,0) | 3 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,0) | 5 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,1) | 0 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
-| (1,1) | 0 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,1) | 1 | up | Not defined | Not derived | Admission stop | {0,2,3}; unassigned |
-| (1,1) | 2 | down | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,1) | 3 | neutrino | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,1) | 3 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-| (1,1) | 5 | charged lepton | Not defined | Not derived | Admission stop | {0,1,2}; unassigned |
-
-Native admission recognizes a supplied label in each bank; it does not identify ClockRing.V with a stationary mode.
-The [first TODO](TODO.md#zero-key-intermediate-admission) is that missing operational admission/representation relation.
-Item 4 stops here. These rows cover all visible groups; no physical ordering or tier assignment follows.
-
-## Persistence of an isolated excitation
-
-The closed resource-exchanging execution is parked for decay. It does not define the
-held-event mass reading. `ExcitationPersistence` and `JointSuccessorConstraints` state
-the missing contracts. Their module docstrings keep the detailed audit.
-
-| Part | Checked result | Open contract |
-| --- | --- | --- |
-| Vacuum | Distinct rest modes are stationary (`ExcitationPersistence.distinct_stationary_modes`). | Admit their occupied interaction and return. |
-| Receiver | Localized Boolean occupancy is conserved. The embedding ignores its vacuum argument. | Derive requests from the occupied background. |
-| Joint tick | Reversible packet lifts project to a supplied core. | Identify joint resources, locality and the admitted packet operation. |
-| Reference supply | Loaded seeds and a clean backward stream give conditional restoration. | Derive and renew that supply within the execution. |
-| Closed period | Zero erasure does not prove reference renewal. Ring return needs the stated port/two-clock hypotheses. | Close the admitted period; see `RingReceiver.ring_return_of_ports`. |
-
-See the [machine TODO](../PMKAutomaton/TODO.md#reachable-occupied-background).
-Coset-0 contacts and full-state persistence remain open. A one-reversal count is not a
-full-state return theorem. No electron identification or mass comparison follows.
+`SpacetimeProgram` proves the registration ceilings and conditional packing bounds. A
+fixed spatial clock line contains no spacetime root step (`execution_changes_space`).
+Its box counts and `FootprintNoGo` reachability results are not nested service workloads.
 
 ## Footprint: what the generation can change
 
-| Family or test | Checked result | Lean entry point |
-| --- | --- | --- |
-| One preserving root step | Zero glue key keeps generation. A nonzero key changes it. Preserving both generation and internal content selects exactly the same 24 spacetime D4 roots for all labels and generations. | `FootprintNoGo.generation_preserved_iff`, `step_preserves_both_iff` |
-| Common reachable-set functional | A common functional of relative displacements within a fixed step budget cannot distinguish generations or labels. Other program inputs are not removed. | `FootprintNoGo.footprint_functional_independent`, `event_footprint_functional_independent` |
-| Requested two-root intermediate | A first hop with the starting glue key sends it to zero. That state cannot be a `Program`. EPLabel has no separate transient admission predicate. | `GluedExcursions.no_typed_intermediate`, `programCompatible_empty` |
-| Raw label-restoring pairs | Before admission, every channel has 512 ordered pairs and 33 distinct spacetime displacements. Real span dimension is 4; spatial span dimension is 3. The full displacement sets differ across generations. | `restoring_counts`, `spacetime_span_dimension`, `spatial_span_dimension`, `displacement_sets_distinct` |
-| Charge-conserving partner pairs | A nontrivial weak flip changes electric charge. Distinct charge-conserving colour partners have no two-root increment in the current doubled label code. | `weak_partner_charge_changes`, `partner_increments_disjoint`, `relabelPairs_empty` |
-
-The table below concerns raw algebraic displacements. It asserts no admitted
-execution. Zero displacement is separate from clock-only and spatial-only motion.
-The spatial split is orthogonal to the existing clock covector in the aligned D4 metric.
-
-| `genIndex` | Glue key | Distinct clock readings: count | Zero / clock-only / spatial-only / mixed |
-| --- | --- | --- | --- |
-| 0 | (0,1) | -2:1, -1:6, 0:19, +1:6, +2:1 | 1 / 2 / 18 / 12 |
-| 1 | (1,0) | -1:10, 0:13, +1:10 | 1 / 0 / 12 / 20 |
-| 2 | (1,1) | -1:10, 0:13, +1:10 | 1 / 0 / 12 / 20 |
-
-No column gives the declared tier sets. There is no derived generation-to-tier map.
-An empty typed-compatible pair family does not mean a zero physical footprint.
-See [GluedExcursions](GluedExcursions.lean) for the 21 class/species rows, ordered-pair
-histograms and the admission boundary. No count is identified with `Footprint.events`.
+`FootprintNoGo` proves that common functionals of the preserving-root reachable set cannot
+separate generations. The nested proposal must identify additional per-level work and
+metadata; it does not reinterpret that result as a mass hierarchy.
 
 ## Generation orbits
 
-`PMKAutomaton.ClockSymmetry.Gplus` is the full subgroup of W(E8) that keeps
-both aligned D4 factors and fixes `ClockPlane.cu`. `Gpm` permits its negative.
-The root-reflection words generate these intrinsic groups. This does not
-replace the 43-state clock reading, which also uses `cv`.
+`ClockSymmetry` certifies the full raw stabilizers; `FullGenerationOrbits` gives the
+label-respecting obstruction. The level-role map uses neither as a tier selector.
 
-| Group before label restriction | Image on generation keys | Generation orbits | Entry point |
-| --- | --- | --- | --- |
-| G₊: `cu` fixed | Identity and the swap 1↔2. Key (0,1) is fixed. | {0}, {1,2} | `ClockSymmetry.full_generation_image`, `positive_generators_exhaustive` |
-| G±: `cu` fixed up to sign | The same two permutations. | {0}, {1,2} | `full_generation_image`, `line_generators_exhaustive` |
-| Both factor discriminants | The same permutation acts on both. Fixing `cu` fixes its vector class. | No third permutation occurs. | `sector_annihilator`, `keyAction_descent`, `diagonal_glue`, `fixes_clock_key` |
+## Generation readout needs vacuum contact: audit
 
-The existing placement supplies more structure. Each class lies on one wall.
-Its generation cycle is oriented. A glue transposition reverses that cycle
-and exchanges the wall classes. It cannot preserve any one visible class.
-The result holds for every element of the full groups, not just one witness.
+The implication is not a consequence of current StrongMap. `GenerationReadoutContact`
+shows that a preloaded request code can retain generation with one reversal; it does not
+derive a physical encoder. Zero-key conservation is not unreadability. A zero-key lattice
+intermediate has no supplied identification with a native stationary vacuum mode.
+These results remain implementation constraints, not a flat minimization objective.
 
-| Visible class | Carrier species | Label-respecting G₊ orbits | Label-respecting G± orbits | Raw swap and its label obstruction | Declared tiers |
-| --- | --- | --- | --- | --- | --- |
-| 0 | up | {0}, {1}, {2} | {0}, {1}, {2} | Spatial-axis flip + internal clock-adapted axis flip; changes wall class. | {0,2,3} |
-| 0 | down | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
-| 1 | up | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,2,3} |
-| 2 | down | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
-| 3 | electron | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
-| 3 | neutrino | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
-| 5 | electron | {0}, {1}, {2} | {0}, {1}, {2} | Same obstruction. | {0,1,2} |
+## Persistence of an isolated excitation
 
-| Test | Checked result | Lean entry point |
-| --- | --- | --- |
-| Class and species | No class-respecting element swaps generations. A species refinement cannot restore a rejected element. | `FullGenerationOrbits.classGroup_generation_identity`, `sameOrbit_iff`, `species_generation_identity` |
-| Program cost | The typed class-program action obeys the group laws. An invariant cost is equal along its orbits. An invariant real function may separate distinct generations. | `programAction_one`, `programAction_mul`, `invariant_cost_equal`, `invariant_can_separate` |
-| Spatial orientation | The raw swap has representatives with spatial determinant -1 and +1. Thus the glue swap is not a test of chirality. | `ClockSymmetry.swap_orientations`, `swap_generation_check`, `even_swap_generation` |
-| Carrier axis | Flipping the original lepton axis or any original colour axis fails to fix the internal clock projection, even up to sign. The adapted swap is not a carrier doublet-index flip. | `FullGenerationOrbits.carrier_axis_clock_checks`, `no_single_carrier_axis` |
-| Excursions | The fixed key is index 0, the key with raw ±2 excursions. | `fixed_excursion_key` |
-| Clock boundary | The explicit swap changes the full 43-state reading. Its use as a symmetry of an execution cost remains conditional. | `ClockSymmetry.swap_changes_clockReading` |
-
-Indices use `EPLabelGen.genIndex`: 0 = (0,1), 1 = (1,0), 2 = (1,1).
-No derived map assigns these indices to tier entries or to light/heavy species.
-There is no forced cross-generation cost tie after the existing class placement.
-A light-generation splitting is not forced to use a parity-odd structure.
-Lepton-axis versus colour-axis flips do not explain the up-type tier difference.
-No parity-odd named premise follows from this computation. Physical selection
-of the oriented placement and the clock data of an execution remain open.
-See [FullGenerationOrbits](FullGenerationOrbits.lean) for the scope of the cost action.
+`ExcitationPersistence` and `JointSuccessorConstraints` state the missing admitted joint
+execution and resource account for the parked renewal/decay work. Their module docstrings
+keep the detailed audit. Closed-ring zero erasure does not prove reference renewal.
 
 ## Charges
 
@@ -268,7 +186,7 @@ The [single footprint table](../PMSubstrate/OVERVIEW.md#occupancy-footprints)
 records their status. Counts are whole numbers. A residual records a term for which
 no whole pillar count has been supplied. It is not evidence for a persistent region.
 
-| Particle | Tier | Canonical footprint | Checked result | Open count |
+| Particle | Declared tier label | Canonical footprint | Checked result | Open count |
 | --- | --- | --- | --- | --- |
 | Electron | Point | `OccupancyCost.Footprint` with `events := 1` | One event costs one electron unit. | Physical point-region identification. |
 | Muon | Line | `SpeciesFootprints.Lepton.muonFootprint` | `LeptonMasses.muon_value`, feedback fixed point. | Sweep, attachment, residual and feedback rule. |
@@ -280,9 +198,10 @@ no whole pillar count has been supplied. It is not evidence for a persistent reg
 | Neutrino | Declared tiers | No selected footprint. | `TierLedger.neutrinoTiers` checks the declared list. | Occupied region and output. |
 
 `PersistencePremises.causal_cone_card` proves the square-region count. It does not
-identify a species with that region. First derive region dimensions. Then check
-`TierLedger.tiersFor`; only then compare masses. The physical unit, one clock event
-costs one electron mass, is a named premise in SCOPE.
+identify a species with that region or force a nesting level. Point/line/area/volume
+are labels for the declared leading powers. The nested proposal must derive the
+per-level work and architecture before checking `TierLedger.tiersFor`. The physical
+unit, one clock event costs one electron mass, is a named premise in SCOPE.
 
 ### Generations on the E8 wire
 
